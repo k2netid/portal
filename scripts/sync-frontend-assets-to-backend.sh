@@ -20,7 +20,7 @@ NODE_BIN="$(command -v node)"
 NODE_VER="$(node -v 2>/dev/null || echo unknown)"
 echo "Using node: ${NODE_BIN} (${NODE_VER})"
 case "${NODE_VER}" in
-  v22.*|v23.*|v24.*) ;;
+  v22.*|v23.*|v24.*|v25.*|v26.*) ;;
   *)
     echo "error: Node 22.12+ required (got ${NODE_VER}). Install NodeSource 22 or run: source .envrc" >&2
     exit 1
