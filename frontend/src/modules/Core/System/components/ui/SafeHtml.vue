@@ -10,7 +10,7 @@ defineOptions({
 const props = defineProps<{
   html: string;
   tag?: string;
-  mode?: 'default' | 'cms';
+  mode?: 'default' | 'cms' | 'Jejakawan';
   config?: Record<string, any>;
 }>();
 
@@ -23,7 +23,7 @@ const attrs = useAttrs();
 const sanitizedHtml = computed(() => {
   if (!props.html) return '';
   
-  const baseConfig = props.mode === 'cms' ? CMS_SANITIZE_CONFIG : DEFAULT_SANITIZE_CONFIG;
+  const baseConfig = (props.mode === 'cms' || props.mode === 'Jejakawan') ? CMS_SANITIZE_CONFIG : DEFAULT_SANITIZE_CONFIG;
   const mergedConfig = { ...baseConfig, ...props.config };
   
   return DOMPurify.sanitize(props.html, mergedConfig);

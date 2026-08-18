@@ -44,7 +44,7 @@ const groups = computed<ModuleGroup[]>(() => {
   const def = moduleDefinition.value
   if (!def?.settings) return []
   
-  let rawItems: ModuleField[] = []
+  let rawItems: ModuleField[]
   if (Array.isArray(def.settings)) {
     rawItems = props.activeTab === 'content' ? def.settings as ModuleField[] : []
   } else {
@@ -105,7 +105,7 @@ const activeGroupId = ref<string | null>(null)
 // Initialize first group as open
 watch(groups, (newGroups) => {
   if (newGroups.length > 0 && !activeGroupId.value) {
-    activeGroupId.value = newGroups[0].id
+    activeGroupId.value = newGroups[0]?.id ?? null
   }
 }, { immediate: true })
 

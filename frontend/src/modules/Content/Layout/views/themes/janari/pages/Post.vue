@@ -84,7 +84,7 @@
           <!-- Main Content -->
           <div class="lg:col-span-9">
             <div class="max-w-none">
-              <ThemeSafeHtml
+              <SafeHtml
                 ref="contentRef"
                 class="prose prose-sm md:prose-lg prose-indigo mx-auto dark:prose-invert"
                 :html="post.body || ''"
@@ -150,7 +150,7 @@
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, onMounted, nextTick, watch } from 'vue';
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue';
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import PluginSlot from '@/shared/components/PluginSlot.vue';
 import BlogSidebar from '../components/blog/BlogSidebar.vue';
 import { useRoute } from 'vue-router';

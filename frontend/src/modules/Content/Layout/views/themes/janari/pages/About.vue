@@ -23,7 +23,7 @@
     <template v-else>
       <div class="flex-1">
         <!-- Page Body Content if available -->
-        <ThemeSafeHtml
+        <SafeHtml
           v-if="cmsBody"
           class="container mx-auto px-4 py-16 Jejakawan-content"
           :html="cmsBody"
@@ -156,7 +156,7 @@ import JanariSplitText from '../components/shared/JanariSplitText.vue'
 import AboutOfferingsSection from '../components/sections/AboutOfferingsSection.vue'
 import { ref, onMounted, nextTick, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue'
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Content/Layout/composables/useTheme'
 import PageDisabled from '../components/shared/PageDisabled.vue'

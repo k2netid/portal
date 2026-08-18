@@ -35,7 +35,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     ]);
 });
 
-// Fallback redirect for users stranded from the previous maintenance strategy
+// Fallback for users stranded from the previous maintenance strategy
 Route::get('/maintenance', function () {
-    return redirect('/maintenance');
+    if (app()->isDownForMaintenance()) {
+        abort(503);
+    }
+
+    return redirect('/');
 });

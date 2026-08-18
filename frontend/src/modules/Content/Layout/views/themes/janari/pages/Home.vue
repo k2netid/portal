@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col">
     <div class="flex-1 flex flex-col">
       <!-- Dynamic Content if exists (e.g. from Jejakawan page editor) -->
-      <ThemeSafeHtml 
+      <SafeHtml 
         v-if="cmsHtml" 
         class="Jejakawan-content"
         :html="cmsHtml"
@@ -78,7 +78,7 @@
 import { PluginSlot } from '@/shared/components'
 import { ref, onMounted, computed, nextTick, onBeforeUnmount, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue'
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import { usePublicPageContent } from '@/modules/Content/Layout/composables/usePublicPageContent'
 import { resolveLocalizedPageHtml } from '@/modules/Content/Layout/utils/resolveLocalizedContent'
 

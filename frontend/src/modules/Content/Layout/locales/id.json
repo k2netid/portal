@@ -2,6 +2,7 @@
   "navigation": {
     "menu": {
       "design": "Desain",
+      "siteEditor": "Editor Situs",
       "menus": "Menu",
       "widgets": "Widget",
       "redirects": "Pengalihan"

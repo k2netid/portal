@@ -34,6 +34,7 @@ frontend/.env.*
 # Dependencies and build artifacts
 node_modules/
 backend/vendor/
+backend/composer
 backend/node_modules/
 frontend/node_modules/
 frontend/dist/

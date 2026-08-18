@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import { visualizer } from 'rollup-plugin-visualizer'
+import sri from 'vite-plugin-sri'
 import { spaFallbackPlugin } from './vite/spaFallback'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -38,9 +39,7 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     spaFallbackPlugin(),
-    // SRI (Subresource Integrity) Recommendation:
-    // To prevent supply-chain attacks, it is highly recommended to install and use 'vite-plugin-sri'.
-    // Once installed, add it here: sri(),
+    sri(),
     visualizer({
       filename: './dist/stats.html',
       open: false,

@@ -28,8 +28,12 @@ export default tseslint.config(
     {
         rules: {
             'vue/multi-word-component-names': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/no-unused-vars': 'off',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-unused-vars': ['warn', {
+                argsIgnorePattern: '^_',
+                varsIgnorePattern: '^_',
+                caughtErrorsIgnorePattern: '^_',
+            }],
             '@typescript-eslint/ban-ts-comment': 'off',
             'vue/no-v-text-v-html-on-component': 'off',
             'vue/max-attributes-per-line': 'off',
@@ -37,7 +41,7 @@ export default tseslint.config(
             'vue/singleline-html-element-content-newline': 'off',
             'vue/html-self-closing': 'off',
             'vue/attributes-order': 'off',
-            'no-unused-vars': 'off',
+            'no-unused-vars': 'off', // handled by @typescript-eslint/no-unused-vars
         },
     },
 );

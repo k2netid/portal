@@ -22,3 +22,4 @@ interface Window {
 }
 
 declare module '@tailwindcss/vite';
+declare module 'vite-plugin-sri';

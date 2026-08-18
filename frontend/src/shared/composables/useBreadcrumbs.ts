@@ -26,7 +26,6 @@ const segmentConfig: Record<string, string> = {
     webhooks: 'infra.webhooks.title',
     plugins: 'infra.plugins.title',
     extensions: 'system.navigation.menu.extensions',
-    platform: 'operational.navigation.menu.platform',
     'oauth-clients': 'system.oauth.title',
     'console-appearance': 'system.navigation.menu.consoleAppearance',
     cck: 'infra.cck.title',

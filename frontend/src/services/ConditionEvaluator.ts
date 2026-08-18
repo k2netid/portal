@@ -157,8 +157,12 @@ export class ConditionEvaluator {
             case 'cookie': {
                 if (!key) return true;
                 const cookies = document.cookie.split(';').reduce((acc: Record<string, string>, c) => {
-                    const [k, v] = c.split('=').map(s => s.trim());
-                    acc[k] = v;
+                    const parts = c.split('=').map(s => s.trim());
+                    const k = parts[0];
+                    const v = parts[1];
+                    if (k && v !== undefined) {
+                        acc[k] = v;
+                    }
                     return acc;
                 }, {});
                 const cookieValue = cookies[key];

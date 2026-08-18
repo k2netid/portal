@@ -2,6 +2,7 @@
   "navigation": {
     "menu": {
       "design": "Design",
+      "siteEditor": "Site Editor",
       "menus": "Menus",
       "widgets": "Widgets",
       "redirects": "Redirects"

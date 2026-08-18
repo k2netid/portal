@@ -49,7 +49,7 @@
 
         <main class="container mx-auto px-6 py-20">
           <!-- Page Body Content if available -->
-          <ThemeSafeHtml
+          <SafeHtml
             v-if="cmsBody"
             class="mb-16 Jejakawan-content max-w-4xl"
             :html="cmsBody"
@@ -560,7 +560,7 @@ import { normalizeLocaleCode } from '@/engine/i18n'
 import { resolveLocalizedPageHtml } from '@/modules/Content/Layout/utils/resolveLocalizedContent'
 import { useHead } from '@unhead/vue'
 import axios from 'axios'
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue'
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Content/Layout/composables/useTheme'
 import PageDisabled from '../components/shared/PageDisabled.vue'

@@ -97,7 +97,7 @@ const hexToHsl = (hex: string): string | null => {
   }
   r /= 255; g /= 255; b /= 255
   const cmin = Math.min(r, g, b), cmax = Math.max(r, g, b), delta = cmax - cmin
-  let h = 0, s = 0, l = 0
+  let h: number, s: number, l: number
   if (delta === 0) h = 0
   else if (cmax === r) h = ((g - b) / delta) % 6
   else if (cmax === g) h = (b - r) / delta + 2
@@ -123,6 +123,7 @@ const injectThemeStyles = () => {
     if (manifest.settings_schema) {
         Object.keys(manifest.settings_schema).forEach(key => {
             const schema = manifest.settings_schema![key]
+            if (!schema) return
             const value = settings[key] !== undefined ? settings[key] : schema.default
             
             if (value === undefined || value === null) return

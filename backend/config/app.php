@@ -67,9 +67,9 @@ return [
     */
     'security_officer_emails' => env('SECURITY_OFFICER_EMAILS', ''),
 
-    'super_admin_email' => env('SUPER_ADMIN_EMAIL', 'super@jejakawan.com'),
+    'super_admin_email' => env('SUPER_ADMIN_EMAIL'),
 
-    'super_admin_password' => env('SUPER_ADMIN_PASSWORD', 'ChangeMeOnFirstLogin!'),
+    'super_admin_password' => env('SUPER_ADMIN_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------

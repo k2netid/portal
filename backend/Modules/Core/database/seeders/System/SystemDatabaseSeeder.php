@@ -15,10 +15,16 @@ class SystemDatabaseSeeder extends Seeder
     {
         $this->call(FoundationSeeder::class);
 
-        $emailRaw = config('app.super_admin_email', 'super@jejakawan.com');
-        $superEmail = is_scalar($emailRaw) ? (string) $emailRaw : 'super@jejakawan.com';
-        $passwordRaw = config('app.super_admin_password', 'ChangeMeOnFirstLogin!');
-        $superPassword = is_scalar($passwordRaw) ? (string) $passwordRaw : 'ChangeMeOnFirstLogin!';
+        $emailRaw = config('app.super_admin_email');
+        $superEmail = is_scalar($emailRaw) && (string) $emailRaw !== '' ? (string) $emailRaw : 'super@jejakawan.com';
+        $passwordRaw = config('app.super_admin_password');
+        if (! is_scalar($passwordRaw) || (string) $passwordRaw === '') {
+            $superPassword = \Illuminate\Support\Str::random(24);
+            $this->command?->warn("⚠ SUPER_ADMIN_PASSWORD not set. Generated random password: {$superPassword}");
+            $this->command?->warn('  Set SUPER_ADMIN_PASSWORD in .env to use a specific password.');
+        } else {
+            $superPassword = (string) $passwordRaw;
+        }
 
         $superAdmin = User::firstOrCreate(
             ['email' => $superEmail],

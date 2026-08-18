@@ -13,7 +13,7 @@
           <h1 class="mt-6 text-3xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
             <JanariSplitText :text="pageTitle" />
           </h1>
-          <ThemeSafeHtml
+          <SafeHtml
             v-if="pageIntro"
             class="mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base prose prose-sm prose-p:my-3 prose-strong:text-foreground prose-a:text-primary"
             :html="pageIntro"
@@ -137,7 +137,7 @@
                   <span>{{ featuredImageCaptionText }}</span>
                 </figcaption>
               </figure>
-              <ThemeSafeHtml
+              <SafeHtml
                 class="janari-page-content prose prose-slate max-w-none prose-p:my-4 prose-p:leading-relaxed prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-ul:my-4 prose-ol:my-4"
                 :html="pageBody"
                 mode="Jejakawan"
@@ -186,7 +186,7 @@ import { PluginSlot } from '@/shared/components'
 import { logger } from '@/shared/utils/logger';
 import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue';
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { useRoute, useRouter } from 'vue-router';
 import JanariSplitText from '../components/shared/JanariSplitText.vue';
 import api from '@/engine/api/client';

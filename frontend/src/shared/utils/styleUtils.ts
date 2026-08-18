@@ -448,7 +448,7 @@ export function getBackgroundStyles(settings: ModuleSettings, device: string = '
                 css.webkitMaskImage = maskUri
 
                 const mSize = getVal<string>(settings, 'backgroundMaskSize', device) || 'fit'
-                let sizeVal = 'contain'
+                let sizeVal: string
                 if (mSize === 'custom') {
                     const mW = getVal<string | number>(settings, 'backgroundMaskWidth', device)
                     const mH = getVal<string | number>(settings, 'backgroundMaskHeight', device)

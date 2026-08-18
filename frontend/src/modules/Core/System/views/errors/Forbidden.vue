@@ -26,7 +26,7 @@
         @click="goMemberLogin"
       >
         <LogIn class="w-4 h-4 mr-2" />
-        {{ t('member.login.submit') }}
+        {{ t('common.errors.403.login') }}
       </button>
 
       <button

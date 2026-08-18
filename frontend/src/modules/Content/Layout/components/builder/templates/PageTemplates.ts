@@ -3,7 +3,7 @@
  * Pre-built page layouts matching the Janari theme
  */
 
-import { heroGradient, featuresGrid, ctaDark, aboutSplit, teamGrid, blogHeader, contactSection } from '@/components/builder/templates/SectionTemplates.js'
+import { heroGradient, featuresGrid, ctaDark, aboutSplit, teamGrid, blogHeader, contactSection } from '@/components/builder/templates/SectionTemplates'
 
 interface TemplateNode {
     id: string;

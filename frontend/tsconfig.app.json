@@ -10,6 +10,15 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@/components/builder/*": [
+        "./src/modules/Content/Layout/components/builder/*"
+      ],
+      "@/components/content-renderer/*": [
+        "./src/modules/Content/Layout/components/content-renderer/*"
+      ],
+      "@/composables/*": [
+        "./src/shared/composables/*"
       ]
     },
     /* Linting */

@@ -1,5 +1,5 @@
 import type { Ref, ComputedRef, Component } from 'vue';
-import type { Category, Tag } from './taxonomy';
+import type { Category, Tag } from '@/modules/Content/Publishing/types/taxonomy';
 export type { Category, Tag };
 import type { Menu } from './menu';
 import type { ThemeData, ThemeSettings } from './theme';
