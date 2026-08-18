@@ -24,11 +24,6 @@
         "quality:backend": "cd backend && ./vendor/bin/pint --test && composer run quality",
         "release": "bash scripts/bundle.sh",
         "install:server": "sudo bash scripts/install.sh",
-        "redeploy": "bash scripts/redeploy-hub.sh",
-        "verify:hosted-pilot": "bash scripts/verify-hosted-pilot-gate.sh staging",
-        "verify:payment-env": "bash scripts/verify-platform-payment-env.sh staging",
-        "merge:staging-payment-env": "bash scripts/merge-staging-payment-env.sh",
-        "verify:hosted-pilot:full": "bash scripts/merge-staging-payment-env.sh && bash scripts/verify-hosted-pilot-gate.sh staging",
         "deploy:assets:sync": "SYNC_ONLY=1 bash scripts/sync-frontend-assets-to-backend.sh"
     },
     "x-agent-guidelines": {
