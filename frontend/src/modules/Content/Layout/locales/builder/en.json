@@ -1,0 +1,809 @@
+{
+  "common": {
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "close": "Close",
+    "search": "Search",
+    "select": "Select",
+    "settings": "Settings",
+    "retry": "Retry",
+    "none": "None",
+    "all": "All",
+    "no_results": "No results found"
+  },
+  "actions": {
+    "add": "Add",
+    "addSection": "Add New Section"
+  },
+  "items": {
+    "delete": "Delete Element",
+    "drag": "Drag to Reorder",
+    "duplicate": "Duplicate Element",
+    "layout": "Change Layout",
+    "more": "More Options",
+    "settings": "Configure Settings"
+  },
+  "messages": {
+    "loading": "Loading builder engine..."
+  },
+  "canvas": {
+    "empty": "Start your page by adding a section.",
+    "gridViewTitle": "Grid View"
+  },
+  "toolbar": {
+    "undo": "Undo",
+    "redo": "Redo",
+    "theme": "Theme Settings",
+    "switchTheme": "Switch Theme",
+    "switchLanguage": "Switch Language",
+    "saveDraft": "Save Draft",
+    "publish": "Publish",
+    "update": "Update",
+    "draft": "Draft",
+    "wireframe": "Wireframe Mode",
+    "gridView": "Grid View",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "preferences": "Preferences",
+    "menu": "Menu",
+    "close": "Close Editor",
+    "zoom": "Zoom",
+    "devices": {
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "mobile": "Mobile",
+      "auto": "Responsive (Auto)"
+    }
+  },
+  "rightPanel": {
+    "settings": "Settings",
+    "searchPlaceholder": "Search settings...",
+    "noSettings": "Select an element on canvas to configure settings",
+    "back": "Back",
+    "collapse": "Collapse Panel",
+    "responsiveMode": "Responsive Mode"
+  },
+  "sidebars": {
+    "theme": "Theme & Design",
+    "layers": "Layers",
+    "pages": "Pages",
+    "templates": "Templates",
+    "presets": "Design Presets",
+    "globalVariables": "Global Variables",
+    "preferences": "Preferences",
+    "history": "History",
+    "code": "Code Editor"
+  },
+  "tabs": {
+    "content": "Content",
+    "design": "Design",
+    "advanced": "Advanced"
+  },
+  "categories": {
+    "all": "All Modules",
+    "basic": "Basic",
+    "content": "Content",
+    "media": "Media",
+    "dynamic": "Dynamic & Posts",
+    "forms": "Forms & Inputs",
+    "fullwidth": "Full Width",
+    "interactive": "Interactive",
+    "structure": "Structure",
+    "suggested": "Suggested"
+  },
+  "breakpoints": {
+    "desktop": "Desktop",
+    "tablet": "Tablet",
+    "mobile": "Mobile",
+    "hover": "Hover State"
+  },
+  "contextMenu": {
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "renameLabel": "Rename Element",
+    "reset": "Reset Styles"
+  },
+  "dynamic": {
+    "loading": "Loading data...",
+    "noResults": "No matching records found"
+  },
+  "advanced": {
+    "attributes": {
+      "add": "Add Attribute",
+      "custom": "Custom Data Attribute"
+    },
+    "conditions": {
+      "add": "Add Condition",
+      "search": "Search condition rules..."
+    },
+    "css": {
+      "info": "Custom CSS rules applied to this element",
+      "elementsInfo": "Target specific sub-elements with custom CSS"
+    },
+    "interactions": {
+      "add": "Add Interaction"
+    },
+    "scroll": {
+      "configure": "Configure scroll animation for {type}",
+      "level": "Intensity",
+      "tabDisabled": "Scroll effects disabled for {type}"
+    }
+  },
+  "settings": {
+    "groups": {
+      "animation": {
+        "label": "Animation",
+        "empty": "Select an animation style to see options."
+      },
+      "filters": {
+        "label": "Filters"
+      },
+      "transform": {
+        "label": "Transform",
+        "tabs": {
+          "rotate": "Rotate",
+          "scale": "Scale",
+          "skew": "Skew",
+          "translate": "Translate"
+        }
+      }
+    },
+    "fields": {
+      "animation_effect": "Animation Style",
+      "animation_duration": "Duration (ms)",
+      "animation_delay": "Delay (ms)",
+      "animation_repeat": "Repeat Count",
+      "animation_curve": "Animation Curve",
+      "transition_curve": "Transition Timing",
+      "blend_mode": "Blend Mode",
+      "blur": "Blur",
+      "brightness": "Brightness",
+      "contrast": "Contrast",
+      "grayscale": "Grayscale",
+      "hue_rotate": "Hue Rotate",
+      "invert": "Invert",
+      "opacity": "Opacity",
+      "origin": "Transform Origin",
+      "rotateX": "Rotate X",
+      "rotateY": "Rotate Y",
+      "rotateZ": "Rotate Z",
+      "saturate": "Saturate",
+      "scale": "Scale",
+      "sepia": "Sepia",
+      "skewX": "Skew X",
+      "skewY": "Skew Y",
+      "translateX": "Translate X",
+      "translateY": "Translate Y"
+    },
+    "options": {
+      "animation_repeat": {
+        "1": "Once (Default)",
+        "infinite": "Loop Infinitely"
+      },
+      "blend_mode": {
+        "normal": "Normal",
+        "multiply": "Multiply",
+        "screen": "Screen",
+        "overlay": "Overlay",
+        "darken": "Darken",
+        "lighten": "Lighten",
+        "color": "Color",
+        "luminosity": "Luminosity",
+        "difference": "Difference",
+        "exclusion": "Exclusion",
+        "hue": "Hue",
+        "saturation": "Saturation",
+        "color-burn": "Color Burn",
+        "color-dodge": "Color Dodge",
+        "hard-light": "Hard Light",
+        "soft-light": "Soft Light"
+      }
+    },
+    "meta_query": {
+      "add": "Add Meta Query",
+      "key": "Key",
+      "key_placeholder": "meta_key",
+      "compare": "Compare",
+      "type": "Type",
+      "value": "Value",
+      "value_placeholder": "meta_value"
+    }
+  },
+  "fields": {
+    "inherited": "Inherited from theme",
+    "actions": {
+      "remove": "Remove",
+      "select": "Select Asset",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "reset": "Reset",
+      "copy": "Copy",
+      "paste": "Paste",
+      "apply": "Apply",
+      "cancel": "Cancel",
+      "dynamicData": "Dynamic Data",
+      "findReplace": "Find & Replace",
+      "info": "Help Info",
+      "manageGlobal": "Manage Global Variables",
+      "responsive": "Responsive Overrides"
+    },
+    "children": {
+      "applyTemplate": "Apply Children Template"
+    },
+    "common": {
+      "color": "Color",
+      "height": "Height",
+      "heightPlaceholder": "auto or px/%/vh",
+      "position": "Position",
+      "width": "Width",
+      "widthPlaceholder": "100% or px/%/vw"
+    },
+    "layoutTypes": {
+      "flex": "Flexbox",
+      "grid": "CSS Grid"
+    },
+    "types": {
+      "element": "Element",
+      "item": "Item",
+      "row": "Row"
+    },
+    "upload": {
+      "mode": {
+        "manual": "Upload / URL",
+        "var": "Theme Variable"
+      },
+      "placeholder": "Enter media URL or select file",
+      "select": "Select from Media Library",
+      "dragPrompt": "Drag image here or click to upload"
+    },
+    "color": {
+      "placeholder": "Search colors & variables...",
+      "noMatches": "No matching colors found",
+      "solid": "Solid Color",
+      "gradient": "Gradient",
+      "variables": "Theme Variables",
+      "saved": "Saved Palette",
+      "hex": "Hex Code",
+      "inherited": "Inherited",
+      "openPicker": "Open Color Picker",
+      "var": "CSS Variable"
+    },
+    "repeater": {
+      "empty": "No items yet. Click Add Item to begin.",
+      "add": "Add Item",
+      "item": "Item #{index}"
+    },
+    "icon": {
+      "search": "Search icons...",
+      "filter": "Filter Category",
+      "noResults": "No matching icons found",
+      "pickIcon": "Choose Icon",
+      "searchLarge": "Search in library of 1000+ icons..."
+    },
+    "border": {
+      "radius": {
+        "label": "Border Radius"
+      },
+      "styles": {
+        "label": "Border Style & Width"
+      },
+      "width": "Border Width",
+      "color": "Border Color",
+      "style": "Style",
+      "styleOptions": {
+        "solid": "Solid",
+        "dashed": "Dashed",
+        "dotted": "Dotted",
+        "double": "Double",
+        "none": "None"
+      }
+    },
+    "spacing": {
+      "link": "Link all sides together",
+      "unlink": "Unlink sides for custom spacing",
+      "margin": "Margin",
+      "padding": "Padding",
+      "top": "Top",
+      "right": "Right",
+      "bottom": "Bottom",
+      "left": "Left"
+    },
+    "typography": {
+      "fontSize": "Font Size",
+      "fontWeight": "Font Weight",
+      "lineHeight": "Line Height",
+      "letterSpacing": "Letter Spacing",
+      "textAlign": "Text Alignment",
+      "textTransform": "Text Transform",
+      "fontFamily": "Font Family"
+    },
+    "shadow": {
+      "controls": {
+        "blur": "Blur Radius",
+        "color": "Shadow Color",
+        "horizontal": "Horizontal Offset",
+        "vertical": "Vertical Offset",
+        "inset": "Inset (Inner Shadow)",
+        "spread": "Spread Radius"
+      },
+      "presets": {
+        "label": "Shadow Preset",
+        "none": "None",
+        "sm": "Small",
+        "lg": "Large",
+        "xl": "Extra Large",
+        "inner": "Inner Shadow"
+      }
+    },
+    "background": {
+      "proportional": "Keep Proportions",
+      "tabs": {
+        "color": "Color",
+        "gradient": "Gradient",
+        "image": "Image",
+        "pattern": "Pattern",
+        "mask": "Mask",
+        "video": "Video"
+      },
+      "image": {
+        "repeat": {
+          "options": {
+            "space": "Space Evenly",
+            "noRepeat": "No Repeat",
+            "repeat": "Repeat (Tile)",
+            "repeatX": "Repeat Horizontally",
+            "repeatY": "Repeat Vertically",
+            "round": "Round / Space"
+          },
+          "label": "Image Repeat"
+        },
+        "size": {
+          "label": "Image Sizing",
+          "options": {
+            "actual": "Actual Size",
+            "auto": "Auto",
+            "cover": "Cover",
+            "custom": "Custom",
+            "fit": "Fit",
+            "stretch": "Stretch"
+          }
+        },
+        "add": "Add Background Image",
+        "attachment": {
+          "label": "Background Attachment",
+          "options": {
+            "fixed": "Fixed (Parallax)",
+            "scroll": "Scroll with Page"
+          }
+        },
+        "blend": "Image Blend Mode",
+        "label": "Background Image",
+        "parallax": "Enable Parallax Effect",
+        "parallaxMethod": {
+          "label": "Parallax Method",
+          "options": {
+            "css": "CSS Fixed",
+            "true": "Smooth JavaScript"
+          }
+        },
+        "position": {
+          "label": "Image Position",
+          "options": {
+            "bottomCenter": "Bottom Center",
+            "bottomLeft": "Bottom Left",
+            "bottomRight": "Bottom Right",
+            "center": "Center",
+            "centerLeft": "Center Left",
+            "centerRight": "Center Right",
+            "topCenter": "Top Center",
+            "topLeft": "Top Left",
+            "topRight": "Top Right"
+          }
+        }
+      },
+      "mask": {
+        "add": "Add Background Mask",
+        "aspectRatio": {
+          "label": "Mask Aspect Ratio",
+          "options": {
+            "landscape": "Landscape",
+            "portrait": "Portrait",
+            "square": "Square"
+          }
+        },
+        "blend_mode": {
+          "label": "Mask Blend Mode"
+        },
+        "color": "Mask Color",
+        "flipH": "Flip Horizontally",
+        "flipV": "Flip Vertically",
+        "invert": "Invert Mask",
+        "position": {
+          "label": "Mask Position"
+        },
+        "rotate": "Rotate Mask",
+        "size": {
+          "height": "Mask Height",
+          "label": "Mask Size",
+          "width": "Mask Width"
+        },
+        "transform": "Transform Mask"
+      },
+      "pattern": {
+        "add": "Add Background Pattern",
+        "blendMode": {
+          "label": "Pattern Blend Mode"
+        },
+        "color": "Pattern Color",
+        "flipH": "Flip Horizontally",
+        "flipV": "Flip Vertically",
+        "horizontalOffset": "Horizontal Offset",
+        "invert": "Invert Pattern",
+        "repeat": {
+          "label": "Pattern Repeat"
+        },
+        "repeatOrigin": {
+          "label": "Repeat Origin",
+          "options": {
+            "bottomCenter": "Bottom Center",
+            "bottomLeft": "Bottom Left",
+            "bottomRight": "Bottom Right",
+            "center": "Center",
+            "centerLeft": "Center Left",
+            "centerRight": "Center Right",
+            "topCenter": "Top Center",
+            "topLeft": "Top Left",
+            "topRight": "Top Right"
+          }
+        },
+        "rotate": "Rotate Pattern",
+        "size": {
+          "height": "Pattern Height",
+          "label": "Pattern Size",
+          "width": "Pattern Width"
+        },
+        "transform": "Transform Pattern",
+        "verticalOffset": "Vertical Offset"
+      },
+      "video": {
+        "add": "Add Background Video",
+        "height": "Video Height",
+        "label": "Background Video Source",
+        "loop": "Loop Video",
+        "mp4": "MP4 Video URL",
+        "mute": "Mute Audio",
+        "overlay": "Video Overlay Color",
+        "pauseNotInView": "Pause When Off-screen",
+        "pauseOnPlay": "Pause on Play",
+        "webm": "WebM Video URL",
+        "width": "Video Width"
+      },
+      "color": {
+        "add": "Add Background Color",
+        "inherited": "Inherited Color",
+        "label": "Background Color"
+      },
+      "gradient": {
+        "add": "Add Background Gradient",
+        "direction": "Gradient Direction",
+        "directionInfo": "Angle in degrees or direction keyword",
+        "label": "Background Gradient",
+        "length": "Gradient Length",
+        "lengthInfo": "Spread length of gradient",
+        "placeAbove": "Place Gradient Above Background Image",
+        "repeat": "Repeat Gradient",
+        "repeatInfo": "Repeat gradient pattern infinitely",
+        "selectedStop": "Selected Color Stop",
+        "type": {
+          "label": "Gradient Type"
+        },
+        "typeInfo": "Linear or radial gradient mode"
+      }
+    },
+    "contextMenu": {
+      "canvasSettings": "Canvas Settings",
+      "moduleSettings": "Module Settings",
+      "sectionSettings": "Section Settings",
+      "rowSettings": "Row Settings",
+      "addElement": "Add Element",
+      "copyStyles": "Copy Styles",
+      "deleteCanvas": "Delete from Canvas",
+      "disable": "Disable Element",
+      "duplicateCanvas": "Duplicate to Canvas",
+      "editCanvas": "Edit in Canvas",
+      "enable": "Enable Element",
+      "exportCanvas": "Export Element",
+      "goToLayer": "Go to Layer",
+      "goToParent": "Go to Parent Element",
+      "makeMainCanvas": "Set as Main Canvas",
+      "paste": "Paste Element",
+      "pasteStyles": "Paste Styles",
+      "redo": "Redo Action",
+      "renameLabel": "Rename Element",
+      "resetStyles": "Reset Styles",
+      "saveToLibrary": "Save to Library",
+      "undo": "Undo Action"
+    }
+  },
+  "insertModal": {
+    "title": "Insert Module",
+    "searchPlaceholder": "Search modules (e.g. heading, button)...",
+    "libraryEmpty": "No saved library modules found."
+  },
+  "insertRowModal": {
+    "title": "Insert Row",
+    "libraryPlaceholder": "Search row layouts..."
+  },
+  "insertSectionModal": {
+    "title": "Insert Section"
+  },
+  "modals": {
+    "confirm": {
+      "deleteModule": "Delete Module",
+      "deleteModuleDesc": "Are you sure you want to remove this module from the page? This action cannot be undone.",
+      "deleteSection": "Delete Section",
+      "deleteSectionDesc": "Are you sure you want to delete this section and all contained rows and modules?",
+      "deleteRow": "Delete Row",
+      "deleteRowDesc": "Are you sure you want to delete this row and all its columns?",
+      "deletePage": "Delete Page",
+      "deletePageDesc": "Are you sure you want to permanently delete this page?",
+      "deletePreset": "Delete Preset",
+      "deletePresetDesc": "Are you sure you want to remove this design preset?",
+      "discard": "Discard",
+      "discardChanges": "Discard Unsaved Changes",
+      "discardChangesDesc": "You have unsaved changes. Discarding will revert to the last saved revision.",
+      "resetLayout": "Reset Layout",
+      "resetLayoutDesc": "Resetting will restore this section to its default state.",
+      "confirm": "Confirm Action",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "insertModule": {
+      "title": "Insert Module",
+      "searchPlaceholder": "Search modules (e.g. heading, button, form)...",
+      "noResults": "No modules found matching your search term."
+    },
+    "insertSection": {
+      "title": "Insert Section",
+      "tabs": {
+        "regular": "Regular Section",
+        "specialty": "Specialty Layout",
+        "fullwidth": "Fullwidth Section",
+        "templates": "Pre-built Templates"
+      },
+      "templatesCount": "{count} templates"
+    },
+    "insertRow": {
+      "title": "Insert Row",
+      "selectLayout": "Select Column Layout"
+    },
+    "breakpoints": {
+      "title": "Custom Breakpoints & Viewports",
+      "base": "Base (100%)",
+      "save": "Save Viewport Settings",
+      "cancel": "Cancel"
+    },
+    "colorPicker": {
+      "title": "Color & Palette Picker",
+      "custom": "Custom Color",
+      "customColor": "Custom Color",
+      "opacity": "Opacity",
+      "addGlobal": "Add to Global Colors",
+      "filters": "Filter Palettes",
+      "globalColors": "Global Theme Colors",
+      "material": "Material Colors",
+      "hsv": {
+        "h": "Hue (H)",
+        "s": "Saturation (S)",
+        "v": "Value (V)"
+      }
+    },
+    "responsiveField": {
+      "title": "Responsive Overrides for {field}",
+      "overrideHint": "Set custom values per device breakpoint. Values inherit from desktop by default."
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "save": "Save Changes",
+      "undo": "Undo Action",
+      "redo": "Redo Action",
+      "duplicate": "Duplicate Selected",
+      "delete": "Delete Selected",
+      "preview": "Toggle Preview Mode"
+    },
+    "structureTemplates": {
+      "title": "Structure & Section Templates",
+      "noResults": "No structure templates found."
+    },
+    "pageTemplate": {
+      "title": "Select Page Template",
+      "loading": "Loading template preview..."
+    }
+  },
+  "structureTemplateModal": {
+    "title": "Structure Templates",
+    "noResults": "No templates found in this category."
+  },
+  "pageTemplateModal": {
+    "title": "Choose Page Template",
+    "warning": "Applying a full template will replace existing canvas contents."
+  },
+  "presets": {
+    "title": "Design Presets",
+    "addNew": "Save As New Preset",
+    "defaultPreset": "Default Preset",
+    "newFromCurrent": "Create preset from current styles",
+    "basedOn": "Based on {preset}"
+  },
+  "panels": {
+    "comingSoon": "Feature coming soon",
+    "fallbackTitle": "Panel Details",
+    "layers": {
+      "title": "Layers Tree",
+      "empty": "No elements placed on the canvas yet",
+      "search": "Filter layers..."
+    },
+    "pages": {
+      "title": "Site Pages",
+      "addNew": "New Page",
+      "empty": "No pages created yet",
+      "loading": "Loading site pages...",
+      "searchPlaceholder": "Search pages...",
+      "promptTitle": "Enter Title for New Page:",
+      "actions": {
+        "edit": "Edit Page",
+        "delete": "Delete Page"
+      }
+    },
+    "layouts": {
+      "title": "Layout Blocks",
+      "emptyTitle": "No Layout Blocks Found",
+      "emptyDesc": "Save custom sections or rows as reusable layout blocks.",
+      "search": "Search layouts..."
+    },
+    "templates": {
+      "title": "Page & Theme Templates",
+      "addNew": "Create Template",
+      "loading": "Loading templates...",
+      "searchPlaceholder": "Search templates...",
+      "category": "Template Category",
+      "contentType": "Content Type",
+      "applyTo": "Assign Template To:",
+      "assignmentTitle": "Template Assignment Rules",
+      "contentTypeOptions": {
+        "post": "Blog Posts",
+        "page": "Standard Pages",
+        "custom": "Custom Types"
+      },
+      "applyOptions": {
+        "all": "All Content in this Type",
+        "front_page": "Front Page (Home)",
+        "specific_category": "Specific Category",
+        "specific_type": "Specific Content Type"
+      }
+    },
+    "presets": {
+      "title": "Saved Presets",
+      "empty": "No style presets saved for this module.",
+      "actions": {
+        "apply": "Apply Preset",
+        "delete": "Delete Preset"
+      },
+      "saveModal": {
+        "title": "Save Design Preset",
+        "description": "Save current typography, colors, and layout as a reusable preset.",
+        "nameLabel": "Preset Name",
+        "placeholder": "e.g. Hero Primary Card",
+        "saveBtn": "Save Preset"
+      }
+    },
+    "theme": {
+      "title": "Theme Customizer",
+      "settings": "Theme Variables & Colors",
+      "loading": "Loading theme manifest...",
+      "noActive": "No theme currently activated",
+      "selectHint": "Choose an active theme to customize global typography, colors, and design tokens.",
+      "searchPlaceholder": "Search theme options...",
+      "activate": "Activate Theme"
+    },
+    "globalVariables": {
+      "title": "Global Variables",
+      "empty": "No global variables defined",
+      "add": "Add Variable",
+      "name": "Variable Name",
+      "value": "Value",
+      "type": "Variable Type",
+      "actions": {
+        "addColor": "Add Color",
+        "addFont": "Add Font",
+        "addImage": "Add Image",
+        "addLink": "Add URL",
+        "addNumber": "Add Number",
+        "addString": "Add Text",
+        "cancel": "Cancel",
+        "save": "Save Variables",
+        "select": "Select Asset",
+        "selectImage": "Choose Media Asset"
+      },
+      "messages": {
+        "saveError": "Failed to save global variables.",
+        "saveSuccess": "Global variables updated successfully."
+      },
+      "placeholders": {
+        "name": "variable_name",
+        "none": "None configured"
+      },
+      "table": {
+        "color": "Color Swatch",
+        "image": "Media Preview",
+        "name": "Token Name",
+        "string": "Value String",
+        "url": "Link Destination",
+        "value": "Value"
+      }
+    },
+    "preferences": {
+      "title": "Builder Preferences",
+      "editor": "Editor Behavior",
+      "interface": "Interface & Layout",
+      "autoSave": "Auto Save Changes",
+      "showGrid": "Show Layout Grid Lines",
+      "snapToObjects": "Snap to Object Edges",
+      "darkMode": "Dark Mode Canvas Preview",
+      "system": "System Info",
+      "version": "Builder Engine Version",
+      "build": "Build Timestamp"
+    },
+    "portability": {
+      "tabs": {
+        "export": "Export JSON",
+        "import": "Import JSON"
+      },
+      "export": {
+        "file": "Download Template File",
+        "copy": "Copy JSON to Clipboard",
+        "helper": "Export your current layout tree to share across sites or backups."
+      },
+      "import": {
+        "placeholder": "Paste exported JSON layout tree here...",
+        "button": "Import & Replace Canvas",
+        "helper": "Importing will replace the canvas with the imported structure.",
+        "invalid": "Invalid JSON structure. Please check the pasted content.",
+        "success": "Layout successfully imported!"
+      }
+    },
+    "pageSettings": {
+      "status": {
+        "pending": "Pending Review"
+      },
+      "placeholders": {
+        "selectImage": "Choose featured image..."
+      }
+    },
+    "history": {
+      "change": "Changed {property}",
+      "current": "Current Working State",
+      "initial": "Initial Page Load",
+      "sessionStart": "Session Started"
+    },
+    "help": {
+      "shortcuts": "Shortcuts",
+      "footer": {
+        "docs": "Documentation",
+        "support": "Contact Support"
+      },
+      "labels": {
+        "copy": "Copy",
+        "delete": "Delete",
+        "duplicate": "Duplicate",
+        "paste": "Paste",
+        "redo": "Redo",
+        "save": "Save",
+        "undo": "Undo"
+      }
+    }
+  }
+}

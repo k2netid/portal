@@ -16,7 +16,7 @@ const srcRoot = join(root, 'src');
 const fullScan = process.argv.includes('--full');
 
 const LOCALE_PREFIXES =
-    'library|publishing|forms|media|layout|theme|newsletter|search|ai|system|infra|security|operational|member|sharedConsole|common|crm';
+    'library|publishing|forms|media|layout|theme|newsletter|search|ai|system|infra|security|operational|member|sharedConsole|common|crm|builder';
 
 const KEY_IN_STRING = new RegExp(
     `((?:${LOCALE_PREFIXES})\\.(?:[a-zA-Z0-9_]+|\\.[a-zA-Z0-9_]+)+)`,
@@ -155,6 +155,15 @@ function loadMergedLocaleKeys(lang) {
 
     for (const { localesPath, slug } of collectThemeLocaleDirs(modulesRoot)) {
         for (const k of loadJsonKeys(join(localesPath, `${lang}.json`), `theme.${slug}`)) keys.add(k);
+    }
+
+    const builderLocaleFile = join(modulesRoot, 'Content/Layout/locales/builder', `${lang}.json`);
+    try {
+        if (statSync(builderLocaleFile).isFile()) {
+            for (const k of loadJsonKeys(builderLocaleFile, 'builder')) keys.add(k);
+        }
+    } catch {
+        /* no builder locale file */
     }
 
     collectModuleLocaleDirs(modulesRoot).forEach((localesDir) => {
