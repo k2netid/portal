@@ -199,6 +199,7 @@ import ContextMenu from './ui/ContextMenu.vue'
 import { useBuilder } from './core'
 import ModuleRegistry from './core/ModuleRegistry'
 import { useDarkMode } from '@/shared/composables/useDarkMode'
+import { useCmsStore } from '@/stores/cms'
 const { isDarkMode } = useDarkMode()
 import { throttle, debounce } from '@/shared/utils/performance'
 import type { BlockInstance, BuilderInstance, Canvas as ICanvas, BuilderPreset } from '@/shared/types/builder'

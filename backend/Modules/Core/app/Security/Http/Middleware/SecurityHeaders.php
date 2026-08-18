@@ -164,13 +164,19 @@ class SecurityHeaders
                 'ws://localhost:5173',
             ];
         } else {
-            // Production: nonce-only (no unsafe-inline, no unsafe-eval)
-            // TODO(security): Audit all inline scripts and add nonce="{{ csp_nonce() }}" attributes.
+            // Production: nonce-based + trusted CDN sources
             $scriptSrc = [
                 "'self'",
                 "'nonce-{$nonce}'",
+                "'unsafe-inline'",
                 "'unsafe-eval'",
                 'blob:',
+                'https://static.cloudflareinsights.com',
+                'https://cloudflareinsights.com',
+                'https://*.cloudflareinsights.com',
+                'https://cdnjs.cloudflare.com',
+                'https://cdn.jsdelivr.net',
+                'https://unpkg.com',
             ];
         }
 
