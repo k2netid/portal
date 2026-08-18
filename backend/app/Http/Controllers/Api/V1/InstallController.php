@@ -213,7 +213,7 @@ class InstallController extends Controller
     {
         $extensions = [
             'bcmath', 'ctype', 'curl', 'dom', 'fileinfo', 'gd',
-            'intl', 'json', 'mbstring', 'openssl', 'pdo_pgsql',
+            'intl', 'json', 'mbstring', 'openssl', 'pdo',
             'tokenizer', 'xml', 'zip',
         ];
 
@@ -222,7 +222,7 @@ class InstallController extends Controller
             'php_supported' => version_compare(PHP_VERSION, '8.2.0', '>='),
             'writable_env' => is_writable(base_path('.env')) || is_writable(base_path()),
             'writable_storage' => is_writable(storage_path()) && is_writable(base_path('bootstrap/cache')),
-            'pdo_enabled' => extension_loaded('pdo_pgsql'),
+            'pdo_enabled' => extension_loaded('pdo') && (extension_loaded('pdo_mysql') || extension_loaded('pdo_pgsql') || extension_loaded('pdo_sqlite')),
         ];
 
         foreach ($extensions as $ext) {
