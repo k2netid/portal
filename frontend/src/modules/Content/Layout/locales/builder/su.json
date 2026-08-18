@@ -66,15 +66,20 @@
     "responsiveMode": "Modeu Résponsif"
   },
   "sidebars": {
-    "theme": "Téma & Desain",
-    "layers": "Lapisan (Layers)",
+    "theme": "Téma",
+    "layers": "Lapisan",
     "pages": "Kaca",
     "templates": "Citakan",
-    "presets": "Prasét Desain",
+    "presets": "Prasét",
     "globalVariables": "Variabel Global",
     "preferences": "Pangresep",
-    "history": "Sajarah Édisi",
-    "code": "Éditor Kode"
+    "history": "Sajarah",
+    "code": "Éditor Kode",
+    "settings": "Setelan",
+    "layouts": "Tata Letak",
+    "global_variables": "Variabel Global",
+    "portability": "Impor / Ékspor",
+    "help": "Pitulung"
   },
   "tabs": {
     "content": "Eusi Kontén",
@@ -94,9 +99,9 @@
     "suggested": "Disarankeun"
   },
   "breakpoints": {
-    "desktop": "Desktop",
+    "desktop": "Kompouter (Desktop)",
     "tablet": "Tablét",
-    "mobile": "Hapé",
+    "mobile": "Hapé (Mobile)",
     "hover": "Kaayaan Hover"
   },
   "contextMenu": {
@@ -107,7 +112,9 @@
   },
   "dynamic": {
     "loading": "Nuju ngamuat data...",
-    "noResults": "Teu aya data anu cocog"
+    "noResults": "Teu aya data anu cocog",
+    "title": "Sumber Data Dinamis",
+    "search": "Milari widang dinamis..."
   },
   "advanced": {
     "attributes": {
@@ -228,10 +235,15 @@
       "findReplace": "Milari & Gentos",
       "info": "Inpormasi Pitulung",
       "manageGlobal": "Atur Variabel Global",
-      "responsive": "Pangaturan Résponsif"
+      "responsive": "Pangaturan Résponsif",
+      "copyAttributes": "Salin Atribut",
+      "extendAttributes": "Legaan Atribut",
+      "resetAttributes": "Setél Ulang Atribut"
     },
     "children": {
-      "applyTemplate": "Larapkeun Citakan Élémén Anak"
+      "applyTemplate": "Larapkeun Citakan Élémén Anak",
+      "empty": "Teu acan aya élémén anak.",
+      "add": "Tambih Élémén Anak"
     },
     "common": {
       "color": "Kelir",
@@ -309,7 +321,13 @@
       "top": "Luhur",
       "right": "Katuhu",
       "bottom": "Handap",
-      "left": "Kénca"
+      "left": "Kénca",
+      "sides": {
+        "top": "Luhur",
+        "bottom": "Handap",
+        "left": "Kénca",
+        "right": "Katuhu"
+      }
     },
     "typography": {
       "fontSize": "Ukuran Aksara",
@@ -466,7 +484,15 @@
           "width": "Lebar Pola"
         },
         "transform": "Transformasi Pola",
-        "verticalOffset": "Offset Vertikal"
+        "verticalOffset": "Offset Vertikal",
+        "options": {
+          "polkaDots": "Titik Polkadot",
+          "grid": "Garis Kisi",
+          "diagonalStripes": "Garis Diagonal",
+          "chevrons": "Pola Chevron",
+          "waves": "Ombak",
+          "triangles": "Segitilu"
+        }
       },
       "video": {
         "add": "Tambih Video Latar",
@@ -510,10 +536,10 @@
       "rowSettings": "Setelan Baris",
       "addElement": "Tambih Élémén",
       "copyStyles": "Salin Gaya",
-      "deleteCanvas": "Hapus tina Kanvas",
+      "deleteCanvas": "Hapus Kanvas",
       "disable": "Pareuman Élémén",
-      "duplicateCanvas": "Duplikat ka Kanvas",
-      "editCanvas": "Ropéa dina Kanvas",
+      "duplicateCanvas": "Duplikat Kanvas",
+      "editCanvas": "Ropéa Kanvas",
       "enable": "Hurungkeun Élémén",
       "exportCanvas": "Ékspor Élémén",
       "goToLayer": "Buka Lapisan Patali",
@@ -525,20 +551,39 @@
       "renameLabel": "Gentos Nami Élémén",
       "resetStyles": "Setél Ulang Gaya",
       "saveToLibrary": "Simpen ka Perpustakaan",
-      "undo": "Bolaykeun Lampah"
+      "undo": "Bolaykeun Lampah",
+      "duplicate": "Duplikat {type}",
+      "delete": "Hapus {type}",
+      "copy": "Salin {type}",
+      "cut": "Teukteuk {type}"
     }
   },
   "insertModal": {
     "title": "Selapkeun Modul",
     "searchPlaceholder": "Milari modul (contona: judul, tombol)...",
-    "libraryEmpty": "Teu aya modul perpustakaan disimpen."
+    "libraryEmpty": "Teu aya modul perpustakaan disimpen.",
+    "tabs": {
+      "modules": "Modul",
+      "saved": "Tata Letak Disimpen",
+      "global": "Élémén Global"
+    },
+    "noResults": "Modul atanapi citakan teu kapendak.",
+    "layoutGroups": {
+      "columns": "Tata Letak Kolom"
+    }
   },
   "insertRowModal": {
     "title": "Selapkeun Baris",
     "libraryPlaceholder": "Milari tata letak baris..."
   },
   "insertSectionModal": {
-    "title": "Selapkeun Séksi"
+    "title": "Selapkeun Séksi",
+    "tabs": {
+      "regular": "Séksi Biasa",
+      "specialty": "Séksi Husus",
+      "fullwidth": "Séksi Lega Pinuh",
+      "templates": "Citakan Jadi"
+    }
   },
   "modals": {
     "confirm": {
@@ -621,6 +666,9 @@
     "pageTemplate": {
       "title": "Pilih Citakan Kaca",
       "loading": "Nuju ngamuat sawangan citakan..."
+    },
+    "responsive": {
+      "title": "Pangaturan Résponsif"
     }
   },
   "structureTemplateModal": {
@@ -644,7 +692,9 @@
     "layers": {
       "title": "Tangkal Lapisan (Layers Tree)",
       "empty": "Teu acan aya élémén dina kanvas",
-      "search": "Saring lapisan..."
+      "search": "Saring lapisan...",
+      "searchPlaceholder": "Milari lapisan...",
+      "closeAll": "Tutup Sadaya"
     },
     "pages": {
       "title": "Kaca Loka",
@@ -726,15 +776,19 @@
         "cancel": "Batal",
         "save": "Simpen Variabel",
         "select": "Pilih Asét",
-        "selectImage": "Pilih Berkas Média"
+        "selectImage": "Pilih Berkas Média",
+        "addGeneric": "Tambih Variabel Énggal"
       },
       "messages": {
         "saveError": "Gagal nyimpen variabel global.",
-        "saveSuccess": "Variabel global parantos hasil dianyarkeun."
+        "saveSuccess": "Variabel global parantos hasil dianyarkeun.",
+        "fillName": "Mangga lebetkeun nami variabel anu sah.",
+        "invalidHex": "Kode kelir hex teu sah."
       },
       "placeholders": {
         "name": "nami_variabel",
-        "none": "Teu acan dikonfigurasi"
+        "none": "Teu acan dikonfigurasi",
+        "empty": "Teu acan aya variabel global dina golongan ieu."
       },
       "table": {
         "color": "Kelir",
@@ -743,7 +797,13 @@
         "string": "Nilai Téks",
         "url": "Tujuan Tumbu",
         "value": "Nilai"
-      }
+      },
+      "numbers": "Angka & Satuan",
+      "text": "Téks & Kalimah",
+      "images": "Gambar & Média",
+      "links": "Tumbu & URL",
+      "colors": "Kelir & Palét",
+      "fonts": "Font & Tipografi"
     },
     "preferences": {
       "title": "Pangresep Builder",
@@ -777,17 +837,54 @@
     },
     "pageSettings": {
       "status": {
-        "pending": "Nuju Ditaliti"
+        "draft": "Rarancang",
+        "published": "Dipedalkeun",
+        "pending": "Nuju Ditaliti",
+        "archived": "Diarsipkeun"
       },
       "placeholders": {
         "selectImage": "Pilih gambar utama..."
-      }
+      },
+      "publishing": "Publikasi",
+      "publishDate": "Kaping Publikasi",
+      "slug": "Slug URL",
+      "slugPlaceholder": "dijieun-otomatis-tina-judul",
+      "type": "Jinis Kontén",
+      "featured": "Kontén Utama",
+      "featuredDesc": "Pangluhurkeun kontén ieu",
+      "menus": "Menu",
+      "addToMenu": "Tambihkeun ka Menu",
+      "addToMenuDesc": "Tambihkeun kaca ieu kana struktur menu",
+      "selectMenu": "Pilih Menu",
+      "parentItem": "Item Indung",
+      "rootItem": "Pangluhurna (Tanpa Indung)",
+      "menuLabel": "Labél Menu",
+      "menuLabelPlaceholder": "Labél menu...",
+      "taxonomy": "Taksonomi & Golongan",
+      "category": "Golongan",
+      "selectCategory": "Pilih Golongan",
+      "tags": "Tag",
+      "addTags": "Milari atanapi tambih tag...",
+      "featuredImage": "Gambar Utama",
+      "removeImage": "Hapus Gambar",
+      "excerpt": "Ringkesan",
+      "excerptPlaceholder": "Ringkesan singget kontén...",
+      "discussion": "Sawala & Koméntar",
+      "allowComments": "Widian Koméntar",
+      "allowCommentsDesc": "Hurungkeun kolom koméntar dina kaca ieu",
+      "metaTitle": "Judul Méta (SEO)",
+      "metaDescription": "Pedaran Méta (SEO)",
+      "metaKeywords": "Kecap Konci Méta",
+      "ogImage": "Gambar Open Graph (Média Sosial)",
+      "selectOgImage": "Pilih Gambar OG",
+      "statusLabel": "Status"
     },
     "history": {
       "change": "Ngarobih {property}",
       "current": "Kaayaan Damel Ayeuna",
       "initial": "Pamuatan Mimitian Kaca",
-      "sessionStart": "Sési Dikawitan"
+      "sessionStart": "Sési Dikawitan",
+      "action": "Lampah #{id}"
     },
     "help": {
       "shortcuts": "Pangringkes Kibor",

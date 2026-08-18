@@ -13,7 +13,7 @@
             <div class="section-icon section-icon--green">
               <FileCheck class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.content.form.publishing') || 'Publishing' }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.publishing') }}</span>
           </div>
           <ChevronDown 
             class="section-chevron"
@@ -22,39 +22,39 @@
         </button>
         <div v-show="sections.publishing" class="section-content">
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.status') }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.statusLabel') }}</label>
             <select v-model="content.status" class="setting-select">
-              <option value="draft">{{ t('features.content.status.draft') }}</option>
-              <option value="published">{{ t('features.content.status.published') }}</option>
-              <option value="pending">{{ t('builder.panels.pageSettings.status.pending') || 'Pending' }}</option>
-              <option value="archived">{{ t('features.content.status.archived') }}</option>
+              <option value="draft">{{ t('builder.panels.pageSettings.status.draft') }}</option>
+              <option value="published">{{ t('builder.panels.pageSettings.status.published') }}</option>
+              <option value="pending">{{ t('builder.panels.pageSettings.status.pending') }}</option>
+              <option value="archived">{{ t('builder.panels.pageSettings.status.archived') }}</option>
             </select>
           </div>
 
           <div v-if="content.status === 'published'" class="field-group">
-            <label class="field-label">{{ t('features.content.form.publishDate') || 'Publish Date' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.publishDate') }}</label>
             <input 
               type="datetime-local" 
               v-model="content.published_at" 
-              class="setting-input"
+              class="setting-input" 
             />
           </div>
 
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.slug') }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.slug') }}</label>
             <div class="slug-input-wrapper">
               <span class="slug-prefix">/</span>
               <input 
                 type="text" 
                 v-model="content.slug" 
                 class="setting-input slug-input" 
-                :placeholder="t('features.content.form.slugPlaceholder') || 'auto-generated-from-title'" 
+                :placeholder="t('builder.panels.pageSettings.slugPlaceholder')" 
               />
             </div>
           </div>
 
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.type') || 'Type' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.type') }}</label>
             <select v-model="content.type" class="setting-select">
               <option value="post">Post</option>
               <option value="page">Page</option>
@@ -64,8 +64,8 @@
 
           <div class="toggle-row">
             <div class="toggle-info">
-              <span class="toggle-label">{{ t('features.content.form.featured') || 'Featured Content' }}</span>
-              <span class="toggle-desc">{{ t('features.content.form.featuredDesc') || 'Pin this content to the top' }}</span>
+              <span class="toggle-label">{{ t('builder.panels.pageSettings.featured') }}</span>
+              <span class="toggle-desc">{{ t('builder.panels.pageSettings.featuredDesc') }}</span>
             </div>
             <button 
               @click="content.is_featured = !content.is_featured"
@@ -89,7 +89,7 @@
             <div class="section-icon section-icon--indigo">
               <MenuSquare class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.menus.title') || 'Menus' }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.menus') }}</span>
           </div>
           <div class="section-header-right">
             <span v-if="content.menu_item?.add_to_menu" class="status-badge status-badge--indigo">Active</span>
@@ -102,8 +102,8 @@
         <div v-show="sections.menu" class="section-content">
           <div class="toggle-row">
             <div class="toggle-info">
-              <span class="toggle-label">{{ t('features.menus.actions.addToMenu') || 'Add to Menu' }}</span>
-              <span class="toggle-desc">Add this content to a menu</span>
+              <span class="toggle-label">{{ t('builder.panels.pageSettings.addToMenu') }}</span>
+              <span class="toggle-desc">{{ t('builder.panels.pageSettings.addToMenuDesc') }}</span>
             </div>
             <button 
               @click="toggleAddToMenu"
@@ -116,9 +116,9 @@
 
           <template v-if="content.menu_item?.add_to_menu">
             <div class="field-group">
-              <label class="field-label">{{ t('features.menus.form.selectMenu') || 'Select Menu' }}</label>
+              <label class="field-label">{{ t('builder.panels.pageSettings.selectMenu') }}</label>
               <select v-model="selectedMenuId" @change="handleMenuChange" class="setting-select">
-                <option value="">{{ t('features.menus.form.selectMenu') }}</option>
+                <option value="">{{ t('builder.panels.pageSettings.selectMenu') }}</option>
                 <option v-for="menu in builder?.menus?.value || []" :key="menu.id" :value="menu.id">
                   {{ menu.name }}
                 </option>
@@ -126,9 +126,9 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label">{{ t('features.menus.form.parentItem') || 'Parent Item' }}</label>
+              <label class="field-label">{{ t('builder.panels.pageSettings.parentItem') }}</label>
               <select v-model="content.menu_item.parent_id" class="setting-select" :disabled="loadingParentItems">
-                <option :value="null">{{ t('features.menus.form.rootItem') || 'Root (No Parent)' }}</option>
+                <option :value="null">{{ t('builder.panels.pageSettings.rootItem') }}</option>
                 <option v-for="item in menuParentItems" :key="item.id" :value="item.id">
                   {{ '  '.repeat(item.depth || 0) + (item.title || item.label) }}
                 </option>
@@ -136,12 +136,12 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label">{{ t('features.menus.form.label') || 'Menu Label' }}</label>
+              <label class="field-label">{{ t('builder.panels.pageSettings.menuLabel') }}</label>
               <input 
                 type="text" 
                 v-model="content.menu_item.title" 
                 class="setting-input" 
-                :placeholder="t('features.menus.form.labelPlaceholder') || 'Menu label...'" 
+                :placeholder="t('builder.panels.pageSettings.menuLabelPlaceholder')" 
               />
             </div>
           </template>
@@ -159,7 +159,7 @@
             <div class="section-icon section-icon--blue">
               <Tags class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.content.form.taxonomy') || 'Taxonomy' }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.taxonomy') }}</span>
           </div>
           <ChevronDown 
             class="section-chevron"
@@ -168,9 +168,9 @@
         </button>
         <div v-show="sections.taxonomy" class="section-content">
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.category') }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.category') }}</label>
             <select v-model="content.category_id" class="setting-select">
-              <option :value="null">{{ t('features.content.form.selectCategory') || 'Select Category' }}</option>
+              <option :value="null">{{ t('builder.panels.pageSettings.selectCategory') }}</option>
               <option v-for="cat in builder?.categories?.value || []" :key="cat.id" :value="cat.id">
                 {{ cat.name }}
               </option>
@@ -178,7 +178,7 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.tags') }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.tags') }}</label>
             <div class="flex flex-wrap gap-1.5 mb-2">
               <div v-for="tag in content.tags" :key="tag.id || tag.name" class="tag-badge">
                 {{ tag.name }}
@@ -194,7 +194,7 @@
                 @input="handleTagSearch"
                 @keydown.enter.prevent="addCustomTag"
                 class="setting-input pl-8" 
-                :placeholder="t('features.content.form.addTags') || 'Search or add tag...'" 
+                :placeholder="t('builder.panels.pageSettings.addTags')" 
               />
               <Search class="absolute left-2.5 top-2.5 w-4 h-4 text-muted-foreground" />
               
@@ -224,7 +224,7 @@
             <div class="section-icon section-icon--purple">
               <ImageIcon class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.content.form.featuredImage') }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.featuredImage') }}</span>
           </div>
           <div class="section-header-right">
             <div v-if="content.featured_image" class="thumb-preview">
@@ -257,7 +257,7 @@
             </template>
           </MediaPicker>
           <button v-if="content.featured_image" @click="content.featured_image = null" class="remove-image-btn">
-            {{ t('features.content.form.removeImage') || 'Remove Image' }}
+            {{ t('builder.panels.pageSettings.removeImage') }}
           </button>
         </div>
       </div>
@@ -273,7 +273,7 @@
             <div class="section-icon section-icon--amber">
               <FileText class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.content.form.excerpt') }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.excerpt') }}</span>
           </div>
           <ChevronDown 
             class="section-chevron"
@@ -285,7 +285,7 @@
             v-model="content.excerpt" 
             rows="3" 
             class="setting-input" 
-            :placeholder="t('features.content.form.excerptPlaceholder') || 'Short summary...'"
+            :placeholder="t('builder.panels.pageSettings.excerptPlaceholder')"
           ></textarea>
         </div>
       </div>
@@ -301,7 +301,7 @@
             <div class="section-icon section-icon--orange">
               <MessageSquare class="w-3.5 h-3.5" />
             </div>
-            <span class="section-title-text">{{ t('features.content.form.discussion') || 'Discussion' }}</span>
+            <span class="section-title-text">{{ t('builder.panels.pageSettings.discussion') }}</span>
           </div>
           <div class="section-header-right">
             <span v-if="!content.comment_status" class="status-badge status-badge--orange">Disabled</span>
@@ -314,8 +314,8 @@
         <div v-show="sections.discussion" class="section-content">
           <div class="toggle-row">
             <div class="toggle-info">
-              <span class="toggle-label">{{ t('features.content.form.allowComments') || 'Allow Comments' }}</span>
-              <span class="toggle-desc">{{ t('features.content.form.allowCommentsDesc') || 'Enable comments on this content' }}</span>
+              <span class="toggle-label">{{ t('builder.panels.pageSettings.allowComments') }}</span>
+              <span class="toggle-desc">{{ t('builder.panels.pageSettings.allowCommentsDesc') }}</span>
             </div>
             <button 
               @click="content.comment_status = !content.comment_status"
@@ -348,22 +348,22 @@
         </button>
         <div v-show="sections.seo" class="section-content">
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.seo.metaTitle') || 'Meta Title' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.metaTitle') }}</label>
             <input type="text" v-model="content.meta_title" class="setting-input" />
           </div>
           
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.seo.metaDescription') || 'Meta Description' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.metaDescription') }}</label>
             <textarea v-model="content.meta_description" rows="2" class="setting-input"></textarea>
           </div>
 
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.metaKeywords') || 'Meta Keywords' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.metaKeywords') }}</label>
             <input type="text" v-model="content.meta_keywords" class="setting-input" placeholder="keyword1, keyword2" />
           </div>
 
           <div class="field-group">
-            <label class="field-label">{{ t('features.content.form.ogImage') || 'OG Image' }}</label>
+            <label class="field-label">{{ t('builder.panels.pageSettings.ogImage') }}</label>
             <MediaPicker
               @selected="(media: { url?: string } | string | null) => content.og_image = (typeof media === 'object' ? media?.url : media) || null"
               :constraints="{ allowedExtensions: ['jpg', 'jpeg', 'png', 'webp'] }"
@@ -377,7 +377,7 @@
                 </div>
                 <button v-else type="button" class="og-image-btn" @click="open">
                   <ImageIcon class="w-3 h-3" />
-                  {{ t('features.content.form.selectOgImage') || 'Select OG Image' }}
+                  {{ t('builder.panels.pageSettings.selectOgImage') }}
                 </button>
               </template>
             </MediaPicker>

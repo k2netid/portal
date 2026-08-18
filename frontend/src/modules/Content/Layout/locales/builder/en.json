@@ -66,15 +66,20 @@
     "responsiveMode": "Responsive Mode"
   },
   "sidebars": {
-    "theme": "Theme & Design",
+    "theme": "Theme",
     "layers": "Layers",
     "pages": "Pages",
     "templates": "Templates",
-    "presets": "Design Presets",
+    "presets": "Presets",
     "globalVariables": "Global Variables",
     "preferences": "Preferences",
     "history": "History",
-    "code": "Code Editor"
+    "code": "Code Editor",
+    "settings": "Settings",
+    "layouts": "Layouts",
+    "global_variables": "Global Variables",
+    "portability": "Import / Export",
+    "help": "Help"
   },
   "tabs": {
     "content": "Content",
@@ -97,7 +102,7 @@
     "desktop": "Desktop",
     "tablet": "Tablet",
     "mobile": "Mobile",
-    "hover": "Hover State"
+    "hover": "Hover"
   },
   "contextMenu": {
     "duplicate": "Duplicate",
@@ -107,7 +112,9 @@
   },
   "dynamic": {
     "loading": "Loading data...",
-    "noResults": "No matching records found"
+    "noResults": "No matching records found",
+    "title": "Dynamic Data Sources",
+    "search": "Search dynamic fields..."
   },
   "advanced": {
     "attributes": {
@@ -228,10 +235,15 @@
       "findReplace": "Find & Replace",
       "info": "Help Info",
       "manageGlobal": "Manage Global Variables",
-      "responsive": "Responsive Overrides"
+      "responsive": "Responsive Overrides",
+      "copyAttributes": "Copy Attributes",
+      "extendAttributes": "Extend Attributes",
+      "resetAttributes": "Reset Attributes"
     },
     "children": {
-      "applyTemplate": "Apply Children Template"
+      "applyTemplate": "Apply Children Template",
+      "empty": "No child elements yet.",
+      "add": "Add Child Element"
     },
     "common": {
       "color": "Color",
@@ -309,7 +321,13 @@
       "top": "Top",
       "right": "Right",
       "bottom": "Bottom",
-      "left": "Left"
+      "left": "Left",
+      "sides": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right"
+      }
     },
     "typography": {
       "fontSize": "Font Size",
@@ -466,7 +484,15 @@
           "width": "Pattern Width"
         },
         "transform": "Transform Pattern",
-        "verticalOffset": "Vertical Offset"
+        "verticalOffset": "Vertical Offset",
+        "options": {
+          "polkaDots": "Polka Dots",
+          "grid": "Grid Lines",
+          "diagonalStripes": "Diagonal Stripes",
+          "chevrons": "Chevrons",
+          "waves": "Waves",
+          "triangles": "Triangles"
+        }
       },
       "video": {
         "add": "Add Background Video",
@@ -510,14 +536,14 @@
       "rowSettings": "Row Settings",
       "addElement": "Add Element",
       "copyStyles": "Copy Styles",
-      "deleteCanvas": "Delete from Canvas",
+      "deleteCanvas": "Delete Canvas",
       "disable": "Disable Element",
-      "duplicateCanvas": "Duplicate to Canvas",
-      "editCanvas": "Edit in Canvas",
+      "duplicateCanvas": "Duplicate Canvas",
+      "editCanvas": "Edit Canvas",
       "enable": "Enable Element",
       "exportCanvas": "Export Element",
       "goToLayer": "Go to Layer",
-      "goToParent": "Go to Parent Element",
+      "goToParent": "Go to Parent",
       "makeMainCanvas": "Set as Main Canvas",
       "paste": "Paste Element",
       "pasteStyles": "Paste Styles",
@@ -525,20 +551,39 @@
       "renameLabel": "Rename Element",
       "resetStyles": "Reset Styles",
       "saveToLibrary": "Save to Library",
-      "undo": "Undo Action"
+      "undo": "Undo Action",
+      "duplicate": "Duplicate {type}",
+      "delete": "Delete {type}",
+      "copy": "Copy {type}",
+      "cut": "Cut {type}"
     }
   },
   "insertModal": {
     "title": "Insert Module",
     "searchPlaceholder": "Search modules (e.g. heading, button)...",
-    "libraryEmpty": "No saved library modules found."
+    "libraryEmpty": "No saved library modules found.",
+    "tabs": {
+      "modules": "Modules",
+      "saved": "Saved Layouts",
+      "global": "Global Elements"
+    },
+    "noResults": "No matching modules or templates found.",
+    "layoutGroups": {
+      "columns": "Columns Layout"
+    }
   },
   "insertRowModal": {
     "title": "Insert Row",
     "libraryPlaceholder": "Search row layouts..."
   },
   "insertSectionModal": {
-    "title": "Insert Section"
+    "title": "Insert Section",
+    "tabs": {
+      "regular": "Regular Section",
+      "specialty": "Specialty Section",
+      "fullwidth": "Fullwidth Section",
+      "templates": "Pre-built Templates"
+    }
   },
   "modals": {
     "confirm": {
@@ -621,6 +666,9 @@
     "pageTemplate": {
       "title": "Select Page Template",
       "loading": "Loading template preview..."
+    },
+    "responsive": {
+      "title": "Responsive Overrides"
     }
   },
   "structureTemplateModal": {
@@ -644,7 +692,9 @@
     "layers": {
       "title": "Layers Tree",
       "empty": "No elements placed on the canvas yet",
-      "search": "Filter layers..."
+      "search": "Filter layers...",
+      "searchPlaceholder": "Search layers...",
+      "closeAll": "Close All"
     },
     "pages": {
       "title": "Site Pages",
@@ -726,15 +776,19 @@
         "cancel": "Cancel",
         "save": "Save Variables",
         "select": "Select Asset",
-        "selectImage": "Choose Media Asset"
+        "selectImage": "Choose Media Asset",
+        "addGeneric": "Add New Variable"
       },
       "messages": {
         "saveError": "Failed to save global variables.",
-        "saveSuccess": "Global variables updated successfully."
+        "saveSuccess": "Global variables updated successfully.",
+        "fillName": "Please enter a valid variable name.",
+        "invalidHex": "Invalid hex color code."
       },
       "placeholders": {
         "name": "variable_name",
-        "none": "None configured"
+        "none": "None configured",
+        "empty": "No global variables defined in this category."
       },
       "table": {
         "color": "Color Swatch",
@@ -743,7 +797,13 @@
         "string": "Value String",
         "url": "Link Destination",
         "value": "Value"
-      }
+      },
+      "numbers": "Numbers & Units",
+      "text": "Text & Strings",
+      "images": "Images & Media",
+      "links": "Links & URLs",
+      "colors": "Colors & Palettes",
+      "fonts": "Fonts & Typography"
     },
     "preferences": {
       "title": "Builder Preferences",
@@ -777,17 +837,54 @@
     },
     "pageSettings": {
       "status": {
-        "pending": "Pending Review"
+        "draft": "Draft",
+        "published": "Published",
+        "pending": "Pending Review",
+        "archived": "Archived"
       },
       "placeholders": {
         "selectImage": "Choose featured image..."
-      }
+      },
+      "publishing": "Publishing",
+      "publishDate": "Publish Date",
+      "slug": "Slug",
+      "slugPlaceholder": "auto-generated-from-title",
+      "type": "Type",
+      "featured": "Featured Content",
+      "featuredDesc": "Pin this content to the top",
+      "menus": "Menus",
+      "addToMenu": "Add to Menu",
+      "addToMenuDesc": "Add this content to a menu",
+      "selectMenu": "Select Menu",
+      "parentItem": "Parent Item",
+      "rootItem": "Root (No Parent)",
+      "menuLabel": "Menu Label",
+      "menuLabelPlaceholder": "Menu label...",
+      "taxonomy": "Taxonomy",
+      "category": "Category",
+      "selectCategory": "Select Category",
+      "tags": "Tags",
+      "addTags": "Search or add tag...",
+      "featuredImage": "Featured Image",
+      "removeImage": "Remove Image",
+      "excerpt": "Excerpt",
+      "excerptPlaceholder": "Short summary...",
+      "discussion": "Discussion",
+      "allowComments": "Allow Comments",
+      "allowCommentsDesc": "Enable comments on this content",
+      "metaTitle": "Meta Title",
+      "metaDescription": "Meta Description",
+      "metaKeywords": "Meta Keywords",
+      "ogImage": "OG Image",
+      "selectOgImage": "Select OG Image",
+      "statusLabel": "Status"
     },
     "history": {
       "change": "Changed {property}",
       "current": "Current Working State",
       "initial": "Initial Page Load",
-      "sessionStart": "Session Started"
+      "sessionStart": "Session Started",
+      "action": "Action #{id}"
     },
     "help": {
       "shortcuts": "Shortcuts",
