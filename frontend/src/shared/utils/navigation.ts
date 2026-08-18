@@ -16,9 +16,6 @@ export interface NavItem {
     type?: 'item' | 'divider';
     children?: NavItem[];
     group?:
-        | 'crm'
-        | 'accounting'
-        | 'platform'
         | 'studio'
         | 'nexus'
         | 'identity'

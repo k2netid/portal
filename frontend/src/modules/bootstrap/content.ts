@@ -2,7 +2,7 @@ const CONTENT_PATH_RE =
     /^\/[^/]+\/(?:publishing|media|forms|layout|library|content-studio|themes|pages|contents|categories|content-templates|comments|seo|menus|widgets|redirects|tags|custom-fields)(?:[/?#]|$)/i;
 
 const DEFERRED_PATH_RE =
-    /^\/[^/]+\/(?:search|ai|analytics|newsletter|email-templates|accounting|platform|crm)(?:[/?#]|$)/i;
+    /^\/[^/]+\/(?:search|ai|analytics|newsletter|email-templates)(?:[/?#]|$)/i;
 
 export function consolePathNeedsContentModules(pathname: string): boolean {
     return CONTENT_PATH_RE.test(pathname);

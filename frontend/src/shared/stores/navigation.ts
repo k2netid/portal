@@ -4,9 +4,6 @@ import type { NavItem } from '@/shared/utils/navigation';
 
 /** Sidebar parents with the same `group` are merged into one accordion. */
 const MERGE_BY_GROUP = new Set<NonNullable<NavItem['group']>>([
-    'crm',
-    'accounting',
-    'platform',
     'studio',
     'nexus',
     'identity',

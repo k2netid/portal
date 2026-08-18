@@ -87,11 +87,6 @@
             "Modules\\Intelligence\\Newsletter\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Newsletter/",
             "Modules\\Intelligence\\Search\\Database\\Factories\\": "Modules/Intelligence/database/factories/Search/",
             "Modules\\Intelligence\\Search\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Search/",
-            "Modules\\Operational\\Platform\\Database\\Factories\\": "Modules/Operational/database/factories/Platform/",
-            "Modules\\Operational\\Platform\\Database\\Seeders\\": "Modules/Operational/database/seeders/Platform/",
-            "Modules\\Operational\\Member\\Database\\Factories\\": "Modules/Operational/database/factories/Member/",
-            "Modules\\Operational\\Member\\Database\\Seeders\\": "Modules/Operational/database/seeders/Member/",
-            "Modules\\Operational\\Database\\Seeders\\": "Modules/Operational/database/seeders/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
