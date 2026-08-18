@@ -1,13 +1,11 @@
-# Jejakawan Control Plane (backend)
+# Jejakawan CMS (backend)
 
 | | |
 | :--- | :--- |
-| **Produk** | Jejakawan hub (`ja-control-plane`) |
-| **Peran deploy** | `APP_ROLE=ops` — billing, CMS marketing, member portal, license |
+| **Produk** | Jejakawan CMS (`ja-cms`) |
+| **Peran deploy** | Content Management System, Visual Builder & Publishing Hub |
 
-Laravel API untuk **control plane** Jejakawan (satu database PostgreSQL, tanpa partisi `saas_tenants`).
-
-**Produk & penamaan:** [docs/product/control-plane-and-editions.md](../docs/product/control-plane-and-editions.md)
+Laravel API untuk **Jejakawan CMS** (satu database PostgreSQL).
 
 Developed by **Jejakawan** ([jejakawan.com](https://jejakawan.com)) for **PT. Kirana Karina Network (K2NET)**.
 

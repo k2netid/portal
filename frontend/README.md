@@ -1,17 +1,15 @@
-# Jejakawan — Frontend (`ja-control-plane`)
+# Jejakawan — Frontend (`ja-cms`)
 
-Vue 3 + Vite SPA untuk **jejakawan.com**: situs marketing publik, konsol operator, portal member, Platform.
+Vue 3 + Vite SPA untuk **jejakawan.com**: situs publik (Janari Theme), Visual Builder (JA-Builder), dan Konsol Pengelolaan Konten.
 
 ## Modul FE
 
 | Tier | Modul |
 | :--- | :--- |
-| Core | System, Infra |
-| Content | Publishing, Media, Studio (Layout, Forms, Library) |
-| Intelligence | AI, Search, Newsletter |
-| Operational | Platform (+ rute `/member/*`) |
+| Core | System, Infra, Security |
+| Content | Publishing, Layout (JA-Builder, Themes), Media, Forms, Library |
+| Intelligence | AI, Search, Analytics, Newsletter |
 
-**ja-workspace** (nanti): dashboard + CMS multi-tenant pelanggan — bukan scope repo ini sekarang.
 
 ## Shell
 

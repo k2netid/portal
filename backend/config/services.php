@@ -39,20 +39,4 @@ return [
         ],
     ],
 
-    'sme' => [
-        'response_signing_secret' => env('SME_RESPONSE_SIGNING_SECRET', ''),
-        'offline_license_hmac_secret' => env('SME_OFFLINE_LICENSE_HMAC_SECRET', ''),
-    ],
-
-    'aksara' => [
-        'api_url' => rtrim((string) env('AKSARA_API_URL', 'https://api-aksara.jejakawan.com'), '/'),
-        'app_url' => rtrim((string) env('AKSARA_APP_URL', 'https://aksarakita.jejakawan.com'), '/'),
-        'entitlement_secret' => env('AKSARA_ENTITLEMENT_SECRET', ''),
-    ],
-
-    'exambro' => [
-        'download_url' => env('EXAMBRO_DOWNLOAD_URL', 'https://github.com/jejak-awan/ja-exambro/releases'),
-        'docs_url' => env('EXAMBRO_DOCS_URL', 'https://github.com/jejak-awan/ja-exambro/blob/android/README.md'),
-    ],
-
 ];

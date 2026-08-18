@@ -169,20 +169,6 @@ export const infraPaths = {
     fileManagerTrashPermanent: '/manage/infra/file-manager/trash/permanent',
 } as const;
 
-export const memberPaths = {
-    registrationPolicy: '/public/member/registration-policy',
-    login: '/public/member/login',
-    register: '/public/member/register',
-    logout: '/public/member/logout',
-    profile: '/public/member/profile',
-    billing: '/public/member/billing',
-    settings: '/public/member/settings',
-    notifications: '/public/member/notifications',
-    notificationsReadAll: '/public/member/notifications/read-all',
-    aksaraLaunch: '/public/member/aksara/launch',
-    exambroLaunch: '/public/member/exambro/launch',
-} as const;
-
 export const platformPaths = {
     publicCatalog: '/public/platform/catalog',
     publicSubscriptionFeatures: '/public/subscription/features',

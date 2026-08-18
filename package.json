@@ -33,7 +33,7 @@
     },
     "x-agent-guidelines": {
         "purpose": "Standard instructions for AI/coding agents when creating or updating this project.",
-        "scope": "Jejakawan product; repo ja-control-plane (control plane + hosted). Repo ja-platform (customer app, edu vertical) is separate \u2014 do not modify unless asked.",
+        "scope": "Jejakawan CMS; repo ja-cms (Visual Builder, Publishing, Layout, Themes, Media, Forms, Library, and Intelligence).",
         "when_creating_or_updating_project": [
             "Read docs/AGENT_START_HERE.md and docs/product/control-plane-and-editions.md first, then docs/.agent-rules.md, docs/architectural-status.md, docs/blueprint/*, and docs/plan/module-communication-standard.md. Use only paths listed in docs/README.md.",
             "For UI/UX changes read docs/blueprint/03-ui-ux-design-system.md and docs/blueprint/04-ui-ux-page-patterns.md.",
