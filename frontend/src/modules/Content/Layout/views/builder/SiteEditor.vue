@@ -14,17 +14,17 @@
       <Dialog :open="showConfirmDialog" @update:open="showConfirmDialog = $event">
             <DialogContent class="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Confirm Navigation</DialogTitle>
+                    <DialogTitle>{{ t('builder.modals.confirm.discardChanges') }}</DialogTitle>
                     <DialogDescription>
-                        You have unsaved changes. Are you sure you want to leave?
+                        {{ t('builder.modals.confirm.discardChangesDesc') }}
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                     <Button variant="outline" @click="showConfirmDialog = false">
-                        Cancel
+                        {{ t('builder.common.cancel') }}
                     </Button>
-                    <Button @click="confirmClose">
-                         Confirm
+                    <Button variant="destructive" @click="confirmClose">
+                        {{ t('builder.modals.confirm.discard') }}
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -37,6 +37,7 @@
 import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { toast } from '@/shared/services/toastService';
 import Builder from '../../components/builder/Builder.vue';
 import {
@@ -49,10 +50,11 @@ import {
     Button
 } from '@/shared/components/ui';
 
-const router = useRouter()
-const isFullscreen = ref(false)
-const builderRef = ref<{ builder?: { content: { value: { status: string } }; isDirty: boolean; saveContent: () => Promise<void> } } | null>(null)
-const showConfirmDialog = ref(false)
+const { t } = useI18n();
+const router = useRouter();
+const isFullscreen = ref(false);
+const builderRef = ref<{ builder?: { content: { value: { status: string } }; isDirty: boolean; saveContent: () => Promise<void> } } | null>(null);
+const showConfirmDialog = ref(false);
 
 const handleSave = async (status: string | null) => {
     if (!builderRef.value?.builder) return

@@ -238,7 +238,7 @@
         </button>
         <div v-show="sections.image" class="section-content">
           <MediaPicker 
-            @selected="(media) => content.featured_image = media.url"
+            @selected="(media: { url?: string } | string | null) => content.featured_image = (typeof media === 'object' ? media?.url : media) || null"
             :constraints="{ allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'] }"
           >
             <template #trigger="{ open }">
