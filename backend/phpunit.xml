@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <source>
+        <include>
+            <directory>Modules/Core/app</directory>
+            <directory>Modules/Content/app</directory>
+            <directory>Modules/Intelligence/app</directory>
+            <directory>Modules/Operational/app</directory>
+            <directory>Modules/Crm/app</directory>
+        </include>
+    </source>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Modules">
+            <directory>Modules/Core/tests</directory>
+            <directory>Modules/Content/tests</directory>
+            <directory>Modules/Intelligence/tests</directory>
+            <directory>Modules/Operational/tests</directory>
+            <directory>Modules/Crm/tests</directory>
+        </testsuite>
+    </testsuites>
+    <!-- Coverage (pcov/xdebug) hanya lewat phpunit.coverage.xml + composer test:coverage
+         supaya server dengan pcov off + JIT on tidak kena peringatan driver setiap artisan test. -->
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="BROADCAST_CONNECTION" value="null"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NIGHTWATCH_ENABLED" value="false"/>
+    </php>
+</phpunit>

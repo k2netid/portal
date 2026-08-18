@@ -1,0 +1,41 @@
+{
+    "navigation": {
+        "sections": {
+            "operations": "Operations",
+            "settings": "Settings",
+            "studio": "Studio",
+            "nexus": "Nexus",
+            "command_center": "Command Center",
+            "content": "Studio",
+            "marketing": "Reach",
+            "marketing_insights": "Marketing & Insights",
+            "seo_optimization": "SEO & Optimization",
+            "design_config": "Design & Config",
+            "content_studio": "Content & Media"
+        },
+        "menu": {
+            "studio": "Content",
+            "editorial": "Editorial",
+            "media": "Media",
+            "design": "Design",
+            "library": "Library",
+            "insights": "Insights",
+            "audience": "Audience",
+            "journals": "Journals",
+            "systemConfig": "Configuration",
+            "infrastructure": "Infrastructure",
+            "devTools": "Integrations & Dev",
+            "mediaLibrary": "Media Library",
+            "analytics": "Analytics",
+            "comments": "Comments",
+            "emailTemplates": "Email templates",
+            "forms": "Forms",
+            "menus": "Menus",
+            "newsletter": "Newsletter",
+            "redirects": "Redirects",
+            "seoTools": "SEO tools",
+            "themes": "Themes",
+            "widgets": "Widgets"
+        }
+    }
+}

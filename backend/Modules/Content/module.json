@@ -1,0 +1,44 @@
+{
+    "name": "Content",
+    "alias": "content",
+    "description": "Content Management and Design Module (Publishing, Layout, Media, Forms, Library)",
+    "keywords": [],
+    "priority": 0,
+    "version": "1.0.0",
+    "providers": [
+        "Modules\\Content\\Providers\\ContentServiceProvider"
+    ],
+    "files": [],
+    "features": [
+        {
+            "slug": "publishing",
+            "name": "Publishing",
+            "description": "Write articles, pages, comments moderation, and SEO optimization.",
+            "category": "marketing"
+        },
+        {
+            "slug": "layout",
+            "name": "Layout & Page Builder",
+            "description": "Design layouts, templates, and widgets visually.",
+            "category": "utility"
+        },
+        {
+            "slug": "media",
+            "name": "Media Library",
+            "description": "Upload files, images, organize folders, and cloud storage optimization.",
+            "category": "utility"
+        },
+        {
+            "slug": "forms",
+            "name": "Forms & Submissions",
+            "description": "Create dynamic forms, custom fields, and track user responses.",
+            "category": "marketing"
+        },
+        {
+            "slug": "library",
+            "name": "Category & Tag Library",
+            "description": "Taxonomy organization helper across content types.",
+            "category": "utility"
+        }
+    ]
+}

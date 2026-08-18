@@ -1,0 +1,168 @@
+{
+    "navigation": {
+        "menu": {
+            "library": "Library",
+            "tags": "Tags",
+            "customFields": "Custom Fields"
+        }
+    },
+    "tags": {
+        "actions": {
+            "delete": "Delete",
+            "edit": "Edit",
+            "bulkDelete": "Delete Tags",
+            "deleteTitle": "Delete Tag"
+        },
+        "createNew": "New Tag",
+        "description": "Manage content tags",
+        "empty": "No tags found",
+        "filters": {
+            "all": "All",
+            "unused": "Unused Only",
+            "usage": "Usage",
+            "used": "Used Only",
+            "type": "Type",
+            "allTypes": "All Types",
+            "content": "Content",
+            "media": "Media",
+            "crm": "CRM"
+        },
+        "form": {
+            "cancel": "Cancel",
+            "create": "Create",
+            "createDescription": "Create a new tag to organize content.",
+            "createTitle": "Create Tag",
+            "description": "Description",
+            "descriptionPlaceholder": "Tag description",
+            "editDescription": "Update tag details.",
+            "editTitle": "Edit Tag",
+            "name": "Name",
+            "namePlaceholder": "Tag name",
+            "saveError": "Failed to save tag",
+            "saving": "Saving...",
+            "slug": "Slug",
+            "slugHelp": "URL-friendly version",
+            "slugPlaceholder": "tag-slug",
+            "update": "Update"
+        },
+        "loading": "Loading tags...",
+        "messages": {
+            "deleteConfirm": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+            "deleteError": "Failed to delete tag"
+        },
+        "search": "Search tags...",
+        "stats": {
+            "total": "Total Tags",
+            "usage": "Total Usage",
+            "used": "Used Tags"
+        },
+        "table": {
+            "actions": "Actions",
+            "description": "Description",
+            "name": "Name",
+            "slug": "Slug",
+            "usage": "Usage",
+            "type": "Type"
+        },
+        "title": "Tags",
+        "title_singular": "Tag"
+    },
+    "customFields": {
+        "description": "Manage reusable field groups and custom fields for your content models",
+        "create_field": "New Field",
+        "create_group": "New Field Group",
+        "fields": {
+            "actions": {
+                "delete": "Delete",
+                "edit": "Edit"
+            },
+            "confirm": {
+                "delete": "Are you sure you want to delete field \"{label}\"?"
+            },
+            "empty": "No custom fields found",
+            "messages": {
+                "delete_failed": "Failed to delete field",
+                "save_failed": "Failed to save field"
+            },
+            "modal": {
+                "cancel": "Cancel",
+                "create": "Create",
+                "default_label": "Default Value",
+                "default_placeholder": "Default value",
+                "group_label": "Field Group",
+                "group_none": "No Group",
+                "instructions_label": "Instructions",
+                "instructions_placeholder": "Field instructions for users",
+                "label_label": "Label",
+                "label_placeholder": "Field label",
+                "name_help": "Field identifier (snake_case)",
+                "name_label": "Name",
+                "name_placeholder": "field_name",
+                "options_help": "Comma-separated values",
+                "options_label": "Options (for select, radio, checkbox)",
+                "options_placeholder": "option1,option2,option3",
+                "required_label": "Required",
+                "saving": "Saving...",
+                "searchable_label": "Searchable",
+                "title_create": "Create Custom Field",
+                "title_edit": "Edit Custom Field",
+                "type_label": "Type",
+                "update": "Update"
+            },
+            "search": "Search fields...",
+            "table": {
+                "actions": "Actions",
+                "group": "Group",
+                "label": "Label",
+                "name": "Name",
+                "type": "Type"
+            },
+            "title": "Custom Fields"
+        },
+        "groups": {
+            "actions": {
+                "delete": "Delete",
+                "edit": "Edit"
+            },
+            "confirm": {
+                "delete": "Are you sure you want to delete field group \"{name}\"?"
+            },
+            "empty": "No field groups found",
+            "messages": {
+                "delete_failed": "Failed to delete field group",
+                "save_failed": "Failed to save field group"
+            },
+            "modal": {
+                "attach_label": "Attach To",
+                "attach_options": {
+                    "category": "Category",
+                    "content": "Content",
+                    "media": "Media",
+                    "none": "None"
+                },
+                "cancel": "Cancel",
+                "create": "Create",
+                "description_label": "Description",
+                "description_placeholder": "Field group description",
+                "name_label": "Name",
+                "name_placeholder": "Field group name",
+                "saving": "Saving...",
+                "title_create": "Create Field Group",
+                "title_edit": "Edit Field Group",
+                "update": "Update"
+            },
+            "table": {
+                "actions": "Actions",
+                "attached_to": "Attached To",
+                "fields": "Fields",
+                "name": "Name"
+            }
+        },
+        "tabs": {
+            "fields": "Custom Fields",
+            "groups": "Field Groups"
+        },
+        "title": "Custom Fields",
+        "loading": "Loading..."
+    }
+}

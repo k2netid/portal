@@ -1,0 +1,3031 @@
+{
+  "contentPreview": {
+    "title": "Content Preview",
+    "publish": "Publish",
+    "byPrefix": "By",
+    "devices": {
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "mobile": "Mobile"
+    }
+  },
+  "app": {
+    "consoleTitle": "Jejakawan Console"
+  },
+  "routes": {
+    "maintenance": "Under Maintenance",
+    "install": "Installation Wizard",
+    "appError": "Application Error",
+    "dashboardError": "Dashboard Error",
+    "navigationError": "A critical error occurred while navigating.",
+    "dashboardNavigationError": "A critical error occurred while navigating the dashboard."
+  },
+  "systemOverlay": {
+    "waitingConnection": "Waiting for connection...",
+    "forceReload": "Force Reload",
+    "titles": {
+      "maintenance": "System Updating",
+      "chunkError": "New Version Available",
+      "connectionInterrupted": "Connection Interrupted"
+    },
+    "messages": {
+      "maintenance": "We are currently deploying improvements. The page will reload automatically when ready.",
+      "chunkError": "A new version of the app has been deployed. Updating your local cache...",
+      "connectionInterrupted": "We lost connection to the server. Attempting to reconnect..."
+    }
+  },
+  "navigation": {
+    "sections": {
+      "usersAccess": "Users & Access",
+      "monitoring": "Monitoring",
+      "infrastructure": "Infrastructure",
+      "developer": "Dev",
+      "advanced": "Advanced"
+    },
+    "menu": {
+      "users": "Users",
+      "roles": "Roles & Permissions",
+      "journalDashboard": "Journal Dashboard",
+      "activityJournal": "Activity Journal",
+      "securityJournal": "Security Journal",
+      "systemJournal": "System Journal",
+      "accessJournal": "Access History",
+      "systemInfo": "System Info",
+      "settings": "Settings",
+      "systemNotifications": "Notifications",
+      "backups": "Backups",
+      "fileManager": "File Manager",
+      "redis": "Redis Cache",
+      "scheduledTasks": "Scheduled Tasks",
+      "languages": "Languages",
+      "webhooks": "Webhooks",
+      "plugins": "Plugins",
+      "extensions": "Extensions & App Store",
+      "pulse": "Pulse",
+      "consoleAppearance": "Console appearance",
+      "oauthClients": "OAuth Clients",
+      "identityIntegrations": "Identity & Integrations",
+      "kycReviews": "KYC Reviews",
+      "integrations": "Integrations"
+    }
+  },
+  "auth": {
+    "captcha": {
+      "answer": "?",
+      "dragSlider": "Drag the slider to the target",
+      "enterCode": "Enter the code shown below",
+      "error": "Incorrect answer",
+      "invalid": "Invalid captcha. Please try again.",
+      "newQuestion": "New question",
+      "refresh": "Get new code",
+      "required": "Please complete the captcha verification",
+      "slideToVerify": "Slide to verify you're human",
+      "solveQuestion": "Solve the math problem",
+      "tryAgain": "Try again - slide to the highlighted position",
+      "typeCode": "Type code here"
+    },
+    "forgotPassword": {
+      "backToLogin": "Back to login",
+      "submit": "Send Reset Link",
+      "subtitle": "Enter your email to receive a reset link",
+      "success": "Password reset link sent to your email",
+      "title": "Forgot Password"
+    },
+    "login": {
+      "emailPlaceholder": "Enter your email",
+      "forgotPassword": "Forgot password?",
+      "hero_subtitle": "The ultimate solution for managing your digital presence with speed, security, and elegance.",
+      "noAccount": "Don't have an account?",
+      "or": "Or continue with",
+      "passwordPlaceholder": "Enter your password",
+      "register": "Register now",
+      "rememberMe": "Remember me",
+      "submit": "Sign In",
+      "subtitle": "Enter your credentials to access your account",
+      "title": "Login to Your Account",
+      "welcomeBack": "Welcome back"
+    },
+    "logout": {
+      "confirm": "Are you sure you want to logout?",
+      "success": "Logged out successfully"
+    },
+    "messages": {
+      "error": "An unexpected error occurred. Please try again.",
+      "failed": "Login failed. Please check your credentials.",
+      "retryDetails": "Please try again in {time}.",
+      "success": "Login successful!",
+      "timeout": "Your session has expired due to inactivity. Please login again to continue.",
+      "tooManyAttempts": "Too Many Attempts"
+    },
+    "register": {
+      "alreadyHaveAccount": "Already have an account?",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "emailPlaceholder": "Enter your email address",
+      "haveAccount": "Already have an account?",
+      "hero_subtitle": "Experience the most powerful content management ecosystem ever built.",
+      "login": "Sign in",
+      "namePlaceholder": "Enter your full name",
+      "passwordPlaceholder": "Create a strong password",
+      "privacy_link": "Privacy",
+      "submit": "Create Account",
+      "subtitle": "Start your journey with us",
+      "terms": "By registering, you agree to our Terms and Privacy Policy",
+      "terms_and": "and",
+      "terms_link": "Terms",
+      "terms_prefix": "I agree to the",
+      "title": "Create an Account"
+    },
+    "resetPassword": {
+      "confirmPassword": "Confirm New Password",
+      "newPassword": "New Password",
+      "submit": "Reset Password",
+      "success": "Password reset successfully",
+      "title": "Reset Password",
+      "tokenLabel": "Reset Token",
+      "tokenPlaceholder": "Paste reset token from email",
+      "subtitle": "Choose a new password for your account"
+    },
+    "retry": {
+      "minutes": "{n} minute | {n} minutes",
+      "minutesSeconds": "{minutes}m {seconds}s",
+      "moment": "a moment",
+      "seconds": "{n} second | {n} seconds"
+    },
+    "twoFactor": {
+      "codeHelp": "Enter the 6-digit code from your authenticator app.",
+      "codeLabel": "Verification Code",
+      "codePlaceholder": "Enter 6-digit code",
+      "codesRemaining": "codes left",
+      "confirmDisable": "Confirm Disable",
+      "confirmRegen": "Regenerate Codes",
+      "disable": "Disable 2FA",
+      "disableConfirm": "To disable two-factor authentication, please enter your password for confirmation.",
+      "disableTitle": "Disable 2FA",
+      "enable": "Enable 2FA",
+      "enabledAt": "Enabled on",
+      "enabledDesc": "Your account is protected with two-factor authentication.",
+      "enabledTitle": "2FA is Enabled",
+      "enterCode": "Verification Code",
+      "generateQR": "Generate QR Code",
+      "invalidCode": "Invalid verification code. Please try again.",
+      "messages": {
+        "copySuccess": "Secret key copied to clipboard",
+        "disableSuccess": "Two-factor authentication disabled successfully",
+        "enableSuccess": "Two-factor authentication enabled successfully",
+        "generateFailed": "Failed to generate 2FA secret",
+        "regenerateSuccess": "Backup codes regenerated successfully",
+        "validationCodeRequired": "Please enter a 6-digit verification code",
+        "validationErrorTitle": "Validation Error"
+      },
+      "recoveryDesc": "Use these codes if you lose access to your authenticator app.",
+      "recoveryTitle": "Recovery Codes",
+      "regenDesc": "Regenerating codes will invalidate your current ones. Enter password to continue.",
+      "regenTitle": "Regenerate Backup Codes",
+      "regenerate": "Regenerate",
+      "requiredDesc": "Your account security policy requires 2FA to be enabled.",
+      "requiredTitle": "Setup Required",
+      "resend": "Resend code",
+      "saveWarning": "Save these codes now. They will not be shown again.",
+      "scanQR": "Scan this QR code with your app",
+      "setupDesc": "Add an extra layer of security to your account by requiring a verification code from your authenticator app.",
+      "setupTitle": "Setup Two-Factor Authentication",
+      "submit": "Verify",
+      "subtitle": "Enter the code from your authenticator app",
+      "title": "Two-Factor Authentication",
+      "useRecovery": "Use recovery code",
+      "verify": "Verify",
+      "verifying": "Verifying..."
+    },
+    "verifyEmail": {
+      "cooldown": "Resend in {seconds}s",
+      "description": "We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.",
+      "failed": "Verification failed. Please try again.",
+      "redirecting": "Redirecting to login...",
+      "resendButton": "Resend Verification Email",
+      "resendPrompt": "Didn't receive the email? Check your spam folder or click the button below to resend.",
+      "resendSuccess": "Verification email sent! Please check your inbox.",
+      "sending": "Sending...",
+      "success": "Email verified successfully!",
+      "title": "Verify Your Email",
+      "tokenMissing": "Invalid verification link."
+    }
+  },
+  "users": {
+    "title_singular": "User",
+    "unknown": "Unknown User",
+    "actions": {
+      "forceLogout": "Force Logout",
+      "verify": "Verify Email"
+    },
+    "allRoles": "All Roles",
+    "createNew": "Create New User",
+    "empty": "No users found.",
+    "filters": {
+      "all": "All",
+      "unverifiedOnly": "Unverified Only",
+      "verification": "Verification Status",
+      "verifiedOnly": "Verified Only"
+    },
+    "form": {
+      "avatar": "Avatar",
+      "avatarPreview": "Avatar Preview",
+      "bio": "Bio",
+      "email": "Email",
+      "emailPlaceholder": "user{'@'}teladan.com",
+      "hints": {
+        "passwordUpdate": "Leave empty if you don't want to change password"
+      },
+      "location": "Location",
+      "name": "Name",
+      "namePlaceholder": "Nama lengkap",
+      "password": "Password",
+      "passwordConfirmation": "Confirm Password",
+      "phone": "Phone",
+      "placeholders": {
+        "bio": "User biography",
+        "email": "user{'@'}example.com",
+        "location": "City, Country",
+        "name": "Full name",
+        "password": "Minimum 8 characters",
+        "passwordConfirmation": "Repeat password",
+        "passwordCurrent": "Kata sandi",
+        "phone": "+1234567890",
+        "website": "https://example.com"
+      },
+      "removeAvatar": "Remove Avatar",
+      "roles": "Roles",
+      "selectAvatar": "Select Avatar",
+      "titleCreate": "Buat Pengguna",
+      "titleEdit": "Ubah Pengguna",
+      "verified": "Verified",
+      "website": "Website"
+    },
+    "loading": "Loading users...",
+    "messages": {
+      "bulkForceLogoutConfirm": "Are you sure you want to force logout {count} selected users?",
+      "bulkVerifyConfirm": "Are you sure you want to verify {count} selected users?",
+      "cannotDeleteLastSuperAdmin": "Cannot delete the last super-admin account",
+      "cannotManageSuperAdmin": "You cannot manage super-admin accounts",
+      "createFailed": "Failed to create user",
+      "create_success": "User created successfully",
+      "deleteConfirm": "Are you sure you want to delete user \"{name}\"?",
+      "deleteFailed": "Failed to delete user",
+      "fetchFailed": "Failed to fetch user data",
+      "forceLogoutConfirm": "Are you sure you want to force logout user \"{name}\" from all devices?",
+      "forceLogoutFailed": "Failed to force logout user",
+      "forceLogoutSessions": "User logged out from {count} device(s)",
+      "forceLogoutSuccess": "Force Logout Successful",
+      "hierarchy_restriction": "You can only manage users with a lower rank than yours",
+      "passwordRequired": "Password is required for new users",
+      "roleRequired": "Please select at least one role",
+      "saveFailed": "Failed to save user",
+      "saveSuccess": "User saved successfully",
+      "updateFailed": "Failed to update user",
+      "update_success": "User updated successfully",
+      "verifySuccess": "User verified successfully",
+      "restoreSuccess": "User restored successfully",
+      "forceDeleteSuccess": "User permanently deleted",
+      "bulkActionSuccess": "Bulk action completed successfully"
+    },
+    "confirm": {
+      "restoreTitle": "Restore User",
+      "restoreMessage": "Are you sure you want to restore {name}?",
+      "restoreConfirm": "Restore",
+      "forceDeleteTitle": "Permanently Delete User",
+      "forceDeleteMessage": "Are you sure you want to PERMANENTLY delete {name}? This action cannot be undone.",
+      "forceDeleteConfirm": "Force Delete"
+    },
+    "modals": {
+      "user": {
+        "avatar": "Avatar",
+        "bio": "Bio",
+        "bioPlaceholder": "User biography",
+        "email": "Email",
+        "emailPlaceholder": "user{'@'}example.com",
+        "loadingRoles": "Loading roles...",
+        "location": "Location",
+        "locationPlaceholder": "City, Country",
+        "name": "Name",
+        "namePlaceholder": "Full name",
+        "noRoles": "No roles available",
+        "password": "Password",
+        "passwordHint": "Leave empty when editing to keep current password",
+        "passwordPlaceholder": "Minimum 8 characters",
+        "phone": "Phone",
+        "phonePlaceholder": "+1234567890",
+        "removeAvatar": "Remove Avatar",
+        "roles": "Roles",
+        "saving": "Saving...",
+        "selectAvatar": "Select Avatar",
+        "titleCreate": "Create User",
+        "titleEdit": "Edit User",
+        "website": "Website",
+        "websitePlaceholder": "https://example.com"
+      }
+    },
+    "search": "Search user by name, email or phone...",
+    "stats": {
+      "active": "Active (30 Days)",
+      "recent": "New (7 Days)",
+      "total": "Total Users",
+      "unverified": "Unverified",
+      "verified": "Verified"
+    },
+    "status": {
+      "never": "Never",
+      "noRoles": "No roles assigned",
+      "unverified": "Unverified",
+      "verified": "Verified"
+    },
+    "subtitle": "Manage users, roles, and access permissions within the system.",
+    "subtitleCreate": "Fill in the information below to create a new user.",
+    "subtitleEdit": "Update user information to adjust profile and access.",
+    "table": {
+      "actions": "Actions",
+      "email": "Email",
+      "lastLogin": "Last Login",
+      "roles": "Roles",
+      "user": "User"
+    },
+    "title": "Users"
+  },
+  "roles": {
+    "actions": {
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "edit": "Edit"
+    },
+    "create": "Create Role",
+    "edit": "Edit Role",
+    "form": {
+      "cancel": "Cancel",
+      "deselectAll": "Deselect All",
+      "name": "Role Name",
+      "namePlaceholder": "Enter role name",
+      "save": "Save",
+      "saving": "Saving...",
+      "selectAll": "Select All"
+    },
+    "list": {
+      "empty": "No roles found",
+      "loading": "Loading roles...",
+      "more": "+{count} more",
+      "permissionsCount": "{count} permissions",
+      "usersCount": "Users: {count}"
+    },
+    "messages": {
+      "deleteConfirm": "Delete role \"{name}\"? This cannot be undone.",
+      "deleteFailed": "Failed to delete role",
+      "deleteSuccess": "Role deleted successfully",
+      "duplicateFailed": "Failed to duplicate role",
+      "enterName": "Please enter a role name",
+      "fetchFailed": "Failed to fetch roles",
+      "saveFailed": "Failed to save role",
+      "saveSuccess": "Role saved successfully"
+    },
+    "permissions": "Permissions",
+    "subtitle": "Manage user roles and their permissions",
+    "title": "Roles & Permissions",
+    "title_singular": "Role",
+    "unknown": "Unknown Role",
+    "panel": {
+      "clearSelection": "Clear Selection",
+      "comparison": {
+        "exit": "Exit Comparison",
+        "mode": "Comparison Mode",
+        "subtitle": "Permission Comparison Matrix",
+        "syncing": "Syncing {count} Roles",
+        "title": "Role Comparison Matrix"
+      },
+      "create": {
+        "title": "Create New Role"
+      },
+      "duplicate": "Duplicate role",
+      "edit": {
+        "mode": "Edit Mode"
+      },
+      "identity": "Role Identity",
+      "liveEditing": "Live Editing",
+      "matrix": {
+        "available": "{count} permissions available",
+        "collapseAll": "Collapse All",
+        "deselectCategory": "Deselect Category",
+        "expandAll": "Expand All",
+        "selectCategory": "Select Category",
+        "title": "Permissions Matrix"
+      },
+      "placeholder": "Select a role to start managing permissions",
+      "reset": "Reset Changes",
+      "save": "Save Configuration",
+      "saving": {
+        "subtitle": "Applying permissions across roles...",
+        "title": "Saving Security Configuration"
+      },
+      "synced": "Configuration synced",
+      "unsavedChanges": "Unsaved changes detected",
+      "welcome": {
+        "description": "Click on a role in the sidebar to edit its permissions, or select multiple roles use the checkbox to compare them side-by-side.",
+        "title": "Role management panel"
+      }
+    }
+  },
+  "notifications": {
+    "actions": {
+      "delete": "Delete",
+      "markAllRead": "Mark All as Read",
+      "markRead": "Mark as Read"
+    },
+    "confirm": {
+      "delete": "Are you sure you want to delete this notification?"
+    },
+    "filters": {
+      "allTypes": "All Types",
+      "readStatus": {
+        "all": "All",
+        "read": "Read",
+        "unread": "Unread"
+      },
+      "search": "Search notifications...",
+      "type": {
+        "error": "Error",
+        "info": "Info",
+        "success": "Success",
+        "warning": "Warning"
+      }
+    },
+    "messages": {
+      "deleteFailed": "Failed to delete notification",
+      "deleteSuccess": "Notification deleted successfully",
+      "empty": "No notifications found",
+      "loading": "Loading...",
+      "markAllReadFailed": "Failed to mark all notifications as read",
+      "markAllReadSuccess": "All notifications marked as read",
+      "markReadFailed": "Failed to mark notification as read",
+      "markReadSuccess": "Notification marked as read"
+    },
+    "title": "Notifications",
+    "subtitle": "Your inbox of system and account notifications."
+  },
+  "appStore": {
+    "title": "Extensions & App Store",
+    "subtitle": "Manage dynamic plug-and-play modules and plugins securely with sandbox gating.",
+    "searchPlaceholder": "Search by name, slug, or author...",
+    "scaffolderBtn": "Scaffolder",
+    "gitBtn": "Git Integration",
+    "uploadBtn": "Upload ZIP",
+    "all": "All",
+    "modules": "Modules",
+    "plugins": "Plugins",
+    "author": "Author",
+    "license": "License",
+    "core": "System Core",
+    "locked": "Locked Core",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "uninstall": "Uninstall",
+    "configure": "Configure",
+    "configureModal": {
+      "settingsSchema": "Dynamic Settings Schema"
+    },
+    "defaultAuthor": "Jejakawan",
+    "card": {
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "licenseCommunity": "Community",
+      "licensePro": "PRO License",
+      "licenseProPlus": "PRO+ Enterprise",
+      "licenseMit": "MIT",
+      "licenseCommercialPro": "Commercial PRO",
+      "licenseEnterprise": "Enterprise Proprietary",
+      "coreInfrastructure": "Core Base Infrastructure",
+      "mandatoryService": "Mandatory Service",
+      "featureActive": "Active",
+      "operationalExtensions": "Operational Extensions",
+      "activeToggleable": "Active Toggleable",
+      "featureDescCoreFallback": "Mandatory core system infrastructure.",
+      "featureDescEmpty": "No description provided."
+    },
+    "constituentFeatures": "Constituent Features",
+    "noFeatures": "No features registered.",
+    "noExtensions": "No extensions found",
+    "noExtensionsSub": "Try searching for different keywords or upload a new ZIP package to install.",
+    "yes": "Yes",
+    "no": "No",
+    "page": "Page",
+    "next": "Next",
+    "prev": "Previous",
+    "showing": "Showing",
+    "of": "of",
+    "loading": "Scanning system extensions...",
+    "uploadTitle": "Upload Extension ZIP",
+    "sandboxNoticeTitle": "Sandbox Gate Scanner Enabled",
+    "sandboxNoticeDesc": "All PHP files inside the ZIP will be scanned in real-time for forbidden system commands (exec, eval, shell_exec) before extraction.",
+    "dragDropLabel": "Drag & drop ZIP here, or click to browse",
+    "manifestNotice": "ZIP package must contain manifest.json",
+    "cancel": "Cancel",
+    "installing": "Security Scanning & Extracting...",
+    "installBtn": "Install Extension",
+    "configTitle": "Configure Settings",
+    "configDesc": "Edit settings variables stored in database for this package.",
+    "saveBtn": "Save Settings",
+    "gitTitle": "Git Repository Integration",
+    "gitDesc": "Pull and clone private/public Git extension repositories dynamically into the Jejakawan!",
+    "repoUrl": "Repository URL",
+    "gitNotice": "Git dynamic pull integrations require SSH token configurations. Feature is currently running under dry-run console.",
+    "gitCloning": "Cloning...",
+    "gitCloneBtn": "Clone & Install",
+    "understood": "Understood",
+    "messages": {
+      "featureToggled": "Feature {name} has been {status}!",
+      "featureToggleFailed": "Failed to update feature status.",
+      "featureToggleError": "Failed to toggle feature.",
+      "invalidJson": "Invalid JSON structure. Please verify formatting.",
+      "settingsSaved": "Configuration parameters updated successfully!",
+      "settingsSaveFailed": "Failed to save settings.",
+      "gitCloneSuccess": "Dynamic plugin cloned and installed successfully from Git!",
+      "gitCloneFailed": "Failed to clone extension.",
+      "gitCloneSecurityFailed": "Security gate: Banned keyword or Git signature validation failed!",
+      "loadFailed": "Failed to load extensions list.",
+      "toggleConfirmTitleActivate": "Activate {name}?",
+      "toggleConfirmTitleDeactivate": "Deactivate {name}?",
+      "toggleConfirmMessageActivate": "Are you sure you want to activate {name}? This will run all database schema migrations dynamically.",
+      "toggleConfirmMessageDeactivate": "Are you sure you want to deactivate {name}? Features will immediately become unavailable.",
+      "toggleSuccessActivated": "{name} has been successfully activated!",
+      "toggleSuccessDeactivated": "{name} has been successfully deactivated!",
+      "toggleFailed": "Failed to {action} extension.",
+      "toggleError": "Error performing action: {action}",
+      "uninstallConfirmTitle": "Uninstall Extension?",
+      "uninstallConfirmMessage": "Are you sure you want to completely uninstall this extension? This will PERMANENTLY ERASE all custom code folders and file assets on the disk! This action is irreversible.",
+      "uninstallConfirmText": "Uninstall & Purge Files",
+      "uninstallSuccess": "Extension purged and deleted successfully!",
+      "uninstallFailed": "Failed to uninstall extension.",
+      "uploadSuccess": "Dynamic plugin installed successfully! Sandbox guard scan passed.",
+      "uploadFailed": "Failed to install ZIP.",
+      "uploadSecurityFailed": "Security gate: Banned keyword or command execution code detected!",
+      "redirectingTo": "Redirecting to {name} configuration..."
+    },
+    "git": {
+      "repoUrlPlaceholder": "https://github.com/username/ja-plugin-telegram.git"
+    },
+    "scaffolder": {
+      "title": "DeveloperKit Scaffolder",
+      "fields": {
+        "pluginName": "Plugin Name",
+        "pluginSlug": "Plugin Slug",
+        "author": "Author",
+        "version": "Version",
+        "description": "Description"
+      },
+      "placeholders": {
+        "pluginName": "My Telegram Bot",
+        "pluginSlug": "my-telegram-bot",
+        "author": "Jejakawan",
+        "version": "1.0.0",
+        "description": "Custom plugin boilerplate generated automatically.",
+        "routeUri": "/api/v1/my-endpoint",
+        "routeAction": "MyController@index",
+        "menuTitle": "Menu Title",
+        "menuRoute": "/dash/my-route",
+        "icon": "icon"
+      },
+      "installLocal": {
+        "title": "Install Directly to Local Server",
+        "description": "If enabled, the extension will be installed directly in backend/extensions/<slug>/"
+      },
+      "routes": {
+        "title": "Dynamic API Routes",
+        "add": "Add Route",
+        "empty": "No custom API routes registered yet."
+      },
+      "menus": {
+        "title": "Dashboard Sidebar Menus",
+        "add": "Add Menu",
+        "empty": "No dashboard menus registered yet.",
+        "groups": {
+          "academic": "Academic",
+          "Jejakawan": "Jejakawan",
+          "system": "System"
+        }
+      },
+      "generating": "Generating boilerplate...",
+      "submit": "Scaffold & Package",
+      "defaultAuthor": "DeveloperKit",
+      "scaffoldFailed": "Scaffolding failed.",
+      "installedSuccess": "Plugin scaffolded and installed successfully!",
+      "downloadSuccess": "Boilerplate ZIP generated and downloaded successfully!"
+    },
+    "descriptions": {
+      "system": "Core system configurations, RBAC user/role permissions, pulse activity logs, settings, and dynamic localizations.",
+      "security": "Robust enterprise shield, featuring Multi-Factor Authentication (2FA), firewall rate limit challenge, honeypots, and file integrity check.",
+      "analytics": "High-performance visitor traffic auditing, dashboard stats trackers, and event lifecycle counters.",
+      "infra": "Mission-critical operations: dynamic Redis caching managers, scheduled cron automation, and database backups.",
+      "ai": "Intelligent copilot organization powered by Gemini models for auto-translations and smart content generation.",
+      "media": "Central enterprise file explorer featuring drag-and-drop uploads, directory structures, and image cropper.",
+      "Jejakawan": "Premium publishing engine with draft autosaving, comment moderation gates, sitemaps, and layout templates.",
+      "forms": "Dynamic drag-and-drop form designer with validator engines and response exports.",
+      "layout": "Section block layout customizer and widget builder.",
+      "library": "Smart book library circulation cataloguing and medical UKS log tracking.",
+      "newsletter": "Campaign email broadcast automation and dynamic subscriber newsletters.",
+      "search": "High-speed global full-text query indexer.",
+      "member": "Membership profile signups and premium subscription packages.",
+      "fallback": "Dynamic system {type} supporting modular platform features."
+    }
+  },
+  "system": {
+    "backups": {
+      "actions": {
+        "delete": "Delete Backup",
+        "restore": "Restore Backup"
+      },
+      "confirm": {
+        "delete": "Are you sure you want to delete backup \"{name}\"?",
+        "restore": "Are you sure you want to restore backup \"{name}\"? This will replace all current data.",
+        "restore_warning": "This action cannot be undone. Are you absolutely sure?"
+      },
+      "create": "Create Backup",
+      "creating": "Creating...",
+      "description": "Manage system backups and restoration points",
+      "empty": "No backups found",
+      "loading": "Loading...",
+      "messages": {
+        "created": "Backup created successfully",
+        "failed_create": "Failed to create backup",
+        "failed_download": "Failed to download backup",
+        "failed_restore": "Failed to restore backup",
+        "failed_save": "Failed to save schedule",
+        "restored": "Backup restored successfully. Please refresh the page.",
+        "saved": "Schedule saved successfully"
+      },
+      "schedule": {
+        "configure": "Configure",
+        "days": "days",
+        "frequencies": {
+          "daily": "Daily",
+          "monthly": "Monthly",
+          "weekly": "Weekly"
+        },
+        "frequency": "Frequency",
+        "modal": {
+          "cancel": "Cancel",
+          "enable": "Enable automatic backups",
+          "max": "Max Backups",
+          "save": "Save",
+          "saving": "Saving...",
+          "title": "Backup Schedule Settings"
+        },
+        "retention": "Retention",
+        "status": "Status",
+        "time": "Time",
+        "title": "Backup Schedule"
+      },
+      "search": "Search backups...",
+      "stats": {
+        "auto": "Auto Backup",
+        "disabled": "Disabled",
+        "enabled": "Enabled",
+        "last": "Last Backup",
+        "never": "Never",
+        "size": "Total Size",
+        "total": "Total Backups"
+      },
+      "table": {
+        "actions": "Actions",
+        "created": "Created",
+        "delete": "Delete",
+        "download": "Download",
+        "name": "Name",
+        "restore": "Restore",
+        "size": "Size",
+        "password": "Password",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      },
+      "title": "Backups"
+    },
+    "info": {
+      "cache": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "clear": "Clear Cache",
+        "clearing": "Clearing...",
+        "failed": "Failed to clear cache",
+        "manage": "Manage Cache",
+        "success": "Cache cleared successfully",
+        "title": "Cache Status"
+      },
+      "health": {
+        "critical": "Critical",
+        "healthy": "Healthy",
+        "title": "System Health",
+        "warning": "Warning"
+      },
+      "quickActions": {
+        "backups": "Backups",
+        "commandRunner": "Command Runner",
+        "emailSettings": "Email Settings",
+        "emailTemplates": "Email Templates",
+        "notifications": "Notification Manager",
+        "redis": "Redis Cache",
+        "scheduledTasks": "Scheduled Tasks",
+        "settings": "Settings",
+        "title": "Quick Actions"
+      },
+      "sections": {
+        "application": "Application",
+        "database": "Database",
+        "debugMode": "Debug Mode",
+        "disabled": "Disabled",
+        "diskUsage": "Disk Usage",
+        "enabled": "Enabled",
+        "environment": "Environment",
+        "laravelVersion": "Laravel Version",
+        "memoryUsage": "Memory Usage",
+        "phpVersion": "PHP Version",
+        "server": "Server",
+        "serverSoftware": "Server Software"
+      },
+      "statistics": {
+        "contents": "Total Contents",
+        "media": "Total Media",
+        "title": "System Statistics",
+        "users": "Total Users",
+        "visits": "Total Visits"
+      },
+      "title": "System Information",
+      "uptime": "Uptime",
+      "maintenance": {
+        "title": "OS System Care & Maintenance Centre",
+        "subtitle": "Manage micro-kernel health, optimize the database, clean virtual junk files, and reset the system.",
+        "cards": {
+          "junk": {
+            "title": "Junk File Cleaner",
+            "description": "Removes temporary ZIP files, leftover dev scaffolds, and old sandbox cache.",
+            "action": "Clean Junk"
+          },
+          "database": {
+            "title": "Database Optimization",
+            "description": "Defragments schema indexes and purges orphaned CCK data.",
+            "action": "Optimize Database"
+          },
+          "performance": {
+            "title": "Performance Boost (Cache)",
+            "description": "Instantly recompiles Laravel framework config, routes, and views.",
+            "action": "Accelerate Performance"
+          },
+          "reset": {
+            "title": "System Factory Reset",
+            "description": "Deletes all custom data and plugins, cleans the sandbox, and reloads the database.",
+            "action": "Reset System"
+          }
+        },
+        "console": {
+          "header": "[SYS LOGS ENGINE OUTPUT]",
+          "clear": "Clear"
+        },
+        "resetModal": {
+          "title": "Factory Reset Confirmation",
+          "subtitle": "This destructive action cannot be undone.",
+          "warning": "This will delete all custom sandbox data, reset the database schema to factory defaults, remove third-party plugins, and reset Administrator credentials.",
+          "passwordLabel": "Enter your Super-Admin password",
+          "cancel": "Cancel",
+          "confirm": "Reset Now"
+        },
+        "logs": {
+          "junk": {
+            "start": "Starting junk file cleanup (temp & dev artifacts)...",
+            "success": "SUCCESS: Junk files cleaned!",
+            "filesDeleted": "  - Files deleted: {count}",
+            "spaceFreed": "  - Space freed: {size}",
+            "error": "ERROR: Failed to clean junk: {message}"
+          },
+          "database": {
+            "start": "Starting database optimization & CCK indexes...",
+            "success": "SUCCESS: Database indexes defragmented!",
+            "tablesOptimized": "  - Tables optimized: {count}",
+            "orphansPurged": "  - Orphaned CCK rows purged: {count}",
+            "error": "ERROR: Failed to optimize database: {message}"
+          },
+          "performance": {
+            "start": "Starting precompilation (config, route & view warming)...",
+            "success": "SUCCESS: Internal micro-kernel cache warmed!",
+            "mode": "  - Cache mode: Router & Views cache warmup.",
+            "error": "ERROR: Failed to warm cache: {message}"
+          },
+          "reset": {
+            "start": "Starting factory reset (FACTORY RESET)...",
+            "sandboxCleared": "SUCCESS: All sandbox data has been fully cleared.",
+            "dbMigrated": "SUCCESS: Database safely migrated from scratch.",
+            "redirect": "The system will redirect you to the login page in 5 seconds...",
+            "error": "ERROR: Authorization failed or an error occurred: {message}"
+          }
+        }
+      },
+      "subtitle": "Health, versions, and quick links to system tools."
+    },
+    "logs": {
+      "actions": {
+        "clear": "Clear Logs"
+      },
+      "clear": "Clear Logs",
+      "clearing": "Clearing...",
+      "confirm": {
+        "clear": "Are you sure you want to clear all logs? This action cannot be undone."
+      },
+      "empty": "Select a log file to view",
+      "failed_load": "Failed to load log content",
+      "files": "Log Files",
+      "loading": "Loading log file...",
+      "messages": {
+        "cleared": "Logs cleared successfully",
+        "failed_clear": "Failed to clear logs",
+        "failed_download": "Failed to download log file"
+      },
+      "refresh": "Refresh",
+      "search": "Search in log...",
+      "select": "Select a log file",
+      "title": "System Journal",
+      "subtitle": "Application and server log files."
+    },
+    "notifications": {
+      "confirm": {
+        "revoke": "Are you sure you want to revoke this broadcast? All associated notifications will be deleted from recipients' inboxes.",
+        "send": "Are you sure you want to send this notification to all selected targets?"
+      },
+      "create": {
+        "title": "Send Notification"
+      },
+      "form": {
+        "message": "Message",
+        "process_async": "Process in Background (Queue)",
+        "revoke": "Revoke Broadcast",
+        "revoking": "Revoking...",
+        "send": "Send Notification",
+        "sending": "Sending...",
+        "target_id": "Specific Target",
+        "target_type": "Target Audience",
+        "targets": {
+          "all": "All Users",
+          "role": "Specific Role",
+          "user": "Specific User"
+        },
+        "title": "Title",
+        "type": "Type"
+      },
+      "history": {
+        "title": "Broadcast History"
+      },
+      "messages": {
+        "failed": "Failed to send notification.",
+        "revoked": "Broadcast successfully revoked.",
+        "sent": "Notification has been queued for delivery."
+      },
+      "queue": {
+        "inactive_message": "No worker detected. Notifications will be queued but not delivered until a worker is running. Disable this option to send immediately.",
+        "inactive_title": "Queue Inactive"
+      },
+      "table": {
+        "message": "Message",
+        "recipients": "Recipients",
+        "send": "Send Notification",
+        "sending": "Sending...",
+        "sent_at": "Sent At",
+        "title": "Title",
+        "type": "Type"
+      },
+      "title": "Notification Manager"
+    },
+    "scheduled_tasks": {
+      "confirm": {
+        "delete": "Are you sure you want to delete task \"{name}\"?",
+        "run": "Are you sure you want to run task \"{name}\" now?"
+      },
+      "create": "New Task",
+      "empty": "No scheduled tasks found",
+      "filters": {
+        "active": "Active",
+        "all": "All Status",
+        "inactive": "Inactive"
+      },
+      "loading": "Loading...",
+      "messages": {
+        "executed": "Task executed successfully",
+        "failed_execute": "Failed to run task",
+        "failed_save": "Failed to save task",
+        "saved": "Task saved successfully"
+      },
+      "modal": {
+        "active_label": "Active",
+        "cancel": "Cancel",
+        "command_help": "Laravel artisan command or PHP script",
+        "command_label": "Command (e.g., emails:send)",
+        "command_placeholder": "artisan:command or php script.php",
+        "create_action": "Create",
+        "description_label": "Description",
+        "description_placeholder": "Task description",
+        "name_label": "Task Name",
+        "name_placeholder": "Task name",
+        "save": "Save Task",
+        "saving": "Saving...",
+        "schedule_help": "Cron expression (e.g., \"0 * * * *\" for hourly, \"0 0 * * *\" for daily)",
+        "schedule_label": "Schedule Expression (Cron)",
+        "schedule_placeholder": "0 * * * *",
+        "title_create": "Create New Task",
+        "title_edit": "Edit Task",
+        "update": "Update"
+      },
+      "search": "Search tasks...",
+      "table": {
+        "actions": "Actions",
+        "command": "Command",
+        "delete": "Delete",
+        "edit": "Edit",
+        "last_run": "Last Run",
+        "name": "Name",
+        "never": "Never",
+        "run": "Run Now",
+        "schedule": "Schedule",
+        "status": "Status"
+      },
+      "title": "Scheduled Tasks",
+      "description": "Manage scheduled tasks and cron jobs."
+    },
+    "navigation": {
+      "menu": {
+        "webhooks": "Webhooks"
+      }
+    },
+    "kyc": {
+      "title": "Account Verification (KYC)",
+      "subtitle": "Complete these steps to unlock all features.",
+      "steps": {
+        "basic": {
+          "title": "Level 1: Basic Profile",
+          "desc": "Provide your basic information."
+        },
+        "contact": {
+          "title": "Level 2: Contact Verification",
+          "desc": "Verify your phone and address."
+        },
+        "identity": {
+          "title": "Level 3: Identity Verification",
+          "desc": "Upload government ID to unlock all features."
+        }
+      }
+    },
+    "profile": {
+      "tabs": {
+        "sessions": "Active Sessions"
+      },
+      "sessions": {
+        "revoked": "Session revoked successfully"
+      }
+    }
+  },
+  "settings": {
+    "title": "Jejakawan Settings",
+    "description": "Manage Jejakawan configuration, identity, discussion, and performance",
+    "loading": "Loading settings...",
+    "noSettings": "No settings found in this tab.",
+    "tabs": {
+      "identity": "Identity",
+      "general": "General",
+      "email": "Email",
+      "seo": "SEO",
+      "security": "Security",
+      "comments": "Discussion",
+      "performance": "Performance",
+      "monitoring": "Monitoring",
+      "media": "Media",
+      "ai": "AI Assistance",
+      "analytics": "Analytics",
+      "system": "System"
+    },
+    "groups": {
+      "license": {
+        "title": "License & Service",
+        "description": "Status of platform license and service integration."
+      },
+      "brand": {
+        "title": "Application Identity (Whitelabel)",
+        "description": "Customize platform branding for admin and system."
+      },
+      "site": {
+        "title": "Public site identity",
+        "description": "Name, contact, and branding shown on the public Jejakawan and landing page."
+      },
+      "ai": {
+        "title": "AI Assistance",
+        "description": "Configure AI features for content generation.",
+        "enable_ai": "Enable AI Features",
+        "enable_ai_desc": "Enable or disable AI assistance in the editor.",
+        "default_provider": "Default Provider",
+        "default_provider_desc": "Select which AI provider to use by default.",
+        "providers": "AI Providers",
+        "api_key": "API Key",
+        "api_key_placeholder": "Enter API Key",
+        "model_select": "Default Model",
+        "select_model": "Select Model",
+        "loading_models": "Loading...",
+        "enter_api_key_to_select": "Enter API Key to select model.",
+        "test_connection": "Test Connection",
+        "fetch_models": "Fetch Models",
+        "using_model": "Using: {model}",
+        "connection_success": "Connection successful",
+        "fetch_success": "Models fetched successfully"
+      },
+      "editor": {
+        "title": "Editor Preferences",
+        "description": "Control content editor behavior"
+      },
+      "localization": {
+        "title": "Localization",
+        "description": "Regional settings and formatting preferences"
+      },
+      "smtp": {
+        "title": "SMTP Configuration",
+        "description": "Mail server connection settings"
+      },
+      "identity": {
+        "title": "Email Identity",
+        "description": "Default sender information for outgoing emails"
+      },
+      "meta": {
+        "title": "Meta Tags",
+        "description": "Configure default metadata and keywords for SEO"
+      },
+      "searchEngines": {
+        "title": "Search Engines & Crawling",
+        "description": "Configure integration with Google search console, sitemap, and robots.txt"
+      },
+      "authentication": {
+        "title": "Authentication & 2FA",
+        "description": "User registration and two-factor authentication settings"
+      },
+      "password": {
+        "title": "Password Policy",
+        "description": "Password strength and complexity requirements"
+      },
+      "session": {
+        "title": "Session Management",
+        "description": "Control login session duration and limits"
+      },
+      "access": {
+        "title": "Access Restriction",
+        "description": "Settings to restrict suspicious access"
+      },
+      "captcha": {
+        "title": "Anti-Bot Protection",
+        "description": "Captcha verification to prevent automated attacks"
+      },
+      "upload": {
+        "title": "Upload Settings",
+        "description": "File upload limits and allowed file types"
+      },
+      "imageProcessing": {
+        "title": "Image Processing",
+        "description": "Thumbnail generation and watermark settings"
+      },
+      "s3": {
+        "title": "S3 Configuration",
+        "description": "Configure S3 bucket connection details"
+      },
+      "google": {
+        "title": "Google Drive Configuration",
+        "description": "Configure Google Drive API details"
+      },
+      "ftp": {
+        "title": "FTP Configuration",
+        "description": "Configure FTP server details"
+      },
+      "dropbox": {
+        "title": "Dropbox Configuration",
+        "description": "Configure Dropbox API token"
+      },
+      "migration": {
+        "title": "Storage Migration",
+        "description": "Migrate files from Local Storage to {driver}. This will copy existing files to the new storage.",
+        "start": "Start Migration",
+        "stop": "Stop",
+        "scanning": "Scanning local files...",
+        "migrating": "Migrating: {processed} / {total} files",
+        "no_files": "No files to migrate.",
+        "stopped": "Migration stopped by user.",
+        "batch_failed": "Batch failed",
+        "success": "Migration completed successfully.",
+        "confirm_title": "Storage Migration",
+        "confirm_message": "This will copy all files from Local Storage to the currently configured External Storage. Process may take time. Continue?"
+      },
+      "test": {
+        "button": "Test Connection",
+        "testing": "Testing...",
+        "failed": "Connection failed. Please check your credentials."
+      },
+      "moderation": {
+        "title": "Moderation & Security Settings",
+        "description": "Configure comment moderation policies, spam protection, and captchas"
+      },
+      "maintenance": {
+        "title": "Maintenance Mode",
+        "description": "Configure Coming Soon / Under Maintenance page."
+      },
+      "botShield": {
+        "title": "Bot Shield (Anti-Scraper)",
+        "description": "Proof-of-Work protection against AI scrapers and automated bots."
+      },
+      "scannerProtection": {
+        "title": "Scanner Protection",
+        "description": "Dynamic learning and auto-blocking for malicious path scanners."
+      },
+      "threatIntel": {
+        "title": "Threat Intelligence",
+        "description": "AbuseIPDB and IP reputation settings"
+      },
+      "securityNotifications": {
+        "title": "Security Notifications",
+        "description": "Telegram, Email, and Webhook alerts"
+      },
+      "logs": {
+        "title": "System Log Retention",
+        "description": "Configure how long activity and system logs are kept before being auto-deleted."
+      },
+      "backupMonitoring": {
+        "title": "Backup Monitoring",
+        "description": "System backup monitoring and file retention settings."
+      },
+      "notifications": {
+        "title": "Notification Manager",
+        "description": "Broadcast system notifications to users and roles."
+      },
+      "siteInfo": {
+        "title": "Site Information",
+        "description": "Basic information about your website"
+      },
+      "analytics": {
+        "retentionTitle": "Data Retention",
+        "description": "Configure how long analytics data should be kept in the database.",
+        "cleanupTitle": "Manual Data Cleanup",
+        "cleanupDescription": "Trigger a manual cleanup of old analytics data based on the retention settings. This will permanently delete data older than the specified retention periods.",
+        "cleanupButton": "Run Cleanup Now",
+        "cleaningNow": "Cleaning...",
+        "cleanupConfirm": "Are you sure you want to delete old analytics data now?",
+        "cleanupSuccess": "Successfully cleaned up {count} records.",
+        "purgeTitle": "Reset all analytics",
+        "purgeConfirm": "This permanently deletes every visit, event, and session in analytics (including today). Content page view counters are not changed. Continue?",
+        "purgeButton": "Delete all analytics",
+        "purgingNow": "Deleting...",
+        "purgeSuccess": "Removed {count} analytics records. Dashboards will reflect empty data immediately."
+      },
+      "discussion": {
+        "title": "Discussion Settings",
+        "description": "Configure comment system behavior"
+      }
+    },
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "current": "Current",
+    "reset": "Reset Settings",
+    "save": "Save Settings",
+    "saving": "Saving…",
+    "saved": "Settings saved successfully",
+    "failed": "Failed to save settings",
+    "jsonPlaceholder": "Enter valid JSON format",
+    "options": {
+      "timezone": {
+        "utc": "UTC (Coordinated Universal Time)",
+        "jakarta": "Asia/Jakarta (WIB - GMT+7)",
+        "makassar": "Asia/Makassar (WITA - GMT+8)",
+        "jayapura": "Asia/Jayapura (WIT - GMT+9)",
+        "newyork": "America/New_York (EST/EDT)",
+        "chicago": "America/Chicago (CST/CDT)",
+        "losangeles": "America/Los_Angeles (PST/PDT)",
+        "london": "Europe/London (GMT/BST)",
+        "paris": "Europe/Paris (CET/CEST)",
+        "sydney": "Australia/Sydney (AEST/AEDT)",
+        "tokyo": "Asia/Tokyo (JST)",
+        "singapore": "Asia/Singapore (SGT)"
+      },
+      "dateFormat": {
+        "ymd": "2024-12-25 (Y-m-d)",
+        "dmy": "25/12/2024 (d/m/Y)",
+        "mdy": "12/25/2024 (m/d/Y)",
+        "dmyDash": "25-12-2024 (d-m-Y)",
+        "full": "December 25, 2024 (F j, Y)",
+        "fullReverse": "25 December 2024 (j F Y)"
+      },
+      "timeFormat": {
+        "24hSeconds": "23:59:59 (24-hour with seconds)",
+        "24h": "23:59 (24-hour)",
+        "12h": "11:59 PM (12-hour)",
+        "12hSeconds": "11:59:59 PM (12-hour with seconds)"
+      },
+      "itemsPerPage": {
+        "10": "10 items",
+        "15": "15 items",
+        "20": "20 items",
+        "25": "25 items",
+        "50": "50 items",
+        "100": "100 items"
+      },
+      "mailDriver": {
+        "smtp": "SMTP",
+        "sendmail": "Sendmail",
+        "mailgun": "Mailgun",
+        "ses": "Amazon SES",
+        "postmark": "Postmark",
+        "log": "Log (Testing)"
+      },
+      "mailEncryption": {
+        "tls": "TLS (Recommended)",
+        "ssl": "SSL",
+        "none": "None"
+      },
+      "mailPort": {
+        "25": "25 (No Encryption - Not Recommended)",
+        "465": "465 (No Encryption)",
+        "587": "587 (No Encryption)",
+        "2525": "2525 (TLS Alternative)",
+        "587tls": "587 (TLS Standard - Recommended)",
+        "25tls": "25 (Legacy with STARTTLS)",
+        "465tls": "465 (TLS over SSL Port)",
+        "465ssl": "465 (SSL Standard - Recommended)",
+        "587ssl": "587 (SSL Alternative)",
+        "25ssl": "25 (Legacy with SSL)",
+        "2525plain": "2525 (Alternative - No Encryption)"
+      },
+      "storageDriver": {
+        "local": "Local Storage",
+        "s3": "Amazon S3",
+        "ftp": "FTP Server",
+        "dropbox": "Dropbox",
+        "google": "Google Drive"
+      },
+      "thumbnailSize": {
+        "150": "150px",
+        "200": "200px",
+        "250": "250px",
+        "300": "300px",
+        "400": "400px",
+        "500": "500px"
+      },
+      "passwordMinLength": {
+        "6": "6 characters (minimum)",
+        "8": "8 characters (recommended)",
+        "10": "10 characters (strong)",
+        "12": "12 characters (very strong)",
+        "16": "16 characters (maximum security)"
+      },
+      "loginAttempts": {
+        "3": "3 attempts (strict)",
+        "5": "5 attempts (recommended)",
+        "10": "10 attempts (lenient)",
+        "unlimited": "Unlimited"
+      },
+      "blockDuration": {
+        "5": "5 minutes",
+        "15": "15 minutes (recommended)",
+        "30": "30 minutes",
+        "60": "1 hour",
+        "1440": "24 hours"
+      },
+      "sessionLifetime": {
+        "30": "30 minutes",
+        "60": "1 hour",
+        "120": "2 hours (recommended)",
+        "480": "8 hours (workday)",
+        "1440": "24 hours",
+        "10080": "7 days"
+      },
+      "maxSessions": {
+        "1": "1 session (strict)",
+        "2": "2 sessions",
+        "3": "3 sessions (recommended)",
+        "5": "5 sessions",
+        "unlimited": "Unlimited"
+      },
+      "logRetention": {
+        "7": "7 days",
+        "14": "14 days",
+        "30": "30 days (recommended)",
+        "60": "60 days",
+        "90": "90 days",
+        "365": "1 year",
+        "forever": "Keep forever"
+      },
+      "cacheTtl": {
+        "300": "5 minutes",
+        "600": "10 minutes",
+        "1800": "30 minutes",
+        "3600": "1 hour (recommended)",
+        "7200": "2 hours",
+        "86400": "24 hours"
+      },
+      "maxUploadSize": {
+        "1024": "1 MB",
+        "2048": "2 MB (recommended)",
+        "5120": "5 MB",
+        "10240": "10 MB",
+        "20480": "20 MB",
+        "51200": "50 MB",
+        "102400": "100 MB"
+      },
+      "twoFactorMethod": {
+        "app": "Authenticator App (TOTP)",
+        "email": "Email Code"
+      },
+      "twoFactorEnforced": {
+        "no": "Optional for all users",
+        "admin": "Mandatory for Admins",
+        "all": "Mandatory for All Users"
+      },
+      "captchaMethod": {
+        "slider": "Slider Verification",
+        "math": "Math Challenge",
+        "image": "Image Code"
+      },
+      "maintenanceTitlePresets": {
+        "coming_soon": "Coming Soon",
+        "under_maintenance": "Under Maintenance",
+        "launch_day": "Launch Day!",
+        "system_update": "System Update"
+      },
+      "maintenanceMessagePresets": {
+        "awesome": "We are currently working on something awesome. Please check back later.",
+        "inconvenience": "Sorry for the inconvenience. We're performing some maintenance and will be back shortly.",
+        "exciting": "Something exciting is coming! Stay tuned for our launch.",
+        "better_exp": "We are updating our system to provide you a better experience. We'll be back online soon."
+      },
+      "shieldProtectionMode": {
+        "off": "Disabled",
+        "suspicious": "Suspicious Traffic Only",
+        "always": "Always Challenge (Strict)"
+      },
+      "shieldProtectionDifficulty": {
+        "3": "3 - Very Light",
+        "4": "4 - Normal (Recommended)",
+        "5": "5 - Strict",
+        "6": "6 - Very Strict",
+        "7": "7 - Paranoid"
+      }
+    },
+    "labels": {
+      "site_name": "Site Name",
+      "app_name": "Application Name",
+      "site_public_name": "Public site name",
+      "site_public_address": "Public site address",
+      "site_public_phone": "Public contact phone",
+      "license_type": "License Type",
+      "license_key": "License Key",
+      "site_logo": "Site Logo",
+      "site_favicon": "Site Favicon",
+      "site_description": "Site Description",
+      "site_url": "Site URL",
+      "admin_email": "Admin Email",
+      "app_logo": "Application Logo",
+      "app_favicon": "Application Favicon",
+      "branding_display": "Branding Display Mode",
+      "timezone": "Timezone",
+      "date_format": "Date Format",
+      "time_format": "Time Format",
+      "items_per_page": "Items Per Page",
+      "mail_driver": "Mail Driver / Protocol",
+      "mail_host": "SMTP Server Host",
+      "mail_port": "SMTP Server Port",
+      "mail_username": "SMTP Server Username",
+      "mail_password": "SMTP Server Password",
+      "mail_encryption": "Mail Encryption Type",
+      "mail_from_address": "Sender Email Address",
+      "mail_from_name": "Sender Name Display",
+      "meta_title": "Default Meta Title",
+      "meta_description": "Default Meta Description",
+      "meta_keywords": "Default Meta Keywords",
+      "google_analytics_id": "Google Analytics Measurement ID",
+      "google_search_console": "Google Search Console Verification Token",
+      "enable_sitemap": "Enable Sitemap Generation",
+      "enable_robots_txt": "Enable Robots.txt Editor",
+      "enable_registration": "Enable Registration",
+      "require_email_verification": "Require Email Verification",
+      "password_min_length": "Minimum Password Length",
+      "password_require_uppercase": "Require Uppercase Letter",
+      "password_require_lowercase": "Require Lowercase Letter",
+      "password_require_number": "Require Number",
+      "password_require_symbol": "Require Symbol",
+      "enable_captcha": "Enable Captcha",
+      "captcha_method": "Captcha Method",
+      "captcha_on_login": "Captcha on Login",
+      "captcha_on_register": "Captcha on Registration",
+      "login_attempts_limit": "Login Attempts Limit",
+      "block_duration_minutes": "Block Duration (minutes)",
+      "enable_2fa": "Enable 2FA",
+      "two_factor_method": "2FA Method",
+      "two_factor_enforced_roles": "2FA Enforcement",
+      "session_lifetime": "Session Lifetime (minutes)",
+      "single_session_enabled": "Single Session Mode",
+      "max_concurrent_sessions": "Max Concurrent Sessions",
+      "log_retention_days": "Log Retention (days)",
+      "activity_log_retention_days": "System Activity Log Retention (Days)",
+      "security_log_retention_days": "WAF & Security Audit Retention (Days)",
+      "login_history_retention_days": "User Login History Retention (Days)",
+      "security_alert_failed_login_threshold": "Failed Logins Warning Threshold",
+      "backup_retention_days": "Database Backup Retention (Days)",
+      "enable_cache": "Enable Cache",
+      "cache_driver": "Cache Driver",
+      "cache_ttl": "Cache Time-To-Live (seconds)",
+      "enable_image_optimization": "Optimize Images",
+      "enable_lazy_loading": "Lazy Loading",
+      "enable_cdn": "Enable CDN",
+      "cdn_preset": "CDN Provider",
+      "cdn_url": "CDN URL",
+      "cdn_included_dirs": "Included Directories",
+      "cdn_excluded_extensions": "Excluded Extensions",
+      "max_upload_size": "Max Upload Size (KB)",
+      "allowed_image_types": "Allowed Image Types",
+      "allowed_file_types": "Allowed File Types",
+      "thumbnail_width": "Thumbnail Width (px)",
+      "thumbnail_height": "Thumbnail Height (px)",
+      "enable_watermark": "Enable Watermark",
+      "watermark_text": "Watermark Text",
+      "storage_driver": "Storage Driver",
+      "aws_access_key_id": "AWS Access Key ID",
+      "aws_secret_access_key": "AWS Secret Access Key",
+      "aws_default_region": "AWS Default Region",
+      "aws_bucket": "AWS Bucket",
+      "aws_endpoint": "AWS Endpoint",
+      "google_client_id": "Google Client ID",
+      "google_client_secret": "Google Client Secret",
+      "google_refresh_token": "Google Refresh Token",
+      "google_folder_id": "Google Folder ID",
+      "ftp_host": "FTP Host",
+      "ftp_username": "FTP Username",
+      "ftp_password": "FTP Password",
+      "ftp_root": "FTP Root Path",
+      "ftp_port": "FTP Port",
+      "ftp_ssl": "Use SSL/TLS",
+      "dropbox_authorization_token": "Dropbox Auth Token",
+      "maintenance_mode": "Maintenance Mode",
+      "maintenance_title": "Maintenance Page Title",
+      "maintenance_message": "Maintenance Message",
+      "maintenance_countdown_enabled": "Enable Countdown Timer",
+      "maintenance_end_time": "Maintenance End Time",
+      "shield_protection_mode": "Bot Shield Mode",
+      "console_dashboard_slug": "Console Dashboard URL Slug",
+      "shield_protection_difficulty": "PoW Difficulty Level",
+      "shield_log_verification_success": "Log Successful Verifications",
+      "shield_enable_ip_intelligence": "Global Blacklist (IP Intelligence)",
+      "shield_allowed_countries": "Allowed Countries",
+      "email_to": "Recipient Email",
+      "webhook_url": "Webhook URL",
+      "abuseipdb_api_key": "AbuseIPDB API Key",
+      "threat_intel_auto_block_threshold": "Threat Intel Threshold",
+      "scanner_auto_block_threshold": "Scanner Protection Threshold",
+      "security_learned_scanner_paths": "Learned Scanner Paths",
+      "telegram_bot_token": "Telegram Bot Token",
+      "telegram_chat_id": "Telegram Chat ID",
+      "analytics_retention_days": "Visitor Log Retention (Days)",
+      "analytics_event_retention_days": "Event History Retention (Days)",
+      "analytics_visitor_retention_days": "Session Log Retention (Days)",
+      "content": {
+        "autosave_enabled": "Enable Autosave in Content Editor",
+        "autosave_interval_seconds": "Autosave Interval (seconds)"
+      },
+      "brand_logo": "Brand Logo",
+      "brand_favicon": "Brand Favicon",
+      "ai_enabled": "Enable AI Platform Features",
+      "ai_default_provider": "Default LLM Provider",
+      "gemini_api_key": "Gemini LLM API Key",
+      "gemini_model": "Gemini Model Variant",
+      "comments": {
+        "security": {
+          "enable_reply": "Enable Replies",
+          "allow_guests": "Allow Guest Comments",
+          "moderation_enabled": "Enable Moderation",
+          "guest_captcha": "Guest Captcha",
+          "max_links": "Max Links Allowed",
+          "banned_words": "Banned Words"
+        }
+      }
+    },
+    "descriptions": {
+      "site_name": "The public name of your Jejakawan site",
+      "app_name": "Custom name for this application instance",
+      "site_public_name": "Official name shown on the public Jejakawan",
+      "site_public_address": "Physical address shown on the public site",
+      "site_public_phone": "Main contact phone number for the public site",
+      "license_type": "The tier or version of your active license",
+      "license_key": "Unique license identifier for support and updates",
+      "site_logo": "The main logo of the Jejakawan site",
+      "site_favicon": "The browser icon for your site (recommended 16x16 or 32x32)",
+      "site_description": "A brief description of your site for SEO purposes",
+      "site_url": "The main URL of your Jejakawan application",
+      "admin_email": "Contact email for administrative purposes",
+      "app_logo": "Logo displayed in the admin dashboard sidebar and header",
+      "app_favicon": "Icon displayed in the browser tab when viewing the admin dashboard",
+      "branding_display": "Determine if branding displays logo, app name, or both",
+      "timezone": "The default timezone used for all dates and times",
+      "date_format": "The format used to display dates throughout the application",
+      "time_format": "The format used to display times throughout the application",
+      "items_per_page": "The default number of items to display in table listings",
+      "mail_driver": "Transmission protocol driver (usually SMTP)",
+      "mail_host": "FQDN or IP of your mail relay mail server",
+      "mail_port": "Port mapped to the mail relay (typically 587 or 2525)",
+      "mail_username": "Authentication username credential for mail delivery",
+      "mail_password": "Authentication password credential for mail delivery",
+      "mail_encryption": "TLS or SSL tunnel encapsulation mode for security",
+      "mail_from_address": "Outgoing envelope sender address shown in emails",
+      "mail_from_name": "Display name prefix mapped to sender address",
+      "meta_title": "Primary default title used when no specific content title is set",
+      "meta_description": "Default description served to search engine crawl spiders",
+      "meta_keywords": "Comma separated keywords representing core site taxonomy",
+      "google_analytics_id": "Integration tracking ID (e.g. G-XXXXXX)",
+      "google_search_console": "HTML verification token for search performance console",
+      "enable_sitemap": "Generate sitemap.xml dynamically to ease indexing",
+      "enable_robots_txt": "Expose robots.txt configuration dynamically",
+      "enable_registration": "Allow new users to create accounts on your site",
+      "require_email_verification": "New users must verify their email before they can log in",
+      "password_min_length": "The minimum number of characters required for passwords",
+      "password_require_uppercase": "Passwords must contain at least one uppercase letter (A-Z)",
+      "password_require_lowercase": "Passwords must contain at least one lowercase letter (a-z)",
+      "password_require_number": "Passwords must contain at least one digit (0-9)",
+      "password_require_symbol": "Passwords must contain at least one symbol (!{'@'}#$%^&*...)",
+      "enable_captcha": "Show captcha verification on login and registration forms",
+      "captcha_method": "Choose the type of captcha challenge to use",
+      "captcha_on_login": "Require captcha verification on the login form",
+      "captcha_on_register": "Require captcha verification on the registration form",
+      "login_attempts_limit": "Number of failed logins allowed before temporary lockout",
+      "block_duration_minutes": "How long an IP is blocked after exceeding login limits",
+      "enable_2fa": "Enable or disable two-factor authentication system-wide",
+      "two_factor_method": "Method used for 2FA verification",
+      "two_factor_enforced_roles": "Enforce 2FA for specific user roles",
+      "session_lifetime": "How long a user session lasts before expiring due to inactivity",
+      "single_session_enabled": "When enabled, new login will automatically logout previous sessions (1 account = 1 device)",
+      "max_concurrent_sessions": "Maximum number of active sessions per user. Set 0 for unlimited",
+      "log_retention_days": "How long general application logs are kept before being auto-deleted.",
+      "activity_log_retention_days": "Automated purge interval for audit logs",
+      "security_log_retention_days": "Automated purge interval for WAF blockage events",
+      "login_history_retention_days": "Trace logs window for login attempts",
+      "security_alert_failed_login_threshold": "Warn admin if an IP fails authentication this many times",
+      "backup_retention_days": "Retention window for ZIP backups of DB + files",
+      "enable_cache": "Store computed data temporarily to speed up the site",
+      "cache_driver": "The storage system for cached data",
+      "cache_ttl": "Default duration for cached items to remain valid",
+      "cache_status": "Manage cache drivers and application cache status",
+      "cdn_status": "Configure Content Delivery Network settings",
+      "performance_status": "Image optimization, lazy loading, and more",
+      "enable_image_optimization": "Automatically optimize images on upload for better performance",
+      "enable_lazy_loading": "Load images only when they enter the viewport",
+      "enable_cdn": "Serve static assets from a Content Delivery Network",
+      "cdn_preset": "Select your CDN provider for optimized configuration",
+      "cdn_url": "The base URL provided by your CDN",
+      "cdn_included_dirs": "Comma-separated list of directories to serve via CDN",
+      "cdn_excluded_extensions": "File extensions to exclude from CDN",
+      "max_upload_size": "The maximum file size allowed for uploads",
+      "allowed_image_types": "Comma-separated list of allowed image extensions",
+      "allowed_file_types": "Comma-separated list of allowed file extensions",
+      "thumbnail_width": "The width used when generating thumbnails",
+      "thumbnail_height": "The height used when generating thumbnails",
+      "enable_watermark": "Add a text watermark to images on upload",
+      "watermark_text": "The text to display on the watermark",
+      "storage_driver": "The system used to store uploaded files (local or external)",
+      "aws_access_key_id": "Your AWS IAM Access Key ID",
+      "aws_secret_access_key": "Your AWS IAM Secret Access Key",
+      "aws_default_region": "Region code, e.g. us-east-1",
+      "aws_bucket": "S3 Bucket Name",
+      "aws_endpoint": "Optional custom endpoint for S3 compatible services (MinIO, Spaces)",
+      "google_client_id": "OAuth2 Client ID from Google Cloud Console",
+      "google_client_secret": "OAuth2 Client Secret",
+      "google_refresh_token": "Long-lived refresh token for offline access",
+      "google_folder_id": "ID of the folder to store files in (optional)",
+      "ftp_host": "Hostname or IP address of the FTP server",
+      "ftp_username": "FTP Account Username",
+      "ftp_password": "FTP Account Password",
+      "ftp_root": "Root directory for file storage (e.g. /public_html)",
+      "ftp_port": "FTP connection port (default 21)",
+      "ftp_ssl": "Enable secure connection (FTPS)",
+      "dropbox_authorization_token": "Generated Access Token from Dropbox App Console",
+      "maintenance_mode": "Enable or disable Coming Soon / Under Maintenance mode.",
+      "maintenance_title": "The main heading on the maintenance page.",
+      "maintenance_message": "The message displayed on the maintenance page.",
+      "maintenance_countdown_enabled": "Show a live countdown timer until the site becomes live again.",
+      "maintenance_end_time": "When the maintenance is scheduled to end. The site will automatically become live after this time.",
+      "shield_protection_mode": "Proof-of-Work (PoW) security layer to deter AI scrapers and bots. 'Suspicious Traffic Only' mode minimizes friction for legitimate users.",
+      "console_dashboard_slug": "Customize the base URL prefix for the Jejakawan Console (e.g. ja-dash, control) to hide the default /dash path.",
+      "shield_protection_difficulty": "Number of leading zeros required in the proof hash. Higher values increase bot CPU usage. Normal (4) is recommended.",
+      "shield_log_verification_success": "If enabled, successful verification attempts will be logged in the Security Journal. Default: Disabled to reduce log volume.",
+      "shield_enable_ip_intelligence": "Automatically check visitors against global blacklists (Spamhaus ZEN). Malicious IPs are blocked permanently.",
+      "shield_allowed_countries": "List of country codes (ISO 3166-1 alpha-2) that are allowed to access the site. Examples: [\"ID\", \"SG\"]. Leave empty to allow all.",
+      "email_to": "Email address where security notifications will be sent.",
+      "webhook_url": "Discord/Slack webhook URL for security alerts.",
+      "abuseipdb_api_key": "API Key from AbuseIPDB.com for IP reputation checks.",
+      "threat_intel_auto_block_threshold": "Confidence score (0-100) at which to automatically block IPs.",
+      "scanner_auto_block_threshold": "Number of malicious scanner hits within 1 hour before an IP is automatically blocked.",
+      "security_learned_scanner_paths": "JSON array of scanner paths learned by the automated tuning engine. Manually modify if needed.",
+      "telegram_bot_token": "API token from BotFather for Telegram alerts.",
+      "telegram_chat_id": "Telegram Chat or Group ID for receiving alerts.",
+      "analytics_retention_days": "Retain general visitor trace statistics (kpi counters)",
+      "analytics_event_retention_days": "Retain granular frontend search / interaction events log",
+      "analytics_visitor_retention_days": "Retain unique tracking sessions",
+      "content": {
+        "autosave_enabled": "When enabled, draft changes are saved automatically while editing content.",
+        "autosave_interval_seconds": "How often autosave runs while editing. Recommended options: 15 (active editing), 30 (balanced), or 60 (lighter server load)."
+      },
+      "brand_logo": "Corporate/Brand logo displayed in admin panels",
+      "brand_favicon": "Admin panel favicon icon asset",
+      "ai_enabled": "Enable unified AI generation and chat tools globally",
+      "ai_default_provider": "Preferred primary Large Language Model provider",
+      "gemini_api_key": "Authentication key from Google AI Studio",
+      "gemini_model": "Target model variant (e.g., gemini-2.5-flash)",
+      "comments": {
+        "security": {
+          "enable_reply": "Allow users to reply to other comments",
+          "allow_guests": "Allow users to comment without logging in",
+          "moderation_enabled": "New comments require admin approval before appearing",
+          "guest_captcha": "Require guests to solve a captcha to post",
+          "max_links": "Maximum number of links allowed in a comment (0 for unlimited)",
+          "banned_words": "List of words that will cause a comment to be marked as spam (JSON array)"
+        }
+      }
+    },
+    "emailTest": {
+      "title": "Email Configuration Testing",
+      "configStatus": "Configuration Validation",
+      "validate": "Validate Config",
+      "validating": "Validating...",
+      "valid": "Configuration structure is valid",
+      "invalid": "Configuration structure is invalid",
+      "errors": "Critical Errors:",
+      "warnings": "Warnings:",
+      "smtpTest": "SMTP Connection Test",
+      "testConnection": "Test Connection",
+      "testing": "Testing...",
+      "connected": "Successfully connected to {host}:{port}",
+      "failed": "Connection test failed",
+      "sendTest": "Send Test Email",
+      "recipient": "Recipient Email",
+      "recipientPlaceholder": "test{'@'}example.com",
+      "subject": "Email Subject",
+      "subjectPlaceholder": "Test Email",
+      "message": "Test Message",
+      "messagePlaceholder": "This is a test email...",
+      "recipientRequired": "Please enter a recipient email address",
+      "sentSuccess": "Test email sent successfully",
+      "sendFailed": "Failed to send test email",
+      "queueStatus": "Queue Status",
+      "driver": "Driver",
+      "pending": "Pending Jobs",
+      "failedJobs": "Failed Jobs",
+      "refresh": "Refresh",
+      "recentLogs": "Recent Email Logs",
+      "noLogs": "No email logs found",
+      "sending": "Mengirim..."
+    },
+    "cache": {
+      "clearTitle": "Clear Cache",
+      "clearConfirm": "Clear Cache",
+      "clearMessage": "Are you sure you want to clear the system cache?",
+      "configTitle": "Cache Configuration",
+      "managementTitle": "Cache Management",
+      "clear": "Clear Cache",
+      "warm": "Warm Cache",
+      "clearing": "Clearing...",
+      "warming": "Warming...",
+      "loading": "Loading cache status...",
+      "cleared": "Cache cleared successfully",
+      "warmed": "Cache warmed successfully",
+      "status": "Status",
+      "keys": "Total Keys",
+      "size": "Size",
+      "driver": "Driver",
+      "drivers": {
+        "file": "File System",
+        "redis": "Redis",
+        "database": "Database",
+        "array": "Array (Memory)"
+      },
+      "redisInfo": {
+        "title": "Redis Configuration",
+        "description": "When using Redis as a cache driver, ensure you have a running Redis server. You can configure the connection details in the Redis Management page.",
+        "linkText": "Go to Redis Settings"
+      },
+      "page": {
+        "title": "Cache Management",
+        "subtitle": "Manage and monitor system cache performance",
+        "status": "Cache Status",
+        "statusActive": "Active",
+        "statusInactive": "Inactive",
+        "hits": "Cache Hits",
+        "misses": "Cache Misses",
+        "actionsTitle": "Cache Actions",
+        "clearAll": {
+          "title": "Clear All Cache",
+          "desc": "Remove all cached data from the system",
+          "confirmTitle": "Clear All Cache",
+          "confirmMessage": "Are you sure you want to clear all cache? This may affect performance temporarily.",
+          "confirmText": "Clear All",
+          "success": "All cache cleared successfully",
+          "failed": "Failed to clear cache"
+        },
+        "clearContent": {
+          "title": "Clear Content Cache",
+          "desc": "Remove content-related cache only",
+          "confirmTitle": "Clear Content Cache",
+          "confirmMessage": "Are you sure you want to clear content cache?",
+          "confirmText": "Clear Content Cache",
+          "success": "Content cache cleared successfully",
+          "failed": "Failed to clear content cache"
+        },
+        "warmUp": {
+          "title": "Warm Up Cache",
+          "desc": "Preload frequently used data into cache",
+          "success": "Cache warmed up successfully",
+          "failed": "Failed to warm up cache"
+        },
+        "detailedStats": "Detailed Statistics",
+        "table": {
+          "key": "Key",
+          "value": "Value"
+        }
+      }
+    },
+    "ai": {
+      "title": "AI Assistance",
+      "description": "Configure AI features for content generation.",
+      "enable_ai": "Enable AI Features",
+      "enable_ai_desc": "Enable or disable AI assistance in the editor.",
+      "default_provider": "Default Provider",
+      "default_provider_desc": "Select which AI provider to use by default.",
+      "providers": "AI Providers",
+      "test_connection": "Test Connection",
+      "fetch_models": "Fetch Models",
+      "model_select": "Default Model",
+      "model_select_desc": "Select the default model for this provider.",
+      "api_key": "API Key",
+      "api_key_placeholder": "Enter API Key",
+      "connection_success": "Connection successful!",
+      "connection_failed": "Connection failed",
+      "models_fetched": "Models fetched successfully"
+    },
+    "consoleAppearance": {
+      "description": "Curated color presets and custom brand tokens for the admin console.",
+      "presetSectionTitle": "Color preset",
+      "presetSectionDescription": "Pick a curated palette for buttons, links, and focus rings. Surfaces stay neutral.",
+      "customColorHint": "Pick any brand color — used when preset is Custom.",
+      "previewLabel": "Preview",
+      "previewPrimary": "Primary",
+      "previewSecondary": "Secondary",
+      "previewLink": "Link accent",
+      "loading": "Loading…",
+      "saving": "Saving…",
+      "save": "Save",
+      "reload": "Reload",
+      "presets": {
+        "monochrome_clean": {
+          "label": "Monochrome",
+          "description": "Editorial black & white — minimal, high-end dashboard."
+        },
+        "indigo_pro": {
+          "label": "Indigo Pro",
+          "description": "Classic SaaS indigo — balanced and familiar."
+        },
+        "oceanic_clean": {
+          "label": "Oceanic",
+          "description": "Deep ocean blue — calm, trustworthy, modern."
+        },
+        "emerald_fresh": {
+          "label": "Emerald",
+          "description": "Fresh green accent — growth and clarity."
+        },
+        "royal_violet": {
+          "label": "Royal Violet",
+          "description": "Bold purple — creative and distinctive."
+        },
+        "sunset_coral": {
+          "label": "Sunset Coral",
+          "description": "Warm coral — energetic and approachable."
+        },
+        "midnight_cyan": {
+          "label": "Midnight Cyan",
+          "description": "Cool cyan — tech-forward and crisp."
+        },
+        "aurora_mint": {
+          "label": "Aurora Mint",
+          "description": "Mint teal — light, contemporary accent."
+        },
+        "amber_pulse": {
+          "label": "Amber Pulse",
+          "description": "Golden amber — warm highlights and CTAs."
+        },
+        "ruby_night": {
+          "label": "Ruby Night",
+          "description": "Rich ruby red — strong brand presence."
+        },
+        "custom": {
+          "label": "Custom",
+          "description": "Your own hex brand color."
+        }
+      },
+      "brandColorPickerTitle": "Pick brand color",
+      "brandColorHexLabel": "Brand color (HEX)",
+      "title": "Console appearance",
+      "saved": "Console appearance saved.",
+      "loadError": "Failed to load console appearance.",
+      "saveError": "Failed to save console appearance.",
+      "shapeSectionTitle": "Shape",
+      "buttonRadiusLabel": "Button corner radius",
+      "buttonRadiusDescription": "Border radius for buttons and controls across the console.",
+      "surfaceSectionTitle": "Surface style",
+      "surfaceSectionDescription": "Frosted glass panels with blur, or flat solid cards.",
+      "surfaceGlass": "Glass",
+      "surfaceFlat": "Flat",
+      "surfaceGlassHint": "Frosted panels with blur and soft depth on cards and toolbars.",
+      "surfaceFlatHint": "Solid opaque cards with no blur — matches Extensions and list pages.",
+      "glassGradientSectionTitle": "Glass gradient",
+      "glassGradientSectionDescription": "Background glow behind glass panels. Use presets or tune color, intensity, and angle.",
+      "glassGradientColorPickerTitle": "Gradient color",
+      "glassGradientIntensityLabel": "Intensity / size",
+      "glassGradientAngleLabel": "Angle",
+      "brandColorDarkPickerTitle": "Dark mode brand color",
+      "fontPrimaryLabel": "Primary UI Font",
+      "fontMonoLabel": "Code & Monospace Font",
+      "shadowElevationLabel": "Shadow Depth Style",
+      "borderStyleLabel": "Border Line Width",
+      "contrastRatio": "Contrast Ratio",
+      "contrastLabel": "Contrast Guard (WCAG 2.1)",
+      "contrastPassAA": "Pass (AA 4.5+)",
+      "contrastPassAAA": "Pass (AAA 7.0+)",
+      "contrastFail": "Contrast Too Low",
+      "shadowOptions": {
+        "flat": "Flat (No Shadow)",
+        "soft": "Soft (Modern Premium)",
+        "layered": "Layered (High Contrast Depth)"
+      },
+      "borderOptions": {
+        "clean": "Clean (No Border)",
+        "subtle": "Subtle (1px Line)",
+        "bold": "Bold (2px Strong)"
+      },
+      "tabs": {
+        "colorPreset": "Colors & Presets",
+        "uiShell": "UI Shell Styles",
+        "logos": "Logo Assets"
+      },
+      "sidebarStyleLabel": "Sidebar background style",
+      "navbarStyleLabel": "Navbar background style",
+      "popperOpacityLabel": "Overlay & Dropdown transparency",
+      "logoLightLabel": "Logo (Light Mode)",
+      "logoLightDescription": "Logo displayed on light navigation bars/sidebars.",
+      "logoDarkLabel": "Logo (Dark Mode)",
+      "logoDarkDescription": "Logo displayed on dark navigation bars/sidebars.",
+      "logoCompactLabel": "Logo Compact (Icon)",
+      "logoCompactDescription": "Square brand icon shown when sidebar is collapsed.",
+      "faviconLabel": "Favicon",
+      "faviconDescription": "Browser tab icon (supports .ico, .png).",
+      "whiteLabelRequired": "White Label License Required",
+      "whiteLabelDescription": "Uploading custom logos is a premium feature. Please upgrade your license to unlock it.",
+      "glassGradients": {
+        "none": {
+          "label": "None",
+          "description": "No background gradient."
+        },
+        "subtle": {
+          "label": "Subtle",
+          "description": "Soft wash — minimal distraction."
+        },
+        "balanced": {
+          "label": "Balanced",
+          "description": "Default glow — visible but refined."
+        },
+        "vivid": {
+          "label": "Vivid",
+          "description": "Stronger accent bloom across the canvas."
+        },
+        "aurora": {
+          "label": "Aurora",
+          "description": "Multi-hue bands like northern lights."
+        },
+        "sunset": {
+          "label": "Sunset",
+          "description": "Warm dual-tone from corner to corner."
+        },
+        "cornerGlow": {
+          "label": "Corner glow",
+          "description": "Spotlights in opposite corners."
+        },
+        "custom": {
+          "label": "Custom",
+          "description": "Your color, intensity, and angle."
+        }
+      },
+      "themePortabilityTitle": "Theme backup & restore",
+      "themePortabilityDescription": "Copy the JSON below to back up or move your theme to another server.",
+      "themeImportPlaceholder": "Paste theme JSON here…",
+      "themeImportApply": "Apply",
+      "themeCopied": "Theme configuration copied to clipboard.",
+      "themeImported": "Theme imported. Save to apply permanently.",
+      "themeImportInvalid": "Invalid JSON format.",
+      "sidebarStyleDescription": "Adjust the main menu sidebar background model and visibility.",
+      "navbarStyleDescription": "Choose how the top navigation bar looks on each page.",
+      "popperOpacityDescription": "Background opacity for floating elements (dropdowns, tooltips, select menus, dialogs).",
+      "typographySectionTitle": "Typography",
+      "typographySectionDescription": "Primary UI font and monospace font for technical data.",
+      "depthSectionTitle": "Depth & borders",
+      "depthSectionDescription": "Shadow depth and border weight for interface panels.",
+      "shellStyles": {
+        "sidebar": {
+          "glass": {
+            "label": "Frosted glass",
+            "description": "Translucent with a soft frosted blur."
+          },
+          "solid": {
+            "label": "Solid brand",
+            "description": "Uses your brand primary as the sidebar background."
+          },
+          "clean": {
+            "label": "Clean minimal",
+            "description": "Flat neutral surface with no visual noise."
+          }
+        },
+        "navbar": {
+          "glass": {
+            "label": "Frosted glass",
+            "description": "Translucent gradient that blends with the canvas."
+          },
+          "bordered": {
+            "label": "Plain bordered",
+            "description": "Flat style with a crisp bottom edge."
+          },
+          "blended": {
+            "label": "Fully blended",
+            "description": "Seamless with the page background."
+          }
+        }
+      },
+      "fontOptions": {
+        "system": "System default",
+        "inter": "Inter (modern & clean)",
+        "outfit": "Outfit (elegant geometric)",
+        "poppins": "Poppins (friendly sans)",
+        "systemMono": "System monospace",
+        "jetbrains_mono": "JetBrains Mono",
+        "fira_code": "Fira Code"
+      },
+      "presetSelectPlaceholder": "Choose a color preset…",
+      "glassGradientSelectPlaceholder": "Choose a glass gradient…",
+      "themeMode": {
+        "title": "Theme application",
+        "description": "Choose whether the console follows a global preset or per-component advanced styling. Only one mode applies at a time.",
+        "globalActiveHint": "Global mode is active: color presets, surfaces, and glass gradients apply. Advanced shell controls are ignored until you switch modes.",
+        "advancedActiveHint": "Advanced mode is active: sidebar, navbar, poppers, typography, and depth apply. Color presets and glass surfaces are ignored until you switch modes.",
+        "global": {
+          "label": "Global",
+          "hint": "Preset palettes, surfaces, glass, and shape tokens for the whole console."
+        },
+        "advanced": {
+          "label": "Advanced",
+          "hint": "Fine-tune sidebar, navbar, dropdowns, cards, borders, fonts, and accent colors."
+        }
+      },
+      "scopeOverlay": {
+        "colorsDisabledTitle": "Global mode required",
+        "colorsDisabledDescription": "Color presets and surface styles are only available in Global mode. Switch to Global or open the Colors tab after switching.",
+        "shellDisabledTitle": "Advanced mode required",
+        "shellDisabledDescription": "Component and shell styling is only available in Advanced mode. Switch to Advanced to customize sidebar, navbar, and depth.",
+        "goToColors": "Open Colors & Presets",
+        "goToShell": "Open UI Shell Styles"
+      },
+      "advancedAccent": {
+        "title": "Accent & component shape",
+        "description": "Brand accent and button radius used across buttons, links, and focus rings in Advanced mode."
+      },
+      "themeModeGroups": {
+        "globalTitle": "Global (design tokens)",
+        "globalItems": "Color presets, brand hex (custom), surface glass/flat, glass gradient, corner radius, theme import/export",
+        "advancedTitle": "Advanced (component chrome)",
+        "advancedItems": "Sidebar, navbar, dropdown/popper overlays, primary & mono fonts, card shadow, border weight, accent colors"
+      },
+      "advancedComponents": {
+        "tabs": {
+          "chrome": "Page chrome",
+          "buttons": "Buttons",
+          "cards": "Cards",
+          "overlays": "Dropdowns & modals",
+          "icons": "Icons",
+          "type": "Typography"
+        },
+        "buttons": {
+          "title": "Buttons & accent",
+          "description": "Primary accent color, default button fill, and corner radius for actions.",
+          "styleLabel": "Default button style",
+          "styles": {
+            "solid": "Solid fill",
+            "soft": "Soft tint",
+            "outline": "Outline"
+          }
+        },
+        "cards": {
+          "title": "Cards & panels",
+          "description": "Shadow and border treatment for cards, stat tiles, and toolbars.",
+          "styles": {
+            "flat": {
+              "label": "Flat",
+              "description": "No shadow — clean data surfaces."
+            },
+            "soft": {
+              "label": "Soft",
+              "description": "Subtle elevation for everyday panels."
+            },
+            "elevated": {
+              "label": "Elevated",
+              "description": "Layered shadow for emphasis."
+            }
+          }
+        },
+        "overlays": {
+          "title": "Dropdowns & modals",
+          "description": "Menus, select lists, popovers, and modal backdrop dimming.",
+          "dropdownStyleLabel": "Dropdown / menu style",
+          "modalBackdropLabel": "Modal backdrop dim",
+          "dropdownStyles": {
+            "minimal": "Minimal — solid panel",
+            "standard": "Standard — balanced blur",
+            "glass": "Glass — frosted overlay"
+          }
+        },
+        "icons": {
+          "title": "Icons",
+          "description": "Global stroke weight for Lucide icons in navigation and actions.",
+          "weights": {
+            "light": "Light",
+            "regular": "Regular",
+            "bold": "Bold"
+          }
+        }
+      },
+      "sidebarAccentLabel": "Sidebar hover highlight",
+      "sidebarAccentDescription": "Color for hovered menu items and subtle highlights in the sidebar navigation.",
+      "themeExportJsonLabel": "Exported theme JSON",
+      "brandRadiusLabel": "Brand Radius"
+    }
+  },
+  "installer": {
+    "brand": "Jejakawan",
+    "title": "Installation Wizard",
+    "subtitle": "Setup your application identity and infrastructure.",
+    "steps": {
+      "requirements": "System Check",
+      "config": "Configuration",
+      "success": "Success"
+    },
+    "requirements": {
+      "title": "System Check",
+      "description": "Checking if your server meets the requirements.",
+      "core": "Core Requirements",
+      "extensions": "PHP Extensions",
+      "status_ok": "OK",
+      "status_missing": "Missing",
+      "continue": "Continue to Configuration"
+    },
+    "config": {
+      "title": "Basic Configuration",
+      "description": "Set up your application identity and database.",
+      "app_name": "Application Name",
+      "app_url": "Application URL",
+      "db_connection": "Database Connection",
+      "db_host": "Host",
+      "db_port": "Port",
+      "db_database": "Database Name",
+      "db_username": "Username",
+      "db_password": "Password",
+      "back": "Back",
+      "run": "Run Installation",
+      "placeholders": {
+        "appName": "My Jejakawan",
+        "appUrl": "https://example.com",
+        "dbConnection": "Select connection",
+        "dbHost": "127.0.0.1",
+        "dbPort": "3306",
+        "dbDatabase": "ja_platform",
+        "dbUsername": "root",
+        "dbSqlitePath": "Absolute path to .sqlite file"
+      },
+      "dbDrivers": {
+        "mysql": "MySQL / MariaDB",
+        "pgsql": "PostgreSQL",
+        "sqlite": "SQLite"
+      }
+    },
+    "messages": {
+      "configCheckError": "Check your configuration and try again."
+    },
+    "success": {
+      "title": "Success!",
+      "description": "Jejakawan has been installed successfully.",
+      "finish": "Go to Dashboard"
+    },
+    "troubleshooting": {
+      "title": "Troubleshooting for {os}:",
+      "php_version": "Upgrade PHP to 8.2 or 8.3 (Recommended).",
+      "writable_env": "Ensure .env exists and is writable.",
+      "writable_storage": "Run: chmod -R 775 storage bootstrap/cache",
+      "install_missing": "Install missing extensions:",
+      "windows_hint": "Enable extensions in your php.ini (remove ';' prefix for the listed extensions).",
+      "unknownOsHint": "Install the missing PHP extensions listed above using your OS package manager."
+    }
+  },
+  "labels": {
+    "roles": "Roles",
+    "role": "Role",
+    "permissions": "Permissions",
+    "permission": "Permission",
+    "users": "Users",
+    "user": "User",
+    "system": "System",
+    "systemGlobal": "Global / System",
+    "globalContext": "Global",
+    "logs": "Audit Logs",
+    "security": "Security",
+    "redis": "Redis Cache",
+    "scheduledTasks": "Scheduled Tasks",
+    "webhooks": "Webhooks",
+    "plugins": "Plugins",
+    "extensions": "Admin Extensions"
+  },
+  "dashboard": {
+    "creatorSubtitle": "Here is how your content is performing",
+    "stats": {
+      "activeUsers": "Active users",
+      "creator": {
+        "awaitingApproval": "Awaiting approval",
+        "contentStatus": "Content Status Distribution",
+        "drafts": "Drafts",
+        "myContent": "My Content",
+        "myMedia": "My Media",
+        "pendingReview": "Pending Review",
+        "published": "Published",
+        "recentActivity": "Recent Activity",
+        "topContent": "Top Content",
+        "uploadedFiles": "Uploaded files",
+        "workInProgress": "Work in progress"
+      },
+      "mediaFiles": "Media Files",
+      "pendingContent": "Pending Content",
+      "published": "published",
+      "requiresReview": "Requires review",
+      "totalContents": "Total Contents",
+      "totalUsers": "Total Users"
+    },
+    "table": {
+      "content": "Content",
+      "status": "Status",
+      "views": "Views"
+    },
+    "title": "Dashboard",
+    "traffic": {
+      "filters": {
+        "last30Days": "Last 30 Days",
+        "last7Days": "Last 7 Days",
+        "last90Days": "Last 3 Months"
+      },
+      "last7Days": "Last 7 Days",
+      "noData": "No traffic data available",
+      "overview": "Traffic statistics overview",
+      "title": "Traffic Overview",
+      "visits": "Visits",
+      "labels": {
+        "desktop": "Desktop",
+        "mobile": "Mobile"
+      },
+      "dataTableSummary": "View chart data as table",
+      "dataTablePeriod": "Period",
+      "dataTableValue": "Visits"
+    },
+    "welcome": "Welcome back, {name}!",
+    "widgets": {
+      "quickActions": {
+        "commandRunner": "Command Runner",
+        "createCategory": "Create Category",
+        "createPage": "Create Page",
+        "createPost": "Create Post",
+        "createTag": "Create Tag",
+        "manageUsers": "Manage Users",
+        "recentActions": "Recent Actions",
+        "settings": "Settings",
+        "title": "Quick Actions",
+        "uploadMedia": "Upload Media",
+        "viewComments": "View Comments"
+      },
+      "recentActivity": {
+        "description": "Latest system activities",
+        "empty": "No recent activity found",
+        "live": "Live",
+        "loading": "Loading activities...",
+        "time": {
+          "ago": "{time} ago",
+          "justNow": "Just now"
+        },
+        "title": "Recent Activity",
+        "viewAll": "View All Activity"
+      },
+      "emailStatus": {
+        "title": "Email Status",
+        "templates": "Templates",
+        "subscribers": "Subscribers",
+        "smtpStatus": "SMTP Connection",
+        "recentLogs": "Recent Activity",
+        "noLogs": "No recent email activity",
+        "manage": "Manage Email Settings"
+      },
+      "systemHealth": {
+        "cpu": "CPU",
+        "database": "Database",
+        "disk": "Disk",
+        "lastUpdated": "Last updated: {time}",
+        "memory": "Memory",
+        "overallStatus": "Overall Status",
+        "redis": "Redis",
+        "status": {
+          "critical": "Critical",
+          "disabled": "Disabled",
+          "error": "Error",
+          "healthy": "Healthy",
+          "ok": "OK",
+          "unknown": "Unknown",
+          "warning": "Warning"
+        },
+        "title": "System Health"
+      }
+    }
+  },
+  "redis": {
+    "cache": {
+      "actions": {
+        "all": {
+          "button": "Clear All",
+          "desc": "Clear all cached data including config, routes, and views",
+          "title": "Clear All Cache"
+        },
+        "cache": {
+          "button": "Clear Cache",
+          "desc": "Clear application cache only",
+          "title": "Application Cache"
+        },
+        "config": {
+          "button": "Clear Config",
+          "desc": "Clear configuration cache",
+          "title": "Configuration Cache"
+        },
+        "route": {
+          "button": "Clear Routes",
+          "desc": "Clear route cache",
+          "title": "Route Cache"
+        },
+        "view": {
+          "button": "Clear Views",
+          "desc": "Clear compiled view templates",
+          "title": "View Cache"
+        },
+        "warm": {
+          "button": "Warm Cache",
+          "desc": "Regenerate optimized cache files",
+          "title": "Warm Cache",
+          "warming": "Warming..."
+        }
+      },
+      "stats": {
+        "expired": "Expired Keys",
+        "keys": "Total Keys",
+        "size": "Cache Size",
+        "table": {
+          "key": "Key",
+          "size": "Size",
+          "ttl": "TTL"
+        },
+        "title": "Cache Statistics",
+        "topKeys": "Top Keys by Size"
+      },
+      "title": "Cache Management"
+    },
+    "description": "Manage Redis server configuration and monitor cache performance",
+    "messages": {
+      "flushTitle": "Flush Cache",
+      "flushAction": "Flush",
+      "flushConfirm": "Are you sure you want to clear {type} cache?",
+      "flushConfirmLogout": "Warning: Clearing all cache will also clear user sessions. You will be logged out immediately. Are you sure you want to proceed?",
+      "flushFailed": "Failed to flush cache",
+      "flushSuccess": "{type} cache cleared successfully!",
+      "warmTitle": "Warm Cache",
+      "warmAction": "Warm Up",
+      "loading": "Loading...",
+      "saveFailed": "Failed to save settings",
+      "saveSuccess": "Settings saved successfully!",
+      "testFailed": "Connection failed",
+      "testSuccess": "Connection successful",
+      "warmConfirm": "Are you sure you want to warm the cache? This will regenerate config, route, and view caches.",
+      "warmConfirmLogout": "Warning: Warming the cache requires clearing it first, which will clear user sessions. You will be logged out immediately. Are you sure you want to proceed?",
+      "warmFailed": "Failed to warm cache",
+      "warmSuccess": "Cache warmed successfully!"
+    },
+    "settings": {
+      "cancel": "Reset",
+      "connection": "Connection Settings",
+      "disabled": "Disabled",
+      "enabled": "Enabled",
+      "save": "Save Settings",
+      "saving": "Saving...",
+      "select": "Select...",
+      "test": "Test Connection",
+      "testing": "Testing...",
+      "testDescription": "Test your Redis connection settings."
+    },
+    "statistics": {
+      "autoRefresh": "Auto-refresh every 30 seconds",
+      "grid": {
+        "clients": "Connected Clients",
+        "commands": "Total Commands",
+        "hitRate": "Hit Rate",
+        "keys": "Total Keys",
+        "memory": "Memory Used",
+        "ops": "Operations/Sec",
+        "uptime": "Uptime",
+        "version": "Redis Version"
+      },
+      "hitMiss": {
+        "hitRate": "Hit Rate",
+        "hits": "Cache Hits",
+        "misses": "Cache Misses",
+        "title": "Cache Hit/Miss Statistics"
+      },
+      "refresh": "Refresh Stats"
+    },
+    "tabs": {
+      "cache": "Cache Management",
+      "settings": "Settings",
+      "statistics": "Statistics"
+    },
+    "title": "Redis Management"
+  },
+  "languages": {
+    "actions": {
+      "confirmDelete": "Delete language \"{name}\"?",
+      "delete": "Delete",
+      "export": "Export",
+      "setDefault": "Set Default"
+    },
+    "add": "Add Language",
+    "create": {
+      "code": "Language Code",
+      "codePlaceholder": "fr, de, es...",
+      "fromTemplate": "Create translations from template (English)",
+      "name": "Language Name",
+      "namePlaceholder": "French, German...",
+      "title": "Add New Language"
+    },
+    "import": {
+      "button": "Import",
+      "description": "Upload a ZIP file containing language translation files.",
+      "file": "Select ZIP File",
+      "title": "Import Language Pack"
+    },
+    "importPack": "Import Pack",
+    "list": {
+      "default": "Default",
+      "description": "Languages registered in the system",
+      "empty": "No languages found",
+      "headers": {
+        "actions": "Actions",
+        "code": "Code",
+        "default": "Default",
+        "name": "Name"
+      },
+      "title": "Registered Languages"
+    },
+    "messages": {
+      "createFailed": "Failed to create language",
+      "createSuccess": "Language created successfully",
+      "deleteFailed": "Failed to delete language",
+      "exportFailed": "Failed to export language pack",
+      "fetchFailed": "Failed to fetch languages",
+      "importFailed": "Failed to import language pack",
+      "importSuccess": "Language pack imported successfully",
+      "setDefaultFailed": "Failed to set default language",
+      "export_success": "Language pack exported successfully",
+      "set_default_success": "Default language updated"
+    },
+    "subtitle": "Manage application languages",
+    "title": "Languages",
+    "uiLanguages": {
+      "active": "Active",
+      "available": "Available",
+      "browserDetected": "Browser Language",
+      "description": "Languages available for the user interface. Changes take effect immediately.",
+      "hasUiTranslations": "UI Support",
+      "keys": "keys",
+      "notAvailable": "Not Available",
+      "title": "UI Translations",
+      "translationKeys": "Translation Keys"
+    },
+    "description": "Manage application languages"
+  },
+  "profile": {
+    "form": {
+      "bio": "Bio",
+      "changePassword": "Change Password",
+      "changing": "Changing...",
+      "confirmPassword": "Confirm New Password",
+      "currentPassword": "Current Password",
+      "email": "Email",
+      "location": "Location",
+      "name": "Name",
+      "newPassword": "New Password",
+      "passwordHelp": "Must be at least 8 characters with uppercase, lowercase, and number",
+      "phone": "Phone",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "twoFactorDescription": "Secure your account with Two-Factor Authentication."
+    },
+    "messages": {
+      "passwordFailed": "Failed to change password",
+      "passwordSuccess": "Password changed successfully",
+      "updateFailed": "Failed to update profile",
+      "updateSuccess": "Profile updated successfully"
+    },
+    "subtitle": "Manage your account information and security",
+    "tabs": {
+      "history": "Login History",
+      "password": "Change Password",
+      "profile": "Profile Information",
+      "two-factor": "Two-Factor",
+      "twoFactor": "Two-Factor Authentication"
+    },
+    "title": "My Profile",
+    "sessions": {
+      "title": "Active sessions",
+      "description": "Devices and browsers signed in to your account.",
+      "empty": "No active sessions found.",
+      "loading": "Loading sessions…",
+      "current": "Current session",
+      "lastActive": "Last active",
+      "started": "Started",
+      "revoke": "Revoke access",
+      "confirmRevoke": "Revoke this session? The device will be signed out.",
+      "revoked": "Revoked"
+    },
+    "passkeys": {
+      "registerDialog": {
+        "title": "Add passkey",
+        "description": "Choose a name you will recognize on this device.",
+        "label": "Display name",
+        "placeholder": "My laptop",
+        "defaultName": "My Passkey",
+        "submit": "Register"
+      },
+      "removeDialog": {
+        "title": "Remove passkey?"
+      }
+    }
+  },
+  "scheduled_tasks": {
+    "actions": {
+      "delete": "Delete Task",
+      "run": "Run Task"
+    },
+    "confirm_delete": "Are you sure you want to delete task \"{name}\"?",
+    "confirm_run": "Are you sure you want to run task \"{name}\"?",
+    "create": "Create Task",
+    "description": "Manage scheduled tasks and cron jobs",
+    "edit": "Edit Task",
+    "form": {
+      "active": "Active",
+      "command": "Command",
+      "cron_help": "Format: minute hour day month weekday (e.g., 0 * * * * = every hour)",
+      "description": "Description",
+      "name": "Task Name",
+      "preset": "Quick preset",
+      "schedule": "Cron Schedule",
+      "select_command": "Select a command"
+    },
+    "help": {
+      "cron_desc": "Add this line to your server's crontab (run 'crontab -e'):",
+      "cron_hint": "This command tells your server to check for scheduled tasks every minute.",
+      "cron_title": "Server Cron Setup",
+      "intro": "Scheduled tasks allow you to automate routine commands like cache clearing, backups, and maintenance jobs.",
+      "req_1": "Task must be set to Active (click the status button)",
+      "req_2": "Valid cron schedule must be configured",
+      "req_3": "Server cron job must be running (see below)",
+      "requirements_title": "Requirements for Automatic Execution:",
+      "title": "How Scheduled Tasks Work"
+    },
+    "messages": {
+      "activated": "Task activated",
+      "bulkDeleted": "{count} tasks deleted successfully",
+      "created": "Task created successfully",
+      "deactivated": "Task deactivated",
+      "deleted": "Task deleted successfully",
+      "executed": "Task executed successfully",
+      "toggled": "Task status updated",
+      "updated": "Task updated successfully"
+    },
+    "output": {
+      "noOutput": "No output available",
+      "title": "Task Output"
+    },
+    "no_tasks": "No scheduled tasks found",
+    "status": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "pending": "Pending",
+      "running": "Running",
+      "inactive": "Inactive",
+      "active": "Active"
+    },
+    "table": {
+      "actions": "Actions",
+      "active": "Active",
+      "command": "Command",
+      "last_run": "Last Run",
+      "name": "Name",
+      "schedule": "Schedule",
+      "status": "Status"
+    },
+    "title": "Scheduled Tasks",
+    "tooltips": {
+      "click_to_activate": "Click to activate - Task will run automatically based on schedule",
+      "click_to_deactivate": "Click to deactivate - Task will not run automatically"
+    }
+  },
+  "command_runner": {
+    "access_denied": "Access Denied",
+    "clear": "Clear",
+    "description": "Execute artisan commands manually (Super Admin only)",
+    "execute": "Execute Command",
+    "executed_error": "Command executed with errors",
+    "executed_success": "Command executed successfully",
+    "executing": "Executing command...",
+    "history": "Command History",
+    "no_history": "No commands executed yet",
+    "output": "Output",
+    "parameters": "Parameters",
+    "parameters_placeholder": "Optional parameters (e.g., --force)",
+    "run": "Run",
+    "running": "Running...",
+    "select_command": "Select Command",
+    "select_placeholder": "Choose a command to run...",
+    "super_admin": "Super Admin Only",
+    "super_admin_only": "This feature is only available to super administrators",
+    "table": {
+      "command": "Command",
+      "date": "Date",
+      "parameters": "Parameters",
+      "runner": "Runner",
+      "status": "Status"
+    },
+    "title": "Command Runner"
+  },
+  "analytics": {
+    "apply": "Apply",
+    "charts": {
+      "browsers": "Browsers",
+      "devices": "Devices",
+      "realtime": "Real-time Activity",
+      "topContent": "Top Content",
+      "topCountries": "Top Countries",
+      "topPages": "Top Pages",
+      "topReferrers": "Top Referrers",
+      "visits": "Visits",
+      "visitsOverTime": "Visits Over Time"
+    },
+    "export": {
+      "button": "Export",
+      "events": "Export Events",
+      "exporting": "Exporting...",
+      "sessions": "Export Sessions",
+      "success": "Data export started successfully",
+      "visits": "Export Visits"
+    },
+    "labels": {
+      "visits": "visits"
+    },
+    "loading": "Loading analytics...",
+    "noData": "No data available",
+    "overview": {
+      "bounceRate": "Bounce Rate",
+      "totalSessions": "Total Sessions",
+      "totalVisits": "Total Visits",
+      "uniqueVisitors": "Unique Visitors"
+    },
+    "realtime": {
+      "activePages": "Active Pages",
+      "activeSessions": "Active Sessions",
+      "visitsLastHour": "Visits (Last Hour)"
+    },
+    "sections": {
+      "content": "Top Content",
+      "geography": "Geography",
+      "technology": "Technology",
+      "traffic": "Traffic"
+    },
+    "subtitle": "Track and analyze your website performance",
+    "title": "Analytics",
+    "to": "to",
+    "dateFrom": "From date",
+    "dateTo": "To date"
+  },
+  "journal_dashboard": {
+    "cards": {
+      "activity": {
+        "description": "User activities and data changes",
+        "title": "Activity Journal",
+        "total": "total activities"
+      },
+      "login": {
+        "description": "All user login activities",
+        "title": "Access History",
+        "total": "total logins"
+      },
+      "security": {
+        "description": "Security events and login attempts",
+        "title": "Security Journal",
+        "total": "total events"
+      },
+      "system": {
+        "description": "Laravel application logs",
+        "files": "log files",
+        "title": "System Journal"
+      }
+    },
+    "description": "View summary and quick access to all log systems",
+    "empty": "No data",
+    "loading": "Loading...",
+    "recent": {
+      "activity": "Recent Activities",
+      "security": "Recent Security Events"
+    },
+    "title": "Journal Dashboard",
+    "viewAll": "View All"
+  },
+  "activity_journal": {
+    "export": {
+      "button": "Export CSV",
+      "exporting": "Exporting...",
+      "failed": "Failed to export activity logs"
+    },
+    "filters": {
+      "allTypes": "All Types",
+      "allUsers": "All Users",
+      "clear": "Clear",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "perPage": "Per page",
+      "search": "Search activities...",
+      "types": {
+        "bulk_action_media": "Bulk Media Action",
+        "created": "Created",
+        "delete_permanent": "Permanently Deleted",
+        "deleted": "Deleted",
+        "emptied_trash": "Emptied Trash",
+        "login": "Login",
+        "login_failed": "Login Failed",
+        "login_success": "Login Success",
+        "logout": "Logout",
+        "published": "Published",
+        "session_invalidated": "Session Invalidated",
+        "soft_deleted_file": "Moved File to Trash",
+        "soft_deleted_folder": "Moved Folder to Trash",
+        "soft_deleted_media": "Moved Media to Trash",
+        "unpublished": "Unpublished",
+        "updated": "Updated",
+        "uploaded_media": "Uploaded Media",
+        "viewed": "Viewed"
+      }
+    },
+    "messages": {
+      "empty": "No activity logs found",
+      "loading": "Loading...",
+      "system": "System",
+      "unknown": "Unknown",
+      "viewDetails": "View Details"
+    },
+    "stats": {
+      "activeUsers": "Active Users",
+      "thisWeek": "This Week",
+      "today": "Today",
+      "total": "Total Activities"
+    },
+    "title": "Activity Journal",
+    "subtitle": "Audit trail of user and system actions."
+  },
+  "access_journal": {
+    "alerts": {
+      "severity": {
+        "high": "High",
+        "low": "Low",
+        "medium": "Medium"
+      },
+      "title": "Suspicious Activity Alerts",
+      "types": {
+        "brute_force": "Potential Brute Force",
+        "new_ip": "New IP Address",
+        "shared_ip": "Possible Account Sharing"
+      }
+    },
+    "description": "View all login activities from users",
+    "export": {
+      "button": "Export CSV",
+      "exporting": "Exporting...",
+      "failed": "Failed to export login history"
+    },
+    "filters": {
+      "allStatus": "All Status",
+      "allUsers": "All Users",
+      "dateFrom": "From",
+      "dateTo": "To"
+    },
+    "messages": {
+      "empty": "No login history found",
+      "loading": "Loading..."
+    },
+    "pagination": {
+      "showing": "Showing {count} of {total} records"
+    },
+    "stats": {
+      "activeSessions": "Active Sessions",
+      "failedLogins": "Failed Logins",
+      "suspiciousCount": "Suspicious Activity",
+      "todayLogins": "Logins Today",
+      "totalLogins": "Total Successful Logins",
+      "uniqueIps": "Unique IPs Today"
+    },
+    "status": {
+      "failed": "Failed",
+      "success": "Success"
+    },
+    "title": "Access History"
+  },
+  "autosave": {
+    "agoMinutes": "{minutes}m ago",
+    "agoSeconds": "{seconds}s ago",
+    "failed": "Save failed",
+    "justNow": "just now",
+    "notSaved": "Not saved",
+    "savedAt": "Saved at {time}",
+    "saving": "Auto-saving..."
+  },
+  "infra": {
+    "plugins": {
+      "title": "Plugins",
+      "loading": "Loading plugins…",
+      "empty": "No plugins installed.",
+      "themeBlocks": {
+        "title": "Theme app block slots",
+        "hint": "Select where this plugin renders on the public site (Janari theme).",
+        "noSlots": "No theme slots available.",
+        "save": "Save settings",
+        "saved": "Plugin settings saved.",
+        "saveFailed": "Could not save plugin settings."
+      },
+      "modal": {
+        "settings_title": "Settings for {name}",
+        "close": "Close"
+      }
+    }
+  },
+  "legal": {
+    "backToRegister": "Back to registration",
+    "privacy": {
+      "title": "Privacy Policy",
+      "subtitle": "Last updated: {date}",
+      "footer": "All rights reserved."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "subtitle": "Last updated: {date}",
+      "footer": "All rights reserved."
+    }
+  },
+  "onboarding": {
+    "title": "Get your site ready",
+    "subtitle": "Complete these steps to launch your public site (about 15 minutes).",
+    "progress": "{completed} of {total} complete",
+    "dismiss": "Dismiss checklist",
+    "completed": "All set — onboarding checklist complete.",
+    "steps": {
+      "identity": {
+        "title": "Site identity",
+        "description": "Set your site name and branding in general settings.",
+        "action": "Open settings"
+      },
+      "theme": {
+        "title": "Activate a theme",
+        "description": "Enable Janari or another bundled theme for the public site.",
+        "action": "Manage themes"
+      },
+      "firstPage": {
+        "title": "Publish your first page",
+        "description": "Create a page visitors can open from the menu or home.",
+        "action": "Create page"
+      }
+    }
+  },
+  "oauth": {
+    "title": "OAuth Clients",
+    "description": "Register external applications that use this control plane as an OAuth2 identity provider.",
+    "actions": {
+      "create": "New client"
+    },
+    "empty": {
+      "title": "No OAuth clients",
+      "description": "Create a client to issue authorization codes for ja-platform or other apps."
+    },
+    "table": {
+      "name": "Application",
+      "redirect": "Redirect URI",
+      "actions": "Actions"
+    },
+    "confirmDelete": "Delete OAuth client \"{name}\"?",
+    "deleted": "OAuth client deleted",
+    "errors": {
+      "load": "Failed to load OAuth clients",
+      "delete": "Failed to delete OAuth client"
+    },
+    "form": {
+      "createTitle": "Create OAuth client",
+      "editTitle": "Edit OAuth client",
+      "description": "Confidential clients receive a client secret shown once after creation.",
+      "name": "Application name",
+      "redirect": "Redirect URI",
+      "confidential": "Confidential client (recommended)",
+      "secretTitle": "Client secret",
+      "secretHint": "Copy this secret now. It will not be shown again."
+    },
+    "consent": {
+      "title": "Authorize application",
+      "description": "{client} is requesting access to your account.",
+      "scopes": "Requested permissions",
+      "allow": "Allow",
+      "deny": "Deny",
+      "missingToken": "Authorization session expired. Start sign-in again from the application.",
+      "unknownClient": "Unknown application"
+    }
+  },
+  "integrations": {
+    "title": "Platform Integrations",
+    "subtitle": "SCIM provisioning and centralized configuration sync for child apps.",
+    "scim": {
+      "title": "SCIM 2.0 Identity Provisioning",
+      "description": "Provision users from Azure AD, Okta, or other IdPs.",
+      "baseUrl": "Base URL",
+      "bearer": "Bearer token",
+      "bearerHint": "Set SCIM_TOKEN in server .env"
+    },
+    "config": {
+      "title": "Centralized Configuration Server",
+      "description": "Expose public settings to child apps via OAuth2 client credentials.",
+      "resolve": "Resolve config",
+      "sync": "Sync ping"
+    },
+    "hub": {
+      "title": "Identity & platform integrations",
+      "subtitle": "Configure SSO, SCIM provisioning, outbound webhooks, and links to access policies.",
+      "oauthCard": "OAuth Clients",
+      "oauthDesc": "Register apps for authorization code and SSO (ja-platform, ja-organization).",
+      "webhooksCard": "Webhooks",
+      "webhooksDesc": "Subscribe to user and member lifecycle events with signed delivery.",
+      "abacCard": "ABAC Policies",
+      "abacDesc": "Attribute-based rules beyond roles — open Security settings.",
+      "scimCard": "SCIM & Config",
+      "scimDesc": "Enterprise provisioning URLs and machine-to-machine config API.",
+      "open": "Open",
+      "siemCard": "SIEM export log",
+      "siemDesc": "View security events forwarded to SIEM file export."
+    }
+  },
+  "webhooks": {
+    "title": "Webhooks",
+    "description": "Manage outbound webhooks for event-driven integrations.",
+    "empty": {
+      "title": "No Webhooks Configured",
+      "description": "Create a webhook endpoint to receive identity and member events."
+    },
+    "form": {
+      "createTitle": "Create Webhook",
+      "editTitle": "Edit Webhook",
+      "description": "Subscribe to IAM events with HMAC-signed delivery.",
+      "name": "Name",
+      "url": "Endpoint URL",
+      "secret": "Signing secret (optional)",
+      "events": "Events",
+      "active": "Active",
+      "eventsRequired": "Select at least one event."
+    },
+    "actions": {
+      "testPing": "Test ping",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "messages": {
+      "testDispatched": "Test payload queued for delivery.",
+      "testFailed": "Failed to trigger test delivery.",
+      "deleted": "Webhook deleted."
+    },
+    "deliveries": {
+      "title": "Delivery history",
+      "subtitle": "Recent outbound webhook attempts across all endpoints.",
+      "empty": "No deliveries recorded yet. Send a test ping to see entries.",
+      "colWebhook": "Webhook",
+      "colEvent": "Event",
+      "colStatus": "Status",
+      "colCode": "HTTP",
+      "colWhen": "When"
+    }
+  },
+  "kyc": {
+    "title": "Account verification (KYC)",
+    "subtitle": "Complete each step. Level 3 requires admin review of your ID.",
+    "levels": {
+      "level_0": "Unverified",
+      "level_1": "Level 1",
+      "level_2": "Level 2",
+      "level_3": "Verified"
+    },
+    "pending": {
+      "title": "Under review",
+      "description": "Your documents were submitted. An administrator will review them soon."
+    },
+    "rejected": {
+      "title": "Verification rejected",
+      "description": "Please upload new documents and submit again."
+    },
+    "steps": {
+      "basic": {
+        "title": "Level 1: Basic profile",
+        "desc": "Name and phone are required.",
+        "done": "Basic profile complete."
+      },
+      "contact": {
+        "title": "Level 2: Contact verification",
+        "desc": "Verified email and phone required.",
+        "done": "Contact verification complete."
+      },
+      "identity": {
+        "title": "Level 3: Identity documents",
+        "desc": "Upload ID or passport. Optional selfie. Admin approves Level 3.",
+        "done": "Identity verified.",
+        "locked": "Complete Level 2 first."
+      }
+    },
+    "form": {
+      "name": "Full name",
+      "phone": "Phone",
+      "location": "Location (optional)"
+    },
+    "requirements": {
+      "emailVerified": "Email verified",
+      "phone": "Phone on profile"
+    },
+    "documents": {
+      "idCard": "National ID (KTP)",
+      "idCardHint": "JPG, PNG or PDF — max 10 MB",
+      "passport": "Passport",
+      "passportHint": "Alternative to national ID",
+      "selfie": "Selfie with ID (optional)",
+      "selfieHint": "Holding your ID next to your face"
+    },
+    "actions": {
+      "completeBasic": "Save & reach Level 1",
+      "completeContact": "Confirm Level 2",
+      "submitReview": "Submit for admin review"
+    },
+    "messages": {
+      "basicDone": "Level 1 complete",
+      "contactDone": "Level 2 complete",
+      "documentUploaded": "Document uploaded",
+      "submitted": "Submitted for review"
+    }
+  },
+  "kycReviews": {
+    "title": "KYC review queue",
+    "subtitle": "Approve or reject identity submissions.",
+    "filters": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "all": "All"
+    },
+    "empty": {
+      "title": "No submissions",
+      "description": "No KYC submissions match this filter."
+    },
+    "actions": {
+      "review": "Review",
+      "approve": "Approve Level 3",
+      "reject": "Reject",
+      "confirmReject": "Confirm rejection"
+    },
+    "review": {
+      "title": "Review submission",
+      "rejectReason": "Rejection reason (required)"
+    },
+    "messages": {
+      "approved": "KYC approved",
+      "rejected": "KYC rejected"
+    }
+  }
+}

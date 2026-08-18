@@ -1,0 +1,176 @@
+@reference "./shell/console-tailwind.css";
+
+/**
+ * Console color presets — applied on `.admin-layout` and `html[data-console-theme]` (portals).
+ */
+
+@layer base {
+    html[data-console-theme][data-console-preset]:not([data-console-preset="monochrome_clean"]),
+    .admin-layout[data-console-preset]:not([data-console-preset="monochrome_clean"]) {
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --success: 142 76% 36%;
+        --success-foreground: 0 0% 100%;
+        --warning: 38 92% 50%;
+        --warning-foreground: 48 96% 2%;
+        --info: 199 88% 48%;
+        --info-foreground: 0 0% 100%;
+    }
+
+    .dark html[data-console-theme][data-console-preset]:not([data-console-preset="monochrome_clean"]),
+    .dark .admin-layout[data-console-preset]:not([data-console-preset="monochrome_clean"]) {
+        --destructive: 0 72% 55%;
+        --destructive-foreground: 0 0% 100%;
+        --success: 142 70% 45%;
+        --success-foreground: 144 61% 9%;
+        --warning: 38 92% 50%;
+        --warning-foreground: 48 96% 2%;
+        --info: 199 88% 48%;
+        --info-foreground: 0 0% 100%;
+    }
+
+    html[data-console-theme][data-console-preset="monochrome_clean"],
+    .admin-layout[data-console-preset="monochrome_clean"] {
+        --console-primary-hsl: 0 0% 9%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 0 0% 9%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="monochrome_clean"],
+    .dark .admin-layout[data-console-preset="monochrome_clean"] {
+        --console-primary-hsl: 0 0% 100%;
+        --console-primary-foreground-hsl: 0 0% 0%;
+        --ring: 0 0% 100%;
+    }
+
+    html[data-console-theme][data-console-preset="indigo_pro"],
+    .admin-layout[data-console-preset="indigo_pro"] {
+        --console-primary-hsl: 238.9 77.1% 60.6%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 238.9 77.1% 60.6%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="indigo_pro"],
+    .dark .admin-layout[data-console-preset="indigo_pro"] {
+        --console-primary-hsl: 234 89% 74%;
+        --console-primary-foreground-hsl: 238.9 77.1% 12%;
+        --ring: 234 89% 74%;
+    }
+
+    html[data-console-theme][data-console-preset="oceanic_clean"],
+    .admin-layout[data-console-preset="oceanic_clean"] {
+        --console-primary-hsl: 212 92% 45%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 212 92% 45%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="oceanic_clean"],
+    .dark .admin-layout[data-console-preset="oceanic_clean"] {
+        --console-primary-hsl: 206 100% 65%;
+        --console-primary-foreground-hsl: 212 92% 10%;
+        --ring: 206 100% 65%;
+    }
+
+    html[data-console-theme][data-console-preset="emerald_fresh"],
+    .admin-layout[data-console-preset="emerald_fresh"] {
+        --console-primary-hsl: 158 75% 36%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 158 75% 36%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="emerald_fresh"],
+    .dark .admin-layout[data-console-preset="emerald_fresh"] {
+        --console-primary-hsl: 150 100% 55%;
+        --console-primary-foreground-hsl: 158 75% 10%;
+        --ring: 150 100% 55%;
+    }
+
+    html[data-console-theme][data-console-preset="royal_violet"],
+    .admin-layout[data-console-preset="royal_violet"] {
+        --console-primary-hsl: 265 82% 52%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 265 82% 52%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="royal_violet"],
+    .dark .admin-layout[data-console-preset="royal_violet"] {
+        --console-primary-hsl: 265 92% 72%;
+        --console-primary-foreground-hsl: 265 82% 10%;
+        --ring: 265 92% 72%;
+    }
+
+    html[data-console-theme][data-console-preset="sunset_coral"],
+    .admin-layout[data-console-preset="sunset_coral"] {
+        --console-primary-hsl: 12 95% 58%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 12 95% 58%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="sunset_coral"],
+    .dark .admin-layout[data-console-preset="sunset_coral"] {
+        --console-primary-hsl: 12 100% 68%;
+        --console-primary-foreground-hsl: 12 95% 10%;
+        --ring: 12 100% 68%;
+    }
+
+    html[data-console-theme][data-console-preset="midnight_cyan"],
+    .admin-layout[data-console-preset="midnight_cyan"] {
+        --console-primary-hsl: 192 95% 42%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 192 95% 42%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="midnight_cyan"],
+    .dark .admin-layout[data-console-preset="midnight_cyan"] {
+        --console-primary-hsl: 188 100% 55%;
+        --console-primary-foreground-hsl: 192 95% 10%;
+        --ring: 188 100% 55%;
+    }
+
+    html[data-console-theme][data-console-preset="aurora_mint"],
+    .admin-layout[data-console-preset="aurora_mint"] {
+        --console-primary-hsl: 162 82% 44%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 162 82% 44%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="aurora_mint"],
+    .dark .admin-layout[data-console-preset="aurora_mint"] {
+        --console-primary-hsl: 162 100% 58%;
+        --console-primary-foreground-hsl: 162 82% 10%;
+        --ring: 162 100% 58%;
+    }
+
+    html[data-console-theme][data-console-preset="amber_pulse"],
+    .admin-layout[data-console-preset="amber_pulse"] {
+        --console-primary-hsl: 38 92% 50%;
+        --console-primary-foreground-hsl: 48 96% 2%;
+        --ring: 38 92% 50%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="amber_pulse"],
+    .dark .admin-layout[data-console-preset="amber_pulse"] {
+        --console-primary-hsl: 43 96% 58%;
+        --console-primary-foreground-hsl: 38 92% 10%;
+        --ring: 43 96% 58%;
+    }
+
+    html[data-console-theme][data-console-preset="ruby_night"],
+    .admin-layout[data-console-preset="ruby_night"] {
+        --console-primary-hsl: 350 85% 50%;
+        --console-primary-foreground-hsl: 0 0% 100%;
+        --ring: 350 85% 50%;
+    }
+
+    .dark html[data-console-theme][data-console-preset="ruby_night"],
+    .dark .admin-layout[data-console-preset="ruby_night"] {
+        --console-primary-hsl: 350 100% 65%;
+        --console-primary-foreground-hsl: 350 85% 10%;
+        --ring: 350 100% 65%;
+    }
+
+    html[data-console-theme][data-console-preset="custom"],
+    .admin-layout[data-console-preset="custom"] {
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+    }
+}

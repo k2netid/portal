@@ -1,0 +1,595 @@
+{
+  "alerts": {
+    "hide": "Sembunyikan",
+    "severity": {
+      "critical": "Kritis",
+      "info": "Info",
+      "warning": "Peringatan"
+    },
+    "show": "Tampilkan Detail",
+    "title": "Peringatan Keamanan",
+    "types": {
+      "brute_force": "Serangan Brute Force",
+      "failed_login": "Banyak Login Gagal",
+      "ip_blocked": "IP Diblokir",
+      "multiple_ip_login": "Login dari Banyak IP"
+    }
+  },
+  "blocklist": {
+    "actions": {
+      "moveToWhitelist": "Pindah ke Daftar Putih",
+      "remove": "Hapus",
+      "unblock": "Buka Blokir"
+    },
+    "addIp": "Tambah IP ke Daftar Blokir",
+    "description": "Alamat IP yang terblokir tidak dapat mengakses sistem",
+    "empty": "Tidak ada alamat IP yang terblokir",
+    "reason": "Alasan (opsional)",
+    "table": {
+      "actions": "Aksi",
+      "createdBy": "Dibuat Oleh",
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "reason": "Alasan"
+    },
+    "title": "Daftar Blokir IP"
+  },
+  "bulkActions": {
+    "blockSelected": "Blokir Terpilih",
+    "removeSelected": "Hapus Terpilih",
+    "selected": "{count} dipilih",
+    "unblockSelected": "Buka Blokir Terpilih",
+    "whitelistSelected": "Tambah ke Daftar Putih"
+  },
+  "cspReports": {
+    "actions": {
+      "markFalsePositive": "Tandai False Positive",
+      "markReviewed": "Tandai Ditinjau"
+    },
+    "confirmBulkAction": "Apakah Anda yakin ingin {action} {count} laporan?",
+    "bulkActionSuccess": "{count} laporan diperbarui",
+    "description": "Pantau pelanggaran Content Security Policy dari laporan browser",
+    "empty": "Tidak ada laporan pelanggaran CSP. Kebijakan keamanan Anda kuat! 🛡️",
+    "filters": {
+      "dateFrom": "Dari Tanggal",
+      "dateTo": "Sampai Tanggal",
+      "directive": "Direktif",
+      "directivePlaceholder": "mis. script-src",
+      "status": "Status"
+    },
+    "stats": {
+      "last24h": "24 Jam Terakhir",
+      "new": "Baru",
+      "topViolation": "Pelanggaran Teratas",
+      "total": "Total Laporan"
+    },
+    "status": {
+      "falsePositive": "False Positive",
+      "new": "Baru",
+      "reviewed": "Ditinjau"
+    },
+    "table": {
+      "blockedUri": "URI Diblokir",
+      "date": "Tanggal",
+      "directive": "Direktif",
+      "documentUri": "URI Dokumen",
+      "ip": "Alamat IP",
+      "status": "Status"
+    },
+    "title": "Laporan Pelanggaran CSP"
+  },
+  "fileIntegrity": {
+    "actions": {
+      "runAudit": "Jalankan Audit",
+      "runInitial": "Jalankan Audit Awal",
+      "sync": "Sinkronkan Data"
+    },
+    "description": "Deteksi modifikasi tidak sah pada file sistem kritis",
+    "noData": "Tidak ada data integritas yang tersedia. Jalankan audit untuk mulai memantau.",
+    "stats": {
+      "criticalFiles": "File sistem & konfigurasi kritis",
+      "lastAudit": "Audit Terakhir",
+      "monitoredFiles": "File Dipantau",
+      "never": "Belum Pernah",
+      "noHistory": "Tidak ada riwayat audit",
+      "secure": "Aman",
+      "systemStatus": "Status Sistem",
+      "tampered": "Dimanipulasi",
+      "violationsDetected": "{count} pelanggaran terdeteksi"
+    },
+    "title": "Pemantauan Integritas File",
+    "violations": {
+      "empty": "Semua file sah",
+      "emptyDesc": "Tidak ada modifikasi tidak sah yang terdeteksi pada file aplikasi yang dipantau.",
+      "table": {
+        "detected": "Hash Terdeteksi",
+        "expected": "Hash Diharapkan",
+        "fileNotFound": "File tidak ditemukan",
+        "path": "Path File",
+        "type": "Tipe"
+      },
+      "title": "Pelanggaran Integritas",
+      "types": {
+        "missing": "Hilang",
+        "modified": "Dimodifikasi",
+        "new": "Baru/Tidak Dikenal"
+      }
+    },
+    "warning": {
+      "description": "Modifikasi file tidak sah terdeteksi. Ini bisa mengindikasikan kompromi server atau perubahan kode yang tidak sah. Harap verifikasi sumber perubahan ini segera.",
+      "title": "Peringatan Keamanan Kritis"
+    },
+    "resync": {
+      "dialogTitle": "Otorisasi Pembaruan Integritas",
+      "dialogDescription": "Isi alasan perubahan terotorisasi untuk audit trail. Sistem akan memperbarui baseline integritas file.",
+      "reasonLabel": "Alasan perubahan (wajib)",
+      "reasonPlaceholder": "Contoh: Deploy hotfix + update middleware keamanan pada 2026-04-22 oleh tim infra.",
+      "clearHistoryLabel": "Bersihkan catatan pelanggaran integritas lama",
+      "clearHistoryDesc": "Direkomendasikan setelah update terotorisasi agar dashboard merefleksikan baseline terbaru.",
+      "cancel": "Batal",
+      "submit": "Otorisasi & sinkron ulang",
+      "defaultReason": "Pembaruan terotorisasi: deploy/perubahan konfigurasi divalidasi pada {timestamp}",
+      "reasonMinLength": "Alasan audit minimal 8 karakter",
+      "auditStarted": "Pemeriksaan integritas file dimulai",
+      "success": "Baseline integritas diotorisasi & catatan lama dibersihkan",
+      "rateLimitActive": "Rate limit aktif. Coba lagi dalam {seconds} detik.",
+      "tooManyRequests": "Terlalu banyak request resync. Tunggu {seconds} detik lalu coba lagi."
+    }
+  },
+  "health": {
+    "title": "Skor Kesehatan Keamanan"
+  },
+  "kpi": {
+    "passRate": "Tingkat lulus drill (30h)",
+    "drills": "drill",
+    "avgRto": "RTO rata-rata",
+    "period": "Periode",
+    "avgRpo": "RPO rata-rata",
+    "targetNote": "Lebih rendah lebih baik",
+    "noiseRate": "Tingkat noise deteksi",
+    "infoSignals": "info",
+    "criticalSignals": "kritis"
+  },
+  "notifications": {
+    "test": "Uji peringatan",
+    "test_sent": "Notifikasi uji terkirim! Periksa Telegram Anda."
+  },
+  "ipManagement": {
+    "block": {
+      "button": "Blokir",
+      "label": "Blokir Alamat IP",
+      "placeholder": "192.168.1.1"
+    },
+    "check": {
+      "button": "Cek",
+      "label": "Cek Status IP",
+      "placeholder": "192.168.1.1"
+    },
+    "status": {
+      "allowed": "Diizinkan",
+      "blocked": "Terblokir",
+      "label": "Status IP"
+    },
+    "title": "Manajemen IP",
+    "unblock": {
+      "button": "Buka Blokir",
+      "label": "Buka Blokir IP / Hapus Rate Limit",
+      "placeholder": "192.168.1.1"
+    }
+  },
+  "logs": {
+    "actions": {
+      "blockIp": "Blokir IP"
+    },
+    "all": "Semua Event",
+    "blockedIp": "IP Terblokir",
+    "empty": "Tidak ada log keamanan ditemukan",
+    "eventTypes": {
+      "account_locked": "Akun Dikunci",
+      "force_logout": "Logout Paksa",
+      "ip_blocked": "IP Diblokir",
+      "ip_blocked_permanent": "IP Diblokir Permanen",
+      "ip_blocked_temp": "IP Diblokir Sementara",
+      "ip_unblocked": "IP Utama Dibuka Blokir",
+      "ip_whitelist_removed": "Dihapus dari Daftar Putih",
+      "ip_whitelisted": "IP Masuk Daftar Putih",
+      "login_blocked": "Login Diblokir",
+      "login_failed": "Login Gagal",
+      "login_success": "Login Berhasil",
+      "malicious_extension_blocked": "Ekstensi Diblokir",
+      "malicious_scanner_blocked": "Scanner Diblokir",
+      "session_invalidated": "Sesi Diinvalidasi",
+      "session_limit_reached": "Batas Sesi Tercapai",
+      "shield_failed": "Verifikasi Shield Gagal",
+      "shield_honeypot": "Honeypot Terdeteksi",
+      "shield_verified": "Verifikasi Shield Berhasil",
+      "suspicious_activity": "Aktivitas Mencurigakan"
+    },
+    "failedLogin": "Login Gagal",
+    "loading": "Memuat...",
+    "search": "Cari log...",
+    "suspiciousActivity": "Aktivitas Mencurigakan",
+    "table": {
+      "actions": "Aksi",
+      "date": "Tanggal",
+      "details": "Detail",
+      "event": "Event",
+      "ip": "Alamat IP",
+      "user": "Pengguna"
+    },
+    "title": "Jurnal Keamanan",
+    "clearShieldConfirm": "Apakah Anda yakin ingin menghapus semua log shield?",
+    "shieldCleared": "Log shield berhasil dibersihkan",
+    "selectAll": "Pilih semua log",
+    "selectRow": "Pilih log {ip}",
+    "filterLabel": "Filter log keamanan"
+  },
+  "maintenance": {
+    "activate": "Aktifkan Mode Pemeliharaan",
+    "deactivate": "Akhiri Pemeliharaan & Sinkronisasi Ulang",
+    "description": "Jeda sementara modul keamanan selama deployment dan pengujian",
+    "duration": {
+      "15min": "15 Menit",
+      "1hour": "1 Jam",
+      "2hours": "2 Jam",
+      "30min": "30 Menit",
+      "4hours": "4 Jam",
+      "label": "Durasi"
+    },
+    "modules": {
+      "title": "Modul",
+      "all": "Semua Modul",
+      "autotune": "Auto-Tune",
+      "integrity": "Integritas File",
+      "notifications": "Notifikasi Keamanan",
+      "scanner": "Perlindungan Scanner",
+      "shield": "Bot Shield (PoW)",
+      "threatintel": "Intelijen Ancaman",
+      "waf": "WAF (Firewall)"
+    },
+    "notifications": {
+      "activated": "Mode pemeliharaan diaktifkan selama {duration} menit",
+      "deactivated": "Mode pemeliharaan berakhir. Baseline disinkronkan ulang."
+    },
+    "status": {
+      "active": "Mode Pemeliharaan Aktif",
+      "autoExpired": "Berakhir otomatis",
+      "expiresIn": "Berakhir dalam {time}",
+      "inactive": "Semua Sistem Aktif"
+    },
+    "title": "Mode Pemeliharaan Keamanan",
+    "warnings": {
+      "active": "Modul keamanan sedang dijeda. Sistem lebih rentan selama periode ini.",
+      "autoResync": "Baseline integritas file akan otomatis dibuat ulang saat pemeliharaan berakhir."
+    }
+  },
+  "messages": {
+    "blockFailed": "Gagal memblokir alamat IP",
+    "blockSuccess": "Alamat IP berhasil diblokir",
+    "bulkBlockSuccess": "{blocked} alamat IP diblokir, {skipped} dilewati",
+    "bulkRemoveSuccess": "{count} alamat IP dihapus",
+    "bulkUnblockSuccess": "{count} alamat IP dibuka blokirnya",
+    "bulkWhitelistSuccess": "{count} alamat IP ditambahkan ke daftar putih",
+    "cannotBlockWhitelisted": "Tidak dapat memblokir alamat IP yang ada di daftar putih",
+    "checkFailed": "Gagal mengecek status IP",
+    "confirmBlock": "Apakah Anda yakin ingin memblokir alamat IP {ip}?",
+    "confirmBulkBlock": "Apakah Anda yakin ingin memblokir {count} alamat IP?",
+    "confirmBulkRemoveWhitelist": "Hapus {count} alamat IP dari daftar putih?",
+    "confirmBulkUnblock": "Apakah Anda yakin ingin membuka blokir {count} alamat IP?",
+    "confirmRemoveWhitelist": "Hapus alamat IP {ip} dari daftar putih?",
+    "confirmUnblock": "Apakah Anda yakin ingin membuka blokir alamat IP {ip} dan menghapus rate limit-nya?",
+    "confirmWhitelist": "Tambahkan alamat IP {ip} ke daftar putih?",
+    "enterIp": "Silakan masukkan alamat IP",
+    "removeWhitelistFailed": "Gagal menghapus alamat IP dari daftar putih",
+    "removeWhitelistSuccess": "Alamat IP dihapus dari daftar putih",
+    "unblockFailed": "Gagal membuka blokir alamat IP",
+    "unblockSuccess": "Alamat IP berhasil dibuka blokirnya dan rate limit dihapus",
+    "whitelistFailed": "Gagal menambahkan alamat IP ke daftar putih",
+    "whitelistSuccess": "Alamat IP berhasil ditambahkan ke daftar putih",
+    "bulkWhitelistRemoveSuccess": "IP dihapus dari whitelist",
+    "movedToWhitelist": "IP dipindah ke whitelist",
+    "whitelistRemoveSuccess": "IP dihapus dari whitelist"
+  },
+  "packages": {
+    "description": "Daftar lengkap semua dependensi Composer dan NPM",
+    "empty": "Tidak ada paket ditemukan di file lock",
+    "filters": {
+      "status": "Status Keamanan"
+    },
+    "showAll": "Tampilkan Semua Paket",
+    "stats": {
+      "composer": "Composer",
+      "npm": "NPM",
+      "secure": "Aman",
+      "total": "Total Paket",
+      "vulnerable": "Rentan"
+    },
+    "status": {
+      "secure": "Aman",
+      "vulnerable": "Rentan"
+    },
+    "table": {
+      "package": "Paket",
+      "source": "Sumber",
+      "status": "Status",
+      "version": "Versi"
+    },
+    "title": "Semua Paket"
+  },
+  "reasons": {
+    "autoTuned": "Auto-tune: skor ancaman {score}",
+    "honeypotTriggered": "Trigger honeypot terdeteksi: {path}",
+    "maliciousScanner": "Scanner bot berbahaya: {path}",
+    "manual": "Diblokir manual",
+    "threatIntelHighRisk": "Intelijen Ancaman: IP Risiko Tinggi ({score}/100)",
+    "wafViolation": "Pelanggaran WAF: {match}"
+  },
+  "settings": {
+    "activityRetention": {
+      "description": "Catatan jurnal aktivitas yang lebih lama dari periode ini akan otomatis dihapus.",
+      "label": "Retensi Log Aktivitas"
+    },
+    "autotuneFrequency": {
+      "daily": "Harian (01:00)",
+      "description": "Seberapa sering mesin auto-tuning keamanan menganalisis dan menyesuaikan parameter perlindungan.",
+      "label": "Frekuensi Auto-Tune",
+      "weekly": "Mingguan (Minggu 02:00)"
+    },
+    "description": "Konfigurasi parameter operasi keamanan dan kebijakan retensi",
+    "loginRetention": {
+      "description": "Catatan riwayat login yang lebih lama dari periode ini akan otomatis dihapus.",
+      "label": "Retensi Riwayat Login"
+    },
+    "retentionDays": {
+      "description": "Log keamanan yang lebih lama dari periode ini akan otomatis dihapus. Minimum 7 hari, maksimum 365 hari.",
+      "label": "Retensi Log Keamanan",
+      "unit": "hari"
+    },
+    "saved": "Pengaturan keamanan berhasil disimpan",
+    "title": "Pengaturan Keamanan"
+  },
+  "shield": {
+    "challenge": {
+      "message": "Kami mengamankan sesi Anda untuk melindungi dari ancaman otomatis. Ini hanya akan memakan waktu sejenak.",
+      "retry": "Coba Lagi",
+      "status": {
+        "analyzing": "Menganalisis metrik keamanan...",
+        "failed": "Verifikasi gagal. Mencoba kembali...",
+        "finalizing": "Finalisasi verifikasi...",
+        "initializing": "Menginisialisasi pemeriksaan keamanan...",
+        "processing": "Sedang diproses",
+        "verified": "Terverifikasi! Melanjutkan...",
+        "verifying": "Memverifikasi koneksi..."
+      },
+      "steps": {
+        "analyze": "Analisis",
+        "solve": "Selesaikan",
+        "verify": "Verifikasi"
+      },
+      "title": "Memverifikasi Koneksi"
+    },
+    "description": "Pantau aktivitas tantangan Proof-of-Work dan deteksi bot otomatis",
+    "stats": {
+      "difficulty": "Kesulitan Saat Ini",
+      "extensionsBlocked": "Ekstensi Diblokir",
+      "failures": "Verifikasi Gagal",
+      "honeypot": "Honeypot Trigger",
+      "scannersBlocked": "Scanner Diblokir",
+      "verifications": "Total Verifikasi"
+    },
+    "table": {
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "status": "Status",
+      "userAgent": "User Agent"
+    },
+    "title": "Bot Shield Journal"
+  },
+  "slowQueries": {
+    "description": "Pantau query database yang melebihi batas performa",
+    "empty": "Tidak ada query lambat. Performa database optimal! 🚀",
+    "filters": {
+      "dateFrom": "Dari Tanggal",
+      "dateTo": "Sampai Tanggal",
+      "minDuration": "Durasi Min (ms)",
+      "minDurationPlaceholder": "1000",
+      "route": "Route",
+      "routePlaceholder": "Cari berdasarkan path route..."
+    },
+    "stats": {
+      "avgDuration": "Durasi Rata-rata",
+      "maxDuration": "Durasi Maksimum",
+      "today": "Hari Ini",
+      "total": "Total Tercatat"
+    },
+    "table": {
+      "date": "Tanggal",
+      "duration": "Durasi",
+      "query": "Query",
+      "route": "Route",
+      "user": "Pengguna"
+    },
+    "title": "Analisis Query Lambat"
+  },
+  "statistics": {
+    "blockedIps": "IP Terblokir",
+    "events": "Event Keamanan",
+    "failedLogins": "Login Gagal",
+    "last24h": "24 Jam Terakhir"
+  },
+  "tabs": {
+    "blocklist": "Daftar Blokir",
+    "cspReports": "Laporan CSP",
+    "fileIntegrity": "Integritas File",
+    "overview": "Ringkasan",
+    "settings": "Pengaturan",
+    "shieldJournal": "Shield Journal",
+    "slowQueries": "Query Lambat",
+    "threatAnalysis": "Analisis Ancaman",
+    "vulnerabilities": "Kerentanan",
+    "whitelist": "Daftar Putih"
+  },
+  "threatAnalysis": {
+    "autoTune": {
+      "changes": {
+        "blockedIps": "Memblokir {count} IP risiko tinggi",
+        "newScannerPaths": "{count} path scanner baru terdeteksi",
+        "scannerThreshold": "Ambang batas scanner diperketat menjadi {value}"
+      },
+      "description": "Penyesuaian parameter keamanan yang dilakukan oleh mesin tuning otomatis",
+      "detected": "{count} Terdeteksi",
+      "ips": "IP",
+      "noChanges": "Tidak ada perubahan yang diterapkan",
+      "risk": "Risiko",
+      "table": {
+        "campaigns": "Kampanye",
+        "changes": "Perubahan",
+        "date": "Tanggal",
+        "stats": "Statistik"
+      },
+      "title": "Riwayat Auto-Tune"
+    },
+    "campaigns": {
+      "coordinated": "Upaya terkoordinasi",
+      "description": "Korelasi dari beberapa event yang berbagi pola yang identik",
+      "detected": "{count} Terdeteksi",
+      "empty": "Tidak ada kampanye serangan aktif yang terdeteksi",
+      "highRisk": "Risiko Tinggi",
+      "ipsCount": "{count} IP",
+      "title": "Kampanye Serangan"
+    },
+    "description": "Korelasi event keamanan untuk mendeteksi pola serangan yang terkoordinasi",
+    "highRiskIps": {
+      "actions": {
+        "block": "Blokir IP"
+      },
+      "critical": "Kritis",
+      "description": "IP individu dengan skor ancaman akumulasi tinggi",
+      "empty": "Tidak ada IP berisiko tinggi yang ditandai saat ini",
+      "events": "Event",
+      "flagged": "{count} Ditandai",
+      "score": "Skor",
+      "title": "IP Risiko Tinggi",
+      "warning": "Peringatan"
+    },
+    "stats": {
+      "detectedCampaigns": "Kampanye Terdeteksi",
+      "highRiskIps": "IP Risiko Tinggi",
+      "totalEvents": "Total Event Keamanan",
+      "uniqueIps": "IP Unik Dianalisis"
+    },
+    "loadFailed": "Gagal memuat analisis ancaman. Periksa koneksi atau izin Anda, lalu muat ulang.",
+    "title": "Analisis Ancaman Keamanan"
+  },
+  "title": "Manajemen Keamanan",
+  "twoFactor": {
+    "globallyDisabledDesc": "Administrator telah menonaktifkan Autentikasi Dua Faktor untuk seluruh sistem.",
+    "globallyDisabledTitle": "2FA Dinonaktifkan Secara Global"
+  },
+  "vulnerabilities": {
+    "auditCompleted": "Audit dependensi berhasil diselesaikan",
+    "description": "Hasil audit keamanan untuk paket Composer dan NPM",
+    "empty": "Tidak ada kerentanan ditemukan. Dependensi Anda aman! 🛡️",
+    "filters": {
+      "package": "Paket",
+      "searchPackage": "Cari paket...",
+      "severity": "Tingkat Keparahan",
+      "source": "Sumber",
+      "status": "Status"
+    },
+    "runAudit": "Jalankan Audit",
+    "severity": {
+      "critical": "Kritis",
+      "high": "Tinggi",
+      "low": "Rendah",
+      "medium": "Sedang"
+    },
+    "source": {
+      "composer": "Composer",
+      "npm": "NPM"
+    },
+    "stats": {
+      "critical": "Kritis",
+      "high": "Tinggi",
+      "low": "Rendah",
+      "medium": "Sedang",
+      "total": "Total"
+    },
+    "status": {
+      "acknowledged": "Diketahui",
+      "ignored": "Diabaikan",
+      "new": "Baru",
+      "patched": "Diperbaiki"
+    },
+    "table": {
+      "actions": "Aksi",
+      "cve": "CVE",
+      "package": "Paket",
+      "severity": "Tingkat Keparahan",
+      "source": "Sumber",
+      "status": "Status",
+      "version": "Versi"
+    },
+    "title": "Kerentanan Dependensi"
+  },
+  "whitelist": {
+    "actions": {
+      "remove": "Hapus"
+    },
+    "addIp": "Tambah IP ke Daftar Putih",
+    "description": "Alamat IP di daftar putih tidak akan pernah diblokir",
+    "empty": "Tidak ada alamat IP di daftar putih",
+    "reason": "Alasan (opsional)",
+    "table": {
+      "actions": "Aksi",
+      "createdBy": "Dibuat Oleh",
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "reason": "Alasan"
+    },
+    "title": "Daftar Putih IP"
+  },
+  "trends": {
+    "title": "Tren serangan (24j)",
+    "events": "Peristiwa"
+  },
+  "subtitle": "Log keamanan, laporan CSP, dan pemantauan ancaman.",
+  "abac": {
+    "title": "Kebijakan ABAC",
+    "subtitle": "Aturan akses berbasis atribut setelah RBAC.",
+    "create": "Kebijakan baru",
+    "empty": "Belum ada kebijakan ABAC.",
+    "loading": "Memuat kebijakan…",
+    "confirmDelete": "Hapus kebijakan \"{name}\"?",
+    "form": {
+      "createTitle": "Buat kebijakan ABAC",
+      "editTitle": "Ubah kebijakan ABAC",
+      "description": "Conditions harus berupa array JSON.",
+      "name": "Nama",
+      "descriptionField": "Deskripsi",
+      "target": "Resource target",
+      "action": "Aksi",
+      "conditions": "Conditions (JSON)",
+      "active": "Kebijakan aktif",
+      "save": "Simpan kebijakan"
+    },
+    "deleteTitle": "Hapus kebijakan?",
+    "columns": {
+      "name": "Nama",
+      "target": "Target",
+      "action": "Aksi",
+      "status": "Status",
+      "actions": "Aksi"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Nonaktif"
+    }
+  },
+  "siem": {
+    "tab": "Ekspor SIEM",
+    "title": "Log ekspor SIEM",
+    "subtitle": "Event keamanan di siem_export.log (channel syslog juga aktif).",
+    "empty": "Belum ada entri SIEM. Event akan muncul setelah aktivitas."
+  }
+}

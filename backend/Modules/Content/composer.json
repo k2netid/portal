@@ -1,0 +1,22 @@
+{
+    "name": "jejakawan/content",
+    "description": "Content Management and Design Module",
+    "authors": [
+        {
+            "name": "jejakawan",
+            "email": "info@jejakawan.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Content\\Providers\\ContentServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Content\\": "app/"
+        }
+    }
+}

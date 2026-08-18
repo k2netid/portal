@@ -1,0 +1,150 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, pdo, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --force
+
+      - name: Composer audit (fail on critical)
+        run: composer audit --locked || test $? -eq 2
+
+      - name: Quality gate
+        run: composer run quality
+
+      - name: PHPUnit
+        run: php artisan test --ansi
+
+      - name: Payment env check (staging profile)
+        run: php artisan platform:payment-env-check --profile=local --ansi
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: NPM audit (fail on critical)
+        run: npm audit --audit-level=critical
+
+      - name: Frontend quality gate
+        run: npm run quality:frontend
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, pdo, pdo_sqlite, sqlite3
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Prepare backend for E2E
+        working-directory: backend
+        run: |
+          composer install --no-interaction --prefer-dist
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --force
+          php artisan db:seed --force
+          {
+            echo "FORCE_HTTPS_URLS=false"
+            echo "SESSION_SECURE_COOKIE=false"
+            echo "SANCTUM_STATEFUL_DOMAINS=127.0.0.1:8081,localhost:8081,127.0.0.1,localhost"
+            echo "APP_URL=http://127.0.0.1:8081"
+          } >> .env
+          php artisan config:clear
+
+      - name: Start Laravel for E2E
+        working-directory: backend
+        run: |
+          php artisan serve --host=127.0.0.1 --port=8081 > /tmp/laravel-e2e.log 2>&1 &
+          echo $! > /tmp/laravel-e2e.pid
+          for i in $(seq 1 45); do
+            if curl -sf http://127.0.0.1:8081/up >/dev/null; then
+              echo "Laravel ready on :8081"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/laravel-e2e.log
+          exit 1
+
+      - name: Build and deploy assets
+        run: npm run build && cd .. && npm run deploy:assets:full
+
+      - name: E2E preflight + smoke + theme
+        env:
+          PLAYWRIGHT_USE_FULL_STACK: "1"
+        run: |
+          node scripts/e2e-preflight.mjs
+          npm run test:e2e:ci

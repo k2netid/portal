@@ -1,0 +1,42 @@
+name: Security Audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 1 * * *"
+    - cron: "0 2 * * 1"
+
+jobs:
+  smoke-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, pdo, sqlite
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Prepare app
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan migrate --force
+
+      - name: Security smoke check
+        run: composer security:smoke-check
+
+      - name: Granular permission matrix
+        run: php artisan test Modules/Core/tests/Feature/SecurityPermissionDomainTest.php --ansi
+
+      - name: Recovery drill (weekly baseline)
+        run: php artisan security:recovery-drill --create-backup --max-rto-seconds=600 --max-rpo-minutes=1440 --ansi
+
+      - name: KPI report (30d)
+        run: composer security:kpi

@@ -1,0 +1,287 @@
+{
+  "console_theme_mode": {
+    "type": "select",
+    "label": "Theme application mode",
+    "default": "global",
+    "category": "Brand",
+    "description": "Global uses presets and derived shell. Advanced uses per-component overrides only.",
+    "options": [
+      "global",
+      "advanced"
+    ]
+  },
+  "console_color_preset": {
+    "type": "select",
+    "label": "Color preset",
+    "default": "custom",
+    "category": "Brand",
+    "description": "Curated accent palettes for the admin console. Choose Custom to use your own brand color.",
+    "options": [
+      "monochrome_clean",
+      "indigo_pro",
+      "oceanic_clean",
+      "emerald_fresh",
+      "royal_violet",
+      "sunset_coral",
+      "midnight_cyan",
+      "aurora_mint",
+      "amber_pulse",
+      "ruby_night",
+      "custom"
+    ]
+  },
+  "console_brand_primary": {
+    "type": "color",
+    "label": "Primary brand color",
+    "default": "#4f46e5",
+    "category": "Brand",
+    "description": "Main accent for buttons, links, and focus rings in the admin console."
+  },
+  "console_button_radius": {
+    "type": "range",
+    "label": "Button corner radius",
+    "default": 8,
+    "min": 0,
+    "max": 24,
+    "unit": "px",
+    "category": "Shape"
+  },
+  "console_sidebar_accent": {
+    "type": "color",
+    "label": "Sidebar accent",
+    "default": "#0f172a",
+    "category": "Brand",
+    "description": "Optional sidebar highlight; reserved for future sidebar theming."
+  },
+  "console_surface_style": {
+    "type": "select",
+    "label": "Surface style",
+    "default": "glass",
+    "category": "Shape",
+    "description": "Flat panels or frosted glass surfaces across the console.",
+    "options": [
+      "flat",
+      "glass"
+    ]
+  },
+  "console_glass_gradient_preset": {
+    "type": "select",
+    "label": "Glass gradient preset",
+    "default": "balanced",
+    "category": "Shape",
+    "description": "Background gradient when surface style is glass.",
+    "options": [
+      "none",
+      "subtle",
+      "balanced",
+      "vivid",
+      "aurora",
+      "sunset",
+      "corner_glow",
+      "custom"
+    ]
+  },
+  "console_glass_gradient_color": {
+    "type": "color",
+    "label": "Glass gradient color",
+    "default": "#4f46e5",
+    "category": "Shape",
+    "description": "Accent color for custom glass gradient (defaults to brand primary)."
+  },
+  "console_glass_gradient_intensity": {
+    "type": "range",
+    "label": "Glass gradient intensity",
+    "default": 55,
+    "min": 0,
+    "max": 100,
+    "unit": "%",
+    "category": "Shape",
+    "description": "Strength and spread of the glass background glow."
+  },
+  "console_glass_gradient_angle": {
+    "type": "range",
+    "label": "Glass gradient angle",
+    "default": 135,
+    "min": 0,
+    "max": 360,
+    "unit": "deg",
+    "category": "Shape",
+    "description": "Direction of the custom glass gradient (degrees)."
+  },
+  "console_brand_primary_dark": {
+    "type": "color",
+    "label": "Primary brand color (Dark Mode)",
+    "default": "#818cf8",
+    "category": "Brand",
+    "description": "Accent color specifically for dark mode pages."
+  },
+  "console_sidebar_style": {
+    "type": "select",
+    "label": "Sidebar style",
+    "default": "glass",
+    "category": "Style",
+    "description": "Background style for the left navigation sidebar.",
+    "options": [
+      "glass",
+      "solid",
+      "clean"
+    ]
+  },
+  "console_navbar_style": {
+    "type": "select",
+    "label": "Navbar style",
+    "default": "glass",
+    "category": "Style",
+    "description": "Background style for the top sticky navbar.",
+    "options": [
+      "glass",
+      "bordered",
+      "blended"
+    ]
+  },
+  "console_popper_opacity": {
+    "type": "range",
+    "label": "Popper overlay opacity",
+    "default": 85,
+    "min": 0,
+    "max": 100,
+    "unit": "%",
+    "category": "Style",
+    "description": "Transparency layer for dropdown menus, select listbox, and dialog overlays."
+  },
+  "app_logo_light": {
+    "type": "image",
+    "label": "App Logo (Light Mode)",
+    "default": "",
+    "category": "Logo",
+    "description": "Logo displayed on light sidebars."
+  },
+  "app_logo_dark": {
+    "type": "image",
+    "label": "App Logo (Dark Mode)",
+    "default": "",
+    "category": "Logo",
+    "description": "Logo displayed on dark sidebars."
+  },
+  "app_logo_compact": {
+    "type": "image",
+    "label": "App Logo Compact (Icon)",
+    "default": "",
+    "category": "Logo",
+    "description": "Square brand icon shown when sidebar is collapsed."
+  },
+  "console_font_primary": {
+    "type": "select",
+    "label": "Primary Font Family",
+    "default": "system",
+    "category": "Typography",
+    "description": "Main font family for the user interface text and headings.",
+    "options": [
+      "system",
+      "inter",
+      "outfit",
+      "poppins"
+    ]
+  },
+  "console_font_mono": {
+    "type": "select",
+    "label": "Monospace Font Family",
+    "default": "system",
+    "category": "Typography",
+    "description": "Monospace font for technical logs, tables, and codes.",
+    "options": [
+      "system",
+      "jetbrains_mono",
+      "fira_code"
+    ]
+  },
+  "console_shadow_elevation": {
+    "type": "select",
+    "label": "Shadow Elevation",
+    "default": "soft",
+    "category": "Style",
+    "description": "Preset shadow elevation styles for cards, toolbars, and tiles.",
+    "options": [
+      "flat",
+      "soft",
+      "layered"
+    ]
+  },
+  "console_border_style": {
+    "type": "select",
+    "label": "Border Thickness",
+    "default": "subtle",
+    "category": "Style",
+    "description": "Card and boundary borders thickness level.",
+    "options": [
+      "clean",
+      "subtle",
+      "bold"
+    ]
+  },
+  "console_button_style": {
+    "type": "select",
+    "label": "Button style",
+    "default": "solid",
+    "category": "Components",
+    "description": "Default filled style for primary actions in advanced mode.",
+    "options": [
+      "solid",
+      "soft",
+      "outline"
+    ]
+  },
+  "console_card_style": {
+    "type": "select",
+    "label": "Card style",
+    "default": "soft",
+    "category": "Components",
+    "description": "Shadow and border treatment for panels, cards, and tiles.",
+    "options": [
+      "flat",
+      "soft",
+      "elevated"
+    ]
+  },
+  "console_modal_backdrop_opacity": {
+    "type": "range",
+    "label": "Modal backdrop opacity",
+    "default": 50,
+    "min": 0,
+    "max": 90,
+    "unit": "%",
+    "category": "Components",
+    "description": "Dimming strength behind modal dialogs."
+  },
+  "console_dropdown_style": {
+    "type": "select",
+    "label": "Dropdown style",
+    "default": "standard",
+    "category": "Components",
+    "description": "Menus, select lists, and popovers.",
+    "options": [
+      "minimal",
+      "standard",
+      "glass"
+    ]
+  },
+  "console_icon_weight": {
+    "type": "select",
+    "label": "Icon weight",
+    "default": "regular",
+    "category": "Components",
+    "description": "Stroke weight for Lucide icons across the console.",
+    "options": [
+      "light",
+      "regular",
+      "bold"
+    ]
+  },
+  "app_favicon": {
+    "type": "image",
+    "label": "Favicon",
+    "default": "",
+    "category": "Logo",
+    "description": "Browser tab icon for the admin console."
+  }
+}

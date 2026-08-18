@@ -1,0 +1,100 @@
+{
+  "module": {
+    "name": "Asisten AI"
+  },
+  "navigation": {
+    "panel": "Asisten AI"
+  },
+  "title": "Studio AI",
+  "subtitle": "Pemakaian (30 hari terakhir) sareng pintasan bantuan publikasi di editor.",
+  "loading": "Nuju ngamuat pemakaian…",
+  "stats": {
+    "totalCalls": "Total panggilan (30h)",
+    "tokensMonth": "Token dipakai (bulan)",
+    "tokenLimit": "Batas token (paket)",
+    "providers": "Penyedia",
+    "noProviders": "Acan aya penyedia. Atur API key di Sistem → Petélan → AI."
+  },
+  "usageByFeature": "Pemakaian per fitur",
+  "refresh": "Muat ulang",
+  "noCalls": "Acan aya panggilan AI. Gunakan bantuan draf/taksonomi di editor Kusi, atawa dina petélan.",
+  "table": {
+    "feature": "Fitur",
+    "provider": "Penyedia",
+    "calls": "Panggilan",
+    "tokensIn": "Token masup",
+    "tokensOut": "Token kaluar"
+  },
+  "batch": {
+    "title": "Taksonomi batch (antrian)",
+    "description": "Antri dugi ka 25 posting; hasil muncul nalika job sampurna (antrian sinkron langsung jalan).",
+    "refreshJobs": "Muat ulang job",
+    "itemsLabel": "Item (array JSON)",
+    "queue": "Antri batch",
+    "queuing": "Mengantri…",
+    "empty": "Acan aya job batch.",
+    "resultsTitle": "Hasil — {id}",
+    "failedSuffix": "({count} gagal)",
+    "table": {
+      "id": "ID",
+      "status": "Status",
+      "progress": "Progres",
+      "provider": "Penyedia",
+      "created": "Dijieun"
+    },
+    "errors": {
+      "mustBeArray": "Item harus berupa array JSON",
+      "loadJobs": "Gagal nuju ngamuat job batch",
+      "loadBatch": "Gagal nuju ngamuat batch",
+      "queue": "Gagal mengantri batch"
+    }
+  },
+  "help": {
+    "title": "Di mana menggunakan AI",
+    "body": "Saran draf sareng taksonomi tersedia dina editor kusi (popover bantuan AI).",
+    "settingsLink": "Atur penyedia di Petélan Sistem → AI"
+  },
+  "errors": {
+    "load": "Gagal nuju ngamuat asisten AI"
+  },
+  "assist": {
+    "title": "Bantuan AI",
+    "description": "Gunakan AI pikeun memperbaiki tulisan. Pilih opsi atawa ketik perintah kustom.",
+    "selectProvider": "Pilih penyedia",
+    "loadingModels": "Nuju ngamuat model…",
+    "selectModel": "Pilih model",
+    "presets": {
+      "fixGrammar": "Perbaiki tata bahasa",
+      "rewrite": "Tulis ulang",
+      "summarize": "Ringkas",
+      "expand": "Perluas"
+    },
+    "commands": {
+      "fixGrammar": "Perbaiki tata bahasa sareng ejaan",
+      "rewrite": "Parafrase teks ieu agar langkung menarik",
+      "summarize": "Ringkas teks ieu dina 1 kalimat",
+      "expand": "Perluas teks ieu jeung detail tambahan"
+    },
+    "customCommand": "Perintah kustom",
+    "customPlaceholder": "Jelaskan naon anu hoyong AI lakukan…",
+    "generateWith": "Hasilkan jeung {provider}",
+    "generating": "Menghasilkan…",
+    "orCustom": "Atawa ketik perintah kustom",
+    "customInputPlaceholder": "mis. Terjemahkan ka Bahasa Indonesia…",
+    "generatingMagic": "Menghasilkan…",
+    "noProviders": "Teu aya penyedia AI aktif. Atur di petélan.",
+    "errorTitle": "Kalepatan AI",
+    "generateFailed": "Gagal menghasilkan kusi."
+  },
+  "publishing": {
+    "draft": "Draf AI",
+    "draftGenerating": "Nyieun draf…",
+    "taxonomy": "Taksonomi AI",
+    "taxonomySuggesting": "Menyarankan…",
+    "draftTopicPrompt": "Topik pikeun draf AI?",
+    "draftEmpty": "Draf AI kosong",
+    "draftApplied": "Draf AI diterapkan",
+    "taxonomyEmpty": "Taksonomi AI kosong",
+    "taxonomyApplied": "Taksonomi AI diterapkan"
+  }
+}

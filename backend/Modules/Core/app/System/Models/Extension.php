@@ -1,0 +1,74 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Core\System\Models;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * @property string $id
+ * @property string $slug
+ * @property string $type
+ * @property string $name
+ * @property string $version
+ * @property string $database_version
+ * @property string $status
+ * @property bool $is_core
+ * @property string|null $author
+ * @property string $license
+ * @property array<string, mixed>|null $requirements
+ * @property array<string, mixed>|null $settings
+ */
+class Extension extends Model
+{
+    use HasUuids, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            @unlink(storage_path('framework/cache/active_extensions.json'));
+        });
+
+        static::deleted(function () {
+            @unlink(storage_path('framework/cache/active_extensions.json'));
+        });
+    }
+
+    protected $table = 'sys_extensions';
+
+    /**
+     * @return HasMany<Feature, $this>
+     */
+    public function features(): HasMany
+    {
+        return $this->hasMany(Feature::class, 'extension_slug', 'slug');
+    }
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'slug',
+        'type',
+        'name',
+        'version',
+        'database_version',
+        'status',
+        'is_core',
+        'author',
+        'license',
+        'requirements',
+        'settings',
+    ];
+
+    protected $casts = [
+        'is_core' => 'boolean',
+        'requirements' => 'array',
+        'settings' => 'array',
+    ];
+}

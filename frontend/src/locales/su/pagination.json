@@ -1,0 +1,18 @@
+{
+    "entries": "data",
+    "first": "Mimiti",
+    "last": "Panungtung",
+    "next": "Salajengna",
+    "noData": "Teu aya data",
+    "of": "tina",
+    "page": "Kaca",
+    "perPage": "Per Kaca",
+    "previous": "Sateuacanna",
+    "rowsPerPage": "Baris per kaca",
+    "show": "Tembongkeun",
+    "showing": "Nembongkeun",
+    "total": "Total",
+    "showingRange": "Nembongkeun {from}–{to} tina {total}",
+    "showingCompact": "{from}–{to} / {total}",
+    "pageSummary": "{current} / {total}"
+}

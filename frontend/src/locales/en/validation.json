@@ -1,0 +1,17 @@
+{
+    "alphaNum": "{field} may only contain letters and numbers",
+    "confirmed": "Passwords do not match",
+    "date": "Invalid date format",
+    "email": "Invalid email format",
+    "image": "File must be an image",
+    "invalid": "Invalid {field}",
+    "max": "{field} must not exceed {max} characters",
+    "maxSize": "File size must not exceed {size}",
+    "mimes": "File type not allowed",
+    "min": "{field} must be at least {min} characters",
+    "numeric": "{field} must be a number",
+    "required": "{field} is required",
+    "unique": "{field} already exists",
+    "url": "Invalid URL format",
+    "slug": "Must be a valid URL slug"
+}

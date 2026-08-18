@@ -1,0 +1,350 @@
+/* Shadcn UI Design Tokens - Premium Enterprise Grade */
+@layer base {
+
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    @supports (-moz-osx-font-smoothing: grayscale) {
+        body {
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
+    /* Global Form Resets for Anti-Flash & Consistency */
+    [data-slot="input"],
+    [data-slot="select-trigger"],
+    [data-slot="search-trigger"],
+    [data-slot="search-input"],
+    [data-slot="field"],
+    [data-slot="field-group"],
+    [data-slot="field-content"],
+    [data-slot="field-label"],
+    [data-slot="field-description"],
+    [data-slot="field-title"],
+    [data-slot="table"],
+    [data-slot="table-row"],
+    [data-slot="table-head"],
+    [data-slot="table-cell"] {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        outline: none !important;
+        /* Removed transition: none to re-enable hover/focus micro-interactions globally */
+    }
+
+    /* Autofill overrides to prevent yellow background */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
+        -webkit-text-fill-color: hsl(var(--foreground)) !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Interactive components need borders and background flexibility */
+    [data-slot="input"],
+    [data-slot="select-trigger"],
+    [data-slot="search-trigger"] {
+        border-color: hsl(var(--border) / 0.5) !important;
+    }
+
+    /*
+     * Checkbox: flat 1px border, readable in light/dark (bulk tables + forms).
+     */
+    [data-slot="checkbox"] {
+        border-width: 1px !important;
+        border-style: solid !important;
+        border-color: hsl(var(--border)) !important;
+        background-color: hsl(var(--background)) !important;
+        box-shadow: none !important;
+    }
+
+    .dark [data-slot="checkbox"] {
+        border-color: hsl(var(--border)) !important;
+        background-color: hsl(var(--background)) !important;
+    }
+
+    [data-slot="checkbox"]:hover:not([data-disabled]):not([data-state="checked"]) {
+        border-color: hsl(var(--muted-foreground) / 0.5) !important;
+    }
+
+    [data-slot="checkbox"]:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: hsl(var(--primary) / 0.55) !important;
+    }
+
+    [data-slot="checkbox"][data-state="checked"] {
+        background-color: hsl(var(--primary)) !important;
+        border-color: hsl(var(--primary)) !important;
+    }
+
+    [data-slot="table-row"],
+    [data-slot="table-head"] {
+        border-color: hsl(var(--border) / 0.8) !important;
+    }
+
+    /* Search input specifically has no border */
+    [data-slot="search-input"] {
+        border: none !important;
+    }
+
+    .dark [data-slot="input"],
+    .dark [data-slot="select-trigger"] {
+        background-color: hsl(var(--input) / 0.3) !important;
+    }
+
+    [data-slot="input"]:focus-visible,
+    [data-slot="input"]:focus,
+    [data-slot="select-trigger"]:focus {
+        @apply ring-2 ring-primary/20 border-primary/50 outline-none;
+        transition: box-shadow 0.15s ease, border-color 0.15s ease !important;
+    }
+
+    /* Premium Overlays & Popovers - Separation from main page */
+    [data-slot="popover"],
+    [data-slot="dropdown-menu"],
+    [data-slot="dialog"],
+    [data-slot="hover-card"],
+    [role="dialog"] {
+        box-shadow: 0 25px 50px -12px hsl(var(--foreground) / 0.15), 0 0 0 1px hsl(var(--border) / 0.5) !important;
+        border: none !important; /* Rely on shadow for crisp fractional border */
+    }
+
+    .dark [data-slot="popover"],
+    .dark [data-slot="dropdown-menu"],
+    .dark [data-slot="dialog"],
+    .dark [data-slot="hover-card"],
+    .dark [role="dialog"] {
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px hsl(var(--border) / 0.3) !important;
+        background-color: hsl(var(--popover) / 0.92) !important;
+        backdrop-filter: blur(20px);
+    }
+
+    :root {
+        /* Global Primary Neutral (theme-specific overrides live separately) */
+        --primary: 222 47% 11%;
+        --primary-foreground: 0 0% 100%;
+
+        /* Clean White Surfaces */
+        --background: 0 0% 100%;
+        --foreground: 222 47% 11%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 222 47% 11%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 222 47% 11%;
+
+        /* Sidebar — pure white */
+        --sidebar: 0 0% 100%;
+        --sidebar-foreground: 222 47% 11%;
+        --sidebar-accent: 210 40% 96%;
+
+        /* Secondary & Muted */
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 222 47% 11%;
+
+        --muted: 210 40% 96%;
+        --muted-foreground: 215 16% 47%;
+
+        /* Accent */
+        --accent: 210 40% 96%;
+        --accent-foreground: 222 47% 11%;
+
+        /* Destructive */
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+
+        /* Borders, Inputs & Focus Ring */
+        --border: 214 32% 91%;
+        --input: 214 32% 91%;
+        --ring: 222 47% 11%;
+
+        --radius: 0.5rem;
+
+        /* Semantic States */
+        --success: 142 76% 36%;
+        --success-foreground: 0 0% 100%;
+        --warning: 38 92% 50%;
+        --warning-foreground: 48 96% 2%;
+        --info: 199 88% 48%;
+        --info-foreground: 0 0% 100%;
+
+        /* Charts */
+        --chart-1: 222 73% 40%;
+        --chart-2: 215 16% 47%;
+        --chart-3: 142 76% 36%;
+        --chart-4: 199 88% 48%;
+        --chart-5: 38 92% 50%;
+    }
+
+    .dark {
+        /* Dark Mode - Pure Clean Black */
+        --background: 0 0% 0%;
+        /* Pure Black */
+        --sidebar: 0 0% 0%;
+        --card: 0 0% 3%;
+        --popover: 0 0% 2%;
+
+        --foreground: 0 0% 100%;
+        --card-foreground: 0 0% 98%;
+        --popover-foreground: 0 0% 98%;
+
+        --primary: 0 0% 100%; /* Neutral Primary for Editorial Look */
+        --primary-foreground: 0 0% 0%;
+
+        --secondary: 0 0% 6%;
+        --secondary-foreground: 0 0% 100%;
+
+        --muted: 0 0% 6%;
+        --muted-foreground: 0 0% 65%;
+
+        --accent: 0 0% 10%;
+        --accent-foreground: 0 0% 100%;
+
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+
+        /* High Contrast Borders for Obsidian */
+        --border: 0 0% 12%;
+        --input: 0 0% 12%;
+        --ring: 0 0% 100%;
+
+        --sidebar-foreground: 0 0% 98%;
+        --sidebar-accent: 0 0% 6%;
+
+        /* Semantic States - Dark */
+        --success: 142 70% 45%;
+        --success-foreground: 144 61% 9%;
+        --warning: 38 92% 50%;
+        --warning-foreground: 48 96% 2%;
+        --info: 199 88% 48%;
+        --info-foreground: 0 0% 100%;
+
+        /* Charts */
+        --chart-1: 0 0% 100%;
+        --chart-2: 0 0% 40%;
+        --chart-3: 199 88% 48%;
+        --chart-4: 38 92% 50%;
+        --chart-5: 0 84% 60%;
+
+        color-scheme: dark;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] {
+    direction: rtl;
+}
+
+[dir="rtl"] .header-container {
+    flex-direction: row-reverse;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade {
+    animation: fadeIn 0.4s ease-out both;
+}
+
+.animate-fade-up {
+    animation: fadeInUp 0.4s ease-out both;
+}
+
+/* Global Transition Suppression Utils */
+.admin-instant,
+.admin-instant *,
+.no-transitions,
+.no-transitions * {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Premium Artist Visual Utilities */
+@layer utilities {
+    .font-heading {
+        font-family: var(--font-heading);
+    }
+
+    /* Subpixel antialiasing for thinner, sharper text on dark backgrounds */
+    .text-sharp {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Firefox / macOS only — keeps Chromium from logging “unknown property” for -moz-* */
+    @supports (-moz-osx-font-smoothing: grayscale) {
+        .text-sharp {
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
+    .noise-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        background-image: none;
+    }
+
+    .glass-morphism {
+        @apply bg-background/60 backdrop-blur-xl border border-white/10;
+    }
+
+    .text-stroke {
+        -webkit-text-stroke: 1px currentColor;
+        color: transparent;
+    }
+
+    .mask-reveal {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+
+    /* Magnetic target markers for JS */
+    .cursor-magnetic {
+        display: inline-block;
+    }
+
+    .auth-input {
+        @apply h-12 px-5 text-base border-border/40 bg-card/50 transition-all duration-300 focus:bg-card focus:border-primary/50;
+    }
+
+    .auth-button-gradient {
+        @apply bg-foreground text-background font-bold tracking-tight uppercase px-8 py-3 transition-all duration-500 hover:tracking-widest active:scale-95 disabled:opacity-50;
+    }
+
+    .auth-card-premium {
+        @apply border-border/20 shadow-2xl shadow-black/20 rounded-none overflow-hidden bg-card/80 backdrop-blur-sm;
+    }
+}

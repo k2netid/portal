@@ -1,0 +1,364 @@
+{
+  "navigation": {
+    "menu": {
+      "design": "Design",
+      "menus": "Menus",
+      "widgets": "Widgets",
+      "redirects": "Redirects"
+    }
+  },
+  "menus": {
+    "actions": {
+      "addAll": "Add All",
+      "addToMenu": "Add to Menu",
+      "backToList": "Back to List",
+      "builderView": "Builder View",
+      "cancel": "Cancel",
+      "create": "New Menu",
+      "createAction": "Create",
+      "createFirst": "Create your first menu",
+      "createItem": "Add Item",
+      "creating": "Creating...",
+      "delete": "Delete",
+      "deleteItem": "Delete Item",
+      "edit": "Edit",
+      "listView": "List View",
+      "or": "or",
+      "preview": "Preview",
+      "save": "Save Menu",
+      "saved": "Menu saved successfully",
+      "saving": "Saving...",
+      "selectMenu": "Select a menu to edit",
+      "update": "Update"
+    },
+    "form": {
+      "addColumnGroup": "Add Column Group",
+      "addItems": "Add Menu Items",
+      "badgeColor": "Badge Color",
+      "badgeText": "Badge Text",
+      "category": "Category",
+      "columnHeading": "Column Heading",
+      "columnNumber": "Column Number",
+      "content": "Content",
+      "createItemTitle": "Add Menu Item",
+      "createTitle": "Create Menu",
+      "cssClasses": "CSS Classes",
+      "customLink": "Custom Link",
+      "dragHelp": "Drag items to reorder or nest",
+      "dragStart": "Drag items from the left sidebar to start building your menu",
+      "editItemTitle": "Edit Menu Item",
+      "editTitle": "Edit Menu",
+      "groups": {
+        "localization": "Localization",
+        "visibility": "Visibility"
+      },
+      "heading": "Heading",
+      "hideLabel": "Hide Label",
+      "icon": "Icon",
+      "image": "Image",
+      "imageSize": "Image Size",
+      "items": "Menu Items",
+      "label": "Label",
+      "labelPlaceholder": "Label for menu item",
+      "linkText": "Link Text",
+      "location": "Location",
+      "megaMenuLayout": "Mega Menu Layout",
+      "menuStructure": "Menu Structure",
+      "name": "Name",
+      "namePlaceholder": "Enter menu name",
+      "newColumnGroup": "New Column Group",
+      "newLink": "New Link",
+      "noCategories": "No categories found",
+      "noPages": "No pages found",
+      "noPosts": "No posts found",
+      "openInNewTab": "Open in new tab",
+      "options": {
+        "auto169": "Auto (16:9)",
+        "blue": "Blue",
+        "danger": "Danger",
+        "default": "Default (Dropdown)",
+        "emerald": "Emerald",
+        "full": "Full Width (4 Columns)",
+        "full169": "Full Width (16:9)",
+        "grid2": "Grid (2 Columns)",
+        "grid3": "Grid (3 Columns)",
+        "landscape_lg": "Landscape Large",
+        "landscape_md": "Landscape Medium",
+        "landscape_sm": "Landscape Small",
+        "mega": "Mega Menu",
+        "none": "None",
+        "orange": "Orange",
+        "portrait_md": "Portrait Medium",
+        "portrait_sm": "Portrait Small",
+        "primary": "Primary",
+        "purple": "Purple",
+        "secondary": "Secondary",
+        "success": "Success",
+        "warning": "Warning"
+      },
+      "page": "Page",
+      "parentItem": "Parent Item",
+      "placeholders": {
+        "cssClasses": "e.g. mb-4",
+        "location": "header, footer, etc.",
+        "name": "Menu name",
+        "none": "- None -",
+        "selectCategory": "Select category...",
+        "selectContent": "Select content...",
+        "selectLocation": "Select location",
+        "selectPage": "Select page...",
+        "selectParent": "Select parent menu"
+      },
+      "promotionDescription": "Promotion Description (Quote)",
+      "rootItem": "Root Item",
+      "selectCategory": "Select Category",
+      "selectMenu": "Select Menu",
+      "selectPage": "Select Page",
+      "selectPost": "Select Post",
+      "settings": "Menu Settings",
+      "showDividers": "Show Column Dividers",
+      "showHeadingLine": "Show Heading Line",
+      "structure": "Menu Structure",
+      "type": "Type",
+      "types": {
+        "category": "Categories",
+        "column_group": "Column Group",
+        "content": "Content",
+        "custom": "Custom Link",
+        "link": "Link",
+        "page": "Pages",
+        "post": "Posts"
+      },
+      "url": "URL",
+      "requiredPermission": "Required permission",
+      "permissionPlaceholder": "e.g. view dashboard",
+      "titleEnPlaceholder": "e.g. Home",
+      "titleIdPlaceholder": "e.g. Beranda",
+      "requiresAuth": "Requires authentication",
+      "titleEn": "Title (English)",
+      "titleId": "Title (Indonesian)"
+    },
+    "headers": {
+      "actions": "Actions",
+      "activeLocations": "Active Locations",
+      "items": "Items",
+      "itemsCount": "{count} items",
+      "location": "Location",
+      "name": "Name",
+      "totalMenus": "Total Menus"
+    },
+    "messages": {
+      "createFailed": "Failed to create menu",
+      "customLinkAdded": "Custom link added",
+      "deleteConfirm": "Are you sure you want to delete menu \"{name}\"?",
+      "deleteFailed": "Failed to delete menu",
+      "deleteItemConfirm": "Are you sure you want to delete \"{title}\"?",
+      "deleteItemFailed": "Failed to delete menu item",
+      "forceDeleteConfirm": "Are you sure you want to PERMANENTLY delete menu \"{name}\"? This action cannot be undone.",
+      "restoreConfirm": "Restore menu \"{name}\"?",
+      "dragHelp": "Drag items to reorder or nest",
+      "empty": "No menus found",
+      "emptyDescription": "Create your first menu to start organizing your site navigation.",
+      "emptyHint": "Drag items from the left sidebar to start building your menu.",
+      "emptyItems": "No menu items. Click \"Add Item\" to get started.",
+      "enterUrlLabel": "Please enter label and URL",
+      "itemDeleted": "Menu item deleted",
+      "loading": "Loading...",
+      "noMenuSelected": "No Menu Selected",
+      "previewDescription": "Preview how your menu will appear on the frontend",
+      "saveFailed": "Failed to save menu",
+      "saveItemFailed": "Failed to save menu item",
+      "selectItemToEdit": "Start by selecting an item to edit its properties",
+      "loadingFailed": "Failed to load menus"
+    },
+    "subtitle": "Manage your menus and their locations.",
+    "title": "Menus",
+    "usage": {
+      "notInUse": "This menu is not assigned to any theme slot and is not the active menu served on the public site.",
+      "inUseLocations": "Currently used in:",
+      "themeAssignment": "Theme Customizer — {theme}, slot: {location}",
+      "publicLocation": "Public site (active menu for location): {location}",
+      "activeTheme": "active theme",
+      "inactiveTheme": "inactive theme",
+      "softDeleteInUse": "Menu \"{name}\" is in use. It will be moved to trash and will no longer be served on the public site. Theme assignments may still reference it until you change them in Theme Customizer.",
+      "forceDeleteBlockedTitle": "Cannot permanently delete",
+      "forceDeleteBlocked": "Menu \"{name}\" is still in use and cannot be permanently deleted. Remove theme assignments in Theme Customizer first.",
+      "dismiss": "Got it",
+      "deleteTitleInUse": "Delete menu \"{name}\" (in use)",
+      "checkFailed": "Could not verify usage. You may continue, but check Theme Customizer before deleting."
+    },
+    "filters": {
+      "notTrashed": "Not in trash",
+      "trashedOnly": "In trash only"
+    }
+  },
+  "widgets": {
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "empty": "No widgets found",
+    "loading": "Loading...",
+    "messages": {
+      "deleteConfirm": "Are you sure you want to delete widget \"{title}\"?",
+      "deleteFailed": "Failed to delete widget",
+      "saveFailed": "Failed to save widget"
+    },
+    "modals": {
+      "widget": {
+        "active": "Active",
+        "content": "Content",
+        "location": "Location",
+        "positionPlaceholder": "sidebar, footer, etc.",
+        "saving": "Saving...",
+        "title": "Title",
+        "titleCreate": "Create Widget",
+        "titleEdit": "Edit Widget",
+        "type": "Type"
+      }
+    },
+    "new": "New Widget",
+    "table": {
+      "actions": "Actions",
+      "location": "Location",
+      "status": {
+        "inactive": "Inactive"
+      },
+      "title": "Title",
+      "type": "Type"
+    },
+    "types": {
+      "categories": "Categories",
+      "custom": "Custom",
+      "html": "HTML",
+      "recent_posts": "Recent Posts",
+      "text": "Text"
+    },
+    "title": "Widgets",
+    "subtitle": "Manage sidebar and footer widgets for the public site.",
+    "statistics": {
+      "total": "Total widgets",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "search": "Search widgets…",
+    "filters": {
+      "all": "All",
+      "active": "Active only",
+      "inactive": "Inactive only"
+    }
+  },
+  "redirects": {
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "empty": "No redirects found",
+    "loading": "Loading...",
+    "messages": {
+      "deleteConfirm": "Are you sure you want to delete redirect from \"{from}\"?",
+      "deleteFailed": "Failed to delete redirect",
+      "saveFailed": "Failed to save redirect"
+    },
+    "modals": {
+      "redirect": {
+        "active": "Active",
+        "code": "Status Code",
+        "codes": {
+          "p301": "301 - Permanent Redirect",
+          "p308": "308 - Permanent Redirect (Preserve Method)",
+          "t302": "302 - Temporary Redirect",
+          "t307": "307 - Temporary Redirect (Preserve Method)"
+        },
+        "from": "From URL",
+        "fromHint": "The source URL path (e.g., /old-page)",
+        "fromPlaceholder": "/old-path",
+        "saving": "Saving...",
+        "titleCreate": "Create Redirect",
+        "titleEdit": "Edit Redirect",
+        "to": "To URL",
+        "toHint": "The destination URL path or full URL",
+        "toPlaceholder": "/new-path"
+      }
+    },
+    "new": "New Redirect",
+    "search": "Search redirects...",
+    "statistics": {
+      "active": "Active Redirects",
+      "hits": "Total Hits",
+      "total": "Total Redirects"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "actions": "Actions",
+      "code": "Status Code",
+      "from": "From URL",
+      "hits": "Hits",
+      "status": "Status",
+      "to": "To URL"
+    },
+    "title": "Redirects",
+    "subtitle": "Configure URL redirects and monitor traffic rules."
+  },
+  "themes": {
+    "loadFailed": "Failed to load theme",
+    "defaultName": "Default",
+    "actions": {
+      "upload": "Upload theme (ZIP)",
+      "activate": "Activate",
+      "customizer": "Theme Customizer",
+      "customize": "Customize",
+      "openCustomizer": "Open Customizer",
+      "preview": "Preview",
+      "settings": "Settings",
+      "validate": "Validate"
+    },
+    "uploading": "Uploading…",
+    "source": {
+      "uploaded": "Uploaded",
+      "bundled": "Bundled"
+    },
+    "messages": {
+      "uploadSuccess": "Theme package installed.",
+      "uploadFailed": "Theme upload failed.",
+      "uploadDisabled": "Uploaded themes are disabled on this server.",
+      "activateConfirm": "Are you sure you want to activate theme \"{name}\"?",
+      "activateFailed": "Failed to activate theme",
+      "activateSuccess": "Theme activated successfully",
+      "scanFailed": "Failed to scan themes",
+      "scanSuccess": "Scan completed! Found {count} theme(s).",
+      "validateError": "Failed to validate theme",
+      "validateFailed": "Theme validation failed:",
+      "validateSuccess": "Theme is valid!"
+    },
+    "list": {
+      "by": "by {author}",
+      "child": "Child",
+      "empty": "No themes found",
+      "emptySubtitle": "Get started by creating a new theme.",
+      "version": "v{version}"
+    },
+    "modals": {
+      "previewTitle": "Theme Preview: {name}"
+    },
+    "scan": "Scan Themes",
+    "scanning": "Scanning...",
+    "status": {
+      "active": "Active",
+      "broken": "Broken",
+      "inactive": "Inactive",
+      "pending": "Pending"
+    },
+    "subtitle": "Manage and customize your themes",
+    "title": "Themes Management",
+    "types": {
+      "admin": "Admin",
+      "all": "All Types",
+      "email": "Email",
+      "frontend": "Frontend"
+    }
+  }
+}

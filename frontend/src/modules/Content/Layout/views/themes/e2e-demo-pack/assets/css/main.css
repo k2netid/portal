@@ -1,0 +1,9 @@
+/* Theme: {$themeName} */
+:root {
+    --theme-primary-color: #3B82F6;
+    --theme-secondary-color: #8B5CF6;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Core",
+    "alias": "core",
+    "description": "Core Infrastructure Module (System, Security, Infra)",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Core\\Providers\\CoreServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,5 @@
+export { default as Canvas } from './Canvas.vue'
+export { default as ModuleWrapper } from './ModuleWrapper.vue'
+export { default as ModuleRenderer } from './ModuleRenderer.vue'
+export { default as AddModuleButton } from './AddModuleButton.vue'
+export { default as BackgroundMedia } from './BackgroundMedia.vue'

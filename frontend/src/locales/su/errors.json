@@ -1,0 +1,76 @@
+{
+  "403": {
+    "contactForm": "Formulir Kontak",
+    "description": "Mangga ngahubungi administrator upami salira yakin ieu mangrupikeun kasalahan.",
+    "loggedInAs": "Login salaku:",
+    "login": "Login",
+    "message": "Hapunten, salira teu gaduh widi kanggo ngaksés kaca ieu.",
+    "reason": "Alesan:",
+    "relogin": "Logout & Login Deui",
+    "requiredPermissions": "Widin nu Peryogi:",
+    "support": "Peryogi bantosan? Hubungi administrator:",
+    "title": "Akses Ditampik"
+  },
+  "404": {
+    "back": "Balik",
+    "description": "URL tiasa waé salah ketik atanapi kaca tos dipindahkeun.",
+    "home": "Kaca Utama",
+    "message": "Hapunten, kaca nu dipilari ku salira teu tiasa kapendak.",
+    "popular": "Kaca Populér:",
+    "searchPlaceholder": "Pilari eusi...",
+    "title": "Kaca Teu Kapendak"
+  },
+  "419": {
+    "concurrent": "Akun salira kadeteksi nuju login dina parangkat atanapi panyungsi (browser) sanés. Sési dina parangkat ieu dihentikeun sacara otomatis demi kaamanan.",
+    "description": "Mangga muat ulang kaca atanapi login deui kanggo neruskeun.",
+    "login": "Login Deui",
+    "message": "Sési salira parantos réngsé kusabab teu aya aktivitas.",
+    "refresh": "Muat Ulang",
+    "timeout": "Sési salira parantos réngsé kusabab teu aya aktivitas dina waktos nu cekap lami.",
+    "title": "Kaca Kadaluwarsa"
+  },
+  "429": {
+    "description": "Mangga cobian sababaraha saat deui atanapi hubungi administrator.",
+    "message": "Salira parantos ngalakukeun seueur teuing pamundut dina waktos anu singget.",
+    "retryAfter": "Mangga cobian deui dina {seconds} detik.",
+    "title": "Seueur Teuing Pamundut"
+  },
+  "500": {
+    "api": "API",
+    "cache": "Cache",
+    "checkStatus": "Cek status server:",
+    "database": "Database",
+    "description": "Tim kami parantos dibéjaan sareng nuju ngalereskeun perkawis ieu.",
+    "hideDetails": "Sumputkeun Rincian Kasalahan",
+    "message": "Hapunten, aya kasalahan dina server kami.",
+    "report": "Laporkeun Perkawis Ieu",
+    "retry": "Cobian Deui",
+    "retrying": "Nuju Nyobian Deui...",
+    "showDetails": "Tembongkeun Rincian Kasalahan",
+    "title": "Kasalahan Server"
+  },
+  "unknown": {
+    "title": "Aya kasalahan",
+    "message": "Aya kasalahan anu teu disangka-sangka."
+  },
+  "modal": {
+    "footerCode": "Kode kasalahan:"
+  },
+  "maintenancePage": {
+    "adminBypass": "Bypass Admin",
+    "days": "Hari",
+    "hours": "Jam",
+    "mins": "Menit",
+    "secs": "Detik",
+    "footer": "Tim kami nuju digawé di tukangeun layar.",
+    "defaultTitle": "Segera Hadir",
+    "defaultMessage": "Kami nuju nyiapkeun hiji hal anu pikaresepeun. Mangga sumping deui engké."
+  },
+  "forbidden": "Akses dilarang.",
+  "generic": "Aya kasalahan. Mangga cobian deui.",
+  "maintenance": "Sistem nuju dina pangropéa.",
+  "notFound": "Sumber daya teu kapendak.",
+  "title": "Kasalahan",
+  "unauthorized": "Akses teu sah.",
+  "validation": "Kasalahan validasi."
+}

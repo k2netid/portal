@@ -1,0 +1,142 @@
+{
+  "navigation": {
+    "menu": {
+      "devTools": "Integrasi & Dev"
+    }
+  },
+  "webhooks": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Edit",
+      "test": "Uji Coba"
+    },
+    "confirm": {
+      "delete": "Naha salira yakin hoyong ngahapus webhook \"{name}\"?"
+    },
+    "create": "Webhook Anyar",
+    "empty": "Teu aya webhook kapendak",
+    "events": {
+      "comment": {
+        "approved": "Komentar Disatujuan",
+        "created": "Komentar Dijieun"
+      },
+      "content": {
+        "created": "Eusi Dijieun",
+        "deleted": "Eusi Dihapus",
+        "updated": "Eusi Diropéa"
+      },
+      "user": {
+        "created": "Pamaké Dijieun",
+        "updated": "Pamaké Diropéa"
+      }
+    },
+    "loading": "Nuju ngamuat...",
+    "messages": {
+      "delete_failed": "Gagal ngahapus webhook",
+      "save_failed": "Gagal nyimpen webhook",
+      "test_failed": "Gagal nguji webhook",
+      "test_success": "Uji coba webhook hasil dikirim"
+    },
+    "modal": {
+      "active_label": "Aktip",
+      "cancel": "Batal",
+      "create": "Jieun",
+      "events_label": "Kajadian",
+      "name_label": "Nami",
+      "name_placeholder": "Nami webhook",
+      "saving": "Nuju nyimpen...",
+      "secret_label": "Kunci Rusiah",
+      "secret_placeholder": "Kunci rusiah opsional pikeun nandatanganan",
+      "title_create": "Jieun Webhook",
+      "title_edit": "Ubah Webhook",
+      "update": "Diropéa",
+      "url_label": "URL",
+      "url_placeholder": "https://contoh.com/webhook"
+    },
+    "search": "Pilari webhook...",
+    "stats": {
+      "active": "Aktip",
+      "failed_calls": "Panggilan Gagal",
+      "total": "Total Webhook",
+      "total_calls": "Total Panggilan"
+    },
+    "table": {
+      "actions": "Tindakan",
+      "calls": "Panggilan",
+      "events": "Kajadian",
+      "name": "Nami",
+      "status": "Status",
+      "url": "URL"
+    },
+    "title": "Webhook",
+    "subtitle": "Webhook HTTP kaluar sareng statistik pangiriman."
+  },
+  "plugins": {
+    "actions": {
+      "activate": "Aktipkeun",
+      "close": "Tutup",
+      "deactivate": "Nonaktipkeun",
+      "settings": "Setélan"
+    },
+    "empty": "Teu aya plugin kapendak",
+    "loading": "Nuju ngamuat...",
+    "messages": {
+      "failed_fetch": "Gagal ngamuat daptar plugin",
+      "failed_activate": "Gagal ngaktipkeun plugin",
+      "failed_deactivate": "Gagal ngononaktipkeun plugin",
+      "activated": "Plugin diaktipkeun",
+      "deactivated": "Plugin dinonaktipkeun"
+    },
+    "modal": {
+      "close": "Tutup",
+      "settings_placeholder": "Petélan plugin bakal dimuat di dieu",
+      "settings_title": "Petélan: {name}"
+    },
+    "status": {
+      "active": "Aktip",
+      "inactive": "Teu Aktip"
+    },
+    "table": {
+      "actions": "Tindakan",
+      "name": "Nami",
+      "status": "Status",
+      "version": "Versi"
+    },
+    "title": "Plugin",
+    "subtitle": "Plugin terpasang, versi, sareng status aktivasi.",
+    "themeBlocks": {
+      "title": "Slot blok téma",
+      "hint": "Pilih lokasi tampil plugin di situs publik (téma Janari).",
+      "noSlots": "Teu aya slot téma.",
+      "save": "Simpen petélan",
+      "saved": "Petélan plugin disimpen.",
+      "saveFailed": "Gagal nyimpen petélan plugin."
+    }
+  },
+  "cck": {
+    "title": "Tipe eusi (CCK)",
+    "subtitle": "Pembangun skema visual pikeun endpoint REST dinamis",
+    "newType": "Tipe eusi anyar",
+    "editType": "Ubah tipe eusi",
+    "empty": "Teu acan aya tipe eusi.",
+    "fields": "Widang",
+    "addField": "Tambah widang",
+    "validationPreview": "Aturan validasi",
+    "save": "Simpen skema",
+    "delete": "Hapus",
+    "apiHint": "API data: /api/v1/dynamic/{slug}",
+    "messages": {
+      "loadFailed": "Gagal ngamuat",
+      "created": "Tipe eusi dijieun.",
+      "saved": "Tipe eusi disimpen.",
+      "saveFailed": "Gagal nyimpen"
+    }
+  },
+  "dynamic": {
+    "record": {
+      "newTitle": "Catetan (Record) anyar",
+      "editTitle": "Ubah catetan (record)",
+      "subtitle": "Jieun atawa aropéa baris pikeun tipe eusi ieu."
+    }
+  }
+}

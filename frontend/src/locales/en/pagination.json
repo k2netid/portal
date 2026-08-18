@@ -1,0 +1,18 @@
+{
+    "entries": "entries",
+    "first": "First",
+    "last": "Last",
+    "next": "Next",
+    "noData": "No data",
+    "of": "of",
+    "page": "Page",
+    "perPage": "Per Page",
+    "previous": "Previous",
+    "rowsPerPage": "Rows per page",
+    "show": "Show",
+    "showing": "Showing",
+    "total": "Total",
+    "showingRange": "Showing {from}–{to} of {total}",
+    "showingCompact": "{from}–{to} / {total}",
+    "pageSummary": "{current} / {total}"
+}

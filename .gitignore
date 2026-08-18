@@ -1,0 +1,78 @@
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.envrc
+core
+core.*
+
+# Local / one-off scripts (not part of release tooling)
+drop_sch.sh
+drop_sch_sas.sh
+releases/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!backend/.env.example
+*.key
+*.pem
+*.sql
+backend/.env
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Dependencies and build artifacts
+node_modules/
+backend/vendor/
+backend/node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+# Vite must not copy stale hashed bundles from here into dist (keep only static subtrees e.g. themes/)
+frontend/public/assets/*
+!frontend/public/assets/themes/
+!frontend/public/assets/themes/**
+ja-backup/
+
+# Local lint / analysis dumps (not source)
+frontend/eslint-current.json
+frontend/lint_report_final.json
+frontend/unused_vars.txt
+frontend/public/stats.html
+frontend/test-results/
+frontend/playwright-report/
+backend/.phpunit.result.cache
+backend/phpunit.coverage.xml
+backend/phpstan_errors*.log
+backend/build/
+
+# Runtime/cache artifacts
+backend/storage/logs/*.log
+backend/storage/framework/cache/data/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+!backend/storage/framework/sessions/.gitignore
+!backend/storage/framework/views/.gitignore
+backend/storage/installed
+backend/phpstan-output.txt
+backend/public/assets/
+backend/public/index.html
+backend/public/console.html
+backend/public/favicon.ico
+backend/public/logo.png
+backend/public/logo-bw.png
+backend/public/site.webmanifest
+backend/public/stats.html
+backend/bootstrap/cache/*.php
+
+# Documentation is versioned under docs/ (see ROADMAP_2026_Q4.md)

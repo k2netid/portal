@@ -1,0 +1,120 @@
+{
+    "confirm": {
+        "defaultTitle": "Konfirmasi",
+        "defaultConfirm": "OK",
+        "defaultCancel": "Batal",
+        "action": "Apakah Anda yakin ingin {action} {item} ini?",
+        "approve": "Apakah Anda yakin ingin menyetujui {item} ini?",
+        "bulkAction": "Apakah Anda yakin ingin {action} {count} item terpilih?",
+        "bulkDelete": "Apakah Anda yakin ingin menghapus {count} item terpilih?",
+        "danger": "Bahaya",
+        "delete": "Apakah Anda yakin ingin menghapus {item} ini?",
+        "deleteMultiple": "Apakah Anda yakin ingin menghapus {count} item?",
+        "deletePermanently": "Apakah Anda yakin ingin menghapus {item} secara permanen? Tindakan ini tidak dapat dibatalkan.",
+        "duplicate": "Apakah Anda yakin ingin menduplikasi {item} ini?",
+        "emptyTrash": "Apakah Anda yakin ingin menghapus semua item di sampah secara permanen? Tindakan ini tidak dapat dibatalkan.",
+        "no": "Batal",
+        "reject": "Apakah Anda yakin ingin menolak {item} ini?",
+        "restore": "Apakah Anda yakin ingin memulihkan {item} ini?",
+        "title": "Konfirmasi",
+        "unsaved": "Anda memiliki perubahan yang belum disimpan. Yakin ingin meninggalkan halaman?",
+        "warning": "Peringatan",
+        "yes": "Ya, Lanjutkan"
+    },
+    "empty": {
+        "default": "Tidak ada data",
+        "filter": "Tidak ada item yang cocok dengan filter",
+        "search": "Tidak ada hasil untuk \"{query}\""
+    },
+    "error": {
+        "action": "Gagal Melakukan Tindakan",
+        "canOnlyAction": "Anda hanya dapat {action}",
+        "cannotActionGlobal": "Anda tidak dapat {action} {resource} global",
+        "deleteFailed": "Gagal menghapus {item}",
+        "forbidden": "Akses ditolak",
+        "generic": "Terjadi kesalahan",
+        "loadFailed": "Gagal memuat data",
+        "network": "Kesalahan jaringan. Silakan coba lagi",
+        "noPermission": "Anda tidak memiliki izin untuk {action}",
+        "notFound": "{item} tidak ditemukan",
+        "server": "Kesalahan server. Silakan coba lagi nanti",
+        "unauthorized": "Anda tidak memiliki izin untuk melakukan tindakan ini",
+        "uploadFailed": "Gagal mengunggah file",
+        "validation": "Silakan periksa formulir untuk kesalahan",
+        "default": "Terjadi kesalahan"
+    },
+    "loading": {
+        "creating": "Membuat...",
+        "default": "Memuat...",
+        "deleting": "Menghapus...",
+        "processing": "Memproses...",
+        "saving": "Menyimpan...",
+        "searching": "Mencari...",
+        "uploading": "Mengunggah...",
+        "updating": "Memperbarui…"
+    },
+    "clipboard": {
+        "pathCopied": "Path disalin ke clipboard",
+        "urlCopied": "URL disalin ke clipboard",
+        "copyFailed": "Gagal menyalin"
+    },
+    "no_data": "Tidak ada data yang ditemukan",
+    "select_node": "Pilih node...",
+    "slugConflict": {
+        "action": {
+            "overwrite": "Hapus & Timpa Lama",
+            "useUnique": "Gunakan Slug Unik"
+        },
+        "active": "Aktif",
+        "existingTitle": "Judul Ada",
+        "message": "Slug \"{slug}\" sudah digunakan.",
+        "status": "Status",
+        "title": "Konflik Slug Terdeteksi",
+        "trashed": "Sampah (Dihapus)"
+    },
+    "success": {
+        "action": "Tindakan Berhasil",
+        "actionSuccess": "{item} berhasil {action}",
+        "activated": "{item} berhasil diaktifkan",
+        "approved": "{item} berhasil disetujui",
+        "created": "{item} berhasil dibuat",
+        "deactivated": "{item} berhasil dinonaktifkan",
+        "default": "Proses berhasil",
+        "deleted": "{item} berhasil dihapus",
+        "exported": "Data berhasil diekspor",
+        "imported": "Data berhasil diimpor",
+        "marked_spam": "{item} ditandai sebagai spam",
+        "rejected": "{item} berhasil ditolak",
+        "restored": "{item} berhasil dipulihkan",
+        "retrieved": "{item} berhasil diambil",
+        "saved": "Perubahan berhasil disimpan",
+        "updated": "{item} berhasil diperbarui",
+        "uploaded": "File berhasil diunggah"
+    },
+    "time": {
+        "ago": "{time} yang lalu",
+        "justNow": "Baru saja"
+    },
+    "session": {
+        "expiredTitle": "Sesi Berakhir",
+        "terminatedDescription": "Sesi Anda diakhiri karena login baru dari perangkat lain."
+    },
+    "router": {
+        "navigationError": "Terjadi kesalahan kritis saat navigasi.",
+        "dashboardNavigationError": "Terjadi kesalahan kritis saat navigasi dasbor."
+    },
+    "toast": {
+        "action_failed": "Gagal melakukan aksi.",
+        "created": "Data berhasil dibuat.",
+        "deleted": "Data berhasil dihapus.",
+        "error": "Error",
+        "info": "Info",
+        "permission_denied": "Anda tidak memiliki izin untuk melakukan aksi ini.",
+        "saved": "Data berhasil disimpan.",
+        "success": "Berhasil",
+        "updated": "Data berhasil diperbarui.",
+        "warning": "Peringatan"
+    },
+    "selectedItems": "{count} item dipilih",
+    "copied": "Disalin ke clipboard"
+}

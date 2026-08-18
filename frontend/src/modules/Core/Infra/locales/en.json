@@ -1,0 +1,142 @@
+{
+    "navigation": {
+        "menu": {
+            "devTools": "Integrations & Dev"
+        }
+    },
+    "webhooks": {
+        "actions": {
+            "delete": "Delete",
+            "edit": "Edit",
+            "test": "Test"
+        },
+        "confirm": {
+            "delete": "Are you sure you want to delete webhook \"{name}\"?"
+        },
+        "create": "New Webhook",
+        "empty": "No webhooks found",
+        "events": {
+            "comment": {
+                "approved": "Comment Approved",
+                "created": "Comment Created"
+            },
+            "content": {
+                "created": "Content Created",
+                "deleted": "Content Deleted",
+                "updated": "Content Updated"
+            },
+            "user": {
+                "created": "User Created",
+                "updated": "User Updated"
+            }
+        },
+        "loading": "Loading...",
+        "messages": {
+            "delete_failed": "Failed to delete webhook",
+            "save_failed": "Failed to save webhook",
+            "test_failed": "Failed to test webhook",
+            "test_success": "Webhook test sent successfully"
+        },
+        "modal": {
+            "active_label": "Active",
+            "cancel": "Cancel",
+            "create": "Create",
+            "events_label": "Events",
+            "name_label": "Name",
+            "name_placeholder": "Webhook name",
+            "saving": "Saving...",
+            "secret_label": "Secret Key",
+            "secret_placeholder": "Optional secret key for signing",
+            "title_create": "Create Webhook",
+            "title_edit": "Edit Webhook",
+            "update": "Update",
+            "url_label": "URL",
+            "url_placeholder": "https://example.com/webhook"
+        },
+        "search": "Search webhooks...",
+        "stats": {
+            "active": "Active",
+            "failed_calls": "Failed Calls",
+            "total": "Total Webhooks",
+            "total_calls": "Total Calls"
+        },
+        "table": {
+            "actions": "Actions",
+            "calls": "Calls",
+            "events": "Events",
+            "name": "Name",
+            "status": "Status",
+            "url": "URL"
+        },
+        "title": "Webhooks",
+        "subtitle": "Outbound HTTP hooks and delivery statistics."
+    },
+    "plugins": {
+        "actions": {
+            "activate": "Activate",
+            "close": "Close",
+            "deactivate": "Deactivate",
+            "settings": "Settings"
+        },
+        "empty": "No plugins found",
+        "loading": "Loading...",
+        "messages": {
+            "failed_fetch": "Failed to load plugins",
+            "failed_activate": "Failed to activate plugin",
+            "failed_deactivate": "Failed to deactivate plugin",
+            "activated": "Plugin activated",
+            "deactivated": "Plugin deactivated"
+        },
+        "modal": {
+            "close": "Close",
+            "settings_placeholder": "Plugin settings will be loaded here",
+            "settings_title": "Settings: {name}"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "table": {
+            "actions": "Actions",
+            "name": "Name",
+            "status": "Status",
+            "version": "Version"
+        },
+        "title": "Plugins",
+        "subtitle": "Installed plugins, versions, and activation state.",
+        "themeBlocks": {
+            "title": "Theme app block slots",
+            "hint": "Select where this plugin renders on the public site (Janari theme).",
+            "noSlots": "No theme slots available.",
+            "save": "Save settings",
+            "saved": "Plugin settings saved.",
+            "saveFailed": "Could not save plugin settings."
+        }
+    },
+    "cck": {
+        "title": "Content types (CCK)",
+        "subtitle": "Visual schema builder for dynamic REST endpoints",
+        "newType": "New content type",
+        "editType": "Edit content type",
+        "empty": "No content types yet.",
+        "fields": "Fields",
+        "addField": "Add field",
+        "validationPreview": "Validation rules",
+        "save": "Save schema",
+        "delete": "Delete",
+        "apiHint": "Records API: /api/v1/dynamic/{slug}",
+        "messages": {
+            "loadFailed": "Load failed",
+            "created": "Content type created.",
+            "saved": "Content type saved.",
+            "saveFailed": "Save failed"
+        }
+    },
+    "dynamic": {
+        "record": {
+            "newTitle": "New record",
+            "editTitle": "Edit record",
+            "subtitle": "Create or update a row for this content type."
+        }
+    }
+}

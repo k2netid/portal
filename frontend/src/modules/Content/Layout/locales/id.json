@@ -1,0 +1,364 @@
+{
+  "navigation": {
+    "menu": {
+      "design": "Desain",
+      "menus": "Menu",
+      "widgets": "Widget",
+      "redirects": "Pengalihan"
+    }
+  },
+  "menus": {
+    "actions": {
+      "addAll": "Tambah Semua",
+      "addToMenu": "Tambahkan ke Menu",
+      "backToList": "Kembali ke Daftar",
+      "builderView": "Tampilan Builder",
+      "cancel": "Batal",
+      "create": "Menu Baru",
+      "createAction": "Buat",
+      "createFirst": "Buat menu pertama Anda",
+      "createItem": "Tambah Item",
+      "creating": "Membuat...",
+      "delete": "Hapus",
+      "deleteItem": "Hapus Item",
+      "edit": "Edit",
+      "listView": "Tampilan Daftar",
+      "or": "atau",
+      "preview": "Pratinjau",
+      "save": "Simpan Menu",
+      "saved": "Menu berhasil disimpan",
+      "saving": "Menyimpan...",
+      "selectMenu": "Pilih menu untuk diedit",
+      "update": "Perbarui"
+    },
+    "form": {
+      "addColumnGroup": "Tambah Grup Kolom",
+      "addItems": "Tambah Item Menu",
+      "badgeColor": "Warna Badge",
+      "badgeText": "Teks Badge",
+      "category": "Kategori",
+      "columnHeading": "Judul Kolom",
+      "columnNumber": "Nomor Kolom",
+      "content": "Konten",
+      "createItemTitle": "Tambah Item Menu",
+      "createTitle": "Buat Menu",
+      "cssClasses": "Kelas CSS",
+      "customLink": "Tautan Kustom",
+      "dragHelp": "Tarik item untuk mengatur ulang atau membuat sub-menu",
+      "dragStart": "Tarik item dari sidebar kiri untuk mulai membuat menu Anda",
+      "editItemTitle": "Edit Item Menu",
+      "editTitle": "Edit Menu",
+      "groups": {
+        "localization": "Lokalisasi",
+        "visibility": "Visibilitas"
+      },
+      "heading": "Judul",
+      "hideLabel": "Sembunyikan Label",
+      "icon": "Ikon",
+      "image": "Gambar",
+      "imageSize": "Ukuran Gambar",
+      "items": "Item Menu",
+      "label": "Label",
+      "labelPlaceholder": "Label untuk item menu",
+      "linkText": "Teks Tautan",
+      "location": "Lokasi",
+      "megaMenuLayout": "Tata Letak Mega Menu",
+      "menuStructure": "Struktur Menu",
+      "name": "Nama",
+      "namePlaceholder": "Masukkan nama menu",
+      "newColumnGroup": "Grup Kolom Baru",
+      "newLink": "Tautan Baru",
+      "noCategories": "Tidak ada kategori ditemukan",
+      "noPages": "Tidak ada halaman ditemukan",
+      "noPosts": "Tidak ada postingan ditemukan",
+      "openInNewTab": "Buka di tab baru",
+      "options": {
+        "auto169": "Auto (16:9)",
+        "blue": "Biru",
+        "danger": "Bahaya",
+        "default": "Default (Dropdown)",
+        "emerald": "Zamrud",
+        "full": "Lebar Penuh (4 Kolom)",
+        "full169": "Lebar Penuh (16:9)",
+        "grid2": "Grid (2 Kolom)",
+        "grid3": "Grid (3 Kolom)",
+        "landscape_lg": "Lanskap Besar",
+        "landscape_md": "Lanskap Sedang",
+        "landscape_sm": "Lanskap Kecil",
+        "mega": "Mega Menu",
+        "none": "Tidak Ada",
+        "orange": "Oranye",
+        "portrait_md": "Potret Sedang",
+        "portrait_sm": "Potret Kecil",
+        "primary": "Utama",
+        "purple": "Ungu",
+        "secondary": "Sekunder",
+        "success": "Sukses",
+        "warning": "Peringatan"
+      },
+      "page": "Halaman",
+      "parentItem": "Item Induk",
+      "placeholders": {
+        "cssClasses": "contoh: mb-4",
+        "location": "header, footer, dll.",
+        "name": "Nama menu",
+        "none": "- Tidak ada -",
+        "selectCategory": "Pilih kategori...",
+        "selectContent": "Pilih konten...",
+        "selectLocation": "Pilih lokasi",
+        "selectPage": "Pilih halaman...",
+        "selectParent": "Pilih menu induk"
+      },
+      "promotionDescription": "Deskripsi Promosi (Quote)",
+      "rootItem": "Item Akar (Utama)",
+      "selectCategory": "Pilih Kategori",
+      "selectMenu": "Pilih Menu",
+      "selectPage": "Pilih Halaman",
+      "selectPost": "Pilih Postingan",
+      "settings": "Pengaturan Menu",
+      "showDividers": "Tampilkan Pembatas Kolom",
+      "showHeadingLine": "Tampilkan Garis Judul",
+      "structure": "Struktur Menu",
+      "type": "Tipe",
+      "types": {
+        "category": "Kategori",
+        "column_group": "Grup Kolom",
+        "content": "Konten",
+        "custom": "Tautan Kustom",
+        "link": "Tautan",
+        "page": "Halaman",
+        "post": "Postingan"
+      },
+      "url": "URL",
+      "requiredPermission": "Izin diperlukan",
+      "permissionPlaceholder": "mis. view dashboard",
+      "titleEnPlaceholder": "mis. Home",
+      "titleIdPlaceholder": "mis. Beranda",
+      "requiresAuth": "Perlu autentikasi",
+      "titleEn": "Judul (Inggris)",
+      "titleId": "Judul (Indonesia)"
+    },
+    "headers": {
+      "actions": "Aksi",
+      "activeLocations": "Lokasi Aktif",
+      "items": "Item",
+      "itemsCount": "{count} item",
+      "location": "Lokasi",
+      "name": "Nama",
+      "totalMenus": "Total Menu"
+    },
+    "messages": {
+      "createFailed": "Gagal membuat menu",
+      "customLinkAdded": "Tautan kustom ditambahkan",
+      "deleteConfirm": "Anda yakin ingin menghapus menu \"{name}\"?",
+      "deleteFailed": "Gagal menghapus menu",
+      "deleteItemConfirm": "Anda yakin ingin menghapus \"{title}\"?",
+      "deleteItemFailed": "Gagal menghapus item menu",
+      "forceDeleteConfirm": "Apakah Anda yakin ingin menghapus PERMANEN menu \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+      "restoreConfirm": "Pulihkan menu \"{name}\"?",
+      "dragHelp": "Tarik item untuk mengatur ulang atau membuat sub-menu",
+      "empty": "Tidak ada menu ditemukan",
+      "emptyDescription": "Buat menu pertama Anda untuk mulai mengatur navigasi situs.",
+      "emptyHint": "Tarik item dari sidebar kiri untuk mulai membangun menu Anda.",
+      "emptyItems": "Tidak ada item menu. Klik \"Tambah Item\" untuk memulai.",
+      "enterUrlLabel": "Harap masukkan label dan URL",
+      "itemDeleted": "Item menu dihapus",
+      "loading": "Memuat...",
+      "noMenuSelected": "Tidak Ada Menu Dipilih",
+      "previewDescription": "Pratinjau tampilan menu di frontend",
+      "saveFailed": "Gagal menyimpan menu",
+      "saveItemFailed": "Gagal menyimpan item menu",
+      "selectItemToEdit": "Mulai dengan memilih item untuk diedit propertinya",
+      "loadingFailed": "Gagal memuat menu"
+    },
+    "subtitle": "Kelola menu dan lokasinya.",
+    "title": "Menu",
+    "usage": {
+      "notInUse": "Menu ini tidak ditetapkan ke slot tema manapun dan bukan menu aktif yang dilayani di situs publik.",
+      "inUseLocations": "Sedang dipakai di:",
+      "themeAssignment": "Theme Customizer — {theme}, slot: {location}",
+      "publicLocation": "Situs publik (menu aktif untuk lokasi): {location}",
+      "activeTheme": "tema aktif",
+      "inactiveTheme": "tema nonaktif",
+      "softDeleteInUse": "Menu \"{name}\" sedang dipakai. Menu akan dipindah ke sampah dan tidak lagi dilayani di situs publik. Penugasan di tema mungkin masih mereferensikan menu ini sampai Anda mengubahnya di Theme Customizer.",
+      "forceDeleteBlockedTitle": "Tidak dapat hapus permanen",
+      "forceDeleteBlocked": "Menu \"{name}\" masih dipakai dan tidak dapat dihapus permanen. Hapus penugasan di Theme Customizer terlebih dahulu.",
+      "dismiss": "Mengerti",
+      "deleteTitleInUse": "Hapus menu \"{name}\" (sedang dipakai)",
+      "checkFailed": "Tidak dapat memverifikasi pemakaian menu. Anda tetap bisa melanjutkan, tetapi periksa Theme Customizer sebelum menghapus."
+    },
+    "filters": {
+      "notTrashed": "Tidak di sampah",
+      "trashedOnly": "Hanya di sampah"
+    }
+  },
+  "widgets": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Ubah"
+    },
+    "empty": "Tidak ada widget ditemukan",
+    "loading": "Memuat...",
+    "messages": {
+      "deleteConfirm": "Apakah Anda yakin ingin menghapus widget \"{title}\"?",
+      "deleteFailed": "Gagal menghapus widget",
+      "saveFailed": "Gagal menyimpan widget"
+    },
+    "modals": {
+      "widget": {
+        "active": "Aktif",
+        "content": "Konten",
+        "location": "Lokasi",
+        "positionPlaceholder": "sidebar, footer, dll.",
+        "saving": "Menyimpan...",
+        "title": "Judul",
+        "titleCreate": "Buat Widget",
+        "titleEdit": "Ubah Widget",
+        "type": "Tipe"
+      }
+    },
+    "new": "Widget Baru",
+    "table": {
+      "actions": "Aksi",
+      "location": "Lokasi",
+      "status": {
+        "inactive": "Tidak Aktif"
+      },
+      "title": "Judul",
+      "type": "Tipe"
+    },
+    "types": {
+      "categories": "Kategori",
+      "custom": "Kustom",
+      "html": "HTML",
+      "recent_posts": "Postingan Terbaru",
+      "text": "Teks"
+    },
+    "title": "Widget",
+    "subtitle": "Kelola widget sidebar dan footer untuk situs publik.",
+    "statistics": {
+      "total": "Total widgets",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "search": "Search widgets…",
+    "filters": {
+      "all": "All",
+      "active": "Active only",
+      "inactive": "Inactive only"
+    }
+  },
+  "redirects": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Ubah"
+    },
+    "empty": "Tidak ada pengalihan ditemukan",
+    "loading": "Memuat...",
+    "messages": {
+      "deleteConfirm": "Apakah Anda yakin ingin menghapus pengalihan dari \"{from}\"?",
+      "deleteFailed": "Gagal menghapus pengalihan",
+      "saveFailed": "Gagal menyimpan pengalihan"
+    },
+    "modals": {
+      "redirect": {
+        "active": "Aktif",
+        "code": "Kode Status",
+        "codes": {
+          "p301": "301 - Pengalihan Permanen",
+          "p308": "308 - Pengalihan Permanen (Pertahankan Metode)",
+          "t302": "302 - Pengalihan Sementara",
+          "t307": "307 - Pengalihan Sementara (Pertahankan Metode)"
+        },
+        "from": "URL Asal",
+        "fromHint": "Jalur URL sumber (misal, /halaman-lama)",
+        "fromPlaceholder": "/jalur-lama",
+        "saving": "Menyimpan...",
+        "titleCreate": "Buat Pengalihan",
+        "titleEdit": "Ubah Pengalihan",
+        "to": "URL Tujuan",
+        "toHint": "Jalur URL tujuan atau URL lengkap",
+        "toPlaceholder": "/jalur-baru"
+      }
+    },
+    "new": "Pengalihan Baru",
+    "search": "Cari pengalihan...",
+    "statistics": {
+      "active": "Pengalihan Aktif",
+      "hits": "Total Klik",
+      "total": "Total Pengalihan"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Tidak Aktif"
+    },
+    "table": {
+      "actions": "Aksi",
+      "code": "Kode Status",
+      "from": "URL Asal",
+      "hits": "Klik",
+      "status": "Status",
+      "to": "URL Tujuan"
+    },
+    "title": "Pengalihan",
+    "subtitle": "Atur redirect URL dan pantau aturan lalu lintas."
+  },
+  "themes": {
+    "loadFailed": "Gagal memuat tema",
+    "defaultName": "Default",
+    "actions": {
+      "upload": "Unggah tema (ZIP)",
+      "activate": "Aktifkan",
+      "customizer": "Customizer Tema",
+      "customize": "Sesuaikan",
+      "openCustomizer": "Buka Customizer",
+      "preview": "Pratinjau",
+      "settings": "Pengaturan",
+      "validate": "Validasi"
+    },
+    "uploading": "Mengunggah…",
+    "source": {
+      "uploaded": "Diunggah",
+      "bundled": "Bundled"
+    },
+    "messages": {
+      "uploadSuccess": "Paket tema berhasil diunggah.",
+      "uploadFailed": "Gagal mengunggah tema.",
+      "uploadDisabled": "Unggahan tema dinonaktifkan di server ini.",
+      "activateConfirm": "Apakah Anda yakin ingin mengaktifkan tema \"{name}\"?",
+      "activateFailed": "Gagal mengaktifkan tema",
+      "activateSuccess": "Tema berhasil diaktifkan",
+      "scanFailed": "Gagal memindai tema",
+      "scanSuccess": "Pemindaian selesai! Menemukan {count} tema.",
+      "validateError": "Gagal memvalidasi tema",
+      "validateFailed": "Validasi tema gagal:",
+      "validateSuccess": "Tema valid!"
+    },
+    "list": {
+      "by": "oleh {author}",
+      "child": "Anak",
+      "empty": "Tidak ada tema ditemukan",
+      "emptySubtitle": "Mulai dengan membuat tema baru.",
+      "version": "v{version}"
+    },
+    "modals": {
+      "previewTitle": "Pratinjau Tema: {name}"
+    },
+    "scan": "Pindai Tema",
+    "scanning": "Memindai...",
+    "status": {
+      "active": "Aktif",
+      "broken": "Rusak",
+      "inactive": "Tidak Aktif",
+      "pending": "Menunggu"
+    },
+    "subtitle": "Kelola dan sesuaikan tema Anda",
+    "title": "Manajemen Tema",
+    "types": {
+      "admin": "Admin",
+      "all": "Semua Tipe",
+      "email": "Email",
+      "frontend": "Frontend"
+    }
+  }
+}

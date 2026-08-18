@@ -1,0 +1,20 @@
+{
+    "active": "Active",
+    "all": "All",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "failed": "Failed",
+    "not_configured": "Not Configured",
+    "online": "Online",
+    "success": "Success",
+    "planned": "Planned",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "pending": "Pending",
+    "reviewed": "Reviewed",
+    "actioned": "Actioned",
+    "rejected": "Rejected",
+    "disabled": "Disabled",
+    "enabled": "Enabled"
+}

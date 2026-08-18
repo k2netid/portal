@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/**
+ * Console shell — Tailwind scan scope (operators /dash, auth, modules).
+ * Shared tokens: ../foundation/tokens.css + base-resets.css
+ */
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
+@custom-variant dark (&:is(.dark *));
+
+@import '../foundation/tokens.css';
+@import '../foundation/base-resets.css';
+
+@source '../../../backend/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../backend/storage/framework/views/*.php';
+@source '../../../backend/resources/views/**/*.blade.php';
+
+@source '../../shared/**/*.{vue,ts,js}';
+@source '../../engine/**/*.{vue,ts,js}';
+@source '../../config/**/*.{vue,ts,js}';
+@source '../../locales/**/*.{vue,ts,js}';
+@source '../../ConsoleApp.vue';
+
+@source '../../modules/Core/**/*.{vue,ts,js}';
+@source '../../modules/Intelligence/**/*.{vue,ts,js}';
+
+@source '../../modules/Content/Publishing/**/*.{vue,ts,js}';
+@source '../../modules/Content/Media/**/*.{vue,ts,js}';
+@source '../../modules/Content/Forms/**/*.{vue,ts,js}';
+@source '../../modules/Content/Library/**/*.{vue,ts,js}';
+@source '../../modules/Content/Studio/**/*.{vue,ts,js}';
+
+/* Layout module without Janari theme pages (public-only markup/classes). */
+@source '../../modules/Content/Layout/**/*.{vue,ts,js}';
+@source not '../../modules/Content/Layout/views/themes/janari/**/*';

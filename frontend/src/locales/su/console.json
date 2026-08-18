@@ -1,0 +1,41 @@
+{
+  "navigation": {
+    "sections": {
+      "operations": "Operasional",
+      "settings": "Pangaturan",
+      "studio": "Studio",
+      "nexus": "Nexus",
+      "command_center": "Command Center",
+      "content": "Studio",
+      "marketing": "Reach",
+      "marketing_insights": "Marketing & Insight",
+      "seo_optimization": "SEO & Optimasi",
+      "design_config": "Tampilan & Desain",
+      "content_studio": "Konten & Media"
+    },
+    "menu": {
+      "studio": "Konten",
+      "editorial": "Editorial",
+      "media": "Media",
+      "design": "Téma & Desain",
+      "library": "Pustaka",
+      "insights": "Wawasan",
+      "audience": "Pamiarsa",
+      "journals": "Jurnal Aktivitas",
+      "systemConfig": "Konfigurasi Utama",
+      "infrastructure": "Infrastruktur",
+      "devTools": "Integrasi & Dev",
+      "mediaLibrary": "Pustaka Media",
+      "analytics": "Analitik",
+      "comments": "Komentar",
+      "emailTemplates": "Citakan Surél",
+      "forms": "Formulir",
+      "menus": "Menu",
+      "newsletter": "Newsletter",
+      "redirects": "Pangalihan",
+      "seoTools": "Alat SEO",
+      "themes": "Téma",
+      "widgets": "Widget"
+    }
+  }
+}

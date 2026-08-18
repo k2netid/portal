@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+/**
+ * Public shell — Tailwind scan scope (portal, Janari theme, member).
+ * Shared tokens: ../foundation/tokens.css + base-resets.css
+ */
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
+@custom-variant dark (&:is(.dark *));
+
+@import '../foundation/tokens.css';
+@import '../foundation/base-resets.css';
+
+@source '../../../backend/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../backend/storage/framework/views/*.php';
+@source '../../../backend/resources/views/**/*.blade.php';
+
+@source '../../shared/**/*.{vue,ts,js}';
+@source '../../engine/**/*.{vue,ts,js}';
+@source '../../config/**/*.{vue,ts,js}';
+@source '../../PublicApp.vue';
+
+@source '../../modules/Core/System/views/auth/**/*.{vue,ts,js}';
+@source '../../modules/Core/System/views/legal/**/*.{vue,ts,js}';
+@source '../../modules/Core/System/views/errors/**/*.{vue,ts,js}';
+@source '../../modules/Core/System/views/Maintenance.vue';
+@source '../../modules/Core/System/views/InstallView.vue';
+
+@source '../../modules/Content/Layout/layouts/**/*.{vue,ts,js}';
+@source '../../modules/Content/Layout/components/**/*.{vue,ts,js}';
+@source '../../modules/Content/Layout/composables/**/*.{vue,ts,js}';
+@source '../../modules/Content/Layout/router/**/*.{vue,ts,js}';
+@source '../../modules/Content/Layout/views/themes/janari/**/*.{vue,ts,js}';
+
+@source '../../shared/views/**/*.{vue,ts,js}';

@@ -1,0 +1,42 @@
+{
+    "name": "E2E Demo Pack",
+    "slug": "e2e-demo-pack",
+    "version": "1.0.0",
+    "type": "frontend",
+    "description": "A custom theme: E2E Demo Pack",
+    "author": "Jejakawan",
+    "license": "MIT",
+    "requires": {
+        "cms_version": ">=1.0.0",
+        "php": ">=8.2"
+    },
+    "supports": {
+        "custom_logo": true,
+        "custom_colors": true,
+        "custom_fonts": true,
+        "widgets": true,
+        "menus": true
+    },
+    "assets": {
+        "css": [
+            "assets/css/main.css"
+        ],
+        "js": [
+            "assets/js/theme.js"
+        ]
+    },
+    "settings_schema": {
+        "primary_color": {
+            "type": "color",
+            "default": "#3B82F6",
+            "label": "Primary Color",
+            "description": "The main brand color"
+        },
+        "secondary_color": {
+            "type": "color",
+            "default": "#8B5CF6",
+            "label": "Secondary Color",
+            "description": "The secondary brand color"
+        }
+    }
+}

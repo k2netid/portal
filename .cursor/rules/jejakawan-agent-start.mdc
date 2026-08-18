@@ -1,0 +1,36 @@
+---
+description: Jejakawan scope & doc tiers — baca AGENT_START_HERE sebelum mengubah kode
+alwaysApply: true
+---
+
+# Jejakawan (`ja-control-plane`) — aturan agen
+
+## Wajib pertama
+
+1. Baca **`docs/AGENT_START_HERE.md`** dan **`docs/.agent-rules.md`** sebelum implementasi.
+2. Hub domain: **`docs/architecture/hub-domain-and-module-tiers.md`** · scope: **`docs/architecture/request-scope.md`**.
+
+## Istilah hub (jangan campur)
+
+| Pakai | Jangan untuk kode baru di hub |
+| :--- | :--- |
+| **subscription** (`platform_subscriptions`, `HubSubscriptionScope`) | workspace, tenant, `saas_*` |
+| **customer**, **product**, **package** | `saas_tenant` |
+| **organization** (CMS di produk lain) | `subscription_id` di kolom konten hub |
+
+## Kode & API (singkat)
+
+- Middleware: `subscription.feature:{key}` · member: `X-Subscription-Domain` · hub CMS: global (`ScopedToHubSite`, no org header)
+- Admin API: `/api/v1/manage/platform/*` · webhooks: `/api/v1/platform/webhooks/*`
+- FE konsol: `/dash/platform`
+- **Tidak ada** provisioning DB per tenant di repo ini (single DB hub)
+
+## Lingkup git & direktori
+
+- **Hanya** `/opt/ja-control-plane` — remote `jejak-awan/ja-control-plane`, branch kerja `dev`.
+- **`/opt/ja-workspace` bukan repo git hub** (tidak ada `.git` di sana). Jangan commit, push, atau refactor di path itu kecuali user secara eksplisit meminta produk workspace.
+- Runbook CMS multi-DB / SaaS tenant → clone produk terpisah nanti; di hub cukup [moved-to-ja-workspace.md](../../docs/moved-to-ja-workspace.md).
+
+## Produk
+
+- Repo ini: **control plane** (`APP_ROLE=ops`). CMS hosted → repositori produk terpisah (`ja-workspace`, di luar git hub).

@@ -1,0 +1,42 @@
+/**
+ * Core module locale bundles (eager). CRM, accounting, security, content, and intelligence
+ * load via deferredLocales.ts to keep the initial bundle smaller.
+ */
+import system from '@/modules/Core/System/locales';
+import infra from '@/modules/Core/Infra/locales';
+import { themeLocaleBundles } from '@/engine/i18n/themeLocales';
+
+import consoleEn from '@/locales/en/console.json';
+import consoleId from '@/locales/id/console.json';
+
+const coLocated = {
+    system: system.en,
+    infra: infra.en,
+    theme: themeLocaleBundles.en,
+} as const;
+
+const coLocatedId = {
+    system: system.id,
+    infra: infra.id,
+    theme: themeLocaleBundles.id,
+} as const;
+
+const coLocatedSu = {
+    system: system.su,
+    infra: infra.su,
+    theme: themeLocaleBundles.su,
+} as const;
+
+export const moduleLocaleBundles = {
+    en: {
+        ...coLocated,
+        sharedConsole: consoleEn,
+    },
+    id: {
+        ...coLocatedId,
+        sharedConsole: consoleId,
+    },
+    su: {
+        ...coLocatedSu,
+    },
+} as const;

@@ -1,0 +1,120 @@
+{
+  "confirm": {
+    "defaultTitle": "Konfirmasi",
+    "defaultConfirm": "OK",
+    "defaultCancel": "Batal",
+    "action": "Naha salira yakin hoyong {action} {item} ieu?",
+    "approve": "Naha salira yakin hoyong nyatujuan {item} ieu?",
+    "bulkAction": "Naha salira yakin hoyong {action} {count} item nu dipilih?",
+    "bulkDelete": "Naha salira yakin hoyong mupus {count} item nu dipilih?",
+    "danger": "Bahaya",
+    "delete": "Naha salira yakin hoyong mupus {item} ieu?",
+    "deleteMultiple": "Naha salira yakin hoyong mupus {count} item?",
+    "deletePermanently": "Naha salira yakin hoyong mupus {item} sacara permanén? Tindakan ieu teu tiasa dibolaykeun.",
+    "duplicate": "Naha salira yakin hoyong ngadupilkat {item} ieu?",
+    "emptyTrash": "Naha salira yakin hoyong mupus sadaya eusi tempat sampah sacara permanén? Tindakan ieu teu tiasa dibolaykeun.",
+    "no": "Batal",
+    "reject": "Naha salira yakin hoyong nolak {item} ieu?",
+    "restore": "Naha salira yakin hoyong mulihkeun {item} ieu?",
+    "title": "Konfirmasi",
+    "unsaved": "Salira gaduh parobahan anu teu acan disimpen. Yakin hoyong ninggalkeun kaca ieu?",
+    "warning": "Peringatan",
+    "yes": "Muhun, Teruskeun"
+  },
+  "empty": {
+    "default": "Teu aya data",
+    "filter": "Teu aya item anu cocog sareng saringan",
+    "search": "Teu aya hasil pikeun \"{query}\""
+  },
+  "error": {
+    "action": "Gagal Ngalakukeun Tindakan",
+    "canOnlyAction": "Salira ngan tiasa {action}",
+    "cannotActionGlobal": "Salira teu tiasa {action} {resource} global",
+    "deleteFailed": "Gagal mupus {item}",
+    "forbidden": "Akses ditampik",
+    "generic": "Aya kasalahan",
+    "loadFailed": "Gagal ngamuat data",
+    "network": "Kasalahan jaringan. Mangga cobian deui",
+    "noPermission": "Salira teu gaduh widi kanggo {action}",
+    "notFound": "{item} teu kapendak",
+    "server": "Kasalahan server. Mangga cobian deui engké",
+    "unauthorized": "Salira teu gaduh widi kanggo ngalakukeun tindakan ieu",
+    "uploadFailed": "Gagal ngunggah berkas",
+    "validation": "Mangga pariksa deui formulir pikeun kasalahan",
+    "default": "Aya kasalahan"
+  },
+  "loading": {
+    "creating": "Nuju ngadamel...",
+    "default": "Nuju ngamuat...",
+    "deleting": "Nuju mupus...",
+    "processing": "Nuju diprosés...",
+    "saving": "Nuju nyimpen...",
+    "searching": "Nuju milari...",
+    "uploading": "Nuju ngunggah...",
+    "updating": "Nuju ngropéa..."
+  },
+  "clipboard": {
+    "pathCopied": "Path parantos disalin",
+    "urlCopied": "URL parantos disalin",
+    "copyFailed": "Gagal nyalin"
+  },
+  "no_data": "Teu aya data anu kapendak",
+  "select_node": "Pilih node...",
+  "slugConflict": {
+    "action": {
+      "overwrite": "Hapus & Timpa Nu Lami",
+      "useUnique": "Anggo Slug Unik"
+    },
+    "active": "Aktip",
+    "existingTitle": "Judul Aya",
+    "message": "Slug \"{slug}\" parantos dianggo.",
+    "status": "Status",
+    "title": "Konflik Slug Kadeteksi",
+    "trashed": "Tempat Sampah (Dihapus)"
+  },
+  "success": {
+    "action": "Tindakan Hasil",
+    "actionSuccess": "{item} parantos hasil di-{action}",
+    "activated": "{item} parantos hasil diaktipkeun",
+    "approved": "{item} parantos hasil disatujuan",
+    "created": "{item} parantos hasil dijieun",
+    "deactivated": "{item} parantos hasil dinonaktipkeun",
+    "default": "Prosés hasil",
+    "deleted": "{item} parantos hasil dihapus",
+    "exported": "Data parantos hasil diékspor",
+    "imported": "Data parantos hasil diimpor",
+    "marked_spam": "{item} ditandaan salaku spam",
+    "rejected": "{item} parantos hasil ditolak",
+    "restored": "{item} parantos hasil dipulihkeun",
+    "retrieved": "{item} parantos hasil dicandak",
+    "saved": "Parobahan parantos hasil disimpen",
+    "updated": "{item} parantos hasil diropéa",
+    "uploaded": "Berkas parantos hasil diunggah"
+  },
+  "time": {
+    "ago": "{time} ka pengker",
+    "justNow": "Nembé pisan"
+  },
+  "session": {
+    "expiredTitle": "Sési Réngsé",
+    "terminatedDescription": "Sési salira parantos réngsé kusabab aya login énggal ti parangkat sanés."
+  },
+  "router": {
+    "navigationError": "Aya kasalahan kritis nalika navigasi.",
+    "dashboardNavigationError": "Aya kasalahan kritis nalika navigasi dasbor."
+  },
+  "toast": {
+    "action_failed": "Gagal ngalakukeun tindakan.",
+    "created": "Data parantos hasil dijieun.",
+    "deleted": "Data parantos hasil dihapus.",
+    "error": "Kasalahan",
+    "info": "Inpo",
+    "permission_denied": "Salira teu gaduh widi kanggo ngalakukeun tindakan ieu.",
+    "saved": "Data parantos hasil disimpen.",
+    "success": "Hasil",
+    "updated": "Data parantos hasil diropéa.",
+    "warning": "Peringatan"
+  },
+  "selectedItems": "{count} item dipilih",
+  "copied": "Parantos disalin"
+}

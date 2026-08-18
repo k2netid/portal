@@ -1,0 +1,22 @@
+{
+    "name": "jejakawan/intelligence",
+    "description": "Data and AI Intelligence Module",
+    "authors": [
+        {
+            "name": "jejakawan",
+            "email": "info@jejakawan.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Intelligence\\Providers\\IntelligenceServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Intelligence\\": "app/"
+        }
+    }
+}

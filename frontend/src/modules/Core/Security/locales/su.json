@@ -1,0 +1,595 @@
+{
+  "alerts": {
+    "hide": "Sumputkeun",
+    "severity": {
+      "critical": "Kritis",
+      "info": "Inpo",
+      "warning": "Pangeling"
+    },
+    "show": "Tembongkeun Rincian",
+    "title": "Pangeling Kaamanan",
+    "types": {
+      "brute_force": "Serangan Brute Force",
+      "failed_login": "Seueur Login Gagal",
+      "ip_blocked": "IP Diblokir",
+      "multiple_ip_login": "Login dina Seueur IP"
+    }
+  },
+  "blocklist": {
+    "actions": {
+      "moveToWhitelist": "Pindah ka Daptar Bodas",
+      "remove": "Hapus",
+      "unblock": "Buka Blokir"
+    },
+    "addIp": "Tambah IP ka Daptar Blokir",
+    "description": "Alamat IP anu kablokir teu tiasa ngaksés sistem",
+    "empty": "Teu aya alamat IP anu kablokir",
+    "reason": "Alesan (opsional)",
+    "table": {
+      "actions": "Aksi",
+      "createdBy": "Dijieun Ku",
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "reason": "Alesan"
+    },
+    "title": "Daptar Blokir IP"
+  },
+  "bulkActions": {
+    "blockSelected": "Blokir nu Dipilih",
+    "removeSelected": "Hapus nu Dipilih",
+    "selected": "{count} dipilih",
+    "unblockSelected": "Buka Blokir nu Dipilih",
+    "whitelistSelected": "Tambah ka Daptar Bodas"
+  },
+  "cspReports": {
+    "actions": {
+      "markFalsePositive": "Tandaan False Positive",
+      "markReviewed": "Tandaan Parantos Ditinjau"
+    },
+    "confirmBulkAction": "Naha salira yakin hoyong {action} {count} laporan?",
+    "bulkActionSuccess": "{count} laporan parantos diropéa",
+    "description": "Pantau palanggaran Content Security Policy tina laporan browser",
+    "empty": "Teu aya laporan palanggaran CSP. Kabijakan kaamanan salira kuat pisan! 🛡️",
+    "filters": {
+      "dateFrom": "Ti Tanggal",
+      "dateTo": "Dugi ka Tanggal",
+      "directive": "Direktif",
+      "directivePlaceholder": "mis. script-src",
+      "status": "Status"
+    },
+    "stats": {
+      "last24h": "24 Jam Terakhir",
+      "new": "Anyar",
+      "topViolation": "Palanggaran Paling Seueur",
+      "total": "Total Laporan"
+    },
+    "status": {
+      "falsePositive": "False Positive",
+      "new": "Anyar",
+      "reviewed": "Ditinjau"
+    },
+    "table": {
+      "blockedUri": "URI Diblokir",
+      "date": "Tanggal",
+      "directive": "Direktif",
+      "documentUri": "URI Dokumén",
+      "ip": "Alamat IP",
+      "status": "Status"
+    },
+    "title": "Laporan Palanggaran CSP"
+  },
+  "fileIntegrity": {
+    "actions": {
+      "runAudit": "Jalankeun Audit",
+      "runInitial": "Jalankeun Audit Awal",
+      "sync": "Sinkronkeun Data"
+    },
+    "description": "Deteksi modifikasi teu sah dina berkas sistem kritis",
+    "noData": "Teu aya data integritas anu sayogi. Jalankeun audit pikeun mimitian ngawaskeun.",
+    "stats": {
+      "criticalFiles": "Berkas sistem & konfigurasi kritis",
+      "lastAudit": "Audit Terakhir",
+      "monitoredFiles": "Berkas nu Diawaskeun",
+      "never": "Teu acan Pernah",
+      "noHistory": "Teu aya riwayat audit",
+      "secure": "Aman",
+      "systemStatus": "Status Sistem",
+      "tampered": "Dimanipulasi",
+      "violationsDetected": "{count} palanggaran kadeteksi"
+    },
+    "title": "Pangawasan Integritas Berkas",
+    "violations": {
+      "empty": "Sadaya berkas sah",
+      "emptyDesc": "Teu aya modifikasi teu sah anu kadeteksi dina berkas aplikasi anu diawaskeun.",
+      "table": {
+        "detected": "Hash Kadeteksi",
+        "expected": "Hash nu Dianti-anti",
+        "fileNotFound": "Berkas teu kapendak",
+        "path": "Path Berkas",
+        "type": "Tipe"
+      },
+      "title": "Palanggaran Integritas",
+      "types": {
+        "missing": "Hilang",
+        "modified": "Dimodifikasi",
+        "new": "Anyar/Teu Dikenal"
+      }
+    },
+    "warning": {
+      "description": "Modifikasi berkas teu sah kadeteksi. Ieu tiasa nuduhkeun kompromi server atanapi parobahan kode anu teu sah. Mangga verifikasi sumber parobahan ieu geura-giru.",
+      "title": "Pangeling Kaamanan Kritis"
+    },
+    "resync": {
+      "dialogTitle": "Otorisasi Pambaruan Integritas",
+      "dialogDescription": "Eusian alesan parobahan anu diotorisasi pikeun daptar audit. Sistem bakal nganyarkeun baseline integritas berkas.",
+      "reasonLabel": "Alesan parobahan (wajib)",
+      "reasonPlaceholder": "Contoh: Deploy hotfix + update middleware kaamanan dina 2026-04-22 ku tim infra.",
+      "clearHistoryLabel": "Bersihkeun catetan palanggaran integritas lami",
+      "clearHistoryDesc": "Direkomendasikeun saatos update terotorisasi supados dasbor nembongkeun baseline panganyarna.",
+      "cancel": "Batal",
+      "submit": "Otorisasi & sinkron deui",
+      "defaultReason": "Pambahanan terotorisasi: deploy/parobahan konfigurasi divalidasi dina {timestamp}",
+      "reasonMinLength": "Alesan audit minimal 8 karakter",
+      "auditStarted": "Pamariksaan integritas berkas dikawitan",
+      "success": "Baseline integritas diotorisasi & catetan lami parantos dibersihkeun",
+      "rateLimitActive": "Watesan laju aktip. Coba deui dina {seconds} detik.",
+      "tooManyRequests": "Teu teuing seueur pamundut sinkronisasi. Antos {seconds} detik teras cobian deui."
+    }
+  },
+  "health": {
+    "title": "Skor Kaséhatan Kaamanan"
+  },
+  "kpi": {
+    "passRate": "Tingkat lulus drill (30 dinten)",
+    "drills": "drill",
+    "avgRto": "RTO rata-rata",
+    "period": "Periode",
+    "avgRpo": "RPO rata-rata",
+    "targetNote": "Langkung handap langkung saé",
+    "noiseRate": "Tingkat noise deteksi",
+    "infoSignals": "inpo",
+    "criticalSignals": "kritis"
+  },
+  "notifications": {
+    "test": "Uji pangeling",
+    "test_sent": "Notifikasi uji parantos dikintunkeun! Mangga pariksa Telegram salira."
+  },
+  "ipManagement": {
+    "block": {
+      "button": "Blokir",
+      "label": "Blokir Alamat IP",
+      "placeholder": "192.168.1.1"
+    },
+    "check": {
+      "button": "Cek",
+      "label": "Cek Status IP",
+      "placeholder": "192.168.1.1"
+    },
+    "status": {
+      "allowed": "Diwidian",
+      "blocked": "Kablokir",
+      "label": "Status IP"
+    },
+    "title": "Manajemén IP",
+    "unblock": {
+      "button": "Buka Blokir",
+      "label": "Buka Blokir IP / Hapus Rate Limit",
+      "placeholder": "192.168.1.1"
+    }
+  },
+  "logs": {
+    "actions": {
+      "blockIp": "Blokir IP"
+    },
+    "all": "Sadaya Kajadian",
+    "blockedIp": "IP Kablokir",
+    "empty": "Teu aya log kaamanan anu kapendak",
+    "eventTypes": {
+      "account_locked": "Akun Dikonci",
+      "force_logout": "Logout Paksa",
+      "ip_blocked": "IP Diblokir",
+      "ip_blocked_permanent": "IP Diblokir Permanén",
+      "ip_blocked_temp": "IP Diblokir Samentara",
+      "ip_unblocked": "IP Utama Dibuka Blokir",
+      "ip_whitelist_removed": "Dihapus tina Daptar Bodas",
+      "ip_whitelisted": "IP Lebet Daptar Bodas",
+      "login_blocked": "Login Diblokir",
+      "login_failed": "Login Gagal",
+      "login_success": "Login Hasil",
+      "malicious_extension_blocked": "Éksténsi Diblokir",
+      "malicious_scanner_blocked": "Scanner Diblokir",
+      "session_invalidated": "Sési Teu Valid deui",
+      "session_limit_reached": "Watesan Sési Kahontal",
+      "shield_failed": "Verifikasi Shield Gagal",
+      "shield_honeypot": "Honeypot Kadeteksi",
+      "shield_verified": "Verifikasi Shield Hasil",
+      "suspicious_activity": "Aktivitas Mencurigakan"
+    },
+    "failedLogin": "Login Gagal",
+    "loading": "Nuju ngamuat...",
+    "search": "Pilari log...",
+    "suspiciousActivity": "Aktivitas Mencurigakan",
+    "table": {
+      "actions": "Aksi",
+      "date": "Tanggal",
+      "details": "Rincian",
+      "event": "Kajadian",
+      "ip": "Alamat IP",
+      "user": "Pamaké"
+    },
+    "title": "Jurnal Kaamanan",
+    "clearShieldConfirm": "Naha salira yakin hoyong ngahapus sadaya log shield?",
+    "shieldCleared": "Log shield parantos hasil dibersihkeun",
+    "selectAll": "Pilih sadaya log",
+    "selectRow": "Pilih log {ip}",
+    "filterLabel": "Saring log kaamanan"
+  },
+  "maintenance": {
+    "activate": "Aktipkeun Mode Pangropéa",
+    "deactivate": "Réngsékeun Mode Pangropéa & Sinkronkeun Deui",
+    "description": "Reureuh samentara modul kaamanan nalika prosés deployment sareng tés",
+    "duration": {
+      "15min": "15 Menit",
+      "1hour": "1 Jam",
+      "2hours": "2 Jam",
+      "30min": "30 Menit",
+      "4hours": "4 Jam",
+      "label": "Durasi"
+    },
+    "modules": {
+      "title": "Modul",
+      "all": "Sadaya Modul",
+      "autotune": "Auto-Tune",
+      "integrity": "Integritas Berkas",
+      "notifications": "Notifikasi Kaamanan",
+      "scanner": "Perlindungan Scanner",
+      "shield": "Bot Shield (PoW)",
+      "threatintel": "Intelijen Ancaman",
+      "waf": "WAF (Firewall)"
+    },
+    "notifications": {
+      "activated": "Mode pangropéa diaktipkeun salami {duration} menit",
+      "deactivated": "Mode pangropéa parantos réngsé. Baseline disinkronkeun deui."
+    },
+    "status": {
+      "active": "Mode Pangropéa Aktip",
+      "autoExpired": "Réngsé otomatis",
+      "expiresIn": "Réngsé dina {time}",
+      "inactive": "Sadaya Sistem Aktip"
+    },
+    "title": "Mode Pangropéa Kaamanan",
+    "warnings": {
+      "active": "Modul kaamanan nuju direureuhkeun. Sistem langkung rentan salami periode ieu.",
+      "autoResync": "Baseline integritas berkas bakal otomatis dijieun deui nalika mode pangropéa réngsé."
+    }
+  },
+  "messages": {
+    "blockFailed": "Gagal ngablokir alamat IP",
+    "blockSuccess": "Alamat IP parantos hasil diblokir",
+    "bulkBlockSuccess": "{blocked} alamat IP diblokir, {skipped} dilewati",
+    "bulkRemoveSuccess": "{count} alamat IP dihapus",
+    "bulkUnblockSuccess": "{count} alamat IP dibuka blokirna",
+    "bulkWhitelistSuccess": "{count} alamat IP ditambihkeun ka daptar bodas",
+    "cannotBlockWhitelisted": "Teu tiasa ngablokir alamat IP anu aya dina daptar bodas",
+    "checkFailed": "Gagal mariksa status IP",
+    "confirmBlock": "Naha salira yakin hoyong ngablokir alamat IP {ip}?",
+    "confirmBulkBlock": "Naha salira yakin hoyong ngablokir {count} alamat IP?",
+    "confirmBulkRemoveWhitelist": "Hapus {count} alamat IP tina daptar bodas?",
+    "confirmBulkUnblock": "Naha salira yakin hoyong muka blokir {count} alamat IP?",
+    "confirmRemoveWhitelist": "Hapus alamat IP {ip} tina daptar bodas?",
+    "confirmUnblock": "Naha salira yakin hoyong muka blokir alamat IP {ip} sareng ngahapus rate limit-na?",
+    "confirmWhitelist": "Tambihkeun alamat IP {ip} ka daptar bodas?",
+    "enterIp": "Mangga lebetkeun alamat IP",
+    "removeWhitelistFailed": "Gagal ngahapus alamat IP tina daptar bodas",
+    "removeWhitelistSuccess": "Alamat IP parantos dihapus tina daptar bodas",
+    "unblockFailed": "Gagal muka blokir alamat IP",
+    "unblockSuccess": "Alamat IP parantos hasil dibuka blokirna sareng rate limit parantos dihapus",
+    "whitelistFailed": "Gagal nambihkeun alamat IP ka daptar bodas",
+    "whitelistSuccess": "Alamat IP parantos hasil ditambihkeun ka daptar bodas",
+    "bulkWhitelistRemoveSuccess": "IP parantos dihapus tina daptar bodas",
+    "movedToWhitelist": "IP parantos dipindahkeun ka daptar bodas",
+    "whitelistRemoveSuccess": "IP parantos dihapus tina daptar bodas"
+  },
+  "packages": {
+    "description": "Daptar lengkep sadaya dependensi Composer sareng NPM",
+    "empty": "Teu aya paket kapendak dina berkas lock",
+    "filters": {
+      "status": "Status Kaamanan"
+    },
+    "showAll": "Tembongkeun Sadaya Paket",
+    "stats": {
+      "composer": "Composer",
+      "npm": "NPM",
+      "secure": "Aman",
+      "total": "Total Paket",
+      "vulnerable": "Rentan"
+    },
+    "status": {
+      "secure": "Aman",
+      "vulnerable": "Rentan"
+    },
+    "table": {
+      "package": "Paket",
+      "source": "Sumber",
+      "status": "Status",
+      "version": "Versi"
+    },
+    "title": "Sadaya Paket"
+  },
+  "reasons": {
+    "autoTuned": "Auto-tune: skor ancaman {score}",
+    "honeypotTriggered": "Trigger honeypot kadeteksi: {path}",
+    "maliciousScanner": "Scanner bot berbahaya: {path}",
+    "manual": "Diblokir sacara manual",
+    "threatIntelHighRisk": "Intelijen Ancaman: IP Risiko Tinggi ({score}/100)",
+    "wafViolation": "Palanggaran WAF: {match}"
+  },
+  "settings": {
+    "activityRetention": {
+      "description": "Catetan jurnal aktivitas anu langkung lami ti periode ieu bakal otomatis dihapus.",
+      "label": "Retensi Log Aktivitas"
+    },
+    "autotuneFrequency": {
+      "daily": "Kunjungan Harian (01:00)",
+      "description": "Sakumaha sering mesin auto-tuning kaamanan nganalisis sareng nyaluyukeun parameter panyalindungan.",
+      "label": "Frekuensi Auto-Tune",
+      "weekly": "Mingguan (Minggu 02:00)"
+    },
+    "description": "Konfigurasi parameter operasi kaamanan sareng kawijakan retensi",
+    "loginRetention": {
+      "description": "Catetan riwayat login anu langkung lami ti periode ieu bakal otomatis dihapus.",
+      "label": "Retensi Riwayat Login"
+    },
+    "retentionDays": {
+      "description": "Log kaamanan anu langkung lami ti periode ieu bakal otomatis dihapus. Minimum 7 dinten, maksimum 365 dinten.",
+      "label": "Retensi Log Kaamanan",
+      "unit": "dinten"
+    },
+    "saved": "Petélan kaamanan parantos hasil disimpen",
+    "title": "Petélan Kaamanan"
+  },
+  "shield": {
+    "challenge": {
+      "message": "Kami ngamankeun sési salira pikeun nangtayungan tina ancaman otomatis. Ieu ngan bakal nyandak sakedap.",
+      "retry": "Cobian Deui",
+      "status": {
+        "analyzing": "Nganalisis metrik kaamanan...",
+        "failed": "Verifikasi gagal. Nyobian deui...",
+        "finalizing": "Finalisasi verifikasi...",
+        "initializing": "Ngamimitian pamariksaan kaamanan...",
+        "processing": "Nuju diprosés",
+        "verified": "Parantos Terverifikasi! Neruskeun...",
+        "verifying": "Mariksa koneksi..."
+      },
+      "steps": {
+        "analyze": "Analisis",
+        "solve": "Ngabéréskeun",
+        "verify": "Verifikasi"
+      },
+      "title": "Mariksa Koneksi"
+    },
+    "description": "Pantau aktivitas tantangan Proof-of-Work sareng deteksi bot otomatis",
+    "stats": {
+      "difficulty": "Tingkat Kasusahan Ayeuna",
+      "extensionsBlocked": "Éksténsi Diblokir",
+      "failures": "Verifikasi Gagal",
+      "honeypot": "Honeypot Trigger",
+      "scannersBlocked": "Scanner Diblokir",
+      "verifications": "Total Verifikasi"
+    },
+    "table": {
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "status": "Status",
+      "userAgent": "User Agent"
+    },
+    "title": "Bot Shield Journal"
+  },
+  "slowQueries": {
+    "description": "Pantau query database anu ngaleuwihan wates performa",
+    "empty": "Teu aya query lambat. Performa database optimal pisan! 🚀",
+    "filters": {
+      "dateFrom": "Ti Tanggal",
+      "dateTo": "Dugi ka Tanggal",
+      "minDuration": "Durasi Min (ms)",
+      "minDurationPlaceholder": "1000",
+      "route": "Route",
+      "routePlaceholder": "Pilari dumasar path route..."
+    },
+    "stats": {
+      "avgDuration": "Durasi Rata-rata",
+      "maxDuration": "Durasi Maksimum",
+      "today": "Dinten Ieu",
+      "total": "Total Tercatet"
+    },
+    "table": {
+      "date": "Tanggal",
+      "duration": "Durasi",
+      "query": "Query",
+      "route": "Route",
+      "user": "Pamaké"
+    },
+    "title": "Analisis Query Lambat"
+  },
+  "statistics": {
+    "blockedIps": "IP Kablokir",
+    "events": "Kajadian Kaamanan",
+    "failedLogins": "Login Gagal",
+    "last24h": "24 Jam Terakhir"
+  },
+  "tabs": {
+    "blocklist": "Daptar Blokir",
+    "cspReports": "Laporan CSP",
+    "fileIntegrity": "Integritas Berkas",
+    "overview": "Ringkesan",
+    "settings": "Petélan",
+    "shieldJournal": "Shield Journal",
+    "slowQueries": "Query Lambat",
+    "threatAnalysis": "Analisis Ancaman",
+    "vulnerabilities": "Kerentanan",
+    "whitelist": "Daptar Bodas"
+  },
+  "threatAnalysis": {
+    "autoTune": {
+      "changes": {
+        "blockedIps": "Ngablokir {count} IP risiko tinggi",
+        "newScannerPaths": "{count} path scanner anyar kadeteksi",
+        "scannerThreshold": "Watesan scanner diperketat janten {value}"
+      },
+      "description": "Panyaluyuan parameter kaamanan anu dilakukeun ku mesin tuning otomatis",
+      "detected": "{count} Kadeteksi",
+      "ips": "IP",
+      "noChanges": "Teu aya parobahan anu diterapkeun",
+      "risk": "Risiko",
+      "table": {
+        "campaigns": "Kampanye",
+        "changes": "Parobahan",
+        "date": "Tanggal",
+        "stats": "Statistik"
+      },
+      "title": "Riwayat Auto-Tune"
+    },
+    "campaigns": {
+      "coordinated": "Upaya terkoordinasi",
+      "description": "Korelasi ti sababaraha kajadian anu ngabagi pola anu sami",
+      "detected": "{count} Kadeteksi",
+      "empty": "Teu aya kampanye serangan aktip anu kadeteksi",
+      "highRisk": "Risiko Tinggi",
+      "ipsCount": "{count} IP",
+      "title": "Kampanye Serangan"
+    },
+    "description": "Korelasi kajadian kaamanan pikeun mendeteksi pola serangan anu terkoordinasi",
+    "highRiskIps": {
+      "actions": {
+        "block": "Blokir IP"
+      },
+      "critical": "Kritis",
+      "description": "IP individu kalayan skor ancaman akumulasi anu luhur",
+      "empty": "Teu aya IP berisiko tinggi anu ditandaan dina waktos ieu",
+      "events": "Kajadian",
+      "flagged": "{count} Ditandaan",
+      "score": "Skor",
+      "title": "IP Risiko Tinggi",
+      "warning": "Pangeling"
+    },
+    "stats": {
+      "detectedCampaigns": "Kampanye Kadeteksi",
+      "highRiskIps": "IP Risiko Tinggi",
+      "totalEvents": "Total Kajadian Kaamanan",
+      "uniqueIps": "IP Unik nu Dianalisis"
+    },
+    "loadFailed": "Gagal ngamuat analisis ancaman. Mangga pariksa koneksi atanapi widi salira, teras muat ulang.",
+    "title": "Analisis Ancaman Kaamanan"
+  },
+  "title": "Manajemén Kaamanan",
+  "twoFactor": {
+    "globallyDisabledDesc": "Administrator parantos nganonaktipkeun Autentikasi Dua Faktor pikeun sakabéh sistem.",
+    "globallyDisabledTitle": "2FA Dinonaktipkeun sacara Global"
+  },
+  "vulnerabilities": {
+    "auditCompleted": "Audit dependensi parantos hasil réngsé",
+    "description": "Hasil audit kaamanan pikeun paket Composer sareng NPM",
+    "empty": "Teu aya kerentanan kapendak. Dependensi salira aman pisan! 🛡️",
+    "filters": {
+      "package": "Paket",
+      "searchPackage": "Pilari paket...",
+      "severity": "Tingkat Bahaya",
+      "source": "Sumber",
+      "status": "Status"
+    },
+    "runAudit": "Jalankeun Audit",
+    "severity": {
+      "critical": "Kritis",
+      "high": "Tinggi",
+      "low": "Handap",
+      "medium": "Sedeng"
+    },
+    "source": {
+      "composer": "Composer",
+      "npm": "NPM"
+    },
+    "stats": {
+      "critical": "Kritis",
+      "high": "Tinggi",
+      "low": "Handap",
+      "medium": "Sedeng",
+      "total": "Total"
+    },
+    "status": {
+      "acknowledged": "Dipikanyaho",
+      "ignored": "Diabaikeun",
+      "new": "Anyar",
+      "patched": "Parantos Dioméan"
+    },
+    "table": {
+      "actions": "Aksi",
+      "cve": "CVE",
+      "package": "Paket",
+      "severity": "Tingkat Bahaya",
+      "source": "Sumber",
+      "status": "Status",
+      "version": "Versi"
+    },
+    "title": "Kerentanan Dependensi"
+  },
+  "whitelist": {
+    "actions": {
+      "remove": "Hapus"
+    },
+    "addIp": "Tambah IP ka Daptar Bodas",
+    "description": "Alamat IP dina daptar bodas moal pernah diblokir",
+    "empty": "Teu aya alamat IP dina daptar bodas",
+    "reason": "Alesan (opsional)",
+    "table": {
+      "actions": "Aksi",
+      "createdBy": "Dijieun Ku",
+      "date": "Tanggal",
+      "ip": "Alamat IP",
+      "reason": "Alesan"
+    },
+    "title": "Daptar Bodas IP"
+  },
+  "trends": {
+    "title": "Tren serangan (24 jam)",
+    "events": "Kajadian"
+  },
+  "subtitle": "Log kaamanan, laporan CSP, sareng pangawasan ancaman.",
+  "abac": {
+    "title": "Belajakan ABAC",
+    "subtitle": "Aturan aksés dumasar atribut saatos RBAC.",
+    "create": "Belajakan anyar",
+    "empty": "Teu acan aya belajakan ABAC.",
+    "loading": "Nuju ngamuat belajakan…",
+    "confirmDelete": "Hapus belajakan \"{name}\"?",
+    "form": {
+      "createTitle": "Jieun belajakan ABAC",
+      "editTitle": "Ubah belajakan ABAC",
+      "description": "Conditions kedah mangrupikeun array JSON.",
+      "name": "Nami",
+      "descriptionField": "Déskripsi",
+      "target": "Resource target",
+      "action": "Aksi",
+      "conditions": "Conditions (JSON)",
+      "active": "Belajakan aktip",
+      "save": "Simpen belajakan"
+    },
+    "deleteTitle": "Hapus belajakan?",
+    "columns": {
+      "name": "Nami",
+      "target": "Target",
+      "action": "Aksi",
+      "status": "Status",
+      "actions": "Aksi"
+    },
+    "status": {
+      "active": "Aktip",
+      "inactive": "Teu Aktip"
+    }
+  },
+  "siem": {
+    "tab": "Ékspor SIEM",
+    "title": "Log ékspor SIEM",
+    "subtitle": "Kajadian kaamanan dina siem_export.log (saluran syslog oge aktip).",
+    "empty": "Teu acan aya entri SIEM. Kajadian bakal némbongan saatos aya aktivitas."
+  }
+}

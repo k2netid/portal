@@ -1,0 +1,503 @@
+@reference "./shell/console-tailwind.css";
+
+@layer base {
+    html:has(.admin-layout),
+    html:has(.admin-layout) body {
+        overflow-x: clip;
+    }
+
+    html:has(.admin-layout) {
+        overflow-y: scroll;
+    }
+
+    /* Console shell: monochrome: surfaces + semantics + charts (no chroma; single source in app.css) */
+    .admin-layout {
+        --background: 0 0% 100%;
+        --foreground: 0 0% 6%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 6%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 6%;
+        --sidebar: 0 0% 100%;
+        --sidebar-foreground: 0 0% 6%;
+        --sidebar-accent: 0 0% 96%;
+        --primary: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --primary-foreground: var(--console-primary-foreground-hsl, 0 0% 100%);
+        --secondary: 0 0% 100%;
+        --secondary-foreground: 0 0% 6%;
+        --accent: 0 0% 100%;
+        --accent-foreground: 0 0% 6%;
+        --muted: 0 0% 98%;
+        --muted-foreground: 0 0% 38%;
+        --border: 0 0% 90%;
+        --input: 0 0% 90%;
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --radius: var(--console-radius, 8px);
+        --radius-lg: var(--radius);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-sm: calc(var(--radius) - 4px);
+        /* “Semantic” hues → grayscale only */
+        --destructive: 0 0% 12%;
+        --destructive-foreground: 0 0% 100%;
+        --success: 0 0% 18%;
+        --success-foreground: 0 0% 100%;
+        --warning: 0 0% 28%;
+        --warning-foreground: 0 0% 100%;
+        --info: 0 0% 22%;
+        --info-foreground: 0 0% 100%;
+        --chart-1: 0 0% 12%;
+        --chart-2: 0 0% 28%;
+        --chart-3: 0 0% 44%;
+        --chart-4: 0 0% 60%;
+        --chart-5: 0 0% 76%;
+    }
+
+    .dark .admin-layout {
+        --background: 0 0% 0%;
+        --card: 0 0% 4%;
+        --popover: 0 0% 3%;
+        --foreground: 0 0% 100%;
+        --card-foreground: 0 0% 97%;
+        --popover-foreground: 0 0% 97%;
+        --sidebar: 0 0% 0%;
+        --sidebar-foreground: 0 0% 98%;
+        --sidebar-accent: 0 0% 9%;
+        --primary: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --primary-foreground: var(--console-primary-foreground-hsl, 0 0% 0%);
+        --secondary: 0 0% 9%;
+        --secondary-foreground: 0 0% 100%;
+        --accent: 0 0% 10%;
+        --accent-foreground: 0 0% 100%;
+        --muted: 0 0% 9%;
+        --muted-foreground: 0 0% 70%;
+        --border: 0 0% 16%;
+        --input: 0 0% 16%;
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --radius: var(--console-radius, 8px);
+        --radius-lg: var(--radius);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-sm: calc(var(--radius) - 4px);
+        --destructive: 0 0% 88%;
+        --destructive-foreground: 0 0% 0%;
+        --success: 0 0% 78%;
+        --success-foreground: 0 0% 0%;
+        --warning: 0 0% 68%;
+        --warning-foreground: 0 0% 0%;
+        --info: 0 0% 72%;
+        --info-foreground: 0 0% 0%;
+        --chart-1: 0 0% 96%;
+        --chart-2: 0 0% 72%;
+        --chart-3: 0 0% 52%;
+        --chart-4: 0 0% 36%;
+        --chart-5: 0 0% 22%;
+        color-scheme: dark;
+    }
+
+    /* Same console tokens on <html> for portals (dialog, popover, dropdown) */
+    html[data-console-theme] {
+        --primary: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --primary-foreground: var(--console-primary-foreground-hsl, 0 0% 100%);
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --radius: var(--console-radius, 8px);
+        --radius-lg: var(--radius);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-sm: calc(var(--radius) - 4px);
+    }
+
+    .dark html[data-console-theme] {
+        --primary: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --primary-foreground: var(--console-primary-foreground-hsl, 0 0% 0%);
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --radius: var(--console-radius, 8px);
+    }
+
+}
+
+@layer components {
+    /* Dashboard Breadcrumb - Clean & Flat Shadcn Style */
+    .dashboard-breadcrumb {
+        @apply bg-transparent border-b border-border/40 py-4 px-6;
+    }
+
+    .dashboard-breadcrumb-title {
+        @apply text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/80 leading-none;
+    }
+
+    .dashboard-breadcrumb-title-rule {
+        @apply hidden; /* Remove the underline rule for a cleaner flat look */
+    }
+
+    .dashboard-breadcrumb-path {
+        @apply flex items-center mt-1.5 text-[13px] font-medium text-foreground/70;
+    }
+
+    .dashboard-breadcrumb-separator {
+        @apply mx-2 text-muted-foreground/30 font-light;
+    }
+
+    .dashboard-breadcrumb-link {
+        @apply text-muted-foreground hover:text-foreground transition-colors duration-200;
+    }
+
+    .dashboard-breadcrumb-current {
+        @apply text-foreground font-semibold;
+    }
+
+    .dashboard-breadcrumb-accent {
+        @apply hidden;
+    }
+}
+
+@layer components {
+    .console-content-wrap {
+        max-width: 80rem;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        min-width: 0;
+        max-width: min(80rem, 100%);
+    }
+
+    /* Flat+ console surfaces (Extensions / App Store reference) */
+    .console-page {
+        @apply space-y-6;
+    }
+
+    .console-toolbar {
+        @apply flex flex-col gap-4 rounded-xl border border-border/50 bg-card/30 p-4 backdrop-blur-md md:flex-row md:items-center md:justify-between;
+    }
+
+    .console-search {
+        @apply h-10 w-full rounded-lg border border-border/70 bg-background pl-9 pr-4 text-sm text-foreground shadow-none;
+        @apply focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25;
+    }
+
+    .console-panel {
+        @apply overflow-hidden rounded-xl border border-border/50 bg-card/40 shadow-none backdrop-blur-sm;
+    }
+
+    .console-stat-tile {
+        @apply rounded-xl border border-border/60 bg-card/80 shadow-none backdrop-blur-sm transition-all duration-200;
+        @apply hover:border-border hover:shadow-sm;
+    }
+
+    .console-stat-tile--active {
+        @apply border-primary/40 ring-1 ring-primary/20;
+    }
+
+    .console-stat-tile__value {
+        @apply text-2xl font-bold tracking-tight text-foreground;
+    }
+
+    .console-stat-tile__icon {
+        @apply rounded-xl p-2.5;
+    }
+
+    .console-stat-tile__icon--primary {
+        @apply bg-primary/10 text-primary;
+    }
+
+    .console-stat-tile__icon--success {
+        @apply bg-emerald-500/10 text-emerald-600 dark:text-emerald-400;
+    }
+
+    .console-stat-tile__icon--destructive {
+        @apply bg-destructive/10 text-destructive;
+    }
+
+
+    .console-range-input {
+        @apply h-2 w-full appearance-none rounded-full bg-muted;
+        accent-color: hsl(var(--primary));
+    }
+
+    .console-range-input::-webkit-slider-thumb {
+        @apply h-4 w-4 appearance-none rounded-full border-2 border-background bg-primary shadow-sm;
+    }
+
+    .console-segment {
+        @apply inline-flex items-center gap-1 rounded-lg border border-border/50 bg-muted/20 p-1;
+    }
+
+    .console-segment__btn {
+        @apply rounded-md border-0 px-3 py-1.5 text-sm transition-colors;
+    }
+
+    .console-segment__btn--active {
+        @apply bg-primary/10 font-semibold text-primary shadow-sm;
+    }
+
+    .console-segment__btn--inactive {
+        @apply text-muted-foreground hover:bg-muted/40 hover:text-foreground;
+    }
+
+    /* Dialog shells — widths aligned with Extensions (md / lg / xl) */
+    .console-dialog-content {
+        @apply bg-card border border-border/80 rounded-xl shadow-none;
+    }
+
+    .console-dialog-sm {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full sm:max-w-md;
+    }
+
+    .console-dialog-md {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full sm:max-w-lg;
+    }
+
+    .console-dialog-lg {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full sm:max-w-xl;
+    }
+
+    .console-dialog-xl {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full max-w-2xl;
+    }
+
+    .console-dialog-xl-scroll {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full max-w-2xl overflow-y-auto max-h-[85vh];
+    }
+
+    .console-dialog-preview {
+        @apply bg-card border border-border/80 rounded-xl shadow-none w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col;
+    }
+
+    .console-dialog-full {
+        @apply w-[96vw] max-w-[1400px] h-[90vh] p-0 overflow-hidden bg-card border border-border/80 rounded-xl shadow-none;
+    }
+
+    /* Legacy left-accent stat cards */
+    .console-stat-card {
+        border-left-width: 3px;
+    }
+
+    .console-stat-card--primary { border-left-color: hsl(var(--primary)); }
+    .console-stat-card--success { border-left-color: hsl(var(--success)); }
+    .console-stat-card--warning { border-left-color: hsl(var(--warning)); }
+    .console-stat-card--default {
+        border-left-color: color-mix(in oklch, hsl(var(--muted-foreground)) 40%, transparent);
+    }
+}
+
+@layer base {
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+
+        .animate-spin {
+            animation: none !important;
+        }
+    }
+}
+
+@layer components {
+    /* Glassmorphism console surfaces */
+    .admin-layout[data-console-surface="glass"],
+    html[data-console-theme][data-console-surface="glass"] {
+        background-image: var(
+            --console-glass-bg-image,
+            radial-gradient(ellipse 92% 62% at 8% -12%, hsl(var(--primary) / 0.22), transparent 55%),
+            radial-gradient(ellipse 72% 52% at 95% 5%, hsl(var(--primary) / 0.14), transparent 52%)
+        );
+        background-color: hsl(var(--background));
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .admin-layout[data-console-surface="glass"] [data-console-glass] {
+        background-color: color-mix(in srgb, hsl(var(--card)) 58%, transparent);
+        backdrop-filter: blur(20px) saturate(1.35);
+        -webkit-backdrop-filter: blur(20px) saturate(1.35);
+        border-color: color-mix(in srgb, hsl(var(--border)) 65%, transparent);
+        box-shadow:
+            0 1px 0 0 color-mix(in srgb, hsl(var(--foreground)) 6%, transparent) inset,
+            0 8px 32px -12px color-mix(in srgb, hsl(var(--foreground)) 12%, transparent);
+    }
+
+    .admin-layout[data-console-surface="glass"] .console-toolbar,
+    .admin-layout[data-console-surface="glass"] .console-panel,
+    .admin-layout[data-console-surface="glass"] .console-stat-tile {
+        background-color: color-mix(in srgb, hsl(var(--card)) 52%, transparent);
+        backdrop-filter: blur(18px) saturate(1.25);
+        -webkit-backdrop-filter: blur(18px) saturate(1.25);
+        border-color: color-mix(in srgb, hsl(var(--border)) 60%, transparent);
+    }
+
+    .admin-layout[data-console-surface="glass"] .console-appearance-preview {
+        background-color: color-mix(in srgb, hsl(var(--card)) 45%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-color: color-mix(in srgb, hsl(var(--border)) 55%, transparent);
+    }
+
+    /* Flat console surfaces — opaque cards, no blur */
+    
+    /* Advanced mode: no glass preset background — solid surfaces */
+    .admin-layout[data-console-surface="advanced"],
+    html[data-console-theme][data-console-surface="advanced"] {
+        background-image: none !important;
+    }
+
+    .admin-layout[data-console-surface="advanced"] .console-toolbar,
+    .admin-layout[data-console-surface="advanced"] .console-panel,
+    .admin-layout[data-console-surface="advanced"] .console-stat-tile,
+    html[data-console-theme][data-console-surface="advanced"] .console-toolbar,
+    html[data-console-theme][data-console-surface="advanced"] .console-panel,
+    html[data-console-theme][data-console-surface="advanced"] .console-stat-tile {
+        background: hsl(var(--card));
+        backdrop-filter: none;
+    }
+
+    .admin-layout[data-console-surface="flat"] {
+        background-image: none;
+    }
+
+    .admin-layout[data-console-surface="flat"] [data-console-glass] {
+        background-color: hsl(var(--card));
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-color: hsl(var(--border));
+        box-shadow: none;
+    }
+
+    .admin-layout[data-console-surface="flat"] .console-toolbar,
+    .admin-layout[data-console-surface="flat"] .console-panel,
+    .admin-layout[data-console-surface="flat"] .console-stat-tile {
+        background-color: hsl(var(--card));
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-color: hsl(var(--border));
+        box-shadow: none;
+    }
+
+    .admin-layout[data-console-surface="flat"] .console-appearance-preview {
+        background-color: hsl(var(--muted) / 0.35);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-color: hsl(var(--border));
+    }
+
+
+    /* Shell chrome: sidebar + top navbar follow surface style */
+    .admin-layout aside.fixed,
+    html[data-console-theme] aside.fixed {
+        background: var(--console-sidebar-bg) !important;
+        border-color: var(--console-sidebar-border) !important;
+        color: hsl(var(--console-sidebar-text)) !important;
+    }
+
+
+    /* Sidebar hover/active uses optional console_sidebar_accent */
+    .admin-layout aside.fixed,
+    html[data-console-theme] aside.fixed {
+        --accent: var(--console-sidebar-accent-hsl, var(--accent));
+    }
+
+    .admin-layout header.sticky,
+    html[data-console-theme] header.sticky {
+        background: var(--console-navbar-bg) !important;
+        border-color: var(--console-navbar-border) !important;
+    }
+
+    /* Radix portals — shared semantic tokens */
+    html[data-console-theme] [data-radix-popper-content-wrapper] [role="menu"],
+    html[data-console-theme] [data-radix-popper-content-wrapper] [data-radix-menu-content],
+    html[data-console-theme] [role="dialog"],
+    html[data-console-theme] [data-radix-select-content],
+    html[data-console-theme] [data-radix-popper-content-wrapper] > div {
+        --primary: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --primary-foreground: var(--console-primary-foreground-hsl, 0 0% 100%);
+        --ring: var(--console-primary-hsl, 238.9 77.1% 60.6%);
+        --radius: var(--console-radius, 8px);
+    }
+
+    /* Dropdowns / selects (not modal content panel) */
+    html[data-console-theme] [data-radix-popper-content-wrapper] [role="menu"],
+    html[data-console-theme] [data-radix-popper-content-wrapper] [data-radix-menu-content],
+    html[data-console-theme] [data-radix-select-content],
+    html[data-console-theme] [data-radix-popper-content-wrapper] > div:not([role="dialog"]) {
+        background-color: var(--console-popper-bg) !important;
+        border-color: var(--console-popper-border) !important;
+        backdrop-filter: blur(var(--console-popper-blur, 16px)) !important;
+        -webkit-backdrop-filter: blur(var(--console-popper-blur, 16px)) !important;
+    }
+
+    /* Modal dialog panel */
+    html[data-console-theme] [role="dialog"] {
+        box-shadow: var(--console-shadow, none) !important;
+        border-width: var(--console-border-width, 1px) !important;
+    }
+
+    html[data-console-theme] [data-radix-dialog-overlay] {
+        background-color: rgba(0, 0, 0, var(--console-modal-backdrop-alpha, 0.5)) !important;
+        backdrop-filter: blur(var(--console-modal-backdrop-blur, 4px)) !important;
+    }
+
+    /* Button default variant overrides (advanced / global derived) */
+    html[data-console-theme][data-console-button-style="soft"] button[data-slot="button"][data-variant="default"]:not(:disabled) {
+        background-color: hsl(var(--primary) / 0.14) !important;
+        color: hsl(var(--primary)) !important;
+        border: 1px solid hsl(var(--primary) / 0.22) !important;
+    }
+
+    html[data-console-theme][data-console-button-style="soft"] button[data-slot="button"][data-variant="default"]:not(:disabled):hover {
+        background-color: hsl(var(--primary) / 0.22) !important;
+    }
+
+    html[data-console-theme][data-console-button-style="outline"] button[data-slot="button"][data-variant="default"]:not(:disabled) {
+        background-color: transparent !important;
+        color: hsl(var(--primary)) !important;
+        border: 1px solid hsl(var(--primary) / 0.45) !important;
+    }
+
+    html[data-console-theme][data-console-button-style="outline"] button[data-slot="button"][data-variant="default"]:not(:disabled):hover {
+        background-color: hsl(var(--primary) / 0.08) !important;
+    }
+
+    /* Icon stroke weight */
+    html[data-console-theme] svg.lucide,
+    html[data-console-theme] .lucide {
+        stroke-width: var(--console-icon-stroke, 2);
+    }
+
+
+    /* Dynamic Typography, Shadows, and Borders overrides */
+    .admin-layout, html[data-console-theme] {
+        font-family: var(--console-font-sans, ui-sans-serif, system-ui, sans-serif) !important;
+    }
+    
+    .admin-layout code, 
+    .admin-layout pre, 
+    .admin-layout kbd, 
+    .admin-layout samp,
+    html[data-console-theme] code,
+    html[data-console-theme] pre {
+        font-family: var(--console-font-mono, ui-monospace, SFMono-Regular, Consolas, monospace) !important;
+    }
+
+    .admin-layout .console-panel,
+    .admin-layout .console-stat-tile,
+    .admin-layout .console-toolbar,
+    html[data-console-theme] [data-radix-popper-content-wrapper] [role="menu"] {
+        box-shadow: var(--console-shadow, none) !important;
+        border-width: var(--console-border-width, 1px) !important;
+    }
+}
+
+/* Rich preset dropdown items */
+.console-rich-select-item {
+    @apply relative flex w-full cursor-default select-none items-start rounded-md py-2 pl-3 pr-9 text-sm outline-none;
+    @apply focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground;
+}
+
+.console-rich-select-item > span:first-child {
+    @apply absolute right-2 top-1/2 left-auto -translate-y-1/2 flex h-4 w-4 items-center justify-center;
+}
+
+.console-rich-select-content {
+    @apply max-h-[min(20rem,70vh)];
+}

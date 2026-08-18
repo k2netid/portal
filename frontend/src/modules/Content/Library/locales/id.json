@@ -1,0 +1,168 @@
+{
+    "navigation": {
+        "menu": {
+            "library": "Pustaka",
+            "tags": "Tag",
+            "customFields": "Bidang Kustom"
+        }
+    },
+    "tags": {
+        "actions": {
+            "delete": "Hapus",
+            "edit": "Edit",
+            "bulkDelete": "Hapus Tag",
+            "deleteTitle": "Hapus Tag"
+        },
+        "createNew": "Tag Baru",
+        "description": "Kelola tag konten",
+        "empty": "Tidak ada tag ditemukan",
+        "filters": {
+            "all": "Semua",
+            "unused": "Tidak Digunakan",
+            "usage": "Penggunaan",
+            "used": "Hanya Digunakan",
+            "type": "Tipe",
+            "allTypes": "Semua Tipe",
+            "content": "Konten",
+            "media": "Media",
+            "crm": "CRM"
+        },
+        "form": {
+            "cancel": "Batal",
+            "create": "Buat",
+            "createDescription": "Buat tag baru untuk mengelompokkan konten.",
+            "createTitle": "Buat Tag",
+            "description": "Deskripsi",
+            "descriptionPlaceholder": "Deskripsi tag",
+            "editDescription": "Perbarui informasi tag.",
+            "editTitle": "Edit Tag",
+            "name": "Nama",
+            "namePlaceholder": "Nama tag",
+            "saveError": "Gagal menyimpan tag",
+            "saving": "Menyimpan...",
+            "slug": "Slug",
+            "slugHelp": "Versi ramah URL",
+            "slugPlaceholder": "slug-tag",
+            "update": "Perbarui"
+        },
+        "loading": "Memuat tag...",
+        "messages": {
+            "deleteConfirm": "Apakah Anda yakin ingin menghapus \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+            "deleteError": "Gagal menghapus tag"
+        },
+        "search": "Cari tag...",
+        "stats": {
+            "total": "Total Tag",
+            "usage": "Total Penggunaan",
+            "used": "Tag Digunakan"
+        },
+        "table": {
+            "actions": "Aksi",
+            "description": "Deskripsi",
+            "name": "Nama",
+            "slug": "Slug",
+            "usage": "Penggunaan",
+            "type": "Tipe"
+        },
+        "title": "Tag",
+        "title_singular": "Tag"
+    },
+    "customFields": {
+        "description": "Kelola grup bidang yang dapat digunakan kembali dan bidang kustom untuk model konten Anda",
+        "create_field": "Bidang Baru",
+        "create_group": "Grup Bidang Baru",
+        "fields": {
+            "actions": {
+                "delete": "Hapus",
+                "edit": "Edit"
+            },
+            "confirm": {
+                "delete": "Apakah Anda yakin ingin menghapus bidang \"{label}\"?"
+            },
+            "empty": "Tidak ada bidang kustom ditemukan",
+            "messages": {
+                "delete_failed": "Gagal menghapus bidang",
+                "save_failed": "Gagal menyimpan bidang"
+            },
+            "modal": {
+                "cancel": "Batal",
+                "create": "Buat",
+                "default_label": "Nilai Default",
+                "default_placeholder": "Nilai default",
+                "group_label": "Grup Bidang",
+                "group_none": "Tidak Ada Grup",
+                "instructions_label": "Instruksi",
+                "instructions_placeholder": "Instruksi bidang untuk pengguna",
+                "label_label": "Label",
+                "label_placeholder": "Label bidang",
+                "name_help": "Pengenal bidang (snake_case)",
+                "name_label": "Nama",
+                "name_placeholder": "nama_bidang",
+                "options_help": "Nilai dipisahkan koma",
+                "options_label": "Opsi (untuk pilihan, radio, centang)",
+                "options_placeholder": "opsi1,opsi2,opsi3",
+                "required_label": "Wajib",
+                "saving": "Menyimpan...",
+                "searchable_label": "Dapat Dicari",
+                "title_create": "Buat Bidang Kustom",
+                "title_edit": "Edit Bidang Kustom",
+                "type_label": "Tipe",
+                "update": "Perbarui"
+            },
+            "search": "Cari bidang...",
+            "table": {
+                "actions": "Tindakan",
+                "group": "Grup",
+                "label": "Label",
+                "name": "Nama",
+                "type": "Tipe"
+            },
+            "title": "Bidang Kustom"
+        },
+        "groups": {
+            "actions": {
+                "delete": "Hapus",
+                "edit": "Edit"
+            },
+            "confirm": {
+                "delete": "Apakah Anda yakin ingin menghapus grup bidang \"{name}\"?"
+            },
+            "empty": "Tidak ada grup bidang ditemukan",
+            "messages": {
+                "delete_failed": "Gagal menghapus grup bidang",
+                "save_failed": "Gagal menyimpan grup bidang"
+            },
+            "modal": {
+                "attach_label": "Lampirkan Ke",
+                "attach_options": {
+                    "category": "Kategori",
+                    "content": "Konten",
+                    "media": "Media",
+                    "none": "Tidak Ada"
+                },
+                "cancel": "Batal",
+                "create": "Buat",
+                "description_label": "Deskripsi",
+                "description_placeholder": "Deskripsi grup bidang",
+                "name_label": "Nama",
+                "name_placeholder": "Nama grup bidang",
+                "saving": "Menyimpan...",
+                "title_create": "Buat Grup Bidang",
+                "title_edit": "Edit Grup Bidang",
+                "update": "Perbarui"
+            },
+            "table": {
+                "actions": "Tindakan",
+                "attached_to": "Terlampir Pada",
+                "fields": "Bidang",
+                "name": "Nama"
+            }
+        },
+        "tabs": {
+            "fields": "Bidang Kustom",
+            "groups": "Grup Bidang"
+        },
+        "title": "Bidang Kustom",
+        "loading": "Memuat..."
+    }
+}

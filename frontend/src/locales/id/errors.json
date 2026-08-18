@@ -1,0 +1,76 @@
+{
+    "403": {
+        "contactForm": "Formulir Kontak",
+        "description": "Silakan hubungi administrator jika Anda yakin ini adalah kesalahan.",
+        "loggedInAs": "Login sebagai:",
+        "login": "Login",
+        "message": "Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.",
+        "reason": "Alasan:",
+        "relogin": "Logout & Login Ulang",
+        "requiredPermissions": "Izin yang Diperlukan:",
+        "support": "Butuh bantuan? Hubungi administrator:",
+        "title": "Akses Ditolak"
+    },
+    "404": {
+        "back": "Kembali",
+        "description": "URL mungkin salah ketik atau halaman telah dipindahkan.",
+        "home": "Halaman Utama",
+        "message": "Maaf, halaman yang Anda cari tidak dapat ditemukan.",
+        "popular": "Halaman Populer:",
+        "searchPlaceholder": "Cari konten...",
+        "title": "Halaman Tidak Ditemukan"
+    },
+    "419": {
+        "concurrent": "Akun Anda telah terdeteksi melakukan login di perangkat atau browser lain. Sesi di perangkat ini demi keamanan otomatis dihentikan.",
+        "description": "Silakan muat ulang halaman atau login kembali untuk melanjutkan.",
+        "login": "Login Kembali",
+        "message": "Sesi Anda telah berakhir karena tidak ada aktivitas.",
+        "refresh": "Muat Ulang",
+        "timeout": "Sesi Anda telah berakhir karena tidak ada aktivitas dalam waktu yang cukup lama.",
+        "title": "Halaman Kedaluwarsa"
+    },
+    "429": {
+        "description": "Silakan coba lagi beberapa saat lagi atau hubungi administrator.",
+        "message": "Anda telah melakukan terlalu banyak permintaan dalam waktu singkat.",
+        "retryAfter": "Silakan coba lagi dalam {seconds} detik.",
+        "title": "Terlalu Banyak Permintaan"
+    },
+    "500": {
+        "api": "API",
+        "cache": "Cache",
+        "checkStatus": "Cek status server:",
+        "database": "Database",
+        "description": "Tim kami telah diberitahu dan sedang menangani masalah ini.",
+        "hideDetails": "Sembunyikan Detail Error",
+        "message": "Maaf, terjadi kesalahan pada server kami.",
+        "report": "Laporkan Masalah Ini",
+        "retry": "Coba Lagi",
+        "retrying": "Mencoba Ulang...",
+        "showDetails": "Tampilkan Detail Error",
+        "title": "Kesalahan Server"
+    },
+    "unknown": {
+        "title": "Terjadi kesalahan",
+        "message": "Terjadi kesalahan yang tidak terduga."
+    },
+    "modal": {
+        "footerCode": "Kode error:"
+    },
+    "maintenancePage": {
+        "adminBypass": "Bypass Admin",
+        "days": "Hari",
+        "hours": "Jam",
+        "mins": "Menit",
+        "secs": "Detik",
+        "footer": "Tim kami sedang bekerja di balik layar.",
+        "defaultTitle": "Segera Hadir",
+        "defaultMessage": "Kami sedang menyiapkan sesuatu yang menarik. Silakan kembali lagi nanti."
+    },
+    "forbidden": "Akses dilarang.",
+    "generic": "Terjadi kesalahan. Silakan coba lagi.",
+    "maintenance": "Sistem sedang dalam pemeliharaan.",
+    "notFound": "Sumber daya tidak ditemukan.",
+    "title": "Kesalahan",
+    "unauthorized": "Akses tidak sah.",
+    "validation": "Kesalahan validasi."
+}

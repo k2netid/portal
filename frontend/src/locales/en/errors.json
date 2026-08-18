@@ -1,0 +1,76 @@
+{
+    "403": {
+        "contactForm": "Contact Form",
+        "description": "Please contact the administrator if you believe this is a mistake.",
+        "loggedInAs": "Logged in as:",
+        "login": "Login",
+        "message": "Sorry, you do not have permission to access this page.",
+        "reason": "Reason:",
+        "relogin": "Logout & Relogin",
+        "requiredPermissions": "Required Permissions:",
+        "support": "Need help? Contact administrator:",
+        "title": "Access Denied"
+    },
+    "404": {
+        "back": "Go Back",
+        "description": "The URL might be misspelled or the page has been moved.",
+        "home": "Home Page",
+        "message": "Sorry, the page you are looking for could not be found.",
+        "popular": "Popular Pages",
+        "searchPlaceholder": "Search content...",
+        "title": "Page Not Found"
+    },
+    "419": {
+        "concurrent": "Your account has been detected logging in from another device or browser. This session has been automatically terminated for your security.",
+        "description": "Please refresh the page or log in again to continue.",
+        "login": "Login Again",
+        "message": "Your session has expired due to inactivity.",
+        "refresh": "Refresh Page",
+        "timeout": "Your session has expired due to inactivity for a significant amount of time.",
+        "title": "Page Expired"
+    },
+    "429": {
+        "description": "Please check back in a moment or contact administrator if you believe this is a mistake.",
+        "message": "You have made too many requests in a short period.",
+        "retryAfter": "Please try again in {seconds} seconds.",
+        "title": "Too Many Requests"
+    },
+    "500": {
+        "api": "API",
+        "cache": "Cache",
+        "checkStatus": "Check server status:",
+        "database": "Database",
+        "description": "Our team has been notified and is working on the issue.",
+        "hideDetails": "Hide Error Details",
+        "message": "Sorry, an error occurred on our server.",
+        "report": "Report This Issue",
+        "retry": "Try Again",
+        "retrying": "Retrying...",
+        "showDetails": "Show Error Details",
+        "title": "Server Error"
+    },
+    "unknown": {
+        "title": "Something went wrong",
+        "message": "An unexpected error occurred."
+    },
+    "modal": {
+        "footerCode": "Error Code:"
+    },
+    "maintenancePage": {
+        "adminBypass": "Admin Bypass",
+        "days": "Days",
+        "hours": "Hours",
+        "mins": "Mins",
+        "secs": "Secs",
+        "footer": "Our team is working hard behind the scenes.",
+        "defaultTitle": "Coming Soon",
+        "defaultMessage": "We are currently working on something awesome. Please check back later."
+    },
+    "forbidden": "Access forbidden.",
+    "generic": "An error occurred. Please try again.",
+    "maintenance": "The system is under maintenance.",
+    "notFound": "Resource not found.",
+    "title": "Error",
+    "unauthorized": "Unauthorized access.",
+    "validation": "Validation error."
+}

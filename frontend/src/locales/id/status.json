@@ -1,0 +1,20 @@
+{
+    "active": "Aktif",
+    "all": "Semua",
+    "connected": "Terhubung",
+    "disconnected": "Terputus",
+    "failed": "Gagal",
+    "not_configured": "Belum dikonfigurasi",
+    "online": "Online",
+    "success": "Berhasil",
+    "planned": "Direncanakan",
+    "in_progress": "Berjalan",
+    "completed": "Selesai",
+    "cancelled": "Dibatalkan",
+    "pending": "Menunggu",
+    "reviewed": "Ditinjau",
+    "actioned": "Diproses",
+    "rejected": "Ditolak",
+    "disabled": "Nonaktif",
+    "enabled": "Aktif"
+}

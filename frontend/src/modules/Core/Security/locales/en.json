@@ -1,0 +1,595 @@
+{
+  "alerts": {
+    "hide": "Hide",
+    "severity": {
+      "critical": "Critical",
+      "info": "Info",
+      "warning": "Warning"
+    },
+    "show": "Show Details",
+    "title": "Security Alerts",
+    "types": {
+      "brute_force": "Brute Force Attack",
+      "failed_login": "Multiple Failed Logins",
+      "ip_blocked": "IP Blocked",
+      "multiple_ip_login": "Login from Multiple IPs"
+    }
+  },
+  "blocklist": {
+    "actions": {
+      "moveToWhitelist": "Move to Whitelist",
+      "remove": "Remove",
+      "unblock": "Unblock"
+    },
+    "addIp": "Add IP to Blocklist",
+    "description": "Blocked IP addresses cannot access the system",
+    "empty": "No blocked IP addresses",
+    "reason": "Reason (optional)",
+    "table": {
+      "actions": "Actions",
+      "createdBy": "Created By",
+      "date": "Date",
+      "ip": "IP Address",
+      "reason": "Reason"
+    },
+    "title": "IP Blocklist"
+  },
+  "bulkActions": {
+    "blockSelected": "Block Selected",
+    "removeSelected": "Remove Selected",
+    "selected": "{count} selected",
+    "unblockSelected": "Unblock Selected",
+    "whitelistSelected": "Add to Whitelist"
+  },
+  "cspReports": {
+    "actions": {
+      "markFalsePositive": "Mark False Positive",
+      "markReviewed": "Mark Reviewed"
+    },
+    "confirmBulkAction": "Are you sure you want to {action} {count} report(s)?",
+    "bulkActionSuccess": "Updated {count} report(s)",
+    "description": "Monitor Content Security Policy violations from browser reports",
+    "empty": "No CSP violation reports found. Your security policies are holding strong! 🛡️",
+    "filters": {
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "directive": "Directive",
+      "directivePlaceholder": "e.g. script-src",
+      "status": "Status"
+    },
+    "stats": {
+      "last24h": "Last 24h",
+      "new": "New",
+      "topViolation": "Top Violation",
+      "total": "Total Reports"
+    },
+    "status": {
+      "falsePositive": "False Positive",
+      "new": "New",
+      "reviewed": "Reviewed"
+    },
+    "table": {
+      "blockedUri": "Blocked URI",
+      "date": "Date",
+      "directive": "Directive",
+      "documentUri": "Document URI",
+      "ip": "IP Address",
+      "status": "Status"
+    },
+    "title": "CSP Violation Reports"
+  },
+  "fileIntegrity": {
+    "actions": {
+      "runAudit": "Run Audit",
+      "runInitial": "Run Initial Audit",
+      "sync": "Sync Data"
+    },
+    "description": "Detect unauthorized modifications to critical system files",
+    "noData": "No integrity data available. Run an audit to start monitoring.",
+    "stats": {
+      "criticalFiles": "Critical system & config files",
+      "lastAudit": "Last Audit",
+      "monitoredFiles": "Monitored Files",
+      "never": "Never",
+      "noHistory": "No audit history",
+      "secure": "Secure",
+      "systemStatus": "System Status",
+      "tampered": "Tampered",
+      "violationsDetected": "{count} violations detected"
+    },
+    "title": "File Integrity Monitoring",
+    "violations": {
+      "empty": "All files are legitimate",
+      "emptyDesc": "No unauthorized modifications detected in monitored application files.",
+      "table": {
+        "detected": "Detected Hash",
+        "expected": "Expected Hash",
+        "fileNotFound": "File not found",
+        "path": "File Path",
+        "type": "Type"
+      },
+      "title": "Integrity Violations",
+      "types": {
+        "missing": "Missing",
+        "modified": "Modified",
+        "new": "New/Unknown"
+      }
+    },
+    "warning": {
+      "description": "Unauthorized file modifications detected. This could indicate a server compromise or unauthorized code changes. Please verify the source of these changes immediately.",
+      "title": "Critical Security Warning"
+    },
+    "resync": {
+      "dialogTitle": "Authorize Integrity Update",
+      "dialogDescription": "Enter an authorized reason for the audit trail. The system will update the file integrity baseline.",
+      "reasonLabel": "Reason for change (required)",
+      "reasonPlaceholder": "e.g. Deploy hotfix + security middleware update on 2026-04-22 by infra team.",
+      "clearHistoryLabel": "Clear old integrity violation records",
+      "clearHistoryDesc": "Recommended after an authorized update so the dashboard reflects the new baseline.",
+      "cancel": "Cancel",
+      "submit": "Authorize & Re-sync",
+      "defaultReason": "Authorized update: deploy/config change validated on {timestamp}",
+      "reasonMinLength": "Audit reason must be at least 8 characters",
+      "auditStarted": "File integrity check started",
+      "success": "Integrity baseline authorized and old records cleared",
+      "rateLimitActive": "Rate limit active. Try again in {seconds} seconds.",
+      "tooManyRequests": "Too many resync requests. Wait {seconds} seconds and try again."
+    }
+  },
+  "health": {
+    "title": "Security Health Score"
+  },
+  "kpi": {
+    "passRate": "Drill Pass Rate (30d)",
+    "drills": "drills",
+    "avgRto": "Avg RTO",
+    "period": "Period",
+    "avgRpo": "Avg RPO",
+    "targetNote": "Lower is better",
+    "noiseRate": "Detection Noise Rate",
+    "infoSignals": "info",
+    "criticalSignals": "critical"
+  },
+  "notifications": {
+    "test": "Test Alert",
+    "test_sent": "Test notification sent! Check your Telegram."
+  },
+  "ipManagement": {
+    "block": {
+      "button": "Block",
+      "label": "Block IP Address",
+      "placeholder": "192.168.1.1"
+    },
+    "check": {
+      "button": "Check",
+      "label": "Check IP Status",
+      "placeholder": "192.168.1.1"
+    },
+    "status": {
+      "allowed": "Allowed",
+      "blocked": "Blocked",
+      "label": "IP Status"
+    },
+    "title": "IP Management",
+    "unblock": {
+      "button": "Unblock",
+      "label": "Unblock IP / Clear Rate Limit",
+      "placeholder": "192.168.1.1"
+    }
+  },
+  "logs": {
+    "actions": {
+      "blockIp": "Block IP"
+    },
+    "all": "All Events",
+    "blockedIp": "Blocked IP",
+    "empty": "No security logs found",
+    "eventTypes": {
+      "account_locked": "Account Locked",
+      "force_logout": "Force Logout",
+      "ip_blocked": "IP Blocked",
+      "ip_blocked_permanent": "IP Blocked Permanently",
+      "ip_blocked_temp": "IP Blocked Temporarily",
+      "ip_unblocked": "IP Unblocked",
+      "ip_whitelist_removed": "Removed from Whitelist",
+      "ip_whitelisted": "IP Whitelisted",
+      "login_blocked": "Login Blocked",
+      "login_failed": "Login Failed",
+      "login_success": "Login Success",
+      "malicious_extension_blocked": "Extension Blocked",
+      "malicious_scanner_blocked": "Scanner Blocked",
+      "session_invalidated": "Session Invalidated",
+      "session_limit_reached": "Session Limit Reached",
+      "shield_failed": "Shield Verification Failed",
+      "shield_honeypot": "Honeypot Triggered",
+      "shield_verified": "Shield Verified",
+      "suspicious_activity": "Suspicious Activity"
+    },
+    "failedLogin": "Failed Login",
+    "loading": "Loading...",
+    "search": "Search logs...",
+    "suspiciousActivity": "Suspicious Activity",
+    "table": {
+      "actions": "Actions",
+      "date": "Date",
+      "details": "Details",
+      "event": "Event",
+      "ip": "IP Address",
+      "user": "User"
+    },
+    "title": "Security Journal",
+    "clearShieldConfirm": "Are you sure you want to clear all shield logs?",
+    "shieldCleared": "Shield logs cleared successfully",
+    "selectAll": "Select all logs",
+    "selectRow": "Select log {ip}",
+    "filterLabel": "Filter security logs"
+  },
+  "maintenance": {
+    "activate": "Activate Maintenance Mode",
+    "deactivate": "End Maintenance & Re-sync",
+    "description": "Temporarily pause security modules during deployments and testing",
+    "duration": {
+      "15min": "15 Minutes",
+      "1hour": "1 Hour",
+      "2hours": "2 Hours",
+      "30min": "30 Minutes",
+      "4hours": "4 Hours",
+      "label": "Duration"
+    },
+    "modules": {
+      "title": "Modules",
+      "all": "All Modules",
+      "autotune": "Auto-Tune",
+      "integrity": "File Integrity",
+      "notifications": "Security Notifications",
+      "scanner": "Scanner Protection",
+      "shield": "Bot Shield (PoW)",
+      "threatintel": "Threat Intelligence",
+      "waf": "WAF (Firewall)"
+    },
+    "notifications": {
+      "activated": "Maintenance mode activated for {duration} minutes",
+      "deactivated": "Maintenance mode ended. Baselines re-synced."
+    },
+    "status": {
+      "active": "Maintenance Mode Active",
+      "autoExpired": "Auto-expired",
+      "expiresIn": "Expires in {time}",
+      "inactive": "All Systems Active"
+    },
+    "title": "Security Maintenance Mode",
+    "warnings": {
+      "active": "Security modules are paused. The system is more vulnerable during this period.",
+      "autoResync": "File integrity baselines will be automatically regenerated when maintenance ends."
+    }
+  },
+  "messages": {
+    "blockFailed": "Failed to block IP address",
+    "blockSuccess": "IP address blocked successfully",
+    "bulkBlockSuccess": "{blocked} IP addresses blocked, {skipped} skipped",
+    "bulkRemoveSuccess": "{count} IP addresses removed",
+    "bulkUnblockSuccess": "{count} IP addresses unblocked",
+    "bulkWhitelistSuccess": "{count} IP addresses added to whitelist",
+    "cannotBlockWhitelisted": "Cannot block whitelisted IP address",
+    "checkFailed": "Failed to check IP status",
+    "confirmBlock": "Are you sure you want to block IP address {ip}?",
+    "confirmBulkBlock": "Are you sure you want to block {count} IP address(es)?",
+    "confirmBulkRemoveWhitelist": "Remove {count} IP address(es) from whitelist?",
+    "confirmBulkUnblock": "Are you sure you want to unblock {count} IP address(es)?",
+    "confirmRemoveWhitelist": "Remove IP address {ip} from whitelist?",
+    "confirmUnblock": "Are you sure you want to unblock IP address {ip} and clear its rate limit?",
+    "confirmWhitelist": "Add IP address {ip} to whitelist?",
+    "enterIp": "Please enter an IP address",
+    "removeWhitelistFailed": "Failed to remove IP address from whitelist",
+    "removeWhitelistSuccess": "IP address removed from whitelist",
+    "unblockFailed": "Failed to unblock IP address",
+    "unblockSuccess": "IP address unblocked and rate limit cleared successfully",
+    "whitelistFailed": "Failed to add IP address to whitelist",
+    "whitelistSuccess": "IP address added to whitelist successfully",
+    "bulkWhitelistRemoveSuccess": "IPs removed from whitelist",
+    "movedToWhitelist": "IP moved to whitelist",
+    "whitelistRemoveSuccess": "IP removed from whitelist"
+  },
+  "packages": {
+    "description": "Complete list of all Composer and NPM dependencies",
+    "empty": "No packages found in project lock files",
+    "filters": {
+      "status": "Security Status"
+    },
+    "showAll": "Show All Packages",
+    "stats": {
+      "composer": "Composer",
+      "npm": "NPM",
+      "secure": "Secure",
+      "total": "Total Packages",
+      "vulnerable": "Vulnerable"
+    },
+    "status": {
+      "secure": "Secure",
+      "vulnerable": "Vulnerable"
+    },
+    "table": {
+      "package": "Package",
+      "source": "Source",
+      "status": "Status",
+      "version": "Version"
+    },
+    "title": "All Packages"
+  },
+  "reasons": {
+    "autoTuned": "Auto-tuned: threat score {score}",
+    "honeypotTriggered": "Honeypot trap triggered: {path}",
+    "maliciousScanner": "Malicious bot scanner: {path}",
+    "manual": "Manually blocked",
+    "threatIntelHighRisk": "Threat Intel: High risk IP ({score}/100)",
+    "wafViolation": "WAF Violation: {match}"
+  },
+  "settings": {
+    "activityRetention": {
+      "description": "Activity journal entries older than this period will be automatically deleted.",
+      "label": "Activity Log Retention"
+    },
+    "autotuneFrequency": {
+      "daily": "Daily (1:00 AM)",
+      "description": "How often the security auto-tuning engine analyzes and adjusts protection parameters.",
+      "label": "Auto-Tune Frequency",
+      "weekly": "Weekly (Sunday 2:00 AM)"
+    },
+    "description": "Configure security operation parameters and retention policies",
+    "loginRetention": {
+      "description": "Login history records older than this period will be automatically deleted.",
+      "label": "Login History Retention"
+    },
+    "retentionDays": {
+      "description": "Security logs older than this period will be automatically deleted. Minimum 7 days, maximum 365 days.",
+      "label": "Security Log Retention",
+      "unit": "days"
+    },
+    "saved": "Security settings saved successfully",
+    "title": "Security Settings"
+  },
+  "shield": {
+    "challenge": {
+      "message": "We are securing your session to protect against automated threats. This will only take a moment.",
+      "retry": "Try Again",
+      "status": {
+        "analyzing": "Analyzing security metrics...",
+        "failed": "Verification failed. Retrying...",
+        "finalizing": "Finalizing verification...",
+        "initializing": "Initializing security check...",
+        "processing": "processing",
+        "verified": "Verified! Continuing...",
+        "verifying": "Verifying connection..."
+      },
+      "steps": {
+        "analyze": "Analyze",
+        "solve": "Solve",
+        "verify": "Verify"
+      },
+      "title": "Verifying Connection"
+    },
+    "description": "Monitor Proof-of-Work challenge activity and automated bot detections",
+    "stats": {
+      "difficulty": "Current Difficulty",
+      "extensionsBlocked": "Extensions Blocked",
+      "failures": "Verification Failures",
+      "honeypot": "Honeypot Triggers",
+      "scannersBlocked": "Scanners Blocked",
+      "verifications": "Total Verifications"
+    },
+    "table": {
+      "date": "Date",
+      "ip": "IP Address",
+      "status": "Status",
+      "userAgent": "User Agent"
+    },
+    "title": "Bot Shield Journal"
+  },
+  "slowQueries": {
+    "description": "Monitor database queries that exceed performance thresholds",
+    "empty": "No slow queries found. Database performance is optimal! 🚀",
+    "filters": {
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "minDuration": "Min Duration (ms)",
+      "minDurationPlaceholder": "1000",
+      "route": "Route",
+      "routePlaceholder": "Search by route path..."
+    },
+    "stats": {
+      "avgDuration": "Avg Duration",
+      "maxDuration": "Max Duration",
+      "today": "Today",
+      "total": "Total Logged"
+    },
+    "table": {
+      "date": "Date",
+      "duration": "Duration",
+      "query": "Query",
+      "route": "Route",
+      "user": "User"
+    },
+    "title": "Slow Query Analysis"
+  },
+  "statistics": {
+    "blockedIps": "Blocked IPs",
+    "events": "Security Events",
+    "failedLogins": "Failed Logins",
+    "last24h": "Last 24h"
+  },
+  "tabs": {
+    "blocklist": "Blocklist",
+    "cspReports": "CSP Reports",
+    "fileIntegrity": "File Integrity",
+    "overview": "Overview",
+    "settings": "Settings",
+    "shieldJournal": "Shield Journal",
+    "slowQueries": "Slow Queries",
+    "threatAnalysis": "Threat Analysis",
+    "vulnerabilities": "Vulnerabilities",
+    "whitelist": "Whitelist"
+  },
+  "threatAnalysis": {
+    "autoTune": {
+      "changes": {
+        "blockedIps": "Blocked {count} high-risk IPs",
+        "newScannerPaths": "{count} new scanner paths detected",
+        "scannerThreshold": "Scanner threshold tightened to {value}"
+      },
+      "description": "Security parameter adjustments made by the automated tuning engine",
+      "detected": "{count} Detected",
+      "ips": "IPs",
+      "noChanges": "No changes applied",
+      "risk": "Risk",
+      "table": {
+        "campaigns": "Campaigns",
+        "changes": "Changes",
+        "date": "Date",
+        "stats": "Stats"
+      },
+      "title": "Auto-Tune History"
+    },
+    "campaigns": {
+      "coordinated": "Coordinated effort",
+      "description": "Correlation of multiple events sharing identical patterns",
+      "detected": "{count} Detected",
+      "empty": "No active attack campaigns detected",
+      "highRisk": "High Risk",
+      "ipsCount": "{count} IPs",
+      "title": "Attack Campaigns"
+    },
+    "description": "Correlation of security events to detect coordinated attack patterns",
+    "highRiskIps": {
+      "actions": {
+        "block": "Block IP"
+      },
+      "critical": "Critical",
+      "description": "Individual IPs with high accumulated threat scores",
+      "empty": "No high-risk IPs flagged currently",
+      "events": "Events",
+      "flagged": "{count} Flagged",
+      "score": "Score",
+      "title": "High Risk IPs",
+      "warning": "Warning"
+    },
+    "stats": {
+      "detectedCampaigns": "Detected Campaigns",
+      "highRiskIps": "High Risk IPs",
+      "totalEvents": "Total Security Events",
+      "uniqueIps": "Unique IPs Analyzed"
+    },
+    "loadFailed": "Could not load threat analysis. Check your connection or permissions, then refresh.",
+    "title": "Security Threat Analysis"
+  },
+  "title": "Security Management",
+  "twoFactor": {
+    "globallyDisabledDesc": "The administrator has disabled Two-Factor Authentication for the entire system.",
+    "globallyDisabledTitle": "2FA is Globally Disabled"
+  },
+  "vulnerabilities": {
+    "auditCompleted": "Dependency audit completed successfully",
+    "description": "Security audit results for Composer and NPM packages",
+    "empty": "No vulnerabilities found. Your dependencies are secure! 🛡️",
+    "filters": {
+      "package": "Package",
+      "searchPackage": "Search package...",
+      "severity": "Severity",
+      "source": "Source",
+      "status": "Status"
+    },
+    "runAudit": "Run Audit",
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "low": "Low",
+      "medium": "Medium"
+    },
+    "source": {
+      "composer": "Composer",
+      "npm": "NPM"
+    },
+    "stats": {
+      "critical": "Critical",
+      "high": "High",
+      "low": "Low",
+      "medium": "Medium",
+      "total": "Total"
+    },
+    "status": {
+      "acknowledged": "Acknowledged",
+      "ignored": "Ignored",
+      "new": "New",
+      "patched": "Patched"
+    },
+    "table": {
+      "actions": "Actions",
+      "cve": "CVE",
+      "package": "Package",
+      "severity": "Severity",
+      "source": "Source",
+      "status": "Status",
+      "version": "Version"
+    },
+    "title": "Dependency Vulnerabilities"
+  },
+  "whitelist": {
+    "actions": {
+      "remove": "Remove"
+    },
+    "addIp": "Add IP to Whitelist",
+    "description": "Whitelisted IP addresses are never blocked",
+    "empty": "No whitelisted IP addresses",
+    "reason": "Reason (optional)",
+    "table": {
+      "actions": "Actions",
+      "createdBy": "Created By",
+      "date": "Date",
+      "ip": "IP Address",
+      "reason": "Reason"
+    },
+    "title": "IP Whitelist"
+  },
+  "trends": {
+    "title": "Attack Trends (24h)",
+    "events": "Events"
+  },
+  "subtitle": "Security logs, CSP reports, and threat monitoring.",
+  "abac": {
+    "title": "ABAC Policies",
+    "subtitle": "Attribute-based access rules evaluated after RBAC.",
+    "create": "New policy",
+    "empty": "No ABAC policies yet. Create one to enforce KYC, IP, or custom attributes.",
+    "loading": "Loading policies…",
+    "confirmDelete": "Delete policy \"{name}\"?",
+    "form": {
+      "createTitle": "Create ABAC policy",
+      "editTitle": "Edit ABAC policy",
+      "description": "Conditions must be a JSON array of attribute rules.",
+      "name": "Name",
+      "descriptionField": "Description",
+      "target": "Target resource",
+      "action": "Action",
+      "conditions": "Conditions (JSON)",
+      "active": "Policy is active",
+      "save": "Save policy"
+    },
+    "deleteTitle": "Delete policy?",
+    "columns": {
+      "name": "Name",
+      "target": "Target",
+      "action": "Action",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "siem": {
+    "tab": "SIEM export",
+    "title": "SIEM export log",
+    "subtitle": "Security events written to siem_export.log (syslog channel also active).",
+    "empty": "No SIEM export entries yet. Security events will appear after activity."
+  }
+}

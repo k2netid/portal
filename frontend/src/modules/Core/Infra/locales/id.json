@@ -1,0 +1,142 @@
+{
+    "navigation": {
+        "menu": {
+            "devTools": "Integrasi & Dev"
+        }
+    },
+    "webhooks": {
+        "actions": {
+            "delete": "Hapus",
+            "edit": "Edit",
+            "test": "Tes"
+        },
+        "confirm": {
+            "delete": "Apakah Anda yakin ingin menghapus webhook \"{name}\"?"
+        },
+        "create": "Webhook Baru",
+        "empty": "Tidak ada webhook ditemukan",
+        "events": {
+            "comment": {
+                "approved": "Komentar Disetujui",
+                "created": "Komentar Dibuat"
+            },
+            "content": {
+                "created": "Konten Dibuat",
+                "deleted": "Konten Dihapus",
+                "updated": "Konten Diperbarui"
+            },
+            "user": {
+                "created": "Pengguna Dibuat",
+                "updated": "Pengguna Diperbarui"
+            }
+        },
+        "loading": "Memuat...",
+        "messages": {
+            "delete_failed": "Gagal menghapus webhook",
+            "save_failed": "Gagal menyimpan webhook",
+            "test_failed": "Gagal mengetes webhook",
+            "test_success": "Tes webhook berhasil dikirim"
+        },
+        "modal": {
+            "active_label": "Aktif",
+            "cancel": "Batal",
+            "create": "Buat",
+            "events_label": "Kejadian",
+            "name_label": "Nama",
+            "name_placeholder": "Nama webhook",
+            "saving": "Menyimpan...",
+            "secret_label": "Kunci Rahasia",
+            "secret_placeholder": "Kunci rahasia opsional untuk penandatanganan",
+            "title_create": "Buat Webhook",
+            "title_edit": "Edit Webhook",
+            "update": "Perbarui",
+            "url_label": "URL",
+            "url_placeholder": "https://contoh.com/webhook"
+        },
+        "search": "Cari webhook...",
+        "stats": {
+            "active": "Aktif",
+            "failed_calls": "Panggilan Gagal",
+            "total": "Total Webhook",
+            "total_calls": "Total Panggilan"
+        },
+        "table": {
+            "actions": "Tindakan",
+            "calls": "Panggilan",
+            "events": "Kejadian",
+            "name": "Nama",
+            "status": "Status",
+            "url": "URL"
+        },
+        "title": "Webhook",
+        "subtitle": "Webhook HTTP keluar dan statistik pengiriman."
+    },
+    "plugins": {
+        "actions": {
+            "activate": "Aktifkan",
+            "close": "Tutup",
+            "deactivate": "Nonaktifkan",
+            "settings": "Pengaturan"
+        },
+        "empty": "Tidak ada plugin ditemukan",
+        "loading": "Memuat...",
+        "messages": {
+            "failed_fetch": "Gagal memuat daftar plugin",
+            "failed_activate": "Gagal mengaktifkan plugin",
+            "failed_deactivate": "Gagal menonaktifkan plugin",
+            "activated": "Plugin diaktifkan",
+            "deactivated": "Plugin dinonaktifkan"
+        },
+        "modal": {
+            "close": "Tutup",
+            "settings_placeholder": "Pengaturan plugin akan dimuat di sini",
+            "settings_title": "Pengaturan: {name}"
+        },
+        "status": {
+            "active": "Aktif",
+            "inactive": "Tidak Aktif"
+        },
+        "table": {
+            "actions": "Tindakan",
+            "name": "Nama",
+            "status": "Status",
+            "version": "Versi"
+        },
+        "title": "Plugin",
+        "subtitle": "Plugin terpasang, versi, dan status aktivasi.",
+        "themeBlocks": {
+            "title": "Slot blok tema",
+            "hint": "Pilih lokasi tampil plugin di situs publik (tema Janari).",
+            "noSlots": "Tidak ada slot tema.",
+            "save": "Simpan pengaturan",
+            "saved": "Pengaturan plugin disimpan.",
+            "saveFailed": "Gagal menyimpan pengaturan plugin."
+        }
+    },
+    "cck": {
+        "title": "Tipe konten (CCK)",
+        "subtitle": "Pembangun skema visual untuk endpoint REST dinamis",
+        "newType": "Tipe konten baru",
+        "editType": "Ubah tipe konten",
+        "empty": "Belum ada tipe konten.",
+        "fields": "Field",
+        "addField": "Tambah field",
+        "validationPreview": "Aturan validasi",
+        "save": "Simpan skema",
+        "delete": "Hapus",
+        "apiHint": "API data: /api/v1/dynamic/{slug}",
+        "messages": {
+            "loadFailed": "Gagal memuat",
+            "created": "Tipe konten dibuat.",
+            "saved": "Tipe konten disimpan.",
+            "saveFailed": "Gagal menyimpan"
+        }
+    },
+    "dynamic": {
+        "record": {
+            "newTitle": "Record baru",
+            "editTitle": "Ubah record",
+            "subtitle": "Buat atau perbarui baris untuk tipe konten ini."
+        }
+    }
+}

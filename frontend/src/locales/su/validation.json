@@ -1,0 +1,17 @@
+{
+    "alphaNum": "{field} ngan kénging dieusi ku aksara sareng angka",
+    "confirmed": "Sandi teu cocog",
+    "date": "Format tanggal teu valid",
+    "email": "Format email teu valid",
+    "image": "Berkas kedah mangrupi gambar",
+    "invalid": "{field} teu valid",
+    "max": "{field} maksimal {max} karakter",
+    "maxSize": "Ukuran berkas maksimal {size}",
+    "mimes": "Tipe berkas teu diwidian",
+    "min": "{field} minimal {min} karakter",
+    "numeric": "{field} kedah mangrupi angka",
+    "required": "{field} wajib dieusi",
+    "unique": "{field} parantos aya",
+    "url": "Format URL teu valid",
+    "slug": "Kedah mangrupi slug URL anu valid"
+}

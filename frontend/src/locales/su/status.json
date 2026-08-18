@@ -1,0 +1,20 @@
+{
+    "active": "Aktip",
+    "all": "Sadaya",
+    "connected": "Kahubung",
+    "disconnected": "Teu Kahubung",
+    "failed": "Gagal",
+    "not_configured": "Teu acan dikonfigurasi",
+    "online": "Online",
+    "success": "Hasil",
+    "planned": "Direncanakeun",
+    "in_progress": "Nuju Jalan",
+    "completed": "Rengse",
+    "cancelled": "Dibatalkeun",
+    "pending": "Antosan",
+    "reviewed": "Ditinjau",
+    "actioned": "Diprosés",
+    "rejected": "Ditolak",
+    "disabled": "Teu Aktip",
+    "enabled": "Aktip"
+}

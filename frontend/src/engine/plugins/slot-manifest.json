@@ -1,0 +1,15 @@
+{
+  "after_header": {
+    "label": "Below site header",
+    "maxBlocks": 5,
+    "context": ["route", "locale"]
+  },
+  "before_footer": {
+    "label": "Above site footer",
+    "maxBlocks": 5
+  },
+  "after_post_content": {
+    "label": "After article body",
+    "context": ["post_id", "post_type"]
+  }
+}

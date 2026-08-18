@@ -1,0 +1,60 @@
+{
+    "name": "jejakawan",
+    "version": "1.0.0-beta.1",
+    "private": true,
+    "engines": {
+        "node": ">=22.12.0"
+    },
+    "scripts": {
+        "dev": "bash scripts/use-node22.sh npm --prefix frontend run dev",
+        "build": "bash scripts/use-node22.sh npm --prefix frontend run build",
+        "sync": "npm run deploy:assets:sync",
+        "deploy": "npm run deploy:assets:full",
+        "deploy:assets": "npm run deploy:assets:full",
+        "deploy:assets:full": "bash scripts/sync-frontend-assets-to-backend.sh",
+        "agent:verify": "npm run quality:frontend && npm run quality:backend",
+        "agent:verify:quick": "npm run quality:frontend",
+        "test:backend": "cd backend && php artisan test",
+        "test:backend:coverage": "cd backend && php artisan test --coverage",
+        "test:e2e:list": "npm --prefix frontend run test:e2e:list",
+        "test:e2e:smoke": "npm --prefix frontend run test:e2e:smoke",
+        "test:e2e:auth": "npm --prefix frontend run test:e2e:auth",
+        "format:backend": "cd backend && ./vendor/bin/pint",
+        "quality:frontend": "bash scripts/use-node22.sh npm --prefix frontend run quality:frontend",
+        "quality:backend": "cd backend && ./vendor/bin/pint --test && composer run quality",
+        "release": "bash scripts/bundle.sh",
+        "install:server": "sudo bash scripts/install.sh",
+        "redeploy": "bash scripts/redeploy-hub.sh",
+        "verify:hosted-pilot": "bash scripts/verify-hosted-pilot-gate.sh staging",
+        "verify:payment-env": "bash scripts/verify-platform-payment-env.sh staging",
+        "merge:staging-payment-env": "bash scripts/merge-staging-payment-env.sh",
+        "verify:hosted-pilot:full": "bash scripts/merge-staging-payment-env.sh && bash scripts/verify-hosted-pilot-gate.sh staging",
+        "deploy:assets:sync": "SYNC_ONLY=1 bash scripts/sync-frontend-assets-to-backend.sh"
+    },
+    "x-agent-guidelines": {
+        "purpose": "Standard instructions for AI/coding agents when creating or updating this project.",
+        "scope": "Jejakawan product; repo ja-control-plane (control plane + hosted). Repo ja-platform (customer app, edu vertical) is separate \u2014 do not modify unless asked.",
+        "when_creating_or_updating_project": [
+            "Read docs/AGENT_START_HERE.md and docs/product/control-plane-and-editions.md first, then docs/.agent-rules.md, docs/architectural-status.md, docs/blueprint/*, and docs/plan/module-communication-standard.md. Use only paths listed in docs/README.md.",
+            "For UI/UX changes read docs/blueprint/03-ui-ux-design-system.md and docs/blueprint/04-ui-ux-page-patterns.md.",
+            "Use branch-based workflow; avoid direct edits on main.",
+            "Prefer package managers for dependency changes (npm/composer), avoid manual lockfile edits.",
+            "Keep changes minimal and focused; avoid unrelated refactors.",
+            "Do not commit secrets or environment-specific credentials.",
+            "After edits, run quality gates before proposing merge."
+        ],
+        "required_validation_before_pr": [
+            "npm run quality:frontend",
+            "npm run quality:backend"
+        ],
+        "optional_validation": [
+            "npm run quality:all",
+            "npm run test:e2e:list"
+        ],
+        "handover_checklist": [
+            "Summarize risky files touched and behavior changes.",
+            "Include test evidence (commands + pass/fail).",
+            "Ensure working tree is clean before final handover."
+        ]
+    }
+}

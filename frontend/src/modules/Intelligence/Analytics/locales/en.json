@@ -1,0 +1,47 @@
+{
+    "apply": "Apply",
+    "charts": {
+        "browsers": "Browsers",
+        "devices": "Devices",
+        "realtime": "Real-time Activity",
+        "topContent": "Top Content",
+        "topCountries": "Top Countries",
+        "topPages": "Top Pages",
+        "topReferrers": "Top Referrers",
+        "visits": "Visits",
+        "visitsOverTime": "Visits Over Time"
+    },
+    "export": {
+        "button": "Export",
+        "events": "Export Events",
+        "exporting": "Exporting...",
+        "sessions": "Export Sessions",
+        "success": "Data export started successfully",
+        "visits": "Export Visits"
+    },
+    "labels": {
+        "visits": "visits"
+    },
+    "loading": "Loading analytics...",
+    "noData": "No data available",
+    "overview": {
+        "bounceRate": "Bounce Rate",
+        "totalSessions": "Total Sessions",
+        "totalVisits": "Total Visits",
+        "uniqueVisitors": "Unique Visitors"
+    },
+    "realtime": {
+        "activePages": "Active Pages",
+        "activeSessions": "Active Sessions",
+        "visitsLastHour": "Visits (Last Hour)"
+    },
+    "sections": {
+        "content": "Top Content",
+        "geography": "Geography",
+        "technology": "Technology",
+        "traffic": "Traffic"
+    },
+    "subtitle": "Track and analyze your website performance",
+    "title": "Analytics",
+    "to": "to"
+}

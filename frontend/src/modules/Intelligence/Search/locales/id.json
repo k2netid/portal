@@ -1,0 +1,54 @@
+{
+    "navigation": {
+        "menu": {
+            "insights": "Wawasan",
+            "analytics": "Analitik",
+            "search": "Pencarian"
+        }
+    },
+    "empty": "Tidak ada hasil",
+    "filterBy": "Filter menurut tipe:",
+    "initial": "Masukkan kata kunci untuk memulai",
+    "placeholder": "Cari...",
+    "resultsFor": "Hasil untuk:",
+    "searching": "Mencari...",
+    "title": "Hasil Pencarian",
+    "types": {
+        "category": "Kategori",
+        "content": "Konten",
+        "media": "Media",
+        "page": "Halaman",
+        "tag": "Tag",
+        "post": "Posting",
+        "user": "Pengguna"
+    },
+    "ops": {
+        "title": "Kesehatan indeks",
+        "subtitle": "Perkiraan lag vs konten dan taksonomi terbit (ports).",
+        "refresh": "Muat ulang",
+        "reindex": "Bangun ulang indeks",
+        "reindexing": "Mengindeks ulang…",
+        "loading": "Memuat kesehatan indeks…",
+        "inSync": "Indeks sinkron",
+        "lagDetected": "Lag terdeteksi ({count} item)",
+        "checkedMeta": "Diperiksa {time} · {total} baris di indeks",
+        "table": {
+            "resource": "Sumber daya",
+            "source": "Sumber",
+            "indexed": "Terindeks",
+            "lag": "Lag"
+        },
+        "cliHint": "CLI: php artisan search:index-health · php artisan search:reindex",
+        "reindexDone": "Pembangunan ulang indeks pencarian selesai.",
+        "loadFailed": "Gagal memuat kesehatan indeks",
+        "reindexFailed": "Gagal mengindeks ulang"
+    },
+    "hub": {
+        "title": "Pencarian & indeks",
+        "subtitle": "Jelajahi pencarian terpadu atau pantau kesehatan indeks.",
+        "tabs": {
+            "search": "Pencarian",
+            "ops": "Kesehatan indeks"
+        }
+    }
+}

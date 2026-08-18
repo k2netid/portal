@@ -1,0 +1,3031 @@
+{
+  "contentPreview": {
+    "title": "Pratinjau Konten",
+    "publish": "Terbitkan",
+    "byPrefix": "Oleh",
+    "devices": {
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "mobile": "Mobile"
+    }
+  },
+  "app": {
+    "consoleTitle": "Konsol Jejakawan"
+  },
+  "routes": {
+    "maintenance": "Sedang Pemeliharaan",
+    "install": "Wizard Instalasi",
+    "appError": "Kesalahan Aplikasi",
+    "dashboardError": "Kesalahan Dasbor",
+    "navigationError": "Terjadi kesalahan kritis saat navigasi.",
+    "dashboardNavigationError": "Terjadi kesalahan kritis saat navigasi dasbor."
+  },
+  "systemOverlay": {
+    "waitingConnection": "Menunggu koneksi...",
+    "forceReload": "Muat Ulang Paksa",
+    "titles": {
+      "maintenance": "Sistem Diperbarui",
+      "chunkError": "Versi Baru Tersedia",
+      "connectionInterrupted": "Koneksi Terputus"
+    },
+    "messages": {
+      "maintenance": "Kami sedang menerapkan peningkatan. Halaman akan dimuat ulang otomatis saat siap.",
+      "chunkError": "Versi baru aplikasi telah diterapkan. Memperbarui cache lokal Anda...",
+      "connectionInterrupted": "Koneksi ke server terputus. Mencoba menyambung kembali..."
+    }
+  },
+  "navigation": {
+    "sections": {
+      "usersAccess": "Tim",
+      "monitoring": "Pemantauan",
+      "infrastructure": "Infrastruktur",
+      "developer": "Dev",
+      "advanced": "Lanjutan"
+    },
+    "menu": {
+      "users": "Pengguna",
+      "roles": "Peran & Izin",
+      "journalDashboard": "Dasbor Jurnal",
+      "activityJournal": "Jurnal Aktivitas",
+      "securityJournal": "Jurnal Keamanan",
+      "systemJournal": "Jurnal Sistem",
+      "accessJournal": "Riwayat Akses",
+      "systemInfo": "Info Sistem",
+      "settings": "Pengaturan",
+      "systemNotifications": "Notifikasi",
+      "backups": "Cadangan",
+      "fileManager": "Manajer File",
+      "redis": "Cache Redis",
+      "scheduledTasks": "Tugas Terjadwal",
+      "languages": "Bahasa",
+      "webhooks": "Webhooks",
+      "plugins": "Plugin",
+      "extensions": "Ekstensi & App Store",
+      "pulse": "Pulse",
+      "consoleAppearance": "Tampilan konsol",
+      "oauthClients": "OAuth Clients",
+      "identityIntegrations": "Identitas & Integrasi",
+      "kycReviews": "Review KYC",
+      "integrations": "Integrations"
+    }
+  },
+  "auth": {
+    "captcha": {
+      "answer": "?",
+      "dragSlider": "Geser slider ke target",
+      "enterCode": "Masukkan kode yang ditampilkan",
+      "error": "Jawaban salah",
+      "invalid": "Captcha tidak valid. Silakan coba lagi.",
+      "newQuestion": "Soal baru",
+      "refresh": "Dapatkan kode baru",
+      "required": "Silakan selesaikan verifikasi captcha",
+      "slideToVerify": "Geser untuk memverifikasi Anda manusia",
+      "solveQuestion": "Selesaikan soal matematika",
+      "tryAgain": "Coba lagi - geser ke posisi yang ditandai",
+      "typeCode": "Ketik kode di sini"
+    },
+    "forgotPassword": {
+      "backToLogin": "Kembali ke login",
+      "submit": "Kirim Tautan Reset",
+      "subtitle": "Masukkan email Anda untuk menerima tautan reset",
+      "success": "Tautan reset kata sandi telah dikirim ke email Anda",
+      "title": "Lupa Kata Sandi"
+    },
+    "login": {
+      "emailPlaceholder": "Masukkan email Anda",
+      "forgotPassword": "Lupa kata sandi?",
+      "hero_subtitle": "Solusi terbaik untuk mengelola kehadiran digital Anda dengan kecepatan, keamanan, dan keanggunan.",
+      "noAccount": "Belum punya akun?",
+      "or": "Atau lanjutkan dengan",
+      "passwordPlaceholder": "Masukkan kata sandi Anda",
+      "register": "Daftar sekarang",
+      "rememberMe": "Ingat saya",
+      "submit": "Masuk",
+      "subtitle": "Masukkan kredensial untuk mengakses akun Anda",
+      "title": "Masuk ke Akun Anda",
+      "welcomeBack": "Selamat datang kembali"
+    },
+    "logout": {
+      "confirm": "Apakah Anda yakin ingin keluar?",
+      "success": "Berhasil keluar"
+    },
+    "messages": {
+      "error": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi.",
+      "failed": "Login gagal. Mohon periksa kredensial Anda.",
+      "retryDetails": "Silakan coba lagi dalam {time}.",
+      "success": "Login berhasil!",
+      "timeout": "Sesi Anda telah berakhir karena tidak ada aktivitas. Silakan login kembali untuk melanjutkan.",
+      "tooManyAttempts": "Terlalu Banyak Percobaan"
+    },
+    "register": {
+      "alreadyHaveAccount": "Sudah punya akun?",
+      "confirmPasswordPlaceholder": "Konfirmasi kata sandi Anda",
+      "emailPlaceholder": "Masukkan alamat email Anda",
+      "haveAccount": "Sudah punya akun?",
+      "hero_subtitle": "Rasakan ekosistem manajemen konten paling kuat yang pernah dibangun.",
+      "login": "Masuk",
+      "namePlaceholder": "Masukkan nama lengkap Anda",
+      "passwordPlaceholder": "Buat kata sandi yang kuat",
+      "privacy_link": "Privasi",
+      "submit": "Buat Akun",
+      "subtitle": "Mulai perjalanan Anda bersama kami",
+      "terms": "Dengan mendaftar, Anda menyetujui Syarat dan Kebijakan Privasi kami",
+      "terms_and": "dan",
+      "terms_link": "Syarat",
+      "terms_prefix": "Saya setuju dengan",
+      "title": "Buat Akun"
+    },
+    "resetPassword": {
+      "confirmPassword": "Konfirmasi Kata Sandi Baru",
+      "newPassword": "Kata Sandi Baru",
+      "submit": "Reset Kata Sandi",
+      "success": "Kata sandi berhasil direset",
+      "title": "Reset Kata Sandi",
+      "tokenLabel": "Token Reset",
+      "tokenPlaceholder": "Tempel token reset dari email",
+      "subtitle": "Pilih kata sandi baru untuk akun Anda"
+    },
+    "retry": {
+      "minutes": "{n} menit",
+      "minutesSeconds": "{minutes}m {seconds}d",
+      "moment": "sebentar",
+      "seconds": "{n} detik"
+    },
+    "twoFactor": {
+      "codeHelp": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+      "codeLabel": "Kode Verifikasi",
+      "codePlaceholder": "Masukkan kode 6 digit",
+      "codesRemaining": "kode tersisa",
+      "confirmDisable": "Konfirmasi Nonaktifkan",
+      "confirmRegen": "Buat Ulang Kode",
+      "disable": "Nonaktifkan 2FA",
+      "disableConfirm": "Untuk menonaktifkan autentikasi dua faktor, masukkan kata sandi Anda untuk konfirmasi.",
+      "disableTitle": "Nonaktifkan 2FA",
+      "enable": "Aktifkan 2FA",
+      "enabledAt": "Diaktifkan pada",
+      "enabledDesc": "Akun Anda dilindungi dengan autentikasi dua faktor.",
+      "enabledTitle": "2FA Aktif",
+      "enterCode": "Kode Verifikasi",
+      "generateQR": "Buat Kode QR",
+      "invalidCode": "Kode verifikasi tidak valid. Silakan coba lagi.",
+      "messages": {
+        "copySuccess": "Kunci rahasia berhasil disalin ke papan klip",
+        "disableSuccess": "Autentikasi dua faktor berhasil dinonaktifkan",
+        "enableSuccess": "Autentikasi dua faktor berhasil diaktifkan",
+        "generateFailed": "Gagal membuat rahasia 2FA",
+        "regenerateSuccess": "Kode pemulihan berhasil diperbarui",
+        "validationCodeRequired": "Masukkan kode verifikasi 6 digit",
+        "validationErrorTitle": "Kesalahan Validasi"
+      },
+      "recoveryDesc": "Gunakan kode ini jika Anda kehilangan akses ke aplikasi autentikator Anda.",
+      "recoveryTitle": "Kode Pemulihan",
+      "regenDesc": "Membuat ulang kode akan membatalkan kode Anda saat ini. Masukkan kata sandi untuk melanjutkan.",
+      "regenTitle": "Buat Ulang Kode Pemulihan",
+      "regenerate": "Buat Ulang",
+      "requiredDesc": "Kebijakan keamanan akun Anda mewajibkan 2FA diaktifkan.",
+      "requiredTitle": "Butuh Persiapan",
+      "resend": "Kirim ulang kode",
+      "saveWarning": "Simpan kode ini sekarang. Kode tidak akan ditampilkan lagi.",
+      "scanQR": "Pindai kode QR ini dengan aplikasi Anda",
+      "setupDesc": "Tambahkan lapisan keamanan ekstra ke akun Anda dengan mewajibkan kode verifikasi dari aplikasi autentikator Anda.",
+      "setupTitle": "Siapkan Autentikasi Dua Faktor",
+      "submit": "Verifikasi",
+      "subtitle": "Masukkan kode dari aplikasi autentikator Anda",
+      "title": "Autentikasi Dua Faktor",
+      "useRecovery": "Gunakan kode pemulihan",
+      "verify": "Verifikasi",
+      "verifying": "Memverifikasi..."
+    },
+    "verifyEmail": {
+      "cooldown": "Kirim ulang dalam {seconds}d",
+      "description": "Kami telah mengirimkan tautan verifikasi ke alamat email Anda. Silakan periksa kotak masuk dan klik tautan untuk memverifikasi akun Anda.",
+      "failed": "Verifikasi gagal. Silakan coba lagi.",
+      "redirecting": "Mengalihkan ke halaman login...",
+      "resendButton": "Kirim Ulang Email Verifikasi",
+      "resendPrompt": "Tidak menerima email? Periksa folder spam atau klik tombol di bawah untuk mengirim ulang.",
+      "resendSuccess": "Email verifikasi terkirim! Silakan periksa kotak masuk Anda.",
+      "sending": "Mengirim...",
+      "success": "Email berhasil diverifikasi!",
+      "title": "Verifikasi Email Anda",
+      "tokenMissing": "Tautan verifikasi tidak valid."
+    }
+  },
+  "users": {
+    "title_singular": "Pengguna",
+    "unknown": "Pengguna Tidak Dikenal",
+    "actions": {
+      "forceLogout": "Logout Paksa",
+      "verify": "Verifikasi Email"
+    },
+    "allRoles": "Semua Peran",
+    "createNew": "Buat Pengguna Baru",
+    "empty": "Tidak ada pengguna ditemukan.",
+    "filters": {
+      "all": "Semua",
+      "unverifiedOnly": "Belum Terverifikasi Saja",
+      "verification": "Status Verifikasi",
+      "verifiedOnly": "Terverifikasi Saja"
+    },
+    "form": {
+      "avatar": "Avatar",
+      "avatarPreview": "Pratinjau Avatar",
+      "bio": "Bio",
+      "email": "Email",
+      "emailPlaceholder": "user{'@'}teladan.com",
+      "hints": {
+        "passwordUpdate": "Biarkan kosong jika tidak ingin mengubah kata sandi"
+      },
+      "location": "Lokasi",
+      "name": "Nama",
+      "namePlaceholder": "Nama lengkap",
+      "password": "Kata Sandi",
+      "passwordConfirmation": "Konfirmasi Kata Sandi",
+      "phone": "Telepon",
+      "placeholders": {
+        "bio": "Biografi pengguna",
+        "email": "user{'@'}teladan.com",
+        "location": "Kota, Negara",
+        "name": "Nama lengkap",
+        "password": "Minimal 8 karakter",
+        "passwordConfirmation": "Ulangi kata sandi",
+        "passwordCurrent": "Kata sandi",
+        "phone": "+6281234567890",
+        "website": "https://contoh.com"
+      },
+      "removeAvatar": "Hapus Avatar",
+      "roles": "Peran",
+      "selectAvatar": "Pilih Avatar",
+      "titleCreate": "Buat Pengguna",
+      "titleEdit": "Ubah Pengguna",
+      "verified": "Terverifikasi",
+      "website": "Situs Web"
+    },
+    "loading": "Memuat pengguna...",
+    "messages": {
+      "bulkForceLogoutConfirm": "Apakah Anda yakin ingin melogout paksa {count} pengguna yang dipilih?",
+      "bulkVerifyConfirm": "Apakah Anda yakin ingin memverifikasi {count} pengguna yang dipilih?",
+      "cannotDeleteLastSuperAdmin": "Tidak dapat menghapus satu-satunya akun super-admin",
+      "cannotManageSuperAdmin": "Anda tidak dapat mengelola akun super-admin",
+      "createFailed": "Gagal membuat pengguna",
+      "create_success": "Pengguna berhasil dibuat",
+      "deleteConfirm": "Apakah Anda yakin ingin menghapus pengguna \"{name}\"?",
+      "deleteFailed": "Gagal menghapus pengguna",
+      "fetchFailed": "Gagal memuat data pengguna",
+      "forceLogoutConfirm": "Apakah Anda yakin ingin melogout paksa pengguna \"{name}\" dari semua perangkat?",
+      "forceLogoutFailed": "Gagal melogout paksa pengguna",
+      "forceLogoutSessions": "Pengguna berhasil dilogout dari {count} perangkat",
+      "forceLogoutSuccess": "Berhasil Logout Paksa",
+      "hierarchy_restriction": "Anda hanya dapat mengelola pengguna dengan peringkat lebih rendah dari Anda",
+      "passwordRequired": "Kata sandi wajib diisi untuk pengguna baru",
+      "roleRequired": "Harap pilih setidaknya satu peran",
+      "saveFailed": "Gagal menyimpan pengguna",
+      "saveSuccess": "Pengguna berhasil disimpan",
+      "updateFailed": "Gagal memperbarui pengguna",
+      "update_success": "Pengguna berhasil diperbarui",
+      "verifySuccess": "Pengguna berhasil diverifikasi",
+      "restoreSuccess": "Pengguna berhasil dipulihkan",
+      "forceDeleteSuccess": "Pengguna dihapus permanen",
+      "bulkActionSuccess": "Aksi massal berhasil"
+    },
+    "confirm": {
+      "restoreTitle": "Pulihkan Pengguna",
+      "restoreMessage": "Yakin ingin memulihkan {name}?",
+      "restoreConfirm": "Pulihkan",
+      "forceDeleteTitle": "Hapus Pengguna Permanen",
+      "forceDeleteMessage": "Yakin ingin menghapus PERMANEN {name}? Tindakan ini tidak dapat dibatalkan.",
+      "forceDeleteConfirm": "Hapus Paksa"
+    },
+    "modals": {
+      "user": {
+        "avatar": "Avatar",
+        "bio": "Bio",
+        "bioPlaceholder": "Biografi pengguna",
+        "email": "Email",
+        "emailPlaceholder": "user{'@'}teladan.com",
+        "loadingRoles": "Memuat peran...",
+        "location": "Lokasi",
+        "locationPlaceholder": "Kota, Negara",
+        "name": "Nama",
+        "namePlaceholder": "Nama lengkap",
+        "noRoles": "Tidak ada peran tersedia",
+        "password": "Kata Sandi",
+        "passwordHint": "Biarkan kosong saat mengubah untuk tetap menggunakan kata sandi saat ini",
+        "passwordPlaceholder": "Minimal 8 karakter",
+        "phone": "Telepon",
+        "phonePlaceholder": "+6281234567890",
+        "removeAvatar": "Hapus Avatar",
+        "roles": "Peran",
+        "saving": "Menyimpan...",
+        "selectAvatar": "Pilih Avatar",
+        "titleCreate": "Buat Pengguna",
+        "titleEdit": "Ubah Pengguna",
+        "website": "Situs Web",
+        "websitePlaceholder": "https://contoh.com"
+      }
+    },
+    "search": "Cari pengguna berdasarkan nama, email atau telepon...",
+    "stats": {
+      "active": "Aktif (30 Hari)",
+      "recent": "Baru (7 Hari)",
+      "total": "Total Pengguna",
+      "unverified": "Belum Diverifikasi",
+      "verified": "Terverifikasi"
+    },
+    "status": {
+      "never": "Belum pernah",
+      "noRoles": "Tidak ada peran yang ditetapkan",
+      "unverified": "Belum Terverifikasi",
+      "verified": "Terverifikasi"
+    },
+    "subtitle": "Kelola pengguna, peran, dan izin akses dalam sistem.",
+    "subtitleCreate": "Isi informasi di bawah ini untuk membuat pengguna baru.",
+    "subtitleEdit": "Perbarui informasi pengguna untuk menyesuaikan profil dan akses.",
+    "table": {
+      "actions": "Aksi",
+      "email": "Email",
+      "lastLogin": "Login Terakhir",
+      "roles": "Peran",
+      "user": "Pengguna"
+    },
+    "title": "Pengguna"
+  },
+  "roles": {
+    "actions": {
+      "delete": "Hapus",
+      "duplicate": "Duplikasi",
+      "edit": "Edit"
+    },
+    "create": "Buat Peran",
+    "edit": "Edit Peran",
+    "form": {
+      "cancel": "Batal",
+      "deselectAll": "Batalkan Semua",
+      "name": "Nama Peran",
+      "namePlaceholder": "Masukkan nama peran",
+      "save": "Simpan",
+      "saving": "Menyimpan...",
+      "selectAll": "Pilih Semua"
+    },
+    "list": {
+      "empty": "Tidak ada peran ditemukan",
+      "loading": "Memuat peran...",
+      "more": "+{count} lagi",
+      "permissionsCount": "{count} izin",
+      "usersCount": "Pengguna: {count}"
+    },
+    "messages": {
+      "deleteConfirm": "Hapus peran \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+      "deleteFailed": "Gagal menghapus peran",
+      "deleteSuccess": "Peran berhasil dihapus",
+      "duplicateFailed": "Gagal menduplikasi peran",
+      "enterName": "Mohon masukkan nama peran",
+      "fetchFailed": "Gagal memuat peran",
+      "saveFailed": "Gagal menyimpan peran",
+      "saveSuccess": "Peran berhasil disimpan"
+    },
+    "permissions": "Izin",
+    "subtitle": "Kelola peran pengguna dan izin akses mereka",
+    "title": "Peran & Izin",
+    "title_singular": "Peran",
+    "unknown": "Peran Tidak Dikenal",
+    "panel": {
+      "clearSelection": "Bersihkan Pilihan",
+      "comparison": {
+        "exit": "Keluar Perbandingan",
+        "mode": "Mode Perbandingan",
+        "subtitle": "Matriks Perbandingan Izin",
+        "syncing": "Menyinkronkan {count} Peran",
+        "title": "Matriks Perbandingan Peran"
+      },
+      "create": {
+        "title": "Buat Peran Baru"
+      },
+      "duplicate": "Duplikat peran",
+      "edit": {
+        "mode": "Mode Edit"
+      },
+      "identity": "Identitas Peran",
+      "liveEditing": "Penyuntingan Langsung",
+      "matrix": {
+        "available": "{count} izin tersedia",
+        "collapseAll": "Tutup Semua",
+        "deselectCategory": "Batalkan Kategori",
+        "expandAll": "Buka Semua",
+        "selectCategory": "Pilih Kategori",
+        "title": "Matriks Izin"
+      },
+      "placeholder": "Pilih peran untuk mulai mengelola izin",
+      "reset": "Reset Perubahan",
+      "save": "Simpan Konfigurasi",
+      "saving": {
+        "subtitle": "Menerapkan izin di seluruh peran...",
+        "title": "Menyimpan Konfigurasi Keamanan"
+      },
+      "synced": "Konfigurasi sinkron",
+      "unsavedChanges": "Deteksi perubahan belum disimpan",
+      "welcome": {
+        "description": "Klik pada peran di sidebar untuk mengedit izinnya, atau pilih beberapa peran menggunakan kotak centang untuk membandingkannya secara berdampingan.",
+        "title": "Panel manajemen peran"
+      }
+    }
+  },
+  "notifications": {
+    "actions": {
+      "delete": "Hapus",
+      "markAllRead": "Tandai Semua Dibaca",
+      "markRead": "Tandai Dibaca"
+    },
+    "confirm": {
+      "delete": "Apakah Anda yakin ingin menghapus notifikasi ini?"
+    },
+    "filters": {
+      "allTypes": "Semua Tipe",
+      "readStatus": {
+        "all": "Semua",
+        "read": "Dibaca",
+        "unread": "Belum Dibaca"
+      },
+      "search": "Cari notifikasi...",
+      "type": {
+        "error": "Error",
+        "info": "Info",
+        "success": "Sukses",
+        "warning": "Peringatan"
+      }
+    },
+    "messages": {
+      "deleteFailed": "Gagal menghapus notifikasi",
+      "deleteSuccess": "Notifikasi berhasil dihapus",
+      "empty": "Tidak ada notifikasi ditemukan",
+      "loading": "Memuat...",
+      "markAllReadFailed": "Gagal menandai semua notifikasi",
+      "markAllReadSuccess": "Semua notifikasi ditandai sudah dibaca",
+      "markReadFailed": "Gagal menandai notifikasi",
+      "markReadSuccess": "Notifikasi ditandai sudah dibaca"
+    },
+    "title": "Notifikasi",
+    "subtitle": "Kotak masuk notifikasi sistem dan akun."
+  },
+  "appStore": {
+    "title": "Ekstensi & Galeri Aplikasi",
+    "subtitle": "Kelola modul dinamis dan plugin plug-and-play secara aman dengan gerbang sandbox.",
+    "searchPlaceholder": "Cari berdasarkan nama, slug, atau pembuat...",
+    "scaffolderBtn": "Scaffolder",
+    "gitBtn": "Integrasi Git",
+    "uploadBtn": "Unggah ZIP",
+    "all": "Semua",
+    "modules": "Modul",
+    "plugins": "Plugin",
+    "author": "Pembuat",
+    "license": "Lisensi",
+    "core": "Core Sistem",
+    "locked": "Core Terkunci",
+    "activate": "Aktifkan",
+    "deactivate": "Nonaktifkan",
+    "uninstall": "Copot Pemasangan",
+    "configure": "Konfigurasi",
+    "configureModal": {
+      "settingsSchema": "Skema Pengaturan Dinamis"
+    },
+    "defaultAuthor": "Jejakawan",
+    "card": {
+      "statusActive": "Aktif",
+      "statusInactive": "Nonaktif",
+      "licenseCommunity": "Community",
+      "licensePro": "Lisensi PRO",
+      "licenseProPlus": "PRO+ Enterprise",
+      "licenseMit": "MIT",
+      "licenseCommercialPro": "Commercial PRO",
+      "licenseEnterprise": "Enterprise Proprietary",
+      "coreInfrastructure": "Infrastruktur Core Base",
+      "mandatoryService": "Layanan Wajib",
+      "featureActive": "Aktif",
+      "operationalExtensions": "Ekstensi Operasional",
+      "activeToggleable": "Dapat Diaktifkan",
+      "featureDescCoreFallback": "Infrastruktur inti sistem yang wajib.",
+      "featureDescEmpty": "Tidak ada deskripsi."
+    },
+    "constituentFeatures": "Daftar Fitur Bawaan",
+    "noFeatures": "Tidak ada fitur terdaftar.",
+    "noExtensions": "Ekstensi tidak ditemukan",
+    "noExtensionsSub": "Coba cari dengan kata kunci lain atau unggah ZIP baru untuk memasangnya.",
+    "yes": "Ya",
+    "no": "Tidak",
+    "page": "Halaman",
+    "next": "Berikutnya",
+    "prev": "Sebelumnya",
+    "showing": "Menampilkan",
+    "of": "dari",
+    "loading": "Memindai ekstensi sistem...",
+    "uploadTitle": "Unggah ZIP Ekstensi",
+    "sandboxNoticeTitle": "Pemindai Sandbox Aktif",
+    "sandboxNoticeDesc": "Semua file PHP di dalam berkas ZIP akan dipindai secara real-time dari perintah sistem terlarang (exec, eval, shell_exec) sebelum diekstraksi.",
+    "dragDropLabel": "Seret & lepas file ZIP di sini, atau klik untuk memilih",
+    "manifestNotice": "Paket ZIP harus berisi file manifest.json",
+    "cancel": "Batal",
+    "installing": "Memindai Keamanan & Mengekstrak...",
+    "installBtn": "Pasang Ekstensi",
+    "configTitle": "Konfigurasi Pengaturan",
+    "configDesc": "Edit variabel pengaturan yang disimpan dalam database untuk paket ini.",
+    "saveBtn": "Simpan Pengaturan",
+    "gitTitle": "Integrasi Repositori Git",
+    "gitDesc": "Tarik dan klon repositori ekstensi Git privat/publik secara dinamis ke dalam Jejakawan!",
+    "repoUrl": "URL Repositori",
+    "gitNotice": "Integrasi tarikan dinamis Git memerlukan konfigurasi token SSH. Fitur ini saat ini berjalan di bawah konsol simulasi dry-run.",
+    "gitCloning": "Mengkloning...",
+    "gitCloneBtn": "Klon & Pasang",
+    "understood": "Dimengerti",
+    "messages": {
+      "featureToggled": "Fitur {name} telah {status}!",
+      "featureToggleFailed": "Gagal memperbarui status fitur.",
+      "featureToggleError": "Gagal mengubah status fitur.",
+      "invalidJson": "Struktur JSON tidak valid. Periksa formatnya.",
+      "settingsSaved": "Parameter konfigurasi berhasil diperbarui!",
+      "settingsSaveFailed": "Gagal menyimpan pengaturan.",
+      "gitCloneSuccess": "Plugin berhasil diklon dan dipasang dari Git!",
+      "gitCloneFailed": "Gagal mengklon ekstensi.",
+      "gitCloneSecurityFailed": "Gerbang keamanan: Kata kunci terlarang atau validasi tanda tangan Git gagal!",
+      "loadFailed": "Gagal memuat daftar ekstensi.",
+      "toggleConfirmTitleActivate": "Aktifkan {name}?",
+      "toggleConfirmTitleDeactivate": "Nonaktifkan {name}?",
+      "toggleConfirmMessageActivate": "Apakah Anda yakin ingin mengaktifkan {name}? Ini akan menjalankan semua migrasi skema database secara dinamis.",
+      "toggleConfirmMessageDeactivate": "Apakah Anda yakin ingin menonaktifkan {name}? Fitur akan segera tidak tersedia.",
+      "toggleSuccessActivated": "{name} berhasil diaktifkan!",
+      "toggleSuccessDeactivated": "{name} berhasil dinonaktifkan!",
+      "toggleFailed": "Gagal {action} ekstensi.",
+      "toggleError": "Kesalahan saat melakukan aksi: {action}",
+      "uninstallConfirmTitle": "Copot Ekstensi?",
+      "uninstallConfirmMessage": "Apakah Anda yakin ingin mencopot ekstensi ini sepenuhnya? Ini akan MENGHAPUS PERMANEN semua folder kode kustom dan aset file di disk! Tindakan ini tidak dapat dibatalkan.",
+      "uninstallConfirmText": "Copot & Hapus File",
+      "uninstallSuccess": "Ekstensi berhasil dihapus dan dibersihkan!",
+      "uninstallFailed": "Gagal mencopot ekstensi.",
+      "uploadSuccess": "Plugin dinamis berhasil dipasang! Pemindaian sandbox lulus.",
+      "uploadFailed": "Gagal memasang ZIP.",
+      "uploadSecurityFailed": "Gerbang keamanan: Kata kunci terlarang atau kode eksekusi perintah terdeteksi!",
+      "redirectingTo": "Mengalihkan ke konfigurasi {name}..."
+    },
+    "git": {
+      "repoUrlPlaceholder": "https://github.com/username/ja-plugin-telegram.git"
+    },
+    "scaffolder": {
+      "title": "DeveloperKit Scaffolder",
+      "fields": {
+        "pluginName": "Nama Plugin",
+        "pluginSlug": "Plugin Slug",
+        "author": "Author",
+        "version": "Versi",
+        "description": "Deskripsi"
+      },
+      "placeholders": {
+        "pluginName": "My Telegram Bot",
+        "pluginSlug": "my-telegram-bot",
+        "author": "Jejakawan",
+        "version": "1.0.0",
+        "description": "Plugin boilerplate kustom yang dihasilkan otomatis.",
+        "routeUri": "/api/v1/my-endpoint",
+        "routeAction": "MyController@index",
+        "menuTitle": "Judul Menu",
+        "menuRoute": "/dash/my-route",
+        "icon": "ikon"
+      },
+      "installLocal": {
+        "title": "Pasang Langsung ke Server Lokal",
+        "description": "Jika diaktifkan, extension akan langsung terpasang di backend/extensions/<slug>/"
+      },
+      "routes": {
+        "title": "Dynamic API Routes",
+        "add": "Tambah Rute",
+        "empty": "Belum ada rute API kustom terdaftar."
+      },
+      "menus": {
+        "title": "Dashboard Sidebar Menus",
+        "add": "Tambah Menu",
+        "empty": "Belum ada menu dashboard terdaftar.",
+        "groups": {
+          "academic": "Academic",
+          "Jejakawan": "Jejakawan",
+          "system": "System"
+        }
+      },
+      "generating": "Generasi Kode Boilerplate...",
+      "submit": "Scaffold & Package",
+      "defaultAuthor": "DeveloperKit",
+      "scaffoldFailed": "Gagal melakukan scaffolding.",
+      "installedSuccess": "Plugin berhasil di-scaffold dan dipasang!",
+      "downloadSuccess": "ZIP boilerplate berhasil dibuat dan diunduh!"
+    },
+    "descriptions": {
+      "system": "Pengaturan core sistem, perizinan pengguna (RBAC), log aktivitas pulse, dan lokalisasi terjemahan.",
+      "security": "Perisai keamanan enterprise kokoh, dilengkapi Otentikasi 2FA, rate limit firewall, honeypot, dan pengecekan integritas file.",
+      "analytics": "Audit lalu lintas pengunjung berkinerja tinggi, dasbor statistik, dan pelacak event interaksi.",
+      "infra": "Operasi kritikal: manajemen Redis cache, penjadwal cron otomatis, dan backup database.",
+      "ai": "Asisten kecerdasan buatan (AI Copilot) didukung model Gemini untuk auto-translate dan kreasi konten pintar.",
+      "media": "Manajer media pusat dengan drag-and-drop upload, struktur folder, dan pemotong gambar terintegrasi.",
+      "Jejakawan": "Mesin penerbitan konten premium dengan autosave draft, moderasi komentar, sitemap SEO, dan template tata letak.",
+      "forms": "Desainer formulir dinamis serbaguna dengan mesin validator dan ekspor repons excel.",
+      "layout": "Kustomisasi tata letak widget halaman depan dan pengelolaan blok seksi.",
+      "library": "Sirkulasi perpustakaan buku pintar, katalogisasi digital, dan pelacak rekam medis UKS.",
+      "newsletter": "Automasi broadcast email kampanye pemasaran dan pelacakan langganan newsletter.",
+      "search": "Mesin pencarian indeks teks penuh berkecepatan tinggi secara global.",
+      "member": "Pendaftaran keanggotaan dan paket berlangganan premium khusus.",
+      "fallback": "Modul sistem dinamis untuk mendukung fitur-fitur modular platform."
+    }
+  },
+  "system": {
+    "backups": {
+      "actions": {
+        "delete": "Hapus Cadangan",
+        "restore": "Pulihkan Cadangan"
+      },
+      "confirm": {
+        "delete": "Apakah Anda yakin ingin menghapus cadangan \"{name}\"?",
+        "restore": "Apakah Anda yakin ingin memulihkan cadangan \"{name}\"? Ini akan menggantikan semua data saat ini.",
+        "restore_warning": "Tindakan ini tidak dapat dibatalkan. Apakah Anda benar-benar yakin?"
+      },
+      "create": "Buat Cadangan",
+      "creating": "Membuat...",
+      "description": "Kelola cadangan sistem dan titik pemulihan",
+      "empty": "Tidak ada cadangan ditemukan",
+      "loading": "Memuat...",
+      "messages": {
+        "created": "Cadangan berhasil dibuat",
+        "failed_create": "Gagal membuat cadangan",
+        "failed_download": "Gagal mengunduh cadangan",
+        "failed_restore": "Gagal memulihkan cadangan",
+        "failed_save": "Gagal menyimpan jadwal",
+        "restored": "Cadangan berhasil dipulihkan. Silakan refresh halaman.",
+        "saved": "Jadwal berhasil disimpan"
+      },
+      "schedule": {
+        "configure": "Konfigurasi",
+        "days": "hari",
+        "frequencies": {
+          "daily": "Harian",
+          "monthly": "Bulanan",
+          "weekly": "Mingguan"
+        },
+        "frequency": "Frekuensi",
+        "modal": {
+          "cancel": "Batal",
+          "enable": "Aktifkan cadangan otomatis",
+          "max": "Makimal Cadangan",
+          "save": "Simpan",
+          "saving": "Menyimpan...",
+          "title": "Pengaturan Jadwal Cadangan"
+        },
+        "retention": "Retensi",
+        "status": "Status",
+        "time": "Waktu",
+        "title": "Jadwal Cadangan"
+      },
+      "search": "Cari cadangan...",
+      "stats": {
+        "auto": "Cadangan Otomatis",
+        "disabled": "Tidak Aktif",
+        "enabled": "Aktif",
+        "last": "Cadangan Terakhir",
+        "never": "Belum Pernah",
+        "size": "Total Ukuran",
+        "total": "Total Cadangan"
+      },
+      "table": {
+        "actions": "Aksi",
+        "created": "Dibuat",
+        "delete": "Hapus",
+        "download": "Unduh",
+        "name": "Nama",
+        "restore": "Pulihkan",
+        "size": "Ukuran",
+        "password": "Kata sandi",
+        "showPassword": "Tampilkan kata sandi",
+        "hidePassword": "Sembunyikan kata sandi"
+      },
+      "title": "Cadangan"
+    },
+    "info": {
+      "cache": {
+        "active": "Aktif",
+        "inactive": "Tidak aktif",
+        "clear": "Bersihkan Cache",
+        "clearing": "Membersihkan...",
+        "failed": "Gagal membersihkan cache",
+        "manage": "Kelola Cache",
+        "success": "Cache berhasil dibersihkan",
+        "title": "Status Cache"
+      },
+      "health": {
+        "critical": "Kritis",
+        "healthy": "Sehat",
+        "title": "Kesehatan Sistem",
+        "warning": "Peringatan"
+      },
+      "quickActions": {
+        "backups": "Cadangan",
+        "commandRunner": "Penjalan Perintah",
+        "emailSettings": "Pengaturan Email",
+        "emailTemplates": "Template Email",
+        "notifications": "Manajer Notifikasi",
+        "redis": "Cache Redis",
+        "scheduledTasks": "Tugas Terjadwal",
+        "settings": "Pengaturan",
+        "title": "Aksi Cepat"
+      },
+      "sections": {
+        "application": "Aplikasi",
+        "database": "Database",
+        "debugMode": "Mode Debug",
+        "disabled": "Tidak Aktif",
+        "diskUsage": "Penggunaan Disk",
+        "enabled": "Aktif",
+        "environment": "Environment",
+        "laravelVersion": "Versi Laravel",
+        "memoryUsage": "Penggunaan Memori",
+        "phpVersion": "Versi PHP",
+        "server": "Server",
+        "serverSoftware": "Software Server"
+      },
+      "statistics": {
+        "contents": "Total Konten",
+        "media": "Total Media",
+        "title": "Statistik Sistem",
+        "users": "Total Pengguna",
+        "visits": "Total Kunjungan"
+      },
+      "title": "Informasi Sistem",
+      "uptime": "Waktu Operasional",
+      "maintenance": {
+        "title": "OS System Care & Maintenance Centre",
+        "subtitle": "Kelola kesehatan kernel mikro, optimalisasi database, bersihkan file sampah virtual, dan reset sistem.",
+        "cards": {
+          "junk": {
+            "title": "Pembersih File Sampah",
+            "description": "Menghapus file temporary ZIP, sisa scaffolds dev, dan cache sandbox lama.",
+            "action": "Bersihkan Junk"
+          },
+          "database": {
+            "title": "Optimalisasi Database",
+            "description": "Melakukan defragmentasi indeks skema dan membersihkan data CCK yatim piatu.",
+            "action": "Optimasi Database"
+          },
+          "performance": {
+            "title": "Boost Kinerja (Cache)",
+            "description": "Mengompilasi ulang config, route, dan view framework Laravel secara instan.",
+            "action": "Akselerasi Kinerja"
+          },
+          "reset": {
+            "title": "Factory Reset Sistem",
+            "description": "Menghapus seluruh data kustom dan plugin, membersihkan sandbox, dan memuat ulang database.",
+            "action": "Reset Sistem"
+          }
+        },
+        "console": {
+          "header": "[OUTPUT ENGINE LOG SISTEM]",
+          "clear": "Bersihkan"
+        },
+        "resetModal": {
+          "title": "Konfirmasi Factory Reset",
+          "subtitle": "Tindakan destruktif ini tidak dapat dibatalkan.",
+          "warning": "Ini akan menghapus seluruh data custom sandboxed, mereset struktur tabel database ke kondisi awal pabrik, menghapus plugin pihak ketiga, dan menyetel ulang kredensial Administrator.",
+          "passwordLabel": "Masukkan Password Super-Admin Anda",
+          "cancel": "Batal",
+          "confirm": "Reset Sekarang"
+        },
+        "logs": {
+          "junk": {
+            "start": "Memulai Pembersihan File Sampah (Temp & Dev Artifacts)...",
+            "success": "SUKSES: File sampah dibersihkan!",
+            "filesDeleted": "  - Jumlah file dihapus: {count}",
+            "spaceFreed": "  - Total kapasitas yang dibebaskan: {size}",
+            "error": "ERROR: Gagal membersihkan junk: {message}"
+          },
+          "database": {
+            "start": "Memulai Optimalisasi Database & Indeks CCK...",
+            "success": "SUKSES: Indeks database berhasil didefragmentasi!",
+            "tablesOptimized": "  - Total tabel dioptimasi: {count}",
+            "orphansPurged": "  - Total baris CCK yatim piatu yang dipurge: {count}",
+            "error": "ERROR: Gagal optimalisasi database: {message}"
+          },
+          "performance": {
+            "start": "Memulai Prekompilasi (Config, Route, & View Warming)...",
+            "success": "SUKSES: Cache internal kernel mikro dihangatkan!",
+            "mode": "  - Mode cache: Router & Views Cache Warmup.",
+            "error": "ERROR: Gagal warming cache: {message}"
+          },
+          "reset": {
+            "start": "Memulai Pemulihan Default Pabrik (FACTORY RESET)...",
+            "sandboxCleared": "SUKSES: Seluruh data sandbox telah dibersihkan secara total.",
+            "dbMigrated": "SUKSES: Database bermigrasi kembali dari nol secara aman.",
+            "redirect": "Sistem akan meredireksi Anda ke halaman login dalam 5 detik...",
+            "error": "ERROR: Otorisasi gagal atau terjadi kesalahan: {message}"
+          }
+        }
+      },
+      "subtitle": "Kesehatan, versi, dan pintasan ke alat sistem."
+    },
+    "logs": {
+      "actions": {
+        "clear": "Bersihkan Log"
+      },
+      "clear": "Bersihkan Log",
+      "clearing": "Membersihkan...",
+      "confirm": {
+        "clear": "Apakah Anda yakin ingin membersihkan semua log? Tindakan ini tidak dapat dibatalkan."
+      },
+      "empty": "Pilih file log untuk melihat",
+      "failed_load": "Gagal memuat konten log",
+      "files": "File Log",
+      "loading": "Memuat file log...",
+      "messages": {
+        "cleared": "Log berhasil dibersihkan",
+        "failed_clear": "Gagal membersihkan log",
+        "failed_download": "Gagal mengunduh file log"
+      },
+      "refresh": "Segarkan",
+      "search": "Cari di log...",
+      "select": "Pilih file log",
+      "title": "Jurnal Sistem",
+      "subtitle": "File log aplikasi dan server."
+    },
+    "notifications": {
+      "confirm": {
+        "revoke": "Apakah Anda yakin ingin menarik broadcast ini? Semua notifikasi terkait akan dihapus dari kotak masuk penerima.",
+        "send": "Apakah Anda yakin ingin mengirim notifikasi ini ke semua target yang dipilih?"
+      },
+      "create": {
+        "title": "Kirim Notifikasi"
+      },
+      "form": {
+        "message": "Pesan",
+        "process_async": "Proses di Background (Queue)",
+        "revoke": "Tarik Notifikasi",
+        "revoking": "Menarik...",
+        "send": "Kirim Notifikasi",
+        "sending": "Mengirim...",
+        "target_id": "Target Spesifik",
+        "target_type": "Target Audiens",
+        "targets": {
+          "all": "Semua Pengguna",
+          "role": "Role Spesifik",
+          "user": "Pengguna Spesifik"
+        },
+        "title": "Judul",
+        "type": "Tipe"
+      },
+      "history": {
+        "title": "Riwayat Siaran"
+      },
+      "messages": {
+        "failed": "Gagal mengirim notifikasi.",
+        "revoked": "Broadcast berhasil ditarik.",
+        "sent": "Notifikasi telah masuk antrean untuk dikirim."
+      },
+      "queue": {
+        "inactive_message": "Worker tidak terdeteksi. Notifikasi akan masuk antrean tapi tidak akan terkirim sampai worker dijalankan. Matikan opsi ini untuk kirim langsung.",
+        "inactive_title": "Antrean Tidak Aktif"
+      },
+      "table": {
+        "message": "Pesan",
+        "recipients": "Penerima",
+        "send": "Kirim Notifikasi",
+        "sending": "Mengirim...",
+        "sent_at": "Dikirim Pada",
+        "title": "Judul",
+        "type": "Tipe"
+      },
+      "title": "Manajer Notifikasi"
+    },
+    "scheduled_tasks": {
+      "confirm": {
+        "delete": "Apakah Anda yakin ingin menghapus tugas \"{name}\"?",
+        "run": "Apakah Anda yakin ingin menjalankan tugas \"{name}\" sekarang?"
+      },
+      "create": "Tugas Baru",
+      "empty": "Tidak ada tugas terjadwal ditemukan",
+      "filters": {
+        "active": "Aktif",
+        "all": "Semua Status",
+        "inactive": "Tidak Aktif"
+      },
+      "loading": "Memuat...",
+      "messages": {
+        "executed": "Tugas berhasil dijalankan",
+        "failed_execute": "Gagal menjalankan tugas",
+        "failed_save": "Gagal menyimpan tugas",
+        "saved": "Tugas berhasil disimpan"
+      },
+      "modal": {
+        "active_label": "Aktif",
+        "cancel": "Batal",
+        "command_help": "Perintah Laravel artisan atau skrip PHP",
+        "command_label": "Perintah (mis. emails:send)",
+        "command_placeholder": "artisan:command atau php script.php",
+        "create_action": "Buat",
+        "description_label": "Deskripsi",
+        "description_placeholder": "Deskripsi tugas",
+        "name_label": "Nama Tugas",
+        "name_placeholder": "Nama tugas",
+        "save": "Simpan Tugas",
+        "saving": "Menyimpan...",
+        "schedule_help": "Ekspresi Cron (contoh: \"0 * * * *\" untuk setiap jam, \"0 0 * * *\" untuk setiap hari)",
+        "schedule_label": "Ekspresi Jadwal (Cron)",
+        "schedule_placeholder": "0 * * * *",
+        "title_create": "Buat Tugas Baru",
+        "title_edit": "Edit Tugas",
+        "update": "Perbarui"
+      },
+      "search": "Cari tugas...",
+      "table": {
+        "actions": "Aksi",
+        "command": "Perintah",
+        "delete": "Hapus",
+        "edit": "Edit",
+        "last_run": "Terakhir Dijalankan",
+        "name": "Nama",
+        "never": "Belum Pernah",
+        "run": "Jalankan",
+        "schedule": "Jadwal",
+        "status": "Status"
+      },
+      "title": "Tugas Terjadwal",
+      "description": "Kelola tugas terjadwal dan cron job."
+    },
+    "navigation": {
+      "menu": {
+        "webhooks": "Webhook"
+      }
+    },
+    "kyc": {
+      "title": "Verifikasi Akun (KYC)",
+      "subtitle": "Selesaikan langkah ini untuk membuka semua fitur.",
+      "steps": {
+        "basic": {
+          "title": "Level 1: Profil Dasar",
+          "desc": "Lengkapi informasi dasar Anda."
+        },
+        "contact": {
+          "title": "Level 2: Verifikasi Kontak",
+          "desc": "Verifikasi telepon dan alamat."
+        },
+        "identity": {
+          "title": "Level 3: Verifikasi Identitas",
+          "desc": "Unggah ID resmi untuk membuka semua fitur."
+        }
+      }
+    },
+    "profile": {
+      "sessions": {
+        "revoked": "Sesi berhasil dicabut"
+      },
+      "tabs": {
+        "sessions": "Sesi Aktif"
+      }
+    }
+  },
+  "settings": {
+    "title": "Pengaturan Jejakawan",
+    "description": "Kelola konfigurasi, identitas, diskusi, dan performa Jejakawan",
+    "loading": "Memuat pengaturan...",
+    "noSettings": "Tidak ada pengaturan ditemukan di tab ini.",
+    "tabs": {
+      "identity": "Identitas",
+      "general": "Umum",
+      "email": "Email",
+      "seo": "SEO",
+      "security": "Keamanan",
+      "comments": "Diskusi",
+      "performance": "Performa",
+      "monitoring": "Monitoring",
+      "media": "Media",
+      "ai": "Bantuan AI",
+      "analytics": "Analitik",
+      "system": "Sistem"
+    },
+    "groups": {
+      "ai": {
+        "title": "Bantuan AI",
+        "description": "Konfigurasi fitur AI untuk pembuatan konten.",
+        "enable_ai": "Aktifkan Fitur AI",
+        "enable_ai_desc": "Aktifkan atau nonaktifkan bantuan AI di editor.",
+        "default_provider": "Provider Default",
+        "default_provider_desc": "Pilih provider AI yang akan digunakan secara default.",
+        "providers": "Provider AI",
+        "api_key": "API Key",
+        "api_key_placeholder": "Masukkan API Key",
+        "model_select": "Model Default",
+        "select_model": "Pilih Model",
+        "loading_models": "Memuat...",
+        "enter_api_key_to_select": "Masukkan API Key untuk memilih model.",
+        "test_connection": "Tes Koneksi",
+        "fetch_models": "Ambil Model",
+        "using_model": "Menggunakan: {model}",
+        "connection_success": "Koneksi berhasil",
+        "fetch_success": "Model berhasil diambil"
+      },
+      "brand": {
+        "title": "Identitas Aplikasi",
+        "description": "Logo, favicon, dan email admin untuk dashboard aplikasi"
+      },
+      "editor": {
+        "title": "Preferensi Editor",
+        "description": "Kontrol perilaku editor konten"
+      },
+      "localization": {
+        "title": "Lokalisasi",
+        "description": "Pengaturan regional dan preferensi format"
+      },
+      "smtp": {
+        "title": "Konfigurasi SMTP",
+        "description": "Pengaturan koneksi server email"
+      },
+      "identity": {
+        "title": "Identitas Email",
+        "description": "Informasi pengirim default untuk email keluar"
+      },
+      "meta": {
+        "title": "Tag Meta SEO",
+        "description": "Konfigurasi default metadata dan kata kunci untuk SEO"
+      },
+      "searchEngines": {
+        "title": "Mesin Pencari & Perayapan",
+        "description": "Konfigurasi integrasi dengan Google Search Console, peta situs, dan robots.txt"
+      },
+      "authentication": {
+        "title": "Autentikasi & 2FA",
+        "description": "Pengaturan pendaftaran pengguna dan autentikasi dua faktor"
+      },
+      "password": {
+        "title": "Kebijakan Kata Sandi",
+        "description": "Persyaratan kekuatan dan kompleksitas kata sandi"
+      },
+      "session": {
+        "title": "Manajemen Sesi",
+        "description": "Kontrol durasi dan batasan sesi login"
+      },
+      "access": {
+        "title": "Pembatasan Akses",
+        "description": "Pengaturan untuk membakasi akses mencurigakan"
+      },
+      "captcha": {
+        "title": "Perlindungan Anti-Bot",
+        "description": "Verifikasi captcha untuk mencegah serangan otomatis"
+      },
+      "upload": {
+        "title": "Pengaturan Unggahan",
+        "description": "Batas unggahan file dan tipe file yang diizinkan"
+      },
+      "imageProcessing": {
+        "title": "Pemrosesan Gambar",
+        "description": "Pengaturan pembuatan thumbnail dan watermark"
+      },
+      "s3": {
+        "title": "Konfigurasi S3",
+        "description": "Konfigurasi detail koneksi bucket S3"
+      },
+      "google": {
+        "title": "Konfigurasi Google Drive",
+        "description": "Konfigurasi detail Google Drive API"
+      },
+      "ftp": {
+        "title": "Konfigurasi FTP",
+        "description": "Konfigurasi detail server FTP"
+      },
+      "dropbox": {
+        "title": "Konfigurasi Dropbox",
+        "description": "Konfigurasi token API Dropbox"
+      },
+      "migration": {
+        "title": "Migrasi Penyimpanan",
+        "description": "Migrasi file dari Penyimpanan Lokal ke {driver}. Ini akan menyalin file yang ada ke penyimpanan baru.",
+        "start": "Mulai Migrasi",
+        "stop": "Berhenti",
+        "scanning": "Memindai file lokal...",
+        "migrating": "Memigrasi: {processed} / {total} file",
+        "no_files": "Tidak ada file untuk dimigrasi.",
+        "stopped": "Migrasi dihentikan oleh pengguna.",
+        "batch_failed": "Batch gagal",
+        "success": "Migrasi selesai dengan sukses.",
+        "confirm_title": "Migrasi Penyimpanan",
+        "confirm_message": "Ini akan menyalin semua file dari Penyimpanan Lokal ke Penyimpanan Eksternal yang dikonfigurasi saat ini. Proses ini mungkin memakan waktu. Lanjutkan?"
+      },
+      "test": {
+        "button": "Tes Koneksi",
+        "testing": "Mengetes...",
+        "failed": "Koneksi gagal. Silakan periksa kredensial Anda."
+      },
+      "moderation": {
+        "title": "Pengaturan Moderasi & Keamanan",
+        "description": "Konfigurasi kebijakan moderasi komentar, proteksi spam, dan captcha"
+      },
+      "maintenance": {
+        "title": "Mode Maintenance",
+        "description": "Konfigurasi halaman Coming Soon / Under Maintenance."
+      },
+      "botShield": {
+        "title": "Bot Shield (Keamanan Lanjutan)",
+        "description": "Perlindungan Proof-of-Work terhadap AI scrapers, bots, dan serangan otomatis."
+      },
+      "scannerProtection": {
+        "title": "Perlindungan Scanner",
+        "description": "Pembelajaran dinamis dan pemblokiran otomatis untuk pemindai path berbahaya."
+      },
+      "threatIntel": {
+        "title": "Intelijen Ancaman",
+        "description": "Pengaturan reputasi IP dan AbuseIPDB"
+      },
+      "securityNotifications": {
+        "title": "Notifikasi Keamanan",
+        "description": "Peringatan via Telegram, Email, dan Webhook"
+      },
+      "logs": {
+        "title": "Retensi Log Sistem",
+        "description": "Konfigurasi berapa lama log aktivitas dan sistem disimpan sebelum dihapus otomatis."
+      },
+      "backupMonitoring": {
+        "title": "Monitoring Cadangan",
+        "description": "Pengaturan pemantauan dan retensi file cadangan sistem."
+      },
+      "license": {
+        "title": "License & Service",
+        "description": "Status of platform license and service integration."
+      },
+      "site": {
+        "title": "Identitas situs publik",
+        "description": "Nama, kontak, dan branding yang ditampilkan di Jejakawan publik dan halaman utama."
+      },
+      "notifications": {
+        "title": "Manajer Notifikasi",
+        "description": "Siarkan notifikasi sistem ke pengguna dan peran."
+      },
+      "siteInfo": {
+        "title": "Informasi Situs",
+        "description": "Informasi dasar tentang situs web Anda"
+      },
+      "analytics": {
+        "retentionTitle": "Retensi Data",
+        "description": "Konfigurasi berapa lama data analitik harus disimpan di database.",
+        "cleanupTitle": "Pembersihan Data Manual",
+        "cleanupDescription": "Jalankan pembersihan manual data analitik lama berdasarkan pengaturan retensi. Proses ini akan menghapus data yang lebih tua dari periode retensi yang ditentukan secara permanen.",
+        "cleanupButton": "Jalankan Pembersihan Sekarang",
+        "cleaningNow": "Membersihkan...",
+        "cleanupConfirm": "Apakah Anda yakin ingin menghapus data analitik lama sekarang?",
+        "cleanupSuccess": "Berhasil membersihkan {count} data.",
+        "purgeTitle": "Hapus semua data analitik",
+        "purgeConfirm": "Ini akan menghapus permanen semua kunjungan, event, dan sesi analitik (termasuk hari ini). Penghitung tayang di konten Jejakawan tidak ikut direset. Lanjutkan?",
+        "purgeButton": "Hapus semua analitik",
+        "purgingNow": "Menghapus...",
+        "purgeSuccess": "{count} rekaman analitik dihapus. Dashboard akan menampilkan data kosong."
+      },
+      "discussion": {
+        "title": "Pengaturan Diskusi",
+        "description": "Konfigurasi sistem komentar"
+      }
+    },
+    "enabled": "Aktif",
+    "disabled": "Nonaktif",
+    "current": "Saat ini",
+    "reset": "Reset Pengaturan",
+    "save": "Simpan Pengaturan",
+    "saving": "Menyimpan…",
+    "saved": "Pengaturan berhasil disimpan",
+    "failed": "Gagal menyimpan pengaturan",
+    "jsonPlaceholder": "Masukkan format JSON yang valid",
+    "options": {
+      "timezone": {
+        "utc": "UTC (Waktu Universal Terkoordinasi)",
+        "jakarta": "Asia/Jakarta (WIB - GMT+7)",
+        "makassar": "Asia/Makassar (WITA - GMT+8)",
+        "jayapura": "Asia/Jayapura (WIT - GMT+9)",
+        "newyork": "America/New_York (EST/EDT)",
+        "chicago": "America/Chicago (CST/CDT)",
+        "losangeles": "America/Los_Angeles (PST/PDT)",
+        "london": "Europe/London (GMT/BST)",
+        "paris": "Europe/Paris (CET/CEST)",
+        "sydney": "Australia/Sydney (AEST/AEDT)",
+        "tokyo": "Asia/Tokyo (JST)",
+        "singapore": "Asia/Singapura (SGT)"
+      },
+      "dateFormat": {
+        "ymd": "2024-12-25 (Y-m-d)",
+        "dmy": "25/12/2024 (d/m/Y)",
+        "mdy": "12/25/2024 (m/d/Y)",
+        "dmyDash": "25-12-2024 (d-m-Y)",
+        "full": "Desember 25, 2024 (F j, Y)",
+        "fullReverse": "25 Desember 2024 (j F Y)"
+      },
+      "timeFormat": {
+        "24hSeconds": "23:59:59 (24 jam dengan detik)",
+        "24h": "23:59 (24 jam)",
+        "12h": "11:59 PM (12 jam)",
+        "12hSeconds": "11:59:59 PM (12 jam dengan detik)"
+      },
+      "itemsPerPage": {
+        "10": "10 item",
+        "15": "15 item",
+        "20": "20 item",
+        "25": "25 item",
+        "50": "50 item",
+        "100": "100 item"
+      },
+      "mailDriver": {
+        "smtp": "SMTP",
+        "sendmail": "Sendmail",
+        "mailgun": "Mailgun",
+        "ses": "Amazon SES",
+        "postmark": "Postmark",
+        "log": "Log (Pengujian)"
+      },
+      "mailEncryption": {
+        "tls": "TLS (Direkomendasikan)",
+        "ssl": "SSL",
+        "none": "Tidak Ada"
+      },
+      "mailPort": {
+        "25": "25 (Tanpa Enkripsi - Tidak Direkomendasikan)",
+        "465": "465 (Tanpa Enkripsi)",
+        "587": "587 (Tanpa Enkripsi)",
+        "2525": "2525 (TLS Alternatif)",
+        "587tls": "587 (TLS Standar - Direkomendasikan)",
+        "25tls": "25 (Legacy dengan STARTTLS)",
+        "465tls": "465 (TLS via Port SSL)",
+        "465ssl": "465 (SSL Standar - Direkomendasikan)",
+        "587ssl": "587 (SSL Alternatif)",
+        "25ssl": "25 (Legacy dengan SSL)",
+        "2525plain": "2525 (Alternatif - Tanpa Enkripsi)"
+      },
+      "storageDriver": {
+        "local": "Penyimpanan Lokal",
+        "s3": "Amazon S3",
+        "ftp": "Server FTP",
+        "dropbox": "Dropbox",
+        "google": "Google Drive"
+      },
+      "thumbnailSize": {
+        "150": "150px",
+        "200": "200px",
+        "250": "250px",
+        "300": "300px",
+        "400": "400px",
+        "500": "500px"
+      },
+      "passwordMinLength": {
+        "6": "6 karakter (minimum)",
+        "8": "8 karakter (direkomendasikan)",
+        "10": "10 karakter (kuat)",
+        "12": "12 karakter (sangat kuat)",
+        "16": "16 karakter (keamanan maksimal)"
+      },
+      "loginAttempts": {
+        "3": "3 percobaan (ketat)",
+        "5": "5 percobaan (direkomendasikan)",
+        "10": "10 percobaan (longgar)",
+        "unlimited": "Tidak Terbatas"
+      },
+      "blockDuration": {
+        "5": "5 menit",
+        "15": "15 menit (direkomendasikan)",
+        "30": "30 menit",
+        "60": "1 jam",
+        "1440": "24 jam"
+      },
+      "sessionLifetime": {
+        "30": "30 menit",
+        "60": "1 jam",
+        "120": "2 jam (direkomendasikan)",
+        "480": "8 jam (hari kerja)",
+        "1440": "24 jam",
+        "10080": "7 hari"
+      },
+      "maxSessions": {
+        "1": "1 sesi (ketat)",
+        "2": "2 sesi",
+        "3": "3 sesi (direkomendasikan)",
+        "5": "5 sesi",
+        "unlimited": "Tidak Terbatas"
+      },
+      "logRetention": {
+        "7": "7 hari",
+        "14": "14 hari",
+        "30": "30 hari (direkomendasikan)",
+        "60": "60 hari",
+        "90": "90 hari",
+        "365": "1 tahun",
+        "forever": "Simpan Selamanya"
+      },
+      "cacheTtl": {
+        "300": "5 menit",
+        "600": "10 menit",
+        "1800": "30 menit",
+        "3600": "1 jam (direkomendasikan)",
+        "7200": "2 jam",
+        "86400": "24 jam"
+      },
+      "maxUploadSize": {
+        "1024": "1 MB",
+        "2048": "2 MB (direkomendasikan)",
+        "5120": "5 MB",
+        "10240": "10 MB",
+        "20480": "20 MB",
+        "51200": "50 MB",
+        "102400": "100 MB"
+      },
+      "captchaMethod": {
+        "slider": "Verifikasi Slider",
+        "math": "Tantangan Matematika",
+        "image": "Kode Gambar"
+      },
+      "twoFactorMethod": {
+        "app": "Authenticator App (TOTP)",
+        "email": "Email Code"
+      },
+      "twoFactorEnforced": {
+        "no": "Opsional untuk semua pengguna",
+        "admin": "Wajib untuk Admin",
+        "all": "Wajib untuk Semua Pengguna"
+      },
+      "maintenanceTitlePresets": {
+        "coming_soon": "Segera Hadir",
+        "under_maintenance": "Dalam Perbaikan",
+        "launch_day": "Hari Peluncuran!",
+        "system_update": "Pembaruan Sistem"
+      },
+      "maintenanceMessagePresets": {
+        "awesome": "Kami sedang mengerjakan sesuatu yang luar biasa. Silakan cek kembali nanti.",
+        "inconvenience": "Mohon maaf atas ketidaknyamanannya. Kami sedang melakukan pemeliharaan dan akan segera kembali.",
+        "exciting": "Sesuatu yang menarik akan segera hadir! Nantikan peluncuran kami.",
+        "better_exp": "Kami sedang memperbarui sistem untuk memberikan pengalaman yang lebih baik. Kami akan segera online kembali."
+      },
+      "shieldProtectionMode": {
+        "off": "Nonaktif",
+        "suspicious": "Hanya Trafik Mencurigakan",
+        "always": "Selalu Tantang (Sangat Ketat)"
+      },
+      "shieldProtectionDifficulty": {
+        "3": "3 - Sangat Ringan",
+        "4": "4 - Normal (Direkomendasikan)",
+        "5": "5 - Ketat",
+        "6": "6 - Sangat Ketat",
+        "7": "7 - Paranoid"
+      }
+    },
+    "labels": {
+      "site_name": "Nama Situs",
+      "app_name": "Nama Aplikasi",
+      "site_public_name": "Nama situs publik",
+      "site_public_address": "Alamat situs publik",
+      "site_public_phone": "Nomor Telepon",
+      "license_type": "Tipe Lisensi",
+      "license_key": "Kode Lisensi",
+      "site_logo": "Logo Situs",
+      "site_favicon": "Favicon Situs",
+      "site_description": "Deskripsi Situs",
+      "site_url": "URL Situs",
+      "admin_email": "Email Admin",
+      "app_logo": "Logo Aplikasi",
+      "app_favicon": "Favicon Aplikasi",
+      "branding_display": "Mode Tampilan Branding",
+      "timezone": "Zona Waktu",
+      "date_format": "Format Tanggal",
+      "time_format": "Format Waktu",
+      "items_per_page": "Item Per Halaman",
+      "mail_driver": "Driver / Protokol Email",
+      "mail_host": "Host Server SMTP",
+      "mail_port": "Port Server SMTP",
+      "mail_username": "Username Server SMTP",
+      "mail_password": "Password Server SMTP",
+      "mail_encryption": "Tipe Enkripsi Email",
+      "mail_from_address": "Alamat Email Pengirim",
+      "mail_from_name": "Nama Tampilan Pengirim",
+      "meta_title": "Meta Title Bawaan",
+      "meta_description": "Meta Description Bawaan",
+      "meta_keywords": "Meta Keywords Bawaan",
+      "google_analytics_id": "Google Analytics Measurement ID",
+      "google_search_console": "Token Verifikasi Google Search Console",
+      "enable_sitemap": "Aktifkan Peta Situs (Sitemap.xml)",
+      "enable_robots_txt": "Aktifkan Editor Robots.txt",
+      "enable_registration": "Aktifkan Pendaftaran",
+      "require_email_verification": "Wajib Verifikasi Email",
+      "password_min_length": "Panjang Minimal Kata Sandi",
+      "password_require_uppercase": "Wajib Huruf Besar",
+      "password_require_lowercase": "Wajib Huruf Kecil",
+      "password_require_number": "Wajib Angka",
+      "password_require_symbol": "Wajib Simbol",
+      "enable_captcha": "Aktifkan Captcha",
+      "captcha_method": "Metode Captcha",
+      "captcha_on_login": "Captcha di Login",
+      "captcha_on_register": "Captcha di Pendaftaran",
+      "login_attempts_limit": "Batas Percobaan Login",
+      "block_duration_minutes": "Durasi Pemblokiran (menit)",
+      "enable_2fa": "Aktifkan 2FA",
+      "session_lifetime": "Masa Berlaku Sesi (menit)",
+      "single_session_enabled": "Mode Sesi Tunggal",
+      "max_concurrent_sessions": "Maksimal Sesi Bersamaan",
+      "log_retention_days": "Retensi Log (hari)",
+      "activity_log_retention_days": "Retensi Log Aktivitas Sistem (Hari)",
+      "security_log_retention_days": "Retensi Audit Keamanan & WAF (Hari)",
+      "login_history_retention_days": "Retensi Log Riwayat Login (Hari)",
+      "security_alert_failed_login_threshold": "Batas Peringatan Kegagalan Login",
+      "backup_retention_days": "Retensi Backup Database (Hari)",
+      "enable_cache": "Aktifkan Cache",
+      "cache_driver": "Driver Cache",
+      "cache_ttl": "Masa Berlaku Cache (detik)",
+      "enable_image_optimization": "Optimasi Gambar",
+      "enable_lazy_loading": "Lazy Loading",
+      "enable_cdn": "Aktifkan CDN",
+      "cdn_preset": "Penyedia CDN",
+      "cdn_url": "URL CDN",
+      "cdn_included_dirs": "Direktori yang Disertakan",
+      "cdn_excluded_extensions": "Ekstensi yang Dikecualikan",
+      "max_upload_size": "Ukuran Maksimal Unggahan (KB)",
+      "allowed_image_types": "Tipe Gambar yang Diizinkan",
+      "allowed_file_types": "Tipe File yang Diizinkan",
+      "thumbnail_width": "Lebar Thumbnail (px)",
+      "thumbnail_height": "Tinggi Thumbnail (px)",
+      "enable_watermark": "Aktifkan Watermark",
+      "watermark_text": "Teks Watermark",
+      "storage_driver": "Driver Penyimpanan",
+      "two_factor_method": "Metode 2FA",
+      "two_factor_enforced_roles": "Penegakan 2FA",
+      "aws_access_key_id": "AWS Access Key ID",
+      "aws_secret_access_key": "AWS Secret Access Key",
+      "aws_default_region": "AWS Default Region",
+      "aws_bucket": "AWS Bucket",
+      "aws_endpoint": "AWS Endpoint",
+      "google_client_id": "Google Client ID",
+      "google_client_secret": "Google Client Secret",
+      "google_refresh_token": "Google Refresh Token",
+      "google_folder_id": "Google Folder ID",
+      "ftp_host": "FTP Host",
+      "ftp_username": "FTP Username",
+      "ftp_password": "FTP Password",
+      "ftp_root": "FTP Root Path",
+      "ftp_port": "FTP Port",
+      "ftp_ssl": "Use SSL/TLS",
+      "dropbox_authorization_token": "Dropbox Auth Token",
+      "maintenance_mode": "Mode Maintenance",
+      "maintenance_title": "Judul Halaman Maintenance",
+      "maintenance_message": "Pesan Maintenance",
+      "maintenance_countdown_enabled": "Aktifkan Penghitung Waktu Mundur",
+      "shield_protection_mode": "Mode Bot Shield",
+      "console_dashboard_slug": "Slug URL Konsol Dasbor",
+      "shield_protection_difficulty": "Tingkat Kesulitan PoW",
+      "shield_log_verification_success": "Catat Verifikasi Berhasil",
+      "shield_enable_ip_intelligence": "Blacklist Global (IP Intelligence)",
+      "shield_allowed_countries": "Negara yang Diizinkan",
+      "email_to": "Email Penerima",
+      "webhook_url": "URL Webhook",
+      "abuseipdb_api_key": "API Key AbuseIPDB",
+      "threat_intel_auto_block_threshold": "Ambang Batas Intelijen Ancaman",
+      "scanner_auto_block_threshold": "Ambang Batas Perlindungan Scanner",
+      "security_learned_scanner_paths": "Path Scanner yang Dipelajari",
+      "telegram_bot_token": "Token Bot Telegram",
+      "telegram_chat_id": "ID Chat Telegram",
+      "analytics_retention_days": "Retensi Log Pengunjung (Hari)",
+      "analytics_event_retention_days": "Retensi Log Kunjungan Event (Hari)",
+      "analytics_visitor_retention_days": "Retensi Log Kunjungan Sesi (Hari)",
+      "content": {
+        "autosave_enabled": "Aktifkan Autosave di Editor Konten",
+        "autosave_interval_seconds": "Interval Autosave (detik)"
+      },
+      "maintenance_end_time": "Maintenance End Time",
+      "brand_logo": "Logo Brand",
+      "brand_favicon": "Favicon Brand",
+      "ai_enabled": "Aktifkan Fitur Platform AI",
+      "ai_default_provider": "Provider LLM Bawaan",
+      "gemini_api_key": "API Key Gemini LLM",
+      "gemini_model": "Varian Model Gemini",
+      "comments": {
+        "security": {
+          "enable_reply": "Aktifkan Balasan",
+          "allow_guests": "Izinkan Komentar Tamu",
+          "moderation_enabled": "Aktifkan Moderasi",
+          "guest_captcha": "Captcha Tamu",
+          "max_links": "Maksimal Tautan",
+          "banned_words": "Kata-kata Terlarang"
+        }
+      }
+    },
+    "descriptions": {
+      "site_name": "Nama publik situs Jejakawan Anda",
+      "site_logo": "Logo utama situs Jejakawan",
+      "site_favicon": "Ikon browser situs (rekomendasi 16x16 atau 32x32)",
+      "site_description": "Penjelasan singkat tentang situs Anda untuk keperluan SEO",
+      "site_url": "URL utama aplikasi Jejakawan Anda",
+      "admin_email": "Email kontak untuk keperluan administratif situs Jejakawan",
+      "license_key": "Masukkan kode lisensi resmi dari jejakawan.com untuk aktivasi whitelabel.",
+      "license_type": "Paket layanan yang aktif saat ini (Free/Community/Pro/Pro+).",
+      "app_name": "Nama aplikasi yang akan muncul di dashboard, footer, dan judul tab admin.",
+      "site_public_name": "Nama resmi yang ditampilkan di Jejakawan publik.",
+      "app_logo": "Logo yang ditampilkan di sidebar dan header dashboard admin",
+      "app_favicon": "Ikon yang ditampilkan di tab browser saat membuka dashboard admin",
+      "branding_display": "Menentukan apakah panel menampilkan logo, nama aplikasi, atau keduanya",
+      "timezone": "Zona waktu default yang digunakan untuk semua tanggal dan waktu",
+      "date_format": "Format yang digunakan untuk menampilkan tanggal di seluruh aplikasi",
+      "time_format": "Format yang digunakan untuk menampilkan waktu di seluruh aplikasi",
+      "items_per_page": "Jumlah item default yang ditampilkan dalam daftar tabel",
+      "mail_driver": "Driver protokol pengiriman (biasanya SMTP)",
+      "mail_host": "FQDN atau IP server relai email Anda",
+      "mail_port": "Port relai email (biasanya 587 atau 2525)",
+      "mail_username": "Username otentikasi untuk pengiriman email",
+      "mail_password": "Password otentikasi untuk pengiriman email",
+      "mail_encryption": "Mode enkripsi TLS atau SSL untuk keamanan pengiriman",
+      "mail_from_address": "Alamat email pengirim keluar yang muncul di email penerima",
+      "mail_from_name": "Nama tampilan pengirim keluar",
+      "meta_title": "Judul utama bawaan ketika konten tidak memiliki judul spesifik",
+      "meta_description": "Deskripsi default yang disajikan ke laba-laba perayap mesin pencari",
+      "meta_keywords": "Kata kunci terpisah koma yang mewakili taksonomi situs",
+      "google_analytics_id": "ID Pelacakan Integrasi (contoh: G-XXXXXX)",
+      "google_search_console": "Token verifikasi HTML untuk konsol kinerja pencarian Google",
+      "enable_sitemap": "Hasilkan sitemap.xml secara dinamis untuk memudahkan indeksasi",
+      "enable_robots_txt": "Tampilkan konfigurasi robots.txt secara dinamis",
+      "enable_registration": "Izinkan pengguna baru untuk membuat akun di situs Anda",
+      "require_email_verification": "Pengguna baru harus memverifikasi email sebelum bisa login",
+      "password_min_length": "Jumlah minimal karakter yang diperlukan untuk kata sandi",
+      "password_require_uppercase": "Kata sandi harus mengandung minimal satu huruf besar (A-Z)",
+      "password_require_lowercase": "Kata sandi harus mengandung minimal satu huruf kecil (a-z)",
+      "password_require_number": "Kata sandi harus mengandung minimal satu angka (0-9)",
+      "password_require_symbol": "Kata sandi harus mengandung minimal satu simbol (!{'@'}#$%^&*...)",
+      "enable_captcha": "Tampilkan verifikasi captcha di form login dan pendaftaran",
+      "captcha_method": "Pilih tipe tantangan captcha yang digunakan",
+      "captcha_on_login": "Wajib verifikasi captcha di form login",
+      "captcha_on_register": "Wajib verifikasi captcha di form pendaftaran",
+      "login_attempts_limit": "Jumlah percobaan login gagal yang diizinkan sebelum penguncian sementara",
+      "block_duration_minutes": "Berapa lama IP diblokir setelah melampaui batas login",
+      "enable_2fa": "Aktifkan atau nonaktifkan autentikasi dua faktor secara sistem",
+      "session_lifetime": "Berapa lama sesi pengguna berlangsung sebelum kedaluwarsa karena tidak aktif",
+      "single_session_enabled": "Jika aktif, login baru akan otomatis logout sesi sebelumnya (1 akun = 1 perangkat)",
+      "max_concurrent_sessions": "Jumlah maksimal sesi aktif per pengguna. Atur 0 untuk tidak terbatas",
+      "log_retention_days": "Berapa lama log aplikasi umum disimpan sebelum dihapus otomatis.",
+      "activity_log_retention_days": "Interval penghapusan otomatis untuk log audit aktivitas",
+      "security_log_retention_days": "Interval penghapusan otomatis untuk kejadian pemblokiran WAF",
+      "login_history_retention_days": "Jendela pencatatan log riwayat percobaan login",
+      "security_alert_failed_login_threshold": "Peringatkan admin jika ada IP gagal login sebanyak ini",
+      "backup_retention_days": "Jendela retensi untuk file ZIP cadangan database",
+      "enable_cache": "Simpan data komputasi sementara untuk mempercepat situs",
+      "cache_driver": "Sistem penyimpanan untuk data cache",
+      "cache_ttl": "Durasi default untuk item cache tetap valid",
+      "cache_status": "Kelola driver dan status cache aplikasi",
+      "cdn_status": "Konfigurasi Content Delivery Network",
+      "performance_status": "Optimasi gambar, lazy loading, dan lainnya",
+      "enable_image_optimization": "Optimalkan gambar secara otomatis saat diunggah untuk performa lebih baik",
+      "enable_lazy_loading": "Muat gambar hanya saat masuk ke area tampilan (viewport)",
+      "enable_cdn": "Sajikan aset statis dari Content Delivery Network (CDN)",
+      "cdn_preset": "Pilih penyedia CDN untuk konfigurasi yang dioptimalkan",
+      "cdn_url": "URL dasar yang disediakan oleh CDN Anda",
+      "cdn_included_dirs": "Daftar direktori yang disajikan via CDN (pisahkan dengan koma)",
+      "cdn_excluded_extensions": "Ekstensi file yang dikecualikan dari CDN",
+      "max_upload_size": "Ukuran file maksimum yang diizinkan untuk unggahan",
+      "allowed_image_types": "Daftar ekstensi gambar yang diizinkan (dipisahkan koma)",
+      "allowed_file_types": "Daftar ekstensi file yang diizinkan (dipisahkan koma)",
+      "thumbnail_width": "Lebar yang digunakan saat menghasilkan thumbnail",
+      "thumbnail_height": "Tinggi yang digunakan saat menghasilkan thumbnail",
+      "enable_watermark": "Tambahkan tanda air teks ke gambar saat diunggah",
+      "watermark_text": "Teks yang akan ditampilkan pada tanda air",
+      "storage_driver": "Sistem yang digunakan untuk menyimpan file unggahan (lokal atau eksternal)",
+      "aws_access_key_id": "Access Key ID AWS IAM Anda",
+      "aws_secret_access_key": "Secret Access Key AWS IAM Anda",
+      "aws_default_region": "Kode wilayah, misal: us-east-1",
+      "aws_bucket": "Nama Bucket S3",
+      "aws_endpoint": "Endpoint kustom opsional untuk layanan kompatibel S3 (MinIO, Spaces)",
+      "google_client_id": "ID Klien OAuth2 dari Konsol Google Cloud",
+      "google_client_secret": "Client Secret OAuth2",
+      "google_refresh_token": "Refresh token berumur panjang untuk akses luring (offline)",
+      "google_folder_id": "ID folder untuk menyimpan file (opsional)",
+      "ftp_host": "Nama host atau alamat IP server FTP",
+      "ftp_username": "Nama Pengguna Akun FTP",
+      "ftp_password": "Kata Sandi Akun FTP",
+      "ftp_root": "Direktori root untuk penyimpanan file (misal: /public_html)",
+      "ftp_port": "Port koneksi FTP (default 21)",
+      "ftp_ssl": "Aktifkan koneksi aman (FTPS)",
+      "dropbox_authorization_token": "Token Akses yang dihasilkan dari Dropbox App Console",
+      "maintenance_mode": "Aktifkan atau nonaktifkan mode Coming Soon / Under Maintenance.",
+      "maintenance_title": "Judul utama di halaman maintenance.",
+      "maintenance_message": "Pesan yang ditampilkan di halaman maintenance.",
+      "maintenance_countdown_enabled": "Tampilkan penghitung waktu mundur langsung hingga situs online kembali.",
+      "shield_protection_mode": "Lapisan keamanan Proof-of-Work (PoW) untuk menghalangi AI scraper dan bot. Mode 'Hanya Lalu Lintas Mencurigakan' meminimalkan hambatan bagi pengguna sah.",
+      "console_dashboard_slug": "Sesuaikan awalan URL Jejakawan Console (mis. ja-dash, control) agar jalur /dash bawaan tidak terekspos.",
+      "shield_protection_difficulty": "Jumlah nol di depan yang diperlukan dalam hash pembuktian. Nilai yang lebih tinggi meningkatkan penggunaan CPU bot. Direkomendasikan Normal (4).",
+      "shield_log_verification_success": "Jika diaktifkan, percoban verifikasi yang berhasil akan dicatat di Jurnal Keamanan. Default: Nonaktif untuk mengurangi volume log.",
+      "shield_enable_ip_intelligence": "Otomatis cek pengunjung terhadap database blacklist global (Spamhaus ZEN). IP berbahaya akan diblokir permanen.",
+      "shield_allowed_countries": "Daftar kode negara (ISO 3166-1 alpha-2) yang diizinkan mengakses situs. Contoh: [\"ID\", \"SG\"]. Kosongkan untuk mengizinkan semua.",
+      "email_to": "Alamat email tempat notifikasi keamanan akan dikirim.",
+      "webhook_url": "URL webhook Discord/Slack untuk peringatan keamanan.",
+      "abuseipdb_api_key": "API Key dari AbuseIPDB.com untuk pengecekan reputasi IP.",
+      "threat_intel_auto_block_threshold": "Skor keyakinan (0-100) di mana IP akan diblokir secara otomatis.",
+      "telegram_bot_token": "Token API dari BotFather untuk peringatan Telegram.",
+      "telegram_chat_id": "ID Chat atau Grup Telegram untuk menerima peringatan.",
+      "analytics_retention_days": "Pertahankan statistik jejak pengunjung umum",
+      "analytics_event_retention_days": "Pertahankan riwayat log pencarian/interaksi detail frontend",
+      "analytics_visitor_retention_days": "Pertahankan sesi pelacakan pengunjung unik",
+      "content": {
+        "autosave_enabled": "Jika aktif, perubahan draft akan tersimpan otomatis saat mengedit konten.",
+        "autosave_interval_seconds": "Seberapa sering autosave berjalan saat mengedit. Rekomendasi: 15 (editing aktif), 30 (seimbang), atau 60 detik (beban server lebih ringan)."
+      },
+      "site_public_address": "Alamat fisik yang ditampilkan di situs publik",
+      "site_public_phone": "Nomor telepon kontak utama situs publik",
+      "two_factor_method": "Method used for 2FA verification",
+      "two_factor_enforced_roles": "Enforce 2FA for specific user roles",
+      "maintenance_end_time": "When the maintenance is scheduled to end. The site will automatically become live after this time.",
+      "scanner_auto_block_threshold": "Number of malicious scanner hits within 1 hour before an IP is automatically blocked.",
+      "security_learned_scanner_paths": "JSON array of scanner paths learned by the automated tuning engine. Manually modify if needed.",
+      "brand_logo": "Logo korporasi/brand yang ditampilkan di panel admin",
+      "brand_favicon": "Favicon khusus panel admin",
+      "ai_enabled": "Aktifkan alat bantu pembuatan konten dan obrolan AI secara global",
+      "ai_default_provider": "Penyedia Model Bahasa Besar utama pilihan Anda",
+      "gemini_api_key": "Kunci otentikasi resmi dari Google AI Studio",
+      "gemini_model": "Varian model target (contoh: gemini-2.5-flash)",
+      "comments": {
+        "security": {
+          "enable_reply": "Izinkan pengguna untuk membalas komentar lain",
+          "allow_guests": "Izinkan pengguna berkomentar tanpa login",
+          "moderation_enabled": "Komentar baru memerlukan persetujuan admin sebelum muncul",
+          "guest_captcha": "Wajibkan tamu menyelesaikan captcha untuk memposting",
+          "max_links": "Jumlah maksimum tautan yang diperbolehkan dalam satu komentar (0 untuk tidak terbatas)",
+          "banned_words": "Daftar kata yang akan menyebabkan komentar ditandai sebagai spam (array JSON)"
+        }
+      }
+    },
+    "emailTest": {
+      "title": "Pengujian Konfigurasi Email",
+      "configStatus": "Validasi Konfigurasi",
+      "validate": "Validasi Konfig",
+      "validating": "Memvalidasi...",
+      "valid": "Struktur konfigurasi valid",
+      "invalid": "Struktur konfigurasi tidak valid",
+      "errors": "Kesalahan Kritis:",
+      "warnings": "Peringatan:",
+      "smtpTest": "Uji Koneksi SMTP",
+      "testConnection": "Uji Koneksi",
+      "testing": "Menguji...",
+      "connected": "Berhasil terhubung ke {host}:{port}",
+      "failed": "Uji koneksi gagal",
+      "sendTest": "Kirim Email Uji",
+      "recipient": "Email Penerima",
+      "recipientPlaceholder": "test{'@'}contoh.com",
+      "subject": "Subjek Email",
+      "subjectPlaceholder": "Email Uji Coba",
+      "message": "Pesan Uji Coba",
+      "messagePlaceholder": "Ini adalah email uji coba...",
+      "recipientRequired": "Silakan masukkan alamat email penerima",
+      "sentSuccess": "Email uji coba berhasil dikirim",
+      "sendFailed": "Gagal mengirim email uji coba",
+      "sending": "Mengirim...",
+      "queueStatus": "Status Antrean",
+      "driver": "Driver",
+      "pending": "Pekerjaan Tertunda",
+      "failedJobs": "Pekerjaan Gagal",
+      "refresh": "Segarkan",
+      "recentLogs": "Log Email Terbaru",
+      "noLogs": "Tidak ada log email ditemukan"
+    },
+    "cache": {
+      "clearTitle": "Bersihkan Cache",
+      "clearConfirm": "Bersihkan Cache",
+      "clearMessage": "Apakah Anda yakin ingin membersihkan cache sistem?",
+      "configTitle": "Konfigurasi Cache",
+      "managementTitle": "Manajemen Cache",
+      "clear": "Bersihkan Cache",
+      "warm": "Warm Cache",
+      "clearing": "Membersihkan...",
+      "warming": "Memproses...",
+      "loading": "Memuat status cache...",
+      "cleared": "Cache berhasil dibersihkan",
+      "warmed": "Cache berhasil di-warm",
+      "status": "Status",
+      "keys": "Total Key",
+      "size": "Ukuran",
+      "driver": "Driver",
+      "drivers": {
+        "file": "File System",
+        "redis": "Redis",
+        "database": "Database",
+        "array": "Array (Memori)"
+      },
+      "redisInfo": {
+        "title": "Konfigurasi Redis",
+        "description": "Saat menggunakan Redis sebagai driver cache, pastikan Anda memiliki server Redis yang berjalan. Anda dapat mengonfigurasi detail koneksi di halaman Manajemen Redis.",
+        "linkText": "Ke Pengaturan Redis"
+      },
+      "page": {
+        "title": "Manajemen Cache",
+        "subtitle": "Kelola dan pantau performa cache sistem",
+        "status": "Status Cache",
+        "statusActive": "Aktif",
+        "statusInactive": "Nonaktif",
+        "hits": "Cache Hit",
+        "misses": "Cache Miss",
+        "actionsTitle": "Aksi Cache",
+        "clearAll": {
+          "title": "Bersihkan Semua Cache",
+          "desc": "Hapus semua data cache dari sistem",
+          "confirmTitle": "Bersihkan Semua Cache",
+          "confirmMessage": "Yakin ingin membersihkan semua cache? Performa mungkin sementara terpengaruh.",
+          "confirmText": "Bersihkan Semua",
+          "success": "Semua cache berhasil dibersihkan",
+          "failed": "Gagal membersihkan cache"
+        },
+        "clearContent": {
+          "title": "Bersihkan Cache Konten",
+          "desc": "Hapus cache terkait konten saja",
+          "confirmTitle": "Bersihkan Cache Konten",
+          "confirmMessage": "Yakin ingin membersihkan cache konten?",
+          "confirmText": "Bersihkan Cache Konten",
+          "success": "Cache konten berhasil dibersihkan",
+          "failed": "Gagal membersihkan cache konten"
+        },
+        "warmUp": {
+          "title": "Warm Cache",
+          "desc": "Muat data yang sering dipakai ke cache",
+          "success": "Cache berhasil di-warm",
+          "failed": "Gagal warm cache"
+        },
+        "detailedStats": "Statistik Detail",
+        "table": {
+          "key": "Kunci",
+          "value": "Nilai"
+        }
+      }
+    },
+    "ai": {
+      "title": "Bantuan AI",
+      "description": "Konfigurasi fitur AI untuk pembuatan konten.",
+      "enable_ai": "Aktifkan Fitur AI",
+      "enable_ai_desc": "Aktifkan atau nonaktifkan bantuan AI di editor.",
+      "default_provider": "Penyedia Default",
+      "default_provider_desc": "Pilih penyedia AI mana yang akan digunakan secara default.",
+      "providers": "Penyedia AI",
+      "test_connection": "Uji Koneksi",
+      "fetch_models": "Ambil Model",
+      "model_select": "Model Default",
+      "model_select_desc": "Pilih model default untuk penyedia ini.",
+      "api_key": "Kunci API",
+      "api_key_placeholder": "Masukkan Kunci API",
+      "connection_success": "Koneksi berhasil!",
+      "connection_failed": "Koneksi gagal",
+      "models_fetched": "Model berhasil diambil"
+    },
+    "consoleAppearance": {
+      "description": "Preset warna siap pakai dan token brand kustom untuk konsol admin.",
+      "presetSectionTitle": "Preset warna",
+      "presetSectionDescription": "Pilih palet siap pakai untuk tombol, tautan, dan focus ring. Permukaan tetap netral.",
+      "customColorHint": "Pilih warna brand — dipakai saat preset Kustom.",
+      "previewLabel": "Pratinjau",
+      "previewPrimary": "Utama",
+      "previewSecondary": "Sekunder",
+      "previewLink": "Aksen tautan",
+      "loading": "Memuat…",
+      "saving": "Menyimpan…",
+      "save": "Simpan",
+      "reload": "Muat ulang",
+      "presets": {
+        "monochrome_clean": {
+          "label": "Monokrom",
+          "description": "Hitam-putih editorial — dashboard minimal dan premium."
+        },
+        "indigo_pro": {
+          "label": "Indigo Pro",
+          "description": "Indigo klasik SaaS — seimbang dan familiar."
+        },
+        "oceanic_clean": {
+          "label": "Oceanic",
+          "description": "Biru laut dalam — tenang, modern, terpercaya."
+        },
+        "emerald_fresh": {
+          "label": "Emerald",
+          "description": "Aksen hijau segar — pertumbuhan dan kejelasan."
+        },
+        "royal_violet": {
+          "label": "Royal Violet",
+          "description": "Ungu tegas — kreatif dan khas."
+        },
+        "sunset_coral": {
+          "label": "Sunset Coral",
+          "description": "Koral hangat — energik dan ramah."
+        },
+        "midnight_cyan": {
+          "label": "Midnight Cyan",
+          "description": "Cyan dingin — nuansa tech yang tajam."
+        },
+        "aurora_mint": {
+          "label": "Aurora Mint",
+          "description": "Mint teal — aksen ringan dan kekinian."
+        },
+        "amber_pulse": {
+          "label": "Amber Pulse",
+          "description": "Amber keemasan — sorotan hangat pada CTA."
+        },
+        "ruby_night": {
+          "label": "Ruby Night",
+          "description": "Merah ruby — brand presence yang kuat."
+        },
+        "custom": {
+          "label": "Kustom",
+          "description": "Warna brand hex milik Anda."
+        }
+      },
+      "brandColorPickerTitle": "Pilih warna brand",
+      "brandColorHexLabel": "Warna brand (HEX)",
+      "title": "Tampilan konsol",
+      "saved": "Tampilan konsol disimpan.",
+      "loadError": "Gagal memuat tampilan konsol.",
+      "saveError": "Gagal menyimpan tampilan konsol.",
+      "shapeSectionTitle": "Bentuk",
+      "buttonRadiusLabel": "Radius sudut tombol",
+      "buttonRadiusDescription": "Radius border untuk tombol dan kontrol di konsol.",
+      "surfaceSectionTitle": "Gaya permukaan",
+      "surfaceSectionDescription": "Panel kaca buram (glass) atau kartu datar solid.",
+      "surfaceGlass": "Glass",
+      "surfaceFlat": "Flat",
+      "surfaceGlassHint": "Panel buram dengan blur dan kedalaman halus pada kartu dan toolbar.",
+      "surfaceFlatHint": "Kartu solid tanpa blur — selaras dengan halaman Extensions dan daftar.",
+      "glassGradientSectionTitle": "Gradasi glass",
+      "glassGradientSectionDescription": "Cahaya latar di balik panel glass. Pakai preset atau atur warna, intensitas, dan sudut.",
+      "glassGradientColorPickerTitle": "Warna gradasi",
+      "glassGradientIntensityLabel": "Intensitas / ukuran",
+      "glassGradientAngleLabel": "Sudut",
+      "brandColorDarkPickerTitle": "Warna brand (Mode Gelap)",
+      "fontPrimaryLabel": "Font UI Utama",
+      "fontMonoLabel": "Font Monospace & Kode",
+      "shadowElevationLabel": "Gaya Kedalaman Bayangan",
+      "borderStyleLabel": "Ketebalan Garis Pembatas",
+      "contrastRatio": "Rasio Kontras",
+      "contrastLabel": "Pelindung Kontras (WCAG 2.1)",
+      "contrastPassAA": "Lolos (AA 4.5+)",
+      "contrastPassAAA": "Lolos (AAA 7.0+)",
+      "contrastFail": "Kontras Rendah",
+      "shadowOptions": {
+        "flat": "Flat (Tanpa Bayangan)",
+        "soft": "Halus (Modern Premium)",
+        "layered": "Berlapis (Kedalaman Tinggi)"
+      },
+      "borderOptions": {
+        "clean": "Clean (Tanpa Garis)",
+        "subtle": "Subtle (Garis 1px)",
+        "bold": "Tegas (Garis 2px)"
+      },
+      "tabs": {
+        "colorPreset": "Warna & Preset",
+        "uiShell": "Desain UI Shell",
+        "logos": "Unggah Logo"
+      },
+      "sidebarStyleLabel": "Gaya latar sidebar",
+      "navbarStyleLabel": "Gaya latar navbar",
+      "popperOpacityLabel": "Opasitas popper & dropdown overlay",
+      "logoLightLabel": "Logo Terang (Light Mode)",
+      "logoLightDescription": "Logo yang digunakan pada sidebar/navbar dengan latar belakang terang.",
+      "logoDarkLabel": "Logo Gelap (Dark Mode)",
+      "logoDarkDescription": "Logo yang digunakan pada sidebar/navbar dengan latar belakang gelap.",
+      "logoCompactLabel": "Logo Ringkas (Kompak)",
+      "logoCompactDescription": "Ikon persegi ringkas yang ditampilkan saat sidebar disusutkan.",
+      "faviconLabel": "Favicon",
+      "faviconDescription": "Ikon tab browser (mendukung berkas .ico, .png).",
+      "whiteLabelRequired": "Lisensi White Label Diperlukan",
+      "whiteLabelDescription": "Pengunggahan logo kustom adalah fitur premium. Silakan tingkatkan lisensi Anda untuk mengaktifkannya.",
+      "glassGradients": {
+        "none": {
+          "label": "Tanpa",
+          "description": "Tanpa gradasi latar."
+        },
+        "subtle": {
+          "label": "Halus",
+          "description": "Cahaya lembut — tidak mengganggu."
+        },
+        "balanced": {
+          "label": "Seimbang",
+          "description": "Default — terlihat tapi tetap rapi."
+        },
+        "vivid": {
+          "label": "Kuat",
+          "description": "Glow aksen lebih tegas di seluruh kanvas."
+        },
+        "aurora": {
+          "label": "Aurora",
+          "description": "Multi-warna seperti aurora."
+        },
+        "sunset": {
+          "label": "Sunset",
+          "description": "Dua warna hangat dari sudut ke sudut."
+        },
+        "cornerGlow": {
+          "label": "Sudut glow",
+          "description": "Sorotan di sudut berlawanan."
+        },
+        "custom": {
+          "label": "Kustom",
+          "description": "Warna, intensitas, dan sudut Anda."
+        }
+      },
+      "themePortabilityTitle": "Backup & restore tema",
+      "themePortabilityDescription": "Salin JSON di bawah untuk backup atau pindahkan tema ke server lain.",
+      "themeImportPlaceholder": "Tempel JSON tema di sini…",
+      "themeImportApply": "Terapkan",
+      "themeCopied": "Konfigurasi tema disalin ke clipboard.",
+      "themeImported": "Tema diimpor. Simpan untuk menerapkan permanen.",
+      "themeImportInvalid": "Format JSON tidak valid.",
+      "sidebarStyleDescription": "Atur model latar sidebar menu utama dan tingkat visibilitasnya.",
+      "navbarStyleDescription": "Pilih gaya bilah navigasi atas pada setiap halaman.",
+      "popperOpacityDescription": "Transparansi latar untuk elemen melayang (dropdown, tooltip, select, dialog).",
+      "typographySectionTitle": "Tipografi",
+      "typographySectionDescription": "Font utama UI dan font monospace untuk data teknis.",
+      "depthSectionTitle": "Kedalaman & border",
+      "depthSectionDescription": "Kedalaman bayangan dan ketebalan garis panel antarmuka.",
+      "shellStyles": {
+        "sidebar": {
+          "glass": {
+            "label": "Kaca buram",
+            "description": "Transparan dengan blur kaca lembut."
+          },
+          "solid": {
+            "label": "Solid brand",
+            "description": "Menggunakan warna primary brand sebagai latar sidebar."
+          },
+          "clean": {
+            "label": "Minimal bersih",
+            "description": "Permukaan netral datar tanpa gangguan visual."
+          }
+        },
+        "navbar": {
+          "glass": {
+            "label": "Kaca buram",
+            "description": "Gradasi transparan yang menyatu dengan kanvas."
+          },
+          "bordered": {
+            "label": "Bergaris datar",
+            "description": "Gaya flat dengan tepi bawah yang tegas."
+          },
+          "blended": {
+            "label": "Menyatu penuh",
+            "description": "Seamless dengan latar halaman."
+          }
+        }
+      },
+      "fontOptions": {
+        "system": "Default sistem",
+        "inter": "Inter (modern & bersih)",
+        "outfit": "Outfit (geometris elegan)",
+        "poppins": "Poppins (sans ramah)",
+        "systemMono": "Monospace sistem",
+        "jetbrains_mono": "JetBrains Mono",
+        "fira_code": "Fira Code"
+      },
+      "presetSelectPlaceholder": "Pilih preset warna…",
+      "glassGradientSelectPlaceholder": "Pilih gradasi glass…",
+      "themeMode": {
+        "title": "Mode penerapan tema",
+        "description": "Pilih apakah konsol mengikuti preset global atau penyesuaian per komponen (lanjutan). Hanya satu mode yang berlaku pada satu waktu.",
+        "globalActiveHint": "Mode global aktif: preset warna, permukaan, dan gradasi glass berlaku. Pengaturan shell lanjutan diabaikan sampai Anda mengganti mode.",
+        "advancedActiveHint": "Mode lanjutan aktif: sidebar, navbar, popper, tipografi, dan kedalaman berlaku. Preset warna dan permukaan glass diabaikan sampai Anda mengganti mode.",
+        "global": {
+          "label": "Global",
+          "hint": "Palet preset, permukaan, glass, dan token bentuk untuk seluruh konsol."
+        },
+        "advanced": {
+          "label": "Lanjutan",
+          "hint": "Sesuaikan sidebar, navbar, dropdown, kartu, border, font, dan warna aksen."
+        }
+      },
+      "scopeOverlay": {
+        "colorsDisabledTitle": "Perlu mode global",
+        "colorsDisabledDescription": "Preset warna dan gaya permukaan hanya tersedia di mode Global. Beralih ke Global untuk mengedit.",
+        "shellDisabledTitle": "Perlu mode lanjutan",
+        "shellDisabledDescription": "Gaya shell dan komponen hanya tersedia di mode Lanjutan. Beralih ke Lanjutan untuk menyesuaikan sidebar, navbar, dan kedalaman.",
+        "goToColors": "Buka Warna & Preset",
+        "goToShell": "Buka Desain UI Shell"
+      },
+      "advancedAccent": {
+        "title": "Aksen & bentuk komponen",
+        "description": "Warna brand dan radius tombol untuk tombol, tautan, dan focus ring di mode Lanjutan."
+      },
+      "themeModeGroups": {
+        "globalTitle": "Global (token desain)",
+        "globalItems": "Preset warna, hex brand (kustom), permukaan glass/datar, gradasi glass, radius sudut, impor/ekspor tema",
+        "advancedTitle": "Lanjutan (chrome komponen)",
+        "advancedItems": "Sidebar, navbar, overlay dropdown/popper, font utama & mono, bayangan kartu, ketebalan border, warna aksen"
+      },
+      "advancedComponents": {
+        "tabs": {
+          "chrome": "Chrome halaman",
+          "buttons": "Tombol",
+          "cards": "Kartu",
+          "overlays": "Dropdown & modal",
+          "icons": "Ikon",
+          "type": "Tipografi"
+        },
+        "buttons": {
+          "title": "Tombol & aksen",
+          "description": "Warna aksen, gaya tombol utama, dan radius sudut untuk aksi.",
+          "styleLabel": "Gaya tombol default",
+          "styles": {
+            "solid": "Solid",
+            "soft": "Soft tint",
+            "outline": "Outline"
+          }
+        },
+        "cards": {
+          "title": "Kartu & panel",
+          "description": "Bayangan dan border untuk kartu, stat tile, dan toolbar.",
+          "styles": {
+            "flat": {
+              "label": "Datar",
+              "description": "Tanpa bayangan — permukaan data bersih."
+            },
+            "soft": {
+              "label": "Halus",
+              "description": "Elevasi ringan untuk panel sehari-hari."
+            },
+            "elevated": {
+              "label": "Tinggi",
+              "description": "Bayangan berlapis untuk penekanan."
+            }
+          }
+        },
+        "overlays": {
+          "title": "Dropdown & modal",
+          "description": "Menu, daftar select, popover, dan redup latar modal.",
+          "dropdownStyleLabel": "Gaya dropdown / menu",
+          "modalBackdropLabel": "Redup backdrop modal",
+          "dropdownStyles": {
+            "minimal": "Minimal — panel solid",
+            "standard": "Standar — blur seimbang",
+            "glass": "Glass — overlay buram"
+          }
+        },
+        "icons": {
+          "title": "Ikon",
+          "description": "Ketebalan stroke global untuk ikon Lucide di navigasi dan aksi.",
+          "weights": {
+            "light": "Tipis",
+            "regular": "Reguler",
+            "bold": "Tebal"
+          }
+        }
+      },
+      "sidebarAccentLabel": "Sorotan hover sidebar",
+      "sidebarAccentDescription": "Warna untuk item menu saat hover dan sorotan halus di navigasi sidebar.",
+      "themeExportJsonLabel": "JSON tema diekspor",
+      "brandRadiusLabel": "Brand Radius"
+    }
+  },
+  "installer": {
+    "brand": "Jejakawan",
+    "title": "Panduan Instalasi",
+    "subtitle": "Atur identitas aplikasi dan infrastruktur Anda.",
+    "steps": {
+      "requirements": "Cek Sistem",
+      "config": "Konfigurasi",
+      "success": "Berhasil"
+    },
+    "requirements": {
+      "title": "Pengecekan Sistem",
+      "description": "Memastikan server Anda memenuhi persyaratan minimum.",
+      "core": "Persyaratan Inti",
+      "extensions": "Ekstensi PHP",
+      "status_ok": "Oke",
+      "status_missing": "Tidak Ada",
+      "continue": "Lanjut ke Konfigurasi"
+    },
+    "config": {
+      "title": "Konfigurasi Dasar",
+      "description": "Atur identitas aplikasi dan database Anda.",
+      "app_name": "Nama Aplikasi",
+      "app_url": "URL Aplikasi",
+      "db_connection": "Koneksi Database",
+      "db_host": "Host",
+      "db_port": "Port",
+      "db_database": "Nama Database",
+      "db_username": "Username",
+      "db_password": "Password",
+      "back": "Kembali",
+      "run": "Jalankan Instalasi",
+      "placeholders": {
+        "appName": "Jejakawan Saya",
+        "appUrl": "https://contoh.com",
+        "dbConnection": "Pilih koneksi",
+        "dbHost": "127.0.0.1",
+        "dbPort": "3306",
+        "dbDatabase": "ja_platform",
+        "dbUsername": "root",
+        "dbSqlitePath": "Path absolut ke berkas .sqlite"
+      },
+      "dbDrivers": {
+        "mysql": "MySQL / MariaDB",
+        "pgsql": "PostgreSQL",
+        "sqlite": "SQLite"
+      }
+    },
+    "messages": {
+      "configCheckError": "Periksa konfigurasi Anda dan coba lagi."
+    },
+    "success": {
+      "title": "Berhasil!",
+      "description": "Jejakawan telah berhasil diinstal.",
+      "finish": "Buka Dashboard"
+    },
+    "troubleshooting": {
+      "title": "Panduan Perbaikan untuk {os}:",
+      "php_version": "Tingkatkan versi PHP ke 8.2 atau 8.3 (Disarankan).",
+      "writable_env": "Pastikan berkas .env ada dan dapat ditulisi.",
+      "writable_storage": "Jalankan: chmod -R 775 storage bootstrap/cache",
+      "install_missing": "Instal ekstensi yang kurang:",
+      "windows_hint": "Aktifkan ekstensi di php.ini Anda (hapus awalan ';' untuk ekstensi yang terdaftar).",
+      "unknownOsHint": "Instal ekstensi PHP yang kurang di atas menggunakan package manager OS Anda."
+    }
+  },
+  "labels": {
+    "roles": "Peran",
+    "role": "Peran",
+    "permissions": "Izin",
+    "permission": "Izin",
+    "users": "Pengguna",
+    "user": "Pengguna",
+    "system": "Sistem",
+    "systemGlobal": "Global / Sistem",
+    "globalContext": "Global",
+    "logs": "Log Audit",
+    "security": "Keamanan",
+    "redis": "Cache Redis",
+    "scheduledTasks": "Tugas Terjadwal",
+    "webhooks": "Webhooks",
+    "plugins": "Plugin",
+    "extensions": "Ekstensi Admin"
+  },
+  "dashboard": {
+    "creatorSubtitle": "Berikut performa konten Anda",
+    "stats": {
+      "activeUsers": "Pengguna aktif",
+      "creator": {
+        "awaitingApproval": "Menunggu persetujuan",
+        "contentStatus": "Distribusi Status Konten",
+        "drafts": "Draf",
+        "myContent": "Konten Saya",
+        "myMedia": "Media Saya",
+        "pendingReview": "Menunggu Tinjauan",
+        "published": "Diterbitkan",
+        "recentActivity": "Aktivitas Terkini",
+        "topContent": "Konten Terpopuler",
+        "uploadedFiles": "File diunggah",
+        "workInProgress": "Dalam pengerjaan"
+      },
+      "mediaFiles": "File Media",
+      "pendingContent": "Konten Tertunda",
+      "published": "diterbitkan",
+      "requiresReview": "Butuh tinjauan",
+      "totalContents": "Total Konten",
+      "totalUsers": "Total Pengguna"
+    },
+    "table": {
+      "content": "Konten",
+      "status": "Status",
+      "views": "Dilihat"
+    },
+    "title": "Dasbor",
+    "traffic": {
+      "filters": {
+        "last30Days": "30 Hari Terakhir",
+        "last7Days": "7 Hari Terakhir",
+        "last90Days": "3 Bulan Terakhir"
+      },
+      "last7Days": "7 Hari Terakhir",
+      "noData": "Tidak ada data trafik",
+      "overview": "Ringkasan statistik trafik",
+      "title": "Ringkasan Trafik",
+      "visits": "Kunjungan",
+      "labels": {
+        "desktop": "Desktop",
+        "mobile": "Seluler"
+      },
+      "dataTableSummary": "Lihat data grafik sebagai tabel",
+      "dataTablePeriod": "Periode",
+      "dataTableValue": "Kunjungan"
+    },
+    "welcome": "Selamat datang kembali, {name}!",
+    "widgets": {
+      "quickActions": {
+        "commandRunner": "Runner Perintah",
+        "createCategory": "Buat Kategori",
+        "createPage": "Buat Halaman",
+        "createPost": "Buat Artikel",
+        "createTag": "Buat Tag",
+        "manageUsers": "Kelola Pengguna",
+        "recentActions": "Aksi Terakhir",
+        "settings": "Pengaturan",
+        "title": "Aksi Cepat",
+        "uploadMedia": "Unggah Media",
+        "viewComments": "Lihat Komentar"
+      },
+      "recentActivity": {
+        "description": "Aktivitas sistem terbaru",
+        "empty": "Tidak ada aktivitas terkini",
+        "live": "Langsung",
+        "loading": "Memuat aktivitas...",
+        "time": {
+          "ago": "{time} yang lalu",
+          "justNow": "Baru saja"
+        },
+        "title": "Aktivitas Terkini",
+        "viewAll": "Lihat Semua Aktivitas"
+      },
+      "emailStatus": {
+        "title": "Status Email",
+        "templates": "Template",
+        "subscribers": "Pelanggan",
+        "smtpStatus": "Koneksi SMTP",
+        "recentLogs": "Aktivitas Terkini",
+        "noLogs": "Tidak ada aktivitas email terkini",
+        "manage": "Kelola Pengaturan Email"
+      },
+      "systemHealth": {
+        "cpu": "CPU",
+        "database": "Database",
+        "disk": "Disk",
+        "lastUpdated": "Terakhir diperbarui: {time}",
+        "memory": "Memori",
+        "overallStatus": "Status Keseluruhan",
+        "redis": "Redis",
+        "status": {
+          "critical": "Kritis",
+          "disabled": "Nonaktif",
+          "error": "Error",
+          "healthy": "Sehat",
+          "ok": "OK",
+          "unknown": "Tidak Diketahui",
+          "warning": "Peringatan"
+        },
+        "title": "Kesehatan Sistem"
+      }
+    }
+  },
+  "redis": {
+    "cache": {
+      "actions": {
+        "all": {
+          "button": "Bersihkan Semua",
+          "desc": "Bersihkan semua data cache termasuk config, route, dan view",
+          "title": "Bersihkan Semua Cache"
+        },
+        "cache": {
+          "button": "Bersihkan Cache",
+          "desc": "Bersihkan cache aplikasi saja",
+          "title": "Cache Aplikasi"
+        },
+        "config": {
+          "button": "Bersihkan Config",
+          "desc": "Bersihkan cache konfigurasi",
+          "title": "Cache Konfigurasi"
+        },
+        "route": {
+          "button": "Bersihkan Route",
+          "desc": "Bersihkan cache route",
+          "title": "Cache Route"
+        },
+        "view": {
+          "button": "Bersihkan View",
+          "desc": "Bersihkan template view yang dikompilasi",
+          "title": "Cache View"
+        },
+        "warm": {
+          "button": "Warm Cache",
+          "desc": "Regenerasi file cache yang dioptimalkan",
+          "title": "Warm Cache",
+          "warming": "Memproses..."
+        }
+      },
+      "stats": {
+        "expired": "Key Kedaluwarsa",
+        "keys": "Total Key",
+        "size": "Ukuran Cache",
+        "table": {
+          "key": "Key",
+          "size": "Ukuran",
+          "ttl": "TTL"
+        },
+        "title": "Statistik Cache",
+        "topKeys": "Key Teratas berdasarkan Ukuran"
+      },
+      "title": "Manajemen Cache"
+    },
+    "description": "Kelola konfigurasi server Redis dan monitor performa cache",
+    "messages": {
+      "flushTitle": "Bersihkan Cache",
+      "flushAction": "Bersihkan",
+      "flushConfirm": "Apakah Anda yakin ingin menghapus cache {type}?",
+      "flushConfirmLogout": "Peringatan: Menghapus semua cache juga akan menghapus sesi pengguna. Anda akan segera logout. Apakah Anda yakin ingin melanjutkan?",
+      "flushFailed": "Gagal membersihkan cache",
+      "flushSuccess": "Cache {type} berhasil dibersihkan!",
+      "loading": "Memuat...",
+      "saveFailed": "Gagal menyimpan pengaturan",
+      "saveSuccess": "Pengaturan berhasil disimpan!",
+      "testFailed": "Koneksi gagal",
+      "testSuccess": "Koneksi berhasil",
+      "warmTitle": "Panaskan Cache",
+      "warmAction": "Panaskan",
+      "warmConfirm": "Apakah Anda yakin ingin memanaskan ulang cache? Ini akan meregenerasi cache konfigurasi, route, dan view.",
+      "warmConfirmLogout": "Peringatan: Memanaskan ulang cache memerlukan penghapusan terlebih dahulu, yang akan menghapus sesi pengguna. Anda akan segera logout. Apakah Anda yakin ingin melanjutkan?",
+      "warmFailed": "Gagal melakukan warm cache",
+      "warmSuccess": "Cache berhasil di-warm!"
+    },
+    "settings": {
+      "cancel": "Reset",
+      "connection": "Pengaturan Koneksi",
+      "disabled": "Dinonaktifkan",
+      "enabled": "Diaktifkan",
+      "save": "Simpan Pengaturan",
+      "saving": "Menyimpan...",
+      "select": "Pilih...",
+      "test": "Uji Koneksi",
+      "testing": "Menguji...",
+      "testDescription": "Uji pengaturan koneksi Redis Anda."
+    },
+    "statistics": {
+      "autoRefresh": "Segarkan otomatis setiap 30 detik",
+      "grid": {
+        "clients": "Klien Terhubung",
+        "commands": "Total Perintah",
+        "hitRate": "Hit Rate",
+        "keys": "Total Key",
+        "memory": "Memori Digunakan",
+        "ops": "Operasi/Detik",
+        "uptime": "Uptime",
+        "version": "Versi Redis"
+      },
+      "hitMiss": {
+        "hitRate": "Hit Rate",
+        "hits": "Cache Hit",
+        "misses": "Cache Miss",
+        "title": "Statistik Cache Hit/Miss"
+      },
+      "refresh": "Segarkan Statistik"
+    },
+    "tabs": {
+      "cache": "Manajemen Cache",
+      "settings": "Pengaturan",
+      "statistics": "Statistik"
+    },
+    "title": "Manajemen Redis"
+  },
+  "languages": {
+    "actions": {
+      "confirmDelete": "Hapus bahasa \"{name}\"?",
+      "delete": "Hapus",
+      "export": "Ekspor",
+      "setDefault": "Jadikan Default"
+    },
+    "add": "Tambah Bahasa",
+    "create": {
+      "code": "Kode Bahasa",
+      "codePlaceholder": "fr, de, es...",
+      "fromTemplate": "Buat terjemahan dari template (Bahasa Inggris)",
+      "name": "Nama Bahasa",
+      "namePlaceholder": "Prancis, Jerman...",
+      "title": "Tambah Bahasa Baru"
+    },
+    "import": {
+      "button": "Impor",
+      "description": "Unggah file ZIP yang berisi file terjemahan bahasa.",
+      "file": "Pilih File ZIP",
+      "title": "Impor Paket Bahasa"
+    },
+    "importPack": "Impor Paket",
+    "list": {
+      "default": "Default",
+      "description": "Bahasa yang terdaftar di sistem",
+      "empty": "Tidak ada bahasa ditemukan",
+      "headers": {
+        "actions": "Aksi",
+        "code": "Kode",
+        "default": "Default",
+        "name": "Nama"
+      },
+      "title": "Bahasa Terdaftar"
+    },
+    "messages": {
+      "createFailed": "Gagal membuat bahasa",
+      "createSuccess": "Bahasa berhasil dibuat",
+      "deleteFailed": "Gagal menghapus bahasa",
+      "exportFailed": "Gagal mengekspor paket bahasa",
+      "fetchFailed": "Gagal memuat bahasa",
+      "importFailed": "Gagal mengimpor paket bahasa",
+      "importSuccess": "Paket bahasa berhasil diimpor",
+      "setDefaultFailed": "Gagal mengatur bahasa default",
+      "export_success": "Paket bahasa berhasil diekspor",
+      "set_default_success": "Bahasa default diperbarui"
+    },
+    "subtitle": "Kelola bahasa aplikasi",
+    "title": "Bahasa",
+    "uiLanguages": {
+      "active": "Aktif",
+      "available": "Tersedia",
+      "browserDetected": "Bahasa Browser",
+      "description": "Bahasa yang tersedia untuk antarmuka pengguna. Perubahan langsung berlaku.",
+      "hasUiTranslations": "Dukungan UI",
+      "keys": "kunci",
+      "notAvailable": "Tidak Tersedia",
+      "title": "Terjemahan UI",
+      "translationKeys": "Kunci Terjemahan"
+    },
+    "description": "Kelola bahasa aplikasi"
+  },
+  "profile": {
+    "form": {
+      "bio": "Bio",
+      "changePassword": "Ganti Kata Sandi",
+      "changing": "Mengganti...",
+      "confirmPassword": "Konfirmasi Kata Sandi Baru",
+      "currentPassword": "Kata Sandi Saat Ini",
+      "email": "Email",
+      "location": "Lokasi",
+      "name": "Nama",
+      "newPassword": "Kata Sandi Baru",
+      "passwordHelp": "Harus minimal 8 karakter dengan huruf besar, huruf kecil, dan angka",
+      "phone": "Telepon",
+      "save": "Simpan Perubahan",
+      "saving": "Menyimpan...",
+      "twoFactorDescription": "Amankan akun Anda dengan Autentikasi Dua Faktor."
+    },
+    "messages": {
+      "passwordFailed": "Gagal mengubah kata sandi",
+      "passwordSuccess": "Kata sandi berhasil diubah",
+      "updateFailed": "Gagal memperbarui profil",
+      "updateSuccess": "Profil berhasil diperbarui"
+    },
+    "subtitle": "Kelola informasi akun dan keamanan Anda",
+    "tabs": {
+      "history": "Riwayat Login",
+      "password": "Ganti Kata Sandi",
+      "profile": "Informasi Profil",
+      "two-factor": "Dua Faktor",
+      "twoFactor": "Otentikasi Dua Faktor"
+    },
+    "title": "Profil Saya",
+    "sessions": {
+      "title": "Sesi aktif",
+      "description": "Perangkat dan browser yang masuk ke akun Anda.",
+      "empty": "Tidak ada sesi aktif.",
+      "loading": "Memuat sesi…",
+      "current": "Sesi saat ini",
+      "lastActive": "Terakhir aktif",
+      "started": "Dimulai",
+      "revoke": "Cabut akses",
+      "confirmRevoke": "Cabut sesi ini? Perangkat akan logout.",
+      "revoked": "Revoked"
+    },
+    "passkeys": {
+      "registerDialog": {
+        "title": "Tambah passkey",
+        "description": "Pilih nama yang mudah dikenali di perangkat ini.",
+        "label": "Nama tampilan",
+        "placeholder": "Laptop saya",
+        "defaultName": "Passkey saya",
+        "submit": "Daftarkan"
+      },
+      "removeDialog": {
+        "title": "Hapus passkey?"
+      }
+    }
+  },
+  "scheduled_tasks": {
+    "actions": {
+      "delete": "Hapus Tugas",
+      "run": "Jalankan Tugas"
+    },
+    "confirm_delete": "Yakin ingin menghapus tugas \"{name}\"?",
+    "confirm_run": "Yakin ingin menjalankan tugas \"{name}\"?",
+    "create": "Buat Tugas",
+    "description": "Kelola tugas terjadwal dan cron jobs",
+    "edit": "Edit Tugas",
+    "form": {
+      "active": "Aktif",
+      "command": "Perintah",
+      "cron_help": "Format: menit jam hari bulan hari-minggu (mis., 0 * * * * = setiap jam)",
+      "description": "Deskripsi",
+      "name": "Nama Tugas",
+      "preset": "Preset cepat",
+      "schedule": "Jadwal Cron",
+      "select_command": "Pilih perintah"
+    },
+    "help": {
+      "cron_desc": "Tambahkan baris ini ke crontab server Anda (jalankan 'crontab -e'):",
+      "cron_hint": "Perintah ini memberitahu server untuk memeriksa tugas terjadwal setiap menit.",
+      "cron_title": "Pengaturan Cron Server",
+      "intro": "Tugas terjadwal memungkinkan Anda mengotomatisasi perintah rutin seperti pembersihan cache, backup, dan pekerjaan pemeliharaan.",
+      "req_1": "Tugas harus di-set ke Active (klik tombol status)",
+      "req_2": "Jadwal cron yang valid harus dikonfigurasi",
+      "req_3": "Cron job server harus berjalan (lihat di bawah)",
+      "requirements_title": "Syarat agar Tugas Berjalan Otomatis:",
+      "title": "Cara Kerja Tugas Terjadwal"
+    },
+    "messages": {
+      "activated": "Tugas diaktifkan",
+      "bulkDeleted": "{count} tugas berhasil dihapus",
+      "created": "Tugas berhasil dibuat",
+      "deactivated": "Tugas dinonaktifkan",
+      "deleted": "Tugas berhasil dihapus",
+      "executed": "Tugas berhasil dijalankan",
+      "toggled": "Status tugas diperbarui",
+      "updated": "Tugas berhasil diperbarui"
+    },
+    "no_tasks": "Tidak ada tugas terjadwal",
+    "output": {
+      "noOutput": "Tidak ada output",
+      "title": "Output Tugas"
+    },
+    "status": {
+      "completed": "Selesai",
+      "failed": "Gagal",
+      "pending": "Menunggu",
+      "running": "Berjalan",
+      "inactive": "Tidak Aktif",
+      "active": "Aktif"
+    },
+    "table": {
+      "actions": "Aksi",
+      "active": "Aktif",
+      "command": "Perintah",
+      "last_run": "Terakhir Dijalankan",
+      "name": "Nama",
+      "schedule": "Jadwal",
+      "status": "Status"
+    },
+    "title": "Tugas Terjadwal",
+    "tooltips": {
+      "click_to_activate": "Klik untuk mengaktifkan - Tugas akan berjalan otomatis sesuai jadwal",
+      "click_to_deactivate": "Klik untuk menonaktifkan - Tugas tidak akan berjalan otomatis"
+    }
+  },
+  "command_runner": {
+    "access_denied": "Akses Ditolak",
+    "clear": "Bersihkan",
+    "description": "Jalankan perintah artisan secara manual (Super Admin saja)",
+    "execute": "Jalankan Perintah",
+    "executed_error": "Perintah dijalankan dengan error",
+    "executed_success": "Perintah berhasil dijalankan",
+    "executing": "Menjalankan perintah...",
+    "history": "Riwayat Perintah",
+    "no_history": "Belum ada perintah yang dijalankan",
+    "output": "Output",
+    "parameters": "Parameter",
+    "parameters_placeholder": "Parameter opsional (mis., --force)",
+    "run": "Jalankan",
+    "running": "Menjalankan...",
+    "select_command": "Pilih Perintah",
+    "select_placeholder": "Pilih perintah untuk dijalankan...",
+    "super_admin": "Super Admin Saja",
+    "super_admin_only": "Fitur ini hanya tersedia untuk super administrator",
+    "table": {
+      "command": "Perintah",
+      "date": "Tanggal",
+      "parameters": "Parameter",
+      "runner": "Pelaksana",
+      "status": "Status"
+    },
+    "title": "Command Runner"
+  },
+  "analytics": {
+    "apply": "Terapkan",
+    "charts": {
+      "browsers": "Browser",
+      "devices": "Perangkat",
+      "realtime": "Aktivitas Real-time",
+      "topContent": "Konten Teratas",
+      "topCountries": "Negara Teratas",
+      "topPages": "Halaman Teratas",
+      "topReferrers": "Perujuk Teratas",
+      "visits": "Kunjungan",
+      "visitsOverTime": "Kunjungan dari Waktu ke Waktu"
+    },
+    "export": {
+      "button": "Ekspor",
+      "events": "Ekspor Event",
+      "exporting": "Mengekspor...",
+      "sessions": "Ekspor Sesi",
+      "success": "Ekspor data berhasil dimulai",
+      "visits": "Ekspor Kunjungan"
+    },
+    "labels": {
+      "visits": "kunjungan"
+    },
+    "loading": "Memuat analitik...",
+    "noData": "Data tidak tersedia",
+    "overview": {
+      "bounceRate": "Rasio Pantulan",
+      "totalSessions": "Total Sesi",
+      "totalVisits": "Total Kunjungan",
+      "uniqueVisitors": "Pengunjung Unik"
+    },
+    "realtime": {
+      "activePages": "Halaman Aktif",
+      "activeSessions": "Sesi Aktif",
+      "visitsLastHour": "Kunjungan (Jam Terakhir)"
+    },
+    "sections": {
+      "content": "Konten Teratas",
+      "geography": "Geografi",
+      "technology": "Teknologi",
+      "traffic": "Lalu Lintas"
+    },
+    "subtitle": "Pantau dan analisis performa situs web Anda",
+    "title": "Analitik",
+    "to": "sampai",
+    "dateFrom": "Dari tanggal",
+    "dateTo": "Sampai tanggal"
+  },
+  "journal_dashboard": {
+    "cards": {
+      "activity": {
+        "description": "Aktivitas pengguna dan perubahan data",
+        "title": "Jurnal Aktivitas",
+        "total": "total aktivitas"
+      },
+      "login": {
+        "description": "Semua aktivitas login pengguna",
+        "title": "Riwayat Akses",
+        "total": "total login"
+      },
+      "security": {
+        "description": "Event keamanan dan percobaan login",
+        "title": "Jurnal Keamanan",
+        "total": "total event"
+      },
+      "system": {
+        "description": "Log aplikasi Laravel",
+        "files": "file log",
+        "title": "Jurnal Sistem"
+      }
+    },
+    "description": "Lihat ringkasan dan akses cepat ke semua sistem log",
+    "empty": "Tidak ada data",
+    "loading": "Memuat...",
+    "recent": {
+      "activity": "Aktivitas Terbaru",
+      "security": "Event Keamanan Terbaru"
+    },
+    "title": "Dasbor Jurnal",
+    "viewAll": "Lihat Semua"
+  },
+  "activity_journal": {
+    "export": {
+      "button": "Ekspor CSV",
+      "exporting": "Mengekspor...",
+      "failed": "Gagal mengekspor log aktivitas"
+    },
+    "filters": {
+      "allTypes": "Semua Tipe",
+      "allUsers": "Semua Pengguna",
+      "clear": "Hapus",
+      "dateFrom": "Dari",
+      "dateTo": "Sampai",
+      "perPage": "Per halaman",
+      "search": "Cari aktivitas...",
+      "types": {
+        "bulk_action_media": "Aksi Masal Media",
+        "created": "Dibuat",
+        "delete_permanent": "Dihapus Permanen",
+        "deleted": "Dihapus",
+        "emptied_trash": "Kosongkan Sampah",
+        "login": "Masuk",
+        "login_failed": "Login Gagal",
+        "login_success": "Login Berhasil",
+        "logout": "Keluar",
+        "published": "Diterbitkan",
+        "session_invalidated": "Sesi Berakhir",
+        "soft_deleted_file": "Pindahkan File ke Sampah",
+        "soft_deleted_folder": "Pindahkan Folder ke Sampah",
+        "soft_deleted_media": "Pindahkan Media ke Sampah",
+        "unpublished": "Tidak Diterbitkan",
+        "updated": "Diperbarui",
+        "uploaded_media": "Unggah Media",
+        "viewed": "Dilihat"
+      }
+    },
+    "messages": {
+      "empty": "Tidak ada log aktivitas ditemukan",
+      "loading": "Memuat...",
+      "system": "Sistem",
+      "unknown": "Tidak Diketahui",
+      "viewDetails": "Lihat Detail"
+    },
+    "stats": {
+      "activeUsers": "Pengguna Aktif",
+      "thisWeek": "Minggu Ini",
+      "today": "Hari Ini",
+      "total": "Total Aktivitas"
+    },
+    "title": "Jurnal Aktivitas",
+    "subtitle": "Jejak audit aksi pengguna dan sistem."
+  },
+  "access_journal": {
+    "alerts": {
+      "severity": {
+        "high": "Tinggi",
+        "low": "Rendah",
+        "medium": "Sedang"
+      },
+      "title": "Peringatan Aktivitas Mencurigakan",
+      "types": {
+        "brute_force": "Potensi Brute Force",
+        "new_ip": "Alamat IP Baru",
+        "shared_ip": "Kemungkinan Berbagi Akun"
+      }
+    },
+    "description": "Lihat semua aktivitas login dari pengguna",
+    "export": {
+      "button": "Ekspor CSV",
+      "exporting": "Mengekspor...",
+      "failed": "Gagal mengekspor riwayat login"
+    },
+    "filters": {
+      "allStatus": "Semua Status",
+      "allUsers": "Semua Pengguna",
+      "dateFrom": "Dari",
+      "dateTo": "Sampai"
+    },
+    "messages": {
+      "empty": "Tidak ada riwayat login ditemukan",
+      "loading": "Memuat..."
+    },
+    "pagination": {
+      "showing": "Menampilkan {count} dari {total} record"
+    },
+    "stats": {
+      "activeSessions": "Sesi Aktif",
+      "failedLogins": "Login Gagal",
+      "suspiciousCount": "Aktivitas Mencurigakan",
+      "todayLogins": "Login Hari Ini",
+      "totalLogins": "Total Login Berhasil",
+      "uniqueIps": "IP Unik Hari Ini"
+    },
+    "status": {
+      "failed": "Gagal",
+      "success": "Berhasil"
+    },
+    "title": "Riwayat Akses"
+  },
+  "autosave": {
+    "agoMinutes": "{minutes}m yang lalu",
+    "agoSeconds": "{seconds}d yang lalu",
+    "failed": "Gagal menyimpan",
+    "justNow": "baru saja",
+    "notSaved": "Belum disimpan",
+    "savedAt": "Disimpan pada {time}",
+    "saving": "Menyimpan otomatis..."
+  },
+  "infra": {
+    "plugins": {
+      "title": "Plugin",
+      "loading": "Memuat plugin…",
+      "empty": "Belum ada plugin.",
+      "themeBlocks": {
+        "title": "Slot blok tema",
+        "hint": "Pilih lokasi tampil plugin di situs publik (tema Janari).",
+        "noSlots": "Tidak ada slot tema.",
+        "save": "Simpan pengaturan",
+        "saved": "Pengaturan plugin disimpan.",
+        "saveFailed": "Gagal menyimpan pengaturan plugin."
+      },
+      "modal": {
+        "settings_title": "Pengaturan {name}",
+        "close": "Tutup"
+      }
+    }
+  },
+  "legal": {
+    "backToRegister": "Kembali ke pendaftaran",
+    "privacy": {
+      "title": "Kebijakan Privasi",
+      "subtitle": "Terakhir diperbarui: {date}",
+      "footer": "Hak cipta dilindungi."
+    },
+    "terms": {
+      "title": "Syarat Layanan",
+      "subtitle": "Terakhir diperbarui: {date}",
+      "footer": "Hak cipta dilindungi."
+    }
+  },
+  "onboarding": {
+    "title": "Siapkan situs Anda",
+    "subtitle": "Selesaikan langkah ini untuk meluncurkan situs publik (sekitar 15 menit).",
+    "progress": "{completed} dari {total} selesai",
+    "dismiss": "Tutup daftar periksa",
+    "completed": "Selesai — daftar periksa onboarding lengkap.",
+    "steps": {
+      "identity": {
+        "title": "Identitas situs",
+        "description": "Atur nama situs dan branding di pengaturan umum.",
+        "action": "Buka pengaturan"
+      },
+      "theme": {
+        "title": "Aktifkan tema",
+        "description": "Aktifkan Janari atau tema bundled lain untuk situs publik.",
+        "action": "Kelola tema"
+      },
+      "firstPage": {
+        "title": "Terbitkan halaman pertama",
+        "description": "Buat halaman yang bisa dibuka pengunjung dari menu atau beranda.",
+        "action": "Buat halaman"
+      }
+    }
+  },
+  "oauth": {
+    "title": "Klien OAuth",
+    "description": "Daftarkan aplikasi eksternal yang memakai control plane sebagai penyedia identitas OAuth2.",
+    "actions": {
+      "create": "Klien baru"
+    },
+    "empty": {
+      "title": "Belum ada klien OAuth",
+      "description": "Buat klien untuk menerbitkan kode otorisasi ke ja-platform atau aplikasi lain."
+    },
+    "table": {
+      "name": "Aplikasi",
+      "redirect": "URI redirect",
+      "actions": "Aksi"
+    },
+    "confirmDelete": "Hapus klien OAuth \"{name}\"?",
+    "deleted": "Klien OAuth dihapus",
+    "errors": {
+      "load": "Gagal memuat klien OAuth",
+      "delete": "Gagal menghapus klien OAuth"
+    },
+    "form": {
+      "createTitle": "Buat klien OAuth",
+      "editTitle": "Ubah klien OAuth",
+      "description": "Klien confidential mendapat client secret yang hanya ditampilkan sekali setelah dibuat.",
+      "name": "Nama aplikasi",
+      "redirect": "URI redirect",
+      "confidential": "Klien confidential (disarankan)",
+      "secretTitle": "Client secret",
+      "secretHint": "Salin secret ini sekarang. Tidak akan ditampilkan lagi."
+    },
+    "consent": {
+      "title": "Otorisasi aplikasi",
+      "description": "{client} meminta akses ke akun Anda.",
+      "scopes": "Izin yang diminta",
+      "allow": "Izinkan",
+      "deny": "Tolak",
+      "missingToken": "Sesi otorisasi kedaluwarsa. Mulai lagi dari aplikasi.",
+      "unknownClient": "Aplikasi tidak dikenal"
+    }
+  },
+  "integrations": {
+    "title": "Integrasi Platform",
+    "subtitle": "Provisioning SCIM dan sinkron konfigurasi terpusat untuk aplikasi turunan.",
+    "scim": {
+      "title": "Provisioning Identitas SCIM 2.0",
+      "description": "Provision pengguna dari Azure AD, Okta, atau IdP lain.",
+      "baseUrl": "URL Dasar",
+      "bearer": "Token Bearer",
+      "bearerHint": "Atur SCIM_TOKEN di .env server"
+    },
+    "config": {
+      "title": "Server Konfigurasi Terpusat",
+      "description": "Ekspos pengaturan publik ke aplikasi turunan via OAuth2 client credentials.",
+      "resolve": "Resolve konfigurasi",
+      "sync": "Ping sinkron"
+    },
+    "hub": {
+      "title": "Identitas & integrasi platform",
+      "subtitle": "Konfigurasi SSO, provisioning SCIM, webhook keluar, dan kebijakan akses.",
+      "oauthCard": "OAuth Clients",
+      "oauthDesc": "Daftarkan aplikasi untuk authorization code dan SSO.",
+      "webhooksCard": "Webhooks",
+      "webhooksDesc": "Berlangganan event siklus user/member dengan tanda tangan HMAC.",
+      "abacCard": "Kebijakan ABAC",
+      "abacDesc": "Aturan berbasis atribut — buka tab Security.",
+      "scimCard": "SCIM & Config",
+      "scimDesc": "URL provisioning enterprise dan API config M2M.",
+      "open": "Buka",
+      "siemCard": "Log ekspor SIEM",
+      "siemDesc": "Lihat event keamanan yang diekspor ke file SIEM."
+    }
+  },
+  "webhooks": {
+    "title": "Webhook",
+    "description": "Kelola webhook keluar untuk integrasi berbasis event.",
+    "empty": {
+      "title": "Belum Ada Webhook",
+      "description": "Buat endpoint webhook untuk menerima event identitas dan member."
+    },
+    "form": {
+      "createTitle": "Buat Webhook",
+      "editTitle": "Ubah Webhook",
+      "description": "Berlangganan event IAM dengan pengiriman bertanda HMAC.",
+      "name": "Nama",
+      "url": "URL Endpoint",
+      "secret": "Secret penandatangan (opsional)",
+      "events": "Event",
+      "active": "Aktif",
+      "eventsRequired": "Pilih minimal satu event."
+    },
+    "actions": {
+      "testPing": "Uji ping",
+      "edit": "Ubah",
+      "delete": "Hapus"
+    },
+    "messages": {
+      "testDispatched": "Payload uji diantrekan untuk dikirim.",
+      "testFailed": "Gagal memicu pengiriman uji.",
+      "deleted": "Webhook dihapus."
+    },
+    "deliveries": {
+      "title": "Riwayat pengiriman",
+      "subtitle": "Percobaan pengiriman webhook terbaru.",
+      "empty": "Belum ada pengiriman. Kirim test ping untuk melihat entri.",
+      "colWebhook": "Webhook",
+      "colEvent": "Event",
+      "colStatus": "Status",
+      "colCode": "HTTP",
+      "colWhen": "Waktu"
+    }
+  },
+  "kyc": {
+    "title": "Verifikasi akun (KYC)",
+    "subtitle": "Selesaikan setiap langkah. Level 3 memerlukan review admin.",
+    "levels": {
+      "level_0": "Belum terverifikasi",
+      "level_1": "Level 1",
+      "level_2": "Level 2",
+      "level_3": "Terverifikasi"
+    },
+    "pending": {
+      "title": "Sedang ditinjau",
+      "description": "Dokumen telah dikirim. Admin akan meninjau segera."
+    },
+    "rejected": {
+      "title": "Verifikasi ditolak",
+      "description": "Unggah dokumen baru dan kirim ulang."
+    },
+    "steps": {
+      "basic": {
+        "title": "Level 1: Profil dasar",
+        "desc": "Nama dan telepon wajib diisi.",
+        "done": "Profil dasar selesai."
+      },
+      "contact": {
+        "title": "Level 2: Verifikasi kontak",
+        "desc": "Email terverifikasi dan telepon diperlukan.",
+        "done": "Verifikasi kontak selesai."
+      },
+      "identity": {
+        "title": "Level 3: Dokumen identitas",
+        "desc": "Unggah KTP atau paspor. Selfie opsional. Admin menyetujui Level 3.",
+        "done": "Identitas terverifikasi.",
+        "locked": "Selesaikan Level 2 terlebih dahulu."
+      }
+    },
+    "form": {
+      "name": "Nama lengkap",
+      "phone": "Telepon",
+      "location": "Lokasi (opsional)"
+    },
+    "requirements": {
+      "emailVerified": "Email terverifikasi",
+      "phone": "Telepon di profil"
+    },
+    "documents": {
+      "idCard": "KTP",
+      "idCardHint": "JPG, PNG atau PDF — maks 10 MB",
+      "passport": "Paspor",
+      "passportHint": "Alternatif jika tanpa KTP",
+      "selfie": "Selfie dengan ID (opsional)",
+      "selfieHint": "Memegang ID di samping wajah"
+    },
+    "actions": {
+      "completeBasic": "Simpan & capai Level 1",
+      "completeContact": "Konfirmasi Level 2",
+      "submitReview": "Kirim untuk review admin"
+    },
+    "messages": {
+      "basicDone": "Level 1 selesai",
+      "contactDone": "Level 2 selesai",
+      "documentUploaded": "Dokumen diunggah",
+      "submitted": "Dikirim untuk ditinjau"
+    }
+  },
+  "kycReviews": {
+    "title": "Antrian review KYC",
+    "subtitle": "Setujui atau tolak pengajuan identitas.",
+    "filters": {
+      "pending": "Menunggu",
+      "approved": "Disetujui",
+      "rejected": "Ditolak",
+      "all": "Semua"
+    },
+    "empty": {
+      "title": "Tidak ada pengajuan",
+      "description": "Tidak ada pengajuan untuk filter ini."
+    },
+    "actions": {
+      "review": "Tinjau",
+      "approve": "Setujui Level 3",
+      "reject": "Tolak",
+      "confirmReject": "Konfirmasi penolakan"
+    },
+    "review": {
+      "title": "Tinjau pengajuan",
+      "rejectReason": "Alasan penolakan (wajib)"
+    },
+    "messages": {
+      "approved": "KYC disetujui",
+      "rejected": "KYC ditolak"
+    }
+  }
+}

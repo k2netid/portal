@@ -1,0 +1,47 @@
+{
+  "apply": "Terapkan",
+  "charts": {
+    "browsers": "Browser",
+    "devices": "Perangkat",
+    "realtime": "Aktivitas Real-time",
+    "topContent": "Kusi Teratas",
+    "topCountries": "Negara Teratas",
+    "topPages": "Kaca Teratas",
+    "topReferrers": "Perujuk Teratas",
+    "visits": "Kunjungan",
+    "visitsOverTime": "Kunjungan dina Waktu ka Waktu"
+  },
+  "export": {
+    "button": "Ekspor",
+    "events": "Ekspor Event",
+    "exporting": "Mengekspor...",
+    "sessions": "Ekspor Sesi",
+    "success": "Ekspor data hasil dimulai",
+    "visits": "Ekspor Kunjungan"
+  },
+  "labels": {
+    "visits": "kunjungan"
+  },
+  "loading": "Nuju ngamuat analitik...",
+  "noData": "Data teu tersedia",
+  "overview": {
+    "bounceRate": "Rasio Pantulan",
+    "totalSessions": "Total Sesi",
+    "totalVisits": "Total Kunjungan",
+    "uniqueVisitors": "Pengunjung Unik"
+  },
+  "realtime": {
+    "activePages": "Kaca Aktif",
+    "activeSessions": "Sesi Aktif",
+    "visitsLastHour": "Kunjungan (Jam Terakhir)"
+  },
+  "sections": {
+    "content": "Kusi Teratas",
+    "geography": "Geografi",
+    "technology": "Teknologi",
+    "traffic": "Teras Lintas"
+  },
+  "subtitle": "Pantau sareng analisis performa situs web salira",
+  "title": "Analitik",
+  "to": "dugi ka"
+}
