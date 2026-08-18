@@ -70,12 +70,6 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: (id) => {
-          if (id.includes('/src/modules/Crm/')) {
-            return 'mod-crm';
-          }
-          if (id.includes('/src/modules/Operational/Accounting/')) {
-            return 'mod-accounting';
-          }
           if (id.includes('/src/modules/Core/Security/')) {
             return 'mod-security';
           }

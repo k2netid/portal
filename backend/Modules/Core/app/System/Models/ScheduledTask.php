@@ -71,11 +71,6 @@ class ScheduledTask extends Model
         'media:sync-from-disk',
         'theme:scan-register',
 
-        // Operational & Accounting
-        'accounting:mark-overdue-invoices',
-        'accounting:send-invoice-reminders',
-        'platform:payment-env-check',
-
         // Health & diagnostics
         'system:health-check',
         'system:audit',

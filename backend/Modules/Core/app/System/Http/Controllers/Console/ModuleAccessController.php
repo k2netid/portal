@@ -19,7 +19,7 @@ use Modules\Core\System\Support\SqlLikeEscape;
  */
 class ModuleAccessController extends BaseApiController
 {
-    private const MODULES = ['publishing', 'crm', 'accounting'];
+    private const MODULES = ['publishing', 'layout', 'library', 'forms', 'media', 'intelligence'];
 
     public function roles(Request $request, string $module): JsonResponse
     {

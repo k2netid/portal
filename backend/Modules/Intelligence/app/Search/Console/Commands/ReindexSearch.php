@@ -34,7 +34,6 @@ class ReindexSearch extends Command
                 ['Publishing Contents', $stats['pub_contents'] ?? 0],
                 ['Library Categories', $stats['pub_categories'] ?? 0],
                 ['Library Tags', $stats['pub_tags'] ?? 0],
-                ['CRM Records', $stats['crm_records'] ?? 0],
                 ['System Pages & Features', $stats['system_pages'] ?? 0],
             ]
         );

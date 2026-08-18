@@ -7,7 +7,7 @@ namespace Modules\Core\Providers\Concerns;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Shared boot helpers for macro-tier module service providers (Core, Content, Intelligence, Operational).
+ * Shared boot helpers for macro-tier module service providers (Core, Content, Intelligence).
  */
 trait RegistersMacroTierResources
 {

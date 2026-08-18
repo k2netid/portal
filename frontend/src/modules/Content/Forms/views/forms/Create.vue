@@ -121,7 +121,6 @@
         value="settings"
         class="mt-0 focus-visible:ring-0 space-y-6"
       >
-        <FormCrmLeadSettings v-model:settings="formData.settings" />
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <ConsoleFormCard class="lg:col-span-2 p-6 space-y-8" :padded="false">
             <div class="space-y-4">
@@ -219,7 +218,6 @@ import { useI18n } from 'vue-i18n';
 import { FormsService } from '@/modules/Content/Forms/services/formsService';
 import { useToast } from '@/shared/composables/useToast';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
-import FormCrmLeadSettings from '../../components/FormCrmLeadSettings.vue';
 import { formSettingsSchema } from '@/shared/schemas';
 import { Button, Checkbox, Input, Textarea, Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/components/ui';
 import {

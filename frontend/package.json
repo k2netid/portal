@@ -41,19 +41,14 @@
         "i18n:check:braces": "node scripts/i18n-dangerous-braces.mjs",
         "test:e2e:theme": "playwright test tests/e2e/theme-public-smoke.spec.ts tests/e2e/theme-plugin-slot.spec.ts tests/e2e/theme-pricing-catalog.spec.ts tests/e2e/theme-contact-public.spec.ts",
         "test:e2e:ci": "npm run test:e2e:smoke && npm run test:e2e:theme",
-        "deploy:assets:sync": "SYNC_ONLY=1 bash ../scripts/sync-frontend-assets-to-backend.sh",
-        "test:e2e:console": "playwright test tests/e2e/console-content-studio.spec.ts tests/e2e/console-appearance.spec.ts tests/e2e/console-shell-a11y.spec.ts tests/e2e/console-modal-a11y.spec.ts tests/e2e/console-pagination-mobile.spec.ts tests/e2e/crm-console.spec.ts tests/e2e/crm-console-a11y.spec.ts tests/e2e/crm-console-ui.spec.ts",
+        "test:e2e:console": "playwright test tests/e2e/console-content-studio.spec.ts tests/e2e/console-appearance.spec.ts tests/e2e/console-shell-a11y.spec.ts tests/e2e/console-modal-a11y.spec.ts tests/e2e/console-pagination-mobile.spec.ts",
         "test:e2e:console-appearance": "playwright test tests/e2e/console-appearance.spec.ts",
         "test:e2e:console-a11y": "playwright test tests/e2e/console-shell-a11y.spec.ts",
-        "test:e2e:console-pagination": "playwright test tests/e2e/console-pagination-mobile.spec.ts tests/e2e/crm-console.spec.ts tests/e2e/crm-console-a11y.spec.ts",
+        "test:e2e:console-pagination": "playwright test tests/e2e/console-pagination-mobile.spec.ts",
         "lighthouse:console": "node scripts/lighthouse-console-manual.mjs sign-in",
         "lighthouse:console:mobile": "node scripts/lighthouse-console-manual.mjs sign-in-mobile",
         "test:e2e:console-modal": "playwright test tests/e2e/console-modal-a11y.spec.ts",
-        "test:e2e:member-a11y": "playwright test tests/e2e/member-portal-a11y.spec.ts",
-        "test:e2e:crm": "playwright test tests/e2e/crm-console.spec.ts tests/e2e/crm-console-a11y.spec.ts",
-        "test:e2e:crm-smoke": "playwright test tests/e2e/crm-console.spec.ts",
-        "test:e2e:crm-a11y": "playwright test tests/e2e/crm-console-a11y.spec.ts",
-        "test:e2e:crm-ui": "playwright test tests/e2e/crm-console-ui.spec.ts"
+        "test:e2e:member-a11y": "playwright test tests/e2e/member-portal-a11y.spec.ts"
     },
     "dependencies": {
         "@fullcalendar/core": "^6.1.19",

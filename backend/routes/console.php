@@ -12,6 +12,3 @@ Schedule::command('content:publish-scheduled')
     ->everyMinute()
     ->withoutOverlapping()
     ->runInBackground();
-
-Schedule::command('accounting:mark-overdue-invoices')->dailyAt('01:00');
-Schedule::command('accounting:send-invoice-reminders')->dailyAt('08:00');

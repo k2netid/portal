@@ -147,12 +147,6 @@
           class="mt-0 focus-visible:ring-0"
         >
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<FormCrmLeadSettings
-                v-model:settings="formData.settings"
-                :form-fields="formFields"
-                class="lg:col-span-2"
-              />
-
             <ConsoleFormCard class="lg:col-span-2 p-6 space-y-8" :padded="false">
               <div class="space-y-4">
                 <h3 class="text-lg font-semibold border-b pb-2 mb-4">
@@ -260,7 +254,6 @@ import {
   Settings2,
 } from 'lucide-vue-next';
 import FormBuilderDesigner from './components/FormBuilderDesigner.vue';
-import FormCrmLeadSettings from '../../components/FormCrmLeadSettings.vue';
 import type { FormField } from '../../types/forms';
 
 

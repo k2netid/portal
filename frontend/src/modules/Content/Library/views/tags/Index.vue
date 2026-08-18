@@ -100,9 +100,6 @@
               <SelectItem value="media">
                 {{ t('library.tags.filters.media') }}
               </SelectItem>
-              <SelectItem value="crm">
-                {{ t('library.tags.filters.crm') }}
-              </SelectItem>
             </SelectContent>
           </Select>
         </div>

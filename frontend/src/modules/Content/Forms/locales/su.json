@@ -220,21 +220,5 @@
     "withData_desc": "Menduplikat formulir sareng sakabéh data réspondén ({count} data).",
     "cancel": "Batal"
   },
-  "subtitle": "Jieun formulir, kumpulkeun kiriman, sareng tingali analitik.",
-  "crm": {
-    "title": "Tangkap lead CRM",
-    "description": "Jieun lead CRM otomatis nalika formulir ieu dikirim.",
-    "assignee": "Penanggung jawab default",
-    "assigneePlaceholder": "Pilih pamaké",
-    "unassigned": "Tanpa penugasan",
-    "mappingTitle": "Pambetaan widang",
-    "mappingHint": "Petakeun nami widang formulir ka kolom lead CRM.",
-    "autoField": "Otomatis ({field})",
-    "fields": {
-      "firstName": "Nami payun",
-      "lastName": "Nami pengker",
-      "email": "Email",
-      "company": "Pausahaan"
-    }
-  }
+  "subtitle": "Jieun formulir, kumpulkeun kiriman, sareng tingali analitik."
 }

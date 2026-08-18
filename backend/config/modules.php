@@ -187,7 +187,6 @@ return [
             base_path('Modules/Core/*'),
             base_path('Modules/Content/*'),
             base_path('Modules/Intelligence/*'),
-            base_path('Modules/Operational/*'),
         ],
     ],
 

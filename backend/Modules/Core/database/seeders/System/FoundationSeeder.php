@@ -79,14 +79,8 @@ class FoundationSeeder extends Seeder
             'view backups', 'create backups', 'manage backups',
             'view analytics',
 
-            // Module Governance (Generic)
+            // Module Governance (CMS)
             'manage module access',
-            'view crm',
-            'manage crm',
-            'view accounting',
-            'manage accounting',
-            'reconcile accounting',
-            'close accounting period',
         ];
 
         foreach ($permissions as $permission) {
@@ -121,22 +115,9 @@ class FoundationSeeder extends Seeder
             'manage kyc reviews',
             'view security logs',
             'manage module access',
-            'view crm',
-            'manage crm',
-            'view accounting',
-            'manage accounting',
-            'manage kyc reviews',
         ])->get());
 
         // --- Subscription member (public/member API, not platform console) ---
-
-        $finance = Role::firstOrCreate(['name' => 'finance', 'guard_name' => 'web']);
-        $finance->syncPermissions(Permission::whereIn('name', [
-            'view accounting',
-            'manage accounting',
-            'reconcile accounting',
-            'close accounting period',
-        ])->get());
 
         $member = Role::firstOrCreate(['name' => 'member', 'guard_name' => 'web']);
         $member->syncPermissions(['view profile', 'edit profile']);
@@ -155,7 +136,6 @@ class FoundationSeeder extends Seeder
             'manage security integrity',
             'manage security maintenance',
             'manage kyc reviews',
-            'view crm',
         ]);
 
         $this->assignSecurityOfficerFromEnv($securityOfficer);

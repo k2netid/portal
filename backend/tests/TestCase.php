@@ -100,12 +100,6 @@ abstract class TestCase extends BaseTestCase
             'view scheduled tasks', 'manage scheduled tasks',
             'view backups', 'create backups', 'download backups', 'delete backups', 'manage backups',
             'view system', 'manage system',
-            'view crm',
-            'manage crm',
-            'view accounting',
-            'manage accounting',
-            'reconcile accounting',
-            'close accounting period',
             // Logs & Analytics
             'view logs', 'delete logs',
             'view analytics',
