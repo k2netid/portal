@@ -1,9 +1,0 @@
-# Proyek lain di /opt — bukan bagian repo ja-control-plane
-../ja-platform/
-../ja-workspace/
-../bookstack/
-../flarum/
-../remi/
-../zbackup/
-../core
-../.vscode/

@@ -1,71 +1,64 @@
 # Changelog
 
-All notable changes to **ja-control-plane** (Jejakawan hub, `APP_ROLE=ops`).
+Semua perubahan penting pada **Jejakawan CMS (`ja-cms`)**.
 
-## [1.0.0] — (unreleased)
+Format changelog ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) dan mematuhi [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Target: GA setelah gate production (payment live, pilot hosted).
+---
+
+## [1.0.0-beta.2] — 2026-08-19
+
+Rilis penyempurnaan menyeluruh: isolasi modul visual builder, pembersihan total artefak kontrol-plane, peningkatan arsitektur i18n 3 bahasa, dan stabilisasi UI/UX.
 
 ### Added
-
-- **Security Hardening & Mitigations**: Keamanan tingkat tinggi dengan mitigasi 19 celah keamanan (HMAC-SHA256 untuk token verifikasi bot, sliding window rate limit, strict CSP nonce-based, sanitasi log frontend, proteksi luapan halaman `per_page` cap, dan regenerasi baseline audit integritas sistem).
-- **Optimasi Indeks Database**: Penambahan **15 indeks performa baru** di tabel-tabel modul inti (Operational, Billing, Forms, Publishing, Library, Member, AI & Analytics) untuk memotong *sequential scan* kueri.
-- **Smart Settings Caching**: Caching memori permanen (`Cache::rememberForever`) pada kueri settings global guna mengurangi beban kueri database publik ke 0 kueri, lengkap dengan invalidasi otomatis via Eloquent boot observers (`saved`, `deleted`).
-- **Pencegahan Kueri N+1 Sistematis**: Penegakan `Model::preventLazyLoading` secara global pada non-produksi untuk menangkap loop kueri tidak efisien sejak fase lokal/testing.
-- **Optimasi PGSQL Maintenance**: Rutin pemeliharaan native `VACUUM ANALYZE` untuk PostgreSQL pada `SysMaintenanceService`.
-- **CI/CD Caching**: Penambahan Actions caching Composer dependencies pada alur integrasi `.github/workflows/ci.yml`.
-- **Dokumentasi Audit**: Laporan audit keamanan (`security_audit_report.md`), walkthrough detail performa (`walkthrough.md`), dan checklist tugas (`task.md`) dipusatkan langsung di `docs/`.
-- **Platform** (`platform_*`): packages, subscriptions, transactions, reconciliation; webhooks Midtrans/Xendit/internal
-- **Member** portal: `api/v1/public/member/*` dengan header **`X-Subscription-Domain`**; model `subscription_id` + `ScopedBySubscription`
-- Middleware **`IdentifyMemberSubscription`**, **`HubSubscriptionScope`**; quota storage via `SubscriptionStorageQuotaService`
-- Deploy role: **`ops`** mengizinkan member API; path konsol **`/dash/platform`** (redirect dari `/dash/saas`)
-- Public: `api/v1/public/subscription/features`, `api/v1/license/verify` (instansi **ja-platform**)
-- Scheduled content publish cron; CI dengan composer/npm audit
-- Features JSON v2 mapping (Operational) + unit tests (CR-0.1, CR-1.2)
-- **Frontend — modul terpisah**: `Core/Security` (Security Journal, alerts, store) dan `Intelligence/Analytics` (dashboard analitik) diekstrak dari `Core/System` / `Intelligence/Search`; router, navigasi, dan locale bundle per modul
-- **Frontend — tema di Layout**: seluruh kode tema (Janari, customizer, bindings, manifest) dipindah dari `Content/Publishing` ke `Content/Layout`; route konsol `/dash/themes` dan `/dash/themes/:slug/customizer` di modul Layout (selaras API `/manage/layout/themes/*`)
-- **Janari theme**: struktur `pages/`, `components/`, `customizer/`, locale per-tema (`themeLocales`), composable `useLocalizedThemeSetting` / `usePublicPageContent` / `useThemeI18n`; halaman Pricing terhubung katalog platform
-- **Public API**: `GET api/v1/public/platform/catalog` (`PlatformCatalogController`) + feature test; locale-aware konten publik + `PublicContentLocaleTest`
-- **Dokumentasi refactor FE**: `docs/frontend-architecture-refactor-2026-05-22/` (plan, tasks, walkthrough)
+- **JA-Builder Isolated Localization Architecture**:
+  - Struktur modul translasi mandiri di `frontend/src/modules/Content/Layout/locales/builder/` (`en.json`, `id.json`, `su.json`, `index.ts`).
+  - Kamus builder lengkap (>350 entri) mencakup seluruh kanvas, sidebar, toolbar, popover variabel global, menu konteks, dan modal penyisipan blok.
+  - Integrasi dynamic loader builder di `engine/i18n/loaders/content.ts` dan validator kunci di `scripts/i18n-check-keys.mjs`.
+- **Dukungan Penuh 3 Bahasa Simetris**: Paritas 100% tanpa kunci hilang pada seluruh modul (English, Bahasa Indonesia, dan Basa Sunda).
+- **Z-Index Layering Fix pada Dialog Global**:
+  - `DialogOverlay` ditingkatkan ke `z-[100050]` dan `DialogContent` ke `z-[100060]` untuk mencegah tertutupnya modal konfirmasi saat builder dalam mode fullscreen atau modal overlay.
+  - Dukungan prop `overlayClass` pada komponen `DialogContent.vue`.
+- **Smart Settings Caching & Database Performance**:
+  - Memory caching permanen (`Cache::rememberForever`) pada kueri settings global dengan auto-invalidation via Eloquent boot observers (`saved`, `deleted`).
+  - Indeks komposit performa pada tabel `srv_auth_users`, `pub_contents`, `lay_themes`, `forms`, dan `med_media`.
+  - Rutin pemeliharaan native `VACUUM ANALYZE` PostgreSQL pada `SysMaintenanceService`.
 
 ### Changed
-
-- **Hub single-DB** — satu PostgreSQL (`ja_control_plane`); identitas hosted = `platform_subscriptions`, bukan partisi CMS `organization_id` / `workspace_id`
-- Auth users: tabel **`srv_auth_users`**; validasi `Rule::unique` / `exists` pada model `User`
-- CMS migrasi & model tanpa kolom tenant/workspace; Intelligence quota mengacu subscription hub
-- FE: modul Operational **Platform** + **Member**; konsol platform & member auth stores
-- PHPUnit baseline: **430** passed (`php artisan test`) — lihat [docs/architectural-status.md](docs/architectural-status.md)
-- Docs/README diselaraskan ke arsitektur hub (bukan multi-tenant SaaS DB)
-- **Frontend arsitektur**: impor tema `@/modules/Content/Publishing/...` → `@/modules/Content/Layout/...`; Security Journal & Analytics keluar dari `Core/System`; language switcher Janari memakai `DropdownMenu` + `useLanguage` (desktop & mobile)
-- **Janari theme**: migrasi ikon ke `lucide-vue-next`; CSS tema dipusatkan di modul Layout (hapus `frontend/css/themes/janari.css` terpisah); skema customizer Janari dipecah/digabung via skrip maintainer
+- **Penyelarasan Identitas Proyek ke `ja-cms`**:
+  - Memperbarui seluruh konfigurasi, metadata (`package.json`), dan dokumentasi arsitektur (`frontend/README.md`, `backend/README.md`) ke repositori mandiri **Jejakawan CMS (`ja-cms`)**.
+  - Standardisasi konfigurasi environment (`.env.example`, `backend/.env.example`) untuk penggunaan CMS murni (`ja_cms_db`).
+- **Page Settings Panel Refactoring**:
+  - Migrasi seluruh kunci template di `PageSettingsPanel.vue` dari prefix legacy `features.content.*` / `features.menus.*` ke `builder.panels.pageSettings.*`.
+  - Penambahan tipe parameter eksplisit `(media: { url?: string } | string | null)` pada event handler `MediaPicker`.
+- **Module Governance**:
+  - Memperbarui daftar modul terkelola di `ModuleAccessController` ke CMS: `['publishing', 'layout', 'library', 'forms', 'media', 'intelligence']`.
 
 ### Removed
+- **Pembersihan Total Sisa Control-Plane**:
+  - **Backend**: Menghapus konfigurasi `sme`, `aksara`, dan `exambro` dari `config/services.php`; menghapus `Modules/Operational/*` dari scan paths `config/modules.php`; menghapus scheduled tasks `accounting:*` dan `platform:*` dari `routes/console.php` dan `ScheduledTask.php`.
+  - **Database & Permissions**: Menghapus permission `view/manage crm`, `accounting`, role `finance`, dan membersihkan permission `view crm` dari `security-officer` di `FoundationSeeder.php` serta database live.
+  - **Frontend**: Menghapus komponen `FormCrmLeadSettings.vue` dan membersihkan form `Create.vue` / `Edit.vue`; menghapus filter tag `crm` di modul Library; menghapus export `crmPaths`, `accountingPaths`, dan `memberPaths` dari `paths.ts`.
+  - **Build & Tests**: Menghapus manual chunks `mod-crm` dan `mod-accounting` dari `vite.config.ts`; menghapus seluruh spec file dan snapshot E2E CRM / Billing dari `tests/e2e/`; menghapus file `.cursorignore` usang.
 
-- Modul **`SaaS`** (`saas_*` routes, migrasi, seeders, tests, middleware `ResolveLocalHostedTenant`, `IdentifyMemberTenant`)
-- Provisioning multi-DB tenant, `WorkspaceStorageQuotaService`, `AiWorkspaceQuotaService`
-- API & UI legacy `/dash/saas`, tenant feature gate berbasis DB terpisah
-- Entri navigasi & route tema dari modul **Publishing** (diganti Layout)
-- Blok locale `security_alerts` di `Core/System/locales` (dipindah ke `Core/Security/locales`)
+---
 
-### Fixed
+## [1.0.0-beta.1] — 2026-05-25
 
-- Build SPA: restore **`ContentPreviewModal.vue`** (masih direferensikan `Publishing/contents/Edit.vue` setelah refactor)
-- Build: hapus dynamic import tidak efektif `api/client` di `main.ts` (warning Rolldown `INEFFECTIVE_DYNAMIC_IMPORT`)
-- Toggle bahasa inline `ID | EN` di header Janari yang tidak merespons klik
-
-### Breaking
-
-- Klien yang mengandalkan **`saas_*`** API atau header tenant lama harus migrasi ke **platform** + **`X-Subscription-Domain`**
-- Greenfield DB: `php artisan migrate:fresh --seed` — tidak ada rollback ke skema `saas_*`
-- Path konsol: **`/dash/saas`** → **`/dash/platform`** (redirect FE tetap ada sementara)
-- Impor/extend tema: gunakan `Content/Layout` (bukan `Content/Publishing`); Security & Analytics punya path modul baru (`Core/Security`, `Intelligence/Analytics`)
-
-## [1.0.0-beta.1]
-
-Engineering foundation R2026.1–R2026.24 (baseline sebelum konsolidasi hub di atas).
+Baseline fondasi arsitektur Modular Monolith Jejakawan CMS.
 
 ### Added
-
-- Modular monolith (Core, Content, Intelligence, Operational)
-- SPA console + public Janari theme; Sanctum session auth
-- Installer script & dokumentasi operasional
+- **Core Tier**: Sistem IAM (RBAC Spatie, ABAC Policies, Passkeys WebAuthn, 2FA TOTP), Infrastructure (Backups, URL Redirects, Scheduled Tasks, Webhooks, CCK Content Types), dan Security (IP Management, Rate Limiting, Audit Activity Logs).
+- **Content Tier**:
+  - **Publishing**: Manajemen konten, kategori hierarkis, sistem taksonomi, editorial workflow, revisi konten, dan sistem komentar anti-spam.
+  - **Layout**: JA-Builder Visual Editor, manajemen tema (Janari Theme), customizer, blok tata letak, dan navigasi menu hierarkis.
+  - **Media**: Pengelola file & folder, upload chunked, konversi WebP otomatis, sanitasi SVG, dan image thumbnail generator.
+  - **Forms**: Visual form builder, validasi dinamis, reCAPTCHA v3 / Cloudflare Turnstile, dan submission viewer.
+  - **Library**: Tagging system, custom field manager, dan komponen template reusable.
+- **Intelligence Tier**:
+  - **AI Integration**: Multi-provider LLM (DeepSeek, OpenAI, Google Gemini) untuk content drafting, SEO metadata generation, dan taxonomy suggestions.
+  - **Unified Search**: Indeks pencarian terpusat dengan auto-sync listener event.
+  - **Analytics**: Privacy-friendly visitor & pageview analytics.
+  - **Newsletter**: Manajemen subscriber dan email blast.
+- **Frontend Architecture**: Vue 3 SPA + Vite + Tailwind CSS + Lucide Icons + Vue I18n.
+- **Production Verification**: 446 test suite PHPUnit backend dan 182 unit test Vitest frontend.
