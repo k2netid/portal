@@ -337,7 +337,7 @@ import SelectField from './SelectField.vue'
 import ToggleField from './ToggleField.vue'
 import { IconButton, BaseSlider, BaseDropdown } from '../ui'
 import FieldActions from './FieldActions.vue'
-import { generateGradientCSS, getHarmoniousGradientColors } from '../../../shared/utils/styleUtils'
+import { generateGradientCSS, getHarmoniousGradientColors } from '@/shared/utils/styleUtils';
 
 const props = defineProps<{
   field?: SettingDefinition;

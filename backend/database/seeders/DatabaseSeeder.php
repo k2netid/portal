@@ -7,9 +7,6 @@ use Modules\Content\Layout\Database\Seeders\LayoutDatabaseSeeder;
 use Modules\Content\Publishing\Database\Seeders\PublishingDatabaseSeeder;
 use Modules\Core\System\Database\Seeders\CckDemoSeeder;
 use Modules\Core\System\Database\Seeders\SystemDatabaseSeeder;
-use Modules\Operational\Database\Seeders\AccountingSeeder;
-use Modules\Operational\Member\Database\Seeders\DemoMemberCustomerSeeder;
-use Modules\Operational\Platform\Database\Seeders\PlatformDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,8 +19,5 @@ class DatabaseSeeder extends Seeder
         $this->call(CckDemoSeeder::class);
         $this->call(LayoutDatabaseSeeder::class);
         $this->call(PublishingDatabaseSeeder::class);
-        $this->call(PlatformDatabaseSeeder::class);
-        $this->call(DemoMemberCustomerSeeder::class);
-        $this->call(AccountingSeeder::class);
     }
 }

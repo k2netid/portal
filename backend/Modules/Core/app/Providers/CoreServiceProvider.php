@@ -82,6 +82,9 @@ class CoreServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        // Core registrations
+        $this->app->singleton(
+            \Modules\Core\System\Contracts\StorageQuotaServiceInterface::class,
+            \Modules\Core\System\Services\LocalStorageQuotaService::class
+        );
     }
 }

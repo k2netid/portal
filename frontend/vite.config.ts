@@ -50,6 +50,9 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '@/components/builder': fileURLToPath(new URL('./src/modules/Content/Layout/components/builder', import.meta.url)),
+      '@/components/content-renderer': fileURLToPath(new URL('./src/modules/Content/Layout/components/content-renderer', import.meta.url)),
+      '@/composables': fileURLToPath(new URL('./src/shared/composables', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },

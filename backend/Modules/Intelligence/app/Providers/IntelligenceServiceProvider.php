@@ -13,7 +13,6 @@ use Modules\Content\Publishing\Events\ContentDeleted;
 use Modules\Content\Publishing\Events\ContentPublished;
 use Modules\Content\Publishing\Events\ContentUnpublished;
 use Modules\Core\Providers\Concerns\RegistersMacroTierResources;
-use Modules\Crm\Events\CrmSearchIndexChanged;
 use Modules\Intelligence\Ai\Services\AiSubscriptionQuotaService;
 use Modules\Intelligence\Ai\Services\AiTaxonomyBatchService;
 use Modules\Intelligence\Ai\Services\AiUsageRecorder;
@@ -27,7 +26,6 @@ use Modules\Intelligence\Search\Console\Commands\ReindexSearch;
 use Modules\Intelligence\Search\Console\Commands\SearchIndexHealth;
 use Modules\Intelligence\Search\Contracts\SearchIndexerInterface;
 use Modules\Intelligence\Search\Listeners\SyncContentSearchIndex;
-use Modules\Intelligence\Search\Listeners\SyncCrmSearchIndex;
 use Modules\Intelligence\Search\Listeners\SyncTaxonomySearchIndex;
 use Modules\Intelligence\Search\Services\SearchIndexHealthService;
 use Modules\Intelligence\Search\Services\UnifiedSearchIndexer;
@@ -59,7 +57,6 @@ class IntelligenceServiceProvider extends ServiceProvider
         $events->listen(ContentUnpublished::class, [$searchSync, 'handleUnpublished']);
         $events->listen(ContentDeleted::class, [$searchSync, 'handleDeleted']);
         $events->listen(TaxonomySearchIndexChanged::class, SyncTaxonomySearchIndex::class);
-        $events->listen(CrmSearchIndexChanged::class, SyncCrmSearchIndex::class);
 
         $this->registerTierConsoleCommands([
             ReindexSearch::class,

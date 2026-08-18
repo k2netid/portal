@@ -8,8 +8,6 @@ use Modules\Content\Library\Contracts\TaxonomySearchPortInterface;
 use Modules\Content\Library\Dto\TaxonomySearchSnapshot;
 use Modules\Content\Publishing\Contracts\PublishingSearchReadPortInterface;
 use Modules\Content\Publishing\Dto\SearchableContentSnapshot;
-use Modules\Crm\Contracts\CrmSearchReadPortInterface;
-use Modules\Crm\Dto\CrmSearchSnapshot;
 use Modules\Intelligence\Search\Contracts\SearchIndexerInterface;
 use Modules\Intelligence\Search\Models\SearchIndex;
 
@@ -18,7 +16,6 @@ class UnifiedSearchIndexer implements SearchIndexerInterface
     public function __construct(
         private readonly PublishingSearchReadPortInterface $publishingSearchRead,
         private readonly TaxonomySearchPortInterface $taxonomySearchPort,
-        private readonly CrmSearchReadPortInterface $crmSearchRead,
     ) {}
 
     public function syncPublishing(SearchableContentSnapshot $snapshot): void
@@ -40,29 +37,6 @@ class UnifiedSearchIndexer implements SearchIndexerInterface
                 : url('/blog/'.$snapshot->slug),
             'type' => $snapshot->type,
         ]);
-    }
-
-    public function syncCrm(CrmSearchSnapshot $snapshot): void
-    {
-        SearchIndex::query()->updateOrCreate(
-            [
-                'searchable_type' => $snapshot->searchableType,
-                'searchable_id' => $snapshot->searchableId,
-            ],
-            [
-                'title' => $snapshot->title,
-                'content' => $snapshot->content,
-                'excerpt' => $snapshot->excerpt,
-                'url' => $snapshot->url,
-                'type' => $snapshot->indexType,
-                'relevance_score' => SearchIndex::calculateRelevanceScore($snapshot->title, $snapshot->content),
-            ]
-        );
-    }
-
-    public function removeCrm(string $searchableType, string $searchableId): void
-    {
-        $this->removeByKey($searchableType, $searchableId);
     }
 
     public function syncTaxonomy(TaxonomySearchSnapshot $snapshot): void
@@ -122,17 +96,10 @@ class UnifiedSearchIndexer implements SearchIndexerInterface
             $tagCount++;
         }
 
-        $crmCount = 0;
-        foreach ($this->crmSearchRead->allSnapshots() as $crmSnapshot) {
-            $this->syncCrm($crmSnapshot);
-            $crmCount++;
-        }
-
         return [
             'pub_contents' => $contentCount,
             'pub_categories' => $categoryCount,
             'pub_tags' => $tagCount,
-            'crm_records' => $crmCount,
         ];
     }
 

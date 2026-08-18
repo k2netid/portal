@@ -8,19 +8,12 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Core\System\Support\HubSubscriptionScope;
 use Modules\Intelligence\Ai\Models\AiUsageLog;
 use Modules\Intelligence\Ai\Services\Exceptions\AiSubscriptionQuotaExceededException;
-use Modules\Operational\Platform\Contracts\PlatformSubscriptionAiLimitPortInterface;
 
 class AiSubscriptionQuotaService
 {
-    public function __construct(
-        private readonly PlatformSubscriptionAiLimitPortInterface $subscriptionLimits,
-    ) {}
-
     public function monthlyTokenLimit(?string $subscriptionId = null): ?int
     {
-        return $this->subscriptionLimits->monthlyTokenLimitForSubscription(
-            $this->resolveSubscriptionId($subscriptionId),
-        );
+        return null;
     }
 
     public function monthlyTokensUsed(?string $subscriptionId = null): int

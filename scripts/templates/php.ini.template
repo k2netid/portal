@@ -1,0 +1,21 @@
+# Jejakawan PHP configuration Template
+max_execution_time = 360
+max_input_time = 120
+memory_limit = 1024M
+post_max_size = 512M
+upload_max_filesize = 512M
+max_file_uploads = 50
+date.timezone = UTC
+display_errors = Off
+log_errors = On
+short_open_tag = Off
+expose_php = Off
+realpath_cache_size = 4096k
+realpath_cache_ttl = 600
+opcache.enable=1
+opcache.enable_cli=1
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=16
+opcache.max_accelerated_files=20000
+opcache.revalidate_freq=2
+opcache.validate_timestamps=1

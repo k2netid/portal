@@ -9,8 +9,6 @@
             <directory>Modules/Core/app</directory>
             <directory>Modules/Content/app</directory>
             <directory>Modules/Intelligence/app</directory>
-            <directory>Modules/Operational/app</directory>
-            <directory>Modules/Crm/app</directory>
         </include>
     </source>
     <testsuites>
@@ -24,14 +22,13 @@
             <directory>Modules/Core/tests</directory>
             <directory>Modules/Content/tests</directory>
             <directory>Modules/Intelligence/tests</directory>
-            <directory>Modules/Operational/tests</directory>
-            <directory>Modules/Crm/tests</directory>
         </testsuite>
     </testsuites>
     <!-- Coverage (pcov/xdebug) hanya lewat phpunit.coverage.xml + composer test:coverage
          supaya server dengan pcov off + JIT on tidak kena peringatan driver setiap artisan test. -->
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="APP_INSTALLED" value="true"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>

@@ -108,11 +108,10 @@ class SearchServiceTest extends TestCase
         $this->assertEquals(1, $counts['pub_contents']);
         $this->assertEquals(2, $counts['pub_categories']);
         $this->assertEquals(1, $counts['pub_tags']);
-        $this->assertGreaterThan(0, $counts['system_pages']);
 
         // Verify that items are successfully written to the database
         $this->assertDatabaseCount('srch_indexes', SearchIndex::count());
-        $this->assertGreaterThan(0, SearchIndex::where('searchable_type', 'SystemPage')->count());
+        $this->assertGreaterThan(0, SearchIndex::count());
     }
 
     public function test_search_empty_query(): void

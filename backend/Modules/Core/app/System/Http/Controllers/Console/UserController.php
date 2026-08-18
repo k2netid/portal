@@ -18,14 +18,11 @@ use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\LoginHistory;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Support\SqlLikeEscape;
-use Modules\Operational\Platform\Services\SubscriptionUserLimitService;
 use Spatie\Permission\Models\Role;
 
 class UserController extends BaseApiController
 {
-    public function __construct(
-        private readonly SubscriptionUserLimitService $subscriptionUserLimit,
-    ) {}
+
 
     /**
      * List users with filters.
@@ -205,27 +202,6 @@ class UserController extends BaseApiController
             }
 
             $user->syncRoles(is_array($rolesInput) ? $rolesInput : []);
-        }
-
-        $subscriptionId = $request->input('subscription_id') ?? \Modules\Core\System\Support\HubSubscriptionScope::id();
-        if (! $subscriptionId && class_exists(\Modules\Operational\Platform\Models\PlatformSubscription::class)) {
-            $firstSub = \Modules\Operational\Platform\Models\PlatformSubscription::query()->where('status', 'active')->latest()->first();
-            if ($firstSub) {
-                $subscriptionId = $firstSub->id;
-            }
-        }
-
-        if ($subscriptionId && class_exists(\Modules\Operational\Member\Models\Member::class)) {
-            \Modules\Operational\Member\Models\Member::withoutGlobalScopes()->firstOrCreate(
-                [
-                    'subscription_id' => $subscriptionId,
-                    'user_id' => $user->id,
-                ],
-                [
-                    'points' => 0,
-                    'tier' => 'standard',
-                ]
-            );
         }
 
         $user->load(['roles']);

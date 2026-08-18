@@ -22,8 +22,6 @@ use Modules\Core\System\Http\Middleware\LogSlowQueries;
 use Modules\Core\System\Http\Middleware\NormalizePaginationParams;
 use Modules\Core\System\Http\Middleware\TrustProxies;
 use Modules\Intelligence\Analytics\Http\Middleware\TrackAnalytics;
-use Modules\Operational\Platform\Http\Middleware\SubscriptionFeatureGateMiddleware;
-use Modules\Operational\Platform\Http\Middleware\SubscriptionRateLimitMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
@@ -84,8 +82,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => CheckPermission::class,
             'role' => RoleMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
-            'subscription.feature' => SubscriptionFeatureGateMiddleware::class,
-            'subscription.rate' => SubscriptionRateLimitMiddleware::class,
         ]);
 
         // Exempt analytics and security verification from CSRF protection

@@ -11,11 +11,9 @@ use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
 use Spatie\Permission\PermissionRegistrar;
-use Tests\Concerns\CreatesPlatformHubFixtures;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesPlatformHubFixtures;
     use RefreshDatabase, WithFaker;
 
     /**

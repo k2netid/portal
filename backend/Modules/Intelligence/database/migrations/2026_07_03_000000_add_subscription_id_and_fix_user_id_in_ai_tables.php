@@ -27,12 +27,18 @@ return new class extends Migration
                     $table->uuid('subscription_id')->nullable()->index();
                 }
                 if (Schema::hasColumn('ai_taxonomy_batches', 'user_id')) {
+                    try {
+                        $table->dropIndex(['user_id', 'created_at']);
+                    } catch (\Throwable) {
+                        // ignore if index does not exist
+                    }
                     $table->dropColumn('user_id');
                 }
             });
             // Re-create user_id as UUID
             Schema::table('ai_taxonomy_batches', function (Blueprint $table): void {
                 $table->uuid('user_id')->nullable()->index();
+                $table->index(['user_id', 'created_at']);
             });
         }
     }
@@ -56,11 +62,17 @@ return new class extends Migration
                     $table->dropColumn('subscription_id');
                 }
                 if (Schema::hasColumn('ai_taxonomy_batches', 'user_id')) {
+                    try {
+                        $table->dropIndex(['user_id', 'created_at']);
+                    } catch (\Throwable) {
+                        // ignore
+                    }
                     $table->dropColumn('user_id');
                 }
             });
             Schema::table('ai_taxonomy_batches', function (Blueprint $table): void {
                 $table->unsignedBigInteger('user_id')->nullable();
+                $table->index(['user_id', 'created_at']);
             });
         }
     }
