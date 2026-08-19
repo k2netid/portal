@@ -178,14 +178,14 @@
       />
 
       <!-- Main Editor Area -->
-      <main class="flex-1 overflow-y-auto relative bg-muted/5 custom-scrollbar">
+      <main class="flex-1 overflow-y-auto relative bg-muted/40 custom-scrollbar">
         <div
           v-if="selectedItem"
           class="w-full transition-all duration-300 p-4 sm:p-6 lg:p-8 space-y-6"
           :class="sidebarCollapsed ? 'max-w-7xl mx-auto' : 'max-w-5xl mx-auto'"
         >
           <!-- Unified Main Card with Thin Border -->
-          <div class="border border-border rounded-2xl bg-card shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div class="border border-border bg-card rounded-2xl shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
             <!-- Card Header -->
             <div class="p-5 sm:p-6 border-b border-border bg-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div class="flex items-center gap-3.5">
