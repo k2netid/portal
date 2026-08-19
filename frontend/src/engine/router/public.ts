@@ -117,9 +117,9 @@ const router = createRouter({
 
 // Keep existing behavior for maintenance checks and probe path hardening.
 router.beforeEach(async (to, from) => {
-        return handleBeforeEachGuard(to, from, {
-        loginPath: SECURITY_ROUTES.login,
-        registerPath: SECURITY_ROUTES.register,
+    return handleBeforeEachGuard(to, from, {
+        loginPath: '/member/login',
+        registerPath: '/member/register',
     });
 });
 
