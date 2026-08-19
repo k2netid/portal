@@ -1,21 +1,24 @@
 <template>
   <div class="space-y-2">
     <div class="flex items-center justify-between">
-      <label :for="fieldId" class="text-xs font-medium text-foreground tracking-wide">
+      <label
+        :for="fieldId"
+        class="text-xs font-semibold text-foreground tracking-tight"
+      >
         {{ settingLabel(setting.key, setting.label) }}
       </label>
       <span
         v-if="setting.required"
-        class="text-xs text-red-800"
+        class="text-xs font-bold text-destructive"
       >*</span>
     </div>
 
     <!-- Color Picker -->
     <div
       v-if="setting.type === 'color'"
-      class="flex gap-2"
+      class="flex items-center gap-2.5"
     >
-      <div class="relative w-10 h-10 rounded-lg overflow-hidden border shadow-sm shrink-0 group cursor-pointer">
+      <div class="relative w-10 h-10 rounded-xl overflow-hidden border border-border shadow-sm shrink-0 group cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all">
         <input
           type="color"
           :value="modelValue"
@@ -24,7 +27,7 @@
           @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
           @change="$emit('change')"
         >
-        <div 
+        <div
           class="w-full h-full"
           :style="{ backgroundColor: (modelValue as string) }"
         />
@@ -33,7 +36,7 @@
         :id="fieldId"
         type="text"
         :value="modelValue"
-        class="flex-1 h-10 px-3 py-2 bg-background border rounded-lg text-sm font-mono focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary outline-none transition-colors"
+        class="flex-1 h-10 px-3 py-2 bg-background border border-border rounded-xl text-xs font-mono uppercase focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         @change="$emit('change')"
       >
@@ -44,11 +47,14 @@
       v-else-if="setting.type === 'select'"
       class="relative"
     >
-      <Select 
-        :model-value="String(modelValue)" 
+      <Select
+        :model-value="String(modelValue)"
         @update:model-value="(val) => { handleInput(val); $emit('change'); }"
       >
-        <SelectTrigger :aria-label="settingLabel(setting.key, setting.label)" class="h-10">
+        <SelectTrigger
+          :aria-label="settingLabel(setting.key, setting.label)"
+          class="h-10 rounded-xl border border-border bg-background text-sm font-medium"
+        >
           <SelectValue :placeholder="setting.placeholder ? $t('publishing.theme_customizer.items.' + setting.key + '_placeholder') : $t('publishing.theme_customizer.editor.menus.placeholder')" />
         </SelectTrigger>
         <SelectContent v-if="Array.isArray(setting.options)">
@@ -62,11 +68,11 @@
         </SelectContent>
       </Select>
     </div>
-        
+
     <!-- Range Slider -->
     <div
       v-else-if="setting.type === 'range'"
-      class="flex items-center gap-3"
+      class="flex items-center gap-3 p-3 rounded-xl border border-border bg-muted/20"
     >
       <input
         type="range"
@@ -79,19 +85,19 @@
         @input="handleInput(($event.target as HTMLInputElement).value)"
         @change="$emit('change')"
       >
-      <span class="text-xs font-mono bg-muted px-2 py-1 rounded text-muted-foreground min-w-[3ch] text-center">
+      <span class="text-xs font-mono font-bold bg-background border border-border px-2.5 py-1 rounded-lg text-foreground min-w-[4ch] text-center shadow-sm">
         {{ modelValue }}
       </span>
     </div>
 
     <!-- Textarea -->
     <textarea
-      :id="fieldId"
       v-else-if="setting.type === 'textarea'"
+      :id="fieldId"
       :value="(modelValue as string)"
       :aria-label="settingLabel(setting.key, setting.label)"
       rows="3"
-      class="w-full p-3 bg-background border rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors resize-y min-h-[80px]"
+      class="w-full p-3 bg-background border border-border rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-y min-h-[90px]"
       :placeholder="setting.placeholder"
       @input="handleInput(($event.target as HTMLTextAreaElement).value)"
       @change="$emit('change')"
@@ -100,10 +106,10 @@
     <!-- Toggle Switch / Boolean -->
     <div
       v-else-if="setting.type === 'checkbox' || setting.type === 'boolean'"
-      class="flex items-center justify-between p-3 border rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors"
+      class="flex items-center justify-between p-3.5 border border-border rounded-xl bg-muted/20 hover:bg-muted/30 transition-colors"
     >
-      <span class="text-sm font-medium text-foreground select-none">
-        {{ modelValue ? $t('publishing.theme_customizer.items.common_options.enabled') : $t('publishing.theme_customizer.items.common_options.disabled') }}
+      <span class="text-xs font-semibold text-foreground select-none">
+        {{ modelValue ? $t('publishing.theme_customizer.items.common_options.enabled', 'Aktif') : $t('publishing.theme_customizer.items.common_options.disabled', 'Nonaktif') }}
       </span>
       <Switch
         :aria-label="settingLabel(setting.key, setting.label)"
@@ -115,14 +121,14 @@
     <!-- Checkbox List (Multi-select) -->
     <div
       v-else-if="setting.type === 'checkbox_list' && Array.isArray(setting.options)"
-      class="space-y-2 p-3 border rounded-lg bg-muted/10"
+      class="space-y-2 p-3.5 border border-border rounded-xl bg-muted/10"
     >
       <div
         v-for="opt in (setting.options as ThemeOption[])"
         :key="String(opt.value)"
-        class="flex items-center space-x-2 py-1"
+        class="flex items-center space-x-2.5 py-1"
       >
-        <Checkbox 
+        <Checkbox
           :id="setting.key + '-' + opt.value"
           :checked="Array.isArray(modelValue) ? modelValue.includes(opt.value) : false"
           @update:checked="(checked) => {
@@ -138,71 +144,93 @@
         />
         <label
           :for="setting.key + '-' + opt.value"
-          class="text-sm font-medium leading-none cursor-pointer select-none"
+          class="text-xs font-medium text-foreground cursor-pointer select-none"
         >
           {{ translateOption(opt.label) }}
         </label>
       </div>
     </div>
 
-    <!-- Media Picker -->
+    <!-- Media Picker (Clean & Compact) -->
     <div
       v-else-if="setting.type === 'media'"
       class="space-y-2"
     >
+      <!-- Media Selected State -->
       <div
         v-if="modelValue"
-        class="relative group h-32 bg-muted/50 rounded-lg overflow-hidden border shadow-sm"
+        class="flex items-center gap-4 p-3 rounded-2xl border border-border bg-card/80 shadow-sm"
       >
-        <img
-          :src="(modelValue as string)"
-          class="w-full h-full object-contain p-2"
-          alt="Preview"
-        >
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-          <button
-            class="p-2 bg-white/20 hover:bg-white/40 rounded-full text-white backdrop-blur-sm transition-colors"
-            :aria-label="$t('publishing.theme_customizer.items.common_options.change_image')"
-            :title="$t('publishing.theme_customizer.items.common_options.change_image')"
-            @click="$emit('pick-media')"
+        <div class="w-16 h-16 rounded-xl border border-border/80 bg-muted/30 p-1.5 flex items-center justify-center shrink-0 overflow-hidden shadow-inner">
+          <img
+            :src="(modelValue as string)"
+            class="max-w-full max-h-full object-contain"
+            alt="Media Preview"
           >
-            <Pencil class="w-4 h-4" />
-          </button>
-          <button
-            class="p-2 bg-white/20 hover:bg-white/40 rounded-full text-white backdrop-blur-sm transition-colors"
-            :aria-label="$t('publishing.theme_customizer.items.common_options.remove')"
-            :title="$t('publishing.theme_customizer.items.common_options.remove')"
-            @click="handleInput(''); $emit('change')"
-          >
-            <Trash2 class="w-4 h-4" />
-          </button>
+        </div>
+
+        <div class="flex-1 min-w-0 space-y-1">
+          <p class="text-xs font-semibold text-foreground truncate">
+            {{ (modelValue as string).split('/').pop() || 'media_asset' }}
+          </p>
+          <div class="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              class="h-7 px-2.5 text-[11px] rounded-lg gap-1 font-medium"
+              @click="$emit('pick-media')"
+            >
+              <Pencil class="w-3 h-3" />
+              <span>{{ $t('publishing.theme_customizer.items.common_options.change_image', 'Ganti') }}</span>
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              class="h-7 px-2 text-[11px] rounded-lg gap-1 text-destructive hover:bg-destructive/10 font-medium"
+              @click="handleInput(''); $emit('change')"
+            >
+              <Trash2 class="w-3 h-3" />
+              <span>{{ $t('publishing.theme_customizer.items.common_options.remove', 'Hapus') }}</span>
+            </Button>
+          </div>
         </div>
       </div>
-      <button 
+
+      <!-- Media Empty State (Clean Dropzone) -->
+      <button
         v-else
-        class="w-full h-20 border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors bg-muted/10 hover:bg-muted/20"
+        type="button"
+        class="w-full h-20 rounded-2xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all flex items-center justify-center gap-2.5 text-muted-foreground hover:text-primary cursor-pointer group"
         @click="$emit('pick-media')"
       >
-        <Image class="w-5 h-5" />
-        <span class="text-[10px] font-medium">{{ $t('publishing.theme_customizer.items.common_options.select_media') }}</span>
+        <div class="w-8 h-8 rounded-lg bg-muted/60 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
+          <Image class="w-4 h-4" />
+        </div>
+        <span class="text-xs font-semibold">{{ $t('publishing.theme_customizer.items.common_options.select_media', 'Pilih dari Media Library') }}</span>
       </button>
     </div>
 
     <!-- Dynamic Repeater -->
     <div
       v-else-if="setting.type === 'repeater'"
-      class="space-y-4"
+      class="space-y-3"
     >
-      <div 
-        v-for="(item, idx) in (Array.isArray(modelValue) ? modelValue : [])" 
+      <div
+        v-for="(item, idx) in (Array.isArray(modelValue) ? modelValue : [])"
         :key="idx"
-        class="group p-4 bg-muted/10 border rounded-xl space-y-4 relative transition-all hover:bg-muted/20"
+        class="group p-4 bg-muted/15 border border-border rounded-2xl space-y-3 relative transition-all hover:border-border/80"
       >
-        <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-          <button 
-            class="p-1.5 text-muted-foreground hover:text-destructive transition-colors"
-            :aria-label="$t('common.actions.remove')"
-            :title="$t('common.actions.remove')"
+        <div class="flex items-center justify-between border-b border-border/40 pb-2">
+          <span class="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Item #{{ idx + 1 }}</span>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            class="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg"
+            :aria-label="$t('common.actions.remove', 'Hapus')"
+            :title="$t('common.actions.remove', 'Hapus')"
             @click="() => {
               const newValue = [...(modelValue as any[])];
               newValue.splice(idx, 1);
@@ -211,25 +239,25 @@
             }"
           >
             <Trash2 class="w-3.5 h-3.5" />
-          </button>
+          </Button>
         </div>
 
-        <div class="grid grid-cols-1 gap-4 pt-1">
+        <div class="grid grid-cols-1 gap-3 pt-1">
           <div
             v-for="field in (setting.fields || [])"
             :key="field.name"
             class="space-y-1.5"
           >
-            <label class="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-wider">
+            <label class="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
               {{ translateLabel(field.label) }}
             </label>
-                        
+
             <!-- Text input in repeater -->
             <input
               v-if="field.type === 'text'"
               type="text"
               :value="item[field.name]"
-              class="w-full h-8 px-2 bg-background border rounded-lg text-xs focus:ring-1 focus:ring-primary outline-none transition-colors"
+              class="w-full h-9 px-3 bg-background border border-border rounded-xl text-xs font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
               @input="(e) => {
                 const newValue = [...(modelValue as any[])];
                 newValue[idx] = { ...item, [field.name]: (e.target as HTMLInputElement).value };
@@ -255,7 +283,7 @@
               v-else-if="field.type === 'textarea'"
               :value="item[field.name]"
               rows="2"
-              class="w-full p-2 bg-background border rounded-lg text-xs focus:ring-1 focus:ring-primary outline-none transition-colors resize-y min-h-[50px]"
+              class="w-full p-2.5 bg-background border border-border rounded-xl text-xs font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-y min-h-[60px]"
               @input="(e) => {
                 const newValue = [...(modelValue as any[])];
                 newValue[idx] = { ...item, [field.name]: (e.target as HTMLTextAreaElement).value };
@@ -265,9 +293,9 @@
             />
 
             <!-- Select in repeater -->
-            <Select 
+            <Select
               v-else-if="field.type === 'select'"
-              :model-value="item[field.name]" 
+              :model-value="item[field.name]"
               @update:model-value="(val) => {
                 const newValue = [...(modelValue as any[])];
                 newValue[idx] = { ...item, [field.name]: val };
@@ -275,12 +303,12 @@
                 $emit('change');
               }"
             >
-              <SelectTrigger class="h-8 text-xs bg-background">
+              <SelectTrigger class="h-9 text-xs bg-background border border-border rounded-xl">
                 <div class="flex items-center gap-2">
                   <template v-if="field.options === 'social_icons' || field.options === 'feature_icons'">
                     <component
                       :is="getGenericIcon(item[field.name])"
-                      class="w-3 h-3"
+                      class="w-3.5 h-3.5"
                     />
                   </template>
                   <SelectValue />
@@ -323,8 +351,11 @@
         </div>
       </div>
 
-      <button 
-        class="w-full h-9 border border-dashed border-primary/30 rounded-xl flex items-center justify-center gap-2 text-[11px] font-bold text-primary hover:bg-primary/5 transition-all"
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        class="w-full h-9 rounded-xl border-dashed gap-1.5 font-semibold text-xs"
         @click="() => {
           const newValue = Array.isArray(modelValue) ? [...(modelValue as any[])] : [];
           const newItem: Record<string, any> = {};
@@ -337,7 +368,6 @@
               }
             });
           } else {
-            // Fallback for social links without explicit fields
             newItem.icon = 'Instagram';
             newItem.url = '';
           }
@@ -347,52 +377,58 @@
         }"
       >
         <Plus class="w-3.5 h-3.5" />
-        {{ optionLabel('Add New Item') }}
-      </button>
+        <span>{{ optionLabel('Add New Item') }}</span>
+      </Button>
     </div>
 
     <!-- Default Input (Text/URL/etc) -->
     <input
-      :id="fieldId"
       v-else
+      :id="fieldId"
       :type="setting.type || 'text'"
       :value="(modelValue as string)"
       :placeholder="setting.placeholder"
-      class="w-full h-10 px-3 bg-background border rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+      class="w-full h-10 px-3 bg-background border border-border rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/60"
       @input="handleInput(($event.target as HTMLInputElement).value)"
       @change="$emit('change')"
     >
-        
+
     <div
       v-if="helperVisible"
-      class="space-y-2"
+      class="space-y-2 pt-1"
     >
-      <button
-        v-if="canResolveFromLink"
-        type="button"
-        class="h-8 px-2.5 text-[11px] rounded-md border border-primary/30 text-primary hover:bg-primary/10 transition-colors"
-        @click="useMapLinkDirectly"
-      >
-        Gunakan link map langsung
-      </button>
-      <button
-        v-if="isCurrentLocationMode"
-        type="button"
-        class="h-8 px-2.5 text-[11px] rounded-md border border-primary/30 text-primary hover:bg-primary/10 transition-colors disabled:opacity-50"
-        :disabled="helperLoading"
-        @click="resolveFromCurrentLocation"
-      >
-        {{ helperLoading ? 'Memproses...' : 'Gunakan lokasi saat ini' }}
-      </button>
+      <div class="flex flex-wrap items-center gap-2">
+        <Button
+          v-if="canResolveFromLink"
+          type="button"
+          variant="outline"
+          size="sm"
+          class="h-8 px-3 text-xs rounded-xl"
+          @click="useMapLinkDirectly"
+        >
+          Gunakan link map langsung
+        </Button>
+        <Button
+          v-if="isCurrentLocationMode"
+          type="button"
+          variant="outline"
+          size="sm"
+          class="h-8 px-3 text-xs rounded-xl"
+          :disabled="helperLoading"
+          @click="resolveFromCurrentLocation"
+        >
+          {{ helperLoading ? 'Memproses...' : 'Gunakan lokasi saat ini' }}
+        </Button>
+      </div>
       <p
         v-if="helperMessage"
-        class="text-[10px] text-emerald-600 leading-snug"
+        class="text-xs text-emerald-600 leading-snug font-medium"
       >
         {{ helperMessage }}
       </p>
       <p
         v-if="helperError"
-        class="text-xs text-red-800 leading-snug"
+        class="text-xs text-destructive leading-snug font-medium"
       >
         {{ helperError }}
       </p>
@@ -400,7 +436,7 @@
 
     <p
       v-if="setting.description"
-      class="text-[10px] text-muted-foreground leading-snug"
+      class="text-[11px] text-muted-foreground leading-normal"
     >
       {{ settingHint(setting.key, setting.description) }}
     </p>
@@ -411,8 +447,16 @@
 import { computed, ref } from 'vue';
 import { useThemeCustomizerLabels } from '@/modules/Content/Layout/composables/useThemeCustomizerLabels';
 import type { ThemeSetting, ThemeOption } from '@/modules/Content/Layout/types/theme';
-
-// Common Icons
+import {
+  Button,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  Switch,
+  Checkbox,
+} from '@/shared/components/ui';
 import {
   BadgeCheck,
   CreditCard,
@@ -434,71 +478,58 @@ import {
   Youtube,
 } from 'lucide-vue-next';
 
-// Icons for Repeater
-
-import { 
-    Select, 
-    SelectTrigger, 
-    SelectValue, 
-    SelectContent, 
-    SelectItem,
-    Switch,
-    Checkbox
-} from '@/shared/components/ui';
-
 const props = defineProps<{
-    setting: ThemeSetting & { key?: string };
-    modelValue: unknown;
-    /** Active theme slug for theme.<slug>.customizer.* lookups */
-    themeSlug?: string;
+  setting: ThemeSetting & { key?: string };
+  modelValue: unknown;
+  themeSlug?: string;
 }>();
 
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: unknown): void;
-    (e: 'update:multiple', value: Record<string, unknown>): void;
-    (e: 'change'): void;
-    (e: 'pick-media'): void;
+  (e: 'update:modelValue', value: unknown): void;
+  (e: 'update:multiple', value: Record<string, unknown>): void;
+  (e: 'change'): void;
+  (e: 'pick-media'): void;
 }>();
 
 const { settingLabel, settingHint, optionLabel, fieldLabel } = useThemeCustomizerLabels(
-    () => props.themeSlug,
+  () => props.themeSlug,
 );
 
 const fieldId = computed(() => `theme-setting-${(props.setting.key || 'field').replace(/[^a-zA-Z0-9_-]/g, '-')}`);
 
 const socialIcons = [
-    { label: 'Instagram', value: 'Instagram', icon: Instagram },
-    { label: 'Twitter / X', value: 'Twitter', icon: Twitter },
-    { label: 'Facebook', value: 'Facebook', icon: Facebook },
-    { label: 'YouTube', value: 'Youtube', icon: Youtube },
-    { label: 'LinkedIn', value: 'Linkedin', icon: Linkedin },
-    { label: 'GitHub', value: 'Github', icon: Github },
-    { label: 'TikTok', value: 'Music2', icon: Music2 },
-    { label: 'Website', value: 'Globe', icon: Globe },
-    { label: 'WhatsApp', value: 'MessageCircle', icon: MessageCircle },
-    { label: 'Email', value: 'Mail', icon: Mail },
+  { label: 'Instagram', value: 'Instagram', icon: Instagram },
+  { label: 'Twitter / X', value: 'Twitter', icon: Twitter },
+  { label: 'Facebook', value: 'Facebook', icon: Facebook },
+  { label: 'YouTube', value: 'Youtube', icon: Youtube },
+  { label: 'LinkedIn', value: 'Linkedin', icon: Linkedin },
+  { label: 'GitHub', value: 'Github', icon: Github },
+  { label: 'TikTok', value: 'Music2', icon: Music2 },
+  { label: 'Website', value: 'Globe', icon: Globe },
+  { label: 'WhatsApp', value: 'MessageCircle', icon: MessageCircle },
+  { label: 'Email', value: 'Mail', icon: Mail },
 ];
 
 const featureIcons = [
-    { label: 'Daftar Akun', value: 'UserPlus', icon: UserPlus },
-    { label: 'Lengkapi Data', value: 'FileCheck', icon: FileCheck },
-    { label: 'Seleksi', value: 'BadgeCheck', icon: BadgeCheck },
-    { label: 'Pembayaran', value: 'CreditCard', icon: CreditCard },
+  { label: 'Daftar Akun', value: 'UserPlus', icon: UserPlus },
+  { label: 'Lengkapi Data', value: 'FileCheck', icon: FileCheck },
+  { label: 'Seleksi', value: 'BadgeCheck', icon: BadgeCheck },
+  { label: 'Pembayaran', value: 'CreditCard', icon: CreditCard },
 ];
 
 const getGenericIcon = (key: string) => {
-    const foundSocial = socialIcons.find(i => i.value === key);
-    if (foundSocial) return foundSocial.icon;
-    const foundFeature = featureIcons.find(i => i.value === key);
-    if (foundFeature) return foundFeature.icon;
-    return Globe;
+  const foundSocial = socialIcons.find((i) => i.value === key);
+  if (foundSocial) return foundSocial.icon;
+  const foundFeature = featureIcons.find((i) => i.value === key);
+  if (foundFeature) return foundFeature.icon;
+  return Globe;
 };
 
 const translateOption = (label: string) => optionLabel(label);
 const translateLabel = (label: string) => fieldLabel(label);
 
 const handleInput = (val: unknown) => {
-    emit('update:modelValue', val);
+  emit('update:modelValue', val);
 };
 
 const helperLoading = ref(false);
@@ -506,51 +537,51 @@ const helperMessage = ref('');
 const helperError = ref('');
 const settingKey = computed(() => props.setting?.key || '');
 const helperVisible = computed(() =>
-    settingKey.value === 'contact_map_source'
-    || settingKey.value === 'contact_map_link'
+  settingKey.value === 'contact_map_source'
+  || settingKey.value === 'contact_map_link',
 );
 const isCurrentLocationMode = computed(() => settingKey.value === 'contact_map_source' && String(props.modelValue || '') === 'current_location');
 const canResolveFromLink = computed(() => settingKey.value === 'contact_map_link' && String(props.modelValue || '').trim() !== '');
 
 async function resolveFromCurrentLocation(): Promise<void> {
-    if (helperLoading.value) return;
-    if (typeof navigator === 'undefined' || !navigator.geolocation) {
-        helperError.value = 'Browser tidak mendukung geolocation.';
-        return;
-    }
-    helperLoading.value = true;
-    helperError.value = '';
-    helperMessage.value = '';
-    try {
-        const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 60000,
-            });
-        });
-        const lat = Number(pos.coords.latitude);
-        const lon = Number(pos.coords.longitude);
-        const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lon}`)}`;
-        emit('update:multiple', {
-            contact_map_source: 'current_location',
-            contact_map_link: mapLink,
-        });
-        emit('change');
-        helperMessage.value = 'Lokasi saat ini berhasil dipakai dan link map diperbarui.';
-    } catch {
-        helperError.value = 'Izin lokasi ditolak atau gagal mengambil lokasi saat ini.';
-    } finally {
-        helperLoading.value = false;
-    }
+  if (helperLoading.value) return;
+  if (typeof navigator === 'undefined' || !navigator.geolocation) {
+    helperError.value = 'Browser tidak mendukung geolocation.';
+    return;
+  }
+  helperLoading.value = true;
+  helperError.value = '';
+  helperMessage.value = '';
+  try {
+    const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 60000,
+      });
+    });
+    const lat = Number(pos.coords.latitude);
+    const lon = Number(pos.coords.longitude);
+    const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lon}`)}`;
+    emit('update:multiple', {
+      contact_map_source: 'current_location',
+      contact_map_link: mapLink,
+    });
+    emit('change');
+    helperMessage.value = 'Lokasi saat ini berhasil dipakai dan link map diperbarui.';
+  } catch {
+    helperError.value = 'Izin lokasi ditolak atau gagal mengambil lokasi saat ini.';
+  } finally {
+    helperLoading.value = false;
+  }
 }
 
 function useMapLinkDirectly(): void {
-    const link = String(props.modelValue || '').trim();
-    if (!link) return;
-    emit('update:multiple', { contact_map_link: link });
-    emit('change');
-    helperError.value = '';
-    helperMessage.value = 'Link map langsung disimpan.';
+  const link = String(props.modelValue || '').trim();
+  if (!link) return;
+  emit('update:multiple', { contact_map_link: link });
+  emit('change');
+  helperError.value = '';
+  helperMessage.value = 'Link map langsung disimpan.';
 }
 </script>

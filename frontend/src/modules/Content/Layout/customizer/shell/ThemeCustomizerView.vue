@@ -2,10 +2,11 @@
   <div class="h-[calc(100vh-theme(spacing.16))] flex flex-col bg-background text-foreground select-none">
     <!-- Header -->
     <header class="flex items-center justify-between border-b border-border px-6 py-3 bg-card shrink-0 shadow-sm z-20">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3.5">
         <Button
           variant="ghost"
           size="icon"
+          class="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground"
           :aria-label="t('publishing.theme_customizer.actions.back_tooltip')"
           :title="t('publishing.theme_customizer.actions.back_tooltip')"
           @click="handleBack"
@@ -13,22 +14,22 @@
           <ArrowLeft class="w-5 h-5" />
         </Button>
         <div>
-          <h1 class="text-lg font-bold tracking-tight">
-            {{ t('publishing.theme_customizer.title') }}
+          <h1 class="text-base font-bold tracking-tight text-foreground">
+            {{ t('publishing.theme_customizer.title', 'Theme Customizer') }}
           </h1>
-          <p class="text-xs font-semibold text-foreground/70">
+          <p class="text-xs font-semibold text-muted-foreground capitalize">
             {{ theme?.name || t('common.labels.loading') }}
           </p>
         </div>
       </div>
             
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
         <!-- History Controls -->
-        <div class="flex items-center border rounded-md bg-background overflow-hidden p-0.5 shadow-sm">
+        <div class="flex items-center border border-border rounded-xl bg-background overflow-hidden p-0.5 shadow-sm">
           <button
             type="button"
             :disabled="!canUndo"
-            class="p-1.5 hover:bg-muted text-muted-foreground hover:text-foreground disabled:opacity-20 transition-colors"
+            class="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground disabled:opacity-20 transition-colors"
             :aria-label="t('publishing.theme_customizer.actions.undo')"
             :title="t('publishing.theme_customizer.actions.undo')"
             @click="undo"
@@ -39,7 +40,7 @@
           <button
             type="button"
             :disabled="!canRedo"
-            class="p-1.5 hover:bg-muted text-muted-foreground hover:text-foreground disabled:opacity-20 transition-colors"
+            class="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground disabled:opacity-20 transition-colors"
             :aria-label="t('publishing.theme_customizer.actions.redo')"
             :title="t('publishing.theme_customizer.actions.redo')"
             @click="redo"
@@ -48,96 +49,97 @@
           </button>
         </div>
 
-        <div class="h-6 w-px bg-border" />
+        <div class="h-6 w-px bg-border hidden sm:block" />
 
-        <div class="hidden lg:flex items-center gap-1 rounded-md border bg-background p-1">
+        <!-- Mode Selector (Segmented Control) -->
+        <div class="hidden lg:flex items-center gap-1 rounded-xl border border-border bg-muted/40 p-1">
           <button
-            class="px-2.5 py-1.5 text-xs font-semibold rounded transition-colors"
-            :class="organizationMode === 'design' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'"
+            class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all"
+            :class="organizationMode === 'design' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
             @click="organizationMode = 'design'"
           >
-            {{ t('publishing.theme_customizer.organization.modes.design') }}
+            {{ t('publishing.theme_customizer.organization.modes.design', 'Design') }}
           </button>
           <button
-            class="px-2.5 py-1.5 text-xs font-semibold rounded transition-colors"
-            :class="organizationMode === 'bindings' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'"
+            class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all"
+            :class="organizationMode === 'bindings' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
             @click="organizationMode = 'bindings'"
           >
-            {{ t('publishing.theme_customizer.organization.modes.bindings') }}
+            {{ t('publishing.theme_customizer.organization.modes.bindings', 'Content') }}
           </button>
           <button
-            class="px-2.5 py-1.5 text-xs font-semibold rounded transition-colors"
-            :class="organizationMode === 'advanced' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'"
+            class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all"
+            :class="organizationMode === 'advanced' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
             @click="organizationMode = 'advanced'"
           >
-            {{ t('publishing.theme_customizer.organization.modes.advanced') }}
+            {{ t('publishing.theme_customizer.organization.modes.advanced', 'Advanced') }}
           </button>
         </div>
 
         <Button
           variant="outline"
           size="sm"
-          class="hidden xl:inline-flex h-10 items-center gap-2"
+          class="hidden xl:inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
           @click="showPreview = true"
         >
-          <Eye data-icon="inline-start" class="size-4 shrink-0" />
-          {{ t('publishing.theme_customizer.organization.preview') }}
+          <Eye data-icon="inline-start" class="w-3.5 h-3.5 shrink-0" />
+          {{ t('publishing.theme_customizer.organization.preview', 'Pratinjau') }}
         </Button>
 
         <div class="flex items-center gap-2">
           <span
             v-if="isDirty"
-            class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-amber-500/10 text-amber-500 text-xs font-semibold"
+            class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-500 text-xs font-semibold border border-amber-500/20"
           >
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            {{ t('publishing.theme_customizer.status.unsaved') }}
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+            {{ t('publishing.theme_customizer.status.unsaved', 'Belum Disimpan') }}
           </span>
           <DropdownMenu>
             <DropdownMenuTrigger as-child>
               <Button
                 variant="outline"
                 size="sm"
-                class="h-10 inline-flex items-center gap-2"
+                class="h-9 inline-flex items-center gap-1.5 rounded-xl font-medium text-xs"
                 :disabled="!isDirty"
               >
-                <RotateCcw data-icon="inline-start" class="size-4 shrink-0" />
-                {{ t('publishing.theme_customizer.actions.revert') }}
+                <RotateCcw data-icon="inline-start" class="w-3.5 h-3.5 shrink-0" />
+                {{ t('publishing.theme_customizer.actions.revert', 'Kembalikan') }}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              class="w-56"
+              class="w-56 rounded-xl"
             >
               <DropdownMenuItem @click="resetToInitial">
                 <History class="w-4 h-4 mr-2" />
-                {{ t('publishing.theme_customizer.revert.session_start') }}
+                {{ t('publishing.theme_customizer.revert.session_start', 'Awal Sesi') }}
               </DropdownMenuItem>
               <DropdownMenuItem
-                class="text-destructive"
+                class="text-destructive focus:text-destructive"
                 @click="resetToDefaults"
               >
                 <Zap class="w-4 h-4 mr-2" />
-                {{ t('publishing.theme_customizer.revert.theme_defaults') }}
+                {{ t('publishing.theme_customizer.revert.theme_defaults', 'Pengaturan Default') }}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
             size="sm"
-            class="h-10 inline-flex items-center gap-2 shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90"
+            class="h-9 inline-flex items-center gap-1.5 rounded-xl font-semibold text-xs shadow-sm shadow-primary/20 bg-primary hover:bg-primary/90"
             :disabled="saving || !isDirty"
             @click="saveAll"
           >
             <Save
               v-if="!saving"
               data-icon="inline-start"
-              class="size-4 shrink-0"
+              class="w-3.5 h-3.5 shrink-0"
             />
             <Loader2
               v-else
               data-icon="inline-start"
-              class="size-4 shrink-0 animate-spin"
+              class="w-3.5 h-3.5 shrink-0 animate-spin"
             />
-            {{ saving ? t('publishing.theme_customizer.status.saving') : t('publishing.theme_customizer.actions.publish') }}
+            {{ saving ? t('publishing.theme_customizer.status.saving', 'Menyimpan...') : t('publishing.theme_customizer.actions.publish', 'Terbitkan') }}
           </Button>
         </div>
       </div>
@@ -179,41 +181,43 @@
       <main class="flex-1 overflow-y-auto relative bg-muted/5 custom-scrollbar">
         <div
           v-if="selectedItem"
-          class="max-w-4xl mx-auto p-10 space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300"
+          class="max-w-4xl mx-auto p-6 sm:p-8 space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300"
         >
-          <!-- Section Header -->
-          <div class="flex items-start justify-between">
-            <div class="space-y-1">
-              <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-primary/10 rounded-xl text-primary">
-                  <component
-                    :is="selectedItem.icon"
-                    class="w-7 h-7"
-                  />
-                </div>
-                <div>
-                  <h2 class="text-3xl font-black tracking-tight text-foreground">
-                    {{ selectedItem.label }}
-                  </h2>
-                  <p class="text-muted-foreground text-sm font-medium">
-                    {{ selectedItem.description }}
-                  </p>
-                </div>
+          <!-- Section Header Banner -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-card border border-border shadow-sm">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 shadow-inner">
+                <component
+                  :is="selectedItem.icon"
+                  class="w-6 h-6"
+                />
+              </div>
+              <div>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                  {{ selectedItem.label }}
+                </h2>
+                <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+                  {{ selectedItem.description }}
+                </p>
               </div>
             </div>
-            <div class="flex flex-col items-end gap-2">
-              <div class="flex items-center gap-1.5 px-3 py-1 bg-background border rounded-full text-xs font-semibold text-foreground/70 shadow-sm">
-                <Layout class="w-3 h-3" />
-                {{ activeGroupLabel }}
-              </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <Badge
+                variant="secondary"
+                class="rounded-full text-xs font-semibold px-3 py-1 gap-1.5 bg-muted border-border"
+              >
+                <Layout class="w-3 h-3 text-muted-foreground" />
+                <span>{{ activeGroupLabel }}</span>
+              </Badge>
             </div>
           </div>
 
           <!-- ════════ COMBINED EDITOR ════════ -->
-          <div class="space-y-8 pb-20">
+          <div class="space-y-6 pb-20">
             <div
               v-if="!isItemCompatibleWithMode(selectedItem)"
-              class="rounded-xl border border-dashed border-border bg-card/60 p-5 text-sm text-muted-foreground"
+              class="rounded-2xl border border-dashed border-border bg-card/60 p-5 text-sm text-muted-foreground"
             >
               {{ modeHintText }}
             </div>
@@ -224,14 +228,14 @@
               class="relative"
             >
               <div class="absolute top-4 right-4 z-10 flex items-center gap-2">
-                <span class="text-xs px-2 py-0.5 rounded bg-muted font-mono text-foreground/70">{{ t('publishing.theme_customizer.editor.css.label') }}</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-md bg-muted border border-border font-mono text-muted-foreground font-semibold">{{ t('publishing.theme_customizer.editor.css.label') }}</span>
               </div>
-              <div class="bg-card border-border border-2 rounded-2xl overflow-hidden shadow-2xl shadow-primary/5">
+              <div class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
                 <textarea
                   v-model="customCss"
                   rows="24"
                   :aria-label="t('publishing.theme_customizer.editor.css.label')"
-                  class="w-full p-6 bg-background text-sm font-mono leading-relaxed focus:outline-none resize-none min-h-[500px] border-0 custom-scrollbar selection:bg-primary/20"
+                  class="w-full p-5 bg-background text-xs font-mono leading-relaxed focus:outline-none resize-none min-h-[480px] border-0 custom-scrollbar selection:bg-primary/20"
                   :placeholder="t('publishing.theme_customizer.editor.css.placeholder')"
                   spellcheck="false"
                 />
@@ -241,17 +245,17 @@
             <!-- Type 2: Manifest-Driven Settings (Cards) -->
             <section
               v-if="selectedItem.manifestSections?.length && organizationMode === 'design'"
-              class="space-y-4"
+              class="space-y-3"
             >
-              <h4 class="text-xs font-semibold text-foreground/70 flex items-center gap-2 px-1">
-                <Settings2 class="w-3 h-3" />
-                {{ t('publishing.theme_customizer.editor.sections.visual') }}
+              <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2 px-1">
+                <Settings2 class="w-3.5 h-3.5" />
+                {{ t('publishing.theme_customizer.editor.sections.visual', 'Pengaturan Visual') }}
               </h4>
-              <div class="bg-card border-border border-2 rounded-2xl p-8 shadow-2xl shadow-primary/5 space-y-8">
+              <div class="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
                 <div
                   v-for="section in selectedItem.manifestSections"
                   :key="section.id"
-                  class="space-y-6"
+                  class="space-y-5"
                 >
                   <SettingControl
                     v-for="setting in getVisibleSettings(section.settings)"
@@ -269,23 +273,23 @@
             <!-- Type 3: Menu Locations -->
             <section
               v-if="selectedItem.panel === 'menus' && organizationMode === 'design'"
-              class="space-y-4"
+              class="space-y-3"
             >
-              <h4 class="text-xs font-semibold text-foreground/70 flex items-center gap-2 px-1">
-                <MenuIcon class="w-3 h-3" />
-                {{ t('publishing.theme_customizer.editor.sections.menus') }}
+              <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2 px-1">
+                <MenuIcon class="w-3.5 h-3.5" />
+                {{ t('publishing.theme_customizer.editor.sections.menus', 'Lokasi Menu') }}
               </h4>
-              <div class="bg-card border-border border-2 rounded-2xl p-8 shadow-2xl shadow-primary/5 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div
                   v-for="menuSetting in menuSections"
                   :key="menuSetting.key"
-                  class="space-y-3 p-4 bg-muted/20 rounded-xl border border-border/50 transition-all hover:border-primary/30"
+                  class="space-y-2.5 p-4 bg-muted/20 rounded-xl border border-border transition-all hover:border-primary/30"
                 >
                   <div class="flex items-center justify-between">
-                    <label class="text-xs font-bold text-foreground/80 tracking-wide">{{ menuSetting.label }}</label>
+                    <label class="text-xs font-bold text-foreground tracking-wide">{{ menuSetting.label }}</label>
                     <div
-                      class="w-1.5 h-1.5 rounded-full"
-                      :class="formValues[menuSetting.key] && formValues[menuSetting.key] !== 'none' ? 'bg-primary' : 'bg-muted-foreground/30'"
+                      class="w-2 h-2 rounded-full"
+                      :class="formValues[menuSetting.key] && formValues[menuSetting.key] !== 'none' ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground/30'"
                     />
                   </div>
                   <Select
@@ -294,7 +298,7 @@
                   >
                     <SelectTrigger
                       :aria-label="menuSetting.label"
-                      class="w-full h-10 bg-background border-border/50"
+                      class="w-full h-10 bg-background border-border rounded-xl text-sm font-medium"
                     >
                       <SelectValue :placeholder="t('publishing.theme_customizer.editor.menus.placeholder')" />
                     </SelectTrigger>
@@ -308,7 +312,7 @@
                       </SelectItem>
                     </SelectContent>
                   </Select>
-                  <p class="text-xs text-foreground/70 italic">
+                  <p class="text-[11px] text-muted-foreground italic">
                     {{ menuSetting.description }}
                   </p>
                 </div>
@@ -397,7 +401,7 @@ import { useI18n } from 'vue-i18n'
 import { 
     Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
     DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
-    Dialog, DialogContent
+    Dialog, DialogContent, Badge
 } from '@/shared/components/ui'
 import SettingControl from '@/modules/Content/Layout/components/themes/customizer/sidebar/SettingControl.vue'
 import CustomizerSidebar from '@/modules/Content/Layout/components/themes/customizer/sidebar/Sidebar.vue'

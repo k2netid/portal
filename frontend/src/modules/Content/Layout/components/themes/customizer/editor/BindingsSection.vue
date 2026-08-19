@@ -15,7 +15,7 @@
       <div
         v-for="slot in selectedItem.bindingComponent.slots"
         :key="slot.id"
-        class="bg-card border-border border-2 rounded-2xl overflow-hidden shadow-2xl shadow-primary/5 transition-all hover:shadow-primary/10"
+        class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm transition-all hover:shadow-md"
       >
         <button
           class="w-full flex items-center justify-between p-6 hover:bg-muted/30 transition-colors group"
