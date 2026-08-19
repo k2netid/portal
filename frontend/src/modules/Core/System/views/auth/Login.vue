@@ -556,7 +556,7 @@ const completeLogin = async () => {
     const redirectPath = route.query.redirect;
     const isMember = roleRank <= 10 || route.meta.authContext === 'member';
     const slug = systemStore.consoleDashboardSlug || 'dash';
-    const defaultDashboard = isMember ? '/' : resolveConsoleDashboardLocation(slug);
+    const defaultDashboard = isMember ? '/member/profile' : resolveConsoleDashboardLocation(slug);
     const target: RouteLocationRaw = (redirectPath && typeof redirectPath === 'string' && !redirectPath.includes('/login') && !redirectPath.includes('/419'))
         ? redirectPath
         : defaultDashboard;

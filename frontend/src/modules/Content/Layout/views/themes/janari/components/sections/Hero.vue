@@ -370,19 +370,21 @@ const heroShowScroll = computed(() => getSetting('hero_show_scroll', true))
 const heroNewsCategory = computed(() => (getSetting('hero_news_category') as string)?.trim() || '');
 const initialHeroSlide = computed(() => {
     const configured = (getSetting('hero_slide_1') as string) || '';
-    return configured || undefined;
+    return typeof configured === 'string' && configured.trim().length > 0 ? configured.trim() : null;
 });
 
-useHead({
-    link: [
-        {
-            rel: 'preload',
-            as: 'image',
-            href: initialHeroSlide,
-            fetchpriority: 'high',
-        },
-    ],
-});
+useHead(computed(() => ({
+    link: initialHeroSlide.value
+        ? [
+            {
+                rel: 'preload',
+                as: 'image',
+                href: initialHeroSlide.value,
+                fetchpriority: 'high',
+            },
+        ]
+        : [],
+})));
 
 const heroSlides = ref<string[]>([])
 const activeSlide = ref(0)

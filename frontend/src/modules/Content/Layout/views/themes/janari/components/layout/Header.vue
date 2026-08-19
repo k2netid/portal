@@ -173,7 +173,42 @@
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <!-- Member / Login Dropdown -->
+          <DropdownMenu v-if="authStore.isAuthenticated">
+            <DropdownMenuTrigger as-child>
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 h-9 px-3 text-xs font-semibold text-foreground bg-primary/10 hover:bg-primary/20 rounded-lg transition-all focus:outline-none cursor-pointer"
+              >
+                <UserIcon class="w-3.5 h-3.5 text-primary" />
+                <span class="max-w-[100px] truncate">{{ authStore.user?.name || 'Member' }}</span>
+                <ChevronDown class="w-3 h-3 text-muted-foreground" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              class="w-48 bg-popover/95 backdrop-blur-md border-border/40 shadow-xl"
+            >
+              <DropdownMenuItem as-child>
+                <router-link
+                  to="/member/profile"
+                  class="flex items-center gap-2 cursor-pointer w-full"
+                >
+                  <UserIcon class="w-4 h-4 text-primary" />
+                  <span>{{ t('common.labels.profile', 'Akun Saya') }}</span>
+                </router-link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                class="text-destructive focus:text-destructive cursor-pointer"
+                @click="handleLogout"
+              >
+                <LogOut class="w-4 h-4 mr-2" />
+                <span>{{ t('common.actions.logout', 'Keluar') }}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <a
+            v-else
             :href="loginUrl"
             :class="toolbarLoginClass"
           >
@@ -439,7 +474,18 @@
           <div class="flex items-center gap-4 mb-6">
             <span class="text-2xl font-black text-primary-foreground tracking-tight uppercase">{{ siteName }}</span>
             <div class="h-5 w-px bg-primary-foreground/25" />
+            <template v-if="authStore.isAuthenticated">
+              <router-link
+                to="/member/profile"
+                class="bg-primary-foreground text-primary text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-foreground/90 transition-colors inline-flex items-center gap-1.5"
+                @click="isOpen = false"
+              >
+                <UserIcon class="w-3.5 h-3.5" />
+                <span class="max-w-[120px] truncate">{{ authStore.user?.name || 'Akun Saya' }}</span>
+              </router-link>
+            </template>
             <a
+              v-else
               :href="loginUrl"
               class="bg-primary-foreground text-primary text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-foreground/90 transition-colors"
               @click="isOpen = false"
@@ -537,6 +583,8 @@ import {
     Globe,
     Menu as MenuIcon,
     X,
+    User as UserIcon,
+    LogOut,
 } from 'lucide-vue-next';
 import type { MenuItem } from '@/modules/Content/Layout/types/menu';
 
@@ -564,6 +612,12 @@ const handleSelectLanguage = async (code: string) => {
 const isOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
 const loginUrl = '/member/login';
+const handleLogout = async () => {
+    await authStore.logout();
+    if (route.path.startsWith('/member')) {
+        window.location.assign('/');
+    }
+};
 const headerRef = ref<HTMLElement>();
 const isDesktop = computed(() => device.value === 'desktop');
 const isHomePage = computed(() => route.path === '/');
