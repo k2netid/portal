@@ -1,19 +1,14 @@
 <template>
-  <div class="space-y-6">
-    <!-- Header Hero Banner -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/80 border border-border/50 shadow-sm backdrop-blur-md">
-      <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 border border-blue-500/20 flex items-center justify-center shrink-0 shadow-inner">
-          <MessageSquare class="w-6 h-6" />
-        </div>
-        <div>
-          <h1 class="text-xl sm:text-2xl font-black tracking-tight text-foreground">
-            {{ t('system.member.comments.title', 'Riwayat Komentar & Diskusi') }}
-          </h1>
-          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-            {{ t('system.member.comments.subtitle', 'Semua komentar dan partisipasi diskusi Anda pada artikel CMS') }}
-          </p>
-        </div>
+  <div class="p-6 space-y-6">
+    <!-- Page Header (Matches Console Standard) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight text-foreground">
+          {{ t('system.member.comments.title', 'Riwayat Komentar & Diskusi') }}
+        </h2>
+        <p class="text-muted-foreground mt-1">
+          {{ t('system.member.comments.subtitle', 'Semua komentar dan partisipasi diskusi Anda pada artikel CMS') }}
+        </p>
       </div>
 
       <div class="flex items-center gap-2">
@@ -21,10 +16,10 @@
           as-child
           variant="outline"
           size="sm"
-          class="text-xs h-9 px-4 rounded-xl font-semibold gap-1.5 border-border/50 hover:bg-muted/60"
+          class="gap-2 rounded-xl"
         >
           <router-link to="/blog">
-            <Compass class="w-3.5 h-3.5" />
+            <Compass class="w-4 h-4" />
             <span>{{ t('system.member.bookmarks.explore', 'Jelajahi Artikel') }}</span>
           </router-link>
         </Button>
@@ -34,58 +29,61 @@
     <!-- Loading State -->
     <div
       v-if="loading"
-      class="flex items-center justify-center py-16"
+      class="flex items-center justify-center py-20"
     >
-      <Spinner class="w-6 h-6 text-primary animate-spin" />
+      <Spinner class="w-8 h-8 text-primary animate-spin" />
     </div>
 
     <!-- Comments List -->
     <div
-      v-else
+      v-else-if="comments.length > 0"
       class="space-y-4"
     >
       <Card
         v-for="item in comments"
         :key="item.id"
-        class="rounded-2xl border-border/50 p-5 space-y-3.5 hover:border-border transition-all bg-card/60 backdrop-blur-sm"
+        class="border-border bg-card hover:border-border/80 transition-colors"
       >
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/30 pb-3">
-          <div class="flex items-center gap-2.5">
-            <Badge
-              :variant="item.status === 'approved' ? 'default' : 'secondary'"
-              class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
-              :class="statusBadgeClass(item.status)"
+        <CardContent class="p-5 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
+            <div class="flex items-center gap-2.5">
+              <Badge
+                :variant="badgeVariant(item.status)"
+                class="text-[10px] font-bold uppercase tracking-wider"
+              >
+                {{ statusLabel(item.status) }}
+              </Badge>
+              <span class="text-xs text-muted-foreground">{{ formatDate(item.created_at) }}</span>
+            </div>
+
+            <router-link
+              v-if="item.content"
+              :to="`/blog/${item.content.slug}`"
+              class="text-xs font-semibold text-primary hover:underline flex items-center gap-1 truncate max-w-sm"
             >
-              {{ statusLabel(item.status) }}
-            </Badge>
-            <span class="text-xs text-muted-foreground">{{ formatDate(item.created_at) }}</span>
+              <span>{{ item.content.title }}</span>
+              <ArrowUpRight class="w-3.5 h-3.5 shrink-0" />
+            </router-link>
           </div>
 
-          <router-link
-            v-if="item.content"
-            :to="`/blog/${item.content.slug}`"
-            class="text-xs font-semibold text-primary hover:underline flex items-center gap-1 truncate max-w-sm"
-          >
-            <span>{{ item.content.title }}</span>
-            <ArrowUpRight class="w-3.5 h-3.5 shrink-0" />
-          </router-link>
-        </div>
-
-        <p class="text-xs sm:text-sm text-foreground/90 leading-relaxed bg-muted/20 p-4 rounded-xl border border-border/20">
-          "{{ item.body }}"
-        </p>
+          <p class="text-sm text-foreground leading-relaxed bg-muted/30 p-4 rounded-xl border border-border/50">
+            "{{ item.body }}"
+          </p>
+        </CardContent>
       </Card>
+    </div>
 
-      <!-- Empty State -->
-      <div
-        v-if="comments.length === 0"
-        class="py-16 px-4 text-center rounded-2xl border border-dashed border-border/60 bg-muted/10 space-y-4"
-      >
-        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mx-auto border border-blue-500/20 shadow-inner">
+    <!-- Empty State -->
+    <Card
+      v-else
+      class="border-dashed border-2 py-16 px-4 text-center bg-card/40"
+    >
+      <CardContent class="p-0 space-y-4 max-w-sm mx-auto">
+        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto border border-primary/20">
           <MessageSquare class="w-6 h-6" />
         </div>
-        <div class="max-w-sm mx-auto">
-          <h3 class="font-bold text-foreground text-sm">
+        <div>
+          <h3 class="font-bold text-foreground text-base">
             {{ t('system.member.comments.emptyTitle', 'Belum Ada Komentar') }}
           </h3>
           <p class="text-xs text-muted-foreground mt-1">
@@ -95,20 +93,20 @@
         <Button
           as-child
           size="sm"
-          class="text-xs h-9 rounded-xl"
+          class="gap-1.5 rounded-xl"
         >
           <router-link to="/blog">
-            <Compass class="w-3.5 h-3.5 mr-1.5" />
-            {{ t('system.member.bookmarks.exploreNow', 'Jelajahi Artikel') }}
+            <Compass class="w-4 h-4" />
+            <span>{{ t('system.member.bookmarks.exploreNow', 'Jelajahi Artikel') }}</span>
           </router-link>
         </Button>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
 
     <!-- Pagination -->
     <div
       v-if="totalPages > 1"
-      class="flex items-center justify-center gap-2 pt-4"
+      class="flex items-center justify-center gap-2 pt-2"
     >
       <Button
         variant="outline"
@@ -140,7 +138,13 @@ import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import apiClient from '@/engine/api/client';
 import { memberPaths } from '@/engine/api/paths';
-import { Card, Badge, Button, Spinner } from '@/shared/components/ui';
+import {
+  Card,
+  CardContent,
+  Badge,
+  Button,
+  Spinner,
+} from '@/shared/components/ui';
 import {
   MessageSquare,
   ArrowUpRight,
@@ -181,18 +185,16 @@ const formatDate = (dateStr: string): string => {
   }
 };
 
-const statusBadgeClass = (status: string): string => {
+const badgeVariant = (status: string): 'default' | 'secondary' | 'outline' | 'destructive' => {
   switch (status) {
     case 'approved':
-      return 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+      return 'default';
     case 'pending':
-      return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/20';
+      return 'secondary';
     case 'rejected':
-      return 'bg-red-500/15 text-red-600 dark:text-red-400 border-red-500/20';
-    case 'spam':
-      return 'bg-zinc-500/15 text-zinc-600 dark:text-zinc-400 border-zinc-500/20';
+      return 'destructive';
     default:
-      return 'bg-muted text-muted-foreground';
+      return 'outline';
   }
 };
 
