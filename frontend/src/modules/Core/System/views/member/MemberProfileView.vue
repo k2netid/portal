@@ -1,14 +1,14 @@
 <template>
   <div class="space-y-6">
-    <!-- Header Card -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 border border-border/50 shadow-sm backdrop-blur-md">
+    <!-- Header Hero Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/80 border border-border/50 shadow-sm backdrop-blur-md">
       <div class="flex items-center gap-4">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary flex items-center justify-center text-2xl font-black border border-primary/20 shadow-inner">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl sm:text-2xl font-black border border-primary/20 shadow-inner shrink-0">
           {{ userInitial }}
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-foreground">
               {{ authStore.user?.name || 'Member' }}
             </h1>
             <Badge
@@ -18,23 +18,23 @@
               {{ userRoleLabel }}
             </Badge>
           </div>
-          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
+          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
             {{ authStore.user?.email }}
           </p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 self-start sm:self-auto">
         <Badge
           variant="secondary"
-          class="text-xs px-3 py-1 bg-muted/60 text-muted-foreground border-border/40"
+          class="text-xs px-3 py-1 bg-muted/60 text-muted-foreground border-border/40 font-medium"
         >
           {{ t('system.member.memberSince', 'Member sejak') }} {{ memberSinceDate }}
         </Badge>
       </div>
     </div>
 
-    <!-- Embedded Full Profile Component -->
+    <!-- Embedded Profile Tabs Component -->
     <div class="bg-card/60 rounded-2xl border border-border/50 p-2 sm:p-4 backdrop-blur-sm">
       <Profile />
     </div>

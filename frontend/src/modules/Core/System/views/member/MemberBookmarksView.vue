@@ -1,20 +1,18 @@
 <template>
   <div class="space-y-6">
-    <!-- Header Card -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 border border-border/50 shadow-sm backdrop-blur-md">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
-            <Bookmark class="w-5 h-5" />
-          </div>
-          <div>
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              {{ t('system.member.bookmarks.title', 'Artikel Tersimpan') }}
-            </h1>
-            <p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
-              {{ t('system.member.bookmarks.subtitle', 'Daftar bacaan yang Anda simpan untuk dibaca kembali') }}
-            </p>
-          </div>
+    <!-- Header Hero Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/80 border border-border/50 shadow-sm backdrop-blur-md">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center justify-center shrink-0 shadow-inner">
+          <Bookmark class="w-6 h-6" />
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-black tracking-tight text-foreground">
+            {{ t('system.member.bookmarks.title', 'Artikel Tersimpan') }}
+          </h1>
+          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+            {{ t('system.member.bookmarks.subtitle', 'Daftar bacaan yang Anda simpan untuk dibaca kembali') }}
+          </p>
         </div>
       </div>
 
@@ -22,11 +20,11 @@
         <Button
           as-child
           size="sm"
-          class="text-xs h-9 px-3.5 rounded-lg font-semibold gap-1.5"
+          class="text-xs h-9 px-4 rounded-xl font-semibold gap-1.5 shadow-sm shadow-primary/20"
         >
           <router-link to="/blog">
             <Compass class="w-3.5 h-3.5" />
-            {{ t('system.member.bookmarks.explore', 'Jelajahi Artikel Lain') }}
+            <span>{{ t('system.member.bookmarks.explore', 'Jelajahi Artikel Lain') }}</span>
           </router-link>
         </Button>
       </div>
@@ -37,7 +35,7 @@
       <Card
         v-for="item in bookmarks"
         :key="item.id"
-        class="group overflow-hidden rounded-2xl border-border/50 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/5 flex flex-col justify-between"
+        class="group overflow-hidden rounded-2xl border-border/50 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/5 flex flex-col justify-between bg-card/60 backdrop-blur-sm"
       >
         <div class="p-5 space-y-3">
           <div class="flex items-center justify-between gap-2">
@@ -72,7 +70,7 @@
               as-child
               variant="ghost"
               size="sm"
-              class="h-8 px-2.5 text-xs text-primary hover:text-primary hover:bg-primary/10 gap-1 rounded-lg"
+              class="h-8 px-2.5 text-xs text-primary hover:text-primary hover:bg-primary/10 gap-1 rounded-xl"
             >
               <router-link :to="`/blog/${item.slug}`">
                 <span>{{ t('common.actions.read', 'Baca') }}</span>
@@ -82,7 +80,7 @@
             <Button
               variant="ghost"
               size="icon"
-              class="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg"
+              class="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl"
               :title="t('common.actions.delete', 'Hapus dari Tersimpan')"
               @click="removeBookmark(item.id)"
             >
@@ -97,7 +95,7 @@
         v-if="bookmarks.length === 0"
         class="col-span-full py-16 px-4 text-center rounded-2xl border border-dashed border-border/60 bg-muted/10 space-y-4"
       >
-        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto border border-amber-500/20">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto border border-amber-500/20 shadow-inner">
           <Bookmark class="w-6 h-6" />
         </div>
         <div class="max-w-sm mx-auto">
@@ -111,7 +109,7 @@
         <Button
           as-child
           size="sm"
-          class="text-xs h-9 rounded-lg"
+          class="text-xs h-9 rounded-xl"
         >
           <router-link to="/blog">
             <Compass class="w-3.5 h-3.5 mr-1.5" />

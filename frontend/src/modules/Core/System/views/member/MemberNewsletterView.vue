@@ -1,27 +1,25 @@
 <template>
   <div class="space-y-6 max-w-4xl">
-    <!-- Header Card -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 border border-border/50 shadow-sm backdrop-blur-md">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-            <Mail class="w-5 h-5" />
-          </div>
-          <div>
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              {{ t('system.member.newsletter.title', 'Preferensi Buletin & Email') }}
-            </h1>
-            <p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
-              {{ t('system.member.newsletter.subtitle', 'Atur topik bacaan dan frekuensi penerimaan intisari artikel ke email Anda') }}
-            </p>
-          </div>
+    <!-- Header Hero Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/80 border border-border/50 shadow-sm backdrop-blur-md">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center justify-center shrink-0 shadow-inner">
+          <Mail class="w-6 h-6" />
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-black tracking-tight text-foreground">
+            {{ t('system.member.newsletter.title', 'Preferensi Buletin & Email') }}
+          </h1>
+          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+            {{ t('system.member.newsletter.subtitle', 'Atur topik bacaan dan frekuensi penerimaan intisari artikel ke email Anda') }}
+          </p>
         </div>
       </div>
 
       <div>
         <Button
           size="sm"
-          class="text-xs h-9 px-4 rounded-lg font-semibold gap-1.5 shadow-sm shadow-primary/20"
+          class="text-xs h-9 px-4 rounded-xl font-semibold gap-1.5 shadow-sm shadow-primary/20"
           :disabled="saving"
           @click="savePreferences"
         >
@@ -34,30 +32,30 @@
     <!-- Success Alert -->
     <div
       v-if="savedMessage"
-      class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-300"
+      class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2.5 animate-in fade-in duration-300 shadow-sm"
     >
       <CheckCircle2 class="w-4 h-4 shrink-0" />
       <span>{{ savedMessage }}</span>
     </div>
 
     <!-- Newsletter Toggles -->
-    <div class="space-y-4">
-      <Card class="rounded-2xl border-border/50 p-6 space-y-6">
+    <div class="space-y-5">
+      <Card class="rounded-2xl border-border/50 p-6 space-y-6 bg-card/60 backdrop-blur-sm">
         <div>
           <h3 class="text-sm font-bold text-foreground">
             {{ t('system.member.newsletter.frequencyTitle', 'Frekuensi Pengiriman') }}
           </h3>
-          <p class="text-xs text-muted-foreground mt-0.5">
+          <p class="text-xs text-muted-foreground mt-0.5 font-medium">
             {{ t('system.member.newsletter.frequencySubtitle', 'Pilih seberapa sering Anda ingin menerima update artikel baru') }}
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
           <button
             v-for="freq in frequencyOptions"
             :key="freq.value"
             type="button"
-            class="p-4 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2"
+            class="p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2.5"
             :class="[
               frequency === freq.value
                 ? 'border-primary bg-primary/5 ring-2 ring-primary/20 text-foreground'
@@ -77,26 +75,26 @@
                 />
               </div>
             </div>
-            <span class="text-[11px] leading-relaxed opacity-80">{{ freq.desc }}</span>
+            <span class="text-[11px] leading-relaxed opacity-80 font-medium">{{ freq.desc }}</span>
           </button>
         </div>
       </Card>
 
-      <Card class="rounded-2xl border-border/50 p-6 space-y-6">
+      <Card class="rounded-2xl border-border/50 p-6 space-y-6 bg-card/60 backdrop-blur-sm">
         <div>
           <h3 class="text-sm font-bold text-foreground">
             {{ t('system.member.newsletter.topicsTitle', 'Topik Minat Bacaan') }}
           </h3>
-          <p class="text-xs text-muted-foreground mt-0.5">
+          <p class="text-xs text-muted-foreground mt-0.5 font-medium">
             {{ t('system.member.newsletter.topicsSubtitle', 'Pilih kategori konten yang paling Anda minati') }}
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div
             v-for="topic in topicOptions"
             :key="topic.id"
-            class="flex items-start gap-3 p-3.5 rounded-xl border border-border/40 hover:border-border bg-card/30 transition-colors"
+            class="flex items-start gap-3 p-4 rounded-2xl border border-border/40 hover:border-border bg-card/30 transition-colors"
           >
             <Checkbox
               :id="`topic-${topic.id}`"
@@ -108,7 +106,7 @@
               class="text-xs cursor-pointer select-none space-y-0.5"
             >
               <span class="font-bold text-foreground block">{{ topic.title }}</span>
-              <span class="text-[11px] text-muted-foreground block leading-relaxed">{{ topic.desc }}</span>
+              <span class="text-[11px] text-muted-foreground block leading-relaxed font-medium">{{ topic.desc }}</span>
             </label>
           </div>
         </div>

@@ -1,21 +1,33 @@
 <template>
   <div class="space-y-6">
-    <!-- Header Card -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 border border-border/50 shadow-sm backdrop-blur-md">
-      <div>
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20">
-            <MessageSquare class="w-5 h-5" />
-          </div>
-          <div>
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              {{ t('system.member.comments.title', 'Riwayat Komentar & Diskusi') }}
-            </h1>
-            <p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
-              {{ t('system.member.comments.subtitle', 'Semua komentar dan partisipasi diskusi Anda pada artikel CMS') }}
-            </p>
-          </div>
+    <!-- Header Hero Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-card/80 border border-border/50 shadow-sm backdrop-blur-md">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 border border-blue-500/20 flex items-center justify-center shrink-0 shadow-inner">
+          <MessageSquare class="w-6 h-6" />
         </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-black tracking-tight text-foreground">
+            {{ t('system.member.comments.title', 'Riwayat Komentar & Diskusi') }}
+          </h1>
+          <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+            {{ t('system.member.comments.subtitle', 'Semua komentar dan partisipasi diskusi Anda pada artikel CMS') }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <Button
+          as-child
+          variant="outline"
+          size="sm"
+          class="text-xs h-9 px-4 rounded-xl font-semibold gap-1.5 border-border/50 hover:bg-muted/60"
+        >
+          <router-link to="/blog">
+            <Compass class="w-3.5 h-3.5" />
+            <span>{{ t('system.member.bookmarks.explore', 'Jelajahi Artikel') }}</span>
+          </router-link>
+        </Button>
       </div>
     </div>
 
@@ -24,13 +36,13 @@
       <Card
         v-for="item in comments"
         :key="item.id"
-        class="rounded-2xl border-border/50 p-5 space-y-3 hover:border-border transition-colors"
+        class="rounded-2xl border-border/50 p-5 space-y-3.5 hover:border-border transition-all bg-card/60 backdrop-blur-sm"
       >
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/30 pb-3">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2.5">
             <Badge
               :variant="item.status === 'approved' ? 'default' : 'secondary'"
-              class="text-[10px] font-bold uppercase tracking-wider"
+              class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
               :class="item.status === 'approved' ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/20'"
             >
               {{ item.status === 'approved' ? t('common.status.approved', 'Disetujui') : t('common.status.pending', 'Menunggu Moderasi') }}
@@ -47,7 +59,7 @@
           </router-link>
         </div>
 
-        <p class="text-xs sm:text-sm text-foreground/90 leading-relaxed bg-muted/30 p-3.5 rounded-xl border border-border/20">
+        <p class="text-xs sm:text-sm text-foreground/90 leading-relaxed bg-muted/20 p-4 rounded-xl border border-border/20">
           "{{ item.content }}"
         </p>
       </Card>
@@ -57,7 +69,7 @@
         v-if="comments.length === 0"
         class="py-16 px-4 text-center rounded-2xl border border-dashed border-border/60 bg-muted/10 space-y-4"
       >
-        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mx-auto border border-blue-500/20">
+        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mx-auto border border-blue-500/20 shadow-inner">
           <MessageSquare class="w-6 h-6" />
         </div>
         <div class="max-w-sm mx-auto">
@@ -71,7 +83,7 @@
         <Button
           as-child
           size="sm"
-          class="text-xs h-9 rounded-lg"
+          class="text-xs h-9 rounded-xl"
         >
           <router-link to="/blog">
             <Compass class="w-3.5 h-3.5 mr-1.5" />
