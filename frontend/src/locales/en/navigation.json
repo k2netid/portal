@@ -69,7 +69,13 @@
         "seo_optimization": "SEO & Optimization",
         "design_config": "Design & Config",
         "advanced": "Advanced",
-        "infrastructure": "Infrastructure"
+        "infrastructure": "Infrastructure",
+        "studio": "Studio",
+        "insight": "Insight",
+        "audience": "Audience",
+        "users": "Users",
+        "journal": "Journal",
+        "integrations": "Integrations"
     },
     "sidebar": {
         "expand": "Expand sidebar",

@@ -90,7 +90,7 @@
             <template v-if="!sidebarMinimized">
               <!-- Section Header -->
               <button
-                class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground tracking-wide rounded-xl hover:bg-accent"
+                class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground tracking-wide rounded-xl hover:bg-accent transition-colors"
                 @click="toggleSection(section.key)"
               >
                 <div class="flex items-center gap-2">
@@ -103,6 +103,7 @@
                 <component 
                   :is="getIcon('chevron-down')" 
                   :class="{ 'rotate-180': expandedSections[section.key] }"
+                  class="w-3.5 h-3.5 transition-transform duration-200"
                 />
               </button>
 
@@ -117,7 +118,7 @@
                 >
                   <div
                     v-if="item.type === 'divider'"
-                    class="py-2 px-9 flex items-center gap-2"
+                    class="py-2 px-6 flex items-center gap-2"
                   >
                     <div class="h-px bg-border flex-1" />
                     <span class="text-[10px] font-bold text-muted-foreground/40 tracking-wider whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
@@ -130,7 +131,7 @@
                     class="space-y-0.5"
                   >
                     <button 
-                      class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-xl group pl-9"
+                      class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-xl group pl-6"
                       :class="[ isSubSectionActive(item) ? 'text-foreground hover:bg-accent' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
                       @click="toggleSubSection(navSubSectionKey(item))"
                     >
@@ -144,7 +145,7 @@
                       <component 
                         :is="getIcon('chevron-down')" 
                         :class="{ 'rotate-180': expandedSubSections[navSubSectionKey(item)] }"
-                        class="w-3.5 h-3.5"
+                        class="w-3.5 h-3.5 transition-transform duration-200"
                       />
                     </button>
                                         
@@ -158,7 +159,7 @@
                       >
                         <div
                           v-if="subItem.type === 'divider'"
-                          class="py-1.5 px-3 pl-14 flex items-center gap-2"
+                          class="py-1.5 px-3 pl-10 flex items-center gap-2"
                         >
                           <div class="h-px bg-border flex-1" />
                           <span v-if="getNavigationLabel(subItem)" class="text-[9px] uppercase font-bold text-muted-foreground/40 tracking-widest whitespace-nowrap">{{ getNavigationLabel(subItem) }}</span>
@@ -167,7 +168,7 @@
                         <router-link
                           v-else-if="subItem.resolvedTo"
                           :to="subItem.resolvedTo"
-                          class="flex items-center px-3 py-1.5 text-xs font-medium rounded-xl group pl-16"
+                          class="flex items-center px-3 py-1.5 text-xs font-medium rounded-xl group pl-12"
                           :class="[ $route.name === subItem.name ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground/80 hover:bg-accent hover:text-accent-foreground' ]"
                           @mouseenter="prefetchNavTarget(subItem)"
                           @click="$emit('close')"
@@ -186,8 +187,8 @@
                   <router-link
                     v-else-if="item.resolvedTo"
                     :to="item.resolvedTo"
-                    class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group pl-9"
-                    :class="[ $route.name === item.name ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group pl-6 transition-colors"
+                    :class="[ $route.name === item.name ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
                     @mouseenter="prefetchNavTarget(item)"
                     @click="$emit('close')"
                   >
@@ -416,15 +417,16 @@ const isDashboardActive = computed(() => {
 });
 
 const sidebarSections = computed<SidebarSection[]>(() => {
-    const isSuperAdmin = authStore.getRoleRank() >= 100;
-    
     const sections: SidebarSection[] = [
-        { key: 'operations', labelKey: 'sharedConsole.navigation.sections.operations', icon: getIcon('briefcase') },
+        { key: 'studio', labelKey: 'sharedConsole.navigation.sections.studio', icon: getIcon('layout') },
+        { key: 'insight', labelKey: 'sharedConsole.navigation.sections.insight', icon: getIcon('activity') },
+        { key: 'audience', labelKey: 'sharedConsole.navigation.sections.audience', icon: getIcon('users') },
+        { key: 'users', labelKey: 'sharedConsole.navigation.sections.users', icon: getIcon('user-check') },
+        { key: 'journal', labelKey: 'sharedConsole.navigation.sections.journal', icon: getIcon('book-open') },
+        { key: 'configuration', labelKey: 'sharedConsole.navigation.sections.configuration', icon: getIcon('sliders') },
+        { key: 'infrastructure', labelKey: 'sharedConsole.navigation.sections.infrastructure', icon: getIcon('server') },
+        { key: 'integrations', labelKey: 'sharedConsole.navigation.sections.integrations', icon: getIcon('code') },
     ];
-
-    if (isSuperAdmin) {
-        sections.push({ key: 'settings', labelKey: 'sharedConsole.navigation.sections.settings', icon: getIcon('settings') });
-    }
 
     return sections;
 });
@@ -433,8 +435,11 @@ const expandedSections = ref<Record<string, boolean>>({});
 const expandedSubSections = ref<Record<string, boolean>>({});
 
 const initializeExpandedSections = () => {
-    if (sidebarSections.value.length > 0 && sidebarSections.value[0]?.key) {
-        expandedSections.value[sidebarSections.value[0].key] = true;
+    if ($route.name) {
+        autoExpandActiveSection();
+    }
+    if (Object.keys(expandedSections.value).length === 0) {
+        expandedSections.value['studio'] = true;
     }
 };
 

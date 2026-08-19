@@ -11,7 +11,14 @@
             "marketing_insights": "Marketing & Insight",
             "seo_optimization": "SEO & Optimasi",
             "design_config": "Tampilan & Desain",
-            "content_studio": "Konten & Media"
+            "content_studio": "Konten & Media",
+            "insight": "Insight",
+            "audience": "Audience",
+            "users": "Pengguna",
+            "journal": "Jurnal",
+            "configuration": "Konfigurasi",
+            "infrastructure": "Infrastruktur",
+            "integrations": "Integrasi"
         },
         "menu": {
             "studio": "Konten",

@@ -11,7 +11,14 @@
             "marketing_insights": "Marketing & Insights",
             "seo_optimization": "SEO & Optimization",
             "design_config": "Design & Config",
-            "content_studio": "Content & Media"
+            "content_studio": "Content & Media",
+            "insight": "Insight",
+            "audience": "Audience",
+            "users": "Users",
+            "journal": "Journal",
+            "configuration": "Configuration",
+            "infrastructure": "Infrastructure",
+            "integrations": "Integrations"
         },
         "menu": {
             "studio": "Content",

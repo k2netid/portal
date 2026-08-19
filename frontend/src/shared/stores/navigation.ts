@@ -2,16 +2,18 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { NavItem } from '@/shared/utils/navigation';
 
-/** Sidebar parents with the same `group` are merged into one accordion. */
-const MERGE_BY_GROUP = new Set<NonNullable<NavItem['group']>>([
+export const TOP_LEVEL_NAV_SECTIONS = [
     'studio',
-    'nexus',
-    'identity',
-    'observability',
+    'insight',
+    'audience',
+    'users',
+    'journal',
+    'configuration',
     'infrastructure',
-    'system_config',
-    'integrations_dev',
-]);
+    'integrations',
+] as const;
+
+export type NavSectionKey = (typeof TOP_LEVEL_NAV_SECTIONS)[number];
 
 function mergeChildren(existing: NavItem[] = [], incoming: NavItem[] = []): NavItem[] {
     const merged = [...existing];
@@ -26,7 +28,7 @@ function mergeChildren(existing: NavItem[] = [], incoming: NavItem[] = []): NavI
 }
 
 function findMergeParent(groupArr: NavItem[], item: NavItem): NavItem | undefined {
-    if (item.children && item.children.length > 0 && item.group && MERGE_BY_GROUP.has(item.group)) {
+    if (item.children && item.children.length > 0 && item.group) {
         return groupArr.find((g) => g.group === item.group);
     }
     if (item.children && item.children.length > 0 && item.labelKey) {
@@ -44,14 +46,20 @@ export const useNavigationStore = defineStore('navigation', () => {
 
     const navigationGroups = computed(() => {
         const groups: Record<string, NavItem[]> = {
-            operations: [],
-            settings: [],
+            studio: [],
+            insight: [],
+            audience: [],
+            users: [],
+            journal: [],
+            configuration: [],
+            infrastructure: [],
+            integrations: [],
         };
 
         Object.entries(registry.value).forEach(([_moduleId, items]) => {
             if (!items) return;
             items.forEach((item) => {
-                const targetGroup = item.context || 'operations';
+                const targetGroup = (item.context || item.group || 'studio') as string;
                 if (!groups[targetGroup]) {
                     groups[targetGroup] = [];
                 }
@@ -70,6 +78,7 @@ export const useNavigationStore = defineStore('navigation', () => {
                     return;
                 }
 
+                // If item is a single direct navigation entry or an item with children
                 groupArr.push({
                     ...item,
                     children: item.children ? [...item.children] : undefined,
@@ -77,6 +86,7 @@ export const useNavigationStore = defineStore('navigation', () => {
             });
         });
 
+        // Sort items inside each group by priority descending
         Object.keys(groups).forEach((key) => {
             const arr = groups[key];
             if (arr) {

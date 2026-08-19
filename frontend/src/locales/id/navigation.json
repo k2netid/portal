@@ -69,7 +69,13 @@
         "seo_optimization": "SEO & Optimasi",
         "design_config": "Tampilan & Desain",
         "advanced": "Lanjutan",
-        "infrastructure": "Infrastruktur"
+        "infrastructure": "Infrastruktur",
+        "studio": "Studio",
+        "insight": "Insight",
+        "audience": "Audience",
+        "users": "Pengguna",
+        "journal": "Jurnal",
+        "integrations": "Integrasi"
     },
     "sidebar": {
         "expand": "Perluas sidebar",

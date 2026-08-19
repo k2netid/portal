@@ -4,6 +4,17 @@
 
 import type { RouteLocationRaw } from 'vue-router';
 
+export type NavGroupKey =
+    | 'studio'
+    | 'insight'
+    | 'audience'
+    | 'users'
+    | 'journal'
+    | 'configuration'
+    | 'infrastructure'
+    | 'integrations'
+    | (string & {});
+
 export interface NavItem {
     name?: string;
     to?: string | RouteLocationRaw;
@@ -12,22 +23,9 @@ export interface NavItem {
     icon?: string;
     permission?: string;
     role?: string | string[];
-    context?: 'operations' | 'settings' | 'studio' | 'nexus' | 'command_center' | 'both';
+    context?: NavGroupKey;
     type?: 'item' | 'divider';
     children?: NavItem[];
-    group?:
-        | 'studio'
-        | 'nexus'
-        | 'identity'
-        | 'observability'
-        | 'infrastructure'
-        | 'system_config'
-        | 'integrations_dev'
-        | 'editorial'
-        | 'media'
-        | 'design'
-        | 'library'
-        | 'insights'
-        | 'audience';
+    group?: NavGroupKey;
     priority?: number;
 }
