@@ -154,7 +154,7 @@ export interface BuilderState {
     snapToObjects: Ref<boolean>;
     autoSave: Ref<boolean>;
     pages: Ref<PageMetadata[]>;
-    currentPageId: Ref<number | null>;
+    currentPageId: Ref<number | string | null>;
     pagesLoading: Ref<boolean>;
     categories: Ref<Category[]>;
     availableTags: Ref<Tag[]>;

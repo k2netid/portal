@@ -24,7 +24,7 @@
           v-for="(page, index) in filteredPages" 
           :key="page.id || `page-${index}`" 
           class="page-item" 
-          :class="{ 'page-item--active': currentPageId === page.id }"
+          :class="{ 'page-item--active': String(currentPageId) === String(page.id) }"
           @click="selectPage(page.id as string | number)"
         >
           <div class="page-info">

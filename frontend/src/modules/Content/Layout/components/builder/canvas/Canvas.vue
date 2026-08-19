@@ -19,13 +19,33 @@
       <!-- Main Content Area -->
       <main class="main-content flex-1 w-full flex flex-col">
         <!-- Empty State -->
-        <div v-if="blocks.length === 0" class="canvas-empty flex-1">
-          <div class="canvas-empty__content">
-            <p class="canvas-empty__text">{{ $t('builder.canvas.empty', 'Start your page by adding a section.') }}</p>
-            <button class="canvas-empty__btn" @click="addSection">
-              <Plus :size="16" />
-              {{ $t('builder.actions.addSection', 'Add New Section') }}
-            </button>
+        <div v-if="blocks.length === 0" class="canvas-empty flex-1 flex flex-col items-center justify-center p-8 text-center my-6">
+          <div class="canvas-empty__content max-w-lg mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
+            <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+              <Sparkles :size="28" />
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">{{ contentTitle ? `Desain Halaman ${contentTitle}` : 'Mulai Mendesain Halaman' }}</h3>
+            <p class="canvas-empty__text text-slate-500 dark:text-slate-400 text-sm mb-6">Pilih template siap pakai atau tambahkan seksi baru dari awal.</p>
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+              <button class="px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium flex items-center gap-2 transition-all shadow-md shadow-indigo-500/20 cursor-pointer" @click="addSection">
+                <Plus :size="16" />
+                {{ $t('builder.actions.addSection', 'Add New Section') }}
+              </button>
+              <button class="px-4 py-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer" @click="openTemplateModal">
+                <Sparkles :size="16" />
+                Template Library
+              </button>
+            </div>
+            <!-- Quick Starter Presets -->
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800/80">
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">1-Click Starter Presets</div>
+              <div class="flex flex-wrap items-center justify-center gap-2">
+                <button class="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 transition-all cursor-pointer" @click="loadPreset('saas')">🚀 SaaS / Produk</button>
+                <button class="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 transition-all cursor-pointer" @click="loadPreset('company')">🏢 Profil Bisnis</button>
+                <button class="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 transition-all cursor-pointer" @click="loadPreset('pricing')">💰 Paket Harga</button>
+                <button class="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 transition-all cursor-pointer" @click="loadPreset('contact')">📞 Kontak</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -59,6 +79,9 @@
 <script setup lang="ts">
 import { computed, inject, watch, onMounted } from 'vue'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js'
+import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js'
+import { saasLandingPage, homePage, aboutPage, contactPage } from '@/components/builder/templates/PageTemplates';
+import { pricingSection, faqSection, heroGradient, ctaDark } from '@/components/builder/templates/SectionTemplates';
 import { useI18n } from 'vue-i18n'
 import draggable from 'vuedraggable'
 import ModuleWrapper from './ModuleWrapper.vue'
@@ -77,6 +100,7 @@ const blocks = computed<BlockInstance[]>({
   get: () => builder?.blocks.value || [],
   set: (val) => { if (builder) builder.blocks.value = val }
 })
+const contentTitle = computed(() => builder?.content?.value?.title || '')
 const wireframeMode = computed(() => builder?.wireframeMode.value || false)
 const gridViewMode = computed(() => builder?.gridViewMode.value || false)
 const activeTheme = computed(() => builder?.activeTheme.value || 'janari')
@@ -214,6 +238,30 @@ const clearSelection = () => {
 
 const addSection = () => {
   builder?.insertModule('section')
+}
+
+const openTemplateModal = () => {
+  if (typeof (builder as any)?.openPageTemplateModal === 'function') {
+    (builder as any).openPageTemplateModal()
+  } else {
+    loadPreset('saas')
+  }
+}
+
+const loadPreset = (type: string) => {
+  if (!builder) return
+  if (type === 'saas') {
+    builder.blocks.value = saasLandingPage() as any
+  } else if (type === 'company' || type === 'about') {
+    builder.blocks.value = aboutPage() as any
+  } else if (type === 'pricing') {
+    builder.blocks.value = [heroGradient(), pricingSection(), faqSection(), ctaDark()] as any
+  } else if (type === 'contact') {
+    builder.blocks.value = contactPage() as any
+  } else {
+    builder.blocks.value = homePage() as any
+  }
+  builder.takeSnapshot?.({ immediate: true })
 }
 
 const handleCanvasContextMenu = (e: MouseEvent) => {
