@@ -88,11 +88,11 @@ const filteredPages = computed(() => {
   );
 });
 
-const selectPage = (id: number | string) => {
-  if (builder?.switchCanvas) {
-      builder.switchCanvas(String(id)); // Assuming switchCanvas handles page switching logic if mapped
+const selectPage = async (id: number | string) => {
+  if (id === undefined || id === null) return;
+  if (builder?.setCurrentPage) {
+      await builder.setCurrentPage(id);
   }
-  builder?.setCurrentPage(id);
 };
 
 const handleCreate = () => {
