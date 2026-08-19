@@ -78,7 +78,7 @@ const cards = computed(() => {
     { key: 'intelligence', icon: Brain, to: '/search' },
     { key: 'platform', icon: Server, to: '/pricing' },
     { key: 'organization', icon: Cloud, to: '/solusi#organization-roadmap' },
-    { key: 'member', icon: LayoutDashboard, to: '/auth/console-sign-up' },
+    { key: 'member', icon: LayoutDashboard, to: '/member/register' },
   ]
   return defs
 })

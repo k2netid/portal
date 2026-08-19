@@ -61,7 +61,7 @@ type ServiceKey = 'managed' | 'forms' | 'member' | 'onprem'
 const items: Array<{ key: ServiceKey; icon: Component; to: string }> = [
   { key: 'managed', icon: Server, to: '/contact' },
   { key: 'forms', icon: FileInput, to: '/contact' },
-  { key: 'member', icon: Users, to: '/auth/console-sign-up' },
+  { key: 'member', icon: Users, to: '/member/register' },
   { key: 'onprem', icon: Headphones, to: '/contact' },
 ]
 

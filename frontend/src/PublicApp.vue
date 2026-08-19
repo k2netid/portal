@@ -47,7 +47,6 @@ import { useRoute } from 'vue-router';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { useSessionTimeout } from '@/shared/composables/useSessionTimeout';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useTheme } from '@/modules/Content/Layout/composables/useTheme';
 import { syncDocumentDarkClassForRoute } from '@/shared/composables/useDarkMode';
 import { useHead } from '@unhead/vue';
@@ -74,9 +73,6 @@ watch(
     () => route.path,
     (path) => {
         syncDocumentDarkClassForRoute(path);
-        if (path.startsWith('/member')) {
-            useAuthStore().clearAuth();
-        }
     },
     { immediate: true },
 );

@@ -25,6 +25,18 @@ const routes: Array<RouteRecordRaw> = [
         meta: { guestOnly: true, authContext: 'system' },
     },
     {
+        path: '/member/login',
+        name: 'member-login',
+        component: () => import('@/modules/Core/System/views/auth/Login.vue'),
+        meta: { guestOnly: true, authContext: 'member' },
+    },
+    {
+        path: '/member/register',
+        name: 'member-register',
+        component: () => import('@/modules/Core/System/views/auth/Register.vue'),
+        meta: { guestOnly: true, authContext: 'member' },
+    },
+    {
         path: '/public/system/auth/forgot-password',
         name: 'forgot-password',
         component: () => import('@/modules/Core/System/views/auth/ForgotPassword.vue'),

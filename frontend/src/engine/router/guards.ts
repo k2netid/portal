@@ -85,10 +85,6 @@ export const handleBeforeEachGuard = async (
         to.name === 'session-expired' ||
         to.name === 'member-login' ||
         to.name === 'member-register' ||
-        to.name === 'member-dashboard' ||
-        to.name === 'member-billing' ||
-        to.name === 'member-settings' ||
-        to.name === 'member-notifications' ||
         to.name === 'member-profile' ||
         to.path === '/maintenance' ||
         to.path === paths.loginPath ||

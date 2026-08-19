@@ -552,13 +552,11 @@ const completeLogin = async () => {
         sessionStorage.removeItem('active_organization_name');
     }
 
-    message.value = t('system.auth.messages.success');
-    messageType.value = 'success';
-
     // Check if there's a redirect query parameter
     const redirectPath = route.query.redirect;
+    const isMember = roleRank <= 10 || route.meta.authContext === 'member';
     const slug = systemStore.consoleDashboardSlug || 'dash';
-    const defaultDashboard = resolveConsoleDashboardLocation(slug);
+    const defaultDashboard = isMember ? '/' : resolveConsoleDashboardLocation(slug);
     const target: RouteLocationRaw = (redirectPath && typeof redirectPath === 'string' && !redirectPath.includes('/login') && !redirectPath.includes('/419'))
         ? redirectPath
         : defaultDashboard;
