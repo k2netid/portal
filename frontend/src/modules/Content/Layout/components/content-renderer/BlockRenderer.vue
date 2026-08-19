@@ -133,6 +133,67 @@
         </a>
       </div>
 
+      <!-- Navigation Menu Block -->
+      <nav
+        v-else-if="block.type === 'menu' || block.type === 'fullwidth_menu'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        :aria-label="getSettingStr(block, 'aria_label', 'Navigation Menu')"
+        class="builder-menu-block w-full py-2"
+        :class="[
+          getTextAlignClass(getSettingStr(block, 'alignment')),
+          getSettingStr(block, 'css_class')
+        ]"
+        :style="resolveBlockStyles(block)"
+      >
+        <div class="flex flex-wrap items-center gap-3">
+          <template v-for="(item, itemIdx) in getMenuItems(getSettingStr(block, 'menuId'))" :key="itemIdx">
+            <a
+              :href="item.url || '#'"
+              class="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors py-1.5 px-3 rounded-lg hover:bg-primary/10"
+              :target="item.open_in_new_tab ? '_blank' : '_self'"
+            >
+              {{ item.title }}
+            </a>
+          </template>
+        </div>
+      </nav>
+
+      <!-- Form Picker / Contact Form Block -->
+      <div
+        v-else-if="block.type === 'form_picker' || block.type === 'contact_form'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-form-block w-full max-w-2xl mx-auto rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingBool(block, 'show_title', true)" class="mb-4">
+          <h3 class="text-xl font-bold text-foreground">
+            {{ getSettingStr(block, 'title', 'Hubungi Kami') }}
+          </h3>
+          <p v-if="getSettingBool(block, 'show_description', true) && getSettingStr(block, 'description')" class="text-sm text-muted-foreground mt-1">
+            {{ getSettingStr(block, 'description') }}
+          </p>
+        </div>
+
+        <form class="space-y-4" @submit.prevent="handleFormSubmit">
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-foreground">Nama Lengkap</label>
+            <input type="text" required placeholder="Masukkan nama..." class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-foreground">Email</label>
+            <input type="email" required placeholder="name@example.com" class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-foreground">Pesan</label>
+            <textarea rows="4" required placeholder="Tuliskan pesan Anda..." class="w-full p-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
+          </div>
+          <button type="submit" class="w-full h-10 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm">
+            {{ getSettingStr(block, 'button_text', 'Kirim Pesan') }}
+          </button>
+        </form>
+      </div>
+
       <!-- Divider / Spacer Block -->
       <div
         v-else-if="block.type === 'divider' || block.type === 'spacer'"
@@ -174,6 +235,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useToast } from '@/shared/composables/useToast';
 import type { BlockInstance } from '@/types/builder';
 
 const props = defineProps<{
@@ -183,6 +245,8 @@ const props = defineProps<{
   isPreview?: boolean;
   mode?: 'view' | 'edit';
 }>();
+
+const toast = useToast();
 
 const internalBlocks = computed<BlockInstance[]>(() => {
   if (props.block) return [props.block];
@@ -212,6 +276,19 @@ const getSettingNum = (block: BlockInstance, key: string, fallback = 0): number 
 const resolveDynamicText = (text: string): string => {
   if (!text || typeof text !== 'string') return '';
   return text;
+};
+
+const getMenuItems = (_menuId?: string): Array<{ title: string; url: string; open_in_new_tab?: boolean }> => {
+  return [
+    { title: 'Beranda', url: '/' },
+    { title: 'Tentang Kami', url: '/about' },
+    { title: 'Layanan', url: '/services' },
+    { title: 'Kontak', url: '/contact' }
+  ];
+};
+
+const handleFormSubmit = () => {
+  toast.success.default('Formulir berhasil dikirim!');
 };
 
 const resolveBlockStyles = (block: BlockInstance): Record<string, string> => {

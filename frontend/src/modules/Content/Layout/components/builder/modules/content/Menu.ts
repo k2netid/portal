@@ -71,7 +71,13 @@ const MenuModule: ModuleDefinition = {
                 id: 'menu',
                 label: 'Menu',
                 fields: [
-                    { name: 'menuId', type: 'text', label: 'Menu ID/Slug' },
+                    {
+                        name: 'menuId',
+                        type: 'select',
+                        label: 'Select Navigation Menu',
+                        options: 'dynamic:menus',
+                        searchable: true
+                    },
                     { name: 'style', type: 'select', label: 'Style', responsive: true, options: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }, { value: 'dropdown', label: 'Dropdown' }] },
                     { name: 'aria_label', type: 'text', label: 'ARIA Label' },
                     { name: 'html_id', type: 'text', label: 'HTML ID' }
