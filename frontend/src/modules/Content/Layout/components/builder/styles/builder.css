@@ -245,6 +245,7 @@
     overflow: auto;
     padding: var(--spacing-md);
     position: relative;
+    min-width: 0; /* Allow flex child to shrink and enable scroll */
 }
 
 /* Global Transition Suppression (Only when active/dragging or for specific UI) */

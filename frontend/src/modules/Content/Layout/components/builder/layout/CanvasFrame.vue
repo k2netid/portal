@@ -69,6 +69,7 @@ const viewportStyle = computed(() => {
   height: 100%;
   overflow: auto; /* Enable both X and Y scrolling */
   padding: var(--spacing-lg) 0;
+  min-width: 0; /* Allow flex shrinking below content width */
 }
 
 .canvas-frame__viewport {
@@ -77,12 +78,11 @@ const viewportStyle = computed(() => {
   box-shadow: var(--shadow-lg);
   min-height: calc(100% - 2 * var(--spacing-lg));
   height: auto;
-  overflow: hidden !important; /* Force clip */
-  clip-path: inset(0 round var(--border-radius-md)); /* Robust hardware clipping */
+  overflow: visible; /* Allow content to flow naturally */
   box-sizing: content-box; 
   position: relative; 
   z-index: 1; 
-  contain: content; 
+  flex-shrink: 0; /* Prevent viewport from being squeezed */
 }
 
 /* Device-specific frames */
