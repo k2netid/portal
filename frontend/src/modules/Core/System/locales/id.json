@@ -1,4 +1,41 @@
 {
+  "member": {
+    "badge": "Portal Member",
+    "backToWebsite": "Kembali ke Website",
+    "backShort": "Website",
+    "allRightsReserved": "Hak cipta dilindungi undang-undang.",
+    "exploreArticles": "Eksplorasi Artikel",
+    "memberSince": "Member sejak",
+    "nav": {
+      "profile": "Akun & Profil",
+      "bookmarks": "Artikel Tersimpan",
+      "comments": "Riwayat Komentar",
+      "newsletter": "Preferensi Buletin"
+    },
+    "bookmarks": {
+      "title": "Artikel Tersimpan",
+      "subtitle": "Daftar bacaan yang Anda simpan untuk dibaca kembali",
+      "explore": "Jelajahi Artikel Lain",
+      "emptyTitle": "Belum Ada Artikel Tersimpan",
+      "emptySubtitle": "Tandai artikel menarik saat membaca untuk menemukannya kembali di sini.",
+      "exploreNow": "Mulai Eksplorasi"
+    },
+    "comments": {
+      "title": "Riwayat Komentar & Diskusi",
+      "subtitle": "Semua komentar dan partisipasi diskusi Anda pada artikel CMS",
+      "emptyTitle": "Belum Ada Komentar",
+      "emptySubtitle": "Bergabunglah dalam diskusi artikel untuk melihat riwayat komentar Anda di sini."
+    },
+    "newsletter": {
+      "title": "Preferensi Buletin & Email",
+      "subtitle": "Atur topik bacaan dan frekuensi penerimaan intisari artikel ke email Anda",
+      "frequencyTitle": "Frekuensi Pengiriman",
+      "frequencySubtitle": "Pilih seberapa sering Anda ingin menerima update artikel baru",
+      "topicsTitle": "Topik Minat Bacaan",
+      "topicsSubtitle": "Pilih kategori konten yang paling Anda minati",
+      "savedSuccess": "Preferensi buletin berhasil disimpan!"
+    }
+  },
   "contentPreview": {
     "title": "Pratinjau Konten",
     "publish": "Terbitkan",

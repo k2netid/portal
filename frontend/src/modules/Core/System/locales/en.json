@@ -1,4 +1,41 @@
 {
+  "member": {
+    "badge": "Member Portal",
+    "backToWebsite": "Back to Website",
+    "backShort": "Website",
+    "allRightsReserved": "All rights reserved.",
+    "exploreArticles": "Explore Articles",
+    "memberSince": "Member since",
+    "nav": {
+      "profile": "Account & Profile",
+      "bookmarks": "Saved Articles",
+      "comments": "Comment History",
+      "newsletter": "Newsletter Preferences"
+    },
+    "bookmarks": {
+      "title": "Saved Articles",
+      "subtitle": "Your personal reading list saved for later",
+      "explore": "Explore More Articles",
+      "emptyTitle": "No Saved Articles Yet",
+      "emptySubtitle": "Bookmark interesting articles while reading to find them again here.",
+      "exploreNow": "Start Exploring"
+    },
+    "comments": {
+      "title": "Comment History & Discussions",
+      "subtitle": "All your comments and discussion participation on CMS articles",
+      "emptyTitle": "No Comments Yet",
+      "emptySubtitle": "Join article discussions to view your comment history here."
+    },
+    "newsletter": {
+      "title": "Newsletter & Email Preferences",
+      "subtitle": "Manage article digest topics and email delivery frequency",
+      "frequencyTitle": "Delivery Frequency",
+      "frequencySubtitle": "Choose how often you wish to receive new article digests",
+      "topicsTitle": "Reading Interests",
+      "topicsSubtitle": "Select the content categories you are most interested in",
+      "savedSuccess": "Newsletter preferences saved successfully!"
+    }
+  },
   "contentPreview": {
     "title": "Content Preview",
     "publish": "Publish",

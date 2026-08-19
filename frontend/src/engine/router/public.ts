@@ -37,6 +37,53 @@ const routes: Array<RouteRecordRaw> = [
         meta: { guestOnly: true, authContext: 'member' },
     },
     {
+        path: '/member',
+        component: () => import('@/modules/Core/System/layouts/MemberLayout.vue'),
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: '',
+                redirect: { name: 'member-profile' },
+            },
+            {
+                path: 'profile',
+                name: 'member-profile',
+                component: () => import('@/modules/Core/System/views/member/MemberProfileView.vue'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'system.member.nav.profile',
+                },
+            },
+            {
+                path: 'bookmarks',
+                name: 'member-bookmarks',
+                component: () => import('@/modules/Core/System/views/member/MemberBookmarksView.vue'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'system.member.nav.bookmarks',
+                },
+            },
+            {
+                path: 'comments',
+                name: 'member-comments',
+                component: () => import('@/modules/Core/System/views/member/MemberCommentsView.vue'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'system.member.nav.comments',
+                },
+            },
+            {
+                path: 'newsletter',
+                name: 'member-newsletter',
+                component: () => import('@/modules/Core/System/views/member/MemberNewsletterView.vue'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'system.member.nav.newsletter',
+                },
+            },
+        ],
+    },
+    {
         path: '/public/system/auth/forgot-password',
         name: 'forgot-password',
         component: () => import('@/modules/Core/System/views/auth/ForgotPassword.vue'),

@@ -118,19 +118,6 @@ const frontendRoutes: RouteRecordRaw[] = [
                 props: { page: 'Achievement' },
                 meta: { title: 'publishing.frontend.routes.highlights' }
             },
-            {
-                path: 'member/profile',
-                name: 'member-profile',
-                component: () => import('@/modules/Core/System/views/Profile.vue'),
-                meta: {
-                    requiresAuth: true,
-                    title: 'system.profile.title',
-                },
-            },
-            {
-                path: 'member',
-                redirect: { name: 'member-profile' },
-            },
 
             // Dynamic content route (must be last in children)
             {

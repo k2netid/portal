@@ -1,4 +1,41 @@
 {
+  "member": {
+    "badge": "Portal Anggota",
+    "backToWebsite": "Mulih ka Loka Ramat",
+    "backShort": "Loka Ramat",
+    "allRightsReserved": "Sadaya hak cipta ditangtayungan.",
+    "exploreArticles": "Eksplorasi Artikel",
+    "memberSince": "Anggota ti saprak",
+    "nav": {
+      "profile": "Akun & Profil",
+      "bookmarks": "Artikel Ditunda",
+      "comments": "Jejak Komentar",
+      "newsletter": "Karesep Buletin"
+    },
+    "bookmarks": {
+      "title": "Artikel Ditunda",
+      "subtitle": "Daptar bacaan anu ku anjeun disimpen kanggo dibaca deui",
+      "explore": "Kotektak Artikel Lianna",
+      "emptyTitle": "Tacan Aya Artikel Ditunda",
+      "emptySubtitle": "Tandaan artikel pikaresepeun nalika maca kanggo mendakan deui di dieu.",
+      "exploreNow": "Mimitian Eksplorasi"
+    },
+    "comments": {
+      "title": "Jejak Komentar & Paguneman",
+      "subtitle": "Sadaya koméntar sareng partisipasi sawala anjeun dina artikel CMS",
+      "emptyTitle": "Tacan Aya Komentar",
+      "emptySubtitle": "Ngiringan sawala dina artikel kanggo ningali riwayat koméntar anjeun di dieu."
+    },
+    "newsletter": {
+      "title": "Karesep Buletin & Surélék",
+      "subtitle": "Atur jejér bacaan sareng frékuénsi nampi sari warta kana surélék anjeun",
+      "frequencyTitle": "Frékuénsi Pangiriman",
+      "frequencySubtitle": "Pilih sakumaha sering anjeun hoyong nampi apdét artikel énggal",
+      "topicsTitle": "Jejér Minat Bacaan",
+      "topicsSubtitle": "Pilih katégori kontén anu paling dipikaresep ku anjeun",
+      "savedSuccess": "Karesep buletin parantos hasil disimpen!"
+    }
+  },
   "contentPreview": {
     "title": "Pratinjau Eusi",
     "publish": "Terbitkeun",

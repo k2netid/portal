@@ -86,6 +86,9 @@ export const handleBeforeEachGuard = async (
         to.name === 'member-login' ||
         to.name === 'member-register' ||
         to.name === 'member-profile' ||
+        to.name === 'member-bookmarks' ||
+        to.name === 'member-comments' ||
+        to.name === 'member-newsletter' ||
         to.path === '/maintenance' ||
         to.path === paths.loginPath ||
         to.path === paths.registerPath;
