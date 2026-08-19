@@ -41,9 +41,6 @@
           class="ja-builder__canvas-area"
           ref="canvasAreaRef"
         >
-          <CanvasControls 
-            @save="handleSave"
-          />
           <CanvasFrame 
             :device="builder.device.value" 
             :zoom="builder.zoom.value" 
@@ -178,7 +175,6 @@ import CanvasFrame from './layout/CanvasFrame.vue'
 
 // Canvas Components
 import Canvas from './canvas/Canvas.vue'
-import CanvasControls from './canvas/CanvasControls.vue'
 
 // Modal Components
 import InsertModuleModal from './modals/InsertModuleModal.vue'

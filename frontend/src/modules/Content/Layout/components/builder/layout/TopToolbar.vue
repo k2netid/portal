@@ -50,7 +50,59 @@
             </template>
        </BaseDropdown>
 
+       <BaseDivider orientation="vertical" :margin="4" />
 
+       <!-- Undo/Redo -->
+       <IconButton 
+         variant="ghost"
+         :icon="Undo2" 
+         :disabled="!canUndo" 
+         @click="builder?.undo()" 
+         :title="t('builder.toolbar.undo')"
+       />
+       <IconButton 
+         variant="ghost"
+         :icon="Redo2" 
+         :disabled="!canRedo" 
+         @click="builder?.redo()" 
+         :title="t('builder.toolbar.redo')"
+       />
+
+       <BaseDivider orientation="vertical" :margin="4" />
+
+       <!-- Theme Switcher -->
+       <BaseDropdown align="center" width="200px">
+         <template #trigger="{ open }">
+           <button class="theme-switcher-btn" :class="{ 'theme-switcher-btn--active': open }" :title="t('builder.toolbar.theme')">
+             <Palette :size="14" />
+             <span class="theme-switcher-name">{{ currentThemeName }}</span>
+             <ChevronDown :size="12" />
+           </button>
+         </template>
+         
+         <template #default="{ close }">
+           <div class="dropdown-header">{{ t('builder.toolbar.switchTheme', 'Switch Theme') }}</div>
+           <div v-if="loadingThemes" class="dropdown-loading">
+             <Loader2 :size="16" class="animate-spin" />
+           </div>
+           <template v-else>
+             <button 
+               v-for="theme in availableThemes" 
+               :key="theme.slug"
+               class="dropdown-item"
+               :class="{ 'active': activeThemeSlug === theme.slug }"
+               @click="changeTheme(theme.slug); close()"
+             >
+               <div class="flex items-center justify-between w-full">
+                 <span>{{ theme.name }}</span>
+                 <Check v-if="activeThemeSlug === theme.slug" :size="14" />
+               </div>
+             </button>
+           </template>
+         </template>
+       </BaseDropdown>
+
+       <BaseDivider orientation="vertical" :margin="4" />
 
       <!-- Device Modes (Desktop) -->
       <div class="device-modes desktop-only">
@@ -166,7 +218,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, computed } from 'vue'
+import { inject, computed, onMounted } from 'vue'
 import Menu from 'lucide-vue-next/dist/esm/icons/menu.js';
 import Monitor from 'lucide-vue-next/dist/esm/icons/monitor.js';
 import Tablet from 'lucide-vue-next/dist/esm/icons/tablet.js';
@@ -178,6 +230,12 @@ import Maximize from 'lucide-vue-next/dist/esm/icons/maximize.js';
 import Minimize from 'lucide-vue-next/dist/esm/icons/minimize.js';
 import ChevronsLeft from 'lucide-vue-next/dist/esm/icons/chevrons-left.js';
 import Wand2 from 'lucide-vue-next/dist/esm/icons/wand-sparkles.js';
+import Undo2 from 'lucide-vue-next/dist/esm/icons/undo-2.js';
+import Redo2 from 'lucide-vue-next/dist/esm/icons/redo-2.js';
+import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
+import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
+import Check from 'lucide-vue-next/dist/esm/icons/check.js';
+import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
 import { useI18n } from 'vue-i18n'
 import { DEVICE_MODES } from '@/components/builder/core/constants'
 import { IconButton, BaseDropdown, BaseDivider } from '@/components/builder/ui'
@@ -239,6 +297,29 @@ const toggleFullscreen = () => {
     }
 }
 
+// Undo/Redo state
+const canUndo = computed(() => builder?.canUndo?.value || false)
+const canRedo = computed(() => builder?.canRedo?.value || false)
+
+// Theme switcher state
+const activeThemeSlug = computed(() => builder?.activeTheme?.value || 'janari')
+const availableThemes = computed(() => (builder?.availableThemes?.value || []) as Array<{ slug: string; name: string; [k: string]: unknown }>)
+const loadingThemes = computed(() => builder?.loadingThemes?.value || false)
+
+const currentThemeName = computed(() => {
+    const theme = availableThemes.value.find((t: { slug: string }) => t.slug === activeThemeSlug.value)
+    return theme ? theme.name : activeThemeSlug.value
+})
+
+const changeTheme = (slug: string) => {
+    builder?.loadTheme(slug)
+}
+
+onMounted(() => {
+    if (builder && availableThemes.value.length === 0) {
+        builder.fetchThemes()
+    }
+})
 
 </script>
 
@@ -359,6 +440,57 @@ const toggleFullscreen = () => {
 .dropdown-item.active {
   background: var(--builder-accent);
   color: white;
+}
+
+.dropdown-header {
+    padding: 8px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--builder-text-muted, rgba(255,255,255,0.4));
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-loading {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    color: var(--builder-text-muted, rgba(255,255,255,0.4));
+}
+
+.theme-switcher-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    height: 30px;
+    min-width: 100px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.theme-switcher-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.theme-switcher-btn--active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-switcher-name {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .device-modes {
