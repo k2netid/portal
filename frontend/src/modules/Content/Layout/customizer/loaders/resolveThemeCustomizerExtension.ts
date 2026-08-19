@@ -1,11 +1,9 @@
 import type { ThemeCustomizerExtension } from '@/modules/Content/Layout/customizer/types/extension';
 import { janariCustomizerExtension } from '@/modules/Content/Layout/views/themes/janari/customizer';
-import { hubStubCustomizerExtension } from '@/modules/Content/Layout/views/themes/hub-stub/customizer';
 
 /** Bundled theme customizer extensions (add new themes here when introduced). */
 const extensionBySlug: Record<string, ThemeCustomizerExtension> = {
     janari: janariCustomizerExtension,
-    'hub-stub': hubStubCustomizerExtension,
 };
 
 export function resolveThemeCustomizerExtension(slug: string): ThemeCustomizerExtension | null {
