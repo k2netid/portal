@@ -127,16 +127,16 @@ const rawOptions = computed(() => {
         const key = options.replace('dynamic:', '')
         if (builder) {
             if (key === 'menus' && builder.menus?.value && builder.menus.value.length > 0) {
-                return builder.menus.value.map(m => ({ value: m.slug || m.id, label: m.name || m.slug }))
+                return builder.menus.value.map(m => ({ value: m.slug || m.location || String(m.id), label: m.name || m.slug || String(m.id) }))
             }
             if (key === 'categories' && builder.categories?.value && builder.categories.value.length > 0) {
-                return builder.categories.value.map(c => ({ value: c.slug || c.id, label: c.name }))
+                return builder.categories.value.map(c => ({ value: c.slug || String(c.id), label: c.name || c.slug || String(c.id) }))
             }
             if (key === 'tags' && builder.availableTags?.value && builder.availableTags.value.length > 0) {
-                return builder.availableTags.value.map(t => ({ value: t.slug || t.id, label: t.name }))
+                return builder.availableTags.value.map(t => ({ value: t.slug || String(t.id), label: t.name || t.slug || String(t.id) }))
             }
             if (key === 'pages' && builder.pages?.value && builder.pages.value.length > 0) {
-                return builder.pages.value.map(p => ({ value: p.id, label: p.title }))
+                return builder.pages.value.map(p => ({ value: String(p.id), label: p.title || p.slug }))
             }
         }
         const dynamicData = (typeof window !== 'undefined' ? (window as any).jaCmsData : {}) || {}

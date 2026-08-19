@@ -1,8 +1,9 @@
 import type { Component } from 'vue';
 
 export interface Menu {
-    id: string | string;
+    id: string;
     name: string;
+    slug?: string;
     description?: string;
     location?: string;
     locale?: string;
