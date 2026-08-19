@@ -7,6 +7,8 @@
     "exploreArticles": "Explore Articles",
     "memberSince": "Member since",
     "nav": {
+      "sectionMember": "Member Hub",
+      "sectionSite": "Site Navigation",
       "profile": "Account & Profile",
       "bookmarks": "Saved Articles",
       "comments": "Comment History",
