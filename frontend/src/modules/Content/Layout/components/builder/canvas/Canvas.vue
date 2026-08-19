@@ -14,7 +14,9 @@
 
     <template v-else>
       <!-- Header Preview -->
-      <ThemePageResolver page="components/Header" class="relative z-10" />
+      <div class="canvas-header-preview w-full flex-none relative z-10">
+        <ThemePageResolver page="components/Header" />
+      </div>
 
       <!-- Main Content Area -->
       <main class="main-content flex-1 w-full flex flex-col">
@@ -296,6 +298,37 @@ onMounted(() => {
   background-color: var(--theme-color-background, #ffffff);
   color: var(--theme-color-text, var(--builder-text-primary));
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.canvas-header-preview {
+  position: relative;
+  z-index: 10;
+  margin-bottom: var(--spacing-lg, 24px);
+  width: 100%;
+}
+
+.canvas-header-preview :deep(header),
+.canvas :deep(header),
+.canvas :deep(header.fixed),
+.canvas :deep(header[class*="fixed"]) {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.canvas-footer-preview {
+  position: relative;
+  z-index: 10;
+  margin-top: var(--spacing-xl, 32px);
+  width: 100%;
+}
+
+.canvas-footer-preview :deep(footer),
+.canvas :deep(footer) {
+  position: relative !important;
+  width: 100% !important;
 }
 
 .canvas--wireframe {
