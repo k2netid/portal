@@ -21,11 +21,19 @@ final class ThemeViews
             }
         }
 
+        // 1. Check resources/themes (bundled directly with backend)
+        $resourcesThemes = 'resources/themes';
+        if (is_dir(base_path($resourcesThemes))) {
+            return $resourcesThemes;
+        }
+
+        // 2. Check storage/app/themes
         $storageThemes = 'storage/app/themes';
         if (is_dir(base_path($storageThemes))) {
             return $storageThemes;
         }
 
+        // 3. Monorepo development relative candidates
         $monorepoCandidates = [
             '../frontend/src/modules/Content/Layout/views/themes',
             '../frontend/src/modules/Content/Publishing/views/themes',
@@ -33,15 +41,19 @@ final class ThemeViews
             '../frontend/src/modules/Publishing/views/themes',
         ];
 
-        if (app()->environment('local', 'development', 'testing')) {
-            foreach ($monorepoCandidates as $candidate) {
-                if (is_dir(base_path($candidate))) {
-                    return $candidate;
-                }
+        foreach ($monorepoCandidates as $candidate) {
+            if (is_dir(base_path($candidate))) {
+                return $candidate;
             }
         }
 
-        return '../frontend/src/modules/Content/Layout/views/themes';
+        // 4. Absolute dev workspace path fallback if on same host
+        $devAbsolute = '/home/jejakawan/dev/ja-cms/frontend/src/modules/Content/Layout/views/themes';
+        if (is_dir($devAbsolute)) {
+            return $devAbsolute;
+        }
+
+        return 'resources/themes';
     }
 
     /**
@@ -54,8 +66,7 @@ final class ThemeViews
         $roots = [];
         $seen = [];
 
-        $configured = self::relativePathFromBackendRoot();
-        $absConfigured = base_path($configured);
+        $absConfigured = self::rootPath();
         if (is_dir($absConfigured)) {
             $roots[] = ['path' => $absConfigured, 'source' => 'bundled'];
             $seen[$absConfigured] = true;
@@ -71,12 +82,41 @@ final class ThemeViews
 
     public static function rootPath(): string
     {
-        return base_path(self::relativePathFromBackendRoot());
+        $relative = self::relativePathFromBackendRoot();
+        if (str_starts_with($relative, '/') || (strlen($relative) > 2 && $relative[1] === ':')) {
+            return $relative;
+        }
+
+        return base_path($relative);
     }
 
     public static function pathForSlug(string $slug): string
     {
-        return self::rootPath().DIRECTORY_SEPARATOR.$slug;
+        // 1. Check under configured root path
+        $rootCandidate = self::rootPath().DIRECTORY_SEPARATOR.$slug;
+        if (is_dir($rootCandidate)) {
+            return $rootCandidate;
+        }
+
+        // 2. Check resources/themes
+        $resourcesCandidate = base_path('resources/themes'.DIRECTORY_SEPARATOR.$slug);
+        if (is_dir($resourcesCandidate)) {
+            return $resourcesCandidate;
+        }
+
+        // 3. Check storage/app/themes
+        $storageCandidate = base_path('storage/app/themes'.DIRECTORY_SEPARATOR.$slug);
+        if (is_dir($storageCandidate)) {
+            return $storageCandidate;
+        }
+
+        // 4. Check dev workspace absolute path
+        $devCandidate = '/home/jejakawan/dev/ja-cms/frontend/src/modules/Content/Layout/views/themes'.DIRECTORY_SEPARATOR.$slug;
+        if (is_dir($devCandidate)) {
+            return $devCandidate;
+        }
+
+        return $rootCandidate;
     }
 
     /**
@@ -85,7 +125,7 @@ final class ThemeViews
     public static function diagnostics(): array
     {
         $relative = self::relativePathFromBackendRoot();
-        $absolute = base_path($relative);
+        $absolute = self::rootPath();
 
         return [
             'relative' => $relative,

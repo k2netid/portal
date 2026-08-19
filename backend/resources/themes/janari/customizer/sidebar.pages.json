@@ -1,0 +1,46 @@
+{
+    "specialPageItems": [
+        {
+            "id": "page-management",
+            "manifestCategories": ["Public Pages"],
+            "icon": "settings2",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_management",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_management_desc"
+        },
+        {
+            "id": "page-about",
+            "manifestCategories": ["About Page"],
+            "icon": "user-circle",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_about",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_about_desc"
+        },
+        {
+            "id": "page-achievements",
+            "manifestCategories": ["Achievements Page"],
+            "icon": "award",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_achievements",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_achievements_desc"
+        },
+        {
+            "id": "page-careers",
+            "manifestCategories": ["Careers Page"],
+            "icon": "briefcase",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_careers",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_careers_desc"
+        },
+        {
+            "id": "page-news",
+            "manifestCategories": ["News Page"],
+            "icon": "newspaper",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_news",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_news_desc"
+        },
+        {
+            "id": "page-contact",
+            "manifestCategories": ["Contact Page"],
+            "icon": "globe",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_contact",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_contact_desc"
+        }
+    ]
+}
