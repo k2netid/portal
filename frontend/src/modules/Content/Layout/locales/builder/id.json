@@ -15,7 +15,9 @@
   },
   "actions": {
     "add": "Tambah",
-    "addSection": "Tambah Seksi Baru"
+    "addSection": "Tambah Seksi Baru",
+    "addRow": "Tambah Baris Baru",
+    "addColumn": "Tambah Kolom Baru"
   },
   "items": {
     "delete": "Hapus Elemen",

@@ -14,8 +14,10 @@
     "no_results": "Teu aya hasil kapendak"
   },
   "actions": {
-    "add": "Tambih",
-    "addSection": "Tambih Séksi Énggal"
+    "add": "Tambah",
+    "addSection": "Tambah Seksi Anyar",
+    "addRow": "Tambah Baris Anyar",
+    "addColumn": "Tambah Kolom Anyar"
   },
   "items": {
     "delete": "Hapus Élémén",

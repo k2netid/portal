@@ -104,7 +104,16 @@
     </div>
     
     <!-- Module Add Button UX -->
-    <!-- 1. Sibling Section Button -->
+    <!-- 1. Center Button for Empty Section (Insert Row into Section) -->
+    <div v-if="isSection && !hasChildrenContent && !isGhost" class="module-center-add">
+        <AddModuleButton 
+            type="row"
+            :circular="true"
+            @click="addChild"
+        />
+    </div>
+
+    <!-- 2. Sibling Section Button (Bottom border) -->
     <AddModuleButton 
        v-if="isSection && (isSelected || isHovered) && !isGhost"
        type="section"
@@ -112,7 +121,16 @@
        @click="addSiblingSection"
     />
 
-    <!-- 2. Sibling Row Button -->
+    <!-- 3. Center Button for Empty Row (Insert Columns) -->
+    <div v-if="isRow && !hasChildrenContent && !isGhost" class="module-center-add">
+        <AddModuleButton 
+            type="column"
+            :circular="true"
+            @click="openRowLayoutModal"
+        />
+    </div>
+
+    <!-- 4. Sibling Row Button (Bottom border) -->
     <AddModuleButton 
        v-if="isRow && (isSelected || isHovered) && !isGhost"
        type="row"
@@ -120,26 +138,23 @@
        @click="addSiblingRow"
     />
 
-    <!-- 3. Module Add Button (Inside/Below) -->
-    <template v-if="(isColumn || isContent) && (isSelected || isHovered) && !isGhost">
-        <!-- Center Button for Empty Column (Matching Module Style) -->
-        <div v-if="isColumn && !hasChildrenContent" class="module-center-add">
-            <AddModuleButton 
-                type="module"
-                :circular="true"
-                @click="handlePlusClick"
-            />
-        </div>
-        
-        <!-- Floating Bottom Button for Populated Column or Module -->
+    <!-- 5. Center Button for Empty Column (Insert Module) -->
+    <div v-if="isColumn && !hasChildrenContent && !isGhost" class="module-center-add">
         <AddModuleButton 
-            v-else
-            :type="isColumn ? 'column' : 'module'"
-            :floating="true"
+            type="module"
             :circular="true"
             @click="handlePlusClick"
         />
-    </template>
+    </div>
+
+    <!-- 6. Floating Bottom Button for Populated Column or Content Module -->
+    <AddModuleButton 
+        v-if="((isColumn && hasChildrenContent) || isContent) && (isSelected || isHovered) && !isGhost"
+        :type="isColumn ? 'column' : 'module'"
+        :floating="true"
+        :circular="true"
+        @click="handlePlusClick"
+    />
     
     <!-- Module Label (Grid/Wireframe) -->
     <div v-if="gridViewMode || wireframeMode" class="module-label">

@@ -15,7 +15,9 @@
   },
   "actions": {
     "add": "Add",
-    "addSection": "Add New Section"
+    "addSection": "Add New Section",
+    "addRow": "Add New Row",
+    "addColumn": "Add New Column"
   },
   "items": {
     "delete": "Delete Element",
