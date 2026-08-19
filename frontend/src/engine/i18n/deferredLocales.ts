@@ -80,6 +80,8 @@ export async function preloadLocalesForRoute(path: string, name?: string | symbo
         routePath.includes('/library') ||
         routePath.includes('/forms') ||
         routePath.includes('/layout') ||
+        routePath.includes('site-editor') ||
+        routePath.includes('builder') ||
         // Publishing routes
         routePath.includes('/contents') ||
         routePath.includes('/categories') ||
@@ -96,7 +98,9 @@ export async function preloadLocalesForRoute(path: string, name?: string | symbo
         routePath.includes('/tags') ||
         // Fallback checks
         routeName.includes('publishing') ||
-        routeName.includes('content')
+        routeName.includes('content') ||
+        routeName.includes('builder') ||
+        routeName.includes('layout')
     ) {
         modules.push('content');
     }

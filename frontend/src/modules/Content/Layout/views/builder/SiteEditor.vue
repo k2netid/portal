@@ -39,6 +39,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { toast } from '@/shared/services/toastService';
+import { ensureDeferredLocales } from '@/engine/i18n/deferredLocales';
 import Builder from '../../components/builder/Builder.vue';
 import {
     Dialog,
@@ -103,7 +104,8 @@ const handleEsc = (e: KeyboardEvent) => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  void ensureDeferredLocales(['content'])
   window.addEventListener('keydown', handleEsc)
   // We can't easily listen to builder internal state here without props/emits
   // Let's ensure Builder emits fullscreen changes (we'll need to add that)

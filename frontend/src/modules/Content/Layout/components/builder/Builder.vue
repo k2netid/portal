@@ -200,7 +200,7 @@ import { useBuilder } from './core'
 import ModuleRegistry from './core/ModuleRegistry'
 import { useDarkMode } from '@/shared/composables/useDarkMode'
 import { useCmsStore } from '@/stores/cms'
-const { isDarkMode } = useDarkMode()
+const { isDark: isDarkMode } = useDarkMode()
 import { throttle, debounce } from '@/shared/utils/performance'
 import type { BlockInstance, BuilderInstance, Canvas as ICanvas, BuilderPreset } from '@/shared/types/builder'
 
@@ -510,6 +510,20 @@ const handleKeydown = (e: KeyboardEvent) => {
 
 import { useToast } from '@/composables/useToast'
 import { useI18n } from 'vue-i18n'
+import i18n from '@/engine/i18n'
+import { ensureDeferredLocales } from '@/engine/i18n/deferredLocales'
+import builderEn from '@/modules/Content/Layout/locales/builder/en.json'
+import builderId from '@/modules/Content/Layout/locales/builder/id.json'
+import builderSu from '@/modules/Content/Layout/locales/builder/su.json'
+
+// Synchronous eager registration to guarantee zero leak
+try {
+  i18n.global.mergeLocaleMessage('en', { builder: builderEn })
+  i18n.global.mergeLocaleMessage('id', { builder: builderId })
+  i18n.global.mergeLocaleMessage('su', { builder: builderSu })
+} catch (e) {
+  // safe fallback
+}
 
 const toast = useToast()
 const { t } = useI18n()
@@ -536,6 +550,7 @@ const canvasAreaRef = ref<HTMLElement | null>(null)
 let resizeObserver: ResizeObserver | null = null
 
 onMounted(async () => {
+    void ensureDeferredLocales(['content'])
     window.addEventListener('keydown', handleKeydown)
     builder.loadTheme()
     builder.fetchMetadata()
