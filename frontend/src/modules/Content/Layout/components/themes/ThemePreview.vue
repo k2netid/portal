@@ -192,10 +192,18 @@ defineExpose({ refreshPreview });
 watch(() => props.theme, () => {
     if (previewFrame.value && previewFrame.value.contentWindow) {
         // Send postMessage for reactive updates (JS-based)
+        const themeRaw = JSON.parse(JSON.stringify(toRaw(props.theme)));
+        previewFrame.value.contentWindow.postMessage({
+            type: 'JA_THEME_CUSTOMIZER_SYNC',
+            theme: themeRaw,
+            settings: themeRaw.settings,
+            custom_css: themeRaw.custom_css,
+        }, '*');
+
         previewFrame.value.contentWindow.postMessage({
             type: 'THEME_UPDATE',
-            settings: JSON.parse(JSON.stringify(toRaw(props.theme.settings))),
-            custom_css: props.theme.custom_css
+            settings: themeRaw.settings,
+            custom_css: themeRaw.custom_css,
         }, '*');
 
         // Still inject styles for color/CSS variables

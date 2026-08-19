@@ -409,8 +409,24 @@ watch(janariRootStyleVars, (vars) => {
   })
 }, { immediate: true, flush: 'post' })
 
+const handleCustomizerSync = (event: MessageEvent) => {
+  if (event.data?.type === 'JA_THEME_CUSTOMIZER_SYNC' && event.data?.theme) {
+    if (activeTheme.value) {
+      activeTheme.value = {
+        ...activeTheme.value,
+        ...event.data.theme,
+        settings: {
+          ...(activeTheme.value.settings || {}),
+          ...(event.data.theme.settings || {}),
+        },
+      }
+    }
+  }
+}
+
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('message', handleCustomizerSync)
   await retryThemeLoadIfNeeded()
   schedulePublicPrefetch()
 
@@ -422,11 +438,11 @@ onMounted(async () => {
       el.style.setProperty(key, val)
     })
   }
-
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('message', handleCustomizerSync)
 })
 
 watch(() => route.fullPath, () => {

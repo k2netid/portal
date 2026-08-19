@@ -149,6 +149,20 @@
           </div>
         </section>
 
+        <!-- SEO & Social Share Preview (Core Branding / Site Profile) -->
+        <section
+          v-if="(selectedItem.id === 'brand_core' || selectedItem.id === 'site_profile') && organizationMode === 'design'"
+          class="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4"
+        >
+          <SocialSharePreview
+            :site-title="String(formValues['site_title'] || '')"
+            :site-tagline="String(formValues['site_tagline'] || '')"
+            :brand-logo="String(formValues['brand_logo'] || '')"
+            :favicon="String(formValues['site_favicon'] || '')"
+            :social-links="(formValues['social_links'] as any) || []"
+          />
+        </section>
+
         <!-- Bindings Section -->
         <BindingsSection
           :selected-item="selectedItem"
@@ -206,6 +220,7 @@ import {
 } from '@/shared/components/ui';
 import SettingControl from '@/modules/Content/Layout/components/themes/customizer/sidebar/SettingControl.vue';
 import BindingsSection from '@/modules/Content/Layout/components/themes/customizer/editor/BindingsSection.vue';
+import SocialSharePreview from '@/modules/Content/Layout/components/themes/customizer/seo/SocialSharePreview.vue';
 import { Code2, Layout, LayoutTemplate, MenuIcon } from 'lucide-vue-next';
 
 defineProps<{
