@@ -35,11 +35,12 @@
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { toast } from '@/shared/services/toastService';
 import { ensureDeferredLocales } from '@/engine/i18n/deferredLocales';
+import type { BuilderInstance } from '@/modules/Content/Layout/types/builder';
 import Builder from '../../components/builder/Builder.vue';
 import {
     Dialog,
@@ -54,7 +55,7 @@ import {
 const { t } = useI18n();
 const router = useRouter();
 const isFullscreen = ref(false);
-const builderRef = ref<{ builder?: { content: { value: { status: string } }; isDirty: boolean; saveContent: () => Promise<void> } } | null>(null);
+const builderRef = ref<{ builder?: BuilderInstance } | null>(null);
 const showConfirmDialog = ref(false);
 
 const handleSave = async (status: string | null) => {
@@ -62,13 +63,13 @@ const handleSave = async (status: string | null) => {
     
     // In site mode, we might just use saveContent logic from builder
     // Or we might need to handle status if it's draft/published.
-    // Assuming builder.saveContent handles it (it uses internal content state)
-    if (status) {
-        builderRef.value.builder.content.value.status = status
+    if (status && builderRef.value.builder.content?.value) {
+        (builderRef.value.builder.content.value as any).status = status
     }
     
     try {
         await builderRef.value.builder.saveContent()
+        builderRef.value.builder.markAsSaved()
         toast.success(status === 'published' ? 'Site published successfully' : 'Site saved successfully')
     } catch (err) {
         toast.error('Failed to save site')
@@ -77,7 +78,8 @@ const handleSave = async (status: string | null) => {
 }
 
 const handleClose = () => {
-    if (builderRef.value?.builder?.isDirty) {
+    const isDirty = unref(builderRef.value?.builder?.isDirty)
+    if (isDirty) {
         showConfirmDialog.value = true
     } else {
         router.push({ name: 'dashboard' })
