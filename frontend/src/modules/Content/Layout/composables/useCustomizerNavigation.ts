@@ -1,4 +1,4 @@
-import { ref, computed, watch, type Component, type Ref } from 'vue';
+import { ref, computed, watch, type Ref } from 'vue';
 import type { Theme, ThemeSection } from '@/modules/Content/Layout/types/theme';
 import type { SlotBinding } from '@/modules/Content/Layout/composables/useThemeDataBindings';
 import {
@@ -9,7 +9,6 @@ import {
   Globe,
   GraduationCap,
   ImageIcon,
-  Layout,
   LayoutTemplate,
   Megaphone,
   MenuIcon,
