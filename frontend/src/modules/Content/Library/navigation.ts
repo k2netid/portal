@@ -1,6 +1,14 @@
 import type { NavItem } from '@/shared/utils/navigation';
 
 export const libraryNavigation: NavItem[] = [
+    {
+        name: 'div-library',
+        type: 'divider',
+        labelKey: 'sharedConsole.navigation.menu.library',
+        group: 'studio',
+        context: 'studio',
+        priority: 78,
+    },
     { 
         name: 'custom-fields', 
         label: 'Custom Fields', 

@@ -1,6 +1,14 @@
 import type { NavItem } from '@/shared/utils/navigation';
 
 export const mediaNavigation: NavItem[] = [
+    {
+        name: 'div-media',
+        type: 'divider',
+        labelKey: 'sharedConsole.navigation.menu.media',
+        group: 'studio',
+        context: 'studio',
+        priority: 82,
+    },
     { 
         name: 'media', 
         label: 'Media Library', 

@@ -118,11 +118,10 @@
                 >
                   <div
                     v-if="item.type === 'divider'"
-                    class="py-2 px-6 flex items-center gap-2"
+                    class="pt-3 pb-1 px-3 flex items-center gap-2 select-none"
                   >
-                    <div class="h-px bg-border flex-1" />
-                    <span class="text-[10px] font-bold text-muted-foreground/40 tracking-wider whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
-                    <div class="h-px bg-border flex-1" />
+                    <span class="text-[10px] uppercase font-bold text-muted-foreground/50 tracking-wider whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
+                    <div class="h-px bg-border/60 flex-1" />
                   </div>
                                     
                   <!-- SUB-DROPDOWN -->

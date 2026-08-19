@@ -2,6 +2,14 @@ import type { NavItem } from '@/shared/utils/navigation';
 
 export const layoutNavigation: NavItem[] = [
     {
+        name: 'div-design',
+        type: 'divider',
+        labelKey: 'sharedConsole.navigation.menu.design',
+        group: 'studio',
+        context: 'studio',
+        priority: 92,
+    },
+    {
         name: 'builder.site',
         label: 'Site Editor',
         labelKey: 'layout.navigation.menu.siteEditor',

@@ -1,6 +1,14 @@
 import type { NavItem } from '@/shared/utils/navigation';
 
 export const publishingNavigation: NavItem[] = [
+    {
+        name: 'div-editorial',
+        type: 'divider',
+        labelKey: 'sharedConsole.navigation.menu.editorial',
+        group: 'studio',
+        context: 'studio',
+        priority: 101,
+    },
     { 
         name: 'contents.index', 
         label: 'Content', 
