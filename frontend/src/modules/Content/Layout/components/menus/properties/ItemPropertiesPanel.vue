@@ -129,7 +129,21 @@
                   for="requires_auth"
                   class="text-xs font-normal cursor-pointer"
                 >
-                  {{ t('layout.menus.form.requiresAuth') || 'Requires Authentication' }}
+                  {{ t('layout.menus.form.requiresAuth') || 'Hanya Pengguna Login (Requires Authentication)' }}
+                </Label>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <Checkbox 
+                  id="guest_only"
+                  :checked="Boolean(getMetadata('guest_only'))"
+                  @update:checked="updateMetadataField('guest_only', $event)"
+                />
+                <Label
+                  for="guest_only"
+                  class="text-xs font-normal cursor-pointer"
+                >
+                  {{ t('layout.menus.form.guestOnly') || 'Hanya Tamu Belum Login (Guest Only)' }}
                 </Label>
               </div>
 

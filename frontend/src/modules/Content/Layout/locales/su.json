@@ -136,6 +136,7 @@
       "titleEnPlaceholder": "mis. Home",
       "titleIdPlaceholder": "mis. Beranda",
       "requiresAuth": "Peryogi autentikasi",
+      "guestOnly": "Mung tamu (teu acan lebet)",
       "titleEn": "Judul (Inggris)",
       "titleId": "Judul (Indonesia)"
     },

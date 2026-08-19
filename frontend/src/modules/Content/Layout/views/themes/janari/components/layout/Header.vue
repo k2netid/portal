@@ -767,6 +767,9 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
         .filter(item => {
             const meta = item.metadata as Record<string, any> | undefined;
             if (meta) {
+                if (meta.guest_only && authStore.isAuthenticated) {
+                    return false;
+                }
                 if (meta.requires_auth && !authStore.isAuthenticated) {
                     return false;
                 }

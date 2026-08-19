@@ -136,6 +136,7 @@
       "titleEnPlaceholder": "e.g. Home",
       "titleIdPlaceholder": "e.g. Beranda",
       "requiresAuth": "Requires authentication",
+      "guestOnly": "Guest only (unauthenticated)",
       "titleEn": "Title (English)",
       "titleId": "Title (Indonesian)"
     },
