@@ -75,75 +75,77 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
-  import { ref, computed, onMounted, inject } from 'vue';
-  import Search from 'lucide-vue-next/dist/esm/icons/search.js';
-import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
-import X from 'lucide-vue-next/dist/esm/icons/x.js';
-import AlertCircle from 'lucide-vue-next/dist/esm/icons/circle-alert.js';
-import SearchX from 'lucide-vue-next/dist/esm/icons/search-x.js';
-  import { Input, Badge, Button } from '@/components/ui';
-  import api from '@/services/api';
-  import type { BuilderInstance } from '@/types/builder';
+import { logger } from '@/shared/utils/logger';
+import { ref, computed, onMounted, inject } from 'vue';
+import {
+  Search,
+  Loader2,
+  X,
+  AlertCircle,
+  SearchX,
+} from 'lucide-vue-next';
+import { Input, Badge, Button } from '@/shared/components/ui';
+import api from '@/engine/api/client';
+import type { BuilderInstance } from '@/modules/Content/Layout/types/builder';
 
-  interface Props {
-    source?: string;
-    contentId?: number | string | null;
-    showClose?: boolean;
+interface Props {
+  source?: string;
+  contentId?: number | string | null;
+  showClose?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  source: 'all',
+  contentId: null,
+  showClose: false,
+});
+
+interface DynamicItem {
+  id: string;
+  label: string;
+  tag: string;
+  description: string;
+}
+
+interface DynamicGroup {
+  label: string;
+  items: DynamicItem[];
+}
+
+const emit = defineEmits<{
+  (e: 'select', item: DynamicItem): void;
+  (e: 'close'): void;
+}>();
+
+const builder = inject<BuilderInstance | null>('builder', null);
+
+const searchQuery = ref('');
+const dataGroups = ref<Record<string, DynamicGroup>>({});
+const loading = ref(false);
+const error = ref<string | null>(null);
+
+// Fetch dynamic sources from backend
+const fetchDynamicSources = async () => {
+  loading.value = true;
+  error.value = null;
+
+  try {
+    const params = {
+      context: props.source,
+      content_id: props.contentId || builder?.content.value.id,
+    };
+
+    const response = await api.get('/manage/layout/builder/dynamic-sources', { params });
+    dataGroups.value = response.data?.data || response.data || {};
+  } catch (err) {
+    logger.error('Failed to fetch dynamic sources:', err);
+    error.value = 'Failed to load dynamic data sources';
+    // Fallback to default sources
+    dataGroups.value = getDefaultSources();
+  } finally {
+    loading.value = false;
   }
-
-  const props = withDefaults(defineProps<Props>(), {
-    source: 'all',
-    contentId: null,
-    showClose: false
-  });
-
-  interface DynamicItem {
-    id: string;
-    label: string;
-    tag: string;
-    description: string;
-  }
-
-  interface DynamicGroup {
-    label: string;
-    items: DynamicItem[];
-  }
-
-  const emit = defineEmits<{
-    (e: 'select', item: DynamicItem): void;
-    (e: 'close'): void;
-  }>();
-  
-  const builder = inject<BuilderInstance | null>('builder', null);
-
-  const searchQuery = ref('');
-  const dataGroups = ref<Record<string, DynamicGroup>>({});
-  const loading = ref(false);
-  const error = ref<string | null>(null);
-
-  // Fetch dynamic sources from backend
-  const fetchDynamicSources = async () => {
-    loading.value = true;
-    error.value = null;
-    
-    try {
-      const params = {
-        context: props.source,
-        content_id: props.contentId || builder?.content.value.id
-      };
-      
-      const response = await api.get('/admin/ja/builder/dynamic-sources', { params });
-      dataGroups.value = response.data?.data || response.data || {};
-    } catch (err) {
-      logger.error('Failed to fetch dynamic sources:', err);
-      error.value = 'Failed to load dynamic data sources';
-      // Fallback to default sources
-      dataGroups.value = getDefaultSources();
-    } finally {
-      loading.value = false;
-    }
-  };
+};
 
   // Default sources as fallback
   const getDefaultSources = (): Record<string, DynamicGroup> => ({
