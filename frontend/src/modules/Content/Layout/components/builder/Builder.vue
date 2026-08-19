@@ -71,7 +71,7 @@
         v-if="showInsertRowModal"
         :mode="insertRowMode"
         @close="showInsertRowModal = false"
-        @insert="(type, payload) => insertRow(payload as Record<string, unknown>)"
+        @insert="(_type, payload) => insertRow(payload as Record<string, unknown>)"
         @update="(payload) => updateRow(payload as any)"
       />
       <InsertSectionModal
