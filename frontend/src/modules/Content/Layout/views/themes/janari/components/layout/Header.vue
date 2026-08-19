@@ -299,8 +299,8 @@
     <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent z-50 dark:block hidden" />
   </header>
 
-  <!-- ========== MOBILE MENU OVERLAY (teleported outside header) ========== -->
-  <teleport to="body">
+  <!-- ========== MOBILE MENU OVERLAY (teleported outside header when live, scoped inside canvas when in builder) ========== -->
+  <teleport to="body" :disabled="isBuilder">
     <transition name="mobile-menu">
       <div
         v-if="isOpen && !isDesktop"
@@ -383,7 +383,7 @@
 
         <!-- Primary Links (Dark Section) -->
         <div class="flex-1 bg-black/95 backdrop-blur-xl px-8 py-8">
-          <div class="grid grid-cols-2 gap-x-8 gap-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
             <template
               v-for="item in navItems"
               :key="'mob-'+String(item.id || item.title)"
@@ -448,7 +448,7 @@
                       {{ child.title }}
                     </a>
                     <router-link
-                      v-else
+                      v-else-if="child.url"
                       :to="getInternalUrl(child.url)"
                       :class="[
                         'flex items-center gap-2 text-xs transition-colors',
@@ -493,7 +493,7 @@
               {{ t('theme.janari.header.login') }}
             </a>
           </div>
-          <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
             <router-link
               to="/"
               class="flex items-center gap-3 text-primary-foreground/70 hover:text-primary-foreground text-sm"
@@ -548,7 +548,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch, inject } from 'vue';
 import { useTheme } from '@/modules/Content/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Content/Layout/composables/useMenu';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
@@ -587,6 +587,9 @@ import {
     LogOut,
 } from 'lucide-vue-next';
 import type { MenuItem } from '@/modules/Content/Layout/types/menu';
+
+const builder = inject('builder', null);
+const isBuilder = computed(() => !!builder);
 
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
@@ -950,7 +953,7 @@ const toggleMobileSubmenu = (item: MenuItem) => {
 
 // Use a watch for more robust body scroll locking
 watch(isOpen, (newValue) => {
-    if (!isDesktop.value) {
+    if (!isDesktop.value && !isBuilder.value) {
         document.body.style.overflow = newValue ? 'hidden' : '';
     } else {
         document.body.style.overflow = '';
