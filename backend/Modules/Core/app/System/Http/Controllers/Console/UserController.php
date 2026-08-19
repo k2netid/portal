@@ -5,6 +5,7 @@ namespace Modules\Core\System\Http\Controllers\Console;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -154,15 +155,6 @@ class UserController extends BaseApiController
             return $this->unauthorized();
         }
 
-        if ($this->subscriptionUserLimit->shouldEnforce() && ! $this->subscriptionUserLimit->canAddUser()) {
-            $payload = $this->subscriptionUserLimit->blockedPayload();
-
-            return $this->error($payload['message'], 403, [], $payload['code'], [
-                'limit' => $payload['limit'],
-                'used' => $payload['used'],
-            ]);
-        }
-
         $rolesTable = is_string($v = config('permission.table_names.roles')) ? $v : 'roles';
 
         $validated = $request->validate([
@@ -181,7 +173,9 @@ class UserController extends BaseApiController
         $validated['password'] = Hash::make($validated['password']);
         $validated['email_verified_at'] = now();
 
-        $user = User::create($validated);
+        $user = User::create(Arr::except($validated, ['roles']));
+        $user->email_verified_at = now();
+        $user->save();
 
         if ($request->has('roles')) {
             $maxRequestedRank = 0;
@@ -578,7 +572,7 @@ class UserController extends BaseApiController
             unset($validated['is_verified']);
         }
 
-        $user->update($validated);
+        $user->update(Arr::except($validated, ['roles']));
 
         // Guard: Hierarchy check
         // Allow if self OR if super (rank >= 100) OR if strictly higher rank
