@@ -86,7 +86,7 @@ import { useI18n } from 'vue-i18n'
 import draggable from 'vuedraggable'
 import ModuleWrapper from './ModuleWrapper.vue'
 import CanvasGridView from './CanvasGridView.vue'
-import ThemePageResolver from '@/components/shared/ThemePageResolver.vue'
+import ThemePageResolver from '@/modules/Content/Layout/components/themes/ThemePageResolver.vue'
 import type { BuilderInstance, BlockInstance } from '@/types/builder'
 import type { ThemeData } from '@/types/theme'
 

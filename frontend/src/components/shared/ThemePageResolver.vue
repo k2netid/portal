@@ -1,9 +1,13 @@
 <template>
-  <div class="theme-page-resolver">
+  <ThemePageResolver :page="page" v-bind="$attrs">
     <slot />
-  </div>
+  </ThemePageResolver>
 </template>
 
 <script setup lang="ts">
-// Resolves theme page templates for the canvas
+import ThemePageResolver from '@/modules/Content/Layout/components/themes/ThemePageResolver.vue'
+
+defineProps<{
+  page: string
+}>()
 </script>
