@@ -20,8 +20,8 @@ class BuilderPresetController extends BaseApiController
         $type = is_string($typeRaw) ? $typeRaw : null;
 
         $user = $request->user();
-        /** @var \App\Models\User|null $user */
-        $userId = $user ? (int) $user->id : 0;
+        /** @var User|null $user */
+        $userId = $user ? (string) $user->id : '0';
 
         $query = BuilderPreset::query();
 
@@ -47,7 +47,7 @@ class BuilderPresetController extends BaseApiController
     public function store(Request $request): JsonResponse
     {
         $user = $request->user();
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         if (! $user) {
             return $this->unauthorized();
         }
@@ -75,7 +75,7 @@ class BuilderPresetController extends BaseApiController
     public function update(Request $request, BuilderPreset $builderPreset): JsonResponse
     {
         $user = $request->user();
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         if (! $user) {
             return $this->unauthorized();
         }
@@ -105,7 +105,7 @@ class BuilderPresetController extends BaseApiController
     public function destroy(Request $request, BuilderPreset $builderPreset): JsonResponse
     {
         $user = $request->user();
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         if (! $user) {
             return $this->unauthorized();
         }

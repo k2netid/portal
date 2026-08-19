@@ -15,6 +15,7 @@ parameters:
     ignoreErrors:
         - '#Parameter \#1 \$view of function view expects view-string\|null, string given#'
         - '#Called ''env'' outside of the config directory#'
+        - '#Trait .* is used zero times and is not analysed.#'
 
     excludePaths:
         - Modules/*/tests/*

@@ -7,6 +7,16 @@ use Modules\Core\System\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int|string $id
+ * @property int|string|null $user_id
+ * @property string $type
+ * @property string $name
+ * @property array<string, mixed> $settings
+ * @property bool $is_system
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class BuilderPreset extends Model
 {
     protected $fillable = [

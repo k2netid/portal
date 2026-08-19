@@ -849,6 +849,7 @@ class SecurityController extends BaseApiController
                 continue;
             }
 
+            /** @var array<string, mixed> $json */
             $drills[] = $json;
         }
 

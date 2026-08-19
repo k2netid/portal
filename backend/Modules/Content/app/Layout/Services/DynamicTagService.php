@@ -65,7 +65,7 @@ class DynamicTagService
         // Strip {{ and }}
         $key = trim(str_replace(['{{', '}}'], '', $tag));
 
-        // Post/Page tags
+        // Post / Content tags
         if ($content && str_starts_with($key, 'post_')) {
             $author = $content->author;
 
@@ -74,37 +74,44 @@ class DynamicTagService
                 'post_excerpt' => (string) ($content->excerpt ?? ''),
                 'post_content' => (string) ($content->body ?? ''),
                 'post_date' => ($content->published_at ?? $content->created_at ?? now())->format('M d, Y'),
-                'post_author' => $author instanceof User ? $author->name : '',
-                'post_author_avatar' => $author instanceof User ? (string) ($author->getAttribute('avatar') ?? '') : '',
-                'post_featured_image' => (string) ($content->getAttribute('featured_image') ?? ''),
+                'post_author' => $author instanceof User ? (string) $author->name : '',
+                'post_author_avatar' => ($author instanceof User && is_string($author->getAttribute('avatar'))) ? (string) $author->getAttribute('avatar') : '',
+                'post_featured_image' => is_string($content->getAttribute('featured_image')) ? (string) $content->getAttribute('featured_image') : '',
                 'post_url' => url('/'.$content->slug),
                 'post_category' => $content->category ? (string) $content->category->name : '',
-                'post_tags' => (string) ($content->tags->pluck('name')->join(', ') ?? ''),
+                'post_tags' => $content->tags ? (string) $content->tags->pluck('name')->implode(', ') : '',
                 default => ''
             };
         }
 
         // Loop item tags
         if ($loopItem && str_starts_with($key, 'loop_')) {
+            $thumbnail = $loopItem['thumbnail'] ?? $loopItem['featured_image'] ?? null;
+
             return match ($key) {
-                'loop_title' => (string) ($loopItem['title'] ?? ''),
-                'loop_excerpt' => (string) ($loopItem['excerpt'] ?? ''),
-                'loop_date' => (string) ($loopItem['date'] ?? ''),
-                'loop_author' => (string) ($loopItem['author'] ?? ''),
-                'loop_thumbnail' => (string) ($loopItem['thumbnail'] ?? $loopItem['featured_image'] ?? ''),
-                'loop_url' => (string) ($loopItem['url'] ?? ''),
-                'loop_category' => (string) ($loopItem['category'] ?? ''),
-                'loop_index' => (string) ($loopItem['index'] ?? '0'),
+                'loop_title' => is_scalar($loopItem['title'] ?? null) ? (string) $loopItem['title'] : '',
+                'loop_excerpt' => is_scalar($loopItem['excerpt'] ?? null) ? (string) $loopItem['excerpt'] : '',
+                'loop_date' => is_scalar($loopItem['date'] ?? null) ? (string) $loopItem['date'] : '',
+                'loop_author' => is_scalar($loopItem['author'] ?? null) ? (string) $loopItem['author'] : '',
+                'loop_thumbnail' => is_scalar($thumbnail) ? (string) $thumbnail : '',
+                'loop_url' => is_scalar($loopItem['url'] ?? null) ? (string) $loopItem['url'] : '',
+                'loop_category' => is_scalar($loopItem['category'] ?? null) ? (string) $loopItem['category'] : '',
+                'loop_index' => is_scalar($loopItem['index'] ?? null) ? (string) $loopItem['index'] : '0',
                 default => ''
             };
         }
 
         // Site tags
         if (str_starts_with($key, 'site_') || str_starts_with($key, 'current_')) {
+            $appName = is_string(config('app.name')) ? config('app.name') : 'Jejakawan';
+            $siteTitle = Setting::get('site_title', $appName);
+            $siteTagline = Setting::get('site_tagline', '');
+            $siteLogo = Setting::get('site_logo', '');
+
             return match ($key) {
-                'site_title' => (string) Setting::get('site_title', (string) config('app.name')),
-                'site_tagline' => (string) Setting::get('site_tagline', ''),
-                'site_logo' => (string) Setting::get('site_logo', ''),
+                'site_title' => is_scalar($siteTitle) ? (string) $siteTitle : $appName,
+                'site_tagline' => is_scalar($siteTagline) ? (string) $siteTagline : '',
+                'site_logo' => is_scalar($siteLogo) ? (string) $siteLogo : '',
                 'current_date' => now()->format('M d, Y'),
                 'current_year' => (string) now()->year,
                 default => ''
@@ -128,10 +135,12 @@ class DynamicTagService
                 return '';
             }
 
+            $avatar = $user->getAttribute('avatar');
+
             return match ($key) {
                 'user_name' => (string) ($user->name ?? ''),
                 'user_email' => (string) ($user->email ?? ''),
-                'user_avatar' => (string) $user->getAttribute('avatar') ?? '',
+                'user_avatar' => is_scalar($avatar) ? (string) $avatar : '',
                 default => ''
             };
         }

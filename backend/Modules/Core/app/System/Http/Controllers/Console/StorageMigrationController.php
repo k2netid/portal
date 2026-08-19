@@ -86,9 +86,7 @@ class StorageMigrationController extends BaseApiController
                     $results['failed'][$file] = 'Failed to write to target';
                 }
 
-                if (is_resource($stream)) {
-                    fclose($stream);
-                }
+                fclose($stream);
 
             } catch (\Exception $e) {
                 $results['failed'][$file] = $e->getMessage();

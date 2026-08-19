@@ -65,4 +65,14 @@ class BroadcastNotificationService
             'member' => 0,
         ];
     }
+
+    /**
+     * @return array{console: int, member: int}
+     */
+    public function revoke(string $title, string $message, string|Carbon $sentAt): array
+    {
+        $carbon = is_string($sentAt) ? Carbon::parse($sentAt) : $sentAt;
+
+        return $this->recall($title, $message, $carbon);
+    }
 }

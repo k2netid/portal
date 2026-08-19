@@ -20,7 +20,10 @@ class SpaController extends Controller
     public function index(): Response
     {
         if (file_exists(public_path('index.html'))) {
-            return response(file_get_contents(public_path('index.html')))->header('Content-Type', 'text/html');
+            $content = file_get_contents(public_path('index.html'));
+            if (is_string($content)) {
+                return response($content)->header('Content-Type', 'text/html');
+            }
         }
 
         return response()->json([
@@ -98,12 +101,18 @@ class SpaController extends Controller
             || in_array(strtolower($firstSegment), ['auth', 'login', 'register'], true)
         ) {
             if (file_exists(public_path('console.html'))) {
-                return response(file_get_contents(public_path('console.html')))->header('Content-Type', 'text/html');
+                $content = file_get_contents(public_path('console.html'));
+                if (is_string($content)) {
+                    return response($content)->header('Content-Type', 'text/html');
+                }
             }
         }
 
         if (file_exists(public_path('index.html'))) {
-            return response(file_get_contents(public_path('index.html')))->header('Content-Type', 'text/html');
+            $content = file_get_contents(public_path('index.html'));
+            if (is_string($content)) {
+                return response($content)->header('Content-Type', 'text/html');
+            }
         }
 
         return response()->json(['message' => 'Resource not found'], 404);

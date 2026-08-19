@@ -97,4 +97,21 @@ class Notification extends Model
 
         return $notifications;
     }
+
+    /**
+     * @param  array<int, string>  $roles
+     * @param  array<string, mixed>  $data
+     * @return array<int, self>
+     */
+    public static function createForRoles(array $roles, string $type, string $title, string $message, ?string $actionUrl = null, ?string $actionText = null, array $data = []): array
+    {
+        $users = User::role($roles)->get();
+        $notifications = [];
+
+        foreach ($users as $user) {
+            $notifications[] = static::createForUser($user->id, $type, $title, $message, $actionUrl, $actionText, $data);
+        }
+
+        return $notifications;
+    }
 }
