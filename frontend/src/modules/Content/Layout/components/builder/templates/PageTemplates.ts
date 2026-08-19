@@ -1,9 +1,17 @@
-/**
- * Janari Full Page Templates
- * Pre-built page layouts matching the Janari theme
- */
-
-import { heroGradient, featuresGrid, ctaDark, aboutSplit, teamGrid, blogHeader, contactSection } from '@/components/builder/templates/SectionTemplates'
+import {
+    heroGradient,
+    featuresGrid,
+    ctaDark,
+    aboutSplit,
+    teamGrid,
+    blogHeader,
+    contactSection,
+    pricingSection,
+    testimonialsSection,
+    faqSection,
+    videoSection,
+    countdownSection
+} from '@/components/builder/templates/SectionTemplates';
 
 interface TemplateNode {
     id: string;
@@ -12,25 +20,33 @@ interface TemplateNode {
     children?: TemplateNode[];
 }
 
+export const saasLandingPage = (): TemplateNode[] => [
+    heroGradient(),
+    featuresGrid(),
+    videoSection(),
+    pricingSection(),
+    testimonialsSection(),
+    faqSection(),
+    countdownSection(),
+    ctaDark()
+];
 
 export const homePage = (): TemplateNode[] => [
     heroGradient(),
     featuresGrid(),
     ctaDark()
-]
+];
 
 export const aboutPage = (): TemplateNode[] => [
     aboutSplit(),
     teamGrid(),
     ctaDark()
-]
+];
 
 export const blogPage = (): TemplateNode[] => [
     blogHeader(),
-    // Blog page usually has a dynamic blog loop. 
-    // We'll create a simple section with a Blog block.
     (() => {
-        const id = `tpl_${Math.random().toString(36).substr(2, 9)}`
+        const id = `tpl_${Math.random().toString(36).substr(2, 9)}`;
         return {
             id: id,
             type: 'section',
@@ -55,40 +71,14 @@ export const blogPage = (): TemplateNode[] => [
                     }]
                 }]
             }]
-        }
+        };
     })()
-]
+];
 
 export const contactPage = (): TemplateNode[] => [
     contactSection(),
-    // Map section
-    (() => {
-        const id = `tpl_${Math.random().toString(36).substr(2, 9)}`
-        return {
-            id: id,
-            type: 'section',
-            settings: { padding: { top: '0', bottom: '0' } },
-            children: [{
-                id: `tpl_${Math.random().toString(36).substr(2, 9)}`,
-                type: 'row',
-                settings: { columns: '1' },
-                children: [{
-                    id: `tpl_${Math.random().toString(36).substr(2, 9)}`,
-                    type: 'column',
-                    children: [{
-                        id: `tpl_${Math.random().toString(36).substr(2, 9)}`,
-                        type: 'map',
-                        settings: {
-                            address: 'Jakarta, Indonesia',
-                            zoom: 14,
-                            height: '400px'
-                        }
-                    }]
-                }]
-            }]
-        }
-    })()
-]
+    faqSection()
+];
 
 export interface PageTemplate {
     id: string;
@@ -100,9 +90,16 @@ export interface PageTemplate {
 
 export const pageTemplates: PageTemplate[] = [
     {
+        id: 'janari-saas-landing',
+        name: 'SaaS / Product Landing Page',
+        description: 'Complete high-converting landing page: Hero, Features, Video, Pricing, Testimonials, FAQ & Countdown',
+        thumbnail: 'saas-landing',
+        factory: saasLandingPage
+    },
+    {
         id: 'janari-home',
         name: 'Home Page',
-        description: 'Complete home page with Hero, Features, and CTA',
+        description: 'Clean starter home page with Hero, Features, and CTA',
         thumbnail: 'home-page',
         factory: homePage
     },
@@ -123,10 +120,10 @@ export const pageTemplates: PageTemplate[] = [
     {
         id: 'janari-contact',
         name: 'Contact Page',
-        description: 'Contact page with form, info, and map',
+        description: 'Contact page with form, info, and FAQ accordion',
         thumbnail: 'contact-page',
         factory: contactPage
     }
-]
+];
 
-export default pageTemplates
+export default pageTemplates;

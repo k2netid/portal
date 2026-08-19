@@ -531,6 +531,132 @@ export const contactSection = (): TemplateNode => ({
     }]
 })
 
+export const faqSection = (): TemplateNode => ({
+    id: generateId(),
+    type: 'section',
+    settings: {
+        padding: { top: '80', bottom: '80' }
+    },
+    children: [{
+        id: generateId(),
+        type: 'row',
+        settings: { columns: '1', maxWidth: '800px', margin: { left: 'auto', right: 'auto' } },
+        children: [{
+            id: generateId(),
+            type: 'column',
+            children: [{
+                id: generateId(),
+                type: 'faq',
+                settings: {
+                    title: 'Frequently Asked Questions',
+                    subtitle: 'Everything you need to know about our product and services.',
+                    count: 4
+                }
+            }]
+        }]
+    }]
+});
+
+export const pricingSection = (): TemplateNode => ({
+    id: generateId(),
+    type: 'section',
+    settings: {
+        padding: { top: '90', bottom: '90' }
+    },
+    children: [{
+        id: generateId(),
+        type: 'row',
+        settings: { columns: '1', maxWidth: '1200px', margin: { left: 'auto', right: 'auto' } },
+        children: [{
+            id: generateId(),
+            type: 'column',
+            children: [{
+                id: generateId(),
+                type: 'pricing',
+                settings: {
+                    title: 'Simple & Transparent Pricing',
+                    subtitle: 'Choose the plan that fits your growth and ambition.',
+                    count: 3
+                }
+            }]
+        }]
+    }]
+});
+
+export const testimonialsSection = (): TemplateNode => ({
+    id: generateId(),
+    type: 'section',
+    settings: {
+        padding: { top: '80', bottom: '80' }
+    },
+    children: [{
+        id: generateId(),
+        type: 'row',
+        settings: { columns: '1', maxWidth: '1200px', margin: { left: 'auto', right: 'auto' } },
+        children: [{
+            id: generateId(),
+            type: 'column',
+            children: [{
+                id: generateId(),
+                type: 'testimonials',
+                settings: {
+                    title: 'Loved by Teams Worldwide',
+                    subtitle: 'See how companies are building better websites with our CMS.',
+                    count: 3
+                }
+            }]
+        }]
+    }]
+});
+
+export const countdownSection = (): TemplateNode => ({
+    id: generateId(),
+    type: 'section',
+    settings: {
+        padding: { top: '60', bottom: '60' }
+    },
+    children: [{
+        id: generateId(),
+        type: 'row',
+        settings: { columns: '1', maxWidth: '800px', margin: { left: 'auto', right: 'auto' } },
+        children: [{
+            id: generateId(),
+            type: 'column',
+            children: [{
+                id: generateId(),
+                type: 'countdown',
+                settings: {
+                    title: 'Limited Time Launch Offer Ends Soon:'
+                }
+            }]
+        }]
+    }]
+});
+
+export const videoSection = (): TemplateNode => ({
+    id: generateId(),
+    type: 'section',
+    settings: {
+        padding: { top: '80', bottom: '80' }
+    },
+    children: [{
+        id: generateId(),
+        type: 'row',
+        settings: { columns: '1', maxWidth: '960px', margin: { left: 'auto', right: 'auto' } },
+        children: [{
+            id: generateId(),
+            type: 'column',
+            children: [{
+                id: generateId(),
+                type: 'video',
+                settings: {
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+                }
+            }]
+        }]
+    }]
+});
+
 export interface SectionTemplate {
     id: string;
     name: string;
@@ -577,6 +703,46 @@ export const sectionTemplates: SectionTemplate[] = [
         factory: ctaDark
     },
     {
+        id: 'janari-pricing-section',
+        name: 'Pricing Table',
+        category: 'pricing',
+        description: '3-tier pricing cards with popular badge',
+        thumbnail: 'pricing-table',
+        factory: pricingSection
+    },
+    {
+        id: 'janari-testimonials-section',
+        name: 'Testimonials',
+        category: 'testimonials',
+        description: 'Client reviews and social proof cards',
+        thumbnail: 'testimonials',
+        factory: testimonialsSection
+    },
+    {
+        id: 'janari-faq-section',
+        name: 'FAQ Accordion',
+        category: 'content',
+        description: 'Interactive questions and answers',
+        thumbnail: 'faq-section',
+        factory: faqSection
+    },
+    {
+        id: 'janari-countdown-section',
+        name: 'Countdown Timer',
+        category: 'marketing',
+        description: 'Promo launch timer banner',
+        thumbnail: 'countdown',
+        factory: countdownSection
+    },
+    {
+        id: 'janari-video-section',
+        name: 'Video Showcase',
+        category: 'media',
+        description: 'Responsive 16:9 video embed section',
+        thumbnail: 'video',
+        factory: videoSection
+    },
+    {
         id: 'janari-team-grid',
         name: 'Team Grid',
         category: 'team',
@@ -602,4 +768,4 @@ export const sectionTemplates: SectionTemplate[] = [
     }
 ]
 
-export default sectionTemplates
+export default sectionTemplates;
