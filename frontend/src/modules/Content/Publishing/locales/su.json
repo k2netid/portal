@@ -208,6 +208,16 @@
     },
     "title_singular": "Kusi",
     "title_plural": "Kusi",
+    "builder": {
+      "bannerTitle": "Visual Page & Block Builder",
+      "blocksCount": "{count} blok",
+      "hasBlocksDesc": "Kaca ieu dirancang nganggo blok visual builder interaktif.",
+      "noBlocksDesc": "Rancang kaca nganggo drag & drop block responsif (Grid, Hero, Forms, Carousel).",
+      "editVisual": "Buka di Visual Builder",
+      "launchVisual": "Rancang nganggo Visual Builder",
+      "fallbackContent": "Eusi Teks Fallback / SEO (Tiptap)",
+      "savedSuccess": "Blok visual builder parantos disingkronkeun kana kaca!"
+    },
     "filters": {
       "allStatus": "All statuses"
     }

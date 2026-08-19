@@ -84,11 +84,12 @@
       >
         <ConsoleFormCard :padded="false">
           <ContentMain
-          v-model="form"
-          @save="handleSubmit"
-          @toggle-auto-save="handleAutoSaveToggle"
-          @cancel="handleCancel"
-        />
+            v-model="form"
+            @save="handleSubmit"
+            @toggle-auto-save="handleAutoSaveToggle"
+            @cancel="handleCancel"
+            @open-builder="isVisualBuilderOpen = true"
+          />
         </ConsoleFormCard>
       </div>
 
@@ -185,6 +186,21 @@
         </DialogFooter>
       </DialogContent>
     </Dialog>
+
+    <!-- Fullscreen Visual Page Builder Modal -->
+    <div
+      v-if="isVisualBuilderOpen"
+      class="fixed inset-0 z-50 bg-background flex flex-col"
+    >
+      <Builder
+        :initial-data="{ blocks: form.meta?.builder_blocks || [] }"
+        :content-id="id"
+        mode="page"
+        @close="isVisualBuilderOpen = false"
+        @save="handleBuilderSave"
+        @update="handleBuilderUpdate"
+      />
+    </div>
   </div>
 </template>
 
@@ -231,6 +247,7 @@ import AutoSaveIndicator from '@/shared/components/AutoSaveIndicator.vue';
 import ContentPreviewModal from '@/modules/Core/System/components/console/ContentPreviewModal.vue';
 import ContentMain from '@/modules/Content/Publishing/components/content/ContentMain.vue';
 import ContentSidebar from '@/modules/Content/Publishing/components/content/ContentSidebar.vue';
+import Builder from '@/modules/Content/Layout/components/builder/Builder.vue';
 
 // Composables & Utils
 import { parseSingleResponse, parseResponse, ensureArray, getResponseList } from '@/shared/utils/responseParser';
@@ -248,17 +265,35 @@ interface LockStatus {
     locked_by?: {
         id: string;
         name: string;
+        email: string;
     };
-    can_unlock: boolean;
+    locked_at?: string;
+    can_unlock?: boolean;
 }
 
-const route = useRoute();
-const router = useRouter();
 const { t } = useI18n();
+const router = useRouter();
+const route = useRoute();
+const id = String(route.params.id || '');
 const toast = useToast();
 const publishingStore = usePublishingStore();
 const systemStore = useSystemStore();
 const authStore = useAuthStore();
+
+// Visual Builder State
+const isVisualBuilderOpen = ref(false);
+
+const handleBuilderUpdate = (payload: { blocks: any[] }) => {
+  if (!form.value.meta) {
+    form.value.meta = {};
+  }
+  form.value.meta.builder_blocks = payload.blocks;
+};
+
+const handleBuilderSave = () => {
+  isVisualBuilderOpen.value = false;
+  toast.success.default(t('publishing.content.builder.savedSuccess', 'Blok visual builder berhasil disinkronkan ke halaman!'));
+};
 
 const isSidebarOpen = ref(true);
 const contentId = route.params.id as string;

@@ -97,8 +97,19 @@
         </figure>
       </section>
 
+      <!-- Visual Builder Layout (if page is built with Visual Page Builder) -->
       <section
-        v-if="hasBody"
+        v-if="hasBuilderBlocks"
+        class="w-full py-6 md:py-10"
+      >
+        <div class="container mx-auto px-4">
+          <BlockRenderer :blocks="builderBlocks" />
+        </div>
+      </section>
+
+      <!-- Standard Editorial Layout -->
+      <section
+        v-else-if="hasBody"
         class="py-10 md:py-14"
       >
         <div class="container mx-auto grid grid-cols-1 gap-8 px-4 lg:grid-cols-12">
@@ -189,6 +200,7 @@ import { useI18n } from 'vue-i18n';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { useRoute, useRouter } from 'vue-router';
 import JanariSplitText from '../components/shared/JanariSplitText.vue';
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue';
 import api from '@/engine/api/client';
 import { publishingPaths } from '@/engine/api/paths';
 import { normalizeLocaleCode } from '@/engine/i18n';
@@ -215,6 +227,15 @@ const pageTitle = computed(() => {
 const pageIntro = computed(() => resolveLocalizedContentField(pageData.value, 'intro', locale.value).trim());
 const pageBody = computed(() => resolveLocalizedContentField(pageData.value, 'body', locale.value));
 const hasBody = computed(() => Boolean(pageBody.value.trim()));
+
+const builderBlocks = computed(() => {
+    const meta = pageData.value?.meta as Record<string, any> | undefined;
+    if (meta?.builder_blocks && Array.isArray(meta.builder_blocks) && meta.builder_blocks.length > 0) {
+        return meta.builder_blocks;
+    }
+    return [];
+});
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
 const hasFeaturedImage = computed(() => Boolean(pageData.value?.featured_image));
 const pageTypeLabel = computed(() => (pageData.value?.type || 'page').toUpperCase());
 const featuredImagePosition = computed(() => {

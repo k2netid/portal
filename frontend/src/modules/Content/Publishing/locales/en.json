@@ -29,6 +29,16 @@
     },
     "title_singular": "Content",
     "title_plural": "Contents",
+    "builder": {
+      "bannerTitle": "Visual Page & Block Builder",
+      "blocksCount": "{count} blocks",
+      "hasBlocksDesc": "This page is built with interactive visual builder blocks.",
+      "noBlocksDesc": "Design pages with responsive drag & drop blocks (Grid, Hero, Forms, Carousel).",
+      "editVisual": "Open in Visual Builder",
+      "launchVisual": "Design with Visual Builder",
+      "fallbackContent": "Fallback Text / SEO Content (Tiptap)",
+      "savedSuccess": "Visual builder blocks synced successfully!"
+    },
     "form": {
       "addTags": "Add Tags",
       "allowComments": "Allow Comments",

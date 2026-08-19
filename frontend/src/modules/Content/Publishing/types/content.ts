@@ -25,6 +25,7 @@ export interface ContentForm {
     comment_status?: boolean;
     is_featured?: boolean;
     tags?: Tag[];
+    meta?: Record<string, any>;
     menu_item?: MenuItem;
     menu_items?: MenuItem[];
 }
