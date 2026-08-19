@@ -111,6 +111,33 @@
             </Select>
           </div>
 
+          <!-- Page Template Selector (for Pages) -->
+          <div v-if="modelValue.type === 'page'" class="space-y-1.5 animate-in fade-in slide-in-from-top-1">
+            <Label class="text-xs font-medium text-muted-foreground">{{ $t('publishing.content.form.template') }}</Label>
+            <Select
+              :model-value="(modelValue.meta?.template as string) || 'default'"
+              @update:model-value="(val: string) => updateMetaField('template', val)"
+            >
+              <SelectTrigger class="w-full h-9" :aria-label="t('publishing.content.form.template')">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">
+                  {{ $t('publishing.content.template.default') }}
+                </SelectItem>
+                <SelectItem value="full_width">
+                  {{ $t('publishing.content.template.fullWidth') }}
+                </SelectItem>
+                <SelectItem value="blank_canvas">
+                  {{ $t('publishing.content.template.blankCanvas') }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <p class="text-[10px] text-muted-foreground">
+              {{ modelValue.meta?.template === 'blank_canvas' ? $t('publishing.content.template.blankCanvasDesc') : (modelValue.meta?.template === 'full_width' ? $t('publishing.content.template.fullWidthDesc') : $t('publishing.content.template.defaultDesc')) }}
+            </p>
+          </div>
+
           <div class="flex items-center justify-between border border-border/40 rounded-lg p-3 bg-muted/20">
             <div class="space-y-0.5">
               <Label class="text-xs font-medium leading-none">{{ $t('publishing.content.form.featured') }}</Label>
@@ -712,6 +739,17 @@ const filteredTags = computed(() => {
 
 const updateField = <K extends keyof ContentForm>(field: K, value: ContentForm[K]) => {
     emit('update:modelValue', { ...props.modelValue, [field]: value });
+};
+
+const updateMetaField = (key: string, value: unknown) => {
+    const currentMeta = props.modelValue.meta || {};
+    emit('update:modelValue', {
+        ...props.modelValue,
+        meta: {
+            ...currentMeta,
+            [key]: value
+        }
+    });
 };
 
 const introMaxChars = 500;

@@ -28,6 +28,7 @@
       "unpublish": "Batalkan Terbit"
     },
     "form": {
+      "template": "Template Kaca",
       "addTags": "Tambah Tag",
       "allowComments": "Izinkan Komentar",
       "allowCommentsDesc": "Aktifkan atawa nonaktifkan komentar pikeun item kusi ieu.",
@@ -217,6 +218,14 @@
       "launchVisual": "Rancang nganggo Visual Builder",
       "fallbackContent": "Eusi Teks Fallback / SEO (Tiptap)",
       "savedSuccess": "Blok visual builder parantos disingkronkeun kana kaca!"
+    },
+    "template": {
+      "default": "Standar Tata Letak Téma",
+      "defaultDesc": "Tata letak téma standar kalayan banner judul hero sareng footer.",
+      "fullWidth": "Lega Pinuh (Tanpa Wadah)",
+      "fullWidthDesc": "Méntangkeun bagian ti tungtung ka tungtung.",
+      "blankCanvas": "Blank Canvas (Kaca Funnel / Landing Page)",
+      "blankCanvasDesc": "Némbongkeun 100% blok Visual Builder tanpa header sareng footer téma."
     },
     "filters": {
       "allStatus": "All statuses"

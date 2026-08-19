@@ -28,6 +28,7 @@
       "unpublish": "Batalkan Terbit"
     },
     "form": {
+      "template": "Template Halaman",
       "addTags": "Tambah Tag",
       "allowComments": "Izinkan Komentar",
       "allowCommentsDesc": "Aktifkan atau nonaktifkan komentar untuk item konten ini.",
@@ -217,6 +218,14 @@
       "launchVisual": "Rancang dengan Visual Builder",
       "fallbackContent": "Konten Teks Fallback / SEO (Tiptap)",
       "savedSuccess": "Blok visual builder berhasil disinkronkan ke halaman!"
+    },
+    "template": {
+      "default": "Standar Tata Letak Tema",
+      "defaultDesc": "Tata letak tema standar dengan banner judul hero dan footer.",
+      "fullWidth": "Lebar Penuh (Tanpa Container)",
+      "fullWidthDesc": "Membentangkan section dari ujung ke ujung.",
+      "blankCanvas": "Blank Canvas (Landing Page Funnel)",
+      "blankCanvasDesc": "Merender 100% blok Visual Builder tanpa header dan footer tema."
     },
     "filters": {
       "allStatus": "All statuses"

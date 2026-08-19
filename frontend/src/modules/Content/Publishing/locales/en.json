@@ -39,7 +39,16 @@
       "fallbackContent": "Fallback Text / SEO Content (Tiptap)",
       "savedSuccess": "Visual builder blocks synced successfully!"
     },
+    "template": {
+      "default": "Default Theme Layout",
+      "defaultDesc": "Standard theme layout with hero title banner and footer.",
+      "fullWidth": "Full Width (No Container)",
+      "fullWidthDesc": "Stretches sections from edge to edge.",
+      "blankCanvas": "Blank Canvas (Landing Page Funnel)",
+      "blankCanvasDesc": "Renders 100% Visual Builder blocks without theme header and footer banner."
+    },
     "form": {
+      "template": "Page Template",
       "addTags": "Add Tags",
       "allowComments": "Allow Comments",
       "allowCommentsDesc": "Enable or disable comments for this content item.",
