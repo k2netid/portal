@@ -63,13 +63,13 @@ const viewportStyle = computed(() => {
 <style scoped>
 .canvas-frame {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable both X and Y scrolling */
+  overflow: auto;
   padding: var(--spacing-lg) 0;
-  min-width: 0; /* Allow flex shrinking below content width */
+  min-width: 0;
 }
 
 .canvas-frame__viewport {
@@ -78,11 +78,12 @@ const viewportStyle = computed(() => {
   box-shadow: var(--shadow-lg);
   min-height: calc(100% - 2 * var(--spacing-lg));
   height: auto;
-  overflow: visible; /* Allow content to flow naturally */
+  overflow: visible;
   box-sizing: content-box; 
   position: relative; 
   z-index: 1; 
-  flex-shrink: 0; /* Prevent viewport from being squeezed */
+  flex-shrink: 0;
+  margin: 0 auto; /* Center when fits, left-aligned when overflows */
 }
 
 /* Device-specific frames */
