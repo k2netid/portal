@@ -1,14 +1,14 @@
 <template>
   <div class="block-renderer w-full space-y-6">
-    <template v-for="block in internalBlocks" :key="block.id || block._temp_id">
+    <template v-for="(block, index) in internalBlocks" :key="block.id || index">
       <!-- Section Block -->
       <section
         v-if="block.type === 'section' || block.type === 'fullwidth_section'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-section w-full"
         :class="[
-          block.settings?.css_class || '',
-          block.settings?.fullwidth ? 'w-full' : 'container mx-auto px-4'
+          getSettingStr(block, 'css_class'),
+          getSettingBool(block, 'fullwidth') ? 'w-full' : 'container mx-auto px-4'
         ]"
         :style="resolveBlockStyles(block)"
       >
@@ -24,11 +24,11 @@
       <!-- Row Block -->
       <div
         v-else-if="block.type === 'row'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-row grid gap-6"
         :class="[
           getRowGridClass(block),
-          block.settings?.css_class || ''
+          getSettingStr(block, 'css_class')
         ]"
         :style="resolveBlockStyles(block)"
       >
@@ -44,9 +44,9 @@
       <!-- Column Block -->
       <div
         v-else-if="block.type === 'column'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-column flex flex-col space-y-4"
-        :class="block.settings?.css_class || ''"
+        :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
         <BlockRenderer
@@ -60,55 +60,55 @@
 
       <!-- Heading Block -->
       <component
-        :is="block.settings?.tag || 'h2'"
+        :is="getSettingStr(block, 'tag', 'h2')"
         v-else-if="block.type === 'heading'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-heading font-black tracking-tight text-foreground"
         :class="[
-          getHeadingSizeClass(block.settings?.size || block.settings?.tag),
-          getTextAlignClass(block.settings?.alignment),
-          block.settings?.css_class || ''
+          getHeadingSizeClass(getSettingStr(block, 'size') || getSettingStr(block, 'tag')),
+          getTextAlignClass(getSettingStr(block, 'alignment')),
+          getSettingStr(block, 'css_class')
         ]"
         :style="resolveBlockStyles(block)"
       >
-        {{ resolveDynamicText(block.settings?.text || block.settings?.title || '') }}
+        {{ resolveDynamicText(getSettingStr(block, 'text') || getSettingStr(block, 'title')) }}
       </component>
 
       <!-- Text / RichText Block -->
       <div
         v-else-if="block.type === 'text' || block.type === 'rich_text'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-text prose prose-slate dark:prose-invert max-w-none leading-relaxed"
         :class="[
-          getTextAlignClass(block.settings?.alignment),
-          block.settings?.css_class || ''
+          getTextAlignClass(getSettingStr(block, 'alignment')),
+          getSettingStr(block, 'css_class')
         ]"
         :style="resolveBlockStyles(block)"
-        v-html="resolveDynamicText(block.settings?.content || block.settings?.text || block.settings?.body || '')"
+        v-html="resolveDynamicText(getSettingStr(block, 'content') || getSettingStr(block, 'text') || getSettingStr(block, 'body'))"
       />
 
       <!-- Image Block -->
       <figure
         v-else-if="block.type === 'image'"
-        :id="block.settings?.html_id || undefined"
+        :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-image overflow-hidden rounded-2xl"
         :class="[
-          getTextAlignClass(block.settings?.alignment),
-          block.settings?.css_class || ''
+          getTextAlignClass(getSettingStr(block, 'alignment')),
+          getSettingStr(block, 'css_class')
         ]"
         :style="resolveBlockStyles(block)"
       >
         <img
-          :src="block.settings?.url || block.settings?.src || block.settings?.image || ''"
-          :alt="block.settings?.alt || block.settings?.title || ''"
+          :src="getSettingStr(block, 'url') || getSettingStr(block, 'src') || getSettingStr(block, 'image')"
+          :alt="getSettingStr(block, 'alt') || getSettingStr(block, 'title')"
           class="w-full h-auto object-cover rounded-2xl shadow-sm transition-transform duration-300"
           loading="lazy"
         >
         <figcaption
-          v-if="block.settings?.caption"
+          v-if="getSettingStr(block, 'caption')"
           class="mt-2 text-xs text-center text-muted-foreground"
         >
-          {{ block.settings.caption }}
+          {{ getSettingStr(block, 'caption') }}
         </figcaption>
       </figure>
 
@@ -116,20 +116,20 @@
       <div
         v-else-if="block.type === 'button'"
         class="builder-button-wrapper"
-        :class="getTextAlignClass(block.settings?.alignment)"
+        :class="getTextAlignClass(getSettingStr(block, 'alignment'))"
       >
         <a
-          :href="block.settings?.url || block.settings?.link || '#'"
-          :target="block.settings?.open_in_new_tab ? '_blank' : '_self'"
-          :rel="block.settings?.open_in_new_tab ? 'noopener noreferrer' : undefined"
+          :href="getSettingStr(block, 'url') || getSettingStr(block, 'link') || '#'"
+          :target="getSettingBool(block, 'open_in_new_tab') ? '_blank' : '_self'"
+          :rel="getSettingBool(block, 'open_in_new_tab') ? 'noopener noreferrer' : undefined"
           class="inline-flex items-center justify-center font-bold px-6 py-3 rounded-xl transition-all shadow-sm hover:shadow hover:scale-[1.02] active:scale-[0.98]"
           :class="[
-            getButtonVariantClass(block.settings?.variant || block.settings?.style),
-            block.settings?.css_class || ''
+            getButtonVariantClass(getSettingStr(block, 'variant') || getSettingStr(block, 'style')),
+            getSettingStr(block, 'css_class')
           ]"
           :style="resolveBlockStyles(block)"
         >
-          {{ block.settings?.text || block.settings?.label || 'Click Here' }}
+          {{ getSettingStr(block, 'text') || getSettingStr(block, 'label', 'Click Here') }}
         </a>
       </div>
 
@@ -137,12 +137,12 @@
       <div
         v-else-if="block.type === 'divider' || block.type === 'spacer'"
         class="builder-divider w-full"
-        :style="{ height: (block.settings?.height || 24) + 'px' }"
+        :style="{ height: `${getSettingNum(block, 'height', 24)}px` }"
       >
         <hr
           v-if="block.type === 'divider'"
           class="border-border w-full my-auto"
-          :style="{ borderColor: block.settings?.color || undefined }"
+          :style="getSettingStr(block, 'color') ? { borderColor: getSettingStr(block, 'color') } : {}"
         >
       </div>
 
@@ -150,14 +150,14 @@
       <div
         v-else-if="block.type === 'html' || block.type === 'code' || block.type === 'embed'"
         class="builder-raw-html w-full overflow-hidden"
-        v-html="block.settings?.code || block.settings?.html || ''"
+        v-html="getSettingStr(block, 'code') || getSettingStr(block, 'html')"
       />
 
       <!-- Custom Component Fallback / Container -->
       <div
         v-else
         class="builder-generic-block w-full"
-        :class="block.settings?.css_class || ''"
+        :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
         <BlockRenderer
@@ -189,6 +189,26 @@ const internalBlocks = computed<BlockInstance[]>(() => {
   return props.blocks || [];
 });
 
+const getSettingStr = (block: BlockInstance, key: string, fallback = ''): string => {
+  const val = block.settings?.[key];
+  if (typeof val === 'string') return val;
+  if (typeof val === 'number') return String(val);
+  return fallback;
+};
+
+const getSettingBool = (block: BlockInstance, key: string, fallback = false): boolean => {
+  const val = block.settings?.[key];
+  if (typeof val === 'boolean') return val;
+  return fallback;
+};
+
+const getSettingNum = (block: BlockInstance, key: string, fallback = 0): number => {
+  const val = block.settings?.[key];
+  if (typeof val === 'number') return val;
+  if (typeof val === 'string' && !isNaN(Number(val))) return Number(val);
+  return fallback;
+};
+
 const resolveDynamicText = (text: string): string => {
   if (!text || typeof text !== 'string') return '';
   return text;
@@ -196,35 +216,33 @@ const resolveDynamicText = (text: string): string => {
 
 const resolveBlockStyles = (block: BlockInstance): Record<string, string> => {
   const styles: Record<string, string> = {};
-  const settings = block.settings || {};
 
-  if (settings.background_color) {
-    styles.backgroundColor = settings.background_color;
-  }
-  if (settings.text_color) {
-    styles.color = settings.text_color;
-  }
-  if (settings.padding_top) {
-    styles.paddingTop = `${settings.padding_top}px`;
-  }
-  if (settings.padding_bottom) {
-    styles.paddingBottom = `${settings.padding_bottom}px`;
-  }
-  if (settings.margin_top) {
-    styles.marginTop = `${settings.margin_top}px`;
-  }
-  if (settings.margin_bottom) {
-    styles.marginBottom = `${settings.margin_bottom}px`;
-  }
+  const bgColor = getSettingStr(block, 'background_color');
+  if (bgColor) styles.backgroundColor = bgColor;
+
+  const txtColor = getSettingStr(block, 'text_color');
+  if (txtColor) styles.color = txtColor;
+
+  const padTop = getSettingNum(block, 'padding_top');
+  if (padTop) styles.paddingTop = `${padTop}px`;
+
+  const padBot = getSettingNum(block, 'padding_bottom');
+  if (padBot) styles.paddingBottom = `${padBot}px`;
+
+  const marTop = getSettingNum(block, 'margin_top');
+  if (marTop) styles.marginTop = `${marTop}px`;
+
+  const marBot = getSettingNum(block, 'margin_bottom');
+  if (marBot) styles.marginBottom = `${marBot}px`;
 
   return styles;
 };
 
 const getRowGridClass = (block: BlockInstance): string => {
-  const layout = block.settings?.layout || block.settings?.columns;
-  if (layout === '1/2_1/2' || layout === 2) return 'grid-cols-1 md:grid-cols-2';
-  if (layout === '1/3_1/3_1/3' || layout === 3) return 'grid-cols-1 md:grid-cols-3';
-  if (layout === '1/4_1/4_1/4_1/4' || layout === 4) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  const layout = getSettingStr(block, 'layout') || String(getSettingNum(block, 'columns', 1));
+  if (layout === '1/2_1/2' || layout === '2') return 'grid-cols-1 md:grid-cols-2';
+  if (layout === '1/3_1/3_1/3' || layout === '3') return 'grid-cols-1 md:grid-cols-3';
+  if (layout === '1/4_1/4_1/4_1/4' || layout === '4') return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
   if (layout === '1/3_2/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-4 md:[&>*:last-child]:col-span-8';
   if (layout === '2/3_1/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-8 md:[&>*:last-child]:col-span-4';
   return 'grid-cols-1';
