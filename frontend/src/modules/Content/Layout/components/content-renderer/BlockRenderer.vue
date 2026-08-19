@@ -574,10 +574,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
+import { useMenu } from '@/modules/Content/Layout/composables/useMenu';
 import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lucide-vue-next';
-import type { BlockInstance } from '@/types/builder';
+import type { BlockInstance, BuilderInstance } from '@/types/builder';
+
+const builder = inject<BuilderInstance | null>('builder', null);
+const { menus: themeMenus } = useMenu();
 
 const props = defineProps<{
   blocks?: BlockInstance[];
@@ -674,7 +678,21 @@ const getSamplePricing = (): Array<{ name: string; price: string; desc: string; 
   { name: 'Enterprise', price: 'Rp 599.000', desc: 'Solusi lengkap skala korporasi.', popular: false, btnText: 'Hubungi Sales', url: '#enterprise', features: ['Unlimited Bandwidth', 'Dedicated Cloud Server', 'Custom API Integrations', 'SLA 99.9% Uptime', 'Account Manager Pribadi'] }
 ];
 
-const getMenuItems = (_menuId?: string): Array<{ title: string; url: string; open_in_new_tab?: boolean }> => {
+const getMenuItems = (menuId?: string): Array<{ title: string; url: string; open_in_new_tab?: boolean }> => {
+  if (menuId) {
+    const menuList = (builder?.menus?.value || []);
+    const foundMenu = menuList.find((m: any) => String(m.id) === String(menuId) || m.slug === menuId)
+      || (themeMenus.value ? Object.values(themeMenus.value).find((m: any) => String(m.id) === String(menuId) || m.slug === menuId || m.location === menuId) : null);
+    
+    if (foundMenu && Array.isArray(foundMenu.items) && foundMenu.items.length > 0) {
+      return foundMenu.items.map((item: any) => ({
+        title: item.title || item.name || '',
+        url: item.url || '/',
+        open_in_new_tab: !!item.target || !!item.open_in_new_tab
+      }));
+    }
+  }
+
   return [
     { title: 'Beranda', url: '/' },
     { title: 'Tentang Kami', url: '/about' },

@@ -116,6 +116,8 @@ const dropdownRef = ref<{ isOpen: boolean } | null>(null)
 const searchQuery = ref('')
 const searchInput = ref<HTMLInputElement | null>(null)
 
+const builder = inject<BuilderInstance | null>('builder', null)
+
 // Initialize computed options from field definition
 const rawOptions = computed(() => {
     const options = props.field.options
@@ -123,15 +125,27 @@ const rawOptions = computed(() => {
     // Check if options is a dynamic string identifier
     if (typeof options === 'string' && options.startsWith('dynamic:')) {
         const key = options.replace('dynamic:', '')
-        const dynamicData = window.jaCmsData || {}
+        if (builder) {
+            if (key === 'menus' && builder.menus?.value && builder.menus.value.length > 0) {
+                return builder.menus.value.map(m => ({ value: m.slug || m.id, label: m.name || m.slug }))
+            }
+            if (key === 'categories' && builder.categories?.value && builder.categories.value.length > 0) {
+                return builder.categories.value.map(c => ({ value: c.slug || c.id, label: c.name }))
+            }
+            if (key === 'tags' && builder.availableTags?.value && builder.availableTags.value.length > 0) {
+                return builder.availableTags.value.map(t => ({ value: t.slug || t.id, label: t.name }))
+            }
+            if (key === 'pages' && builder.pages?.value && builder.pages.value.length > 0) {
+                return builder.pages.value.map(p => ({ value: p.id, label: p.title }))
+            }
+        }
+        const dynamicData = (typeof window !== 'undefined' ? (window as any).jaCmsData : {}) || {}
         return (dynamicData[key] || []) as SettingOption[]
     }
 
     // Default to static array
     return (Array.isArray(options) ? options : []) as SettingOption[]
 })
-
-const builder = inject<BuilderInstance>('builder')
 
 const filteredOptions = computed(() => {
   let opts = rawOptions.value
