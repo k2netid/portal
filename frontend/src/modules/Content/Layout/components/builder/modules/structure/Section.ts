@@ -78,7 +78,7 @@ const SectionModule: ModuleDefinition = {
                     {
                         name: 'row_manager',
                         type: 'children_manager',
-                        label: ''
+                        label: 'Rows'
                     }
                 ]
             },

@@ -745,12 +745,38 @@ const resolveBlockStyles = (block: BlockInstance): Record<string, string> => {
 };
 
 const getRowGridClass = (block: BlockInstance): string => {
-  const layout = getSettingStr(block, 'layout') || String(getSettingNum(block, 'columns', 1));
-  if (layout === '1/2_1/2' || layout === '2') return 'grid-cols-1 md:grid-cols-2';
-  if (layout === '1/3_1/3_1/3' || layout === '3') return 'grid-cols-1 md:grid-cols-3';
-  if (layout === '1/4_1/4_1/4_1/4' || layout === '4') return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
-  if (layout === '1/3_2/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-4 md:[&>*:last-child]:col-span-8';
-  if (layout === '2/3_1/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-8 md:[&>*:last-child]:col-span-4';
+  const layout = getSettingStr(block, 'layout') || String(block.settings?.columns || '');
+  const childCount = Array.isArray(block.children) ? block.children.length : 1;
+
+  if (layout === '1/3_2/3' || layout === '1/3-2/3' || layout === '1-2') {
+    return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-4 md:[&>*:last-child]:col-span-8';
+  }
+  if (layout === '2/3_1/3' || layout === '2/3-1/3' || layout === '2-1') {
+    return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-8 md:[&>*:last-child]:col-span-4';
+  }
+  if (layout === '1/4_3/4' || layout === '1/4-3/4' || layout === '1-3') {
+    return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-3 md:[&>*:last-child]:col-span-9';
+  }
+  if (layout === '3/4_1/4' || layout === '3/4-1/4' || layout === '3-1') {
+    return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-9 md:[&>*:last-child]:col-span-3';
+  }
+
+  if (layout.includes('1/2') || layout === '2' || layout === '1-1' || childCount === 2) {
+    return 'grid-cols-1 md:grid-cols-2';
+  }
+  if (layout.includes('1/3') || layout === '3' || layout === '1-1-1' || childCount === 3) {
+    return 'grid-cols-1 md:grid-cols-3';
+  }
+  if (layout.includes('1/4') || layout === '4' || layout === '1-1-1-1' || childCount === 4) {
+    return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  }
+  if (layout.includes('1/5') || layout === '5' || childCount === 5) {
+    return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-5';
+  }
+  if (layout.includes('1/6') || layout === '6' || childCount === 6) {
+    return 'grid-cols-1 sm:grid-cols-3 md:grid-cols-6';
+  }
+
   return 'grid-cols-1';
 };
 

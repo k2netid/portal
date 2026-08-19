@@ -54,6 +54,11 @@
                 item-key="id"
                 :group="childType"
                 class="children-container"
+                :class="[
+                  isRow ? 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch' : '',
+                  isSection ? 'section-children-container flex flex-col space-y-6 w-full' : '',
+                  isColumn ? 'column-children-container flex flex-col space-y-4 w-full h-full min-h-[40px]' : ''
+                ]"
                 ghost-class="ja-builder-ghost"
                 drag-class="drag-module"
               >
@@ -69,7 +74,14 @@
             
             <!-- Static rendering for ghosts to avoid double-binding draggables -->
             <template v-else-if="hasChildren && instance.isGhost">
-              <div class="children-container loop-ghost-children">
+              <div 
+                class="children-container loop-ghost-children"
+                :class="[
+                  isRow ? 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch' : '',
+                  isSection ? 'section-children-container flex flex-col space-y-6 w-full' : '',
+                  isColumn ? 'column-children-container flex flex-col space-y-4 w-full h-full min-h-[40px]' : ''
+                ]"
+              >
                 <ModuleWrapper
                   v-for="(child, idx) in (module.children || [])"
                   :key="child.id + '-' + instance.id"
@@ -312,11 +324,13 @@ const wrapperStyles = computed(() => {
         if (width) {
             styles.flex = `0 0 ${width}`
             styles.maxWidth = width
+            styles.minWidth = '0'
         } else if (flexGrow) {
            styles.flex = `${flexGrow} 1 0%`
+           styles.minWidth = '0'
         } else {
            styles.flex = '1 1 0%' 
-           styles.minWidth = '50px'
+           styles.minWidth = '0'
         }
     }
 
@@ -488,7 +502,8 @@ const deleteModule = async () => {
 }
 
 .module-wrapper--grid.module-wrapper--row,
-.module-wrapper--wireframe.module-wrapper--row {
+.module-wrapper--wireframe.module-wrapper--row,
+.module-wrapper--row {
   border: 2px solid transparent;
   margin: 0 auto var(--spacing-lg) auto;
   width: 100%;
@@ -498,6 +513,34 @@ const deleteModule = async () => {
 .module-wrapper--grid.module-wrapper--row:hover,
 .module-wrapper--grid.module-wrapper--row.is-selected {
   border-color: var(--builder-row);
+}
+
+.module-wrapper--row > .module-content > .children-container,
+.module-wrapper--row .builder-canvas-row > .children-container,
+.module-wrapper--row .row-children-container {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: var(--spacing-lg, 24px) !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+.module-wrapper--section > .module-content > .children-container,
+.module-wrapper--section .builder-canvas-section > .children-container,
+.module-wrapper--section .section-children-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing-lg, 24px) !important;
+  width: 100% !important;
+}
+
+.module-wrapper--column {
+  flex: 1 1 0%;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .module-wrapper--grid.module-wrapper--column,

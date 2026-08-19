@@ -26,11 +26,8 @@
   <!-- 2. Structure Container: Row -->
   <div
     v-else-if="module.type === 'row'"
-    class="builder-canvas-row grid gap-6 items-start w-full"
-    :class="[
-      getRowGridClass(module),
-      getSettingStr(module, 'css_class')
-    ]"
+    class="builder-canvas-row w-full"
+    :class="[getSettingStr(module, 'css_class')]"
     :style="resolveBlockStyles(module)"
   >
     <slot />
@@ -85,13 +82,6 @@ const getSettingBool = (block: BlockInstance, key: string, fallback = false): bo
   return fallback;
 };
 
-const getSettingNum = (block: BlockInstance, key: string, fallback = 0): number => {
-  const val = block.settings?.[key];
-  if (typeof val === 'number') return val;
-  if (typeof val === 'string' && !isNaN(Number(val))) return Number(val);
-  return fallback;
-};
-
 const resolveBlockStyles = (block: BlockInstance): Record<string, string> => {
   const styles: Record<string, string> = {};
   const settings = block.settings || {};
@@ -127,15 +117,5 @@ const resolveBlockStyles = (block: BlockInstance): Record<string, string> => {
   }
 
   return styles;
-};
-
-const getRowGridClass = (block: BlockInstance): string => {
-  const layout = getSettingStr(block, 'layout') || String(getSettingNum(block, 'columns', 1));
-  if (layout === '1/2_1/2' || layout === '2') return 'grid-cols-1 md:grid-cols-2';
-  if (layout === '1/3_1/3_1/3' || layout === '3') return 'grid-cols-1 md:grid-cols-3';
-  if (layout === '1/4_1/4_1/4_1/4' || layout === '4') return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
-  if (layout === '1/3_2/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-4 md:[&>*:last-child]:col-span-8';
-  if (layout === '2/3_1/3') return 'grid-cols-1 md:grid-cols-12 md:[&>*:first-child]:col-span-8 md:[&>*:last-child]:col-span-4';
-  return 'grid-cols-1';
 };
 </script>

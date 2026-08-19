@@ -598,6 +598,23 @@
     padding: 12px !important;
 }
 
+.ja-builder--wireframe .module-wrapper--row > .module-content > .children-container,
+.ja-builder--wireframe .module-wrapper--row .builder-canvas-row > .children-container,
+.ja-builder--wireframe .module-wrapper--row .row-children-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    align-items: stretch !important;
+}
+
+.ja-builder--wireframe .module-wrapper--column {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+}
+
 /* Labels in wireframe mode */
 .ja-builder--wireframe .module-label {
     display: block !important;

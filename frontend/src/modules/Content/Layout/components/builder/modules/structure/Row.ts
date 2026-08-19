@@ -81,7 +81,7 @@ const RowModule: ModuleDefinition = {
                     {
                         name: 'column_manager',
                         type: 'children_manager',
-                        label: ''
+                        label: 'Columns'
                     }
                 ]
             },
