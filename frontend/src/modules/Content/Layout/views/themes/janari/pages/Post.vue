@@ -84,7 +84,12 @@
           <!-- Main Content -->
           <div class="lg:col-span-9">
             <div class="max-w-none">
+              <BlockRenderer
+                v-if="hasBuilderBlocks"
+                :blocks="builderBlocks"
+              />
               <SafeHtml
+                v-else
                 ref="contentRef"
                 class="prose prose-sm md:prose-lg prose-indigo mx-auto dark:prose-invert"
                 :html="post.body || ''"
@@ -123,7 +128,6 @@
           <aside class="lg:col-span-3">
             <BlogSidebar />
             <PluginSlot name="sidebar_article" class="mt-8" :context="{ post_id: post.id, slug: post.slug }" />
-            <BlogSidebar />
           </aside>
         </div>
       </div>
@@ -151,6 +155,7 @@
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue';
 import PluginSlot from '@/shared/components/PluginSlot.vue';
 import BlogSidebar from '../components/blog/BlogSidebar.vue';
 import { useRoute } from 'vue-router';
@@ -173,6 +178,9 @@ const loading = ref(true);
 const contentRef = ref<{ $el: HTMLElement } | null>(null);
 const { displaySiteName } = useJanariIdentity();
 const authorFallback = computed(() => `${displaySiteName.value} Editorial`);
+
+const builderBlocks = computed(() => (post.value?.meta?.builder_blocks as any[]) || []);
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
 
 watch(() => post.value, () => {
     nextTick(() => {
