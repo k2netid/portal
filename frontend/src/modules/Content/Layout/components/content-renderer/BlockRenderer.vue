@@ -1,11 +1,11 @@
 <template>
-  <div class="block-renderer w-full space-y-6">
+  <div class="block-renderer w-full space-y-8">
     <template v-for="(block, index) in internalBlocks" :key="block.id || index">
-      <!-- Section Block -->
+      <!-- 1. SECTION BLOCK -->
       <section
         v-if="block.type === 'section' || block.type === 'fullwidth_section'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-section w-full"
+        class="builder-section w-full transition-all"
         :class="[
           getSettingStr(block, 'css_class'),
           getSettingBool(block, 'fullwidth') ? 'w-full' : 'container mx-auto px-4'
@@ -21,11 +21,11 @@
         />
       </section>
 
-      <!-- Row Block -->
+      <!-- 2. ROW BLOCK (GRID SYSTEM) -->
       <div
         v-else-if="block.type === 'row'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-row grid gap-6"
+        class="builder-row grid gap-6 items-start"
         :class="[
           getRowGridClass(block),
           getSettingStr(block, 'css_class')
@@ -41,7 +41,7 @@
         />
       </div>
 
-      <!-- Column Block -->
+      <!-- 3. COLUMN BLOCK -->
       <div
         v-else-if="block.type === 'column'"
         :id="getSettingStr(block, 'html_id') || undefined"
@@ -58,7 +58,304 @@
         />
       </div>
 
-      <!-- Heading Block -->
+      <!-- 4. HERO / BANNER BLOCK -->
+      <div
+        v-else-if="block.type === 'hero' || block.type === 'fullwidth_header'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-hero-block relative overflow-hidden rounded-3xl p-8 md:p-16 lg:p-20 text-center flex flex-col items-center justify-center border border-border shadow-lg"
+        :class="getSettingStr(block, 'css_class')"
+        :style="[
+          resolveBlockStyles(block),
+          getSettingStr(block, 'image') ? { backgroundImage: `url(${getSettingStr(block, 'image')})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}
+        ]"
+      >
+        <div v-if="getSettingStr(block, 'image')" class="absolute inset-0 bg-background/85 backdrop-blur-[2px] z-0" />
+        
+        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+          <div v-if="getSettingStr(block, 'badge')" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider">
+            <Sparkles class="w-3.5 h-3.5" />
+            <span>{{ getSettingStr(block, 'badge') }}</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.15]">
+            {{ getSettingStr(block, 'title', 'Judul Hero Landing Page') }}
+          </h1>
+
+          <p class="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            {{ getSettingStr(block, 'subtitle') || getSettingStr(block, 'description', 'Deskripsi ringkas yang menarik perhatian pengunjung dan mendorong konversi.') }}
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <a
+              v-if="getSettingStr(block, 'button_text', 'Mulai Sekarang')"
+              :href="getSettingStr(block, 'button_url', '#')"
+              class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow-md hover:shadow-lg hover:scale-105 transition-all"
+            >
+              <span>{{ getSettingStr(block, 'button_text', 'Mulai Sekarang') }}</span>
+              <ArrowRight class="w-4 h-4" />
+            </a>
+
+            <a
+              v-if="getSettingStr(block, 'secondary_button_text')"
+              :href="getSettingStr(block, 'secondary_button_url', '#')"
+              class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl border-2 border-border bg-background/80 hover:bg-muted font-bold text-sm text-foreground transition-all"
+            >
+              <span>{{ getSettingStr(block, 'secondary_button_text') }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. FEATURES GRID / ICON LIST BLOCK -->
+      <div
+        v-else-if="block.type === 'features' || block.type === 'feature_grid' || block.type === 'icon_list'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-features-block w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-foreground">{{ getSettingStr(block, 'title') }}</h2>
+          <p v-if="getSettingStr(block, 'subtitle')" class="text-sm text-muted-foreground">{{ getSettingStr(block, 'subtitle') }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template v-for="(feat, fIdx) in getSampleFeatures(getSettingNum(block, 'count', 3))" :key="fIdx">
+            <div class="group p-6 rounded-2xl border border-border/80 bg-card/60 hover:bg-card hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col items-start">
+              <div class="p-3 rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                <Sparkles class="w-6 h-6" />
+              </div>
+              <h3 class="text-lg font-bold text-foreground mb-2">{{ feat.title }}</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed">{{ feat.desc }}</p>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- 6. CALL TO ACTION (CTA) BLOCK -->
+      <div
+        v-else-if="block.type === 'cta' || block.type === 'call_to_action'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-cta-block w-full rounded-3xl bg-gradient-to-r from-primary/15 via-primary/5 to-background border border-primary/20 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div class="space-y-2 text-center md:text-left max-w-xl">
+          <h3 class="text-2xl sm:text-3xl font-black text-foreground">
+            {{ getSettingStr(block, 'title', 'Siap Meningkatkan Performa Website Anda?') }}
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed">
+            {{ getSettingStr(block, 'description', 'Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi terbaik.') }}
+          </p>
+        </div>
+        <a
+          :href="getSettingStr(block, 'button_url', '#')"
+          class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow hover:shadow-lg hover:scale-105 transition-all shrink-0"
+        >
+          <span>{{ getSettingStr(block, 'button_text', 'Hubungi Kami') }}</span>
+          <ArrowRight class="w-4 h-4" />
+        </a>
+      </div>
+
+      <!-- 7. FAQ / ACCORDION BLOCK -->
+      <div
+        v-else-if="block.type === 'faq' || block.type === 'accordion' || block.type === 'toggle'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-faq-block w-full max-w-3xl mx-auto py-4 space-y-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="text-center mb-8 space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-foreground">{{ getSettingStr(block, 'title', 'Pertanyaan Umum (FAQ)') }}</h2>
+          <p v-if="getSettingStr(block, 'subtitle')" class="text-sm text-muted-foreground">{{ getSettingStr(block, 'subtitle') }}</p>
+        </div>
+
+        <div class="space-y-3">
+          <template v-for="(item, qIdx) in getSampleFaqs(getSettingNum(block, 'count', 4))" :key="qIdx">
+            <div class="border border-border rounded-2xl bg-card overflow-hidden transition-all shadow-sm">
+              <button
+                type="button"
+                class="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-foreground hover:text-primary transition-colors"
+                @click="toggleFaq(index, qIdx)"
+              >
+                <span class="text-sm sm:text-base">{{ item.q }}</span>
+                <ChevronDown
+                  class="w-4 h-4 text-muted-foreground transition-transform duration-300 shrink-0"
+                  :class="{ 'rotate-180 text-primary': isFaqOpen(index, qIdx) }"
+                />
+              </button>
+              <div v-if="isFaqOpen(index, qIdx)" class="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/40 pt-4 animate-in fade-in slide-in-from-top-2">
+                {{ item.a }}
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- 8. TESTIMONIALS BLOCK -->
+      <div
+        v-else-if="block.type === 'testimonial' || block.type === 'testimonials'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-testimonials-block w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-foreground">{{ getSettingStr(block, 'title', 'Apa Kata Klien Kami') }}</h2>
+          <p v-if="getSettingStr(block, 'subtitle')" class="text-sm text-muted-foreground">{{ getSettingStr(block, 'subtitle') }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template v-for="(testi, tIdx) in getSampleTestimonials(getSettingNum(block, 'count', 3))" :key="tIdx">
+            <div class="p-6 rounded-2xl border border-border bg-card/70 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
+              <div class="space-y-3 mb-6">
+                <div class="flex items-center gap-1 text-amber-500">
+                  <Star v-for="s in 5" :key="s" class="w-4 h-4 fill-current" />
+                </div>
+                <p class="text-sm text-foreground/90 italic leading-relaxed">"{{ testi.quote }}"</p>
+              </div>
+              <div class="flex items-center gap-3 pt-4 border-t border-border/50">
+                <div class="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">
+                  {{ testi.author.charAt(0) }}
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-foreground">{{ testi.author }}</h4>
+                  <p class="text-xs text-muted-foreground">{{ testi.role }}</p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- 9. PRICING TABLE BLOCK -->
+      <div
+        v-else-if="block.type === 'pricing' || block.type === 'pricing_table'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-pricing-block w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-foreground">{{ getSettingStr(block, 'title', 'Paket Harga Fleksibel') }}</h2>
+          <p v-if="getSettingStr(block, 'subtitle')" class="text-sm text-muted-foreground">{{ getSettingStr(block, 'subtitle') }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <template v-for="(plan, plIdx) in getSamplePricing()" :key="plIdx">
+            <div
+              class="relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between border transition-all duration-300"
+              :class="plan.popular ? 'border-primary bg-card shadow-xl scale-105 z-10' : 'border-border bg-card/60 shadow-sm'"
+            >
+              <div v-if="plan.popular" class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-black uppercase tracking-wider shadow">
+                Paling Populer
+              </div>
+              <div class="space-y-4 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-foreground">{{ plan.name }}</h3>
+                  <p class="text-xs text-muted-foreground mt-1">{{ plan.desc }}</p>
+                </div>
+                <div class="text-3xl font-black text-foreground">
+                  {{ plan.price }} <span class="text-xs font-normal text-muted-foreground">/bulan</span>
+                </div>
+                <ul class="space-y-2.5 pt-4 border-t border-border/50 text-xs text-foreground/80">
+                  <li v-for="(feature, fIdx) in plan.features" :key="fIdx" class="flex items-center gap-2">
+                    <Check class="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>{{ feature }}</span>
+                  </li>
+                </ul>
+              </div>
+              <a
+                :href="plan.url || '#'"
+                class="w-full py-3 rounded-xl font-bold text-xs text-center transition-all shadow-sm block"
+                :class="plan.popular ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'border border-border bg-background hover:bg-muted text-foreground'"
+              >
+                {{ plan.btnText }}
+              </a>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- 10. COUNTDOWN TIMER BLOCK -->
+      <div
+        v-else-if="block.type === 'countdown'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-countdown-block w-full text-center py-6"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <h3 v-if="getSettingStr(block, 'title')" class="text-xl font-bold text-foreground mb-4">
+          {{ getSettingStr(block, 'title', 'Promo Berakhir Dalam:') }}
+        </h3>
+        <div class="flex items-center justify-center gap-3 sm:gap-6 font-mono">
+          <div class="flex flex-col items-center p-3 sm:p-5 rounded-2xl bg-card border border-border shadow-sm min-w-[70px] sm:min-w-[90px]">
+            <span class="text-2xl sm:text-4xl font-black text-primary">05</span>
+            <span class="text-[10px] sm:text-xs text-muted-foreground uppercase font-sans mt-1">Hari</span>
+          </div>
+          <span class="text-2xl font-bold text-muted-foreground">:</span>
+          <div class="flex flex-col items-center p-3 sm:p-5 rounded-2xl bg-card border border-border shadow-sm min-w-[70px] sm:min-w-[90px]">
+            <span class="text-2xl sm:text-4xl font-black text-primary">14</span>
+            <span class="text-[10px] sm:text-xs text-muted-foreground uppercase font-sans mt-1">Jam</span>
+          </div>
+          <span class="text-2xl font-bold text-muted-foreground">:</span>
+          <div class="flex flex-col items-center p-3 sm:p-5 rounded-2xl bg-card border border-border shadow-sm min-w-[70px] sm:min-w-[90px]">
+            <span class="text-2xl sm:text-4xl font-black text-primary">32</span>
+            <span class="text-[10px] sm:text-xs text-muted-foreground uppercase font-sans mt-1">Menit</span>
+          </div>
+          <span class="text-2xl font-bold text-muted-foreground">:</span>
+          <div class="flex flex-col items-center p-3 sm:p-5 rounded-2xl bg-card border border-border shadow-sm min-w-[70px] sm:min-w-[90px]">
+            <span class="text-2xl sm:text-4xl font-black text-primary">48</span>
+            <span class="text-[10px] sm:text-xs text-muted-foreground uppercase font-sans mt-1">Detik</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. VIDEO PLAYER EMBED BLOCK -->
+      <div
+        v-else-if="block.type === 'video' || block.type === 'video_popup'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-video-block w-full max-w-4xl mx-auto overflow-hidden rounded-3xl border border-border bg-black aspect-video relative shadow-lg"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <iframe
+          v-if="getVideoEmbedUrl(getSettingStr(block, 'url'))"
+          :src="getVideoEmbedUrl(getSettingStr(block, 'url'))"
+          class="w-full h-full border-0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+        <div v-else class="w-full h-full flex flex-col items-center justify-center text-white/70 p-6 space-y-3 bg-gradient-to-br from-slate-900 to-slate-950">
+          <div class="p-4 rounded-full bg-primary/20 text-primary border border-primary/40">
+            <Play class="w-8 h-8 fill-current" />
+          </div>
+          <p class="text-sm font-semibold">Video Player Placeholder</p>
+        </div>
+      </div>
+
+      <!-- 12. SOCIAL LINKS / SHARE BUTTONS -->
+      <div
+        v-else-if="block.type === 'social_links' || block.type === 'share_buttons'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-social-block w-full flex flex-wrap items-center gap-2.5 py-2"
+        :class="[getTextAlignClass(getSettingStr(block, 'alignment')), getSettingStr(block, 'css_class')]"
+        :style="resolveBlockStyles(block)"
+      >
+        <template v-for="(soc, sIdx) in getSocialLinks()" :key="sIdx">
+          <a
+            :href="soc.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-border bg-card text-foreground/80 hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all text-xs font-semibold shadow-sm"
+          >
+            <Share2 class="w-3.5 h-3.5 text-primary" />
+            <span>{{ soc.name }}</span>
+          </a>
+        </template>
+      </div>
+
+      <!-- 13. HEADING BLOCK -->
       <component
         :is="getSettingStr(block, 'tag', 'h2')"
         v-else-if="block.type === 'heading'"
@@ -74,7 +371,7 @@
         {{ resolveDynamicText(getSettingStr(block, 'text') || getSettingStr(block, 'title')) }}
       </component>
 
-      <!-- Text / RichText Block -->
+      <!-- 14. TEXT / RICHTEXT BLOCK -->
       <div
         v-else-if="block.type === 'text' || block.type === 'rich_text'"
         :id="getSettingStr(block, 'html_id') || undefined"
@@ -87,7 +384,7 @@
         v-html="resolveDynamicText(getSettingStr(block, 'content') || getSettingStr(block, 'text') || getSettingStr(block, 'body'))"
       />
 
-      <!-- Image Block -->
+      <!-- 15. IMAGE BLOCK -->
       <figure
         v-else-if="block.type === 'image'"
         :id="getSettingStr(block, 'html_id') || undefined"
@@ -112,7 +409,7 @@
         </figcaption>
       </figure>
 
-      <!-- Button Block -->
+      <!-- 16. BUTTON BLOCK -->
       <div
         v-else-if="block.type === 'button'"
         class="builder-button-wrapper"
@@ -133,7 +430,7 @@
         </a>
       </div>
 
-      <!-- Navigation Menu Block -->
+      <!-- 17. NAVIGATION MENU BLOCK -->
       <nav
         v-else-if="block.type === 'menu' || block.type === 'fullwidth_menu'"
         :id="getSettingStr(block, 'html_id') || undefined"
@@ -158,7 +455,7 @@
         </div>
       </nav>
 
-      <!-- Dynamic Blog / Posts Query Loop Block -->
+      <!-- 18. DYNAMIC BLOG / QUERY LOOP BLOCK -->
       <div
         v-else-if="block.type === 'blog' || block.type === 'posts' || block.type === 'query_loop'"
         :id="getSettingStr(block, 'html_id') || undefined"
@@ -201,11 +498,11 @@
         </div>
       </div>
 
-      <!-- Form Picker / Contact Form Block -->
+      <!-- 19. FORM PICKER / CONTACT FORM BLOCK -->
       <div
         v-else-if="block.type === 'form_picker' || block.type === 'contact_form'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-form-block w-full max-w-2xl mx-auto rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm"
+        class="builder-form-block w-full max-w-2xl mx-auto rounded-3xl border border-border bg-card p-6 md:p-8 shadow-sm"
         :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
@@ -237,7 +534,7 @@
         </form>
       </div>
 
-      <!-- Divider / Spacer Block -->
+      <!-- 20. DIVIDER / SPACER BLOCK -->
       <div
         v-else-if="block.type === 'divider' || block.type === 'spacer'"
         class="builder-divider w-full"
@@ -250,14 +547,14 @@
         >
       </div>
 
-      <!-- HTML / Embed Block -->
+      <!-- 21. HTML / CODE EMBED BLOCK -->
       <div
         v-else-if="block.type === 'html' || block.type === 'code' || block.type === 'embed'"
         class="builder-raw-html w-full overflow-hidden"
         v-html="getSettingStr(block, 'code') || getSettingStr(block, 'html')"
       />
 
-      <!-- Custom Component Fallback / Container -->
+      <!-- 22. GENERIC CONTAINER FALLBACK -->
       <div
         v-else
         class="builder-generic-block w-full"
@@ -277,8 +574,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
+import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lucide-vue-next';
 import type { BlockInstance } from '@/types/builder';
 
 const props = defineProps<{
@@ -290,6 +588,17 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
+const openFaqs = ref<Record<string, boolean>>({});
+
+const toggleFaq = (blockIndex: number, faqIndex: number) => {
+  const key = `${blockIndex}-${faqIndex}`;
+  openFaqs.value[key] = !openFaqs.value[key];
+};
+
+const isFaqOpen = (blockIndex: number, faqIndex: number) => {
+  const key = `${blockIndex}-${faqIndex}`;
+  return openFaqs.value[key] ?? (faqIndex === 0);
+};
 
 const internalBlocks = computed<BlockInstance[]>(() => {
   if (props.block) return [props.block];
@@ -320,6 +629,50 @@ const resolveDynamicText = (text: string): string => {
   if (!text || typeof text !== 'string') return '';
   return text;
 };
+
+const getVideoEmbedUrl = (url?: string): string => {
+  if (!url) return '';
+  if (url.includes('youtube.com/watch?v=')) {
+    return url.replace('watch?v=', 'embed/');
+  }
+  if (url.includes('youtu.be/')) {
+    return url.replace('youtu.be/', 'www.youtube.com/embed/');
+  }
+  return url;
+};
+
+const getSocialLinks = () => [
+  { name: 'WhatsApp', url: 'https://wa.me/' },
+  { name: 'Instagram', url: 'https://instagram.com' },
+  { name: 'Facebook', url: 'https://facebook.com' },
+  { name: 'Twitter / X', url: 'https://x.com' }
+];
+
+const getSampleFeatures = (count = 3) => [
+  { title: 'Performa Sangat Cepat', desc: 'Arsitektur modern yang dioptimasi untuk kecepatan loading di bawah 1 detik.' },
+  { title: 'Desain Responsif', desc: 'Tampilan sempurna di layar smartphone, tablet, laptop, hingga monitor 4K.' },
+  { title: 'Keamanan Tingkat Tinggi', desc: 'Perlindungan otomatis dengan SSL, enkripsi data, dan sanitasi input modern.' },
+  { title: 'SEO Friendly', desc: 'Struktur semantik HTML5 dan Schema JSON-LD siap terindeks Google seketika.' }
+].slice(0, Math.max(1, count));
+
+const getSampleFaqs = (count = 4) => [
+  { q: 'Bagaimana cara memulai membuat halaman dengan Visual Builder?', a: 'Cukup pilih Template Halaman, klik tombol Buka di Visual Builder, lalu drag & drop blok yang Anda inginkan.' },
+  { q: 'Apakah halaman ini mendukung tampilan mobile?', a: 'Ya, seluruh blok yang dihasilkan 100% responsif dan otomatis menyesuaikan lebar layar perangkat.' },
+  { q: 'Bisakah saya menyematkan formulir kontak kustom?', a: 'Tentu, gunakan modul Form Picker untuk memilih formulir yang telah dibuat di modul Reach Forms.' },
+  { q: 'Apakah tema website dapat diubah sewaktu-waktu?', a: 'Bisa, seluruh token warna dan tipografi akan otomatis menyesuaikan tema aktif yang dipilih di Theme Customizer.' }
+].slice(0, Math.max(1, count));
+
+const getSampleTestimonials = (count = 3) => [
+  { author: 'Ahmad Fauzi', role: 'CEO TechCorp', quote: 'Website kami mengalami peningkatan konversi hingga 180% setelah menggunakan landing page baru ini!' },
+  { author: 'Siti Rahma', role: 'Marketing Director', quote: 'Proses mendesain halaman sangat cepat dan mudah tanpa perlu keahlian koding.' },
+  { author: 'Budi Pratama', role: 'Founder Studio Kreatif', quote: 'Dukungan visual builder dan tema dinamis sangat memudahkan kustomisasi brand.' }
+].slice(0, Math.max(1, count));
+
+const getSamplePricing = (): Array<{ name: string; price: string; desc: string; popular: boolean; btnText: string; url?: string; features: string[] }> => [
+  { name: 'Starter', price: 'Rp 99.000', desc: 'Cocok untuk personal dan blog portofolio.', popular: false, btnText: 'Pilih Starter', url: '#starter', features: ['1 Domain Website', '5 GB Cloud Storage', 'SSL Gratis', 'Dukungan Komunitas'] },
+  { name: 'Profesional', price: 'Rp 249.000', desc: 'Pilihan terbaik untuk bisnis berkembang.', popular: true, btnText: 'Pilih Profesional', url: '#pro', features: ['Domain & Subdomain', '25 GB SSD Storage', 'Visual Page Builder Pro', 'Integrasi Formulir & CRM', 'Prioritas Support 24/7'] },
+  { name: 'Enterprise', price: 'Rp 599.000', desc: 'Solusi lengkap skala korporasi.', popular: false, btnText: 'Hubungi Sales', url: '#enterprise', features: ['Unlimited Bandwidth', 'Dedicated Cloud Server', 'Custom API Integrations', 'SLA 99.9% Uptime', 'Account Manager Pribadi'] }
+];
 
 const getMenuItems = (_menuId?: string): Array<{ title: string; url: string; open_in_new_tab?: boolean }> => {
   return [

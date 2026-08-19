@@ -41,6 +41,7 @@
           :loading="loading"
           :disabled="!isValid"
           @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
+          @preview="isPreviewModalOpen = true"
           @save="handleSubmit"
           @cancel="handleCancel"
         />
@@ -135,6 +136,73 @@
       </DialogContent>
     </Dialog>
 
+    <!-- Live Device Preview Modal -->
+    <Dialog :open="isPreviewModalOpen" @update:open="isPreviewModalOpen = $event">
+      <DialogContent class="max-w-6xl w-[95vw] h-[90vh] flex flex-col p-0 overflow-hidden bg-background border border-border rounded-3xl">
+        <DialogHeader class="px-6 py-4 border-b border-border flex flex-row items-center justify-between space-y-0 shrink-0 bg-card/60">
+          <div class="flex items-center gap-3">
+            <DialogTitle class="text-base font-bold">{{ $t('publishing.content.form.preview') }}</DialogTitle>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-mono uppercase">{{ previewDevice }}</span>
+          </div>
+
+          <!-- Device Switcher -->
+          <div class="flex items-center gap-1.5 p-1 bg-muted rounded-xl border border-border/50">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              class="h-7 px-2.5 rounded-lg text-xs"
+              :class="{ 'bg-background shadow-xs font-bold text-foreground': previewDevice === 'desktop' }"
+              @click="previewDevice = 'desktop'"
+            >
+              <Monitor class="w-3.5 h-3.5 mr-1" /> Desktop
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              class="h-7 px-2.5 rounded-lg text-xs"
+              :class="{ 'bg-background shadow-xs font-bold text-foreground': previewDevice === 'tablet' }"
+              @click="previewDevice = 'tablet'"
+            >
+              <Tablet class="w-3.5 h-3.5 mr-1" /> Tablet
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              class="h-7 px-2.5 rounded-lg text-xs"
+              :class="{ 'bg-background shadow-xs font-bold text-foreground': previewDevice === 'mobile' }"
+              @click="previewDevice = 'mobile'"
+            >
+              <Smartphone class="w-3.5 h-3.5 mr-1" /> Mobile
+            </Button>
+          </div>
+        </DialogHeader>
+
+        <div class="flex-1 overflow-y-auto p-6 bg-muted/20 flex justify-center">
+          <div
+            class="transition-all duration-300 bg-background border border-border shadow-xl rounded-2xl p-6 sm:p-10 overflow-x-hidden"
+            :style="{
+              width: previewDevice === 'mobile' ? '375px' : (previewDevice === 'tablet' ? '768px' : '100%'),
+              minHeight: '100%'
+            }"
+          >
+            <h1 class="text-2xl sm:text-4xl font-black mb-6">{{ form.title || 'Judul Halaman' }}</h1>
+            <BlockRenderer
+              v-if="form.meta?.builder_blocks && form.meta.builder_blocks.length > 0"
+              :blocks="form.meta.builder_blocks"
+            />
+            <div
+              v-else
+              class="prose prose-slate dark:prose-invert max-w-none"
+              v-html="form.body || '<p class=\'text-muted-foreground italic\'>Belum ada konten.</p>'"
+            />
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+
     <!-- Fullscreen Visual Page Builder Modal -->
     <div
       v-if="isVisualBuilderOpen"
@@ -179,6 +247,8 @@ import AutoSaveIndicator from '@/shared/components/AutoSaveIndicator.vue';
 import ContentMain from '@/modules/Content/Publishing/components/content/ContentMain.vue';
 import ContentSidebar from '@/modules/Content/Publishing/components/content/ContentSidebar.vue';
 import Builder from '@/modules/Content/Layout/components/builder/Builder.vue';
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue';
+import { Monitor, Tablet, Smartphone } from 'lucide-vue-next';
 
 // Composables & Utils
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
@@ -209,8 +279,10 @@ const toast = useToast();
 const publishingStore = usePublishingStore();
 const systemStore = useSystemStore();
 
-// Visual Builder State
+// Visual Builder & Preview State
 const isVisualBuilderOpen = ref(false);
+const isPreviewModalOpen = ref(false);
+const previewDevice = ref<'desktop' | 'tablet' | 'mobile'>('desktop');
 
 const handleBuilderUpdate = (payload: { blocks: any[] }) => {
   if (!form.value.meta) {

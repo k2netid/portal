@@ -101,6 +101,7 @@
           :disabled="!isDirty"
           :is-edit="true"
           @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
+          @preview="handlePreview"
           @save="handleSubmit"
           @cancel="handleCancel"
         />

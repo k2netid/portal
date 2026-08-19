@@ -43,6 +43,16 @@
             {{ $t('publishing.content.form.cancel') }}
           </Button>
           <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-8 px-3 inline-flex items-center gap-1.5 text-xs font-semibold"
+            @click="$emit('preview')"
+          >
+            <Eye class="w-3.5 h-3.5 text-primary" />
+            <span>{{ $t('publishing.content.form.preview') }}</span>
+          </Button>
+          <Button
             :disabled="loading || disabled"
             size="sm"
             class="h-8 px-4 inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
@@ -102,6 +112,7 @@ import {
   PanelRightClose,
   PanelRightOpen,
   Save,
+  Eye,
   X,
 } from 'lucide-vue-next';
 
@@ -119,6 +130,7 @@ const props = withDefaults(defineProps<{
 
 defineEmits<{
     (e: 'toggle-sidebar'): void;
+    (e: 'preview'): void;
     (e: 'save'): void;
     (e: 'cancel'): void;
 }>();

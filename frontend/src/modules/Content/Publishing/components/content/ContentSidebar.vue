@@ -569,6 +569,25 @@
           v-show="sections.seo"
           class="border-t border-border/5 p-5 space-y-5"
         >
+          <!-- Real-Time SEO Search Snippet Preview -->
+          <div class="rounded-xl border border-border/70 bg-card p-3.5 space-y-2 shadow-2xs">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Google Search Preview</span>
+              <span class="text-[10px] text-muted-foreground font-mono">SERP</span>
+            </div>
+            <div class="space-y-1">
+              <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono truncate">
+                https://yoursite.com/{{ modelValue.slug || 'url-slug' }}
+              </div>
+              <div class="text-xs font-bold text-blue-600 dark:text-blue-400 line-clamp-1">
+                {{ modelValue.meta_title || modelValue.title || 'Judul Halaman - Nama Website' }}
+              </div>
+              <div class="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">
+                {{ modelValue.meta_description || modelValue.excerpt || 'Deskripsi halaman ini akan muncul di hasil pencarian Google dan search engine lainnya.' }}
+              </div>
+            </div>
+          </div>
+
           <div class="space-y-1.5">
             <Label class="text-xs font-medium text-muted-foreground">{{ $t('publishing.content.seo.metaTitle') }}</Label>
             <Input
