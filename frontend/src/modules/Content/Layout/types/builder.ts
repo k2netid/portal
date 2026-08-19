@@ -76,7 +76,7 @@ export interface Canvas {
 }
 
 export interface PageMetadata {
-    id: number | null;
+    id: string | number | null;
     title: string;
     slug: string;
     status: string;
@@ -344,6 +344,7 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     // External
     markAsSaved: () => void;
     loadContent: (id: string | number) => Promise<void>;
+    saveContent: () => Promise<Record<string, unknown> | false>;
     fetchMetadata: () => Promise<void>;
     applyThemeStyles: () => void;
 

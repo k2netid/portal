@@ -538,6 +538,20 @@ const handleDeleteModule = async (id: string) => {
 }
 
 const handleSave = async (status: string | null = null) => {
+  if (status && builder.content?.value) {
+    builder.content.value.status = status
+  }
+  const targetId = props.contentId || builder.content?.value?.id
+  if (targetId) {
+    try {
+      if (builder.content?.value && !builder.content.value.id) {
+        builder.content.value.id = String(targetId)
+      }
+      await builder.saveContent()
+    } catch (e) {
+      console.error('Failed to auto-save content from builder:', e)
+    }
+  }
   emit('save', status)
   builder.markAsSaved()
 }

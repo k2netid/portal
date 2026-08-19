@@ -291,8 +291,18 @@ const handleBuilderUpdate = (payload: { blocks: any[] }) => {
   form.value.meta.builder_blocks = payload.blocks;
 };
 
-const handleBuilderSave = () => {
+const handleBuilderSave = async (status?: string | null) => {
   isVisualBuilderOpen.value = false;
+  if (status && (status === 'draft' || status === 'published')) {
+    form.value.status = status;
+  }
+  if (form.value.title && form.value.title.trim().length > 0) {
+    try {
+      await handleSubmit(form.value.status);
+    } catch (e) {
+      logger.error('Auto-submitting content after builder save failed', e);
+    }
+  }
   toast.success.default(t('publishing.content.builder.savedSuccess', 'Blok visual builder berhasil disinkronkan ke halaman!'));
 };
 

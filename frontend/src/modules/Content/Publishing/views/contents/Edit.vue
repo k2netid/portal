@@ -291,8 +291,18 @@ const handleBuilderUpdate = (payload: { blocks: any[] }) => {
   form.value.meta.builder_blocks = payload.blocks;
 };
 
-const handleBuilderSave = () => {
+const handleBuilderSave = async (status?: string | null) => {
   isVisualBuilderOpen.value = false;
+  if (status && (status === 'draft' || status === 'published')) {
+    form.value.status = status;
+  }
+  if (contentId) {
+    try {
+      await handleSubmit(form.value.status);
+    } catch (e) {
+      logger.error('Auto-submitting content after builder save failed', e);
+    }
+  }
   toast.success.default(t('publishing.content.builder.savedSuccess', 'Blok visual builder berhasil disinkronkan ke halaman!'));
 };
 
@@ -480,6 +490,7 @@ const fetchContent = async () => {
                 meta_description: content.meta_description || '',
                 meta_keywords: content.meta_keywords || '',
                 og_image: content.og_image || null,
+                meta: content.meta || {},
                 menu_item: {
                     add_to_menu: false,
                     menu_id: '',
