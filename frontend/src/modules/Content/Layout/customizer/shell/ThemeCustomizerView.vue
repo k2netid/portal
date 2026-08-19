@@ -1,7 +1,7 @@
 <template>
-  <div class="h-[calc(100vh-theme(spacing.16))] flex flex-col bg-background text-foreground select-none">
-    <!-- Header -->
-    <header class="flex items-center justify-between border-b border-border px-6 py-3 bg-card shrink-0 shadow-sm z-20">
+  <div class="h-[calc(100vh-theme(spacing.36))] min-h-[640px] flex flex-col bg-card border border-border rounded-2xl shadow-sm overflow-hidden text-foreground select-none">
+    <!-- Main Card Top Header -->
+    <header class="flex items-center justify-between border-b border-border px-5 py-3.5 bg-card shrink-0 z-20">
       <div class="flex items-center gap-3.5">
         <Button
           variant="ghost"
@@ -145,7 +145,7 @@
       </div>
     </header>
 
-    <!-- Main organization -->
+    <!-- Main Card Body -->
     <div
       v-if="loading"
       class="flex-1 flex items-center justify-center bg-muted/5"
@@ -177,179 +177,176 @@
         @update:sidebar-collapsed="sidebarCollapsed = $event"
       />
 
-      <!-- Main Editor Area -->
-      <main class="flex-1 overflow-y-auto relative bg-muted/40 custom-scrollbar">
+      <!-- Right Editor Content Area -->
+      <main class="flex-1 overflow-y-auto relative bg-background custom-scrollbar">
         <div
           v-if="selectedItem"
-          class="w-full transition-all duration-300 p-4 sm:p-6 lg:p-8 space-y-6"
+          class="w-full transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300"
           :class="sidebarCollapsed ? 'max-w-7xl mx-auto' : 'max-w-5xl mx-auto'"
         >
-          <!-- Unified Main Card with Thin Border -->
-          <div class="border border-border bg-card rounded-2xl shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <!-- Card Header -->
-            <div class="p-5 sm:p-6 border-b border-border bg-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div class="flex items-center gap-3.5">
-                <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 shadow-inner">
-                  <component
-                    :is="selectedItem.icon"
-                    class="w-5 h-5"
-                  />
+          <!-- Section Title Header / Banner -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 shadow-inner">
+                <component
+                  :is="selectedItem.icon"
+                  class="w-5 h-5"
+                />
+              </div>
+              <div>
+                <h2 class="text-xl font-bold tracking-tight text-foreground">
+                  {{ selectedItem.label }}
+                </h2>
+                <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+                  {{ selectedItem.description }}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <Badge
+                variant="secondary"
+                class="rounded-full text-xs font-semibold px-3 py-1 gap-1.5 bg-muted border-border"
+              >
+                <Layout class="w-3 h-3 text-muted-foreground" />
+                <span>{{ activeGroupLabel }}</span>
+              </Badge>
+            </div>
+          </div>
+
+          <!-- Settings Form Content -->
+          <div class="space-y-6 pb-12">
+            <div
+              v-if="!isItemCompatibleWithMode(selectedItem)"
+              class="rounded-xl border border-dashed border-border bg-muted/20 p-5 text-sm text-muted-foreground"
+            >
+              {{ modeHintText }}
+            </div>
+
+            <!-- Type 1: Static CSS Editor (Direct textarea) -->
+            <div
+              v-if="selectedItem.panel === 'css' && organizationMode === 'advanced'"
+              class="space-y-3 relative"
+            >
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                  <Code2 class="w-3.5 h-3.5 text-primary" />
+                  {{ t('publishing.theme_customizer.editor.css.label', 'Kustomisasi CSS') }}
+                </span>
+              </div>
+              <div class="border border-border rounded-xl overflow-hidden shadow-inner bg-background">
+                <textarea
+                  v-model="customCss"
+                  rows="24"
+                  :aria-label="t('publishing.theme_customizer.editor.css.label')"
+                  class="w-full p-4 bg-transparent text-xs font-mono leading-relaxed focus:outline-none resize-none min-h-[480px] border-0 custom-scrollbar selection:bg-primary/20"
+                  :placeholder="t('publishing.theme_customizer.editor.css.placeholder')"
+                  spellcheck="false"
+                />
+              </div>
+            </div>
+
+            <!-- Type 2: Manifest-Driven Settings (Responsive Grid) -->
+            <section
+              v-if="selectedItem.manifestSections?.length && organizationMode === 'design'"
+              class="space-y-6"
+            >
+              <div
+                v-for="section in selectedItem.manifestSections"
+                :key="section.id"
+                class="space-y-6"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div
+                    v-for="setting in getVisibleSettings(section.settings)"
+                    :key="setting.key"
+                    :class="[
+                      setting.type === 'repeater' || setting.type === 'textarea' || setting.type === 'media' || setting.type === 'checkbox_list'
+                        ? 'col-span-1 md:col-span-2'
+                        : 'col-span-1'
+                    ]"
+                  >
+                    <SettingControl
+                      :theme-slug="slug"
+                      :setting="setting"
+                      :model-value="formValues[setting.key]"
+                      @update:model-value="(val: any) => recordSettingChange(setting.key, val)"
+                      @pick-media="openMediaPicker(setting.key)"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <h2 class="text-lg sm:text-xl font-bold tracking-tight text-foreground">
-                    {{ selectedItem.label }}
-                  </h2>
-                  <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
-                    {{ selectedItem.description }}
+              </div>
+            </section>
+
+            <!-- Type 3: Menu Locations -->
+            <section
+              v-if="selectedItem.panel === 'menus' && organizationMode === 'design'"
+              class="space-y-4"
+            >
+              <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                <MenuIcon class="w-3.5 h-3.5 text-primary" />
+                {{ t('publishing.theme_customizer.editor.sections.menus', 'Lokasi Menu') }}
+              </h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div
+                  v-for="menuSetting in menuSections"
+                  :key="menuSetting.key"
+                  class="space-y-2.5 p-4 bg-muted/20 rounded-xl border border-border transition-all hover:border-primary/30"
+                >
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-foreground tracking-wide">{{ menuSetting.label }}</label>
+                    <div
+                      class="w-2 h-2 rounded-full"
+                      :class="formValues[menuSetting.key] && formValues[menuSetting.key] !== 'none' ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground/30'"
+                    />
+                  </div>
+                  <Select
+                    :model-value="String(formValues[menuSetting.key] || 'none')"
+                    @update:model-value="(val: string) => recordSettingChange(menuSetting.key, val)"
+                  >
+                    <SelectTrigger
+                      :aria-label="menuSetting.label"
+                      class="w-full h-10 bg-background border-border rounded-xl text-sm font-medium"
+                    >
+                      <SelectValue :placeholder="t('publishing.theme_customizer.editor.menus.placeholder')" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem
+                        v-for="opt in (menuSetting.options || [])"
+                        :key="String(opt.value)"
+                        :value="String(opt.value)"
+                      >
+                        {{ opt.label }}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p class="text-[11px] text-muted-foreground italic">
+                    {{ menuSetting.description }}
                   </p>
                 </div>
               </div>
+            </section>
 
-              <div class="flex items-center gap-2 shrink-0">
-                <Badge
-                  variant="secondary"
-                  class="rounded-full text-xs font-semibold px-3 py-1 gap-1.5 bg-muted border-border"
-                >
-                  <Layout class="w-3 h-3 text-muted-foreground" />
-                  <span>{{ activeGroupLabel }}</span>
-                </Badge>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="p-5 sm:p-8 space-y-8 flex-1">
-              <div
-                v-if="!isItemCompatibleWithMode(selectedItem)"
-                class="rounded-xl border border-dashed border-border bg-muted/20 p-5 text-sm text-muted-foreground"
-              >
-                {{ modeHintText }}
-              </div>
-
-              <!-- Type 1: Static CSS Editor (Direct textarea) -->
-              <div
-                v-if="selectedItem.panel === 'css' && organizationMode === 'advanced'"
-                class="space-y-3 relative"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                    <Code2 class="w-3.5 h-3.5 text-primary" />
-                    {{ t('publishing.theme_customizer.editor.css.label', 'Kustomisasi CSS') }}
-                  </span>
-                </div>
-                <div class="border border-border rounded-xl overflow-hidden shadow-inner bg-background">
-                  <textarea
-                    v-model="customCss"
-                    rows="24"
-                    :aria-label="t('publishing.theme_customizer.editor.css.label')"
-                    class="w-full p-4 bg-transparent text-xs font-mono leading-relaxed focus:outline-none resize-none min-h-[480px] border-0 custom-scrollbar selection:bg-primary/20"
-                    :placeholder="t('publishing.theme_customizer.editor.css.placeholder')"
-                    spellcheck="false"
-                  />
-                </div>
-              </div>
-
-              <!-- Type 2: Manifest-Driven Settings (Responsive Grid) -->
-              <section
-                v-if="selectedItem.manifestSections?.length && organizationMode === 'design'"
-                class="space-y-6"
-              >
-                <div
-                  v-for="section in selectedItem.manifestSections"
-                  :key="section.id"
-                  class="space-y-6"
-                >
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div
-                      v-for="setting in getVisibleSettings(section.settings)"
-                      :key="setting.key"
-                      :class="[
-                        setting.type === 'repeater' || setting.type === 'textarea' || setting.type === 'media' || setting.type === 'checkbox_list'
-                          ? 'col-span-1 md:col-span-2'
-                          : 'col-span-1'
-                      ]"
-                    >
-                      <SettingControl
-                        :theme-slug="slug"
-                        :setting="setting"
-                        :model-value="formValues[setting.key]"
-                        @update:model-value="(val: any) => recordSettingChange(setting.key, val)"
-                        @pick-media="openMediaPicker(setting.key)"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Type 3: Menu Locations -->
-              <section
-                v-if="selectedItem.panel === 'menus' && organizationMode === 'design'"
-                class="space-y-4"
-              >
-                <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                  <MenuIcon class="w-3.5 h-3.5 text-primary" />
-                  {{ t('publishing.theme_customizer.editor.sections.menus', 'Lokasi Menu') }}
-                </h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div
-                    v-for="menuSetting in menuSections"
-                    :key="menuSetting.key"
-                    class="space-y-2.5 p-4 bg-muted/20 rounded-xl border border-border transition-all hover:border-primary/30"
-                  >
-                    <div class="flex items-center justify-between">
-                      <label class="text-xs font-bold text-foreground tracking-wide">{{ menuSetting.label }}</label>
-                      <div
-                        class="w-2 h-2 rounded-full"
-                        :class="formValues[menuSetting.key] && formValues[menuSetting.key] !== 'none' ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground/30'"
-                      />
-                    </div>
-                    <Select
-                      :model-value="String(formValues[menuSetting.key] || 'none')"
-                      @update:model-value="(val: string) => recordSettingChange(menuSetting.key, val)"
-                    >
-                      <SelectTrigger
-                        :aria-label="menuSetting.label"
-                        class="w-full h-10 bg-background border-border rounded-xl text-sm font-medium"
-                      >
-                        <SelectValue :placeholder="t('publishing.theme_customizer.editor.menus.placeholder')" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem
-                          v-for="opt in (menuSetting.options || [])"
-                          :key="String(opt.value)"
-                          :value="String(opt.value)"
-                        >
-                          {{ opt.label }}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p class="text-[11px] text-muted-foreground italic">
-                      {{ menuSetting.description }}
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <BindingsSection
-                :selected-item="selectedItem"
-                :organization-mode="organizationMode"
-                :expanded-slots="expandedSlots"
-                :active-binding-component-id="activeBindingComponentId"
-                :categories="categories"
-                :pages="pages"
-                :preview-loading="previewLoading"
-                :preview-results="previewResults"
-                :toggle-slot="toggleSlot"
-                :get-slot-config="getSlotConfig"
-                :get-source-label="getSourceLabel"
-                :get-source-icon="getSourceIcon"
-                :update-binding="updateBinding"
-                :get-fields-for-source="getFieldsForSource"
-                :filter-preview-fields="filterPreviewFields"
-                :preview-slot-data="previewSlotData"
-                :save-history="saveHistory"
-                @clear-preview="id => delete previewResults[id]"
-              />
-            </div>
+            <BindingsSection
+              :selected-item="selectedItem"
+              :organization-mode="organizationMode"
+              :expanded-slots="expandedSlots"
+              :active-binding-component-id="activeBindingComponentId"
+              :categories="categories"
+              :pages="pages"
+              :preview-loading="previewLoading"
+              :preview-results="previewResults"
+              :toggle-slot="toggleSlot"
+              :get-slot-config="getSlotConfig"
+              :get-source-label="getSourceLabel"
+              :get-source-icon="getSourceIcon"
+              :update-binding="updateBinding"
+              :get-fields-for-source="getFieldsForSource"
+              :filter-preview-fields="filterPreviewFields"
+              :preview-slot-data="previewSlotData"
+              :save-history="saveHistory"
+              @clear-preview="id => delete previewResults[id]"
+            />
           </div>
         </div>
 
