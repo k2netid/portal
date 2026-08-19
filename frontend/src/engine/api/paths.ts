@@ -174,5 +174,11 @@ export const platformPaths = {
     publicSubscriptionFeatures: '/public/subscription/features',
 } as const;
 
-
+export const memberPaths = {
+    comments: '/member/comments',
+    bookmarks: '/member/bookmarks',
+    bookmarkCheck: '/member/bookmarks/check',
+    bookmark: (id: string) => `/member/bookmarks/${id}`,
+    newsletter: '/member/newsletter',
+} as const;
 

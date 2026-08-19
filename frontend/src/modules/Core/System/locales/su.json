@@ -31,11 +31,23 @@
     "newsletter": {
       "title": "Karesep Buletin & Surélék",
       "subtitle": "Atur jejér bacaan sareng frékuénsi nampi sari warta kana surélék anjeun",
-      "frequencyTitle": "Frékuénsi Pangiriman",
-      "frequencySubtitle": "Pilih sakumaha sering anjeun hoyong nampi apdét artikel énggal",
-      "topicsTitle": "Jejér Minat Bacaan",
-      "topicsSubtitle": "Pilih katégori kontén anu paling dipikaresep ku anjeun",
-      "savedSuccess": "Karesep buletin parantos hasil disimpen!"
+      "subscriptionTitle": "Status Langganan Buletin",
+      "statusActive": "Aktif — Anjeun nampi buletin périodik",
+      "statusInactive": "Henteu Aktif — Anjeun henteu nampi buletin",
+      "subscribedSince": "Langganan ti saprak",
+      "subscribe": "Mimitian Langganan",
+      "unsubscribe": "Eureun Langganan",
+      "aboutTitle": "Ngeunaan Buletin Kami",
+      "aboutDescription": "Buletin kami dikirim sacara périodik ngandung sari warta artikel terpopulér, tip éksklusif, sareng bewara fitur anyar. Surélék anjeun moal pernah dibagikeun ka pihak katilu.",
+      "featureDigest": "Sari Warta Artikel",
+      "featureDigestDesc": "Ringkesan kontén pilihan mingguan",
+      "featureTips": "Tip Éksklusif",
+      "featureTipsDesc": "Pituduh sareng wawasan husus anggota",
+      "featureUpdates": "Rilis Fitur Anyar",
+      "featureUpdatesDesc": "Bewara apdét platform",
+      "subscribedSuccess": "Parantos hasil langganan buletin!",
+      "unsubscribedSuccess": "Parantos hasil eureun langganan.",
+      "error": "Aya kasalahan. Mangga cobian deui."
     }
   },
   "contentPreview": {

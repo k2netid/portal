@@ -31,11 +31,23 @@
     "newsletter": {
       "title": "Newsletter & Email Preferences",
       "subtitle": "Manage article digest topics and email delivery frequency",
-      "frequencyTitle": "Delivery Frequency",
-      "frequencySubtitle": "Choose how often you wish to receive new article digests",
-      "topicsTitle": "Reading Interests",
-      "topicsSubtitle": "Select the content categories you are most interested in",
-      "savedSuccess": "Newsletter preferences saved successfully!"
+      "subscriptionTitle": "Newsletter Subscription Status",
+      "statusActive": "Active — You are receiving periodic newsletters",
+      "statusInactive": "Inactive — You are not receiving newsletters",
+      "subscribedSince": "Subscribed since",
+      "subscribe": "Subscribe to Newsletter",
+      "unsubscribe": "Unsubscribe",
+      "aboutTitle": "About Our Newsletter",
+      "aboutDescription": "Our newsletter is sent periodically containing digests of popular articles, exclusive insights, and feature updates. Your email is never shared with third parties.",
+      "featureDigest": "Article Digest",
+      "featureDigestDesc": "Weekly hand-picked content summaries",
+      "featureTips": "Exclusive Insights",
+      "featureTipsDesc": "Member-only guides and perspectives",
+      "featureUpdates": "New Feature Releases",
+      "featureUpdatesDesc": "Platform announcements & updates",
+      "subscribedSuccess": "Successfully subscribed to newsletter!",
+      "unsubscribedSuccess": "Successfully unsubscribed from newsletter.",
+      "error": "An error occurred. Please try again."
     }
   },
   "contentPreview": {

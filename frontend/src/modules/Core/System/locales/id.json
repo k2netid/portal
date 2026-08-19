@@ -31,11 +31,23 @@
     "newsletter": {
       "title": "Preferensi Buletin & Email",
       "subtitle": "Atur topik bacaan dan frekuensi penerimaan intisari artikel ke email Anda",
-      "frequencyTitle": "Frekuensi Pengiriman",
-      "frequencySubtitle": "Pilih seberapa sering Anda ingin menerima update artikel baru",
-      "topicsTitle": "Topik Minat Bacaan",
-      "topicsSubtitle": "Pilih kategori konten yang paling Anda minati",
-      "savedSuccess": "Preferensi buletin berhasil disimpan!"
+      "subscriptionTitle": "Status Langganan Buletin",
+      "statusActive": "Aktif — Anda menerima buletin berkala",
+      "statusInactive": "Nonaktif — Anda tidak menerima buletin",
+      "subscribedSince": "Berlangganan sejak",
+      "subscribe": "Mulai Berlangganan",
+      "unsubscribe": "Berhenti Berlangganan",
+      "aboutTitle": "Tentang Buletin Kami",
+      "aboutDescription": "Buletin kami dikirimkan secara berkala berisi intisari artikel terpopuler, tips eksklusif, dan pemberitahuan fitur baru. Email Anda tidak akan pernah dibagikan ke pihak ketiga.",
+      "featureDigest": "Intisari Artikel",
+      "featureDigestDesc": "Ringkasan konten pilihan mingguan",
+      "featureTips": "Tips Eksklusif",
+      "featureTipsDesc": "Wawasan dan panduan khusus anggota",
+      "featureUpdates": "Rilis Fitur Baru",
+      "featureUpdatesDesc": "Pengumuman pembaruan platform",
+      "subscribedSuccess": "Berhasil berlangganan buletin!",
+      "unsubscribedSuccess": "Berhasil berhenti berlangganan.",
+      "error": "Terjadi kesalahan. Silakan coba lagi."
     }
   },
   "contentPreview": {

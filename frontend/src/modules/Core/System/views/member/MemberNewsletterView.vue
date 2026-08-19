@@ -15,179 +15,209 @@
           </p>
         </div>
       </div>
-
-      <div>
-        <Button
-          size="sm"
-          class="text-xs h-9 px-4 rounded-xl font-semibold gap-1.5 shadow-sm shadow-primary/20"
-          :disabled="saving"
-          @click="savePreferences"
-        >
-          <Save class="w-3.5 h-3.5" />
-          <span>{{ saving ? t('common.status.saving', 'Menyimpan...') : t('common.actions.save', 'Simpan Preferensi') }}</span>
-        </Button>
-      </div>
     </div>
 
-    <!-- Success Alert -->
+    <!-- Loading State -->
     <div
-      v-if="savedMessage"
-      class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2.5 animate-in fade-in duration-300 shadow-sm"
+      v-if="loading"
+      class="flex items-center justify-center py-16"
     >
-      <CheckCircle2 class="w-4 h-4 shrink-0" />
-      <span>{{ savedMessage }}</span>
+      <Spinner class="w-6 h-6 text-primary animate-spin" />
     </div>
 
-    <!-- Newsletter Toggles -->
-    <div class="space-y-5">
-      <Card class="rounded-2xl border-border/50 p-6 space-y-6 bg-card/60 backdrop-blur-sm">
-        <div>
-          <h3 class="text-sm font-bold text-foreground">
-            {{ t('system.member.newsletter.frequencyTitle', 'Frekuensi Pengiriman') }}
-          </h3>
-          <p class="text-xs text-muted-foreground mt-0.5 font-medium">
-            {{ t('system.member.newsletter.frequencySubtitle', 'Pilih seberapa sering Anda ingin menerima update artikel baru') }}
-          </p>
-        </div>
+    <template v-else>
+      <!-- Success/Error Alert -->
+      <div
+        v-if="statusMessage"
+        class="p-4 rounded-2xl text-xs font-semibold flex items-center gap-2.5 animate-in fade-in duration-300 shadow-sm"
+        :class="statusIsError
+          ? 'bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400'
+          : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'"
+      >
+        <CheckCircle2
+          v-if="!statusIsError"
+          class="w-4 h-4 shrink-0"
+        />
+        <AlertCircle
+          v-else
+          class="w-4 h-4 shrink-0"
+        />
+        <span>{{ statusMessage }}</span>
+      </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <button
-            v-for="freq in frequencyOptions"
-            :key="freq.value"
-            type="button"
-            class="p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2.5"
-            :class="[
-              frequency === freq.value
-                ? 'border-primary bg-primary/5 ring-2 ring-primary/20 text-foreground'
-                : 'border-border/40 hover:border-border bg-card/40 text-muted-foreground hover:text-foreground'
-            ]"
-            @click="frequency = freq.value"
-          >
-            <div class="flex items-center justify-between w-full">
-              <span class="text-xs font-bold">{{ freq.label }}</span>
+      <!-- Subscription Status Card -->
+      <Card class="rounded-2xl border-border/50 p-6 bg-card/60 backdrop-blur-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <h3 class="text-sm font-bold text-foreground">
+              {{ t('system.member.newsletter.subscriptionTitle', 'Status Langganan Buletin') }}
+            </h3>
+            <div class="flex items-center gap-2.5">
               <div
-                class="w-4 h-4 rounded-full border flex items-center justify-center"
-                :class="frequency === freq.value ? 'border-primary bg-primary text-primary-foreground' : 'border-border/60'"
-              >
-                <div
-                  v-if="frequency === freq.value"
-                  class="w-1.5 h-1.5 rounded-full bg-white"
-                />
-              </div>
+                class="w-2.5 h-2.5 rounded-full shrink-0"
+                :class="isSubscribed ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'"
+              />
+              <span class="text-xs font-semibold" :class="isSubscribed ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground'">
+                {{ isSubscribed
+                  ? t('system.member.newsletter.statusActive', 'Aktif — Anda menerima buletin berkala')
+                  : t('system.member.newsletter.statusInactive', 'Nonaktif — Anda tidak menerima buletin') }}
+              </span>
             </div>
-            <span class="text-[11px] leading-relaxed opacity-80 font-medium">{{ freq.desc }}</span>
-          </button>
+            <p
+              v-if="subscribedAt && isSubscribed"
+              class="text-[11px] text-muted-foreground"
+            >
+              {{ t('system.member.newsletter.subscribedSince', 'Berlangganan sejak') }}: {{ formatDate(subscribedAt) }}
+            </p>
+          </div>
+
+          <Button
+            size="sm"
+            class="text-xs h-9 px-5 rounded-xl font-semibold gap-2 shadow-sm shrink-0"
+            :class="isSubscribed
+              ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20'"
+            :disabled="toggling"
+            @click="toggleSubscription"
+          >
+            <Loader2
+              v-if="toggling"
+              class="w-3.5 h-3.5 animate-spin"
+            />
+            <template v-else>
+              <BellOff
+                v-if="isSubscribed"
+                class="w-3.5 h-3.5"
+              />
+              <Bell
+                v-else
+                class="w-3.5 h-3.5"
+              />
+            </template>
+            <span>
+              {{ isSubscribed
+                ? t('system.member.newsletter.unsubscribe', 'Berhenti Berlangganan')
+                : t('system.member.newsletter.subscribe', 'Mulai Berlangganan') }}
+            </span>
+          </Button>
         </div>
       </Card>
 
-      <Card class="rounded-2xl border-border/50 p-6 space-y-6 bg-card/60 backdrop-blur-sm">
+      <!-- Info Box -->
+      <Card class="rounded-2xl border-border/50 p-6 space-y-4 bg-card/60 backdrop-blur-sm">
         <div>
           <h3 class="text-sm font-bold text-foreground">
-            {{ t('system.member.newsletter.topicsTitle', 'Topik Minat Bacaan') }}
+            {{ t('system.member.newsletter.aboutTitle', 'Tentang Buletin Kami') }}
           </h3>
-          <p class="text-xs text-muted-foreground mt-0.5 font-medium">
-            {{ t('system.member.newsletter.topicsSubtitle', 'Pilih kategori konten yang paling Anda minati') }}
+          <p class="text-xs text-muted-foreground mt-1 leading-relaxed font-medium">
+            {{ t('system.member.newsletter.aboutDescription', 'Buletin kami dikirimkan secara berkala berisi intisari artikel terpopuler, tips eksklusif, dan pemberitahuan fitur baru. Email Anda tidak akan pernah dibagikan ke pihak ketiga.') }}
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-          <div
-            v-for="topic in topicOptions"
-            :key="topic.id"
-            class="flex items-start gap-3 p-4 rounded-2xl border border-border/40 hover:border-border bg-card/30 transition-colors"
-          >
-            <Checkbox
-              :id="`topic-${topic.id}`"
-              v-model="selectedTopics[topic.id]"
-              class="mt-0.5"
-            />
-            <label
-              :for="`topic-${topic.id}`"
-              class="text-xs cursor-pointer select-none space-y-0.5"
-            >
-              <span class="font-bold text-foreground block">{{ topic.title }}</span>
-              <span class="text-[11px] text-muted-foreground block leading-relaxed font-medium">{{ topic.desc }}</span>
-            </label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="flex items-start gap-3 p-3.5 rounded-2xl border border-border/30 bg-muted/10">
+            <Newspaper class="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div class="text-xs space-y-0.5">
+              <span class="font-bold text-foreground block">{{ t('system.member.newsletter.featureDigest', 'Intisari Artikel') }}</span>
+              <span class="text-muted-foreground font-medium">{{ t('system.member.newsletter.featureDigestDesc', 'Ringkasan konten pilihan mingguan') }}</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-3.5 rounded-2xl border border-border/30 bg-muted/10">
+            <Sparkles class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <div class="text-xs space-y-0.5">
+              <span class="font-bold text-foreground block">{{ t('system.member.newsletter.featureTips', 'Tips Eksklusif') }}</span>
+              <span class="text-muted-foreground font-medium">{{ t('system.member.newsletter.featureTipsDesc', 'Wawasan dan panduan khusus anggota') }}</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-3.5 rounded-2xl border border-border/30 bg-muted/10">
+            <Bell class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+            <div class="text-xs space-y-0.5">
+              <span class="font-bold text-foreground block">{{ t('system.member.newsletter.featureUpdates', 'Rilis Fitur Baru') }}</span>
+              <span class="text-muted-foreground font-medium">{{ t('system.member.newsletter.featureUpdatesDesc', 'Pengumuman pembaruan platform') }}</span>
+            </div>
           </div>
         </div>
       </Card>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Card, Button, Checkbox } from '@/shared/components/ui';
+import apiClient from '@/engine/api/client';
+import { memberPaths } from '@/engine/api/paths';
+import { Card, Button, Spinner } from '@/shared/components/ui';
 import {
   Mail,
-  Save,
   CheckCircle2,
+  AlertCircle,
+  Bell,
+  BellOff,
+  Newspaper,
+  Sparkles,
+  Loader2,
 } from 'lucide-vue-next';
 
 const { t } = useI18n();
 
-const frequency = ref<'weekly' | 'monthly' | 'never'>('weekly');
-const saving = ref(false);
-const savedMessage = ref('');
+const loading = ref(true);
+const toggling = ref(false);
+const isSubscribed = ref(false);
+const subscribedAt = ref<string | null>(null);
+const statusMessage = ref('');
+const statusIsError = ref(false);
 
-const frequencyOptions = [
-  {
-    value: 'weekly' as const,
-    label: 'Mingguan (Weekly)',
-    desc: 'Intisari artikel terpopuler setiap akhir pekan.',
-  },
-  {
-    value: 'monthly' as const,
-    label: 'Bulanan (Monthly)',
-    desc: 'Rekap edisi khusus dan artikel pilihan 1x per bulan.',
-  },
-  {
-    value: 'never' as const,
-    label: 'Nonaktifkan',
-    desc: 'Jangan kirimkan buletin email berkala.',
-  },
-];
-
-const topicOptions = [
-  {
-    id: 'technology',
-    title: 'Teknologi & Rekayasa Perangkat Lunak',
-    desc: 'Arsitektur sistem, keamanan, cloud, dan pengembangan web.',
-  },
-  {
-    id: 'design',
-    title: 'Desain & Pengalaman Pengguna (UI/UX)',
-    desc: 'Tren estetika visual, tata letak modern, dan interaksi web.',
-  },
-  {
-    id: 'business',
-    title: 'Bisnis Digital & Strategi Konten',
-    desc: 'Optimasi SEO, pertumbuhan audiens, dan monetisasi media.',
-  },
-  {
-    id: 'updates',
-    title: 'Pemberitahuan & Rilis Fitur Baru',
-    desc: 'Pengumuman pembaruan platform dan fitur komunitas.',
-  },
-];
-
-const selectedTopics = reactive<Record<string, boolean>>({
-  technology: true,
-  design: true,
-  business: false,
-  updates: true,
-});
-
-const savePreferences = () => {
-  saving.value = true;
-  savedMessage.value = '';
-  setTimeout(() => {
-    saving.value = false;
-    savedMessage.value = t('system.member.newsletter.savedSuccess', 'Preferensi buletin berhasil disimpan!');
-    setTimeout(() => {
-      savedMessage.value = '';
-    }, 4000);
-  }, 600);
+const formatDate = (dateStr: string): string => {
+  try {
+    return new Date(dateStr).toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  } catch {
+    return dateStr;
+  }
 };
+
+const fetchNewsletterStatus = async () => {
+  loading.value = true;
+  try {
+    const { data } = await apiClient.get(memberPaths.newsletter);
+    isSubscribed.value = data.data?.subscribed === true;
+    subscribedAt.value = data.data?.subscribed_at || null;
+  } catch (e) {
+    console.error('Failed to fetch newsletter status:', e);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const toggleSubscription = async () => {
+  toggling.value = true;
+  statusMessage.value = '';
+  statusIsError.value = false;
+  try {
+    const { data } = await apiClient.put(memberPaths.newsletter, {
+      subscribe: !isSubscribed.value,
+    });
+    isSubscribed.value = data.data?.subscribed === true;
+    subscribedAt.value = data.data?.subscribed_at || subscribedAt.value;
+    statusMessage.value = data.message || (isSubscribed.value
+      ? t('system.member.newsletter.subscribedSuccess', 'Berhasil berlangganan buletin!')
+      : t('system.member.newsletter.unsubscribedSuccess', 'Berhasil berhenti berlangganan.'));
+    setTimeout(() => { statusMessage.value = ''; }, 5000);
+  } catch (e) {
+    statusIsError.value = true;
+    statusMessage.value = t('system.member.newsletter.error', 'Terjadi kesalahan. Silakan coba lagi.');
+    setTimeout(() => { statusMessage.value = ''; }, 5000);
+    console.error('Failed to toggle newsletter:', e);
+  } finally {
+    toggling.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchNewsletterStatus();
+});
 </script>
