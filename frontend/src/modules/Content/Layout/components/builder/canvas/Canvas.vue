@@ -288,7 +288,11 @@ onMounted(() => {
 <style scoped>
 .canvas {
   min-height: 100%;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg, 24px);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 
   --builder-text-primary: #0f172a;
   --builder-text-secondary: #475569;
@@ -300,11 +304,21 @@ onMounted(() => {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.canvas.device-tablet {
+  padding: 16px;
+}
+
+.canvas.device-mobile {
+  padding: 12px 8px;
+}
+
 .canvas-header-preview {
   position: relative;
   z-index: 10;
   margin-bottom: var(--spacing-lg, 24px);
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .canvas-header-preview :deep(header),
@@ -315,6 +329,9 @@ onMounted(() => {
   top: auto !important;
   left: auto !important;
   width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -323,12 +340,17 @@ onMounted(() => {
   z-index: 10;
   margin-top: var(--spacing-xl, 32px);
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .canvas-footer-preview :deep(footer),
 .canvas :deep(footer) {
   position: relative !important;
   width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
 }
 
 .canvas--wireframe {

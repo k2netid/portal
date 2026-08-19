@@ -1,16 +1,21 @@
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, inject, unref, type Ref } from 'vue'
 import { throttle } from '@/shared/utils/performance'
+import type { BuilderInstance } from '@/types/builder'
+
 export function useResponsiveDevice() {
+    const builder = inject<BuilderInstance | null>('builder', null)
+    const injectedDevice = inject<Ref<string> | string | null>('builderDevice', null)
+
     // We are in frontend mode, listen to window resize
-    const device = ref('desktop')
+    const windowDevice = ref('desktop')
 
     const checkDevice = () => {
         if (typeof window === 'undefined') return
 
         const w = window.innerWidth
-        if (w < 768) device.value = 'mobile'
-        else if (w < 1024) device.value = 'tablet'
-        else device.value = 'desktop'
+        if (w < 768) windowDevice.value = 'mobile'
+        else if (w < 1024) windowDevice.value = 'tablet'
+        else windowDevice.value = 'desktop'
     }
 
     const throttledCheck = throttle(checkDevice, 150)
@@ -24,5 +29,13 @@ export function useResponsiveDevice() {
         window.removeEventListener('resize', throttledCheck)
     })
 
-    return computed(() => device.value)
+    return computed(() => {
+        if (builder?.device?.value) {
+            return builder.device.value
+        }
+        if (injectedDevice) {
+            return unref(injectedDevice)
+        }
+        return windowDevice.value
+    })
 }

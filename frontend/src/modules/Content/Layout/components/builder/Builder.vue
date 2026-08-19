@@ -289,6 +289,7 @@ const builder = {
 
 // Provide builder for child components
 provide('builder', builder)
+provide('builderDevice', builder.device)
 
 watch(() => builder.isFullscreen.value, (val) => {
   emit('update:fullscreen', val)

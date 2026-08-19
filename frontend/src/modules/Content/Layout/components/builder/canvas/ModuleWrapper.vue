@@ -55,7 +55,7 @@
                 :group="childType"
                 class="children-container"
                 :class="[
-                  isRow ? 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch' : '',
+                  isRow ? (currentDevice === 'mobile' ? 'row-children-container flex flex-col gap-4 w-full items-stretch' : 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch') : '',
                   isSection ? 'section-children-container flex flex-col space-y-6 w-full' : '',
                   isColumn ? 'column-children-container flex flex-col space-y-4 w-full h-full min-h-[40px]' : ''
                 ]"
@@ -77,7 +77,7 @@
               <div 
                 class="children-container loop-ghost-children"
                 :class="[
-                  isRow ? 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch' : '',
+                  isRow ? (currentDevice === 'mobile' ? 'row-children-container flex flex-col gap-4 w-full items-stretch' : 'row-children-container flex flex-row flex-nowrap gap-6 w-full items-stretch') : '',
                   isSection ? 'section-children-container flex flex-col space-y-6 w-full' : '',
                   isColumn ? 'column-children-container flex flex-col space-y-4 w-full h-full min-h-[40px]' : ''
                 ]"
@@ -331,21 +331,28 @@ const wrapperStyles = computed(() => {
     const styles: Record<string, string | number> = {}
     
     if (isColumn.value) {
-        const width = getResponsiveValue(props.module.settings, 'width', currentDevice.value) as string | undefined
-        const flexGrow = getResponsiveValue(props.module.settings, 'flexGrow', currentDevice.value) as number | undefined
-        
-        styles.height = '100%' 
-        
-        if (width) {
-            styles.flex = `0 0 ${width}`
-            styles.maxWidth = width
+        if (currentDevice.value === 'mobile') {
+            styles.width = '100%'
+            styles.maxWidth = '100%'
+            styles.flex = '1 1 100%'
             styles.minWidth = '0'
-        } else if (flexGrow) {
-           styles.flex = `${flexGrow} 1 0%`
-           styles.minWidth = '0'
         } else {
-           styles.flex = '1 1 0%' 
-           styles.minWidth = '0'
+            const width = getResponsiveValue(props.module.settings, 'width', currentDevice.value) as string | undefined
+            const flexGrow = getResponsiveValue(props.module.settings, 'flexGrow', currentDevice.value) as number | undefined
+            
+            styles.height = '100%' 
+            
+            if (width) {
+                styles.flex = `0 0 ${width}`
+                styles.maxWidth = width
+                styles.minWidth = '0'
+            } else if (flexGrow) {
+               styles.flex = `${flexGrow} 1 0%`
+               styles.minWidth = '0'
+            } else {
+               styles.flex = '1 1 0%' 
+               styles.minWidth = '0'
+            }
         }
     }
 
