@@ -43,12 +43,12 @@ import { computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { BaseModal } from '@/components/builder/ui';
 import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
-import { pageTemplates } from '@/components/builder/templates/PageTemplates.js';
+import { pageTemplates } from '@/components/builder/templates/PageTemplates';
 import LayoutTemplate from 'lucide-vue-next/dist/esm/icons/layout-template.js';
 import AlertTriangle from 'lucide-vue-next/dist/esm/icons/triangle-alert.js';
 import type { BuilderInstance, BlockInstance } from '@/types/builder';
 
-import type { PageTemplate } from '@/components/builder/templates/PageTemplates.js';
+import type { PageTemplate } from '@/components/builder/templates/PageTemplates';
 
 const emit = defineEmits<{
   (e: 'close'): void;
@@ -95,8 +95,9 @@ const insertTemplate = async (template: PageTemplate) => {
   builder.takeSnapshot();
   
   // Select first section if exists
-  if (builder.blocks.value && builder.blocks.value.length > 0) {
-      builder.selectModule(builder.blocks.value[0].id);
+  const firstBlock = builder.blocks.value?.[0];
+  if (firstBlock?.id) {
+      builder.selectModule(firstBlock.id);
   }
   
   emit('inserted');
