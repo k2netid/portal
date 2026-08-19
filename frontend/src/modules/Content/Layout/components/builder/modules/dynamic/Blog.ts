@@ -103,8 +103,10 @@ const BlogModule: ModuleDefinition = {
                     },
                     {
                         name: 'category',
-                        type: 'text',
+                        type: 'select',
                         label: 'Category Filter',
+                        options: 'dynamic:categories',
+                        searchable: true,
                         responsive: true
                     },
                     {

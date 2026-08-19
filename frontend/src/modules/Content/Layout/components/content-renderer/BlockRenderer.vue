@@ -158,6 +158,49 @@
         </div>
       </nav>
 
+      <!-- Dynamic Blog / Posts Query Loop Block -->
+      <div
+        v-else-if="block.type === 'blog' || block.type === 'posts' || block.type === 'query_loop'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-blog-block w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="mb-6">
+          <h3 class="text-2xl font-bold text-foreground">
+            {{ getSettingStr(block, 'title') }}
+          </h3>
+        </div>
+
+        <div
+          class="grid gap-6"
+          :class="getSettingNum(block, 'columns', 3) === 2 ? 'grid-cols-1 md:grid-cols-2' : (getSettingNum(block, 'columns', 3) === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3')"
+        >
+          <template v-for="(post, pIdx) in getSamplePosts(getSettingNum(block, 'itemsPerPage', 3))" :key="pIdx">
+            <article class="group rounded-2xl border border-border bg-card/60 p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/40 flex flex-col">
+              <figure v-if="getSettingBool(block, 'showImage', true)" class="overflow-hidden rounded-xl bg-muted aspect-video mb-4">
+                <img :src="post.image" :alt="post.title" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
+              </figure>
+              <div v-if="getSettingBool(block, 'showCategory', true)" class="mb-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                  {{ post.category }}
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">
+                <a :href="post.url">{{ post.title }}</a>
+              </h4>
+              <p v-if="getSettingBool(block, 'showExcerpt', true)" class="text-xs text-muted-foreground line-clamp-3 mb-4 leading-relaxed flex-1">
+                {{ post.excerpt }}
+              </p>
+              <div v-if="getSettingBool(block, 'showDate', true) || getSettingBool(block, 'showAuthor', true)" class="pt-3 border-t border-border/50 flex items-center justify-between text-[11px] text-muted-foreground mt-auto">
+                <span v-if="getSettingBool(block, 'showAuthor', true)">{{ post.author }}</span>
+                <span v-if="getSettingBool(block, 'showDate', true)">{{ post.date }}</span>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+
       <!-- Form Picker / Contact Form Block -->
       <div
         v-else-if="block.type === 'form_picker' || block.type === 'contact_form'"
@@ -285,6 +328,39 @@ const getMenuItems = (_menuId?: string): Array<{ title: string; url: string; ope
     { title: 'Layanan', url: '/services' },
     { title: 'Kontak', url: '/contact' }
   ];
+};
+
+const getSamplePosts = (count = 3): Array<{ title: string; excerpt: string; date: string; author: string; category: string; image: string; url: string }> => {
+  const samples = [
+    {
+      title: 'Inovasi Teknologi Terkini dalam Pengembangan Website Modern',
+      excerpt: 'Mengenal pendekatan modular dan visual builder yang mempercepat produktivitas tim pengembang.',
+      date: '19 Agu 2026',
+      author: 'Redaksi',
+      category: 'Teknologi',
+      image: '/assets/themes/janari/news-placeholder.png',
+      url: '/blog'
+    },
+    {
+      title: 'Strategi Optimasi SEO & Metadata untuk Meningkatkan Trafik',
+      excerpt: 'Panduan lengkap mengatur OpenGraph, Schema JSON-LD, dan struktur konten yang ramah mesin pencari.',
+      date: '18 Agu 2026',
+      author: 'Admin',
+      category: 'Insight',
+      image: '/assets/themes/janari/hero-placeholder.png',
+      url: '/blog'
+    },
+    {
+      title: 'Penerapan Design Tokens dan Tema Dinamis pada Web Skala Besar',
+      excerpt: 'Bagaimana CSS Custom Properties menyatukan Theme Customizer dengan kanvas Visual Builder.',
+      date: '17 Agu 2026',
+      author: 'Tim Desain',
+      category: 'Design System',
+      image: '/assets/themes/janari/avatar-placeholder.png',
+      url: '/blog'
+    }
+  ];
+  return samples.slice(0, Math.max(1, count));
 };
 
 const handleFormSubmit = () => {
