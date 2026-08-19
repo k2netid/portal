@@ -42,13 +42,13 @@
       >
     </div>
 
-    <!-- Select -->
+    <!-- Select (Static or Dynamic Forms) -->
     <div
-      v-else-if="setting.type === 'select'"
+      v-else-if="setting.type === 'select' || isDynamicFormSelect"
       class="relative"
     >
       <Select
-        :model-value="String(modelValue)"
+        :model-value="String(modelValue || (isDynamicFormSelect ? 'contact' : ''))"
         @update:model-value="(val) => { handleInput(val); $emit('change'); }"
       >
         <SelectTrigger
@@ -57,9 +57,9 @@
         >
           <SelectValue :placeholder="setting.placeholder ? $t('publishing.theme_customizer.items.' + setting.key + '_placeholder') : $t('publishing.theme_customizer.editor.menus.placeholder')" />
         </SelectTrigger>
-        <SelectContent v-if="Array.isArray(setting.options)">
+        <SelectContent v-if="resolvedOptions.length > 0">
           <SelectItem
-            v-for="opt in (setting.options as ThemeOption[])"
+            v-for="opt in resolvedOptions"
             :key="String(opt.value)"
             :value="String(opt.value)"
           >
@@ -444,7 +444,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import api from '@/engine/api/client';
+import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 import { useThemeCustomizerLabels } from '@/modules/Content/Layout/composables/useThemeCustomizerLabels';
 import type { ThemeSetting, ThemeOption } from '@/modules/Content/Layout/types/theme';
 import {
@@ -584,4 +586,40 @@ function useMapLinkDirectly(): void {
   helperError.value = '';
   helperMessage.value = 'Link map langsung disimpan.';
 }
+
+const dynamicFormOptions = ref<ThemeOption[]>([]);
+
+const isDynamicFormSelect = computed(() => {
+  return props.setting?.key === 'contact_form_slug' || props.setting?.options === 'dynamic:forms';
+});
+
+const resolvedOptions = computed<ThemeOption[]>(() => {
+  if (isDynamicFormSelect.value) {
+    return dynamicFormOptions.value;
+  }
+  if (Array.isArray(props.setting?.options)) {
+    return props.setting.options as ThemeOption[];
+  }
+  return [];
+});
+
+onMounted(async () => {
+  if (isDynamicFormSelect.value) {
+    try {
+      const res = await api.get('/manage/forms');
+      const parsed = parseResponse<any>(res);
+      const data = ensureArray<any>(parsed.data);
+      const opts: ThemeOption[] = data.map((f: any) => ({
+        value: f.slug,
+        label: `${f.name || f.title || f.slug} (${f.slug})`,
+      }));
+      if (opts.length === 0) {
+        opts.unshift({ value: 'contact', label: 'Default Contact (contact)' });
+      }
+      dynamicFormOptions.value = opts;
+    } catch {
+      dynamicFormOptions.value = [{ value: 'contact', label: 'Default Contact (contact)' }];
+    }
+  }
+});
 </script>
