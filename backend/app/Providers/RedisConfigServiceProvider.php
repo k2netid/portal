@@ -129,8 +129,8 @@ class RedisConfigServiceProvider extends ServiceProvider
             if (Schema::hasTable('sys_settings')) {
                 $selectedDriver = Setting::get('cache_driver');
                 if (is_string($selectedDriver) && $selectedDriver !== '') {
-                    // `redis_failover` is UI alias; safest runtime fallback is Redis.
-                    $resolved = $selectedDriver === 'redis_failover' ? 'redis' : $selectedDriver;
+                    // `redis_failover` is UI alias for the composite `failover` store.
+                    $resolved = ($selectedDriver === 'redis_failover' || $selectedDriver === 'failover') ? 'failover' : $selectedDriver;
                     config(['cache.default' => $resolved]);
                 }
             }
