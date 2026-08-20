@@ -318,6 +318,16 @@ watch(() => props.modelValue, (newBlocks) => {
   }
 }, { deep: false }) // deep: false since we only care about top-level array reference changes from parent
 
+watch(() => props.contentId, async (newId) => {
+  if (newId) {
+    try {
+      await builder.loadContent(newId)
+    } catch (err) {
+      console.error('Failed to load content for builder on prop change:', err)
+    }
+  }
+})
+
 const selectedModule = computed(() => builder.selectedModule.value)
 
 watch(selectedModule, (newVal) => {
