@@ -37,20 +37,14 @@ final class ThemeViews
         $monorepoCandidates = [
             '../frontend/src/modules/Content/Layout/views/themes',
             '../frontend/src/modules/Content/Publishing/views/themes',
-            '../frontend/src/modules/Jejakawan/views/themes',
-            '../frontend/src/modules/Publishing/views/themes',
+            'frontend/src/modules/Content/Layout/views/themes',
+            '../src/modules/Content/Layout/views/themes',
         ];
 
         foreach ($monorepoCandidates as $candidate) {
             if (is_dir(base_path($candidate))) {
                 return $candidate;
             }
-        }
-
-        // 4. Absolute dev workspace path fallback if on same host
-        $devAbsolute = '/home/jejakawan/dev/ja-cms/frontend/src/modules/Content/Layout/views/themes';
-        if (is_dir($devAbsolute)) {
-            return $devAbsolute;
         }
 
         return 'resources/themes';
@@ -110,10 +104,10 @@ final class ThemeViews
             return $storageCandidate;
         }
 
-        // 4. Check dev workspace absolute path
-        $devCandidate = '/home/jejakawan/dev/ja-cms/frontend/src/modules/Content/Layout/views/themes'.DIRECTORY_SEPARATOR.$slug;
-        if (is_dir($devCandidate)) {
-            return $devCandidate;
+        // 4. Check storage/app/public/themes
+        $uploadedCandidate = storage_path('app/public/themes'.DIRECTORY_SEPARATOR.$slug);
+        if (is_dir($uploadedCandidate)) {
+            return $uploadedCandidate;
         }
 
         return $rootCandidate;

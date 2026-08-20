@@ -56,6 +56,48 @@ export interface Theme {
     [key: string]: unknown;
 }
 
+const SYSTEM_FONTS = new Set([
+    'sans-serif', 'serif', 'monospace', 'system-ui', '-apple-system',
+    'blinkmacsystemfont', 'segoe ui', 'roboto', 'helvetica neue', 'arial',
+    'courier new', 'georgia', 'times new roman', 'verdana', 'inherit', 'initial'
+]);
+
+const injectedFonts = new Set<string>();
+
+export const injectGoogleFont = (fontFamily?: string): void => {
+    if (typeof window === 'undefined' || !fontFamily) return;
+    const cleanFont = fontFamily.replace(/['"]/g, '').trim();
+    if (!cleanFont || SYSTEM_FONTS.has(cleanFont.toLowerCase()) || injectedFonts.has(cleanFont)) {
+        return;
+    }
+
+    injectedFonts.add(cleanFont);
+
+    // Preconnect links for Google Fonts if not present
+    if (!document.querySelector('link[rel="preconnect"][href="https://fonts.googleapis.com"]')) {
+        const preconnect1 = document.createElement('link');
+        preconnect1.rel = 'preconnect';
+        preconnect1.href = 'https://fonts.googleapis.com';
+        document.head.appendChild(preconnect1);
+
+        const preconnect2 = document.createElement('link');
+        preconnect2.rel = 'preconnect';
+        preconnect2.href = 'https://fonts.gstatic.com';
+        preconnect2.crossOrigin = 'anonymous';
+        document.head.appendChild(preconnect2);
+    }
+
+    const fontQuery = encodeURIComponent(cleanFont).replace(/%20/g, '+');
+    const linkId = `google-font-${cleanFont.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+    if (!document.getElementById(linkId)) {
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = `https://fonts.googleapis.com/css2?family=${fontQuery}:wght@300;400;500;600;700;800;900&display=swap`;
+        document.head.appendChild(link);
+    }
+};
+
 // Global shared state
 const activeTheme = ref<Theme | null>(null);
 const themeSettings = ref<Record<string, unknown>>({});
@@ -324,8 +366,10 @@ export function useTheme() {
                         variables.push(`${cssKey}-hsl: ${hslValue};`);
                     }
                 } else if (setting.type === 'font' || setting.type === 'typography') {
-                    // Inject font-family
-                    const fontValue = String(value).includes(' ') ? `"${value}"` : value;
+                    // Inject dynamic Google Font and CSS custom property
+                    const rawFont = String(value);
+                    injectGoogleFont(rawFont);
+                    const fontValue = rawFont.includes(' ') ? `"${rawFont}"` : rawFont;
                     variables.push(`${cssKey}: ${fontValue};`);
                 }
             });

@@ -6,11 +6,12 @@
  */
 import type { I18n } from 'vue-i18n';
 import janari from '@/modules/Content/Layout/views/themes/janari/locales';
+import zenith from '@/modules/Content/Layout/views/themes/zenith/locales';
 
 const bundledThemeMessages = {
-    en: { janari: janari.en },
-    id: { janari: janari.id },
-    su: { janari: janari.su },
+    en: { janari: janari.en, zenith: zenith.en },
+    id: { janari: janari.id, zenith: zenith.id },
+    su: { janari: janari.su, zenith: zenith.su },
 } as const;
 
 export type ThemeLocaleSlug = keyof typeof bundledThemeMessages.en;

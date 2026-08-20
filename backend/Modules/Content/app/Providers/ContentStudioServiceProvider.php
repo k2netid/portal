@@ -11,6 +11,7 @@ use Modules\Content\Layout\Console\Commands\BackfillThemeJanariParentCommand;
 use Modules\Content\Layout\Console\Commands\ThemeBackfillSourceCommand;
 use Modules\Content\Layout\Console\Commands\ThemeBuildCommand;
 use Modules\Content\Layout\Console\Commands\ThemeChecksumCommand;
+use Modules\Content\Layout\Console\Commands\ThemeExportCommand;
 use Modules\Content\Layout\Console\Commands\ThemeMake;
 use Modules\Content\Layout\Console\Commands\ThemePackageCommand;
 use Modules\Content\Layout\Console\Commands\ThemePathsCommand;
@@ -39,6 +40,7 @@ class ContentStudioServiceProvider extends ServiceProvider
             ThemePathsCommand::class,
             ThemeValidateCommand::class,
             ThemePackageCommand::class,
+            ThemeExportCommand::class,
             ThemeStagingUploadedCommand::class,
             ThemeScanRegisterCommand::class,
             ThemeBackfillSourceCommand::class,

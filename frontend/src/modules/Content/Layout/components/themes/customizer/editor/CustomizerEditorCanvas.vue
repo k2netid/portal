@@ -73,6 +73,13 @@
           v-if="selectedItem.manifestSections?.length && organizationMode === 'design'"
           class="space-y-6"
         >
+          <ThemePresetSelector
+            v-if="selectedItem.id === 'colors' || selectedItem.id === 'appearance'"
+            :current-preset="String(formValues['color_preset'] || '')"
+            :current-color-primary="String(formValues['color_primary'] || '')"
+            @select-preset="handlePresetSelect"
+          />
+
           <div
             v-for="section in selectedItem.manifestSections"
             :key="section.id"
@@ -220,6 +227,7 @@ import {
 } from '@/shared/components/ui';
 import SettingControl from '@/modules/Content/Layout/components/themes/customizer/sidebar/SettingControl.vue';
 import BindingsSection from '@/modules/Content/Layout/components/themes/customizer/editor/BindingsSection.vue';
+import ThemePresetSelector from '@/modules/Content/Layout/components/themes/customizer/editor/ThemePresetSelector.vue';
 import SocialSharePreview from '@/modules/Content/Layout/components/themes/customizer/seo/SocialSharePreview.vue';
 import { Code2, Layout, LayoutTemplate, MenuIcon } from 'lucide-vue-next';
 
@@ -260,4 +268,11 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+
+function handlePresetSelect(_key: string, values: { color_preset: string; color_primary?: string }) {
+  emit('recordSettingChange', 'color_preset', values.color_preset);
+  if (values.color_primary) {
+    emit('recordSettingChange', 'color_primary', values.color_primary);
+  }
+}
 </script>
