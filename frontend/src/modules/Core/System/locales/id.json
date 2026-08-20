@@ -2596,10 +2596,37 @@
       "schedule": "Jadwal",
       "status": "Status"
     },
+    "presets": {
+      "recommended": "Preset Rekomendasi",
+      "recommended_desc": "Aktifkan 8 tugas pemeliharaan esensial dengan jadwal optimal.",
+      "reset_defaults": "Reset Bawaan",
+      "reset_confirm": "Kembalikan semua tugas terjadwal ke konfigurasi standar sistem (Golden Set)?",
+      "recommended_confirm": "Terapkan preset rekomendasi untuk tugas pemeliharaan sistem?",
+      "applied": "Preset rekomendasi berhasil diterapkan",
+      "reset_success": "Tugas terjadwal berhasil direset ke konfigurasi bawaan"
+    },
+    "bulk": {
+      "activate": "Aktifkan Terpilih",
+      "deactivate": "Nonaktifkan Terpilih",
+      "run": "Jalankan Terpilih",
+      "bulkActivated": "{count} tugas berhasil diaktifkan",
+      "bulkDeactivated": "{count} tugas berhasil dinonaktifkan",
+      "bulkRun": "{count} tugas berhasil dieksekusi",
+      "confirm_run": "Jalankan {count} tugas terpilih sekarang?"
+    },
+    "prerequisites": {
+      "title": "Prasyarat Sistem",
+      "all_met": "Semua prasyarat terpenuhi",
+      "warning": "Prasyarat server belum terpenuhi: {unmet}",
+      "ready": "Siap",
+      "not_ready": "Belum Siap"
+    },
+    "recommended_badge": "Rekomendasi",
     "title": "Tugas Terjadwal",
     "tooltips": {
       "click_to_activate": "Klik untuk mengaktifkan - Tugas akan berjalan otomatis sesuai jadwal",
-      "click_to_deactivate": "Klik untuk menonaktifkan - Tugas tidak akan berjalan otomatis"
+      "click_to_deactivate": "Klik untuk menonaktifkan - Tugas tidak akan berjalan otomatis",
+      "recommended": "Tugas ini sangat direkomendasikan untuk kesehatan sistem"
     }
   },
   "command_runner": {

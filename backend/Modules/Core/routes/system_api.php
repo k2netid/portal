@@ -167,6 +167,8 @@ Route::prefix('v1')->group(function (): void {
         Route::post('translations', [TranslationController::class, 'setTranslation']);
 
         Route::get('scheduled-tasks/allowed-commands', [ScheduledTaskController::class, 'allowedCommands']);
+        Route::post('scheduled-tasks/bulk', [ScheduledTaskController::class, 'bulk']);
+        Route::post('scheduled-tasks/apply-preset', [ScheduledTaskController::class, 'applyPreset']);
         Route::post('scheduled-tasks/run-adhoc', [ScheduledTaskController::class, 'runAdhoc']);
         Route::post('scheduled-tasks/{id}/run', [ScheduledTaskController::class, 'run']);
         Route::apiResource('scheduled-tasks', ScheduledTaskController::class);

@@ -7,27 +7,47 @@
     >
       <template #actions>
         <div class="flex flex-wrap gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          class="h-10 inline-flex items-center gap-2"
-          @click="showHelp = !showHelp"
-        >
-          <BadgeInfo class="w-4 h-4 mr-2" />
-          {{ $t('common.labels.help') }}
-        </Button>
-        <Button
-          v-if="isSuperAdmin"
-          variant="outline"
-          @click="openRunCommandDialog"
-        >
-          <Terminal class="w-4 h-4 mr-2" />
-          {{ $t('system.command_runner.run') }}
-        </Button>
-        <Button @click="openCreateDialog">
-          <Plus class="w-4 h-4 mr-2" />
-          {{ $t('system.scheduled_tasks.create') }}
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            class="h-10 inline-flex items-center gap-2 border-emerald-500/30 text-emerald-600 hover:bg-emerald-500/10 dark:text-emerald-400"
+            :disabled="applyingPreset"
+            @click="applyPresetAction('recommended')"
+          >
+            <Sparkles class="w-4 h-4 mr-1 text-emerald-500" />
+            {{ $t('system.scheduled_tasks.presets.recommended') }}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            class="h-10 inline-flex items-center gap-2"
+            :disabled="applyingPreset"
+            @click="applyPresetAction('reset_defaults')"
+          >
+            <RotateCcw class="w-4 h-4 mr-1 text-muted-foreground" />
+            {{ $t('system.scheduled_tasks.presets.reset_defaults') }}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            class="h-10 inline-flex items-center gap-2"
+            @click="showHelp = !showHelp"
+          >
+            <BadgeInfo class="w-4 h-4 mr-2" />
+            {{ $t('common.labels.help') }}
+          </Button>
+          <Button
+            v-if="isSuperAdmin"
+            variant="outline"
+            @click="openRunCommandDialog"
+          >
+            <Terminal class="w-4 h-4 mr-2" />
+            {{ $t('system.command_runner.run') }}
+          </Button>
+          <Button @click="openCreateDialog">
+            <Plus class="w-4 h-4 mr-2" />
+            {{ $t('system.scheduled_tasks.create') }}
+          </Button>
         </div>
       </template>
     </PageHeader>
@@ -134,10 +154,28 @@
                 v-model="bulkActionSelection"
                 @update:model-value="handleBulkAction"
               >
-                <SelectTrigger class="w-[140px] h-9 bg-primary/5 border-primary/20 text-primary hover:bg-primary/10">
+                <SelectTrigger class="w-[170px] h-9 bg-primary/5 border-primary/20 text-primary hover:bg-primary/10">
                   <SelectValue :placeholder="$t('common.actions.bulkAction')" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="activate">
+                    <div class="flex items-center text-emerald-600 dark:text-emerald-400">
+                      <CheckCircle class="w-4 h-4 mr-2" />
+                      {{ $t('system.scheduled_tasks.bulk.activate') }}
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="deactivate">
+                    <div class="flex items-center text-amber-600 dark:text-amber-400">
+                      <PauseCircle class="w-4 h-4 mr-2" />
+                      {{ $t('system.scheduled_tasks.bulk.deactivate') }}
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="run">
+                    <div class="flex items-center text-blue-600 dark:text-blue-400">
+                      <Play class="w-4 h-4 mr-2" />
+                      {{ $t('system.scheduled_tasks.bulk.run') }}
+                    </div>
+                  </SelectItem>
                   <SelectItem
                     value="delete"
                     class="text-destructive focus:text-destructive"
@@ -253,6 +291,7 @@
             <Select
               v-model="form.command"
               required
+              @update:model-value="onCommandChange"
             >
               <SelectTrigger id="scheduledTaskCommand" :aria-label="$t('system.scheduled_tasks.form.command')" :class="{ 'border-destructive focus:ring-destructive': errors.command }">
                 <SelectValue :placeholder="$t('system.scheduled_tasks.form.select_command')" />
@@ -263,7 +302,10 @@
                   :key="cmd.value" 
                   :value="cmd.value"
                 >
-                  {{ cmd.label }}
+                  <div class="flex items-center justify-between w-full gap-2">
+                    <span>{{ cmd.label }}</span>
+                    <span v-if="cmd.is_recommended" class="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 font-semibold border border-emerald-500/20">✨ Rec</span>
+                  </div>
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -273,6 +315,51 @@
             >
               {{ Array.isArray(errors.command) ? errors.command[0] : errors.command }}
             </p>
+
+            <!-- Command Info & Prerequisites Card -->
+            <div
+              v-if="selectedCommandMeta"
+              class="p-3 rounded-lg border border-border/70 bg-muted/40 space-y-2 text-xs mt-1"
+            >
+              <div class="flex items-center justify-between">
+                <Badge variant="outline" class="text-[10px]">{{ selectedCommandMeta.category }}</Badge>
+                <Badge
+                  v-if="selectedCommandMeta.is_recommended"
+                  class="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]"
+                >
+                  ✨ {{ $t('system.scheduled_tasks.recommended_badge') }}
+                </Badge>
+              </div>
+              <p class="text-muted-foreground">{{ selectedCommandMeta.description }}</p>
+
+              <!-- Prerequisites Status -->
+              <div class="pt-2 border-t border-border/60">
+                <div class="font-semibold text-[11px] mb-1.5 flex items-center gap-1.5 text-foreground">
+                  <ShieldCheck class="w-3.5 h-3.5 text-primary" />
+                  {{ $t('system.scheduled_tasks.prerequisites.title') }}
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <div
+                    v-for="pKey in selectedCommandMeta.prerequisites"
+                    :key="pKey"
+                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium"
+                    :class="systemPrerequisites[pKey]?.met ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20' : 'bg-destructive/10 text-destructive border border-destructive/20'"
+                    :title="systemPrerequisites[pKey]?.message"
+                  >
+                    <Check v-if="systemPrerequisites[pKey]?.met" class="w-3 h-3" />
+                    <AlertTriangle v-else class="w-3 h-3" />
+                    {{ systemPrerequisites[pKey]?.name || pKey }}
+                  </div>
+                </div>
+                <p
+                  v-if="!selectedCommandMeta.prerequisites_met"
+                  class="text-destructive text-[11px] mt-1.5 font-medium flex items-center gap-1"
+                >
+                  <AlertTriangle class="w-3.5 h-3.5 flex-shrink-0" />
+                  {{ $t('system.scheduled_tasks.prerequisites.warning', { unmet: selectedCommandMeta.unmet_prerequisites.join(', ') }) }}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="grid gap-2">
@@ -381,10 +468,58 @@
                   :key="cmd.value" 
                   :value="cmd.value"
                 >
-                  {{ cmd.label }}
+                  <div class="flex items-center justify-between w-full gap-2">
+                    <span>{{ cmd.label }}</span>
+                    <span v-if="cmd.is_recommended" class="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 font-semibold border border-emerald-500/20">✨ Rec</span>
+                  </div>
                 </SelectItem>
               </SelectContent>
             </Select>
+
+            <!-- Command Info & Prerequisites Card -->
+            <div
+              v-if="adhocCommandMeta"
+              class="p-3 rounded-lg border border-border/70 bg-muted/40 space-y-2 text-xs mt-1"
+            >
+              <div class="flex items-center justify-between">
+                <Badge variant="outline" class="text-[10px]">{{ adhocCommandMeta.category }}</Badge>
+                <Badge
+                  v-if="adhocCommandMeta.is_recommended"
+                  class="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]"
+                >
+                  ✨ {{ $t('system.scheduled_tasks.recommended_badge') }}
+                </Badge>
+              </div>
+              <p class="text-muted-foreground">{{ adhocCommandMeta.description }}</p>
+
+              <!-- Prerequisites Status -->
+              <div class="pt-2 border-t border-border/60">
+                <div class="font-semibold text-[11px] mb-1.5 flex items-center gap-1.5 text-foreground">
+                  <ShieldCheck class="w-3.5 h-3.5 text-primary" />
+                  {{ $t('system.scheduled_tasks.prerequisites.title') }}
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <div
+                    v-for="pKey in adhocCommandMeta.prerequisites"
+                    :key="pKey"
+                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium"
+                    :class="systemPrerequisites[pKey]?.met ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20' : 'bg-destructive/10 text-destructive border border-destructive/20'"
+                    :title="systemPrerequisites[pKey]?.message"
+                  >
+                    <Check v-if="systemPrerequisites[pKey]?.met" class="w-3 h-3" />
+                    <AlertTriangle v-else class="w-3 h-3" />
+                    {{ systemPrerequisites[pKey]?.name || pKey }}
+                  </div>
+                </div>
+                <p
+                  v-if="!adhocCommandMeta.prerequisites_met"
+                  class="text-destructive text-[11px] mt-1.5 font-medium flex items-center gap-1"
+                >
+                  <AlertTriangle class="w-3.5 h-3.5 flex-shrink-0" />
+                  {{ $t('system.scheduled_tasks.prerequisites.warning', { unmet: adhocCommandMeta.unmet_prerequisites.join(', ') }) }}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="grid gap-2">
@@ -508,20 +643,27 @@ import {
 } from '@tanstack/vue-table';
 
 import {
+  AlertTriangle,
   BadgeInfo,
   Calendar,
   Check,
+  CheckCircle,
   Copy,
   FileText,
   Info,
   Loader2,
+  PauseCircle,
   Pencil,
   Play,
   Plus,
+  RotateCcw,
   Search,
+  ShieldCheck,
+  Sparkles,
   Terminal,
   Trash2,
   X,
+  Zap,
 } from 'lucide-vue-next';
 
 interface ScheduledTask {
@@ -540,8 +682,23 @@ interface ScheduledTask {
 }
 
 interface AllowedCommand {
-  label: string;
   value: string;
+  label: string;
+  category: string;
+  description: string;
+  is_recommended: boolean;
+  default_schedule: string;
+  prerequisites: string[];
+  prerequisites_met: boolean;
+  unmet_prerequisites: string[];
+}
+
+interface SystemPrerequisite {
+  id: string;
+  name: string;
+  description: string;
+  met: boolean;
+  message: string;
 }
 
 interface PaginationInfo {
@@ -582,8 +739,34 @@ const editingTask = ref<ScheduledTask | null>(null);
 const saving = ref(false);
 const running = ref<string | null>(null);
 const allowedCommands = ref<AllowedCommand[]>([]);
+const systemPrerequisites = ref<Record<string, SystemPrerequisite>>({});
+const applyingPreset = ref(false);
 const cronPreset = ref('');
 const errors = ref<Record<string, string | string[]>>({});
+
+const selectedCommandMeta = computed(() => {
+  return allowedCommands.value.find(c => c.value === form.value.command);
+});
+
+const adhocCommandMeta = computed(() => {
+  return allowedCommands.value.find(c => c.value === adhocCommand.value.command);
+});
+
+function onCommandChange(val: string) {
+  form.value.command = val;
+  const meta = allowedCommands.value.find(c => c.value === val);
+  if (meta) {
+    if (!form.value.name) {
+      form.value.name = meta.label;
+    }
+    if (!form.value.schedule && meta.default_schedule) {
+      form.value.schedule = meta.default_schedule;
+    }
+    if (!form.value.description && meta.description) {
+      form.value.description = meta.description;
+    }
+  }
+}
 
 // Help guide state
 const showHelp = ref(false);
@@ -686,7 +869,23 @@ const columns = [
     }),
     columnHelper.accessor('command', {
         header: t('system.scheduled_tasks.table.command'),
-        cell: ({ row }) => h('code', { class: 'text-[11px] bg-muted/50 px-2 py-0.5 rounded border border-border dark:bg-muted/20' }, row.original.command)
+        cell: ({ row }) => {
+            const task = row.original;
+            const meta = allowedCommands.value.find(c => c.value === task.command);
+            const isRec = meta?.is_recommended;
+            const unmet = meta?.unmet_prerequisites || [];
+            return h('div', { class: 'flex items-center gap-1.5 flex-wrap' }, [
+                h('code', { class: 'text-[11px] bg-muted/50 px-2 py-0.5 rounded border border-border dark:bg-muted/20' }, task.command),
+                isRec ? h('span', { class: 'inline-flex items-center gap-0.5 px-1.5 py-0.2 text-[9px] font-semibold bg-emerald-500/10 text-emerald-600 rounded border border-emerald-500/20', title: t('system.scheduled_tasks.tooltips.recommended') }, [
+                    h(Sparkles, { class: 'w-2.5 h-2.5 mr-0.5 inline text-emerald-500' }),
+                    t('system.scheduled_tasks.recommended_badge')
+                ]) : null,
+                unmet.length > 0 ? h('span', { class: 'inline-flex items-center gap-0.5 px-1.5 py-0.2 text-[9px] font-semibold bg-destructive/10 text-destructive rounded border border-destructive/20', title: t('system.scheduled_tasks.prerequisites.warning', { unmet: unmet.join(', ') }) }, [
+                    h(AlertTriangle, { class: 'w-2.5 h-2.5 mr-0.5 inline' }),
+                    unmet[0]
+                ]) : null,
+            ]);
+        }
     }),
     columnHelper.accessor('schedule', {
         header: t('system.scheduled_tasks.table.schedule'),
@@ -894,11 +1093,18 @@ async function fetchTasks(page = 1) : Promise<void> {
 async function fetchAllowedCommands() : Promise<void> {
   try {
     const response = await api.get('/manage/system/scheduled-tasks/allowed-commands');
-    if (response.data.commands) {
+    if (response.data?.data) {
+        allowedCommands.value = response.data.data.commands || [];
+        systemPrerequisites.value = response.data.data.prerequisites || {};
+        if (response.data.data.base_path) {
+            appPath.value = response.data.data.base_path;
+        }
+    } else if (response.data?.commands) {
         allowedCommands.value = response.data.commands;
-        appPath.value = response.data.base_path;
-    } else {
-        allowedCommands.value = response.data;
+        systemPrerequisites.value = response.data.prerequisites || {};
+        if (response.data.base_path) {
+            appPath.value = response.data.base_path;
+        }
     }
   } catch (error: unknown) {
     logger.error('Failed to fetch allowed commands:', error);
@@ -918,15 +1124,46 @@ const handlePerPageChange = (perPage: number) => {
     // fetchTasks will be called by the page-change event emitted by Pagination component immediately after
 };
 
-// Selection Logic (Removed - now handled by TanStack Table)
+// Preset Actions
+const applyPresetAction = async (preset: 'recommended' | 'reset_defaults') => {
+  const confirmMsg = preset === 'recommended' 
+    ? t('system.scheduled_tasks.presets.recommended_confirm') 
+    : t('system.scheduled_tasks.presets.reset_confirm');
+
+  const confirmed = await confirm({
+    title: t('common.messages.confirm.title'),
+    message: confirmMsg,
+    variant: preset === 'reset_defaults' ? 'warning' : 'default',
+    confirmText: t('common.actions.confirm'),
+  });
+
+  if (!confirmed) return;
+
+  try {
+    applyingPreset.value = true;
+    await api.post('/manage/system/scheduled-tasks/apply-preset', { preset });
+    toast.success.action(preset === 'recommended' 
+      ? t('system.scheduled_tasks.presets.applied') 
+      : t('system.scheduled_tasks.presets.reset_success')
+    );
+    await fetchTasks(pagination.value.current_page);
+    await fetchAllowedCommands();
+  } catch (error: unknown) {
+    logger.error('Failed to apply preset:', error);
+    toast.error.fromResponse(error);
+  } finally {
+    applyingPreset.value = false;
+  }
+};
 
 // Bulk Actions
 const handleBulkAction = async (action: string) => {
-    if (!action) return;
+    if (!action || !selectedTasks.value.length) {
+        bulkActionSelection.value = '';
+        return;
+    }
 
     if (action === 'delete') {
-        if (!selectedTasks.value.length) return;
-
         const confirmed = await confirm({
             title: t('common.messages.confirm.title'),
             message: t('common.messages.confirm.bulkDelete'),
@@ -938,19 +1175,45 @@ const handleBulkAction = async (action: string) => {
             bulkActionSelection.value = '';
             return;
         }
+    } else if (action === 'run') {
+        const confirmed = await confirm({
+            title: t('common.messages.confirm.title'),
+            message: t('system.scheduled_tasks.bulk.confirm_run', { count: selectedTasks.value.length }),
+            variant: 'warning',
+            confirmText: t('common.actions.run'),
+        });
 
-        try {
-            const deletePromises = selectedTasks.value.map(id => api.delete(`/manage/system/scheduled-tasks/${id}`));
-            await Promise.all(deletePromises);
-            
-            toast.success.action(t('system.scheduled_tasks.messages.bulkDeleted', { count: selectedTasks.value.length }));
-            selectedTasks.value = [];
+        if (!confirmed) {
             bulkActionSelection.value = '';
-            fetchTasks(pagination.value.current_page);
-        } catch (error: unknown) {
-            logger.error('Bulk action failed:', error);
-            toast.error.fromResponse(error);
+            return;
         }
+    }
+
+    try {
+        const response = await api.post('/manage/system/scheduled-tasks/bulk', {
+            action,
+            task_ids: selectedTasks.value
+        });
+
+        const affected = response.data?.data?.affected_count ?? selectedTasks.value.length;
+
+        if (action === 'activate') {
+            toast.success.action(t('system.scheduled_tasks.bulk.bulkActivated', { count: affected }));
+        } else if (action === 'deactivate') {
+            toast.success.action(t('system.scheduled_tasks.bulk.bulkDeactivated', { count: affected }));
+        } else if (action === 'run') {
+            toast.success.action(t('system.scheduled_tasks.bulk.bulkRun', { count: affected }));
+        } else if (action === 'delete') {
+            toast.success.action(t('system.scheduled_tasks.messages.bulkDeleted', { count: affected }));
+        }
+
+        selectedTasks.value = [];
+        bulkActionSelection.value = '';
+        fetchTasks(pagination.value.current_page);
+    } catch (error: unknown) {
+        logger.error('Bulk action failed:', error);
+        toast.error.fromResponse(error);
+        bulkActionSelection.value = '';
     }
 };
 

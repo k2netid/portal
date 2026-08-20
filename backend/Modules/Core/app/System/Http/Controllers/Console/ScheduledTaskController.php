@@ -32,8 +32,151 @@ class ScheduledTaskController extends BaseApiController
     {
         return $this->success([
             'commands' => ScheduledTask::getAllowedCommands(),
+            'prerequisites' => ScheduledTask::checkAllPrerequisites(),
             'base_path' => base_path(),
-        ], 'Allowed commands retrieved');
+        ], 'Allowed commands and prerequisites retrieved');
+    }
+
+    /**
+     * Perform bulk actions on scheduled tasks
+     */
+    public function bulk(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'action' => 'required|string|in:activate,deactivate,run,delete',
+            'task_ids' => 'required|array|min:1',
+            'task_ids.*' => 'required|string|uuid',
+        ]);
+
+        $action = (string) $validated['action'];
+        /** @var array<string> $taskIds */
+        $taskIds = $validated['task_ids'];
+
+        $authUser = Auth::user();
+        $user = $authUser instanceof User ? $authUser : null;
+        if (! $user || ! $user->can('manage scheduled tasks')) {
+            return $this->forbidden('Insufficient permissions context.');
+        }
+
+        $tasks = ScheduledTask::whereIn('id', $taskIds)->get();
+        $affectedCount = 0;
+        $runResults = [];
+
+        switch ($action) {
+            case 'activate':
+                $affectedCount = ScheduledTask::whereIn('id', $taskIds)->update(['is_active' => true]);
+                break;
+
+            case 'deactivate':
+                $affectedCount = ScheduledTask::whereIn('id', $taskIds)->update(['is_active' => false]);
+                break;
+
+            case 'delete':
+                $affectedCount = ScheduledTask::whereIn('id', $taskIds)->delete();
+                break;
+
+            case 'run':
+                app(Kernel::class)->bootstrap();
+                foreach ($tasks as $task) {
+                    if (! ScheduledTask::isCommandAllowed($task->command)) {
+                        continue;
+                    }
+                    try {
+                        $task->update(['status' => 'running', 'last_run_at' => now()]);
+                        $exitCode = Artisan::call($task->command);
+                        $output = Artisan::output();
+                        if (in_array(trim($output), ['', '0'], true) && $exitCode === 0) {
+                            $output = 'Task executed successfully.';
+                        }
+                        $status = $exitCode === 0 ? 'completed' : 'failed';
+                        $task->update(['status' => $status, 'output' => $output]);
+                        $runResults[$task->id] = ['name' => $task->name, 'status' => $status, 'exit_code' => $exitCode];
+                        $affectedCount++;
+                    } catch (\Throwable $e) {
+                        $task->update(['status' => 'failed', 'output' => $e->getMessage()]);
+                        $runResults[$task->id] = ['name' => $task->name, 'status' => 'failed', 'error' => $e->getMessage()];
+                    }
+                }
+                break;
+        }
+
+        $countInt = is_numeric($affectedCount) ? (int) $affectedCount : count($taskIds);
+
+        Log::info("Scheduled tasks bulk action: {$action}", [
+            'count' => $countInt,
+            'user_id' => Auth::id(),
+        ]);
+
+        return $this->success([
+            'action' => $action,
+            'affected_count' => $countInt,
+            'run_results' => $runResults,
+        ], "Bulk action '{$action}' executed successfully on {$countInt} tasks");
+    }
+
+    /**
+     * Apply preset or reset defaults
+     */
+    public function applyPreset(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'preset' => 'required|string|in:recommended,reset_defaults,all_active,all_inactive',
+        ]);
+
+        $preset = (string) $validated['preset'];
+
+        $authUser = Auth::user();
+        $user = $authUser instanceof User ? $authUser : null;
+        if (! $user || ! $user->can('manage scheduled tasks')) {
+            return $this->forbidden('Insufficient permissions context.');
+        }
+
+        $catalog = ScheduledTask::getCommandCatalog();
+
+        if ($preset === 'reset_defaults') {
+            $seeder = new \Modules\Core\System\Database\Seeders\ScheduledTaskSeeder;
+            $seeder->run();
+
+            return $this->success(null, 'Scheduled tasks reset to default golden set successfully');
+        }
+
+        if ($preset === 'recommended') {
+            foreach ($catalog as $cmd => $meta) {
+                $isRec = $meta['is_recommended'];
+                /** @var ScheduledTask|null $existing */
+                $existing = ScheduledTask::where('command', $cmd)->first();
+                if ($existing) {
+                    $existing->update([
+                        'is_active' => $isRec,
+                        'schedule' => $meta['default_schedule'],
+                    ]);
+                } elseif ($isRec) {
+                    ScheduledTask::create([
+                        'name' => $meta['name'],
+                        'command' => $cmd,
+                        'schedule' => $meta['default_schedule'],
+                        'description' => $meta['description'],
+                        'is_active' => true,
+                    ]);
+                }
+            }
+
+            return $this->success(null, 'Recommended task preset applied successfully');
+        }
+
+        if ($preset === 'all_active') {
+            ScheduledTask::query()->update(['is_active' => true]);
+
+            return $this->success(null, 'All scheduled tasks activated');
+        }
+
+        if ($preset === 'all_inactive') {
+            ScheduledTask::query()->update(['is_active' => false]);
+
+            return $this->success(null, 'All scheduled tasks deactivated');
+        }
+
+        return $this->error('Unknown preset', 422);
     }
 
     /**

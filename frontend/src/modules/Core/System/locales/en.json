@@ -2596,10 +2596,37 @@
       "schedule": "Schedule",
       "status": "Status"
     },
+    "presets": {
+      "recommended": "Recommended Preset",
+      "recommended_desc": "Activate 8 essential maintenance tasks with optimal schedules.",
+      "reset_defaults": "Reset Defaults",
+      "reset_confirm": "Reset all scheduled tasks to system default configuration (Golden Set)?",
+      "recommended_confirm": "Apply recommended preset for essential system maintenance tasks?",
+      "applied": "Recommended preset applied successfully",
+      "reset_success": "Scheduled tasks reset to defaults successfully"
+    },
+    "bulk": {
+      "activate": "Activate Selected",
+      "deactivate": "Deactivate Selected",
+      "run": "Run Selected",
+      "bulkActivated": "{count} tasks activated successfully",
+      "bulkDeactivated": "{count} tasks deactivated successfully",
+      "bulkRun": "{count} tasks executed successfully",
+      "confirm_run": "Run {count} selected tasks now?"
+    },
+    "prerequisites": {
+      "title": "System Prerequisites",
+      "all_met": "All server prerequisites met",
+      "warning": "Unmet server prerequisites: {unmet}",
+      "ready": "Ready",
+      "not_ready": "Not Ready"
+    },
+    "recommended_badge": "Recommended",
     "title": "Scheduled Tasks",
     "tooltips": {
       "click_to_activate": "Click to activate - Task will run automatically based on schedule",
-      "click_to_deactivate": "Click to deactivate - Task will not run automatically"
+      "click_to_deactivate": "Click to deactivate - Task will not run automatically",
+      "recommended": "This task is highly recommended for system health"
     }
   },
   "command_runner": {
