@@ -18,6 +18,7 @@ use Modules\Core\System\Http\Controllers\Console\EmailTestController;
 use Modules\Core\System\Http\Controllers\Console\ExtensionController;
 use Modules\Core\System\Http\Controllers\Console\KycReviewController;
 use Modules\Core\System\Http\Controllers\Console\LanguageController;
+use Modules\Core\System\Http\Controllers\Console\LicenseController;
 use Modules\Core\System\Http\Controllers\Console\LogController;
 use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
@@ -203,6 +204,14 @@ Route::prefix('v1')->group(function (): void {
         Route::get('{filename}/download', [LogController::class, 'download']);
         Route::post('clear', [LogController::class, 'clear']);
         Route::delete('{filename}', [LogController::class, 'destroy']);
+    });
+
+    // License Management & JA-CP Integration routes
+    Route::prefix('system/license')->group(function (): void {
+        Route::get('', [LicenseController::class, 'index']);
+        Route::post('activate', [LicenseController::class, 'activate']);
+        Route::post('refresh', [LicenseController::class, 'refresh']);
+        Route::post('deactivate', [LicenseController::class, 'deactivate']);
     });
 
     // Redis Management routes

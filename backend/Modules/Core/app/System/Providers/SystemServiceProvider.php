@@ -104,6 +104,7 @@ class SystemServiceProvider extends ServiceProvider
             PruneExpired::class,
             SystemClearCache::class,
             SystemHealthCheck::class,
+            \Modules\Core\System\Console\Commands\LicenseCheckCommand::class,
         ]);
     }
 

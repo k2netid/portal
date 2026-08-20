@@ -39,7 +39,7 @@
                     :is="getTabIcon(tab.id)"
                     class="w-4 h-4 mr-2"
                   />
-                  {{ $t('system.settings.tabs.' + tab.id) }}
+                  {{ te('system.settings.tabs.' + tab.id) ? $t('system.settings.tabs.' + tab.id) : tab.label }}
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -49,8 +49,12 @@
             class="space-y-6 p-6"
             @submit.prevent="handleSubmit"
           >
+          <TabsContent value="license">
+            <LicenseTab />
+          </TabsContent>
+
           <div
-            v-if="currentSettings.length === 0"
+            v-if="currentSettings.length === 0 && activeTab !== 'license'"
             class="text-center py-8"
           >
             <p class="text-muted-foreground">
@@ -58,7 +62,7 @@
             </p>
           </div>
 
-          <template v-else>
+          <template v-else-if="activeTab !== 'license'">
             <TabsContent value="system">
               <GeneralTab
                 v-model:form-data="formData"
@@ -178,7 +182,7 @@
           </template>
 
           <!-- Actions -->
-          <div class="flex justify-end space-x-4 pt-6 border-t">
+          <div v-if="activeTab !== 'license'" class="flex justify-end space-x-4 pt-6 border-t">
             <Button
               type="button"
               variant="outline"
@@ -228,9 +232,11 @@ import {
   SettingsIcon,
   Shield,
   Sparkles,
+  KeyRound,
 } from 'lucide-vue-next';
 
 // Async Tab Components
+const LicenseTab = defineAsyncComponent(() => import('./tabs/LicenseTab.vue'));
 const PlatformIdentityTab = defineAsyncComponent(() => import('./tabs/PlatformIdentityTab.vue'));
 const SeoTab = defineAsyncComponent(() => import('./tabs/SeoTab.vue'));
 const AnalyticsTab = defineAsyncComponent(() => import('./tabs/AnalyticsTab.vue'));
@@ -259,7 +265,7 @@ interface Tab {
     label: string;
 }
 
-const { t } = useI18n();
+const { t, te } = useI18n();
 const authStore = useAuthStore();
 const systemStore = useSystemStore();
 const route = useRoute();
@@ -268,8 +274,8 @@ const toast = useToast();
 
 const loading = ref(false);
 const saving = ref(false);
-// Initialize tab from query param if present (e.g., ?tab=performance)
-const validTabs = ['system', 'identity', 'seo', 'analytics', 'security', 'comments', 'performance', 'monitoring', 'email', 'media', 'ai'];
+// Initialize tab from query param if present (e.g., ?tab=license)
+const validTabs = ['system', 'license', 'identity', 'seo', 'analytics', 'security', 'comments', 'performance', 'monitoring', 'email', 'media', 'ai'];
 const initialTab = validTabs.includes(route.query.tab as string) ? (route.query.tab as string) : 'system';
 const activeTab = ref(initialTab);
 const settings = ref<Setting[]>([]);
@@ -313,6 +319,7 @@ const warmingCache = ref(false);
 const tabs = computed<Tab[]>(() => {
     const allTabs: Tab[] = [
         { id: 'system', label: 'System' },
+        { id: 'license', label: 'License' },
         { id: 'identity', label: 'Identity' },
         { id: 'seo', label: 'SEO' },
         { id: 'analytics', label: 'Analytics' },
@@ -331,13 +338,14 @@ const tabs = computed<Tab[]>(() => {
     }
 
     // Otherwise, only show operational tabs
-    const operationalTabs = ['system', 'media'];
+    const operationalTabs = ['system', 'license', 'media'];
     return allTabs.filter(tab => operationalTabs.includes(tab.id));
 });
 
 const getTabIcon = (tabId: string) => {
     switch (tabId) {
         case 'system': return SettingsIcon;
+        case 'license': return KeyRound;
         case 'security': return Shield;
         case 'performance': return Activity;
         case 'monitoring': return Activity;
