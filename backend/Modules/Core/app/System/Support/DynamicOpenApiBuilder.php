@@ -110,7 +110,7 @@ final class DynamicOpenApiBuilder
                 ['url' => url('/'), 'description' => 'Application root'],
             ],
             'tags' => [
-                ['name' => 'Dynamic / '.$slug, 'description' => "CCK type `{$slug}` (id: {$type->id})"],
+                ['name' => 'Dynamic / '.$slug, 'description' => "Data model `{$slug}` (id: {$type->id})"],
             ],
             'paths' => $paths,
             'components' => [
@@ -120,11 +120,17 @@ final class DynamicOpenApiBuilder
                     "{$slug}ApiEnvelope" => $envelope,
                 ],
             ],
+            'x-models' => [
+                'content_type_id' => $type->id,
+                'slug' => $slug,
+                'fields' => $type->fields,
+                'validation_rules' => DataModelFieldRulesBuilder::rulesFor($type),
+            ],
             'x-cck' => [
                 'content_type_id' => $type->id,
                 'slug' => $slug,
                 'fields' => $type->fields,
-                'validation_rules' => ContentTypeFieldRulesBuilder::rulesFor($type),
+                'validation_rules' => DataModelFieldRulesBuilder::rulesFor($type),
             ],
         ];
     }

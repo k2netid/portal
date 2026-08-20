@@ -142,14 +142,16 @@ export const aiPaths = {
     usageStats: '/manage/ai/usage-stats',
 } as const;
 
-export const cckPaths = {
-    types: '/manage/infra/cck/types',
-    openApiIndex: '/manage/infra/cck/types/openapi-index',
-    openApiBySlug: (slug: string) => `/manage/infra/cck/types/by-slug/${slug}/openapi`,
-    type: (id: string) => `/manage/infra/cck/types/${id}`,
-    typeBySlug: (slug: string) => `/manage/infra/cck/types/by-slug/${slug}`,
-    validationRules: (id: string) => `/manage/infra/cck/types/${id}/validation-rules`,
+export const dataModelPaths = {
+    types: '/manage/infra/models/types',
+    openApiIndex: '/manage/infra/models/types/openapi-index',
+    openApiBySlug: (slug: string) => `/manage/infra/models/types/by-slug/${slug}/openapi`,
+    type: (id: string) => `/manage/infra/models/types/${id}`,
+    typeBySlug: (slug: string) => `/manage/infra/models/types/by-slug/${slug}`,
+    validationRules: (id: string) => `/manage/infra/models/types/${id}/validation-rules`,
 } as const;
+
+export const cckPaths = dataModelPaths;
 
 export const dynamicRecordPaths = {
     index: (slug: string) => `/dynamic/${slug}`,

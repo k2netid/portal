@@ -34,12 +34,13 @@ class DynamicOpenApiTest extends TestCase
         ]);
 
         $response = $this->actingAs($admin, 'sanctum')
-            ->getJson('/api/v1/manage/infra/cck/types/by-slug/announcements/openapi');
+            ->getJson('/api/v1/manage/infra/models/types/by-slug/announcements/openapi');
 
         $response->assertStatus(200)
             ->assertJsonPath('data.openapi', '3.0.3')
             ->assertJsonPath('data.paths./api/v1/dynamic/announcements.get.operationId', 'dynamic.announcements.index')
             ->assertJsonPath('data.components.schemas.announcementsRecordInput.properties.title.type', 'string')
+            ->assertJsonPath('data.x-models.slug', 'announcements')
             ->assertJsonPath('data.x-cck.slug', 'announcements');
     }
 
@@ -55,7 +56,7 @@ class DynamicOpenApiTest extends TestCase
         ]);
 
         $this->actingAs($admin, 'sanctum')
-            ->getJson('/api/v1/manage/infra/cck/types/openapi-index')
+            ->getJson('/api/v1/manage/infra/models/types/openapi-index')
             ->assertStatus(200)
             ->assertJsonFragment(['slug' => 'products']);
     }

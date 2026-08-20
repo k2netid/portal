@@ -84,7 +84,7 @@ class DeveloperKitScaffolderTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin, 'sanctum')
-            ->postJson('/api/v1/manage/infra/cck/scaffold', $payload);
+            ->postJson('/api/v1/manage/infra/models/scaffold', $payload);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -129,7 +129,7 @@ class DeveloperKitScaffolderTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin, 'sanctum')
-            ->postJson('/api/v1/manage/infra/cck/scaffold', $payload);
+            ->postJson('/api/v1/manage/infra/models/scaffold', $payload);
 
         // Verify that it is returned as a file download (ZIP binary response)
         $response->assertStatus(200);

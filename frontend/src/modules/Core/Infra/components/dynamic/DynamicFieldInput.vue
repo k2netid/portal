@@ -238,11 +238,11 @@
 import { computed, ref, onMounted, watch } from 'vue';
 import { ExternalLink, Loader2 } from 'lucide-vue-next';
 import { Input, Label, Textarea, Checkbox, Button, Badge } from '@/shared/components/ui';
-import type { CckFieldDefinition } from '../../services/cckService';
+import type { DataModelFieldDefinition } from '../../services/dataModelService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 
 const props = defineProps<{
-    field: CckFieldDefinition;
+    field: DataModelFieldDefinition;
     modelValue: unknown;
 }>();
 

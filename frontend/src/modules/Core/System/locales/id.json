@@ -904,17 +904,17 @@
           },
           "database": {
             "title": "Optimalisasi Database",
-            "description": "Melakukan defragmentasi indeks skema dan membersihkan data CCK yatim piatu.",
-            "action": "Optimasi Database"
+            "description": "Melakukan defragmentasi indeks skema dan membersihkan data model yatim piatu.",
+            "action": "Optimalkan Database"
           },
           "performance": {
-            "title": "Boost Kinerja (Cache)",
-            "description": "Mengompilasi ulang config, route, dan view framework Laravel secara instan.",
-            "action": "Akselerasi Kinerja"
+            "title": "Peningkatan Performa (Cache)",
+            "description": "Mengkompilasi ulang konfigurasi framework, rute, dan tampilan Laravel secara instan.",
+            "action": "Akselerasi Performa"
           },
           "reset": {
-            "title": "Factory Reset Sistem",
-            "description": "Menghapus seluruh data kustom dan plugin, membersihkan sandbox, dan memuat ulang database.",
+            "title": "Reset Pabrik Sistem",
+            "description": "Menghapus semua data kustom dan plugin, membersihkan sandbox, dan memuat ulang database.",
             "action": "Reset Sistem"
           }
         },
@@ -923,27 +923,27 @@
           "clear": "Bersihkan"
         },
         "resetModal": {
-          "title": "Konfirmasi Factory Reset",
+          "title": "Konfirmasi Reset Pabrik",
           "subtitle": "Tindakan destruktif ini tidak dapat dibatalkan.",
-          "warning": "Ini akan menghapus seluruh data custom sandboxed, mereset struktur tabel database ke kondisi awal pabrik, menghapus plugin pihak ketiga, dan menyetel ulang kredensial Administrator.",
-          "passwordLabel": "Masukkan Password Super-Admin Anda",
+          "warning": "Tindakan ini akan menghapus semua data sandbox kustom, mengatur ulang skema database ke default pabrik, menghapus plugin pihak ketiga, dan mengatur ulang kredensial Administrator.",
+          "passwordLabel": "Masukkan kata sandi Super-Admin Anda",
           "cancel": "Batal",
           "confirm": "Reset Sekarang"
         },
         "logs": {
           "junk": {
-            "start": "Memulai Pembersihan File Sampah (Temp & Dev Artifacts)...",
-            "success": "SUKSES: File sampah dibersihkan!",
-            "filesDeleted": "  - Jumlah file dihapus: {count}",
-            "spaceFreed": "  - Total kapasitas yang dibebaskan: {size}",
-            "error": "ERROR: Gagal membersihkan junk: {message}"
+            "start": "Memulai pembersihan file sampah (artefak sementara & dev)...",
+            "success": "BERHASIL: File sampah dibersihkan!",
+            "filesDeleted": "  - File dihapus: {count}",
+            "spaceFreed": "  - Ruang dibebaskan: {size}",
+            "error": "GAGAL: Gagal membersihkan sampah: {message}"
           },
           "database": {
-            "start": "Memulai Optimalisasi Database & Indeks CCK...",
-            "success": "SUKSES: Indeks database berhasil didefragmentasi!",
-            "tablesOptimized": "  - Total tabel dioptimasi: {count}",
-            "orphansPurged": "  - Total baris CCK yatim piatu yang dipurge: {count}",
-            "error": "ERROR: Gagal optimalisasi database: {message}"
+            "start": "Memulai Optimalisasi Database & Indeks Model Data...",
+            "success": "BERHASIL: Indeks database didefragmentasi!",
+            "tablesOptimized": "  - Tabel dioptimalkan: {count}",
+            "orphansPurged": "  - Total baris model data yatim piatu yang dipurge: {count}",
+            "error": "GAGAL: Gagal mengoptimalkan database: {message}"
           },
           "performance": {
             "start": "Memulai Prekompilasi (Config, Route, & View Warming)...",

@@ -101,7 +101,7 @@ class SysMaintenanceService
         $purgedOrphans = 0;
         $optimizedTablesCount = 0;
 
-        // 1. Purge orphan dynamic CCK records (records whose ContentType no longer exists)
+        // 1. Purge orphan dynamic data model records (records whose ContentType no longer exists)
         if (Schema::hasTable('sys_content_types') && Schema::hasTable('sys_dynamic_records')) {
             $activeTypeIds = DB::table('sys_content_types')->pluck('id')->toArray();
             if (! empty($activeTypeIds)) {

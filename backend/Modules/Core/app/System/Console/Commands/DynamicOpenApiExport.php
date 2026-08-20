@@ -11,10 +11,10 @@ use Modules\Core\System\Support\DynamicOpenApiBuilder;
 class DynamicOpenApiExport extends Command
 {
     protected $signature = 'dynamic:openapi
-                            {slug? : CCK slug (omit to export all active types)}
+                            {slug? : Data model slug (omit to export all active types)}
                             {--output= : Directory to write JSON files (default: docs/api in project root)}';
 
-    protected $description = 'Export OpenAPI 3 JSON for dynamic CCK slug API(s)';
+    protected $description = 'Export OpenAPI 3 JSON for dynamic data model slug API(s)';
 
     public function handle(DynamicOpenApiBuilder $builder): int
     {

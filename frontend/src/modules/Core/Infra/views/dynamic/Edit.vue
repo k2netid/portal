@@ -86,7 +86,7 @@ import { Button, Spinner, Alert, AlertTitle, AlertDescription } from '@/shared/c
 import { useToast } from '@/shared/composables/useToast';
 import { parseSingleResponse } from '@/shared/utils/responseParser';
 import DynamicFieldInput from '../../components/dynamic/DynamicFieldInput.vue';
-import CckService, { type CckContentType } from '../../services/cckService';
+import DataModelService, { type DataModelSchema } from '../../services/dataModelService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 
 const { t } = useI18n();
@@ -104,10 +104,10 @@ const isEdit = computed(() => Boolean(recordId.value));
 const loading = ref(true);
 const saving = ref(false);
 const error = ref('');
-const contentType = ref<CckContentType | null>(null);
+const contentType = ref<DataModelSchema | null>(null);
 const form = reactive<Record<string, unknown>>({});
 
-function initFormFields(type: CckContentType): void {
+function initFormFields(type: DataModelSchema): void {
     for (const field of type.fields ?? []) {
         if (!(field.slug in form)) {
             if (field.type === 'boolean') {
@@ -125,10 +125,10 @@ async function load(): Promise<void> {
     loading.value = true;
     error.value = '';
     try {
-        const typeRes = await CckService.getTypeBySlug(slug.value);
-        contentType.value = parseSingleResponse<CckContentType>(typeRes);
+        const typeRes = await DataModelService.getTypeBySlug(slug.value);
+        contentType.value = parseSingleResponse<DataModelSchema>(typeRes);
         if (!contentType.value) {
-            error.value = 'Content type not found';
+            error.value = 'Data model not found';
             return;
         }
         initFormFields(contentType.value);

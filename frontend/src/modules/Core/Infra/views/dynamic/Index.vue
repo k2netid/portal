@@ -20,19 +20,19 @@
           size="sm"
           class="h-9 gap-1.5 text-xs"
           :disabled="!contentType"
-          @click="router.push({ name: 'cck-edit', params: { id: contentType?.id } })"
+          @click="router.push({ name: 'model-edit', params: { id: contentType?.id } })"
         >
           <SlidersHorizontal class="h-3.5 w-3.5" />
-          {{ $t('infra.cck.table.schema') }}
+          {{ $t('infra.models.table.schema') }}
         </Button>
         <Button
           variant="ghost"
           size="sm"
           class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          @click="router.push({ name: 'cck-index' })"
+          @click="router.push({ name: 'model-index' })"
         >
           <ArrowLeft class="h-3.5 w-3.5" />
-          {{ $t('infra.cck.back') }}
+          {{ $t('infra.models.back') }}
         </Button>
       </div>
     </template>
@@ -61,7 +61,7 @@
               <button
                 type="button"
                 class="hover:text-primary transition-colors"
-                :title="$t('infra.cck.table.copyEndpoint')"
+                :title="$t('infra.models.table.copyEndpoint')"
                 @click="copyEndpointUrl"
               >
                 <Copy class="h-3 w-3" />
@@ -299,7 +299,7 @@
       :title="$t('infra.dynamic.records.actions.delete')"
       :message="$t('infra.dynamic.records.confirm.delete')"
       :confirm-label="$t('infra.dynamic.records.actions.delete')"
-      :cancel-label="$t('infra.cck.cancel')"
+      :cancel-label="$t('infra.models.cancel')"
       variant="destructive"
       :loading="deleting"
       @confirm="executeDeleteRecord"
@@ -349,7 +349,7 @@ import {
 } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
 import { parseResponse, parseSingleResponse } from '@/shared/utils/responseParser';
-import CckService, { type CckContentType, type CckFieldDefinition } from '../../services/cckService';
+import DataModelService, { type DataModelSchema, type DataModelFieldDefinition } from '../../services/dataModelService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 
 const { t } = useI18n();
@@ -360,7 +360,7 @@ const toast = useToast();
 const slug = ref(String(route.params.slug ?? ''));
 const loading = ref(true);
 const error = ref('');
-const contentType = ref<CckContentType | null>(null);
+const contentType = ref<DataModelSchema | null>(null);
 const records = ref<DynamicRecordRow[]>([]);
 
 // Search and Pagination
@@ -388,7 +388,7 @@ const deleteModalOpen = ref(false);
 const recordToDelete = ref<DynamicRecordRow | null>(null);
 const deleting = ref(false);
 
-const displayColumns = computed<CckFieldDefinition[]>(() => {
+const displayColumns = computed<DataModelFieldDefinition[]>(() => {
     const fields = contentType.value?.fields ?? [];
     return fields.slice(0, 4);
 });
@@ -440,10 +440,10 @@ function onSearchInput(): void {
 
 async function loadContentType(): Promise<void> {
     try {
-        const res = await CckService.getTypeBySlug(slug.value);
-        contentType.value = parseSingleResponse<CckContentType>(res);
+        const res = await DataModelService.getTypeBySlug(slug.value);
+        contentType.value = parseSingleResponse<DataModelSchema>(res);
     } catch (e: unknown) {
-        error.value = e instanceof Error ? e.message : 'Content type not found';
+        error.value = e instanceof Error ? e.message : 'Data model not found';
     }
 }
 
@@ -481,7 +481,7 @@ async function copyEndpointUrl(): Promise<void> {
     const fullUrl = `${window.location.origin}/api/v1/dynamic/${slug.value}`;
     try {
         await navigator.clipboard.writeText(fullUrl);
-        toast.success.default(t('infra.cck.messages.endpointCopied'));
+        toast.success.default(t('infra.models.messages.endpointCopied'));
     } catch {
         prompt('Endpoint URL:', fullUrl);
     }

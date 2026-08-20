@@ -556,12 +556,12 @@ const scaffoldPlugin = async (payload: any) => {
     scaffoldError.value = '';
     try {
         if (payload.install_locally) {
-            const response = await api.post('/manage/infra/cck/scaffold', payload);
+            const response = await api.post('/manage/infra/models/scaffold', payload);
             toast.success(response.data?.message || t('system.appStore.scaffolder.installedSuccess'));
             scaffolderModalOpen.value = false;
             await fetchExtensions();
         } else {
-            const response = await api.post('/manage/infra/cck/scaffold', payload, {
+            const response = await api.post('/manage/infra/models/scaffold', payload, {
                 responseType: 'blob'
             });
             const blob = new Blob([response.data], { type: 'application/zip' });

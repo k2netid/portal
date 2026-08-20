@@ -452,7 +452,7 @@ const itemTranslationsEn: Record<string, { name?: string; desc: string }> = {
     ext_fileinfo: { name: 'PHP Ext: FileInfo', desc: 'Secure MIME type detection for uploaded files regardless of extension.' },
     ext_gd: { name: 'PHP Ext: GD / Imagick', desc: 'Image processing, responsive thumbnail generation, and WebP/AVIF conversions.' },
     ext_intl: { name: 'PHP Ext: Intl', desc: 'Internationalization formatting, localized currency, and calendar dates.' },
-    ext_json: { name: 'PHP Ext: JSON', desc: 'JSON data serialization for REST APIs and CCK custom fields.' },
+    ext_json: { name: 'PHP Ext: JSON', desc: 'JSON data serialization for REST APIs and custom data models.' },
     ext_mbstring: { name: 'PHP Ext: Mbstring', desc: 'Multibyte UTF-8 string manipulation for multilingual content.' },
     ext_openssl: { name: 'PHP Ext: OpenSSL', desc: 'Password hashing, Sanctum API tokens, and secure HTTPS connections.' },
     ext_pdo: { name: 'PHP Ext: PDO', desc: 'Database connection abstraction layer for Laravel Eloquent ORM.' },

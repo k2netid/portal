@@ -2,34 +2,50 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const infraRoutes: RouteRecordRaw[] = [
     {
-        path: 'cck',
-        name: 'cck-index',
-        component: () => import('@/modules/Core/Infra/views/cck/Index.vue'),
+        path: 'models',
+        name: 'model-index',
+        component: () => import('@/modules/Core/Infra/views/models/Index.vue'),
         meta: {
             permission: 'manage settings',
-            title: 'infra.cck.title',
-            breadcrumb: 'infra.cck.title',
+            title: 'infra.models.title',
+            breadcrumb: 'infra.models.title',
         },
+    },
+    {
+        path: 'models/new',
+        name: 'model-create',
+        component: () => import('@/modules/Core/Infra/views/models/Edit.vue'),
+        meta: {
+            permission: 'manage settings',
+            title: 'infra.models.newType',
+            breadcrumb: 'infra.models.newType',
+        },
+    },
+    {
+        path: 'models/:id',
+        name: 'model-edit',
+        component: () => import('@/modules/Core/Infra/views/models/Edit.vue'),
+        meta: {
+            permission: 'manage settings',
+            title: 'infra.models.editType',
+            breadcrumb: 'infra.models.editType',
+        },
+    },
+    // Legacy route redirects & aliases
+    {
+        path: 'cck',
+        name: 'cck-index',
+        redirect: { name: 'model-index' },
     },
     {
         path: 'cck/new',
         name: 'cck-create',
-        component: () => import('@/modules/Core/Infra/views/cck/Edit.vue'),
-        meta: {
-            permission: 'manage settings',
-            title: 'infra.cck.newType',
-            breadcrumb: 'infra.cck.newType',
-        },
+        redirect: { name: 'model-create' },
     },
     {
         path: 'cck/:id',
         name: 'cck-edit',
-        component: () => import('@/modules/Core/Infra/views/cck/Edit.vue'),
-        meta: {
-            permission: 'manage settings',
-            title: 'infra.cck.editType',
-            breadcrumb: 'infra.cck.editType',
-        },
+        redirect: (to) => ({ name: 'model-edit', params: { id: to.params.id } }),
     },
     {
         path: 'dynamic/:slug/records',
@@ -37,8 +53,8 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/dynamic/Index.vue'),
         meta: {
             permission: 'manage settings',
-            title: 'infra.cck.title',
-            breadcrumb: 'infra.cck.title',
+            title: 'infra.models.title',
+            breadcrumb: 'infra.models.title',
         },
     },
     {

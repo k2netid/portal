@@ -904,7 +904,7 @@
           },
           "database": {
             "title": "Database Optimization",
-            "description": "Defragments schema indexes and purges orphaned CCK data.",
+            "description": "Defragments schema indexes and purges orphaned data model records.",
             "action": "Optimize Database"
           },
           "performance": {
@@ -939,10 +939,10 @@
             "error": "ERROR: Failed to clean junk: {message}"
           },
           "database": {
-            "start": "Starting database optimization & CCK indexes...",
+            "start": "Starting database optimization & data model indexes...",
             "success": "SUCCESS: Database indexes defragmented!",
             "tablesOptimized": "  - Tables optimized: {count}",
-            "orphansPurged": "  - Orphaned CCK rows purged: {count}",
+            "orphansPurged": "  - Orphaned data model rows purged: {count}",
             "error": "ERROR: Failed to optimize database: {message}"
           },
           "performance": {

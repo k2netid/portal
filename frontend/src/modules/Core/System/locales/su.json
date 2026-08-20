@@ -904,7 +904,7 @@
           },
           "database": {
             "title": "Optimalisasi Database",
-            "description": "Melakukan defragmentasi indeks skema sareng membersihkan data CCK yatim piatu.",
+            "description": "Melakukan defragmentasi indeks skéma sareng ngabersihkeun data modél yatim piatu.",
             "action": "Optimasi Database"
           },
           "performance": {
@@ -939,10 +939,10 @@
             "error": "ERROR: Gagal membersihkan junk: {message}"
           },
           "database": {
-            "start": "Memulai Optimalisasi Database & Indeks CCK...",
-            "success": "SUKSES: Indeks database hasil didefragmentasi!",
+            "start": "Mitembeyan Optimalisasi Database & Indéks Modél Data...",
+            "success": "SUKSES: Indéks database hasil didefragmentasi!",
             "tablesOptimized": "  - Total tabel dioptimasi: {count}",
-            "orphansPurged": "  - Total baris CCK yatim piatu anu dipurge: {count}",
+            "orphansPurged": "  - Total baris modél data yatim piatu anu dipurge: {count}",
             "error": "ERROR: Gagal optimalisasi database: {message}"
           },
           "performance": {
