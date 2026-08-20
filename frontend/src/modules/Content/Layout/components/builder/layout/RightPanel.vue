@@ -227,7 +227,9 @@ const goBack = () => {
   const path = modulePath.value
   if (path.length > 1) {
     const parentModule = path[path.length - 2]
-    selectModule(parentModule.id)
+    if (parentModule) {
+      selectModule(parentModule.id)
+    }
   }
 }
 

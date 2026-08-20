@@ -89,7 +89,7 @@ const { t } = useI18n();
 const cmsStore = useCmsStore();
 const darkMode = computed({
   get: () => cmsStore.isDarkMode,
-  set: (val: boolean) => cmsStore.toggleDarkMode(val)
+  set: () => cmsStore.toggleDarkMode()
 });
 const builder = inject<BuilderInstance>('builder');
 

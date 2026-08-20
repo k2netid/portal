@@ -22,7 +22,7 @@ const modules: ModuleDefinition[] = [];
 
 // Process and register each module
 Object.keys(moduleFiles).forEach((path) => {
-    const mod = moduleFiles[path].default;
+    const mod = moduleFiles[path]?.default;
     if (mod && mod.name) {
         modules.push(mod);
         ModuleRegistry.register(mod);

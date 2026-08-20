@@ -3,8 +3,8 @@ import type { Ref, ComputedRef, Component } from 'vue';
 export interface Category { id: number | string; name: string; slug: string; }
 export interface Tag { id: number | string; name: string; slug: string; }
 export interface Menu { id: number | string; name: string; slug?: string; location?: string; items?: unknown[]; }
-export type ThemeData = Record<string, unknown>;
-export type ThemeSettings = Record<string, unknown>;
+import type { ThemeData, ThemeSettings } from '@/types/theme';
+export type { ThemeData, ThemeSettings };
 
 export interface BuilderOptions {
     mode?: 'site' | 'page';

@@ -168,6 +168,7 @@ const cloneTemplate = (template: Template) => {
     const blocks = template.factory();
     // Factory might return array or single object depending on template implementation.
     const block = Array.isArray(blocks) ? blocks[0] : (blocks as BlockInstance);
+    if (!block) return null;
 
     const regenerateIds = (node: BlockInstance) => {
         node.id = ModuleRegistry.generateId();

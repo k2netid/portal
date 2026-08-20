@@ -12,10 +12,10 @@
       <div class="radius-controls grid grid-cols-2 gap-2">
         <div v-for="corner in cornerKeys" :key="corner" class="control-group">
             <BaseNumberInput 
-              v-model="radius[corner]" 
+              :model-value="radius[corner]" 
               :label="t(`builder.fields.border.radius.${corner}`)"
               :placeholder="String(getPlaceholderRadius(corner))"
-              @update:model-value="updateRadius(corner)"
+              @update:model-value="(v: string | number | boolean) => { radius[corner] = (v as string | number); updateRadius(corner); }"
             />
         </div>
         
@@ -44,7 +44,7 @@
       />
       
       <!-- Helpers for active side style -->
-      <div class="style-inputs flex flex-col gap-3">
+      <div class="style-inputs flex flex-col gap-3" v-if="currentStyle">
          <!-- Width -->
          <div class="input-row">
             <BaseLabel>{{ t('builder.fields.border.width') }}</BaseLabel>
@@ -64,7 +64,7 @@
              <ColorField 
                :value="currentStyle.color" 
                :placeholder-value="getPlaceholderColor"
-               @update:value="(val: string) => { currentStyle.color = val; updateStyle('color') }" 
+               @update:value="handleColorUpdate" 
              />
          </div>
 
@@ -121,7 +121,9 @@ const emit = defineEmits(['update:value'])
 const { t } = useI18n()
 
 // State
-const cornerKeys = ['tl', 'tr', 'bl', 'br']
+const cornerKeys = ['tl', 'tr', 'bl', 'br'] as const
+type CornerKey = typeof cornerKeys[number]
+
 const sides = [
     { id: 'all', label: 'All', icon: Square },
     { id: 'top', label: 'Top', icon: ArrowUp },
@@ -143,7 +145,7 @@ const activeSide = ref('all')
 
 // Internal models
 const linked = ref(true)
-const radius = reactive<Record<string, number | string>>({ tl: 0, tr: 0, bl: 0, br: 0 })
+const radius = reactive<Record<CornerKey, number | string>>({ tl: 0, tr: 0, bl: 0, br: 0 })
 const styles = reactive<Record<string, { width: number | string; color: string; style: string }>>({
     all: { width: 0, color: '#333333', style: 'solid' },
     top: { width: 0, color: '#333333', style: 'solid' },
@@ -157,7 +159,7 @@ watch(() => props.value, (newVal) => {
     if(!newVal) return
     if(newVal.radius) {
         linked.value = newVal.radius.linked
-        Object.keys(radius).forEach(k => {
+        cornerKeys.forEach(k => {
             const val = (newVal.radius as Record<string, unknown>)[k]
             if (typeof val === 'string' || typeof val === 'number') {
                 radius[k] = val
@@ -189,9 +191,16 @@ const getPlaceholderColor = computed(() => {
 })
 
 // Updates
-const updateRadius = (corner: string) => {
+const handleColorUpdate = (val: string) => {
+    if (currentStyle.value) {
+        currentStyle.value.color = val
+        updateStyle('color')
+    }
+}
+
+const updateRadius = (corner: CornerKey) => {
     if(linked.value) {
-        const val = radius[corner]
+        const val = radius[corner] ?? 0
         radius.tl = radius.tr = radius.bl = radius.br = val
     }
     emitUpdate()
@@ -200,7 +209,7 @@ const updateRadius = (corner: string) => {
 const toggleRadiusLink = () => {
     linked.value = !linked.value
     if(linked.value) {
-        const val = radius.tl 
+        const val = radius.tl ?? 0
         radius.tr = radius.bl = radius.br = val
         emitUpdate()
     }

@@ -15,7 +15,6 @@ import genders from '@/locales/su/genders.json';
 import auth from '@/locales/su/auth.json';
 
 import { moduleLocaleBundles } from '@/engine/i18n/moduleLocales';
-import sharedConsole from '@/locales/su/console.json';
 
 const common = {
     actions,
@@ -35,6 +34,5 @@ const common = {
 export default {
     common,
     shared: common,
-    sharedConsole,
     ...moduleLocaleBundles.su,
 };

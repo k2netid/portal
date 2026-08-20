@@ -1,6 +1,7 @@
 export interface ThemeOption {
-    label: string;
-    value: string | boolean;
+    label?: string;
+    value?: string | boolean | number;
+    [key: string]: unknown;
 }
 
 export interface ThemeSetting {
@@ -12,12 +13,12 @@ export interface ThemeSetting {
     min?: number;
     max?: number;
     step?: number;
-    options?: ThemeOption[] | string;
+    options?: (ThemeOption | string)[] | string | Record<string, unknown>;
     fields?: {
         name: string;
         label: string;
         type: string;
-        options?: string | ThemeOption[];
+        options?: string | (ThemeOption | string)[];
     }[];
     placeholder?: string;
     description?: string;

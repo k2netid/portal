@@ -3,7 +3,7 @@
     <!-- History List -->
     <div class="history-list">
       <button 
-        v-for="(snapshot, index) in history"
+        v-for="(_, index) in history"
         :key="index"
         class="history-item"
         :class="{ 

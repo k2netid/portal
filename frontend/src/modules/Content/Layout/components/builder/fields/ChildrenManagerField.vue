@@ -153,7 +153,7 @@ const addChild = () => {
         const definition = builder?.getModuleDefinition(props.module.type)
         if (definition?.children && definition.children.length > 0) {
             const firstChildType = definition.children[0]
-            if (firstChildType !== '*') {
+            if (firstChildType && firstChildType !== '*') {
                 builder?.insertModule(firstChildType, props.module.id)
             }
         }

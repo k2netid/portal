@@ -38,7 +38,15 @@
               </div>
 
               <select v-else-if="setting.type === 'select'" v-model="formValues[setting.key]" class="select-input" @change="handleInput">
-                <option v-for="opt in setting.options" :key="String(opt.value)" :value="opt.value">{{ opt.label }}</option>
+                <template v-if="Array.isArray(setting.options)">
+                  <option 
+                    v-for="opt in setting.options" 
+                    :key="typeof opt === 'object' && opt ? String(opt.value ?? opt.label) : String(opt)" 
+                    :value="typeof opt === 'object' && opt ? opt.value : opt"
+                  >
+                    {{ typeof opt === 'object' && opt ? (opt.label ?? opt.value) : opt }}
+                  </option>
+                </template>
               </select>
 
               <div v-else-if="setting.type === 'checkbox'" class="checkbox-setting">
@@ -111,16 +119,17 @@ const currentTheme = computed(() => {
 const settingsSections = computed(() => {
   if (!currentTheme.value?.manifest?.settings_schema) return [];
   
-  const schema = currentTheme.value.manifest.settings_schema;
+  const schema = currentTheme.value.manifest.settings_schema as Record<string, ThemeSetting>;
   const sections: Record<string, { id: string; label: string; settings: SettingItem[] }> = {};
 
   Object.keys(schema).forEach(key => {
     const setting = schema[key];
+    if (!setting) return;
     const category = setting.category || 'General';
     if (!sections[category]) {
       sections[category] = { id: category, label: category, settings: [] };
     }
-    sections[category].settings.push({ key, ...setting });
+    sections[category]!.settings.push({ key, ...setting });
   });
 
   return Object.values(sections);
@@ -129,11 +138,14 @@ const settingsSections = computed(() => {
 const loadThemeSettings = () => {
     if (!currentTheme.value) return;
     const theme = currentTheme.value;
-    const schema = theme.manifest?.settings_schema || {};
+    const schema = (theme.manifest?.settings_schema || {}) as Record<string, ThemeSetting>;
     const defaults: Record<string, unknown> = {};
     
     Object.keys(schema).forEach(key => {
-        defaults[key] = schema[key].default ?? '';
+        const item = schema[key];
+        if (item) {
+            defaults[key] = item.default ?? '';
+        }
     });
     
     formValues.value = { ...defaults, ...(theme.settings || {}) };

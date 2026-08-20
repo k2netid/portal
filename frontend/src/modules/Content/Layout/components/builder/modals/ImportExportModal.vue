@@ -126,7 +126,7 @@ const handleDrop = (e: DragEvent) => {
   const files = e.dataTransfer?.files;
   if (files && files.length > 0) {
     const file = files[0];
-    if (file.name.endsWith('.json')) {
+    if (file && file.name.endsWith('.json')) {
       selectedFile.value = file;
     }
   }

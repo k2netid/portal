@@ -76,8 +76,8 @@ const filteredThemes = computed(() => {
   if (!searchQuery.value) return themes.value;
   const query = searchQuery.value.toLowerCase();
   return themes.value.filter((t: ThemeData) => 
-    t.name.toLowerCase().includes(query) || 
-    t.slug.toLowerCase().includes(query)
+    (t.name || '').toLowerCase().includes(query) || 
+    (t.slug || '').toLowerCase().includes(query)
   );
 });
 

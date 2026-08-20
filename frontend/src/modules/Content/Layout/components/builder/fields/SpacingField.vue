@@ -30,7 +30,7 @@
     <!-- Unit Selector -->
     <div class="unit-selector-wrapper" v-if="hasUnits">
       <BaseSegmentedControl
-        :model-value="localValue.unit"
+        :model-value="String(localValue.unit || 'px')"
         @update:model-value="updateUnit"
         :options="unitOptions"
         size="sm"
@@ -106,7 +106,7 @@ const updateUnit = (unit: string | number | boolean) => {
 const toggleLink = () => {
   isLinked.value = !isLinked.value
   if (isLinked.value) {
-    const val = localValue.value.top
+    const val = localValue.value.top ?? 0
     localValue.value.right = val
     localValue.value.bottom = val
     localValue.value.left = val

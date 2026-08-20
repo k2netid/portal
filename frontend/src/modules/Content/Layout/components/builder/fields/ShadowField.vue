@@ -157,8 +157,10 @@ watch(localValue, (newVal) => {
 
 const applyPreset = (key: string) => {
     localValue.preset = key
-    const p = (presets.value as Record<string, { values: ShadowValue }>)[key].values
-    Object.assign(localValue, p)
+    const p = (presets.value as Record<string, { values: ShadowValue }>)[key]?.values
+    if (p) {
+        Object.assign(localValue, p)
+    }
 }
 </script>
 

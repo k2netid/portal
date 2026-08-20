@@ -96,7 +96,7 @@ watch(presets, (newPresets) => {
     if (newPresets.length > 0 && !isLoaded.value) {
         const types = Array.from(new Set(newPresets.map((p: BuilderPreset) => p.type))).sort();
         if (types.length > 0) {
-            activeType.value = types[0]; // Open the first category by default
+            activeType.value = types[0] ?? null; // Open the first category by default
         }
         isLoaded.value = true;
     }

@@ -17,12 +17,13 @@
       <div class="flex items-center justify-between mb-4">
         <BaseLabel class="mb-0">{{ activeTabLabel }}</BaseLabel>
         <BaseToggle 
-          v-model="localValue[activeTab].enabled" 
+          v-if="localValue[activeTab]"
+          v-model="localValue[activeTab]!.enabled" 
           @update:model-value="updateValue"
         />
       </div>
 
-      <div v-if="localValue[activeTab].enabled" class="effect-controls space-y-4">
+      <div v-if="localValue[activeTab]?.enabled" class="effect-controls space-y-4">
         <!-- Placeholder for actual motion controls like range sliders, etc. -->
         <!-- In a real implementation, each motion type would have its own set of sliders (Entrance, Middle, Exit) -->
         <div class="info-box text-xs">
@@ -33,7 +34,7 @@
            <!-- Dynamic controls would go here based on activeTab -->
            <div class="flex flex-col gap-2">
              <BaseLabel class="text-[10px]">{{ $t('builder.advanced.scroll.level', 'Intensity') }}</BaseLabel>
-             <input type="range" class="builder-range" v-model="localValue[activeTab].level" @input="updateValue">
+             <input type="range" class="builder-range" v-if="localValue[activeTab]" v-model="localValue[activeTab]!.level" @input="updateValue">
            </div>
         </div>
       </div>

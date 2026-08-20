@@ -8,7 +8,7 @@
         class="variable-category"
         icon-position="right"
         :model-value="activeCategoryId === category.id"
-        @update:model-value="(val) => toggleCategory(category.id)"
+        @update:model-value="() => toggleCategory(category.id)"
       >
 <!-- Numbers Specific Layout -->
            <div v-if="category.id === 'numbers'" class="numbers-list">
@@ -169,7 +169,7 @@
                                </div>
                                <MediaPicker 
                                    :label="t('builder.panels.globalVariables.actions.selectImage')"
-                                   @selected="(media) => handleMediaSelect(index, media)"
+                                   @selected="(media: any) => handleMediaSelect(index, media)"
                                >
                                    <template #trigger="{ open }">
                                        <BaseButton variant="secondary" size="sm" @click="open" class="upload-btn">
@@ -487,8 +487,8 @@ const addFontVariable = () => checkAndAddVariable('fonts', globalFonts);
 
 // Media Picker Logic
 const handleMediaSelect = (index: number, media: { url?: string }) => {
-    if (media && media.url && globalImages?.value) {
-        globalImages.value[index].value = media.url;
+    if (media && media.url && globalImages?.value && globalImages.value[index]) {
+        globalImages.value[index]!.value = media.url;
     }
 };
 
@@ -498,7 +498,8 @@ const editingColorIndex = ref<number | null>(null);
 
 const editingColorValue = computed(() => {
     if (editingColorIndex.value !== null && globalColors?.value && globalColors.value[editingColorIndex.value]) {
-        return globalColors.value[editingColorIndex.value].value as string;
+        const item = globalColors.value[editingColorIndex.value];
+        return item ? (item.value as string) : '';
     }
     return '';
 });
@@ -511,9 +512,11 @@ const openColorPicker = (index: number) => {
 const updateColorValue = (newValue: string) => {
     if (editingColorIndex.value !== null && globalColors?.value) {
         const color = globalColors.value[editingColorIndex.value];
-        color.value = newValue;
-        if (newValue.startsWith('#')) {
-            color.hex = newValue.replace('#', '');
+        if (color) {
+            color.value = newValue;
+            if (newValue.startsWith('#')) {
+                color.hex = newValue.replace('#', '');
+            }
         }
     }
 };
@@ -534,8 +537,10 @@ const handleHexInput = (index: number, event: Event) => {
 const updateColorFromHex = (index: number, hex: string) => {
     if (globalColors?.value) {
         const color = globalColors.value[index];
-        if (!hex.startsWith('#')) hex = '#' + hex;
-        color.value = hex;
+        if (color) {
+            if (!hex.startsWith('#')) hex = '#' + hex;
+            color.value = hex;
+        }
     }
 };
 

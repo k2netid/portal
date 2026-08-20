@@ -268,13 +268,17 @@ const templateGroups = computed(() => {
     
     // Add sections
     sectionTemplates.forEach(tpl => {
-        const cat = categoriesMap[tpl.category] || categoriesMap.content;
-        cat.templates.push({ ...tpl, templateType: 'section' } as LocalTemplate);
+        const cat = (tpl.category ? categoriesMap[tpl.category] : undefined) || categoriesMap.content;
+        if (cat) {
+            cat.templates.push({ ...tpl, templateType: 'section' } as LocalTemplate);
+        }
     });
 
     // Add pages
     pageTemplates.forEach(tpl => {
-        categoriesMap.pages.templates.push({ ...tpl, category: 'pages', templateType: 'page' } as LocalTemplate);
+        if (categoriesMap.pages) {
+            categoriesMap.pages.templates.push({ ...tpl, category: 'pages', templateType: 'page' } as LocalTemplate);
+        }
     });
     
     return Object.values(categoriesMap).filter(c => c.templates.length > 0);

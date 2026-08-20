@@ -48,9 +48,15 @@
                 class="setting-field select-field"
                 @change="handleInput(setting.key)"
               >
-                <option v-for="opt in setting.options" :key="String(opt.value)" :value="opt.value">
-                  {{ opt.label }}
-                </option>
+                <template v-if="Array.isArray(setting.options)">
+                  <option 
+                    v-for="opt in setting.options" 
+                    :key="typeof opt === 'object' && opt ? String(opt.value ?? opt.label) : String(opt)" 
+                    :value="typeof opt === 'object' && opt ? opt.value : opt"
+                  >
+                    {{ typeof opt === 'object' && opt ? (opt.label ?? opt.value) : opt }}
+                  </option>
+                </template>
               </select>
 
               <!-- Number Field -->
@@ -119,11 +125,12 @@ const expandedSections = ref<string[]>(['General', 'Colors']);
 const settingsSections = computed(() => {
   if (!activeTheme.value?.manifest?.settings_schema) return [];
   
-  const schema = activeTheme.value.manifest.settings_schema;
+  const schema = activeTheme.value.manifest.settings_schema as Record<string, ThemeSetting>;
   const sectionsMap: Record<string, { id: string; label: string; settings: SettingItem[] }> = {};
 
   Object.keys(schema).forEach(key => {
     const setting = schema[key];
+    if (!setting) return;
     const category = setting.category || 'General';
     
     if (!sectionsMap[category]) {
@@ -134,7 +141,7 @@ const settingsSections = computed(() => {
       };
     }
     
-    sectionsMap[category].settings.push({ key, ...setting });
+    sectionsMap[category]!.settings.push({ key, ...setting });
   });
 
   return Object.values(sectionsMap);
@@ -144,10 +151,13 @@ const loadSettings = () => {
     if (!activeTheme.value) return;
     
     const defaults: Record<string, unknown> = {};
-    const schema = activeTheme.value.manifest?.settings_schema || {};
+    const schema = (activeTheme.value.manifest?.settings_schema || {}) as Record<string, ThemeSetting>;
     
     Object.keys(schema).forEach(key => {
-        defaults[key] = schema[key].default ?? '';
+        const item = schema[key];
+        if (item) {
+            defaults[key] = item.default ?? '';
+        }
     });
 
     formValues.value = { ...defaults, ...(activeTheme.value.settings || {}) };
@@ -176,7 +186,7 @@ const toggleSection = (id: string) => {
 };
 
 const saveSettings = async () => {
-  if (!isDirty.value || !activeTheme.value || !builder) return;
+  if (!isDirty.value || !activeTheme.value?.slug || !builder?.updateThemeSettings) return;
   
   saving.value = true;
   try {

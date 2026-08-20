@@ -201,14 +201,13 @@ const showVarSuggestions = ref(false)
 const showModeDropdown = ref(false)
 const modeDropdownRef = ref<HTMLElement | null>(null)
 const mainInputRef = ref<HTMLElement | null>(null)
-const hexInputRef = ref<HTMLElement | null>(null)
 
 // Computed Props
 const opacityPercentage = computed(() => {
     const val = props.value || ''
     if (val.startsWith('color-mix(')) {
         const match = val.match(/color-mix\(in srgb,\s*.+?,\s*transparent\s*(\d+(\.\d+)?)%\)/)
-        if (match) {
+        if (match && match[1]) {
             return 100 - parseFloat(match[1]) // if transparent 20%, alpha is 80%
         }
     }
@@ -238,7 +237,7 @@ const initFromProp = () => {
         if (val.startsWith('color-mix(')) {
             // Extract variable and opacity from color-mix(in srgb, var(--foo), transparent 20%)
             const match = val.match(/color-mix\(in srgb,\s*(.+?),\s*transparent\s*(\d+(\.\d+)?)%\)/)
-            if (match) {
+            if (match && match[1]) {
                 const inner = match[1].trim()
                 cssVarValue.value = inner.startsWith('var(') ? inner.replace(/^var\(\s*(.+?)\s*\)$/, '$1') : inner
             } else {
@@ -313,7 +312,7 @@ const handleModalUpdate = (newValue: string) => {
         if (newValue.startsWith('color-mix(')) {
             // Extract variable from color-mix(in srgb, var(--foo), transparent 20%)
             const match = newValue.match(/color-mix\(in srgb,\s*(.+?),\s*transparent\s*(\d+(\.\d+)?)%\)/)
-            if (match) {
+            if (match && match[1]) {
                 const inner = match[1].trim()
                 cssVarValue.value = inner.startsWith('var(') ? inner.replace(/^var\(\s*(.+?)\s*\)$/, '$1') : inner
             } else {

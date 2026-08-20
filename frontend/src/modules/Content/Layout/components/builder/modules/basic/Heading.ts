@@ -1,4 +1,4 @@
-import type { ModuleDefinition, SettingDefinition, ModuleField } from '@/types/builder';
+import type { ModuleDefinition, SettingDefinition } from '@/types/builder';
 import {
     backgroundSettings,
     spacingSettings,
@@ -18,7 +18,6 @@ import {
     interactionsSettings,
     scrollEffectsSettings,
     attributesSettings,
-    linkSettings,
     layoutSettings
 } from '@/components/builder/modules/commonSettings';
 
@@ -107,11 +106,20 @@ const HeadingModule: ModuleDefinition = {
                         label: 'Wrap Heading with Link'
                     },
                     {
-                        ...(linkSettings.fields as ModuleField[])[0],
+                        name: 'link_url',
+                        type: 'link',
+                        label: 'Link URL',
+                        placeholder: 'https:// or #anchor',
                         show_if: { field: 'use_link', value: true }
                     },
                     {
-                        ...(linkSettings.fields as ModuleField[])[1],
+                        name: 'link_target',
+                        type: 'select',
+                        label: 'Target',
+                        options: [
+                            { label: 'Same Window (_self)', value: '_self' },
+                            { label: 'New Window (_blank)', value: '_blank' }
+                        ],
                         show_if: { field: 'use_link', value: true }
                     },
                     {

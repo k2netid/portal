@@ -195,16 +195,22 @@ const addQuery = () => {
 }
 
 const editQuery = (index: number) => {
-    editingQuery.value = { ...localValue.value[index] }
-    editingIndex.value = index
-    isEditing.value = true
+    const item = localValue.value[index]
+    if (item) {
+        editingQuery.value = { ...item }
+        editingIndex.value = index
+        isEditing.value = true
+    }
 }
 
 const duplicateQuery = (index: number) => {
-    const newVal = [...localValue.value]
-    newVal.splice(index + 1, 0, { ...newVal[index] })
-    localValue.value = newVal
-    emitUpdates()
+    const item = localValue.value[index]
+    if (item) {
+        const newVal = [...localValue.value]
+        newVal.splice(index + 1, 0, { ...item })
+        localValue.value = newVal
+        emitUpdates()
+    }
 }
 
 const removeQuery = (index: number) => {

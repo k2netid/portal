@@ -187,7 +187,7 @@
                 </div>
             </transition>
             
-            <MediaPicker @selected="(media) => updateSetting('backgroundImage', media.url)" :constraints="{ allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'] }">
+            <MediaPicker @selected="(media: any) => updateSetting('backgroundImage', media?.url)" :constraints="{ allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'] }">
                 <template #trigger="{ open }">
                     <div 
                       class="bg-preview-box image-preview-box cursor-pointer" 
@@ -651,7 +651,7 @@
                         {{ getInfoContent('backgroundVideoMp4') }}
                     </div>
                 </transition>
-                <MediaPicker @selected="(media) => updateSetting('backgroundVideoMp4', media.url)" :constraints="{ allowedExtensions: ['mp4', 'mov', 'm4v'] }">
+                <MediaPicker @selected="(media: any) => updateSetting('backgroundVideoMp4', media?.url)" :constraints="{ allowedExtensions: ['mp4', 'mov', 'm4v'] }">
                     <template #trigger="{ open }">
                         <div 
                         class="bg-preview-box video-preview-box cursor-pointer" 
@@ -711,7 +711,7 @@
                         {{ getInfoContent('backgroundVideoWebm') }}
                     </div>
                 </transition>
-                <MediaPicker @selected="(media) => updateSetting('backgroundVideoWebm', media.url)" :constraints="{ allowedExtensions: ['webm'] }">
+                <MediaPicker @selected="(media: any) => updateSetting('backgroundVideoWebm', media?.url)" :constraints="{ allowedExtensions: ['webm'] }">
                     <template #trigger="{ open }">
                         <div 
                         class="bg-preview-box video-preview-box cursor-pointer" 
@@ -2239,13 +2239,17 @@ const handleResponsiveUpdate = (data: Record<string, unknown>) => {
         lastUpdate.value++
         if (key.includes('.')) {
             // key is like "backgroundGradient_mobile.direction"
-            const [parentPath, childKey] = key.split('.')
-            let existingParent = currentSettings[parentPath]
-            if (!existingParent || (typeof existingParent === 'object' && Object.keys(existingParent).length === 0)) {
-                const baseKey = parentPath.replace(/(_tablet|_mobile)$/, '')
-                existingParent = currentSettings[baseKey] || {}
+            const parts = key.split('.')
+            const parentPath = parts[0]
+            const childKey = parts[1]
+            if (parentPath && childKey) {
+                let existingParent = currentSettings[parentPath]
+                if (!existingParent || (typeof existingParent === 'object' && Object.keys(existingParent).length === 0)) {
+                    const baseKey = parentPath.replace(/(_tablet|_mobile)$/, '')
+                    existingParent = currentSettings[baseKey] || {}
+                }
+                (finalData as Record<string, unknown>)[parentPath] = { ...(existingParent as object), [childKey]: value }
             }
-            (finalData as Record<string, unknown>)[parentPath] = { ...(existingParent as object), [childKey]: value }
         } else {
             // Flat keys - Check for unit sync
             const baseKey = key.replace(/(_tablet|_mobile)$/, '')

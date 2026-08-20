@@ -238,7 +238,7 @@
               <!-- Variants Grid -->
               <div class="variants-grid">
                   <div 
-                      v-for="(hex, shade) in selectedFamily.variants" 
+                      v-for="(hex, shade) in (selectedFamily?.variants || {})" 
                       :key="shade"
                       class="variant-item"
                       @click="selectPreset(hex as string)"
@@ -526,7 +526,7 @@ const parseVarValue = (val: string) => {
   if (val.startsWith('color-mix(')) {
     // Extract variable and opacity from color-mix(in srgb, var(--foo), transparent 20%)
     const match = val.match(/color-mix\(in srgb,\s*(.+?),\s*transparent\s*(\d+(\.\d+)?)%\)/);
-    if (match) {
+    if (match && match[1] && match[2]) {
       const inner = match[1].trim();
       cssVarValue.value = inner.startsWith('var(') ? inner.replace(/^var\(\s*(.+?)\s*\)$/, '$1') : inner;
       const transparentPercent = parseFloat(match[2]);

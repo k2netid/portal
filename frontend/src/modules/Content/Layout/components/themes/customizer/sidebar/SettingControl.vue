@@ -527,8 +527,8 @@ const getGenericIcon = (key: string) => {
   return Globe;
 };
 
-const translateOption = (label: string) => optionLabel(label);
-const translateLabel = (label: string) => fieldLabel(label);
+const translateOption = (label?: string) => (label ? optionLabel(label) : '');
+const translateLabel = (label?: string) => (label ? fieldLabel(label) : '');
 
 const handleInput = (val: unknown) => {
   emit('update:modelValue', val);

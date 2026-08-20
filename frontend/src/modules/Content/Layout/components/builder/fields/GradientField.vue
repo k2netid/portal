@@ -579,23 +579,24 @@ const getColorAtPosition = (pos: number) => {
     let rightStop = stops[stops.length - 1]
 
     for (let i = 0; i < stops.length; i++) {
-        if (stops[i].position <= pos) leftStop = stops[i]
-        if (stops[i].position >= pos) {
-            rightStop = stops[i]
+        const item = stops[i]
+        if (item && item.position <= pos) leftStop = item
+        if (item && item.position >= pos) {
+            rightStop = item
             break
         }
     }
 
-    if (leftStop === rightStop) return leftStop.color
+    if (leftStop && rightStop && leftStop === rightStop) return leftStop.color
     
     // For now returning left stop color is simplified
-    return leftStop.color
+    return leftStop ? leftStop.color : '#ffffff'
 }
 
 // Drag logic
 let dragStartIndex = -1
 
-const startDrag = (e: MouseEvent, index: number) => {
+const startDrag = (_e: MouseEvent, index: number) => {
   isDragging.value = true
   dragStartIndex = index
   activeStopIndex.value = index
@@ -613,7 +614,10 @@ const onDrag = (e: MouseEvent) => {
   
   position = Math.max(0, Math.min(100, position))
   
-  localSettings.value.stops[dragStartIndex].position = position
+  const targetStop = localSettings.value.stops[dragStartIndex]
+  if (targetStop) {
+    targetStop.position = position
+  }
   emitUpdate()
 }
 

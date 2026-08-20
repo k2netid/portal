@@ -280,7 +280,7 @@ const selectVar = (val: string) => {
 
 const handleSelection = (media: { url: string; extension?: string }) => {
   if (media && media.url) {
-    const ext = media.extension || (media.url.split('.').pop() || '').toLowerCase().split('?')[0]
+    const ext = media.extension || (media.url.split('.').pop() || '').toLowerCase().split('?')[0] || ''
     if (props.allowedExtensions && props.allowedExtensions.length > 0 && !props.allowedExtensions.includes(ext)) {
       toast.error.validation(`File type .${ext} is not allowed for this field.`)
       return
