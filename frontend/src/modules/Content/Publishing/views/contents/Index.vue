@@ -11,6 +11,7 @@ import {
   Clock3,
   FileEdit,
   FileText,
+  LayoutGrid,
   Pencil,
   Plus,
   RotateCcw,
@@ -105,6 +106,14 @@ const perPage = ref('10');
 const selectedContents = ref<string[]>([]);
 const bulkAction = ref('');
 
+const isBuilderContent = (content: Content): boolean => {
+    return !!(
+        (content.meta?.builder_blocks && Array.isArray(content.meta.builder_blocks) && content.meta.builder_blocks.length > 0) ||
+        content.meta?.editor_type === 'builder' ||
+        (content as any).editor_type === 'builder'
+    );
+};
+
 const columnHelper = createColumnHelper<Content>();
 
 const columns = [
@@ -162,6 +171,29 @@ const columns = [
                 variant: 'outline',
                 class: cn('capitalize border-none px-2 py-0.5', getStatusBadgeClass(status))
             }, t(`publishing.content.status.${status}`));
+        }
+    }),
+    columnHelper.display({
+        id: 'editor_type',
+        header: t('publishing.content.form.editor', 'Editor'),
+        cell: ({ row }) => {
+            const isBuilder = isBuilderContent(row.original);
+            if (isBuilder) {
+                return h(Badge, {
+                    variant: 'outline',
+                    class: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-200/50 dark:border-indigo-800/50 font-medium px-2 py-0.5 flex items-center gap-1.5 w-fit text-xs'
+                }, [
+                    h(LayoutGrid, { class: 'w-3 h-3 text-indigo-500 flex-shrink-0' }),
+                    h('span', 'Visual Builder')
+                ]);
+            }
+            return h(Badge, {
+                variant: 'outline',
+                class: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-200/50 dark:border-slate-800/50 font-medium px-2 py-0.5 flex items-center gap-1.5 w-fit text-xs'
+            }, [
+                h(FileText, { class: 'w-3 h-3 text-slate-500 flex-shrink-0' }),
+                h('span', 'Classic')
+            ]);
         }
     }),
     columnHelper.accessor('is_featured', {
