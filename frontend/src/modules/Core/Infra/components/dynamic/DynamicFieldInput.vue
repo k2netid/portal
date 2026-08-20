@@ -185,24 +185,14 @@
       </p>
     </div>
 
-    <!-- 9. Image / Media URL with Preview -->
+    <!-- 9. Image / Media Asset Picker with Media Library integration -->
     <div v-else-if="field.type === 'image' || field.type === 'media'" class="space-y-2">
-      <div class="flex gap-2">
-        <Input
-          :id="inputId"
-          type="text"
-          :model-value="stringValue"
-          :required="field.is_required"
-          class="h-9 text-xs"
-          placeholder="https://example.com/asset.png"
-          @update:model-value="onInput"
-        />
-      </div>
+      <!-- Media Preview Card when value is present -->
       <div
         v-if="stringValue"
-        class="flex items-center gap-3 p-2 rounded-lg border border-border/60 bg-muted/20"
+        class="flex items-center gap-3 p-2.5 rounded-lg border border-border/80 bg-muted/20"
       >
-        <div class="w-12 h-12 rounded border bg-background overflow-hidden shrink-0 flex items-center justify-center">
+        <div class="w-14 h-14 rounded-md border bg-background overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
           <img
             :src="stringValue"
             alt="Preview"
@@ -211,13 +201,61 @@
             @load="imageLoadError = false"
           >
         </div>
-        <div class="min-w-0 flex-1">
-          <p class="text-[11px] font-medium text-foreground truncate">{{ stringValue }}</p>
-          <p class="text-[10px] text-muted-foreground">
-            {{ imageLoadError ? $t('infra.dynamic.record.previewUnavailable') : $t('infra.dynamic.record.imagePreview') }}
-          </p>
+        <div class="min-w-0 flex-1 space-y-1">
+          <p class="text-xs font-mono font-medium text-foreground truncate">{{ stringValue }}</p>
+          <div class="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              class="h-7 text-[11px] gap-1 px-2"
+              @click="isMediaPickerOpen = true"
+            >
+              <ImageIcon class="h-3 w-3" />
+              {{ $t('common.actions.change') || 'Change' }}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              class="h-7 text-[11px] text-destructive hover:bg-destructive/10 px-2 gap-1"
+              @click="onInput('')"
+            >
+              <X class="h-3 w-3" />
+              {{ $t('common.actions.remove') || 'Remove' }}
+            </Button>
+          </div>
         </div>
       </div>
+
+      <!-- Empty state picker button -->
+      <div v-else class="flex flex-col sm:flex-row gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          class="h-10 border-dashed gap-2 text-xs flex-1 justify-center"
+          @click="isMediaPickerOpen = true"
+        >
+          <ImageIcon class="h-4 w-4 text-primary" />
+          {{ $t('media.modals.picker.select') || 'Choose from Media Library' }}
+        </Button>
+        <Input
+          :id="inputId"
+          type="text"
+          :model-value="stringValue"
+          :required="field.is_required"
+          class="h-10 text-xs sm:w-64"
+          placeholder="or paste URL directly..."
+          @update:model-value="onInput"
+        />
+      </div>
+
+      <!-- MediaPicker Modal -->
+      <MediaPicker
+        v-model:open="isMediaPickerOpen"
+        :label="field.name"
+        @selected="(media: any) => onInput(media?.url || media?.path || '')"
+      />
     </div>
 
     <!-- 10. Standard Text / Number / Email / Date Input -->
@@ -236,8 +274,9 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue';
-import { ExternalLink, Loader2 } from 'lucide-vue-next';
+import { ExternalLink, Loader2, Image as ImageIcon, X } from 'lucide-vue-next';
 import { Input, Label, Textarea, Checkbox, Button, Badge } from '@/shared/components/ui';
+import MediaPicker from '@/modules/Content/Media/components/picker/MediaPicker.vue';
 import type { DataModelFieldDefinition } from '../../services/dataModelService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 
@@ -250,6 +289,7 @@ const emit = defineEmits<{
     'update:modelValue': [value: unknown];
 }>();
 
+const isMediaPickerOpen = ref(false);
 const imageLoadError = ref(false);
 const inputId = computed(() => `dyn-${props.field.slug}`);
 

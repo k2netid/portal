@@ -53,7 +53,7 @@
             />
           </div>
 
-          <!-- API Endpoint Pill -->
+          <!-- Export & Refresh Toolbar -->
           <div class="flex items-center gap-2 text-xs font-mono text-muted-foreground">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-muted/60 text-muted-foreground group">
               <Globe class="h-3.5 w-3.5 text-primary shrink-0" />
@@ -67,6 +67,32 @@
                 <Copy class="h-3 w-3" />
               </button>
             </div>
+
+            <!-- Export Records Dropdown -->
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  class="h-8 text-xs gap-1.5"
+                  :disabled="records.length === 0"
+                >
+                  <Download class="h-3.5 w-3.5" />
+                  <span>Export</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" class="w-44">
+                <DropdownMenuItem class="text-xs gap-2 cursor-pointer" @click="exportCSV">
+                  <FileSpreadsheet class="h-3.5 w-3.5 text-emerald-600" />
+                  <span>Export as CSV</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem class="text-xs gap-2 cursor-pointer" @click="exportJSON">
+                  <Code class="h-3.5 w-3.5 text-primary" />
+                  <span>Export as JSON</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button
               variant="ghost"
               size="sm"
@@ -326,6 +352,9 @@ import {
   AlertCircle,
   Network,
   ExternalLink,
+  Download,
+  FileSpreadsheet,
+  Code,
 } from 'lucide-vue-next';
 import {
   ConsoleListPage,
@@ -346,6 +375,10 @@ import {
   TableHead,
   TableCell,
   ConfirmModal,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
 import { parseResponse, parseSingleResponse } from '@/shared/utils/responseParser';
@@ -506,6 +539,56 @@ async function executeDeleteRecord(): Promise<void> {
     } finally {
         deleting.value = false;
     }
+}
+
+function exportJSON(): void {
+    if (records.value.length === 0) return;
+    const exportData = records.value.map((r) => ({
+        id: r.id,
+        ...(r.data || {}),
+        created_at: r.created_at,
+        updated_at: r.updated_at,
+    }));
+    const jsonStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${slug.value}-records-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success.default(t('common.messages.exported') || 'Records exported as JSON');
+}
+
+function exportCSV(): void {
+    if (records.value.length === 0) return;
+    const cols = contentType.value?.fields?.map((f) => f.slug) ?? [];
+    const headers = ['id', ...cols, 'created_at', 'updated_at'];
+
+    const rows = records.value.map((r) => {
+        const rowData = r.data || {};
+        return [
+            r.id,
+            ...cols.map((c) => {
+                const val = rowData[c];
+                if (val === null || val === undefined) return '""';
+                if (typeof val === 'object') return `"${JSON.stringify(val).replace(/"/g, '""')}"`;
+                return `"${String(val).replace(/"/g, '""')}"`;
+            }),
+            r.created_at ? `"${r.created_at}"` : '""',
+            r.updated_at ? `"${r.updated_at}"` : '""',
+        ].join(',');
+    });
+
+    const csvContent = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${slug.value}-records-${Date.now()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success.default(t('common.messages.exported') || 'Records exported as CSV');
 }
 
 watch(
