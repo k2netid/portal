@@ -6,15 +6,29 @@
       :subtitle="$t('infra.dynamic.record.subtitle', { name: contentType?.name ?? slug })"
     >
       <template #actions>
-        <Button
-          variant="ghost"
-          size="sm"
-          class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
-        >
-          <ArrowLeft class="h-3.5 w-3.5" />
-          {{ $t('infra.dynamic.record.backToRecords') }}
-        </Button>
+        <div class="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+            @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
+          >
+            <ArrowLeft class="h-3.5 w-3.5" />
+            {{ $t('infra.dynamic.record.backToRecords') }}
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            class="h-9 gap-2 text-xs"
+            :disabled="saving"
+            @click="submit"
+          >
+            <Spinner v-if="saving" class="h-3.5 w-3.5" />
+            <Save v-else class="h-3.5 w-3.5" />
+            {{ saving ? $t('infra.dynamic.record.saving') : $t('infra.dynamic.record.save') }}
+          </Button>
+        </div>
       </template>
     </PageHeader>
 

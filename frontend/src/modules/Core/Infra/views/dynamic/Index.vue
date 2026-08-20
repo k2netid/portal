@@ -7,13 +7,13 @@
     <template #actions>
       <div class="flex items-center gap-2">
         <Button
+          variant="ghost"
           size="sm"
-          class="h-9 gap-2 text-xs"
-          :disabled="!contentType"
-          @click="router.push({ name: 'dynamic-records-create', params: { slug } })"
+          class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+          @click="router.push({ name: 'model-index' })"
         >
-          <Plus class="h-3.5 w-3.5" />
-          {{ $t('infra.dynamic.records.newRecord') }}
+          <ArrowLeft class="h-3.5 w-3.5" />
+          {{ $t('infra.models.back') }}
         </Button>
         <Button
           variant="outline"
@@ -26,13 +26,13 @@
           {{ $t('infra.models.table.schema') }}
         </Button>
         <Button
-          variant="ghost"
           size="sm"
-          class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          @click="router.push({ name: 'model-index' })"
+          class="h-9 gap-2 text-xs"
+          :disabled="!contentType"
+          @click="router.push({ name: 'dynamic-records-create', params: { slug } })"
         >
-          <ArrowLeft class="h-3.5 w-3.5" />
-          {{ $t('infra.models.back') }}
+          <Plus class="h-3.5 w-3.5" />
+          {{ $t('infra.dynamic.records.newRecord') }}
         </Button>
       </div>
     </template>

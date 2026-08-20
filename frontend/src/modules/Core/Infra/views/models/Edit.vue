@@ -8,7 +8,18 @@
       <template #actions>
         <div class="flex items-center gap-2">
           <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+            @click="router.push({ name: 'model-index' })"
+          >
+            <ArrowLeft class="h-3.5 w-3.5" />
+            {{ $t('infra.models.back') }}
+          </Button>
+          <Button
             v-if="!isCreate && form.slug"
+            type="button"
             variant="outline"
             size="sm"
             class="h-9 gap-1.5 text-xs"
@@ -18,13 +29,15 @@
             {{ $t('infra.models.table.records') }}
           </Button>
           <Button
-            variant="ghost"
+            type="button"
             size="sm"
-            class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-            @click="router.push({ name: 'model-index' })"
+            class="h-9 gap-2 text-xs"
+            :disabled="saving"
+            @click="handleSave"
           >
-            <ArrowLeft class="h-3.5 w-3.5" />
-            {{ $t('infra.models.back') }}
+            <Spinner v-if="saving" class="h-3.5 w-3.5" />
+            <Save v-else class="h-3.5 w-3.5" />
+            {{ saving ? $t('infra.models.saving') : $t('infra.models.save') }}
           </Button>
         </div>
       </template>
