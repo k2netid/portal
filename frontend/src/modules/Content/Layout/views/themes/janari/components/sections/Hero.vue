@@ -88,12 +88,12 @@
         >
           {{ heroCtaPricingText }}
         </router-link>
-        <router-link
-          to="/auth/console-sign-in"
+        <a
+          href="/auth/console-sign-in"
           class="w-full sm:w-auto px-6 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase text-white/70 hover:text-white transition-colors"
         >
           {{ t('theme.janari.hero.ctaSecondary') }}
-        </router-link>
+        </a>
       </div>
 
       <!-- Slide Indicators (Dynamic) -->

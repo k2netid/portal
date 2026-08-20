@@ -11,6 +11,7 @@ import {
 import { errorReturnShell, rememberRouteBeforeError } from '@/shared/utils/errorReturn';
 import { isPublicShell } from '@/config/shell';
 import { resetLockdown } from '@/engine/api/client';
+import { resolveIsConsoleEntrypoint } from '@/engine/router/entrypoint';
 
 interface GuardPaths {
     loginPath: string;
@@ -34,6 +35,14 @@ export const handleBeforeEachGuard = async (
     const systemStore = useSystemStore();
     const onPublicSite = isPublicShell();
     const returnShell = errorReturnShell();
+
+    // Public shell encountering console/auth entrypoint: full browser navigation to console.html
+    if (onPublicSite && resolveIsConsoleEntrypoint(to.path)) {
+        if (typeof window !== 'undefined') {
+            window.location.assign(to.fullPath);
+            return false;
+        }
+    }
 
     // Public shell: probe/console/auth paths → 404 (hub has no CMS routes).
     if (onPublicSite && shouldBlockOnPublicSite(to.path)) {

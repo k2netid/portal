@@ -39,12 +39,12 @@
           >
             {{ t('pages.solusi.ctaPricing') }}
           </router-link>
-          <router-link
-            to="/auth/console-sign-up"
+          <a
+            href="/auth/console-sign-up"
             class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50"
           >
             {{ t('pages.solusi.ctaMember') }}
-          </router-link>
+          </a>
         </div>
       </div>
     </section>
