@@ -109,7 +109,7 @@ const { getSetting } = useTheme();
 const systemStore = useSystemStore();
 
 const siteName = computed(() => {
-  return String(getSetting('site_title') || systemStore.siteTitle || 'Zenith');
+  return String(getSetting('site_title') || systemStore.siteSettings?.site_name || systemStore.appIdentity?.app_name || 'Zenith');
 });
 
 const copyrightText = computed(() => {

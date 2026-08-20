@@ -3,7 +3,7 @@
     type="button"
     aria-label="Toggle Theme"
     class="w-9 h-9 rounded-full flex items-center justify-center border border-border/60 bg-background/60 text-foreground hover:bg-muted transition-colors"
-    @click="toggleDark"
+    @click="toggleMode"
   >
     <Sun
       v-if="isDark"
@@ -20,5 +20,5 @@
 import { useDarkMode } from '@/shared/composables/useDarkMode';
 import { Sun, Moon } from 'lucide-vue-next';
 
-const { isDark, toggleDark } = useDarkMode('frontend');
+const { isDark, toggleMode } = useDarkMode('frontend');
 </script>

@@ -118,11 +118,11 @@ const systemStore = useSystemStore();
 const mobileMenuOpen = ref(false);
 
 const siteName = computed(() => {
-  return String(getSetting('site_title') || systemStore.siteTitle || 'Zenith');
+  return String(getSetting('site_title') || systemStore.siteSettings?.site_name || systemStore.appIdentity?.app_name || 'Zenith');
 });
 
 const siteLogo = computed(() => {
-  return String(getSetting('brand_logo') || systemStore.siteLogo || '');
+  return String(getSetting('brand_logo') || systemStore.siteSettings?.site_logo || systemStore.appIdentity?.app_logo || '');
 });
 
 const navItems = computed(() => [
