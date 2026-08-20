@@ -490,22 +490,26 @@ const itemTranslationsSu: Record<string, { name?: string; desc: string }> = {
 
 const getItemName = (item: RequirementItem): string => {
     const loc = String(locale.value || 'id').toLowerCase();
-    if (loc.startsWith('en') && itemTranslationsEn[item.id]?.name) {
-        return itemTranslationsEn[item.id].name;
+    if (loc.startsWith('en')) {
+        const entry = itemTranslationsEn[item.id];
+        if (entry?.name) return entry.name;
     }
-    if (loc.startsWith('su') && itemTranslationsSu[item.id]?.name) {
-        return itemTranslationsSu[item.id].name;
+    if (loc.startsWith('su')) {
+        const entry = itemTranslationsSu[item.id];
+        if (entry?.name) return entry.name;
     }
     return item.name;
 };
 
 const getItemDescription = (item: RequirementItem): string => {
     const loc = String(locale.value || 'id').toLowerCase();
-    if (loc.startsWith('en') && itemTranslationsEn[item.id]?.desc) {
-        return itemTranslationsEn[item.id].desc;
+    if (loc.startsWith('en')) {
+        const entry = itemTranslationsEn[item.id];
+        if (entry?.desc) return entry.desc;
     }
-    if (loc.startsWith('su') && itemTranslationsSu[item.id]?.desc) {
-        return itemTranslationsSu[item.id].desc;
+    if (loc.startsWith('su')) {
+        const entry = itemTranslationsSu[item.id];
+        if (entry?.desc) return entry.desc;
     }
     return item.description;
 };
