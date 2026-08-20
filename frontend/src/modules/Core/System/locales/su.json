@@ -2398,39 +2398,39 @@
     "cache": {
       "actions": {
         "all": {
-          "button": "Bersihkan Sadaya",
-          "desc": "Bersihkan sadaya data cache termasuk config, route, sareng view",
-          "title": "Bersihkan Sadaya Cache"
+          "button": "Bersihan Sadaya",
+          "desc": "Bersihan sadaya data cache kaasup config, route, sareng view",
+          "title": "Bersihan Sadaya Cache"
         },
         "cache": {
-          "button": "Bersihkan Cache",
-          "desc": "Bersihkan cache aplikasi saja",
+          "button": "Bersihan Cache",
+          "desc": "Bersihan cache aplikasi hungkul",
           "title": "Cache Aplikasi"
         },
         "config": {
-          "button": "Bersihkan Config",
-          "desc": "Bersihkan cache konfigurasi",
+          "button": "Bersihan Config",
+          "desc": "Bersihan cache konfigurasi",
           "title": "Cache Konfigurasi"
         },
         "route": {
-          "button": "Bersihkan Route",
-          "desc": "Bersihkan cache route",
+          "button": "Bersihan Route",
+          "desc": "Bersihan cache route",
           "title": "Cache Route"
         },
         "view": {
-          "button": "Bersihkan View",
-          "desc": "Bersihkan template view anu dikompilasi",
+          "button": "Bersihan View",
+          "desc": "Bersihan citakan view anu dikompilasi",
           "title": "Cache View"
         },
         "warm": {
           "button": "Warm Cache",
-          "desc": "Regenerasi file cache anu dioptimalkan",
+          "desc": "Kompilasi deui berkas cache anu dioptimalkeun",
           "title": "Warm Cache",
-          "warming": "Memproses..."
+          "warming": "Nuju prosés..."
         }
       },
       "stats": {
-        "expired": "Key Kedaluwarsa",
+        "expired": "Key Kadaluwarsa",
         "keys": "Total Key",
         "size": "Ukuran Cache",
         "table": {
@@ -2439,68 +2439,134 @@
           "ttl": "TTL"
         },
         "title": "Statistik Cache",
-        "topKeys": "Key Teratas dumasar kana Ukuran"
+        "topKeys": "Key Pangluhurna dumasar Ukuran"
       },
-      "title": "Manajemen Cache"
+      "title": "Manajemén Cache"
     },
-    "description": "Ngokolakeun konfigurasi server Redis sareng monitor performa cache",
+    "description": "Ngokolakeun konfigurasi sérver Redis, inspeksi keyspace, sareng monitor performa cache sacara real-time",
+    "disabledWarning": {
+      "title": "Redis Teu Aktip",
+      "desc": "Redis danget ieu ditumpurkeun dina setélan sistem. Pikeun ngaktipkeunana, buka",
+      "performanceLink": "Setélan > Performa",
+      "actionHint": "sareng pilih \"Redis\" atanapi \"Redis + Failover\" salaku Driver Cache."
+    },
+    "groups": {
+      "connection": {
+        "name": "Sambungan",
+        "desc": "Konfigurasi host sérver Redis, port, kecap konci, sareng indéks database"
+      },
+      "cache": {
+        "name": "Cache",
+        "desc": "Ngokolakeun paripolah caching aplikasi sareng prefix key"
+      },
+      "sessionQueue": {
+        "name": "Sési & Antrean",
+        "desc": "Konfigurasi driver sési sareng antrean background worker"
+      }
+    },
+    "explorer": {
+      "title": "Éksplorasi Key Redis",
+      "subtitle": "Pilari, pariksa payload nilai, sareng atur key sacara real-time",
+      "searchPlaceholder": "Pilari pola key (conto: tag:*, sys_*, *)...",
+      "searchBtn": "Pilari Key",
+      "searching": "Nuju mariksa...",
+      "connection": "Sambungan:",
+      "cacheDb": "Cache DB (5)",
+      "defaultDb": "Default DB (4)",
+      "totalFound": "Kapendak {count} key",
+      "key": "Key",
+      "rawKey": "Key Asli",
+      "type": "Tipe",
+      "size": "Mémori",
+      "ttl": "TTL",
+      "actions": "Aksi",
+      "inspect": "Pariksa",
+      "delete": "Hapus",
+      "deleteConfirm": "Naha anjeun yakin hoyong ngahapus key \"{key}\"?",
+      "deleteSuccess": "Key \"{key}\" parantos hasil dihapus",
+      "empty": "Teu aya key Redis anu cocog sareng pola ieu",
+      "inspectModal": {
+        "title": "Inspektur Key Redis",
+        "keyName": "Nami Key",
+        "connection": "Database Sambungan",
+        "type": "Tipe Data",
+        "memory": "Pamakéan Mémori",
+        "ttl": "Masa Berlaku (TTL)",
+        "copy": "Salin Nilai",
+        "copied": "Nilai parantos kasalin!",
+        "formatJson": "Format JSON",
+        "formatRaw": "String Mentah",
+        "close": "Tutup"
+      }
+    },
     "messages": {
-      "flushTitle": "Bersihkan Cache",
-      "flushAction": "Bersihkan",
-      "flushConfirm": "Naha salira yakin hoyong ngahapus cache {type}?",
-      "flushConfirmLogout": "Pangeling: Ngahapus sadaya cache oge bakal ngahapus sesi pamaké. salira bakal segera logout. Naha salira yakin hoyong melanjutkan?",
-      "flushFailed": "Gagal membersihkan cache",
-      "flushSuccess": "Cache {type} hasil dibersihkan!",
+      "flushTitle": "Bersihan Cache",
+      "flushAction": "Bersihan Cache",
+      "flushConfirm": "Naha anjeun yakin hoyong ngahapus cache {type}?",
+      "flushConfirmSafe": "Beberesih cache bakal ngosongkeun item cache tina mémori. Sési login pamaké bakal tetep aman.",
+      "flushConfirmLogout": "Pangeling: Ngahapus sadaya cache ogé bakal ngahapus sési pamaké. Anjeun bakal geuwat logout. Naha anjeun yakin hoyong teras?",
+      "flushFailed": "Gagal ngabersihan cache",
+      "flushSuccess": "Cache {type} hasil dibersihan!",
+      "warmTitle": "Warm Cache",
+      "warmAction": "Warm Up Cache",
       "loading": "Nuju ngamuat...",
-      "saveFailed": "Gagal nyimpen petélan",
-      "saveSuccess": "Petélan hasil disimpen!",
-      "testFailed": "Koneksi gagal",
-      "testSuccess": "Koneksi hasil",
-      "warmTitle": "Panaskan Cache",
-      "warmAction": "Panaskan",
-      "warmConfirm": "Naha salira yakin hoyong memanaskan ulang cache? Ieu bakal meregenerasi cache konfigurasi, route, sareng view.",
-      "warmConfirmLogout": "Pangeling: Memanaskan ulang cache memerlukan penghapusan terlebih dahulu, anu bakal ngahapus sesi pamaké. salira bakal segera logout. Naha salira yakin hoyong melanjutkan?",
-      "warmFailed": "Gagal melakukan warm cache",
+      "saveFailed": "Gagal nyimpen setélan",
+      "saveSuccess": "Setélan hasil disimpen!",
+      "testFailed": "Sambungan gagal",
+      "testSuccess": "Sambungan hasil",
+      "warmConfirm": "Naha anjeun yakin hoyong ngalakukeun warm cache? Ieu bakal ngompilasi deui cache konfigurasi, route, sareng view.",
+      "warmConfirmSafe": "Warm cache bakal ngompilasi deui rute, konfigurasi, sareng citakan Blade kana mémori.",
+      "warmConfirmLogout": "Pangeling: Ngalakukeun warm cache merlukeun beberesih heula, anu bakal ngahapus sési pamaké. Anjeun bakal geuwat logout. Naha anjeun yakin hoyong teras?",
+      "warmFailed": "Gagal ngalakukeun warm cache",
       "warmSuccess": "Cache hasil di-warm!"
     },
     "settings": {
       "cancel": "Reset",
-      "connection": "Petélan Koneksi",
-      "disabled": "Dinonaktifkan",
-      "enabled": "Diaktifkan",
-      "save": "Simpen Petélan",
+      "connection": "Setélan Sambungan",
+      "disabled": "Teu Aktip",
+      "enabled": "Aktip",
+      "save": "Simpen Setélan",
       "saving": "Nyimpen...",
       "select": "Pilih...",
-      "test": "Uji Koneksi",
-      "testing": "Menguji...",
-      "testDescription": "Uji petélan koneksi Redis salira."
+      "test": "Uji Sambungan",
+      "testing": "Nuju nguji...",
+      "testDescription": "Uji setélan sambungan Redis anjeun."
     },
     "statistics": {
-      "autoRefresh": "Segarkan otomatis setiap 30 detik",
+      "autoRefresh": "Segarkeun otomatis unggal 30 detik",
       "grid": {
-        "clients": "Klien Terhubung",
-        "commands": "Total Perintah",
+        "clients": "Klién Nyambung",
+        "commands": "Total Paréntah",
         "hitRate": "Hit Rate",
         "keys": "Total Key",
-        "memory": "Memori Digunakan",
+        "memory": "Mémori Digunakeun",
+        "peakMemory": "Mémori Puncak",
+        "fragmentation": "Rasio Fragméntasi",
+        "role": "Role / Mode",
         "ops": "Operasi/Detik",
         "uptime": "Uptime",
-        "version": "Versi Redis"
+        "version": "Vérsi Redis"
       },
       "hitMiss": {
         "hitRate": "Hit Rate",
         "hits": "Cache Hit",
         "misses": "Cache Miss",
-        "title": "Statistik Cache Hit/Miss"
+        "title": "Statistik Cache Hit/Miss",
+        "lifetime": "Métrik Kumulatif Sérver",
+        "cumulative": "kumulatif",
+        "sinceLastClear": "Saprak Beberesih Panungtung (Snapshot Lokal)",
+        "snapshotNotice": "Snapshot diropéa otomatis saatos aksi beberesih cache ti kaca ieu.",
+        "keysEmptyNotice": "Cache keys danget ieu parantos kosong. Angka Hit/Miss sareng Total Commands dina tab statistik nyaéta métrik kumulatif Redis (saprak sérver hurung), janten henteu ngiringan reset nalika beberesih cache."
       },
-      "refresh": "Segarkan Statistik"
+      "refresh": "Segarkeun Statistik"
     },
     "tabs": {
-      "cache": "Manajemen Cache",
-      "settings": "Petélan",
-      "statistics": "Statistik"
+      "cache": "Aksi Cache",
+      "explorer": "Éksplorasi Key",
+      "settings": "Setélan",
+      "statistics": "Statistik & Diagnosis"
     },
-    "title": "Manajemen Redis"
+    "title": "Manajemén Redis"
   },
   "languages": {
     "actions": {

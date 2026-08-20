@@ -227,6 +227,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('flush-cache', [RedisController::class, 'flushCache']);
         Route::post('warm-cache', [RedisController::class, 'warmCache']);
         Route::get('cache-stats', [RedisController::class, 'cacheStats']);
+        Route::get('keys', [RedisController::class, 'searchKeys']);
+        Route::post('key-details', [RedisController::class, 'getKeyDetails']);
+        Route::delete('key', [RedisController::class, 'deleteKey']);
     });
 
     // Activity Journal routes for frontend compatibility

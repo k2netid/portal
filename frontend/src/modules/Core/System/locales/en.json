@@ -2443,22 +2443,79 @@
       },
       "title": "Cache Management"
     },
-    "description": "Manage Redis server configuration and monitor cache performance",
+    "description": "Manage Redis server configuration, inspect keyspace, and monitor real-time caching performance",
+    "disabledWarning": {
+      "title": "Redis Disabled",
+      "desc": "Redis is currently disabled in system settings. To enable it, go to",
+      "performanceLink": "Settings > Performance",
+      "actionHint": "and select \"Redis\" or \"Redis + Failover\" as the Cache Driver."
+    },
+    "groups": {
+      "connection": {
+        "name": "Connection",
+        "desc": "Configure Redis server host, port, password, and database indices"
+      },
+      "cache": {
+        "name": "Cache",
+        "desc": "Manage application caching behavior and key prefixes"
+      },
+      "sessionQueue": {
+        "name": "Session & Queue",
+        "desc": "Configure session driver and background worker queue settings"
+      }
+    },
+    "explorer": {
+      "title": "Redis Key Explorer",
+      "subtitle": "Search, inspect payloads, and manage keys in real-time",
+      "searchPlaceholder": "Search key pattern (e.g. tag:*, sys_*, *)...",
+      "searchBtn": "Search Keys",
+      "searching": "Scanning...",
+      "connection": "Connection:",
+      "cacheDb": "Cache DB (5)",
+      "defaultDb": "Default DB (4)",
+      "totalFound": "Found {count} keys",
+      "key": "Key",
+      "rawKey": "Raw Key",
+      "type": "Type",
+      "size": "Memory",
+      "ttl": "TTL",
+      "actions": "Actions",
+      "inspect": "Inspect",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete key \"{key}\"?",
+      "deleteSuccess": "Key \"{key}\" deleted successfully",
+      "empty": "No Redis keys found matching this pattern",
+      "inspectModal": {
+        "title": "Redis Key Inspector",
+        "keyName": "Key Name",
+        "connection": "Connection Database",
+        "type": "Data Type",
+        "memory": "Memory Usage",
+        "ttl": "Time To Live (TTL)",
+        "copy": "Copy Value",
+        "copied": "Copied to clipboard!",
+        "formatJson": "Formatted JSON",
+        "formatRaw": "Raw String",
+        "close": "Close"
+      }
+    },
     "messages": {
       "flushTitle": "Flush Cache",
-      "flushAction": "Flush",
+      "flushAction": "Flush Cache",
       "flushConfirm": "Are you sure you want to clear {type} cache?",
+      "flushConfirmSafe": "Clearing cache will purge cached items from memory. Active user sessions will be preserved.",
       "flushConfirmLogout": "Warning: Clearing all cache will also clear user sessions. You will be logged out immediately. Are you sure you want to proceed?",
       "flushFailed": "Failed to flush cache",
       "flushSuccess": "{type} cache cleared successfully!",
       "warmTitle": "Warm Cache",
-      "warmAction": "Warm Up",
+      "warmAction": "Warm Up Cache",
       "loading": "Loading...",
       "saveFailed": "Failed to save settings",
       "saveSuccess": "Settings saved successfully!",
       "testFailed": "Connection failed",
       "testSuccess": "Connection successful",
       "warmConfirm": "Are you sure you want to warm the cache? This will regenerate config, route, and view caches.",
+      "warmConfirmSafe": "Warming cache will re-compile routes, configs, and Blade views into memory.",
       "warmConfirmLogout": "Warning: Warming the cache requires clearing it first, which will clear user sessions. You will be logged out immediately. Are you sure you want to proceed?",
       "warmFailed": "Failed to warm cache",
       "warmSuccess": "Cache warmed successfully!"
@@ -2483,6 +2540,9 @@
         "hitRate": "Hit Rate",
         "keys": "Total Keys",
         "memory": "Memory Used",
+        "peakMemory": "Peak Memory",
+        "fragmentation": "Fragmentation Ratio",
+        "role": "Role / Mode",
         "ops": "Operations/Sec",
         "uptime": "Uptime",
         "version": "Redis Version"
@@ -2491,14 +2551,20 @@
         "hitRate": "Hit Rate",
         "hits": "Cache Hits",
         "misses": "Cache Misses",
-        "title": "Cache Hit/Miss Statistics"
+        "title": "Cache Hit/Miss Statistics",
+        "lifetime": "Server Lifetime Metrics",
+        "cumulative": "cumulative",
+        "sinceLastClear": "Since Last Clear (Local Snapshot)",
+        "snapshotNotice": "Snapshot is updated automatically after cache clear actions from this page.",
+        "keysEmptyNotice": "Cache keys are currently empty. Hit/Miss and Total Commands in statistics are cumulative Redis metrics (since service start), and are not reset on cache clear."
       },
       "refresh": "Refresh Stats"
     },
     "tabs": {
-      "cache": "Cache Management",
+      "cache": "Cache Actions",
+      "explorer": "Key Explorer",
       "settings": "Settings",
-      "statistics": "Statistics"
+      "statistics": "Statistics & Diagnostics"
     },
     "title": "Redis Management"
   },

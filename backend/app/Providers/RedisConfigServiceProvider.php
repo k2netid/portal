@@ -82,6 +82,7 @@ class RedisConfigServiceProvider extends ServiceProvider
             'redis_database' => 'database.redis.default.database',
             'redis_cache_database' => 'database.redis.cache.database',
             'redis_prefix' => 'database.redis.options.prefix',
+            'cache_prefix' => 'database.redis.options.prefix',
         ];
 
         foreach ($settings as $key => $value) {

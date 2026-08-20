@@ -116,20 +116,17 @@ class RedisController extends BaseApiController
                 : new PredisConnector;
 
             try {
-                // For phpredis, we might need to handle options differently, but empty array is usually fine
                 $redis = $connector->connect($config, []);
 
                 // Explicitly check connection by sending a PING
                 $pong = $redis->ping();
 
-                // If ping() doesn't throw but returns something else
                 if (! $pong && $client === 'phpredis') {
                     return $this->error('Redis server reachable but did not respond to PING. Check server status.', 500, [], 'REDIS_NO_PONG');
                 }
             } catch (\Exception $e) {
                 $msg = $e->getMessage();
 
-                // Specific error mapping for better UX
                 if (str_contains($msg, 'NOAUTH') || str_contains($msg, 'Authentication required') || str_contains($msg, 'invalid password')) {
                     return $this->error('Redis Authentication Failed: The password provided is incorrect.', 401, [
                         'field' => 'password',
@@ -170,14 +167,13 @@ class RedisController extends BaseApiController
     }
 
     /**
-     * Get Redis server info.
+     * Get Redis server info and rich diagnostic metrics.
      */
     public function info(): JsonResponse
     {
         try {
             $redis = Redis::connection();
 
-            // Check if Redis requires authentication
             try {
                 $redis->ping();
             } catch (\Exception $e) {
@@ -189,12 +185,18 @@ class RedisController extends BaseApiController
 
             $info = $redis->info();
 
-            // Get some key metrics (Redis returns flat array)
             $stats = [
                 'version' => $info['redis_version'] ?? 'Unknown',
                 'uptime_days' => isset($info['uptime_in_days']) ? $info['uptime_in_days'].' days' : 'Unknown',
+                'uptime_seconds' => $info['uptime_in_seconds'] ?? 0,
                 'connected_clients' => $info['connected_clients'] ?? 0,
                 'used_memory' => $info['used_memory_human'] ?? 'Unknown',
+                'used_memory_peak' => $info['used_memory_peak_human'] ?? ($info['used_memory_human'] ?? 'Unknown'),
+                'mem_fragmentation_ratio' => isset($info['mem_fragmentation_ratio']) ? round((float) $info['mem_fragmentation_ratio'], 2) : 1.0,
+                'redis_mode' => $info['redis_mode'] ?? 'standalone',
+                'role' => $info['role'] ?? 'master',
+                'connected_slaves' => $info['connected_slaves'] ?? 0,
+                'rdb_last_bgsave_status' => $info['rdb_last_bgsave_status'] ?? 'ok',
                 'total_keys' => $this->getTotalKeys(),
                 'hits' => $info['keyspace_hits'] ?? 0,
                 'misses' => $info['keyspace_misses'] ?? 0,
@@ -220,7 +222,7 @@ class RedisController extends BaseApiController
     public function flushCache(Request $request): JsonResponse
     {
         try {
-            $type = $request->input('type', 'all'); // all, cache, config, route, view
+            $type = $request->input('type', 'all');
 
             switch ($type) {
                 case 'cache':
@@ -261,14 +263,13 @@ class RedisController extends BaseApiController
     }
 
     /**
-     * Get cache statistics.
+     * Get cache statistics and top keys using safe non-blocking SCAN.
      */
     public function cacheStats(): JsonResponse
     {
         try {
             $redis = Redis::connection('cache');
 
-            // Check if Redis requires authentication
             try {
                 $redis->ping();
             } catch (\Exception $e) {
@@ -278,115 +279,44 @@ class RedisController extends BaseApiController
                 throw $e;
             }
 
-            $prefixRaw = config('database.redis.options.prefix');
-            $prefix = is_string($prefixRaw) ? $prefixRaw : null;
+            $prefix = $this->getConnectionPrefix($redis);
             $totalKeys = $this->getDatabaseSize($redis);
 
-            // Scan and build live Top Keys by Size
-            $keysRaw = [];
-            try {
-                $keysRaw = $redis->keys('*');
-            } catch (\Exception) {
-                // Keep keysRaw empty if failed
-            }
+            // Safe Non-Blocking SCAN for keys
+            $keysRaw = $this->scanKeys($redis, '*', 500);
 
             $topKeys = [];
-            if (is_array($keysRaw) && count($keysRaw) > 0) {
+            if (! empty($keysRaw)) {
                 $tempKeys = [];
-                foreach ($keysRaw as $keyName) {
-                    $keyNameStr = is_string($keyName) ? $keyName : '';
+                foreach ($keysRaw as $keyNameStr) {
                     if (empty($keyNameStr)) {
                         continue;
                     }
 
-                    // Query exact MEMORY USAGE in bytes
-                    $bytes = 0;
-                    try {
-                        $client = $redis->client();
-                        $usage = null;
-                        if ($client instanceof \Redis) {
-                            $usage = $client->rawCommand('MEMORY', 'USAGE', $keyNameStr);
-                        }
-                        $bytes = is_numeric($usage) ? (int) $usage : 0;
-                    } catch (\Exception) {
-                        try {
-                            $val = $redis->get($keyNameStr);
-                            $bytes = is_string($val) ? strlen($val) : 0;
-                        } catch (\Exception) {
-                            $bytes = 0;
-                        }
-                    }
-
-                    // Query TTL
-                    $ttlSec = -1;
-                    try {
-                        $ttlSec = $redis->ttl($keyNameStr);
-                        $ttlSec = is_numeric($ttlSec) ? (int) $ttlSec : -1;
-                    } catch (\Exception) {
-                        $ttlSec = -1;
-                    }
-
-                    // Remove prefix if present in keyNameStr
-                    $cleanKey = $keyNameStr;
-                    if (! empty($prefix)) {
-                        while (str_starts_with($cleanKey, $prefix)) {
-                            $cleanKey = substr($cleanKey, strlen($prefix));
-                        }
-                    }
+                    $cleanKey = $this->stripPrefix($keyNameStr, $prefix);
+                    $bytes = $this->getKeyMemoryUsage($redis, $cleanKey, $keyNameStr);
+                    $ttlSec = $this->getKeyTtl($redis, $cleanKey, $keyNameStr);
 
                     $tempKeys[] = [
                         'key' => $cleanKey,
+                        'raw_key' => $keyNameStr,
                         'size_bytes' => $bytes,
                         'ttl_sec' => $ttlSec,
                     ];
                 }
 
                 // Sort keys by size descending
-                usort($tempKeys, function ($a, $b) {
-                    return $b['size_bytes'] <=> $a['size_bytes'];
-                });
+                usort($tempKeys, fn ($a, $b) => $b['size_bytes'] <=> $a['size_bytes']);
 
-                // Take top 10 keys
+                // Top 10 keys
                 $topKeysRaw = array_slice($tempKeys, 0, 10);
 
-                // Format sizes and TTLs
                 foreach ($topKeysRaw as $item) {
-                    $formattedSize = '0 B';
-                    $units = ['B', 'KB', 'MB', 'GB'];
-                    $sizeVal = $item['size_bytes'];
-                    $unit = 0;
-                    while ($sizeVal >= 1024 && $unit < count($units) - 1) {
-                        $sizeVal /= 1024;
-                        $unit++;
-                    }
-                    $formattedSize = round($sizeVal, 2).' '.$units[$unit];
-
-                    $formattedTtl = 'Persistent';
-                    if ($item['ttl_sec'] === -2) {
-                        $formattedTtl = 'Expired';
-                    } elseif ($item['ttl_sec'] > 0) {
-                        $secs = $item['ttl_sec'];
-                        if ($secs >= 86400) {
-                            $days = floor($secs / 86400);
-                            $hours = floor(($secs % 86400) / 3600);
-                            $formattedTtl = "{$days}d {$hours}h";
-                        } elseif ($secs >= 3600) {
-                            $hours = floor($secs / 3600);
-                            $mins = floor(($secs % 3600) / 60);
-                            $formattedTtl = "{$hours}h {$mins}m";
-                        } elseif ($secs >= 60) {
-                            $mins = floor($secs / 60);
-                            $secRem = $secs % 60;
-                            $formattedTtl = "{$mins}m {$secRem}s";
-                        } else {
-                            $formattedTtl = "{$secs}s";
-                        }
-                    }
-
                     $topKeys[] = [
                         'key' => $item['key'],
-                        'size' => $formattedSize,
-                        'ttl' => $formattedTtl,
+                        'raw_key' => $item['raw_key'],
+                        'size' => $this->formatBytes($item['size_bytes']),
+                        'ttl' => $this->formatTtl($item['ttl_sec']),
                     ];
                 }
             }
@@ -411,22 +341,486 @@ class RedisController extends BaseApiController
     }
 
     /**
-     * Helper: Get total keys count.
-     * Helper: Get total keys count.
+     * Search Redis keys with pattern matching via non-blocking SCAN.
+     */
+    public function searchKeys(Request $request): JsonResponse
+    {
+        try {
+            $connName = $request->input('connection', 'cache');
+            $pattern = (string) $request->input('pattern', '*');
+            $limit = min((int) $request->input('limit', 80), 150);
+
+            if (empty($pattern)) {
+                $pattern = '*';
+            }
+
+            $redis = Redis::connection($connName);
+            $prefix = $this->getConnectionPrefix($redis);
+
+            $keysScanned = $this->scanKeys($redis, $pattern, 300);
+
+            $result = [];
+            foreach (array_slice($keysScanned, 0, $limit) as $keyNameStr) {
+                if (empty($keyNameStr)) {
+                    continue;
+                }
+
+                $cleanKey = $this->stripPrefix($keyNameStr, $prefix);
+                $typeRaw = $this->getKeyType($redis, $cleanKey, $keyNameStr);
+                $type = $this->formatKeyType($typeRaw);
+                $bytes = $this->getKeyMemoryUsage($redis, $cleanKey, $keyNameStr);
+                $ttlSec = $this->getKeyTtl($redis, $cleanKey, $keyNameStr);
+
+                $result[] = [
+                    'key' => $cleanKey,
+                    'raw_key' => $keyNameStr,
+                    'type' => $type,
+                    'size_bytes' => $bytes,
+                    'size' => $this->formatBytes($bytes),
+                    'ttl_sec' => $ttlSec,
+                    'ttl' => $this->formatTtl($ttlSec),
+                ];
+            }
+
+            return $this->success([
+                'pattern' => $pattern,
+                'connection' => $connName,
+                'total_found' => count($keysScanned),
+                'items' => $result,
+            ], 'Keys retrieved successfully');
+        } catch (\Throwable $e) {
+            return $this->error('Failed to search keys: '.$e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Get detailed key inspection and value preview.
+     */
+    public function getKeyDetails(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'key' => 'required|string',
+            'connection' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationError($validator->errors()->toArray());
+        }
+
+        try {
+            $connName = (string) $request->input('connection', 'cache');
+            $rawInputKey = (string) $request->input('key');
+            $redis = Redis::connection($connName);
+            $prefix = $this->getConnectionPrefix($redis);
+
+            $cleanKey = $this->stripPrefix($rawInputKey, $prefix);
+            $typeRaw = $this->getKeyType($redis, $cleanKey, $rawInputKey);
+            $type = $this->formatKeyType($typeRaw);
+            $bytes = $this->getKeyMemoryUsage($redis, $cleanKey, $rawInputKey);
+            $ttlSec = $this->getKeyTtl($redis, $cleanKey, $rawInputKey);
+            $value = $this->readKeyValue($redis, $cleanKey, $rawInputKey, $type);
+
+            return $this->success([
+                'key' => $cleanKey,
+                'raw_key' => $rawInputKey,
+                'connection' => $connName,
+                'type' => $type,
+                'size_bytes' => $bytes,
+                'size' => $this->formatBytes($bytes),
+                'ttl_sec' => $ttlSec,
+                'ttl' => $this->formatTtl($ttlSec),
+                'value' => $value,
+                'is_json' => is_array($value),
+            ], 'Key details retrieved successfully');
+        } catch (\Throwable $e) {
+            return $this->error('Failed to get key details: '.$e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Delete a single or multiple Redis keys.
+     */
+    public function deleteKey(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'key' => 'nullable|string',
+            'keys' => 'nullable|array',
+            'connection' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->validationError($validator->errors()->toArray());
+        }
+
+        try {
+            $connName = (string) $request->input('connection', 'cache');
+            $redis = Redis::connection($connName);
+            $prefix = $this->getConnectionPrefix($redis);
+
+            $targetKeys = [];
+            if ($request->filled('key')) {
+                $targetKeys[] = (string) $request->input('key');
+            }
+            if ($request->filled('keys') && is_array($request->input('keys'))) {
+                $targetKeys = array_merge($targetKeys, $request->input('keys'));
+            }
+
+            $targetKeys = array_unique(array_filter($targetKeys));
+            if (empty($targetKeys)) {
+                return $this->error('No keys specified for deletion', 422);
+            }
+
+            $deletedCount = 0;
+            foreach ($targetKeys as $k) {
+                try {
+                    $clean = $this->stripPrefix($k, $prefix);
+                    $delRes = (int) $redis->del($clean);
+                    if ($delRes === 0) {
+                        // Fallback: delete raw key directly
+                        $client = $redis->client();
+                        if ($client instanceof \Redis) {
+                            $delRes = (int) $client->del($k);
+                        }
+                    }
+                    $deletedCount += $delRes;
+                } catch (\Throwable) {}
+            }
+
+            return $this->success([
+                'deleted' => $deletedCount,
+                'keys' => $targetKeys,
+            ], "Successfully deleted {$deletedCount} key(s)");
+        } catch (\Throwable $e) {
+            return $this->error('Failed to delete key: '.$e->getMessage(), 500);
+        }
+    }
+
+    private function formatKeyType(mixed $type): string
+    {
+        if (is_string($type)) {
+            return strtolower($type);
+        }
+
+        return match ((int) $type) {
+            1 => 'string',
+            2 => 'set',
+            3 => 'list',
+            4 => 'zset',
+            5 => 'hash',
+            6 => 'stream',
+            default => 'none',
+        };
+    }
+
+    private function getConnectionPrefix(Connection $redis): string
+    {
+        try {
+            $client = $redis->client();
+            if ($client instanceof \Redis) {
+                $p = $client->getOption(\Redis::OPT_PREFIX);
+                if (is_string($p)) {
+                    return $p;
+                }
+            }
+        } catch (\Throwable) {}
+
+        $prefixRaw = config('database.redis.options.prefix');
+
+        return is_string($prefixRaw) ? $prefixRaw : '';
+    }
+
+    private function stripPrefix(string $key, string $prefix): string
+    {
+        if (! empty($prefix) && str_starts_with($key, $prefix)) {
+            return substr($key, strlen($prefix));
+        }
+
+        return $key;
+    }
+
+    private function getKeyType(Connection $redis, string $cleanKey, string $rawKey): mixed
+    {
+        try {
+            $client = $redis->client();
+            if ($client instanceof \Redis) {
+                $type = $client->rawCommand('TYPE', $rawKey);
+                if ($type !== 0 && $type !== 'none' && $type !== false && $type !== null) {
+                    return $type;
+                }
+            }
+        } catch (\Throwable) {}
+
+        try {
+            $type = $redis->type($cleanKey);
+            if ($type !== 0 && $type !== 'none' && $type !== false && $type !== null) {
+                return $type;
+            }
+        } catch (\Throwable) {}
+
+        return 0;
+    }
+
+    private function getKeyTtl(Connection $redis, string $cleanKey, string $rawKey): int
+    {
+        try {
+            $client = $redis->client();
+            if ($client instanceof \Redis) {
+                $ttl = $client->rawCommand('TTL', $rawKey);
+                if (is_numeric($ttl)) {
+                    return (int) $ttl;
+                }
+            }
+        } catch (\Throwable) {}
+
+        try {
+            $ttl = $redis->ttl($cleanKey);
+            if (is_numeric($ttl)) {
+                return (int) $ttl;
+            }
+        } catch (\Throwable) {}
+
+        return -1;
+    }
+
+    private function getKeyMemoryUsage(Connection $redis, string $cleanKey, string $rawKey): int
+    {
+        try {
+            $client = $redis->client();
+            if ($client instanceof \Redis) {
+                $usage = $client->rawCommand('MEMORY', 'USAGE', $rawKey);
+                if (is_numeric($usage)) {
+                    return (int) $usage;
+                }
+            }
+        } catch (\Throwable) {}
+
+        try {
+            $val = $redis->get($cleanKey);
+            if (is_string($val)) {
+                return strlen($val);
+            }
+        } catch (\Throwable) {}
+
+        return 0;
+    }
+
+    private function readKeyValue(Connection $redis, string $cleanKey, string $rawKey, string $type): mixed
+    {
+        try {
+            $client = $redis->client();
+
+            switch ($type) {
+                case 'string':
+                    $val = null;
+                    if ($client instanceof \Redis) {
+                        try {
+                            $val = $client->rawCommand('GET', $rawKey);
+                        } catch (\Throwable) {}
+                    }
+                    if ($val === null || $val === false) {
+                        $val = $redis->get($cleanKey);
+                    }
+
+                    if (is_string($val)) {
+                        if ($this->isSerialized($val)) {
+                            try {
+                                $unserialized = @unserialize($val);
+                                if ($unserialized !== false || $val === 'b:0;') {
+                                    return $unserialized;
+                                }
+                            } catch (\Throwable) {}
+                        }
+                        $json = json_decode($val, true);
+                        if (json_last_error() === JSON_ERROR_NONE) {
+                            return $json;
+                        }
+                    }
+
+                    return $val;
+
+                case 'hash':
+                    $hash = [];
+                    if ($client instanceof \Redis) {
+                        try {
+                            $rawHash = $client->rawCommand('HGETALL', $rawKey);
+                            if (is_array($rawHash)) {
+                                // PhpRedis rawCommand HGETALL returns alternating key/value flat array
+                                if (! empty($rawHash) && array_is_list($rawHash)) {
+                                    for ($i = 0; $i < count($rawHash); $i += 2) {
+                                        if (isset($rawHash[$i + 1])) {
+                                            $hash[$rawHash[$i]] = $rawHash[$i + 1];
+                                        }
+                                    }
+                                } else {
+                                    $hash = $rawHash;
+                                }
+                            }
+                        } catch (\Throwable) {}
+                    }
+                    if (empty($hash)) {
+                        $hash = $redis->hgetall($cleanKey);
+                    }
+
+                    return $hash;
+
+                case 'list':
+                    if ($client instanceof \Redis) {
+                        try {
+                            return $client->rawCommand('LRANGE', $rawKey, 0, 99);
+                        } catch (\Throwable) {}
+                    }
+
+                    return $redis->lrange($cleanKey, 0, 99);
+
+                case 'set':
+                    if ($client instanceof \Redis) {
+                        try {
+                            return $client->rawCommand('SMEMBERS', $rawKey);
+                        } catch (\Throwable) {}
+                    }
+
+                    return $redis->smembers($cleanKey);
+
+                case 'zset':
+                    if ($client instanceof \Redis) {
+                        try {
+                            return $client->rawCommand('ZRANGE', $rawKey, 0, 99, 'WITHSCORES');
+                        } catch (\Throwable) {}
+                    }
+
+                    return $redis->zrange($cleanKey, 0, 99, ['WITHSCORES' => true]);
+
+                default:
+                    if ($client instanceof \Redis) {
+                        try {
+                            return $client->rawCommand('GET', $rawKey);
+                        } catch (\Throwable) {}
+                    }
+
+                    return $redis->get($cleanKey);
+            }
+        } catch (\Throwable $e) {
+            return '[Error reading value: '.$e->getMessage().']';
+        }
+    }
+
+    private function isSerialized(string $val): bool
+    {
+        return (bool) preg_match('/^(?:i:\d+|b:[01]|s:\d+:".*"|a:\d+:\{.*\}|O:\d+:".*":\d+:\{.*\});?$/s', $val);
+    }
+
+    /**
+     * Helper: Scan keys using cursor-based non-blocking SCAN.
+     *
+     * @return array<int, string>
+     */
+    private function scanKeys(Connection $redis, string $pattern = '*', int $maxLimit = 500): array
+    {
+        $cursor = null;
+        $keys = [];
+        $iterations = 0;
+        $maxIterations = 50;
+
+        do {
+            $iterations++;
+            $result = $redis->scan($cursor, ['match' => $pattern, 'count' => 100]);
+
+            if ($result === false) {
+                break;
+            }
+
+            if (is_array($result)) {
+                if (isset($result[0]) && is_array($result[1])) {
+                    $cursor = $result[0];
+                    foreach ($result[1] as $k) {
+                        if (is_string($k)) {
+                            $keys[] = $k;
+                        }
+                    }
+                } else {
+                    foreach ($result as $k) {
+                        if (is_string($k)) {
+                            $keys[] = $k;
+                        }
+                    }
+                }
+            }
+
+            $keys = array_unique($keys);
+            if (count($keys) >= $maxLimit || $iterations >= $maxIterations) {
+                break;
+            }
+        } while ($cursor && $cursor !== '0');
+
+        return array_values($keys);
+    }
+
+    /**
+     * Helper: Format bytes into human readable string.
+     */
+    private function formatBytes(int $bytes): string
+    {
+        if ($bytes <= 0) {
+            return '0 B';
+        }
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $val = (float) $bytes;
+        $unit = 0;
+        while ($val >= 1024 && $unit < count($units) - 1) {
+            $val /= 1024;
+            $unit++;
+        }
+
+        return round($val, 2).' '.$units[$unit];
+    }
+
+    /**
+     * Helper: Format TTL into readable string.
+     */
+    private function formatTtl(int $ttlSec): string
+    {
+        if ($ttlSec === -2) {
+            return 'Expired';
+        }
+        if ($ttlSec <= -1) {
+            return 'Persistent';
+        }
+
+        if ($ttlSec >= 86400) {
+            $days = floor($ttlSec / 86400);
+            $hours = floor(($ttlSec % 86400) / 3600);
+
+            return "{$days}d {$hours}h";
+        }
+        if ($ttlSec >= 3600) {
+            $hours = floor($ttlSec / 3600);
+            $mins = floor(($ttlSec % 3600) / 60);
+
+            return "{$hours}h {$mins}m";
+        }
+        if ($ttlSec >= 60) {
+            $mins = floor($ttlSec / 60);
+            $secRem = $ttlSec % 60;
+
+            return "{$mins}m {$secRem}s";
+        }
+
+        return "{$ttlSec}s";
+    }
+
+    /**
+     * Helper: Get total keys count across default and cache databases.
      */
     private function getTotalKeys(): int
     {
         $count = 0;
-        // Try to count keys from both default and cache connections
         try {
             $count += $this->getDatabaseSize(Redis::connection('default'));
-        } catch (\Exception $e) {
-        }
+        } catch (\Throwable) {}
 
         try {
             $count += $this->getDatabaseSize(Redis::connection('cache'));
-        } catch (\Exception) {
-        }
+        } catch (\Throwable) {}
 
         return $count;
     }
@@ -462,7 +856,7 @@ class RedisController extends BaseApiController
             $info = $redis->info();
 
             return isset($info['expired_keys']) ? (int) $info['expired_keys'] : 0;
-        } catch (\Exception) {
+        } catch (\Throwable) {
             return 0;
         }
     }
@@ -478,9 +872,7 @@ class RedisController extends BaseApiController
     {
         try {
             Redis::connection($connection)->flushdb();
-        } catch (\Throwable) {
-            // Continue without failing request; some deployments may not define both connections.
-        }
+        } catch (\Throwable) {}
     }
 
     private function getConnectionKeys(string $connection): int

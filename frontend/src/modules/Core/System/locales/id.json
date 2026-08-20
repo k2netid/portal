@@ -2443,23 +2443,80 @@
       },
       "title": "Manajemen Cache"
     },
-    "description": "Kelola konfigurasi server Redis dan monitor performa cache",
+    "description": "Kelola konfigurasi server Redis, inspeksi keyspace, dan pantau performa cache secara real-time",
+    "disabledWarning": {
+      "title": "Redis Nonaktif",
+      "desc": "Redis saat ini dinonaktifkan dalam pengaturan sistem. Untuk mengaktifkannya, buka",
+      "performanceLink": "Pengaturan > Performa",
+      "actionHint": "dan pilih \"Redis\" atau \"Redis + Failover\" sebagai Cache Driver."
+    },
+    "groups": {
+      "connection": {
+        "name": "Koneksi",
+        "desc": "Konfigurasi host server Redis, port, password, dan indeks database"
+      },
+      "cache": {
+        "name": "Cache",
+        "desc": "Kelola perilaku caching aplikasi dan prefix key"
+      },
+      "sessionQueue": {
+        "name": "Sesi & Antrean",
+        "desc": "Konfigurasi driver sesi dan antrean background worker"
+      }
+    },
+    "explorer": {
+      "title": "Eksplorasi Key Redis",
+      "subtitle": "Cari, inspeksi payload nilai, dan kelola key secara real-time",
+      "searchPlaceholder": "Cari pola key (contoh: tag:*, sys_*, *)...",
+      "searchBtn": "Cari Key",
+      "searching": "Memindai...",
+      "connection": "Koneksi:",
+      "cacheDb": "Cache DB (5)",
+      "defaultDb": "Default DB (4)",
+      "totalFound": "Ditemukan {count} key",
+      "key": "Key",
+      "rawKey": "Key Asli",
+      "type": "Tipe",
+      "size": "Memori",
+      "ttl": "TTL",
+      "actions": "Aksi",
+      "inspect": "Inspeksi",
+      "delete": "Hapus",
+      "deleteConfirm": "Apakah Anda yakin ingin menghapus key \"{key}\"?",
+      "deleteSuccess": "Key \"{key}\" berhasil dihapus",
+      "empty": "Tidak ada key Redis yang cocok dengan pola ini",
+      "inspectModal": {
+        "title": "Inspektur Key Redis",
+        "keyName": "Nama Key",
+        "connection": "Basis Data Koneksi",
+        "type": "Tipe Data",
+        "memory": "Penggunaan Memori",
+        "ttl": "Masa Berlaku (TTL)",
+        "copy": "Salin Nilai",
+        "copied": "Nilai berhasil disalin!",
+        "formatJson": "Format JSON",
+        "formatRaw": "String Mentah",
+        "close": "Tutup"
+      }
+    },
     "messages": {
       "flushTitle": "Bersihkan Cache",
-      "flushAction": "Bersihkan",
+      "flushAction": "Bersihkan Cache",
       "flushConfirm": "Apakah Anda yakin ingin menghapus cache {type}?",
+      "flushConfirmSafe": "Pembersihan cache akan mengosongkan item cache dari memori. Sesi login pengguna akan tetap aman.",
       "flushConfirmLogout": "Peringatan: Menghapus semua cache juga akan menghapus sesi pengguna. Anda akan segera logout. Apakah Anda yakin ingin melanjutkan?",
       "flushFailed": "Gagal membersihkan cache",
       "flushSuccess": "Cache {type} berhasil dibersihkan!",
+      "warmTitle": "Warm Cache",
+      "warmAction": "Warm Up Cache",
       "loading": "Memuat...",
       "saveFailed": "Gagal menyimpan pengaturan",
       "saveSuccess": "Pengaturan berhasil disimpan!",
       "testFailed": "Koneksi gagal",
       "testSuccess": "Koneksi berhasil",
-      "warmTitle": "Panaskan Cache",
-      "warmAction": "Panaskan",
-      "warmConfirm": "Apakah Anda yakin ingin memanaskan ulang cache? Ini akan meregenerasi cache konfigurasi, route, dan view.",
-      "warmConfirmLogout": "Peringatan: Memanaskan ulang cache memerlukan penghapusan terlebih dahulu, yang akan menghapus sesi pengguna. Anda akan segera logout. Apakah Anda yakin ingin melanjutkan?",
+      "warmConfirm": "Apakah Anda yakin ingin melakukan warm cache? Ini akan meregenerasi cache konfigurasi, route, dan view.",
+      "warmConfirmSafe": "Warm cache akan mengompilasi ulang route, konfigurasi, dan tampilan Blade ke memori.",
+      "warmConfirmLogout": "Peringatan: Melakukan warm cache memerlukan pembersihan terlebih dahulu, yang akan menghapus sesi pengguna. Anda akan segera logout. Apakah Anda yakin ingin melanjutkan?",
       "warmFailed": "Gagal melakukan warm cache",
       "warmSuccess": "Cache berhasil di-warm!"
     },
@@ -2483,6 +2540,9 @@
         "hitRate": "Hit Rate",
         "keys": "Total Key",
         "memory": "Memori Digunakan",
+        "peakMemory": "Memori Puncak",
+        "fragmentation": "Rasio Fragmentasi",
+        "role": "Role / Mode",
         "ops": "Operasi/Detik",
         "uptime": "Uptime",
         "version": "Versi Redis"
@@ -2491,14 +2551,20 @@
         "hitRate": "Hit Rate",
         "hits": "Cache Hit",
         "misses": "Cache Miss",
-        "title": "Statistik Cache Hit/Miss"
+        "title": "Statistik Cache Hit/Miss",
+        "lifetime": "Metrik Kumulatif Server",
+        "cumulative": "kumulatif",
+        "sinceLastClear": "Sejak Pembersihan Terakhir (Snapshot Lokal)",
+        "snapshotNotice": "Snapshot diperbarui otomatis setelah aksi clear cache dari halaman ini.",
+        "keysEmptyNotice": "Cache keys saat ini sudah kosong. Angka Hit/Miss dan Total Commands di tab statistik adalah metrik kumulatif Redis (sejak service start), sehingga tidak ikut reset saat clear cache."
       },
       "refresh": "Segarkan Statistik"
     },
     "tabs": {
-      "cache": "Manajemen Cache",
+      "cache": "Aksi Cache",
+      "explorer": "Eksplorasi Key",
       "settings": "Pengaturan",
-      "statistics": "Statistik"
+      "statistics": "Statistik & Diagnostik"
     },
     "title": "Manajemen Redis"
   },
