@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col lg:flex-row gap-6 items-start">
+  <div class="flex flex-col xl:flex-row gap-6 items-start w-full">
     <!-- Left Field Palette -->
-    <div class="w-full lg:w-72 shrink-0 space-y-4">
+    <div class="w-full xl:w-72 2xl:w-80 shrink-0 space-y-4">
       <div>
         <h3 class="text-sm font-semibold text-foreground flex items-center gap-2">
           <Layers class="h-4 w-4 text-primary" />
@@ -19,7 +19,7 @@
           <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
             {{ $t('infra.models.builder.categories.standard') }}
           </span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-1 gap-1.5">
             <button
               v-for="ft in standardTypes"
               :key="ft.type"
@@ -34,11 +34,11 @@
                 <div class="text-xs font-medium text-foreground truncate">
                   {{ $t(`infra.models.builder.types.${ft.type}`) }}
                 </div>
-                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                <div class="text-[10px] text-muted-foreground truncate hidden 2xl:block">
                   {{ $t(`infra.models.builder.types.${ft.type}Desc`) }}
                 </div>
               </div>
-              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden xl:block" />
             </button>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
             {{ $t('infra.models.builder.categories.media') }}
           </span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-1 gap-1.5">
             <button
               v-for="ft in mediaTypes"
               :key="ft.type"
@@ -63,11 +63,11 @@
                 <div class="text-xs font-medium text-foreground truncate">
                   {{ $t(`infra.models.builder.types.${ft.type}`) }}
                 </div>
-                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                <div class="text-[10px] text-muted-foreground truncate hidden 2xl:block">
                   {{ $t(`infra.models.builder.types.${ft.type}Desc`) }}
                 </div>
               </div>
-              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden xl:block" />
             </button>
           </div>
         </div>
@@ -77,7 +77,7 @@
           <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
             {{ $t('infra.models.builder.categories.advanced') }}
           </span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-1 gap-1.5">
             <button
               v-for="ft in advancedTypes"
               :key="ft.type"
@@ -92,11 +92,11 @@
                 <div class="text-xs font-semibold text-foreground truncate">
                   {{ $t(`infra.models.builder.types.${ft.type}`) }}
                 </div>
-                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                <div class="text-[10px] text-muted-foreground truncate hidden 2xl:block">
                   {{ $t(`infra.models.builder.types.${ft.type}Desc`) }}
                 </div>
               </div>
-              <Plus class="h-3.5 w-3.5 text-primary opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+              <Plus class="h-3.5 w-3.5 text-primary opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden xl:block" />
             </button>
           </div>
         </div>
@@ -150,26 +150,26 @@
         <template #item="{ element: field, index }">
           <Card class="overflow-hidden border border-border/70 hover:border-border transition-colors shadow-none">
             <!-- Card Header Bar -->
-            <div class="flex items-center justify-between px-3 py-2 bg-muted/30 border-b border-border/50 text-xs">
-              <div class="flex items-center gap-2 min-w-0">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 bg-muted/30 border-b border-border/50 text-xs">
+              <div class="flex flex-wrap items-center gap-2 min-w-0 flex-1">
                 <div
-                  class="drag-handle p-1 -ml-1 rounded cursor-grab active:cursor-grabbing hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                  class="drag-handle p-1 -ml-1 rounded cursor-grab active:cursor-grabbing hover:bg-muted text-muted-foreground hover:text-foreground transition-colors shrink-0"
                   :title="$t('infra.models.builder.dragHint')"
                 >
                   <GripVertical class="h-4 w-4" />
                 </div>
-                <span class="font-mono text-[11px] text-muted-foreground font-semibold">#{{ index + 1 }}</span>
-                <span class="font-medium text-foreground truncate max-w-[140px] sm:max-w-[220px]">
+                <span class="font-mono text-[11px] text-muted-foreground font-semibold shrink-0">#{{ index + 1 }}</span>
+                <span class="font-semibold text-foreground truncate max-w-[160px] sm:max-w-[240px]">
                   {{ field.name || 'Untitled' }}
                 </span>
-                <Badge variant="outline" class="text-[10px] h-5 px-1.5 py-0 gap-1 font-normal bg-background">
+                <Badge variant="outline" class="text-[10px] h-5 px-1.5 py-0 gap-1 font-normal bg-background shrink-0">
                   <component :is="getFieldIcon(field.type)" class="h-3 w-3" />
                   {{ $t(`infra.models.builder.types.${field.type}`) }}
                 </Badge>
                 <Badge
                   v-if="field.type === 'relation' && field.target_type"
                   variant="secondary"
-                  class="text-[10px] h-5 px-1.5 py-0 gap-1 font-mono"
+                  class="text-[10px] h-5 px-1.5 py-0 gap-1 font-mono shrink-0"
                 >
                   <ArrowRight class="h-2.5 w-2.5" />
                   {{ field.target_type }} ({{ field.relation_mode || 'single' }})
@@ -177,13 +177,13 @@
                 <Badge
                   v-if="field.is_required"
                   variant="destructive"
-                  class="text-[10px] h-5 px-1.5 py-0 font-normal"
+                  class="text-[10px] h-5 px-1.5 py-0 font-normal shrink-0"
                 >
                   {{ $t('infra.models.builder.required') }}
                 </Badge>
               </div>
 
-              <div class="flex items-center gap-1">
+              <div class="flex items-center gap-1 shrink-0 ml-auto">
                 <Button
                   type="button"
                   variant="ghost"

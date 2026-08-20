@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 max-w-3xl">
+  <div class="space-y-6 w-full">
     <PageHeader
       borderless
       :title="isEdit ? $t('infra.dynamic.record.editTitle', { name: contentType?.name ?? slug }) : $t('infra.dynamic.record.newTitle', { name: contentType?.name ?? slug })"
@@ -36,42 +36,79 @@
     <!-- Record Form -->
     <form
       v-else
-      class="space-y-6"
+      class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start"
       @submit.prevent="submit"
     >
-      <ConsoleFormCard class="space-y-4">
-        <div class="space-y-4">
-          <DynamicFieldInput
-            v-for="field in contentType?.fields ?? []"
-            :key="field.slug"
-            :field="field"
-            :model-value="form[field.slug]"
-            @update:model-value="(v) => (form[field.slug] = v)"
-          />
-        </div>
+      <!-- Main Form Fields -->
+      <div class="lg:col-span-2 space-y-6">
+        <ConsoleFormCard
+          :title="contentType?.name || 'Fields'"
+          :subtitle="$t('infra.dynamic.record.subtitle', { name: contentType?.name ?? slug })"
+        >
+          <div class="space-y-4">
+            <DynamicFieldInput
+              v-for="field in contentType?.fields ?? []"
+              :key="field.slug"
+              :field="field"
+              :model-value="form[field.slug]"
+              @update:model-value="(v) => (form[field.slug] = v)"
+            />
+          </div>
+        </ConsoleFormCard>
+      </div>
 
-        <div class="flex items-center gap-2 pt-4 border-t border-border/60">
-          <Button
-            type="submit"
-            size="sm"
-            class="h-9 gap-2 text-xs"
-            :disabled="saving"
-          >
-            <Spinner v-if="saving" class="h-3.5 w-3.5" />
-            <Save v-else class="h-3.5 w-3.5" />
-            {{ saving ? $t('infra.dynamic.record.saving') : $t('infra.dynamic.record.save') }}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            class="h-9 text-xs"
-            @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
-          >
-            {{ $t('infra.dynamic.record.cancel') }}
-          </Button>
-        </div>
-      </ConsoleFormCard>
+      <!-- Sidebar Metadata & Actions -->
+      <div class="space-y-6">
+        <ConsoleFormCard
+          :title="$t('infra.models.form.general')"
+          class="space-y-4"
+        >
+          <div class="space-y-3 text-xs">
+            <div class="flex items-center justify-between pb-2 border-b border-border/50">
+              <span class="text-muted-foreground">Model</span>
+              <span class="font-medium text-foreground">{{ contentType?.name }}</span>
+            </div>
+            <div class="flex items-center justify-between pb-2 border-b border-border/50">
+              <span class="text-muted-foreground">Slug</span>
+              <span class="font-mono text-foreground font-medium">{{ contentType?.slug }}</span>
+            </div>
+            <div class="flex items-center justify-between pb-2 border-b border-border/50">
+              <span class="text-muted-foreground">Fields</span>
+              <Badge variant="outline" class="text-[11px] font-normal">
+                {{ (contentType?.fields ?? []).length }} fields
+              </Badge>
+            </div>
+            <div class="flex flex-col gap-1 pt-1">
+              <span class="text-muted-foreground text-[11px]">API Route</span>
+              <div class="p-2 rounded bg-muted/50 font-mono text-[11px] text-foreground truncate">
+                /api/v1/dynamic/{{ slug }}
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2 pt-4 border-t border-border/60">
+            <Button
+              type="submit"
+              size="sm"
+              class="h-9 gap-2 text-xs w-full"
+              :disabled="saving"
+            >
+              <Spinner v-if="saving" class="h-3.5 w-3.5" />
+              <Save v-else class="h-3.5 w-3.5" />
+              {{ saving ? $t('infra.dynamic.record.saving') : $t('infra.dynamic.record.save') }}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              class="h-9 text-xs w-full"
+              @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
+            >
+              {{ $t('infra.dynamic.record.cancel') }}
+            </Button>
+          </div>
+        </ConsoleFormCard>
+      </div>
     </form>
   </div>
 </template>
@@ -82,7 +119,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { ArrowLeft, Save, AlertCircle } from 'lucide-vue-next';
 import { PageHeader, ConsoleFormCard } from '@/shared/components/shell';
-import { Button, Spinner, Alert, AlertTitle, AlertDescription } from '@/shared/components/ui';
+import { Button, Spinner, Alert, AlertTitle, AlertDescription, Badge } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
 import { parseSingleResponse } from '@/shared/utils/responseParser';
 import DynamicFieldInput from '../../components/dynamic/DynamicFieldInput.vue';

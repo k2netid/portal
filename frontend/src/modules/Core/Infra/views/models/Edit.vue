@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 max-w-5xl">
+  <div class="space-y-6 w-full">
     <PageHeader
       borderless
       :title="isCreate ? $t('infra.models.newType') : (form.name || $t('infra.models.editType'))"
@@ -43,16 +43,16 @@
       @submit.prevent="handleSave"
     >
       <Tabs v-model="activeTab" class="w-full">
-        <TabsList class="grid grid-cols-3 w-full max-w-md">
-          <TabsTrigger value="schema" class="text-xs gap-1.5">
+        <TabsList class="inline-flex items-center gap-1 p-1 bg-muted/60 rounded-lg border border-border/50 max-w-full overflow-x-auto">
+          <TabsTrigger value="schema" class="text-xs gap-1.5 px-4 py-2">
             <Layers class="h-3.5 w-3.5" />
             {{ $t('infra.models.form.tabs.schema') }}
           </TabsTrigger>
-          <TabsTrigger value="api" :disabled="isCreate" class="text-xs gap-1.5">
+          <TabsTrigger value="api" :disabled="isCreate" class="text-xs gap-1.5 px-4 py-2">
             <Globe class="h-3.5 w-3.5" />
             {{ $t('infra.models.form.tabs.api') }}
           </TabsTrigger>
-          <TabsTrigger value="rules" :disabled="isCreate" class="text-xs gap-1.5">
+          <TabsTrigger value="rules" :disabled="isCreate" class="text-xs gap-1.5 px-4 py-2">
             <CheckSquare class="h-3.5 w-3.5" />
             {{ $t('infra.models.form.tabs.rules') }}
           </TabsTrigger>
@@ -248,7 +248,7 @@
       </Tabs>
 
       <!-- Action Footer Toolbar -->
-      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
+      <div class="sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm p-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 border-t border-border mt-8 flex flex-wrap items-center justify-between gap-3 shadow-xs">
         <div class="flex items-center gap-2">
           <Button
             type="submit"
