@@ -77,7 +77,7 @@
       <div class="mt-12 text-center">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/60 text-xs font-mono text-muted-foreground border border-border/60">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Live API Source: <strong class="text-foreground">/api/v1/dynamic/user_survey</strong></span>
+          <span>Live API Source: <strong class="text-foreground">/api/v1/system/dynamic/user_survey</strong></span>
         </div>
       </div>
     </div>
@@ -152,7 +152,7 @@ const fallbackRecords: SurveyItem[] = [
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/v1/dynamic/user_survey?per_page=8')
+    const res = await fetch('/api/v1/system/dynamic/user_survey?per_page=8')
     if (res.ok) {
       const json = await res.json()
       const rawData = json?.data?.data || json?.data
