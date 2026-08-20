@@ -11,6 +11,7 @@ import {
   Clock3,
   FileEdit,
   FileText,
+  History,
   LayoutGrid,
   Pencil,
   Plus,
@@ -234,6 +235,11 @@ const columns = [
                         }, [h(Trash2, { class: 'w-4 h-4' })])
                     ]
                     : [
+                        authStore.hasPermission('edit content') && h(Button, {
+                            variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-muted-foreground hover:text-foreground',
+                            onClick: () => router.push({ name: 'contents.revisions', params: { id: content.id } }),
+                            title: t('publishing.content.list.revisions')
+                        }, [h(History, { class: 'w-4 h-4' })]),
                         authStore.hasPermission('edit content') && h(Button, {
                             variant: 'ghost', size: 'icon', class: 'h-8 w-8',
                             onClick: () => handleEdit(content), title: t('common.actions.edit')

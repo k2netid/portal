@@ -47,6 +47,39 @@
           />
         </div>
       </template>
+      <template #actions>
+        <div class="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            class="gap-1.5 text-xs font-medium"
+            @click="router.push({ name: 'contents.revisions', params: { id } })"
+          >
+            <History class="w-3.5 h-3.5" />
+            {{ $t('publishing.content.list.revisions') }}
+          </Button>
+          <template v-if="form.status === 'pending' && authStore.hasPermission('approve content')">
+            <Button
+              variant="default"
+              size="sm"
+              class="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 text-xs font-medium"
+              @click="handleApprove"
+            >
+              <CheckCircle2 class="w-3.5 h-3.5" />
+              {{ $t('publishing.content.actions.approve') }}
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              class="gap-1.5 text-xs font-medium"
+              @click="handleReject"
+            >
+              <XCircle class="w-3.5 h-3.5" />
+              {{ $t('publishing.content.actions.reject') }}
+            </Button>
+          </template>
+        </div>
+      </template>
     </PageHeader>
 
     <!-- Pending Review Notice -->
@@ -222,10 +255,13 @@ import api from '@/engine/api/client';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 
 import {
+  CheckCircle2,
   Clock3,
+  History,
   Loader2,
   Lock,
   Unlock,
+  XCircle,
 } from 'lucide-vue-next';
 
 // UI Components
@@ -253,6 +289,7 @@ import Builder from '@/modules/Content/Layout/components/builder/Builder.vue';
 // Composables & Utils
 import { parseSingleResponse, parseResponse, ensureArray, getResponseList } from '@/shared/utils/responseParser';
 import { useAutoSave } from '@/shared/composables/useAutoSave';
+import { useConfirm } from '@/shared/composables/useConfirm';
 import { useToast } from '@/shared/composables/useToast';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
 import { contentSchema } from '@/modules/Content/Publishing/schemas/content';
@@ -277,9 +314,49 @@ const router = useRouter();
 const route = useRoute();
 const id = String(route.params.id || '');
 const toast = useToast();
+const { confirm } = useConfirm();
 const publishingStore = usePublishingStore();
 const systemStore = useSystemStore();
 const authStore = useAuthStore();
+
+// Approval Actions
+const handleApprove = async () => {
+  const confirmed = await confirm({
+    title: t('publishing.content.actions.approve'),
+    message: t('publishing.content.messages.approveConfirm', 'Are you sure you want to approve and publish this content?'),
+    confirmText: t('publishing.content.actions.approve'),
+    variant: 'success'
+  });
+  if (!confirmed) return;
+
+  try {
+    await api.put(`/manage/publishing/contents/${id}/approve`);
+    form.value.status = 'published';
+    toast.success.default(t('publishing.content.messages.approvedSuccess', 'Content approved and published successfully!'));
+  } catch (error) {
+    logger.error('Failed to approve content:', error);
+    toast.error.default(t('publishing.content.messages.approveFailed', 'Failed to approve content'));
+  }
+};
+
+const handleReject = async () => {
+  const confirmed = await confirm({
+    title: t('publishing.content.actions.reject'),
+    message: t('publishing.content.messages.rejectConfirm', 'Are you sure you want to reject this content? It will be moved to draft.'),
+    confirmText: t('publishing.content.actions.reject'),
+    variant: 'danger'
+  });
+  if (!confirmed) return;
+
+  try {
+    await api.put(`/manage/publishing/contents/${id}/reject`);
+    form.value.status = 'draft';
+    toast.success.default(t('publishing.content.messages.rejectedSuccess', 'Content rejected and moved to draft.'));
+  } catch (error) {
+    logger.error('Failed to reject content:', error);
+    toast.error.default(t('publishing.content.messages.rejectFailed', 'Failed to reject content'));
+  }
+};
 
 // Visual Builder State
 const isVisualBuilderOpen = ref(false);
