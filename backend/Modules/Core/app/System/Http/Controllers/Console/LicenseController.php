@@ -35,7 +35,8 @@ class LicenseController extends BaseApiController
             'license_key' => 'required|string|min:6|max:255',
         ]);
 
-        $key = (string) $request->input('license_key');
+        $rawKey = $request->input('license_key');
+        $key = is_string($rawKey) ? $rawKey : '';
         $result = $this->licenseService->activateLicense($key);
 
         $status = $result['success'] ? 200 : 422;

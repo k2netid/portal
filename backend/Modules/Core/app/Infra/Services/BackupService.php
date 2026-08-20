@@ -98,7 +98,7 @@ class BackupService
             // We use the same directory structure but temporary filename
             $backupDir = dirname(Storage::disk('local')->path($targetPath));
             if (! is_dir($backupDir)) {
-                mkdir($backupDir, 0755, true);
+                mkdir($backupDir, 0775, true);
             }
 
             // We need absolute path for the SQL dump to work
@@ -288,7 +288,7 @@ class BackupService
                     // Create temp directory for extraction
                     $tempExtractDir = dirname($fullPath).'/restore_'.uniqid();
                     if (! is_dir($tempExtractDir)) {
-                        mkdir($tempExtractDir, 0755, true);
+                        mkdir($tempExtractDir, 0775, true);
                     }
 
                     // Get password from DB or Env or App Key
@@ -415,7 +415,7 @@ class BackupService
                     $targetMedia = storage_path('app/public');
                     // Ensure target exists
                     if (! is_dir($targetMedia)) {
-                        mkdir($targetMedia, 0755, true);
+                        mkdir($targetMedia, 0775, true);
                     }
                     // Copy files over
                     $this->copyDirectory($mediaExtractPath, $targetMedia);
@@ -711,7 +711,7 @@ class BackupService
             $zipPath = Storage::disk('local')->path($targetPath);
             $zipDir = dirname($zipPath);
             if (! is_dir($zipDir)) {
-                mkdir($zipDir, 0755, true);
+                mkdir($zipDir, 0775, true);
             }
 
             $zip = new \ZipArchive;
@@ -784,7 +784,7 @@ class BackupService
             $zipPath = Storage::disk('local')->path($targetPath);
             $zipDir = dirname($zipPath);
             if (! is_dir($zipDir)) {
-                mkdir($zipDir, 0755, true);
+                mkdir($zipDir, 0775, true);
             }
 
             $zip = new \ZipArchive;
@@ -862,7 +862,7 @@ class BackupService
             return;
         }
 
-        @mkdir($dst, 0755, true);
+        @mkdir($dst, 0775, true);
         while (($file = readdir($dir)) !== false) {
             if (($file != '.') && ($file != '..')) {
                 if (is_dir($src.'/'.$file)) {

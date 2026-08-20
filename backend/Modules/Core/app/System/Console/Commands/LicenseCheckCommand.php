@@ -33,6 +33,8 @@ class LicenseCheckCommand extends Command
         $maskedKey = is_string($status['masked_key'] ?? null) ? $status['masked_key'] : 'None (Community)';
         $domain = is_string($status['domain'] ?? null) ? $status['domain'] : 'localhost';
 
+        $cpUrl = isset($status['control_plane_url']) && is_string($status['control_plane_url']) ? $status['control_plane_url'] : 'N/A';
+
         $this->table(
             ['Property', 'Value'],
             [
@@ -40,7 +42,7 @@ class LicenseCheckCommand extends Command
                 ['Status', strtoupper($licenseStatus)],
                 ['Active Key', $maskedKey],
                 ['Bound Domain', $domain],
-                ['Control Plane', (string) ($status['control_plane_url'] ?? 'N/A')],
+                ['Control Plane', $cpUrl],
             ]
         );
 
