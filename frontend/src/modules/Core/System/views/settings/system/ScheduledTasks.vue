@@ -1092,12 +1092,15 @@ async function confirmDelete(task: ScheduledTask) {
   }
 }
 
-function getStatusVariant(status: string | null) {
-  const variants: Record<string, string> = {
+type BadgeVariant = 'info' | 'success' | 'warning' | 'outline' | 'default' | 'destructive' | 'secondary';
+
+function getStatusVariant(status: string | null): BadgeVariant {
+  const variants: Record<string, BadgeVariant> = {
     completed: 'success',
     running: 'default',
     failed: 'destructive',
-    pending: 'secondary'
+    pending: 'secondary',
+    inactive: 'secondary'
   };
   return variants[status || 'pending'] || 'secondary';
 }
