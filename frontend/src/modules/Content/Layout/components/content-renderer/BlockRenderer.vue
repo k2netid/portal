@@ -676,6 +676,23 @@
         v-html="getSettingStr(block, 'code') || getSettingStr(block, 'html')"
       />
 
+      <!-- 21B. COMMENTS BLOCK -->
+      <div
+        v-else-if="block.type === 'comments'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-comments-block w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <PublicComments
+          :content-id="String(context?.post_id || context?.content_id || context?.id || route.params.id || route.params.slug || '')"
+          :title="getSettingStr(block, 'title', '')"
+          :placeholder="getSettingStr(block, 'commentPlaceholder', '')"
+          :submit-text="getSettingStr(block, 'submitText', '')"
+          :is-comments-open="true"
+        />
+      </div>
+
       <!-- 22. GENERIC CONTAINER FALLBACK -->
       <div
         v-else
@@ -697,6 +714,8 @@
 
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue';
+import { useRoute } from 'vue-router';
+import PublicComments from '@/modules/Content/Publishing/components/comments/PublicComments.vue';
 import api from '@/engine/api/client';
 import { logger } from '@/shared/utils/logger';
 import { useToast } from '@/shared/composables/useToast';
@@ -705,6 +724,7 @@ import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lu
 import { ConditionEvaluator } from '@/services/ConditionEvaluator';
 import type { BlockInstance, BuilderInstance } from '@/types/builder';
 
+const route = useRoute();
 const builder = inject<BuilderInstance | null>('builder', null);
 const { menus: themeMenus } = useMenu();
 

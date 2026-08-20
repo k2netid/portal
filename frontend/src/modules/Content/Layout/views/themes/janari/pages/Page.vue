@@ -173,6 +173,13 @@
                   :html="pageBody"
                   mode="Jejakawan"
                 />
+
+                <!-- Public Comments on Page if enabled -->
+                <PublicComments
+                  v-if="pageData?.comment_status"
+                  :content-id="String(pageData.id)"
+                  :is-comments-open="true"
+                />
               </div>
             </article>
           </div>
@@ -222,6 +229,7 @@ import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { useRoute, useRouter } from 'vue-router';
 import JanariSplitText from '../components/shared/JanariSplitText.vue';
 import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue';
+import PublicComments from '@/modules/Content/Publishing/components/comments/PublicComments.vue';
 import api from '@/engine/api/client';
 import { publishingPaths } from '@/engine/api/paths';
 import { normalizeLocaleCode } from '@/engine/i18n';

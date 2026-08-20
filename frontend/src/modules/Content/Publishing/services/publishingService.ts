@@ -26,6 +26,21 @@ export const PublishingService = {
     manageContent(id: string): Promise<AxiosResponse> {
         return api.get(publishingPaths.content(id));
     },
+
+    publicComments(contentId: string): Promise<AxiosResponse> {
+        return api.get(`/publishing/contents/${contentId}/comments`);
+    },
+
+    postPublicComment(contentId: string, data: {
+        body: string;
+        name?: string;
+        email?: string;
+        parent_id?: string;
+        captcha_token?: string;
+        captcha_input?: string;
+    }): Promise<AxiosResponse> {
+        return api.post(`/publishing/contents/${contentId}/comments`, data);
+    },
 };
 
 export default PublishingService;

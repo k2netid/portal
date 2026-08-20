@@ -121,6 +121,13 @@
                   slug: post.slug,
                 }"
               />
+
+              <!-- Public Comments Section -->
+              <PublicComments
+                v-if="post.comment_status !== false"
+                :content-id="String(post.id)"
+                :is-comments-open="true"
+              />
             </div>
           </div>
 
@@ -156,6 +163,7 @@ import { logger } from '@/shared/utils/logger';
 import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue';
+import PublicComments from '@/modules/Content/Publishing/components/comments/PublicComments.vue';
 import PluginSlot from '@/shared/components/PluginSlot.vue';
 import BlogSidebar from '../components/blog/BlogSidebar.vue';
 import { useRoute } from 'vue-router';
