@@ -11,6 +11,8 @@ import { applyMergedSettingsSchema } from '@/modules/Content/Layout/customizer/l
 import type { ComponentBindings } from '@/modules/Content/Layout/composables/useThemeDataBindings';
 import { THEME_DATA_BINDINGS_KEY, isPlainSettingsObject } from '@/modules/Content/Layout/constants/themeBindings';
 
+import { useSystemStore } from '@/modules/Core/System/stores/system';
+
 function omitThemeBindingKeys(settings: Record<string, unknown>): Record<string, unknown> {
     const next = { ...settings };
     delete next[THEME_DATA_BINDINGS_KEY];
@@ -21,6 +23,7 @@ type TranslateFn = (key: string, ...args: unknown[]) => string;
 
 export function useThemeCustomizer(slug: string, t: TranslateFn) {
     const toast = useToast();
+    const systemStore = useSystemStore();
     const theme = ref<any>(null);
     const loading = ref(true);
     const saving = ref(false);
@@ -98,6 +101,10 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
     async function fetchThemeData() {
         loading.value = true;
         try {
+            if (!systemStore.publicSettingsLoaded) {
+                await systemStore.fetchPublicSettings();
+            }
+
             const response = await api.get(`/manage/layout/themes/${slug}`);
             theme.value = response.data;
             applyMergedSettingsSchema(theme.value, slug);
@@ -108,8 +115,33 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
                 if (schema[k]) defaults[k] = schema[k].default ?? '';
             });
 
+            const siteName = systemStore.siteSettings?.site_name || '';
+            const siteLogo = systemStore.siteSettings?.site_logo || '';
+            const siteFavicon = systemStore.siteSettings?.site_favicon || '';
+            const siteDesc = systemStore.siteSettings?.site_description || '';
+
+            const fallbackGlobalMap: Record<string, string> = {
+                site_title: siteName,
+                site_name: siteName,
+                brand_logo: siteLogo,
+                site_logo: siteLogo,
+                brand_favicon: siteFavicon,
+                site_favicon: siteFavicon,
+                site_tagline: siteDesc,
+                site_description: siteDesc,
+            };
+
             const rawSettings = (theme.value?.settings || {}) as Record<string, unknown>;
-            formValues.value = { ...defaults, ...omitThemeBindingKeys(rawSettings) };
+            const mergedValues: Record<string, unknown> = { ...defaults, ...omitThemeBindingKeys(rawSettings) };
+
+            // Populate fallback from global Settings > Identity when not explicitly customized in theme
+            Object.entries(fallbackGlobalMap).forEach(([k, fallbackVal]) => {
+                if (fallbackVal && (!mergedValues[k] || mergedValues[k] === '')) {
+                    mergedValues[k] = fallbackVal;
+                }
+            });
+
+            formValues.value = mergedValues;
             customCss.value = theme.value?.custom_css || '';
 
             const rawBindings = rawSettings[THEME_DATA_BINDINGS_KEY];
@@ -165,6 +197,28 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
         const schema = theme.value.manifest.settings_schema;
         Object.keys(schema).forEach((k) => {
             if (schema[k]) defaults[k] = schema[k].default ?? '';
+        });
+
+        const siteName = systemStore.siteSettings?.site_name || '';
+        const siteLogo = systemStore.siteSettings?.site_logo || '';
+        const siteFavicon = systemStore.siteSettings?.site_favicon || '';
+        const siteDesc = systemStore.siteSettings?.site_description || '';
+
+        const fallbackGlobalMap: Record<string, string> = {
+            site_title: siteName,
+            site_name: siteName,
+            brand_logo: siteLogo,
+            site_logo: siteLogo,
+            brand_favicon: siteFavicon,
+            site_favicon: siteFavicon,
+            site_tagline: siteDesc,
+            site_description: siteDesc,
+        };
+
+        Object.entries(fallbackGlobalMap).forEach(([k, fallbackVal]) => {
+            if (fallbackVal && (!defaults[k] || defaults[k] === '')) {
+                defaults[k] = fallbackVal;
+            }
         });
 
         isInternalChange.value = true;

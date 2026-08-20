@@ -158,14 +158,14 @@
 
         <!-- SEO & Social Share Preview (Core Branding / Site Profile) -->
         <section
-          v-if="(selectedItem.id === 'brand_core' || selectedItem.id === 'site_profile') && organizationMode === 'design'"
+          v-if="(selectedItem.id === 'brand_core' || selectedItem.id === 'site_profile' || selectedItem.id === 'identity-general') && organizationMode === 'design'"
           class="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4"
         >
           <SocialSharePreview
-            :site-title="String(formValues['site_title'] || '')"
-            :site-tagline="String(formValues['site_tagline'] || '')"
-            :brand-logo="String(formValues['brand_logo'] || '')"
-            :favicon="String(formValues['site_favicon'] || '')"
+            :site-title="String(formValues['site_title'] || formValues['site_name'] || '')"
+            :site-tagline="String(formValues['site_tagline'] || formValues['site_description'] || '')"
+            :brand-logo="String(formValues['brand_logo'] || formValues['site_logo'] || '')"
+            :favicon="String(formValues['brand_favicon'] || formValues['site_favicon'] || '')"
             :social-links="(formValues['social_links'] as any) || []"
           />
         </section>
