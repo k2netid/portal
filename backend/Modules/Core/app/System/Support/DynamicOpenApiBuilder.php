@@ -7,7 +7,7 @@ namespace Modules\Core\System\Support;
 use Modules\Core\System\Models\ContentType;
 
 /**
- * Builds an OpenAPI 3.0 document for /api/v1/dynamic/{slug} from CCK field definitions.
+ * Builds an OpenAPI 3.0 document for /api/v1/dynamic/{slug} from Data Model field definitions.
  */
 final class DynamicOpenApiBuilder
 {

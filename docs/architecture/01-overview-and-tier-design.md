@@ -42,7 +42,7 @@ Menyediakan fondasi sistem operasi CMS, otentikasi, tata kelola keamanan, dan ut
    - Activity log & System health metrics.
 2. **Infra**:
    - Scheduled task orchestrator & automation runner.
-   - Dynamic Custom Content Kit (CCK) & Custom Post Types.
+   - Data Model Studio & Dynamic REST Entities.
    - URL Redirects manager & Automated Database Backup system.
    - Outbound webhooks delivery & audit.
 3. **Security**:

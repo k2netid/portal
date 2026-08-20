@@ -42,7 +42,7 @@ Aplikasi dibangun di atas arsitektur modular monolith yang rapi, terisolasi, dan
 - **`Core` Tier:**
   - **System:** User Management, RBAC (Role-Based Access Control) + ABAC Interceptor, Personal Access Tokens, Extension Engine, System Settings.
   - **Security:** Autentikasi 2FA, WebAuthn/Passkeys, CSP Header Security, Activity Audit Trails, Security Logs, Brute Force & Rate Limit Protection.
-  - **Infra:** Task Scheduler, Automated Backups, Webhook Dispatcher & Delivery Retries, URL Redirects, CCK & Dynamic Entities.
+  - **Infra:** Task Scheduler, Automated Backups, Webhook Dispatcher & Delivery Retries, URL Redirects, Data Model Studio & Dynamic Entities.
 - **`Content` Tier:**
   - **Publishing:** Post, Page, Templates, Kategori Hierarkis, Tagging, Komentar Anti-Spam, Revision History, SEO Meta & OpenGraph.
   - **Layout & Visual Site Editor:** 50+ Blok Builder Visual, Drag & Drop responsive designer, Preset Management, Dynamic Tag Resolver, Theme Engine (Janari & Custom Themes), Menu Management, Widget Locations.

@@ -27,7 +27,7 @@ frontend/src/
 ├── modules/                      # Domain Modules
 │   ├── Core/
 │   │   ├── System/               # IAM, Settings, Audit Logs
-│   │   ├── Infra/                # Tasks, Backups, Redirects, CCK
+│   │   ├── Infra/                # Tasks, Backups, Redirects, Models
 │   │   └── Security/             # IP firewall, 2FA, Passkeys, ABAC
 │   ├── Content/
 │   │   ├── Publishing/           # Posts, Pages, Categories
