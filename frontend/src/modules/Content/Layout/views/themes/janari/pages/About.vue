@@ -146,7 +146,8 @@
         </section>
 
         <AboutOfferingsSection />
-</div>
+        <UserSurveyDynamicSection />
+      </div>
     </template>
   </div>
 </template>
@@ -154,6 +155,7 @@
 <script setup lang="ts">
 import JanariSplitText from '../components/shared/JanariSplitText.vue'
 import AboutOfferingsSection from '../components/sections/AboutOfferingsSection.vue'
+import UserSurveyDynamicSection from '../components/sections/UserSurveyDynamicSection.vue'
 import { ref, onMounted, nextTick, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
