@@ -212,11 +212,41 @@ final class DynamicOpenApiBuilder
             'boolean' => ['type' => 'boolean'],
             'date' => ['type' => 'string', 'format' => 'date'],
             'email' => ['type' => 'string', 'format' => 'email'],
-            'image' => ['type' => 'string', 'format' => 'uri', 'description' => 'Media URL or path'],
+            'url' => ['type' => 'string', 'format' => 'uri'],
+            'color' => ['type' => 'string', 'example' => '#3b82f6', 'description' => 'Hex color code'],
+            'image' => ['type' => 'string', 'format' => 'uri', 'description' => 'Image URL or path'],
+            'media' => ['type' => 'string', 'description' => 'Media asset path or UUID'],
+            'richtext' => ['type' => 'string', 'description' => 'Formatted rich HTML or Markdown text'],
+            'json' => ['type' => 'object', 'description' => 'Nested structured JSON / key-value dictionary'],
+            'relation' => $this->relationSchema($field),
             'select' => $this->selectSchema($field),
             'longtext' => ['type' => 'string'],
             default => ['type' => 'string'],
         };
+    }
+
+    /**
+     * @param  array<string, mixed>  $field
+     * @return array<string, mixed>
+     */
+    private function relationSchema(array $field): array
+    {
+        $targetType = is_scalar($field['target_type'] ?? null) ? (string) $field['target_type'] : 'record';
+        $relationMode = is_scalar($field['relation_mode'] ?? null) ? (string) $field['relation_mode'] : 'single';
+
+        if ($relationMode === 'multiple') {
+            return [
+                'type' => 'array',
+                'description' => "List of referenced IDs from `{$targetType}`",
+                'items' => ['type' => 'string', 'format' => 'uuid'],
+            ];
+        }
+
+        return [
+            'type' => 'string',
+            'format' => 'uuid',
+            'description' => "Referenced record ID from `{$targetType}`",
+        ];
     }
 
     /**

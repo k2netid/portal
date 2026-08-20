@@ -8,6 +8,10 @@ export interface CckFieldDefinition {
     type: string;
     is_required?: boolean;
     options?: string[];
+    target_type?: string;
+    relation_mode?: 'single' | 'multiple';
+    placeholder?: string;
+    default_value?: unknown;
 }
 
 export interface CckContentType {

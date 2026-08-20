@@ -6,6 +6,7 @@ export interface DynamicRecordRow {
     id: string;
     content_type_id: string;
     data: Record<string, unknown>;
+    _relations?: Record<string, unknown>;
     created_at?: string;
     updated_at?: string;
 }

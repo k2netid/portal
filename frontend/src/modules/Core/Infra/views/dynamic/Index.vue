@@ -105,7 +105,7 @@
         </div>
         <div class="space-y-1 max-w-sm mx-auto">
           <h4 class="text-sm font-medium text-foreground">
-            {{ searchQuery ? $t('infra.dynamic.records.empty') : $t('infra.dynamic.records.empty') }}
+            {{ $t('infra.dynamic.records.empty') }}
           </h4>
           <p class="text-xs text-muted-foreground">
             {{ searchQuery ? '' : $t('infra.dynamic.records.emptyHint') }}
@@ -164,13 +164,54 @@
                   {{ row.data?.[col.slug] ? $t('infra.dynamic.record.booleanYes') : $t('infra.dynamic.record.booleanNo') }}
                 </Badge>
 
-                <!-- Image Field -->
-                <div v-else-if="col.type === 'image'" class="flex items-center gap-2">
-                  <div v-if="row.data?.[col.slug]" class="w-8 h-8 rounded border overflow-hidden bg-muted shrink-0">
-                    <img :src="String(row.data[col.slug])" alt="img" class="w-full h-full object-cover">
-                  </div>
-                  <span v-else class="text-muted-foreground">—</span>
+                <!-- Relation Field (Hydrated or ID) -->
+                <Badge
+                  v-else-if="col.type === 'relation' && row.data?.[col.slug]"
+                  variant="outline"
+                  class="text-[11px] font-medium gap-1 bg-primary/5 text-primary border-primary/20"
+                >
+                  <Network class="h-3 w-3" />
+                  {{ getRelationLabel(row, col.slug) }}
+                </Badge>
+
+                <!-- Color Swatch Field -->
+                <div
+                  v-else-if="col.type === 'color' && row.data?.[col.slug]"
+                  class="flex items-center gap-1.5 font-mono text-[11px]"
+                >
+                  <div
+                    class="w-3.5 h-3.5 rounded border border-border/80 shadow-xs shrink-0"
+                    :style="{ backgroundColor: String(row.data[col.slug]) }"
+                  />
+                  <span>{{ row.data[col.slug] }}</span>
                 </div>
+
+                <!-- URL Field -->
+                <a
+                  v-else-if="col.type === 'url' && row.data?.[col.slug]"
+                  :href="String(row.data[col.slug])"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-primary hover:underline text-xs truncate max-w-[180px]"
+                >
+                  <ExternalLink class="h-3 w-3 shrink-0" />
+                  <span class="truncate">{{ row.data[col.slug] }}</span>
+                </a>
+
+                <!-- Image / Media Field -->
+                <div v-else-if="(col.type === 'image' || col.type === 'media') && row.data?.[col.slug]" class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded border overflow-hidden bg-muted shrink-0">
+                    <img :src="String(row.data[col.slug])" alt="media" class="w-full h-full object-cover">
+                  </div>
+                </div>
+
+                <!-- Rich Text Summary -->
+                <span
+                  v-else-if="col.type === 'richtext' && row.data?.[col.slug]"
+                  class="font-normal text-muted-foreground truncate max-w-xs block"
+                >
+                  {{ stripHtml(String(row.data[col.slug])) }}
+                </span>
 
                 <!-- Select Field -->
                 <Badge
@@ -283,6 +324,8 @@ import {
   Pencil,
   Trash2,
   AlertCircle,
+  Network,
+  ExternalLink,
 } from 'lucide-vue-next';
 import {
   ConsoleListPage,
@@ -363,6 +406,28 @@ function formatCellValue(val: unknown): string {
         return '—';
     }
     return String(val);
+}
+
+function getRelationLabel(row: DynamicRecordRow, fieldSlug: string): string {
+    const rel = row._relations?.[fieldSlug] as Record<string, unknown> | undefined;
+    if (rel && rel.data && typeof rel.data === 'object') {
+        const d = rel.data as Record<string, unknown>;
+        const titleCandidates = ['title', 'name', 'label', 'heading', 'email', 'slug', 'project_name'];
+        for (const key of titleCandidates) {
+            if (d[key] && typeof d[key] === 'string') {
+                return String(d[key]);
+            }
+        }
+    }
+    const rawVal = row.data?.[fieldSlug];
+    if (typeof rawVal === 'string') {
+        return `#${rawVal.slice(0, 8)}`;
+    }
+    return String(rawVal || '—');
+}
+
+function stripHtml(html: string): string {
+    return html.replace(/<[^>]*>?/gm, '').trim();
 }
 
 function onSearchInput(): void {

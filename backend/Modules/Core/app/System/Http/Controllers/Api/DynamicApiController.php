@@ -45,6 +45,115 @@ class DynamicApiController extends BaseApiController
     }
 
     /**
+     * Hydrate relational fields for a list of records or single record.
+     *
+     * @param  array<int, mixed>|DynamicRecord|\Illuminate\Contracts\Pagination\LengthAwarePaginator  $records
+     * @return mixed
+     */
+    protected function hydrateRelations(ContentType $contentType, mixed $records): mixed
+    {
+        $fields = $contentType->fields;
+        if (! is_array($fields)) {
+            return $records;
+        }
+
+        $relationFields = [];
+        foreach ($fields as $field) {
+            if (is_array($field) && ($field['type'] ?? '') === 'relation') {
+                $slug = (string) ($field['slug'] ?? '');
+                $targetType = (string) ($field['target_type'] ?? '');
+                $relationMode = (string) ($field['relation_mode'] ?? 'single');
+                if ($slug !== '' && $targetType !== '') {
+                    $relationFields[$slug] = [
+                        'target_type' => $targetType,
+                        'relation_mode' => $relationMode,
+                    ];
+                }
+            }
+        }
+
+        if (empty($relationFields)) {
+            return $records;
+        }
+
+        $isSingle = $records instanceof DynamicRecord;
+        $items = $isSingle ? [$records] : ($records instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator ? $records->items() : $records);
+
+        // Collect target IDs grouped by target_type
+        $targetIdsByType = [];
+        foreach ($items as $item) {
+            if (! ($item instanceof DynamicRecord)) {
+                continue;
+            }
+            $data = is_array($item->data) ? $item->data : [];
+            foreach ($relationFields as $fieldSlug => $config) {
+                $val = $data[$fieldSlug] ?? null;
+                if (! empty($val)) {
+                    $targetType = $config['target_type'];
+                    if (! isset($targetIdsByType[$targetType])) {
+                        $targetIdsByType[$targetType] = [];
+                    }
+                    if (is_array($val)) {
+                        foreach ($val as $subVal) {
+                            if (is_string($subVal) && $subVal !== '') {
+                                $targetIdsByType[$targetType][] = $subVal;
+                            }
+                        }
+                    } elseif (is_string($val) && $val !== '') {
+                        $targetIdsByType[$targetType][] = $val;
+                    }
+                }
+            }
+        }
+
+        // Fetch related entities in batch
+        $resolvedEntitiesByType = [];
+        foreach ($targetIdsByType as $targetType => $ids) {
+            $uniqueIds = array_unique($ids);
+            if (empty($uniqueIds)) {
+                continue;
+            }
+
+            // Check if target is another ContentType slug
+            $targetContentType = ContentType::where('slug', $targetType)->first();
+            if ($targetContentType) {
+                $relatedRecords = DynamicRecord::where('content_type_id', $targetContentType->id)
+                    ->whereIn('id', $uniqueIds)
+                    ->get();
+                $resolvedEntitiesByType[$targetType] = $relatedRecords->keyBy('id')->all();
+            }
+        }
+
+        // Attach resolved relations to records as custom attribute
+        foreach ($items as $item) {
+            if (! ($item instanceof DynamicRecord)) {
+                continue;
+            }
+            $data = is_array($item->data) ? $item->data : [];
+            $relationsData = [];
+            foreach ($relationFields as $fieldSlug => $config) {
+                $val = $data[$fieldSlug] ?? null;
+                $targetType = $config['target_type'];
+                if (! empty($val) && isset($resolvedEntitiesByType[$targetType])) {
+                    if (is_array($val)) {
+                        $relationsData[$fieldSlug] = [];
+                        foreach ($val as $id) {
+                            if (isset($resolvedEntitiesByType[$targetType][$id])) {
+                                $relationsData[$fieldSlug][] = $resolvedEntitiesByType[$targetType][$id];
+                            }
+                        }
+                    } elseif (isset($resolvedEntitiesByType[$targetType][$val])) {
+                        $relationsData[$fieldSlug] = $resolvedEntitiesByType[$targetType][$val];
+                    }
+                }
+            }
+            $item->setAttribute('_relations', (object) $relationsData);
+        }
+
+        return $isSingle ? $items[0] : $records;
+    }
+
+    /**
      * GET /api/v1/dynamic/{slug}
      * List all dynamic records for a content type.
      */
@@ -102,7 +211,17 @@ class DynamicApiController extends BaseApiController
             }
         }
 
-        // 2. Dynamic Sorting
+        // 2. Field-specific Filtering (?filter[field]=val)
+        $filter = $request->query('filter');
+        if (is_array($filter)) {
+            foreach ($filter as $fieldKey => $fieldVal) {
+                if (is_string($fieldKey) && preg_match('/^[a-zA-Z0-9_]+$/', $fieldKey) && is_scalar($fieldVal)) {
+                    $query->where("data->{$fieldKey}", (string) $fieldVal);
+                }
+            }
+        }
+
+        // 3. Dynamic Sorting
         $sortBy = $request->query('sort_by');
         $sortOrder = $request->query('sort_order', 'desc');
         if (is_string($sortBy) && $sortBy !== '' && preg_match('/^[a-zA-Z0-9_]+$/', $sortBy)) {
@@ -112,9 +231,12 @@ class DynamicApiController extends BaseApiController
             $query->latest();
         }
 
-        // 3. Paginate output
+        // 4. Paginate output
         $perPage = (int) $request->query('per_page', 15);
         $records = $query->paginate($perPage > 0 ? $perPage : 15);
+
+        // 5. Hydrate Relations
+        $this->hydrateRelations($contentType, $records);
 
         return $this->success($records, 'Dynamic records retrieved successfully');
     }
@@ -140,6 +262,8 @@ class DynamicApiController extends BaseApiController
             'data' => $payload,
         ]);
 
+        $this->hydrateRelations($contentType, $record);
+
         return $this->success($record, 'Dynamic record created successfully', 201);
     }
 
@@ -159,6 +283,8 @@ class DynamicApiController extends BaseApiController
         if (! $record) {
             return $this->error('Record not found', 404);
         }
+
+        $this->hydrateRelations($contentType, $record);
 
         return $this->success($record, 'Dynamic record retrieved successfully');
     }
@@ -195,6 +321,8 @@ class DynamicApiController extends BaseApiController
         $record->update([
             'data' => $updatedData,
         ]);
+
+        $this->hydrateRelations($contentType, $record);
 
         return $this->success($record, 'Dynamic record updated successfully');
     }
@@ -249,6 +377,10 @@ class DynamicApiController extends BaseApiController
             'fields.*.options' => 'nullable|array',
             'fields.*.options.*' => 'string',
             'fields.*.is_required' => 'nullable|boolean',
+            'fields.*.target_type' => 'nullable|string',
+            'fields.*.relation_mode' => 'nullable|string|in:single,multiple',
+            'fields.*.placeholder' => 'nullable|string',
+            'fields.*.default_value' => 'nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -376,6 +508,10 @@ class DynamicApiController extends BaseApiController
             'fields.*.options' => 'nullable|array',
             'fields.*.options.*' => 'string',
             'fields.*.is_required' => 'nullable|boolean',
+            'fields.*.target_type' => 'nullable|string',
+            'fields.*.relation_mode' => 'nullable|string|in:single,multiple',
+            'fields.*.placeholder' => 'nullable|string',
+            'fields.*.default_value' => 'nullable',
             'is_active' => 'nullable|boolean',
         ];
 

@@ -126,7 +126,7 @@
             :title="$t('infra.cck.form.fieldsSection')"
             :subtitle="$t('infra.cck.form.fieldsSectionHint')"
           >
-            <CckTypeBuilder v-model="form.fields" />
+            <CckTypeBuilder v-model="form.fields" :current-type-slug="form.slug" />
           </ConsoleFormCard>
         </TabsContent>
 

@@ -1,39 +1,105 @@
 <template>
   <div class="flex flex-col lg:flex-row gap-6 items-start">
     <!-- Left Field Palette -->
-    <div class="w-full lg:w-64 shrink-0 space-y-3">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-sm font-semibold text-foreground">
-            {{ $t('infra.cck.builder.title') }}
-          </h3>
-          <p class="text-xs text-muted-foreground mt-0.5">
-            {{ $t('infra.cck.builder.subtitle') }}
-          </p>
-        </div>
+    <div class="w-full lg:w-72 shrink-0 space-y-4">
+      <div>
+        <h3 class="text-sm font-semibold text-foreground flex items-center gap-2">
+          <Layers class="h-4 w-4 text-primary" />
+          {{ $t('infra.cck.builder.title') }}
+        </h3>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          {{ $t('infra.cck.builder.subtitle') }}
+        </p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-1 gap-2">
-        <button
-          v-for="ft in fieldTypes"
-          :key="ft.type"
-          type="button"
-          class="flex items-center gap-2.5 p-2.5 rounded-lg border border-border/70 bg-card hover:bg-muted/60 hover:border-primary/50 text-left transition-all group focus:outline-none focus:ring-2 focus:ring-primary/20"
-          @click="addField(ft.type)"
-        >
-          <div class="p-1.5 rounded-md bg-muted group-hover:bg-primary/10 text-muted-foreground group-hover:text-primary transition-colors shrink-0">
-            <component :is="ft.icon" class="h-4 w-4" />
+      <!-- Field Types Categorized Accordion / Grouping -->
+      <div class="space-y-4">
+        <!-- 1. Standard Fields -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
+            {{ $t('infra.cck.builder.categories.standard') }}
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+            <button
+              v-for="ft in standardTypes"
+              :key="ft.type"
+              type="button"
+              class="flex items-center gap-2.5 p-2 rounded-lg border border-border/70 bg-card hover:bg-muted/60 hover:border-primary/50 text-left transition-all group focus:outline-none focus:ring-2 focus:ring-primary/20"
+              @click="addField(ft.type)"
+            >
+              <div class="p-1.5 rounded-md bg-muted group-hover:bg-primary/10 text-muted-foreground group-hover:text-primary transition-colors shrink-0">
+                <component :is="ft.icon" class="h-3.5 w-3.5" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-medium text-foreground truncate">
+                  {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                </div>
+                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                  {{ $t(`infra.cck.builder.types.${ft.type}Desc`) }}
+                </div>
+              </div>
+              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+            </button>
           </div>
-          <div class="min-w-0 flex-1">
-            <div class="text-xs font-medium text-foreground truncate">
-              {{ $t(`infra.cck.builder.types.${ft.type}`) }}
-            </div>
-            <div class="text-[10px] text-muted-foreground truncate hidden sm:block lg:block">
-              {{ $t(`infra.cck.builder.types.${ft.type}Desc`) }}
-            </div>
+        </div>
+
+        <!-- 2. Rich & Media Fields -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
+            {{ $t('infra.cck.builder.categories.media') }}
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+            <button
+              v-for="ft in mediaTypes"
+              :key="ft.type"
+              type="button"
+              class="flex items-center gap-2.5 p-2 rounded-lg border border-border/70 bg-card hover:bg-muted/60 hover:border-primary/50 text-left transition-all group focus:outline-none focus:ring-2 focus:ring-primary/20"
+              @click="addField(ft.type)"
+            >
+              <div class="p-1.5 rounded-md bg-muted group-hover:bg-primary/10 text-muted-foreground group-hover:text-primary transition-colors shrink-0">
+                <component :is="ft.icon" class="h-3.5 w-3.5" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-medium text-foreground truncate">
+                  {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                </div>
+                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                  {{ $t(`infra.cck.builder.types.${ft.type}Desc`) }}
+                </div>
+              </div>
+              <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+            </button>
           </div>
-          <Plus class="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
-        </button>
+        </div>
+
+        <!-- 3. Advanced & Relational -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase px-1">
+            {{ $t('infra.cck.builder.categories.advanced') }}
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+            <button
+              v-for="ft in advancedTypes"
+              :key="ft.type"
+              type="button"
+              class="flex items-center gap-2.5 p-2 rounded-lg border border-primary/30 bg-primary/[0.03] hover:bg-primary/[0.08] hover:border-primary/60 text-left transition-all group focus:outline-none focus:ring-2 focus:ring-primary/20"
+              @click="addField(ft.type)"
+            >
+              <div class="p-1.5 rounded-md bg-primary/10 text-primary transition-colors shrink-0">
+                <component :is="ft.icon" class="h-3.5 w-3.5" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-semibold text-foreground truncate">
+                  {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                </div>
+                <div class="text-[10px] text-muted-foreground truncate hidden lg:block">
+                  {{ $t(`infra.cck.builder.types.${ft.type}Desc`) }}
+                </div>
+              </div>
+              <Plus class="h-3.5 w-3.5 text-primary opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto hidden lg:block" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -42,22 +108,22 @@
       <!-- Empty State -->
       <div
         v-if="fields.length === 0"
-        class="rounded-xl border border-dashed border-border/80 p-8 text-center bg-muted/20 space-y-3"
+        class="rounded-xl border border-dashed border-border/80 p-10 text-center bg-muted/20 space-y-4"
       >
-        <div class="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-          <Layers class="h-6 w-6" />
+        <div class="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+          <Network class="h-7 w-7" />
         </div>
-        <div class="space-y-1 max-w-sm mx-auto">
-          <h4 class="text-sm font-medium text-foreground">
+        <div class="space-y-1 max-w-md mx-auto">
+          <h4 class="text-sm font-semibold text-foreground">
             {{ $t('infra.cck.builder.empty') }}
           </h4>
-          <p class="text-xs text-muted-foreground">
+          <p class="text-xs text-muted-foreground leading-relaxed">
             {{ $t('infra.cck.builder.emptyHint') }}
           </p>
         </div>
-        <div class="flex flex-wrap items-center justify-center gap-1.5 pt-2">
+        <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
           <Button
-            v-for="ft in fieldTypes.slice(0, 4)"
+            v-for="ft in allFieldTypes.slice(0, 5)"
             :key="ft.type"
             type="button"
             variant="outline"
@@ -99,6 +165,14 @@
                 <Badge variant="outline" class="text-[10px] h-5 px-1.5 py-0 gap-1 font-normal bg-background">
                   <component :is="getFieldIcon(field.type)" class="h-3 w-3" />
                   {{ $t(`infra.cck.builder.types.${field.type}`) }}
+                </Badge>
+                <Badge
+                  v-if="field.type === 'relation' && field.target_type"
+                  variant="secondary"
+                  class="text-[10px] h-5 px-1.5 py-0 gap-1 font-mono"
+                >
+                  <ArrowRight class="h-2.5 w-2.5" />
+                  {{ field.target_type }} ({{ field.relation_mode || 'single' }})
                 </Badge>
                 <Badge
                   v-if="field.is_required"
@@ -174,18 +248,90 @@
                     class="w-full h-9 rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
                     @change="onTypeChange(field)"
                   >
-                    <option
-                      v-for="ft in fieldTypes"
-                      :key="ft.type"
-                      :value="ft.type"
-                    >
-                      {{ $t(`infra.cck.builder.types.${ft.type}`) }}
-                    </option>
+                    <optgroup :label="$t('infra.cck.builder.categories.standard')">
+                      <option
+                        v-for="ft in standardTypes"
+                        :key="ft.type"
+                        :value="ft.type"
+                      >
+                        {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                      </option>
+                    </optgroup>
+                    <optgroup :label="$t('infra.cck.builder.categories.media')">
+                      <option
+                        v-for="ft in mediaTypes"
+                        :key="ft.type"
+                        :value="ft.type"
+                      >
+                        {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                      </option>
+                    </optgroup>
+                    <optgroup :label="$t('infra.cck.builder.categories.advanced')">
+                      <option
+                        v-for="ft in advancedTypes"
+                        :key="ft.type"
+                        :value="ft.type"
+                      >
+                        {{ $t(`infra.cck.builder.types.${ft.type}`) }}
+                      </option>
+                    </optgroup>
                   </select>
                 </div>
               </div>
 
-              <!-- Select Options Editor -->
+              <!-- Relation Configurator (When type === 'relation') -->
+              <div
+                v-if="field.type === 'relation'"
+                class="space-y-3 rounded-lg border border-primary/30 bg-primary/[0.02] p-3.5"
+              >
+                <div class="flex items-center gap-2 text-xs font-semibold text-primary">
+                  <Network class="h-4 w-4" />
+                  <span>{{ $t('infra.cck.builder.relation.title') }}</span>
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <Label class="text-xs mb-1.5 block">
+                      {{ $t('infra.cck.builder.relation.targetType') }}
+                      <span class="text-destructive">*</span>
+                    </Label>
+                    <select
+                      v-model="field.target_type"
+                      class="w-full h-9 rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="" disabled>
+                        {{ $t('infra.cck.builder.relation.selectTarget') }}
+                      </option>
+                      <option
+                        v-for="ct in availableTypes"
+                        :key="ct.slug"
+                        :value="ct.slug"
+                      >
+                        {{ ct.name }} ({{ ct.slug }})
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <Label class="text-xs mb-1.5 block">
+                      {{ $t('infra.cck.builder.relation.mode') }}
+                    </Label>
+                    <select
+                      v-model="field.relation_mode"
+                      class="w-full h-9 rounded-md border border-input bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="single">
+                        {{ $t('infra.cck.builder.relation.single') }} (Many-to-One / BelongsTo)
+                      </option>
+                      <option value="multiple">
+                        {{ $t('infra.cck.builder.relation.multiple') }} (Many-to-Many / HasMany)
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Select Options Editor (When type === 'select') -->
               <div
                 v-if="field.type === 'select'"
                 class="space-y-1.5 rounded-lg border border-border/60 bg-muted/20 p-3"
@@ -207,7 +353,7 @@
                 />
               </div>
 
-              <!-- Required Toggle -->
+              <!-- Required Toggle & Helper info -->
               <div class="flex items-center justify-between pt-1 border-t border-border/40">
                 <label class="flex items-center gap-2 text-xs font-medium text-foreground cursor-pointer select-none">
                   <Checkbox
@@ -226,25 +372,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Component } from 'vue';
+import { ref, watch, onMounted, type Component } from 'vue';
 import draggable from 'vuedraggable';
 import {
   Type,
   AlignLeft,
+  FileText,
   Hash,
   ToggleLeft,
   Calendar,
   Mail,
+  Link as LinkIcon,
+  Palette,
   Image as ImageIcon,
+  FolderOpen,
   ListFilter,
+  Network,
+  Code,
   GripVertical,
   Trash2,
   Copy,
   Plus,
   Layers,
+  ArrowRight,
 } from 'lucide-vue-next';
 import { Button, Card, CardContent, Checkbox, Input, Label, Textarea, Badge } from '@/shared/components/ui';
-import type { CckFieldDefinition } from '../../services/cckService';
+import CckService, { type CckFieldDefinition, type CckContentType } from '../../services/cckService';
 
 export interface BuilderField extends CckFieldDefinition {
     _key: string;
@@ -253,6 +406,7 @@ export interface BuilderField extends CckFieldDefinition {
 
 const props = defineProps<{
     modelValue: CckFieldDefinition[];
+    currentTypeSlug?: string;
 }>();
 
 const emit = defineEmits<{
@@ -264,23 +418,55 @@ interface FieldTypeConfig {
     icon: Component;
 }
 
-const fieldTypes: FieldTypeConfig[] = [
+const standardTypes: FieldTypeConfig[] = [
     { type: 'text', icon: Type },
     { type: 'longtext', icon: AlignLeft },
     { type: 'number', icon: Hash },
     { type: 'boolean', icon: ToggleLeft },
-    { type: 'date', icon: Calendar },
-    { type: 'email', icon: Mail },
-    { type: 'image', icon: ImageIcon },
     { type: 'select', icon: ListFilter },
+    { type: 'date', icon: Calendar },
+    { type: 'color', icon: Palette },
+];
+
+const mediaTypes: FieldTypeConfig[] = [
+    { type: 'richtext', icon: FileText },
+    { type: 'image', icon: ImageIcon },
+    { type: 'media', icon: FolderOpen },
+    { type: 'url', icon: LinkIcon },
+    { type: 'email', icon: Mail },
+];
+
+const advancedTypes: FieldTypeConfig[] = [
+    { type: 'relation', icon: Network },
+    { type: 'json', icon: Code },
+];
+
+const allFieldTypes: FieldTypeConfig[] = [
+    ...standardTypes,
+    ...mediaTypes,
+    ...advancedTypes,
 ];
 
 function getFieldIcon(type: string): Component {
-    const found = fieldTypes.find((f) => f.type === type);
+    const found = allFieldTypes.find((f) => f.type === type);
     return found ? found.icon : Type;
 }
 
 const fields = ref<BuilderField[]>([]);
+const availableTypes = ref<CckContentType[]>([]);
+
+onMounted(async () => {
+    try {
+        const res = await CckService.listTypes();
+        if (res.data?.data) {
+            availableTypes.value = (res.data.data as CckContentType[]).filter(
+                (t) => t.slug !== props.currentTypeSlug,
+            );
+        }
+    } catch {
+        // graceful fallback
+    }
+});
 
 function toBuilderField(raw: CckFieldDefinition, index: number): BuilderField {
     return {
@@ -288,6 +474,8 @@ function toBuilderField(raw: CckFieldDefinition, index: number): BuilderField {
         _key: `${raw.slug || 'field'}-${Date.now()}-${index}`,
         _optionsLines: (raw.options ?? []).join('\n'),
         is_required: raw.is_required ?? false,
+        target_type: raw.target_type ?? '',
+        relation_mode: raw.relation_mode ?? 'single',
     };
 }
 
@@ -301,6 +489,10 @@ function fromBuilderField(field: BuilderField): CckFieldDefinition {
     if (field.type === 'select' && field.options?.length) {
         payload.options = field.options;
     }
+    if (field.type === 'relation') {
+        payload.target_type = field.target_type || '';
+        payload.relation_mode = field.relation_mode || 'single';
+    }
     return payload;
 }
 
@@ -311,7 +503,6 @@ watch(
             fields.value = [];
             return;
         }
-        // Only update if length or keys differ to preserve local uncommitted edits
         if (value.length !== fields.value.length) {
             fields.value = value.map((f, i) => toBuilderField(f, i));
         }
@@ -353,6 +544,8 @@ function addField(type: string): void {
         is_required: false,
         _optionsLines: type === 'select' ? 'option_1\noption_2' : '',
         options: type === 'select' ? ['option_1', 'option_2'] : undefined,
+        target_type: type === 'relation' && availableTypes.value[0] ? availableTypes.value[0].slug : '',
+        relation_mode: 'single',
     };
     fields.value.push(newField);
 }
@@ -367,6 +560,8 @@ function duplicateField(field: BuilderField): void {
         slug: clonedSlug,
         options: field.options ? [...field.options] : undefined,
         _optionsLines: field._optionsLines,
+        target_type: field.target_type,
+        relation_mode: field.relation_mode,
     };
     fields.value.push(cloned);
 }
@@ -376,7 +571,7 @@ function removeField(key: string): void {
 }
 
 function syncSlug(field: BuilderField): void {
-    if (!field.slug || field.slug.startsWith('field_') || field.slug.startsWith('text_') || field.slug.startsWith('number_')) {
+    if (!field.slug || field.slug.startsWith('field_') || field.slug.startsWith('text_') || field.slug.startsWith('number_') || field.slug.startsWith('relation_')) {
         field.slug = slugify(field.name) || field.slug;
     }
 }
@@ -385,6 +580,10 @@ function onTypeChange(field: BuilderField): void {
     if (field.type === 'select' && !field.options?.length) {
         field.options = ['option_1', 'option_2'];
         field._optionsLines = field.options.join('\n');
+    }
+    if (field.type === 'relation' && !field.target_type && availableTypes.value[0]) {
+        field.target_type = availableTypes.value[0].slug;
+        field.relation_mode = 'single';
     }
 }
 

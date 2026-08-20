@@ -16,7 +16,22 @@ final class ContentTypeFieldRulesBuilder
      */
     public static function allowedFieldTypes(): array
     {
-        return ['text', 'longtext', 'number', 'boolean', 'date', 'image', 'email', 'select'];
+        return [
+            'text',
+            'longtext',
+            'richtext',
+            'number',
+            'boolean',
+            'date',
+            'image',
+            'media',
+            'email',
+            'url',
+            'color',
+            'select',
+            'relation',
+            'json',
+        ];
     }
 
     /**
@@ -62,6 +77,24 @@ final class ContentTypeFieldRulesBuilder
                 case 'email':
                     $ruleList[] = 'email';
                     break;
+                case 'url':
+                    $ruleList[] = 'url';
+                    break;
+                case 'color':
+                    $ruleList[] = 'string';
+                    $ruleList[] = 'regex:/^#([A-Fa-f0-9]{3,8})$/';
+                    break;
+                case 'json':
+                    $ruleList[] = 'array';
+                    break;
+                case 'relation':
+                    $relationMode = $field['relation_mode'] ?? 'single';
+                    if ($relationMode === 'multiple') {
+                        $ruleList[] = 'array';
+                    } else {
+                        $ruleList[] = 'string';
+                    }
+                    break;
                 case 'select':
                     $ruleList[] = 'string';
                     $options = $field['options'] ?? [];
@@ -77,7 +110,9 @@ final class ContentTypeFieldRulesBuilder
                         }
                     }
                     break;
+                case 'media':
                 case 'image':
+                case 'richtext':
                 case 'longtext':
                 case 'text':
                 default:

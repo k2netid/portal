@@ -110,7 +110,13 @@ const form = reactive<Record<string, unknown>>({});
 function initFormFields(type: CckContentType): void {
     for (const field of type.fields ?? []) {
         if (!(field.slug in form)) {
-            form[field.slug] = field.type === 'boolean' ? false : '';
+            if (field.type === 'boolean') {
+                form[field.slug] = false;
+            } else if (field.type === 'json') {
+                form[field.slug] = null;
+            } else {
+                form[field.slug] = '';
+            }
         }
     }
 }

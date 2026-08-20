@@ -248,4 +248,75 @@ class DynamicCckTest extends TestCase
         ]);
         $valid->assertStatus(201);
     }
+
+    /**
+     * Test Relational Content Modeling, Relation Hydration, and Rich Fields (Richtext, Color, URL, JSON).
+     */
+    public function test_relational_content_modeling_and_hydration(): void
+    {
+        // 1. Create Author Schema
+        $authorType = ContentType::create([
+            'name' => 'Author',
+            'slug' => 'authors',
+            'description' => 'Book authors',
+            'is_active' => true,
+            'fields' => [
+                ['name' => 'Full Name', 'slug' => 'name', 'type' => 'text', 'is_required' => true],
+                ['name' => 'Bio', 'slug' => 'bio', 'type' => 'richtext', 'is_required' => false],
+            ],
+        ]);
+
+        // 2. Create Book Schema with relation to authors, color, url, and json
+        $bookType = ContentType::create([
+            'name' => 'Book',
+            'slug' => 'books',
+            'description' => 'Books catalog with author relation',
+            'is_active' => true,
+            'fields' => [
+                ['name' => 'Book Title', 'slug' => 'title', 'type' => 'text', 'is_required' => true],
+                [
+                    'name' => 'Author',
+                    'slug' => 'author_id',
+                    'type' => 'relation',
+                    'target_type' => 'authors',
+                    'relation_mode' => 'single',
+                    'is_required' => true,
+                ],
+                ['name' => 'Theme Color', 'slug' => 'theme_color', 'type' => 'color', 'is_required' => false],
+                ['name' => 'Official Website', 'slug' => 'website', 'type' => 'url', 'is_required' => false],
+                ['name' => 'Metadata', 'slug' => 'metadata', 'type' => 'json', 'is_required' => false],
+            ],
+        ]);
+
+        // 3. Create Author Record
+        $authorRes = $this->postJson('/api/v1/dynamic/authors', [
+            'name' => 'Martin Fowler',
+            'bio' => '<p>Author of Refactoring and Patterns of Enterprise Application Architecture.</p>',
+        ]);
+        $authorRes->assertStatus(201);
+        $authorId = $authorRes->json('data.id');
+
+        // 4. Create Book Record referencing the Author
+        $bookRes = $this->postJson('/api/v1/dynamic/books', [
+            'title' => 'Refactoring: Improving the Design of Existing Code',
+            'author_id' => $authorId,
+            'theme_color' => '#3b82f6',
+            'website' => 'https://martinfowler.com/books/refactoring.html',
+            'metadata' => ['edition' => 2, 'pages' => 448],
+        ]);
+        $bookRes->assertStatus(201);
+        $bookId = $bookRes->json('data.id');
+
+        // 5. Verify Relational Hydration on GET /api/v1/dynamic/books
+        $indexBooks = $this->getJson('/api/v1/dynamic/books');
+        $indexBooks->assertStatus(200);
+        $indexBooks->assertJsonPath('data.data.0.data.title', 'Refactoring: Improving the Design of Existing Code');
+        $indexBooks->assertJsonPath('data.data.0._relations.author_id.data.name', 'Martin Fowler');
+
+        // 6. Verify Relational Hydration on GET /api/v1/dynamic/books/{id}
+        $showBook = $this->getJson("/api/v1/dynamic/books/{$bookId}");
+        $showBook->assertStatus(200);
+        $showBook->assertJsonPath('data._relations.author_id.data.name', 'Martin Fowler');
+        $showBook->assertJsonPath('data.data.theme_color', '#3b82f6');
+    }
 }
