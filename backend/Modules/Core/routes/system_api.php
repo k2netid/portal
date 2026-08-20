@@ -81,6 +81,8 @@ Route::prefix('v1')->group(function (): void {
 
         // System Info, Health, Statistics, and Cache
         Route::get('info', [SystemController::class, 'info']);
+        Route::get('requirements', [SystemController::class, 'requirements']);
+        Route::post('requirements/autofix', [SystemController::class, 'autoFixRequirements']);
         Route::get('health', [SystemController::class, 'health']);
         Route::get('health/detailed', [SystemController::class, 'systemHealth']);
         Route::get('statistics', [SystemController::class, 'statistics']);

@@ -28,6 +28,18 @@ class SystemController extends BaseApiController
         return $this->success($this->systemService->getSystemInfo(), 'System information retrieved successfully');
     }
 
+    public function requirements(): JsonResponse
+    {
+        return $this->success($this->systemService->getRequirements(), 'System requirements retrieved successfully');
+    }
+
+    public function autoFixRequirements(): JsonResponse
+    {
+        $res = $this->systemService->autoFixRequirements();
+
+        return $this->success($res, $res['message']);
+    }
+
     public function health(): JsonResponse
     {
         $health = $this->systemService->getSystemHealth();

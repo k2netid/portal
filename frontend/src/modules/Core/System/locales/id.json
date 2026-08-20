@@ -754,6 +754,49 @@
       "title": "Cadangan"
     },
     "info": {
+      "tabs": {
+        "overview": "Ringkasan & Pemeliharaan",
+        "requirements": "Matriks Kebutuhan Sistem"
+      },
+      "requirements": {
+        "title": "Audit Kebutuhan & Kesiapan Sistem JA-CMS",
+        "subtitle": "Pemeriksaan menyeluruh terhadap spesifikasi server, ekstensi PHP, koneksi basis data, izin folder, dan service latar belakang.",
+        "score": "Skor Kesiapan Sistem",
+        "ready": "Sistem Siap Digunakan",
+        "needs_attention": "Perlu Perhatian",
+        "autofix_btn": "Perbaiki Masalah Izin Otomatis",
+        "autofixing": "Memproses Perbaikan...",
+        "autofix_success": "Perbaikan izin folder berhasil dijalankan!",
+        "recheck": "Audit Ulang",
+        "search_placeholder": "Cari kebutuhan sistem atau ekstensi...",
+        "filter": "Filter Kategori",
+        "all_passed": "Semua Prasyarat Terpenuhi",
+        "warnings_count": "{count} Peringatan / Rekomendasi",
+        "errors_count": "{count} Kebutuhan Kurang",
+        "categories": {
+          "all": "Semua Kebutuhan",
+          "php_core": "PHP Runtime & Core",
+          "php_extensions": "Ekstensi & Library PHP",
+          "database": "Database",
+          "caching": "Cache & Redis",
+          "storage_permissions": "Izin Folder & Storage",
+          "background_services": "Service & Background Worker"
+        },
+        "table": {
+          "name": "Komponen / Requirement",
+          "category": "Kategori",
+          "current": "Nilai Terdeteksi",
+          "required": "Kebutuhan Minimum",
+          "status": "Status",
+          "actions": "Panduan / Aksi"
+        },
+        "guide": {
+          "title": "Panduan Perbaikan / Instalasi",
+          "ubuntu": "Debian / Ubuntu Server:",
+          "rhel": "RHEL / AlmaLinux / CentOS:",
+          "general": "cPanel / Hosting / Umum:"
+        }
+      },
       "cache": {
         "active": "Aktif",
         "inactive": "Tidak aktif",

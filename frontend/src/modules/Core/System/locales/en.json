@@ -754,6 +754,49 @@
       "title": "Backups"
     },
     "info": {
+      "tabs": {
+        "overview": "Overview & Maintenance",
+        "requirements": "System Requirements Matrix"
+      },
+      "requirements": {
+        "title": "JA-CMS System Requirements & Readiness Audit",
+        "subtitle": "Comprehensive evaluation of server specifications, PHP extensions, database engine, storage permissions, and background worker daemons.",
+        "score": "System Readiness Score",
+        "ready": "System Fully Ready",
+        "needs_attention": "Needs Attention",
+        "autofix_btn": "Auto-Fix Permissions",
+        "autofixing": "Applying Fixes...",
+        "autofix_success": "Folder permissions and symlinks repaired successfully!",
+        "recheck": "Re-run Audit",
+        "search_placeholder": "Search system requirements or extensions...",
+        "filter": "Category Filter",
+        "all_passed": "All Requirements Met",
+        "warnings_count": "{count} Warnings / Recommendations",
+        "errors_count": "{count} Missing Requirements",
+        "categories": {
+          "all": "All Requirements",
+          "php_core": "PHP Runtime & Core",
+          "php_extensions": "PHP Extensions & Libraries",
+          "database": "Database",
+          "caching": "Cache & Redis",
+          "storage_permissions": "Folder Permissions & Storage",
+          "background_services": "Services & Background Workers"
+        },
+        "table": {
+          "name": "Component / Requirement",
+          "category": "Category",
+          "current": "Detected Value",
+          "required": "Minimum Requirement",
+          "status": "Status",
+          "actions": "Guide / Action"
+        },
+        "guide": {
+          "title": "Remediation & Installation Guide",
+          "ubuntu": "Debian / Ubuntu Server:",
+          "rhel": "RHEL / AlmaLinux / CentOS:",
+          "general": "cPanel / Web Hosting / General:"
+        }
+      },
       "cache": {
         "active": "Active",
         "inactive": "Inactive",
