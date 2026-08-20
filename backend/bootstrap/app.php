@@ -33,6 +33,74 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule): void {
+        // Core schedule: Auto-publishing scheduled posts every minute
+        $schedule->command('content:publish-scheduled')
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->runInBackground();
+
+        // Dynamic Database-backed Scheduled Tasks (sys_scheduled_tasks)
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('sys_scheduled_tasks')) {
+                $tasks = \Modules\Core\System\Models\ScheduledTask::where('is_active', true)->get();
+
+                foreach ($tasks as $task) {
+                    if ($task->command === 'content:publish-scheduled') {
+                        continue;
+                    }
+
+                    if (! \Modules\Core\System\Models\ScheduledTask::isCommandAllowed($task->command)) {
+                        continue;
+                    }
+
+                    if (! \Modules\Core\System\Models\ScheduledTask::isValidCronExpression($task->schedule)) {
+                        continue;
+                    }
+
+                    $taskId = $task->id;
+                    $commandString = $task->command;
+
+                    $event = $schedule->command($commandString)
+                        ->cron($task->schedule)
+                        ->withoutOverlapping()
+                        ->runInBackground();
+
+                    $event->before(function () use ($taskId) {
+                        try {
+                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                                'status' => 'running',
+                                'last_run_at' => now(),
+                            ]);
+                        } catch (\Throwable) {
+                        }
+                    });
+
+                    $event->onSuccess(function () use ($taskId) {
+                        try {
+                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                                'status' => 'completed',
+                                'output' => 'Executed successfully via system scheduler.',
+                            ]);
+                        } catch (\Throwable) {
+                        }
+                    });
+
+                    $event->onFailure(function () use ($taskId) {
+                        try {
+                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                                'status' => 'failed',
+                                'output' => 'Task execution failed via system scheduler.',
+                            ]);
+                        } catch (\Throwable) {
+                        }
+                    });
+                }
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::debug('Dynamic Schedule registration error: '.$e->getMessage());
+        }
+    })
     ->withProviders()
     ->withMiddleware(function (Middleware $middleware): void {
         // Security Layer: Order matters (TrustProxies first, then Domain enforcement, then WAF, etc.)

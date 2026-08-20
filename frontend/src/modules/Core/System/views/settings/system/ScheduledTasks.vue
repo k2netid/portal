@@ -1034,7 +1034,7 @@ async function runTask(task: ScheduledTask) {
     
     toast.success.action(t('system.scheduled_tasks.messages.executed'));
 
-    selectedTaskOutput.value = response.data.output;
+    selectedTaskOutput.value = response.data?.data?.output || response.data?.output || t('system.scheduled_tasks.output.noOutput');
     outputDialogOpen.value = true;
     
     await fetchTasks(pagination.value.current_page);
@@ -1099,7 +1099,7 @@ function getStatusVariant(status: string | null) {
     failed: 'destructive',
     pending: 'secondary'
   };
-  return (variants[status || ''] || 'secondary') as "default" | "destructive" | "secondary" | "success" | "outline" | null | undefined;
+  return variants[status || 'pending'] || 'secondary';
 }
 
 function formatDate(dateString: string) {
@@ -1125,7 +1125,7 @@ async function runAdhocCommand() {
       parameters: adhocCommand.value.parameters
     });
 
-    adhocOutput.value = response.data.output || t('system.scheduled_tasks.output.noOutput');
+    adhocOutput.value = response.data?.data?.output || response.data?.output || t('system.scheduled_tasks.output.noOutput');
     
     if(response.data.exit_code !== 0) {
          // handle error visual if needed, but text is likely enough
