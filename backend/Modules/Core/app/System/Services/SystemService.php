@@ -761,10 +761,12 @@ class SystemService
         // Queue worker processes
         $queueWorkersCount = 0;
         try {
-            $psOut = @shell_exec('ps aux | grep "artisan queue:work" | grep -v grep 2>&1');
-            if ($psOut && trim($psOut)) {
-                $lines = array_filter(explode("\n", trim($psOut)));
-                $queueWorkersCount = count($lines);
+            $myPid = getmypid();
+            $pgrepOut = @shell_exec('pgrep -f "queue:work|queue:listen|horizon" 2>&1');
+            if ($pgrepOut && trim($pgrepOut)) {
+                $pids = array_filter(explode("\n", trim($pgrepOut)));
+                $pids = array_filter($pids, fn ($pid) => is_numeric(trim($pid)) && (int) trim($pid) !== $myPid);
+                $queueWorkersCount = count($pids);
             }
         } catch (\Throwable) {
         }
@@ -774,6 +776,26 @@ class SystemService
         try {
             $crontabOut = @shell_exec('crontab -l 2>&1');
             if ($crontabOut && str_contains($crontabOut, 'schedule:run')) {
+                $cronConfigured = true;
+            }
+            if (! $cronConfigured && is_dir('/etc/cron.d')) {
+                $cronFiles = @scandir('/etc/cron.d') ?: [];
+                foreach ($cronFiles as $file) {
+                    if ($file === '.' || $file === '..') continue;
+                    $content = @file_get_contents('/etc/cron.d/'.$file);
+                    if ($content && str_contains($content, 'schedule:run')) {
+                        $cronConfigured = true;
+                        break;
+                    }
+                }
+            }
+            if (! $cronConfigured && file_exists('/etc/crontab')) {
+                $content = @file_get_contents('/etc/crontab');
+                if ($content && str_contains($content, 'schedule:run')) {
+                    $cronConfigured = true;
+                }
+            }
+            if (! $cronConfigured && Cache::has('illuminate:schedule:last_run')) {
                 $cronConfigured = true;
             }
         } catch (\Throwable) {
