@@ -49,6 +49,14 @@ export const CckService = {
     validationRules(id: string): Promise<AxiosResponse> {
         return api.get(cckPaths.validationRules(id));
     },
+
+    getOpenApiBySlug(slug: string): Promise<AxiosResponse> {
+        return api.get(cckPaths.openApiBySlug(slug));
+    },
+
+    getOpenApiIndex(): Promise<AxiosResponse> {
+        return api.get(cckPaths.openApiIndex);
+    },
 };
 
 export default CckService;

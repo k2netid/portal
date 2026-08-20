@@ -7,8 +7,8 @@
     "webhooks": {
         "actions": {
             "delete": "Hapus",
-            "edit": "Edit",
-            "test": "Tes"
+            "edit": "Ubah",
+            "test": "Uji"
         },
         "confirm": {
             "delete": "Apakah Anda yakin ingin menghapus webhook \"{name}\"?"
@@ -34,24 +34,24 @@
         "messages": {
             "delete_failed": "Gagal menghapus webhook",
             "save_failed": "Gagal menyimpan webhook",
-            "test_failed": "Gagal mengetes webhook",
-            "test_success": "Tes webhook berhasil dikirim"
+            "test_failed": "Gagal menguji webhook",
+            "test_success": "Uji webhook berhasil dikirim"
         },
         "modal": {
             "active_label": "Aktif",
             "cancel": "Batal",
             "create": "Buat",
-            "events_label": "Kejadian",
+            "events_label": "Peristiwa",
             "name_label": "Nama",
             "name_placeholder": "Nama webhook",
             "saving": "Menyimpan...",
             "secret_label": "Kunci Rahasia",
-            "secret_placeholder": "Kunci rahasia opsional untuk penandatanganan",
+            "secret_placeholder": "Kunci rahasia opsional untuk tanda tangan",
             "title_create": "Buat Webhook",
-            "title_edit": "Edit Webhook",
+            "title_edit": "Ubah Webhook",
             "update": "Perbarui",
             "url_label": "URL",
-            "url_placeholder": "https://contoh.com/webhook"
+            "url_placeholder": "https://example.com/webhook"
         },
         "search": "Cari webhook...",
         "stats": {
@@ -61,15 +61,15 @@
             "total_calls": "Total Panggilan"
         },
         "table": {
-            "actions": "Tindakan",
+            "actions": "Aksi",
             "calls": "Panggilan",
-            "events": "Kejadian",
+            "events": "Peristiwa",
             "name": "Nama",
             "status": "Status",
             "url": "URL"
         },
         "title": "Webhook",
-        "subtitle": "Webhook HTTP keluar dan statistik pengiriman."
+        "subtitle": "Kait HTTP keluar dan statistik pengiriman."
     },
     "plugins": {
         "actions": {
@@ -81,7 +81,7 @@
         "empty": "Tidak ada plugin ditemukan",
         "loading": "Memuat...",
         "messages": {
-            "failed_fetch": "Gagal memuat daftar plugin",
+            "failed_fetch": "Gagal memuat plugin",
             "failed_activate": "Gagal mengaktifkan plugin",
             "failed_deactivate": "Gagal menonaktifkan plugin",
             "activated": "Plugin diaktifkan",
@@ -97,16 +97,16 @@
             "inactive": "Tidak Aktif"
         },
         "table": {
-            "actions": "Tindakan",
+            "actions": "Aksi",
             "name": "Nama",
             "status": "Status",
             "version": "Versi"
         },
         "title": "Plugin",
-        "subtitle": "Plugin terpasang, versi, dan status aktivasi.",
+        "subtitle": "Plugin terinstal, versi, dan status aktivasi.",
         "themeBlocks": {
-            "title": "Slot blok tema",
-            "hint": "Pilih lokasi tampil plugin di situs publik (tema Janari).",
+            "title": "Slot blok aplikasi tema",
+            "hint": "Pilih di mana plugin ini ditampilkan pada situs publik (tema Janari).",
             "noSlots": "Tidak ada slot tema.",
             "save": "Simpan pengaturan",
             "saved": "Pengaturan plugin disimpan.",
@@ -114,29 +114,177 @@
         }
     },
     "cck": {
-        "title": "Tipe konten (CCK)",
+        "title": "Tipe Konten (CCK)",
         "subtitle": "Pembangun skema visual untuk endpoint REST dinamis",
         "newType": "Tipe konten baru",
         "editType": "Ubah tipe konten",
-        "empty": "Belum ada tipe konten.",
+        "empty": "Tidak ada tipe konten ditemukan.",
+        "emptyHint": "Buat tipe konten kustom pertama Anda untuk menghasilkan REST API dinamis.",
+        "searchPlaceholder": "Cari tipe konten...",
         "fields": "Field",
         "addField": "Tambah field",
         "validationPreview": "Aturan validasi",
         "save": "Simpan skema",
+        "saving": "Menyimpan...",
         "delete": "Hapus",
+        "deleteType": "Hapus tipe konten",
+        "deleteTypeConfirm": "Apakah Anda yakin ingin menghapus tipe konten \"{name}\"? Semua data record dinamis terkait akan dihapus permanen.",
+        "cancel": "Batal",
+        "back": "Kembali ke tipe konten",
         "apiHint": "API data: /api/v1/dynamic/{slug}",
+        "stats": {
+            "totalTypes": "Total Tipe Konten",
+            "activeTypes": "Skema Aktif",
+            "totalFields": "Total Field Terdefinisi",
+            "apiBase": "Basis API Dinamis"
+        },
+        "table": {
+            "name": "Nama & Deskripsi",
+            "slug": "Slug / Rute API",
+            "fields": "Field",
+            "fieldsCount": "{count} field",
+            "status": "Status",
+            "actions": "Aksi",
+            "records": "Data Record",
+            "schema": "Skema",
+            "copyEndpoint": "Salin Endpoint API",
+            "downloadOpenApi": "Unduh Spek OpenAPI",
+            "active": "Aktif",
+            "inactive": "Nonaktif"
+        },
+        "form": {
+            "tabs": {
+                "schema": "Skema & Field",
+                "api": "API & OpenAPI",
+                "rules": "Aturan Validasi"
+            },
+            "general": "Informasi Umum",
+            "generalHint": "Konfigurasikan nama skema, slug, dan status aktivasi.",
+            "name": "Nama Tipe",
+            "namePlaceholder": "contoh: Proyek Portofolio, Pengumuman",
+            "slug": "Slug",
+            "slugPlaceholder": "contoh: proyek_portofolio",
+            "slugHint": "Digunakan pada endpoint dinamis /api/v1/dynamic/{slug}",
+            "description": "Deskripsi",
+            "descriptionPlaceholder": "Deskripsi opsional untuk skema tipe konten ini",
+            "active": "Skema aktif (mengaktifkan endpoint API dinamis)",
+            "fieldsSection": "Definisi Field",
+            "fieldsSectionHint": "Tambahkan dan atur urutan field untuk tipe konten ini.",
+            "apiSection": "Endpoint REST API Dinamis",
+            "apiSectionHint": "Setiap tipe konten yang aktif otomatis menyediakan endpoint REST CRUD lengkap.",
+            "endpoints": {
+                "list": "Daftar / Cari Record",
+                "create": "Buat Record",
+                "show": "Ambil Satu Record",
+                "update": "Perbarui Record",
+                "delete": "Hapus Record"
+            },
+            "openApiTitle": "Spesifikasi OpenAPI 3.0",
+            "openApiHint": "Skema OpenAPI langsung untuk integrasi Swagger / Postman.",
+            "downloadSpec": "Unduh OpenAPI JSON",
+            "copySpec": "Salin OpenAPI JSON",
+            "rulesTitle": "Aturan Validasi Laravel Terurai",
+            "rulesHint": "Aturan validasi dinamis yang ditegakkan saat pembuatan dan pembaruan record.",
+            "ruleField": "Slug Field",
+            "ruleDefinition": "Ekspresi Validasi",
+            "noRules": "Belum ada aturan validasi yang terdefinisi."
+        },
+        "builder": {
+            "title": "Field Tersedia",
+            "subtitle": "Klik untuk menambahkan field ke dalam skema",
+            "empty": "Belum ada field dalam skema ini.",
+            "emptyHint": "Pilih tipe field dari panel kiri untuk menambahkan field pertama Anda.",
+            "label": "Label",
+            "labelPlaceholder": "Label field (contoh: Judul, Penulis)",
+            "slug": "Slug",
+            "slugPlaceholder": "slug_field",
+            "type": "Tipe Field",
+            "required": "Wajib diisi",
+            "options": "Pilihan (satu per baris)",
+            "optionsPlaceholder": "pilihan_1\npilihan_2\npilihan_3",
+            "optionsHint": "Masukkan setiap nilai opsi yang dapat dipilih pada baris terpisah.",
+            "duplicate": "Duplikat field",
+            "remove": "Hapus field",
+            "dragHint": "Tarik untuk mengubah urutan",
+            "types": {
+                "text": "Teks",
+                "textDesc": "String pendek satu baris",
+                "longtext": "Teks Panjang",
+                "longtextDesc": "Teks multi-baris atau markdown",
+                "number": "Angka",
+                "numberDesc": "Angka integer atau desimal",
+                "boolean": "Boolean",
+                "booleanDesc": "Sakelar Ya / Tidak",
+                "date": "Tanggal",
+                "dateDesc": "Pemilih tanggal kalender",
+                "email": "Email",
+                "emailDesc": "Alamat email tervalidasi",
+                "image": "URL Gambar",
+                "imageDesc": "Berkas media atau URL gambar",
+                "select": "Pilihan (Select)",
+                "selectDesc": "Dropdown pilihan tunggal"
+            }
+        },
         "messages": {
-            "loadFailed": "Gagal memuat",
-            "created": "Tipe konten dibuat.",
-            "saved": "Tipe konten disimpan.",
-            "saveFailed": "Gagal menyimpan"
+            "loadFailed": "Gagal memuat tipe konten",
+            "created": "Tipe konten berhasil dibuat.",
+            "saved": "Skema tipe konten berhasil disimpan.",
+            "saveFailed": "Gagal menyimpan tipe konten",
+            "deleted": "Tipe konten berhasil dihapus.",
+            "deleteFailed": "Gagal menghapus tipe konten",
+            "endpointCopied": "URL endpoint disalin ke papan klip.",
+            "specCopied": "OpenAPI JSON disalin ke papan klip."
         }
     },
     "dynamic": {
+        "records": {
+            "title": "Data Record: {name}",
+            "subtitle": "Kelola data record dinamis untuk tipe konten \"{name}\".",
+            "apiRoute": "Rute API",
+            "newRecord": "Record Baru",
+            "searchPlaceholder": "Cari record berdasarkan field apa pun...",
+            "empty": "Tidak ada record ditemukan.",
+            "emptyHint": "Belum ada record dinamis untuk tipe konten ini.",
+            "createFirst": "Buat Record Pertama",
+            "table": {
+                "id": "ID",
+                "updatedAt": "Terakhir Diperbarui",
+                "actions": "Aksi"
+            },
+            "actions": {
+                "edit": "Ubah",
+                "delete": "Hapus",
+                "copyId": "Salin ID Record"
+            },
+            "confirm": {
+                "delete": "Apakah Anda yakin ingin menghapus record ini? Tindakan ini tidak dapat dibatalkan."
+            },
+            "messages": {
+                "loadFailed": "Gagal memuat data record dinamis",
+                "deleted": "Record berhasil dihapus.",
+                "deleteFailed": "Gagal menghapus record",
+                "idCopied": "ID Record disalin ke papan klip."
+            }
+        },
         "record": {
-            "newTitle": "Record baru",
-            "editTitle": "Ubah record",
-            "subtitle": "Buat atau perbarui baris untuk tipe konten ini."
+            "newTitle": "Record Baru: {name}",
+            "editTitle": "Ubah Record: {name}",
+            "subtitle": "Buat atau perbarui baris record untuk skema \"{name}\".",
+            "backToRecords": "Kembali ke data record",
+            "save": "Simpan Record",
+            "saving": "Menyimpan...",
+            "cancel": "Batal",
+            "booleanYes": "Ya (Benar)",
+            "booleanNo": "Tidak (Salah)",
+            "selectPlaceholder": "Pilih salah satu opsi...",
+            "imagePreview": "Pratinjau Gambar",
+            "noImage": "Belum ada URL gambar",
+            "messages": {
+                "loadFailed": "Gagal memuat data record",
+                "created": "Record berhasil dibuat.",
+                "saved": "Record berhasil diperbarui.",
+                "saveFailed": "Gagal menyimpan record"
+            }
         }
     }
 }

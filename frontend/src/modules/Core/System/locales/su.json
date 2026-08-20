@@ -2779,8 +2779,9 @@
     "recommended_badge": "Rékomendasi",
     "title": "Tugas Terjadwal",
     "tooltips": {
-      "click_to_activate": "Klik pikeun mengaktifkan - Tugas bakal berjalan otomatis sesuai jadwal",
-      "click_to_deactivate": "Klik pikeun menonaktifkan - Tugas teu bakal berjalan otomatis"
+      "click_to_activate": "Klik pikeun ngaktipkeun - Tugas bakal jalan otomatis dumasar jadwal",
+      "click_to_deactivate": "Klik pikeun mareuman - Tugas moal jalan otomatis",
+      "recommended": "Tugas ieu kacida dirékomendasikeunana pikeun kaséhatan sistem"
     }
   },
   "command_runner": {

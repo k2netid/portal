@@ -1,113 +1,354 @@
 <template>
-  <div class="space-y-6">
-    <PageHeader borderless>
-      <template #title>{{ contentType?.name ?? 'Records' }}</template>
-      <template #subtitle>
-        <RouterLink
-          :to="{ name: 'cck-index' }"
-          class="text-xs text-muted-foreground hover:underline"
-        >
-          Content types
-        </RouterLink>
-        <span class="text-xs text-muted-foreground"> / {{ contentType?.name ?? slug }}</span>
-        <span class="block font-mono text-xs text-muted-foreground mt-1">/api/v1/dynamic/{{ slug }}</span>
-      </template>
-      <template #actions>
+  <ConsoleListPage
+    :title="contentType?.name ? $t('infra.dynamic.records.title', { name: contentType.name }) : 'Records'"
+    :subtitle="contentType?.name ? $t('infra.dynamic.records.subtitle', { name: contentType.name }) : ''"
+    :borderless="true"
+  >
+    <template #actions>
+      <div class="flex items-center gap-2">
         <Button
           size="sm"
+          class="h-9 gap-2 text-xs"
           :disabled="!contentType"
           @click="router.push({ name: 'dynamic-records-create', params: { slug } })"
         >
-          New record
+          <Plus class="h-3.5 w-3.5" />
+          {{ $t('infra.dynamic.records.newRecord') }}
         </Button>
-      </template>
-    </PageHeader>
+        <Button
+          variant="outline"
+          size="sm"
+          class="h-9 gap-1.5 text-xs"
+          :disabled="!contentType"
+          @click="router.push({ name: 'cck-edit', params: { id: contentType?.id } })"
+        >
+          <SlidersHorizontal class="h-3.5 w-3.5" />
+          {{ $t('infra.cck.table.schema') }}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          class="h-9 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+          @click="router.push({ name: 'cck-index' })"
+        >
+          <ArrowLeft class="h-3.5 w-3.5" />
+          {{ $t('infra.cck.back') }}
+        </Button>
+      </div>
+    </template>
 
-    <div
-      v-if="loading"
-      class="text-sm text-muted-foreground"
-    >
-      Loading…
-    </div>
-    <p
-      v-else-if="error"
-      class="text-sm text-destructive"
-    >
-      {{ error }}
-    </p>
-    <div
-      v-else-if="records.length === 0"
-      class="text-sm text-muted-foreground"
-    >
-      No records yet.
-    </div>
+    <!-- Main List Card -->
     <ConsoleListCard>
-      <div class="overflow-x-auto min-w-0">
-<table class="w-full text-sm">
-        <thead>
-          <tr class="border-b border-border text-left text-muted-foreground bg-muted/30">
-            <th class="py-2 px-4">Preview</th>
-            <th class="py-2 px-4">Updated</th>
-            <th class="py-2 px-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="row in records"
-            :key="row.id"
-            class="border-b border-border/60"
-          >
-            <td class="py-2 px-4 max-w-md truncate">
-              {{ recordPreview(row) }}
-            </td>
-            <td class="py-2 px-4 text-xs text-muted-foreground">
-              {{ row.updated_at ? formatDate(row.updated_at) : '—' }}
-            </td>
-            <td class="py-2 px-4 flex gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                @click="router.push({ name: 'dynamic-records-edit', params: { slug, recordId: row.id } })"
+      <template #toolbar>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 w-full">
+          <!-- Search Box -->
+          <div class="relative w-full sm:max-w-xs shrink-0">
+            <Search class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              v-model="searchQuery"
+              type="text"
+              :placeholder="$t('infra.dynamic.records.searchPlaceholder')"
+              class="h-9 w-full pl-9 bg-background text-xs"
+              @input="onSearchInput"
+            />
+          </div>
+
+          <!-- API Endpoint Pill -->
+          <div class="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-muted/60 text-muted-foreground group">
+              <Globe class="h-3.5 w-3.5 text-primary shrink-0" />
+              <span class="text-foreground font-medium">/api/v1/dynamic/{{ slug }}</span>
+              <button
+                type="button"
+                class="hover:text-primary transition-colors"
+                :title="$t('infra.cck.table.copyEndpoint')"
+                @click="copyEndpointUrl"
               >
-                Edit
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                class="text-destructive"
-                :disabled="saving"
-                @click="removeRecord(row.id)"
+                <Copy class="h-3 w-3" />
+              </button>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              class="h-8 text-xs text-muted-foreground hover:text-foreground"
+              :disabled="loading"
+              @click="loadRecords"
+            >
+              <RefreshCw class="h-3.5 w-3.5" :class="{ 'animate-spin': loading }" />
+            </Button>
+          </div>
+        </div>
+      </template>
+
+      <!-- Loading State -->
+      <div v-if="loading" class="p-12 text-center text-sm text-muted-foreground flex flex-col items-center justify-center gap-3">
+        <Spinner class="h-6 w-6 text-primary" />
+        <span>{{ $t('common.messages.loading.default') }}</span>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="p-6">
+        <Alert variant="destructive">
+          <AlertCircle class="h-4 w-4" />
+          <AlertTitle>{{ $t('common.labels.error') }}</AlertTitle>
+          <AlertDescription>{{ error }}</AlertDescription>
+        </Alert>
+      </div>
+
+      <!-- Empty State -->
+      <div
+        v-else-if="records.length === 0"
+        class="p-12 text-center space-y-3"
+      >
+        <div class="mx-auto w-12 h-12 rounded-full bg-muted/60 flex items-center justify-center text-muted-foreground">
+          <Database class="h-6 w-6" />
+        </div>
+        <div class="space-y-1 max-w-sm mx-auto">
+          <h4 class="text-sm font-medium text-foreground">
+            {{ searchQuery ? $t('infra.dynamic.records.empty') : $t('infra.dynamic.records.empty') }}
+          </h4>
+          <p class="text-xs text-muted-foreground">
+            {{ searchQuery ? '' : $t('infra.dynamic.records.emptyHint') }}
+          </p>
+        </div>
+        <Button
+          v-if="!searchQuery"
+          size="sm"
+          class="h-8 text-xs gap-1.5 mt-2"
+          @click="router.push({ name: 'dynamic-records-create', params: { slug } })"
+        >
+          <Plus class="h-3.5 w-3.5" />
+          {{ $t('infra.dynamic.records.createFirst') }}
+        </Button>
+      </div>
+
+      <!-- Dynamic Records Table -->
+      <div v-else class="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow class="bg-muted/40 hover:bg-muted/40">
+              <TableHead
+                v-for="col in displayColumns"
+                :key="col.slug"
+                class="text-xs font-semibold"
               >
-                Delete
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-</div>
+                {{ col.name }}
+              </TableHead>
+              <TableHead class="text-xs font-semibold">
+                {{ $t('infra.dynamic.records.table.updatedAt') }}
+              </TableHead>
+              <TableHead class="text-xs font-semibold text-right">
+                {{ $t('infra.dynamic.records.table.actions') }}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow
+              v-for="row in records"
+              :key="row.id"
+              class="hover:bg-muted/30 transition-colors"
+            >
+              <!-- Dynamic Field Values -->
+              <TableCell
+                v-for="col in displayColumns"
+                :key="col.slug"
+                class="py-3 text-xs"
+              >
+                <!-- Boolean Field -->
+                <Badge
+                  v-if="col.type === 'boolean'"
+                  variant="outline"
+                  class="text-[11px] font-normal"
+                  :class="row.data?.[col.slug] ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-muted text-muted-foreground'"
+                >
+                  {{ row.data?.[col.slug] ? $t('infra.dynamic.record.booleanYes') : $t('infra.dynamic.record.booleanNo') }}
+                </Badge>
+
+                <!-- Image Field -->
+                <div v-else-if="col.type === 'image'" class="flex items-center gap-2">
+                  <div v-if="row.data?.[col.slug]" class="w-8 h-8 rounded border overflow-hidden bg-muted shrink-0">
+                    <img :src="String(row.data[col.slug])" alt="img" class="w-full h-full object-cover">
+                  </div>
+                  <span v-else class="text-muted-foreground">—</span>
+                </div>
+
+                <!-- Select Field -->
+                <Badge
+                  v-else-if="col.type === 'select' && row.data?.[col.slug]"
+                  variant="secondary"
+                  class="text-[11px] font-mono font-normal"
+                >
+                  {{ row.data[col.slug] }}
+                </Badge>
+
+                <!-- Default Text / Number / Email / Date -->
+                <span v-else class="font-normal text-foreground truncate max-w-xs block">
+                  {{ formatCellValue(row.data?.[col.slug]) }}
+                </span>
+              </TableCell>
+
+              <!-- Updated At -->
+              <TableCell class="py-3 text-xs text-muted-foreground whitespace-nowrap">
+                {{ row.updated_at ? formatDate(row.updated_at) : '—' }}
+              </TableCell>
+
+              <!-- Actions -->
+              <TableCell class="py-3 text-right">
+                <div class="inline-flex items-center justify-end gap-1.5">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    class="h-8 text-xs gap-1.5"
+                    @click="router.push({ name: 'dynamic-records-edit', params: { slug, recordId: row.id } })"
+                  >
+                    <Pencil class="h-3.5 w-3.5" />
+                    {{ $t('infra.dynamic.records.actions.edit') }}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    class="h-8 text-xs text-destructive hover:bg-destructive/10"
+                    @click="promptDeleteRecord(row)"
+                  >
+                    <Trash2 class="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+
+      <!-- Pagination Footer -->
+      <template v-if="pagination.total > pagination.perPage" #footer>
+        <div class="flex items-center justify-between text-xs text-muted-foreground w-full">
+          <div>
+            Showing {{ paginationFrom }} to {{ paginationTo }} of {{ pagination.total }} records
+          </div>
+          <div class="flex items-center gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-8 px-2.5 text-xs"
+              :disabled="pagination.currentPage <= 1 || loading"
+              @click="changePage(pagination.currentPage - 1)"
+            >
+              Previous
+            </Button>
+            <span class="px-2 font-medium text-foreground">
+              {{ pagination.currentPage }} / {{ pagination.lastPage }}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-8 px-2.5 text-xs"
+              :disabled="pagination.currentPage >= pagination.lastPage || loading"
+              @click="changePage(pagination.currentPage + 1)"
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      </template>
     </ConsoleListCard>
-  </div>
+
+    <!-- Delete Confirmation Modal -->
+    <ConfirmModal
+      :open="deleteModalOpen"
+      :title="$t('infra.dynamic.records.actions.delete')"
+      :message="$t('infra.dynamic.records.confirm.delete')"
+      :confirm-label="$t('infra.dynamic.records.actions.delete')"
+      :cancel-label="$t('infra.cck.cancel')"
+      variant="destructive"
+      :loading="deleting"
+      @confirm="executeDeleteRecord"
+      @cancel="deleteModalOpen = false"
+    />
+  </ConsoleListPage>
 </template>
 
 <script setup lang="ts">
-import {PageHeader, ConsoleListCard} from '@/shared/components/shell';
-
-import { onMounted, ref, watch } from 'vue';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { Button } from '@/shared/components/ui';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import {
+  Database,
+  Plus,
+  Search,
+  RefreshCw,
+  Copy,
+  Globe,
+  SlidersHorizontal,
+  ArrowLeft,
+  Pencil,
+  Trash2,
+  AlertCircle,
+} from 'lucide-vue-next';
+import {
+  ConsoleListPage,
+  ConsoleListCard,
+} from '@/shared/components/shell';
+import {
+  Button,
+  Input,
+  Badge,
+  Spinner,
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  ConfirmModal,
+} from '@/shared/components/ui';
+import { useToast } from '@/shared/composables/useToast';
 import { parseResponse, parseSingleResponse } from '@/shared/utils/responseParser';
-import CckService, { type CckContentType } from '../../services/cckService';
+import CckService, { type CckContentType, type CckFieldDefinition } from '../../services/cckService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const slug = ref(String(route.params.slug ?? ''));
+const toast = useToast();
 
+const slug = ref(String(route.params.slug ?? ''));
 const loading = ref(true);
-const saving = ref(false);
 const error = ref('');
 const contentType = ref<CckContentType | null>(null);
 const records = ref<DynamicRecordRow[]>([]);
+
+// Search and Pagination
+const searchQuery = ref('');
+let searchTimer: ReturnType<typeof setTimeout> | null = null;
+
+const pagination = ref({
+    currentPage: 1,
+    lastPage: 1,
+    perPage: 15,
+    total: 0,
+});
+
+const paginationFrom = computed(() => {
+    if (pagination.value.total === 0) return 0;
+    return (pagination.value.currentPage - 1) * pagination.value.perPage + 1;
+});
+
+const paginationTo = computed(() => {
+    return Math.min(pagination.value.currentPage * pagination.value.perPage, pagination.value.total);
+});
+
+// Delete modal state
+const deleteModalOpen = ref(false);
+const recordToDelete = ref<DynamicRecordRow | null>(null);
+const deleting = ref(false);
+
+const displayColumns = computed<CckFieldDefinition[]>(() => {
+    const fields = contentType.value?.fields ?? [];
+    return fields.slice(0, 4);
+});
 
 function formatDate(iso: string): string {
     try {
@@ -117,64 +358,106 @@ function formatDate(iso: string): string {
     }
 }
 
-function recordPreview(row: DynamicRecordRow): string {
-    const data = row.data ?? {};
-    const first = contentType.value?.fields?.[0]?.slug;
-    if (first && data[first] !== undefined && data[first] !== null) {
-        return String(data[first]);
+function formatCellValue(val: unknown): string {
+    if (val === null || val === undefined || val === '') {
+        return '—';
     }
-    const values = Object.values(data).filter((v) => v !== null && v !== '');
-    return values.length > 0 ? String(values[0]) : row.id;
+    return String(val);
 }
 
-async function load(): Promise<void> {
+function onSearchInput(): void {
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+        pagination.value.currentPage = 1;
+        loadRecords();
+    }, 300);
+}
+
+async function loadContentType(): Promise<void> {
+    try {
+        const res = await CckService.getTypeBySlug(slug.value);
+        contentType.value = parseSingleResponse<CckContentType>(res);
+    } catch (e: unknown) {
+        error.value = e instanceof Error ? e.message : 'Content type not found';
+    }
+}
+
+async function loadRecords(): Promise<void> {
     loading.value = true;
     error.value = '';
     try {
-        const typeRes = await CckService.getTypeBySlug(slug.value);
-        contentType.value = parseSingleResponse<CckContentType>(typeRes);
-        if (!contentType.value) {
-            error.value = 'Content type not found';
-            return;
+        const params: Record<string, string | number> = {
+            page: pagination.value.currentPage,
+            per_page: pagination.value.perPage,
+        };
+        if (searchQuery.value.trim()) {
+            params.search = searchQuery.value.trim();
         }
-        const listRes = await DynamicRecordService.list(slug.value, { per_page: 50 });
-        const page = parseResponse<DynamicRecordRow>(listRes);
+        const res = await DynamicRecordService.list(slug.value, params);
+        const page = parseResponse<DynamicRecordRow>(res);
         records.value = page.data ?? [];
+        pagination.value.total = page.pagination?.total ?? records.value.length;
+        pagination.value.lastPage = page.pagination?.last_page ?? 1;
+        pagination.value.currentPage = page.pagination?.current_page ?? 1;
     } catch (e: unknown) {
-        error.value = e instanceof Error ? e.message : 'Failed to load records';
+        error.value = e instanceof Error ? e.message : t('infra.dynamic.records.messages.loadFailed');
     } finally {
         loading.value = false;
     }
 }
 
-async function removeRecord(id: string): Promise<void> {
-    if (!confirm('Delete this record?')) {
-        return;
-    }
-    saving.value = true;
+function changePage(page: number): void {
+    if (page < 1 || page > pagination.value.lastPage) return;
+    pagination.value.currentPage = page;
+    loadRecords();
+}
+
+async function copyEndpointUrl(): Promise<void> {
+    const fullUrl = `${window.location.origin}/api/v1/dynamic/${slug.value}`;
     try {
-        await DynamicRecordService.remove(slug.value, id);
-        await load();
+        await navigator.clipboard.writeText(fullUrl);
+        toast.success.default(t('infra.cck.messages.endpointCopied'));
+    } catch {
+        prompt('Endpoint URL:', fullUrl);
+    }
+}
+
+function promptDeleteRecord(row: DynamicRecordRow): void {
+    recordToDelete.value = row;
+    deleteModalOpen.value = true;
+}
+
+async function executeDeleteRecord(): Promise<void> {
+    if (!recordToDelete.value) return;
+    deleting.value = true;
+    try {
+        await DynamicRecordService.remove(slug.value, recordToDelete.value.id);
+        toast.success.default(t('infra.dynamic.records.messages.deleted'));
+        deleteModalOpen.value = false;
+        recordToDelete.value = null;
+        await loadRecords();
     } catch (e: unknown) {
-        error.value = e instanceof Error ? e.message : 'Delete failed';
+        toast.error.default(e instanceof Error ? e.message : t('infra.dynamic.records.messages.deleteFailed'));
     } finally {
-        saving.value = false;
+        deleting.value = false;
     }
 }
 
 watch(
     () => route.params.slug,
-    (value) => {
-        slug.value = String(value ?? '');
-        if (slug.value) {
-            load();
+    async (newSlug) => {
+        if (newSlug) {
+            slug.value = String(newSlug);
+            await loadContentType();
+            await loadRecords();
         }
     },
 );
 
-onMounted(() => {
+onMounted(async () => {
     if (slug.value) {
-        load();
+        await loadContentType();
+        await loadRecords();
     }
 });
 </script>

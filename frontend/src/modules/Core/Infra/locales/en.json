@@ -118,25 +118,173 @@
         "subtitle": "Visual schema builder for dynamic REST endpoints",
         "newType": "New content type",
         "editType": "Edit content type",
-        "empty": "No content types yet.",
+        "empty": "No content types found.",
+        "emptyHint": "Create your first custom content type to generate dynamic REST APIs.",
+        "searchPlaceholder": "Search content types...",
         "fields": "Fields",
         "addField": "Add field",
         "validationPreview": "Validation rules",
         "save": "Save schema",
+        "saving": "Saving...",
         "delete": "Delete",
+        "deleteType": "Delete content type",
+        "deleteTypeConfirm": "Are you sure you want to delete content type \"{name}\"? All associated dynamic records will be permanently removed.",
+        "cancel": "Cancel",
+        "back": "Back to content types",
         "apiHint": "Records API: /api/v1/dynamic/{slug}",
+        "stats": {
+            "totalTypes": "Total Content Types",
+            "activeTypes": "Active Schemas",
+            "totalFields": "Total Defined Fields",
+            "apiBase": "Dynamic API Base"
+        },
+        "table": {
+            "name": "Name & Description",
+            "slug": "Slug / API Route",
+            "fields": "Fields",
+            "fieldsCount": "{count} fields",
+            "status": "Status",
+            "actions": "Actions",
+            "records": "Records",
+            "schema": "Schema",
+            "copyEndpoint": "Copy API Endpoint",
+            "downloadOpenApi": "Download OpenAPI Spec",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "form": {
+            "tabs": {
+                "schema": "Schema & Fields",
+                "api": "API & OpenAPI",
+                "rules": "Validation Rules"
+            },
+            "general": "General Information",
+            "generalHint": "Configure the schema identifier, slug, and status.",
+            "name": "Type Name",
+            "namePlaceholder": "e.g. Portfolio Project, Announcement",
+            "slug": "Slug",
+            "slugPlaceholder": "e.g. portfolio_projects",
+            "slugHint": "Used in the dynamic endpoint /api/v1/dynamic/{slug}",
+            "description": "Description",
+            "descriptionPlaceholder": "Optional description for this content type schema",
+            "active": "Active schema (enables dynamic API endpoints)",
+            "fieldsSection": "Field Definitions",
+            "fieldsSectionHint": "Add and arrange the fields for this content type.",
+            "apiSection": "Dynamic REST API Endpoints",
+            "apiSectionHint": "Every active content type automatically exposes full CRUD REST endpoints.",
+            "endpoints": {
+                "list": "List / Search Records",
+                "create": "Create Record",
+                "show": "Get Single Record",
+                "update": "Update Record",
+                "delete": "Delete Record"
+            },
+            "openApiTitle": "OpenAPI 3.0 Specification",
+            "openApiHint": "Live OpenAPI schema for Swagger / Postman integration.",
+            "downloadSpec": "Download OpenAPI JSON",
+            "copySpec": "Copy OpenAPI JSON",
+            "rulesTitle": "Resolved Laravel Validation Rules",
+            "rulesHint": "Dynamic validation rules enforced on record creation and updates.",
+            "ruleField": "Field Slug",
+            "ruleDefinition": "Validation Expression",
+            "noRules": "No validation rules defined."
+        },
+        "builder": {
+            "title": "Available Fields",
+            "subtitle": "Click to add a field to the schema",
+            "empty": "No fields in this schema yet.",
+            "emptyHint": "Select a field type from the left palette to add your first field.",
+            "label": "Label",
+            "labelPlaceholder": "Field label (e.g. Title, Author)",
+            "slug": "Slug",
+            "slugPlaceholder": "field_slug",
+            "type": "Field Type",
+            "required": "Required field",
+            "options": "Options (one per line)",
+            "optionsPlaceholder": "option_1\noption_2\noption_3",
+            "optionsHint": "Enter each selectable option value on a separate line.",
+            "duplicate": "Duplicate field",
+            "remove": "Remove field",
+            "dragHint": "Drag to reorder",
+            "types": {
+                "text": "Text",
+                "textDesc": "Short single-line string",
+                "longtext": "Long Text",
+                "longtextDesc": "Multi-line text or markdown",
+                "number": "Number",
+                "numberDesc": "Numeric integers or decimals",
+                "boolean": "Boolean",
+                "booleanDesc": "True / False toggle",
+                "date": "Date",
+                "dateDesc": "Calendar date selector",
+                "email": "Email",
+                "emailDesc": "Validated email address",
+                "image": "Image URL",
+                "imageDesc": "Media asset or image URL",
+                "select": "Select",
+                "selectDesc": "Single choice dropdown"
+            }
+        },
         "messages": {
-            "loadFailed": "Load failed",
-            "created": "Content type created.",
-            "saved": "Content type saved.",
-            "saveFailed": "Save failed"
+            "loadFailed": "Failed to load content type",
+            "created": "Content type created successfully.",
+            "saved": "Content type schema saved successfully.",
+            "saveFailed": "Failed to save content type",
+            "deleted": "Content type deleted successfully.",
+            "deleteFailed": "Failed to delete content type",
+            "endpointCopied": "Endpoint URL copied to clipboard.",
+            "specCopied": "OpenAPI JSON copied to clipboard."
         }
     },
     "dynamic": {
+        "records": {
+            "title": "Records: {name}",
+            "subtitle": "Manage dynamic data records for content type \"{name}\".",
+            "apiRoute": "API Route",
+            "newRecord": "New Record",
+            "searchPlaceholder": "Search records by any field...",
+            "empty": "No records found.",
+            "emptyHint": "There are no dynamic records for this content type yet.",
+            "createFirst": "Create First Record",
+            "table": {
+                "id": "ID",
+                "updatedAt": "Last Updated",
+                "actions": "Actions"
+            },
+            "actions": {
+                "edit": "Edit",
+                "delete": "Delete",
+                "copyId": "Copy Record ID"
+            },
+            "confirm": {
+                "delete": "Are you sure you want to delete this record? This action cannot be undone."
+            },
+            "messages": {
+                "loadFailed": "Failed to load dynamic records",
+                "deleted": "Record deleted successfully.",
+                "deleteFailed": "Failed to delete record",
+                "idCopied": "Record ID copied to clipboard."
+            }
+        },
         "record": {
-            "newTitle": "New record",
-            "editTitle": "Edit record",
-            "subtitle": "Create or update a row for this content type."
+            "newTitle": "New Record: {name}",
+            "editTitle": "Edit Record: {name}",
+            "subtitle": "Create or update a record row for schema \"{name}\".",
+            "backToRecords": "Back to records",
+            "save": "Save Record",
+            "saving": "Saving...",
+            "cancel": "Cancel",
+            "booleanYes": "Yes (True)",
+            "booleanNo": "No (False)",
+            "selectPlaceholder": "Select an option...",
+            "imagePreview": "Image Preview",
+            "noImage": "No image URL provided",
+            "messages": {
+                "loadFailed": "Failed to load record data",
+                "created": "Record created successfully.",
+                "saved": "Record updated successfully.",
+                "saveFailed": "Failed to save record"
+            }
         }
     }
 }
