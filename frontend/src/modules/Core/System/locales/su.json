@@ -754,6 +754,49 @@
       "title": "Cadangan"
     },
     "info": {
+      "tabs": {
+        "overview": "Ringkesan & Pangropéa",
+        "requirements": "Matriks Pangabutuh Sistem"
+      },
+      "requirements": {
+        "title": "Audit Pangabutuh & Kasiapan Sistem JA-CMS",
+        "subtitle": "Pamariksaan gembleng kana spésifikasi sérver, éksténsi PHP, sambungan database, widi folder, sareng layanan kasang tukang.",
+        "score": "Skor Kasiapan Sistem",
+        "ready": "Sistem Parantos Sayaga",
+        "needs_attention": "Peryogi Perhatian",
+        "autofix_btn": "Dangdosan Masalah Widi Otomatis",
+        "autofixing": "Nuju Ngoméan...",
+        "autofix_success": "Pangoméan widi folder hasil dilaksanakeun!",
+        "recheck": "Audit Deui",
+        "search_placeholder": "Pilari pangabutuh sistem atanapi éksténsi...",
+        "filter": "Saring Kategori",
+        "all_passed": "Sadaya Prasyarat Kacumponan",
+        "warnings_count": "{count} Pangeling / Rékomendasi",
+        "errors_count": "{count} Pangabutuh Kirang",
+        "categories": {
+          "all": "Sadaya Pangabutuh",
+          "php_core": "PHP Runtime & Core",
+          "php_extensions": "Éksténsi & Library PHP",
+          "database": "Database",
+          "caching": "Cache & Redis",
+          "storage_permissions": "Widi Folder & Storage",
+          "background_services": "Layanan & Background Worker"
+        },
+        "table": {
+          "name": "Komponén / Pangabutuh",
+          "category": "Kategori",
+          "current": "Nilai Kapendak",
+          "required": "Pangabutuh Minimum",
+          "status": "Status",
+          "actions": "Pituduh / Aksi"
+        },
+        "guide": {
+          "title": "Pituduh Pangoméan / Instalasi",
+          "ubuntu": "Debian / Ubuntu Server:",
+          "rhel": "RHEL / AlmaLinux / CentOS:",
+          "general": "cPanel / Hosting / Umum:"
+        }
+      },
       "cache": {
         "active": "Aktif",
         "inactive": "Teu aktif",
@@ -2596,6 +2639,32 @@
       "schedule": "Jadwal",
       "status": "Status"
     },
+    "presets": {
+      "recommended": "Prisét Rékomendasi",
+      "recommended_desc": "Aktipkeun 8 tugas pangropéa ésénsial kalayan jadwal optimal.",
+      "reset_defaults": "Balikeun Ka Bawaan",
+      "reset_confirm": "Balikeun sadaya tugas terjadwal ka konfigurasi standar sistem (Golden Set)?",
+      "recommended_confirm": "Terapkeun prisét rékomendasi kanggo tugas pangropéa sistem?",
+      "applied": "Prisét rékomendasi hasil diterapkeun",
+      "reset_success": "Tugas terjadwal hasil dibalikeun ka konfigurasi bawaan"
+    },
+    "bulk": {
+      "activate": "Aktipkeun Anu Dipilih",
+      "deactivate": "Nonaktipkeun Anu Dipilih",
+      "run": "Jalankeun Anu Dipilih",
+      "bulkActivated": "{count} tugas hasil diaktipkeun",
+      "bulkDeactivated": "{count} tugas hasil dinonaktipkeun",
+      "bulkRun": "{count} tugas hasil diéksekusi",
+      "confirm_run": "Jalankeun {count} tugas anu dipilih ayeuna?"
+    },
+    "prerequisites": {
+      "title": "Prasyarat Sistem",
+      "all_met": "Sadaya prasyarat kacumponan",
+      "warning": "Prasyarat sérver tacan kacumponan: {unmet}",
+      "ready": "Sayaga",
+      "not_ready": "Tacan Sayaga"
+    },
+    "recommended_badge": "Rékomendasi",
     "title": "Tugas Terjadwal",
     "tooltips": {
       "click_to_activate": "Klik pikeun mengaktifkan - Tugas bakal berjalan otomatis sesuai jadwal",
