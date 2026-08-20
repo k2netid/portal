@@ -160,9 +160,15 @@ class BackupService
                 // No need to unset PGPASSWORD since we didn't use it
 
                 if ($result['returnCode'] !== 0) {
-                    $errorOutput = 'Unknown error';
+                    $errorOutput = '';
                     if (file_exists($tempSqlFile)) {
-                        $errorOutput = file_get_contents($tempSqlFile) ?: 'Empty error log';
+                        $errorOutput = trim((string) file_get_contents($tempSqlFile));
+                    }
+                    if (empty($errorOutput)) {
+                        $errorOutput = trim(implode("\n", array_filter($result['output'])));
+                    }
+                    if (empty($errorOutput)) {
+                        $errorOutput = 'Unknown error (exit code '.$result['returnCode'].')';
                     }
                     throw new \Exception('pg_dump failed: '.$errorOutput);
                 }
@@ -450,8 +456,21 @@ class BackupService
         /** @var string $path */
         $path = $backup->path;
 
-        if ($deletePhysicalFile && $path && Storage::disk($disk)->exists($path)) {
-            Storage::disk($disk)->delete($path);
+        if ($deletePhysicalFile && $path) {
+            $deleted = Storage::disk($disk)->delete($path);
+            if (! $deleted) {
+                $fullPath = Storage::disk($disk)->path($path);
+                if (file_exists($fullPath)) {
+                    @unlink($fullPath);
+                }
+            }
+
+            if (Storage::disk($disk)->exists($path)) {
+                Log::channel('backup')->warning('Backup physical file could not be deleted from disk', [
+                    'backup_id' => $backupId,
+                    'path' => $path,
+                ]);
+            }
         }
 
         // Delete record
