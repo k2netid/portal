@@ -263,6 +263,7 @@ class DataModelApiController extends BaseApiController
         ]);
 
         $this->hydrateRelations($contentType, $record);
+        $this->dispatchLifecycle('created', $contentType, $record, $payload);
 
         return $this->success($record, 'Dynamic record created successfully', 201);
     }
@@ -322,6 +323,7 @@ class DataModelApiController extends BaseApiController
         ]);
 
         $this->hydrateRelations($contentType, $record);
+        $this->dispatchLifecycle('updated', $contentType, $record, $payload);
 
         return $this->success($record, 'Dynamic record updated successfully');
     }
@@ -344,8 +346,55 @@ class DataModelApiController extends BaseApiController
         }
 
         $record->delete();
+        $this->dispatchLifecycle('deleted', $contentType, $id);
 
         return $this->success(null, 'Dynamic record deleted successfully');
+    }
+
+    /**
+     * Dispatch webhook and activity log for dynamic record operations.
+     *
+     * @param  array<string, mixed>|null  $payload
+     */
+    protected function dispatchLifecycle(string $action, ContentType $contentType, DynamicRecord|string $recordOrId, ?array $payload = null): void
+    {
+        $event = "dynamic.{$contentType->slug}.{$action}";
+        $recordData = $recordOrId instanceof DynamicRecord ? $recordOrId->toArray() : ['id' => $recordOrId];
+
+        try {
+            if (interface_exists(\Modules\Core\System\Contracts\OutboundWebhookPortInterface::class)) {
+                /** @var \Modules\Core\System\Contracts\OutboundWebhookPortInterface $dispatcher */
+                $dispatcher = app(\Modules\Core\System\Contracts\OutboundWebhookPortInterface::class);
+                $dispatcher->dispatch($event, [
+                    'model' => [
+                        'id' => $contentType->id,
+                        'slug' => $contentType->slug,
+                        'name' => $contentType->name,
+                    ],
+                    'record' => $recordData,
+                ]);
+            }
+        } catch (\Throwable $e) {
+            // Non-blocking webhook dispatch failure
+        }
+
+        try {
+            if (class_exists(\Modules\Core\System\Models\ActivityLog::class)) {
+                $model = $recordOrId instanceof DynamicRecord ? $recordOrId : null;
+                \Modules\Core\System\Models\ActivityLog::log(
+                    $action,
+                    $model,
+                    [
+                        'slug' => $contentType->slug,
+                        'payload' => $payload,
+                    ],
+                    null,
+                    ucfirst($action)." dynamic record in '{$contentType->name}'"
+                );
+            }
+        } catch (\Throwable $e) {
+            // Non-blocking activity log failure
+        }
     }
 
     /**

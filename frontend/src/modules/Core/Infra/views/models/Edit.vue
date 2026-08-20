@@ -182,6 +182,120 @@
             </div>
           </ConsoleFormCard>
 
+          <!-- Interactive Code Examples Playground -->
+          <ConsoleFormCard
+            title="Interactive Code Examples"
+            subtitle="Copy ready-to-run API request snippets in your favorite language"
+          >
+            <div class="space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-border/50">
+                <!-- Language Selector -->
+                <div class="flex items-center gap-1 bg-muted/60 p-1 rounded-lg">
+                  <Button
+                    type="button"
+                    :variant="selectedCodeLang === 'curl' ? 'default' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-xs px-2.5"
+                    @click="selectedCodeLang = 'curl'"
+                  >
+                    cURL
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeLang === 'js' ? 'default' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-xs px-2.5"
+                    @click="selectedCodeLang = 'js'"
+                  >
+                    JavaScript
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeLang === 'php' ? 'default' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-xs px-2.5"
+                    @click="selectedCodeLang = 'php'"
+                  >
+                    PHP
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeLang === 'python' ? 'default' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-xs px-2.5"
+                    @click="selectedCodeLang = 'python'"
+                  >
+                    Python
+                  </Button>
+                </div>
+
+                <!-- Operation Selector -->
+                <div class="flex items-center gap-1 bg-muted/60 p-1 rounded-lg">
+                  <Button
+                    type="button"
+                    :variant="selectedCodeOp === 'list' ? 'secondary' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-[11px] px-2"
+                    @click="selectedCodeOp = 'list'"
+                  >
+                    List
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeOp === 'create' ? 'secondary' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-[11px] px-2"
+                    @click="selectedCodeOp = 'create'"
+                  >
+                    Create
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeOp === 'show' ? 'secondary' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-[11px] px-2"
+                    @click="selectedCodeOp = 'show'"
+                  >
+                    Get
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeOp === 'update' ? 'secondary' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-[11px] px-2"
+                    @click="selectedCodeOp = 'update'"
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    type="button"
+                    :variant="selectedCodeOp === 'delete' ? 'secondary' : 'ghost'"
+                    size="sm"
+                    class="h-7 text-[11px] px-2"
+                    @click="selectedCodeOp = 'delete'"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+
+              <!-- Code Preview Area -->
+              <div class="relative rounded-lg border border-border/80 bg-muted/40 p-4 font-mono text-xs overflow-x-auto">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  class="absolute top-3 right-3 h-7 text-xs gap-1 bg-background/80 backdrop-blur-xs"
+                  @click="copyCodeSnippet"
+                >
+                  <Copy class="h-3 w-3" />
+                  <span>Copy</span>
+                </Button>
+                <pre class="pt-1 text-foreground/90 whitespace-pre-wrap">{{ codeSnippet }}</pre>
+              </div>
+            </div>
+          </ConsoleFormCard>
+
           <!-- OpenAPI Specification -->
           <ConsoleFormCard
             :title="$t('infra.models.form.openApiTitle')"
@@ -406,6 +520,101 @@ const validationRulesList = computed(() => {
         expression,
     }));
 });
+
+// Interactive Code Examples Logic
+const selectedCodeLang = ref<'curl' | 'js' | 'php' | 'python'>('curl');
+const selectedCodeOp = ref<'list' | 'create' | 'show' | 'update' | 'delete'>('list');
+
+const codeSnippet = computed(() => {
+    const slug = form.value.slug || 'example_model';
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://api.example.com';
+    const samplePayload: Record<string, unknown> = {};
+    for (const f of form.value.fields) {
+        if (f.type === 'number') samplePayload[f.slug] = 42;
+        else if (f.type === 'boolean') samplePayload[f.slug] = true;
+        else if (f.type === 'email') samplePayload[f.slug] = 'user@example.com';
+        else if (f.type === 'url') samplePayload[f.slug] = 'https://example.com';
+        else if (f.type === 'date') samplePayload[f.slug] = '2026-08-20';
+        else if (f.type === 'color') samplePayload[f.slug] = '#3b82f6';
+        else if (f.type === 'select' && f.options?.length) samplePayload[f.slug] = f.options[0];
+        else if (f.type === 'relation' && f.relation_mode === 'multiple') samplePayload[f.slug] = ['rec_uuid_1', 'rec_uuid_2'];
+        else if (f.type === 'relation') samplePayload[f.slug] = 'rec_uuid_1';
+        else samplePayload[f.slug] = `Sample ${f.name}`;
+    }
+    const jsonBody = JSON.stringify(samplePayload, null, 2);
+
+    if (selectedCodeLang.value === 'curl') {
+        if (selectedCodeOp.value === 'list') {
+            return `curl -X GET "${baseUrl}/api/v1/dynamic/${slug}?page=1&per_page=15" \\\n  -H "Accept: application/json" \\\n  -H "Authorization: Bearer YOUR_TOKEN"`;
+        }
+        if (selectedCodeOp.value === 'create') {
+            return `curl -X POST "${baseUrl}/api/v1/dynamic/${slug}" \\\n  -H "Content-Type: application/json" \\\n  -H "Accept: application/json" \\\n  -H "Authorization: Bearer YOUR_TOKEN" \\\n  -d '${JSON.stringify(samplePayload)}'`;
+        }
+        if (selectedCodeOp.value === 'show') {
+            return `curl -X GET "${baseUrl}/api/v1/dynamic/${slug}/RECORD_ID" \\\n  -H "Accept: application/json" \\\n  -H "Authorization: Bearer YOUR_TOKEN"`;
+        }
+        if (selectedCodeOp.value === 'update') {
+            return `curl -X PUT "${baseUrl}/api/v1/dynamic/${slug}/RECORD_ID" \\\n  -H "Content-Type: application/json" \\\n  -H "Accept: application/json" \\\n  -H "Authorization: Bearer YOUR_TOKEN" \\\n  -d '${JSON.stringify(samplePayload)}'`;
+        }
+        return `curl -X DELETE "${baseUrl}/api/v1/dynamic/${slug}/RECORD_ID" \\\n  -H "Accept: application/json" \\\n  -H "Authorization: Bearer YOUR_TOKEN"`;
+    }
+
+    if (selectedCodeLang.value === 'js') {
+        if (selectedCodeOp.value === 'list') {
+            return `// Fetch dynamic records\nconst response = await fetch('${baseUrl}/api/v1/dynamic/${slug}?page=1&per_page=15', {\n  headers: {\n    'Accept': 'application/json',\n    'Authorization': 'Bearer YOUR_TOKEN'\n  }\n});\nconst result = await response.json();\nconsole.log(result.data);`;
+        }
+        if (selectedCodeOp.value === 'create') {
+            return `// Create a dynamic record\nconst payload = ${jsonBody};\n\nconst response = await fetch('${baseUrl}/api/v1/dynamic/${slug}', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Authorization': 'Bearer YOUR_TOKEN'\n  },\n  body: JSON.stringify(payload)\n});\nconst result = await response.json();\nconsole.log(result.data);`;
+        }
+        if (selectedCodeOp.value === 'show') {
+            return `// Get single dynamic record\nconst recordId = 'RECORD_ID';\nconst response = await fetch(\`${baseUrl}/api/v1/dynamic/${slug}/\${recordId}\`, {\n  headers: {\n    'Accept': 'application/json',\n    'Authorization': 'Bearer YOUR_TOKEN'\n  }\n});\nconst result = await response.json();\nconsole.log(result.data);`;
+        }
+        if (selectedCodeOp.value === 'update') {
+            return `// Update a dynamic record\nconst recordId = 'RECORD_ID';\nconst payload = ${jsonBody};\n\nconst response = await fetch(\`${baseUrl}/api/v1/dynamic/${slug}/\${recordId}\`, {\n  method: 'PUT',\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Authorization': 'Bearer YOUR_TOKEN'\n  },\n  body: JSON.stringify(payload)\n});\nconst result = await response.json();\nconsole.log(result.data);`;
+        }
+        return `// Delete dynamic record\nconst recordId = 'RECORD_ID';\nconst response = await fetch(\`${baseUrl}/api/v1/dynamic/${slug}/\${recordId}\`, {\n  method: 'DELETE',\n  headers: {\n    'Accept': 'application/json',\n    'Authorization': 'Bearer YOUR_TOKEN'\n  }\n});\nconst result = await response.json();\nconsole.log(result);`;
+    }
+
+    if (selectedCodeLang.value === 'php') {
+        if (selectedCodeOp.value === 'list') {
+            return `<?php\n\n$ch = curl_init('${baseUrl}/api/v1/dynamic/${slug}');\ncurl_setopt_array($ch, [\n    CURLOPT_RETURNTRANSFER => true,\n    CURLOPT_HTTPHEADER => [\n        'Accept: application/json',\n        'Authorization: Bearer YOUR_TOKEN',\n    ],\n]);\n$response = curl_exec($ch);\n$data = json_decode($response, true);\ncurl_close($ch);`;
+        }
+        if (selectedCodeOp.value === 'create') {
+            return `<?php\n\n$payload = ${jsonBody};\n\n$ch = curl_init('${baseUrl}/api/v1/dynamic/${slug}');\ncurl_setopt_array($ch, [\n    CURLOPT_RETURNTRANSFER => true,\n    CURLOPT_POST => true,\n    CURLOPT_POSTFIELDS => json_encode($payload),\n    CURLOPT_HTTPHEADER => [\n        'Content-Type: application/json',\n        'Accept: application/json',\n        'Authorization: Bearer YOUR_TOKEN',\n    ],\n]);\n$response = curl_exec($ch);\n$result = json_decode($response, true);\ncurl_close($ch);`;
+        }
+        if (selectedCodeOp.value === 'show') {
+            return `<?php\n\n$recordId = 'RECORD_ID';\n$ch = curl_init("${baseUrl}/api/v1/dynamic/${slug}/{$recordId}");\ncurl_setopt_array($ch, [\n    CURLOPT_RETURNTRANSFER => true,\n    CURLOPT_HTTPHEADER => [\n        'Accept: application/json',\n        'Authorization: Bearer YOUR_TOKEN',\n    ],\n]);\n$response = curl_exec($ch);\n$result = json_decode($response, true);\ncurl_close($ch);`;
+        }
+        if (selectedCodeOp.value === 'update') {
+            return `<?php\n\n$recordId = 'RECORD_ID';\n$payload = ${jsonBody};\n\n$ch = curl_init("${baseUrl}/api/v1/dynamic/${slug}/{$recordId}");\ncurl_setopt_array($ch, [\n    CURLOPT_RETURNTRANSFER => true,\n    CURLOPT_CUSTOMREQUEST => 'PUT',\n    CURLOPT_POSTFIELDS => json_encode($payload),\n    CURLOPT_HTTPHEADER => [\n        'Content-Type: application/json',\n        'Accept: application/json',\n        'Authorization: Bearer YOUR_TOKEN',\n    ],\n]);\n$response = curl_exec($ch);\n$result = json_decode($response, true);\ncurl_close($ch);`;
+        }
+        return `<?php\n\n$recordId = 'RECORD_ID';\n$ch = curl_init("${baseUrl}/api/v1/dynamic/${slug}/{$recordId}");\ncurl_setopt_array($ch, [\n    CURLOPT_RETURNTRANSFER => true,\n    CURLOPT_CUSTOMREQUEST => 'DELETE',\n    CURLOPT_HTTPHEADER => [\n        'Accept: application/json',\n        'Authorization: Bearer YOUR_TOKEN',\n    ],\n]);\n$response = curl_exec($ch);\n$result = json_decode($response, true);\ncurl_close($ch);`;
+    }
+
+    // Python
+    if (selectedCodeOp.value === 'list') {
+        return `import requests\n\nheaders = {\n    "Accept": "application/json",\n    "Authorization": "Bearer YOUR_TOKEN"\n}\nres = requests.get("${baseUrl}/api/v1/dynamic/${slug}", headers=headers)\nprint(res.json())`;
+    }
+    if (selectedCodeOp.value === 'create') {
+        return `import requests\n\npayload = ${jsonBody.replace(/true/g, 'True').replace(/false/g, 'False').replace(/null/g, 'None')}\nheaders = {\n    "Content-Type": "application/json",\n    "Accept": "application/json",\n    "Authorization": "Bearer YOUR_TOKEN"\n}\nres = requests.post("${baseUrl}/api/v1/dynamic/${slug}", json=payload, headers=headers)\nprint(res.json())`;
+    }
+    if (selectedCodeOp.value === 'show') {
+        return `import requests\n\nrecord_id = "RECORD_ID"\nheaders = {\n    "Accept": "application/json",\n    "Authorization": "Bearer YOUR_TOKEN"\n}\nres = requests.get(f"${baseUrl}/api/v1/dynamic/${slug}/{record_id}", headers=headers)\nprint(res.json())`;
+    }
+    if (selectedCodeOp.value === 'update') {
+        return `import requests\n\nrecord_id = "RECORD_ID"\npayload = ${jsonBody.replace(/true/g, 'True').replace(/false/g, 'False').replace(/null/g, 'None')}\nheaders = {\n    "Content-Type": "application/json",\n    "Accept": "application/json",\n    "Authorization": "Bearer YOUR_TOKEN"\n}\nres = requests.put(f"${baseUrl}/api/v1/dynamic/${slug}/{record_id}", json=payload, headers=headers)\nprint(res.json())`;
+    }
+    return `import requests\n\nrecord_id = "RECORD_ID"\nheaders = {\n    "Accept": "application/json",\n    "Authorization": "Bearer YOUR_TOKEN"\n}\nres = requests.delete(f"${baseUrl}/api/v1/dynamic/${slug}/{record_id}", headers=headers)\nprint(res.json())`;
+});
+
+async function copyCodeSnippet(): Promise<void> {
+    try {
+        await navigator.clipboard.writeText(codeSnippet.value);
+        toast.success.default(t('infra.models.messages.endpointCopied') || 'Code copied to clipboard');
+    } catch {
+        prompt('Code Snippet:', codeSnippet.value);
+    }
+}
 
 function slugify(text: string): string {
     return text
