@@ -23,6 +23,10 @@ class ThemeController extends BaseApiController
     {
         $typeRaw = $request->input('type', 'frontend');
         $type = is_string($typeRaw) ? $typeRaw : 'frontend';
+
+        // Auto-discover bundled & uploaded themes from disk
+        $this->themeService->scanThemes();
+
         $themes = Theme::query()
             ->ofType($type)
             ->latest()
