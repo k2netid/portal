@@ -258,7 +258,26 @@
       />
     </div>
 
-    <!-- 10. Standard Text / Number / Email / Date Input -->
+    <!-- 10. Slug / Identifier Field with Auto-Sanitization -->
+    <div
+      v-else-if="field.slug === 'slug' || field.slug.endsWith('_slug')"
+      class="relative"
+    >
+      <Input
+        :id="inputId"
+        type="text"
+        :model-value="stringValue"
+        :required="field.is_required"
+        class="h-9 font-mono text-xs pr-12 bg-background"
+        :placeholder="field.placeholder || 'my-awesome-record'"
+        @input="onSlugInput(($event.target as HTMLInputElement).value)"
+      />
+      <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-muted-foreground/70 select-none bg-muted px-1.5 py-0.5 rounded border border-border/50">
+        slug
+      </span>
+    </div>
+
+    <!-- 11. Standard Text / Number / Email / Date Input -->
     <Input
       v-else
       :id="inputId"
@@ -401,5 +420,13 @@ function onInput(value: unknown): void {
         }
     }
     emit('update:modelValue', value);
+}
+
+function onSlugInput(rawVal: string): void {
+    const clean = rawVal
+        .toLowerCase()
+        .replace(/[^a-z0-9-_]/g, '-')
+        .replace(/-+/g, '-');
+    emit('update:modelValue', clean);
 }
 </script>
