@@ -151,10 +151,16 @@ class SettingController extends BaseApiController
                 // Hub-wide system settings (no subscription or organization column on Setting).
                 Setting::set($sKey, $sValue, $sType, $sGroup);
 
-                // Sync with Redis Settings if cache driver is changed to Redis-based
-                if ($sKey === 'cache_driver' && in_array($sValue, ['redis', 'failover'])) {
+                // Sync with Redis Settings if cache driver or enable_cache is changed
+                if ($sKey === 'cache_driver' || $sKey === 'enable_cache') {
                     try {
-                        RedisSetting::setValue('enable_redis', true);
+                        $currentDriverRaw = Setting::get('cache_driver', 'file');
+                        $currentDriver = is_scalar($currentDriverRaw) ? (string) $currentDriverRaw : 'file';
+                        $currentEnabledRaw = Setting::get('enable_cache', true);
+                        $currentEnabled = filter_var($currentEnabledRaw, FILTER_VALIDATE_BOOLEAN);
+
+                        $isRedis = $currentEnabled && in_array($currentDriver, ['redis', 'failover']);
+                        RedisSetting::setValue('enable_redis', $isRedis);
                     } catch (\Throwable) {
                         // Silent fail if RedisSetting not available
                     }

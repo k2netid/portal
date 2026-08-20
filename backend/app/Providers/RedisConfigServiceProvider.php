@@ -124,14 +124,21 @@ class RedisConfigServiceProvider extends ServiceProvider
         }
 
         // Sync global cache driver with Performance settings (settings table).
-        // PerformanceTab writes `cache_driver` there, but runtime config reads cache.default.
+        // PerformanceTab writes `cache_driver` and `enable_cache` there.
         try {
             if (Schema::hasTable('sys_settings')) {
-                $selectedDriver = Setting::get('cache_driver');
-                if (is_string($selectedDriver) && $selectedDriver !== '') {
-                    // `redis_failover` is UI alias for the composite `failover` store.
-                    $resolved = ($selectedDriver === 'redis_failover' || $selectedDriver === 'failover') ? 'failover' : $selectedDriver;
-                    config(['cache.default' => $resolved]);
+                $cacheEnabledRaw = Setting::get('enable_cache', true);
+                $isCacheEnabled = filter_var($cacheEnabledRaw, FILTER_VALIDATE_BOOLEAN);
+
+                if (! $isCacheEnabled) {
+                    config(['cache.default' => 'array']);
+                } else {
+                    $selectedDriver = Setting::get('cache_driver');
+                    if (is_string($selectedDriver) && $selectedDriver !== '') {
+                        // `redis_failover` is UI alias for the composite `failover` store.
+                        $resolved = ($selectedDriver === 'redis_failover' || $selectedDriver === 'failover') ? 'failover' : $selectedDriver;
+                        config(['cache.default' => $resolved]);
+                    }
                 }
             }
         } catch (\Exception $e) {

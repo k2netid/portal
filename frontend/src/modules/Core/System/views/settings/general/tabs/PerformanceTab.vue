@@ -72,7 +72,10 @@
                   <p class="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                     {{ $t('system.settings.cache.status') }}
                   </p>
-                  <p class="text-sm font-bold text-foreground mt-1">
+                  <p 
+                    class="text-sm font-bold mt-1"
+                    :class="cacheStatus.enabled ? 'text-success' : 'text-muted-foreground'"
+                  >
                     {{ cacheStatus.enabled ? $t('system.settings.enabled') : $t('system.settings.disabled') }}
                   </p>
                 </div>
@@ -249,7 +252,7 @@
 
         <!-- Redis Infrastructure Link (More prominent) -->
         <div
-          v-if="formData.cache_driver === 'redis' || formData.cache_driver === 'failover'"
+          v-if="Boolean(formData.enable_cache) && (formData.cache_driver === 'redis' || formData.cache_driver === 'failover')"
           class="mx-6 mb-6 p-5 rounded-xl border border-primary/20 bg-primary/5 shadow-sm"
         >
           <div class="flex items-center justify-between gap-4">

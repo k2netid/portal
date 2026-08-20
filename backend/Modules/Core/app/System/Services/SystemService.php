@@ -12,6 +12,7 @@ use Modules\Core\System\Jobs\QueueHeartbeatJob;
 use Modules\Core\System\Models\Analytics;
 use Modules\Core\System\Models\EmailTemplate;
 use Modules\Core\System\Models\PageView;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Intelligence\Newsletter\Models\NewsletterSubscriber;
 
@@ -540,62 +541,61 @@ class SystemService
      */
     public function getCacheStatus(): array
     {
-        $driver = config('cache.default', 'file');
+        $cacheEnabledRaw = Setting::get('enable_cache', true);
+        $isEnabled = filter_var($cacheEnabledRaw, FILTER_VALIDATE_BOOLEAN);
+
+        $configuredDriverRaw = Setting::get('cache_driver', config('cache.default', 'file'));
+        $driver = is_scalar($configuredDriverRaw) ? (string) $configuredDriverRaw : 'file';
+
         $hits = 0;
         $misses = 0;
         $keys = 0;
-        $enabled = false;
         $size = '0 B';
 
-        // Check if driver is redis or redis_failover (starts with 'redis')
-        $driverStr = is_scalar($driver) ? (string) $driver : 'file';
-        if (str_starts_with($driverStr, 'redis')) {
-            try {
-                $redis = Redis::connection();
-                $redis->ping();
-                $enabled = true;
+        if ($isEnabled) {
+            $driverStr = strtolower($driver);
+            if (str_starts_with($driverStr, 'redis') || $driverStr === 'failover') {
+                try {
+                    $redis = Redis::connection();
+                    $redis->ping();
 
-                $info = $redis->info('stats');
-                $hits = $info['keyspace_hits'] ?? 0;
-                $misses = $info['keyspace_misses'] ?? 0;
-                $keys = $redis->dbsize();
+                    $info = $redis->info('stats');
+                    $hits = $info['keyspace_hits'] ?? 0;
+                    $misses = $info['keyspace_misses'] ?? 0;
+                    $keys = $redis->dbsize();
 
-                // Estimate size for Redis (not accurate but better than nothing)
-                $memory = $redis->info('memory');
-                $size = $this->formatBytes($memory['used_memory'] ?? 0);
-
-            } catch (\Exception $e) {
-                Log::debug('Redis stats not available: '.$e->getMessage());
-                // Try to get file cache size as fallback if redis fails but driver is set
-                // Or leave as 0
-            }
-        } elseif ($driver === 'file') {
-            $enabled = true; // File driver is always active
-            $stats = $this->getCacheStats('file');
-            $size = $stats['size'];
-            $keys = $stats['count'];
-        } else {
-            // Other drivers (database, etc)
-            $enabled = true; // Assume active if config exists
-            try {
-                if ($driver === 'database') {
+                    $memory = $redis->info('memory');
+                    $size = $this->formatBytes($memory['used_memory'] ?? 0);
+                } catch (\Exception $e) {
+                    Log::debug('Redis stats not available: '.$e->getMessage());
+                    if ($driverStr === 'failover') {
+                        $stats = $this->getCacheStats('file');
+                        $size = $stats['size'];
+                        $keys = $stats['count'];
+                    }
+                }
+            } elseif ($driverStr === 'file') {
+                $stats = $this->getCacheStats('file');
+                $size = $stats['size'];
+                $keys = $stats['count'];
+            } elseif ($driverStr === 'database') {
+                try {
                     $tableNameRaw = config('cache.stores.database.table', 'cache');
                     $tableName = is_scalar($tableNameRaw) ? (string) $tableNameRaw : 'cache';
                     $keys = DB::table($tableName)->count();
+                } catch (\Exception) {
                 }
-            } catch (\Exception) {
-                $enabled = false;
             }
         }
 
         return [
-            'status' => $enabled ? 'Active' : 'Inactive',
-            'enabled' => $enabled,
-            'driver' => is_scalar($driver) ? (string) $driver : 'unknown',
+            'status' => $isEnabled ? 'Enabled' : 'Disabled',
+            'enabled' => $isEnabled,
+            'driver' => $driver,
             'hits' => $hits,
             'misses' => $misses,
-            'keys' => $keys,
-            'size' => $size,
+            'keys' => $isEnabled ? $keys : 0,
+            'size' => $isEnabled ? $size : '0 B',
         ];
     }
 
