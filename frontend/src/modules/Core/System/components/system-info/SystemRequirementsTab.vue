@@ -360,7 +360,7 @@
                 {{ t('system.system.info.requirements.guide.general') }}
               </span>
               <p class="text-xs text-foreground">
-                {{ item.fix_guide.general }}
+                {{ getGeneralGuide(item) }}
               </p>
             </div>
           </div>
@@ -554,6 +554,32 @@ const filteredRequirements = computed(() => {
     return list;
 });
 
+const itemGuideTranslationsEn: Record<string, string> = {
+    php_version: 'Upgrade your web server PHP version via your hosting control panel to at least 8.2 or 8.3.',
+    php_memory_limit: 'Increase memory_limit to at least 256M or 512M in php.ini / cPanel PHP INI Editor.',
+    php_max_execution_time: 'Set max_execution_time to at least 60s in your PHP configuration.',
+    php_upload_max_filesize: 'Increase upload_max_filesize and post_max_size to 64M+ in php.ini.',
+    php_opcache: 'Enable the Zend OPcache extension in your server hosting / PHP settings.',
+    db_connection: 'Ensure database credentials in .env are correct and the database server is running.',
+    redis_server: 'Install and start the Redis service (e.g., redis-server) or configure REDIS_HOST in .env.',
+    storage_symlink: 'Run the command php artisan storage:link in your server terminal.',
+    service_cron: 'Add a 1-minute cron job in cPanel/crontab running php artisan schedule:run.',
+    service_queue_worker: 'Use Supervisor or a systemd daemon to keep queue workers running in the background.'
+};
+
+const getGeneralGuide = (item: RequirementItem): string => {
+    const loc = String(locale.value || 'id').toLowerCase();
+    if (loc.startsWith('en')) {
+        const guide = itemGuideTranslationsEn[item.id];
+        if (guide) return guide;
+        if (item.category === 'php_extensions') {
+            const extName = item.id.replace('ext_', '');
+            return `Enable the '${extName}' extension in your PHP Extensions / PHP Selector settings in cPanel/DirectAdmin.`;
+        }
+    }
+    return item.fix_guide?.general || '';
+};
+
 const formatCategory = (cat: string): string => {
     switch (cat) {
         case 'php_core': return t('system.system.info.requirements.categories.php_core');
@@ -568,29 +594,77 @@ const formatCategory = (cat: string): string => {
 
 const formatCurrentValue = (val: string): string => {
     if (!val) return '-';
-    if (val === 'Terpasang (Installed)' || val === 'Terpasang') return t('system.system.info.requirements.status_text.installed');
-    if (val === 'Tidak Ditemukan (Missing)' || val === 'Tidak Ditemukan') return t('system.system.info.requirements.status_text.missing');
-    if (val === 'Tersambung (Linked)' || val === 'Tersambung') return t('system.system.info.requirements.status_text.connected');
-    if (val === 'Terputus / Belum Dibuat') return t('system.system.info.requirements.status_text.disconnected');
-    if (val === 'Terdeteksi di Crontab') return t('system.system.info.requirements.status_text.detected_cron');
-    if (val === 'Belum Dikonfigurasi di Crontab') return t('system.system.info.requirements.status_text.unconfigured_cron');
-    if (val === 'Dapat Ditulis (Writable)' || val === 'Writable') return t('system.system.info.requirements.status_text.writable');
-    if (val === 'Hanya Baca (Read-only)') return t('system.system.info.requirements.status_text.read_only');
-    if (val === 'Aktif (Enabled)') return t('system.system.info.requirements.status_text.enabled');
-    if (val === 'Nonaktif (Disabled)') return t('system.system.info.requirements.status_text.disabled');
-    if (val.includes('Worker Berjalan') || val.includes('Worker Active') || val.includes('Worker')) {
-        const count = val.replace(/[^0-9]/g, '');
-        return t('system.system.info.requirements.server_specs.active_workers', { count: count || '1' });
+    const loc = String(locale.value || 'id').toLowerCase();
+
+    if (loc.startsWith('en')) {
+        if (val === 'Terpasang (Installed)' || val === 'Terpasang') return 'Installed';
+        if (val === 'Tidak Ditemukan (Missing)' || val === 'Tidak Ditemukan') return 'Missing';
+        if (val === 'Tersambung (Linked)' || val === 'Tersambung') return 'Connected (Linked)';
+        if (val === 'Terputus / Belum Dibuat') return 'Disconnected';
+        if (val === 'Terdeteksi di Crontab') return 'Configured in Crontab';
+        if (val === 'Belum Dikonfigurasi di Crontab') return 'Not Configured';
+        if (val === 'Dapat Ditulis (Writable)' || val === 'Writable') return 'Writable';
+        if (val === 'Hanya Baca (Read-only)') return 'Read-Only';
+        if (val === 'Aktif (Enabled)') return 'Enabled';
+        if (val === 'Nonaktif (Disabled)') return 'Disabled';
+        if (val === 'Tidak Ada Worker Aktif') return 'No Active Workers';
+        if (val.includes('Worker Berjalan') || val.includes('Worker Active') || val.includes('Worker')) {
+            const count = val.replace(/[^0-9]/g, '');
+            return `${count || '1'} Active`;
+        }
+        return val;
     }
+
+    if (loc.startsWith('su')) {
+        if (val === 'Terpasang (Installed)' || val === 'Terpasang') return 'Kapasang (Installed)';
+        if (val === 'Tidak Ditemukan (Missing)' || val === 'Tidak Ditemukan') return 'Teu Kapendak (Missing)';
+        if (val === 'Tersambung (Linked)' || val === 'Tersambung') return 'Nyambung (Linked)';
+        if (val === 'Terputus / Belum Dibuat') return 'Pegat / Tacan Dijieun';
+        if (val === 'Terdeteksi di Crontab') return 'Kapendak dina Crontab';
+        if (val === 'Belum Dikonfigurasi di Crontab') return 'Tacan Kakonfigurasi dina Crontab';
+        if (val === 'Dapat Ditulis (Writable)' || val === 'Writable') return 'Tiasa Diserat (Writable)';
+        if (val === 'Hanya Baca (Read-only)') return 'Ukur Maca (Read-only)';
+        if (val === 'Aktif (Enabled)') return 'Aktip (Enabled)';
+        if (val === 'Nonaktif (Disabled)') return 'Nonaktip (Disabled)';
+        if (val === 'Tidak Ada Worker Aktif') return 'Teu Aya Worker Aktip';
+        if (val.includes('Worker Berjalan') || val.includes('Worker Active') || val.includes('Worker')) {
+            const count = val.replace(/[^0-9]/g, '');
+            return `${count || '1'} Aktip`;
+        }
+        return val;
+    }
+
     return val;
 };
 
 const formatRequiredValue = (val: string): string => {
     if (!val) return '-';
-    if (val === 'Terpasang') return t('system.system.info.requirements.status_text.installed');
-    if (val === 'Tersambung') return t('system.system.info.requirements.status_text.connected');
-    if (val === 'Dapat Ditulis (Writable)' || val === 'Writable') return t('system.system.info.requirements.status_text.writable');
-    if (val.includes('schedule:run')) return t('system.system.info.requirements.server_specs.configured');
+    const loc = String(locale.value || 'id').toLowerCase();
+
+    if (loc.startsWith('en')) {
+        let result = val;
+        result = result.replace(/Aktif \(Disarankan untuk Production\)/i, 'Enabled (Recommended for Production)');
+        result = result.replace(/Aktif \(Disarankan via Supervisor\)/i, 'Active (Recommended via Supervisor)');
+        result = result.replace(/\(Disarankan ([^)]+)\)/i, '($1 recommended)');
+        result = result.replace(/^Terpasang$/i, 'Installed');
+        result = result.replace(/^Tersambung$/i, 'Connected');
+        result = result.replace(/^Dapat Ditulis$/i, 'Writable');
+        result = result.replace(/Aktif \(\* \* \* \* \* schedule:run\)/i, 'Active (* * * * * schedule:run)');
+        return result;
+    }
+
+    if (loc.startsWith('su')) {
+        let result = val;
+        result = result.replace(/Aktif \(Disarankan untuk Production\)/i, 'Aktip (Disarankeun pikeun Produksi)');
+        result = result.replace(/Aktif \(Disarankan via Supervisor\)/i, 'Aktip (Disarankeun liwat Supervisor)');
+        result = result.replace(/\(Disarankan ([^)]+)\)/i, '(Disarankeun $1)');
+        result = result.replace(/^Terpasang$/i, 'Kapasang');
+        result = result.replace(/^Tersambung$/i, 'Nyambung');
+        result = result.replace(/^Dapat Ditulis$/i, 'Tiasa Diserat');
+        result = result.replace(/Aktif \(\* \* \* \* \* schedule:run\)/i, 'Aktip (* * * * * schedule:run)');
+        return result;
+    }
+
     return val;
 };
 
