@@ -213,16 +213,6 @@ const generalSettingsGrouped = computed(() => {
     
     const groups: SettingGroupData[] = [
         {
-            id: 'license',
-            title: t('system.settings.groups.license.title'),
-            description: t('system.settings.groups.license.description'),
-            icon: ToolIcon,
-            color: 'purple',
-            keys: ['license_key', 'license_type'],
-            settings: [],
-            defaultExpanded: true,
-        },
-        {
             id: 'brand',
             title: t('system.settings.groups.brand.title'),
             description: t('system.settings.groups.brand.description'),
@@ -259,7 +249,6 @@ const generalSettingsGrouped = computed(() => {
         
         // Ensure settings are in logical order
         const orders: Record<string, string[]> = {
-            'license': ['license_type', 'license_key'],
             'brand': ['app_name', 'brand_logo', 'brand_favicon', 'branding_display'],
             'maintenance': ['maintenance_mode', 'maintenance_title', 'maintenance_message', 'maintenance_countdown_enabled', 'maintenance_end_time'],
             'localization': ['timezone', 'date_format', 'time_format', 'items_per_page']
