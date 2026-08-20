@@ -26,7 +26,7 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['Content-Type', 'X-Requested-With', 'Authorization', 'Accept', 'X-XSRF-TOKEN', 'X-Socket-Id', 'X-Subscription-Domain'],
+    'allowed_headers' => ['Content-Type', 'X-Requested-With', 'Authorization', 'Accept', 'X-XSRF-TOKEN', 'X-Socket-Id'],
 
     'exposed_headers' => [],
 
