@@ -16,6 +16,7 @@ parameters:
         - '#Parameter \#1 \$view of function view expects view-string\|null, string given#'
         - '#Called ''env'' outside of the config directory#'
         - '#Trait .* is used zero times and is not analysed.#'
+        - '#Method Illuminate\\Database\\Migrations\\Migration.*::getConnection\(\) should return string\|null but returns mixed\.#'
 
     excludePaths:
         - Modules/*/tests/*
