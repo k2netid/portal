@@ -552,32 +552,108 @@
         :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
-        <div v-if="getSettingBool(block, 'show_title', true)" class="mb-4">
-          <h3 class="text-xl font-bold text-foreground">
-            {{ getSettingStr(block, 'title', 'Hubungi Kami') }}
-          </h3>
-          <p v-if="getSettingBool(block, 'show_description', true) && getSettingStr(block, 'description')" class="text-sm text-muted-foreground mt-1">
-            {{ getSettingStr(block, 'description') }}
-          </p>
+        <!-- Success State -->
+        <div v-if="dynamicFormSuccess[block.id || 'default']" class="p-6 text-center space-y-3 bg-primary/5 rounded-2xl border border-primary/20">
+          <div class="w-12 h-12 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center font-bold text-xl">✓</div>
+          <h4 class="text-lg font-bold text-foreground">{{ getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.name || 'Terima Kasih!' }}</h4>
+          <p class="text-sm text-muted-foreground">{{ dynamicFormSuccessMessage[block.id || 'default'] || 'Formulir Anda telah berhasil dikirim. Kami akan segera menghubungi Anda.' }}</p>
+          <button type="button" @click="resetDynamicForm(block.id || 'default')" class="text-xs font-semibold text-primary hover:underline pt-2">Kirim Tanggapan Lain</button>
         </div>
 
-        <form class="space-y-4" @submit.prevent="handleFormSubmit">
-          <div class="space-y-1.5">
-            <label class="text-xs font-semibold text-foreground">Nama Lengkap</label>
-            <input type="text" required placeholder="Masukkan nama..." class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
+        <!-- Form Fields -->
+        <template v-else>
+          <div v-if="getSettingBool(block, 'show_title', true)" class="mb-6">
+            <h3 class="text-xl font-bold text-foreground">
+              {{ getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.name || getSettingStr(block, 'title', 'Hubungi Kami') }}
+            </h3>
+            <p v-if="getSettingBool(block, 'show_description', true) && (getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.description || getSettingStr(block, 'description'))" class="text-sm text-muted-foreground mt-1">
+              {{ getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.description || getSettingStr(block, 'description') }}
+            </p>
           </div>
-          <div class="space-y-1.5">
-            <label class="text-xs font-semibold text-foreground">Email</label>
-            <input type="email" required placeholder="name@example.com" class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
-          </div>
-          <div class="space-y-1.5">
-            <label class="text-xs font-semibold text-foreground">Pesan</label>
-            <textarea rows="4" required placeholder="Tuliskan pesan Anda..." class="w-full p-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
-          </div>
-          <button type="submit" class="w-full h-10 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm">
-            {{ getSettingStr(block, 'button_text', 'Kirim Pesan') }}
-          </button>
-        </form>
+
+          <!-- Dynamic Form from Reach Forms if form_slug is configured -->
+          <form
+            v-if="getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.fields?.length"
+            class="space-y-4"
+            @submit.prevent="submitDynamicForm(getSettingStr(block, 'form_slug'), block.id || 'default')"
+          >
+            <template v-for="field in getDynamicFormDefinition(getSettingStr(block, 'form_slug'))?.fields" :key="field.name">
+              <div class="space-y-1.5">
+                <label class="text-xs font-semibold text-foreground flex items-center gap-1">
+                  {{ field.label }}
+                  <span v-if="field.is_required" class="text-destructive">*</span>
+                </label>
+
+                <!-- Textarea -->
+                <textarea
+                  v-if="field.type === 'textarea'"
+                  v-model="getFormValues(block.id || 'default')[field.name]"
+                  :required="field.is_required"
+                  :placeholder="field.placeholder || ''"
+                  rows="4"
+                  class="w-full p-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                />
+
+                <!-- Select -->
+                <select
+                  v-else-if="field.type === 'select'"
+                  v-model="getFormValues(block.id || 'default')[field.name]"
+                  :required="field.is_required"
+                  class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+                  <option value="" disabled selected>{{ field.placeholder || 'Pilih opsi...' }}</option>
+                  <option
+                    v-for="(opt, optIdx) in parseFieldOptions(field.options)"
+                    :key="optIdx"
+                    :value="opt.value"
+                  >
+                    {{ opt.label }}
+                  </option>
+                </select>
+
+                <!-- Standard Input (text, email, number, tel, url, date) -->
+                <input
+                  v-else
+                  v-model="getFormValues(block.id || 'default')[field.name]"
+                  :type="field.type === 'number' ? 'number' : (field.type === 'email' ? 'email' : (field.type === 'tel' ? 'tel' : (field.type === 'date' ? 'date' : 'text')))"
+                  :required="field.is_required"
+                  :placeholder="field.placeholder || ''"
+                  class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+
+                <p v-if="field.help_text" class="text-[11px] text-muted-foreground">{{ field.help_text }}</p>
+              </div>
+            </template>
+
+            <button
+              type="submit"
+              :disabled="dynamicFormSubmitting[block.id || 'default']"
+              class="w-full h-10 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <span v-if="dynamicFormSubmitting[block.id || 'default']" class="w-4 h-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
+              <span>{{ getSettingStr(block, 'button_text', 'Kirim Pesan') }}</span>
+            </button>
+          </form>
+
+          <!-- Fallback Standard Contact Form -->
+          <form v-else class="space-y-4" @submit.prevent="handleFormSubmit">
+            <div class="space-y-1.5">
+              <label class="text-xs font-semibold text-foreground">Nama Lengkap <span class="text-destructive">*</span></label>
+              <input type="text" required placeholder="Masukkan nama..." class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-semibold text-foreground">Email <span class="text-destructive">*</span></label>
+              <input type="email" required placeholder="name@example.com" class="w-full h-10 px-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20">
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-semibold text-foreground">Pesan <span class="text-destructive">*</span></label>
+              <textarea rows="4" required placeholder="Tuliskan pesan Anda..." class="w-full p-3 text-sm rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20" />
+            </div>
+            <button type="submit" class="w-full h-10 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm">
+              {{ getSettingStr(block, 'button_text', 'Kirim Pesan') }}
+            </button>
+          </form>
+        </template>
       </div>
 
       <!-- 20. DIVIDER / SPACER BLOCK -->
@@ -893,6 +969,111 @@ const getDataModelRecords = (
   }
 
   return dataModelRecordsCache.value[cacheKey] || getSampleDataModelRecords(count, modelSlug);
+};
+
+interface DynamicFormDef {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string | null;
+  success_message?: string | null;
+  fields?: Array<{
+    name: string;
+    label: string;
+    type: string;
+    placeholder?: string | null;
+    help_text?: string | null;
+    options?: unknown;
+    is_required?: boolean;
+  }>;
+}
+
+const dynamicFormCache = ref<Record<string, DynamicFormDef | null>>({});
+const dynamicFormLoading = ref<Record<string, boolean>>({});
+const dynamicFormValues = ref<Record<string, Record<string, any>>>({});
+const dynamicFormSubmitting = ref<Record<string, boolean>>({});
+const dynamicFormSuccess = ref<Record<string, boolean>>({});
+const dynamicFormSuccessMessage = ref<Record<string, string>>({});
+
+const getFormValues = (blockId: string): Record<string, any> => {
+  if (!dynamicFormValues.value[blockId]) {
+    dynamicFormValues.value[blockId] = {};
+  }
+  return dynamicFormValues.value[blockId];
+};
+
+const resetDynamicForm = (blockId: string) => {
+  dynamicFormSuccess.value[blockId] = false;
+  dynamicFormValues.value[blockId] = {};
+};
+
+const parseFieldOptions = (options: unknown): Array<{ value: string; label: string }> => {
+  if (!options) return [];
+  if (Array.isArray(options)) {
+    return options.map(opt => {
+      if (typeof opt === 'string' || typeof opt === 'number') {
+        return { value: String(opt), label: String(opt) };
+      }
+      if (typeof opt === 'object' && opt !== null) {
+        const item = opt as Record<string, any>;
+        return { value: String(item.value ?? item.id ?? item.name ?? ''), label: String(item.label ?? item.title ?? item.name ?? item.value ?? '') };
+      }
+      return { value: '', label: '' };
+    }).filter(opt => opt.value || opt.label);
+  }
+  return [];
+};
+
+const loadDynamicForm = async (slug: string) => {
+  if (!slug || dynamicFormCache.value[slug] !== undefined || dynamicFormLoading.value[slug]) return;
+  dynamicFormLoading.value[slug] = true;
+  try {
+    const res = await api.get(`/public/forms/${slug}`);
+    const data = res.data?.data || res.data;
+    if (data && data.name) {
+      dynamicFormCache.value[slug] = data as DynamicFormDef;
+    } else {
+      dynamicFormCache.value[slug] = null;
+    }
+  } catch (err) {
+    logger.warning(`[BlockRenderer] Failed to load form '${slug}':`, err);
+    dynamicFormCache.value[slug] = null;
+  } finally {
+    dynamicFormLoading.value[slug] = false;
+  }
+};
+
+const getDynamicFormDefinition = (slug?: string): DynamicFormDef | null => {
+  if (!slug) return null;
+  if (dynamicFormCache.value[slug] === undefined && !dynamicFormLoading.value[slug]) {
+    loadDynamicForm(slug);
+  }
+  return dynamicFormCache.value[slug] || null;
+};
+
+const submitDynamicForm = async (slug: string, blockId: string) => {
+  if (!slug) {
+    handleFormSubmit();
+    return;
+  }
+  dynamicFormSubmitting.value[blockId] = true;
+  try {
+    const values = dynamicFormValues.value[blockId] || {};
+    const res = await api.post(`/public/forms/${slug}/submit`, values);
+    const successMsg = res.data?.message || getDynamicFormDefinition(slug)?.success_message || 'Formulir berhasil dikirim!';
+    dynamicFormSuccess.value[blockId] = true;
+    dynamicFormSuccessMessage.value[blockId] = successMsg;
+    toast.success.default(successMsg);
+  } catch (err: unknown) {
+    let msg = 'Gagal mengirim formulir. Silakan coba beberapa saat lagi.';
+    if (err && typeof err === 'object' && 'response' in err) {
+      const resp = (err as { response?: { data?: { message?: string } } }).response;
+      if (resp?.data?.message) msg = resp.data.message;
+    }
+    toast.error.default(msg);
+  } finally {
+    dynamicFormSubmitting.value[blockId] = false;
+  }
 };
 
 const handleFormSubmit = () => {
