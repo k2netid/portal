@@ -498,6 +498,52 @@
         </div>
       </div>
 
+      <!-- 18B. DATA MODEL STUDIO COLLECTION REPEATER BLOCK -->
+      <div
+        v-else-if="block.type === 'datamodel_collection' || block.type === 'dynamic_collection'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-datamodel-collection w-full py-4"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div v-if="getSettingStr(block, 'title')" class="mb-6 flex items-center justify-between">
+          <h3 class="text-2xl font-bold text-foreground">
+            {{ getSettingStr(block, 'title') }}
+          </h3>
+          <span v-if="getSettingStr(block, 'modelSlug')" class="text-xs font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
+            /dynamic/{{ getSettingStr(block, 'modelSlug') }}
+          </span>
+        </div>
+
+        <div
+          class="grid gap-6"
+          :class="getSettingNum(block, 'columns', 3) === 1 ? 'grid-cols-1' : (getSettingNum(block, 'columns', 3) === 2 ? 'grid-cols-1 md:grid-cols-2' : (getSettingNum(block, 'columns', 3) === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'))"
+        >
+          <template v-for="(item, itemIdx) in getSampleDataModelRecords(getSettingNum(block, 'itemsPerPage', 6), getSettingStr(block, 'modelSlug'))" :key="itemIdx">
+            <article class="group rounded-2xl border border-border bg-card/60 p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/40 flex flex-col">
+              <figure v-if="getSettingBool(block, 'showImage', true)" class="overflow-hidden rounded-xl bg-muted aspect-video mb-4">
+                <img :src="item.image" :alt="item.title" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
+              </figure>
+              <div v-if="getSettingBool(block, 'showBadge', true) && item.badge" class="mb-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                  {{ item.badge }}
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">
+                <a :href="item.url || '#'">{{ item.title }}</a>
+              </h4>
+              <p v-if="getSettingBool(block, 'showDescription', true)" class="text-xs text-muted-foreground line-clamp-3 mb-4 leading-relaxed flex-1">
+                {{ item.description }}
+              </p>
+              <div v-if="getSettingBool(block, 'showLink', true)" class="pt-3 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-primary mt-auto group-hover:translate-x-0.5 transition-transform">
+                <span>{{ getSettingStr(block, 'buttonText', 'View Details') }}</span>
+                <span aria-hidden="true">&rarr;</span>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+
       <!-- 19. FORM PICKER / CONTACT FORM BLOCK -->
       <div
         v-else-if="block.type === 'form_picker' || block.type === 'contact_form'"
@@ -729,6 +775,56 @@ const getSamplePosts = (count = 3): Array<{ title: string; excerpt: string; date
       category: 'Design System',
       image: '/assets/themes/janari/avatar-placeholder.png',
       url: '/blog'
+    }
+  ];
+  return samples.slice(0, Math.max(1, count));
+};
+
+const getSampleDataModelRecords = (count = 6, modelSlug = ''): Array<{ title: string; description: string; badge: string; image: string; url: string }> => {
+  const modelName = modelSlug ? modelSlug.replace(/[-_]/g, ' ') : 'Item';
+  const capitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+  const samples = [
+    {
+      title: `${capitalized} Premium Solution 01`,
+      description: 'Layanan dan solusi data model dinamis yang dirancang untuk mendukung operasional bisnis secara efisien.',
+      badge: 'Featured',
+      image: '/assets/themes/janari/hero-placeholder.png',
+      url: '#'
+    },
+    {
+      title: `${capitalized} Enterprise Service 02`,
+      description: 'Implementasi terintegrasi dengan performa tinggi dan skalabilitas sistem yang solid.',
+      badge: 'Popular',
+      image: '/assets/themes/janari/news-placeholder.png',
+      url: '#'
+    },
+    {
+      title: `${capitalized} Strategic Growth 03`,
+      description: 'Pendekatan berbasis data untuk mengoptimalkan alur kerja dan konversi pengguna.',
+      badge: 'New',
+      image: '/assets/themes/janari/avatar-placeholder.png',
+      url: '#'
+    },
+    {
+      title: `${capitalized} Advanced Core 04`,
+      description: 'Fondasi arsitektur modern yang memastikan keandalan dan keamanan data tingkat tinggi.',
+      badge: 'Core',
+      image: '/assets/themes/janari/hero-placeholder.png',
+      url: '#'
+    },
+    {
+      title: `${capitalized} Cloud Integration 05`,
+      description: 'Konektivitas menyeluruh dengan API dan ekosistem multi-platform yang fleksibel.',
+      badge: 'Cloud',
+      image: '/assets/themes/janari/news-placeholder.png',
+      url: '#'
+    },
+    {
+      title: `${capitalized} Smart Architecture 06`,
+      description: 'Kustomisasi tanpa batas untuk memenuhi kebutuhan spesifik industri dan organisasi Anda.',
+      badge: 'Pro',
+      image: '/assets/themes/janari/avatar-placeholder.png',
+      url: '#'
     }
   ];
   return samples.slice(0, Math.max(1, count));
