@@ -98,11 +98,12 @@ const DataModelCollectionModule: ModuleDefinition = {
                 fields: [
                     {
                         name: 'modelSlug',
-                        type: 'text',
-                        label: 'Data Model Slug',
-                        placeholder: 'e.g. portfolio, testimonials, products',
-                        responsive: true,
-                        help: 'Enter the slug of the Data Model created in Data Model Studio.'
+                        type: 'select',
+                        label: 'Select Data Model',
+                        placeholder: 'Choose a Data Model...',
+                        options: 'dynamic:models',
+                        searchable: true,
+                        help: 'Select the dynamic collection created in Data Model Studio.'
                     },
                     {
                         name: 'title',
