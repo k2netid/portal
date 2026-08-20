@@ -197,6 +197,64 @@
           </AccordionContent>
         </AccordionItem>
 
+        <!-- Data Models -->
+        <AccordionItem value="models">
+          <AccordionTrigger class="px-4 py-3 hover:no-underline hover:bg-muted/50">
+            <div class="flex items-center gap-2 flex-1">
+              <Database class="w-4 h-4 text-cyan-500" />
+              <span>Data Models</span>
+              <Badge
+                variant="secondary"
+                class="ml-2"
+              >
+                {{ models.length }}
+              </Badge>
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                class="ml-auto h-6 w-6" 
+                aria-label="Add all data models"
+                title="Add all data models" 
+                @click.stop="addAll('model', models)"
+              >
+                <Plus class="w-3 h-3" />
+              </Button>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent class="px-4 pb-4">
+            <div class="max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+              <div
+                v-if="loadingModels"
+                class="flex justify-center py-4"
+              >
+                <Loader2 class="w-5 h-5 animate-spin text-muted-foreground" />
+              </div>
+              <draggable
+                v-else
+                :list="models"
+                :group="{ name: 'menu', pull: 'clone', put: false }"
+                :clone="(item: unknown) => createItem('model', item)"
+                item-key="id"
+                class="space-y-2"
+              >
+                <template #item="{ element }">
+                  <SourceItem 
+                    :item="element" 
+                    :type="'model'"
+                    @add="addItem('model', element)"
+                  />
+                </template>
+              </draggable>
+              <div
+                v-if="!loadingModels && models.length === 0"
+                class="text-center py-4 text-muted-foreground text-xs"
+              >
+                Tidak ada data model aktif
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
         <!-- Custom Link -->
         <AccordionItem value="custom">
           <AccordionTrigger class="px-4 py-3 hover:no-underline hover:bg-muted/50">
@@ -289,6 +347,7 @@ import SourceItem from './SourceItem.vue';
 
 import {
   Columns,
+  Database,
   File,
   FileText,
   LinkIcon,
@@ -310,9 +369,11 @@ defineEmits<{
 const pages = ref<unknown[]>([]);
 const posts = ref<unknown[]>([]);
 const categories = ref<unknown[]>([]);
+const models = ref<unknown[]>([]);
 const loadingPages = ref(false);
 const loadingPosts = ref(false);
 const loadingCategories = ref(false);
+const loadingModels = ref(false);
 
 // Custom link form
 const customLink = ref({ title: '', url: 'https://' });
@@ -357,13 +418,33 @@ const fetchCategories = async () => {
     }
 };
 
+const fetchModels = async () => {
+    loadingModels.value = true;
+    try {
+        const response = await api.get('/manage/infra/models/types');
+        const { data } = parseResponse(response);
+        const list = ensureArray(data);
+        models.value = list.map((m: any) => ({
+            id: m.id,
+            name: m.name || m.title || m.slug,
+            slug: m.slug,
+            url: `/dynamic/${m.slug}`
+        }));
+    } catch (error) {
+        logger.error('Failed to fetch data models for menu:', error);
+    } finally {
+        loadingModels.value = false;
+    }
+};
+
 // Create menu item from source
 const createItem = (type: string, sourceItem: unknown) => {
     const si = sourceItem as Record<string, unknown>;
-    const item = menuItemRegistry.createInstance(type, {
+    const targetType = type === 'model' ? 'custom' : type;
+    const item = menuItemRegistry.createInstance(targetType, {
         title: (si.title as string) || (si.name as string),
         target_id: String(si.id),
-        url: (si.url as string) || undefined
+        url: (si.url as string) || (type === 'model' && si.slug ? `/dynamic/${si.slug}` : undefined)
     });
     return item;
 };
@@ -412,6 +493,7 @@ onMounted(() => {
     fetchPages();
     fetchPosts();
     fetchCategories();
+    fetchModels();
 });
 </script>
 
