@@ -199,7 +199,20 @@ export function useCustomizerNavigation(
           ]
         : []),
     ];
-    return groups;
+
+    return groups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => {
+          if (item.panel) return true;
+          if (item.bindingComponent) return true;
+          if (item.manifestSections && item.manifestSections.length > 0) {
+            return item.manifestSections.some((s) => s.settings && s.settings.length > 0);
+          }
+          return false;
+        }),
+      }))
+      .filter((group) => group.items.length > 0);
   });
 
   const filteredGroups = computed(() => {
