@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject, onMounted, watch } from 'vue'
 import type { BuilderInstance } from '@/types/builder'
+import { useTheme } from '@/modules/Content/Layout/composables/useTheme'
 
 interface Props {
   device?: 'desktop' | 'tablet' | 'mobile';
@@ -43,7 +44,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const builder = inject<BuilderInstance | null>('builder', null)
+const { activeTheme, applyThemeStyles } = useTheme()
 const showGridOverlay = computed(() => builder?.showGrid?.value ?? false)
+
+onMounted(() => {
+  applyThemeStyles()
+})
+
+watch(() => activeTheme.value, () => {
+  applyThemeStyles()
+})
 
 const viewportStyle = computed(() => {
   const widths: Record<string, number | null> = {

@@ -519,7 +519,7 @@
           class="grid gap-6"
           :class="getSettingNum(block, 'columns', 3) === 1 ? 'grid-cols-1' : (getSettingNum(block, 'columns', 3) === 2 ? 'grid-cols-1 md:grid-cols-2' : (getSettingNum(block, 'columns', 3) === 4 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'))"
         >
-          <template v-for="(item, itemIdx) in getSampleDataModelRecords(getSettingNum(block, 'itemsPerPage', 6), getSettingStr(block, 'modelSlug'))" :key="itemIdx">
+          <template v-for="(item, itemIdx) in getDataModelRecords(getSettingNum(block, 'itemsPerPage', 6), getSettingStr(block, 'modelSlug'), block)" :key="itemIdx">
             <article class="group rounded-2xl border border-border bg-card/60 p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/40 flex flex-col">
               <figure v-if="getSettingBool(block, 'showImage', true)" class="overflow-hidden rounded-xl bg-muted aspect-video mb-4">
                 <img :src="item.image" :alt="item.title" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
@@ -621,6 +621,8 @@
 
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue';
+import api from '@/engine/api/client';
+import { logger } from '@/shared/utils/logger';
 import { useToast } from '@/shared/composables/useToast';
 import { useMenu } from '@/modules/Content/Layout/composables/useMenu';
 import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lucide-vue-next';
@@ -832,6 +834,65 @@ const getSampleDataModelRecords = (count = 6, modelSlug = ''): Array<{ title: st
     }
   ];
   return samples.slice(0, Math.max(1, count));
+};
+
+const dataModelRecordsCache = ref<Record<string, Array<{ title: string; description: string; badge: string; image: string; url: string; raw?: Record<string, any> }>>>({});
+const dataModelLoading = ref<Record<string, boolean>>({});
+
+const loadDataModelRecords = async (
+  modelSlug: string,
+  count = 6,
+  fieldMapping?: { titleField?: string; descriptionField?: string; imageField?: string; badgeField?: string; linkField?: string }
+) => {
+  if (!modelSlug) return;
+  const cacheKey = `${modelSlug}_${count}`;
+  if (dataModelRecordsCache.value[cacheKey] || dataModelLoading.value[cacheKey]) return;
+
+  dataModelLoading.value[cacheKey] = true;
+  try {
+    const res = await api.get(`/dynamic/${modelSlug}`, { params: { per_page: count } });
+    const payload = res.data?.data || res.data || [];
+    const items = Array.isArray(payload) ? payload : (payload.data || []);
+
+    const mapped = items.map((rec: Record<string, any>) => {
+      const data = rec.data || rec;
+      const title = String(data[fieldMapping?.titleField || 'title'] || data.name || data.subject || data.full_name || rec.title || 'Untitled');
+      const description = String(data[fieldMapping?.descriptionField || 'description'] || data.content || data.body || data.excerpt || data.feedback || data.message || '');
+      const badge = String(data[fieldMapping?.badgeField || 'badge'] || data.category || data.status || data.rating || data.role || '');
+      const image = String(data[fieldMapping?.imageField || 'image'] || data.avatar || data.thumbnail || data.photo || '/assets/themes/janari/hero-placeholder.png');
+      const url = String(data[fieldMapping?.linkField || 'link'] || data.url || '#');
+      return { title, description, badge, image, url, raw: data };
+    });
+
+    if (mapped.length > 0) {
+      dataModelRecordsCache.value[cacheKey] = mapped;
+    }
+  } catch (err) {
+    logger.warning(`[BlockRenderer] Failed to load data model '${modelSlug}':`, err);
+  } finally {
+    dataModelLoading.value[cacheKey] = false;
+  }
+};
+
+const getDataModelRecords = (
+  count = 6,
+  modelSlug = '',
+  block?: BlockInstance
+): Array<{ title: string; description: string; badge: string; image: string; url: string }> => {
+  if (!modelSlug) return getSampleDataModelRecords(count, modelSlug);
+
+  const titleField = block ? getSettingStr(block, 'titleField') : '';
+  const descriptionField = block ? getSettingStr(block, 'descriptionField') : '';
+  const imageField = block ? getSettingStr(block, 'imageField') : '';
+  const badgeField = block ? getSettingStr(block, 'badgeField') : '';
+  const linkField = block ? getSettingStr(block, 'linkField') : '';
+
+  const cacheKey = `${modelSlug}_${count}`;
+  if (!dataModelRecordsCache.value[cacheKey] && !dataModelLoading.value[cacheKey]) {
+    loadDataModelRecords(modelSlug, count, { titleField, descriptionField, imageField, badgeField, linkField });
+  }
+
+  return dataModelRecordsCache.value[cacheKey] || getSampleDataModelRecords(count, modelSlug);
 };
 
 const handleFormSubmit = () => {
