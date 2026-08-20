@@ -658,10 +658,12 @@ const handleCleanJunk = async (): Promise<void> => {
     appendConsole(t('system.system.info.maintenance.logs.junk.start'));
     try {
         const res = await api.post('/manage/system/maintenance/clean-junk');
-        const data = parseSingleResponse<{ deleted_files: number; freed_bytes: number }>(res);
+        const data = parseSingleResponse<{ deleted_files?: number; files_removed?: number; freed_bytes?: number; cleaned_bytes?: number }>(res);
+        const count = data?.deleted_files ?? data?.files_removed ?? 0;
+        const bytes = data?.freed_bytes ?? data?.cleaned_bytes ?? 0;
         appendConsole(t('system.system.info.maintenance.logs.junk.success'));
-        appendConsole(t('system.system.info.maintenance.logs.junk.filesDeleted', { count: data?.deleted_files || 0 }));
-        appendConsole(t('system.system.info.maintenance.logs.junk.spaceFreed', { size: formatBytes(data?.freed_bytes || 0) }));
+        appendConsole(t('system.system.info.maintenance.logs.junk.filesDeleted', { count }));
+        appendConsole(t('system.system.info.maintenance.logs.junk.spaceFreed', { size: formatBytes(bytes) }));
     } catch (err: unknown) {
         logger.error('Failed to clean junk:', err);
         const message = err instanceof Error ? err.message : String(err);

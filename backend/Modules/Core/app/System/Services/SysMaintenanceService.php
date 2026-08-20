@@ -26,11 +26,14 @@ class SysMaintenanceService
         $cleanedBytes = 0;
         $filesRemoved = 0;
 
-        // 1. Clean temporary ZIP uploads and scaffold outputs
+        // 1. Clean temporary ZIP uploads, scaffold outputs, and temp media/cache
         $tempPaths = [
             storage_path('app/uploads'),
             storage_path('app/scaffolds'),
+            storage_path('app/temp'),
+            storage_path('app/private/temp'),
             storage_path('framework/views'),
+            storage_path('framework/testing'),
         ];
 
         foreach ($tempPaths as $path) {
@@ -82,7 +85,9 @@ class SysMaintenanceService
 
         return [
             'cleaned_bytes' => $cleanedBytes,
+            'freed_bytes' => $cleanedBytes,
             'files_removed' => $filesRemoved,
+            'deleted_files' => $filesRemoved,
         ];
     }
 
@@ -114,19 +119,33 @@ class SysMaintenanceService
             if ($driver === 'sqlite') {
                 DB::statement('VACUUM');
                 $optimizedTablesCount = 1;
-            } elseif ($driver === 'mysql') {
-                $tables = ['sys_content_types', 'sys_dynamic_records', 'srv_auth_users', 'settings', 'media'];
-                foreach ($tables as $table) {
+            } else {
+                $targetTables = [
+                    'pub_contents',
+                    'pub_content_revisions',
+                    'pub_comments',
+                    'srv_media_files',
+                    'srv_media_usages',
+                    'srv_auth_users',
+                    'sys_settings',
+                    'sys_content_types',
+                    'sys_dynamic_records',
+                    'srv_analytics_visits',
+                    'srv_analytics_events',
+                    'srch_indexes',
+                    'srch_queries',
+                    'infra_backups',
+                    'sec_logs',
+                    'system_activity_logs',
+                ];
+
+                foreach ($targetTables as $table) {
                     if (Schema::hasTable($table)) {
-                        DB::statement("OPTIMIZE TABLE {$table}");
-                        $optimizedTablesCount++;
-                    }
-                }
-            } elseif ($driver === 'pgsql') {
-                $tables = ['sys_content_types', 'sys_dynamic_records', 'srv_auth_users', 'sys_settings', 'media'];
-                foreach ($tables as $table) {
-                    if (Schema::hasTable($table)) {
-                        DB::statement("VACUUM ANALYZE {$table}");
+                        if ($driver === 'pgsql') {
+                            DB::statement("VACUUM ANALYZE {$table}");
+                        } elseif ($driver === 'mysql') {
+                            DB::statement("OPTIMIZE TABLE {$table}");
+                        }
                         $optimizedTablesCount++;
                     }
                 }
@@ -162,6 +181,11 @@ class SysMaintenanceService
             Artisan::call('config:cache');
             Artisan::call('route:cache');
             Artisan::call('view:cache');
+            try {
+                Artisan::call('event:cache');
+            } catch (Exception) {
+                // event:cache optional if no event discovery
+            }
         } catch (Exception $e) {
             Log::warning('[SysMaintenance] Framework boost compilation failed: '.$e->getMessage());
         }
