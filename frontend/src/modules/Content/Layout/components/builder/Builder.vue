@@ -212,7 +212,12 @@ registerBlockComponents()
 
 // Props
 interface Props {
-  initialData?: { blocks: BlockInstance[] };
+  initialData?: {
+    blocks: BlockInstance[];
+    body?: string;
+    title?: string;
+    slug?: string;
+  };
   modelValue?: BlockInstance[];
   contentId?: string | number | null;
   mode?: 'site' | 'page';

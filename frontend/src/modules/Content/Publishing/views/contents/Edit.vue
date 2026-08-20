@@ -194,7 +194,7 @@
       class="fixed inset-0 z-50 bg-background flex flex-col"
     >
       <Builder
-        :initial-data="{ blocks: form.meta?.builder_blocks || [] }"
+        :initial-data="{ blocks: form.meta?.builder_blocks || [], body: form.body || '', title: form.title || '', slug: form.slug || '' }"
         :content-id="id"
         mode="page"
         @close="isVisualBuilderOpen = false"

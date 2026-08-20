@@ -624,6 +624,7 @@ import { computed, ref, inject } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
 import { useMenu } from '@/modules/Content/Layout/composables/useMenu';
 import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lucide-vue-next';
+import { ConditionEvaluator } from '@/services/ConditionEvaluator';
 import type { BlockInstance, BuilderInstance } from '@/types/builder';
 
 const builder = inject<BuilderInstance | null>('builder', null);
@@ -651,8 +652,11 @@ const isFaqOpen = (blockIndex: number, faqIndex: number) => {
 };
 
 const internalBlocks = computed<BlockInstance[]>(() => {
-  if (props.block) return [props.block];
-  return props.blocks || [];
+  const rawList = props.block ? [props.block] : (props.blocks || []);
+  if (props.mode === 'edit') {
+    return rawList;
+  }
+  return rawList.filter(b => ConditionEvaluator.evaluate(b, props.context || {}));
 });
 
 const getSettingStr = (block: BlockInstance, key: string, fallback = ''): string => {

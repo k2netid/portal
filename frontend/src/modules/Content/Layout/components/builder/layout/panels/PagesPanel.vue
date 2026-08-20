@@ -1,66 +1,113 @@
 <template>
   <div class="pages-panel">
-    <div class="pages-search">
+    <!-- Header Search & Filter Tabs -->
+    <div class="pages-header">
       <BaseInput 
         v-model="searchQuery"
-        :placeholder="t('builder.panels.pages.searchPlaceholder')"
+        :placeholder="t('builder.panels.pages.searchPlaceholder', 'Search pages or posts...')"
       >
         <template #prefix>
           <Search :size="14" />
         </template>
       </BaseInput>
+
+      <!-- Filter Tabs -->
+      <div class="type-filter-tabs">
+        <button
+          type="button"
+          class="type-tab-btn"
+          :class="{ 'type-tab-btn--active': activeTypeFilter === 'all' }"
+          @click="activeTypeFilter = 'all'"
+        >
+          All ({{ allContentList.length }})
+        </button>
+        <button
+          type="button"
+          class="type-tab-btn"
+          :class="{ 'type-tab-btn--active': activeTypeFilter === 'page' }"
+          @click="activeTypeFilter = 'page'"
+        >
+          Pages ({{ pageCount }})
+        </button>
+        <button
+          type="button"
+          class="type-tab-btn"
+          :class="{ 'type-tab-btn--active': activeTypeFilter === 'post' }"
+          @click="activeTypeFilter = 'post'"
+        >
+          Posts ({{ postCount }})
+        </button>
+        <button
+          type="button"
+          class="type-tab-btn"
+          :class="{ 'type-tab-btn--active': activeTypeFilter === 'theme' }"
+          @click="activeTypeFilter = 'theme'"
+        >
+          Theme ({{ themeTemplates.length }})
+        </button>
+      </div>
     </div>
 
     <!-- Loading State -->
     <div v-if="loading" class="pages-loading">
       <div class="spinner"></div>
-      <span>{{ t('builder.panels.pages.loading') }}</span>
+      <span>{{ t('builder.panels.pages.loading', 'Loading pages...') }}</span>
     </div>
 
     <!-- List -->
     <template v-else>
       <div class="pages-list">
         <div 
-          v-for="(page, index) in filteredPages" 
-          :key="page.id || `page-${index}`" 
+          v-for="(page, index) in filteredItems" 
+          :key="page.id || `item-${index}`" 
           class="page-item" 
-          :class="{ 'page-item--active': String(currentPageId) === String(page.id) }"
-          @click="selectPage(page.id as string | number)"
+          :class="{ 'page-item--active': String(currentPageId) === String(page.id) || (page.isThemeTemplate && builder?.content?.value?.slug === page.slug) }"
+          @click="selectItem(page)"
         >
           <div class="page-info">
-            <span class="page-title">{{ page.title }}</span>
-            <span class="page-slug">/{{ page.slug }}</span>
-            <span v-if="page.status === 'draft'" class="page-status-badge">{{ page.status }}</span>
+            <div class="flex items-center gap-1.5 mb-0.5">
+              <span class="page-title">{{ page.title }}</span>
+              <span
+                class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded leading-tight"
+                :class="page.isThemeTemplate ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : (page.type === 'post' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400' : 'bg-primary/10 text-primary')"
+              >
+                {{ page.isThemeTemplate ? 'Theme' : (page.type || 'page') }}
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="page-slug">/{{ page.slug }}</span>
+              <span v-if="page.status === 'draft'" class="page-status-badge">draft</span>
+            </div>
           </div>
-          <div v-if="builder?.mode.value === 'site'" class="page-actions">
-            <!-- Normal edit button (switching page in builder) -->
-            <button class="action-btn" :title="t('builder.panels.pages.actions.edit')" @click.stop="selectPage(page.id as string | number)">
+
+          <div v-if="builder?.mode.value === 'site' && !page.isThemeTemplate" class="page-actions">
+            <button class="action-btn" :title="t('builder.panels.pages.actions.edit', 'Edit')" @click.stop="selectItem(page)">
               <Edit2 :size="14" />
             </button>
-            <button class="action-btn" :title="t('builder.panels.pages.actions.delete')" @click.stop="handleDelete(page)">
+            <button class="action-btn" :title="t('builder.panels.pages.actions.delete', 'Delete')" @click.stop="handleDelete(page)">
               <Trash2 :size="14" />
             </button>
           </div>
         </div>
         
-        <div v-if="filteredPages.length === 0" class="empty-results">
-          {{ t('builder.panels.pages.empty') }}
+        <div v-if="filteredItems.length === 0" class="empty-results">
+          {{ t('builder.panels.pages.empty', 'No content found') }}
         </div>
       </div>
       
       <!-- Add Button -->
       <div v-if="builder?.mode.value === 'site'" class="panel-footer">
-          <button class="add-page-btn" @click="handleCreate">
-            <Plus :size="16" />
-            <span>{{ t('builder.panels.pages.addNew') }}</span>
-          </button>
+        <button class="add-page-btn" @click="handleCreate">
+          <Plus :size="16" />
+          <span>{{ t('builder.panels.pages.addNew', 'Add New Page') }}</span>
+        </button>
       </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, inject, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Edit2 from 'lucide-vue-next/dist/esm/icons/pen-line.js';
@@ -70,57 +117,111 @@ import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import { BaseInput } from '@/components/builder/ui';
 import type { BuilderInstance, PageMetadata } from '@/types/builder';
 
+interface ContentItem extends PageMetadata {
+  type?: string
+  isThemeTemplate?: boolean
+}
+
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');
-// Fix types for reactive values coming from builder
-const pages = computed(() => (builder?.pages?.value || []) as PageMetadata[]);
+
+const pages = computed(() => (builder?.pages?.value || []) as ContentItem[]);
 const currentPageId = computed(() => builder?.currentPageId?.value);
 const loading = computed(() => builder?.pagesLoading?.value || false);
 
 const searchQuery = ref('');
+const activeTypeFilter = ref<'all' | 'page' | 'post' | 'theme'>('all');
 
-const filteredPages = computed(() => {
-  if (!searchQuery.value) return pages.value;
+// Standard theme page templates
+const themeTemplates: ContentItem[] = [
+  { id: 'theme-home', title: 'Beranda (Home)', slug: 'home', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-about', title: 'Tentang Kami (About)', slug: 'about', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-tim', title: 'Tim Kami (Team)', slug: 'tim', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-pricing', title: 'Harga & Paket (Pricing)', slug: 'pricing', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-solusi', title: 'Produk & Solusi', slug: 'solusi', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-contact', title: 'Hubungi Kami (Contact)', slug: 'contact', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-blog', title: 'Arsip Berita (Blog)', slug: 'blog', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-careers', title: 'Pusat Karier (Careers)', slug: 'careers', type: 'page', isThemeTemplate: true, status: 'published' },
+  { id: 'theme-highlights', title: 'Sorotan & Prestasi', slug: 'highlights', type: 'page', isThemeTemplate: true, status: 'published' }
+];
+
+const allContentList = computed<ContentItem[]>(() => {
+  return [...pages.value];
+});
+
+const pageCount = computed(() => pages.value.filter(p => p.type === 'page' || !p.type).length);
+const postCount = computed(() => pages.value.filter(p => p.type === 'post').length);
+
+const filteredItems = computed<ContentItem[]>(() => {
+  let list: ContentItem[] = [];
+
+  if (activeTypeFilter.value === 'all') {
+    list = allContentList.value;
+  } else if (activeTypeFilter.value === 'page') {
+    list = pages.value.filter(p => p.type === 'page' || !p.type);
+  } else if (activeTypeFilter.value === 'post') {
+    list = pages.value.filter(p => p.type === 'post');
+  } else if (activeTypeFilter.value === 'theme') {
+    list = themeTemplates;
+  }
+
+  if (!searchQuery.value) return list;
   const query = searchQuery.value.toLowerCase();
-  return pages.value.filter(p => 
+  return list.filter(p => 
     p.title.toLowerCase().includes(query) || 
     p.slug.toLowerCase().includes(query)
   );
 });
 
-const selectPage = async (id: number | string) => {
-  if (id === undefined || id === null) return;
+const selectItem = async (item: ContentItem) => {
+  if (item.isThemeTemplate) {
+    // If it's a theme template, check if matching page exists in DB
+    const existing = pages.value.find(p => p.slug === item.slug);
+    if (existing && existing.id) {
+      if (builder?.setCurrentPage) {
+        await builder.setCurrentPage(existing.id);
+      }
+    } else {
+      // Create or load template directly
+      if (builder?.addPage) {
+        await builder.addPage(item.title);
+      }
+    }
+    return;
+  }
+
+  if (item.id === undefined || item.id === null) return;
   if (builder?.setCurrentPage) {
-      await builder.setCurrentPage(id);
+    await builder.setCurrentPage(item.id);
   }
 };
 
 const handleCreate = () => {
-  const title = prompt(t('builder.panels.pages.promptTitle'));
+  const title = prompt(t('builder.panels.pages.promptTitle', 'Enter page title:'));
   if (title) {
-     builder?.addPage(title);
+    builder?.addPage(title);
   }
 };
 
-const handleDelete = async (page: PageMetadata) => {
-    const confirmed = await builder?.confirm?.({
-        title: t('builder.modals.confirm.deletePage'),
-        message: t('builder.modals.confirm.deletePageDesc'),
-        confirmText: t('builder.modals.confirm.delete'),
-        cancelText: t('builder.modals.confirm.cancel'),
-        type: 'delete'
-    });
-    if (confirmed) {
-        try {
-            await builder?.deletePage(page.id as string | number);
-        } catch (error) {
-            logger.error('Delete failed:', error);
-        }
+const handleDelete = async (page: ContentItem) => {
+  const confirmed = await builder?.confirm?.({
+    title: t('builder.modals.confirm.deletePage', 'Delete Page'),
+    message: t('builder.modals.confirm.deletePageDesc', 'Are you sure you want to delete this page?'),
+    confirmText: t('builder.modals.confirm.delete', 'Delete'),
+    cancelText: t('builder.modals.confirm.cancel', 'Cancel'),
+    type: 'delete'
+  });
+  if (confirmed) {
+    try {
+      await builder?.deletePage(page.id as string | number);
+    } catch (error) {
+      logger.error('Delete failed:', error instanceof Error ? error.message : String(error));
     }
+  }
 };
 
 onMounted(() => {
-    builder?.fetchPages();
+  builder?.fetchPages();
 });
 </script>
 
@@ -129,31 +230,65 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-.pages-search {
-  padding: var(--spacing-sm);
-  position: relative;
-  z-index: 2;
+.pages-header {
+  padding: 10px 12px;
   background: var(--builder-bg-primary);
+  border-bottom: 1px solid var(--builder-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.type-filter-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--builder-bg-secondary);
+  padding: 2px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.type-tab-btn {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--builder-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.type-tab-btn:hover {
+  color: var(--builder-text-primary);
+}
+
+.type-tab-btn--active {
+  background: var(--builder-bg-primary);
+  color: var(--builder-text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .pages-list {
   flex: 1;
   overflow-y: auto;
-  padding: 0 var(--spacing-sm) var(--spacing-sm);
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .page-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   transition: background 0.2s;
@@ -172,28 +307,32 @@ onMounted(() => {
 .page-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .page-title {
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--builder-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
 
 .page-slug {
   font-size: 11px;
   color: var(--builder-text-muted);
+  font-family: monospace;
 }
 
 .page-status-badge {
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
   background: var(--builder-bg-secondary);
   color: var(--builder-text-muted);
-  padding: 2px 6px;
-  border-radius: 10px;
-  width: fit-content;
-  margin-top: 2px;
+  padding: 1px 5px;
+  border-radius: 8px;
 }
 
 .page-actions {
@@ -229,8 +368,8 @@ onMounted(() => {
 }
 
 .panel-footer {
-    padding: var(--spacing-sm);
-    border-top: 1px solid var(--builder-border);
+  padding: 12px;
+  border-top: 1px solid var(--builder-border);
 }
 
 .add-page-btn {
