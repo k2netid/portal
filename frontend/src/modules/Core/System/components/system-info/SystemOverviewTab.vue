@@ -123,7 +123,7 @@
               </div>
               <div class="flex justify-between items-center">
                 <dt class="text-sm text-muted-foreground">
-                  Cache / Session Driver
+                  {{ t('system.system.info.sections.cacheSessionDriver') }}
                 </dt>
                 <dd class="text-xs font-mono bg-accent px-2 py-0.5 rounded text-foreground">
                   {{ systemInfo.cache_driver }} / {{ systemInfo.session_driver }}
@@ -140,7 +140,7 @@
             <dl class="space-y-2.5">
               <div class="flex justify-between items-center">
                 <dt class="text-sm text-muted-foreground">
-                  OS / Distro
+                  {{ t('system.system.info.sections.osDistro') }}
                 </dt>
                 <dd class="text-sm text-foreground font-semibold truncate max-w-[200px]" :title="systemInfo.os_distro">
                   {{ systemInfo.os_distro || '-' }}
