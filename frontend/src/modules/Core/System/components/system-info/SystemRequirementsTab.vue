@@ -461,15 +461,15 @@ const itemTranslationsEn: Record<string, { name?: string; desc: string }> = {
     ext_zip: { name: 'PHP Ext: ZipArchive', desc: 'Zip archive creation and extraction for backups and plugin installs.' },
     ext_redis: { name: 'PHP Ext: PhpRedis (Optional)', desc: 'High-performance native PHP client for Redis cache and queue workers.' },
     ext_exif: { name: 'PHP Ext: EXIF (Optional)', desc: 'Photo metadata extraction and automatic image rotation.' },
-    db_connection: { name: 'Database Connection & Encoding', desc: 'Active database connection with UTF-8 character encoding support.' },
-    redis_server: { name: 'Redis In-Memory Server', desc: 'In-memory data store for lightning-fast caching and background queue processing.' },
-    storage_views: { name: 'storage/framework/views', desc: 'Directory where Laravel compiles Blade templates into PHP.' },
-    storage_cache: { name: 'storage/framework/cache', desc: 'Directory for application cache and rate limiter data.' },
-    storage_sessions: { name: 'storage/framework/sessions', desc: 'Session storage directory when using the file session driver.' },
-    storage_public: { name: 'storage/app/public', desc: 'Main storage directory for user-uploaded media and avatars.' },
-    storage_backups: { name: 'storage/app/backups', desc: 'Directory for system snapshot zip archives and backups.' },
-    storage_logs: { name: 'storage/logs', desc: 'Directory for system activity and diagnostic error logs.' },
-    bootstrap_cache: { name: 'bootstrap/cache', desc: 'Directory for cached routes, configuration, and package manifests.' },
+    service_db: { name: 'Database Connection', desc: 'Active database connection with UTF-8 character encoding support.' },
+    service_redis: { name: 'Redis In-Memory Server', desc: 'In-memory data store for lightning-fast caching and background queue processing.' },
+    storage_views: { name: 'Permission: storage/framework/views', desc: 'Directory where Laravel compiles Blade templates into PHP.' },
+    storage_cache: { name: 'Permission: storage/framework/cache', desc: 'Directory for application cache and rate limiter data.' },
+    storage_sessions: { name: 'Permission: storage/framework/sessions', desc: 'Session storage directory when using the file session driver.' },
+    storage_public: { name: 'Permission: storage/app/public', desc: 'Main storage directory for user-uploaded media and avatars.' },
+    storage_backups: { name: 'Permission: storage/app/backups', desc: 'Directory for system snapshot zip archives and backups.' },
+    storage_logs: { name: 'Permission: storage/logs', desc: 'Directory for system activity and diagnostic error logs.' },
+    bootstrap_cache: { name: 'Permission: bootstrap/cache', desc: 'Directory for cached routes, configuration, and package manifests.' },
     storage_symlink: { name: 'Public Storage Symlink (public/storage)', desc: 'Symbolic link connecting storage/app/public to public/storage for browser access.' },
     service_cron: { name: 'Cron Scheduler Daemon', desc: 'Server cron job executing scheduled tasks (backups, cleanup, publishing) every minute.' },
     service_queue_worker: { name: 'Background Queue Worker', desc: 'Background daemon processing intensive jobs (bulk emails, image thumbnails, indexing).' }
@@ -481,8 +481,15 @@ const itemTranslationsSu: Record<string, { name?: string; desc: string }> = {
     php_max_execution_time: { name: 'Waktu Maksimum Éksékusi', desc: 'Waktu éksékusi maksimum skrip pikeun nyegah timeout nalika cadangan atanapi impor kusi.' },
     php_upload_max_filesize: { name: 'Ukuran Maksimal Unggahan', desc: 'Ukuran maksimal berkas tunggal anu diwidian diunggah ka Pabukon Média.' },
     php_opcache: { name: 'Akselerator Zend OPcache', desc: 'OPcache ngompilasi bytecode PHP dina mémori sangkan performa JA-CMS ningkat dugi ka 3x lipet.' },
-    db_connection: { name: 'Sambungan Database & Énkoding', desc: 'Koneksi aktip ka database kalayan rojongan énkoding aksara UTF-8.' },
-    redis_server: { name: 'Sérver In-Memory Redis', desc: 'Panyimpenan data in-memory pikeun cache gancang sareng antrean worker.' },
+    service_db: { name: 'Sambungan Database & Énkoding', desc: 'Koneksi aktip ka database kalayan rojongan énkoding aksara UTF-8.' },
+    service_redis: { name: 'Sérver In-Memory Redis', desc: 'Panyimpenan data in-memory pikeun cache gancang sareng antrean worker.' },
+    storage_views: { name: 'Widi: storage/framework/views', desc: 'Polder tempat Laravel ngompilasi citakan Blade kana PHP.' },
+    storage_cache: { name: 'Widi: storage/framework/cache', desc: 'Polder panyimpenan berkas cache aplikasi sareng rate limiter.' },
+    storage_sessions: { name: 'Widi: storage/framework/sessions', desc: 'Polder panyimpenan sési pamaké upami nganggo driver berkas.' },
+    storage_public: { name: 'Widi: storage/app/public', desc: 'Polder utama panyimpenan berkas média sareng avatar pamaké.' },
+    storage_backups: { name: 'Widi: storage/app/backups', desc: 'Polder panyimpenan arsip cadangan snapshot sistem.' },
+    storage_logs: { name: 'Widi: storage/logs', desc: 'Polder panulisan berkas log kagiatan sareng diagnosis error.' },
+    bootstrap_cache: { name: 'Widi: bootstrap/cache', desc: 'Polder berkas manifest routes, konfigurasi, sareng paket cache.' },
     storage_symlink: { name: 'Symlink Panyimpenan Publik (public/storage)', desc: 'Tautan simbolik ti storage/app/public ka public/storage sangkan berkas média tiasa diaksés ku browser.' },
     service_cron: { name: 'Daemon Tugas Terjadwal (Cron)', desc: 'Cron job sérver anu ngajalankeun tugas otomatis (cadangan, beberesih log, terbitkeun otomatis) unggal menit.' },
     service_queue_worker: { name: 'Worker Antrean Kasang Tukang', desc: 'Worker latar tukang pikeun ngolah tugas beurat (ngirim email massal, komprési gambar, indeks pilarian).' }
@@ -560,8 +567,8 @@ const itemGuideTranslationsEn: Record<string, string> = {
     php_max_execution_time: 'Set max_execution_time to at least 60s in your PHP configuration.',
     php_upload_max_filesize: 'Increase upload_max_filesize and post_max_size to 64M+ in php.ini.',
     php_opcache: 'Enable the Zend OPcache extension in your server hosting / PHP settings.',
-    db_connection: 'Ensure database credentials in .env are correct and the database server is running.',
-    redis_server: 'Install and start the Redis service (e.g., redis-server) or configure REDIS_HOST in .env.',
+    service_db: 'Ensure database credentials in .env are correct and the database server is running.',
+    service_redis: 'Install and start the Redis service (e.g., redis-server) or configure REDIS_HOST in .env.',
     storage_symlink: 'Run the command php artisan storage:link in your server terminal.',
     service_cron: 'Add a 1-minute cron job in cPanel/crontab running php artisan schedule:run.',
     service_queue_worker: 'Use Supervisor or a systemd daemon to keep queue workers running in the background.'
@@ -608,6 +615,8 @@ const formatCurrentValue = (val: string): string => {
         if (val === 'Aktif (Enabled)') return 'Enabled';
         if (val === 'Nonaktif (Disabled)') return 'Disabled';
         if (val === 'Tidak Ada Worker Aktif') return 'No Active Workers';
+        if (val.startsWith('Terhubung')) return val.replace(/^Terhubung/i, 'Connected');
+        if (val.startsWith('Aktif')) return val.replace(/^Aktif/i, 'Active');
         if (val.includes('Worker Berjalan') || val.includes('Worker Active') || val.includes('Worker')) {
             const count = val.replace(/[^0-9]/g, '');
             return `${count || '1'} Active`;
@@ -627,6 +636,8 @@ const formatCurrentValue = (val: string): string => {
         if (val === 'Aktif (Enabled)') return 'Aktip (Enabled)';
         if (val === 'Nonaktif (Disabled)') return 'Nonaktip (Disabled)';
         if (val === 'Tidak Ada Worker Aktif') return 'Teu Aya Worker Aktip';
+        if (val.startsWith('Terhubung')) return val.replace(/^Terhubung/i, 'Nyambung');
+        if (val.startsWith('Aktif')) return val.replace(/^Aktif/i, 'Aktip');
         if (val.includes('Worker Berjalan') || val.includes('Worker Active') || val.includes('Worker')) {
             const count = val.replace(/[^0-9]/g, '');
             return `${count || '1'} Aktip`;
@@ -645,24 +656,34 @@ const formatRequiredValue = (val: string): string => {
         let result = val;
         result = result.replace(/Aktif \(Disarankan untuk Production\)/i, 'Enabled (Recommended for Production)');
         result = result.replace(/Aktif \(Disarankan via Supervisor\)/i, 'Active (Recommended via Supervisor)');
+        result = result.replace(/Aktif \(Disarankan untuk High-Traffic\)/i, 'Active (Recommended for High-Traffic)');
+        result = result.replace(/Aktif \(untuk High-Traffic recommended\)/i, 'Active (Recommended for High-Traffic)');
+        result = result.replace(/Terhubung \(PDO Active\)/i, 'Connected (PDO Active)');
+        result = result.replace(/Writable \(Dapat Ditulis\)/i, 'Writable');
+        result = result.replace(/\(Dapat Ditulis\)/i, '');
         result = result.replace(/\(Disarankan ([^)]+)\)/i, '($1 recommended)');
         result = result.replace(/^Terpasang$/i, 'Installed');
         result = result.replace(/^Tersambung$/i, 'Connected');
         result = result.replace(/^Dapat Ditulis$/i, 'Writable');
         result = result.replace(/Aktif \(\* \* \* \* \* schedule:run\)/i, 'Active (* * * * * schedule:run)');
-        return result;
+        return result.trim();
     }
 
     if (loc.startsWith('su')) {
         let result = val;
         result = result.replace(/Aktif \(Disarankan untuk Production\)/i, 'Aktip (Disarankeun pikeun Produksi)');
         result = result.replace(/Aktif \(Disarankan via Supervisor\)/i, 'Aktip (Disarankeun liwat Supervisor)');
+        result = result.replace(/Aktif \(Disarankan untuk High-Traffic\)/i, 'Aktip (Disarankeun pikeun High-Traffic)');
+        result = result.replace(/Aktif \(untuk High-Traffic recommended\)/i, 'Aktip (Disarankeun pikeun High-Traffic)');
+        result = result.replace(/Terhubung \(PDO Active\)/i, 'Nyambung (PDO Aktip)');
+        result = result.replace(/Writable \(Dapat Ditulis\)/i, 'Tiasa Diserat (Writable)');
+        result = result.replace(/\(Dapat Ditulis\)/i, '(Tiasa Diserat)');
         result = result.replace(/\(Disarankan ([^)]+)\)/i, '(Disarankeun $1)');
         result = result.replace(/^Terpasang$/i, 'Kapasang');
         result = result.replace(/^Tersambung$/i, 'Nyambung');
         result = result.replace(/^Dapat Ditulis$/i, 'Tiasa Diserat');
         result = result.replace(/Aktif \(\* \* \* \* \* schedule:run\)/i, 'Aktip (* * * * * schedule:run)');
-        return result;
+        return result.trim();
     }
 
     return val;
