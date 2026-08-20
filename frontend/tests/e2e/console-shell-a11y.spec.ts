@@ -329,10 +329,10 @@ const shellA11yPages: A11yPageCase[] = [
         },
     },
     {
-        path: '/dash/cck',
+        path: '/dash/models',
         ready: async (page) => {
             await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-                /Content types|Tipe konten|CCK/i,
+                /Data Model Studio|Studio Model Data|Model Data/i,
                 { timeout: 15000 },
             );
         },
@@ -512,7 +512,7 @@ const shellA11yPages: A11yPageCase[] = [
         },
     },
     {
-        path: '/dash/cck/new',
+        path: '/dash/models/new',
         ready: async (page) => {
             await expect(page.locator(CONSOLE_MAIN)).toBeVisible({ timeout: 15000 });
         },
@@ -564,11 +564,11 @@ const shellA11yPages: A11yPageCase[] = [
                     },
     },
     {
-        path: '__nav__/dash/cck/:id',
+        path: '__nav__/dash/models/:id',
         ready: async (page) => {
-            const id = await firstApiId(page, '/manage/infra/cck/types');
+            const id = await firstApiId(page, '/manage/infra/models/types');
             if (!id) return false;
-            await page.goto(`/dash/cck/${id}`);
+            await page.goto(`/dash/models/${id}`);
                     },
     },
     {

@@ -104,7 +104,7 @@ final class DynamicOpenApiBuilder
             'info' => [
                 'title' => "Jejakawan Dynamic API — {$type->name}",
                 'version' => '1.0.0',
-                'description' => $type->description ?? "EAV records for slug `{$slug}`",
+                'description' => $type->description ?? "Data model records for slug `{$slug}`",
             ],
             'servers' => [
                 ['url' => url('/'), 'description' => 'Application root'],
@@ -121,12 +121,6 @@ final class DynamicOpenApiBuilder
                 ],
             ],
             'x-models' => [
-                'content_type_id' => $type->id,
-                'slug' => $slug,
-                'fields' => $type->fields,
-                'validation_rules' => DataModelFieldRulesBuilder::rulesFor($type),
-            ],
-            'x-cck' => [
                 'content_type_id' => $type->id,
                 'slug' => $slug,
                 'fields' => $type->fields,

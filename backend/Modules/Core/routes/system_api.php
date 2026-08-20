@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Modules\Core\System\Http\Controllers\Api\ConfigServerController;
 use Modules\Core\System\Http\Controllers\Api\DataModelApiController;
-use Modules\Core\System\Http\Controllers\Api\DynamicApiController;
 use Modules\Core\System\Http\Controllers\Api\MaintenanceApiController;
 use Modules\Core\System\Http\Controllers\Api\ScaffolderApiController;
 use Modules\Core\System\Http\Controllers\Api\ScimUserController;
@@ -266,20 +265,6 @@ Route::prefix('v1')->group(function (): void {
 
     // Data Model Studio (Schema & Data Modeling Engine)
     Route::prefix('manage/infra/models')->middleware(['auth:sanctum'])->group(function (): void {
-        Route::get('types', [DataModelApiController::class, 'listTypes']);
-        Route::post('types', [DataModelApiController::class, 'storeType']);
-        Route::get('types/openapi-index', [DataModelApiController::class, 'openApiIndex']);
-        Route::get('types/by-slug/{slug}/openapi', [DataModelApiController::class, 'openApiBySlug']);
-        Route::get('types/by-slug/{slug}', [DataModelApiController::class, 'showTypeBySlug']);
-        Route::get('types/{id}/validation-rules', [DataModelApiController::class, 'typeValidationRules']);
-        Route::get('types/{id}', [DataModelApiController::class, 'showType']);
-        Route::put('types/{id}', [DataModelApiController::class, 'updateType']);
-        Route::delete('types/{id}', [DataModelApiController::class, 'destroyType']);
-        Route::post('scaffold', [ScaffolderApiController::class, 'scaffold']);
-    });
-
-    // Backward compatibility alias for legacy CCK paths
-    Route::prefix('manage/infra/cck')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('types', [DataModelApiController::class, 'listTypes']);
         Route::post('types', [DataModelApiController::class, 'storeType']);
         Route::get('types/openapi-index', [DataModelApiController::class, 'openApiIndex']);

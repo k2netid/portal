@@ -31,22 +31,6 @@ const infraRoutes: RouteRecordRaw[] = [
             breadcrumb: 'infra.models.editType',
         },
     },
-    // Legacy route redirects & aliases
-    {
-        path: 'cck',
-        name: 'cck-index',
-        redirect: { name: 'model-index' },
-    },
-    {
-        path: 'cck/new',
-        name: 'cck-create',
-        redirect: { name: 'model-create' },
-    },
-    {
-        path: 'cck/:id',
-        name: 'cck-edit',
-        redirect: (to) => ({ name: 'model-edit', params: { id: to.params.id } }),
-    },
     {
         path: 'dynamic/:slug/records',
         name: 'dynamic-records-index',

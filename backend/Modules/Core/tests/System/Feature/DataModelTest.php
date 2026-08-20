@@ -103,34 +103,6 @@ class DataModelTest extends TestCase
         $this->assertDatabaseMissing('sys_content_types', ['id' => $typeId]);
     }
 
-    /**
-     * Test backward compatibility alias for legacy CCK route paths.
-     */
-    public function test_legacy_cck_routes_backward_compatibility(): void
-    {
-        $payload = [
-            'name' => 'Legacy Type',
-            'slug' => 'legacy_types',
-            'fields' => [
-                [
-                    'name' => 'Title',
-                    'slug' => 'title',
-                    'type' => 'text',
-                    'is_required' => true,
-                ],
-            ],
-        ];
-
-        // Access via legacy /manage/infra/cck/types
-        $res = $this->actingAs($this->admin, 'sanctum')
-            ->postJson('/api/v1/manage/infra/cck/types', $payload);
-        $res->assertStatus(201);
-
-        $list = $this->actingAs($this->admin, 'sanctum')
-            ->getJson('/api/v1/manage/infra/cck/types');
-        $list->assertStatus(200);
-        $list->assertJsonFragment(['slug' => 'legacy_types']);
-    }
 
     /**
      * Test instant EAV CRUD operations, validation rules, and SQLite/MySQL dynamic searching.

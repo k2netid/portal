@@ -126,8 +126,3 @@ class DataModelFieldRulesBuilder
         return $rules;
     }
 }
-
-// Backward compatibility alias
-if (! class_exists(ContentTypeFieldRulesBuilder::class, false)) {
-    class_alias(DataModelFieldRulesBuilder::class, ContentTypeFieldRulesBuilder::class);
-}

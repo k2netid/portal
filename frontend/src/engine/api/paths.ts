@@ -151,8 +151,6 @@ export const dataModelPaths = {
     validationRules: (id: string) => `/manage/infra/models/types/${id}/validation-rules`,
 } as const;
 
-export const cckPaths = dataModelPaths;
-
 export const dynamicRecordPaths = {
     index: (slug: string) => `/dynamic/${slug}`,
     record: (slug: string, id: string) => `/dynamic/${slug}/${id}`,

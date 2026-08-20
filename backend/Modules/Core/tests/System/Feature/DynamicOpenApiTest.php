@@ -40,8 +40,7 @@ class DynamicOpenApiTest extends TestCase
             ->assertJsonPath('data.openapi', '3.0.3')
             ->assertJsonPath('data.paths./api/v1/dynamic/announcements.get.operationId', 'dynamic.announcements.index')
             ->assertJsonPath('data.components.schemas.announcementsRecordInput.properties.title.type', 'string')
-            ->assertJsonPath('data.x-models.slug', 'announcements')
-            ->assertJsonPath('data.x-cck.slug', 'announcements');
+            ->assertJsonPath('data.x-models.slug', 'announcements');
     }
 
     public function test_openapi_index_lists_active_slugs(): void

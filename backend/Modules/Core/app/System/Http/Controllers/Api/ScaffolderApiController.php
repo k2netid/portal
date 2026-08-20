@@ -24,7 +24,7 @@ class ScaffolderApiController extends BaseApiController
     }
 
     /**
-     * POST /api/v1/manage/infra/cck/scaffold
+     * POST /api/v1/manage/infra/models/scaffold
      * Scaffold a new dynamic plugin.
      *
      * @return JsonResponse|BinaryFileResponse

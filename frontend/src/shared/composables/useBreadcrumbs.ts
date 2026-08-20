@@ -28,8 +28,8 @@ const segmentConfig: Record<string, string> = {
     extensions: 'system.navigation.menu.extensions',
     'oauth-clients': 'system.oauth.title',
     'console-appearance': 'system.navigation.menu.consoleAppearance',
-    cck: 'infra.cck.title',
-    dynamic: 'infra.cck.title',
+    models: 'infra.models.title',
+    dynamic: 'infra.models.title',
 
     users: 'system.navigation.menu.users',
     roles: 'system.navigation.menu.roles',
@@ -108,7 +108,7 @@ const parentCrumbRules: ParentCrumbRule[] = [
             const parts = n.split('/').filter(Boolean);
             return `/${slug}/dynamic/${parts[1]}/records`;
         },
-        labelKey: 'infra.cck.title',
+        labelKey: 'infra.models.title',
     },
     {
         test: /^\/dynamic\/[^/]+\/records\/new$/,
@@ -116,17 +116,17 @@ const parentCrumbRules: ParentCrumbRule[] = [
             const parts = n.split('/').filter(Boolean);
             return `/${slug}/dynamic/${parts[1]}/records`;
         },
-        labelKey: 'infra.cck.title',
+        labelKey: 'infra.models.title',
     },
     {
-        test: /^\/cck\/new$/,
-        parentPath: (_n, _r, slug) => `/${slug}/cck`,
-        labelKey: 'infra.cck.title',
+        test: /^\/models\/new$/,
+        parentPath: (_n, _r, slug) => `/${slug}/models`,
+        labelKey: 'infra.models.title',
     },
     {
-        test: /^\/cck\/[^/]+$/,
-        parentPath: (_n, _r, slug) => `/${slug}/cck`,
-        labelKey: 'infra.cck.title',
+        test: /^\/models\/[^/]+$/,
+        parentPath: (_n, _r, slug) => `/${slug}/models`,
+        labelKey: 'infra.models.title',
     },
 ];
 

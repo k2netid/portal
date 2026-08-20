@@ -25,10 +25,6 @@ export interface DataModelSchema {
     updated_at?: string;
 }
 
-// Backward-compatibility aliases
-export type CckFieldDefinition = DataModelFieldDefinition;
-export type CckContentType = DataModelSchema;
-
 export const DataModelService = {
     listTypes(): Promise<AxiosResponse> {
         return api.get(dataModelPaths.types);
@@ -67,6 +63,4 @@ export const DataModelService = {
     },
 };
 
-// Backward-compatibility alias
-export const CckService = DataModelService;
 export default DataModelService;

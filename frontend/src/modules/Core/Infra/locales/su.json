@@ -1,471 +1,323 @@
 {
-  "navigation": {
-    "menu": {
-      "devTools": "Integrasi & Dev"
-    }
-  },
-  "webhooks": {
-    "actions": {
-      "delete": "Hapus",
-      "edit": "Ropéa",
-      "test": "Uji"
+    "navigation": {
+        "menu": {
+            "devTools": "Integrasi & Dev"
+        }
     },
-    "confirm": {
-      "delete": "Naha anjeun yakin rék ngahapus webhook \"{name}\"?"
+    "webhooks": {
+        "actions": {
+            "delete": "Hapus",
+            "edit": "Ropéa",
+            "test": "Uji"
+        },
+        "confirm": {
+            "delete": "Naha anjeun yakin rék ngahapus webhook \"{name}\"?"
+        },
+        "create": "Webhook Anyar",
+        "empty": "Teu aya webhook kapanggih",
+        "events": {
+            "comment": {
+                "approved": "Koméntar Disatujuan",
+                "created": "Koméntar Dijieun"
+            },
+            "content": {
+                "created": "Eusi Dijieun",
+                "deleted": "Eusi Dihapus",
+                "updated": "Eusi Diropéa"
+            },
+            "user": {
+                "created": "Pamaké Dijieun",
+                "updated": "Pamaké Diropéa"
+            }
+        },
+        "loading": "Ngamuat...",
+        "messages": {
+            "delete_failed": "Gagal ngahapus webhook",
+            "save_failed": "Gagal nyimpen webhook",
+            "test_failed": "Gagal nguji webhook",
+            "test_success": "Uji webhook hasil dikirimkeun"
+        },
+        "modal": {
+            "active_label": "Aktif",
+            "cancel": "Batal",
+            "create": "Jieun",
+            "events_label": "Kajadian",
+            "name_label": "Nami",
+            "name_placeholder": "Nami webhook",
+            "saving": "Nyimpen...",
+            "secret_label": "Konci Rahasia",
+            "secret_placeholder": "Konci rahasia pilihan pikeun tanda tangan",
+            "title_create": "Jieun Webhook",
+            "title_edit": "Ropéa Webhook",
+            "update": "Ropéa",
+            "url_label": "URL",
+            "url_placeholder": "https://example.com/webhook"
+        },
+        "search": "Téangan webhook...",
+        "stats": {
+            "active": "Aktif",
+            "failed_calls": "Panggilan Gagal",
+            "total": "Total Webhook",
+            "total_calls": "Total Panggilan"
+        },
+        "table": {
+            "actions": "Peta",
+            "calls": "Panggilan",
+            "events": "Kajadian",
+            "name": "Nami",
+            "status": "Status",
+            "url": "URL"
+        },
+        "title": "Webhook",
+        "subtitle": "Kait HTTP kaluar jeung statistik pangiriman."
     },
-    "create": "Webhook Anyar",
-    "empty": "Teu aya webhook kapanggih",
-    "events": {
-      "comment": {
-        "approved": "Koméntar Disatujuan",
-        "created": "Koméntar Dijieun"
-      },
-      "content": {
-        "created": "Eusi Dijieun",
-        "deleted": "Eusi Dihapus",
-        "updated": "Eusi Diropéa"
-      },
-      "user": {
-        "created": "Pamaké Dijieun",
-        "updated": "Pamaké Diropéa"
-      }
+    "plugins": {
+        "actions": {
+            "activate": "Aktipkeun",
+            "close": "Tutup",
+            "deactivate": "Pareuman",
+            "settings": "Petélan"
+        },
+        "empty": "Teu aya plugin kapanggih",
+        "loading": "Ngamuat...",
+        "messages": {
+            "failed_fetch": "Gagal ngamuat plugin",
+            "failed_activate": "Gagal ngaktipkeun plugin",
+            "failed_deactivate": "Gagal mareuman plugin",
+            "activated": "Plugin diaktipkeun",
+            "deactivated": "Plugin dipareuman"
+        },
+        "modal": {
+            "close": "Tutup",
+            "settings_placeholder": "Petélan plugin bakal dimuat di dieu",
+            "settings_title": "Petélan: {name}"
+        },
+        "status": {
+            "active": "Aktif",
+            "inactive": "Teu Aktif"
+        },
+        "table": {
+            "actions": "Peta",
+            "name": "Nami",
+            "status": "Status",
+            "version": "Vérsi"
+        },
+        "title": "Plugin",
+        "subtitle": "Plugin nu dipasang, vérsi, jeung status aktipasi.",
+        "themeBlocks": {
+            "title": "Slot blok aplikasi téma",
+            "hint": "Pilih di mana plugin ieu ditembongkeun dina loka umum (téma Janari).",
+            "noSlots": "Teu aya slot téma.",
+            "save": "Simpen petélan",
+            "saved": "Petélan plugin disimpen.",
+            "saveFailed": "Gagal nyimpen petélan plugin."
+        }
     },
-    "loading": "Ngamuat...",
-    "messages": {
-      "delete_failed": "Gagal ngahapus webhook",
-      "save_failed": "Gagal nyimpen webhook",
-      "test_failed": "Gagal nguji webhook",
-      "test_success": "Uji webhook hasil dikirimkeun"
-    },
-    "modal": {
-      "active_label": "Aktif",
-      "cancel": "Batal",
-      "create": "Jieun",
-      "events_label": "Kajadian",
-      "name_label": "Nami",
-      "name_placeholder": "Nami webhook",
-      "saving": "Nyimpen...",
-      "secret_label": "Konci Rahasia",
-      "secret_placeholder": "Konci rahasia pilihan pikeun tanda tangan",
-      "title_create": "Jieun Webhook",
-      "title_edit": "Ropéa Webhook",
-      "update": "Ropéa",
-      "url_label": "URL",
-      "url_placeholder": "https://example.com/webhook"
-    },
-    "search": "Téangan webhook...",
-    "stats": {
-      "active": "Aktif",
-      "failed_calls": "Panggilan Gagal",
-      "total": "Total Webhook",
-      "total_calls": "Total Panggilan"
-    },
-    "table": {
-      "actions": "Peta",
-      "calls": "Panggilan",
-      "events": "Kajadian",
-      "name": "Nami",
-      "status": "Status",
-      "url": "URL"
-    },
-    "title": "Webhook",
-    "subtitle": "Kait HTTP kaluar jeung statistik pangiriman."
-  },
-  "plugins": {
-    "actions": {
-      "activate": "Aktipkeun",
-      "close": "Tutup",
-      "deactivate": "Pareuman",
-      "settings": "Petélan"
-    },
-    "empty": "Teu aya plugin kapanggih",
-    "loading": "Ngamuat...",
-    "messages": {
-      "failed_fetch": "Gagal ngamuat plugin",
-      "failed_activate": "Gagal ngaktipkeun plugin",
-      "failed_deactivate": "Gagal mareuman plugin",
-      "activated": "Plugin diaktipkeun",
-      "deactivated": "Plugin dipareuman"
-    },
-    "modal": {
-      "close": "Tutup",
-      "settings_placeholder": "Petélan plugin bakal dimuat di dieu",
-      "settings_title": "Petélan: {name}"
-    },
-    "status": {
-      "active": "Aktif",
-      "inactive": "Teu Aktif"
-    },
-    "table": {
-      "actions": "Peta",
-      "name": "Nami",
-      "status": "Status",
-      "version": "Vérsi"
-    },
-    "title": "Plugin",
-    "subtitle": "Plugin nu dipasang, vérsi, jeung status aktipasi.",
-    "themeBlocks": {
-      "title": "Slot blok aplikasi téma",
-      "hint": "Pilih di mana plugin ieu ditembongkeun dina loka umum (téma Janari).",
-      "noSlots": "Teu aya slot téma.",
-      "save": "Simpen petélan",
-      "saved": "Petélan plugin disimpen.",
-      "saveFailed": "Gagal nyimpen petélan plugin."
-    }
-  },
-  "models": {
-    "title": "Data Model Studio",
-    "subtitle": "Parancang skéma visual & pamodélan data REST API dinamis",
-    "newType": "Modél Data Anyar",
-    "editType": "Ropéa Modél Data",
-    "empty": "Teu aya modél data kapanggih.",
-    "emptyHint": "Jieun modél data munggaran anjeun pikeun ngahasilkeun REST API dinamis & skéma relasional.",
-    "searchPlaceholder": "Téangan modél data...",
-    "fields": "Widang (Field)",
-    "addField": "Tambah widang",
-    "validationPreview": "Aturan validasi",
-    "save": "Simpen skéma",
-    "saving": "Nyimpen...",
-    "delete": "Hapus",
-    "deleteType": "Hapus modél data",
-    "deleteTypeConfirm": "Naha anjeun yakin rék ngahapus modél data \"{name}\"? Sadaya data record dinamis nu patali bakal dihapus sacara permanén.",
-    "cancel": "Batal",
-    "back": "Balik ka modél data",
-    "apiHint": "API data: /api/v1/dynamic/{slug}",
-    "stats": {
-      "totalTypes": "Total Modél Data",
-      "activeTypes": "Modél Aktif",
-      "totalFields": "Total Widang Ditetepkeun",
-      "apiBase": "Basis API Dinamis"
-    },
-    "table": {
-      "name": "Nami & Katrangan Modél",
-      "slug": "Slug / Rute API",
-      "fields": "Widang",
-      "fieldsCount": "{count} widang",
-      "status": "Status",
-      "actions": "Peta",
-      "records": "Data Record",
-      "schema": "Studio Skéma",
-      "copyEndpoint": "Salin Endpoint API",
-      "downloadOpenApi": "Undeur Spék OpenAPI",
-      "active": "Aktif",
-      "inactive": "Teu Aktif"
-    },
-    "form": {
-      "tabs": {
-        "schema": "Skéma & Widang",
-        "api": "API & OpenAPI",
-        "rules": "Aturan Validasi"
-      },
-      "general": "Inpormasi Modél",
-      "generalHint": "Konpigurasikeun nami modél data, slug, jeung status aktipasi.",
-      "name": "Nami Modél",
-      "namePlaceholder": "contona: Proyék Portopolio, Béwara",
-      "slug": "Slug",
-      "slugPlaceholder": "contona: proyek_portopolio",
-      "slugHint": "Dipaké dina endpoint dinamis /api/v1/dynamic/{slug}",
-      "description": "Katrangan",
-      "descriptionPlaceholder": "Katrangan pilihan pikeun skéma modél data ieu",
-      "active": "Skéma aktif (ngaktipkeun endpoint API dinamis)",
-      "fieldsSection": "Watesan Widang",
-      "fieldsSectionHint": "Tambahkeun jeung atur runtuyan widang pikeun modél data ieu.",
-      "apiSection": "Endpoint REST API Dinamis",
-      "apiSectionHint": "Unggal modél data nu aktif otomatis nyadiakeun endpoint REST CRUD lengkep.",
-      "endpoints": {
-        "list": "Daptar / Téangan Record",
-        "create": "Jieun Record",
-        "show": "Tembongkeun Hiji Record",
-        "update": "Ropéa Record",
-        "delete": "Hapus Record"
-      },
-      "openApiTitle": "Spésifikasi OpenAPI 3.0",
-      "openApiHint": "Skéma OpenAPI langsung pikeun integrasi Swagger / Postman.",
-      "downloadSpec": "Undeur OpenAPI JSON",
-      "copySpec": "Salin OpenAPI JSON",
-      "rulesTitle": "Aturan Validasi Laravel Diwincik",
-      "rulesHint": "Aturan validasi dinamis nu diterapkeun nalika nyieun jeung ngaropéa record.",
-      "ruleField": "Slug Widang",
-      "ruleDefinition": "Éksprési Validasi",
-      "noRules": "Teu acan aya aturan validasi nu ditetepkeun."
-    },
-    "builder": {
-      "title": "Widang Sadia",
-      "subtitle": "Klik pikeun nambihan widang kana skéma",
-      "empty": "Teu acan aya widang dina skéma ieu.",
-      "emptyHint": "Pilih tipe widang ti panel kénca pikeun nambihan widang munggaran anjeun.",
-      "label": "Labél",
-      "labelPlaceholder": "Labél widang (contona: Judul, Panulis)",
-      "slug": "Slug",
-      "slugPlaceholder": "slug_widang",
-      "type": "Tipe Widang",
-      "required": "Wajib dieusian",
-      "options": "Pilihan (hiji per baris)",
-      "optionsPlaceholder": "pilihan_1\npilihan_2\npilihan_3",
-      "optionsHint": "Asupkeun unggal nilai pilihan nu tiasa dipilih dina baris nu misah.",
-      "duplicate": "Duplikat widang",
-      "remove": "Hapus widang",
-      "dragHint": "Gérser pikeun ngarobah runtuyan",
-      "categories": {
-        "standard": "Widang Standar",
-        "media": "Téks Beunghar & Média",
-        "advanced": "Tingkat Lanjut & Relasional"
-      },
-      "relation": {
-        "title": "Konfigurasi Réferénsi Relasional",
-        "targetType": "Tipe Eusi Target",
-        "selectTarget": "Pilih tipe eusi target...",
-        "mode": "Kardinalitas Relasi",
-        "single": "Réferénsi Tunggal",
-        "multiple": "Loba Réferénsi (Array)"
-      },
-      "types": {
-        "text": "Téks",
-        "textDesc": "String pondok sabaris",
-        "longtext": "Téks Panjang",
-        "longtextDesc": "Téks sababaraha baris atawa markdown",
-        "richtext": "Téks Beunghar",
-        "richtextDesc": "Téks beunghar pormat HTML atawa Markdown",
-        "number": "Nomer / Angka",
-        "numberDesc": "Angka integer atawa désimal",
-        "boolean": "Boolean",
-        "booleanDesc": "Saklar Enya / Henteu",
-        "select": "Pilihan (Select)",
-        "selectDesc": "Dropdown pilihan tunggal",
-        "date": "Titimangsa",
-        "dateDesc": "Pamilih titimangsa kalénder",
-        "color": "Warna",
-        "colorDesc": "Kode warna hex sarta pamilih warna",
-        "image": "URL Gambar",
-        "imageDesc": "Berkas média atawa URL gambar",
-        "media": "Aset Média",
-        "mediaDesc": "Réferénsi berkas pustaka média",
-        "url": "URL / Tumbu",
-        "urlDesc": "Alamat web nu divalidasi",
-        "email": "Surélék (Email)",
-        "emailDesc": "Alamat email nu divalidasi",
-        "relation": "Relasi",
-        "relationDesc": "Réferénsi ka tipe eusi séjénna",
-        "json": "Objék JSON",
-        "jsonDesc": "Data JSON terstruktur bersarang"
-      }
-    },
-    "messages": {
-      "loadFailed": "Gagal ngamuat modél data",
-      "created": "Modél data hasil dijieun.",
-      "saved": "Skéma modél data hasil disimpen.",
-      "saveFailed": "Gagal nyimpen modél data",
-      "deleted": "Modél data hasil dihapus.",
-      "deleteFailed": "Gagal ngahapus modél data",
-      "endpointCopied": "URL endpoint disalin kana papan klip.",
-      "specCopied": "OpenAPI JSON disalin kana papan klip."
-    }
-  },
-  "cck": {
-    "title": "Data Model Studio",
-    "subtitle": "Parancang skéma visual & pamodélan data REST API dinamis",
-    "newType": "Modél Data Anyar",
-    "editType": "Ropéa Modél Data",
-    "empty": "Teu aya modél data kapanggih.",
-    "emptyHint": "Jieun modél data munggaran anjeun pikeun ngahasilkeun REST API dinamis & skéma relasional.",
-    "searchPlaceholder": "Téangan modél data...",
-    "fields": "Widang (Field)",
-    "addField": "Tambah widang",
-    "validationPreview": "Aturan validasi",
-    "save": "Simpen skéma",
-    "saving": "Nyimpen...",
-    "delete": "Hapus",
-    "deleteType": "Hapus modél data",
-    "deleteTypeConfirm": "Naha anjeun yakin rék ngahapus modél data \"{name}\"? Sadaya data record dinamis nu patali bakal dihapus sacara permanén.",
-    "cancel": "Batal",
-    "back": "Balik ka modél data",
-    "apiHint": "API data: /api/v1/dynamic/{slug}",
-    "stats": {
-      "totalTypes": "Total Modél Data",
-      "activeTypes": "Modél Aktif",
-      "totalFields": "Total Widang Ditetepkeun",
-      "apiBase": "Basis API Dinamis"
-    },
-    "table": {
-      "name": "Nami & Katrangan Modél",
-      "slug": "Slug / Rute API",
-      "fields": "Widang",
-      "fieldsCount": "{count} widang",
-      "status": "Status",
-      "actions": "Peta",
-      "records": "Data Record",
-      "schema": "Studio Skéma",
-      "copyEndpoint": "Salin Endpoint API",
-      "downloadOpenApi": "Undeur Spék OpenAPI",
-      "active": "Aktif",
-      "inactive": "Teu Aktif"
-    },
-    "form": {
-      "tabs": {
-        "schema": "Skéma & Widang",
-        "api": "API & OpenAPI",
-        "rules": "Aturan Validasi"
-      },
-      "general": "Inpormasi Modél",
-      "generalHint": "Konpigurasikeun nami modél data, slug, jeung status aktipasi.",
-      "name": "Nami Modél",
-      "namePlaceholder": "contona: Proyék Portopolio, Béwara",
-      "slug": "Slug",
-      "slugPlaceholder": "contona: proyek_portopolio",
-      "slugHint": "Dipaké dina endpoint dinamis /api/v1/dynamic/{slug}",
-      "description": "Katrangan",
-      "descriptionPlaceholder": "Katrangan pilihan pikeun skéma modél data ieu",
-      "active": "Skéma aktif (ngaktipkeun endpoint API dinamis)",
-      "fieldsSection": "Watesan Widang",
-      "fieldsSectionHint": "Tambahkeun jeung atur runtuyan widang pikeun modél data ieu.",
-      "apiSection": "Endpoint REST API Dinamis",
-      "apiSectionHint": "Unggal modél data nu aktif otomatis nyadiakeun endpoint REST CRUD lengkep.",
-      "endpoints": {
-        "list": "Daptar / Téangan Record",
-        "create": "Jieun Record",
-        "show": "Tembongkeun Hiji Record",
-        "update": "Ropéa Record",
-        "delete": "Hapus Record"
-      },
-      "openApiTitle": "Spésifikasi OpenAPI 3.0",
-      "openApiHint": "Skéma OpenAPI langsung pikeun integrasi Swagger / Postman.",
-      "downloadSpec": "Undeur OpenAPI JSON",
-      "copySpec": "Salin OpenAPI JSON",
-      "rulesTitle": "Aturan Validasi Laravel Diwincik",
-      "rulesHint": "Aturan validasi dinamis nu diterapkeun nalika nyieun jeung ngaropéa record.",
-      "ruleField": "Slug Widang",
-      "ruleDefinition": "Éksprési Validasi",
-      "noRules": "Teu acan aya aturan validasi nu ditetepkeun."
-    },
-    "builder": {
-      "title": "Widang Sadia",
-      "subtitle": "Klik pikeun nambihan widang kana skéma",
-      "empty": "Teu acan aya widang dina skéma ieu.",
-      "emptyHint": "Pilih tipe widang ti panel kénca pikeun nambihan widang munggaran anjeun.",
-      "label": "Labél",
-      "labelPlaceholder": "Labél widang (contona: Judul, Panulis)",
-      "slug": "Slug",
-      "slugPlaceholder": "slug_widang",
-      "type": "Tipe Widang",
-      "required": "Wajib dieusian",
-      "options": "Pilihan (hiji per baris)",
-      "optionsPlaceholder": "pilihan_1\npilihan_2\npilihan_3",
-      "optionsHint": "Asupkeun unggal nilai pilihan nu tiasa dipilih dina baris nu misah.",
-      "duplicate": "Duplikat widang",
-      "remove": "Hapus widang",
-      "dragHint": "Gérser pikeun ngarobah runtuyan",
-      "categories": {
-        "standard": "Widang Standar",
-        "media": "Téks Beunghar & Média",
-        "advanced": "Tingkat Lanjut & Relasional"
-      },
-      "relation": {
-        "title": "Konfigurasi Réferénsi Relasional",
-        "targetType": "Tipe Eusi Target",
-        "selectTarget": "Pilih tipe eusi target...",
-        "mode": "Kardinalitas Relasi",
-        "single": "Réferénsi Tunggal",
-        "multiple": "Loba Réferénsi (Array)"
-      },
-      "types": {
-        "text": "Téks",
-        "textDesc": "String pondok sabaris",
-        "longtext": "Téks Panjang",
-        "longtextDesc": "Téks sababaraha baris atawa markdown",
-        "richtext": "Téks Beunghar",
-        "richtextDesc": "Téks beunghar pormat HTML atawa Markdown",
-        "number": "Nomer / Angka",
-        "numberDesc": "Angka integer atawa désimal",
-        "boolean": "Boolean",
-        "booleanDesc": "Saklar Enya / Henteu",
-        "select": "Pilihan (Select)",
-        "selectDesc": "Dropdown pilihan tunggal",
-        "date": "Titimangsa",
-        "dateDesc": "Pamilih titimangsa kalénder",
-        "color": "Warna",
-        "colorDesc": "Kode warna hex sarta pamilih warna",
-        "image": "URL Gambar",
-        "imageDesc": "Berkas média atawa URL gambar",
-        "media": "Aset Média",
-        "mediaDesc": "Réferénsi berkas pustaka média",
-        "url": "URL / Tumbu",
-        "urlDesc": "Alamat web nu divalidasi",
-        "email": "Surélék (Email)",
-        "emailDesc": "Alamat email nu divalidasi",
-        "relation": "Relasi",
-        "relationDesc": "Réferénsi ka tipe eusi séjénna",
-        "json": "Objék JSON",
-        "jsonDesc": "Data JSON terstruktur bersarang"
-      }
-    },
-    "messages": {
-      "loadFailed": "Gagal ngamuat modél data",
-      "created": "Modél data hasil dijieun.",
-      "saved": "Skéma modél data hasil disimpen.",
-      "saveFailed": "Gagal nyimpen modél data",
-      "deleted": "Modél data hasil dihapus.",
-      "deleteFailed": "Gagal ngahapus modél data",
-      "endpointCopied": "URL endpoint disalin kana papan klip.",
-      "specCopied": "OpenAPI JSON disalin kana papan klip."
-    }
-  },
-  "dynamic": {
-    "records": {
-      "title": "Data Record: {name}",
-      "subtitle": "Atur data record dinamis pikeun tipe eusi \"{name}\".",
-      "apiRoute": "Rute API",
-      "newRecord": "Record Anyar",
-      "searchPlaceholder": "Téangan record dumasar kana widang naon waé...",
-      "empty": "Teu aya record kapanggih.",
-      "emptyHint": "Teu acan aya record dinamis pikeun tipe eusi ieu.",
-      "createFirst": "Jieun Record Munggaran",
-      "table": {
-        "id": "ID",
-        "updatedAt": "Tungtung Diropéa",
-        "actions": "Peta"
-      },
-      "actions": {
-        "edit": "Ropéa",
+    "models": {
+        "title": "Data Model Studio",
+        "subtitle": "Parancang skéma visual & pamodélan data REST API dinamis",
+        "newType": "Modél Data Anyar",
+        "editType": "Ropéa Modél Data",
+        "empty": "Teu aya modél data kapanggih.",
+        "emptyHint": "Jieun modél data munggaran anjeun pikeun ngahasilkeun REST API dinamis & skéma relasional.",
+        "searchPlaceholder": "Téangan modél data...",
+        "fields": "Widang (Field)",
+        "addField": "Tambah widang",
+        "validationPreview": "Aturan validasi",
+        "save": "Simpen skéma",
+        "saving": "Nyimpen...",
         "delete": "Hapus",
-        "copyId": "Salin ID Record"
-      },
-      "confirm": {
-        "delete": "Naha anjeun yakin rék ngahapus record ieu? Peta ieu teu tiasa dibolaykeun."
-      },
-      "messages": {
-        "loadFailed": "Gagal ngamuat data record dinamis",
-        "deleted": "Record hasil dihapus.",
-        "deleteFailed": "Gagal ngahapus record",
-        "idCopied": "ID Record disalin kana papan klip."
-      }
+        "deleteType": "Hapus modél data",
+        "deleteTypeConfirm": "Naha anjeun yakin rék ngahapus modél data \"{name}\"? Sadaya data record dinamis nu patali bakal dihapus sacara permanén.",
+        "cancel": "Batal",
+        "back": "Balik ka modél data",
+        "apiHint": "API data: /api/v1/dynamic/{slug}",
+        "stats": {
+            "totalTypes": "Total Modél Data",
+            "activeTypes": "Modél Aktif",
+            "totalFields": "Total Widang Ditetepkeun",
+            "apiBase": "Basis API Dinamis"
+        },
+        "table": {
+            "name": "Nami & Katrangan Modél",
+            "slug": "Slug / Rute API",
+            "fields": "Widang",
+            "fieldsCount": "{count} widang",
+            "status": "Status",
+            "actions": "Peta",
+            "records": "Data Record",
+            "schema": "Studio Skéma",
+            "copyEndpoint": "Salin Endpoint API",
+            "downloadOpenApi": "Undeur Spék OpenAPI",
+            "active": "Aktif",
+            "inactive": "Teu Aktif"
+        },
+        "form": {
+            "tabs": {
+                "schema": "Skéma & Widang",
+                "api": "API & OpenAPI",
+                "rules": "Aturan Validasi"
+            },
+            "general": "Inpormasi Modél",
+            "generalHint": "Konpigurasikeun nami modél data, slug, jeung status aktipasi.",
+            "name": "Nami Modél",
+            "namePlaceholder": "contona: Proyék Portopolio, Béwara",
+            "slug": "Slug",
+            "slugPlaceholder": "contona: proyek_portopolio",
+            "slugHint": "Dipaké dina endpoint dinamis /api/v1/dynamic/{slug}",
+            "description": "Katrangan",
+            "descriptionPlaceholder": "Katrangan pilihan pikeun skéma modél data ieu",
+            "active": "Skéma aktif (ngaktipkeun endpoint API dinamis)",
+            "fieldsSection": "Watesan Widang",
+            "fieldsSectionHint": "Tambahkeun jeung atur runtuyan widang pikeun modél data ieu.",
+            "apiSection": "Endpoint REST API Dinamis",
+            "apiSectionHint": "Unggal modél data nu aktif otomatis nyadiakeun endpoint REST CRUD lengkep.",
+            "endpoints": {
+                "list": "Daptar / Téangan Record",
+                "create": "Jieun Record",
+                "show": "Tembongkeun Hiji Record",
+                "update": "Ropéa Record",
+                "delete": "Hapus Record"
+            },
+            "openApiTitle": "Spésifikasi OpenAPI 3.0",
+            "openApiHint": "Skéma OpenAPI langsung pikeun integrasi Swagger / Postman.",
+            "downloadSpec": "Undeur OpenAPI JSON",
+            "copySpec": "Salin OpenAPI JSON",
+            "rulesTitle": "Aturan Validasi Laravel Diwincik",
+            "rulesHint": "Aturan validasi dinamis nu diterapkeun nalika nyieun jeung ngaropéa record.",
+            "ruleField": "Slug Widang",
+            "ruleDefinition": "Éksprési Validasi",
+            "noRules": "Teu acan aya aturan validasi nu ditetepkeun."
+        },
+        "builder": {
+            "title": "Widang Sadia",
+            "subtitle": "Klik pikeun nambihan widang kana skéma",
+            "empty": "Teu acan aya widang dina skéma ieu.",
+            "emptyHint": "Pilih tipe widang ti panel kénca pikeun nambihan widang munggaran anjeun.",
+            "label": "Labél",
+            "labelPlaceholder": "Labél widang (contona: Judul, Panulis)",
+            "slug": "Slug",
+            "slugPlaceholder": "slug_widang",
+            "type": "Tipe Widang",
+            "required": "Wajib dieusian",
+            "options": "Pilihan (hiji per baris)",
+            "optionsPlaceholder": "pilihan_1\npilihan_2\npilihan_3",
+            "optionsHint": "Asupkeun unggal nilai pilihan nu tiasa dipilih dina baris nu misah.",
+            "duplicate": "Duplikat widang",
+            "remove": "Hapus widang",
+            "dragHint": "Gérser pikeun ngarobah runtuyan",
+            "categories": {
+                "standard": "Widang Standar",
+                "media": "Téks Beunghar & Média",
+                "advanced": "Tingkat Lanjut & Relasional"
+            },
+            "relation": {
+                "title": "Konfigurasi Réferénsi Relasional",
+                "targetType": "Tipe Eusi Target",
+                "selectTarget": "Pilih tipe eusi target...",
+                "mode": "Kardinalitas Relasi",
+                "single": "Réferénsi Tunggal",
+                "multiple": "Loba Réferénsi (Array)"
+            },
+            "types": {
+                "text": "Téks",
+                "textDesc": "String pondok sabaris",
+                "longtext": "Téks Panjang",
+                "longtextDesc": "Téks sababaraha baris atawa markdown",
+                "richtext": "Téks Beunghar",
+                "richtextDesc": "Téks beunghar pormat HTML atawa Markdown",
+                "number": "Nomer / Angka",
+                "numberDesc": "Angka integer atawa désimal",
+                "boolean": "Boolean",
+                "booleanDesc": "Saklar Enya / Henteu",
+                "select": "Pilihan (Select)",
+                "selectDesc": "Dropdown pilihan tunggal",
+                "date": "Titimangsa",
+                "dateDesc": "Pamilih titimangsa kalénder",
+                "color": "Warna",
+                "colorDesc": "Kode warna hex sarta pamilih warna",
+                "image": "URL Gambar",
+                "imageDesc": "Berkas média atawa URL gambar",
+                "media": "Aset Média",
+                "mediaDesc": "Réferénsi berkas pustaka média",
+                "url": "URL / Tumbu",
+                "urlDesc": "Alamat web nu divalidasi",
+                "email": "Surélék (Email)",
+                "emailDesc": "Alamat email nu divalidasi",
+                "relation": "Relasi",
+                "relationDesc": "Réferénsi ka tipe eusi séjénna",
+                "json": "Objék JSON",
+                "jsonDesc": "Data JSON terstruktur bersarang"
+            }
+        },
+        "messages": {
+            "loadFailed": "Gagal ngamuat modél data",
+            "created": "Modél data hasil dijieun.",
+            "saved": "Skéma modél data hasil disimpen.",
+            "saveFailed": "Gagal nyimpen modél data",
+            "deleted": "Modél data hasil dihapus.",
+            "deleteFailed": "Gagal ngahapus modél data",
+            "endpointCopied": "URL endpoint disalin kana papan klip.",
+            "specCopied": "OpenAPI JSON disalin kana papan klip."
+        }
     },
-    "record": {
-      "newTitle": "Record Anyar: {name}",
-      "editTitle": "Ropéa Record: {name}",
-      "subtitle": "Jieun atawa aropéa baris record pikeun skéma \"{name}\".",
-      "backToRecords": "Balik ka data record",
-      "save": "Simpen Record",
-      "saving": "Nyimpen...",
-      "cancel": "Batal",
-      "booleanYes": "Enya (Leres)",
-      "booleanNo": "Henteu (Salah)",
-      "selectPlaceholder": "Pilih salah sahiji pilihan...",
-      "imagePreview": "Pratinjau Gambar",
-      "noImage": "Teu acan aya URL gambar",
-      "richTextHint": "Ngarojong pormat HTML / Markdown beunghar",
-      "selectRelationPlaceholder": "Pilih data nu patali...",
-      "loadingRelations": "Ngamuat data nu patali...",
-      "noRelationRecords": "Teu aya data dina tipe eusi \"{type}\". Jieun data heula.",
-      "openUrl": "Buka Tumbu",
-      "jsonHint": "Peryogi sintaks JSON anu sah",
-      "jsonError": "Sintaks pormat JSON henteu sah",
-      "previewUnavailable": "Sawangan henteu sayogi",
-      "messages": {
-        "loadFailed": "Gagal ngamuat data record",
-        "created": "Record hasil dijieun.",
-        "saved": "Record hasil diropéa.",
-        "saveFailed": "Gagal nyimpen record"
-      }
+    "dynamic": {
+        "records": {
+            "title": "Data Record: {name}",
+            "subtitle": "Atur data record dinamis pikeun tipe eusi \"{name}\".",
+            "apiRoute": "Rute API",
+            "newRecord": "Record Anyar",
+            "searchPlaceholder": "Téangan record dumasar kana widang naon waé...",
+            "empty": "Teu aya record kapanggih.",
+            "emptyHint": "Teu acan aya record dinamis pikeun tipe eusi ieu.",
+            "createFirst": "Jieun Record Munggaran",
+            "table": {
+                "id": "ID",
+                "updatedAt": "Tungtung Diropéa",
+                "actions": "Peta"
+            },
+            "actions": {
+                "edit": "Ropéa",
+                "delete": "Hapus",
+                "copyId": "Salin ID Record"
+            },
+            "confirm": {
+                "delete": "Naha anjeun yakin rék ngahapus record ieu? Peta ieu teu tiasa dibolaykeun."
+            },
+            "messages": {
+                "loadFailed": "Gagal ngamuat data record dinamis",
+                "deleted": "Record hasil dihapus.",
+                "deleteFailed": "Gagal ngahapus record",
+                "idCopied": "ID Record disalin kana papan klip."
+            }
+        },
+        "record": {
+            "newTitle": "Record Anyar: {name}",
+            "editTitle": "Ropéa Record: {name}",
+            "subtitle": "Jieun atawa aropéa baris record pikeun skéma \"{name}\".",
+            "backToRecords": "Balik ka data record",
+            "save": "Simpen Record",
+            "saving": "Nyimpen...",
+            "cancel": "Batal",
+            "booleanYes": "Enya (Leres)",
+            "booleanNo": "Henteu (Salah)",
+            "selectPlaceholder": "Pilih salah sahiji pilihan...",
+            "imagePreview": "Pratinjau Gambar",
+            "noImage": "Teu acan aya URL gambar",
+            "richTextHint": "Ngarojong pormat HTML / Markdown beunghar",
+            "selectRelationPlaceholder": "Pilih data nu patali...",
+            "loadingRelations": "Ngamuat data nu patali...",
+            "noRelationRecords": "Teu aya data dina tipe eusi \"{type}\". Jieun data heula.",
+            "openUrl": "Buka Tumbu",
+            "jsonHint": "Peryogi sintaks JSON anu sah",
+            "jsonError": "Sintaks pormat JSON henteu sah",
+            "previewUnavailable": "Sawangan henteu sayogi",
+            "messages": {
+                "loadFailed": "Gagal ngamuat data record",
+                "created": "Record hasil dijieun.",
+                "saved": "Record hasil diropéa.",
+                "saveFailed": "Gagal nyimpen record"
+            }
+        }
     }
-  }
 }

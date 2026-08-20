@@ -47,7 +47,4 @@ pass "GET /manage/media"
 curl -sS "${AUTH[@]}" "${API}/manage/infra/models/types" | grep -q '"success":true' || fail "Data Model Studio types list"
 pass "GET /manage/infra/models/types"
 
-curl -sS "${AUTH[@]}" "${API}/manage/infra/cck/types" | grep -q '"success":true' || fail "CCK legacy types alias"
-pass "GET /manage/infra/cck/types"
-
 echo "=== All CMS API smoke checks passed successfully ==="

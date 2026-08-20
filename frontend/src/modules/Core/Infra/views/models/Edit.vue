@@ -349,7 +349,7 @@ const router = useRouter();
 const toast = useToast();
 
 const typeId = computed(() => route.params.id as string | undefined);
-const isCreate = computed(() => route.name === 'model-create' || route.name === 'cck-create');
+const isCreate = computed(() => route.name === 'model-create');
 
 const activeTab = ref('schema');
 const loading = ref(!isCreate.value);
