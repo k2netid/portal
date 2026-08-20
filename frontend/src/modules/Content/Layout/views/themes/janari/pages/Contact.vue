@@ -22,7 +22,14 @@
     </div>
 
     <template v-else>
-      <div class="space-y-0">
+      <!-- Visual Builder Content if page was customized in Builder -->
+      <BlockRenderer
+        v-if="hasBuilderBlocks"
+        :blocks="builderBlocks"
+        :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+      />
+
+      <div v-else class="space-y-0">
         <section class="relative overflow-hidden border-y border-border/50 aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1] min-h-[300px]">
           <img
             v-if="contactHeroImage"
@@ -561,6 +568,8 @@ import { resolveLocalizedPageHtml } from '@/modules/Content/Layout/utils/resolve
 import { useHead } from '@unhead/vue'
 import axios from 'axios'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue'
+import type { BlockInstance } from '@/types/builder'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Content/Layout/composables/useTheme'
 import PageDisabled from '../components/shared/PageDisabled.vue'
@@ -597,7 +606,7 @@ const CaptchaWrapper = defineAsyncComponent(() => import('@/modules/Core/System/
 import type { Content } from '@/modules/Content/Publishing/types/content'
 
 /** Jejakawan page payload for optional intro HTML above the contact form. */
-type PageData = Pick<Content, 'id' | 'title' | 'slug' | 'body' | 'type'>;
+type PageData = Pick<Content, 'id' | 'title' | 'slug' | 'body' | 'type' | 'meta'> & { blocks?: unknown[] };
 
 interface PublicFormField {
     name: string;
@@ -644,6 +653,16 @@ const toast = useToast()
 const { displayEmail, displayPhone, displayAddress, phoneDialHref } = useJanariIdentity()
 const { t, locale } = useI18n({ useScope: 'global' })
 const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+
+const builderBlocks = computed<BlockInstance[]>(() => {
+  const meta = pageData.value?.meta as Record<string, unknown> | undefined
+  const blocks = meta?.builder_blocks || pageData.value?.blocks
+  if (Array.isArray(blocks)) {
+    return blocks as BlockInstance[]
+  }
+  return []
+})
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
 
 const loadContactCms = async () => {
     try {

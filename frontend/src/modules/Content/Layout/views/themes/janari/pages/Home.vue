@@ -1,9 +1,16 @@
 <template>
   <div class="min-h-screen flex flex-col">
     <div class="flex-1 flex flex-col">
-      <!-- Dynamic Content if exists (e.g. from Jejakawan page editor) -->
+      <!-- Visual Builder Content if page was customized in Builder -->
+      <BlockRenderer
+        v-if="hasBuilderBlocks"
+        :blocks="builderBlocks"
+        :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+      />
+
+      <!-- Dynamic Content if exists (e.g. from classic editor) -->
       <SafeHtml 
-        v-if="cmsHtml" 
+        v-else-if="cmsHtml" 
         class="Jejakawan-content"
         :html="cmsHtml"
         mode="Jejakawan"
@@ -79,6 +86,8 @@ import { PluginSlot } from '@/shared/components'
 import { ref, onMounted, computed, nextTick, onBeforeUnmount, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue'
+import type { BlockInstance } from '@/types/builder'
 import { usePublicPageContent } from '@/modules/Content/Layout/composables/usePublicPageContent'
 import { resolveLocalizedPageHtml } from '@/modules/Content/Layout/utils/resolveLocalizedContent'
 
@@ -89,6 +98,16 @@ import Hero from '../components/sections/Hero.vue'
 const { t, locale } = useI18n({ useScope: 'global' })
 const { pageData } = usePublicPageContent('home')
 const cmsHtml = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+
+const builderBlocks = computed<BlockInstance[]>(() => {
+  const meta = pageData.value?.meta as Record<string, unknown> | undefined
+  const blocks = meta?.builder_blocks || pageData.value?.blocks
+  if (Array.isArray(blocks)) {
+    return blocks as BlockInstance[]
+  }
+  return []
+})
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
 const ProductsSection = defineAsyncComponent(() => import('../components/sections/ProductsSection.vue'))
 const UpdateInformation = defineAsyncComponent(() => import('../components/sections/UpdateInformation.vue'))
 const Testimonials = defineAsyncComponent(() => import('../components/sections/Testimonials.vue'))

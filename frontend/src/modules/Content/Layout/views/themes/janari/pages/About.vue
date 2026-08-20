@@ -22,32 +22,41 @@
     
     <template v-else>
       <div class="flex-1">
-        <!-- Page Body Content if available -->
-        <SafeHtml
-          v-if="cmsBody"
-          class="container mx-auto px-4 py-16 Jejakawan-content"
-          :html="cmsBody"
-          mode="Jejakawan"
+        <!-- Visual Builder Content if page was customized in Builder -->
+        <BlockRenderer
+          v-if="hasBuilderBlocks"
+          :blocks="builderBlocks"
+          :context="{ post: pageData, site: { name: 'Jejakawan' } }"
         />
 
-        <!-- Header -->
-        <section
-          ref="headerSection"
-          class="py-24 bg-gradient-to-b from-primary/10 to-background border-b border-border/50"
-        >
-          <div class="container mx-auto px-4 text-center">
-            <span class="motion-fade text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ pageTitle || t('theme.janari.pages.about.sectionLabel') }}</span>
-            <h1
-              ref="aboutTitle"
-              class="text-4xl md:text-6xl font-extrabold mb-6 text-foreground"
-            >
-              <JanariSplitText :text="pageTitle || 'jejakawan.com'" />
-            </h1>
-            <p class="motion-fade text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
-              {{ pageSubtitle || t('theme.janari.pages.about.subtitle') }}
-            </p>
-          </div>
-        </section>
+        <!-- Default Theme Template if no Visual Builder blocks exist -->
+        <template v-else>
+          <!-- Page Body Content if available -->
+          <SafeHtml
+            v-if="cmsBody"
+            class="container mx-auto px-4 py-16 Jejakawan-content"
+            :html="cmsBody"
+            mode="Jejakawan"
+          />
+
+          <!-- Header -->
+          <section
+            ref="headerSection"
+            class="py-24 bg-gradient-to-b from-primary/10 to-background border-b border-border/50"
+          >
+            <div class="container mx-auto px-4 text-center">
+              <span class="motion-fade text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ pageTitle || t('theme.janari.pages.about.sectionLabel') }}</span>
+              <h1
+                ref="aboutTitle"
+                class="text-4xl md:text-6xl font-extrabold mb-6 text-foreground"
+              >
+                <JanariSplitText :text="pageTitle || 'jejakawan.com'" />
+              </h1>
+              <p class="motion-fade text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
+                {{ pageSubtitle || t('theme.janari.pages.about.subtitle') }}
+              </p>
+            </div>
+          </section>
 
         <!-- Mission/Content -->
         <section class="py-20 bg-background">
@@ -147,6 +156,7 @@
 
         <AboutOfferingsSection />
         <UserSurveyDynamicSection />
+        </template>
       </div>
     </template>
   </div>
@@ -156,6 +166,8 @@
 import JanariSplitText from '../components/shared/JanariSplitText.vue'
 import AboutOfferingsSection from '../components/sections/AboutOfferingsSection.vue'
 import UserSurveyDynamicSection from '../components/sections/UserSurveyDynamicSection.vue'
+import BlockRenderer from '@/modules/Content/Layout/components/content-renderer/BlockRenderer.vue'
+import type { BlockInstance } from '@/types/builder'
 import { ref, onMounted, nextTick, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
@@ -169,6 +181,16 @@ import { resolveLocalizedPageHtml } from '@/modules/Content/Layout/utils/resolve
 const { t, locale } = useI18n({ useScope: 'global' })
 const { pageData, loading } = usePublicPageContent('about')
 const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+
+const builderBlocks = computed<BlockInstance[]>(() => {
+  const meta = pageData.value?.meta as Record<string, unknown> | undefined
+  const blocks = meta?.builder_blocks || pageData.value?.blocks
+  if (Array.isArray(blocks)) {
+    return blocks as BlockInstance[]
+  }
+  return []
+})
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
 const { getSetting } = useTheme()
 const router = useRouter()
 const { fadeInRight, splitTextRevealSafe, staggerChildren } = useThemeMotion()
