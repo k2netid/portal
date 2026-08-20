@@ -663,7 +663,6 @@ import {
   Terminal,
   Trash2,
   X,
-  Zap,
 } from 'lucide-vue-next';
 
 interface ScheduledTask {
@@ -1133,7 +1132,7 @@ const applyPresetAction = async (preset: 'recommended' | 'reset_defaults') => {
   const confirmed = await confirm({
     title: t('common.messages.confirm.title'),
     message: confirmMsg,
-    variant: preset === 'reset_defaults' ? 'warning' : 'default',
+    variant: preset === 'reset_defaults' ? 'warning' : 'info',
     confirmText: t('common.actions.confirm'),
   });
 
