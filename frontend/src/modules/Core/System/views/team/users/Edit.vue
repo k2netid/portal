@@ -79,11 +79,13 @@
         <!-- Basic Info -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-foreground">
+            <label for="user-edit-name" class="block text-sm font-medium text-foreground">
               {{ $t('system.users.form.name') }} <span class="text-destructive">*</span>
             </label>
             <Input
+              id="user-edit-name"
               v-model="form.name"
+              name="name"
               type="text"
               required
               :class="{ 'border-destructive focus-visible:ring-destructive': errors.name }"
@@ -98,11 +100,13 @@
           </div>
 
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-foreground">
+            <label for="user-edit-email" class="block text-sm font-medium text-foreground">
               {{ $t('system.users.form.email') }} <span class="text-destructive">*</span>
             </label>
             <Input
+              id="user-edit-email"
               v-model="form.email"
+              name="email"
               type="email"
               required
               :class="{ 'border-destructive focus-visible:ring-destructive': errors.email }"
@@ -117,11 +121,12 @@
           </div>
 
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-foreground">
+            <label for="user-edit-password" class="block text-sm font-medium text-foreground">
               {{ $t('system.users.form.password') }}
             </label>
             <div class="relative">
               <Input
+                id="user-edit-password"
                 v-model="form.password"
                 name="password"
                 :type="showPassword ? 'text' : 'password'"
@@ -157,11 +162,12 @@
           </div>
 
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-foreground">
+            <label for="user-edit-password-confirm" class="block text-sm font-medium text-foreground">
               {{ $t('system.users.form.passwordConfirmation') }}
             </label>
             <div class="relative">
               <Input
+                id="user-edit-password-confirm"
                 v-model="form.password_confirmation"
                 name="password_confirmation"
                 :type="showConfirmPassword ? 'text' : 'password'"
@@ -194,11 +200,13 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-foreground mb-1">
+            <label for="user-edit-phone" class="block text-sm font-medium text-foreground mb-1">
               {{ $t('system.users.form.phone') }}
             </label>
             <Input
+              id="user-edit-phone"
               v-model="form.phone"
+              name="phone"
               type="tel"
               :placeholder="$t('system.users.form.placeholders.phone')"
             />
@@ -208,33 +216,39 @@
         <!-- Additional Info -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-foreground mb-1">
+            <label for="user-edit-bio" class="block text-sm font-medium text-foreground mb-1">
               {{ $t('system.users.form.bio') }}
             </label>
             <Textarea
+              id="user-edit-bio"
               v-model="form.bio"
+              name="bio"
               :rows="3"
               :placeholder="$t('system.users.form.placeholders.bio')"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-foreground mb-1">
+            <label for="user-edit-website" class="block text-sm font-medium text-foreground mb-1">
               {{ $t('system.users.form.website') }}
             </label>
             <Input
+              id="user-edit-website"
               v-model="form.website"
+              name="website"
               type="url"
               :placeholder="$t('system.users.form.placeholders.website')"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-foreground mb-1">
+            <label for="user-edit-location" class="block text-sm font-medium text-foreground mb-1">
               {{ $t('system.users.form.location') }}
             </label>
             <Input
+              id="user-edit-location"
               v-model="form.location"
+              name="location"
               type="text"
               :placeholder="$t('system.users.form.placeholders.location')"
             />

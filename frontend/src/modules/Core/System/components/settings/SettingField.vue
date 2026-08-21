@@ -1,7 +1,7 @@
 <template>
   <div :class="colSpanClass">
     <div class="flex items-center justify-between mb-1">
-      <label :for="fieldId" class="block text-sm font-medium text-foreground">
+      <label :for="type !== 'image' && type !== 'media' ? fieldId : undefined" class="block text-sm font-medium text-foreground">
         {{ label }}
       </label>
 
@@ -55,7 +55,7 @@
       :disabled="disabled"
       @update:model-value="localValue = hasNumericOptions ? Number($event) : $event; updateValue()"
     >
-      <SelectTrigger :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
+      <SelectTrigger :id="fieldId" :name="fieldKey" :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
         <SelectValue :placeholder="$t('common.actions.select')" />
       </SelectTrigger>
       <SelectContent>
@@ -76,7 +76,7 @@
       :disabled="disabled"
       @update:model-value="localValue = Number($event); updateValue()"
     >
-      <SelectTrigger :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
+      <SelectTrigger :id="fieldId" :name="fieldKey" :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
         <SelectValue :placeholder="$t('common.actions.select')" />
       </SelectTrigger>
       <SelectContent>
@@ -92,6 +92,7 @@
 
     <Input
       :id="fieldId"
+      :name="fieldKey"
       v-else-if="(type === 'string' || type === 'password' || type === 'datetime') && !isTextarea"
       :model-value="(localValue as string)"
       :disabled="disabled"
@@ -103,6 +104,7 @@
     <!-- Textarea -->
     <Textarea
       :id="fieldId"
+      :name="fieldKey"
       v-else-if="isTextarea"
       :model-value="(localValue as string)"
       :disabled="disabled"
@@ -114,6 +116,7 @@
     <!-- Number Input -->
     <Input
       :id="fieldId"
+      :name="fieldKey"
       v-else-if="type === 'integer'"
       :model-value="(localValue as number)"
       :disabled="disabled"
@@ -128,6 +131,8 @@
       class="mt-1 flex items-center space-x-2"
     >
       <Switch
+        :id="fieldId"
+        :name="fieldKey"
         :aria-label="label"
         :checked="Boolean(localValue)"
         :disabled="disabled"
