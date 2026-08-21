@@ -5,7 +5,6 @@ export const securityNavigation: NavItem[] = [
         label: 'Journals',
         labelKey: 'sharedConsole.navigation.menu.journals',
         icon: 'book-open',
-        context: 'settings',
         group: 'observability',
         priority: 70,
         children: [

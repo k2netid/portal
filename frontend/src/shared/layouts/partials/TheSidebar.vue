@@ -59,7 +59,7 @@
         <!-- Dashboard (standalone) -->
         <router-link
           :to="dashboardLink"
-          class="flex items-center px-3 py-2.5 text-sm font-medium rounded-xl group"
+          class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group transition-colors"
           :class="[ isDashboardActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
           :title="sidebarMinimized ? dashboardLabel : ''"
           @mouseenter="prefetchRoute(router, dashboardLink)"
@@ -77,143 +77,118 @@
           </span>
         </router-link>
 
-        <!-- Collapsible Sections -->
-        <template
-          v-for="section in sidebarSections"
-          :key="section.key"
-        >
-          <div
-            v-if="(filteredNavigation[section.key]?.length ?? 0) > 0"
-            class="pt-2"
+        <!-- EXPANDED MODE: Flat & Parallel Accordion Groups -->
+        <template v-if="!sidebarMinimized">
+          <template
+            v-for="item in filteredNavigation"
+            :key="navItemKey(item)"
           >
-            <!-- EXPANDED MODE: Accordion Style -->
-            <template v-if="!sidebarMinimized">
-              <!-- Section Header -->
-              <button
-                class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground tracking-wide rounded-xl hover:bg-accent"
-                @click="toggleSection(section.key)"
+            <!-- Divider -->
+            <div
+              v-if="item.type === 'divider'"
+              class="py-2 px-3 flex items-center gap-2"
+            >
+              <div class="h-px bg-border flex-1" />
+              <span v-if="getNavigationLabel(item)" class="text-[10px] font-bold text-muted-foreground/40 tracking-wider whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
+              <div class="h-px bg-border flex-1" />
+            </div>
+
+            <!-- Accordion Group with Sub-Items -->
+            <div
+              v-else-if="item.children && item.children.length > 0"
+              class="space-y-0.5"
+            >
+              <button 
+                class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-xl group transition-colors"
+                :class="[ isMenuGroupActive(item) ? 'text-foreground hover:bg-accent' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+                @click="toggleGroup(navItemKey(item))"
               >
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2.5">
                   <component
-                    :is="section.icon"
-                    class="w-4 h-4"
+                    :is="getIcon(item.icon || '')"
+                    class="w-4 h-4 flex-shrink-0"
                   />
-                  <span>{{ t(section.labelKey) }}</span>
+                  <span class="truncate font-medium">{{ getNavigationLabel(item) }}</span>
                 </div>
                 <component 
                   :is="getIcon('chevron-down')" 
-                  :class="{ 'rotate-180': expandedSections[section.key] }"
+                  :class="{ 'rotate-180': expandedGroups[navItemKey(item)] }"
+                  class="w-3.5 h-3.5 transition-transform duration-200"
                 />
               </button>
-
-              <!-- Section Items -->
+                                  
               <div 
-                v-show="expandedSections[section.key]"
-                class="mt-1 space-y-0.5"
+                v-show="expandedGroups[navItemKey(item)]"
+                class="mt-0.5 space-y-0.5"
               >
                 <template
-                  v-for="item in filteredNavigation[section.key]"
-                  :key="navItemKey(item)"
+                  v-for="subItem in item.children"
+                  :key="subItem.name || subItem.label"
                 >
                   <div
-                    v-if="item.type === 'divider'"
-                    class="py-2 px-9 flex items-center gap-2"
+                    v-if="subItem.type === 'divider'"
+                    class="py-1.5 px-3 pl-9 flex items-center gap-2"
                   >
                     <div class="h-px bg-border flex-1" />
-                    <span class="text-[10px] font-bold text-muted-foreground/40 tracking-wider whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
+                    <span v-if="getNavigationLabel(subItem)" class="text-[9px] uppercase font-bold text-muted-foreground/40 tracking-widest whitespace-nowrap">{{ getNavigationLabel(subItem) }}</span>
                     <div class="h-px bg-border flex-1" />
                   </div>
-                                    
-                  <!-- SUB-DROPDOWN -->
-                  <div
-                    v-else-if="item.children && item.children.length > 0"
-                    class="space-y-0.5"
-                  >
-                    <button 
-                      class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-xl group pl-9"
-                      :class="[ isSubSectionActive(item) ? 'text-foreground hover:bg-accent' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
-                      @click="toggleSubSection(navSubSectionKey(item))"
-                    >
-                      <div class="flex items-center gap-2.5">
-                        <component
-                          :is="getIcon(item.icon || '')"
-                          class="w-4 h-4 flex-shrink-0"
-                        />
-                        <span class="truncate">{{ getNavigationLabel(item) }}</span>
-                      </div>
-                      <component 
-                        :is="getIcon('chevron-down')" 
-                        :class="{ 'rotate-180': expandedSubSections[navSubSectionKey(item)] }"
-                        class="w-3.5 h-3.5"
-                      />
-                    </button>
-                                        
-                    <div 
-                      v-show="expandedSubSections[navSubSectionKey(item)]"
-                      class="mt-0.5 space-y-0.5"
-                    >
-                      <template
-                        v-for="subItem in item.children"
-                        :key="subItem.name || subItem.label"
-                      >
-                        <div
-                          v-if="subItem.type === 'divider'"
-                          class="py-1.5 px-3 pl-14 flex items-center gap-2"
-                        >
-                          <div class="h-px bg-border flex-1" />
-                          <span v-if="getNavigationLabel(subItem)" class="text-[9px] uppercase font-bold text-muted-foreground/40 tracking-widest whitespace-nowrap">{{ getNavigationLabel(subItem) }}</span>
-                          <div class="h-px bg-border flex-1" />
-                        </div>
-                        <router-link
-                          v-else-if="subItem.resolvedTo"
-                          :to="subItem.resolvedTo"
-                          class="flex items-center px-3 py-1.5 text-xs font-medium rounded-xl group pl-16"
-                          :class="[ $route.name === subItem.name ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground/80 hover:bg-accent hover:text-accent-foreground' ]"
-                          @mouseenter="prefetchNavTarget(subItem)"
-                          @click="$emit('close')"
-                        >
-                          <component
-                            :is="getIcon(subItem.icon || subItem.name || '')"
-                            class="w-3.5 h-3.5 flex-shrink-0 mr-2"
-                          />
-                          <span class="truncate">{{ getNavigationLabel(subItem) }}</span>
-                        </router-link>
-                      </template>
-                    </div>
-                  </div>
-
-                  <!-- NORMAL ITEM -->
                   <router-link
-                    v-else-if="item.resolvedTo"
-                    :to="item.resolvedTo"
-                    class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group pl-9"
-                    :class="[ $route.name === item.name ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
-                    @mouseenter="prefetchNavTarget(item)"
+                    v-else-if="subItem.resolvedTo"
+                    :to="subItem.resolvedTo"
+                    class="flex items-center px-3 py-1.5 text-xs font-medium rounded-xl group pl-9 transition-colors"
+                    :class="[ isChildActive(subItem) ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground/80 hover:bg-accent hover:text-accent-foreground' ]"
+                    @mouseenter="prefetchNavTarget(subItem)"
                     @click="$emit('close')"
                   >
                     <component
-                      :is="getIcon(item.icon || item.name || '')"
-                      class="w-4 h-4 flex-shrink-0 mr-2.5"
+                      :is="getIcon(subItem.icon || subItem.name || '')"
+                      class="w-3.5 h-3.5 flex-shrink-0 mr-2"
                     />
-                    <span class="truncate">{{ getNavigationLabel(item) }}</span>
+                    <span class="truncate">{{ getNavigationLabel(subItem) }}</span>
                   </router-link>
                 </template>
               </div>
-            </template>
+            </div>
 
-            <!-- MINIMIZED MODE: Group Icon with Floating Menu -->
+            <!-- Standalone Single Link -->
+            <router-link
+              v-else-if="item.resolvedTo"
+              :to="item.resolvedTo"
+              class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group transition-colors"
+              :class="[ isChildActive(item) ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+              @mouseenter="prefetchNavTarget(item)"
+              @click="$emit('close')"
+            >
+              <component
+                :is="getIcon(item.icon || item.name || '')"
+                class="w-4 h-4 flex-shrink-0 mr-2.5"
+              />
+              <span class="truncate font-medium">{{ getNavigationLabel(item) }}</span>
+            </router-link>
+          </template>
+        </template>
+
+        <!-- MINIMIZED MODE: Icon List with Dropdown Popover -->
+        <template v-else>
+          <template
+            v-for="item in filteredNavigation"
+            :key="navItemKey(item)"
+          >
+            <!-- Dropdown Menu for Group with Children -->
             <div
-              v-else
-              class="flex justify-center p-1"
+              v-if="item.children && item.children.length > 0"
+              class="flex justify-center p-0.5"
             >
               <DropdownMenu>
                 <DropdownMenuTrigger as-child>
                   <button
-                    class="w-full flex items-center justify-center p-2.5 rounded-xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    :class="[ isSectionActive(section.key) ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+                    class="w-full flex items-center justify-center p-2.5 rounded-xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
+                    :class="[ isMenuGroupActive(item) ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+                    :title="getNavigationLabel(item)"
                   >
                     <component
-                      :is="section.icon"
+                      :is="getIcon(item.icon || '')"
                       class="w-5 h-5"
                     />
                   </button>
@@ -224,77 +199,39 @@
                   :side-offset="12"
                   class="w-56 p-0 overflow-hidden"
                 >
-                  <!-- Header -->
+                  <!-- Group Header -->
                   <div class="px-3 py-2 text-xs font-semibold text-muted-foreground tracking-wide border-b border-border bg-muted/30">
-                    {{ t(section.labelKey) }}
+                    {{ getNavigationLabel(item) }}
                   </div>
-                                    
+                                      
                   <div class="max-h-[80vh] overflow-y-auto py-1">
-                    <!-- Items -->
                     <template
-                      v-for="item in filteredNavigation[section.key]"
-                      :key="navItemKey(item)"
+                      v-for="subItem in item.children"
+                      :key="subItem.name || subItem.label"
                     >
                       <div
-                        v-if="item.type === 'divider'"
-                        class="py-2 px-3 flex items-center gap-2"
+                        v-if="subItem.type === 'divider'"
+                        class="py-1 px-3 flex items-center gap-2 pointer-events-none"
                       >
                         <div class="h-px bg-border flex-1" />
-                        <span class="text-[10px] uppercase font-bold text-muted-foreground/30 tracking-widest whitespace-nowrap">{{ getNavigationLabel(item) }}</span>
+                        <span v-if="getNavigationLabel(subItem)" class="text-[9px] uppercase font-bold text-muted-foreground/30 tracking-widest whitespace-nowrap">{{ getNavigationLabel(subItem) }}</span>
                         <div class="h-px bg-border flex-1" />
                       </div>
-                                            
-                      <!-- Sub-category Header in Popover -->
-                      <div
-                        v-else-if="item.children && item.children.length > 0"
-                        class="mt-2 first:mt-0"
-                      >
-                        <DropdownMenuLabel class="px-3 py-1 text-[10px] font-bold text-muted-foreground/60 tracking-wider">
-                          {{ getNavigationLabel(item) }}
-                        </DropdownMenuLabel>
-                                                
-                        <DropdownMenuItem
-                          v-for="subItem in item.children"
-                          :key="subItem.name || subItem.label"
-                          as-child
-                        >
-                          <div v-if="subItem.type === 'divider'" class="py-1 px-3 flex items-center gap-2 pointer-events-none">
-                            <div class="h-px bg-border flex-1" />
-                            <span v-if="getNavigationLabel(subItem)" class="text-[9px] uppercase font-bold text-muted-foreground/30 tracking-widest whitespace-nowrap">{{ getNavigationLabel(subItem) }}</span>
-                            <div class="h-px bg-border flex-1" />
-                          </div>
-                          <router-link
-                            v-else-if="subItem.resolvedTo"
-                            :to="subItem.resolvedTo"
-                            class="flex items-center px-3 py-1.5 text-xs font-medium cursor-pointer"
-                            :class="[ $route.name === subItem.name ? 'text-primary bg-primary/10' : 'text-muted-foreground' ]"
-                            @click="$emit('close')"
-                          >
-                            <component
-                              :is="getIcon(subItem.icon || subItem.name || '')"
-                              class="w-3.5 h-3.5 flex-shrink-0 mr-2 opacity-70"
-                            />
-                            <span class="truncate">{{ getNavigationLabel(subItem) }}</span>
-                          </router-link>
-                        </DropdownMenuItem>
-                      </div>
-
                       <DropdownMenuItem
-                        v-else
+                        v-else-if="subItem.resolvedTo"
                         as-child
                       >
                         <router-link
-                          v-if="item.resolvedTo"
-                          :to="item.resolvedTo"
-                          class="flex items-center px-3 py-2 text-sm font-medium cursor-pointer"
-                          :class="[ $route.name === item.name ? 'text-primary bg-primary/10' : 'text-muted-foreground' ]"
+                          :to="subItem.resolvedTo"
+                          class="flex items-center px-3 py-2 text-xs font-medium cursor-pointer"
+                          :class="[ isChildActive(subItem) ? 'text-primary bg-primary/10 font-semibold' : 'text-muted-foreground' ]"
                           @click="$emit('close')"
                         >
                           <component
-                            :is="getIcon(item.icon || item.name || '')"
-                            class="w-4 h-4 flex-shrink-0 mr-2.5 opacity-70"
+                            :is="getIcon(subItem.icon || subItem.name || '')"
+                            class="w-3.5 h-3.5 flex-shrink-0 mr-2 opacity-70"
                           />
-                          <span class="truncate">{{ getNavigationLabel(item) }}</span>
+                          <span class="truncate">{{ getNavigationLabel(subItem) }}</span>
                         </router-link>
                       </DropdownMenuItem>
                     </template>
@@ -302,7 +239,34 @@
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          </div>
+
+            <!-- Single Standalone Item Tooltip -->
+            <div
+              v-else-if="item.resolvedTo"
+              class="flex justify-center p-0.5"
+            >
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <router-link
+                      :to="item.resolvedTo"
+                      class="w-full flex items-center justify-center p-2.5 rounded-xl cursor-pointer transition-colors"
+                      :class="[ isChildActive(item) ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' ]"
+                      @click="$emit('close')"
+                    >
+                      <component
+                        :is="getIcon(item.icon || item.name || '')"
+                        class="w-5 h-5"
+                      />
+                    </router-link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    {{ getNavigationLabel(item) }}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </template>
         </template>
       </nav>
     </div>
@@ -310,7 +274,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted, type Component } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useNavigationStore } from '@/shared/stores/navigation';
@@ -340,15 +304,8 @@ import {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel
 } from '@/shared/components/ui';
 import type { User } from '@/engine/types/auth';
-
-interface SidebarSection {
-    key: string;
-    labelKey: string;
-    icon: Component | string;
-}
 
 defineProps<{
     sidebarMinimized?: boolean;
@@ -393,7 +350,6 @@ function resolveNavToForItem(
     return to;
 }
 
-
 const authStore = useAuthStore();
 const systemStore = useSystemStore();
 const consoleStore = useConsoleContextStore();
@@ -415,83 +371,40 @@ const isDashboardActive = computed(() => {
     return names.includes(String($route.name));
 });
 
-const sidebarSections = computed<SidebarSection[]>(() => {
-    const isSuperAdmin = authStore.getRoleRank() >= 100;
-    
-    const sections: SidebarSection[] = [
-        { key: 'operations', labelKey: 'sharedConsole.navigation.sections.operations', icon: getIcon('briefcase') },
-    ];
+const expandedGroups = ref<Record<string, boolean>>({});
 
-    if (isSuperAdmin) {
-        sections.push({ key: 'settings', labelKey: 'sharedConsole.navigation.sections.settings', icon: getIcon('settings') });
-    }
-
-    return sections;
-});
-
-const expandedSections = ref<Record<string, boolean>>({});
-const expandedSubSections = ref<Record<string, boolean>>({});
-
-const initializeExpandedSections = () => {
-    if (sidebarSections.value.length > 0 && sidebarSections.value[0]?.key) {
-        expandedSections.value[sidebarSections.value[0].key] = true;
-    }
+const toggleGroup = (key: string) => {
+    expandedGroups.value[key] = !expandedGroups.value[key];
 };
 
-const isItemActive = (item: NavItem): boolean => {
-    if (!$route) return false;
+const isChildActive = (item: Pick<NavItem, 'name' | 'to'>) => {
+    if (!$route.name) return false;
     if (item.name === $route.name) return true;
+    if (item.to && typeof item.to === 'object' && 'name' in item.to && item.to.name === $route.name) return true;
+    return false;
+};
+
+const isMenuGroupActive = (item: NavItem): boolean => {
+    if (!$route.name) return false;
+    if (isChildActive(item)) return true;
     if (item.children && item.children.length > 0) {
-        return item.children.some(child => child.name === $route.name);
+        return item.children.some(child => isChildActive(child));
     }
     return false;
 };
 
-const autoExpandActiveSection = () => {
+const autoExpandActiveGroup = () => {
     if (!$route.name) return;
-    const currentRouteName = String($route.name);
-    
-    for (const section of sidebarSections.value) {
-        const items = filteredNavigation.value[section.key] || [];
-        
-        let sectionHasActive = false;
-        items.forEach(item => {
-            const isActive = item.name === currentRouteName || 
-                           (item.children && item.children.some(c => c.name === currentRouteName));
-            
-            if (isActive) {
-                sectionHasActive = true;
-                if (item.children && item.children.some(c => c.name === currentRouteName)) {
-                    expandedSubSections.value[navSubSectionKey(item)] = true;
-                }
+    for (const item of filteredNavigation.value) {
+        if (item.children && item.children.length > 0) {
+            if (item.children.some(c => isChildActive(c))) {
+                expandedGroups.value[navItemKey(item)] = true;
             }
-        });
-
-        if (sectionHasActive) {
-            expandedSections.value[section.key] = true;
         }
     }
 };
 
-const toggleSection = (key: string) => {
-    const isCurrentlyExpanded = expandedSections.value[key];
-    expandedSections.value = {};
-    expandedSections.value[key] = !isCurrentlyExpanded;
-};
-
-const toggleSubSection = (key: string) => {
-    expandedSubSections.value[key] = !expandedSubSections.value[key];
-};
-
-const isSubSectionActive = (item: NavItem) => isItemActive(item);
-
-const isSectionActive = (key: string) => {
-    const items = filteredNavigation.value[key] || [];
-    return items.some(item => isItemActive(item));
-};
-
-const filteredNavigation = computed(() => {
-    const filtered: Record<string, ResolvedNavItem[]> = {};
+const filteredNavigation = computed<ResolvedNavItem[]>(() => {
     const routeNames = buildRouteNameSet();
     const permissionSet = authStore.permissionNameSet;
     const isSuperAdmin = authStore.getRoleRank() >= 100;
@@ -502,47 +415,47 @@ const filteredNavigation = computed(() => {
         return permissionSet.has(permission);
     };
 
-    for (const [group, items] of Object.entries(navigationStore.navigationGroups)) {
-        filtered[group] = items
-            .filter((item: NavItem) => {
-                const role = Array.isArray(item.role) ? item.role[0] : item.role;
-                if (role && !authStore.isAtLeastRole(role)) return false;
-                if (!canPermission(item.permission)) return false;
-                
-                const requiredFeature = (item as any).feature || (item as any).requiredFeature;
-                if (requiredFeature && !subscriptionCan(requiredFeature)) return false;
+    return navigationStore.navigationItems
+        .filter((item: NavItem) => {
+            const role = Array.isArray(item.role) ? item.role[0] : item.role;
+            if (role && !authStore.isAtLeastRole(role)) return false;
+            if (!canPermission(item.permission)) return false;
+            
+            const requiredFeature = (item as any).feature || (item as any).requiredFeature;
+            if (requiredFeature && !subscriptionCan(requiredFeature)) return false;
 
-                // Global visibility filters can be added here if needed
+            return true;
+        })
+        .map((item: NavItem) => {
+            const filteredChildren = item.children?.filter(child => {
+                if (!canPermission(child.permission)) return false;
+                
+                const childFeature = (child as any).feature || (child as any).requiredFeature;
+                if (childFeature && !subscriptionCan(childFeature)) return false;
+                
                 return true;
-            })
-            .map((item: NavItem) => {
-                const filteredChildren = item.children?.filter(child => {
-                    if (!canPermission(child.permission)) return false;
-                    
-                    const childFeature = (child as any).feature || (child as any).requiredFeature;
-                    if (childFeature && !subscriptionCan(childFeature)) return false;
-                    
-                    // Global visibility filters for children can be added here
-                    return true;
-                });
-                
-                const resolvedChildren = filteredChildren?.map((child) => ({
-                    ...child,
-                    label: resolveNavLabel(child),
-                    resolvedTo: resolveNavToForItem(child, routeNames),
-                }));
-
-                return {
-                    ...item,
-                    label: resolveNavLabel(item),
-                    resolvedTo: resolveNavToForItem(item, routeNames),
-                    children: resolvedChildren,
-                };
             });
-    }
-    return filtered;
-});
+            
+            const resolvedChildren = filteredChildren?.map((child) => ({
+                ...child,
+                label: resolveNavLabel(child),
+                resolvedTo: resolveNavToForItem(child, routeNames),
+            }));
 
+            return {
+                ...item,
+                label: resolveNavLabel(item),
+                resolvedTo: resolveNavToForItem(item, routeNames),
+                children: resolvedChildren,
+            };
+        })
+        .filter((item) => {
+            if (item.children && item.children.length === 0 && !item.resolvedTo) {
+                return false;
+            }
+            return true;
+        });
+});
 
 const prefetchNavTarget = (item: ResolvedNavItem | ResolvedNavChild) => {
     const to = item.resolvedTo;
@@ -552,7 +465,6 @@ const prefetchNavTarget = (item: ResolvedNavItem | ResolvedNavChild) => {
 };
 
 const navItemKey = (item: NavItem) => item.group || item.labelKey || item.name || item.label || '';
-const navSubSectionKey = (item: NavItem) => item.group || item.labelKey || item.label || item.name || '';
 
 const resolveNavLabel = (item: NavItem) => {
     const lk = item.labelKey || '';
@@ -567,29 +479,27 @@ const getVisitTooltip = computed(() => {
     try {
         const url = new URL(siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`);
         domain = url.hostname;
-    } catch { /* keep default section when nav load fails */ }
+    } catch { /* keep default */ }
     return t('common.navigation.visit_site', { url: domain });
 });
 
-watch(expandedSections, (newVal) => {
-    localStorage.setItem('sidebarExpandedSections', JSON.stringify(newVal));
+watch(expandedGroups, (newVal) => {
+    localStorage.setItem('sidebarExpandedGroups', JSON.stringify(newVal));
 }, { deep: true });
 
 onMounted(() => {
     if (isConsoleShell()) {
         fetchFeatures();
     }
-    const saved = localStorage.getItem('sidebarExpandedSections');
+    const saved = localStorage.getItem('sidebarExpandedGroups');
     if (saved) {
-        try { expandedSections.value = JSON.parse(saved); } 
-        catch { initializeExpandedSections(); }
-    } else {
-        initializeExpandedSections();
+        try { expandedGroups.value = JSON.parse(saved); } 
+        catch { /* ignore */ }
     }
-    autoExpandActiveSection();
+    autoExpandActiveGroup();
 });
 
-watch(() => $route.name, () => autoExpandActiveSection());
+watch(() => $route.name, () => autoExpandActiveGroup());
 </script>
 
 <style scoped>

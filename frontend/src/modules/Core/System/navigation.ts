@@ -5,9 +5,8 @@ export const systemNavigation: NavItem[] = [
         label: 'Users & Access',
         labelKey: 'system.navigation.sections.usersAccess',
         icon: 'users',
-        context: 'settings',
         group: 'identity',
-        priority: 100,
+        priority: 95,
         children: [
             { name: 'kyc-reviews', label: 'KYC Reviews', labelKey: 'system.navigation.menu.kycReviews', permission: 'manage kyc reviews', icon: 'users' },
             { name: 'users.index', label: 'Users', labelKey: 'system.navigation.menu.users', permission: 'view users', icon: 'users' },
@@ -18,9 +17,8 @@ export const systemNavigation: NavItem[] = [
         label: 'Journals',
         labelKey: 'sharedConsole.navigation.menu.journals',
         icon: 'book-open',
-        context: 'settings',
         group: 'observability',
-        priority: 95,
+        priority: 90,
         children: [
             {
                 name: 'journal-dashboard',
@@ -64,9 +62,8 @@ export const systemNavigation: NavItem[] = [
         label: 'System Config',
         labelKey: 'sharedConsole.navigation.menu.systemConfig',
         icon: 'sliders',
-        context: 'settings',
         group: 'system_config',
-        priority: 90,
+        priority: 85,
         children: [
             { name: 'settings', label: 'System Settings', labelKey: 'system.navigation.menu.settings', permission: 'view settings', icon: 'settings' },
             { name: 'settings-console-appearance', label: 'Console Appearance', labelKey: 'system.navigation.menu.consoleAppearance', permission: 'manage settings', icon: 'palette' },
@@ -78,9 +75,8 @@ export const systemNavigation: NavItem[] = [
         label: 'Infrastructure',
         labelKey: 'system.navigation.sections.infrastructure',
         icon: 'settings',
-        context: 'settings',
         group: 'infrastructure',
-        priority: 85,
+        priority: 80,
         children: [
             { name: 'system', label: 'System Info', labelKey: 'system.navigation.menu.systemInfo', permission: 'view system', role: 'super', priority: 100, icon: 'system' },
             { name: 'backups', label: 'Backups', labelKey: 'system.navigation.menu.backups', permission: 'view backups', role: 'super', priority: 90, icon: 'backups' },
@@ -92,9 +88,8 @@ export const systemNavigation: NavItem[] = [
         label: 'Identity & Integrations',
         labelKey: 'system.navigation.menu.identityIntegrations',
         icon: 'code',
-        context: 'settings',
         group: 'integrations_dev',
-        priority: 80,
+        priority: 75,
         children: [
             { name: 'extensions', label: 'Extensions & App Store', labelKey: 'system.navigation.menu.extensions', permission: 'manage settings', role: 'super', priority: 100, icon: 'extensions' },
             { name: 'plugins', label: 'Plugins', labelKey: 'system.navigation.menu.plugins', permission: 'view plugins', priority: 90, icon: 'plugins' },

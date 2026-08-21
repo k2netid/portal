@@ -45,6 +45,42 @@ export const useNavigationStore = defineStore('navigation', () => {
         registry.value[moduleId] = items;
     };
 
+    const navigationItems = computed<NavItem[]>(() => {
+        const list: NavItem[] = [];
+
+        Object.entries(registry.value).forEach(([_moduleId, items]) => {
+            if (!items) return;
+            items.forEach((item) => {
+                const existingParent = findMergeParent(list, item);
+                if (existingParent) {
+                    existingParent.children = mergeChildren(existingParent.children, item.children);
+                    const incomingPriority = item.priority || 0;
+                    const existingPriority = existingParent.priority || 0;
+                    if (incomingPriority >= existingPriority) {
+                        existingParent.priority = incomingPriority;
+                        if (item.icon) existingParent.icon = item.icon;
+                        if (item.labelKey) existingParent.labelKey = item.labelKey;
+                    }
+                    return;
+                }
+
+                list.push({
+                    ...item,
+                    children: item.children ? [...item.children] : undefined,
+                });
+            });
+        });
+
+        list.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+        list.forEach((item) => {
+            if (item.children) {
+                item.children.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+            }
+        });
+
+        return list;
+    });
+
     const navigationGroups = computed(() => {
         const groups: Record<string, NavItem[]> = {
             operations: [],
@@ -98,6 +134,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     return {
         registry,
         registerModuleNavigation,
+        navigationItems,
         navigationGroups,
     };
 });

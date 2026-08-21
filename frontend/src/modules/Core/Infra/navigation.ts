@@ -5,7 +5,6 @@ export const infraNavigation: NavItem[] = [
         label: 'Data Studio',
         labelKey: 'infra.models.title',
         icon: 'layers',
-        context: 'operations',
         group: 'studio',
         priority: 100,
         children: [
