@@ -61,13 +61,7 @@ const { t } = useI18n()
 
 const props = defineProps<Props>()
 
-const MessageCircleIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>`
-}
-
-const ShieldCheckIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>`
-}
+import { MessageCircle, ShieldCheck } from 'lucide-vue-next'
 
 const discussionSettingsGrouped = computed(() => {
     const discussionSettings = props.settings.filter(s => s && s.group === 'comments')
@@ -77,7 +71,7 @@ const discussionSettingsGrouped = computed(() => {
             id: 'general',
             title: t('system.settings.groups.discussion.title'),
             description: t('system.settings.groups.discussion.description'),
-            icon: MessageCircleIcon,
+            icon: MessageCircle,
             color: 'blue',
             keys: ['comments.security.enable_reply', 'comments.security.allow_guests'],
             settings: [],
@@ -87,7 +81,7 @@ const discussionSettingsGrouped = computed(() => {
             id: 'moderation',
             title: t('system.settings.groups.moderation.title'),
             description: t('system.settings.groups.moderation.description'),
-            icon: ShieldCheckIcon,
+            icon: ShieldCheck,
             color: 'red',
             keys: ['comments.security.moderation_enabled', 'comments.security.guest_captcha', 'comments.security.max_links', 'comments.security.banned_words'],
             settings: [],

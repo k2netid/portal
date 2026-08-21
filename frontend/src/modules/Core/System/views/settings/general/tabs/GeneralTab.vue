@@ -151,15 +151,7 @@ const handleAutosaveCustomInput = (event: Event) => {
     updateField('content.autosave_interval_seconds', normalizeAutosaveInterval(value))
 }
 
-// SVG Icon Components
-const ClockIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
-}
-
-const ToolIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.999.922l-7.126 7.126a.908.908 0 01-1.287 0l-1.287-1.287a.908.908 0 010-1.287l7.126-7.126c.851-.735 1.013-1.923.922-2.999a4.5 4.5 0 014.484-4.884 4.5 4.5 0 014.884 4.884zM11.64 12.36L9.64 10.36" /><path stroke-linecap="round" stroke-linejoin="round" d="M7 17l-5 5" /><path stroke-linecap="round" stroke-linejoin="round" d="M12.5 12.5l5.5-5.5" /></svg>`
-}
-
+import { Clock, Wrench, Sparkles } from 'lucide-vue-next'
 
 interface SettingGroupData {
     id: string;
@@ -188,10 +180,6 @@ const isMaintenanceSettingVisible = (key: string) => {
     return true;
 }
 
-const BrandIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>`
-}
-
 const isFieldProtected = (key: string) => {
     // Branding fields are protected if no White Label license
     const brandingKeys = ['app_name', 'app_logo', 'app_favicon', 'branding_display'];
@@ -216,7 +204,7 @@ const generalSettingsGrouped = computed(() => {
             id: 'brand',
             title: t('system.settings.groups.brand.title'),
             description: t('system.settings.groups.brand.description'),
-            icon: BrandIcon,
+            icon: Sparkles,
             color: 'indigo',
             keys: ['app_name', 'app_logo', 'app_favicon', 'branding_display'],
             settings: [],
@@ -226,7 +214,7 @@ const generalSettingsGrouped = computed(() => {
             id: 'localization',
             title: t('system.settings.groups.localization.title'),
             description: t('system.settings.groups.localization.description'),
-            icon: ClockIcon,
+            icon: Clock,
             color: 'amber',
             keys: ['timezone', 'date_format', 'time_format', 'items_per_page'],
             settings: [],
@@ -236,7 +224,7 @@ const generalSettingsGrouped = computed(() => {
             id: 'maintenance',
             title: t('system.settings.groups.maintenance.title'),
             description: t('system.settings.groups.maintenance.description'),
-            icon: ToolIcon,
+            icon: Wrench,
             color: 'orange',
             keys: ['maintenance_mode', 'maintenance_title', 'maintenance_message', 'maintenance_countdown_enabled', 'maintenance_end_time'],
             settings: [],

@@ -59,21 +59,7 @@ const updateField = (key: string, value: SettingValue) => {
     emit('update:formData', { ...props.formData, [key]: value })
 }
 
-const UploadIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>`
-}
-
-const ImageIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>`
-}
-
-const CloudIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" /></svg>`
-}
-
-const ServerIcon = {
-    template: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" /></svg>`
-}
+import { Upload, Image as LucideImage, Cloud, Server } from 'lucide-vue-next'
 
 const mediaSettingsGrouped = computed(() => {
     const mediaSettings = props.settings.filter(s => s && s.group === 'media')
@@ -87,7 +73,7 @@ const mediaSettingsGrouped = computed(() => {
             id: 'upload',
             title: t('system.settings.groups.upload.title'),
             description: t('system.settings.groups.upload.description'),
-            icon: UploadIcon,
+            icon: Upload,
             color: 'blue',
             keys: ['max_upload_size', 'allowed_image_types', 'allowed_file_types', 'storage_driver'],
             settings: [],
@@ -101,7 +87,7 @@ const mediaSettingsGrouped = computed(() => {
             id: 's3_config',
             title: t('system.settings.groups.s3.title'),
             description: t('system.settings.groups.s3.description'),
-            icon: CloudIcon,
+            icon: Cloud,
             color: 'orange',
             keys: ['aws_access_key_id', 'aws_secret_access_key', 'aws_default_region', 'aws_bucket', 'aws_endpoint'],
             settings: [],
@@ -116,7 +102,7 @@ const mediaSettingsGrouped = computed(() => {
             id: 'google_config',
             title: t('system.settings.groups.google.title'),
             description: t('system.settings.groups.google.description'),
-            icon: CloudIcon,
+            icon: Cloud,
             color: 'red',
             keys: ['google_client_id', 'google_client_secret', 'google_refresh_token', 'google_folder_id'],
             settings: [],
@@ -131,7 +117,7 @@ const mediaSettingsGrouped = computed(() => {
             id: 'ftp_config',
             title: t('system.settings.groups.ftp.title'),
             description: t('system.settings.groups.ftp.description'),
-            icon: ServerIcon,
+            icon: Server,
             color: 'purple',
             keys: ['ftp_host', 'ftp_username', 'ftp_password', 'ftp_root', 'ftp_port', 'ftp_ssl'],
             settings: [],
@@ -146,7 +132,7 @@ const mediaSettingsGrouped = computed(() => {
             id: 'dropbox_config',
             title: t('system.settings.groups.dropbox.title'),
             description: t('system.settings.groups.dropbox.description'),
-            icon: CloudIcon,
+            icon: Cloud,
             color: 'indigo',
             keys: ['dropbox_authorization_token'],
             settings: [],
@@ -160,7 +146,7 @@ const mediaSettingsGrouped = computed(() => {
         id: 'image_processing',
         title: t('system.settings.groups.imageProcessing.title'),
         description: t('system.settings.groups.imageProcessing.description'),
-        icon: ImageIcon,
+        icon: LucideImage,
         color: 'pink',
         keys: ['thumbnail_width', 'thumbnail_height', 'enable_watermark', 'watermark_text'],
         settings: [],
