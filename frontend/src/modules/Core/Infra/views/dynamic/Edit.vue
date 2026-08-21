@@ -19,6 +19,15 @@
           </Button>
           <Button
             type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs"
+            @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
+          >
+            {{ $t('infra.dynamic.record.cancel') }}
+          </Button>
+          <Button
+            type="button"
             size="sm"
             class="h-9 gap-2 text-xs"
             :disabled="saving"
@@ -100,30 +109,84 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-2 pt-4 border-t border-border/60">
+          <div class="flex items-center gap-2 pt-4 border-t border-border/60">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              class="h-9 text-xs flex-1"
+              @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
+            >
+              {{ $t('infra.dynamic.record.cancel') }}
+            </Button>
             <Button
               type="submit"
               size="sm"
-              class="h-9 gap-2 text-xs w-full"
+              class="h-9 gap-2 text-xs flex-1"
               :disabled="saving"
             >
               <Spinner v-if="saving" class="h-3.5 w-3.5" />
               <Save v-else class="h-3.5 w-3.5" />
               {{ saving ? $t('infra.dynamic.record.saving') : $t('infra.dynamic.record.save') }}
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              class="h-9 text-xs w-full"
-              @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
-            >
-              {{ $t('infra.dynamic.record.cancel') }}
-            </Button>
           </div>
         </ConsoleFormCard>
       </div>
+
+      <!-- Action Footer Toolbar -->
+      <div class="col-span-1 lg:col-span-3 sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm p-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 border-t border-border mt-8 flex items-center justify-between gap-3 shadow-xs">
+        <div>
+          <Button
+            v-if="isEdit"
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs text-destructive border-destructive/20 hover:bg-destructive/10 gap-1.5"
+            :disabled="saving || deleting"
+            @click="deleteModalOpen = true"
+          >
+            <Trash2 class="h-3.5 w-3.5" />
+            {{ $t('infra.models.delete') }}
+          </Button>
+        </div>
+
+        <div class="flex items-center gap-2 ml-auto">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs"
+            @click="router.push({ name: 'dynamic-records-index', params: { slug } })"
+          >
+            {{ $t('infra.dynamic.record.cancel') }}
+          </Button>
+
+          <Button
+            type="submit"
+            size="sm"
+            class="h-9 gap-2 text-xs"
+            :disabled="saving"
+          >
+            <Spinner v-if="saving" class="h-3.5 w-3.5" />
+            <Save v-else class="h-3.5 w-3.5" />
+            {{ saving ? $t('infra.dynamic.record.saving') : $t('infra.dynamic.record.save') }}
+          </Button>
+        </div>
+      </div>
     </form>
+
+    <!-- Delete Confirmation Modal -->
+    <ConfirmModal
+      :open="deleteModalOpen"
+      :title="$t('infra.dynamic.record.deleteTitle') || 'Delete Record'"
+      :message="$t('infra.dynamic.record.deleteConfirm') || 'Are you sure you want to delete this record?'"
+      :confirm-label="$t('infra.models.delete')"
+      :cancel-label="$t('infra.dynamic.record.cancel')"
+      variant="destructive"
+      :loading="deleting"
+      @confirm="executeDelete"
+      @cancel="deleteModalOpen = false"
+    />
   </div>
 </template>
 
@@ -131,9 +194,9 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { ArrowLeft, Save, AlertCircle } from 'lucide-vue-next';
+import { ArrowLeft, Save, Trash2, AlertCircle } from 'lucide-vue-next';
 import { PageHeader, ConsoleFormCard } from '@/shared/components/shell';
-import { Button, Spinner, Alert, AlertTitle, AlertDescription, Badge } from '@/shared/components/ui';
+import { Button, Spinner, Alert, AlertTitle, AlertDescription, Badge, ConfirmModal } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
 import { parseSingleResponse } from '@/shared/utils/responseParser';
 import DynamicFieldInput from '../../components/dynamic/DynamicFieldInput.vue';
@@ -154,6 +217,8 @@ const isEdit = computed(() => Boolean(recordId.value));
 
 const loading = ref(true);
 const saving = ref(false);
+const deleting = ref(false);
+const deleteModalOpen = ref(false);
 const error = ref('');
 const contentType = ref<DataModelSchema | null>(null);
 const form = reactive<Record<string, unknown>>({});
@@ -220,6 +285,21 @@ async function submit(): Promise<void> {
         toast.error.default(e instanceof Error ? e.message : t('infra.dynamic.record.messages.saveFailed'));
     } finally {
         saving.value = false;
+    }
+}
+
+async function executeDelete(): Promise<void> {
+    if (!recordId.value) return;
+    deleting.value = true;
+    try {
+        await DynamicRecordService.remove(slug.value, recordId.value);
+        toast.success.default(t('infra.dynamic.record.messages.deleted') || 'Record deleted successfully');
+        deleteModalOpen.value = false;
+        await router.push({ name: 'dynamic-records-index', params: { slug: slug.value } });
+    } catch (e: unknown) {
+        toast.error.default(e instanceof Error ? e.message : t('infra.dynamic.record.messages.deleteFailed') || 'Failed to delete record');
+    } finally {
+        deleting.value = false;
     }
 }
 

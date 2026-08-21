@@ -30,6 +30,15 @@
           </Button>
           <Button
             type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs"
+            @click="router.push({ name: 'model-index' })"
+          >
+            {{ $t('infra.models.cancel') }}
+          </Button>
+          <Button
+            type="button"
             size="sm"
             class="h-9 gap-2 text-xs"
             :disabled="saving"
