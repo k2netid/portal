@@ -24,7 +24,7 @@ const baseRoutes: Array<RouteRecordRaw> = [
         redirect: () => {
             const authStore = useAuthStore();
             if (!authStore.isAuthenticated) {
-                return { name: 'login' };
+                return { path: SECURITY_ROUTES.login };
             }
             const systemStore = useSystemStore();
             const dashboardSlug = String(systemStore.consoleDashboardSlug || 'dash');
@@ -44,13 +44,13 @@ const baseRoutes: Array<RouteRecordRaw> = [
         meta: { public: true, title: 'system.installer.title' },
     },
     {
-        path: '/login',
+        path: SECURITY_ROUTES.login,
         name: 'login',
         component: () => import('@/modules/Core/System/views/auth/Login.vue'),
         meta: { guestOnly: true, authContext: 'system' },
     },
     {
-        path: '/auth/console-sign-in',
+        path: '/login',
         name: 'login-alias',
         component: () => import('@/modules/Core/System/views/auth/Login.vue'),
         meta: { guestOnly: true, authContext: 'system' },

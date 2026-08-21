@@ -1,5 +1,6 @@
 import { logger } from '@/shared/utils/logger';
 import { appConfig } from '@/config';
+import { SECURITY_ROUTES } from '@/config/security';
 import { defineStore } from 'pinia';
 import type { AxiosResponse } from 'axios';
 import { isCancel, isAxiosError } from 'axios';
@@ -259,8 +260,8 @@ export const useAuthStore = defineStore('auth', {
                     window.__is403Blocked = false;
                 }
 
-                // Redirect to homepage after logout
-                window.location.href = '/';
+                // Redirect to login page after logout
+                window.location.href = SECURITY_ROUTES.login;
             }
         },
 
