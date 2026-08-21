@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build the Vue dashboard and sync dist/ → backend/public/ (logo, favicon, hashed JS/CSS).
 #
-# Usage from repo root (ja-control-plane):
+# Usage from repo root (ja-core_engine):
 #   npm run deploy:assets:full         # ONE command: clean rebuild + rsync (preferred)
 #   npm run deploy:assets:sync         # rsync only — dist/ must already exist
 #
@@ -60,5 +60,5 @@ rsync -a --delete \
   "$SRC_DIST" "$DST_PUBLIC"
 
 echo "OK: synced $SRC_DIST → $DST_PUBLIC"
-echo "Tip: on the server, after pull: cd ja-control-plane && npm run deploy:assets:full"
-echo "Tip: optional Laravel: cd ja-control-plane/backend && php artisan optimize:clear && php artisan view:cache"
+echo "Tip: on the server, after pull: cd ja-core_engine && npm run deploy:assets:full"
+echo "Tip: optional Laravel: cd ja-core_engine/backend && php artisan optimize:clear && php artisan view:cache"

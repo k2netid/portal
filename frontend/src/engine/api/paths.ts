@@ -171,7 +171,6 @@ export const infraPaths = {
 
 export const platformPaths = {
     publicCatalog: '/public/platform/catalog',
-    publicSubscriptionFeatures: '/public/subscription/features',
 } as const;
 
 export const memberPaths = {

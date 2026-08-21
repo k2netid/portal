@@ -292,8 +292,6 @@ import { prefetchRoute } from '@/shared/utils/routePrefetch';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useConsoleContextStore } from '@/engine/stores/consoleContext';
-import { useSubscriptionFeatures } from '@/shared/composables/useSubscriptionFeatures';
-import { isConsoleShell } from '@/config/shell';
 import TheLogo from '@/shared/layouts/partials/TheLogo.vue';
 import { 
     Tooltip, 
@@ -354,7 +352,6 @@ const authStore = useAuthStore();
 const systemStore = useSystemStore();
 const consoleStore = useConsoleContextStore();
 const navigationStore = useNavigationStore();
-const { fetchFeatures, can: subscriptionCan } = useSubscriptionFeatures();
 
 // Dynamic Dashboard logic
 const dashboardLink = computed(() => {
@@ -424,19 +421,13 @@ const filteredNavigation = computed<ResolvedNavItem[]>(() => {
             const role = Array.isArray(item.role) ? item.role[0] : item.role;
             if (role && !authStore.isAtLeastRole(role)) return false;
             if (!canPermission(item.permission)) return false;
-            
-            const requiredFeature = (item as any).feature || (item as any).requiredFeature;
-            if (requiredFeature && !subscriptionCan(requiredFeature)) return false;
 
             return true;
         })
         .map((item: NavItem) => {
             const filteredChildren = item.children?.filter(child => {
                 if (!canPermission(child.permission)) return false;
-                
-                const childFeature = (child as any).feature || (child as any).requiredFeature;
-                if (childFeature && !subscriptionCan(childFeature)) return false;
-                
+
                 return true;
             });
             
@@ -492,9 +483,6 @@ watch(expandedGroups, (newVal) => {
 }, { deep: true });
 
 onMounted(() => {
-    if (isConsoleShell()) {
-        fetchFeatures();
-    }
     const saved = localStorage.getItem('sidebarExpandedGroups');
     if (saved) {
         try { expandedGroups.value = JSON.parse(saved); } 
