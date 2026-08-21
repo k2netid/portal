@@ -1,17 +1,17 @@
-# 03. Frontend Architecture & Standards — Jejakawan CMS
+# 03. Frontend Architecture & Standards — Jejakawan Core Engine
 
-Panduan arsitektur dan standar pengembangan frontend Vue 3 + TypeScript di **Jejakawan CMS (`ja-cms`)**.
+Panduan arsitektur dan standar pengembangan frontend Vue 3 + TypeScript di **Jejakawan Core Engine (`ja-core_engine`)**.
 
 ---
 
 ## 🎨 1. Tech Stack Frontend
 
-- **Framework**: Vue 3 (Composition API dengan `<script setup lang="ts">`).
-- **Build Tool**: Vite 8 + ESBuild.
-- **State Management**: Pinia stores.
-- **Styling**: Tailwind CSS + Radix Vue (Primitives) + Lucide Icons (`lucide-vue-next`).
-- **Routing**: Vue Router 4 dengan dynamic chunk lazy loading.
-- **Internationalization**: Vue I18n v9+ dengan loader modular per-tier.
+- **Framework**: Vue 3.5 (Composition API dengan `<script setup lang="ts">`).
+- **Build Tool**: Vite 8 + ESBuild minifier.
+- **State Management**: Pinia stores terenkapsulasi.
+- **Styling**: Tailwind CSS v4 + Radix UI primitives (`radix-vue`) + Lucide Icons (`lucide-vue-next`).
+- **Routing**: Vue Router 4 dengan route lazy-loading dan dynamic dashboard resolver.
+- **Internationalization**: Vue I18n v9+ dengan translasi 3 bahasa (`id`, `en`, `su`).
 
 ---
 
@@ -19,78 +19,66 @@ Panduan arsitektur dan standar pengembangan frontend Vue 3 + TypeScript di **Jej
 
 ```
 frontend/src/
-├── engine/                       # Core engine CMS
-│   ├── api/                      # Axios HTTP client, interceptors, paths
+├── main.ts                       # Single Unified SPA Entrypoint
+├── engine/                       # Kernel Engine Core
+│   ├── api/                      # Axios client, CSRF handling, auth interceptors
 │   ├── i18n/                     # Konfigurasi i18n & dynamic loaders
-│   ├── router/                   # Router configuration & guards
-│   └── state/                    # Global app state & session
+│   ├── router/                   # Router configuration & route guards
+│   ├── stores/                   # Console context & session stores
+│   └── types/                    # Global TypeScript interfaces
 ├── modules/                      # Domain Modules
-│   ├── Core/
-│   │   ├── System/               # IAM, Settings, Audit Logs
-│   │   ├── Infra/                # Tasks, Backups, Redirects, Models
-│   │   └── Security/             # IP firewall, 2FA, Passkeys, ABAC
-│   ├── Content/
-│   │   ├── Publishing/           # Posts, Pages, Categories
-│   │   ├── Layout/               # JA-Builder, Themes (Janari), Menus
-│   │   ├── Forms/                # Form builder & submissions
-│   │   ├── Media/                # Media manager & picker
-│   │   └── Library/              # Tags & custom fields
-│   └── Intelligence/
-│       ├── Ai/                   # AI assistants & stats
-│       ├── Search/               # Search management & health
-│       ├── Analytics/            # Analytics dashboard
-│       └── Newsletter/           # Newsletter manager
+│   └── Core/
+│       ├── System/               # IAM, RBAC, Settings, Journals, Extensions
+│       ├── Infra/                # Data Studio, Tasks, Backups, Redis, Webhooks
+│       └── Security/             # IP firewall, 2FA, Passkeys, ABAC, Logs
 ├── shared/                       # Shared UI & Utilities
-│   ├── components/               # Atomic UI components (Button, Dialog, etc.)
+│   ├── components/               # Atomic UI components (Button, Dialog, Card, Input)
 │   ├── composables/              # Reusable Vue composables
-│   ├── stores/                   # Cross-module shared Pinia stores
-│   └── utils/                    # Helper functions & formatters
-└── types/                        # Global TypeScript declarations
+│   ├── stores/                   # Navigation & Dashboard shared stores
+│   └── utils/                    # Helper functions, icon registry, formatters
+└── styles/                       # Tailwind CSS v4 & theme style definitions
 ```
 
 ---
 
-## 🖥️ 3. Dual Entry Shell Architecture
+## 🖥️ 3. Single Unified Console SPA Architecture
 
-Frontend CMS memiliki 2 shell HTML independen untuk optimasi performa dan isolasi fungsionalitas:
+Pada `ja-core_engine`, frontend menggunakan arsitektur **Single Unified Console SPA**:
 
-1. **Console Shell (`console.html` ➔ `main-console.ts`)**:
-   - Area administratif `/dash/*`.
-   - Menggunakan `ConsoleLayout.vue` dengan sidebar navigasi dinamis berbasis permission, dark/light theme switcher, breadcrumbs, dan session expiration timeout modal.
-2. **Public Shell (`index.html` ➔ `main-public.ts`)**:
-   - Area situs publik dan marketing.
-   - Merender tema aktif secara dinamis (misal: **Janari Theme**) via `ThemePageResolver.vue` dan `FrontendLayout.vue`.
+1. **Satu Entrypoint (`index.html` ➔ `src/main.ts`)**:
+   - Tidak ada dual-shell overhead.
+   - Seluruh inisialisasi kernel, router, i18n, dan registry modul dijalankan melalui `main.ts`.
+2. **Instant Auth & Landing Flow**:
+   - **Root URL `/`**:
+     - Pengguna yang belum login diarahkan secara langsung ke `/login` (tanpa 404/delay).
+     - Pengguna yang sudah terautentikasi diarahkan langsung ke `/:dashboard_slug/dashboard`.
+   - **Direct Auth Routes**: `/login`, `/register`, `/forgot-password`, `/reset-password` merupakan rute first-class.
+3. **Console Layout Shell (`ConsoleLayout.vue`)**:
+   - Sidebar navigasi dinamis berbasis role/permission (`operations` & `settings` accordion).
+   - Global search (`Ctrl+K`), quick actions, live notification drawer, and profile switcher.
 
 ---
 
-## 🧩 4. Standar Komponen & TypeScript
+## 📏 4. Standar Kode Komponen Vue
 
-1. **Composition API & `<script setup lang="ts">`**:
-   - Selalu gunakan syntax `<script setup lang="ts">`.
-   - Jangan gunakan Options API (`export default { data(), methods }`).
-2. **Strict Typing**:
-   - Seluruh prop, emit, dan API response harus memiliki interface TypeScript yang jelas.
-   - Hindari penggunaan type `any` implisit.
-   - Contoh:
-     ```vue
-     <script setup lang="ts">
-     interface Props {
-       title: string
-       status?: 'draft' | 'published'
-       count: number
-     }
+Setiap komponen Vue wajib mengikuti konvensi:
 
-     const props = withDefaults(defineProps<Props>(), {
-       status: 'draft',
-     })
+```vue
+<template>
+  <div class="space-y-4">
+    <!-- UI Elements -->
+  </div>
+</template>
 
-     const emit = defineEmits<{
-       (e: 'save', payload: { id: number; title: string }): void
-       (e: 'cancel'): void
-     }>()
-     </script>
-     ```
-3. **Komponen UI Primitives**:
-   - Gunakan komponen dasar yang tersedia di `@/shared/components/ui/` (`Button`, `Input`, `DialogContent`, `Select`, `DropdownMenu`, dll.) untuk menjaga konsistensi visual dan aksesibilitas (A11y).
-4. **Z-Index Governance**:
-   - Komponen modal/overlay global wajib menggunakan kelas layer tinggi (`z-[100050]` untuk overlay, `z-[100060]` untuk dialog content) agar tidak tertimpa kanvas visual builder fullscreen.
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+// Component Logic with explicit TypeScript typings
+</script>
+```
+
+- **No `any` types**: Gunakan interface eksplisit dari `@/engine/types/*` atau definisikan tipe lokal.
+- **i18n Integration**: Semua label teks yang tampak oleh user wajib menggunakan `$t()` atau `t()`.
+- **Lucide Icons**: Seluruh ikon diimpor secara eksplisit dari `lucide-vue-next` atau melalui utilitas `getIcon()`.

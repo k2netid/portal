@@ -8,14 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\Security\Models\SecurityLog;
-use Modules\Core\System\Models\Setting;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 class SpaController extends Controller
 {
     /**
-     * Serve Public SPA root.
+     * Serve SPA root.
      */
     public function index(): Response
     {
@@ -28,7 +26,7 @@ class SpaController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'message' => 'Jejakawan CMS is running',
+            'message' => 'Jejakawan Core Engine is running',
         ]);
     }
 
@@ -84,30 +82,6 @@ class SpaController extends Controller
      */
     public function fallback(Request $request): Response
     {
-        $path = $request->path();
-        $segments = explode('/', $path);
-        $firstSegment = $segments[0] ?? '';
-
-        $consoleSlugs = ['dash', 'ja-dash'];
-        try {
-            $consoleSlugs[] = Setting::resolveConsoleDashboardSlug();
-        } catch (Throwable) {
-            // Fallback
-        }
-        $consoleSlugs = array_values(array_unique(array_filter($consoleSlugs)));
-
-        if (
-            in_array(strtolower($firstSegment), array_map('strtolower', $consoleSlugs), true)
-            || in_array(strtolower($firstSegment), ['auth', 'login', 'register'], true)
-        ) {
-            if (file_exists(public_path('console.html'))) {
-                $content = file_get_contents(public_path('console.html'));
-                if (is_string($content)) {
-                    return response($content)->header('Content-Type', 'text/html');
-                }
-            }
-        }
-
         if (file_exists(public_path('index.html'))) {
             $content = file_get_contents(public_path('index.html'));
             if (is_string($content)) {

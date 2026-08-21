@@ -1,104 +1,81 @@
-# 01. Overview & Tier Architecture — Jejakawan CMS
+# 01. Overview & Architecture — Jejakawan Core Engine
 
 ## 🌟 1. Ikhtisar Sistem
-**Jejakawan CMS (`ja-cms`)** adalah platform Content Management System modern berbasis arsitektur **Modular Monolith** yang dirancang untuk performa tinggi, keamanan kelas enterprise, dan fleksibilitas penerbitan konten.
+**Jejakawan Core Engine (`ja-core_engine`)** adalah platform Headless Kernel dan Admin Console modern berbasis arsitektur **Modular Monolith** yang dirancang untuk performa tinggi, isolasi domain yang kokoh, serta keandalan tata kelola data & infrastruktur.
 
 Sistem ini menggabungkan:
-- **Backend**: Laravel 12 (PHP 8.3+) dengan arsitektur domain modular di bawah namespace `Modules\`.
-- **Frontend**: Vue 3 SPA + TypeScript + Vite 8 + Tailwind CSS.
-- **Database**: Single-Database PostgreSQL 16+ (atau SQLite untuk testing) dengan Redis untuk caching, session, dan queuing.
+- **Backend**: Laravel 12/13 (PHP 8.3+) dengan arsitektur domain modular terenkapsulasi di bawah namespace `Modules\Core\`.
+- **Frontend**: Vue 3.5 Single Unified Console SPA + TypeScript + Vite 8 + Tailwind CSS v4.
+- **Database**: PostgreSQL 16+ (atau SQLite untuk isolated automated testing) dengan skema terisolasi `core_engine` serta Redis untuk caching, session, dan queuing.
 
 ---
 
-## 🏛️ 2. Pembagian Tier & Modul
+## 🏛️ 2. Domain & Modul Core Engine
 
-Arsitektur dibagi menjadi 3 Tier hierarkis yang independen dan saling melengkapi:
+Arsitektur Core Engine berfokus pada fondasi kernel operasional:
 
 ```
                           ┌───────────────────────────┐
-                          │       Jejakawan CMS       │
+                          │   Jejakawan Core Engine   │
                           └─────────────┬─────────────┘
                                         │
          ┌──────────────────────────────┼──────────────────────────────┐
          │                              │                              │
          ▼                              ▼                              ▼
 ┌──────────────────┐          ┌───────────────────┐          ┌───────────────────┐
-│     Core Tier    │          │    Content Tier   │          │ Intelligence Tier │
+│      System      │          │       Infra       │          │      Security     │
 ├──────────────────┤          ├───────────────────┤          ├───────────────────┤
-│ • System         │          │ • Publishing      │          │ • AI Integration  │
-│ • Infra          │          │ • Layout (Builder)│          │ • Unified Search  │
-│ • Security       │          │ • Forms           │          │ • Analytics       │
-│                  │          │ • Media           │          │ • Newsletter      │
-│                  │          │ • Library         │          │                   │
+│ • User & IAM     │          │ • Data Studio     │          │ • RBAC + ABAC     │
+│ • RBAC Matrix    │          │ • Task Crons      │          │ • 2FA & Passkeys  │
+│ • Settings       │          │ • Backups         │          │ • Rate Limiting   │
+│ • Plugins/Ext    │          │ • Redis Cache     │          │ • IP Lists        │
+│ • Languages      │          │ • Webhooks        │          │ • Audit Journals  │
 └──────────────────┘          └───────────────────┘          └───────────────────┘
 ```
 
-### A. Core Tier (`Modules/Core/`)
-Menyediakan fondasi sistem operasi CMS, otentikasi, tata kelola keamanan, dan utilitas infrastruktur:
-1. **System**:
-   - IAM (Identity and Access Management): User, Role (Spatie RBAC), Permission Registry, KYC Profile.
-   - Dynamic System Settings dengan cache memori otomatis (`Cache::rememberForever`).
-   - Extension & Plugin system sandbox.
-   - Activity log & System health metrics.
-2. **Infra**:
-   - Scheduled task orchestrator & automation runner.
-   - Data Model Studio & Dynamic REST Entities.
-   - URL Redirects manager & Automated Database Backup system.
-   - Outbound webhooks delivery & audit.
-3. **Security**:
+### A. System Domain (`Modules/Core/app/System/`)
+Menyediakan tata kelola sistem operasi aplikasi, otentikasi, dan konfigurasi global:
+1. **IAM (Identity and Access Management)**:
+   - User Accounts, Role Hierarchy (Spatie RBAC), Permission Registry, KYC Document Review Flow.
+   - Dual Login support: Autentikasi fleksibel menggunakan Email atau Username.
+2. **Configuration & Internationalization**:
+   - Dynamic System Settings dengan cache memori otomatis.
+   - Multi-bahasa terpadu (`id`, `en`, `su`) dengan modul lazy-loader.
+3. **Extensions & Plugins**:
+   - Extension Registry dengan AST Security Sandbox Scanner untuk memvalidasi paket pihak ketiga.
+4. **Activity & Audit Logging**:
+   - Full Activity Journaling yang mencatat seluruh lifecycle mutasi entitas dan aktivitas admin.
+
+### B. Infrastructure & Data Studio (`Modules/Core/app/Infra/`)
+Mengelola utilitas komputasi, storage, automasi, dan schema modeling:
+1. **Data Model Studio**:
+   - Desain data model dinamis (entities, custom fields, validation rules, OpenAPI schema generation).
+   - Dynamic Record CRUD engine otomatis untuk model yang dibuat di runtime.
+2. **Task Scheduler & Automation**:
+   - Cron runner terpadu dengan reporting status eksekusi, preset runtime, dan scheduler logs.
+3. **Backup & Snapshot Manager**:
+   - Backup database terisolasi dan instant snapshot management.
+4. **Redis Cache Engine**:
+   - Key search, memory analytics, dan TTL inspection.
+5. **Webhook Dispatcher**:
+   - Outbound webhook delivery system dengan retry policy otomatis.
+
+### C. Security Domain (`Modules/Core/app/Security/`)
+Perlindungan perimeter, tata kelola akses, dan observabilitas keamanan:
+1. **Access Governance**:
    - Attribute-Based Access Control (ABAC) Policy engine.
    - Two-Factor Authentication (TOTP 2FA) & WebAuthn / Passkeys.
-   - IP Firewall (Allowlist/Blocklist) & Dynamic Rate Limiter.
-   - SIEM log exporter & Content Security Policy (CSP) engine.
-
-### B. Content Tier (`Modules/Content/`)
-Jantung dari kemampuan manajemen konten dan visual design CMS:
-1. **Publishing**:
-   - Konten artikel, berita, dan halaman kustom.
-   - Kategori hierarkis, taksonomi tag, dan metadata SEO.
-   - Editorial workflow (Draft, Scheduled, Published, Archived), versioning & revisi riwayat.
-   - Sistem komentar interaktif dengan spam protection filter.
-2. **Layout & JA-Builder**:
-   - **JA-Builder**: Visual Canvas Builder dengan drag-and-drop, responsive preview (Desktop, Tablet, Mobile), layer tree, property panels, popover variabel global, dan isolated i18n localization.
-   - **Theme Engine**: Sistem tema mandiri (misalnya **Janari Theme**) dengan slot dinamis, schema customizer, dan live preview.
-   - **Navigation & Menus**: Pengelola menu hierarkis multi-lokasi.
-3. **Media**:
-   - Media storage explorer, folder hierarki, pencarian aset.
-   - Otomasi konversi WebP, thumbnail generator multi-resolusi, dan sanitasi file SVG.
-4. **Forms**:
-   - Visual drag-and-drop form builder.
-   - Validasi field dinamis, integrasi bot protection (reCAPTCHA v3 / Cloudflare Turnstile).
-   - Pengelola respons form, ekspor CSV/Excel, dan analitik submisi.
-5. **Library**:
-   - Global reusable template blocks & snippet library.
-   - Custom field definition system.
-
-### C. Intelligence Tier (`Modules/Intelligence/`)
-Menyediakan kecerdasan buatan, analitik, dan kapabilitas pencarian:
-1. **AI Integration**:
-   - Multi-provider gateway (DeepSeek, OpenAI, Google Gemini).
-   - Asisten penulisan artikel (Content Drafting), SEO auto-generation, dan AI Taxonomy suggestions.
-   - AI usage analytics & token rate monitor.
-2. **Search**:
-   - Unified Search Indexer yang mengindeks artikel, halaman, media, dan kategori secara terpusat melalui asynchronous database triggers / listeners.
-   - Loose & strict matching, search auto-suggestions, and health indexing scanner.
-3. **Analytics**:
-   - Privacy-friendly visitor tracking tanpa cookie pihak ketiga.
-   - Statistik kunjungan real-time, browser, perangkat, negara, dan top landing pages.
-4. **Newsletter**:
-   - Subscriber management, audience segmentation, dan broadcast campaign builder.
+2. **Perimeter Defense**:
+   - IP Filtering (Allowlist & Blocklist) dengan progressive auto-block.
+   - Dynamic Rate Limiting & Probe Path Sinkhole.
+3. **Observability & SIEM**:
+   - Security Audit Logs, SIEM JSON Exporter, dan CSP (Content Security Policy) report collector.
 
 ---
 
-## 🔒 3. Prinsip Komunikasi Antar-Modul
+## 🔒 3. Prinsip Isolasi Data & Multi-Schema
 
-1. **Explicit API Boundaries**:
-   - Antar modul backend tidak boleh mengakses tabel modul lain secara *raw DB query* langsung di luar model resmi.
-   - Gunakan Model Relations, Service Classes, atau Laravel Event/Listeners (`Event::dispatch`).
-2. **Database Isolation**:
-   - Setiap modul memiliki prefix tabel yang konsisten:
-     - Core: `srv_*` (e.g. `srv_auth_users`, `srv_system_settings`)
-     - Content: `pub_*` (e.g. `pub_contents`), `lay_*` (e.g. `lay_themes`), `med_*` (e.g. `med_media`), `forms_*`
-     - Intelligence: `int_*` (e.g. `int_search_index`, `int_analytics_visits`)
-3. **Lifecycle Events**:
-   - Perubahan data (seperti `ContentPublished`, `CategoryDeleted`) mentrigger event yang secara otomatis ditangkap oleh modul Intelligence (`UnifiedSearchIndexer`) tanpa kopling ketat (*loose coupling*).
+Untuk menjaga kestabilan dalam integrasi multi-project:
+- `ja-core_engine` menggunakan schema terisolasi: `core_engine` pada PostgreSQL (`DB_SCHEMA=core_engine`).
+- Database Redis menggunakan dedicated database index (`REDIS_DB=6`, `REDIS_CACHE_DB=7`) dengan prefix unik `core_engine_cache:`.
+- Hal ini mencegah tabrakan data dan cache dengan instance CMS maupun Control Plane lainnya pada host yang sama.

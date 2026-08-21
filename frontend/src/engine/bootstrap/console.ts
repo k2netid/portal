@@ -29,13 +29,11 @@ export async function bootstrapConsoleApp() {
     }
 
     try {
-        const pathname = typeof window !== 'undefined' ? window.location.pathname : '/dash';
-        const { loadBootstrapConsoleModules } = await import('@/modules/bootstrap/content');
-        const modules = await loadBootstrapConsoleModules(pathname);
-        modules.forEach((m) => registry.register(m));
-        await registry.initializeModules(modules);
+        const { coreModules } = await import('@/modules/Core');
+        coreModules.forEach((m) => registry.register(m));
+        await registry.initializeModules(coreModules);
     } catch (error) {
-        logger.error('[Kernel] Failed to register console modules during bootstrap', error);
+        logger.error('[Kernel] Failed to register core console modules during bootstrap', error);
     }
 
     logger.info('[Kernel] Console kernel ready.', {

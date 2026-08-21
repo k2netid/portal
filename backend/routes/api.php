@@ -13,9 +13,10 @@ Route::prefix('v1/install')->group(function () {
 | API Routes
 |--------------------------------------------------------------------------
 |
-| All API routes have been moved to their respective modules:
-| - Modules/Core/System/routes/api.php
-| - Modules/Content/Publishing/routes/api.php
+| All API routes are encapsulated in their respective modules:
+| - Modules/Core/routes/system_api.php
+| - Modules/Core/routes/infra_api.php
+| - Modules/Core/routes/security_api.php
 |*/
 
 use Illuminate\Http\Request;

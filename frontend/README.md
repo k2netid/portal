@@ -1,27 +1,30 @@
-# Jejakawan — Frontend (`ja-cms`)
+# Jejakawan Core Engine (Frontend)
 
-Vue 3 + Vite SPA untuk **jejakawan.com**: situs publik (Janari Theme), Visual Builder (JA-Builder), dan Konsol Pengelolaan Konten.
+Vue 3.5 + Vite 8 Single Unified Console SPA untuk **Jejakawan Core Engine (`ja-core_engine`)**.
 
-## Modul FE
+## Modul Domain
 
-| Tier | Modul |
+| Domain | Modul Sub-fitur |
 | :--- | :--- |
-| Core | System, Infra, Security |
-| Content | Publishing, Layout (JA-Builder, Themes), Media, Forms, Library |
-| Intelligence | AI, Search, Analytics, Newsletter |
+| **System** | IAM, RBAC, Settings, Journals, Extensions, Languages |
+| **Infra** | Data Studio, Tasks Scheduler, Backups, Redis Cache Explorer, Webhooks |
+| **Security** | IP Firewall, 2FA, Passkeys WebAuthn, ABAC Policies, Security Logs |
 
+## Shell Architecture
 
-## Shell
-
-Dua HTML: `console.html` → `main-console.ts` (`/dash/*`, auth); `index.html` → `main-public.ts` (portal Janari).
+Single Unified Console SPA (`index.html` → `src/main.ts`) dengan rute autentikasi langsung dan zero-404 landing redirect.
 
 ## Development
 
 ```bash
-npm install && npm run dev
-npm run deploy:assets:full
+npm install
+npm run dev
 ```
 
----
+## Quality Gates
 
-[Root README](../README.md)
+```bash
+npx vue-tsc -b       # TypeScript Typecheck
+npm run test:unit    # Vitest Unit Tests
+npm run build        # Production Build
+```
