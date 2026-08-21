@@ -9,6 +9,7 @@ use Modules\Core\System\Http\Controllers\Api\MaintenanceApiController;
 use Modules\Core\System\Http\Controllers\Api\ScaffolderApiController;
 use Modules\Core\System\Http\Controllers\Api\ScimUserController;
 use Modules\Core\System\Http\Controllers\Console\ActivityLogController;
+use Modules\Core\System\Http\Controllers\Console\AnalyticsController;
 use Modules\Core\System\Http\Controllers\Console\AuthController;
 use Modules\Core\System\Http\Controllers\Console\CaptchaController;
 use Modules\Core\System\Http\Controllers\Console\ConsoleThemeController;
@@ -201,6 +202,21 @@ Route::prefix('v1')->group(function (): void {
         Route::post('system/revoke', [NotificationController::class, 'revokeSystem']);
         Route::post('system/bulk-revoke', [NotificationController::class, 'bulkRevokeSystem']);
         Route::post('broadcast', [NotificationController::class, 'broadcast']);
+    });
+
+    // Analytics Management API (Cleanup, purge, & reporting)
+    Route::prefix('manage/analytics')->middleware(['auth:sanctum'])->group(function (): void {
+        Route::post('cleanup', [AnalyticsController::class, 'cleanup']);
+        Route::post('purge-all', [AnalyticsController::class, 'purgeAll']);
+        Route::get('overview', [AnalyticsController::class, 'overview']);
+        Route::get('visits', [AnalyticsController::class, 'visits']);
+        Route::get('top-pages', [AnalyticsController::class, 'topPages']);
+        Route::get('devices', [AnalyticsController::class, 'devices']);
+        Route::get('browsers', [AnalyticsController::class, 'browsers']);
+        Route::get('countries', [AnalyticsController::class, 'countries']);
+        Route::get('referrers', [AnalyticsController::class, 'referrers']);
+        Route::get('realtime', [AnalyticsController::class, 'realtime']);
+        Route::get('export', [AnalyticsController::class, 'export']);
     });
 
     // System Journal routes for frontend compatibility (registered as api/v1/manage/system-journal)
