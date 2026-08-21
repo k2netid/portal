@@ -92,4 +92,25 @@ class TwoFactorAndSecurityApiTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function test_admin_can_access_dependency_vulnerabilities_endpoints(): void
+    {
+        $admin = $this->createAdminUser();
+
+        $statsRes = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/security/dependency-vulnerabilities/statistics');
+        $statsRes->assertOk();
+
+        $listRes = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/security/dependency-vulnerabilities');
+        $listRes->assertOk();
+
+        $pkgStatsRes = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/security/dependency-packages/statistics');
+        $pkgStatsRes->assertOk();
+
+        $pkgListRes = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/security/dependency-packages');
+        $pkgListRes->assertOk();
+    }
 }

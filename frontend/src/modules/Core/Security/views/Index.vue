@@ -1017,7 +1017,7 @@ const fetchVulnerabilities = async (): Promise<void> => {
 const fetchVulnStats = async (): Promise<void> => {
     try {
         const response = await api.get('/manage/security/dependency-vulnerabilities/statistics');
-        vulnStats.value = (response.data as VulnStats) || { total: 0, critical: 0, high: 0, medium: 0, low: 0 };
+        vulnStats.value = ((response.data?.data || response.data) as VulnStats) || { total: 0, critical: 0, high: 0, medium: 0, low: 0 };
     } catch (_error: unknown) {
         logger.error('Failed to fetch vulnerability stats:', _error);
     }
