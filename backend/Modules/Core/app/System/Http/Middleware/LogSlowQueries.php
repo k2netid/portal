@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Services\QueryPerformanceService;
-use Modules\Intelligence\Analytics\Models\SlowQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogSlowQueries
@@ -58,10 +57,11 @@ class LogSlowQueries
                         ], $slowQueries),
                     ]);
 
-                    // Store in database for analytics
-                    if (config('database.store_slow_queries', true)) {
+                    // Store in database for analytics if analytics module is available
+                    $slowQueryClass = 'Modules\\Intelligence\\Analytics\\Models\\SlowQuery';
+                    if (config('database.store_slow_queries', false) && class_exists($slowQueryClass)) {
                         foreach ($slowQueries as $query) {
-                            SlowQuery::create([
+                            $slowQueryClass::create([
                                 'sql' => $query['query'],
                                 'time' => (float) ($query['time'] ?? 0),
                                 'connection' => config('database.default'),
