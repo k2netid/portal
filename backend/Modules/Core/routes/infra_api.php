@@ -26,7 +26,20 @@ Route::prefix('v1')->group(function (): void {
 
         // File Manager
         Route::get('file-manager', [FileManagerController::class, 'index']);
+        Route::get('file-manager/download', [FileManagerController::class, 'download']);
         Route::post('file-manager/upload', [FileManagerController::class, 'upload']);
+        Route::post('file-manager/folder', [FileManagerController::class, 'createFolder']);
+        Route::delete('file-manager/folder', [FileManagerController::class, 'deleteFolder']);
+        Route::delete('file-manager', [FileManagerController::class, 'delete']);
+        Route::post('file-manager/move', [FileManagerController::class, 'move']);
+        Route::post('file-manager/copy', [FileManagerController::class, 'copy']);
+        Route::post('file-manager/rename', [FileManagerController::class, 'rename']);
+        Route::get('file-manager/trash', [FileManagerController::class, 'trash']);
+        Route::post('file-manager/restore', [FileManagerController::class, 'restore']);
+        Route::post('file-manager/empty-trash', [FileManagerController::class, 'emptyTrash']);
+        Route::delete('file-manager/permanently', [FileManagerController::class, 'deletePermanently']);
+        Route::post('file-manager/extract', [FileManagerController::class, 'extract']);
+        Route::post('file-manager/compress', [FileManagerController::class, 'compress']);
 
         // Redirects
         Route::apiResource('redirects', InfraRedirectController::class)->names([

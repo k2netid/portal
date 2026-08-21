@@ -683,6 +683,130 @@
     }
   },
   "system": {
+    "system": {
+      "logs": {
+        "actions": {
+          "clear": "Clear Logs"
+        },
+        "clear": "Clear Logs",
+        "clearing": "Clearing...",
+        "confirm": {
+          "clear": "Are you sure you want to clear all logs? This action cannot be undone."
+        },
+        "empty": "Select a log file to view",
+        "failed_load": "Failed to load log content",
+        "files": "Log Files",
+        "loading": "Loading log file...",
+        "messages": {
+          "cleared": "Logs cleared successfully",
+          "failed_clear": "Failed to clear logs",
+          "failed_download": "Failed to download log file"
+        },
+        "refresh": "Refresh",
+        "search": "Search in log...",
+        "select": "Select a log file",
+        "title": "System Journal",
+        "subtitle": "Application and server log files."
+      }
+    },
+    "activity_journal": {
+      "export": {
+        "button": "Export CSV",
+        "exporting": "Exporting...",
+        "failed": "Failed to export activity logs"
+      },
+      "filters": {
+        "allTypes": "All Types",
+        "allUsers": "All Users",
+        "clear": "Clear",
+        "dateFrom": "From",
+        "dateTo": "To",
+        "perPage": "Per page",
+        "search": "Search activities...",
+        "types": {
+          "bulk_action_media": "Bulk Media Action",
+          "created": "Created",
+          "delete_permanent": "Permanently Deleted",
+          "deleted": "Deleted",
+          "emptied_trash": "Emptied Trash",
+          "login": "Login",
+          "login_failed": "Login Failed",
+          "login_success": "Login Success",
+          "logout": "Logout",
+          "published": "Published",
+          "session_invalidated": "Session Invalidated",
+          "soft_deleted_file": "Moved File to Trash",
+          "soft_deleted_folder": "Moved Folder to Trash",
+          "soft_deleted_media": "Moved Media to Trash",
+          "unpublished": "Unpublished",
+          "updated": "Updated",
+          "uploaded_media": "Uploaded Media",
+          "viewed": "Viewed"
+        }
+      },
+      "messages": {
+        "empty": "No activity logs found",
+        "loading": "Loading...",
+        "system": "System",
+        "unknown": "Unknown",
+        "viewDetails": "View Details"
+      },
+      "stats": {
+        "activeUsers": "Active Users",
+        "thisWeek": "This Week",
+        "today": "Today",
+        "total": "Total Activities"
+      },
+      "title": "Activity Journal",
+      "subtitle": "Audit trail of user and system actions."
+    },
+    "access_journal": {
+      "alerts": {
+        "severity": {
+          "high": "High",
+          "low": "Low",
+          "medium": "Medium"
+        },
+        "title": "Suspicious Activity Alerts",
+        "types": {
+          "brute_force": "Potential Brute Force",
+          "new_ip": "New IP Address",
+          "shared_ip": "Possible Account Sharing"
+        }
+      },
+      "description": "View all login activities from users",
+      "export": {
+        "button": "Export CSV",
+        "exporting": "Exporting...",
+        "failed": "Failed to export login history"
+      },
+      "filters": {
+        "allStatus": "All Status",
+        "allUsers": "All Users",
+        "dateFrom": "From",
+        "dateTo": "To"
+      },
+      "messages": {
+        "empty": "No login history found",
+        "loading": "Loading..."
+      },
+      "pagination": {
+        "showing": "Showing {count} of {total} records"
+      },
+      "stats": {
+        "activeSessions": "Active Sessions",
+        "failedLogins": "Failed Logins",
+        "suspiciousCount": "Suspicious Activity",
+        "todayLogins": "Logins Today",
+        "totalLogins": "Total Successful Logins",
+        "uniqueIps": "Unique IPs Today"
+      },
+      "status": {
+        "failed": "Failed",
+        "success": "Success"
+      },
+      "title": "Access History"
+    },
     "backups": {
       "actions": {
         "delete": "Delete Backup",
@@ -759,7 +883,7 @@
         "requirements": "System Requirements Matrix"
       },
       "requirements": {
-        "title": "JA-CMS System Requirements & Readiness Audit",
+        "title": "JA Control Plane System Requirements & Readiness Audit",
         "subtitle": "Comprehensive evaluation of server specifications, PHP extensions, database engine, storage permissions, and background worker daemons.",
         "score": "System Readiness Score",
         "readiness_label": "Readiness",

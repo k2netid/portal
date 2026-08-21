@@ -683,6 +683,130 @@
     }
   },
   "system": {
+    "system": {
+      "logs": {
+        "actions": {
+          "clear": "Bersihkan Log"
+        },
+        "clear": "Bersihkan Log",
+        "clearing": "Membersihkan...",
+        "confirm": {
+          "clear": "Apakah Anda yakin ingin membersihkan semua log? Tindakan ini tidak dapat dibatalkan."
+        },
+        "empty": "Pilih berkas log untuk melihat isi",
+        "failed_load": "Gagal memuat isi log",
+        "files": "Berkas Log",
+        "loading": "Memuat berkas log...",
+        "messages": {
+          "cleared": "Log berhasil dibersihkan",
+          "failed_clear": "Gagal membersihkan log",
+          "failed_download": "Gagal mengunduh berkas log"
+        },
+        "refresh": "Segarkan",
+        "search": "Cari dalam log...",
+        "select": "Pilih berkas log",
+        "title": "Jurnal Sistem",
+        "subtitle": "Berkas log aplikasi dan server."
+      }
+    },
+    "activity_journal": {
+      "export": {
+        "button": "Ekspor CSV",
+        "exporting": "Mengekspor...",
+        "failed": "Gagal mengekspor log aktivitas"
+      },
+      "filters": {
+        "allTypes": "Semua Tipe",
+        "allUsers": "Semua Pengguna",
+        "clear": "Bersihkan",
+        "dateFrom": "Dari",
+        "dateTo": "Sampai",
+        "perPage": "Per halaman",
+        "search": "Cari aktivitas...",
+        "types": {
+          "bulk_action_media": "Aksi Masal Media",
+          "created": "Dibuat",
+          "delete_permanent": "Dihapus Permanen",
+          "deleted": "Dihapus",
+          "emptied_trash": "Sampah Dikosongkan",
+          "login": "Masuk",
+          "login_failed": "Gagal Masuk",
+          "login_success": "Berhasil Masuk",
+          "logout": "Keluar",
+          "published": "Diterbitkan",
+          "session_invalidated": "Sesi Dibatalkan",
+          "soft_deleted_file": "Berkas Dibuang ke Sampah",
+          "soft_deleted_folder": "Folder Dibuang ke Sampah",
+          "soft_deleted_media": "Media Dibuang ke Sampah",
+          "unpublished": "Ditarik",
+          "updated": "Diperbarui",
+          "uploaded_media": "Media Diunggah",
+          "viewed": "Dilihat"
+        }
+      },
+      "messages": {
+        "empty": "Tidak ada log aktivitas ditemukan",
+        "loading": "Memuat...",
+        "system": "Sistem",
+        "unknown": "Tidak Diketahui",
+        "viewDetails": "Lihat Detail"
+      },
+      "stats": {
+        "activeUsers": "Pengguna Aktif",
+        "thisWeek": "Minggu Ini",
+        "today": "Hari Ini",
+        "total": "Total Aktivitas"
+      },
+      "title": "Jurnal Aktivitas",
+      "subtitle": "Jejak audit aksi pengguna dan sistem."
+    },
+    "access_journal": {
+      "alerts": {
+        "severity": {
+          "high": "Tinggi",
+          "low": "Rendah",
+          "medium": "Sedang"
+        },
+        "title": "Peringatan Aktivitas Mencurigakan",
+        "types": {
+          "brute_force": "Potensi Serangan Brute Force",
+          "new_ip": "Alamat IP Baru",
+          "shared_ip": "Kemungkinan Berbagi Akun"
+        }
+      },
+      "description": "Lihat semua riwayat login dari pengguna",
+      "export": {
+        "button": "Ekspor CSV",
+        "exporting": "Mengekspor...",
+        "failed": "Gagal mengekspor riwayat masuk"
+      },
+      "filters": {
+        "allStatus": "Semua Status",
+        "allUsers": "Semua Pengguna",
+        "dateFrom": "Dari",
+        "dateTo": "Sampai"
+      },
+      "messages": {
+        "empty": "Tidak ada riwayat masuk ditemukan",
+        "loading": "Memuat..."
+      },
+      "pagination": {
+        "showing": "Menampilkan {count} dari {total} catatan"
+      },
+      "stats": {
+        "activeSessions": "Sesi Aktif",
+        "failedLogins": "Login Gagal",
+        "suspiciousCount": "Aktivitas Mencurigakan",
+        "todayLogins": "Login Hari Ini",
+        "totalLogins": "Total Login Berhasil",
+        "uniqueIps": "IP Unik Hari Ini"
+      },
+      "status": {
+        "failed": "Gagal",
+        "success": "Berhasil"
+      },
+      "title": "Riwayat Masuk"
+    },
     "backups": {
       "actions": {
         "delete": "Hapus Cadangan",
@@ -759,7 +883,7 @@
         "requirements": "Matriks Kebutuhan Sistem"
       },
       "requirements": {
-        "title": "Audit Kebutuhan & Kesiapan Sistem JA-CMS",
+        "title": "Audit Kebutuhan & Kesiapan Sistem JA Control Plane",
         "subtitle": "Pemeriksaan menyeluruh terhadap spesifikasi server, ekstensi PHP, koneksi basis data, izin folder, dan service latar belakang.",
         "score": "Skor Kesiapan Sistem",
         "readiness_label": "Kesiapan",

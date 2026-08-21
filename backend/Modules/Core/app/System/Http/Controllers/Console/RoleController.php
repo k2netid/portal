@@ -120,10 +120,13 @@ class RoleController extends BaseApiController
 
     public function store(Request $request): JsonResponse
     {
+        $rolesTable = is_string($v = config('permission.table_names.roles')) ? $v : 'roles';
+        $permissionsTable = is_string($p = config('permission.table_names.permissions')) ? $p : 'permissions';
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name',
+            'name' => 'required|string|max:255|unique:'.$rolesTable.',name',
             'permissions' => 'array',
-            'permissions.*' => 'exists:permissions,name',
+            'permissions.*' => 'exists:'.$permissionsTable.',name',
         ]);
 
         $name = is_string($validated['name']) ? $validated['name'] : '';
@@ -144,10 +147,13 @@ class RoleController extends BaseApiController
             return $this->error('Cannot modify protected role', 403);
         }
 
+        $rolesTable = is_string($v = config('permission.table_names.roles')) ? $v : 'roles';
+        $permissionsTable = is_string($p = config('permission.table_names.permissions')) ? $p : 'permissions';
+
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255|unique:roles,name,'.$role->id,
+            'name' => 'sometimes|string|max:255|unique:'.$rolesTable.',name,'.$role->id,
             'permissions' => 'array',
-            'permissions.*' => 'exists:permissions,name',
+            'permissions.*' => 'exists:'.$permissionsTable.',name',
         ]);
 
         if (isset($validated['name'])) {

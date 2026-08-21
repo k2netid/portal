@@ -191,6 +191,7 @@ Route::prefix('v1')->group(function (): void {
     // Notifications Management API (Canonical for SPA)
     Route::prefix('manage/notifications')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('', [NotificationController::class, 'index']);
+        Route::get('unread-count', [NotificationController::class, 'unreadCount']);
         Route::put('read-all', [NotificationController::class, 'markAllAsRead']);
         Route::put('{notification}/read', [NotificationController::class, 'markAsRead']);
         Route::delete('{notification}', [NotificationController::class, 'destroy']);

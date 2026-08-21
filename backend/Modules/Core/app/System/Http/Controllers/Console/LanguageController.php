@@ -53,7 +53,7 @@ class LanguageController extends BaseApiController
     {
         try {
             $validated = $request->validate([
-                'code' => 'required|string|max:10|unique:languages,code',
+                'code' => 'required|string|max:10|unique:sys_languages,code',
                 'name' => 'required|string|max:255',
                 'native_name' => 'nullable|string|max:255',
                 'flag' => 'nullable|string',
@@ -105,7 +105,7 @@ class LanguageController extends BaseApiController
     {
         try {
             $validated = $request->validate([
-                'code' => 'sometimes|required|string|max:10|unique:languages,code,'.$language->id,
+                'code' => 'sometimes|required|string|max:10|unique:sys_languages,code,'.$language->id,
                 'name' => 'sometimes|required|string|max:255',
                 'native_name' => 'nullable|string|max:255',
                 'flag' => 'nullable|string',

@@ -683,6 +683,130 @@
     }
   },
   "system": {
+    "system": {
+      "logs": {
+        "actions": {
+          "clear": "Beresihan Log"
+        },
+        "clear": "Beresihan Log",
+        "clearing": "Meresihan...",
+        "confirm": {
+          "clear": "Naha anjeun yakin hoyong ngaberesihan sadaya log? Tindakan ieu teu tiasa dibolaykeun."
+        },
+        "empty": "Pilih berkas log kanggo ningali eusi",
+        "failed_load": "Gagal ngamuat eusi log",
+        "files": "Berkas Log",
+        "loading": "Ngamuat berkas log...",
+        "messages": {
+          "cleared": "Log parantos diberesihan",
+          "failed_clear": "Gagal ngaberesihan log",
+          "failed_download": "Gagal ngunduh berkas log"
+        },
+        "refresh": "Segerkeun",
+        "search": "Milari dina log...",
+        "select": "Pilih berkas log",
+        "title": "Jurnal Sistem",
+        "subtitle": "Berkas log aplikasi sareng server."
+      }
+    },
+    "activity_journal": {
+      "export": {
+        "button": "Ékspor CSV",
+        "exporting": "Nuju ngékspor...",
+        "failed": "Gagal ngékspor log aktivitas"
+      },
+      "filters": {
+        "allTypes": "Sadaya Tipe",
+        "allUsers": "Sadaya Pamaké",
+        "clear": "Beresihan",
+        "dateFrom": "Ti",
+        "dateTo": "Dugi",
+        "perPage": "Per kaca",
+        "search": "Milari aktivitas...",
+        "types": {
+          "bulk_action_media": "Aksi Masal Média",
+          "created": "Dijieun",
+          "delete_permanent": "Dihapus Permanén",
+          "deleted": "Dihapus",
+          "emptied_trash": "Runtah Dikosongkeun",
+          "login": "Asup",
+          "login_failed": "Gagal Asup",
+          "login_success": "Hasil Asup",
+          "logout": "Kaluar",
+          "published": "Diterbitkeun",
+          "session_invalidated": "Sési Dibolaykeun",
+          "soft_deleted_file": "Berkas Dipiceun ka Runtah",
+          "soft_deleted_folder": "Polder Dipiceun ka Runtah",
+          "soft_deleted_media": "Média Dipiceun ka Runtah",
+          "unpublished": "Ditarik",
+          "updated": "Dirobih",
+          "uploaded_media": "Média Diunggah",
+          "viewed": "Ditingali"
+        }
+      },
+      "messages": {
+        "empty": "Teu aya log aktivitas kapendak",
+        "loading": "Nuju ngamuat...",
+        "system": "Sistem",
+        "unknown": "Teu Dipikanyaho",
+        "viewDetails": "Tingali Rincian"
+      },
+      "stats": {
+        "activeUsers": "Pamaké Aktif",
+        "thisWeek": "Minggu Ieu",
+        "today": "Dinten Ieu",
+        "total": "Total Aktivitas"
+      },
+      "title": "Jurnal Aktivitas",
+      "subtitle": "Tapak audit aksi pamaké sareng sistem."
+    },
+    "access_journal": {
+      "alerts": {
+        "severity": {
+          "high": "Luhur",
+          "low": "Handap",
+          "medium": "Sedeng"
+        },
+        "title": "Pépéléké Aktivitas Curiga",
+        "types": {
+          "brute_force": "Poténsi Serangan Brute Force",
+          "new_ip": "Alamat IP Énggal",
+          "shared_ip": "Kamungkinan Babagi Akun"
+        }
+      },
+      "description": "Tingali sadaya riwayat asup ti pamaké",
+      "export": {
+        "button": "Ékspor CSV",
+        "exporting": "Nuju ngékspor...",
+        "failed": "Gagal ngékspor riwayat asup"
+      },
+      "filters": {
+        "allStatus": "Sadaya Status",
+        "allUsers": "Sadaya Pamaké",
+        "dateFrom": "Ti",
+        "dateTo": "Dugi"
+      },
+      "messages": {
+        "empty": "Teu aya riwayat asup kapendak",
+        "loading": "Nuju ngamuat..."
+      },
+      "pagination": {
+        "showing": "Némbongkeun {count} tina {total} catetan"
+      },
+      "stats": {
+        "activeSessions": "Sési Aktif",
+        "failedLogins": "Asup Gagal",
+        "suspiciousCount": "Aktivitas Curiga",
+        "todayLogins": "Asup Dinten Ieu",
+        "totalLogins": "Total Asup Hasil",
+        "uniqueIps": "IP Unik Dinten Ieu"
+      },
+      "status": {
+        "failed": "Gagal",
+        "success": "Hasil"
+      },
+      "title": "Riwayat Asup"
+    },
     "backups": {
       "actions": {
         "delete": "Hapus Cadangan",
@@ -759,7 +883,7 @@
         "requirements": "Matriks Pangabutuh Sistem"
       },
       "requirements": {
-        "title": "Audit Pangabutuh & Kasiapan Sistem JA-CMS",
+        "title": "Audit Pangabutuh & Kasiapan Sistem JA Control Plane",
         "subtitle": "Pamariksaan gembleng kana spésifikasi sérver, éksténsi PHP, sambungan database, widi folder, sareng layanan kasang tukang.",
         "score": "Skor Kasiapan Sistem",
         "readiness_label": "Kasiapan",

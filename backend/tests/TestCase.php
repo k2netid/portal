@@ -112,9 +112,12 @@ abstract class TestCase extends BaseTestCase
             Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
         }
 
-        // Create admin role if it doesn't exist
+        // Create admin and super roles if they don't exist
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $adminRole->givePermissionTo(Permission::all());
+
+        $superRole = Role::firstOrCreate(['name' => 'super', 'guard_name' => 'web']);
+        $superRole->givePermissionTo(Permission::all());
     }
 
     /**
@@ -132,6 +135,17 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $this->createUser($attributes);
         $user->assignRole('admin');
+
+        return $user;
+    }
+
+    /**
+     * Create a super admin user for testing.
+     */
+    protected function createSuperAdminUser(array $attributes = []): User
+    {
+        $user = $this->createUser($attributes);
+        $user->assignRole('super');
 
         return $user;
     }
