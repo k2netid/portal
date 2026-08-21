@@ -1,6 +1,6 @@
 import { logger } from '@/shared/utils/logger';
 import { ref, computed } from 'vue';
-import i18n, { normalizeLocaleCode, setLocale as i18nSetLocale, getLocale as i18nGetLocale } from '@/engine/i18n';
+import i18n, { normalizeLocaleCode, setLocale as i18nSetLocale, getLocale as i18nGetLocale, loadLocaleMessages } from '@/engine/i18n';
 import api from '@/engine/api/client';
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 
@@ -113,6 +113,8 @@ export function useLanguage() {
      */
     const setLanguage = async (languageCode: string) => {
         const resolved = normalizeLocaleCode(languageCode);
+        // Ensure locale messages are loaded
+        await loadLocaleMessages(resolved);
         // Update Vue I18n (this saves to localStorage)
         i18nSetLocale(resolved);
 
@@ -179,6 +181,7 @@ export function useLanguage() {
         if (backendLocale) {
             // Backend is source of truth - also update localStorage and Vue I18n
             currentLocale = backendLocale;
+            await loadLocaleMessages(backendLocale);
             i18nSetLocale(backendLocale);
         } else {
             // Fallback to Vue I18n (which already read from localStorage/browser)

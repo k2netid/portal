@@ -784,6 +784,16 @@ const getRole = (id: string) => roles.value.find(r => r && String(r.id) === Stri
 const roleIdToNum = (id: string) => String(id);
 
 // Permission Handlers
+const selectedPermissionsSet = computed(() => new Set(form.value.permissions));
+
+const matrixPermissionsSets = computed(() => {
+    const sets: Record<string, Set<string>> = {};
+    for (const [rId, perms] of Object.entries(form.value.matrixPermissions)) {
+        sets[rId] = new Set(perms);
+    }
+    return sets;
+});
+
 const togglePermission = (name: string) => {
     if (isProtectedRole(activeRole.value?.name || '')) return;
     const index = form.value.permissions.indexOf(name);
@@ -791,12 +801,13 @@ const togglePermission = (name: string) => {
     else form.value.permissions.push(name);
 };
 
-const isSelectedPermission = (name: string) => form.value.permissions.includes(name);
+const isSelectedPermission = (name: string) => selectedPermissionsSet.value.has(name);
 
 const isCategorySelected = (category: string) => {
     const categoryPerms = permissions.value[category] || [];
     if (categoryPerms.length === 0) return false;
-    return categoryPerms.every(p => p && form.value.permissions.includes(p.name));
+    const set = selectedPermissionsSet.value;
+    return categoryPerms.every(p => p && set.has(p.name));
 };
 
 const toggleCategory = (category: string) => {
@@ -811,7 +822,10 @@ const toggleCategory = (category: string) => {
     }
 };
 
-const isRoleHasPermission = (roleId: string, name: string) => (form.value.matrixPermissions[roleId] || []).includes(name);
+const isRoleHasPermission = (roleId: string, name: string) => {
+    const set = matrixPermissionsSets.value[roleId];
+    return set ? set.has(name) : false;
+};
 
 const togglePermissionForRole = (roleId: string, name: string) => {
     const role = getRole(roleId);

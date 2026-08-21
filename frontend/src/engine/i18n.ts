@@ -1,8 +1,6 @@
 import { createI18n, type Composer } from 'vue-i18n';
 import config, { type LocaleConfig } from '@/engine/i18n/config';
-import en from '@/engine/i18n/messages/en';
 import id from '@/engine/i18n/messages/id';
-import su from '@/engine/i18n/messages/su';
 
 const availableCodes = () => config.availableLocales.map((l: LocaleConfig) => l.code);
 
@@ -32,27 +30,55 @@ const detectLocale = (): string => {
 
 const detectedLocale = detectLocale();
 
-const messages = {
-    en,
+// Lazy loaders for on-demand locale loading
+const localeLoaders: Record<string, () => Promise<{ default: Record<string, unknown> }>> = {
+    en: () => import('@/engine/i18n/messages/en'),
+    id: () => Promise.resolve({ default: id as Record<string, unknown> }),
+    su: () => import('@/engine/i18n/messages/su'),
+};
+
+// Track which locales are registered in vue-i18n
+const loadedLocales = new Set<string>(['id']);
+
+// Bootstrap with the primary locale to keep initial bundle compact and eliminate main-thread deepCopy overhead
+const initialMessages: Record<string, any> = {
     id,
-    su,
 };
 
 const i18n = createI18n({
     ...config,
     locale: detectedLocale,
-    messages,
+    messages: initialMessages,
 });
 
-if (!localStorage.getItem('locale')) {
-    localStorage.setItem('locale', detectedLocale);
+export const loadLocaleMessages = async (locale: string): Promise<void> => {
+    const resolved = normalizeLocaleCode(locale);
+    if (loadedLocales.has(resolved)) {
+        return;
+    }
+    const loader = localeLoaders[resolved];
+    if (loader) {
+        const bundle = await loader();
+        getComposer().setLocaleMessage(resolved, bundle.default as any);
+        loadedLocales.add(resolved);
+    }
+};
+
+if (detectedLocale !== 'id') {
+    void loadLocaleMessages(detectedLocale);
 }
 
 export default i18n;
 
-export const setLocale = (locale: string) => {
+export const setLocale = (locale: string): void => {
     const resolved = normalizeLocaleCode(locale);
-    getComposer().locale.value = resolved;
+    if (!loadedLocales.has(resolved)) {
+        void loadLocaleMessages(resolved).then(() => {
+            getComposer().locale.value = resolved;
+        });
+    } else {
+        getComposer().locale.value = resolved;
+    }
     localStorage.setItem('locale', resolved);
     document.documentElement.lang = resolved;
 };

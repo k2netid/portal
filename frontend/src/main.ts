@@ -23,8 +23,6 @@ async function bootstrap(): Promise<void> {
 
     const { registry, authStore } = await bootstrapConsoleApp();
 
-    void import('@/engine/i18n/deferredLocales').then((m) => m.preloadConsoleModuleLocales());
-
     const router = (await import('@/engine/router/console')).createConsoleRouter();
     app.use(router);
 
@@ -61,6 +59,17 @@ async function bootstrap(): Promise<void> {
 
     logger.info('[SPA] Mounting console kernel');
     app.mount('#app');
+
+    // Defer non-critical module locale preload to idle time after first paint
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        window.requestIdleCallback(() => {
+            void import('@/engine/i18n/deferredLocales').then((m) => m.preloadConsoleModuleLocales());
+        });
+    } else {
+        setTimeout(() => {
+            void import('@/engine/i18n/deferredLocales').then((m) => m.preloadConsoleModuleLocales());
+        }, 500);
+    }
 
     const { scheduleDeferredConsoleModules } = await import('@/engine/bootstrap/deferredConsoleModules');
     scheduleDeferredConsoleModules(router, navStore, dbStore);

@@ -63,15 +63,6 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: (id) => {
-          if (id.includes('/src/modules/Core/Security/')) {
-            return 'mod-security';
-          }
-          if (id.includes('/src/modules/Core/System/')) {
-            return 'mod-system';
-          }
-          if (id.includes('/src/modules/Core/Infra/')) {
-            return 'mod-infra';
-          }
           if (!id.includes('node_modules')) {
             return;
           }
@@ -88,6 +79,11 @@ export default defineConfig({
             id.includes('node_modules/@vue/runtime')
           ) {
             return 'vendor-vue-core';
+          }
+
+          // Internationalization
+          if (id.includes('vue-i18n') || id.includes('@intlify')) {
+            return 'vendor-i18n';
           }
 
           // State management
@@ -130,6 +126,18 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1800,
     sourcemap: false,
+  },
+  optimizeDeps: {
+    include: [
+      'vue',
+      'vue-router',
+      'pinia',
+      'vue-i18n',
+      'lucide-vue-next',
+      'radix-vue',
+      'axios',
+      'zod',
+    ],
   },
   server: {
     host: process.env.VITE_DEV_HOST || '0.0.0.0',
