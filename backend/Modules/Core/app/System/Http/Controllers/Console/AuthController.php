@@ -89,15 +89,15 @@ class AuthController extends BaseApiController
     {
         try {
             $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
+                'email' => 'required|string',
+                'password' => 'required|string',
             ]);
         } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
 
-        $emailRaw = $request->input('email');
-        $email = is_string($emailRaw) ? $emailRaw : '';
+        $emailRaw = $request->input('email') ?? $request->input('username');
+        $email = is_string($emailRaw) ? trim($emailRaw) : '';
         $passwordRaw = $request->input('password');
         $password = is_string($passwordRaw) ? $passwordRaw : '';
 
@@ -158,7 +158,9 @@ class AuthController extends BaseApiController
             ], 429);
         }
 
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $email)
+            ->orWhere('username', $email)
+            ->first();
 
         if (! $user || ! Hash::check($password, (string) $user->password)) {
             // Record failed login (may trigger progressive blocking)

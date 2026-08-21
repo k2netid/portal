@@ -19,8 +19,7 @@ const t = (key: string, params: Record<string, unknown> = {}) => JSON.stringify(
  */
 export const loginSchema = z.object({
     email: z.string()
-        .min(1, t('common.validation.required', { field: 'Email' }))
-        .email(t('common.validation.email')),
+        .min(1, t('common.validation.required', { field: 'Email or Username' })),
     password: z.string()
         .min(1, t('common.validation.required', { field: 'Password' })),
 });
