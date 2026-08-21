@@ -375,8 +375,33 @@
       </Tabs>
 
       <!-- Action Footer Toolbar -->
-      <div class="sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm p-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 border-t border-border mt-8 flex flex-wrap items-center justify-between gap-3 shadow-xs">
-        <div class="flex items-center gap-2">
+      <div class="sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm p-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 border-t border-border mt-8 flex items-center justify-between gap-3 shadow-xs">
+        <div>
+          <Button
+            v-if="!isCreate"
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs text-destructive border-destructive/20 hover:bg-destructive/10 gap-1.5"
+            :disabled="saving"
+            @click="deleteModalOpen = true"
+          >
+            <Trash2 class="h-3.5 w-3.5" />
+            {{ $t('infra.models.delete') }}
+          </Button>
+        </div>
+
+        <div class="flex items-center gap-2 ml-auto">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-9 text-xs"
+            @click="router.push({ name: 'model-index' })"
+          >
+            {{ $t('infra.models.cancel') }}
+          </Button>
+
           <Button
             type="submit"
             size="sm"
@@ -387,30 +412,7 @@
             <Save v-else class="h-3.5 w-3.5" />
             {{ saving ? $t('infra.models.saving') : $t('infra.models.save') }}
           </Button>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            class="h-9 text-xs"
-            @click="router.push({ name: 'model-index' })"
-          >
-            {{ $t('infra.models.cancel') }}
-          </Button>
         </div>
-
-        <Button
-          v-if="!isCreate"
-          type="button"
-          variant="outline"
-          size="sm"
-          class="h-9 text-xs text-destructive border-destructive/20 hover:bg-destructive/10 gap-1.5"
-          :disabled="saving"
-          @click="deleteModalOpen = true"
-        >
-          <Trash2 class="h-3.5 w-3.5" />
-          {{ $t('infra.models.delete') }}
-        </Button>
       </div>
     </form>
 
