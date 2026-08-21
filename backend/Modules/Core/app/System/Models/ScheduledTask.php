@@ -61,58 +61,40 @@ class ScheduledTask extends Model
      * Only these commands are safe to run via admin interface
      */
     const ALLOWED_COMMANDS = [
-        // Cache management
-        'cache:clear',
-        'cache:warm',
-        'system:clear-cache',
-
-        // Content & Media
-        'content:publish-scheduled',
-        'media:generate-thumbnails',
-        'media:cleanup-temp',
-        'media:sync-from-disk',
-        'theme:scan-register',
-
-        // Health & diagnostics
+        // System & Diagnostics
+        'system:backup',
         'system:health-check',
         'system:audit',
-        'config:clear',
-        'route:clear',
-        'view:clear',
+        'system:clear-cache',
+        'license:check',
 
-        // Intelligence & Search
-        'search:reindex',
-        'search:index-health',
-        'analytics:cleanup',
-
-        // Backup
-        'system:backup',
-
-        // Security
+        // Security & WAF
+        'security:update-cf-ips',
+        'security:cleanup-logs',
+        'security:maintenance',
+        'security:audit-dependencies',
         'security:clear-blocked-ips',
         'security:clear-rate-limit',
-        'security:audit-dependencies',
-        'security:cleanup-logs',
-        'security:update-cf-ips',
-        'security:maintenance',
-
-        // Maintenance & Cleanup
-        'logs:cleanup',
-        'logs:cleanup-slow-queries',
         'logs:cleanup-csp-reports',
+        'sanctum:prune-expired',
+
+        // Maintenance & Logs
+        'logs:cleanup',
 
         // Queue Management
-        'queue:work',
+        'queue:prune-failed',
         'queue:restart',
         'queue:flush',
-        'queue:prune-failed',
         'queue:retry',
         'queue:monitor',
 
-        // System Optimization
+        // System Optimization & Cache
         'optimize',
         'optimize:clear',
-        'sanctum:prune-expired',
+        'cache:clear',
+        'config:clear',
+        'route:clear',
+        'view:clear',
     ];
 
     /**
@@ -121,16 +103,6 @@ class ScheduledTask extends Model
      * They must NEVER be added to ALLOWED_COMMANDS.
      */
     const BACKEND_ONLY_COMMANDS = [
-        // Theme Development
-        'theme:build',
-        'theme:checksum',
-        'theme:make',
-        'theme:package',
-        'theme:paths',
-        'theme:validate',
-        'theme:staging-uploaded',
-        'theme:backfill-source',
-
         // System Development
         'dynamic:openapi',
 
@@ -206,6 +178,24 @@ class ScheduledTask extends Model
     public static function getCommandCatalog(): array
     {
         return [
+            'system:backup' => [
+                'command' => 'system:backup',
+                'name' => 'Run Daily Backup',
+                'category' => 'Backup',
+                'description' => 'Generates daily automated database backup snapshot for disaster recovery.',
+                'is_recommended' => true,
+                'default_schedule' => '0 1 * * *',
+                'prerequisites' => ['database', 'php_zip', 'storage_write'],
+            ],
+            'queue:prune-failed' => [
+                'command' => 'queue:prune-failed',
+                'name' => 'Prune Failed Jobs',
+                'category' => 'Queue',
+                'description' => 'Removes failed background jobs older than 48 hours from the queue database table.',
+                'is_recommended' => true,
+                'default_schedule' => '0 2 * * *',
+                'prerequisites' => ['database', 'table_failed_jobs'],
+            ],
             'logs:cleanup' => [
                 'command' => 'logs:cleanup',
                 'name' => 'Cleanup System Logs',
@@ -213,15 +203,6 @@ class ScheduledTask extends Model
                 'description' => 'Prunes activity logs, login histories, and general system logs older than retention period (default 90 days).',
                 'is_recommended' => true,
                 'default_schedule' => '0 0 * * 1',
-                'prerequisites' => ['database'],
-            ],
-            'logs:cleanup-slow-queries' => [
-                'command' => 'logs:cleanup-slow-queries',
-                'name' => 'Cleanup Slow Query Logs',
-                'category' => 'Maintenance',
-                'description' => 'Deletes slow database query diagnostic logs older than 30 days to save database storage.',
-                'is_recommended' => true,
-                'default_schedule' => '0 0 * * 2',
                 'prerequisites' => ['database'],
             ],
             'logs:cleanup-csp-reports' => [
@@ -233,32 +214,14 @@ class ScheduledTask extends Model
                 'default_schedule' => '0 0 * * 3',
                 'prerequisites' => ['database'],
             ],
-            'media:cleanup-temp' => [
-                'command' => 'media:cleanup-temp',
-                'name' => 'Cleanup Temp Files',
-                'category' => 'Media',
-                'description' => 'Cleans up orphaned upload chunks and temporary media files older than 24 hours.',
-                'is_recommended' => true,
-                'default_schedule' => '0 3 * * *',
-                'prerequisites' => ['storage_write'],
-            ],
-            'queue:prune-failed' => [
-                'command' => 'queue:prune-failed',
-                'name' => 'Prune Failed Jobs',
-                'category' => 'Queue',
-                'description' => 'Removes failed background jobs older than 48 hours from the queue database table.',
-                'is_recommended' => true,
-                'default_schedule' => '0 2 * * *',
-                'prerequisites' => ['database', 'table_failed_jobs'],
-            ],
-            'sanctum:prune-expired' => [
-                'command' => 'sanctum:prune-expired',
-                'name' => 'Prune Revoked Tokens',
+            'security:cleanup-logs' => [
+                'command' => 'security:cleanup-logs',
+                'name' => 'Cleanup Security Event Logs',
                 'category' => 'Security',
-                'description' => 'Deletes expired and revoked authentication tokens from the database.',
+                'description' => 'Purges security WAF and bot audit logs older than retention period.',
                 'is_recommended' => true,
-                'default_schedule' => '0 5 * * *',
-                'prerequisites' => ['database', 'table_tokens'],
+                'default_schedule' => '0 1 * * 0',
+                'prerequisites' => ['database'],
             ],
             'security:update-cf-ips' => [
                 'command' => 'security:update-cf-ips',
@@ -269,95 +232,23 @@ class ScheduledTask extends Model
                 'default_schedule' => '0 4 * * *',
                 'prerequisites' => ['outbound_http', 'storage_write'],
             ],
-            'system:backup' => [
-                'command' => 'system:backup',
-                'name' => 'Run Daily Backup',
-                'category' => 'Backup',
-                'description' => 'Generates daily automated database backup snapshot for disaster recovery.',
+            'sanctum:prune-expired' => [
+                'command' => 'sanctum:prune-expired',
+                'name' => 'Prune Revoked Tokens',
+                'category' => 'Security',
+                'description' => 'Deletes expired and revoked authentication tokens from the database.',
                 'is_recommended' => true,
-                'default_schedule' => '0 1 * * *',
-                'prerequisites' => ['database', 'php_zip', 'storage_write'],
+                'default_schedule' => '0 5 * * *',
+                'prerequisites' => ['database', 'table_tokens'],
             ],
-            'analytics:cleanup' => [
-                'command' => 'analytics:cleanup',
-                'name' => 'Cleanup Analytics',
-                'category' => 'Analytics',
-                'description' => 'Purges raw visitor and page event analytics older than retention period (default 90 days).',
-                'is_recommended' => false,
-                'default_schedule' => '0 0 1 * *',
-                'prerequisites' => ['database'],
-            ],
-            'optimize' => [
-                'command' => 'optimize',
-                'name' => 'System Optimization',
-                'category' => 'System',
-                'description' => 'Precompiles framework route, configuration, and Blade view caches for high-throughput production execution.',
-                'is_recommended' => false,
-                'default_schedule' => '0 6 * * *',
-                'prerequisites' => ['bootstrap_cache_write', 'storage_write'],
-            ],
-            'content:publish-scheduled' => [
-                'command' => 'content:publish-scheduled',
-                'name' => 'Auto-Publish Scheduled Content',
-                'category' => 'Content',
-                'description' => 'Checks and transitions scheduled articles and pages to published status.',
-                'is_recommended' => true,
-                'default_schedule' => '* * * * *',
-                'prerequisites' => ['database'],
-            ],
-            'media:generate-thumbnails' => [
-                'command' => 'media:generate-thumbnails',
-                'name' => 'Generate Media Thumbnails',
-                'category' => 'Media',
-                'description' => 'Generates missing responsive web thumbnail sizes for uploaded images.',
-                'is_recommended' => false,
-                'default_schedule' => '0 4 * * 0',
-                'prerequisites' => ['storage_write', 'php_gd'],
-            ],
-            'media:sync-from-disk' => [
-                'command' => 'media:sync-from-disk',
-                'name' => 'Sync Media From Disk',
-                'category' => 'Media',
-                'description' => 'Scans physical storage and indexes newly uploaded files into media library.',
-                'is_recommended' => false,
-                'default_schedule' => '0 5 * * 0',
-                'prerequisites' => ['database', 'storage_write'],
-            ],
-            'search:reindex' => [
-                'command' => 'search:reindex',
-                'name' => 'Reindex Unified Search',
-                'category' => 'Search',
-                'description' => 'Rebuilds search index database for all published content, categories, and tags.',
+            'security:maintenance' => [
+                'command' => 'security:maintenance',
+                'name' => 'Run Security Maintenance',
+                'category' => 'Security',
+                'description' => 'Executes routine security cleanup, IP table sync, and token validation.',
                 'is_recommended' => false,
                 'default_schedule' => '0 3 * * 0',
                 'prerequisites' => ['database'],
-            ],
-            'search:index-health' => [
-                'command' => 'search:index-health',
-                'name' => 'Search Index Health Audit',
-                'category' => 'Search',
-                'description' => 'Audits search index synchronization and reports any content index lag.',
-                'is_recommended' => false,
-                'default_schedule' => '0 12 * * *',
-                'prerequisites' => ['database'],
-            ],
-            'system:health-check' => [
-                'command' => 'system:health-check',
-                'name' => 'System Health Diagnostic',
-                'category' => 'Diagnostics',
-                'description' => 'Runs hardware CPU, memory, disk, database, and cache service health checks.',
-                'is_recommended' => false,
-                'default_schedule' => '*/30 * * * *',
-                'prerequisites' => ['database'],
-            ],
-            'system:audit' => [
-                'command' => 'system:audit',
-                'name' => 'Core File Integrity Audit',
-                'category' => 'Security',
-                'description' => 'Audits SHA-256 integrity of Tier-A core CMS files against baseline signatures.',
-                'is_recommended' => false,
-                'default_schedule' => '0 0 * * 0',
-                'prerequisites' => ['storage_write'],
             ],
             'security:audit-dependencies' => [
                 'command' => 'security:audit-dependencies',
@@ -386,41 +277,50 @@ class ScheduledTask extends Model
                 'default_schedule' => '0 0 * * *',
                 'prerequisites' => ['database'],
             ],
-            'security:cleanup-logs' => [
-                'command' => 'security:cleanup-logs',
-                'name' => 'Cleanup Security Event Logs',
-                'category' => 'Security',
-                'description' => 'Purges security WAF and bot audit logs older than retention period.',
+            'system:health-check' => [
+                'command' => 'system:health-check',
+                'name' => 'System Health Diagnostic',
+                'category' => 'Diagnostics',
+                'description' => 'Runs hardware CPU, memory, disk, database, and cache service health checks.',
                 'is_recommended' => false,
-                'default_schedule' => '0 1 * * 0',
+                'default_schedule' => '*/30 * * * *',
                 'prerequisites' => ['database'],
             ],
-            'security:maintenance' => [
-                'command' => 'security:maintenance',
-                'name' => 'Run Security Maintenance',
+            'system:audit' => [
+                'command' => 'system:audit',
+                'name' => 'Core File Integrity Audit',
                 'category' => 'Security',
-                'description' => 'Executes routine security cleanup, IP table sync, and token validation.',
+                'description' => 'Audits SHA-256 integrity of Tier-A core system files against baseline signatures.',
                 'is_recommended' => false,
-                'default_schedule' => '0 3 * * 0',
-                'prerequisites' => ['database'],
-            ],
-            'cache:clear' => [
-                'command' => 'cache:clear',
-                'name' => 'Flush Application Cache',
-                'category' => 'Cache',
-                'description' => 'Flushes all application key-value cache stores.',
-                'is_recommended' => false,
-                'default_schedule' => '0 4 * * 0',
+                'default_schedule' => '0 0 * * 0',
                 'prerequisites' => ['storage_write'],
             ],
-            'cache:warm' => [
-                'command' => 'cache:warm',
-                'name' => 'Warm Application Cache',
-                'category' => 'Cache',
-                'description' => 'Pre-populates frequently accessed content, settings, and layout caches.',
+            'license:check' => [
+                'command' => 'license:check',
+                'name' => 'License Verification & Sync',
+                'category' => 'System',
+                'description' => 'Verifies engine license validity and synchronization with upstream licensing authority.',
                 'is_recommended' => false,
-                'default_schedule' => '0 5 * * 0',
-                'prerequisites' => ['database'],
+                'default_schedule' => '0 0 * * *',
+                'prerequisites' => ['outbound_http', 'database'],
+            ],
+            'optimize' => [
+                'command' => 'optimize',
+                'name' => 'System Optimization',
+                'category' => 'System',
+                'description' => 'Precompiles framework route, configuration, and view caches for high-throughput production execution.',
+                'is_recommended' => false,
+                'default_schedule' => '0 6 * * *',
+                'prerequisites' => ['bootstrap_cache_write', 'storage_write'],
+            ],
+            'optimize:clear' => [
+                'command' => 'optimize:clear',
+                'name' => 'Clear Compiled Optimization Files',
+                'category' => 'System',
+                'description' => 'Removes all precompiled route, configuration, and view cache files.',
+                'is_recommended' => false,
+                'default_schedule' => '0 4 * * 0',
+                'prerequisites' => ['bootstrap_cache_write'],
             ],
             'system:clear-cache' => [
                 'command' => 'system:clear-cache',
@@ -431,14 +331,41 @@ class ScheduledTask extends Model
                 'default_schedule' => '0 4 * * 0',
                 'prerequisites' => ['bootstrap_cache_write', 'storage_write'],
             ],
-            'theme:scan-register' => [
-                'command' => 'theme:scan-register',
-                'name' => 'Scan & Register Layout Themes',
-                'category' => 'Themes',
-                'description' => 'Scans themes directory and updates database theme records and manifests.',
+            'cache:clear' => [
+                'command' => 'cache:clear',
+                'name' => 'Flush Application Cache',
+                'category' => 'Cache',
+                'description' => 'Flushes all application key-value cache stores.',
                 'is_recommended' => false,
-                'default_schedule' => '0 5 * * 0',
-                'prerequisites' => ['database', 'storage_write'],
+                'default_schedule' => '0 4 * * 0',
+                'prerequisites' => ['storage_write'],
+            ],
+            'config:clear' => [
+                'command' => 'config:clear',
+                'name' => 'Clear Config Cache',
+                'category' => 'Cache',
+                'description' => 'Clears cached configuration files.',
+                'is_recommended' => false,
+                'default_schedule' => '0 4 * * 0',
+                'prerequisites' => ['bootstrap_cache_write'],
+            ],
+            'route:clear' => [
+                'command' => 'route:clear',
+                'name' => 'Clear Route Cache',
+                'category' => 'Cache',
+                'description' => 'Clears compiled route cache files.',
+                'is_recommended' => false,
+                'default_schedule' => '0 4 * * 0',
+                'prerequisites' => ['bootstrap_cache_write'],
+            ],
+            'view:clear' => [
+                'command' => 'view:clear',
+                'name' => 'Clear View Cache',
+                'category' => 'Cache',
+                'description' => 'Clears compiled Blade view files.',
+                'is_recommended' => false,
+                'default_schedule' => '0 4 * * 0',
+                'prerequisites' => ['storage_write'],
             ],
             'queue:restart' => [
                 'command' => 'queue:restart',
@@ -476,15 +403,6 @@ class ScheduledTask extends Model
                 'default_schedule' => '*/15 * * * *',
                 'prerequisites' => ['database'],
             ],
-            'optimize:clear' => [
-                'command' => 'optimize:clear',
-                'name' => 'Clear Compiled Optimization Files',
-                'category' => 'System',
-                'description' => 'Removes all precompiled route, configuration, and view cache files.',
-                'is_recommended' => false,
-                'default_schedule' => '0 4 * * 0',
-                'prerequisites' => ['bootstrap_cache_write'],
-            ],
         ];
     }
 
@@ -513,8 +431,8 @@ class ScheduledTask extends Model
         $failedJobsTable = false;
         $tokensTable = false;
         try {
-            $failedJobsTable = Schema::hasTable('failed_jobs');
-            $tokensTable = Schema::hasTable('personal_access_tokens') || Schema::hasTable('srv_personal_access_tokens');
+            $failedJobsTable = Schema::hasTable('sys_failed_jobs') || Schema::hasTable('failed_jobs');
+            $tokensTable = Schema::hasTable('personal_access_tokens') || Schema::hasTable('srv_personal_access_tokens') || Schema::hasTable('sys_personal_access_tokens');
         } catch (\Throwable) {
         }
 
@@ -564,16 +482,16 @@ class ScheduledTask extends Model
             'table_failed_jobs' => [
                 'id' => 'table_failed_jobs',
                 'name' => 'Failed Jobs Table',
-                'description' => 'Queue failed_jobs database table exists.',
+                'description' => 'Queue sys_failed_jobs database table exists.',
                 'met' => $failedJobsTable,
-                'message' => $failedJobsTable ? 'failed_jobs table exists' : 'failed_jobs table is missing (run migrations)',
+                'message' => $failedJobsTable ? 'sys_failed_jobs table exists' : 'sys_failed_jobs table is missing (run migrations)',
             ],
             'table_tokens' => [
                 'id' => 'table_tokens',
                 'name' => 'Personal Access Tokens Table',
-                'description' => 'personal_access_tokens database table exists.',
+                'description' => 'Personal access tokens database table exists.',
                 'met' => $tokensTable,
-                'message' => $tokensTable ? 'personal_access_tokens table exists' : 'personal_access_tokens table is missing',
+                'message' => $tokensTable ? 'Tokens table exists' : 'Tokens table is missing',
             ],
         ];
     }

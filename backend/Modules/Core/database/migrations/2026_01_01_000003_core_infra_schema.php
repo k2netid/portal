@@ -41,8 +41,11 @@ return new class extends Migration
             $table->string('schedule');
             $table->boolean('is_active')->default(true);
             $table->text('description')->nullable();
+            $table->json('options')->nullable();
             $table->timestamp('last_run_at')->nullable();
             $table->timestamp('next_run_at')->nullable();
+            $table->string('status')->nullable();
+            $table->text('output')->nullable();
             $table->text('last_output')->nullable();
             $table->string('last_run_status')->nullable();
             $table->decimal('last_run_duration', 8, 2)->nullable();

@@ -173,6 +173,29 @@ class ScheduledTaskApiTest extends TestCase
         $this->assertGreaterThan(0, ScheduledTask::count());
     }
 
+    public function test_admin_can_run_scheduled_task_manually(): void
+    {
+        $admin = $this->createAdminUser();
+
+        $task = ScheduledTask::create([
+            'name' => 'Cache Clear',
+            'command' => 'cache:clear',
+            'schedule' => '0 0 * * *',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($admin, 'sanctum')
+            ->postJson("/api/v1/manage/system/scheduled-tasks/{$task->id}/run");
+
+        $response->assertOk()
+            ->assertJsonPath('data.task.status', 'completed');
+
+        $fresh = $task->fresh();
+        $this->assertEquals('completed', $fresh->status);
+        $this->assertNotNull($fresh->last_run_at);
+        $this->assertNotNull($fresh->output);
+    }
+
     public function test_unauthenticated_cannot_access_scheduled_tasks(): void
     {
         $this->getJson('/api/v1/manage/system/scheduled-tasks')->assertUnauthorized();
