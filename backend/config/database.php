@@ -158,11 +158,11 @@ return [
 
         'default' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '10.20.0.206'),
-            'username' => env('REDIS_USERNAME', 'core_engine'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'username' => env('REDIS_USERNAME'),
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '6'),
+            'database' => env('REDIS_DB', '0'),
             'timeout' => (float) env('REDIS_TIMEOUT', 1.0),
             'read_timeout' => (float) env('REDIS_READ_TIMEOUT', 1.0),
             'max_retries' => (int) env('REDIS_MAX_RETRIES', 1),
@@ -173,11 +173,11 @@ return [
 
         'cache' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '10.20.0.206'),
-            'username' => env('REDIS_USERNAME', 'core_engine'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'username' => env('REDIS_USERNAME'),
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '7'),
+            'database' => env('REDIS_CACHE_DB', '1'),
             'timeout' => (float) env('REDIS_TIMEOUT', 1.0),
             'read_timeout' => (float) env('REDIS_READ_TIMEOUT', 1.0),
             'max_retries' => (int) env('REDIS_MAX_RETRIES', 1),
