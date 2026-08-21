@@ -4,12 +4,7 @@ const developerRoutes: RouteRecordRaw[] = [
     {
         path: 'plugins',
         name: 'plugins',
-        component: () => import('@/modules/Core/System/views/dev/plugins/Index.vue'),
-        meta: {
-            permission: 'manage plugins',
-            title: 'infra.plugins.title',
-            breadcrumb: 'system.navigation.menu.plugins',
-        },
+        redirect: { name: 'extensions' },
     },
     {
         path: 'oauth-clients',
