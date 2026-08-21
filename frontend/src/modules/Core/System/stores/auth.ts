@@ -293,19 +293,9 @@ export const useAuthStore = defineStore('auth', {
                 const axiosError = isAxiosError(error) ? error : null;
                 const status = axiosError?.response?.status;
 
-                if (status === 401 || status === 419) {
+                // Only retry on 419 CSRF mismatch, never on 401 (guest / logged out state)
+                if (status === 419) {
                     try {
-                        // After login, session cookies can still be in propagation.
-                        // Retry /me once, then fallback to csrf refresh before giving up.
-                        if (options?.skipCsrfRefresh) {
-                            await new Promise((resolve) => setTimeout(resolve, 50));
-                            try {
-                                return await requestMe();
-                            } catch {
-                                await getCsrfCookie();
-                                return await requestMe();
-                            }
-                        }
                         await getCsrfCookie();
                         return await requestMe();
                     } catch (retryError: unknown) {

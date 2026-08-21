@@ -15,11 +15,12 @@ export async function bootstrapConsoleApp() {
     authStore.initAuth();
 
     try {
-        // Always attempt fetchUser — the session cookie may not be visible to JS
-        // (HttpOnly) even when the session is valid. Let the server decide.
-        const me = await authStore.fetchUser({ skipCsrfRefresh: !hasStatefulSessionCookie() });
-        if (!me.success) {
-            authStore.clearAuth();
+        // Only attempt fetchUser if we have a hydrated user or an active session cookie
+        if (authStore.isAuthenticated || hasStatefulSessionCookie()) {
+            const me = await authStore.fetchUser({ skipCsrfRefresh: !hasStatefulSessionCookie() });
+            if (!me.success) {
+                authStore.clearAuth();
+            }
         }
     } catch (e) {
         authStore.clearAuth();
