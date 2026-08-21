@@ -229,14 +229,6 @@ class FoundationSeeder extends Seeder
             ['key' => 'analytics_event_retention_days', 'value' => '30', 'group' => 'analytics', 'type' => 'integer'],
             ['key' => 'analytics_visitor_retention_days', 'value' => '365', 'group' => 'analytics', 'type' => 'integer'],
 
-            // Comments / Discussion Settings
-            ['key' => 'comments.security.enable_reply', 'value' => '1', 'group' => 'comments', 'type' => 'boolean'],
-            ['key' => 'comments.security.allow_guests', 'value' => '0', 'group' => 'comments', 'type' => 'boolean'],
-            ['key' => 'comments.security.moderation_enabled', 'value' => '1', 'group' => 'comments', 'type' => 'boolean'],
-            ['key' => 'comments.security.guest_captcha', 'value' => '1', 'group' => 'comments', 'type' => 'boolean'],
-            ['key' => 'comments.security.max_links', 'value' => '2', 'group' => 'comments', 'type' => 'integer'],
-            ['key' => 'comments.security.banned_words', 'value' => '', 'group' => 'comments', 'type' => 'text'],
-
             // Email Settings
             ['key' => 'mail_driver', 'value' => 'smtp', 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_host', 'value' => 'smtp.mailtrap.io', 'group' => 'email', 'type' => 'string'],
