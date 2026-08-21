@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Button, Spinner } from '@/shared/components/ui';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Button, Spinner } from '@/shared/components/ui';
 import { X as XIcon, Download as DownloadIcon, File as FileIcon, FileWarning as FileWarningIcon } from 'lucide-vue-next';
 
 const props = defineProps<{

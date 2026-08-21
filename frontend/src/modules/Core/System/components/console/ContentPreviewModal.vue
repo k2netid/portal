@@ -69,6 +69,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/shared/components/ui';
 
 interface Author {

@@ -124,6 +124,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
     DialogFooter,
     Button
 } from '@/shared/components/ui';

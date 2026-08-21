@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Button } from '@/shared/components/ui';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button } from '@/shared/components/ui';
 import {
   Settings,
 } from 'lucide-vue-next';
