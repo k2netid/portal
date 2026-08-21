@@ -379,8 +379,12 @@ const toggleGroup = (key: string) => {
 
 const isChildActive = (item: Pick<NavItem, 'name' | 'to'>) => {
     if (!$route.name) return false;
-    if (item.name === $route.name) return true;
-    if (item.to && typeof item.to === 'object' && 'name' in item.to && item.to.name === $route.name) return true;
+    const currentName = String($route.name);
+    if (item.name === currentName) return true;
+    if (item.to && typeof item.to === 'object' && 'name' in item.to && item.to.name === currentName) return true;
+    if (item.name === 'model-index' && (currentName.startsWith('model-') || currentName.startsWith('dynamic-records-'))) {
+        return true;
+    }
     return false;
 };
 
