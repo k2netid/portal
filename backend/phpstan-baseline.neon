@@ -1,2 +1,403 @@
 parameters:
-    ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property object\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:delete\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:moveVariantsFromTrash\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:moveVariantsToTrash\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:registerFromDisk\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:shouldIndexPublicPath\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:syncAfterCopy\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:syncAfterMove\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: Modules/Core/app/System/Http/Controllers/Api/DataModelApiController.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Http\\Controllers\\Api\\DataModelApiController\:\:hydrateRelations\(\) has parameter \$records with generic interface Illuminate\\Contracts\\Pagination\\LengthAwarePaginator but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Api/DataModelApiController.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 4
+			path: Modules/Core/app/System/Http/Controllers/Api/DataModelApiController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between non\-falsy\-string and '''' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Api/DataModelApiController.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/OAuthClientController.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/OAuthClientController.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$owner_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/OAuthClientController.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$owner_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/OAuthClientController.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$revoked\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/OAuthClientController.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 2
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 5
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Parameter \#1 \$key of method Modules\\Core\\System\\Http\\Controllers\\Console\\RedisController\:\:stripPrefix\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Parameter \#1 \$key of method Redis\:\:del\(\) expects array\<string\>\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Parameter \#1 \$name of static method Illuminate\\Redis\\RedisManager\:\:connection\(\) expects string\|UnitEnum\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Parameter \#2 \$pattern of method Redis\:\:scan\(\) expects string\|null, array\<string, int\|string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between int\<min, \-1\>\|int\<1, max\>\|Redis and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between int\<min, \-1\>\|int\<1, max\>\|Redis\|false and ''none'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between mixed~\(0\|0\.0\|''''\|''0''\|array\{\}\|false\|null\) and ''0'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
+
+		-
+			message: '#^Call to an undefined method Modules\\Core\\System\\Services\\CacheWarmingService\:\:getStatistics\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/SystemController.php
+
+		-
+			message: '#^Call to an undefined method Modules\\Core\\System\\Services\\CacheWarmingService\:\:warmByType\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/SystemController.php
+
+		-
+			message: '#^Call to static method create\(\) on an unknown class Modules\\Intelligence\\Analytics\\Models\\SlowQuery\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Middleware/LogSlowQueries.php
+
+		-
+			message: '#^Call to method setCustomFieldValue\(\) on an unknown class Modules\\Content\\Publishing\\Models\\Content\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Call to static method create\(\) on an unknown class Modules\\Content\\Publishing\\Models\\Content\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Class Modules\\Content\\Library\\Models\\Category not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Models\\ContentTemplate\:\:category\(\) has invalid return type Modules\\Content\\Library\\Models\\Category\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Models\\ContentTemplate\:\:category\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Modules\\Content\\Library\\Models\\Category, \$this\(Modules\\Core\\System\\Models\\ContentTemplate\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Illuminate\\Database\\Eloquent\\Model, \$this\(Modules\\Core\\System\\Models\\ContentTemplate\)\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Models\\ContentTemplate\:\:createContent\(\) has invalid return type Modules\\Content\\Publishing\\Models\\Content\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^PHPDoc tag @property\-read for property Modules\\Core\\System\\Models\\ContentTemplate\:\:\$category contains unknown class Modules\\Content\\Library\\Models\\Category\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$content contains unknown class Modules\\Content\\Publishing\\Models\\Content\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Parameter \#1 \$related of method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\) expects class\-string\<Illuminate\\Database\\Eloquent\\Model\>, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Type Modules\\Content\\Library\\Models\\Category in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Modules\\Content\\Library\\Models\\Category, \$this\(Modules\\Core\\System\\Models\\ContentTemplate\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: Modules/Core/app/System/Models/ContentTemplate.php
+
+		-
+			message: '#^Class Modules\\Content\\Media\\Models\\File not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Models\\User\:\:media\(\) has invalid return type Modules\\Content\\Media\\Models\\File\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Models\\User\:\:media\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Modules\\Content\\Media\\Models\\File, \$this\(Modules\\Core\\System\\Models\\User\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Illuminate\\Database\\Eloquent\\Model, \$this\(Modules\\Core\\System\\Models\\User\)\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^PHPDoc tag @property\-read for property Modules\\Core\\System\\Models\\User\:\:\$media contains unknown class Modules\\Content\\Media\\Models\\File\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Parameter \#1 \$related of method Illuminate\\Database\\Eloquent\\Model\:\:hasMany\(\) expects class\-string\<Illuminate\\Database\\Eloquent\\Model\>, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Type Modules\\Content\\Media\\Models\\File in generic type Illuminate\\Database\\Eloquent\\Collection\<int, Modules\\Content\\Media\\Models\\File\> in PHPDoc tag @property\-read for property Modules\\Core\\System\\Models\\User\:\:\$media is not subtype of template type TModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Collection\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Type Modules\\Content\\Media\\Models\\File in generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Modules\\Content\\Media\\Models\\File, \$this\(Modules\\Core\\System\\Models\\User\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:hasMany\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: Modules/Core/app/System/Models/User.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Providers/SystemServiceProvider.php
+
+		-
+			message: '#^Part \$dbEngine \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: Modules/Core/app/System/Services/SystemService.php
+
+		-
+			message: '#^Cannot access offset ''model_has_permissions'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''model_has_roles'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''model_morph_key'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''permission_pivot_key'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''permissions'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''role_has_permissions'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''role_pivot_key'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Cannot access offset ''roles'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Parameter \#1 \$column of method Illuminate\\Database\\Schema\\Blueprint\:\:uuid\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Parameter \#1 \$columns of method Illuminate\\Database\\Schema\\Blueprint\:\:foreign\(\) expects array\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Illuminate\\Database\\Schema\\ForeignKeyDefinition\:\:on\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Parameter \#1 \$table of static method Illuminate\\Support\\Facades\\Schema\:\:create\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Parameter \#1 \$table of static method Illuminate\\Support\\Facades\\Schema\:\:dropIfExists\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Class DependencyPackageController not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: Modules/Core/routes/security_api.php
