@@ -23,7 +23,6 @@ use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
 use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
 use Modules\Core\System\Http\Controllers\Console\OnboardingStatusController;
-use Modules\Core\System\Http\Controllers\Console\PluginController;
 use Modules\Core\System\Http\Controllers\Console\ProfileKycController;
 use Modules\Core\System\Http\Controllers\Console\PublicSettingsController;
 use Modules\Core\System\Http\Controllers\Console\RedisController;
@@ -148,10 +147,6 @@ Route::prefix('v1')->group(function (): void {
         Route::post('settings/bulk-update', [SettingController::class, 'bulkUpdate']);
         Route::apiResource('settings', SettingController::class);
 
-        Route::post('plugins/{plugin}/activate', [PluginController::class, 'activate']);
-        Route::post('plugins/{plugin}/deactivate', [PluginController::class, 'deactivate']);
-        Route::put('plugins/{plugin}/settings', [PluginController::class, 'updateSettings']);
-        Route::apiResource('plugins', PluginController::class);
         Route::apiResource('languages', LanguageController::class);
         Route::post('languages/{language}/set-default', [LanguageController::class, 'setDefault']);
         Route::get('languages/{language}/export-pack', [LanguageController::class, 'exportPack']);
