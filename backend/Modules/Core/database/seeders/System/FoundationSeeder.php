@@ -322,19 +322,19 @@ class FoundationSeeder extends Seeder
             : '6379';
         $username = is_array($redisDefault) && array_key_exists('username', $redisDefault) && $redisDefault['username'] !== null && is_scalar($redisDefault['username'])
             ? (string) $redisDefault['username']
-            : '';
+            : 'core_engine';
         $password = is_array($redisDefault) && array_key_exists('password', $redisDefault) && $redisDefault['password'] !== null && is_scalar($redisDefault['password'])
             ? (string) $redisDefault['password']
             : '';
         $database = is_array($redisDefault) && isset($redisDefault['database']) && is_scalar($redisDefault['database'])
             ? (string) $redisDefault['database']
-            : '0';
+            : '6';
         $cacheDatabase = is_array($redisCache) && isset($redisCache['database']) && is_scalar($redisCache['database'])
             ? (string) $redisCache['database']
-            : '1';
+            : '7';
         $prefix = is_array($redisOptions) && isset($redisOptions['prefix']) && is_scalar($redisOptions['prefix'])
             ? (string) $redisOptions['prefix']
-            : 'ja_apps_';
+            : 'ja_core_engine:';
 
         $sessionDriver = config('session.driver');
         $queueDefault = config('queue.default');
