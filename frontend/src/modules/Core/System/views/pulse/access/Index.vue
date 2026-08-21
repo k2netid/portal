@@ -346,6 +346,7 @@ import { getResponseList } from '@/shared/utils/responseParser';
 import { useToast } from '@/shared/composables/useToast';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import {
+    Badge,
     Button,
     Pagination,
     Input,
@@ -359,7 +360,9 @@ import {
 import {
   AlertTriangle,
   Check,
-  Download} from 'lucide-vue-next';
+  Download,
+  X
+} from 'lucide-vue-next';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/ui';
 
 interface User {

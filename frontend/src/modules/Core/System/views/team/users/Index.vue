@@ -307,7 +307,7 @@ const columns = [
                 h('div', { class: 'ml-4' }, [
                     h('div', { class: 'text-sm font-medium text-foreground flex items-center gap-2' }, [
                         user.name,
-                        user.deleted_at ? h(Badge, { variant: 'destructive', class: 'text-[10px] h-4 px-1' }, t('common.labels.deleted')) : null
+                        user.deleted_at ? h(Badge, { variant: 'destructive', class: 'text-[10px] h-4 px-1' }, () => t('common.labels.deleted')) : null
                     ]),
                     user.phone ? h('div', { class: 'text-[10px] text-muted-foreground font-mono uppercase tracking-tight' }, user.phone) : null
                 ])
@@ -335,7 +335,7 @@ const columns = [
             return h('div', { class: 'flex flex-wrap gap-1.5' }, roles.map(role => h(Badge, {
                 variant: 'secondary',
                 class: 'h-5 text-[10px] px-2 font-semibold uppercase tracking-wider'
-            }, role.name)));
+            }, () => role.name)));
         }
     }),
     columnHelper.accessor('last_login_at', {
@@ -358,34 +358,34 @@ const columns = [
                 !user.email_verified_at && authStore.hasPermission('edit users') && h(Button, {
                     variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-primary hover:bg-primary/10',
                     disabled: !canManageUser, onClick: () => verifyUser(user), 'aria-label': t('system.users.actions.verify')
-                }, [h(CheckCheck, { class: 'w-4 h-4' })]),
+                }, () => h(CheckCheck, { class: 'w-4 h-4' })),
                 
                 authStore.hasPermission('edit users') && h(Button, {
                     variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-warning hover:bg-warning/10',
                     disabled: !canManageUser, onClick: () => forceLogoutUser(user), 'aria-label': t('system.users.actions.forceLogout')
-                }, [h(LogOut, { class: 'w-4 h-4' })]),
+                }, () => h(LogOut, { class: 'w-4 h-4' })),
                 
                 authStore.hasPermission('edit users') && h(Button, {
                     variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-primary hover:bg-primary/10',
                     disabled: !canManageUser, onClick: () => editUser(user), 'aria-label': t('common.actions.edit')
-                }, [h(Pencil, { class: 'w-4 h-4' })]),
+                }, () => h(Pencil, { class: 'w-4 h-4' })),
                 
                 user.deleted_at 
                     ? [
                         authStore.hasPermission('delete users') && h(Button, {
                             variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-success hover:bg-success/10',
                             onClick: () => restoreUser(user), 'aria-label': t('common.actions.restore')
-                        }, [h(RotateCcw, { class: 'w-4 h-4' })]),
+                        }, () => h(RotateCcw, { class: 'w-4 h-4' })),
                         authStore.hasPermission('delete users') && h(Button, {
                             variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-destructive hover:bg-destructive/10',
                             onClick: () => forceDeleteUser(user), 'aria-label': t('common.actions.forceDelete')
-                        }, [h(Trash2, { class: 'w-4 h-4' })])
+                        }, () => h(Trash2, { class: 'w-4 h-4' }))
                     ]
                     : [
                         authStore.hasPermission('delete users') && h(Button, {
                             variant: 'ghost', size: 'icon', class: 'h-8 w-8 text-destructive hover:bg-destructive/10',
                             disabled: !canDeleteUser, onClick: () => deleteUser(user), 'aria-label': t('common.actions.delete')
-                        }, [h(Trash2, { class: 'w-4 h-4' })])
+                        }, () => h(Trash2, { class: 'w-4 h-4' }))
                     ]
             ]);
         }

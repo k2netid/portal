@@ -906,7 +906,7 @@ const columns = [
         cell: ({ row }) => h(Badge, {
             variant: getStatusVariant(row.original.status),
             class: 'capitalize text-[10px] px-2 py-0'
-        }, t('system.scheduled_tasks.status.' + (row.original.status || 'pending')))
+        }, () => t('system.scheduled_tasks.status.' + (row.original.status || 'pending')))
     }),
     columnHelper.accessor('is_active', {
         header: t('system.scheduled_tasks.table.active'),
@@ -918,7 +918,7 @@ const columns = [
                 onClick: () => toggleActive(task),
                 class: 'h-6 text-[10px] font-bold px-2',
                 title: task.is_active ? t('system.scheduled_tasks.tooltips.click_to_deactivate') : t('system.scheduled_tasks.tooltips.click_to_activate')
-            }, task.is_active ? t('common.labels.active') : t('common.labels.inactive'));
+            }, () => (task.is_active ? t('common.labels.active') : t('common.labels.inactive')));
         }
     }),
     columnHelper.display({
@@ -932,22 +932,22 @@ const columns = [
                     disabled: running.value === task.id,
                     class: 'h-8 w-8 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20',
                     title: t('common.actions.run')
-                }, [running.value === task.id ? h(Loader2, { class: 'w-4 h-4 ' }) : h(Play, { class: 'w-4 h-4' })]),
+                }, () => (running.value === task.id ? h(Loader2, { class: 'w-4 h-4 ' }) : h(Play, { class: 'w-4 h-4' }))),
                 task.output && h(Button, {
                     size: 'icon', variant: 'ghost', onClick: () => viewOutput(task),
                     class: 'h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20',
                     title: t('system.scheduled_tasks.output.title')
-                }, [h(FileText, { class: 'w-4 h-4' })]),
+                }, () => h(FileText, { class: 'w-4 h-4' })),
                 h(Button, {
                     size: 'icon', variant: 'ghost', onClick: () => editTask(task),
                     class: 'h-8 w-8 text-orange-600 hover:text-orange-700 hover:bg-orange-50 dark:hover:bg-orange-900/20',
                     title: t('common.actions.edit')
-                }, [h(Pencil, { class: 'w-4 h-4' })]),
+                }, () => h(Pencil, { class: 'w-4 h-4' })),
                 h(Button, {
                     size: 'icon', variant: 'ghost', onClick: () => confirmDelete(task),
                     class: 'h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10',
                     title: t('common.actions.delete')
-                }, [h(Trash2, { class: 'w-4 h-4' })])
+                }, () => h(Trash2, { class: 'w-4 h-4' }))
             ]);
         }
     })
