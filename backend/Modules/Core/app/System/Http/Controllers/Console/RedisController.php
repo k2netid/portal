@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\RedisSetting;
+use Modules\Core\System\Models\Setting;
 
 class RedisController extends BaseApiController
 {
@@ -21,6 +22,15 @@ class RedisController extends BaseApiController
      */
     public function index(): JsonResponse
     {
+        // Keep cache_enabled in sys_redis_settings synchronized with global performance settings
+        try {
+            $currentDriver = strtolower((string) Setting::get('cache_driver', 'file'));
+            $currentEnabled = filter_var(Setting::get('enable_cache', true), FILTER_VALIDATE_BOOLEAN);
+            $isRedisActive = $currentEnabled && in_array($currentDriver, ['redis', 'failover', 'redis_failover']);
+            RedisSetting::setValue('cache_enabled', $isRedisActive ? 'true' : 'false');
+        } catch (\Throwable) {
+        }
+
         $settings = RedisSetting::orderBy('group')->orderBy('key')->get();
 
         $grouped = $settings->groupBy('group')->map(function (Collection $items) {
@@ -73,7 +83,30 @@ class RedisController extends BaseApiController
                 if (is_array($settingData) && isset($settingData['key'])) {
                     $key = is_string($settingData['key']) ? $settingData['key'] : '';
                     if ($key !== '' && $key !== '0') {
-                        RedisSetting::setValue($key, $settingData['value'] ?? null);
+                        $val = $settingData['value'] ?? null;
+                        RedisSetting::setValue($key, $val);
+
+                        // Synchronize cache_enabled with Global Performance Settings
+                        if ($key === 'cache_enabled') {
+                            $isCacheEnabled = filter_var($val, FILTER_VALIDATE_BOOLEAN);
+                            if ($isCacheEnabled) {
+                                Setting::set('enable_cache', '1', 'boolean', 'performance');
+                                $currentDriver = strtolower((string) Setting::get('cache_driver', 'file'));
+                                if (! in_array($currentDriver, ['redis', 'failover', 'redis_failover'])) {
+                                    Setting::set('cache_driver', 'failover', 'string', 'performance');
+                                }
+                            } else {
+                                $currentDriver = strtolower((string) Setting::get('cache_driver', 'file'));
+                                if (in_array($currentDriver, ['redis', 'failover', 'redis_failover'])) {
+                                    Setting::set('cache_driver', 'file', 'string', 'performance');
+                                }
+                            }
+                        }
+
+                        // Synchronize cache_prefix with Global Performance Settings
+                        if ($key === 'cache_prefix' && is_string($val)) {
+                            Setting::set('cache_prefix', $val, 'string', 'performance');
+                        }
                     }
                 }
             }

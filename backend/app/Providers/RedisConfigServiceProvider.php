@@ -109,6 +109,9 @@ class RedisConfigServiceProvider extends ServiceProvider
                 if ($stringKey === 'redis_username') {
                     config(['database.redis.cache.username' => $value]);
                 }
+                if ($stringKey === 'cache_prefix' || $stringKey === 'redis_prefix') {
+                    config(['cache.prefix' => $value]);
+                }
             }
         }
 

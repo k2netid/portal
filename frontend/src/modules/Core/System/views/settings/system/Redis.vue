@@ -986,9 +986,14 @@ const settingsForm = ref<Record<string, unknown>>({});
 const initialSettingsForm = ref<Record<string, unknown>>({});
 const errors = ref<Record<string, string | string[]>>({});
 const cacheDriver = ref<string | null>(null);
+const globalCacheEnabled = ref<boolean | null>(null);
 
 const isRedisDriverActive = computed(() => {
     const driver = (cacheDriver.value || '').toLowerCase();
+    // If global cache is explicitly disabled, Redis cache is not active
+    if (globalCacheEnabled.value === false) {
+      return false;
+    }
     if (!driver) {
       return true;
     }
@@ -1133,6 +1138,11 @@ const saveSettings = async (): Promise<void> => {
       type: 'success',
       message: t('system.redis.messages.saveSuccess')
     };
+
+    // Refresh global cache status to reflect bidirectional sync
+    await getCacheStatus();
+    // Reload settings to get server-synced values
+    await loadSettings();
 
     setTimeout(() => {
       connectionStatus.value = null;
@@ -1400,11 +1410,16 @@ const getCacheDriverFromSettings = async (): Promise<string | null> => {
 const getCacheStatus = async (): Promise<void> => {
     try {
         const response = await api.get('/manage/system/cache-status');
-        const data = response?.data;
+        const data = response?.data as { driver?: unknown; enabled?: unknown } | undefined;
         const driver =
-          resolveCacheDriver((data as { driver?: unknown } | undefined)?.driver)
+          resolveCacheDriver(data?.driver)
           ?? await getCacheDriverFromSettings();
         cacheDriver.value = driver;
+        if (typeof data?.enabled === 'boolean') {
+          globalCacheEnabled.value = data.enabled;
+        } else {
+          globalCacheEnabled.value = null;
+        }
     } catch (error: unknown) {
         logger.error('Failed to get global cache status:', error);
         if (!cacheDriver.value) {

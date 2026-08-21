@@ -159,10 +159,17 @@ class SettingController extends BaseApiController
                         $currentEnabledRaw = Setting::get('enable_cache', true);
                         $currentEnabled = filter_var($currentEnabledRaw, FILTER_VALIDATE_BOOLEAN);
 
-                        $isRedis = $currentEnabled && in_array($currentDriver, ['redis', 'failover']);
-                        RedisSetting::setValue('enable_redis', $isRedis);
+                        $isRedis = $currentEnabled && in_array(strtolower($currentDriver), ['redis', 'failover', 'redis_failover']);
+                        RedisSetting::setValue('cache_enabled', $isRedis ? 'true' : 'false');
                     } catch (\Throwable) {
                         // Silent fail if RedisSetting not available
+                    }
+                }
+
+                if ($sKey === 'cache_prefix' && is_scalar($sValue)) {
+                    try {
+                        RedisSetting::setValue('cache_prefix', (string) $sValue);
+                    } catch (\Throwable) {
                     }
                 }
             }
