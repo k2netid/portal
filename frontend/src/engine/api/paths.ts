@@ -54,8 +54,4 @@ export const infraPaths = {
     fileManagerTrashPermanent: '/manage/infra/file-manager/trash/permanent',
 } as const;
 
-export const platformPaths = {
-    publicCatalog: '/public/platform/catalog',
-} as const;
-
 

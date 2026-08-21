@@ -15,7 +15,6 @@ use Modules\Core\Security\Http\Middleware\VerifyConnection;
 use Modules\Core\Security\Http\Middleware\WafMiddleware;
 use Modules\Core\System\Http\Middleware\CheckMaintenanceMode;
 use Modules\Core\System\Http\Middleware\CheckPermission;
-use Modules\Core\System\Http\Middleware\EnforceDeployRole;
 use Modules\Core\System\Http\Middleware\LazyExtensionBootMiddleware;
 use Modules\Core\System\Http\Middleware\LogSlowQueries;
 use Modules\Core\System\Http\Middleware\NormalizePaginationParams;
@@ -99,7 +98,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn (Request $request) => ($request->is('api/*') || $request->expectsJson()) ? null : '/');
 
         $middleware->web(prepend: [
-            EnforceDeployRole::class,
             LazyExtensionBootMiddleware::class,
             HandleDomainRedirects::class,
             VerifyConnection::class,
@@ -113,7 +111,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->api(prepend: [
-            EnforceDeployRole::class,
             LazyExtensionBootMiddleware::class,
             HandleDomainRedirects::class,
             VerifyConnection::class,
