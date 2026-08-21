@@ -121,6 +121,11 @@ class RedisConfigServiceProvider extends ServiceProvider
             config(['queue.default' => $isEnabled ? 'redis' : 'sync']);
         }
 
+        // Ensure Horizon prefix complies with Redis ACL namespace (ja_core_engine:*)
+        $redisPrefix = $settings['redis_prefix'] ?? $settings['cache_prefix'] ?? env('REDIS_PREFIX', 'ja_core_engine:');
+        $cleanPrefix = rtrim((string) $redisPrefix, ':');
+        config(['horizon.prefix' => $cleanPrefix.':horizon:']);
+
         // Handle Session Configuration
         if (isset($settings['session_enabled'])) {
             $isEnabled = filter_var($settings['session_enabled'], FILTER_VALIDATE_BOOLEAN);
