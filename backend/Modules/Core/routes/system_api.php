@@ -18,6 +18,7 @@ use Modules\Core\System\Http\Controllers\Console\EmailTestController;
 use Modules\Core\System\Http\Controllers\Console\ExtensionController;
 use Modules\Core\System\Http\Controllers\Console\KycReviewController;
 use Modules\Core\System\Http\Controllers\Console\LanguageController;
+use Modules\Core\System\Http\Controllers\Console\LicenseController;
 use Modules\Core\System\Http\Controllers\Console\LogController;
 use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
@@ -89,6 +90,12 @@ Route::prefix('v1')->group(function (): void {
         Route::post('cache/warm', [SystemController::class, 'warmCache']);
         Route::get('cache-warming-stats', [SystemController::class, 'cacheWarmingStats']);
         Route::post('clear-rate-limit', [SystemController::class, 'clearRateLimit']);
+
+        // License Management
+        Route::get('license', [LicenseController::class, 'index']);
+        Route::post('license/activate', [LicenseController::class, 'activate']);
+        Route::post('license/refresh', [LicenseController::class, 'refresh']);
+        Route::post('license/deactivate', [LicenseController::class, 'deactivate']);
 
         // OS Maintenance & Care Centre
         Route::post('maintenance/clean-junk', [MaintenanceApiController::class, 'cleanJunk']);
@@ -271,6 +278,14 @@ Route::prefix('v1')->group(function (): void {
         Route::get('{id}', [DataModelApiController::class, 'show']);
         Route::put('{id}', [DataModelApiController::class, 'update']);
         Route::delete('{id}', [DataModelApiController::class, 'destroy']);
+    });
+
+    // License alias routes for backward compatibility
+    Route::prefix('system/license')->middleware(['auth:sanctum'])->group(function (): void {
+        Route::get('', [LicenseController::class, 'index']);
+        Route::post('activate', [LicenseController::class, 'activate']);
+        Route::post('refresh', [LicenseController::class, 'refresh']);
+        Route::post('deactivate', [LicenseController::class, 'deactivate']);
     });
 });
 

@@ -195,6 +195,7 @@ import { Badge, Button } from '@/shared/components/ui';
 import api from '@/engine/api/client';
 import toast from '@/shared/services/toastService';
 import { useConfirm } from '@/shared/composables/useConfirm';
+import { logger } from '@/shared/utils/logger';
 
 interface LicenseState {
   tier: string;
@@ -306,12 +307,12 @@ const formatDate = (dateStr?: string | null) => {
 const fetchLicense = async () => {
   loading.value = true;
   try {
-    const res = await api.get('/api/v1/system/license');
+    const res = await api.get('/manage/system/license');
     if (res.data?.data) {
       licenseData.value = res.data.data;
     }
   } catch (err) {
-    console.error('Failed to fetch license:', err);
+    logger.error('Failed to fetch license:', err);
   } finally {
     loading.value = false;
   }
@@ -321,7 +322,7 @@ const handleActivate = async () => {
   if (!inputKey.value.trim()) return;
   activating.value = true;
   try {
-    const res = await api.post('/api/v1/system/license/activate', {
+    const res = await api.post('/manage/system/license/activate', {
       license_key: inputKey.value.trim(),
     });
     toast.success(res.data?.message || 'License activated successfully!');
@@ -338,7 +339,7 @@ const handleActivate = async () => {
 const refreshLicense = async () => {
   syncing.value = true;
   try {
-    const res = await api.post('/api/v1/system/license/refresh');
+    const res = await api.post('/manage/system/license/refresh');
     toast.success(res.data?.message || 'License verified with JA-CP!');
     await fetchLicense();
   } catch (err: any) {
@@ -361,7 +362,7 @@ const handleDeactivate = async () => {
 
   deactivating.value = true;
   try {
-    const res = await api.post('/api/v1/system/license/deactivate');
+    const res = await api.post('/manage/system/license/deactivate');
     toast.success(res.data?.message || 'License deactivated.');
     await fetchLicense();
   } catch (err: any) {
