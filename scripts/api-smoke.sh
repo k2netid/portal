@@ -24,7 +24,7 @@ issue_console_token() {
      echo $u->createToken("api-smoke")->plainTextToken;' 2>/dev/null | tr -d '\n'
 }
 
-echo "=== CMS API Smoke Test @ ${API} ==="
+echo "=== Core Engine API Smoke Test @ ${API} ==="
 
 ADMIN_TOKEN="${SMOKE_ADMIN_TOKEN:-$(issue_console_token)}"
 [[ -n "${ADMIN_TOKEN}" ]] || fail "could not issue console token"
@@ -32,19 +32,22 @@ pass "Console sanctum token issued"
 
 AUTH=(-H "Authorization: Bearer ${ADMIN_TOKEN}" -H "Accept: application/json")
 
-curl -sS "${AUTH[@]}" "${API}/manage/publishing/contents" | grep -q '"success":true' || fail "Publishing contents API"
-pass "GET /manage/publishing/contents"
-
-curl -sS "${AUTH[@]}" "${API}/manage/layout/themes" | grep -q '"success":true' || fail "Layout themes API"
-pass "GET /manage/layout/themes"
-
-curl -sS "${AUTH[@]}" "${API}/manage/forms" | grep -q '"success":true' || fail "Forms API"
-pass "GET /manage/forms"
-
-curl -sS "${AUTH[@]}" "${API}/manage/media" | grep -q '"success":true' || fail "Media API"
-pass "GET /manage/media"
-
 curl -sS "${AUTH[@]}" "${API}/manage/infra/models/types" | grep -q '"success":true' || fail "Data Model Studio types list"
 pass "GET /manage/infra/models/types"
 
-echo "=== All CMS API smoke checks passed successfully ==="
+curl -sS "${AUTH[@]}" "${API}/manage/system/users" | grep -q '"success":true' || fail "Users list API"
+pass "GET /manage/system/users"
+
+curl -sS "${AUTH[@]}" "${API}/manage/system/roles" | grep -q '"success":true' || fail "Roles list API"
+pass "GET /manage/system/roles"
+
+curl -sS "${AUTH[@]}" "${API}/manage/system/settings" | grep -q '"success":true' || fail "Settings API"
+pass "GET /manage/system/settings"
+
+curl -sS "${AUTH[@]}" "${API}/manage/system/scheduled-tasks" | grep -q '"success":true' || fail "Scheduled tasks list API"
+pass "GET /manage/system/scheduled-tasks"
+
+curl -sS "${AUTH[@]}" "${API}/manage/system/scheduled-tasks/allowed-commands" | grep -q '"success":true' || fail "Allowed commands API"
+pass "GET /manage/system/scheduled-tasks/allowed-commands"
+
+echo "=== All Core Engine API smoke checks passed successfully ==="

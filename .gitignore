@@ -4,8 +4,9 @@ Thumbs.db
 .idea/
 .vscode/
 .envrc
-core
-core.*
+/core
+/core.[0-9]*
+core.[0-9]*
 
 # Local / one-off scripts (not part of release tooling)
 drop_sch.sh
@@ -39,10 +40,6 @@ backend/node_modules/
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
-# Vite must not copy stale hashed bundles from here into dist (keep only static subtrees e.g. themes/)
-frontend/public/assets/*
-!frontend/public/assets/themes/
-!frontend/public/assets/themes/**
 ja-backup/
 
 # Local lint / analysis dumps (not source)
