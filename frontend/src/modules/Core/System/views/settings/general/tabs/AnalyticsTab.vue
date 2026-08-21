@@ -49,7 +49,7 @@ const updateField = (key: string, value: SettingValue) => {
     emit('update:formData', { ...props.formData, [key]: value })
 }
 
-import { BarChart3 } from 'lucide-vue-next'
+import { BarChart3, Trash2 as TrashIcon } from 'lucide-vue-next';
 
 const analyticsSettingsGrouped = computed(() => {
     const analyticsSettings = props.settings.filter(s => s && s.group === 'analytics')
