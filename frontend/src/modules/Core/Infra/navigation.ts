@@ -2,14 +2,22 @@ import type { NavItem } from '@/shared/utils/navigation';
 
 export const infraNavigation: NavItem[] = [
     {
-        name: 'model-index',
-        label: 'Data Models',
+        label: 'Data Studio',
         labelKey: 'infra.models.title',
-        icon: 'database',
-        permission: 'manage settings',
-        group: 'infrastructure',
-        context: 'infrastructure',
-        priority: 65,
+        icon: 'layers',
+        context: 'operations',
+        group: 'studio',
+        priority: 100,
+        children: [
+            {
+                name: 'model-index',
+                label: 'Data Models',
+                labelKey: 'infra.models.title',
+                icon: 'database',
+                permission: 'manage settings',
+                priority: 100,
+            },
+        ],
     },
 ];
 

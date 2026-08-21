@@ -30,36 +30,35 @@
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <ConsoleStatCard
-        :label="$t('system.dashboard.stats.totalContents')"
-        :value="String(stats.contents?.total || 0)"
-        :hint="`${stats.contents?.published || 0} ${$t('system.dashboard.stats.published')}`"
-        :hint-icon="FileText"
-        :icon="Library"
+        :label="$t('infra.models.title', 'Data Models')"
+        :value="String(stats.models?.total || 0)"
+        :hint="$t('infra.models.studio', 'Studio Schemas')"
+        :hint-icon="Layers"
+        :icon="Database"
         tone="primary"
-      />
-      <ConsoleStatCard
-        :label="$t('system.dashboard.stats.mediaFiles')"
-        :value="String(stats.media?.total || 0)"
-        :hint="$t('common.status.online')"
-        :hint-icon="Image"
-        :icon="FolderOpen"
-        tone="success"
       />
       <ConsoleStatCard
         v-if="authStore.hasPermission('manage users')"
-        :label="$t('system.dashboard.stats.totalUsers')"
+        :label="$t('system.dashboard.stats.totalUsers', 'Total Users')"
         :value="String(stats.users?.total || 0)"
-        :hint="$t('system.dashboard.stats.activeUsers')"
+        :hint="$t('system.dashboard.stats.activeUsers', 'Active accounts')"
         :hint-icon="Users"
         :icon="UserCheck"
+        tone="success"
+      />
+      <ConsoleStatCard
+        :label="$t('system.navigation.menu.activityJournal', 'Activity Logs')"
+        :value="String(stats.journal?.total || 0)"
+        :hint="$t('common.status.online', 'System events')"
+        :hint-icon="Activity"
+        :icon="BookOpen"
         tone="primary"
       />
       <ConsoleStatCard
-        v-if="authStore.hasPermission('approve content')"
-        :label="$t('system.dashboard.stats.pendingContent')"
-        :value="String(stats.contents?.pending || 0)"
-        :hint="$t('system.dashboard.stats.requiresReview')"
-        :hint-icon="AlertCircle"
+        :label="$t('system.navigation.menu.scheduledTasks', 'Scheduled Tasks')"
+        :value="String(stats.tasks?.total || 0)"
+        :hint="`${stats.tasks?.active || 0} active crons`"
+        :hint-icon="Clock3"
         :icon="Clock3"
         tone="warning"
       />
@@ -187,14 +186,13 @@ import {
     SelectValue,
 } from '@/shared/components/ui';
 import {
-  AlertCircle,
+  Activity,
   AreaChart,
   BarChart3,
+  BookOpen,
   Clock3,
-  FileText,
-  FolderOpen,
-  Image,
-  Library,
+  Database,
+  Layers,
   Loader2,
   RefreshCw,
   UserCheck,

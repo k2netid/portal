@@ -35,9 +35,19 @@ class DashboardController extends BaseApiController
 
         $cacheKey = 'dashboard_admin_data_'.$days;
 
-        $data = Cache::remember($cacheKey, 300, fn () => [
+        $data = Cache::remember($cacheKey, 60, fn () => [
             'stats' => array_merge([
                 'users' => $this->getUserStats(),
+                'models' => [
+                    'total' => \Modules\Core\System\Models\ContentType::count(),
+                ],
+                'tasks' => [
+                    'total' => \Modules\Core\System\Models\ScheduledTask::count(),
+                    'active' => \Modules\Core\System\Models\ScheduledTask::where('is_active', true)->count(),
+                ],
+                'journal' => [
+                    'total' => \Modules\Core\System\Models\ActivityLog::count(),
+                ],
                 'system' => $this->getSystemStats(),
             ], $registry->getAllStats()),
             'charts' => array_merge([

@@ -5,15 +5,14 @@ import { logger } from '@/shared/utils/logger';
 
 export interface OnboardingSteps {
     identity: boolean;
-    theme: boolean;
-    first_page: boolean;
+    data_model: boolean;
+    security: boolean;
 }
 
 export interface OnboardingStatusPayload {
     dismissed: boolean;
     steps: OnboardingSteps;
-    active_theme_slug?: string | null;
-    published_pages_count: number;
+    models_count?: number;
     site_name: string;
     complete: boolean;
     progress_percent: number;
@@ -21,8 +20,7 @@ export interface OnboardingStatusPayload {
 
 const defaultStatus = (): OnboardingStatusPayload => ({
     dismissed: false,
-    steps: { identity: false, theme: false, first_page: false },
-    published_pages_count: 0,
+    steps: { identity: false, data_model: false, security: false },
     site_name: '',
     complete: false,
     progress_percent: 0,
@@ -52,7 +50,7 @@ export function useHubOnboarding() {
 
     const completedCount = computed(() => {
         const s = status.value.steps;
-        return Number(s.identity) + Number(s.theme) + Number(s.first_page);
+        return Number(s.identity) + Number(s.data_model) + Number(s.security);
     });
 
     const totalSteps = 3;
@@ -91,11 +89,10 @@ export function useHubOnboarding() {
             loading.value = false;
             status.value = {
                 dismissed: false,
-                steps: { identity: true, theme: false, first_page: false },
-                published_pages_count: 0,
-                site_name: 'Jejakawan',
+                steps: { identity: true, data_model: true, security: false },
+                site_name: 'Jejakawan Core',
                 complete: false,
-                progress_percent: 33,
+                progress_percent: 66,
             };
             return;
         }

@@ -33,6 +33,9 @@ export interface SystemStats {
     contents?: ContentStats;
     media?: DashboardMediaStats;
     users?: UserStats;
+    models?: { total: number };
+    tasks?: { total: number; active?: number };
+    journal?: { total: number };
 }
 
 export interface CreatorDashboardData {

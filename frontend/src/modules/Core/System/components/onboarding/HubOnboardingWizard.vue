@@ -7,8 +7,8 @@
     <CardHeader class="pb-3">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div class="space-y-1">
-          <CardTitle class="text-lg">{{ t('system.onboarding.title') }}</CardTitle>
-          <CardDescription>{{ t('system.onboarding.subtitle') }}</CardDescription>
+          <CardTitle class="text-lg">{{ t('system.onboarding.title', 'Get your core engine ready') }}</CardTitle>
+          <CardDescription>{{ t('system.onboarding.subtitle', 'Complete these steps to set up your core infrastructure.') }}</CardDescription>
           <p class="text-xs text-muted-foreground">
             {{ t('system.onboarding.progress', { completed: completedCount, total: totalSteps }) }}
           </p>
@@ -20,7 +20,7 @@
           data-testid="hub-onboarding-dismiss"
           @click="dismiss"
         >
-          {{ t('system.onboarding.dismiss') }}
+          {{ t('system.onboarding.dismiss', 'Dismiss checklist') }}
         </Button>
       </div>
       <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -80,26 +80,26 @@ const stepItems = computed(() => {
         {
             key: 'identity',
             done: steps.identity,
-            title: t('system.onboarding.steps.identity.title'),
-            description: t('system.onboarding.steps.identity.description'),
-            action: t('system.onboarding.steps.identity.action'),
+            title: t('system.onboarding.steps.identity.title', 'System Identity'),
+            description: t('system.onboarding.steps.identity.description', 'Set your system name and console branding.'),
+            action: t('system.onboarding.steps.identity.action', 'Configure'),
             to: consoleNamedRoute('settings'),
         },
         {
-            key: 'theme',
-            done: steps.theme,
-            title: t('system.onboarding.steps.theme.title'),
-            description: t('system.onboarding.steps.theme.description'),
-            action: t('system.onboarding.steps.theme.action'),
-            to: consoleNamedRoute('themes'),
+            key: 'data_model',
+            done: steps.data_model,
+            title: t('system.onboarding.steps.dataModel.title', 'Data Model Studio'),
+            description: t('system.onboarding.steps.dataModel.description', 'Define entities, custom fields, and OpenAPI schemas.'),
+            action: t('system.onboarding.steps.dataModel.action', 'Design Models'),
+            to: consoleNamedRoute('model-index'),
         },
         {
-            key: 'first_page',
-            done: steps.first_page,
-            title: t('system.onboarding.steps.firstPage.title'),
-            description: t('system.onboarding.steps.firstPage.description'),
-            action: t('system.onboarding.steps.firstPage.action'),
-            to: consoleNamedRoute('contents.create'),
+            key: 'security',
+            done: steps.security,
+            title: t('system.onboarding.steps.security.title', 'Security & Access'),
+            description: t('system.onboarding.steps.security.description', 'Manage RBAC permissions, 2FA, and audit logging.'),
+            action: t('system.onboarding.steps.security.action', 'Manage Security'),
+            to: consoleNamedRoute('roles'),
         },
     ];
 });
