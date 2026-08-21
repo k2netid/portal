@@ -232,6 +232,7 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('manage/redis')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('settings', [RedisController::class, 'index']);
         Route::put('settings', [RedisController::class, 'update']);
+        Route::post('sync-env', [RedisController::class, 'syncFromEnv']);
         Route::post('test-connection', [RedisController::class, 'testConnection']);
         Route::get('info', [RedisController::class, 'info']);
         Route::post('flush-cache', [RedisController::class, 'flushCache']);

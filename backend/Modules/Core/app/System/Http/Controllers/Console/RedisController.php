@@ -119,6 +119,30 @@ class RedisController extends BaseApiController
     }
 
     /**
+     * Sync Redis settings from environment (.env).
+     */
+    public function syncFromEnv(): JsonResponse
+    {
+        $envMap = [
+            'redis_host' => env('REDIS_HOST', '127.0.0.1'),
+            'redis_port' => env('REDIS_PORT', 6379),
+            'redis_username' => env('REDIS_USERNAME', 'core_engine'),
+            'redis_password' => env('REDIS_PASSWORD', ''),
+            'redis_database' => env('REDIS_DB', 6),
+            'redis_cache_database' => env('REDIS_CACHE_DB', 7),
+            'cache_prefix' => env('CACHE_PREFIX', 'ja_core_engine_cache:'),
+        ];
+
+        foreach ($envMap as $key => $val) {
+            RedisSetting::setValue($key, $val);
+        }
+
+        Artisan::call('config:clear');
+
+        return $this->index();
+    }
+
+    /**
      * Test Redis connection.
      */
     public function testConnection(Request $request): JsonResponse
@@ -129,6 +153,7 @@ class RedisController extends BaseApiController
             $host = $request->input('host', '127.0.0.1');
             $portRaw = $request->input('port', 6379);
             $port = is_numeric($portRaw) ? (int) $portRaw : 6379;
+            $username = $request->input('username');
             $password = $request->input('password');
             $databaseRaw = $request->input('database', 0);
             $database = is_numeric($databaseRaw) ? (int) $databaseRaw : 0;
@@ -137,6 +162,7 @@ class RedisController extends BaseApiController
             $config = [
                 'host' => $host,
                 'port' => $port,
+                'username' => $username,
                 'password' => $password,
                 'database' => $database,
                 'timeout' => 2.0,

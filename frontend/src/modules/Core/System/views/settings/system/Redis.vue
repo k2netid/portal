@@ -805,30 +805,43 @@
           </Accordion>
 
           <!-- Action Buttons Footer -->
-          <div class="mt-6 flex justify-end items-center gap-3">
+          <div class="mt-6 flex justify-between items-center gap-3">
             <Button
-              variant="ghost"
+              variant="outline"
               type="button"
-              class="text-xs font-semibold text-muted-foreground hover:text-foreground"
-              @click="loadSettings"
+              :disabled="syncingEnv || saving"
+              class="text-xs font-semibold gap-1.5"
+              @click="syncFromEnv"
             >
-              {{ t('system.redis.settings.cancel') }}
+              <RefreshCw v-if="!syncingEnv" class="w-3.5 h-3.5" />
+              <Loader2 v-else class="w-3.5 h-3.5 animate-spin" />
+              {{ syncingEnv ? 'Syncing...' : 'Sync from .env' }}
             </Button>
-            <Button 
-              type="submit" 
-              :disabled="saving || !isDirty"
-              class="min-w-[140px] text-xs font-bold shadow-sm"
-            >
-              <Loader2
-                v-if="saving"
-                class="w-3.5 h-3.5 mr-2 animate-spin"
-              />
-              <Save
-                v-else
-                class="w-3.5 h-3.5 mr-2"
-              />
-              {{ saving ? t('system.redis.settings.saving') : t('system.redis.settings.save') }}
-            </Button>
+            <div class="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                type="button"
+                class="text-xs font-semibold text-muted-foreground hover:text-foreground"
+                @click="loadSettings"
+              >
+                {{ t('system.redis.settings.cancel') }}
+              </Button>
+              <Button 
+                type="submit" 
+                :disabled="saving || !isDirty"
+                class="min-w-[140px] text-xs font-bold shadow-sm"
+              >
+                <Loader2
+                  v-if="saving"
+                  class="w-3.5 h-3.5 mr-2 animate-spin"
+                />
+                <Save
+                  v-else
+                  class="w-3.5 h-3.5 mr-2"
+                />
+                {{ saving ? t('system.redis.settings.saving') : t('system.redis.settings.save') }}
+              </Button>
+            </div>
           </div>
         </form>
       </TabsContent>
@@ -1166,6 +1179,58 @@ const saveSettings = async (): Promise<void> => {
   }
 };
 
+const syncingEnv = ref(false);
+
+const syncFromEnv = async (): Promise<void> => {
+  const confirmed = await confirm({
+    title: 'Sync Settings from .env',
+    message: 'This will reload Redis settings from your server environment file (.env). Any unsaved changes in this form will be replaced with .env values. Continue?',
+    variant: 'info',
+    confirmText: 'Sync from .env',
+  });
+
+  if (!confirmed) {
+    return;
+  }
+
+  syncingEnv.value = true;
+  try {
+    const response = await api.post('/manage/redis/sync-env');
+    const payload = response?.data;
+    const normalized: Record<string, SettingItem[]> = {};
+
+    if (payload && typeof payload === 'object') {
+      Object.entries(payload as GroupedSettingsPayload).forEach(([groupName, rawItems]) => {
+        const items = Array.isArray(rawItems)
+          ? rawItems
+          : (rawItems && typeof rawItems === 'object' ? Object.values(rawItems) : []);
+
+        normalized[groupName] = items.filter((item): item is SettingItem => {
+          return !!item && typeof item === 'object' && typeof item.key === 'string';
+        });
+      });
+    }
+
+    settings.value = normalized;
+
+    settingsForm.value = {};
+    Object.values(settings.value).forEach((items) => {
+      items.forEach(item => {
+        settingsForm.value[item.key] = item.value;
+      });
+    });
+    initialSettingsForm.value = JSON.parse(JSON.stringify(settingsForm.value));
+
+    toast.success.action('Redis settings successfully synced from .env!');
+    await getCacheStatus();
+  } catch (error: unknown) {
+    logger.error('Failed to sync settings from .env:', error);
+    toast.error.fromResponse(error);
+  } finally {
+    syncingEnv.value = false;
+  }
+};
+
 const testConnection = async (): Promise<void> => {
   testing.value = true;
   connectionStatus.value = null;
@@ -1174,6 +1239,7 @@ const testConnection = async (): Promise<void> => {
     const response = await api.post('/manage/redis/test-connection', {
       host: settingsForm.value.redis_host,
       port: settingsForm.value.redis_port,
+      username: settingsForm.value.redis_username,
       password: settingsForm.value.redis_password,
       database: settingsForm.value.redis_database
     });
