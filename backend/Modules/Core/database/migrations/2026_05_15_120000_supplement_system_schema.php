@@ -140,10 +140,11 @@ return new class extends Migration
         Schema::create('sys_two_factor_auth', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->uuid('user_id')->unique();
-            $table->text('secret');
-            $table->json('recovery_codes')->nullable();
-            $table->boolean('is_enabled')->default(false);
+            $table->text('secret')->nullable();
+            $table->json('backup_codes')->nullable();
+            $table->boolean('enabled')->default(false);
             $table->timestamp('enabled_at')->nullable();
+            $table->timestamp('recovery_codes_generated_at')->nullable();
             $table->timestamps();
         });
     }

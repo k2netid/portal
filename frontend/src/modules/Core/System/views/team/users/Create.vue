@@ -324,7 +324,7 @@ import {
     Textarea,
     Checkbox
 } from '@/shared/components/ui';
-import MediaPicker from '@/modules/Content/Media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import {
   ArrowLeft,
   Eye,

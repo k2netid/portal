@@ -4,7 +4,6 @@ namespace Modules\Core\System\Http\Controllers\Console;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Content\Layout\Services\PluginThemeBlocksValidator;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Plugin;
 
@@ -64,23 +63,13 @@ class PluginController extends BaseApiController
 
     public function destroy(Plugin $plugin): JsonResponse
     {
-        if ($plugin->is_active) {
-            return $this->validationError(['plugin' => ['Cannot delete active plugin. Deactivate it first.']], 'Cannot delete active plugin. Deactivate it first.');
-        }
-
         $plugin->delete();
 
         return $this->success(null, 'Plugin deleted successfully');
     }
 
-    public function activate(Plugin $plugin, PluginThemeBlocksValidator $validator): JsonResponse
+    public function activate(Plugin $plugin): JsonResponse
     {
-        $settings = is_array($plugin->settings) ? $plugin->settings : [];
-        $errors = $validator->validateSettings($settings);
-        if ($errors !== []) {
-            return $this->validationError($errors, 'Invalid plugin theme block configuration.');
-        }
-
         $plugin->activate();
 
         return $this->success([
@@ -97,19 +86,13 @@ class PluginController extends BaseApiController
         ], 'Plugin deactivated successfully');
     }
 
-    public function updateSettings(Request $request, Plugin $plugin, PluginThemeBlocksValidator $validator): JsonResponse
+    public function updateSettings(Request $request, Plugin $plugin): JsonResponse
     {
         $validated = $request->validate([
             'settings' => 'required|array',
         ]);
 
-        $normalized = $validator->normalizeSettings($validated['settings']);
-        $errors = $validator->validateSettings($normalized);
-        if ($errors !== []) {
-            return $this->validationError($errors, 'Invalid plugin theme block configuration.');
-        }
-
-        $plugin->update(['settings' => $normalized]);
+        $plugin->update(['settings' => $validated['settings']]);
 
         return $this->success($plugin, 'Plugin settings updated successfully');
     }

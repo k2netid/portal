@@ -401,7 +401,7 @@ const DeviceSessions = defineAsyncComponent(() => import('@/modules/Core/System/
 const TwoFactorSettings = defineAsyncComponent(() => import('@/modules/Core/System/components/console/TwoFactorSettings.vue'));
 const PasskeysSettings = defineAsyncComponent(() => import('@/modules/Core/System/components/console/PasskeysSettings.vue'));
 const KycOnboarding = defineAsyncComponent(() => import('@/modules/Core/System/components/console/KycOnboarding.vue'));
-const MediaPicker = defineAsyncComponent(() => import('@/modules/Content/Media/components/picker/MediaPicker.vue'));
+const MediaPicker = defineAsyncComponent(() => import('@/shared/components/ui/MediaPicker.vue'));
 
 // Shadcn Components
 // Shadcn Components

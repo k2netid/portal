@@ -1,0 +1,107 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Core\System\Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Modules\Core\System\Models\Setting;
+use Tests\TestCase;
+
+class SettingsApiTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seedPermissionsAndRoles();
+    }
+
+    public function test_admin_can_list_and_filter_settings(): void
+    {
+        $admin = $this->createAdminUser();
+
+        Setting::create([
+            'key' => 'site_title',
+            'value' => 'Jejakawan Control Plane',
+            'type' => 'string',
+            'group' => 'system',
+            'is_public' => true,
+        ]);
+
+        $response = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings?group=system');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'data' => [
+                    '*' => ['id', 'key', 'value', 'type', 'group'],
+                ],
+            ]);
+    }
+
+    public function test_admin_can_retrieve_settings_by_group(): void
+    {
+        $admin = $this->createAdminUser();
+
+        Setting::create([
+            'key' => 'maintenance_mode',
+            'value' => '0',
+            'type' => 'boolean',
+            'group' => 'system',
+            'is_public' => true,
+        ]);
+
+        $response = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings/group/system');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'data',
+            ]);
+    }
+
+    public function test_admin_can_store_and_bulk_update_settings(): void
+    {
+        $admin = $this->createAdminUser();
+
+        // 1. Store new setting
+        $storeResponse = $this->actingAs($admin, 'sanctum')
+            ->postJson('/api/v1/manage/system/settings', [
+                'key' => 'custom_support_email',
+                'value' => 'support@jejakawan.com',
+                'type' => 'string',
+                'group' => 'system',
+                'description' => 'Helpdesk email address',
+                'is_public' => true,
+            ]);
+
+        $storeResponse->assertCreated();
+        $this->assertDatabaseHas('sys_settings', ['key' => 'custom_support_email']);
+
+        // 2. Bulk update settings
+        $bulkResponse = $this->actingAs($admin, 'sanctum')
+            ->postJson('/api/v1/manage/system/settings/bulk-update', [
+                'settings' => [
+                    [
+                        'key' => 'custom_support_email',
+                        'value' => 'contact@jejakawan.com',
+                        'type' => 'string',
+                        'group' => 'system',
+                    ],
+                ],
+            ]);
+
+        $bulkResponse->assertOk();
+        $this->assertEquals('contact@jejakawan.com', Setting::get('custom_support_email'));
+    }
+
+    public function test_unauthenticated_cannot_access_settings(): void
+    {
+        $this->getJson('/api/v1/manage/system/settings')->assertUnauthorized();
+        $this->postJson('/api/v1/manage/system/settings', [])->assertUnauthorized();
+    }
+}

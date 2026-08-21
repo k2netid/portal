@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Modules\Content\Media\Models\File;
-use Modules\Content\Media\Models\File as Media;
+use Illuminate\Support\Facades\Schema;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\ActivityLog;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\DashboardRegistry;
-use Modules\Intelligence\Analytics\Models\AnalyticsVisit;
 
 /**
  * @OA\Tag(name="Dashboard")
@@ -38,13 +37,12 @@ class DashboardController extends BaseApiController
 
         $data = Cache::remember($cacheKey, 300, fn () => [
             'stats' => array_merge([
-                'media' => $this->getMediaStats(),
                 'users' => $this->getUserStats(),
+                'system' => $this->getSystemStats(),
             ], $registry->getAllStats()),
             'charts' => array_merge([
-                'mediaByType' => $this->getMediaByType(),
-                'contentTraffic' => $this->getSiteTrafficSeries($days),
                 'userActivity' => $this->getUserActivity($days),
+                'systemActivity' => $this->getSystemActivitySeries($days),
             ], $registry->getAllCharts()),
         ]);
 
@@ -71,7 +69,7 @@ class DashboardController extends BaseApiController
             return $this->unauthorized();
         }
 
-        $userId = (int) $user->id;
+        $userId = $user->id;
         $daysRaw = $request->input('days', 30);
         $days = is_numeric($daysRaw) ? (int) $daysRaw : 30;
 
@@ -79,10 +77,10 @@ class DashboardController extends BaseApiController
 
         $data = Cache::remember($cacheKey, 300, fn () => [
             'stats' => array_merge([
-                'myMedia' => $this->getMyMediaStats($userId),
-            ], $registry->getAllStats()), // Individual modules should handle userId filtering in their providers if needed
+                'users' => $this->getUserStats(),
+            ], $registry->getAllStats()),
             'charts' => array_merge([
-                'mediaTraffic' => [], // Placeholder for media specific traffic if any
+                'userActivity' => $this->getUserActivity($days),
             ], $registry->getAllCharts()),
         ]);
 
@@ -101,24 +99,7 @@ class DashboardController extends BaseApiController
      */
     public function viewer(Request $request, DashboardRegistry $registry): JsonResponse
     {
-        // Viewer dashboard data is primarily module-specific (e.g. Latest Content)
         return $this->success($registry->getAllStats()['viewer'] ?? []);
-    }
-
-    // Helper methods (Core Only)
-
-    /**
-     * @return array{total: int, images: int, videos: int, documents: int}
-     */
-    private function getMediaStats(): array
-    {
-        return [
-            'total' => Media::count(),
-            'images' => Media::where('mime_type', 'like', 'image/%')->count(),
-            'videos' => Media::where('mime_type', 'like', 'video/%')->count(),
-            'documents' => Media::where('mime_type', 'not like', 'image/%')
-                ->where('mime_type', 'not like', 'video/%')->count(),
-        ];
     }
 
     /**
@@ -133,41 +114,36 @@ class DashboardController extends BaseApiController
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, File>
+     * @return array{php_version: string, laravel_version: string, memory_usage: string}
      */
-    private function getMediaByType(): Collection
+    private function getSystemStats(): array
     {
-        $driver = DB::connection()->getDriverName();
-        $typeExpr = match ($driver) {
-            'pgsql' => "split_part(mime_type, '/', 1)",
-            'sqlite' => "CASE WHEN mime_type LIKE '%/%' THEN SUBSTR(mime_type, 1, INSTR(mime_type, '/') - 1) ELSE mime_type END",
-            default => 'SUBSTRING_INDEX(mime_type, \'/\', 1)',
-        };
-
-        return Media::select(
-            DB::raw("{$typeExpr} as type"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw($typeExpr))
-            ->get();
+        return [
+            'php_version' => PHP_VERSION,
+            'laravel_version' => app()->version(),
+            'memory_usage' => round(memory_get_usage(true) / 1024 / 1024, 2).' MB',
+        ];
     }
 
     /**
-     * Daily site page views from analytics_visits (aligned with dashboard time filter).
+     * Daily system activity logs from sys_activity_logs.
      *
      * @return array<int, array{period: string, visits: int}>
      */
-    private function getSiteTrafficSeries(int $days): array
+    private function getSystemActivitySeries(int $days): array
     {
         $days = max(1, min(366, $days));
         $from = now()->copy()->subDays($days - 1)->startOfDay();
 
-        $rows = AnalyticsVisit::query()
-            ->selectRaw('DATE(visited_at) as period, COUNT(*) as visits')
-            ->where('visited_at', '>=', $from)
-            ->groupByRaw('DATE(visited_at)')
-            ->orderBy('period')
-            ->pluck('visits', 'period');
+        $rows = [];
+        if (Schema::hasTable('sys_activity_logs')) {
+            $rows = ActivityLog::query()
+                ->selectRaw('DATE(created_at) as period, COUNT(*) as count')
+                ->where('created_at', '>=', $from)
+                ->groupByRaw('DATE(created_at)')
+                ->orderBy('period')
+                ->pluck('count', 'period');
+        }
 
         $series = [];
         for ($i = $days - 1; $i >= 0; $i--) {
@@ -200,16 +176,5 @@ class DashboardController extends BaseApiController
             ->groupBy(DB::raw($dateExpr))
             ->orderBy('date')
             ->get();
-    }
-
-    /**
-     * @return array{total: int, size: float|int}
-     */
-    private function getMyMediaStats(int $userId): array
-    {
-        return [
-            'total' => Media::where('author_id', $userId)->count(),
-            'size' => (float) Media::where('author_id', $userId)->sum('size'),
-        ];
     }
 }

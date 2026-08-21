@@ -47,7 +47,6 @@ import { useRoute } from 'vue-router';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { useSessionTimeout } from '@/shared/composables/useSessionTimeout';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { useTheme } from '@/modules/Content/Layout/composables/useTheme';
 import { syncDocumentDarkClassForRoute } from '@/shared/composables/useDarkMode';
 import { useHead } from '@unhead/vue';
 import { applyFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
@@ -64,7 +63,6 @@ const { confirmState } = useConfirm();
 const { isWarningVisible, timeRemaining, extendSession, manualLogout } = useSessionTimeout();
 
 const systemStore = useSystemStore();
-const { themeSettings, loadActiveTheme } = useTheme();
 const route = useRoute();
 const isReady = ref(false);
 const deferUiOverlays = ref(false);
@@ -78,13 +76,9 @@ watch(
 );
 
 onMounted(() => {
-    // Unblock first render; hydrate settings/theme in background.
     isReady.value = true;
     void initializeLanguage();
-    void Promise.all([
-        systemStore.fetchPublicSettings({ force: true }),
-        loadActiveTheme(),
-    ]);
+    void systemStore.fetchPublicSettings({ force: true });
 
     const mountDeferredUi = () => {
         deferUiOverlays.value = true;
@@ -97,7 +91,6 @@ onMounted(() => {
 });
 
 const faviconHref = computed(() => resolveFavicon([
-    themeSettings.value?.brand_favicon,
     systemStore.siteSettings?.site_favicon,
 ]));
 

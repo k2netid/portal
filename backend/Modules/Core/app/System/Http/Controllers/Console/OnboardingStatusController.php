@@ -6,9 +6,8 @@ namespace Modules\Core\System\Http\Controllers\Console;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Content\Layout\Helpers\ThemeHelper;
-use Modules\Content\Publishing\Models\Content;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\ContentType;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 
@@ -18,11 +17,6 @@ class OnboardingStatusController extends BaseApiController
     {
         /** @var User|null $user */
         $user = $request->user();
-        $activeTheme = ThemeHelper::activeTheme('frontend');
-        $publishedPages = (int) Content::query()
-            ->where('type', 'page')
-            ->where('status', 'published')
-            ->count();
 
         $siteNameRaw = Setting::get('site_name', '');
         $siteName = is_string($siteNameRaw) && trim($siteNameRaw) !== ''
@@ -38,10 +32,16 @@ class OnboardingStatusController extends BaseApiController
             }
         }
 
+        $modelsCount = 0;
+        try {
+            $modelsCount = ContentType::count();
+        } catch (\Throwable) {
+        }
+
         $steps = [
             'identity' => $siteName !== '',
-            'theme' => $activeTheme !== null,
-            'first_page' => $publishedPages > 0,
+            'data_model' => $modelsCount > 0,
+            'security' => (bool) Setting::get('enable_2fa', false),
         ];
 
         $completed = count(array_filter($steps));
@@ -50,8 +50,7 @@ class OnboardingStatusController extends BaseApiController
         return $this->success([
             'dismissed' => $dismissed,
             'steps' => $steps,
-            'active_theme_slug' => $activeTheme?->slug,
-            'published_pages_count' => $publishedPages,
+            'models_count' => $modelsCount,
             'site_name' => $siteName,
             'complete' => $completed === count($steps),
             'progress_percent' => (int) round(($completed / max(1, count($steps))) * 100),

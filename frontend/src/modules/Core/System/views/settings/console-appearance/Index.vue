@@ -141,7 +141,7 @@ import { useI18n } from 'vue-i18n';
 import { Image, LayoutTemplate, Palette } from 'lucide-vue-next';
 import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
 import { Tabs, TabsList, TabsTrigger, TabsContent, Button } from '@/shared/components/ui';
-import MediaPicker from '@/modules/Content/Media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import ConsoleThemeModeSection from './components/ConsoleThemeModeSection.vue';
 import ConsoleThemeScopeOverlay from './components/ConsoleThemeScopeOverlay.vue';
 import {

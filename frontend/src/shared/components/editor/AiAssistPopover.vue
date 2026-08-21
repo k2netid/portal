@@ -178,7 +178,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/shared/components/ui';
-import { AiService } from '@/modules/Intelligence/Ai/services/aiService';
+import { AiService } from '@/shared/services/aiService';
 import { useToast } from '@/shared/composables/useToast';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 

@@ -151,6 +151,30 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * Create a creator user for testing.
+     */
+    protected function createCreatorUser(array $attributes = []): User
+    {
+        $user = $this->createUser($attributes);
+        $role = Role::firstOrCreate(['name' => 'creator', 'guard_name' => 'web']);
+        $user->assignRole($role);
+
+        return $user;
+    }
+
+    /**
+     * Create a viewer user for testing.
+     */
+    protected function createViewerUser(array $attributes = []): User
+    {
+        $user = $this->createUser($attributes);
+        $role = Role::firstOrCreate(['name' => 'viewer', 'guard_name' => 'web']);
+        $user->assignRole($role);
+
+        return $user;
+    }
+
+    /**
      * Act as a user for testing.
      */
     protected function actingAsUser(?User $user = null): self

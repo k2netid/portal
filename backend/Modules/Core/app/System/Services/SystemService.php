@@ -7,15 +7,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
-use Modules\Content\Library\Models\Tag;
-use Modules\Content\Media\Models\File;
 use Modules\Core\System\Jobs\QueueHeartbeatJob;
 use Modules\Core\System\Models\Analytics;
 use Modules\Core\System\Models\EmailTemplate;
 use Modules\Core\System\Models\PageView;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
-use Modules\Intelligence\Newsletter\Models\NewsletterSubscriber;
 
 class SystemService
 {
@@ -155,20 +152,13 @@ class SystemService
             $stats = [
                 // Base Core Stats
                 'total_users' => User::count(),
-                'total_media' => File::count(),
                 'total_visits' => $totalVisits,
                 'users' => [
                     'total' => User::count(),
                     'verified' => User::whereNotNull('email_verified_at')->count(),
                 ],
-                'media' => [
-                    'total' => File::count(),
-                    'total_size' => File::sum('size'),
-                ],
-                'tags' => Tag::count(),
                 'email' => [
                     'templates' => class_exists(EmailTemplate::class) ? EmailTemplate::count() : 0,
-                    'subscribers' => class_exists(NewsletterSubscriber::class) ? NewsletterSubscriber::count() : 0,
                     'smtp_status' => strtoupper(is_string($statusVal = Cache::get('email_smtp_status', 'active')) ? $statusVal : 'active'),
                 ],
             ];

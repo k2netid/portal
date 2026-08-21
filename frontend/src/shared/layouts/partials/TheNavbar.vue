@@ -296,7 +296,7 @@ import api from '@/engine/api/client';
 import { getResponseList } from '@/shared/utils/responseParser';
 import BreadcrumbTrail from '@/shared/components/BreadcrumbTrail.vue';
 import DarkModeToggle from '@/shared/components/DarkModeToggle.vue';
-import GlobalSearch from '@/modules/Intelligence/Search/components/GlobalSearch.vue';
+import GlobalSearch from '@/shared/components/shell/GlobalSearch.vue';
 
 
 import {

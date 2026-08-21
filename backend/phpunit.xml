@@ -7,8 +7,6 @@
     <source>
         <include>
             <directory>Modules/Core/app</directory>
-            <directory>Modules/Content/app</directory>
-            <directory>Modules/Intelligence/app</directory>
         </include>
     </source>
     <testsuites>
@@ -20,12 +18,8 @@
         </testsuite>
         <testsuite name="Modules">
             <directory>Modules/Core/tests</directory>
-            <directory>Modules/Content/tests</directory>
-            <directory>Modules/Intelligence/tests</directory>
         </testsuite>
     </testsuites>
-    <!-- Coverage (pcov/xdebug) hanya lewat phpunit.coverage.xml + composer test:coverage
-         supaya server dengan pcov off + JIT on tidak kena peringatan driver setiap artisan test. -->
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_INSTALLED" value="true"/>

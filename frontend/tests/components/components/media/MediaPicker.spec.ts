@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import MediaPicker from '@/modules/Content/Media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import api from '@/engine/api/client';
 
 vi.mock('@/engine/api/client', () => ({

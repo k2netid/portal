@@ -55,7 +55,6 @@
 import { ref, computed, watch, type Component } from 'vue';
 import { useI18n } from 'vue-i18n';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { useTheme } from '@/modules/Content/Layout/composables/useTheme';
 import {
   Monitor,
   Smartphone,
@@ -113,7 +112,6 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-useTheme();
 
 const selectedDevice = ref<string>('desktop');
 

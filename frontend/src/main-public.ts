@@ -1,7 +1,6 @@
 import '@/styles/shell/public-tailwind.css';
 import i18n from '@/engine/i18n';
 import { bootstrapPublicApp } from '@/engine/bootstrap/public';
-import { bootstrapPluginThemeBlocks } from '@/engine/plugins/pluginBootstrap';
 import {
     createShellApp,
     initShellLayout,
@@ -38,9 +37,6 @@ async function bootstrap(): Promise<void> {
     });
 
     registry.getDashboards().forEach((db) => dbStore.registerDashboard(db));
-
-    await bootstrapPluginThemeBlocks();
-    await import('@/modules/Content/Layout/views/themes/janari/assets/styles/janari.css');
 
     logger.info('[SPA] Mounting public shell');
     app.mount('#app');

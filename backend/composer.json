@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "jejakawan/jejakawan-backend",
+    "name": "jejakawan/ja-core-engine",
     "version": "1.0.0-beta.1",
     "type": "project",
-    "description": "Jejakawan Backend Service",
+    "description": "Jejakawan Core Engine - Foundational Application Kernel",
     "authors": [
         {
             "name": "Jejakawan",
@@ -14,7 +14,8 @@
     ],
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "core-engine"
     ],
     "license": "MIT",
     "repositories": [
@@ -61,32 +62,12 @@
         "psr-4": {
             "App\\": "app/",
             "Modules\\Core\\": "Modules/Core/app/",
-            "Modules\\Content\\": "Modules/Content/app/",
-            "Modules\\Intelligence\\": "Modules/Intelligence/app/",
             "Modules\\Core\\System\\Database\\Factories\\": "Modules/Core/database/factories/System/",
             "Modules\\Core\\System\\Database\\Seeders\\": "Modules/Core/database/seeders/System/",
             "Modules\\Core\\Security\\Database\\Factories\\": "Modules/Core/database/factories/Security/",
             "Modules\\Core\\Security\\Database\\Seeders\\": "Modules/Core/database/seeders/Security/",
             "Modules\\Core\\Infra\\Database\\Factories\\": "Modules/Core/database/factories/Infra/",
             "Modules\\Core\\Infra\\Database\\Seeders\\": "Modules/Core/database/seeders/Infra/",
-            "Modules\\Content\\Publishing\\Database\\Factories\\": "Modules/Content/database/factories/Publishing/",
-            "Modules\\Content\\Publishing\\Database\\Seeders\\": "Modules/Content/database/seeders/Publishing/",
-            "Modules\\Content\\Layout\\Database\\Factories\\": "Modules/Content/database/factories/Layout/",
-            "Modules\\Content\\Layout\\Database\\Seeders\\": "Modules/Content/database/seeders/Layout/",
-            "Modules\\Content\\Media\\Database\\Factories\\": "Modules/Content/database/factories/Media/",
-            "Modules\\Content\\Media\\Database\\Seeders\\": "Modules/Content/database/seeders/Media/",
-            "Modules\\Content\\Forms\\Database\\Factories\\": "Modules/Content/database/factories/Forms/",
-            "Modules\\Content\\Forms\\Database\\Seeders\\": "Modules/Content/database/seeders/Forms/",
-            "Modules\\Content\\Library\\Database\\Factories\\": "Modules/Content/database/factories/Library/",
-            "Modules\\Content\\Library\\Database\\Seeders\\": "Modules/Content/database/seeders/Library/",
-            "Modules\\Intelligence\\Ai\\Database\\Factories\\": "Modules/Intelligence/database/factories/Ai/",
-            "Modules\\Intelligence\\Ai\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Ai/",
-            "Modules\\Intelligence\\Analytics\\Database\\Factories\\": "Modules/Intelligence/database/factories/Analytics/",
-            "Modules\\Intelligence\\Analytics\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Analytics/",
-            "Modules\\Intelligence\\Newsletter\\Database\\Factories\\": "Modules/Intelligence/database/factories/Newsletter/",
-            "Modules\\Intelligence\\Newsletter\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Newsletter/",
-            "Modules\\Intelligence\\Search\\Database\\Factories\\": "Modules/Intelligence/database/factories/Search/",
-            "Modules\\Intelligence\\Search\\Database\\Seeders\\": "Modules/Intelligence/database/seeders/Search/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }

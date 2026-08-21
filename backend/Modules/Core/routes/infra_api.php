@@ -14,6 +14,8 @@ Route::prefix('v1')->group(function (): void {
         // Backups
         Route::get('backups/stats', [BackupController::class, 'stats']);
         Route::get('backups/statistics', [BackupController::class, 'stats']);
+        Route::match(['get', 'post'], 'backups/schedule', [BackupController::class, 'schedule']);
+        Route::post('backups/cleanup', [BackupController::class, 'cleanup']);
         Route::post('backups/{backup}/restore', [BackupController::class, 'restore']);
         Route::get('backups/{backup}/download', [BackupController::class, 'download']);
         Route::apiResource('backups', BackupController::class);
@@ -56,6 +58,8 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('manage/system')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('backups/stats', [BackupController::class, 'stats'])->name('compat.api.backups.stats');
         Route::get('backups/statistics', [BackupController::class, 'stats'])->name('compat.api.backups.statistics');
+        Route::match(['get', 'post'], 'backups/schedule', [BackupController::class, 'schedule'])->name('compat.api.backups.schedule');
+        Route::post('backups/cleanup', [BackupController::class, 'cleanup'])->name('compat.api.backups.cleanup');
         Route::post('backups/{backup}/restore', [BackupController::class, 'restore'])->name('compat.api.backups.restore');
         Route::get('backups/{backup}/download', [BackupController::class, 'download'])->name('compat.api.backups.download');
         Route::apiResource('backups', BackupController::class)->names([

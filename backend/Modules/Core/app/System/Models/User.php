@@ -185,7 +185,9 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
             return false;
         }
 
-        return $this->twoFactorAuth && $this->twoFactorAuth->enabled;
+        $twoFactor = $this->twoFactorAuth ?? $this->twoFactorAuth()->first();
+
+        return (bool) ($twoFactor && $twoFactor->enabled);
     }
 
     public function requiresTwoFactor(): bool

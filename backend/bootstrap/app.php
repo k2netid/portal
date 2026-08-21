@@ -7,7 +7,6 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Session\Middleware\AuthenticateSession;
-use Modules\Content\Layout\Http\Middleware\ApplyRedirects;
 use Modules\Core\Infra\Http\Middleware\HandleDomainRedirects;
 use Modules\Core\Security\Http\Middleware\BlockMaliciousBots;
 use Modules\Core\Security\Http\Middleware\HoneypotMiddleware;
@@ -21,7 +20,6 @@ use Modules\Core\System\Http\Middleware\LazyExtensionBootMiddleware;
 use Modules\Core\System\Http\Middleware\LogSlowQueries;
 use Modules\Core\System\Http\Middleware\NormalizePaginationParams;
 use Modules\Core\System\Http\Middleware\TrustProxies;
-use Modules\Intelligence\Analytics\Http\Middleware\TrackAnalytics;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
@@ -34,22 +32,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule): void {
-        // Core schedule: Auto-publishing scheduled posts every minute
-        $schedule->command('content:publish-scheduled')
-            ->everyMinute()
-            ->withoutOverlapping()
-            ->runInBackground();
-
         // Dynamic Database-backed Scheduled Tasks (sys_scheduled_tasks)
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('sys_scheduled_tasks')) {
                 $tasks = \Modules\Core\System\Models\ScheduledTask::where('is_active', true)->get();
 
                 foreach ($tasks as $task) {
-                    if ($task->command === 'content:publish-scheduled') {
-                        continue;
-                    }
-
                     if (! \Modules\Core\System\Models\ScheduledTask::isCommandAllowed($task->command)) {
                         continue;
                     }
@@ -58,13 +46,12 @@ return Application::configure(basePath: dirname(__DIR__))
                         continue;
                     }
 
-                    $taskId = $task->id;
-                    $commandString = $task->command;
-
-                    $event = $schedule->command($commandString)
+                    $event = $schedule->command($task->command)
                         ->cron($task->schedule)
                         ->withoutOverlapping()
                         ->runInBackground();
+
+                    $taskId = $task->id;
 
                     $event->before(function () use ($taskId) {
                         try {
@@ -120,10 +107,8 @@ return Application::configure(basePath: dirname(__DIR__))
             WafMiddleware::class,
             HoneypotMiddleware::class,
         ], append: [
-            ApplyRedirects::class,
             AuthenticateSession::class,
             SecurityHeaders::class,
-            TrackAnalytics::class,
             CheckMaintenanceMode::class,
         ]);
 

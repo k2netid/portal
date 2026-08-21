@@ -39,6 +39,8 @@ export function prefetchConsoleHubRoutes(router: Router): void {
     const names = [
         'dashboard',
         'security',
+        'crm',
+        'accounting',
         'extensions',
         'system-settings',
         'publishing-settings',

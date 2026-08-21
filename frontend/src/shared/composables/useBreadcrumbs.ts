@@ -6,23 +6,6 @@ import { consoleDashboardSlug } from '@/shared/utils/consoleRoute';
 
 /** Fallback i18n keys for first path segment under the console shell. */
 const segmentConfig: Record<string, string> = {
-    contents: 'publishing.navigation.menu.studio',
-    'content-templates': 'publishing.content.list.templates',
-    media: 'media.navigation.menu.mediaLibrary',
-    categories: 'publishing.navigation.menu.categories',
-    tags: 'library.navigation.menu.tags',
-    comments: 'publishing.navigation.menu.comments',
-    forms: 'forms.navigation.menu.forms',
-    newsletter: 'newsletter.navigation.menu.newsletter',
-    themes: 'publishing.navigation.menu.themes',
-    menus: 'layout.navigation.menu.menus',
-    widgets: 'layout.navigation.menu.widgets',
-    analytics: 'search.navigation.menu.analytics',
-    seo: 'publishing.navigation.menu.seo',
-    redirects: 'layout.navigation.menu.redirects',
-    'custom-fields': 'library.navigation.menu.customFields',
-    'email-templates': 'newsletter.navigation.menu.emailTemplates',
-    'file-manager': 'media.file_manager.title',
     webhooks: 'infra.webhooks.title',
     plugins: 'infra.plugins.title',
     extensions: 'system.navigation.menu.extensions',
@@ -44,12 +27,10 @@ const segmentConfig: Record<string, string> = {
     'security-journal': 'system.navigation.menu.securityJournal',
     'system/notifications': 'system.system.notifications.title',
     notifications: 'system.notifications.title',
-    ai: 'ai.navigation.panel',
     redis: 'system.navigation.menu.redis',
     system: 'system.navigation.menu.systemInfo',
     'scheduled-tasks': 'system.navigation.menu.scheduledTasks',
     'command-runner': 'system.command_runner.title',
-    publishing: 'publishing.navigation.menu.publishingSettings',
 };
 
 const staticPathConfig: Record<string, string> = {
@@ -68,26 +49,6 @@ interface ParentCrumbRule {
 
 const parentCrumbRules: ParentCrumbRule[] = [
     {
-        test: /^\/contents\/[^/]+\/(edit|revisions)$/,
-        parentPath: (_n, _r, slug) => `/${slug}/contents`,
-        labelKey: 'publishing.navigation.menu.studio',
-    },
-    {
-        test: /^\/content-templates\/[^/]+\/edit$/,
-        parentPath: (_n, _r, slug) => `/${slug}/content-templates`,
-        labelKey: 'publishing.content.list.templates',
-    },
-    {
-        test: /^\/forms\/[^/]+\/(edit|submissions|analytics)$/,
-        parentPath: (_n, _r, slug) => `/${slug}/forms`,
-        labelKey: 'forms.navigation.menu.forms',
-    },
-    {
-        test: /^\/email-templates\/[^/]+\/edit$/,
-        parentPath: (_n, _r, slug) => `/${slug}/email-templates`,
-        labelKey: 'newsletter.navigation.menu.emailTemplates',
-    },
-    {
         test: /^\/users\/[^/]+\/edit$/,
         parentPath: (_n, _r, slug) => `/${slug}/users`,
         labelKey: 'system.navigation.menu.users',
@@ -96,11 +57,6 @@ const parentCrumbRules: ParentCrumbRule[] = [
         test: /^\/roles\/[^/]+\/edit$/,
         parentPath: (_n, _r, slug) => `/${slug}/roles`,
         labelKey: 'system.navigation.menu.roles',
-    },
-    {
-        test: /^\/themes\/[^/]+\/customizer$/,
-        parentPath: (_n, _r, slug) => `/${slug}/themes`,
-        labelKey: 'publishing.navigation.menu.themes',
     },
     {
         test: /^\/dynamic\/[^/]+\/records\/[^/]+$/,

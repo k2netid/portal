@@ -74,6 +74,7 @@ class TwoFactorController extends BaseApiController
         // Generate backup codes
         $backupCodes = $this->generateBackupCodes();
         $twoFactorAuth->setBackupCodes($backupCodes);
+        $twoFactorAuth->save();
 
         return $this->success([
             'secret' => $secret,
@@ -103,7 +104,7 @@ class TwoFactorController extends BaseApiController
         /** @var User $user */
         $user = $request->user();
         /** @var TwoFactorAuth|null $twoFactorAuth */
-        $twoFactorAuth = $user->twoFactorAuth;
+        $twoFactorAuth = $user->twoFactorAuth()->first();
 
         if (! $twoFactorAuth || $twoFactorAuth->enabled) {
             return $this->error(
@@ -182,7 +183,7 @@ class TwoFactorController extends BaseApiController
         }
 
         /** @var TwoFactorAuth|null $twoFactorAuth */
-        $twoFactorAuth = $user->twoFactorAuth;
+        $twoFactorAuth = $user->twoFactorAuth()->first();
         if ($twoFactorAuth) {
             $twoFactorAuth->enabled = false;
             $twoFactorAuth->secret = null;
@@ -215,7 +216,7 @@ class TwoFactorController extends BaseApiController
         }
 
         /** @var TwoFactorAuth|null $twoFactorAuth */
-        $twoFactorAuth = $user->twoFactorAuth;
+        $twoFactorAuth = $user->twoFactorAuth()->first();
         if (! $twoFactorAuth || ! $twoFactorAuth->enabled) {
             return $this->error(
                 '2FA is not enabled',
@@ -228,6 +229,7 @@ class TwoFactorController extends BaseApiController
         // Generate new backup codes
         $backupCodes = $this->generateBackupCodes();
         $twoFactorAuth->setBackupCodes($backupCodes);
+        $twoFactorAuth->save();
 
         return $this->success([
             'backup_codes' => $backupCodes, // Only show once
@@ -301,14 +303,14 @@ class TwoFactorController extends BaseApiController
         /** @var User $user */
         $user = $request->user();
         /** @var TwoFactorAuth|null $twoFactorAuth */
-        $twoFactorAuth = $user->twoFactorAuth;
+        $twoFactorAuth = $user->twoFactorAuth()->first();
 
         return $this->success([
             'enabled' => $user->hasTwoFactorEnabled(),
             'required' => $user->requiresTwoFactor(),
             'backup_codes_count' => $twoFactorAuth ? $twoFactorAuth->getRemainingBackupCodesCount() : 0,
             'enabled_at' => $twoFactorAuth?->enabled_at,
-            'global_enabled' => Setting::get('enable_2fa', false),
+            'global_enabled' => (bool) Setting::get('enable_2fa', false),
         ], '2FA status retrieved successfully');
     }
 

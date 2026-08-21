@@ -295,7 +295,7 @@
 import { computed, ref, onMounted, watch } from 'vue';
 import { ExternalLink, Loader2, Image as ImageIcon, X } from 'lucide-vue-next';
 import { Input, Label, Textarea, Checkbox, Button, Badge } from '@/shared/components/ui';
-import MediaPicker from '@/modules/Content/Media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import type { DataModelFieldDefinition } from '../../services/dataModelService';
 import DynamicRecordService, { type DynamicRecordRow } from '../../services/dynamicRecordService';
 

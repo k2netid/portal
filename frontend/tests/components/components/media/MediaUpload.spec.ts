@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { mount, flushPromises } from '@vue/test-utils';
-import MediaUpload from '@/modules/Content/Media/components/picker/MediaUpload.vue';
+import MediaUpload from '@/shared/components/ui/MediaUpload.vue';
 import { createTestingPinia } from '@pinia/testing';
 import api from '@/engine/api/client';
 import { useToast } from '@/shared/composables/useToast';

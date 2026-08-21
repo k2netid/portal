@@ -106,7 +106,7 @@ import {
     Button,
     Input,
 } from '@/shared/components/ui';
-import { AiService } from '@/modules/Intelligence/Ai/services/aiService';
+import { AiService } from '@/shared/services/aiService';
 import { useToast } from '@/shared/composables/useToast';
 
 const { t } = useI18n();

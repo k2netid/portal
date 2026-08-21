@@ -91,7 +91,7 @@ class SettingController extends BaseApiController
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'key' => 'required|string|unique:settings,key',
+            'key' => 'required|string|unique:sys_settings,key',
             'value' => 'nullable',
             'type' => 'required|in:string,integer,boolean,json,text,password,number,datetime,image,media',
             'group' => 'required|string',

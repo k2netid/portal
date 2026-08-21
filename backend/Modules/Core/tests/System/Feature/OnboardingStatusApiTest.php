@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Core\System\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Content\Layout\Models\Theme;
-use Modules\Content\Publishing\Models\Content;
+use Modules\Core\System\Models\ContentType;
+use Modules\Core\System\Models\Setting;
 use Tests\TestCase;
 
 class OnboardingStatusApiTest extends TestCase
@@ -30,7 +30,7 @@ class OnboardingStatusApiTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'dismissed',
-                    'steps' => ['identity', 'theme', 'first_page'],
+                    'steps' => ['identity', 'data_model', 'security'],
                     'progress_percent',
                     'complete',
                 ],
@@ -50,23 +50,26 @@ class OnboardingStatusApiTest extends TestCase
         $this->assertTrue((bool) $admin->getPreference('onboarding.dismissed', false));
     }
 
-    public function test_onboarding_complete_when_theme_and_page_exist(): void
+    public function test_onboarding_complete_when_model_and_2fa_exist(): void
     {
         $admin = $this->createAdminUser();
-        Theme::query()->update(['is_active' => false]);
-        Theme::factory()->create(['slug' => 'janari', 'is_active' => true, 'type' => 'frontend']);
-        Content::factory()->create([
-            'type' => 'page',
-            'status' => 'published',
-            'author_id' => $admin->id,
-            'published_at' => now(),
+        Setting::set('app_name', 'Jejakawan Core', 'string', 'system');
+        Setting::set('enable_2fa', true, 'boolean', 'security');
+
+        ContentType::create([
+            'name' => 'Project',
+            'slug' => 'projects',
+            'fields' => [],
+            'is_active' => true,
         ]);
 
         $response = $this->actingAs($admin, 'sanctum')
             ->getJson('/api/v1/manage/system/onboarding-status');
 
         $response->assertOk()
-            ->assertJsonPath('data.steps.theme', true)
-            ->assertJsonPath('data.steps.first_page', true);
+            ->assertJsonPath('data.steps.identity', true)
+            ->assertJsonPath('data.steps.data_model', true)
+            ->assertJsonPath('data.steps.security', true)
+            ->assertJsonPath('data.complete', true);
     }
 }
