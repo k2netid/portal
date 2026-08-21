@@ -749,9 +749,11 @@
                       {{ setting.description }}
                     </p>
 
-                    <div class="relative">
+                    <div
+                      v-if="setting.type === 'string' || setting.type === 'integer'"
+                      class="relative"
+                    >
                       <Input
-                        v-if="setting.type === 'string' || setting.type === 'integer'"
                         :id="setting.key"
                         v-model="(settingsForm[setting.key] as any)"
                         :type="setting.type === 'integer' ? 'number' : (setting.is_encrypted ? (showPassword ? 'text' : 'password') : 'text')"
@@ -772,19 +774,12 @@
                       </button>
                     </div>
 
-                    <p
-                      v-if="errors && errors[setting.key]"
-                      class="text-xs text-destructive mt-1"
-                    >
-                      {{ Array.isArray(errors[setting.key]) ? (errors[setting.key] as string[])[0] : errors[setting.key] }}
-                    </p>
-
                     <Select
                       v-else-if="setting.type === 'boolean'"
                       :model-value="['true', '1', true, 1].includes(settingsForm[setting.key] as any) ? 'true' : 'false'"
                       @update:model-value="(val) => settingsForm[setting.key] = val === 'true'"
                     >
-                      <SelectTrigger class="w-full text-xs">
+                      <SelectTrigger :id="setting.key" class="w-full text-xs">
                         <SelectValue :placeholder="t('system.redis.settings.select')" />
                       </SelectTrigger>
                       <SelectContent>
@@ -796,6 +791,13 @@
                         </SelectItem>
                       </SelectContent>
                     </Select>
+
+                    <p
+                      v-if="errors && errors[setting.key]"
+                      class="text-xs text-destructive mt-1"
+                    >
+                      {{ Array.isArray(errors[setting.key]) ? (errors[setting.key] as string[])[0] : errors[setting.key] }}
+                    </p>
                   </div>
                 </div>
               </AccordionContent>
