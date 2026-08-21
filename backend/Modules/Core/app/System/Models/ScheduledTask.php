@@ -130,7 +130,6 @@ class ScheduledTask extends Model
         'theme:validate',
         'theme:staging-uploaded',
         'theme:backfill-source',
-        'layout:themes:backfill-janari-parent',
 
         // System Development
         'dynamic:openapi',

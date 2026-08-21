@@ -19,7 +19,6 @@ use Laravel\Passkeys\PasskeyAuthenticatable;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\Content\Media\Models\File;
 use Modules\Core\System\Database\Factories\UserFactory;
 use Modules\Core\System\Notifications\VerifyEmail;
 use Modules\Core\System\Traits\CoreLogsActivity;
@@ -51,7 +50,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon|null $deleted_at
  * @property string $kyc_level
  * @property int $onboarding_step
- * @property-read Collection<int, File> $media
  * @property-read Collection<int, ActivityLog> $activityLogs
  * @property-read Collection<int, Notification> $notifications
  * @property-read TwoFactorAuth|null $twoFactorAuth
@@ -153,14 +151,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         $this->preferences = $preferences;
 
         return $this;
-    }
-
-    /**
-     * @return HasMany<File, $this>
-     */
-    public function media(): HasMany
-    {
-        return $this->hasMany(File::class, 'author_id');
     }
 
     /**

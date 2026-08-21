@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch, type Ref, type ComputedRe
 import api from '@/engine/api/client';
 
 interface AutoSaveOptions {
+    endpoint?: string | ((id: number | string | null) => string);
     interval?: number | Ref<number> | ComputedRef<number> | (() => number);
     enabled?: boolean | Ref<boolean> | ComputedRef<boolean> | (() => boolean);
     onSave?: (data: unknown) => void;
@@ -36,10 +37,11 @@ const normalizePublishedAtForApi = (value: unknown): unknown => {
 };
 
 /**
- * Auto-save composable for content editor
+ * Auto-save composable for forms and editors
  */
 export function useAutoSave(form: Ref<Record<string, unknown>>, contentId: Ref<number | null | string> | number | string | null = null, options: AutoSaveOptions = {}): AutoSaveReturn {
     const {
+        endpoint = '/dynamic/autosave',
         interval = 30000, // 30 seconds
         enabled: enabledOption = true,
         onSave = null,
@@ -133,12 +135,16 @@ export function useAutoSave(form: Ref<Record<string, unknown>>, contentId: Ref<n
                 status: currentContentId ? (form.value.status || 'draft') : 'draft',
             };
 
+            const url = typeof endpoint === 'function' 
+                ? endpoint(currentContentId ?? null)
+                : (currentContentId ? `${endpoint}/${currentContentId}` : endpoint);
+
             if (currentContentId) {
-                // Update existing content
-                response = await api.patch(`/manage/publishing/contents/${currentContentId}/autosave`, payload);
+                // Update existing record
+                response = await api.patch(url, payload);
             } else {
-                // Create new draft
-                response = await api.post('/manage/publishing/contents/autosave', payload);
+                // Create new record
+                response = await api.post(url, payload);
 
                 // If new content was created, update contentId
                 if (response.data?.id) {

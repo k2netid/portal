@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Core\System\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Core\System\Models\ContentTemplate;
 use Modules\Core\System\Models\ContentType;
 use Modules\Core\System\Models\DynamicRecord;
 use Modules\Core\System\Models\EmailTemplate;
@@ -56,20 +55,6 @@ class DataModelDemoSeeder extends Seeder
         }
         $admin = User::first();
         if ($admin) {
-            ContentTemplate::updateOrCreate(
-                ['slug' => 'demo-article'],
-                [
-                    'name' => 'Demo Article Template',
-                    'description' => 'Sample content template for console e2e',
-                    'type' => 'post',
-                    'title_template' => '{{ title }}',
-                    'body_template' => '<p>{{ content }}</p>',
-                    'meta' => ['category' => 'General'],
-                    'is_active' => true,
-                    'author_id' => $admin->id,
-                ],
-            );
-
             EmailTemplate::updateOrCreate(
                 ['slug' => 'welcome-user'],
                 [
