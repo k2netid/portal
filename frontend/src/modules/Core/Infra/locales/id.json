@@ -311,12 +311,15 @@
             "openUrl": "Buka Tautan",
             "jsonHint": "Diperlukan sintaks JSON yang valid",
             "jsonError": "Sintaks format JSON tidak valid",
-            "previewUnavailable": "Pratinjau tidak tersedia",
+            "deleteTitle": "Hapus Record",
+            "deleteConfirm": "Apakah Anda yakin ingin menghapus record ini? Tindakan ini tidak dapat dibatalkan.",
             "messages": {
                 "loadFailed": "Gagal memuat data record",
                 "created": "Record berhasil dibuat.",
                 "saved": "Record berhasil diperbarui.",
-                "saveFailed": "Gagal menyimpan record"
+                "saveFailed": "Gagal menyimpan record",
+                "deleted": "Record berhasil dihapus.",
+                "deleteFailed": "Gagal menghapus record"
             }
         }
     }

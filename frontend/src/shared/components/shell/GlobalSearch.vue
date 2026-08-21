@@ -224,14 +224,9 @@ import {
   FileText,
   Folder,
   Globe,
-  HardDrive,
   Home,
   Layers,
-  ListTodo,
-  Mail,
-  MessageSquare,
   Monitor,
-  PlusCircle,
   Search,
   Settings,
   Sparkles,
@@ -255,6 +250,9 @@ interface SearchItem {
     icon?: Component;
     shortcut?: string;
     group?: string;
+    permission?: string;
+    role?: string;
+    context?: string;
 }
 
 interface SearchSuggestion {
@@ -342,92 +340,82 @@ const applySuggestion = (text: string) => {
 };
 
 // Static Actions (Nav Items) - Comprehensive list of admin shortcuts
-const staticActions = computed<SearchItem[]>(() => [
-    // Core Navigation
-    { title: t('common.navigation.menu.dashboard'), icon: Home, route: { name: 'dashboard' }, type: 'action', keywords: 'home overview dashboard' },
-    { title: t('publishing.content.list.createNew'), icon: PlusCircle, route: { name: 'contents.create' }, type: 'action', keywords: 'new post article write', permission: 'manage content' },
-    { title: t('common.labels.myProfile'), icon: UserCircle, route: { name: 'profile' }, type: 'action', keywords: 'account me user profile' },
-    { title: t('system.navigation.menu.settings'), icon: Settings, route: { name: 'settings' }, type: 'action', keywords: 'system settings general config preferences options', permission: 'manage settings' },
-    
-    // Content & Media Management
-    { title: t('sharedConsole.navigation.menu.studio'), icon: FileText, route: { name: 'contents.index' }, type: 'action', keywords: 'posts articles pages blogs content', permission: 'view content' },
-    { title: t('sharedConsole.navigation.menu.mediaLibrary'), icon: HardDrive, route: { name: 'media' }, type: 'action', keywords: 'media library images files upload gallery filemanager', permission: 'manage media' },
-    { title: t('sharedConsole.navigation.menu.comments'), icon: MessageSquare, route: { name: 'comments.index' }, type: 'action', keywords: 'comments discussion feedback moderation', permission: 'view comments' },
-    { title: t('sharedConsole.navigation.menu.forms'), icon: ListTodo, route: { name: 'forms' }, type: 'action', keywords: 'forms submissions contact questionnaires fields', permission: 'manage content' },
-    { title: t('sharedConsole.navigation.menu.newsletter'), icon: Mail, route: { name: 'newsletter' }, type: 'action', keywords: 'newsletter subscribers emails campaigns broadcast', permission: 'manage content' },
-    { title: t('sharedConsole.navigation.menu.emailTemplates'), icon: Mail, route: { name: 'email-templates' }, type: 'action', keywords: 'email templates notification mail', permission: 'manage settings' },
-    { title: t('library.navigation.menu.customFields'), icon: Layers, route: { name: 'custom-fields' }, type: 'action', keywords: 'custom fields metadata models fieldgroups', permission: 'manage content' },
-    { title: t('library.navigation.menu.tags'), icon: Tag, route: { name: 'tags' }, type: 'action', keywords: 'labels keywords tags', permission: 'manage content' },
-    
-    // Design & Config
-    { title: t('sharedConsole.navigation.menu.themes'), icon: Settings, route: { name: 'themes' }, type: 'action', keywords: 'theme customizer design config appearance styling', permission: 'manage themes' },
-    { title: t('sharedConsole.navigation.menu.menus'), icon: Folder, route: { name: 'menus' }, type: 'action', keywords: 'menus navigation links headers footer', permission: 'manage settings' },
-    { title: t('sharedConsole.navigation.menu.widgets'), icon: Folder, route: { name: 'widgets' }, type: 'action', keywords: 'widgets blocks dashboard layout', permission: 'manage settings' },
-    
-    // Users & Access
-    { title: t('system.navigation.menu.users'), icon: User, route: { name: 'users.index' }, type: 'action', keywords: 'members accounts people users', permission: 'view users' },
-    { title: t('system.navigation.menu.roles'), icon: Settings, route: { name: 'roles' }, type: 'action', keywords: 'permissions access rbac roles', permission: 'view roles' },
-    
-    // SEO & Analytics
-    { title: t('sharedConsole.navigation.menu.seoTools'), icon: Search, route: { name: 'publishing.seo' }, type: 'action', keywords: 'seo search engine optimize meta robots sitemap', permission: 'manage settings' },
-    { title: t('sharedConsole.navigation.menu.analytics'), icon: FileText, route: { name: 'analytics' }, type: 'action', keywords: 'stats visitors traffic analytics', permission: 'manage settings' },
-    { title: t('sharedConsole.navigation.menu.redirects'), icon: FileText, route: { name: 'redirects' }, type: 'action', keywords: '301 302 url forward redirects', permission: 'manage settings' },
-    
-    // Infrastructure
-    { title: t('system.navigation.menu.systemInfo'), icon: Monitor, route: { name: 'system' }, type: 'action', keywords: 'system info server environment specs specs check health', permission: 'view system', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.systemNotifications'), icon: Settings, route: { name: 'system-notifications' }, type: 'action', keywords: 'notifications settings alerts system', permission: 'manage system' },
-    { title: t('system.navigation.menu.backups'), icon: Database, route: { name: 'backups' }, type: 'action', keywords: 'backups database files restore export backup', permission: 'view backups', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.redis'), icon: Cpu, route: { name: 'redis' }, type: 'action', keywords: 'redis cache system performance memory infrastructure', permission: 'manage settings', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.scheduledTasks'), icon: Calendar, route: { name: 'scheduled-tasks' }, type: 'action', keywords: 'scheduled tasks cron background jobs schedules', permission: 'view scheduled tasks', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.languages'), icon: Globe, route: { name: 'languages' }, type: 'action', keywords: 'languages translate locale localization', permission: 'view settings' },
-    { title: t('infra.webhooks.title'), icon: Webhook, route: { name: 'webhooks' }, type: 'action', keywords: 'webhooks api integrations events webhook infrastructure', permission: 'manage webhooks', context: 'foundation' },
-    
-    // Monitoring & Journals
-    { title: t('system.navigation.menu.journalDashboard'), icon: Activity, route: { name: 'journal-dashboard' }, type: 'action', keywords: 'monitoring dashboard logs summary journals', permission: 'view logs', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.activityJournal'), icon: Activity, route: { name: 'activity-journal' }, type: 'action', keywords: 'activity journal logs audit history monitoring security events', permission: 'view activity logs', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.securityJournal'), icon: Activity, route: { name: 'security-journal' }, type: 'action', keywords: 'security journal logs login history lockouts monitoring', permission: 'view security logs', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.systemJournal'), icon: Activity, route: { name: 'system-journal' }, type: 'action', keywords: 'system journal backend logs errors warnings', permission: 'view system', role: 'super', context: 'foundation' },
-    { title: t('system.navigation.menu.accessJournal'), icon: Activity, route: { name: 'access-journal' }, type: 'action', keywords: 'access journal session history logins visits', permission: 'view users', role: 'super', context: 'foundation' }
-]);
+const staticActions = computed<SearchItem[]>(() => {
+    const actions: SearchItem[] = [
+        // Core Navigation
+        { title: t('common.navigation.menu.dashboard'), icon: Home, route: { name: 'dashboard' }, type: 'action', keywords: 'home overview dashboard' },
+        { title: t('common.labels.myProfile'), icon: UserCircle, route: { name: 'profile' }, type: 'action', keywords: 'account me user profile' },
+        { title: t('system.navigation.menu.settings'), icon: Settings, route: { name: 'settings' }, type: 'action', keywords: 'system settings general config preferences options', permission: 'manage settings' },
+        
+        // Data & Infrastructure Models
+        { title: t('infra.models.title'), icon: Layers, route: { name: 'model-index' }, type: 'action', keywords: 'data models schema content types dynamic records studio', permission: 'manage settings' },
+        
+        // Users & Access
+        { title: t('system.navigation.menu.users'), icon: User, route: { name: 'users.index' }, type: 'action', keywords: 'members accounts people users team', permission: 'view users' },
+        { title: t('system.navigation.menu.roles'), icon: Settings, route: { name: 'roles' }, type: 'action', keywords: 'permissions access rbac roles security', permission: 'view roles' },
+        
+        // Infrastructure
+        { title: t('system.navigation.menu.systemInfo'), icon: Monitor, route: { name: 'system' }, type: 'action', keywords: 'system info server environment specs specs check health', permission: 'view system', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.systemNotifications'), icon: Settings, route: { name: 'system-notifications' }, type: 'action', keywords: 'notifications settings alerts system', permission: 'manage system' },
+        { title: t('system.navigation.menu.backups'), icon: Database, route: { name: 'backups' }, type: 'action', keywords: 'backups database files restore export backup', permission: 'view backups', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.redis'), icon: Cpu, route: { name: 'redis' }, type: 'action', keywords: 'redis cache system performance memory infrastructure', permission: 'manage settings', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.scheduledTasks'), icon: Calendar, route: { name: 'scheduled-tasks' }, type: 'action', keywords: 'scheduled tasks cron background jobs schedules', permission: 'view scheduled tasks', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.languages'), icon: Globe, route: { name: 'languages' }, type: 'action', keywords: 'languages translate locale localization', permission: 'view settings' },
+        { title: t('infra.webhooks.title'), icon: Webhook, route: { name: 'webhooks' }, type: 'action', keywords: 'webhooks api integrations events webhook infrastructure', permission: 'manage webhooks', context: 'foundation' },
+        
+        // Monitoring & Journals
+        { title: t('system.navigation.menu.journalDashboard'), icon: Activity, route: { name: 'journal-dashboard' }, type: 'action', keywords: 'monitoring dashboard logs summary journals', permission: 'view logs', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.activityJournal'), icon: Activity, route: { name: 'activity-journal' }, type: 'action', keywords: 'activity journal logs audit history monitoring security events', permission: 'view activity logs', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.securityJournal'), icon: Activity, route: { name: 'security-journal' }, type: 'action', keywords: 'security journal logs login history lockouts monitoring', permission: 'view security logs', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.systemJournal'), icon: Activity, route: { name: 'system-journal' }, type: 'action', keywords: 'system journal backend logs errors warnings', permission: 'view system', role: 'super', context: 'foundation' },
+        { title: t('system.navigation.menu.accessJournal'), icon: Activity, route: { name: 'access-journal' }, type: 'action', keywords: 'access journal session history logins visits', permission: 'view users', role: 'super', context: 'foundation' }
+    ];
+
+    return actions.filter(action => {
+        if (action.permission && !authStore.hasPermission(action.permission)) {
+            return false;
+        }
+        if (action.role === 'super' && authStore.getRoleRank() < 100) {
+            return false;
+        }
+        if (action.route && typeof action.route === 'object' && 'name' in action.route && action.route.name) {
+            if (!router.hasRoute(String(action.route.name))) {
+                return false;
+            }
+        }
+        return true;
+    });
+});
 
 // Computed
 const filterActions = computed<SearchItem[]>(() => {
     if (!searchQuery.value || searchQuery.value.length < 2) return [];
     
-    return [
-        {
-            id: 'filter-posts',
-            type: 'action',
-            title: t('common.actions.searchIn') + ' ' + t('common.labels.posts'),
-            icon: FileText,
-            route: { name: 'contents.index', query: { q: searchQuery.value } },
-            group: 'filters'
-        },
-        {
+    const filters: SearchItem[] = [];
+
+    if (router.hasRoute('users.index')) {
+        filters.push({
             id: 'filter-users',
             type: 'action',
             title: t('common.actions.searchIn') + ' ' + t('common.labels.users'),
             icon: User,
             route: { name: 'users.index', query: { q: searchQuery.value } },
             group: 'filters'
-        },
-        {
-            id: 'filter-categories',
+        });
+    }
+
+    if (router.hasRoute('model-index')) {
+        filters.push({
+            id: 'filter-models',
             type: 'action',
-            title: t('common.actions.searchIn') + ' ' + t('common.labels.categories'),
-            icon: Folder,
-            route: { name: 'categories.index', query: { q: searchQuery.value } },
+            title: t('common.actions.searchIn') + ' ' + t('infra.models.title'),
+            icon: Layers,
+            route: { name: 'model-index', query: { q: searchQuery.value } },
             group: 'filters'
-        },
-        {
-            id: 'filter-tags',
-            type: 'action',
-            title: t('common.actions.searchIn') + ' ' + t('common.labels.tags'),
-            icon: Tag,
-            route: { name: 'tags', query: { q: searchQuery.value } },
-            group: 'filters'
-        }
-    ];
+        });
+    }
+
+    return filters;
 });
 
 /**

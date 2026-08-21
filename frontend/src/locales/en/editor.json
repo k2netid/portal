@@ -1,0 +1,163 @@
+{
+  "actions": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "interact": "Interact",
+    "interactShort": "Interact",
+    "stopInteraction": "Stop Interaction",
+    "fit": "Fit",
+    "constrainProportions": "Constrain Proportions"
+  },
+  "bubbleMenu": {
+    "properties": "Properties"
+  },
+  "contextMenu": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "cleanFormatting": "Clear Formatting",
+    "properties": "Properties",
+    "delete": "Delete",
+    "deleteTable": "Delete Table",
+    "undo": "Undo",
+    "redo": "Redo"
+  },
+  "embed": {
+    "empty": "No embed code yet",
+    "configure": "Configure Embed"
+  },
+  "fields": {
+    "size": "Size",
+    "color": "Color",
+    "backgroundColor": "Background Color",
+    "borderColor": "Border Color",
+    "borderWidth": "Border Width",
+    "borderRadius": "Border Radius",
+    "padding": "Padding",
+    "margin": "Margin",
+    "source": "Source / URL",
+    "displayMode": "Display Mode",
+    "alignment": "Alignment",
+    "altText": "Alternative Text",
+    "width": "Width",
+    "height": "Height",
+    "controls": "Player Controls",
+    "autoplay": "Autoplay",
+    "loop": "Loop"
+  },
+  "values": {
+    "block": "Block",
+    "inline": "Inline",
+    "floatLeft": "Float Left",
+    "floatRight": "Float Right"
+  },
+  "markdown": {
+    "edit": "Edit",
+    "preview": "Preview",
+    "placeholder": "Write content in Markdown format...",
+    "toolbar": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "heading": "Heading",
+      "link": "Link",
+      "image": "Image",
+      "inlineCode": "Inline Code",
+      "codeBlock": "Code Block",
+      "list": "List",
+      "quote": "Quote"
+    }
+  },
+  "placeholder": {
+    "text": "Start typing...",
+    "htmlCode": "Enter HTML code here..."
+  },
+  "placeholders": {
+    "html": "HTML code",
+    "unitEm": "e.g. 1.2em",
+    "none": "None",
+    "zero": "0",
+    "zeroPx": "0px",
+    "fontSizePx": "16px",
+    "urlEllipsis": "https://...",
+    "imageUrl": "https://example.com/image.jpg",
+    "alt": "Image description",
+    "auto": "Auto"
+  },
+  "properties": {
+    "title": "Element Properties",
+    "general": "General",
+    "dimensions": "Dimensions",
+    "appearance": "Appearance",
+    "html": "Custom HTML",
+    "video": "Video Settings"
+  },
+  "tableDialog": {
+    "title": "Insert Table",
+    "rows": "Rows",
+    "columns": "Columns",
+    "insert": "Insert"
+  },
+  "toolbar": {
+    "tabs": {
+      "home": "Home",
+      "insert": "Insert",
+      "layout": "Layout",
+      "table": "Table"
+    },
+    "undo": "Undo",
+    "redo": "Redo",
+    "aiAssist": "AI Assist",
+    "viewHtml": "View HTML",
+    "placeholders": {
+      "paragraph": "Paragraph",
+      "font": "Font"
+    },
+    "headings": {
+      "h1": "Heading 1",
+      "h2": "Heading 2",
+      "h3": "Heading 3"
+    },
+    "textColor": "Text Color",
+    "textColorTitle": "Choose Text Color",
+    "fontGroup": "Font",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "code": "Code",
+    "clearStyle": "Clear Formatting",
+    "styleGroup": "Style",
+    "alignLeft": "Align Left",
+    "alignCenter": "Align Center",
+    "alignRight": "Align Right",
+    "alignJustify": "Justify",
+    "bullets": "Bullets",
+    "numbers": "Numbered List",
+    "blockquote": "Blockquote",
+    "dropcap": "Drop Cap",
+    "paragraphGroup": "Paragraph",
+    "image": "Image",
+    "table": "Table",
+    "embed": "Embed",
+    "embedsGroup": "Media & Embed",
+    "line": "Divider Line",
+    "icon": "Icon",
+    "specialGroup": "Special Elements",
+    "commonGroup": "Common",
+    "containers": "Containers",
+    "flowLayout": "Flow Layout",
+    "gridSystem": "Grid System",
+    "newspaperStyle": "Newspaper Style",
+    "columns2": "2 Columns",
+    "columns3": "3 Columns",
+    "grid2": "Grid 2x2",
+    "grid3": "Grid 3x3",
+    "structure": "Structure",
+    "addCol": "Add Column",
+    "delCol": "Delete Column",
+    "addRow": "Add Row",
+    "delRow": "Delete Row",
+    "merge": "Merge Cells",
+    "deleteTable": "Delete Table",
+    "danger": "Danger Zone"
+  }
+}

@@ -190,7 +190,7 @@ export function useToast() {
             urlCopied: () => toast.success(t('common.messages.toast.success'), t('media.toast.urlCopied') || 'URL copied to clipboard'),
 
             // Content Template Specific
-            createFromTemplate: () => toast.success(t('common.messages.toast.success'), t('publishing.content_templates.messages.createContentSuccess') || 'Content created from template'),
+            createFromTemplate: () => toast.success(t('common.messages.toast.success'), t('common.messages.toast.created') || 'Created successfully'),
             default: (message) => toast.success(t('common.messages.toast.success'), message),
         } as ToastSuccessHandlers,
 

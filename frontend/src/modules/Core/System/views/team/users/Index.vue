@@ -141,8 +141,8 @@
               v-model="bulkActionSelection"
               @update:model-value="handleBulkAction"
             >
-              <SelectTrigger class="h-8 w-[140px]" :aria-label="t('publishing.content.list.bulkActions')">
-                <SelectValue :placeholder="t('publishing.content.list.bulkActions')" />
+              <SelectTrigger class="h-8 w-[140px]" :aria-label="t('common.actions.bulkAction')">
+                <SelectValue :placeholder="t('common.actions.bulkAction')" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem
@@ -213,6 +213,7 @@
 import { PageHeader, ConsoleStatCard, ConsoleListCard } from '@/shared/components/shell';
 import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, watch } from 'vue';
+import { useDebounceFn } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import api from '@/engine/api/client';
@@ -716,7 +717,7 @@ const bulkAction = async (action: string) => {
     
     let confirmMessage = '';
     let confirmVariant = 'warning';
-    let confirmTitle = t('publishing.content.list.bulkActions');
+    let confirmTitle = t('common.actions.bulkAction');
 
     if (action === 'delete') {
         confirmMessage = t('common.messages.confirm.bulkDelete', { count: selectedIds.value.length });
@@ -776,7 +777,18 @@ const formatDate = (date: string) => {
     });
 };
 
-watch([search, roleFilter, verificationFilter, trashedFilter, activeStatFilter], () => {
+const debouncedFetchUsers = useDebounceFn(() => {
+    fetchUsers();
+}, 300);
+
+watch(search, () => {
+    if (pagination.value) {
+        pagination.value.current_page = 1;
+    }
+    debouncedFetchUsers();
+});
+
+watch([roleFilter, verificationFilter, trashedFilter, activeStatFilter], () => {
     if (pagination.value) {
         pagination.value.current_page = 1;
     }

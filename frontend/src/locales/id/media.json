@@ -1,0 +1,30 @@
+{
+  "actions": {
+    "cancel": "Batal",
+    "close": "Tutup",
+    "select": "Pilih",
+    "uploadNew": "Unggah Baru"
+  },
+  "modals": {
+    "picker": {
+      "title": "Pilih Media",
+      "select": "Pilih"
+    },
+    "upload": {
+      "title": "Unggah Media",
+      "chooseFile": "Pilih File",
+      "upload": "Unggah",
+      "uploading": "Mengunggah...",
+      "uploadedSuccess": "File berhasil diunggah",
+      "errorLoadingImage": "Gagal memuat gambar"
+    }
+  },
+  "toast": {
+    "uploadSuccess": "Media berhasil diunggah",
+    "moveSuccess": "Media berhasil dipindahkan",
+    "folderCreatedSuccess": "Folder berhasil dibuat",
+    "fileTooLarge": "Ukuran file terlalu besar",
+    "permissionDenied": "Izin ditolak",
+    "urlCopied": "URL berhasil disalin"
+  }
+}

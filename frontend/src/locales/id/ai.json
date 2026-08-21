@@ -1,0 +1,30 @@
+{
+  "assist": {
+    "title": "Bantuan AI",
+    "description": "Tulis atau optimalkan konten dengan kecerdasan buatan",
+    "customPlaceholder": "Masukkan instruksi kustom...",
+    "customInputPlaceholder": "Contoh: Buat kesimpulan dalam 3 poin...",
+    "customCommand": "Kirim Perintah",
+    "orCustom": "Atau perintah kustom",
+    "selectProvider": "Pilih Penyedia",
+    "selectModel": "Pilih Model",
+    "noProviders": "Tidak ada penyedia AI aktif",
+    "loadingModels": "Memuat model...",
+    "generating": "Membuat konten...",
+    "generatingMagic": "Sedang menyusun respons...",
+    "generateFailed": "Gagal membuat konten",
+    "errorTitle": "Kesalahan AI",
+    "commands": {
+      "summarize": "Ringkas",
+      "expand": "Perluas",
+      "fixGrammar": "Perbaiki Tata Bahasa",
+      "rewrite": "Tulis Ulang"
+    },
+    "presets": {
+      "summarize": "Ringkas teks ini",
+      "expand": "Kembangkan paragraf ini",
+      "fixGrammar": "Perbaiki ejaan dan tata bahasa",
+      "rewrite": "Tulis ulang dengan gaya lebih menarik"
+    }
+  }
+}

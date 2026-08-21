@@ -58,6 +58,7 @@
         "urlCopied": "URL disalin ke clipboard",
         "copyFailed": "Gagal menyalin"
     },
+    "exported": "Data berhasil diekspor",
     "no_data": "Tidak ada data yang ditemukan",
     "select_node": "Pilih node...",
     "slugConflict": {

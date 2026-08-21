@@ -1,0 +1,30 @@
+{
+  "assist": {
+    "title": "Bantuan AI",
+    "description": "Tulis atanapi optimalkeun eusi nganggo kecerdasan jieunan",
+    "customPlaceholder": "Asupkeun paréntah kustom...",
+    "customInputPlaceholder": "Contoh: Jieun kacindekan dina 3 poin...",
+    "customCommand": "Kirim Paréntah",
+    "orCustom": "Atawa paréntah kustom",
+    "selectProvider": "Pilih Panyadia",
+    "selectModel": "Pilih Model",
+    "noProviders": "Teu aya panyadia AI nu aktip",
+    "loadingModels": "Ngamuat model...",
+    "generating": "Nuju ngadamel eusi...",
+    "generatingMagic": "Nuju nyusun waleran...",
+    "generateFailed": "Gagal ngadamel eusi",
+    "errorTitle": "Kasalahan AI",
+    "commands": {
+      "summarize": "Ringkas",
+      "expand": "Legaan",
+      "fixGrammar": "Benerkeun Tatabasa",
+      "rewrite": "Tulis Deui"
+    },
+    "presets": {
+      "summarize": "Ringkas téks ieu",
+      "expand": "Kembangkeun paragraf ieu",
+      "fixGrammar": "Benerkeun éjahan jeung tatabasa",
+      "rewrite": "Tulis deui kalayan gaya nu leuwih narik"
+    }
+  }
+}

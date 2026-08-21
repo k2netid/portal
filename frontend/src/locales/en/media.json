@@ -1,0 +1,30 @@
+{
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "select": "Select",
+    "uploadNew": "Upload New"
+  },
+  "modals": {
+    "picker": {
+      "title": "Select Media",
+      "select": "Select"
+    },
+    "upload": {
+      "title": "Upload Media",
+      "chooseFile": "Choose File",
+      "upload": "Upload",
+      "uploading": "Uploading...",
+      "uploadedSuccess": "File uploaded successfully",
+      "errorLoadingImage": "Failed to load image preview"
+    }
+  },
+  "toast": {
+    "uploadSuccess": "Media uploaded successfully",
+    "moveSuccess": "Media moved successfully",
+    "folderCreatedSuccess": "Folder created successfully",
+    "fileTooLarge": "File size exceeds limit",
+    "permissionDenied": "Permission denied",
+    "urlCopied": "URL copied to clipboard"
+  }
+}

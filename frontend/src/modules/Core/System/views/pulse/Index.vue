@@ -271,29 +271,38 @@ const recentSecurity = ref<SecurityLog[]>([]);
 
 const fetchStats = async () => {
     try {
-        // Fetch activity logs stats
-        const activityStats = await api.get('/manage/activity-journal/statistics').catch(() => ({ data: {} }));
-        stats.value.activity = activityStats.data?.data || activityStats.data || {};
+        const [activityRes, securityRes, loginRes, systemRes] = await Promise.allSettled([
+            api.get('/manage/activity-journal/statistics'),
+            api.get('/manage/security/stats'),
+            api.get('/manage/access-journal/statistics'),
+            api.get('/manage/system-journal'),
+        ]);
 
-        // Fetch security stats
-        const securityStats = await api.get('/manage/security/stats').catch(() => ({ data: {} }));
-        const secData = securityStats.data?.data || securityStats.data || {};
-        stats.value.security = {
-            ...secData,
-            total: secData.total_events || 0
-        };
+        if (activityRes.status === 'fulfilled') {
+            const data = activityRes.value.data;
+            stats.value.activity = data?.data || data || {};
+        }
 
-        // Fetch login history stats
-        const loginStats = await api.get('/manage/access-journal/statistics').catch(() => ({ data: {} }));
-        const logData = loginStats.data?.data || loginStats.data || {};
-        stats.value.login = {
-            ...logData,
-            total: (logData.total_logins || 0) + (logData.failed_logins || 0)
-        };
+        if (securityRes.status === 'fulfilled') {
+            const secData = securityRes.value.data?.data || securityRes.value.data || {};
+            stats.value.security = {
+                ...secData,
+                total: secData.total_events || 0
+            };
+        }
 
-        const systemLogs = await api.get('/manage/system-journal').catch(() => ({ data: [] }));
-        const sysData = systemLogs.data?.data || systemLogs.data || [];
-        stats.value.system = { files: Array.isArray(sysData) ? sysData.length : 0 };
+        if (loginRes.status === 'fulfilled') {
+            const logData = loginRes.value.data?.data || loginRes.value.data || {};
+            stats.value.login = {
+                ...logData,
+                total: (logData.total_logins || 0) + (logData.failed_logins || 0)
+            };
+        }
+
+        if (systemRes.status === 'fulfilled') {
+            const sysData = systemRes.value.data?.data || systemRes.value.data || [];
+            stats.value.system = { files: Array.isArray(sysData) ? sysData.length : 0 };
+        }
     } catch (error: unknown) {
         logger.error('Failed to fetch stats:', error);
     }
@@ -301,16 +310,22 @@ const fetchStats = async () => {
 
 const fetchRecentLogs = async () => {
     try {
-        // Fetch recent activity
-        const activityResponse = await api.get('/manage/activity-journal/recent?limit=10').catch(() => ({ data: {} }));
-        const activityData = activityResponse.data;
-        recentActivity.value = Array.isArray(activityData)
-            ? activityData
-            : (activityData?.data || []);
+        const [activityRes, securityRes] = await Promise.allSettled([
+            api.get('/manage/activity-journal/recent?limit=10'),
+            api.get('/manage/security/journal?per_page=10'),
+        ]);
 
-        const securityResponse = await api.get('/manage/security/journal?per_page=10').catch(() => ({ data: { data: { data: [] } } }));
-        const secData = securityResponse.data?.data?.data || securityResponse.data?.data || [];
-        recentSecurity.value = Array.isArray(secData) ? secData : [];
+        if (activityRes.status === 'fulfilled') {
+            const activityData = activityRes.value.data;
+            recentActivity.value = Array.isArray(activityData)
+                ? activityData
+                : (activityData?.data || []);
+        }
+
+        if (securityRes.status === 'fulfilled') {
+            const secData = securityRes.value.data?.data?.data || securityRes.value.data?.data || [];
+            recentSecurity.value = Array.isArray(secData) ? secData : [];
+        }
     } catch (error: unknown) {
         logger.error('Failed to fetch recent logs:', error);
     }

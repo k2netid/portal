@@ -311,12 +311,15 @@
             "openUrl": "Buka Tumbu",
             "jsonHint": "Peryogi sintaks JSON anu sah",
             "jsonError": "Sintaks pormat JSON henteu sah",
-            "previewUnavailable": "Sawangan henteu sayogi",
+            "deleteTitle": "Hapus Record",
+            "deleteConfirm": "Naha anjeun yakin rék ngahapus record ieu? Peta ieu teu tiasa dibolaykeun.",
             "messages": {
                 "loadFailed": "Gagal ngamuat data record",
-                "created": "Record hasil dijieun.",
-                "saved": "Record hasil diropéa.",
-                "saveFailed": "Gagal nyimpen record"
+                "created": "Record parantos hasil dijieun.",
+                "saved": "Record parantos hasil diropéa.",
+                "saveFailed": "Gagal nyimpen record",
+                "deleted": "Record parantos hasil dihapus.",
+                "deleteFailed": "Gagal ngahapus record"
             }
         }
     }

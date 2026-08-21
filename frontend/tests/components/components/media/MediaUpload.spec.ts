@@ -35,21 +35,13 @@ vi.mock('@/modules/Core/System/stores/system', async () => {
     };
 });
 
+import enMessages from '@/engine/i18n/messages/en';
+
 const i18n = createI18n({
     legacy: false,
     locale: 'en',
     messages: {
-        en: {
-            features: {
-                media: {
-                    modals: {
-                        upload: {
-                            errorLoadingImage: 'Error loading image'
-                        }
-                    }
-                }
-            }
-        }
+        en: enMessages,
     }
 });
 
@@ -135,7 +127,7 @@ describe('MediaUpload.vue', () => {
     it('renders upload area', () => {
         const wrapper = createWrapper();
         expect(wrapper.find('input[type="file"]').exists()).toBe(true);
-        expect(wrapper.text()).toContain('media.modals.upload.chooseFile');
+        expect(wrapper.text()).toContain('Choose File');
     });
 
     it('triggers file select dialog', async () => {

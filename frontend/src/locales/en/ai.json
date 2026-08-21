@@ -1,0 +1,30 @@
+{
+  "assist": {
+    "title": "AI Assist",
+    "description": "Write or optimize content with artificial intelligence",
+    "customPlaceholder": "Enter custom instruction...",
+    "customInputPlaceholder": "Example: Summarize in 3 bullet points...",
+    "customCommand": "Send Prompt",
+    "orCustom": "Or custom prompt",
+    "selectProvider": "Select Provider",
+    "selectModel": "Select Model",
+    "noProviders": "No active AI providers",
+    "loadingModels": "Loading models...",
+    "generating": "Generating content...",
+    "generatingMagic": "Composing response...",
+    "generateFailed": "Failed to generate content",
+    "errorTitle": "AI Error",
+    "commands": {
+      "summarize": "Summarize",
+      "expand": "Expand",
+      "fixGrammar": "Fix Grammar",
+      "rewrite": "Rewrite"
+    },
+    "presets": {
+      "summarize": "Summarize this text",
+      "expand": "Expand this paragraph",
+      "fixGrammar": "Fix spelling and grammar",
+      "rewrite": "Rewrite with a more engaging tone"
+    }
+  }
+}

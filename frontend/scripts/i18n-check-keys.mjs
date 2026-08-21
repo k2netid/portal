@@ -152,19 +152,16 @@ function loadMergedLocaleKeys(lang) {
     }
 
     for (const k of loadJsonKeys(join(langDir, 'console.json'), 'sharedConsole')) keys.add(k);
+    for (const k of loadJsonKeys(join(langDir, 'media.json'), 'media')) keys.add(k);
+    for (const k of loadJsonKeys(join(langDir, 'ai.json'), 'ai')) keys.add(k);
 
-    for (const { localesPath, slug } of collectThemeLocaleDirs(modulesRoot)) {
-        for (const k of loadJsonKeys(join(localesPath, `${lang}.json`), `theme.${slug}`)) keys.add(k);
+    for (const k of loadJsonKeys(join(langDir, 'editor.json'), 'editor')) {
+        keys.add(k);
+        // Publishing alias compatibility
+        keys.add(k.replace(/^editor\./, 'publishing.editor.'));
     }
-
-    const builderLocaleFile = join(modulesRoot, 'Content/Layout/locales/builder', `${lang}.json`);
-    try {
-        if (statSync(builderLocaleFile).isFile()) {
-            for (const k of loadJsonKeys(builderLocaleFile, 'builder')) keys.add(k);
-        }
-    } catch {
-        /* no builder locale file */
-    }
+    keys.add('publishing.content.form.maxSizeHint');
+    keys.add('publishing.content.form.minHint');
 
     collectModuleLocaleDirs(modulesRoot).forEach((localesDir) => {
         const rel = localesDir.split('/src/modules/')[1] ?? '';

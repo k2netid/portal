@@ -58,6 +58,7 @@
         "urlCopied": "URL copied to clipboard",
         "copyFailed": "Failed to copy"
     },
+    "exported": "Data successfully exported",
     "no_data": "No data found",
     "select_node": "Select node...",
     "slugConflict": {

@@ -1,0 +1,163 @@
+{
+  "actions": {
+    "cancel": "Batal",
+    "save": "Simpan",
+    "interact": "Interaksi",
+    "interactShort": "Interaksi",
+    "stopInteraction": "Hentikan Interaksi",
+    "fit": "Sesuaikan",
+    "constrainProportions": "Pertahankan Proporsi"
+  },
+  "bubbleMenu": {
+    "properties": "Properti"
+  },
+  "contextMenu": {
+    "bold": "Tebal",
+    "italic": "Miring",
+    "cleanFormatting": "Hapus Format",
+    "properties": "Properti",
+    "delete": "Hapus",
+    "deleteTable": "Hapus Tabel",
+    "undo": "Urungkan",
+    "redo": "Ulangi"
+  },
+  "embed": {
+    "empty": "Belum ada kode embed",
+    "configure": "Konfigurasi Embed"
+  },
+  "fields": {
+    "size": "Ukuran",
+    "color": "Warna",
+    "backgroundColor": "Warna Latar",
+    "borderColor": "Warna Garis Tepi",
+    "borderWidth": "Ketebalan Garis",
+    "borderRadius": "Radius Sudut",
+    "padding": "Padding",
+    "margin": "Margin",
+    "source": "Sumber / URL",
+    "displayMode": "Mode Tampilan",
+    "alignment": "Perataan",
+    "altText": "Teks Alternatif",
+    "width": "Lebar",
+    "height": "Tinggi",
+    "controls": "Kontrol Pemutar",
+    "autoplay": "Putar Otomatis",
+    "loop": "Putar Berulang"
+  },
+  "values": {
+    "block": "Blok",
+    "inline": "Inline",
+    "floatLeft": "Rata Kiri",
+    "floatRight": "Rata Kanan"
+  },
+  "markdown": {
+    "edit": "Edit",
+    "preview": "Pratinjau",
+    "placeholder": "Tulis konten dalam format Markdown...",
+    "toolbar": {
+      "bold": "Tebal",
+      "italic": "Miring",
+      "heading": "Heading",
+      "link": "Tautan",
+      "image": "Gambar",
+      "inlineCode": "Kode Inline",
+      "codeBlock": "Blok Kode",
+      "list": "Daftar",
+      "quote": "Kutipan"
+    }
+  },
+  "placeholder": {
+    "text": "Mulai menulis...",
+    "htmlCode": "Masukkan kode HTML di sini..."
+  },
+  "placeholders": {
+    "html": "Kode HTML",
+    "unitEm": "e.g. 1.2em",
+    "none": "Tidak ada",
+    "zero": "0",
+    "zeroPx": "0px",
+    "fontSizePx": "16px",
+    "urlEllipsis": "https://...",
+    "imageUrl": "https://example.com/image.jpg",
+    "alt": "Deskripsi gambar",
+    "auto": "Otomatis"
+  },
+  "properties": {
+    "title": "Properti Elemen",
+    "general": "Umum",
+    "dimensions": "Dimensi",
+    "appearance": "Tampilan",
+    "html": "HTML Kustom",
+    "video": "Pengaturan Video"
+  },
+  "tableDialog": {
+    "title": "Sisipkan Tabel",
+    "rows": "Jumlah Baris",
+    "columns": "Jumlah Kolom",
+    "insert": "Sisipkan"
+  },
+  "toolbar": {
+    "tabs": {
+      "home": "Beranda",
+      "insert": "Sisipkan",
+      "layout": "Tata Letak",
+      "table": "Tabel"
+    },
+    "undo": "Urungkan",
+    "redo": "Ulangi",
+    "aiAssist": "Bantuan AI",
+    "viewHtml": "Lihat HTML",
+    "placeholders": {
+      "paragraph": "Paragraf",
+      "font": "Font"
+    },
+    "headings": {
+      "h1": "Judul 1",
+      "h2": "Judul 2",
+      "h3": "Judul 3"
+    },
+    "textColor": "Warna Teks",
+    "textColorTitle": "Pilih Warna Teks",
+    "fontGroup": "Font",
+    "bold": "Tebal",
+    "italic": "Miring",
+    "underline": "Garis Bawah",
+    "strikethrough": "Coret",
+    "code": "Kode",
+    "clearStyle": "Hapus Gaya",
+    "styleGroup": "Gaya",
+    "alignLeft": "Rata Kiri",
+    "alignCenter": "Rata Tengah",
+    "alignRight": "Rata Kanan",
+    "alignJustify": "Rata Kanan-Kiri",
+    "bullets": "Poin",
+    "numbers": "Nomor",
+    "blockquote": "Kutipan",
+    "dropcap": "Drop Cap",
+    "paragraphGroup": "Paragraf",
+    "image": "Gambar",
+    "table": "Tabel",
+    "embed": "Embed",
+    "embedsGroup": "Media & Embed",
+    "line": "Garis Pemisah",
+    "icon": "Ikon",
+    "specialGroup": "Elemen Khusus",
+    "commonGroup": "Umum",
+    "containers": "Wadah",
+    "flowLayout": "Tata Letak Alur",
+    "gridSystem": "Sistem Grid",
+    "newspaperStyle": "Gaya Koran",
+    "columns2": "2 Kolom",
+    "columns3": "3 Kolom",
+    "grid2": "Grid 2x2",
+    "grid3": "Grid 3x3",
+    "structure": "Struktur",
+    "addCol": "Tambah Kolom",
+    "delCol": "Hapus Kolom",
+    "addRow": "Tambah Baris",
+    "delRow": "Hapus Baris",
+    "merge": "Gabung Sel",
+    "deleteTable": "Hapus Tabel",
+    "danger": "Bahaya"
+  }
+}
