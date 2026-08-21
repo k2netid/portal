@@ -53,6 +53,17 @@ Route::prefix('v1')->group(function (): void {
     Route::get('public/system/settings', [PublicSettingsController::class, 'index']);
     Route::get('public/system/languages', [LanguageController::class, 'index']);
     Route::get('public/system/console-theme', [ConsoleThemeController::class, 'showPublic']);
+    Route::get('public/subscription/features', function () {
+        return response()->json([
+            'success' => true,
+            'features' => [
+                'oauth_clients' => true,
+                'webhooks' => true,
+                'extensions' => true,
+                'custom_models' => true,
+            ],
+        ]);
+    });
 
     // Dashboard routes
     Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function (): void {

@@ -44,16 +44,9 @@ class OAuthClientController extends BaseApiController
             $validated['name'],
             [$validated['redirect']],
             $request->boolean('confidential', true),
-            null,
         );
 
-        $ownerType = $user->getMorphClass();
-        $ownerId = $user->getKey();
-        if (! is_string($ownerId)) {
-            return $this->error('Invalid user identity', 500);
-        }
-        $client->owner_type = $ownerType;
-        $client->owner_id = $ownerId;
+        $client->setAttribute('user_id', $user->getKey());
         $client->save();
 
         return $this->success(

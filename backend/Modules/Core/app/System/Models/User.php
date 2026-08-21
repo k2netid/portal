@@ -66,13 +66,21 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     public $incrementing = false;
 
     /**
-     * OAuth2 clients owned by this user (Laravel Passport 13).
+     * OAuth2 clients owned by this user (Laravel Passport).
      *
-     * @return MorphMany<Client, $this>
+     * @return HasMany<Client, $this>
      */
-    public function oauthApps(): MorphMany
+    public function clients(): HasMany
     {
-        return $this->morphMany(Passport::clientModel(), 'owner');
+        return $this->hasMany(Passport::clientModel(), 'user_id');
+    }
+
+    /**
+     * @return HasMany<Client, $this>
+     */
+    public function oauthApps(): HasMany
+    {
+        return $this->clients();
     }
 
     protected $table = 'srv_auth_users';
