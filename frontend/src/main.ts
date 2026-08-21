@@ -8,7 +8,7 @@ import {
     useLoggerPlugin,
 } from './main-shared';
 
-document.title = i18n.global.t('system.app.consoleTitle');
+document.title = i18n.global.t('system.app.consoleTitle', 'Jejakawan Console');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('console'));
@@ -59,7 +59,7 @@ async function bootstrap(): Promise<void> {
         import('@/styles/editor.css'),
     ]);
 
-    logger.info('[SPA] Mounting console shell');
+    logger.info('[SPA] Mounting console kernel');
     app.mount('#app');
 
     const { scheduleDeferredConsoleModules } = await import('@/engine/bootstrap/deferredConsoleModules');

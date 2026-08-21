@@ -19,6 +19,19 @@ const registerPath = SECURITY_ROUTES.register;
 
 const baseRoutes: Array<RouteRecordRaw> = [
     {
+        path: '/',
+        name: 'root',
+        redirect: () => {
+            const authStore = useAuthStore();
+            if (!authStore.isAuthenticated) {
+                return { name: 'login' };
+            }
+            const systemStore = useSystemStore();
+            const dashboardSlug = String(systemStore.consoleDashboardSlug || 'dash');
+            return { path: `/${dashboardSlug}/dashboard` };
+        },
+    },
+    {
         path: '/maintenance',
         name: 'maintenance',
         component: () => import('@/shared/views/Maintenance.vue'),
@@ -31,28 +44,28 @@ const baseRoutes: Array<RouteRecordRaw> = [
         meta: { public: true, title: 'system.installer.title' },
     },
     {
-        path: loginPath,
+        path: '/login',
         name: 'login',
         component: () => import('@/modules/Core/System/views/auth/Login.vue'),
         meta: { guestOnly: true, authContext: 'system' },
     },
     {
-        path: '/login',
-        name: 'login-probe',
-        redirect: { name: 'not-found' },
-        meta: { public: true },
+        path: '/auth/console-sign-in',
+        name: 'login-alias',
+        component: () => import('@/modules/Core/System/views/auth/Login.vue'),
+        meta: { guestOnly: true, authContext: 'system' },
     },
     {
-        path: registerPath,
+        path: '/register',
         name: 'register',
         component: () => import('@/modules/Core/System/views/auth/Register.vue'),
         meta: { guestOnly: true, authContext: 'system' },
     },
     {
-        path: '/register',
-        name: 'register-probe',
-        redirect: { name: 'not-found' },
-        meta: { public: true },
+        path: '/auth/console-sign-up',
+        name: 'register-alias',
+        component: () => import('@/modules/Core/System/views/auth/Register.vue'),
+        meta: { guestOnly: true, authContext: 'system' },
     },
     {
         path: '/public/system/auth/forgot-password',
@@ -110,7 +123,7 @@ const dashboardRoute: RouteRecordRaw = {
                 const authStore = useAuthStore();
 
                 if (!authStore.isAuthenticated) {
-                    return { path: '/404', replace: true }; 
+                    return { name: 'login' }; 
                 }
 
                 const consoleStore = useConsoleContextStore();
@@ -143,15 +156,7 @@ const dashboardRoute: RouteRecordRaw = {
                     return { path: `/${dashboardSlug}/dashboard` };
                 }
 
-                const roleRank = authStore.getRoleRank();
-                if (roleRank > 0 && roleRank <= 10) {
-                    if (typeof window !== 'undefined') {
-                        window.location.assign('/member');
-                    }
-                    return { path: loginPath }; 
-                }
-
-                return { path: '/403' };
+                return { path: `/${dashboardSlug}/dashboard` };
             },
         },
         ...registry.getAllRoutes().filter((r) => r.name !== 'system.dashboard'),

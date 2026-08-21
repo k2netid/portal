@@ -8,8 +8,8 @@ const CONSOLE_ENTRYPOINT_PATHS = [
     SECURITY_ROUTES.dashboardBase,
     SECURITY_ROUTES.login,
     SECURITY_ROUTES.register,
-    '/login',
-    '/register',
+    '/auth/console-sign-in',
+    '/auth/console-sign-up',
     '/public/system/auth/forgot-password',
     '/public/system/auth/reset-password',
     '/forgot-password',
@@ -48,7 +48,7 @@ const matchesConsoleEntrypoint = (
     ));
 };
 
-/** Route-based shell: console vs public (single SPA bootstrap). */
+/** Route-based shell: console vs public. */
 export const resolveIsConsoleEntrypoint = (pathname: string): boolean => {
     const cleanPath = normalizeEntryPath(pathname);
 

@@ -98,39 +98,23 @@ export const shouldBlockOnPublicSite = (path: string): boolean => {
 /** Reserved first-segment slugs for `/:slug` CMS route — scanners + infra words. */
 const RESERVED_PUBLIC_CONTENT_SLUGS = new Set([
     'system',
+    'security',
+    'infra',
     'api',
     'sanctum',
-    'member',
+    'auth',
     'install',
-    'cdn-cgi',
-    'dash',
-    'ja-dash',
-    'console',
+    'setup',
+    'maintenance',
+    'member',
     'admin',
-    'dashboard',
     'panel',
+    'dashboard',
     'manage',
-    'manager',
-    'wp-admin',
-    'phpmyadmin',
-    'pma',
-    'cpanel',
-    'administrator',
 ]);
 
 export const isReservedPublicContentSlug = (slug: string): boolean => {
-    const normalized = slug.trim().toLowerCase();
-    if (!normalized) {
-        return true;
-    }
-
-    if (RESERVED_PUBLIC_CONTENT_SLUGS.has(normalized)) {
-        return true;
-    }
-
-    if (collectConsoleDashboardSlugCandidates().includes(normalized)) {
-        return true;
-    }
-
-    return isProbePath(`/${normalized}`);
+    const s = slug.toLowerCase().replace(/^\/+|\/+$/g, '');
+    if (RESERVED_PUBLIC_CONTENT_SLUGS.has(s)) return true;
+    return collectConsoleDashboardSlugCandidates().some((c) => c.toLowerCase() === s);
 };

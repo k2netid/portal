@@ -5,7 +5,6 @@ import { fileURLToPath, URL } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import sri from 'vite-plugin-sri'
-import { spaFallbackPlugin } from './vite/spaFallback.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const appBuildId = process.env.VITE_BUILD_ID ?? `${Date.now()}`
@@ -32,13 +31,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['src/lib/utils.ts', 'src/main-console.ts', 'src/main-public.ts', 'src/main-shared.ts', 'src/router/**', 'src/types/**', 'src/vite-env.d.ts'],
+      exclude: ['src/lib/utils.ts', 'src/main.ts', 'src/main-shared.ts', 'src/router/**', 'src/types/**', 'src/vite-env.d.ts'],
     },
   },
   plugins: [
     vue(),
     tailwindcss(),
-    spaFallbackPlugin(),
     sri(),
     visualizer({
       filename: './dist/stats.html',
@@ -59,7 +57,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, 'index.html'),
-        console: resolve(__dirname, 'console.html'),
       },
       output: {
         chunkFileNames: 'assets/[hash].js',

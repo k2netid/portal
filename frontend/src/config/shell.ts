@@ -1,16 +1,8 @@
-import { resolveIsConsoleEntrypoint } from '@/engine/router/entrypoint';
-
-/** Single SPA: console (operators) vs public (hub landing + member). */
+/** Single Unified Console SPA Shell for Core Engine. */
 export type AppShell = 'console' | 'public';
 
-export const currentAppShell = (): AppShell => {
-    if (typeof window === 'undefined') {
-        return 'public';
-    }
+export const currentAppShell = (): AppShell => 'console';
 
-    return resolveIsConsoleEntrypoint(window.location.pathname) ? 'console' : 'public';
-};
+export const isConsoleShell = (): boolean => true;
 
-export const isConsoleShell = (): boolean => currentAppShell() === 'console';
-
-export const isPublicShell = (): boolean => currentAppShell() === 'public';
+export const isPublicShell = (): boolean => false;
