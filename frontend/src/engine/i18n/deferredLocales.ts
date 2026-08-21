@@ -30,14 +30,16 @@ export async function ensureDeferredLocales(modules: DeferredLocaleModule[]): Pr
         return;
     }
 
+    const currentLocale = (i18n.global.locale as any).value as 'en' | 'id' | 'su';
+
     await Promise.all(
         pending.map(async (key) => {
             const loadBundle = await loaderImporters[key]();
-            const bundle = await loadBundle();
-            mergeForLocale('en', key, bundle.en);
-            mergeForLocale('id', key, bundle.id);
-            if ('su' in bundle) {
-                mergeForLocale('su', key, (bundle as any).su);
+            const bundle = (await loadBundle()) as Record<string, Record<string, unknown>>;
+            if (currentLocale && bundle[currentLocale]) {
+                mergeForLocale(currentLocale, key, bundle[currentLocale]);
+            } else if (bundle.id) {
+                mergeForLocale('id', key, bundle.id);
             }
             loaded.add(key);
         }),

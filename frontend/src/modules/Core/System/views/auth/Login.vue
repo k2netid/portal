@@ -287,7 +287,7 @@
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, reactive, computed, onMounted, onUnmounted, nextTick, defineAsyncComponent } from 'vue';
 import { useRouter, useRoute, type RouteLocationRaw, type LocationQueryRaw } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
@@ -302,7 +302,6 @@ import {
   Loader2,
   Fingerprint,
 } from 'lucide-vue-next';
-import { Passkeys } from '@laravel/passkeys';
 import { resetLockdown } from '@/engine/api/client';
 import api from '@/engine/api/client';
 import AuthLayout from '../../components/auth/AuthLayout.vue';
@@ -314,9 +313,10 @@ import {
     Label,
     Checkbox
 } from '@/shared/components/ui';
-import CaptchaWrapper from '@/modules/Core/System/components/captcha/CaptchaWrapper.vue';
 import type { CaptchaPayload, CaptchaSettingsState } from '@/modules/Core/System/components/captcha/CaptchaWrapper.vue';
 import type { LoginCredentials } from '@/engine/types/auth';
+
+const CaptchaWrapper = defineAsyncComponent(() => import('@/modules/Core/System/components/captcha/CaptchaWrapper.vue'));
 
 useAuthScreenTracking();
 
@@ -409,19 +409,20 @@ onMounted(async () => {
 
     resetLockdown();
 
-    // Fetch latest public settings (logo, name, etc)
-    await systemStore.fetchPublicSettings();
+    // Fetch latest public settings and install status in parallel
+    const [, installStatusResult] = await Promise.allSettled([
+        systemStore.fetchPublicSettings(),
+        api.get('/install/status', { _skipManualRedirect: true } as any),
+    ]);
 
     // Check if system is in post-reset state
-    try {
-        const installStatus = await api.get('/install/status', { _skipManualRedirect: true } as any);
+    if (installStatusResult.status === 'fulfilled') {
+        const installStatus = installStatusResult.value;
         const setupToken = installStatus.data?.setup_token;
         if (installStatus.data?.is_post_reset && typeof setupToken === 'string' && setupToken.length > 0) {
             window.location.replace(`/setup?token=${encodeURIComponent(setupToken)}`);
             return;
         }
-    } catch (e) {
-        // Ignore, probably API not available
     }
 
     // Check if registration is enabled from the store we just updated
@@ -708,6 +709,7 @@ const loginWithPasskey = async () => {
     messageType.value = '';
     
     try {
+        const { Passkeys } = await import('@laravel/passkeys');
         await Passkeys.verify({
             routes: {
                 submit: '/passkeys/login',
