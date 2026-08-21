@@ -218,11 +218,17 @@ return new class extends Migration
         Schema::create('sec_dependency_vulnerabilities', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('package_name')->index();
-            $table->string('current_version');
+            $table->string('version')->nullable();
+            $table->string('current_version')->nullable();
             $table->string('patched_versions')->nullable();
-            $table->string('advisory_id')->index();
+            $table->string('cve')->nullable()->index();
+            $table->string('advisory_id')->nullable()->index();
             $table->string('severity')->default('medium')->index();
-            $table->text('title');
+            $table->string('fixed_in')->nullable();
+            $table->string('status')->default('new')->index();
+            $table->string('source')->default('composer')->index();
+            $table->text('title')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 

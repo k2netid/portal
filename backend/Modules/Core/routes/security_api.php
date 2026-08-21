@@ -42,7 +42,7 @@ Route::prefix('v1')->group(function (): void {
 
             Route::get('dependency-vulnerabilities', [DependencyVulnerabilityController::class, 'index']);
             Route::get('dependency-vulnerabilities/statistics', [DependencyVulnerabilityController::class, 'statistics']);
-            Route::put('dependency-vulnerabilities/{id}', [DependencyVulnerabilityController::class, 'update'])->whereNumber('id');
+            Route::put('dependency-vulnerabilities/{id}', [DependencyVulnerabilityController::class, 'update'])->whereUuid('id');
             Route::post('run-dependency-audit', [DependencyVulnerabilityController::class, 'runAudit']);
 
             Route::get('dependency-packages', [DependencyPackageController::class, 'index']);
