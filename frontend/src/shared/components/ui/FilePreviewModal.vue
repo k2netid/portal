@@ -7,6 +7,9 @@
           <FileIcon class="w-4 h-4 text-white/70" />
           {{ fileName || 'File Preview' }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ fileName || 'File Preview' }}
+        </DialogDescription>
         <div class="flex items-center gap-2">
           <Button variant="ghost" size="icon" class="text-white hover:bg-white/20 rounded-full" @click="downloadFile" title="Download">
             <DownloadIcon class="w-5 h-5" />

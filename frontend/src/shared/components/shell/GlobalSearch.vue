@@ -4,6 +4,8 @@
     @update:open="setOpen"
   >
     <DialogContent class="console-dialog-lg p-0 gap-0 overflow-hidden bg-background text-foreground rounded-xl border border-border/50 shadow-2xl">
+      <DialogTitle class="sr-only">{{ t('common.actions.search') }}</DialogTitle>
+      <DialogDescription class="sr-only">{{ t('common.actions.search') }}</DialogDescription>
       <!-- Search Input Header -->
       <div
         class="flex items-center border-b border-border/40 pl-4 pr-12 py-2"
@@ -212,7 +214,7 @@ import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useConsoleContextStore } from '@/engine/stores/consoleContext';
 import { SearchService } from '@/shared/services/searchService';
-import { Dialog, DialogContent } from '@/shared/components/ui';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/shared/components/ui';
 import {
   Activity,
   Calendar,

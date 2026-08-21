@@ -6,6 +6,9 @@
           <DialogTitle class="text-lg font-semibold">
             {{ t('system.contentPreview.title') }}
           </DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ t('system.contentPreview.title') }}
+          </DialogDescription>
           <div
             class="flex items-center gap-1"
             role="group"

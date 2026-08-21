@@ -13,8 +13,8 @@
           />
           {{ title }}
         </DialogTitle>
-        <DialogDescription v-if="description" class="whitespace-pre-wrap">
-          {{ description }}
+        <DialogDescription :class="description ? 'whitespace-pre-wrap' : 'sr-only'">
+          {{ description || message || title }}
         </DialogDescription>
       </DialogHeader>
 

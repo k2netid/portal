@@ -6,6 +6,9 @@
           <Wand class="w-5 h-5 text-emerald-400" />
           {{ t('system.appStore.scaffolder.title') }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ t('system.appStore.scaffolder.title') }}
+        </DialogDescription>
       </DialogHeader>
 
       <div class="mt-4 space-y-5 text-sm text-muted-foreground leading-relaxed">

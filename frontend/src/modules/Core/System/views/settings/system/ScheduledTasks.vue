@@ -264,6 +264,9 @@
           <DialogTitle>
             {{ editingTask ? $t('system.scheduled_tasks.edit') : $t('system.scheduled_tasks.create') }}
           </DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ editingTask ? $t('system.scheduled_tasks.edit') : $t('system.scheduled_tasks.create') }}
+          </DialogDescription>
         </DialogHeader>
         
         <form
@@ -453,6 +456,9 @@
       <DialogContent class="console-dialog-lg">
         <DialogHeader>
           <DialogTitle>{{ $t('system.command_runner.title') }}</DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ $t('system.command_runner.title') }}
+          </DialogDescription>
         </DialogHeader>
         
         <div class="grid gap-4 py-4">
@@ -587,6 +593,9 @@
       <DialogContent class="console-dialog-xl-scroll">
         <DialogHeader>
           <DialogTitle>{{ $t('system.scheduled_tasks.output.title') }}</DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ $t('system.scheduled_tasks.output.title') }}
+          </DialogDescription>
         </DialogHeader>
         <div class="bg-black text-green-400 p-4 rounded-md font-mono text-sm overflow-auto max-h-[500px] border border-border">
           <pre>{{ selectedTaskOutput }}</pre>

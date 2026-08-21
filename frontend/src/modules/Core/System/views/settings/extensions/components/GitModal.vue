@@ -6,6 +6,9 @@
           <GitBranch class="w-5 h-5 text-indigo-500 animate-pulse" />
           {{ t('system.appStore.gitTitle') }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ t('system.appStore.gitDesc') }}
+        </DialogDescription>
       </DialogHeader>
 
       <div class="mt-4 space-y-4 text-sm text-muted-foreground leading-relaxed">

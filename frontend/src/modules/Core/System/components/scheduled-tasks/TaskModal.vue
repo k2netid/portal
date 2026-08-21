@@ -8,6 +8,9 @@
         <DialogTitle>
           {{ task ? t('system.system.scheduled_tasks.modal.title_edit') : t('system.system.scheduled_tasks.modal.title_create') }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ task ? t('system.system.scheduled_tasks.modal.title_edit') : t('system.system.scheduled_tasks.modal.title_create') }}
+        </DialogDescription>
       </DialogHeader>
 
       <form

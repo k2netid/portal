@@ -6,6 +6,9 @@
           <Upload class="w-5 h-5 text-indigo-500" />
           {{ t('system.appStore.uploadTitle') }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ t('system.appStore.sandboxNoticeDesc') }}
+        </DialogDescription>
       </DialogHeader>
 
       <div class="bg-indigo-500/10 border border-indigo-500/20 p-3 rounded-lg flex gap-3 text-xs text-indigo-400 mt-2">

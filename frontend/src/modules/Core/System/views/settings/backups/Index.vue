@@ -284,6 +284,9 @@
       <DialogContent class="console-dialog-sm">
         <DialogHeader>
           <DialogTitle>{{ t('system.system.backups.schedule.modal.title') }}</DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ t('system.system.backups.schedule.modal.title') }}
+          </DialogDescription>
         </DialogHeader>
         <div class="grid gap-4 py-4">
           <div class="flex items-center space-x-2">
@@ -405,6 +408,9 @@
             <Trash2 class="w-5 h-5 text-destructive" />
             {{ t('system.system.backups.actions.delete') }}
           </DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ backupToDelete ? t('system.system.backups.confirm.delete', { name: backupToDelete.name }) : t('system.system.backups.actions.delete') }}
+          </DialogDescription>
         </DialogHeader>
         <div class="py-4">
           <p class="text-sm text-muted-foreground mb-4 whitespace-pre-wrap break-words">

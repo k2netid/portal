@@ -8,6 +8,9 @@
         <DialogTitle>
           {{ webhook ? t('infra.webhooks.modal.title_edit') : t('infra.webhooks.modal.title_create') }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ webhook ? t('infra.webhooks.modal.title_edit') : t('infra.webhooks.modal.title_create') }}
+        </DialogDescription>
       </DialogHeader>
 
       <form

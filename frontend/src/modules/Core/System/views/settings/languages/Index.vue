@@ -217,6 +217,9 @@ borderless
       <DialogContent class="console-dialog-sm">
         <DialogHeader>
           <DialogTitle>{{ $t('system.languages.create.title') }}</DialogTitle>
+          <DialogDescription class="sr-only">
+            {{ $t('system.languages.create.title') }}
+          </DialogDescription>
         </DialogHeader>
 
         <div class="space-y-4 py-4">
