@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import sri from 'vite-plugin-sri'
-import { spaFallbackPlugin } from './vite/spaFallback'
+import { spaFallbackPlugin } from './vite/spaFallback.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const appBuildId = process.env.VITE_BUILD_ID ?? `${Date.now()}`
@@ -14,7 +14,7 @@ const appBuildId = process.env.VITE_BUILD_ID ?? `${Date.now()}`
 const devApiProxyTarget =
   process.env.VITE_DEV_API_PROXY?.trim() ||
   process.env.E2E_API_PROXY_TARGET?.trim() ||
-  'http://127.0.0.1:8081'
+  'http://127.0.0.1:8000'
 
 const devServerPort = Number(process.env.VITE_DEV_PORT || 5173)
 
@@ -49,16 +49,12 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@/components/builder': fileURLToPath(new URL('./src/modules/Content/Layout/components/builder', import.meta.url)),
-      '@/components/content-renderer': fileURLToPath(new URL('./src/modules/Content/Layout/components/content-renderer', import.meta.url)),
       '@/composables': fileURLToPath(new URL('./src/shared/composables', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   build: {
     modulePreload: false,
-    // Use esbuild CSS minifier to keep Tailwind v4 directives in scoped blocks
-    // from being reported as unknown by lightningcss during production builds.
     cssMinify: 'esbuild',
     rollupOptions: {
       input: {
@@ -73,29 +69,11 @@ export default defineConfig({
           if (id.includes('/src/modules/Core/Security/')) {
             return 'mod-security';
           }
-          if (id.includes('/src/modules/Content/Publishing/')) {
-            return 'mod-content-publishing';
+          if (id.includes('/src/modules/Core/System/')) {
+            return 'mod-system';
           }
-          if (id.includes('/src/modules/Content/Media/')) {
-            return 'mod-content-media';
-          }
-          if (id.includes('/src/modules/Content/Forms/')) {
-            return 'mod-content-forms';
-          }
-          if (id.includes('/src/modules/Content/Layout/')) {
-            return 'mod-content-layout';
-          }
-          if (id.includes('/src/modules/Content/Library/')) {
-            return 'mod-content-library';
-          }
-          if (id.includes('/src/modules/Content/Studio/')) {
-            return 'mod-content-studio';
-          }
-          if (id.includes('/src/modules/Content/')) {
-            return 'mod-content-shared';
-          }
-          if (id.includes('/src/modules/Intelligence/')) {
-            return 'mod-intelligence';
+          if (id.includes('/src/modules/Core/Infra/')) {
+            return 'mod-infra';
           }
           if (!id.includes('node_modules')) {
             return;
@@ -148,21 +126,11 @@ export default defineConfig({
             return 'vendor-animation';
           }
 
-          if (id.includes('@fullcalendar')) {
-            return 'vendor-ui-calendar';
-          }
-
-          if (id.includes('chart.js') || id.includes('vue-chartjs')) {
-            return 'vendor-ui-charts';
-          }
-
           // Fallback vendor chunk
           return 'vendor-misc';
         },
       },
     },
-    // Current largest generated chunk is around ~1.65MB; keep warning threshold
-    // above that so build output only flags newly larger regressions.
     chunkSizeWarningLimit: 1800,
     sourcemap: false,
   },

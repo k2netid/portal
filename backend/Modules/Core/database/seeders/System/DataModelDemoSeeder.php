@@ -63,10 +63,10 @@ class DataModelDemoSeeder extends Seeder
                     'description' => 'Sample content template for console e2e',
                     'type' => 'post',
                     'title_template' => '{{ title }}',
-                    'content_template' => '<p>{{ content }}</p>',
-                    'meta_template' => ['category' => 'General'],
+                    'body_template' => '<p>{{ content }}</p>',
+                    'meta' => ['category' => 'General'],
                     'is_active' => true,
-                    'created_by' => $admin->id,
+                    'author_id' => $admin->id,
                 ],
             );
 
@@ -74,15 +74,12 @@ class DataModelDemoSeeder extends Seeder
                 ['slug' => 'welcome-user'],
                 [
                     'name' => 'Welcome User Email',
-                    'description' => 'Default transactional welcome email',
                     'subject' => 'Welcome to Jejakawan!',
-                    'body_html' => '<p>Hello {{ name }}, welcome to your account.</p>',
-                    'body_plain' => 'Hello {{ name }}, welcome to your account.',
+                    'body' => '<p>Hello {{ name }}, welcome to your account.</p>',
+                    'text_body' => 'Hello {{ name }}, welcome to your account.',
                     'variables' => ['name', 'email', 'app_name'],
                     'category' => 'auth',
-                    'is_system' => true,
                     'is_active' => true,
-                    'created_by' => $admin->id,
                 ],
             );
         }
