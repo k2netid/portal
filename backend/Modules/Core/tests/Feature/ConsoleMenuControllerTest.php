@@ -27,7 +27,7 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('success', true);
 
-        $this->assertDatabaseCount('sys_console_menus', 21);
+        $this->assertDatabaseCount('sys_console_menus', 22);
     }
 
     public function test_admin_can_create_menu_item(): void

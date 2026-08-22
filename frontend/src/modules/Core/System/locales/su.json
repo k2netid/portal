@@ -87,7 +87,8 @@
   },
   "navigation": {
     "sections": {
-      "usersAccess": "Tim",
+      "usersAccess": "Pamaké & Akses",
+      "communications": "Komunikasi",
       "monitoring": "Pamantauan",
       "infrastructure": "Infrastruktur",
       "developer": "Dev",
@@ -118,7 +119,7 @@
       "identityIntegrations": "Idéntitas & Integrasi",
       "kycReviews": "Ulasan KYC",
       "integrations": "Integrasi",
-      "mail": "Kotak Surat",
+      "mail": "JA-Mail",
       "menuEditor": "Éditor Menu"
     },
     "menuEditor": {

@@ -88,6 +88,7 @@
   "navigation": {
     "sections": {
       "usersAccess": "Users & Access",
+      "communications": "Communications",
       "monitoring": "Monitoring",
       "infrastructure": "Infrastructure",
       "developer": "Dev",
@@ -118,7 +119,7 @@
       "identityIntegrations": "Identity & Integrations",
       "kycReviews": "KYC Reviews",
       "integrations": "Integrations",
-      "mail": "Mailbox",
+      "mail": "JA-Mail",
       "menuEditor": "Menu Editor"
     },
     "menuEditor": {

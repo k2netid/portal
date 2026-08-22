@@ -116,6 +116,36 @@ class ConsoleMenu extends Model
                 ],
             ],
 
+            // Group: Communications
+            [
+                'group_slug' => 'communications',
+                'name' => 'Communications',
+                'label_key' => 'system.navigation.sections.communications',
+                'icon' => 'mail',
+                'order' => 15,
+                'children' => [
+                    [
+                        'name' => 'JA-Mail',
+                        'label_key' => 'system.navigation.menu.mail',
+                        'route_name' => 'mail',
+                        'icon' => 'mail',
+                        'permission' => 'manage system',
+                        'extension_slug' => 'mail',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 1,
+                    ],
+                    [
+                        'name' => 'Notifications',
+                        'label_key' => 'system.navigation.menu.systemNotifications',
+                        'route_name' => 'system-notifications',
+                        'icon' => 'bell',
+                        'permission' => 'manage system',
+                        'order' => 2,
+                    ],
+                ],
+            ],
+
             // Group: Observability & Journals
             [
                 'group_slug' => 'observability',
@@ -163,7 +193,7 @@ class ConsoleMenu extends Model
                 ],
             ],
 
-            // Group: System Config & Mail
+            // Group: System Config
             [
                 'group_slug' => 'system_config',
                 'name' => 'System Config',
@@ -172,23 +202,12 @@ class ConsoleMenu extends Model
                 'order' => 30,
                 'children' => [
                     [
-                        'name' => 'Mailbox',
-                        'label_key' => 'system.navigation.menu.mail',
-                        'route_name' => 'mail',
-                        'icon' => 'mail',
-                        'permission' => 'manage system',
-                        'extension_slug' => 'mail',
-                        'badge_text' => 'PRO',
-                        'badge_variant' => 'primary',
-                        'order' => 1,
-                    ],
-                    [
                         'name' => 'System Settings',
                         'label_key' => 'system.navigation.menu.settings',
                         'route_name' => 'settings',
                         'icon' => 'settings',
                         'permission' => 'view settings',
-                        'order' => 2,
+                        'order' => 1,
                     ],
                     [
                         'name' => 'Console Appearance',
@@ -196,7 +215,7 @@ class ConsoleMenu extends Model
                         'route_name' => 'settings-console-appearance',
                         'icon' => 'palette',
                         'permission' => 'manage settings',
-                        'order' => 3,
+                        'order' => 2,
                     ],
                     [
                         'name' => 'Menu Editor',
@@ -207,7 +226,7 @@ class ConsoleMenu extends Model
                         'role' => 'super',
                         'badge_text' => 'NEW',
                         'badge_variant' => 'emerald',
-                        'order' => 4,
+                        'order' => 3,
                     ],
                     [
                         'name' => 'Languages',
@@ -215,15 +234,7 @@ class ConsoleMenu extends Model
                         'route_name' => 'languages',
                         'icon' => 'languages',
                         'permission' => 'view settings',
-                        'order' => 5,
-                    ],
-                    [
-                        'name' => 'Notifications',
-                        'label_key' => 'system.navigation.menu.systemNotifications',
-                        'route_name' => 'system-notifications',
-                        'icon' => 'bell',
-                        'permission' => 'manage system',
-                        'order' => 6,
+                        'order' => 4,
                     ],
                 ],
             ],

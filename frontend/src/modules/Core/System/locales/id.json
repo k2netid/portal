@@ -87,7 +87,8 @@
   },
   "navigation": {
     "sections": {
-      "usersAccess": "Tim",
+      "usersAccess": "Pengguna & Akses",
+      "communications": "Komunikasi",
       "monitoring": "Pemantauan",
       "infrastructure": "Infrastruktur",
       "developer": "Dev",
@@ -118,7 +119,7 @@
       "identityIntegrations": "Identitas & Integrasi",
       "kycReviews": "Review KYC",
       "integrations": "Integrations",
-      "mail": "Kotak Masuk",
+      "mail": "JA-Mail",
       "menuEditor": "Editor Menu"
     },
     "menuEditor": {

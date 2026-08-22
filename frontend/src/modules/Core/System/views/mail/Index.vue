@@ -2,35 +2,31 @@
   <div class="h-[calc(100vh-6.5rem)] flex flex-col bg-card border border-border/70 rounded-2xl shadow-xs overflow-hidden select-none">
     <!-- Top Unified Mail Toolbar Header -->
     <header class="h-12 border-b border-border/40 bg-card/60 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-30">
-      <!-- Left: Brand & Sidebar Toggle -->
-      <div class="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground hidden lg:flex rounded-lg"
-          :title="isSidebarMinimized ? 'Expand Sidebar' : 'Collapse Sidebar'"
-          @click="toggleSidebarMinimize"
-        >
-          <PanelLeftClose v-if="!isSidebarMinimized" class="w-4 h-4" />
-          <PanelLeftOpen v-else class="w-4 h-4" />
-        </Button>
-
+      <!-- Left: JA-Mail Brand & Compose Email Button -->
+      <div class="flex items-center gap-3">
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+          <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-2xs">
             <Mail class="w-3.5 h-3.5" />
           </div>
-          <div>
-            <h1 class="text-xs font-bold tracking-tight text-foreground flex items-center gap-1.5">
-              <span>{{ $t('system.mail.title') }}</span>
-              <span class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-primary/10 text-primary border border-primary/20">
-                PRO
-              </span>
-            </h1>
-          </div>
+          <h1 class="text-xs font-bold tracking-tight text-foreground">
+            JA-Mail
+          </h1>
         </div>
+
+        <div class="h-4 w-px bg-border/60 mx-0.5 hidden sm:block" />
+
+        <!-- Compose Email Button (Beside Brand Label) -->
+        <Button
+          size="sm"
+          class="h-7.5 gap-1.5 text-xs font-semibold px-3 shadow-xs bg-primary hover:bg-primary/90 text-primary-foreground transition-all cursor-pointer"
+          @click="openComposer()"
+        >
+          <Edit3 class="w-3.5 h-3.5" />
+          <span>{{ $t('system.mail.compose') }}</span>
+        </Button>
       </div>
 
-      <!-- Right: Global Actions (Sync, Empty Trash, Shortcuts, Labels, Settings, Compose) -->
+      <!-- Right: Global Actions (Sync, Empty Trash, Shortcuts, Labels, Settings, Account Switcher) -->
       <div class="flex items-center gap-1.5">
         <!-- Sync Button -->
         <Button
@@ -138,16 +134,6 @@
             </button>
           </PopoverContent>
         </Popover>
-
-        <!-- Compose Email Button -->
-        <Button
-          size="sm"
-          class="h-7 gap-1.5 text-xs font-semibold px-3 shadow-xs ml-1"
-          @click="openComposer()"
-        >
-          <Edit3 class="w-3.5 h-3.5" />
-          <span>{{ $t('system.mail.compose') }}</span>
-        </Button>
       </div>
     </header>
 
@@ -160,22 +146,36 @@
       <!-- Column 1: Sidebar (Collapsible on desktop, hidden on mobile) -->
       <aside
         :class="[
-          'hidden lg:flex border-r border-border/40 bg-card/40 shrink-0 overflow-hidden transition-all duration-300',
+          'hidden lg:flex border-r border-border/40 bg-card/40 shrink-0 transition-all duration-300 relative z-20',
           isSidebarMinimized ? 'w-16' : 'w-60'
         ]"
       >
-        <MailSidebar
-          :is-minimized="isSidebarMinimized"
-          :active-folder="activeFolder"
-          :active-label="activeLabel"
-          :folder-counts="folderCounts"
-          :labels="labels"
-          :storage-stats="storageStats"
-          @select-folder="selectFolder"
-          @select-label="selectLabel"
-          @update:labels="saveLabels"
-          @manage-labels="isLabelsModalOpen = true"
-        />
+        <!-- Floating Toggle Button (Desktop, like main sidebar) -->
+        <button
+          type="button"
+          class="hidden lg:flex absolute -right-3 top-3.5 items-center justify-center h-6 w-6 rounded-full border border-border bg-sidebar text-muted-foreground hover:text-foreground hover:bg-muted shadow-xs z-30 transition-all cursor-pointer"
+          :title="isSidebarMinimized ? $t('common.navigation.sidebar.expand') : $t('common.navigation.sidebar.minimize')"
+          :aria-label="isSidebarMinimized ? $t('common.navigation.sidebar.expand') : $t('common.navigation.sidebar.minimize')"
+          @click="toggleSidebarMinimize"
+        >
+          <ChevronLeft v-if="!isSidebarMinimized" class="w-3.5 h-3.5" />
+          <ChevronRight v-else class="w-3.5 h-3.5" />
+        </button>
+
+        <div class="w-full h-full overflow-hidden flex flex-col">
+          <MailSidebar
+            :is-minimized="isSidebarMinimized"
+            :active-folder="activeFolder"
+            :active-label="activeLabel"
+            :folder-counts="folderCounts"
+            :labels="labels"
+            :storage-stats="storageStats"
+            @select-folder="selectFolder"
+            @select-label="selectLabel"
+            @update:labels="saveLabels"
+            @manage-labels="isLabelsModalOpen = true"
+          />
+        </div>
       </aside>
 
       <!-- Column 2: Message List & Search (Draggable width on desktop) -->
@@ -318,8 +318,8 @@ import {
   Mail,
   Edit3,
   RefreshCw,
-  PanelLeftClose,
-  PanelLeftOpen,
+  ChevronLeft,
+  ChevronRight,
   Settings,
   Tag,
   Trash2,
