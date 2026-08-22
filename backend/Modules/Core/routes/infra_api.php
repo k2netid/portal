@@ -31,15 +31,19 @@ Route::prefix('v1')->group(function (): void {
         Route::get('file-manager/download', [FileManagerController::class, 'download']);
         Route::post('file-manager/upload', [FileManagerController::class, 'upload']);
         Route::post('file-manager/folder', [FileManagerController::class, 'createFolder']);
+        Route::match(['post', 'delete'], 'file-manager/folder/delete', [FileManagerController::class, 'deleteFolder']);
         Route::delete('file-manager/folder', [FileManagerController::class, 'deleteFolder']);
+        Route::match(['post', 'delete'], 'file-manager/delete', [FileManagerController::class, 'delete']);
         Route::delete('file-manager', [FileManagerController::class, 'delete']);
         Route::post('file-manager/move', [FileManagerController::class, 'move']);
         Route::post('file-manager/copy', [FileManagerController::class, 'copy']);
         Route::post('file-manager/rename', [FileManagerController::class, 'rename']);
         Route::get('file-manager/trash', [FileManagerController::class, 'trash']);
         Route::post('file-manager/restore', [FileManagerController::class, 'restore']);
-        Route::post('file-manager/empty-trash', [FileManagerController::class, 'emptyTrash']);
-        Route::delete('file-manager/permanently', [FileManagerController::class, 'deletePermanently']);
+        Route::match(['post', 'delete'], 'file-manager/empty-trash', [FileManagerController::class, 'emptyTrash']);
+        Route::match(['post', 'delete'], 'file-manager/trash/empty', [FileManagerController::class, 'emptyTrash']);
+        Route::match(['post', 'delete'], 'file-manager/permanently', [FileManagerController::class, 'deletePermanently']);
+        Route::match(['post', 'delete'], 'file-manager/trash/permanent', [FileManagerController::class, 'deletePermanently']);
         Route::post('file-manager/extract', [FileManagerController::class, 'extract']);
         Route::post('file-manager/compress', [FileManagerController::class, 'compress']);
 
