@@ -1046,7 +1046,7 @@ class FileManagerController extends BaseApiController
         }
 
         $request->validate([
-            'id' => 'required|integer|exists:deleted_files,id',
+            'id' => 'required|string|exists:infra_deleted_files,id',
             'disk' => 'nullable|string', // Keep for validation, but actual disk comes from DeletedFile
         ]);
 
@@ -1256,7 +1256,7 @@ class FileManagerController extends BaseApiController
         }
 
         $request->validate([
-            'id' => 'required|integer|exists:deleted_files,id',
+            'id' => 'required|string|exists:infra_deleted_files,id',
             'disk' => 'nullable|string', // Keep for validation, but actual disk comes from DeletedFile
         ]);
 
