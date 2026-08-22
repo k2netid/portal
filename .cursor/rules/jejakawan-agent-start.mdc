@@ -1,25 +1,25 @@
 ---
-description: Jejakawan CMS architecture & guidelines
+description: Jejakawan Core Engine — agent identity & start pointers
 alwaysApply: true
 ---
 
-# Jejakawan CMS (`ja-cms`) — Aturan Agen & Panduan Arsitektur
+# Jejakawan Core Engine (`ja-core_engine`)
 
-## 1. Lingkup Produk
-Repositori ini adalah **Jejakawan CMS (`ja-cms`)**, sistem manajemen konten modern, visual builder, dan platform publishing mandiri (Single Database PostgreSQL/SQLite).
+This repo is the **headless kernel + unified admin console**, not `ja-cms` and not `ja-control-plane`.
 
-## 2. Modul Sistem
+## Canonical facts
+- **Branch:** `main` only (CMS `develop` line retired Aug 2026).
+- **Kernel modules:** `Modules/Core` → System, Infra, Security. Optional first-party extension: **JA-Mail** (`Modules/Mail`).
+- **Stack:** Laravel 12 modular API · Vue 3 unified console SPA · PostgreSQL/SQLite · Redis.
+- **Downstream apps** (CMS, portals, SaaS) = **separate forks**, not long-lived branches here.
 
-| Tier | Modul | Deskripsi |
-| :--- | :--- | :--- |
-| **Core** | System, Infra, Security | IAM (RBAC/ABAC), pengaturan sistem, audit logs, backup, CCK dinamis, task scheduler, firewall & 2FA/Passkeys. |
-| **Content** | Publishing, Layout, Forms, Media, Library | Artikel & halaman, Visual Editor (JA-Builder), tema publik (Janari), form builder, pengelola media, taksonomi & custom fields. |
-| **Intelligence** | AI, Search, Analytics, Newsletter | Multi-LLM provider (DeepSeek, OpenAI, Gemini), Unified Search Indexer, privacy-friendly analytics, email blast newsletter. |
+## Read first
+1. [docs/AGENT_START_HERE.md](../../docs/AGENT_START_HERE.md)
+2. [docs/architectural-status.md](../../docs/architectural-status.md)
+3. [AGENTS.md](../../AGENTS.md)
 
-## 3. Aturan Pengembangan
-1. **Arsitektur Frontend**: Vue 3 SPA + Vite + Tailwind CSS + Lucide Icons + Vue I18n.
-2. **Visual Builder (JA-Builder)**: Lokalisasi builder terisolasi di `frontend/src/modules/Content/Layout/locales/builder/` dengan parity 100% di 3 bahasa (`en`, `id`, `su`).
-3. **Arsitektur Backend**: Laravel 12 API, arsitektur modular monolith di `backend/Modules/`.
-4. **Kualitas & Pengujian**:
-   - Selalu pastikan `npm run i18n:check:full` dan `npm run test:unit` lulus.
-   - Jalankan `php artisan test` untuk memastikan semua backend feature & unit test lulus.
+## Do / don't
+- Do not call this product `ja-cms` / `JA-CMS` in new user-facing copy.
+- Do not re-add Content/Layout/Publishing/themes to `main` unless explicitly building a downstream product line.
+- Prefer minimal diffs; run `npm run agent:verify` (or CI gates) before calling work done.
+- Never commit secrets / `.env`.
