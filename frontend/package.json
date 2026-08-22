@@ -9,9 +9,9 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=4096\" vue-tsc -b && vite build",
-        "build:analyze": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=4096\" vue-tsc -b && vite build && echo 'Bundle report: frontend/dist/stats.html'",
-        "type-check": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=4096\" vue-tsc -b",
+        "build": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=8192\" vue-tsc -b && vite build",
+        "build:analyze": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=8192\" vue-tsc -b && vite build && echo 'Bundle report: frontend/dist/stats.html'",
+        "type-check": "npm run i18n:check && NODE_OPTIONS=\"--max-old-space-size=8192\" vue-tsc -b",
         "i18n:check": "node scripts/i18n-check-keys.mjs && node scripts/i18n-dangerous-braces.mjs",
         "i18n:check:full": "node scripts/i18n-check-keys.mjs --full",
         "test:unit": "vitest run",
