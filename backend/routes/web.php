@@ -9,26 +9,25 @@ Route::any('/cdn-cgi/{path?}', [SpaController::class, 'cdnCgi'])->where('path', 
 
 $probePaths = [
     'admin',
-    'admin/*',
     'dashboard',
-    'dashboard/*',
     'panel',
-    'panel/*',
     'wp-admin',
-    'wp-admin/*',
     'wp-login.php',
     'phpmyadmin',
-    'phpmyadmin/*',
     'pma',
     'cpanel',
     'administrator',
-    'administrator/*',
     'manager',
     'manage',
     'system',
-    'system/*',
 ];
 
-Route::middleware('throttle:probe-paths')->any('/{path}', [SpaController::class, 'probe'])->whereIn('path', $probePaths);
+// Case-insensitive exact first-segment probes (AdMiN, DaShBoArD, …).
+$probePattern = '(?i)('.implode('|', array_map(
+    static fn (string $p): string => preg_quote($p, '/'),
+    $probePaths,
+)).')';
+
+Route::middleware('throttle:probe-paths')->any('/{path}', [SpaController::class, 'probe'])->where('path', $probePattern);
 
 Route::fallback([SpaController::class, 'fallback']);

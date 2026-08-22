@@ -87,13 +87,24 @@ jobs:
         run: npm run quality:frontend
   e2e-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     needs: [backend, frontend]
+    # Browsers + OS deps preinstalled — avoids hung apt/CDN browser installs on runners.
+    # Pin must match frontend @playwright/test (package-lock).
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+      options: --ipc=host
     defaults:
       run:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install rsync (asset sync)
+        working-directory: .
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends rsync
 
       - uses: actions/setup-node@v4
         with:
@@ -106,20 +117,10 @@ jobs:
           php-version: "8.3"
           extensions: mbstring, pdo, pdo_sqlite, sqlite3
           ini-values: memory_limit=512M
+          tools: composer
 
       - name: Install frontend dependencies
         run: npm ci
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        id: playwright-browser-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
-
-      - name: Install Playwright browsers
-        if: steps.playwright-browser-cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium
 
       - name: Get Composer Cache Directory
         id: composer-cache-e2e
@@ -139,17 +140,22 @@ jobs:
         run: |
           composer install --no-interaction --prefer-dist
           cp .env.example .env
-          php artisan key:generate
-          touch database/database.sqlite
-          php artisan migrate --force
-          php artisan db:seed --force
           {
             echo "FORCE_HTTPS_URLS=false"
             echo "SESSION_SECURE_COOKIE=false"
             echo "SANCTUM_STATEFUL_DOMAINS=127.0.0.1:8081,localhost:8081,127.0.0.1,localhost"
             echo "APP_URL=http://127.0.0.1:8081"
+            echo "APP_INSTALLED=true"
+            echo "SUPER_ADMIN_PASSWORD=ChangeMeOnFirstLogin!"
+            # No Redis in the Playwright container — match phpunit.xml
+            echo "CACHE_STORE=array"
+            echo "QUEUE_CONNECTION=sync"
           } >> .env
+          php artisan key:generate
+          touch database/database.sqlite
           php artisan config:clear
+          php artisan migrate --force
+          php artisan db:seed --force
 
       - name: Start Laravel for E2E
         working-directory: backend
@@ -167,7 +173,8 @@ jobs:
           exit 1
 
       - name: Build and deploy assets
-        run: npm run build && cd .. && npm run deploy:assets:full
+        working-directory: .
+        run: npm run deploy:assets:full
 
       - name: E2E preflight + smoke + theme
         env:

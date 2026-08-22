@@ -17,7 +17,7 @@ test.describe('Hub onboarding wizard', () => {
 
     const wizard = page.getByTestId('hub-onboarding-wizard');
     await expect(wizard).toBeVisible({ timeout: 15_000 });
-    await expect(wizard.getByText(/Activate a theme|Aktifkan tema/i)).toBeVisible();
+    await expect(wizard.getByText(/Site identity|System Identity|Identitas/i)).toBeVisible();
 
     await page.getByTestId('hub-onboarding-dismiss').click();
     await expect(wizard).toBeHidden({ timeout: 10_000 });

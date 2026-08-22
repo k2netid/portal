@@ -1,7 +1,7 @@
 import { logger } from '@/shared/utils/logger';
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
-import { SECURITY_ROUTES } from '@/config/security';
+import { SECURITY_ROUTES, isLegitimateConsoleSlugPath, shouldGuestReceiveSecurityNotFound } from '@/config/security';
 import { handleBeforeEachGuard } from './guards';
 import { trackLastSafeRoute } from '@/shared/utils/errorReturn';
 import { prefetchConsoleHubRoutes } from '@/shared/utils/routePrefetch';
@@ -123,7 +123,16 @@ const dashboardRoute: RouteRecordRaw = {
                 const authStore = useAuthStore();
 
                 if (!authStore.isAuthenticated) {
-                    return { name: 'login' }; 
+                    // Prefer SPA 404 over leaking the console login URL for scanners
+                    // and for guests hitting /dash (see auth-probe-notfound e2e).
+                    if (shouldGuestReceiveSecurityNotFound(to.path)) {
+                        return { name: 'not-found' };
+                    }
+                    const slug = String(to.params.dashboard_slug ?? '').trim();
+                    if (slug !== '' && !isLegitimateConsoleSlugPath(`/${slug}`)) {
+                        return { name: 'not-found' };
+                    }
+                    return { name: 'login' };
                 }
 
                 const consoleStore = useConsoleContextStore();

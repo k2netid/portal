@@ -5,6 +5,7 @@ import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import {
     isReservedPublicContentSlug,
+    isLegitimateConsoleSlugPath,
     shouldBlockOnPublicSite,
     shouldGuestReceiveSecurityNotFound,
 } from '@/config/security';
@@ -58,7 +59,34 @@ export const handleBeforeEachGuard = async (
         }
     }
 
-    // Console shell: after bootstrap, unauthenticated users go to login (not SPA 404).
+    // Guest hardening on console host: sinkhole probes + hide /dash before any login redirect.
+    // `/:dashboard_slug?` matches almost every first segment with meta.auth — checking
+    // requiresAuth first would leak the login URL for /AdMiN, /dash, scanners, etc.
+    if (
+        !onPublicSite
+        && authStore.authBootstrapComplete
+        && !authStore.isAuthenticated
+        && shouldGuestReceiveSecurityNotFound(to.path)
+    ) {
+        rememberRouteBeforeError(from.fullPath, returnShell, authStore.isAuthenticated);
+        return { path: '/404', replace: true };
+    }
+
+    // Fake dashboard slug (not a configured console prefix) → 404 for guests.
+    if (
+        !onPublicSite
+        && authStore.authBootstrapComplete
+        && !authStore.isAuthenticated
+        && to.matched.some((record) => record.path === '/:dashboard_slug?')
+    ) {
+        const slug = String(to.params.dashboard_slug ?? '').trim();
+        if (slug !== '' && !isLegitimateConsoleSlugPath(`/${slug}`)) {
+            rememberRouteBeforeError(from.fullPath, returnShell, authStore.isAuthenticated);
+            return { path: '/404', replace: true };
+        }
+    }
+
+    // Console shell: remaining auth-required routes → login (not SPA 404).
     if (
         !onPublicSite
         && authStore.authBootstrapComplete
@@ -70,17 +98,6 @@ export const handleBeforeEachGuard = async (
             query: { redirect: to.fullPath },
             replace: true,
         };
-    }
-
-    // Probe/scanner paths on console host still sinkhole to 404.
-    if (
-        !onPublicSite
-        && authStore.authBootstrapComplete
-        && !authStore.isAuthenticated
-        && shouldGuestReceiveSecurityNotFound(to.path)
-    ) {
-        rememberRouteBeforeError(from.fullPath, returnShell, authStore.isAuthenticated);
-        return { path: '/404', replace: true };
     }
 
     // 0. Preload Settings Instantly to Resolve Dynamic Dashboard Slug
