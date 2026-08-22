@@ -81,7 +81,26 @@ class ConsoleMenu extends Model
     public static function getDefaultMenus(): array
     {
         return [
-            // Group: Identity & Access
+            // Group: Data Studio
+            [
+                'group_slug' => 'studio',
+                'name' => 'Data Model Studio',
+                'label_key' => 'infra.models.title',
+                'icon' => 'layers',
+                'order' => 5,
+                'children' => [
+                    [
+                        'name' => 'Data Models',
+                        'label_key' => 'infra.models.title',
+                        'route_name' => 'model-index',
+                        'icon' => 'layers',
+                        'permission' => 'manage settings',
+                        'order' => 1,
+                    ],
+                ],
+            ],
+
+            // Group: Users & Access
             [
                 'group_slug' => 'identity',
                 'name' => 'Users & Access',
@@ -173,13 +192,22 @@ class ConsoleMenu extends Model
                         'order' => 2,
                     ],
                     [
+                        'name' => 'Security Journal',
+                        'label_key' => 'system.navigation.menu.securityJournal',
+                        'route_name' => 'security-journal',
+                        'icon' => 'shield',
+                        'permission' => 'view security logs',
+                        'role' => 'super',
+                        'order' => 3,
+                    ],
+                    [
                         'name' => 'System Journal',
                         'label_key' => 'system.navigation.menu.systemJournal',
                         'route_name' => 'system-journal',
                         'icon' => 'terminal',
                         'permission' => 'view system logs',
                         'role' => 'super',
-                        'order' => 3,
+                        'order' => 4,
                     ],
                     [
                         'name' => 'Access History',
@@ -188,7 +216,7 @@ class ConsoleMenu extends Model
                         'icon' => 'key',
                         'permission' => 'view users',
                         'role' => 'super',
-                        'order' => 4,
+                        'order' => 5,
                     ],
                 ],
             ],
@@ -196,7 +224,7 @@ class ConsoleMenu extends Model
             // Group: System Config
             [
                 'group_slug' => 'system_config',
-                'name' => 'System Config',
+                'name' => 'Configuration',
                 'label_key' => 'sharedConsole.navigation.menu.systemConfig',
                 'icon' => 'sliders',
                 'order' => 30,
@@ -256,12 +284,31 @@ class ConsoleMenu extends Model
                         'order' => 1,
                     ],
                     [
+                        'name' => 'File Manager',
+                        'label_key' => 'infra.fileManager.title',
+                        'route_name' => 'file-manager',
+                        'icon' => 'folder',
+                        'permission' => 'manage settings',
+                        'role' => 'super',
+                        'order' => 2,
+                    ],
+                    [
+                        'name' => 'Backups',
+                        'label_key' => 'system.navigation.menu.backups',
+                        'route_name' => 'backups',
+                        'icon' => 'database',
+                        'permission' => 'view backups',
+                        'role' => 'super',
+                        'order' => 3,
+                    ],
+                    [
                         'name' => 'Redis Status',
                         'label_key' => 'system.navigation.menu.redis',
                         'route_name' => 'redis',
-                        'icon' => 'database',
+                        'icon' => 'activity',
                         'permission' => 'manage settings',
-                        'order' => 2,
+                        'role' => 'super',
+                        'order' => 4,
                     ],
                     [
                         'name' => 'Scheduled Tasks',
@@ -269,14 +316,54 @@ class ConsoleMenu extends Model
                         'route_name' => 'scheduled-tasks',
                         'icon' => 'clock',
                         'permission' => 'manage scheduled tasks',
+                        'role' => 'super',
+                        'order' => 5,
+                    ],
+                ],
+            ],
+
+            // Group: Identity & Integrations
+            [
+                'group_slug' => 'integrations_dev',
+                'name' => 'Identity & Integrations',
+                'label_key' => 'system.navigation.menu.identityIntegrations',
+                'icon' => 'code',
+                'order' => 50,
+                'children' => [
+                    [
+                        'name' => 'Extensions & App Store',
+                        'label_key' => 'system.navigation.menu.extensions',
+                        'route_name' => 'extensions',
+                        'icon' => 'box',
+                        'permission' => 'manage settings',
+                        'role' => 'super',
+                        'order' => 1,
+                    ],
+                    [
+                        'name' => 'Overview',
+                        'label_key' => 'system.navigation.menu.integrations',
+                        'route_name' => 'platform-integrations',
+                        'icon' => 'code',
+                        'permission' => 'manage system',
+                        'role' => 'super',
+                        'order' => 2,
+                    ],
+                    [
+                        'name' => 'OAuth Clients',
+                        'label_key' => 'system.navigation.menu.oauthClients',
+                        'route_name' => 'oauth-clients',
+                        'icon' => 'shield',
+                        'permission' => 'manage system',
+                        'role' => 'super',
                         'order' => 3,
                     ],
                     [
-                        'name' => 'Extensions',
-                        'label_key' => 'system.extensions.title',
-                        'route_name' => 'settings-extensions',
-                        'icon' => 'box',
-                        'permission' => 'manage extensions',
+                        'name' => 'Webhooks',
+                        'label_key' => 'system.navigation.menu.webhooks',
+                        'route_name' => 'webhooks',
+                        'icon' => 'zap',
+                        'permission' => 'manage system',
+                        'role' => 'super',
                         'order' => 4,
                     ],
                 ],

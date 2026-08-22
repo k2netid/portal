@@ -10,6 +10,7 @@ const MERGE_BY_GROUP = new Set<NonNullable<NavItem['group']>>([
     'studio',
     'nexus',
     'identity',
+    'communications',
     'observability',
     'infrastructure',
     'system_config',
@@ -40,12 +41,61 @@ function findMergeParent(groupArr: NavItem[], item: NavItem): NavItem | undefine
 
 export const useNavigationStore = defineStore('navigation', () => {
     const registry = ref<Record<string, NavItem[]>>({});
+    const dbMenuRegistry = ref<NavItem[] | null>(null);
 
     const registerModuleNavigation = (moduleId: string, items: NavItem[]) => {
         registry.value[moduleId] = items;
     };
 
+    const setDatabaseMenus = (menus: Array<any>) => {
+        if (!Array.isArray(menus) || menus.length === 0) {
+            dbMenuRegistry.value = null;
+            return;
+        }
+
+        const items: NavItem[] = menus
+            .filter((m) => m.is_visible !== false)
+            .map((m) => {
+                const isGroupHeader = Array.isArray(m.children) && m.children.length > 0;
+                return {
+                    name: !isGroupHeader && m.route_name ? m.route_name : undefined,
+                    to: !isGroupHeader && m.url ? m.url : (!isGroupHeader && m.route_name ? { name: m.route_name } : undefined),
+                    label: m.name,
+                    labelKey: m.label_key || undefined,
+                    icon: m.icon || 'folder',
+                    group: m.group_slug as any,
+                    priority: 100 - (m.order || 0),
+                    permission: m.permission || undefined,
+                    role: m.role || undefined,
+                    extension: m.extension_slug || undefined,
+                    children: isGroupHeader
+                        ? m.children
+                              .filter((c: any) => c.is_visible !== false)
+                              .map((c: any) => ({
+                                  name: c.route_name || undefined,
+                                  to: c.url ? c.url : (c.route_name ? { name: c.route_name } : undefined),
+                                  label: c.name,
+                                  labelKey: c.label_key || undefined,
+                                  icon: c.icon || 'circle',
+                                  permission: c.permission || undefined,
+                                  role: c.role || undefined,
+                                  extension: c.extension_slug || undefined,
+                                  badge_text: c.badge_text || undefined,
+                                  badge_variant: c.badge_variant || undefined,
+                                  priority: 100 - (c.order || 0),
+                              }))
+                        : undefined,
+                };
+            });
+
+        dbMenuRegistry.value = items;
+    };
+
     const navigationItems = computed<NavItem[]>(() => {
+        if (dbMenuRegistry.value && dbMenuRegistry.value.length > 0) {
+            return dbMenuRegistry.value;
+        }
+
         const list: NavItem[] = [];
 
         Object.entries(registry.value).forEach(([_moduleId, items]) => {
@@ -133,7 +183,9 @@ export const useNavigationStore = defineStore('navigation', () => {
 
     return {
         registry,
+        dbMenuRegistry,
         registerModuleNavigation,
+        setDatabaseMenus,
         navigationItems,
         navigationGroups,
     };

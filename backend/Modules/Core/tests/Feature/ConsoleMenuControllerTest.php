@@ -27,7 +27,7 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('success', true);
 
-        $this->assertDatabaseCount('sys_console_menus', 22);
+        $this->assertDatabaseCount('sys_console_menus', 31);
     }
 
     public function test_admin_can_create_menu_item(): void
@@ -133,7 +133,7 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseMissing('sys_console_menus', ['name' => 'Junk Item']);
-        $this->assertDatabaseHas('sys_console_menus', ['name' => 'System Config']);
+        $this->assertDatabaseHas('sys_console_menus', ['name' => 'Configuration']);
     }
 
     public function test_unauthenticated_cannot_access_console_menus(): void

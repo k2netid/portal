@@ -38,6 +38,18 @@ async function bootstrap(): Promise<void> {
 
     if (authStore.isAuthenticated) {
         void apiClient
+            .get('/manage/console-menus')
+            .then((res) => {
+                const data = res.data?.data || res.data;
+                if (Array.isArray(data) && data.length > 0) {
+                    navStore.setDatabaseMenus(data);
+                }
+            })
+            .catch((error) => {
+                logger.warning('[App] Failed to load console database menus', error);
+            });
+
+        void apiClient
             .get('/manage/infra/extensions/navigation')
             .then((dynamicNavs) => {
                 if (Array.isArray(dynamicNavs.data)) {

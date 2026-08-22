@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue';
 import api from '@/engine/api/client';
 import { useToast } from '@/shared/composables/useToast';
+import { useNavigationStore } from '@/shared/stores/navigation';
 
 export interface ConsoleMenuItem {
     id: string;
@@ -24,6 +25,7 @@ export interface ConsoleMenuItem {
 
 export function useConsoleMenu() {
     const toast = useToast();
+    const navStore = useNavigationStore();
     const menus = ref<ConsoleMenuItem[]>([]);
     const loading = ref(false);
     const saving = ref(false);
@@ -31,12 +33,13 @@ export function useConsoleMenu() {
 
     const availableGroups = [
         { slug: 'all', name: 'All Groups', icon: 'layers' },
-        { slug: 'identity', name: 'Identity & Access', icon: 'users' },
-        { slug: 'observability', name: 'Observability & Journals', icon: 'book-open' },
-        { slug: 'system_config', name: 'System Config', icon: 'sliders' },
+        { slug: 'studio', name: 'Data Studio', icon: 'layers' },
+        { slug: 'identity', name: 'Users & Access', icon: 'users' },
+        { slug: 'communications', name: 'Communications', icon: 'mail' },
+        { slug: 'observability', name: 'Journals', icon: 'book-open' },
+        { slug: 'system_config', name: 'Configuration', icon: 'sliders' },
         { slug: 'infrastructure', name: 'Infrastructure', icon: 'cpu' },
-        { slug: 'content', name: 'Content & Publishing', icon: 'file-text' },
-        { slug: 'extensions', name: 'Extensions & Plugins', icon: 'box' },
+        { slug: 'integrations_dev', name: 'Identity & Integrations', icon: 'code' },
     ];
 
     const fetchMenus = async (group?: string) => {
@@ -50,6 +53,9 @@ export function useConsoleMenu() {
             const data = res.data?.data || res.data;
             if (Array.isArray(data)) {
                 menus.value = data;
+                if (!group || group === 'all') {
+                    navStore.setDatabaseMenus(data);
+                }
             }
         } catch (error: unknown) {
             toast.error.fromResponse(error);
@@ -99,6 +105,7 @@ export function useConsoleMenu() {
             const data = res.data?.data || res.data;
             if (Array.isArray(data)) {
                 menus.value = data;
+                navStore.setDatabaseMenus(data);
             }
             toast.success.action('Menu order saved successfully');
             return true;
@@ -115,6 +122,7 @@ export function useConsoleMenu() {
             const data = res.data?.data || res.data;
             if (Array.isArray(data)) {
                 menus.value = data;
+                navStore.setDatabaseMenus(data);
             }
             toast.success.action('Navigation reset to system factory defaults');
             return true;
