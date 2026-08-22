@@ -52,7 +52,7 @@ class BroadcastNotificationService
         $query = Notification::query();
 
         if (! empty($broadcastId)) {
-            $query->whereRaw("jsonb_extract_path_text(data, 'broadcast_id') = ?", [$broadcastId]);
+            $query->whereRaw("data->>'broadcast_id' = ?", [$broadcastId]);
         } elseif (! empty($id)) {
             $query->where('id', $id);
         } else {

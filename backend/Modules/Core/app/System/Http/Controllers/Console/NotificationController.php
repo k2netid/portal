@@ -144,8 +144,8 @@ class NotificationController extends BaseApiController
 
         // Group by title, message, type to find unique "broadcasts"
         $notifications = Notification::query()
-            ->selectRaw("MIN(CAST(id AS TEXT)) as id, title, message, type, MIN(created_at) as created_at, COUNT(*) as recipient_count, COALESCE(MAX(jsonb_extract_path_text(data, 'broadcast_id')), '') as broadcast_id")
-            ->groupBy('title', 'message', 'type', DB::raw("COALESCE(jsonb_extract_path_text(data, 'broadcast_id'), '')"))
+            ->selectRaw("MIN(CAST(id AS TEXT)) as id, title, message, type, MIN(created_at) as created_at, COUNT(*) as recipient_count, COALESCE(MAX(data->>'broadcast_id'), '') as broadcast_id")
+            ->groupBy('title', 'message', 'type', DB::raw("COALESCE(data->>'broadcast_id', '')"))
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
 
