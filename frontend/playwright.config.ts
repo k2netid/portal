@@ -15,6 +15,8 @@ const apiProxyTarget = procEnv?.VITE_DEV_API_PROXY || procEnv?.E2E_API_PROXY_TAR
 export default defineConfig({
     testDir: './tests/e2e',
     timeout: 30_000,
+    fullyParallel: true,
+    workers: procEnv?.CI ? Number(procEnv.PLAYWRIGHT_WORKERS || 2) : undefined,
     expect: {
         timeout: 10_000,
     },

@@ -10,6 +10,9 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+
 jobs:
   backend:
     runs-on: ubuntu-latest
@@ -27,6 +30,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, pdo, pdo_sqlite, sqlite3
           coverage: none
+          ini-values: memory_limit=512M
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -83,6 +87,7 @@ jobs:
         run: npm run quality:frontend
   e2e-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     needs: [backend, frontend]
     defaults:
       run:
@@ -100,12 +105,34 @@ jobs:
         with:
           php-version: "8.3"
           extensions: mbstring, pdo, pdo_sqlite, sqlite3
+          ini-values: memory_limit=512M
 
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-browser-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+
       - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+        if: steps.playwright-browser-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+
+      - name: Get Composer Cache Directory
+        id: composer-cache-e2e
+        working-directory: backend
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies (E2E)
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache-e2e.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
       - name: Prepare backend for E2E
         working-directory: backend
@@ -145,6 +172,7 @@ jobs:
       - name: E2E preflight + smoke + theme
         env:
           PLAYWRIGHT_USE_FULL_STACK: "1"
+          PLAYWRIGHT_WORKERS: "2"
         run: |
           node scripts/e2e-preflight.mjs
           npm run test:e2e:ci
