@@ -3,7 +3,11 @@
     :open="isOpen"
     @update:open="v => { if(!v) $emit('close') }"
   >
-    <DialogContent class="!p-0 !gap-0 max-w-2xl h-[600px] max-h-[92vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden">
+    <DialogContent
+      class="!p-0 !gap-0 max-w-2xl h-[600px] max-h-[92vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden"
+      @pointer-down-outside.prevent
+      @interact-outside.prevent
+    >
       <!-- Header -->
       <div class="h-12 px-5 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
