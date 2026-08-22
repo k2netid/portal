@@ -660,7 +660,13 @@
 
       <!-- Footer -->
       <div class="h-14 px-5 bg-muted/30 border-t border-border/40 flex items-center justify-between shrink-0">
-        <span class="text-[11px] text-muted-foreground">Preferences saved to system profile.</span>
+        <span class="text-[11px] text-muted-foreground flex items-center gap-1.5">
+          <span v-if="isDirty" class="text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+            {{ $t('system.mail.unsaved_changes') }}
+          </span>
+          <span v-else>Preferences saved to system profile.</span>
+        </span>
 
         <div class="flex items-center gap-2">
           <Button
@@ -674,12 +680,12 @@
           <Button
             size="sm"
             class="h-8 gap-1.5 text-xs font-semibold px-4 shadow-xs"
-            :disabled="saving"
+            :disabled="!isDirty || saving"
             @click="saveSettings"
           >
             <Loader2 v-if="saving" class="w-3.5 h-3.5 animate-spin" />
             <Save v-else class="w-3.5 h-3.5" />
-            <span>Save Preferences</span>
+            <span>{{ $t('system.mail.save_preferences') }}</span>
           </Button>
         </div>
       </div>
@@ -688,7 +694,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from '@/shared/composables/useToast';
 import api from '@/engine/api/client';
@@ -792,6 +798,11 @@ const settingsData = ref({
     ai_scope_sentiment: true,
     ai_guardrail_human_review: true,
     ai_guardrail_pii_masking: true,
+});
+
+const initialSnapshot = ref('');
+const isDirty = computed(() => {
+    return initialSnapshot.value !== '' && JSON.stringify(settingsData.value) !== initialSnapshot.value;
 });
 
 // Templates CRUD State
@@ -909,8 +920,9 @@ const loadSettings = async () => {
                 globalAiState.value = data.global_ai;
             }
         }
+        initialSnapshot.value = JSON.stringify(settingsData.value);
     } catch {
-        // Fallback to local state
+        initialSnapshot.value = JSON.stringify(settingsData.value);
     }
 };
 
@@ -949,6 +961,7 @@ const saveSettings = async () => {
                 globalAiState.value = data.global_ai;
             }
         }
+        initialSnapshot.value = JSON.stringify(settingsData.value);
         toast.success.action('Mail preferences saved successfully');
     } catch (error: unknown) {
         toast.error.fromResponse(error);

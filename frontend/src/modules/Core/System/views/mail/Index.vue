@@ -184,6 +184,7 @@
           @delete-permanently="deletePermanently"
           @move-to-folder="moveMessage"
           @toggle-label="toggleMessageLabel"
+          @snooze="snoozeMessage"
         />
       </main>
     </div>
@@ -205,7 +206,7 @@
             class="h-7 text-xs px-2.5 font-bold shadow-xs bg-primary text-primary-foreground hover:bg-primary/90"
             @click="undoSend"
           >
-            Undo
+            {{ $t('system.mail.undo') }}
           </Button>
           <Button
             variant="ghost"
@@ -213,7 +214,7 @@
             class="h-7 text-xs px-2 text-muted-foreground hover:text-foreground"
             @click="sendNow"
           >
-            Send Now
+            {{ $t('system.mail.send_now') }}
           </Button>
         </div>
       </div>
@@ -226,6 +227,8 @@
       :templates="templates"
       @close="isComposerOpen = false"
       @send="sendEmail"
+      @save-draft="saveDraft"
+      @schedule-send="scheduleSend"
       @manage-templates="openSettingsWithTab('templates')"
     />
 
@@ -323,6 +326,9 @@ const {
     reply,
     forward,
     sendEmail,
+    saveDraft,
+    scheduleSend,
+    snoozeMessage,
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);

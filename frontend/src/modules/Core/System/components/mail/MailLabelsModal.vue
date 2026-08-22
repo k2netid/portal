@@ -111,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
 import api from '@/engine/api/client';
 import {
@@ -157,8 +157,17 @@ const colorPalette = [
     { name: 'Slate', class: 'bg-slate-500' },
 ];
 
+const isDuplicate = computed(() => {
+    return props.labels.some(l => l.name.toLowerCase() === newLabelName.value.trim().toLowerCase());
+});
+
 const createLabel = async () => {
     if (!newLabelName.value.trim()) return;
+
+    if (isDuplicate.value) {
+        toast.error.action('A label with this name already exists');
+        return;
+    }
 
     const id = newLabelName.value.toLowerCase().replace(/[^a-z0-9]/g, '-');
     const newLabel: MailLabel = {
@@ -180,6 +189,8 @@ const createLabel = async () => {
 };
 
 const removeLabel = async (index: number) => {
+    if (!confirm('Are you sure you want to delete this label?')) return;
+
     const updated = [...props.labels];
     updated.splice(index, 1);
     emit('update:labels', updated);

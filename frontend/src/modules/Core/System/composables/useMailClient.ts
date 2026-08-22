@@ -557,6 +557,59 @@ export function useMailClient() {
         }
     };
 
+    const saveDraft = async (data?: { to?: string; cc?: string; bcc?: string; subject?: string; body?: string }) => {
+        const payload = data || composerData.value;
+        try {
+            await api.post('/manage/mail/messages/draft', payload);
+            toast.success.action('Draft saved to Drafts folder');
+            fetchMessages(1);
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const scheduleSend = async (scheduledAt: string) => {
+        if (!composerData.value.to.trim()) {
+            toast.error.action('Please provide a recipient email address');
+            return false;
+        }
+
+        try {
+            await api.post('/manage/mail/messages/schedule', {
+                to: composerData.value.to,
+                cc: composerData.value.cc,
+                bcc: composerData.value.bcc,
+                subject: composerData.value.subject,
+                body: composerData.value.body,
+                scheduled_at: scheduledAt,
+            });
+
+            toast.success.action(`Email scheduled for ${scheduledAt}`);
+            isComposerOpen.value = false;
+            fetchMessages(1);
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const snoozeMessage = async (id: string, snoozeUntil: string) => {
+        try {
+            await api.post(`/manage/mail/messages/${id}/snooze`, {
+                snooze_until: snoozeUntil,
+            });
+            toast.success.action(`Message snoozed until ${snoozeUntil}`);
+            fetchMessages(1);
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
     onMounted(async () => {
         await fetchClientSettings();
         fetchLabels();
@@ -613,6 +666,9 @@ export function useMailClient() {
         reply,
         forward,
         sendEmail,
+        saveDraft,
+        scheduleSend,
+        snoozeMessage,
         fetchTemplates,
         saveTemplates,
     };

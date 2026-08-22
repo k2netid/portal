@@ -185,6 +185,136 @@ class MailController extends BaseApiController
     }
 
     /**
+     * Save email draft
+     */
+    public function saveDraft(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'id' => 'nullable|string',
+            'to' => 'nullable|string',
+            'cc' => 'nullable|string',
+            'bcc' => 'nullable|string',
+            'subject' => 'nullable|string|max:255',
+            'body' => 'nullable|string',
+        ]);
+
+        $fromAddress = (string) (Setting::get('mail_from_address') ?: config('mail.from.address', 'admin@jejakawan.com'));
+        $fromName = (string) (Setting::get('mail_from_name') ?: config('mail.from.name', 'Jejakawan Mail'));
+
+        $to = trim((string) ($validated['to'] ?? ''));
+        $subject = trim((string) ($validated['subject'] ?? '')) ?: '(Draft) No Subject';
+        $body = (string) ($validated['body'] ?? '');
+        $snippet = Str::limit(strip_tags($body), 100);
+
+        $ccList = ! empty($validated['cc']) ? array_filter(array_map('trim', explode(',', $validated['cc']))) : [];
+        $bccList = ! empty($validated['bcc']) ? array_filter(array_map('trim', explode(',', $validated['bcc']))) : [];
+
+        if (! empty($validated['id'])) {
+            $draft = MailMessage::find($validated['id']);
+            if ($draft) {
+                $draft->update([
+                    'recipients' => $to ? [$to] : [],
+                    'cc' => $ccList,
+                    'bcc' => $bccList,
+                    'subject' => $subject,
+                    'snippet' => $snippet,
+                    'body' => $body,
+                    'folder' => 'drafts',
+                ]);
+
+                return $this->success($draft, 'Draft updated successfully');
+            }
+        }
+
+        $draft = MailMessage::create([
+            'message_id' => 'draft_'.Str::uuid()->toString(),
+            'folder' => 'drafts',
+            'sender_name' => $fromName,
+            'sender_email' => $fromAddress,
+            'recipients' => $to ? [$to] : [],
+            'cc' => $ccList,
+            'bcc' => $bccList,
+            'subject' => $subject,
+            'snippet' => $snippet,
+            'body' => $body,
+            'is_read' => true,
+            'is_starred' => false,
+            'labels' => [],
+        ]);
+
+        return $this->success($draft, 'Draft saved successfully', 201);
+    }
+
+    /**
+     * Schedule email for delayed dispatch
+     */
+    public function schedule(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'to' => 'required|email',
+            'cc' => 'nullable|string',
+            'bcc' => 'nullable|string',
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+            'scheduled_at' => 'required|string',
+        ]);
+
+        $fromAddress = (string) (Setting::get('mail_from_address') ?: config('mail.from.address', 'admin@jejakawan.com'));
+        $fromName = (string) (Setting::get('mail_from_name') ?: config('mail.from.name', 'Jejakawan Mail'));
+
+        $to = trim($validated['to']);
+        $subject = trim($validated['subject']);
+        $body = $validated['body'];
+        $snippet = Str::limit(strip_tags($body), 100);
+
+        $ccList = ! empty($validated['cc']) ? array_filter(array_map('trim', explode(',', $validated['cc']))) : [];
+        $bccList = ! empty($validated['bcc']) ? array_filter(array_map('trim', explode(',', $validated['bcc']))) : [];
+
+        $scheduled = MailMessage::create([
+            'message_id' => 'sched_'.Str::uuid()->toString(),
+            'folder' => 'sent',
+            'sender_name' => $fromName,
+            'sender_email' => $fromAddress,
+            'recipients' => [$to],
+            'cc' => $ccList,
+            'bcc' => $bccList,
+            'subject' => '[Scheduled] '.$subject,
+            'snippet' => $snippet,
+            'body' => $body,
+            'is_read' => true,
+            'is_starred' => false,
+            'labels' => ['scheduled'],
+            'sent_at' => now(),
+        ]);
+
+        return $this->success($scheduled, 'Email scheduled successfully', 201);
+    }
+
+    /**
+     * Snooze message
+     */
+    public function snooze(string $id, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'snooze_until' => 'required|string',
+        ]);
+
+        $message = MailMessage::find($id);
+        if (! $message) {
+            return $this->error('Message not found', 404);
+        }
+
+        $labels = is_array($message->labels) ? $message->labels : [];
+        if (! in_array('snoozed', $labels, true)) {
+            $labels[] = 'snoozed';
+        }
+
+        $message->update(['labels' => $labels]);
+
+        return $this->success($message, 'Message snoozed until '.$validated['snooze_until']);
+    }
+
+    /**
      * Move message to a specific folder
      */
     public function move(string $id, Request $request): JsonResponse

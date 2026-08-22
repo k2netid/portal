@@ -94,6 +94,39 @@
           </DropdownMenuContent>
         </DropdownMenu>
 
+        <!-- Snooze Dropdown -->
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
+              :title="$t('system.mail.snooze')"
+            >
+              <Clock class="w-3.5 h-3.5 text-amber-500" />
+              <span class="hidden xl:inline">{{ $t('system.mail.snooze') }}</span>
+              <ChevronDown class="w-3 h-3 opacity-60" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" class="w-56 text-xs p-1.5 shadow-2xl">
+            <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              {{ $t('system.mail.snooze') }}
+            </div>
+            <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('later_today')">
+              <Clock class="w-3.5 h-3.5 text-muted-foreground" />
+              <span>{{ $t('system.mail.snooze_later_today') }}</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('tomorrow')">
+              <Clock class="w-3.5 h-3.5 text-muted-foreground" />
+              <span>{{ $t('system.mail.snooze_tomorrow') }}</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('next_week')">
+              <Clock class="w-3.5 h-3.5 text-muted-foreground" />
+              <span>{{ $t('system.mail.snooze_next_week') }}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <!-- Trash / Restore / Delete Actions -->
         <Button
           v-if="message.folder !== 'trash'"
@@ -352,6 +385,7 @@ import {
   Check,
   ShieldCheck,
   ShieldAlert,
+  Clock,
 } from 'lucide-vue-next';
 import { Button, Textarea } from '@/shared/components/ui';
 import {
@@ -377,6 +411,7 @@ const emit = defineEmits<{
     (e: 'delete-permanently', id: string): void;
     (e: 'move-to-folder', id: string, folder: string): void;
     (e: 'toggle-label', id: string, labelId: string): void;
+    (e: 'snooze', id: string, snoozeUntil: string): void;
     (e: 'send-reply', replyText: string): void;
 }>();
 
@@ -384,6 +419,23 @@ const toast = useToast();
 const quickReplyText = ref('');
 const showRemoteImages = ref(false);
 const isSecurityModalOpen = ref(false);
+
+const handleSnooze = (preset: 'later_today' | 'tomorrow' | 'next_week') => {
+    if (!props.message) return;
+    const target = new Date();
+    if (preset === 'later_today') {
+        target.setHours(target.getHours() + 4);
+    } else if (preset === 'tomorrow') {
+        target.setDate(target.getDate() + 1);
+        target.setHours(8, 0, 0, 0);
+    } else if (preset === 'next_week') {
+        const day = target.getDay();
+        const diff = day === 0 ? 1 : 8 - day;
+        target.setDate(target.getDate() + diff);
+        target.setHours(8, 0, 0, 0);
+    }
+    emit('snooze', props.message.id, target.toISOString());
+};
 
 const hasRemoteImages = computed(() => {
     if (!props.message?.body) return false;

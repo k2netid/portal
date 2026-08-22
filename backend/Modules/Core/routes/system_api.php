@@ -204,6 +204,9 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('manage/mail')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('messages', [MailController::class, 'index']);
         Route::get('messages/{id}', [MailController::class, 'show']);
+        Route::post('messages/draft', [MailController::class, 'saveDraft']);
+        Route::post('messages/schedule', [MailController::class, 'schedule']);
+        Route::post('messages/{id}/snooze', [MailController::class, 'snooze']);
         Route::post('messages/{id}/move', [MailController::class, 'move']);
         Route::post('messages/{id}/label', [MailController::class, 'toggleMessageLabel']);
         Route::post('send', [MailController::class, 'send']);
