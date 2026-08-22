@@ -374,6 +374,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import {
   Mail,
   Edit3,
@@ -572,12 +573,19 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
     }
 };
 
+const route = useRoute();
+
 onMounted(() => {
     const saved = localStorage.getItem('ja_mail_list_width');
     if (saved && !isNaN(Number(saved))) {
         listWidth.value = Number(saved);
     }
     window.addEventListener('keydown', handleGlobalKeydown);
+
+    if (route.query.openSettings === 'true' || route.query.tab) {
+        const tab = (typeof route.query.tab === 'string' ? route.query.tab : 'accounts') as 'accounts' | 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server';
+        openSettingsWithTab(tab);
+    }
 });
 
 onUnmounted(() => {

@@ -469,6 +469,7 @@ const openSettingsModal = (ext: ExtensionItem) => {
         media: { name: 'settings', query: { tab: 'media' } },
         analytics: { name: 'settings', query: { tab: 'analytics' } },
         Jejakawan: { name: 'Jejakawan-settings' },
+        mail: { name: 'mail', query: { openSettings: 'true', tab: 'accounts' } },
         forms: '/dash/forms', // Forms module settings
         library: consolePath('/library'),
         newsletter: consolePath('/newsletter'),

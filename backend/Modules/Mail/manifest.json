@@ -1,11 +1,12 @@
 {
-  "name": "Enterprise Mail Suite",
+  "name": "JA-Mail",
   "slug": "mail",
   "version": "1.0.0",
   "description": "Full-featured webmail client, multi-account manager, canned templates, and scheduled dispatcher",
   "author": "Jejakawan Team",
   "type": "module",
   "is_core": false,
+  "settings_route": "mail",
   "features": [
     {
       "name": "Webmail Client",
