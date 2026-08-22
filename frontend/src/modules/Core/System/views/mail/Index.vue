@@ -29,7 +29,11 @@
     </div>
 
     <!-- 3-Column Layout Container -->
-    <div class="flex-1 flex overflow-hidden min-h-0">
+    <div
+      ref="layoutContainerRef"
+      class="flex-1 flex overflow-hidden min-h-0 relative select-none"
+      :class="{ 'cursor-col-resize': isResizing }"
+    >
       <!-- Column 1: Sidebar (Collapsible on desktop, hidden on mobile) -->
       <aside
         :class="[
@@ -52,11 +56,12 @@
         />
       </aside>
 
-      <!-- Column 2: Message List (w-full on mobile when not in detail, w-80/96 on desktop) -->
+      <!-- Column 2: Message List (Draggable resizable width on desktop) -->
       <section
+        :style="{ width: isDesktop ? `${listWidth}px` : undefined }"
         :class="[
-          'flex-1 md:flex-initial md:w-80 lg:w-96 border-r border-border/40 shrink-0 overflow-hidden flex flex-col min-h-0',
-          isMobileDetailOpen ? 'hidden md:flex' : 'flex'
+          'border-r border-border/40 shrink-0 overflow-hidden flex flex-col min-h-0',
+          isMobileDetailOpen ? 'hidden md:flex' : 'flex flex-1 md:flex-initial'
         ]"
       >
         <MailList
@@ -72,6 +77,15 @@
           @refresh="fetchMessages"
         />
       </section>
+
+      <!-- Draggable Splitter Handle (Desktop Only) -->
+      <div
+        class="hidden md:flex w-2 -ml-1 cursor-col-resize items-center justify-center z-20 group relative shrink-0 select-none hover:bg-primary/20 active:bg-primary/30 transition-colors"
+        :title="'Drag to resize list panel'"
+        @mousedown="startResize"
+      >
+        <div class="w-0.5 h-8 bg-border/60 group-hover:bg-primary rounded-full transition-colors" />
+      </div>
 
       <!-- Column 3: Message Detail View (flex-1) -->
       <main
@@ -104,6 +118,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { Mail, Edit3 } from 'lucide-vue-next';
 import { Button } from '@/shared/components/ui';
 import { useMailClient } from '@/modules/Core/System/composables/useMailClient';
@@ -143,4 +158,72 @@ const {
     forward,
     sendEmail,
 } = useMailClient();
+
+// Draggable List Panel Resizing Logic
+const layoutContainerRef = ref<HTMLElement | null>(null);
+const listWidth = ref(340);
+const isResizing = ref(false);
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+const isDesktop = computed(() => windowWidth.value >= 768);
+
+const handleResizeWindow = () => {
+    windowWidth.value = window.innerWidth;
+};
+
+const startResize = (event: MouseEvent) => {
+    event.preventDefault();
+    isResizing.value = true;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', stopResize);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+};
+
+const onMouseMove = (event: MouseEvent) => {
+    if (!isResizing.value || !layoutContainerRef.value) return;
+    const containerRect = layoutContainerRef.value.getBoundingClientRect();
+    const sidebarWidth = isSidebarMinimized.value ? 64 : 240;
+    const rawWidth = event.clientX - containerRect.left - (windowWidth.value >= 1024 ? sidebarWidth : 0);
+    
+    // Constraints: min 260px, max 540px
+    const clamped = Math.max(260, Math.min(540, rawWidth));
+    listWidth.value = clamped;
+};
+
+const stopResize = () => {
+    if (isResizing.value) {
+        isResizing.value = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', stopResize);
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        try {
+            localStorage.setItem('ja_mail_list_width', String(listWidth.value));
+        } catch {
+            // localStorage not accessible
+        }
+    }
+};
+
+onMounted(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    try {
+        const saved = localStorage.getItem('ja_mail_list_width');
+        if (saved) {
+            const parsed = parseInt(saved, 10);
+            if (!isNaN(parsed) && parsed >= 260 && parsed <= 540) {
+                listWidth.value = parsed;
+            }
+        }
+    } catch {
+        // localStorage not accessible
+    }
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', handleResizeWindow);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', stopResize);
+});
 </script>

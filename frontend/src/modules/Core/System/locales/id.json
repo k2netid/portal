@@ -3431,6 +3431,8 @@
     "storage": "Penyimpanan Mail",
     "refresh": "Segarkan",
     "sync_mailbox": "Sinkronisasi Kotak Surat",
-    "syncing": "Menyinkronkan..."
+    "syncing": "Menyinkronkan...",
+    "expand_sidebar": "Perluas Sidebar",
+    "minimize_sidebar": "Ciutkan Sidebar"
   }
 }

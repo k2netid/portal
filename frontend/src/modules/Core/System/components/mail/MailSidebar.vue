@@ -7,10 +7,34 @@
   >
     <!-- Top Section -->
     <div class="space-y-3 w-full flex flex-col flex-1 min-h-0">
-      <!-- Compose Button & Collapse Toggle Header -->
-      <div class="flex items-center gap-2">
+      <!-- Minimized Mode Header -->
+      <div v-if="isMinimized" class="flex flex-col items-center gap-2 w-full">
+        <!-- Expand Button Prominent -->
         <Button
-          v-if="!isMinimized"
+          variant="outline"
+          size="icon"
+          class="h-8 w-8 text-foreground hover:text-primary hover:border-primary/40 rounded-lg shadow-xs transition-colors"
+          :title="$t('system.mail.expand_sidebar')"
+          @click="$emit('toggle-minimize')"
+        >
+          <PanelLeftOpen class="w-4 h-4 text-primary" />
+        </Button>
+
+        <!-- Compose Icon Button -->
+        <Button
+          variant="default"
+          size="icon"
+          class="h-8 w-8 rounded-xl shadow-xs"
+          :title="$t('system.mail.compose')"
+          @click="openComposer()"
+        >
+          <Edit3 class="w-3.5 h-3.5" />
+        </Button>
+      </div>
+
+      <!-- Expanded Mode Header -->
+      <div v-else class="flex items-center gap-2 w-full">
+        <Button
           class="flex-1 justify-center gap-2 h-9 shadow-xs font-semibold text-xs tracking-tight rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all active:scale-[0.98]"
           @click="openComposer()"
         >
@@ -19,26 +43,13 @@
         </Button>
 
         <Button
-          v-else
-          variant="default"
-          size="icon"
-          class="h-9 w-9 rounded-xl shadow-xs"
-          :title="$t('system.mail.compose')"
-          @click="openComposer()"
-        >
-          <Edit3 class="w-4 h-4" />
-        </Button>
-
-        <!-- Sidebar Collapse Toggle Button -->
-        <Button
           variant="ghost"
           size="icon"
           class="h-8 w-8 text-muted-foreground hover:text-foreground shrink-0 rounded-lg"
-          :title="isMinimized ? 'Expand Sidebar' : 'Minimize Sidebar'"
+          :title="$t('system.mail.minimize_sidebar')"
           @click="$emit('toggle-minimize')"
         >
-          <PanelLeftClose v-if="!isMinimized" class="w-4 h-4" />
-          <PanelLeftOpen v-else class="w-4 h-4" />
+          <PanelLeftClose class="w-4 h-4" />
         </Button>
       </div>
 

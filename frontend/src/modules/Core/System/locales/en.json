@@ -3431,6 +3431,8 @@
     "storage": "Mail Storage",
     "refresh": "Refresh",
     "sync_mailbox": "Sync Mailbox",
-    "syncing": "Syncing..."
+    "syncing": "Syncing...",
+    "expand_sidebar": "Expand Sidebar",
+    "minimize_sidebar": "Minimize Sidebar"
   }
 }
