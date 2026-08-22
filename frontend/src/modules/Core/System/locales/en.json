@@ -3491,6 +3491,22 @@
     "unsubscribe_confirm_title": "Unsubscribe from this mailing list?",
     "unsubscribe_confirm_desc": "We will process your request to remove your email address from this sender's automated distribution list.",
     "expand_all": "Expand all",
-    "collapse_all": "Collapse all"
+    "collapse_all": "Collapse all",
+    "accounts": {
+      "title": "Mailbox Accounts",
+      "connectedAccounts": "Connected Mailboxes",
+      "addAccount": "Connect Account",
+      "integrationMode": "Integration Mode",
+      "inheritGlobal": "Use Global System Mailbox",
+      "inheritGlobalDesc": "Send & receive via default system server configured in System Settings",
+      "customPersonal": "Custom Personal Mailbox",
+      "customPersonalDesc": "Configure dedicated personal SMTP and IMAP credentials",
+      "accountName": "Account Label",
+      "emailAddress": "Email Address",
+      "signature": "Default Email Signature",
+      "makeDefault": "Set as Default Mailbox",
+      "makeDefaultDesc": "Use this mailbox by default when composing new messages",
+      "connect": "Connect Mailbox"
+    }
   }
 }

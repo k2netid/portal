@@ -121,10 +121,15 @@
           :folder-counts="folderCounts"
           :labels="labels"
           :storage-stats="storageStats"
+          :accounts="accounts"
+          :active-account-id="activeAccountId"
+          :capabilities="capabilities"
           @select-folder="selectFolder"
           @select-label="selectLabel"
           @update:labels="saveLabels"
           @manage-labels="isLabelsModalOpen = true"
+          @switch-account="switchAccount"
+          @manage-accounts="isAccountModalOpen = true"
         />
       </aside>
 
@@ -254,6 +259,17 @@
       @close="isLabelsModalOpen = false"
       @update:labels="v => labels = v"
     />
+
+    <!-- Multi-Account Mailbox Manager Modal -->
+    <MailAccountModal
+      :is-open="isAccountModalOpen"
+      :accounts="accounts"
+      :capabilities="capabilities"
+      @close="isAccountModalOpen = false"
+      @save="saveAccount"
+      @delete="deleteAccount"
+      @test-connection="testAccountConnection"
+    />
   </div>
 </template>
 
@@ -279,6 +295,7 @@ import MailComposerModal from '@/modules/Core/System/components/mail/MailCompose
 import MailSettingsModal from '@/modules/Core/System/components/mail/MailSettingsModal.vue';
 import MailLabelsModal from '@/modules/Core/System/components/mail/MailLabelsModal.vue';
 import MailShortcutsModal from '@/modules/Core/System/components/mail/MailShortcutsModal.vue';
+import MailAccountModal from '@/modules/Core/System/components/mail/MailAccountModal.vue';
 
 const {
     isSidebarMinimized,
@@ -332,6 +349,14 @@ const {
     scheduleSend,
     snoozeMessage,
     saveLabels,
+    accounts,
+    activeAccountId,
+    capabilities,
+    isAccountModalOpen,
+    switchAccount,
+    saveAccount,
+    deleteAccount,
+    testAccountConnection,
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);

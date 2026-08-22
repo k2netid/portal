@@ -3491,6 +3491,22 @@
     "unsubscribe_confirm_title": "Eureun ngalanggan ti pangirim ieu?",
     "unsubscribe_confirm_desc": "Kami bakal ngolah pamundut miceun email anjeun tina daptar distribusi otomatis ieu.",
     "expand_all": "Buka sadayana",
-    "collapse_all": "Tutup sadayana"
+    "collapse_all": "Tutup sadayana",
+    "accounts": {
+      "title": "Akun Mailbox",
+      "connectedAccounts": "Mailbox Nyambung",
+      "addAccount": "Sambungkeun Akun",
+      "integrationMode": "Mode Integrasi",
+      "inheritGlobal": "Anggo Mailbox Sistem Global",
+      "inheritGlobalDesc": "Kintun & tampi nganggo server sistem standar anu dikonfigurasi dina Setélan Sistem",
+      "customPersonal": "Mailbox Pribadi Kustom",
+      "customPersonalDesc": "Konfigurasi kredensial SMTP sareng IMAP pribadi khusus",
+      "accountName": "Label Akun",
+      "emailAddress": "Alamat Email",
+      "signature": "Tawis Tangan Email Standar",
+      "makeDefault": "Jantenkeun Mailbox Utama",
+      "makeDefaultDesc": "Anggo mailbox ieu salaku standar nalika nyerat serat enggal",
+      "connect": "Sambungkeun Mailbox"
+    }
   }
 }

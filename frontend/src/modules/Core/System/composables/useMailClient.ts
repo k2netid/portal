@@ -46,6 +46,32 @@ export interface MailTemplate {
     body: string;
 }
 
+export interface MailAccount {
+    id: string;
+    user_id?: string;
+    name: string;
+    email: string;
+    account_type: 'system_global' | 'custom_personal';
+    smtp_host?: string | null;
+    smtp_port?: number | null;
+    smtp_username?: string | null;
+    smtp_password?: string | null;
+    smtp_encryption?: 'tls' | 'ssl' | 'null' | null;
+    imap_host?: string | null;
+    imap_port?: number | null;
+    imap_username?: string | null;
+    imap_password?: string | null;
+    imap_encryption?: 'ssl' | 'tls' | 'null' | null;
+    is_default: boolean;
+    is_active: boolean;
+    signature?: string | null;
+}
+
+export interface MailAccountCapabilities {
+    can_manage_personal: boolean;
+    can_manage_multi: boolean;
+}
+
 export const normalizeSubject = (subject: string): string => {
     return (subject || '')
         .replace(/^(\s*(re|fwd|fw|reply|scheduled|\[scheduled\])\s*[:\-])+/gi, '')
@@ -55,6 +81,23 @@ export const normalizeSubject = (subject: string): string => {
 
 export function useMailClient() {
     const toast = useToast();
+
+    // Multi-Account Mailbox State
+    const accounts = ref<MailAccount[]>([]);
+    const activeAccountId = ref<string>('');
+    const capabilities = ref<MailAccountCapabilities>({
+        can_manage_personal: false,
+        can_manage_multi: false,
+    });
+    const isAccountModalOpen = ref(false);
+    const editingAccount = ref<MailAccount | null>(null);
+
+    const activeAccount = computed(() => {
+        return accounts.value.find(a => a.id === activeAccountId.value)
+            || accounts.value.find(a => a.is_default)
+            || accounts.value[0]
+            || null;
+    });
 
     // Templates State
     const templates = ref<MailTemplate[]>([
@@ -641,8 +684,85 @@ export function useMailClient() {
         }
     };
 
+    const fetchAccounts = async () => {
+        try {
+            const res = await api.get('/manage/mail/accounts');
+            const data = res.data?.data || res.data;
+            if (data?.accounts && Array.isArray(data.accounts)) {
+                accounts.value = data.accounts;
+                if (data.capabilities) {
+                    capabilities.value = data.capabilities;
+                }
+                const def = accounts.value.find(a => a.is_default) || accounts.value[0];
+                if (def && !activeAccountId.value) {
+                    activeAccountId.value = def.id;
+                }
+            }
+        } catch {
+            // Soft fail
+        }
+    };
+
+    const switchAccount = (id: string) => {
+        activeAccountId.value = id;
+        fetchMessages(1);
+    };
+
+    const saveAccount = async (payload: Partial<MailAccount>, id?: string) => {
+        try {
+            if (id) {
+                await api.put(`/manage/mail/accounts/${id}`, payload);
+                toast.success.action('Mailbox account updated');
+            } else {
+                await api.post('/manage/mail/accounts', payload);
+                toast.success.action('Mailbox account connected');
+            }
+            await fetchAccounts();
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const deleteAccount = async (id: string) => {
+        try {
+            await api.delete(`/manage/mail/accounts/${id}`);
+            toast.success.action('Mailbox account disconnected');
+            await fetchAccounts();
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const setDefaultAccount = async (id: string) => {
+        try {
+            await api.post(`/manage/mail/accounts/${id}/default`);
+            toast.success.action('Default mailbox updated');
+            await fetchAccounts();
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const testAccountConnection = async (host: string, port: number) => {
+        try {
+            const res = await api.post('/manage/mail/accounts/test', { host, port });
+            toast.success.action(res.data?.message || 'Connection handshake successful');
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
     onMounted(async () => {
         await fetchClientSettings();
+        fetchAccounts();
         fetchLabels();
         fetchTemplates();
         fetchMessages(1);
@@ -705,5 +825,17 @@ export function useMailClient() {
         saveLabels,
         fetchTemplates,
         saveTemplates,
+        accounts,
+        activeAccountId,
+        activeAccount,
+        capabilities,
+        isAccountModalOpen,
+        editingAccount,
+        fetchAccounts,
+        switchAccount,
+        saveAccount,
+        deleteAccount,
+        setDefaultAccount,
+        testAccountConnection,
     };
 }

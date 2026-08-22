@@ -24,6 +24,7 @@ use Modules\Core\System\Http\Controllers\Console\LanguageController;
 use Modules\Core\System\Http\Controllers\Console\LicenseController;
 use Modules\Core\System\Http\Controllers\Console\LogController;
 use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
+use Modules\Core\System\Http\Controllers\Console\MailAccountController;
 use Modules\Core\System\Http\Controllers\Console\MailController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
 use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
@@ -224,6 +225,13 @@ Route::prefix('v1')->group(function (): void {
         Route::post('templates', [MailController::class, 'saveTemplates']);
         Route::get('settings', [MailController::class, 'getSettings']);
         Route::post('settings', [MailController::class, 'saveSettings']);
+        Route::get('accounts', [MailAccountController::class, 'index']);
+        Route::post('accounts', [MailAccountController::class, 'store']);
+        Route::post('accounts/test', [MailAccountController::class, 'testConnection']);
+        Route::get('accounts/{id}', [MailAccountController::class, 'show']);
+        Route::put('accounts/{id}', [MailAccountController::class, 'update']);
+        Route::delete('accounts/{id}', [MailAccountController::class, 'destroy']);
+        Route::post('accounts/{id}/default', [MailAccountController::class, 'setDefault']);
     });
 
     // Console Menu Editor Management API

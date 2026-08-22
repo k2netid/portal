@@ -3491,6 +3491,22 @@
     "unsubscribe_confirm_title": "Berhenti berlangganan dari pengirim ini?",
     "unsubscribe_confirm_desc": "Kami akan memproses permintaan penghapusan email Anda dari daftar distribusi otomatis pengirim ini.",
     "expand_all": "Buka semua",
-    "collapse_all": "Tutup semua"
+    "collapse_all": "Tutup semua",
+    "accounts": {
+      "title": "Akun Mailbox",
+      "connectedAccounts": "Mailbox Terhubung",
+      "addAccount": "Hubungkan Akun",
+      "integrationMode": "Mode Integrasi",
+      "inheritGlobal": "Gunakan Mailbox Sistem Global",
+      "inheritGlobalDesc": "Kirim & terima melalui server sistem bawaan yang dikonfigurasi di Pengaturan Sistem",
+      "customPersonal": "Mailbox Pribadi Kustom",
+      "customPersonalDesc": "Konfigurasi kredensial SMTP dan IMAP pribadi khusus",
+      "accountName": "Label Akun",
+      "emailAddress": "Alamat Email",
+      "signature": "Tanda Tangan Email Bawaan",
+      "makeDefault": "Jadikan Mailbox Utama",
+      "makeDefaultDesc": "Gunakan mailbox ini sebagai default saat menulis pesan baru",
+      "connect": "Hubungkan Mailbox"
+    }
   }
 }

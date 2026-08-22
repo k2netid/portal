@@ -7,6 +7,63 @@
   >
     <!-- Navigation Scroll Container -->
     <div class="flex-1 w-full overflow-y-auto overflow-x-hidden custom-scrollbar space-y-3 pr-1 min-h-0">
+      <!-- Mailbox Account Switcher (Popover) -->
+      <div v-if="accounts && accounts.length > 0" class="mb-2">
+        <Popover v-model:open="isAccountSwitcherOpen">
+          <PopoverTrigger as-child>
+            <button
+              type="button"
+              :class="[
+                'w-full flex items-center gap-2 p-1.5 rounded-xl border border-border/60 bg-card hover:bg-muted/30 transition-all text-left group shadow-xs cursor-pointer',
+                isMinimized ? 'justify-center' : 'justify-between'
+              ]"
+              :title="activeAccount ? `${activeAccount.name} (${activeAccount.email})` : 'Switch Mailbox'"
+            >
+              <div class="flex items-center gap-2 min-w-0 flex-1">
+                <div class="w-6 h-6 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-[11px] shrink-0">
+                  {{ (activeAccount?.name || activeAccount?.email || 'M').charAt(0).toUpperCase() }}
+                </div>
+                <div v-if="!isMinimized" class="min-w-0 flex-1">
+                  <p class="text-xs font-bold text-foreground truncate leading-tight">{{ activeAccount?.name || 'Mailbox' }}</p>
+                  <p class="text-[10px] text-muted-foreground truncate leading-tight">{{ activeAccount?.email }}</p>
+                </div>
+              </div>
+              <ChevronsUpDown v-if="!isMinimized" class="w-3.5 h-3.5 text-muted-foreground opacity-60 group-hover:opacity-100 shrink-0" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent class="w-56 p-1.5 z-[1200] text-xs space-y-1 bg-card border border-border/80 shadow-xl rounded-xl" align="start">
+            <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Connected Mailboxes
+            </div>
+            <button
+              v-for="acc in accounts"
+              :key="acc.id"
+              type="button"
+              :class="[
+                'w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-left transition-colors cursor-pointer',
+                activeAccountId === acc.id ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-muted text-foreground'
+              ]"
+              @click="handleSelectAccount(acc.id)"
+            >
+              <div class="min-w-0 flex-1 pr-1">
+                <p class="truncate leading-tight font-medium text-xs">{{ acc.name }}</p>
+                <p class="text-[10px] text-muted-foreground truncate leading-tight">{{ acc.email }}</p>
+              </div>
+              <Check v-if="activeAccountId === acc.id" class="w-3.5 h-3.5 text-primary shrink-0" />
+            </button>
+            <Separator class="my-1" />
+            <button
+              type="button"
+              class="w-full flex items-center gap-1.5 px-2 py-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground text-left transition-colors text-[11px] font-medium cursor-pointer"
+              @click="$emit('manage-accounts'); isAccountSwitcherOpen = false"
+            >
+              <Settings class="w-3 h-3 text-primary" />
+              <span>Manage Mail Accounts</span>
+            </button>
+          </PopoverContent>
+        </Popover>
+      </div>
+
       <!-- Main Folders Section (Collapsible Accordion) -->
       <div class="space-y-0.5">
         <!-- Folders Accordion Header -->
@@ -262,8 +319,22 @@ import {
   ChevronDown,
   ChevronRight,
   GripVertical,
+  ChevronsUpDown,
+  Check,
+  Settings,
 } from 'lucide-vue-next';
-import type { useMailClient, MailLabel } from '@/modules/Core/System/composables/useMailClient';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Separator,
+} from '@/shared/components/ui';
+import type {
+  useMailClient,
+  MailLabel,
+  MailAccount,
+  MailAccountCapabilities,
+} from '@/modules/Core/System/composables/useMailClient';
 
 type MailClient = ReturnType<typeof useMailClient>;
 
@@ -274,6 +345,9 @@ const props = defineProps<{
     folderCounts: MailClient['folderCounts']['value'];
     labels: MailClient['labels']['value'];
     storageStats?: MailClient['storageStats']['value'];
+    accounts?: MailAccount[];
+    activeAccountId?: string;
+    capabilities?: MailAccountCapabilities;
 }>();
 
 const emit = defineEmits<{
@@ -281,7 +355,25 @@ const emit = defineEmits<{
     (e: 'select-label', labelId: string): void;
     (e: 'update:labels', labels: MailLabel[]): void;
     (e: 'manage-labels'): void;
+    (e: 'switch-account', id: string): void;
+    (e: 'manage-accounts'): void;
 }>();
+
+// Mailbox Account Switcher State
+const isAccountSwitcherOpen = ref(false);
+
+const activeAccount = computed(() => {
+    if (!props.accounts || props.accounts.length === 0) return null;
+    return props.accounts.find(a => a.id === props.activeAccountId)
+        || props.accounts.find(a => a.is_default)
+        || props.accounts[0]
+        || null;
+});
+
+const handleSelectAccount = (id: string) => {
+    emit('switch-account', id);
+    isAccountSwitcherOpen.value = false;
+};
 
 // Accordion Collapsible Sections State
 const isFoldersOpen = ref(true);
