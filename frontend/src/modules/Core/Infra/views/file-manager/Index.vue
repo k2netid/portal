@@ -223,6 +223,7 @@ onMounted(() => {
     fm.isMounted.value = true;
     fm.fetchAllFolders();
     fm.fetchCurrentPath();
+    fm.fetchTrash();
 });
 
 onUnmounted(() => {

@@ -451,8 +451,8 @@ export function useFileManager(options: { rootPath?: string } = {}) {
                 scannedPaths.value.delete(item.path);
             }
             await fetchCurrentPath();
-            fetchTrash();
-            toast.success.action(isFolder ? t('infra.fileManager.messages.folderDeleted') : t('infra.fileManager.messages.fileDeleted'));
+            await fetchTrash();
+            toast.success.action(t('infra.fileManager.messages.bulkDeleted'));
         } catch (error: unknown) {
             toast.error.fromResponse(error);
         }
@@ -550,6 +550,12 @@ export function useFileManager(options: { rootPath?: string } = {}) {
             trashLoading.value = false;
         }
     };
+
+    watch(showTrashView, (val) => {
+        if (val) {
+            fetchTrash();
+        }
+    });
 
     const restoreTrashItem = async (item: TrashItem) => {
         try {

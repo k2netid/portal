@@ -129,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, onMounted } from 'vue';
 import {
   FileText,
   Folder,
@@ -149,4 +149,8 @@ const {
     emptyTrash,
     deleteFromTrashPermanent
 } = inject(FileManagerKey)!;
+
+onMounted(() => {
+    fetchTrash();
+});
 </script>
