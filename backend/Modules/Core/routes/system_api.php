@@ -9,6 +9,7 @@ use Modules\Core\System\Http\Controllers\Api\MaintenanceApiController;
 use Modules\Core\System\Http\Controllers\Api\ScaffolderApiController;
 use Modules\Core\System\Http\Controllers\Api\ScimUserController;
 use Modules\Core\System\Http\Controllers\Console\ActivityLogController;
+use Modules\Core\System\Http\Controllers\Console\AiController;
 use Modules\Core\System\Http\Controllers\Console\AnalyticsController;
 use Modules\Core\System\Http\Controllers\Console\AuthController;
 use Modules\Core\System\Http\Controllers\Console\CaptchaController;
@@ -188,6 +189,14 @@ Route::prefix('v1')->group(function (): void {
         Route::get('logs', [LogController::class, 'index']);
         Route::get('logs/{filename}', [LogController::class, 'show']);
         Route::delete('logs/{filename}', [LogController::class, 'destroy']);
+    });
+
+    // AI Integration Management API
+    Route::prefix('manage/ai')->middleware(['auth:sanctum'])->group(function (): void {
+        Route::get('providers', [AiController::class, 'getProviders']);
+        Route::get('models/{provider}', [AiController::class, 'getModels']);
+        Route::post('test', [AiController::class, 'testConnection']);
+        Route::post('generate', [AiController::class, 'generate']);
     });
 
     // Notifications Management API (Canonical for SPA)

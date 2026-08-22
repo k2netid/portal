@@ -1295,7 +1295,8 @@
         "fetch_models": "Fetch Models",
         "using_model": "Using: {model}",
         "connection_success": "Connection successful",
-        "fetch_success": "Models fetched successfully"
+        "fetch_success": "Models fetched successfully",
+        "get_api_key": "Get API Key"
       },
       "editor": {
         "title": "Editor Preferences",

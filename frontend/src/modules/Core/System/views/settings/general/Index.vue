@@ -408,7 +408,15 @@ const fetchSettings = async () => {
         const analyticsKeys = ['analytics_retention_days', 'analytics_event_retention_days', 'analytics_visitor_retention_days'];
         const emailKeys = ['mail_from_address', 'mail_from_name', 'mail_driver', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption'];
         const monitoringKeys = ['log_retention_days', 'activity_log_retention_days', 'security_log_retention_days', 'login_history_retention_days', 'security_alert_failed_login_threshold', 'backup_retention_days'];
-        const aiKeys = ['ai_enabled', 'ai_default_provider', 'gemini_api_key', 'gemini_model'];
+        const aiKeys = [
+            'ai_enabled', 'ai_default_provider',
+            'gemini_api_key', 'gemini_model',
+            'openai_api_key', 'openai_model',
+            'claude_api_key', 'claude_model',
+            'deepseek_api_key', 'deepseek_model',
+            'grok_api_key', 'grok_model',
+            'openrouter_api_key', 'openrouter_model'
+        ];
 
         rawSettings.forEach(s => {
             if (s && s.key && !uniqueSettingsMap.has(s.key)) {
@@ -557,7 +565,17 @@ const fetchSettings = async () => {
         ensureSetting('ai_enabled', true, 'boolean', 'ai');
         ensureSetting('ai_default_provider', 'gemini', 'string', 'ai');
         ensureSetting('gemini_api_key', '', 'password', 'ai');
-        ensureSetting('gemini_model', 'gemini-1.5-pro', 'string', 'ai');
+        ensureSetting('gemini_model', 'gemini-2.0-flash', 'string', 'ai');
+        ensureSetting('openai_api_key', '', 'password', 'ai');
+        ensureSetting('openai_model', 'gpt-4o-mini', 'string', 'ai');
+        ensureSetting('claude_api_key', '', 'password', 'ai');
+        ensureSetting('claude_model', 'claude-3-5-sonnet-20241022', 'string', 'ai');
+        ensureSetting('deepseek_api_key', '', 'password', 'ai');
+        ensureSetting('deepseek_model', 'deepseek-chat', 'string', 'ai');
+        ensureSetting('grok_api_key', '', 'password', 'ai');
+        ensureSetting('grok_model', 'grok-2-latest', 'string', 'ai');
+        ensureSetting('openrouter_api_key', '', 'password', 'ai');
+        ensureSetting('openrouter_model', 'openrouter/auto', 'string', 'ai');
 
         // Ensure Discussion Settings
         ensureSetting('comments.security.enable_reply', true, 'boolean', 'comments');

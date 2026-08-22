@@ -250,7 +250,17 @@ class FoundationSeeder extends Seeder
             ['key' => 'ai_enabled', 'value' => '1', 'group' => 'ai', 'type' => 'boolean'],
             ['key' => 'ai_default_provider', 'value' => 'gemini', 'group' => 'ai', 'type' => 'string'],
             ['key' => 'gemini_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
-            ['key' => 'gemini_model', 'value' => '', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'gemini_model', 'value' => 'gemini-2.0-flash', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'openai_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
+            ['key' => 'openai_model', 'value' => 'gpt-4o-mini', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'claude_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
+            ['key' => 'claude_model', 'value' => 'claude-3-5-sonnet-20241022', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'deepseek_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
+            ['key' => 'deepseek_model', 'value' => 'deepseek-chat', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'grok_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
+            ['key' => 'grok_model', 'value' => 'grok-2-latest', 'group' => 'ai', 'type' => 'string'],
+            ['key' => 'openrouter_api_key', 'value' => '', 'group' => 'ai', 'type' => 'password'],
+            ['key' => 'openrouter_model', 'value' => 'openrouter/auto', 'group' => 'ai', 'type' => 'string'],
 
             // Security
             ['key' => 'enable_registration', 'value' => '0', 'group' => 'security', 'type' => 'boolean'],

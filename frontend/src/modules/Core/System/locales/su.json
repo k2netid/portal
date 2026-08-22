@@ -1283,7 +1283,8 @@
         "fetch_models": "Ambil Model",
         "using_model": "Menggunakan: {model}",
         "connection_success": "Koneksi hasil",
-        "fetch_success": "Model hasil diambil"
+        "fetch_success": "Model hasil diambil",
+        "get_api_key": "Kengingkeun API Key"
       },
       "brand": {
         "title": "Identitas Aplikasi",
