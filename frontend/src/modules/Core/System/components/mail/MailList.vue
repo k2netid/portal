@@ -1,7 +1,7 @@
 <template>
   <div class="h-full flex flex-col border-r border-border/40 bg-card">
-    <!-- Header: Search Bar (Aligned with h-12 top row, with balanced left padding for floating toggle) -->
-    <div class="h-12 pl-6 pr-3 border-b border-border/40 flex items-center gap-2 shrink-0 bg-background/50 backdrop-blur-sm">
+    <!-- Header: Search Bar (Aligned with h-12 top row, responsive left padding) -->
+    <div class="h-12 pl-3 lg:pl-6 pr-3 border-b border-border/40 flex items-center gap-2 shrink-0 bg-background/50 backdrop-blur-sm">
       <div class="relative flex-1">
         <Search class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <Input

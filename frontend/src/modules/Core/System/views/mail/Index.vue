@@ -1,10 +1,21 @@
 <template>
   <div class="h-[calc(100vh-6.5rem)] flex flex-col bg-card border border-border/70 rounded-2xl shadow-xs overflow-hidden select-none">
     <!-- Top Unified Mail Toolbar Header -->
-    <header class="h-12 border-b border-border/40 bg-card/60 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-30">
-      <!-- Left: JA-Mail Brand & Compose Email Button -->
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2">
+    <header class="h-12 border-b border-border/40 bg-card/60 backdrop-blur-md px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
+      <!-- Left: Mobile Sidebar Drawer Button + JA-Mail Brand + Compose Email Button -->
+      <div class="flex items-center gap-1.5 sm:gap-3">
+        <!-- Mobile Sidebar Toggle Drawer Button -->
+        <Button
+          variant="ghost"
+          size="icon"
+          class="lg:hidden h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg -ml-1 shrink-0"
+          :title="$t('system.mail.folders')"
+          @click="isMobileSidebarOpen = true"
+        >
+          <Menu class="w-4 h-4" />
+        </Button>
+
+        <div class="flex items-center gap-2 shrink-0">
           <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-2xs">
             <Mail class="w-3.5 h-3.5" />
           </div>
@@ -18,26 +29,26 @@
         <!-- Compose Email Button (Beside Brand Label) -->
         <Button
           size="sm"
-          class="h-7.5 gap-1.5 text-xs font-semibold px-3 shadow-xs bg-primary hover:bg-primary/90 text-primary-foreground transition-all cursor-pointer"
+          class="h-7.5 gap-1.5 text-xs font-semibold px-2.5 sm:px-3 shadow-xs bg-primary hover:bg-primary/90 text-primary-foreground transition-all cursor-pointer shrink-0"
           @click="openComposer()"
         >
           <Edit3 class="w-3.5 h-3.5" />
-          <span>{{ $t('system.mail.compose') }}</span>
+          <span class="hidden sm:inline">{{ $t('system.mail.compose') }}</span>
         </Button>
       </div>
 
       <!-- Right: Global Actions (Sync, Empty Trash, Shortcuts, Labels, Settings, Account Switcher) -->
-      <div class="flex items-center gap-1.5">
+      <div class="flex items-center gap-1 sm:gap-1.5">
         <!-- Sync Button -->
         <Button
           variant="outline"
           size="sm"
-          class="h-7 text-xs gap-1.5 px-2.5 shadow-xs"
+          class="h-7 text-xs gap-1.5 px-2 sm:px-2.5 shadow-xs"
           :disabled="syncing || loading"
           @click="syncMailbox"
         >
           <RefreshCw :class="['w-3.5 h-3.5', syncing ? 'animate-spin text-primary' : '']" />
-          <span class="hidden sm:inline">{{ $t('system.mail.sync') }}</span>
+          <span class="hidden md:inline">{{ $t('system.mail.sync') }}</span>
         </Button>
 
         <!-- Empty Trash (Conditional) -->
@@ -45,18 +56,18 @@
           v-if="activeFolder === 'trash' && messages.length > 0"
           variant="destructive"
           size="sm"
-          class="h-7 text-xs gap-1 px-2.5 shadow-xs"
+          class="h-7 text-xs gap-1 px-2 sm:px-2.5 shadow-xs"
           @click="emptyTrash"
         >
           <Trash2 class="w-3.5 h-3.5" />
-          <span class="hidden sm:inline">{{ $t('system.mail.empty_trash') }}</span>
+          <span class="hidden md:inline">{{ $t('system.mail.empty_trash') }}</span>
         </Button>
 
-        <!-- Keyboard Shortcuts Help Button -->
+        <!-- Keyboard Shortcuts Help Button (Desktop Only) -->
         <Button
           variant="ghost"
           size="icon"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
+          class="hidden md:flex h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
           title="Keyboard Shortcuts (?)"
           @click="isShortcutsOpen = true"
         >
@@ -67,7 +78,7 @@
         <Button
           variant="ghost"
           size="icon"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
+          class="hidden sm:flex h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
           :title="$t('system.mail.manage_labels')"
           @click="isLabelsModalOpen = true"
         >
@@ -96,7 +107,7 @@
               <div class="w-4.5 h-4.5 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[9px] shrink-0">
                 {{ (activeAccount?.name || activeAccount?.email || 'M').charAt(0).toUpperCase() }}
               </div>
-              <div class="hidden md:block min-w-0 max-w-[120px]">
+              <div class="hidden lg:block min-w-0 max-w-[120px]">
                 <p class="text-[11px] font-bold text-foreground truncate leading-none">{{ activeAccount?.name || 'Mailbox' }}</p>
                 <p class="text-[9px] text-muted-foreground truncate leading-none mt-0.5">{{ activeAccount?.email }}</p>
               </div>
@@ -272,6 +283,55 @@
       </div>
     </Teleport>
 
+    <!-- Mobile Sidebar Drawer (Slide-Over Sheet for Folders & Labels) -->
+    <Teleport to="body">
+      <div
+        v-if="isMobileSidebarOpen"
+        class="fixed inset-0 z-[1100] lg:hidden flex"
+      >
+        <!-- Backdrop with Blur -->
+        <div
+          class="fixed inset-0 bg-background/80 backdrop-blur-xs transition-opacity animate-in fade-in-0 duration-200"
+          @click="isMobileSidebarOpen = false"
+        />
+
+        <!-- Slide-over Content -->
+        <div class="relative w-[280px] max-w-[85vw] h-full bg-card border-r border-border shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200">
+          <div class="p-3 border-b border-border/40 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                <Mail class="w-3.5 h-3.5" />
+              </div>
+              <span class="text-xs font-bold text-foreground">{{ $t('system.mail.folders') }}</span>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              class="h-7 w-7 rounded-lg text-muted-foreground hover:text-foreground"
+              @click="isMobileSidebarOpen = false"
+            >
+              <X class="w-4 h-4" />
+            </Button>
+          </div>
+
+          <div class="flex-1 overflow-hidden">
+            <MailSidebar
+              :is-minimized="false"
+              :active-folder="activeFolder"
+              :active-label="activeLabel"
+              :folder-counts="folderCounts"
+              :labels="labels"
+              :storage-stats="storageStats"
+              @select-folder="f => { selectFolder(f); isMobileSidebarOpen = false; isMobileDetailOpen = false; }"
+              @select-label="l => { selectLabel(l); isMobileSidebarOpen = false; isMobileDetailOpen = false; }"
+              @update:labels="saveLabels"
+              @manage-labels="() => { isLabelsModalOpen = true; isMobileSidebarOpen = false; }"
+            />
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
     <!-- Mail Composer Modal -->
     <MailComposerModal
       :is-open="isComposerOpen"
@@ -326,6 +386,8 @@ import {
   Keyboard,
   ChevronsUpDown,
   Check,
+  Menu,
+  X,
 } from 'lucide-vue-next';
 import {
   Button,
@@ -405,6 +467,7 @@ const {
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);
+const isMobileSidebarOpen = ref(false);
 const isAccountSwitcherOpen = ref(false);
 
 const activeAccount = computed(() => {
