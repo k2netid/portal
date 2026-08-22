@@ -5,7 +5,7 @@
       v-if="message"
       class="h-12 px-4 border-b border-border/40 flex items-center justify-between gap-2 shrink-0 bg-background/50 backdrop-blur-sm"
     >
-      <div class="flex items-center gap-1.5">
+      <div class="flex items-center gap-1.5 flex-wrap">
         <!-- Mobile Back Button -->
         <Button
           variant="ghost"
@@ -19,7 +19,7 @@
         <Button
           variant="outline"
           size="sm"
-          class="h-7 gap-1.5 text-xs px-2.5"
+          class="h-7 gap-1.5 text-xs px-2.5 shadow-xs"
           @click="$emit('reply', message)"
         >
           <Reply class="w-3.5 h-3.5" />
@@ -29,13 +29,72 @@
         <Button
           variant="outline"
           size="sm"
-          class="h-7 gap-1.5 text-xs px-2.5 hidden sm:inline-flex"
+          class="h-7 gap-1.5 text-xs px-2.5 hidden sm:inline-flex shadow-xs"
           @click="$emit('forward', message)"
         >
           <Forward class="w-3.5 h-3.5" />
           <span>{{ $t('system.mail.forward') }}</span>
         </Button>
 
+        <!-- Move To Folder Dropdown -->
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground"
+              :title="$t('system.mail.move')"
+            >
+              <FolderInput class="w-3.5 h-3.5" />
+              <span class="hidden xl:inline">{{ $t('system.mail.move') }}</span>
+              <ChevronDown class="w-3 h-3 opacity-60" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" class="w-44 text-xs">
+            <DropdownMenuItem
+              v-for="target in ['inbox', 'spam', 'trash', 'drafts']"
+              :key="target"
+              :disabled="message.folder === target"
+              class="gap-2 cursor-pointer text-xs"
+              @click="$emit('move-to-folder', message.id, target)"
+            >
+              <Folder class="w-3.5 h-3.5 text-muted-foreground" />
+              <span>{{ $t(`system.mail.folder_${target}`) }}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <!-- Labels Tagging Dropdown -->
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground"
+              :title="$t('system.mail.labels')"
+            >
+              <Tag class="w-3.5 h-3.5" />
+              <span class="hidden xl:inline">{{ $t('system.mail.labels') }}</span>
+              <ChevronDown class="w-3 h-3 opacity-60" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" class="w-48 text-xs">
+            <DropdownMenuItem
+              v-for="lbl in availableLabels"
+              :key="lbl.id"
+              class="gap-2 cursor-pointer text-xs justify-between"
+              @click="$emit('toggle-label', message.id, lbl.id)"
+            >
+              <div class="flex items-center gap-2">
+                <span :class="['w-2.5 h-2.5 rounded-full', lbl.color]" />
+                <span>{{ lbl.name }}</span>
+              </div>
+              <Check v-if="message.labels && message.labels.includes(lbl.id)" class="w-3.5 h-3.5 text-primary" />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <!-- Trash / Restore / Delete Actions -->
         <Button
           v-if="message.folder !== 'trash'"
           variant="ghost"
@@ -253,12 +312,24 @@ import {
   Sparkles,
   ArrowLeft,
   Mail,
+  FolderInput,
+  Folder,
+  Tag,
+  ChevronDown,
+  Check,
 } from 'lucide-vue-next';
 import { Button, Textarea } from '@/shared/components/ui';
-import type { MailMessage, MailAttachment } from '@/modules/Core/System/composables/useMailClient';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
+import type { MailMessage, MailAttachment, MailLabel } from '@/modules/Core/System/composables/useMailClient';
 
 const props = defineProps<{
     message: MailMessage | null;
+    availableLabels?: MailLabel[];
 }>();
 
 const emit = defineEmits<{
@@ -269,6 +340,8 @@ const emit = defineEmits<{
     (e: 'move-to-trash', id: string): void;
     (e: 'restore-from-trash', id: string): void;
     (e: 'delete-permanently', id: string): void;
+    (e: 'move-to-folder', id: string, folder: string): void;
+    (e: 'toggle-label', id: string, labelId: string): void;
     (e: 'send-reply', replyText: string): void;
 }>();
 

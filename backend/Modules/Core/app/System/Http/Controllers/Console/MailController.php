@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\MailMessage;
+use Modules\Core\System\Models\Setting;
 
 class MailController extends BaseApiController
 {
@@ -108,6 +109,12 @@ class MailController extends BaseApiController
         $body = (string) ($validated['body'] ?? '');
         $snippet = Str::limit(strip_tags($body), 120);
 
+        // Append signature from client preferences if configured
+        $signatureSetting = Setting::where('key', 'mail_client_signature')->first();
+        if ($signatureSetting && ! empty($signatureSetting->value)) {
+            $body .= '<br/><br/>--<br/>'.(string) $signatureSetting->value;
+        }
+
         // Get sender info from settings or system defaults
         $fromName = config('mail.from.name', 'Jejakawan Core');
         $fromAddress = config('mail.from.address', 'noreply@jejakawan.com');
@@ -154,6 +161,53 @@ class MailController extends BaseApiController
     }
 
     /**
+     * Move message to a specific folder
+     */
+    public function move(string $id, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'folder' => 'required|string|in:inbox,sent,drafts,trash,spam,archive',
+        ]);
+
+        $message = MailMessage::find($id);
+        if (! $message) {
+            return $this->error('Message not found', 404);
+        }
+
+        $message->update(['folder' => $validated['folder']]);
+
+        return $this->success($message, 'Message moved to '.$validated['folder']);
+    }
+
+    /**
+     * Assign or remove a label on a message
+     */
+    public function toggleMessageLabel(string $id, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'label' => 'required|string|max:50',
+        ]);
+
+        $message = MailMessage::find($id);
+        if (! $message) {
+            return $this->error('Message not found', 404);
+        }
+
+        $labels = is_array($message->labels) ? $message->labels : [];
+        $target = (string) $validated['label'];
+
+        if (in_array($target, $labels, true)) {
+            $labels = array_values(array_diff($labels, [$target]));
+        } else {
+            $labels[] = $target;
+        }
+
+        $message->update(['labels' => $labels]);
+
+        return $this->success(['labels' => $labels], 'Message labels updated');
+    }
+
+    /**
      * Toggle starred status
      */
     public function toggleStar(string $id): JsonResponse
@@ -185,7 +239,7 @@ class MailController extends BaseApiController
     }
 
     /**
-     * Move message to trash
+     * Move message to trash (Soft Delete)
      */
     public function moveToTrash(string $id): JsonResponse
     {
@@ -215,7 +269,7 @@ class MailController extends BaseApiController
     }
 
     /**
-     * Delete message permanently
+     * Delete message permanently (Hard Delete)
      */
     public function destroy(string $id): JsonResponse
     {
@@ -230,11 +284,111 @@ class MailController extends BaseApiController
     }
 
     /**
+     * Empty entire trash folder
+     */
+    public function emptyTrash(): JsonResponse
+    {
+        $count = MailMessage::where('folder', 'trash')->delete();
+
+        return $this->success(['deleted_count' => $count], 'Trash folder emptied successfully');
+    }
+
+    /**
+     * Get list of custom labels
+     */
+    public function getLabels(): JsonResponse
+    {
+        $labelsSetting = Setting::where('key', 'mail_client_labels')->first();
+        $labels = $labelsSetting && is_array($labelsSetting->value)
+            ? $labelsSetting->value
+            : [
+                ['id' => 'support', 'name' => 'Support', 'color' => 'bg-blue-500'],
+                ['id' => 'urgent', 'name' => 'Urgent', 'color' => 'bg-rose-500'],
+                ['id' => 'billing', 'name' => 'Billing', 'color' => 'bg-emerald-500'],
+                ['id' => 'system', 'name' => 'System Alerts', 'color' => 'bg-amber-500'],
+            ];
+
+        return $this->success($labels, 'Labels retrieved successfully');
+    }
+
+    /**
+     * Save custom labels list
+     */
+    public function saveLabels(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'labels' => 'required|array',
+            'labels.*.id' => 'required|string',
+            'labels.*.name' => 'required|string|max:50',
+            'labels.*.color' => 'required|string|max:50',
+        ]);
+
+        Setting::updateOrCreate(
+            ['key' => 'mail_client_labels'],
+            [
+                'value' => $validated['labels'],
+                'group' => 'mail_client',
+                'type' => 'array',
+            ]
+        );
+
+        return $this->success($validated['labels'], 'Labels saved successfully');
+    }
+
+    /**
+     * Get mail client standard preferences
+     */
+    public function getSettings(): JsonResponse
+    {
+        $settings = Setting::where('group', 'mail_client')->pluck('value', 'key')->all();
+
+        return $this->success([
+            'signature' => $settings['mail_client_signature'] ?? '',
+            'reply_to' => $settings['mail_client_reply_to'] ?? '',
+            'auto_read_delay' => (int) ($settings['mail_client_auto_read_delay'] ?? 0),
+            'auto_check_interval' => (int) ($settings['mail_client_auto_check_interval'] ?? 5),
+            'sound_notifications' => (bool) ($settings['mail_client_sound_notifications'] ?? true),
+            'vacation_enabled' => (bool) ($settings['mail_client_vacation_enabled'] ?? false),
+            'vacation_subject' => $settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply',
+            'vacation_body' => $settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.',
+        ], 'Mail client settings retrieved successfully');
+    }
+
+    /**
+     * Save mail client standard preferences
+     */
+    public function saveSettings(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'signature' => 'nullable|string',
+            'reply_to' => 'nullable|email',
+            'auto_read_delay' => 'nullable|integer',
+            'auto_check_interval' => 'nullable|integer',
+            'sound_notifications' => 'nullable|boolean',
+            'vacation_enabled' => 'nullable|boolean',
+            'vacation_subject' => 'nullable|string|max:255',
+            'vacation_body' => 'nullable|string',
+        ]);
+
+        foreach ($validated as $key => $val) {
+            Setting::updateOrCreate(
+                ['key' => 'mail_client_'.$key],
+                [
+                    'value' => $val,
+                    'group' => 'mail_client',
+                    'type' => is_bool($val) ? 'boolean' : (is_int($val) ? 'integer' : 'string'),
+                ]
+            );
+        }
+
+        return $this->success($validated, 'Mail client settings saved successfully');
+    }
+
+    /**
      * Sync mailbox from mail server
      */
     public function sync(): JsonResponse
     {
-        // Real synchronization endpoint check
         $total = MailMessage::count();
 
         return $this->success([

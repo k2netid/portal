@@ -115,12 +115,28 @@
 
         <!-- Labels Section -->
         <div class="space-y-0.5 pt-2 border-t border-border/40">
-          <p
-            v-if="!isMinimized"
-            class="px-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70 mb-1.5"
+          <div v-if="!isMinimized" class="flex items-center justify-between px-2 mb-1.5">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">
+              {{ $t('system.mail.labels') }}
+            </p>
+            <button
+              type="button"
+              class="text-muted-foreground hover:text-primary p-0.5 rounded transition-colors"
+              :title="$t('system.mail.manage_labels')"
+              @click.stop="$emit('manage-labels')"
+            >
+              <Plus class="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <button
+            v-else
+            type="button"
+            class="w-full flex justify-center p-2 text-muted-foreground hover:text-primary"
+            :title="$t('system.mail.manage_labels')"
+            @click.stop="$emit('manage-labels')"
           >
-            {{ $t('system.mail.labels') }}
-          </p>
+            <Plus class="w-3.5 h-3.5" />
+          </button>
 
           <button
             v-for="label in labels"
@@ -213,6 +229,7 @@ const emit = defineEmits<{
     (e: 'open-composer'): void;
     (e: 'toggle-minimize'): void;
     (e: 'sync'): void;
+    (e: 'manage-labels'): void;
 }>();
 
 const selectFolder = (folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam') => {

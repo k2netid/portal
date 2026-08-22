@@ -104,6 +104,35 @@ class MailControllerTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_move_message_and_toggle_label(): void
+    {
+        $message = MailMessage::create([
+            'folder' => 'inbox',
+            'sender_name' => 'Support',
+            'sender_email' => 'support@example.com',
+            'recipients' => ['admin@jejakawan.com'],
+            'subject' => 'Move and Tag Test',
+            'body' => '<p>Content</p>',
+            'labels' => [],
+        ]);
+
+        // Move to spam
+        $moveRes = $this->actingAs($this->user, 'sanctum')
+            ->postJson("/api/v1/manage/mail/messages/{$message->id}/move", ['folder' => 'spam']);
+
+        $moveRes->assertOk();
+        $this->assertDatabaseHas('sys_mail_messages', ['id' => $message->id, 'folder' => 'spam']);
+
+        // Add label
+        $labelRes = $this->actingAs($this->user, 'sanctum')
+            ->postJson("/api/v1/manage/mail/messages/{$message->id}/label", ['label' => 'urgent']);
+
+        $labelRes->assertOk();
+        $this->assertDatabaseHas('sys_mail_messages', [
+            'id' => $message->id,
+        ]);
+    }
+
     public function test_admin_can_toggle_star_and_move_to_trash(): void
     {
         $message = MailMessage::create([
@@ -124,7 +153,7 @@ class MailControllerTest extends TestCase
         $starRes->assertOk()
             ->assertJsonPath('data.is_starred', true);
 
-        // Move to Trash
+        // Move to Trash (Soft Delete)
         $trashRes = $this->actingAs($this->user, 'sanctum')
             ->deleteJson("/api/v1/manage/mail/messages/{$message->id}/trash");
 
@@ -155,6 +184,42 @@ class MailControllerTest extends TestCase
         $this->assertDatabaseMissing('sys_mail_messages', [
             'id' => $message->id,
         ]);
+    }
+
+    public function test_admin_can_manage_settings_and_empty_trash(): void
+    {
+        // Save settings
+        $settingsRes = $this->actingAs($this->user, 'sanctum')
+            ->postJson('/api/v1/manage/mail/settings', [
+                'signature' => 'Kind regards, Admin',
+                'vacation_enabled' => true,
+                'auto_check_interval' => 5,
+            ]);
+
+        $settingsRes->assertOk();
+
+        // Get settings
+        $getSettingsRes = $this->actingAs($this->user, 'sanctum')
+            ->getJson('/api/v1/manage/mail/settings');
+
+        $getSettingsRes->assertOk()
+            ->assertJsonPath('data.vacation_enabled', true);
+
+        // Create trash message and empty
+        MailMessage::create([
+            'folder' => 'trash',
+            'sender_name' => 'Old Mail',
+            'sender_email' => 'old@example.com',
+            'recipients' => ['admin@jejakawan.com'],
+            'subject' => 'To be emptied',
+            'body' => '<p>Dust</p>',
+        ]);
+
+        $emptyRes = $this->actingAs($this->user, 'sanctum')
+            ->deleteJson('/api/v1/manage/mail/trash/empty');
+
+        $emptyRes->assertOk();
+        $this->assertDatabaseMissing('sys_mail_messages', ['subject' => 'To be emptied']);
     }
 
     public function test_unauthenticated_cannot_access_mail(): void

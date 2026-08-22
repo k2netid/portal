@@ -56,6 +56,11 @@ export function useMailClient() {
     const loading = ref(false);
     const syncing = ref(false);
 
+    // Modals
+    const isSettingsOpen = ref(false);
+    const isLabelsModalOpen = ref(false);
+    const isComposerOpen = ref(false);
+
     // Labels
     const labels = ref<MailLabel[]>([
         { id: 'support', name: 'Support', color: 'bg-blue-500' },
@@ -106,6 +111,19 @@ export function useMailClient() {
             labels: Array.isArray(item.labels) ? item.labels : [],
             attachments: Array.isArray(item.attachments) ? item.attachments : [],
         };
+    };
+
+    // Fetch labels from API
+    const fetchLabels = async () => {
+        try {
+            const res = await api.get('/manage/mail/labels');
+            const data = res.data?.data || res.data;
+            if (Array.isArray(data) && data.length > 0) {
+                labels.value = data;
+            }
+        } catch {
+            // Keep default labels
+        }
     };
 
     // Fetch messages from backend API
@@ -212,6 +230,33 @@ export function useMailClient() {
         }
     };
 
+    const moveMessage = async (id: string, targetFolder: string) => {
+        try {
+            await api.post(`/manage/mail/messages/${id}/move`, { folder: targetFolder });
+            messages.value = messages.value.filter((m) => m.id !== id);
+            toast.success.action(`Message moved to ${targetFolder}`);
+            selectedMessageId.value = messages.value[0]?.id ?? null;
+            isMobileDetailOpen.value = false;
+            fetchMessages();
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+        }
+    };
+
+    const toggleMessageLabel = async (id: string, labelId: string) => {
+        try {
+            const res = await api.post(`/manage/mail/messages/${id}/label`, { label: labelId });
+            const newLabels = res.data?.data?.labels || [];
+            const msg = messages.value.find((m) => m.id === id);
+            if (msg) {
+                msg.labels = newLabels;
+            }
+            toast.success.action('Labels updated');
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+        }
+    };
+
     const moveToTrash = async (id: string) => {
         try {
             await api.delete(`/manage/mail/messages/${id}/trash`);
@@ -250,8 +295,19 @@ export function useMailClient() {
         }
     };
 
+    const emptyTrash = async () => {
+        try {
+            await api.delete('/manage/mail/trash/empty');
+            messages.value = [];
+            selectedMessageId.value = null;
+            toast.success.action('Trash folder emptied');
+            fetchMessages();
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+        }
+    };
+
     // Composer State
-    const isComposerOpen = ref(false);
     const composerData = ref<{
         to: string;
         cc: string;
@@ -320,6 +376,7 @@ export function useMailClient() {
     };
 
     onMounted(() => {
+        fetchLabels();
         fetchMessages();
     });
 
@@ -338,17 +395,22 @@ export function useMailClient() {
         folderCounts,
         loading,
         syncing,
+        isSettingsOpen,
+        isLabelsModalOpen,
+        isComposerOpen,
+        composerData,
         fetchMessages,
         syncMailbox,
         selectFolder,
         selectLabel,
         selectMessage,
         toggleStar,
+        moveMessage,
+        toggleMessageLabel,
         moveToTrash,
         restoreFromTrash,
         deletePermanently,
-        isComposerOpen,
-        composerData,
+        emptyTrash,
         openComposer,
         reply,
         forward,

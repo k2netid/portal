@@ -3433,6 +3433,14 @@
     "sync_mailbox": "Sinkronisasi Kotak Surat",
     "syncing": "Menyinkronkan...",
     "expand_sidebar": "Perluas Sidebar",
-    "minimize_sidebar": "Ciutkan Sidebar"
+    "minimize_sidebar": "Ciutkan Sidebar",
+    "settings_title": "Pengaturan Mail Client",
+    "manage_labels": "Kelola Label",
+    "add_label": "Tambah Label Baru",
+    "add": "Tambah",
+    "existing_labels": "Label yang Ada",
+    "delete": "Hapus",
+    "move": "Pindahkan ke Folder",
+    "empty_trash": "Kosongkan Sampah"
   }
 }

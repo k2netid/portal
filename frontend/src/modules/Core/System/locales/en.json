@@ -3433,6 +3433,14 @@
     "sync_mailbox": "Sync Mailbox",
     "syncing": "Syncing...",
     "expand_sidebar": "Expand Sidebar",
-    "minimize_sidebar": "Minimize Sidebar"
+    "minimize_sidebar": "Minimize Sidebar",
+    "settings_title": "Mail Client Settings",
+    "manage_labels": "Manage Labels",
+    "add_label": "Add New Label",
+    "add": "Add",
+    "existing_labels": "Existing Labels",
+    "delete": "Delete",
+    "move": "Move to Folder",
+    "empty_trash": "Empty Trash"
   }
 }

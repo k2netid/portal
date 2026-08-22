@@ -204,6 +204,8 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('manage/mail')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('messages', [MailController::class, 'index']);
         Route::get('messages/{id}', [MailController::class, 'show']);
+        Route::post('messages/{id}/move', [MailController::class, 'move']);
+        Route::post('messages/{id}/label', [MailController::class, 'toggleMessageLabel']);
         Route::post('send', [MailController::class, 'send']);
         Route::post('sync', [MailController::class, 'sync']);
         Route::patch('messages/{id}/star', [MailController::class, 'toggleStar']);
@@ -211,6 +213,11 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('messages/{id}/trash', [MailController::class, 'moveToTrash']);
         Route::post('messages/{id}/restore', [MailController::class, 'restore']);
         Route::delete('messages/{id}', [MailController::class, 'destroy']);
+        Route::delete('trash/empty', [MailController::class, 'emptyTrash']);
+        Route::get('labels', [MailController::class, 'getLabels']);
+        Route::post('labels', [MailController::class, 'saveLabels']);
+        Route::get('settings', [MailController::class, 'getSettings']);
+        Route::post('settings', [MailController::class, 'saveSettings']);
     });
 
     // Notifications Management API (Canonical for SPA)
