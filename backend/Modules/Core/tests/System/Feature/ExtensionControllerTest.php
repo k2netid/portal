@@ -460,4 +460,77 @@ class ExtensionControllerTest extends TestCase
         $response->assertJsonPath('data.0.name', 'dynamic-test');
         $response->assertJsonPath('data.0.label', 'Dynamic Test Page');
     }
+
+    /**
+     * Core (Modules/Core alias) must discover as kernel: is_core + active.
+     */
+    public function test_core_module_is_discovered_as_active_kernel(): void
+    {
+        Extension::create([
+            'slug' => 'core',
+            'type' => 'module',
+            'name' => 'Core',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+
+        $core = collect($response->json('data'))->firstWhere('slug', 'core');
+        $this->assertNotNull($core);
+        $this->assertTrue((bool) $core['is_core']);
+        $this->assertEquals('active', $core['status']);
+    }
+
+    /**
+     * Kernel cannot be deactivated even when the DB row was corrupted.
+     */
+    public function test_kernel_slug_cannot_be_deactivated_even_if_is_core_flag_false(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'core',
+            'type' => 'module',
+            'name' => 'Core',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/deactivate");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('kernel', strtolower((string) $response->json('message')));
+        $this->assertEquals('active', $ext->fresh()->status);
+    }
+
+    /**
+     * Kernel cannot be uninstalled even when the DB row was corrupted.
+     */
+    public function test_kernel_slug_cannot_be_uninstalled_even_if_is_core_flag_false(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'core',
+            'type' => 'module',
+            'name' => 'Core',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->deleteJson("/api/v1/manage/infra/extensions/{$ext->slug}/uninstall");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('kernel', strtolower((string) $response->json('message')));
+        $this->assertNotNull(Extension::where('slug', 'core')->first());
+        $this->assertDirectoryExists(base_path('Modules/Core'));
+    }
 }

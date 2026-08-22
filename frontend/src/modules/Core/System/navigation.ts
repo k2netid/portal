@@ -102,7 +102,7 @@ export const systemNavigation: NavItem[] = [
         group: 'integrations_dev',
         priority: 75,
         children: [
-            { name: 'extensions', label: 'Extensions & App Store', labelKey: 'system.navigation.menu.extensions', permission: 'manage settings', role: 'super', priority: 100, icon: 'extensions' },
+            { name: 'extensions', label: 'Module Registry & App Store', labelKey: 'system.navigation.menu.extensions', permission: 'manage settings', role: 'super', priority: 100, icon: 'extensions' },
             { name: 'platform-integrations', label: 'Overview', labelKey: 'system.navigation.menu.integrations', permission: 'manage system', role: 'super', priority: 90, icon: 'code' },
             { name: 'oauth-clients', label: 'OAuth Clients', labelKey: 'system.navigation.menu.oauthClients', permission: 'manage system', role: 'super', priority: 85, icon: 'security' },
             { name: 'webhooks', label: 'Webhooks', labelKey: 'system.navigation.menu.webhooks', permission: 'manage system', role: 'super', priority: 80, icon: 'webhooks' },

@@ -276,7 +276,7 @@ const groupedFeatures = computed(() => {
   const operational: FeatureItem[] = [];
   
   props.ext.features.forEach(feat => {
-    const isCore = feat.category === 'core' || feat.category === 'auth' || feat.category === 'security' || props.ext.is_core || ['system', 'security', 'infra'].includes(props.ext.slug);
+    const isCore = feat.category === 'core' || feat.category === 'auth' || feat.category === 'security' || props.ext.is_core || ['core', 'system', 'security', 'infra'].includes(props.ext.slug);
     if (isCore) {
       core.push(feat);
     } else {
@@ -287,11 +287,13 @@ const groupedFeatures = computed(() => {
   return { core, operational };
 });
 
-// Dynamic license mapping for community vs commercial packages
+// License tiers for registry badges (kernel vs first-party vs legacy CMS leftovers)
 const getExtensionLicenseTier = (slug: string): 'free' | 'pro' | 'pro_plus' => {
   const tierMap: Record<string, 'free' | 'pro' | 'pro_plus'> = {
+    core: 'free',
     system: 'free',
     search: 'free',
+    mail: 'pro',
     media: 'pro',
     Jejakawan: 'pro',
     forms: 'pro',
@@ -299,12 +301,15 @@ const getExtensionLicenseTier = (slug: string): 'free' | 'pro' | 'pro_plus' => {
     library: 'pro',
     security: 'pro_plus',
     infra: 'pro_plus',
-    ai: 'pro_plus'
+    ai: 'pro_plus',
   };
   return tierMap[slug] || 'pro';
 };
 
 const licenseLabel = (slug: string) => {
+  if (slug === 'core' || props.ext.is_core) {
+    return t('system.appStore.card.licensePlatform');
+  }
   const tier = getExtensionLicenseTier(slug);
   if (tier === 'free') return t('system.appStore.card.licenseMit');
   if (tier === 'pro') return t('system.appStore.card.licenseCommercialPro');

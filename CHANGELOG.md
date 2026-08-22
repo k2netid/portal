@@ -17,6 +17,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - `Modules/Core/app/System/Services/Ai/AiHttpResponse.php` — typed HTTP helpers untuk provider AI.
 
 ### Changed
+- **Module Registry P0:** Core discovery marks slug `core` as kernel (`is_core` + always `active`); heal stale Inactive rows; uninstall/deactivate refuse kernel slugs even if `is_core` flag wrong; App Store UI → Platform / Modules / Plugins shelves + rename copy.
 - JA-Mail: IMAP/SPF/DKIM documented as mail-server/DNS (out of kernel backlog)
 - Identitas produk diselaraskan ke **Core Engine** (docs, UI, artisan, OAuth copy).
 - PHPStan: perbaiki 138 error di luar baseline; baseline diregenerasi (~85 entri FileManager).

@@ -22,6 +22,15 @@ use ZipArchive;
 class ExtensionController extends BaseApiController
 {
     /**
+     * Kernel packages that must stay active and cannot be uninstalled.
+     * Primary: consolidated Modules/Core (alias `core`).
+     * Legacy: old CMS split packages if they still appear on disk.
+     *
+     * @var list<string>
+     */
+    private const KERNEL_SLUGS = ['core', 'system', 'security', 'infra'];
+
+    /**
      * List all extensions (combining database statuses and physical folder discovery).
      */
     public function index(): JsonResponse
@@ -31,6 +40,26 @@ class ExtensionController extends BaseApiController
         $extensions = Extension::with('features')->latest()->get();
 
         return $this->success($extensions, 'Extensions retrieved successfully');
+    }
+
+    /**
+     * Whether a slug is part of the always-on platform kernel.
+     */
+    protected function isKernelSlug(string $slug): bool
+    {
+        return in_array(strtolower($slug), self::KERNEL_SLUGS, true);
+    }
+
+    /**
+     * Refuse lifecycle mutations that would disable or delete the kernel.
+     */
+    protected function guardKernelLifecycle(Extension $extension, string $action): ?JsonResponse
+    {
+        if (! $extension->is_core && ! $this->isKernelSlug($extension->slug)) {
+            return null;
+        }
+
+        return $this->error("Platform kernel modules cannot be {$action}");
     }
 
     /**
@@ -104,8 +133,8 @@ class ExtensionController extends BaseApiController
     {
         $extension = Extension::where('slug', $slug)->firstOrFail();
 
-        if ($extension->is_core) {
-            return $this->error('Core modules cannot be deactivated');
+        if ($guard = $this->guardKernelLifecycle($extension, 'deactivated')) {
+            return $guard;
         }
 
         if ($extension->status !== 'active') {
@@ -168,8 +197,8 @@ class ExtensionController extends BaseApiController
     {
         $extension = Extension::where('slug', $slug)->firstOrFail();
 
-        if ($extension->is_core) {
-            return $this->error('Core modules cannot be uninstalled');
+        if ($guard = $this->guardKernelLifecycle($extension, 'uninstalled')) {
+            return $guard;
         }
 
         if ($extension->status === 'active') {
@@ -383,12 +412,15 @@ class ExtensionController extends BaseApiController
                     $featuresRaw = $manifest['features'] ?? [];
                     $features = is_array($featuresRaw) ? $featuresRaw : [];
 
+                    $manifestMarksCore = array_key_exists('is_core', $manifest)
+                        && filter_var($manifest['is_core'], FILTER_VALIDATE_BOOLEAN);
+
                     $discovered[$slugRaw] = [
                         'type' => 'module',
                         'name' => $name,
                         'version' => $version,
                         'author' => $author,
-                        'is_core' => in_array($slugRaw, ['system', 'security', 'analytics', 'infra', 'ai', 'media', 'publishing'], true),
+                        'is_core' => $manifestMarksCore || $this->isKernelSlug($slugRaw),
                         'features' => $features,
                     ];
                 }
@@ -434,17 +466,25 @@ class ExtensionController extends BaseApiController
 
         // 3. Synchronize with Database
         foreach ($discovered as $slug => $meta) {
+            $existing = Extension::where('slug', $slug)->first();
+            // Kernel packages are always active — heal stale inactive rows from old discovery.
+            $status = $meta['is_core']
+                ? 'active'
+                : ($existing?->status ?? 'inactive');
+
             $extension = Extension::updateOrCreate(
                 ['slug' => $slug],
                 [
                     'type' => $meta['type'],
                     'name' => $meta['name'],
                     'version' => $meta['version'],
-                    'database_version' => Extension::where('slug', $slug)->value('database_version') ?? '1.0.0',
-                    'status' => Extension::where('slug', $slug)->value('status') ?? ($meta['is_core'] ? 'active' : 'inactive'),
+                    'database_version' => $existing?->database_version ?? '1.0.0',
+                    'status' => $status,
                     'is_core' => $meta['is_core'],
-                    'author' => 'jejakawan',
-                    'license' => 'Proprietary',
+                    'author' => $meta['author'] !== '' && $meta['author'] !== 'Core'
+                        ? $meta['author']
+                        : 'jejakawan',
+                    'license' => $meta['is_core'] ? 'Platform' : 'Proprietary',
                     'requirements' => [],
                 ]
             );
@@ -469,8 +509,8 @@ class ExtensionController extends BaseApiController
         $feature = Feature::where('slug', $slug)->firstOrFail();
         $extension = $feature->extension;
 
-        if ($extension && $extension->is_core && in_array($extension->slug, ['system', 'security', 'infra'])) {
-            return $this->error('Sub-features of critical core modules cannot be toggled');
+        if ($extension && ($extension->is_core || $this->isKernelSlug($extension->slug))) {
+            return $this->error('Sub-features of the platform kernel cannot be toggled');
         }
 
         $validated = $request->validate([

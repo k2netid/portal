@@ -1,8 +1,13 @@
 {
     "name": "Core",
     "alias": "core",
-    "description": "Core Infrastructure Module (System, Security, Infra)",
-    "keywords": [],
+    "slug": "core",
+    "version": "1.0.0",
+    "description": "Platform kernel — System, Security, and Infra (always on)",
+    "author": "jejakawan",
+    "type": "module",
+    "is_core": true,
+    "keywords": ["kernel", "platform", "system", "security", "infra"],
     "priority": 0,
     "providers": [
         "Modules\\Core\\Providers\\CoreServiceProvider"

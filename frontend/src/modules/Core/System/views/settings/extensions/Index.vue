@@ -219,6 +219,7 @@ const trans = computed(() => ({
     gitBtn: t('system.appStore.gitBtn'),
     uploadBtn: t('system.appStore.uploadBtn'),
     all: t('system.appStore.all'),
+    platform: t('system.appStore.platform'),
     modules: t('system.appStore.modules'),
     plugins: t('system.appStore.plugins'),
     author: t('system.appStore.author'),
@@ -268,9 +269,17 @@ const getLocalizedDescription = (ext: ExtensionItem) => {
 
 const filterTabs = computed(() => [
     { label: trans.value.all, value: 'all' },
+    { label: trans.value.platform, value: 'platform' },
     { label: trans.value.modules, value: 'module' },
-    { label: trans.value.plugins, value: 'plugin' }
+    { label: trans.value.plugins, value: 'plugin' },
 ]);
+
+const extensionShelf = (ext: ExtensionItem): 'platform' | 'module' | 'plugin' => {
+    if (ext.is_core || ext.slug === 'core') {
+        return 'platform';
+    }
+    return ext.type === 'plugin' ? 'plugin' : 'module';
+};
 
 // Pagination state
 const currentPage = ref(1);
@@ -351,16 +360,23 @@ const fetchExtensions = async () => {
     }
 };
 
-// Filter logic
+// Filter logic — shelves: platform (kernel) · modules · plugins
 const filteredExtensions = computed(() => {
-    return extensions.value.filter(ext => {
-        const matchesSearch = ext.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-            ext.slug.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-            (ext.author || '').toLowerCase().includes(searchQuery.value.toLowerCase());
-        
-        const matchesTab = activeTab.value === 'all' || ext.type === activeTab.value;
-        return matchesSearch && matchesTab;
-    });
+    const shelfOrder = { platform: 0, module: 1, plugin: 2 } as const;
+
+    return extensions.value
+        .filter((ext) => {
+            const matchesSearch =
+                ext.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                ext.slug.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                (ext.author || '').toLowerCase().includes(searchQuery.value.toLowerCase());
+
+            const shelf = extensionShelf(ext);
+            const matchesTab = activeTab.value === 'all' || activeTab.value === shelf;
+
+            return matchesSearch && matchesTab;
+        })
+        .sort((a, b) => shelfOrder[extensionShelf(a)] - shelfOrder[extensionShelf(b)]);
 });
 
 // Toggle Status (Activate / Deactivate)
@@ -462,6 +478,7 @@ const uploadZip = async (file: File) => {
 const openSettingsModal = (ext: ExtensionItem) => {
     // Check if the module has a dedicated settings page route
     const routeMap: Record<string, { name: string; query?: Record<string, string> } | string> = {
+        core: { name: 'settings', query: { tab: 'system' } },
         system: { name: 'settings', query: { tab: 'system' } },
         security: { name: 'settings', query: { tab: 'security' } },
         infra: { name: 'settings', query: { tab: 'performance' } },
@@ -470,10 +487,10 @@ const openSettingsModal = (ext: ExtensionItem) => {
         analytics: { name: 'settings', query: { tab: 'analytics' } },
         Jejakawan: { name: 'Jejakawan-settings' },
         mail: { name: 'mail', query: { openSettings: 'true', tab: 'accounts' } },
-        forms: '/dash/forms', // Forms module settings
+        forms: '/dash/forms',
         library: consolePath('/library'),
         newsletter: consolePath('/newsletter'),
-        search: { name: 'settings', query: { tab: 'system' } } // Search sits under system settings
+        search: { name: 'settings', query: { tab: 'system' } },
     };
 
     const target = routeMap[ext.slug];
