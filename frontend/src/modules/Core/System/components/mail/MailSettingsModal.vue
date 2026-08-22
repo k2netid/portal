@@ -52,6 +52,331 @@
 
       <!-- Tab Contents (Responsive & Scrollable) -->
       <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar max-h-[calc(88vh-135px)] min-h-[320px]">
+        <!-- Tab 0: Mailbox Accounts & Personal Credentials -->
+        <div v-if="activeTab === 'accounts'" class="space-y-4">
+          <!-- Top section: Connected accounts list + Connect button -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                {{ $t('system.mail.accounts.connectedAccounts') }} ({{ accounts?.length || 0 }})
+              </label>
+              <Button
+                v-if="capabilities?.can_manage_personal || capabilities?.can_manage_multi"
+                variant="outline"
+                size="sm"
+                class="h-7 text-xs gap-1 px-2.5 shadow-2xs"
+                @click="startNewAccount"
+              >
+                <Plus class="w-3.5 h-3.5 text-primary" />
+                <span>{{ $t('system.mail.accounts.addAccount') }}</span>
+              </Button>
+            </div>
+
+            <!-- List of connected accounts -->
+            <div v-if="accounts && accounts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div
+                v-for="acc in accounts"
+                :key="acc.id"
+                :class="[
+                  'p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3',
+                  selectedAccountId === acc.id
+                    ? 'border-primary bg-primary/5 shadow-2xs ring-1 ring-primary/20'
+                    : 'border-border/60 bg-muted/20 hover:bg-muted/40'
+                ]"
+                @click="selectAccountToEdit(acc)"
+              >
+                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                  <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">
+                    {{ (acc.name || acc.email).charAt(0).toUpperCase() }}
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs font-bold text-foreground truncate">{{ acc.name }}</span>
+                      <span v-if="acc.is_default" class="text-[10px] text-amber-500 font-bold">★</span>
+                    </div>
+                    <p class="text-[11px] text-muted-foreground truncate">{{ acc.email }}</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span
+                    :class="[
+                      'text-[9px] font-bold px-1.5 py-0.5 rounded-md border uppercase tracking-wider',
+                      acc.account_type === 'system_global'
+                        ? 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                        : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                    ]"
+                  >
+                    {{ acc.account_type === 'system_global' ? 'Global' : 'Custom' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div v-else class="p-6 text-center border border-dashed border-border/60 rounded-xl bg-muted/10 text-xs text-muted-foreground">
+              No mailbox accounts configured. Connect your email account to start sending and receiving messages.
+            </div>
+          </div>
+
+          <!-- Account Configuration Form -->
+          <div class="p-4 rounded-xl border border-border/60 bg-background/50 space-y-4">
+            <div class="flex items-center justify-between border-b border-border/40 pb-2.5">
+              <h4 class="text-xs font-bold text-foreground flex items-center gap-2">
+                <Mail class="w-4 h-4 text-primary" />
+                <span>{{ selectedAccountId ? 'Edit Mailbox Account' : 'Connect New Mailbox Account' }}</span>
+              </h4>
+              <div v-if="selectedAccountId" class="flex items-center gap-2">
+                <Button
+                  v-if="accounts && accounts.length > 1"
+                  variant="ghost"
+                  size="sm"
+                  class="h-7 text-xs text-destructive hover:bg-destructive/10 gap-1 px-2"
+                  @click="handleDeleteAccount"
+                >
+                  <Trash2 class="w-3.5 h-3.5" />
+                  <span>Disconnect</span>
+                </Button>
+              </div>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="space-y-2">
+              <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.integrationMode') }}</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label
+                  :class="[
+                    'p-3 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5',
+                    accountForm.account_type === 'system_global'
+                      ? 'border-primary bg-primary/5 shadow-2xs'
+                      : 'border-border/60 hover:bg-muted/30'
+                  ]"
+                >
+                  <input
+                    v-model="accountForm.account_type"
+                    type="radio"
+                    value="system_global"
+                    class="mt-0.5 text-primary"
+                  >
+                  <div class="text-xs">
+                    <p class="font-bold text-foreground">{{ $t('system.mail.accounts.inheritGlobal') }}</p>
+                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('system.mail.accounts.inheritGlobalDesc') }}</p>
+                  </div>
+                </label>
+
+                <label
+                  :class="[
+                    'p-3 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5',
+                    accountForm.account_type === 'custom_personal'
+                      ? 'border-primary bg-primary/5 shadow-2xs'
+                      : 'border-border/60 hover:bg-muted/30'
+                  ]"
+                >
+                  <input
+                    v-model="accountForm.account_type"
+                    type="radio"
+                    value="custom_personal"
+                    class="mt-0.5 text-primary"
+                  >
+                  <div class="text-xs">
+                    <p class="font-bold text-foreground">{{ $t('system.mail.accounts.customPersonal') }}</p>
+                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('system.mail.accounts.customPersonalDesc') }}</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Basic Identity Fields -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.accountName') }} *</label>
+                <Input
+                  v-model="accountForm.name"
+                  placeholder="e.g. Sales Department or John Personal"
+                  class="h-8 text-xs bg-background"
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.emailAddress') }} *</label>
+                <Input
+                  v-model="accountForm.email"
+                  type="email"
+                  placeholder="name@domain.com"
+                  class="h-8 text-xs bg-background"
+                />
+              </div>
+            </div>
+
+            <!-- Custom SMTP & IMAP Settings -->
+            <div v-if="accountForm.account_type === 'custom_personal'" class="space-y-3 pt-2 border-t border-border/40">
+              <div class="flex items-center justify-between">
+                <h5 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Personal Server Credentials
+                </h5>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  class="h-6 text-[11px] px-2 gap-1"
+                  :disabled="testingAccountConnection"
+                  @click="handleTestAccountConnection"
+                >
+                  <RefreshCw :class="['w-3 h-3', testingAccountConnection ? 'animate-spin' : '']" />
+                  <span>Test Connection</span>
+                </Button>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">SMTP Host</label>
+                  <Input
+                    :model-value="accountForm.smtp_host ?? ''"
+                    placeholder="smtp.gmail.com"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.smtp_host = String(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">SMTP Port</label>
+                  <Input
+                    :model-value="accountForm.smtp_port ?? 587"
+                    type="number"
+                    placeholder="587"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.smtp_port = Number(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">SMTP Encryption</label>
+                  <Select
+                    :model-value="accountForm.smtp_encryption ?? 'tls'"
+                    @update:model-value="v => accountForm.smtp_encryption = v as any"
+                  >
+                    <SelectTrigger class="h-8 text-xs bg-background"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="tls">TLS (STARTTLS)</SelectItem>
+                      <SelectItem value="ssl">SSL</SelectItem>
+                      <SelectItem value="null">None</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">SMTP Username</label>
+                  <Input
+                    :model-value="accountForm.smtp_username ?? ''"
+                    placeholder="user@gmail.com"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.smtp_username = String(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">SMTP Password</label>
+                  <Input
+                    :model-value="accountForm.smtp_password ?? ''"
+                    type="password"
+                    placeholder="••••••••"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.smtp_password = String(v)"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Host</label>
+                  <Input
+                    :model-value="accountForm.imap_host ?? ''"
+                    placeholder="imap.gmail.com"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.imap_host = String(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Port</label>
+                  <Input
+                    :model-value="accountForm.imap_port ?? 993"
+                    type="number"
+                    placeholder="993"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.imap_port = Number(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Encryption</label>
+                  <Select
+                    :model-value="accountForm.imap_encryption ?? 'ssl'"
+                    @update:model-value="v => accountForm.imap_encryption = v as any"
+                  >
+                    <SelectTrigger class="h-8 text-xs bg-background"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ssl">SSL</SelectItem>
+                      <SelectItem value="tls">TLS</SelectItem>
+                      <SelectItem value="null">None</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Username</label>
+                  <Input
+                    :model-value="accountForm.imap_username ?? ''"
+                    placeholder="user@gmail.com"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.imap_username = String(v)"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Password</label>
+                  <Input
+                    :model-value="accountForm.imap_password ?? ''"
+                    type="password"
+                    placeholder="••••••••"
+                    class="h-8 text-xs bg-background"
+                    @update:model-value="v => accountForm.imap_password = String(v)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Signature & Default Toggle -->
+            <div class="space-y-3 pt-2 border-t border-border/40">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.signature') }}</label>
+                <Textarea
+                  :model-value="accountForm.signature ?? ''"
+                  rows="2"
+                  placeholder="e.g. Best regards, Jane Doe - Product Manager"
+                  class="text-xs bg-background"
+                  @update:model-value="v => accountForm.signature = String(v)"
+                />
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-muted/20 border border-border/40">
+                <div class="text-xs">
+                  <p class="font-bold text-foreground">{{ $t('system.mail.accounts.makeDefault') }}</p>
+                  <p class="text-[11px] text-muted-foreground">{{ $t('system.mail.accounts.makeDefaultDesc') }}</p>
+                </div>
+                <Switch
+                  :checked="!!accountForm.is_default"
+                  @update:checked="v => accountForm.is_default = v"
+                />
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+              <Button
+                variant="default"
+                size="sm"
+                class="h-8 text-xs px-4 font-semibold"
+                @click="handleSaveAccount"
+              >
+                Save Mailbox Account
+              </Button>
+            </div>
+          </div>
+        </div>
+
         <!-- Tab 1: General Preferences & Security -->
         <div v-if="activeTab === 'general'" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -716,6 +1041,8 @@ import {
   Bookmark,
   Plus,
   Trash2,
+  Mail,
+  RefreshCw,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -733,28 +1060,40 @@ import {
 } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
-import type { MailTemplate } from '@/modules/Core/System/composables/useMailClient';
+import type {
+  MailTemplate,
+  MailAccount,
+  MailAccountCapabilities,
+} from '@/modules/Core/System/composables/useMailClient';
 
 const props = withDefaults(
     defineProps<{
         isOpen: boolean;
-        initialTab?: 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server';
+        initialTab?: 'accounts' | 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server';
+        accounts?: MailAccount[];
+        capabilities?: MailAccountCapabilities;
     }>(),
     {
         initialTab: 'general',
+        accounts: () => [],
+        capabilities: () => ({ can_manage_personal: true, can_manage_multi: true, is_admin: true }),
     }
 );
 
 const emit = defineEmits<{
     (e: 'close'): void;
+    (e: 'save-account', data: Partial<MailAccount>, id?: string): void;
+    (e: 'delete-account', id: string): void;
+    (e: 'test-connection', data: Partial<MailAccount>): void;
 }>();
 
 const toast = useToast();
 const router = useRouter();
-const activeTab = ref<'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
+const activeTab = ref<'accounts' | 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
 const saving = ref(false);
 
 const tabs = [
+    { id: 'accounts' as const, label: 'Accounts & Mailboxes', icon: Mail },
     { id: 'general' as const, label: 'Preferences', icon: Sliders },
     { id: 'signature' as const, label: 'Signature & Logo', icon: PenTool },
     { id: 'templates' as const, label: 'Canned Templates', icon: Bookmark },
@@ -762,6 +1101,107 @@ const tabs = [
     { id: 'vacation' as const, label: 'Auto-Reply', icon: Calendar },
     { id: 'server' as const, label: 'Server & Transport', icon: Server },
 ];
+
+// Accounts State & Methods
+const selectedAccountId = ref<string | null>(null);
+const testingAccountConnection = ref(false);
+const accountForm = ref<Partial<MailAccount>>({
+    name: '',
+    email: '',
+    account_type: 'system_global',
+    smtp_host: '',
+    smtp_port: 587,
+    smtp_encryption: 'tls',
+    smtp_username: '',
+    smtp_password: '',
+    imap_host: '',
+    imap_port: 993,
+    imap_encryption: 'ssl',
+    imap_username: '',
+    imap_password: '',
+    is_default: false,
+    is_active: true,
+    signature: '',
+});
+
+const selectAccountToEdit = (acc: MailAccount) => {
+    selectedAccountId.value = acc.id;
+    accountForm.value = {
+        name: acc.name,
+        email: acc.email,
+        account_type: acc.account_type || 'system_global',
+        smtp_host: acc.smtp_host || '',
+        smtp_port: acc.smtp_port || 587,
+        smtp_encryption: acc.smtp_encryption || 'tls',
+        smtp_username: acc.smtp_username || '',
+        smtp_password: acc.smtp_password || '',
+        imap_host: acc.imap_host || '',
+        imap_port: acc.imap_port || 993,
+        imap_encryption: acc.imap_encryption || 'ssl',
+        imap_username: acc.imap_username || '',
+        imap_password: acc.imap_password || '',
+        is_default: acc.is_default || false,
+        is_active: acc.is_active !== false,
+        signature: acc.signature || '',
+    };
+};
+
+const startNewAccount = () => {
+    selectedAccountId.value = null;
+    accountForm.value = {
+        name: '',
+        email: '',
+        account_type: 'custom_personal',
+        smtp_host: '',
+        smtp_port: 587,
+        smtp_encryption: 'tls',
+        smtp_username: '',
+        smtp_password: '',
+        imap_host: '',
+        imap_port: 993,
+        imap_encryption: 'ssl',
+        imap_username: '',
+        imap_password: '',
+        is_default: (props.accounts?.length || 0) === 0,
+        is_active: true,
+        signature: '',
+    };
+};
+
+const handleSaveAccount = () => {
+    if (!accountForm.value.name?.trim() || !accountForm.value.email?.trim()) {
+        toast.error.action('Please enter account label and email address');
+        return;
+    }
+    emit('save-account', { ...accountForm.value }, selectedAccountId.value || undefined);
+};
+
+const handleDeleteAccount = () => {
+    if (selectedAccountId.value && confirm('Are you sure you want to disconnect this mailbox account?')) {
+        emit('delete-account', selectedAccountId.value);
+    }
+};
+
+const handleTestAccountConnection = () => {
+    testingAccountConnection.value = true;
+    emit('test-connection', { ...accountForm.value });
+    setTimeout(() => {
+        testingAccountConnection.value = false;
+    }, 2000);
+};
+
+watch(() => props.isOpen, (open) => {
+    if (open) {
+        if (props.accounts && props.accounts.length > 0) {
+            const target = props.accounts.find(a => a.is_default) || props.accounts[0];
+            if (target) {
+                selectAccountToEdit(target);
+            }
+        } else {
+            startNewAccount();
+        }
+    }
+});
 
 const globalAiState = ref<{
     enabled: boolean;

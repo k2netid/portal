@@ -118,7 +118,23 @@
       "identityIntegrations": "Idéntitas & Integrasi",
       "kycReviews": "Ulasan KYC",
       "integrations": "Integrasi",
-      "mail": "Kotak Surat"
+      "mail": "Kotak Surat",
+      "menuEditor": "Éditor Menu"
+    },
+    "menuEditor": {
+      "title": "Éditor Menu Konsol",
+      "subtitle": "Kustomisasi, atur runtuyan, sareng atur menu navigasi, idin RBAC, sareng pakait eksténsi",
+      "addItem": "Tambih Item Menu",
+      "editItem": "Édit Item Menu",
+      "resetDefaults": "Reset ka Standar",
+      "basicInfo": "Inpormasi Dasar",
+      "destination": "Target & Tujuan",
+      "accessGating": "Aksés & Pangwatesan",
+      "badgeStyle": "Lencana & Gaya",
+      "navigationTree": "Tangkal Navigasi",
+      "dragInstructions": "Sered item pikeun ngatur runtuyan atawa ngagolongkeunana di jero grup induk",
+      "noMenus": "Teu aya item menu kapendak",
+      "noMenusDesc": "Klik Tambih Item Menu atawa Reset ka Standar pikeun ngeusian tangkal navigasi."
     }
   },
   "auth": {
@@ -1213,27 +1229,6 @@
       },
       "title": "Tugas Terjadwal",
       "description": "Ngokolakeun tugas terjadwal sareng cron job."
-    },
-    "navigation": {
-      "menu": {
-        "webhooks": "Webhook",
-        "menuEditor": "Éditor Menu"
-      },
-      "menuEditor": {
-        "title": "Éditor Menu Konsol",
-        "subtitle": "Kustomisasi, atur runtuyan, sareng atur menu navigasi, idin RBAC, sareng pakait eksténsi",
-        "addItem": "Tambih Item Menu",
-        "editItem": "Édit Item Menu",
-        "resetDefaults": "Reset ka Standar",
-        "basicInfo": "Inpormasi Dasar",
-        "destination": "Target & Tujuan",
-        "accessGating": "Aksés & Pangwatesan",
-        "badgeStyle": "Lencana & Gaya",
-        "navigationTree": "Tangkal Navigasi",
-        "dragInstructions": "Sered item pikeun ngatur runtuyan atawa ngagolongkeunana di jero grup induk",
-        "noMenus": "Teu aya item menu kapendak",
-        "noMenusDesc": "Klik Tambih Item Menu atawa Reset ka Standar pikeun ngeusian tangkal navigasi."
-      }
     },
     "kyc": {
       "title": "Verifikasi Akun (KYC)",

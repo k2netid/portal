@@ -118,7 +118,23 @@
       "identityIntegrations": "Identity & Integrations",
       "kycReviews": "KYC Reviews",
       "integrations": "Integrations",
-      "mail": "Mailbox"
+      "mail": "Mailbox",
+      "menuEditor": "Menu Editor"
+    },
+    "menuEditor": {
+      "title": "Console Menu Editor",
+      "subtitle": "Customize, reorder, and control navigation menus, RBAC permissions, and extension bindings",
+      "addItem": "Add Menu Item",
+      "editItem": "Edit Menu Item",
+      "resetDefaults": "Reset to Defaults",
+      "basicInfo": "Basic Information",
+      "destination": "Target & Destination",
+      "accessGating": "Access & Gating",
+      "badgeStyle": "Badges & Style",
+      "navigationTree": "Navigation Tree",
+      "dragInstructions": "Drag items to reorder or nest them inside parent groups",
+      "noMenus": "No menu items found",
+      "noMenusDesc": "Click Add Menu Item or Reset to Defaults to populate the navigation tree."
     }
   },
   "auth": {
@@ -1213,27 +1229,6 @@
       },
       "title": "Scheduled Tasks",
       "description": "Manage scheduled tasks and cron jobs."
-    },
-    "navigation": {
-      "menu": {
-        "webhooks": "Webhooks",
-        "menuEditor": "Menu Editor"
-      },
-      "menuEditor": {
-        "title": "Console Menu Editor",
-        "subtitle": "Customize, reorder, and control navigation menus, RBAC permissions, and extension bindings",
-        "addItem": "Add Menu Item",
-        "editItem": "Edit Menu Item",
-        "resetDefaults": "Reset to Defaults",
-        "basicInfo": "Basic Information",
-        "destination": "Target & Destination",
-        "accessGating": "Access & Gating",
-        "badgeStyle": "Badges & Style",
-        "navigationTree": "Navigation Tree",
-        "dragInstructions": "Drag items to reorder or nest them inside parent groups",
-        "noMenus": "No menu items found",
-        "noMenusDesc": "Click Add Menu Item or Reset to Defaults to populate the navigation tree."
-      }
     },
     "kyc": {
       "title": "Account Verification (KYC)",

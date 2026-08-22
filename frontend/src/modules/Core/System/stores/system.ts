@@ -41,6 +41,7 @@ export interface SystemState {
     themeMode: 'light' | 'dark' | 'system';
     isDarkMode: boolean;
     consoleDashboardSlug: string;
+    activeExtensions: string[];
 }
 
 // siteSettings moved back to CmsStore as per user request (Jejakawan is public web authority)
@@ -78,6 +79,7 @@ export const useSystemStore = defineStore('system', {
         themeMode: 'system', // 'light', 'dark', 'system'
         isDarkMode: false,
         consoleDashboardSlug: 'dash',
+        activeExtensions: [],
     }),
 
     actions: {
@@ -165,6 +167,9 @@ export const useSystemStore = defineStore('system', {
                     this.consoleDashboardSlug = readConsoleDashboardSlugFromPayload(data);
                     persistConsoleDashboardSlug(this.consoleDashboardSlug);
                     
+                    if (Array.isArray(data.active_extensions)) {
+                        this.activeExtensions = data.active_extensions;
+                    }
 
 
                     return data;

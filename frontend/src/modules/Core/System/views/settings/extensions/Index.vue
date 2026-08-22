@@ -200,9 +200,12 @@ interface ExtensionItem {
     features?: FeatureItem[];
 }
 
+import { useSystemStore } from '@/modules/Core/System/stores/system';
+
 const { t, te } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const systemStore = useSystemStore();
 
 const extensions = ref<ExtensionItem[]>([]);
 const loading = ref(false);
@@ -386,6 +389,7 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
                 ? t('system.appStore.messages.toggleSuccessActivated', { name: ext.name })
                 : t('system.appStore.messages.toggleSuccessDeactivated', { name: ext.name }));
             await fetchExtensions();
+            await systemStore.fetchPublicSettings({ force: true });
         } else {
             toast.error(t('system.appStore.messages.toggleFailed', { action }));
         }
@@ -411,6 +415,7 @@ const uninstallExtension = async (slug: string) => {
         if (isSuccess) {
             toast.success(t('system.appStore.messages.uninstallSuccess'));
             await fetchExtensions();
+            await systemStore.fetchPublicSettings({ force: true });
         }
     } catch (err: unknown) {
         toast.error(t('system.appStore.messages.uninstallFailed'));

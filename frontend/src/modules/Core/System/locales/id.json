@@ -118,7 +118,23 @@
       "identityIntegrations": "Identitas & Integrasi",
       "kycReviews": "Review KYC",
       "integrations": "Integrations",
-      "mail": "Kotak Masuk"
+      "mail": "Kotak Masuk",
+      "menuEditor": "Editor Menu"
+    },
+    "menuEditor": {
+      "title": "Editor Menu Konsol",
+      "subtitle": "Kustomisasi, atur urutan, dan kelola menu navigasi, izin RBAC, dan kaitan ekstensi",
+      "addItem": "Tambah Item Menu",
+      "editItem": "Edit Item Menu",
+      "resetDefaults": "Reset ke Bawaan",
+      "basicInfo": "Informasi Dasar",
+      "destination": "Target & Tujuan",
+      "accessGating": "Akses & Pembatasan",
+      "badgeStyle": "Lencana & Gaya",
+      "navigationTree": "Pohon Navigasi",
+      "dragInstructions": "Tarik item untuk mengatur urutan atau mengelompokkannya di dalam grup induk",
+      "noMenus": "Tidak ada item menu ditemukan",
+      "noMenusDesc": "Klik Tambah Item Menu atau Reset ke Bawaan untuk mengisi pohon navigasi."
     }
   },
   "auth": {
@@ -1213,27 +1229,6 @@
       },
       "title": "Tugas Terjadwal",
       "description": "Kelola tugas terjadwal dan cron job."
-    },
-    "navigation": {
-      "menu": {
-        "webhooks": "Webhook",
-        "menuEditor": "Editor Menu"
-      },
-      "menuEditor": {
-        "title": "Editor Menu Konsol",
-        "subtitle": "Kustomisasi, atur urutan, dan kelola menu navigasi, izin RBAC, dan kaitan ekstensi",
-        "addItem": "Tambah Item Menu",
-        "editItem": "Edit Item Menu",
-        "resetDefaults": "Reset ke Bawaan",
-        "basicInfo": "Informasi Dasar",
-        "destination": "Target & Tujuan",
-        "accessGating": "Akses & Pembatasan",
-        "badgeStyle": "Lencana & Gaya",
-        "navigationTree": "Pohon Navigasi",
-        "dragInstructions": "Tarik item untuk mengatur urutan atau mengelompokkannya di dalam grup induk",
-        "noMenus": "Tidak ada item menu ditemukan",
-        "noMenusDesc": "Klik Tambah Item Menu atau Reset ke Bawaan untuk mengisi pohon navigasi."
-      }
     },
     "kyc": {
       "title": "Verifikasi Akun (KYC)",

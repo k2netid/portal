@@ -65,7 +65,7 @@ export const systemNavigation: NavItem[] = [
         group: 'system_config',
         priority: 85,
         children: [
-            { name: 'mail', label: 'Mailbox', labelKey: 'system.navigation.menu.mail', permission: 'manage system', role: 'super', priority: 90, icon: 'mail' },
+            { name: 'mail', label: 'Mailbox', labelKey: 'system.navigation.menu.mail', permission: 'manage system', role: 'super', priority: 90, icon: 'mail', extension: 'mail' },
             { name: 'settings', label: 'System Settings', labelKey: 'system.navigation.menu.settings', permission: 'view settings', icon: 'settings' },
             { name: 'settings-console-appearance', label: 'Console Appearance', labelKey: 'system.navigation.menu.consoleAppearance', permission: 'manage settings', icon: 'palette' },
             { name: 'settings-menus', label: 'Menu Editor', labelKey: 'system.navigation.menu.menuEditor', permission: 'manage settings', role: 'super', priority: 82, icon: 'menu' },

@@ -416,17 +416,26 @@ const filteredNavigation = computed<ResolvedNavItem[]>(() => {
         return permissionSet.has(permission);
     };
 
+    const activeExtensions = computed(() => new Set(systemStore.activeExtensions || []));
+
+    const isExtensionActive = (extSlug?: string): boolean => {
+        if (!extSlug) return true;
+        return activeExtensions.value.has(extSlug);
+    };
+
     return navigationStore.navigationItems
         .filter((item: NavItem) => {
             const role = Array.isArray(item.role) ? item.role[0] : item.role;
             if (role && !authStore.isAtLeastRole(role)) return false;
             if (!canPermission(item.permission)) return false;
+            if (!isExtensionActive(item.extension || item.extension_slug)) return false;
 
             return true;
         })
         .map((item: NavItem) => {
             const filteredChildren = item.children?.filter(child => {
                 if (!canPermission(child.permission)) return false;
+                if (!isExtensionActive(child.extension || child.extension_slug)) return false;
 
                 return true;
             });

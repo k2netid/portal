@@ -89,6 +89,56 @@
           <Settings class="w-4 h-4" />
         </Button>
 
+        <!-- Mailbox Account Switcher Dropdown (Top Right Toolbar) -->
+        <Popover v-if="accounts.length > 0" v-model:open="isAccountSwitcherOpen">
+          <PopoverTrigger as-child>
+            <button
+              type="button"
+              class="h-7 flex items-center gap-1.5 px-2 rounded-lg border border-border/60 bg-muted/40 hover:bg-muted text-left transition-all cursor-pointer shadow-2xs group ml-0.5"
+              :title="activeAccount ? `${activeAccount.name} (${activeAccount.email})` : 'Switch Mailbox'"
+            >
+              <div class="w-4.5 h-4.5 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[9px] shrink-0">
+                {{ (activeAccount?.name || activeAccount?.email || 'M').charAt(0).toUpperCase() }}
+              </div>
+              <div class="hidden md:block min-w-0 max-w-[120px]">
+                <p class="text-[11px] font-bold text-foreground truncate leading-none">{{ activeAccount?.name || 'Mailbox' }}</p>
+                <p class="text-[9px] text-muted-foreground truncate leading-none mt-0.5">{{ activeAccount?.email }}</p>
+              </div>
+              <ChevronsUpDown class="w-3 h-3 text-muted-foreground opacity-60 group-hover:opacity-100 shrink-0" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent class="w-60 p-1.5 z-[1200] text-xs space-y-1 bg-card border border-border/80 shadow-xl rounded-xl" align="end">
+            <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              {{ $t('system.mail.accounts.connectedAccounts') }}
+            </div>
+            <button
+              v-for="acc in accounts"
+              :key="acc.id"
+              type="button"
+              :class="[
+                'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left transition-colors cursor-pointer',
+                activeAccountId === acc.id ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-muted text-foreground'
+              ]"
+              @click="switchAccount(acc.id); isAccountSwitcherOpen = false"
+            >
+              <div class="min-w-0 flex-1 pr-1">
+                <p class="truncate leading-tight font-medium text-xs">{{ acc.name }}</p>
+                <p class="text-[10px] text-muted-foreground truncate leading-tight">{{ acc.email }}</p>
+              </div>
+              <Check v-if="activeAccountId === acc.id" class="w-3.5 h-3.5 text-primary shrink-0" />
+            </button>
+            <Separator class="my-1" />
+            <button
+              type="button"
+              class="w-full flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground text-left transition-colors text-[11px] font-medium cursor-pointer"
+              @click="openSettingsWithTab('accounts'); isAccountSwitcherOpen = false"
+            >
+              <Settings class="w-3.5 h-3.5 text-primary" />
+              <span>{{ $t('system.mail.accounts.title') }}</span>
+            </button>
+          </PopoverContent>
+        </Popover>
+
         <!-- Compose Email Button -->
         <Button
           size="sm"
@@ -121,15 +171,10 @@
           :folder-counts="folderCounts"
           :labels="labels"
           :storage-stats="storageStats"
-          :accounts="accounts"
-          :active-account-id="activeAccountId"
-          :capabilities="capabilities"
           @select-folder="selectFolder"
           @select-label="selectLabel"
           @update:labels="saveLabels"
           @manage-labels="isLabelsModalOpen = true"
-          @switch-account="switchAccount"
-          @manage-accounts="isAccountModalOpen = true"
         />
       </aside>
 
@@ -239,11 +284,16 @@
       @manage-templates="openSettingsWithTab('templates')"
     />
 
-    <!-- Mail Settings Modal -->
+    <!-- Mail Settings Modal (Unified with Accounts Management) -->
     <MailSettingsModal
       :is-open="isSettingsOpen"
       :initial-tab="settingsInitialTab"
+      :accounts="accounts"
+      :capabilities="capabilities"
       @close="isSettingsOpen = false"
+      @save-account="saveAccount"
+      @delete-account="deleteAccount"
+      @test-connection="testAccountConnection"
     />
 
     <!-- Keyboard Shortcuts Help Modal -->
@@ -258,17 +308,6 @@
       :labels="labels"
       @close="isLabelsModalOpen = false"
       @update:labels="v => labels = v"
-    />
-
-    <!-- Multi-Account Mailbox Manager Modal -->
-    <MailAccountModal
-      :is-open="isAccountModalOpen"
-      :accounts="accounts"
-      :capabilities="capabilities"
-      @close="isAccountModalOpen = false"
-      @save="saveAccount"
-      @delete="deleteAccount"
-      @test-connection="testAccountConnection"
     />
   </div>
 </template>
@@ -285,8 +324,16 @@ import {
   Tag,
   Trash2,
   Keyboard,
+  ChevronsUpDown,
+  Check,
 } from 'lucide-vue-next';
-import { Button } from '@/shared/components/ui';
+import {
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Separator,
+} from '@/shared/components/ui';
 import { useMailClient } from '@/modules/Core/System/composables/useMailClient';
 import MailSidebar from '@/modules/Core/System/components/mail/MailSidebar.vue';
 import MailList from '@/modules/Core/System/components/mail/MailList.vue';
@@ -295,7 +342,6 @@ import MailComposerModal from '@/modules/Core/System/components/mail/MailCompose
 import MailSettingsModal from '@/modules/Core/System/components/mail/MailSettingsModal.vue';
 import MailLabelsModal from '@/modules/Core/System/components/mail/MailLabelsModal.vue';
 import MailShortcutsModal from '@/modules/Core/System/components/mail/MailShortcutsModal.vue';
-import MailAccountModal from '@/modules/Core/System/components/mail/MailAccountModal.vue';
 
 const {
     isSidebarMinimized,
@@ -352,7 +398,6 @@ const {
     accounts,
     activeAccountId,
     capabilities,
-    isAccountModalOpen,
     switchAccount,
     saveAccount,
     deleteAccount,
@@ -360,9 +405,19 @@ const {
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);
-const settingsInitialTab = ref<'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
+const isAccountSwitcherOpen = ref(false);
 
-const openSettingsWithTab = (tab: 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server' = 'general') => {
+const activeAccount = computed(() => {
+    if (!accounts.value || accounts.value.length === 0) return null;
+    return accounts.value.find(a => a.id === activeAccountId.value)
+        || accounts.value.find(a => a.is_default)
+        || accounts.value[0]
+        || null;
+});
+
+const settingsInitialTab = ref<'accounts' | 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
+
+const openSettingsWithTab = (tab: 'accounts' | 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server' = 'general') => {
     settingsInitialTab.value = tab;
     isSettingsOpen.value = true;
 };

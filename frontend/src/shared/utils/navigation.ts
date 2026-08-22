@@ -17,4 +17,6 @@ export interface NavItem {
     children?: NavItem[];
     group?: string;
     priority?: number;
+    extension?: string;
+    extension_slug?: string;
 }

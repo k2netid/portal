@@ -749,9 +749,12 @@ export function useMailClient() {
         }
     };
 
-    const testAccountConnection = async (host: string, port: number) => {
+    const testAccountConnection = async (dataOrHost: Partial<MailAccount> | string, portNum?: number) => {
         try {
-            const res = await api.post('/manage/mail/accounts/test', { host, port });
+            const payload = typeof dataOrHost === 'string'
+                ? { host: dataOrHost, port: portNum }
+                : { host: dataOrHost.smtp_host || dataOrHost.imap_host, port: dataOrHost.smtp_port || dataOrHost.imap_port };
+            const res = await api.post('/manage/mail/accounts/test', payload);
             toast.success.action(res.data?.message || 'Connection handshake successful');
             return true;
         } catch (error: unknown) {

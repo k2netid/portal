@@ -53,6 +53,9 @@ class PublicSettingsController extends BaseApiController
             'maintenance_message' => Setting::get('maintenance_message', ''),
             'maintenance_countdown_enabled' => (bool) Setting::get('maintenance_countdown_enabled', false),
             'maintenance_end_time' => Setting::get('maintenance_end_time', ''),
+
+            // Active Extensions & Modules
+            'active_extensions' => \Modules\Core\System\Models\Extension::where('status', 'active')->pluck('slug')->values()->toArray(),
         ];
 
         $response = $this->success($payload, 'Public settings retrieved successfully');
