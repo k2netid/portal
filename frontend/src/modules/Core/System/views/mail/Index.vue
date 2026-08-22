@@ -123,6 +123,7 @@
           :storage-stats="storageStats"
           @select-folder="selectFolder"
           @select-label="selectLabel"
+          @update:labels="saveLabels"
           @manage-labels="isLabelsModalOpen = true"
         />
       </aside>
@@ -329,6 +330,7 @@ const {
     saveDraft,
     scheduleSend,
     snoozeMessage,
+    saveLabels,
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);

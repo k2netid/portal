@@ -35,6 +35,8 @@ export interface MailLabel {
     id: string;
     name: string;
     color: string;
+    parent_id?: string | null;
+    order?: number;
 }
 
 export interface MailTemplate {
@@ -203,6 +205,16 @@ export function useMailClient() {
             }
         } catch {
             // Keep default labels
+        }
+    };
+
+    const saveLabels = async (newLabels: MailLabel[]) => {
+        labels.value = newLabels;
+        try {
+            await api.post('/manage/mail/labels', { labels: newLabels });
+            toast.success.action('Labels updated successfully');
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
         }
     };
 
@@ -669,6 +681,7 @@ export function useMailClient() {
         saveDraft,
         scheduleSend,
         snoozeMessage,
+        saveLabels,
         fetchTemplates,
         saveTemplates,
     };
