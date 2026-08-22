@@ -81,6 +81,10 @@ class FoundationSeeder extends Seeder
 
             // Module Governance (CMS)
             'manage module access',
+
+            // JA-Mail extension
+            'manage personal mail account',
+            'manage multi mail accounts',
         ];
 
         foreach ($permissions as $permission) {
@@ -115,6 +119,8 @@ class FoundationSeeder extends Seeder
             'manage kyc reviews',
             'view security logs',
             'manage module access',
+            'manage personal mail account',
+            'manage multi mail accounts',
         ])->get());
 
         // --- Subscription member (public/member API, not platform console) ---

@@ -21,6 +21,7 @@ Creates:
 4. Add console menu entries (Menu Editor or `ConsoleMenu` seeder)
 5. Configure `.env` (`APP_NAME`, `DB_DATABASE=core_engine_db`, `APP_URL`)
 6. Optional: JA-CP license for Pro/Enterprise tiers
+7. If shipping **Content/Media**: implement `MediaLibrarySyncInterface` on `MediaService` and `MediaFileRecordInterface` on the media `File` model (see `backend/Modules/Core/app/Infra/Contracts/`). File Manager syncs automatically when those classes are bound.
 
 ## Where CMS / member / themes live
 

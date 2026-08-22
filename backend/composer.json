@@ -68,13 +68,15 @@
             "Modules\\Core\\Security\\Database\\Seeders\\": "Modules/Core/database/seeders/Security/",
             "Modules\\Core\\Infra\\Database\\Factories\\": "Modules/Core/database/factories/Infra/",
             "Modules\\Core\\Infra\\Database\\Seeders\\": "Modules/Core/database/seeders/Infra/",
+            "Modules\\Mail\\": "Modules/Mail/app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Modules\\Mail\\Tests\\": "Modules/Mail/tests/"
         }
     },
     "scripts": {

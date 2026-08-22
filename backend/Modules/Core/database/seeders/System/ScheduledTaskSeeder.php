@@ -30,6 +30,9 @@ class ScheduledTaskSeeder extends Seeder
             ['name' => 'Prune Revoked Tokens', 'command' => 'sanctum:prune-expired', 'schedule' => '0 5 * * *', 'is_active' => true],
             ['name' => 'Run Security Maintenance', 'command' => 'security:maintenance', 'schedule' => '0 3 * * 0', 'is_active' => false],
 
+            // JA-Mail
+            ['name' => 'Process Scheduled Mail', 'command' => 'mail:process-scheduled', 'schedule' => '*/5 * * * *', 'is_active' => true],
+
             // System & Diagnostics
             ['name' => 'System Health Diagnostic', 'command' => 'system:health-check', 'schedule' => '*/30 * * * *', 'is_active' => false],
             ['name' => 'System Optimization', 'command' => 'optimize', 'schedule' => '0 6 * * *', 'is_active' => false],

@@ -185,6 +185,7 @@ return [
         'enabled' => true,
         'paths' => [
             base_path('Modules/Core/*'),
+            base_path('Modules/Mail/*'),
             // Downstream product modules (Content, Intelligence, …) — add when extending kernel
         ],
     ],

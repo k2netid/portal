@@ -209,6 +209,7 @@ apiClient.interceptors.response.use(
                 || url.includes('/public/')
                 || url.includes('factory-reset')
                 || url.includes('maintenance')
+                || status === 403
             ) {
                 return Promise.reject(error);
             }
