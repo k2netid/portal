@@ -3,7 +3,7 @@
     :open="isOpen"
     @update:open="v => { if(!v) $emit('close') }"
   >
-    <DialogContent class="!p-0 !gap-0 max-w-2xl h-[580px] max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden">
+    <DialogContent class="!p-0 !gap-0 max-w-2xl h-[600px] max-h-[92vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden">
       <!-- Header -->
       <div class="h-12 px-5 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
@@ -22,12 +22,12 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex items-center gap-2 px-5 pt-3 border-b border-border/40 shrink-0 bg-background/50">
+      <div class="flex items-center gap-1 px-5 pt-2.5 border-b border-border/40 shrink-0 bg-background/50 overflow-x-auto custom-scrollbar">
         <button
           v-for="tab in tabs"
           :key="tab.id"
           :class="[
-            'px-3 py-2 text-xs font-semibold border-b-2 transition-colors flex items-center gap-2 -mb-px',
+            'px-3 py-2 text-xs font-semibold border-b-2 transition-colors flex items-center gap-1.5 -mb-px shrink-0',
             activeTab === tab.id
               ? 'border-primary text-primary font-bold'
               : 'border-transparent text-muted-foreground hover:text-foreground'
@@ -170,7 +170,7 @@
           </div>
         </div>
 
-        <!-- Tab 2: Identity & Signature -->
+        <!-- Tab 2: Identity & Signature (With Modal Logo Selector) -->
         <div v-if="activeTab === 'signature'" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="space-y-1.5">
@@ -194,25 +194,68 @@
             </div>
           </div>
 
-          <!-- Logo Field -->
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-foreground flex items-center gap-1.5">
-              <Image class="w-3.5 h-3.5 text-primary" />
-              <span>Signature Logo URL</span>
-            </label>
-            <p class="text-[11px] text-muted-foreground">Image URL or corporate brand emblem to display in your signature.</p>
-            <div class="flex items-center gap-2">
-              <Input
-                v-model="settingsData.signature_logo"
-                type="url"
-                placeholder="https://example.com/logo.png or /assets/branding/logo.svg"
-                class="h-8 text-xs flex-1"
-              />
+          <!-- Logo Selector (Modal Select & Quick Presets) -->
+          <div class="space-y-2 p-3 rounded-xl bg-muted/20 border border-border/60">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-foreground flex items-center gap-1.5">
+                <ImageIcon class="w-3.5 h-3.5 text-primary" />
+                <span>Signature Brand Logo</span>
+              </label>
+
+              <!-- MediaPicker Trigger -->
+              <MediaPicker @select="handleMediaSelect">
+                <template #trigger="{ open }">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    class="h-7 text-xs gap-1.5 shadow-xs"
+                    @click="open"
+                  >
+                    <Upload class="w-3 h-3" />
+                    <span>Choose from Media Library</span>
+                  </Button>
+                </template>
+              </MediaPicker>
+            </div>
+
+            <!-- Logo Quick Presets & Selected State -->
+            <div class="flex items-center gap-2 pt-1 flex-wrap">
               <div
                 v-if="settingsData.signature_logo"
-                class="w-8 h-8 rounded-lg border border-border/60 p-1 flex items-center justify-center bg-muted/40 shrink-0 overflow-hidden"
+                class="flex items-center gap-2 p-1.5 pr-3 rounded-lg border border-primary/40 bg-primary/5 text-xs"
               >
-                <img :src="settingsData.signature_logo" class="max-h-full max-w-full object-contain" alt="Logo Preview">
+                <div class="w-8 h-8 rounded border border-border/60 p-0.5 flex items-center justify-center bg-card shrink-0">
+                  <img :src="settingsData.signature_logo" class="max-h-full max-w-full object-contain" alt="Selected Logo">
+                </div>
+                <span class="text-[11px] font-medium text-foreground truncate max-w-[150px]">Selected Logo</span>
+                <button
+                  type="button"
+                  class="text-muted-foreground hover:text-destructive p-0.5"
+                  title="Remove Logo"
+                  @click="settingsData.signature_logo = ''"
+                >
+                  <X class="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="flex items-center gap-1.5 text-xs">
+                <span class="text-[10px] text-muted-foreground">Presets:</span>
+                <button
+                  type="button"
+                  class="px-2 py-0.5 rounded border border-border/60 bg-muted/40 hover:bg-muted text-[10px] font-semibold transition-colors"
+                  @click="settingsData.signature_logo = '/assets/branding/logo.svg'"
+                >
+                  System Brand
+                </button>
+                <button
+                  type="button"
+                  class="px-2 py-0.5 rounded border border-border/60 bg-muted/40 hover:bg-muted text-[10px] font-semibold transition-colors"
+                  @click="settingsData.signature_logo = '/favicon.ico'"
+                >
+                  App Icon
+                </button>
               </div>
             </div>
           </div>
@@ -254,7 +297,118 @@
           </div>
         </div>
 
-        <!-- Tab 3: Out-of-Office / Auto-Reply -->
+        <!-- Tab 3: AI Copilot & Governance Scope (NEW) -->
+        <div v-if="activeTab === 'ai'" class="space-y-4">
+          <div class="flex items-center justify-between p-3.5 rounded-xl bg-primary/5 border border-primary/20">
+            <div>
+              <p class="text-xs font-bold text-primary flex items-center gap-1.5">
+                <Sparkles class="w-4 h-4 text-amber-500" />
+                <span>AI Email Copilot Integration</span>
+              </p>
+              <p class="text-[11px] text-muted-foreground">Enable LLM-assisted drafting, summarizing, and smart replies in Webmail.</p>
+            </div>
+            <Switch v-model="settingsData.ai_enabled" />
+          </div>
+
+          <!-- Writing Tone Selection -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Default Writing Tone</label>
+              <Select v-model="settingsData.ai_tone">
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select tone" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="professional">Professional Business</SelectItem>
+                  <SelectItem value="friendly">Friendly & Warm</SelectItem>
+                  <SelectItem value="concise">Concise & Direct</SelectItem>
+                  <SelectItem value="executive">Formal Executive</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Preferred AI Engine</label>
+              <Select v-model="settingsData.ai_provider">
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select AI provider" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="system">System Default AI</SelectItem>
+                  <SelectItem value="claude">Anthropic Claude</SelectItem>
+                  <SelectItem value="gemini">Google Gemini</SelectItem>
+                  <SelectItem value="openai">OpenAI GPT</SelectItem>
+                  <SelectItem value="grok">xAI Grok</SelectItem>
+                  <SelectItem value="deepseek">DeepSeek</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <!-- Permitted Contexts (Konteks yang Diizinkan) -->
+          <div class="space-y-2 pt-1">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Permitted AI Capabilities (Konteks yang Diizinkan)
+            </h4>
+            <div class="space-y-2 rounded-xl border border-border/40 p-3 bg-muted/20">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-semibold text-foreground">AI Email Drafting & Polish</p>
+                  <p class="text-[10px] text-muted-foreground">Generate drafts and polish business tone in composer.</p>
+                </div>
+                <Switch v-model="settingsData.ai_scope_drafting" />
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+                <div>
+                  <p class="text-xs font-semibold text-foreground">Thread Summarization</p>
+                  <p class="text-[10px] text-muted-foreground">Summarize long email threads into actionable key points.</p>
+                </div>
+                <Switch v-model="settingsData.ai_scope_summarize" />
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+                <div>
+                  <p class="text-xs font-semibold text-foreground">Contextual Smart Replies</p>
+                  <p class="text-[10px] text-muted-foreground">Suggest intelligent 1-click quick replies for incoming mail.</p>
+                </div>
+                <Switch v-model="settingsData.ai_scope_smart_reply" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Safety Boundaries & Guardrails (Batasan & Larangan) -->
+          <div class="space-y-2 pt-1">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Safety Guardrails & Boundaries (Batasan Keamanan)
+            </h4>
+            <div class="space-y-2 rounded-xl border border-border/40 p-3 bg-muted/20">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>Human-in-the-Loop Required</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">AI is strictly prohibited from autonomous dispatch; manual click required.</p>
+                </div>
+                <Switch v-model="settingsData.ai_guardrail_human_review" />
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+                <div>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>Sensitive Data & PII Sanitization</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">Automatically redact passwords, tokens, and credit cards before AI prompt.</p>
+                </div>
+                <Switch v-model="settingsData.ai_guardrail_pii_masking" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Out-of-Office / Auto-Reply -->
         <div v-if="activeTab === 'vacation'" class="space-y-4">
           <div class="flex items-center justify-between p-3 rounded-xl bg-muted/30 border border-border/40">
             <div>
@@ -287,7 +441,7 @@
           </div>
         </div>
 
-        <!-- Tab 4: Server & Transport -->
+        <!-- Tab 5: Server & Transport -->
         <div v-if="activeTab === 'server'" class="space-y-4">
           <div class="p-4 rounded-xl bg-muted/30 border border-border/40 space-y-3">
             <div class="flex items-center justify-between">
@@ -360,7 +514,9 @@ import {
   Loader2,
   ExternalLink,
   ShieldCheck,
-  Image,
+  ImageIcon,
+  Sparkles,
+  Upload,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -376,6 +532,7 @@ import {
   SelectValue,
   Switch,
 } from '@/shared/components/ui';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 
 defineProps<{
     isOpen: boolean;
@@ -387,12 +544,13 @@ const emit = defineEmits<{
 
 const toast = useToast();
 const router = useRouter();
-const activeTab = ref<'general' | 'signature' | 'vacation' | 'server'>('general');
+const activeTab = ref<'general' | 'signature' | 'ai' | 'vacation' | 'server'>('general');
 const saving = ref(false);
 
 const tabs = [
     { id: 'general' as const, label: 'Preferences', icon: Sliders },
     { id: 'signature' as const, label: 'Signature & Logo', icon: PenTool },
+    { id: 'ai' as const, label: 'AI Copilot & Scope', icon: Sparkles },
     { id: 'vacation' as const, label: 'Auto-Reply', icon: Calendar },
     { id: 'server' as const, label: 'Server & Transport', icon: Server },
 ];
@@ -412,7 +570,25 @@ const settingsData = ref({
     vacation_enabled: false,
     vacation_subject: 'Out of Office Auto-Reply',
     vacation_body: 'Thank you for your message. I am currently away from my desk.',
+    // AI Governance
+    ai_enabled: true,
+    ai_provider: 'system',
+    ai_tone: 'professional',
+    ai_scope_drafting: true,
+    ai_scope_summarize: true,
+    ai_scope_smart_reply: true,
+    ai_scope_sentiment: true,
+    ai_guardrail_human_review: true,
+    ai_guardrail_pii_masking: true,
 });
+
+const handleMediaSelect = (media: any) => {
+    if (media?.url) {
+        settingsData.value.signature_logo = media.url;
+    } else if (media?.path) {
+        settingsData.value.signature_logo = `/storage/${media.path.replace(/^\//, '')}`;
+    }
+};
 
 const loadSettings = async () => {
     try {

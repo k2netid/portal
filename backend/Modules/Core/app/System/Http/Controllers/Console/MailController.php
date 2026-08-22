@@ -381,6 +381,16 @@ class MailController extends BaseApiController
             'vacation_enabled' => (bool) ($settings['mail_client_vacation_enabled'] ?? false),
             'vacation_subject' => $settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply',
             'vacation_body' => $settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.',
+            // AI Governance & Scope
+            'ai_enabled' => (bool) ($settings['mail_client_ai_enabled'] ?? true),
+            'ai_provider' => $settings['mail_client_ai_provider'] ?? 'system',
+            'ai_tone' => $settings['mail_client_ai_tone'] ?? 'professional',
+            'ai_scope_drafting' => (bool) ($settings['mail_client_ai_scope_drafting'] ?? true),
+            'ai_scope_summarize' => (bool) ($settings['mail_client_ai_scope_summarize'] ?? true),
+            'ai_scope_smart_reply' => (bool) ($settings['mail_client_ai_scope_smart_reply'] ?? true),
+            'ai_scope_sentiment' => (bool) ($settings['mail_client_ai_scope_sentiment'] ?? true),
+            'ai_guardrail_human_review' => (bool) ($settings['mail_client_ai_guardrail_human_review'] ?? true),
+            'ai_guardrail_pii_masking' => (bool) ($settings['mail_client_ai_guardrail_pii_masking'] ?? true),
             'storage_stats' => $this->calculateStorageStats(),
         ], 'Mail client settings retrieved successfully');
     }
@@ -405,6 +415,16 @@ class MailController extends BaseApiController
             'vacation_enabled' => 'nullable|boolean',
             'vacation_subject' => 'nullable|string|max:255',
             'vacation_body' => 'nullable|string',
+            // AI Governance
+            'ai_enabled' => 'nullable|boolean',
+            'ai_provider' => 'nullable|string|max:50',
+            'ai_tone' => 'nullable|string|max:50',
+            'ai_scope_drafting' => 'nullable|boolean',
+            'ai_scope_summarize' => 'nullable|boolean',
+            'ai_scope_smart_reply' => 'nullable|boolean',
+            'ai_scope_sentiment' => 'nullable|boolean',
+            'ai_guardrail_human_review' => 'nullable|boolean',
+            'ai_guardrail_pii_masking' => 'nullable|boolean',
         ]);
 
         foreach ($validated as $key => $val) {
