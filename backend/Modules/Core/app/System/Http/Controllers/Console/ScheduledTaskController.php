@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Database\Seeders\ScheduledTaskSeeder;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\ScheduledTask;
 use Modules\Core\System\Models\User;
@@ -134,7 +135,7 @@ class ScheduledTaskController extends BaseApiController
         $catalog = ScheduledTask::getCommandCatalog();
 
         if ($preset === 'reset_defaults') {
-            $seeder = new \Modules\Core\System\Database\Seeders\ScheduledTaskSeeder;
+            $seeder = new ScheduledTaskSeeder;
             $seeder->run();
 
             return $this->success(null, 'Scheduled tasks reset to default golden set successfully');

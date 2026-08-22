@@ -51,11 +51,13 @@ class LicenseCheckCommand extends Command
         $syncResult = $licenseService->syncHeartbeat($force);
 
         if ($syncResult['success']) {
-            $this->info('✓ ' . $syncResult['message']);
+            $this->info('✓ '.$syncResult['message']);
+
             return Command::SUCCESS;
         }
 
-        $this->warn('⚠ ' . $syncResult['message']);
+        $this->warn('⚠ '.$syncResult['message']);
+
         return Command::SUCCESS;
     }
 }

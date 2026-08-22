@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Crypt;
+use Modules\Core\System\Models\ActivityLog;
 use Modules\Core\System\Models\User;
 
 /**
@@ -168,7 +169,7 @@ class MailAccount extends Model
      */
     private function logActivity(string $event, array $payload): void
     {
-        \Modules\Core\System\Models\ActivityLog::log($event, $this, $payload);
+        ActivityLog::log($event, $this, $payload);
     }
 
     /**

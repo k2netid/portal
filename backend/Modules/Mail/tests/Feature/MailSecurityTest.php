@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\User;
 use Modules\Mail\Exceptions\MailDispatchException;
-use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Services\MailDispatchService;
 use Modules\Mail\Tests\Support\ActivatesMailExtension;
 use Modules\Mail\Tests\Support\CreatesMailMessages;

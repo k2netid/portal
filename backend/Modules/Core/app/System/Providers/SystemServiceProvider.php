@@ -12,6 +12,7 @@ use Laravel\Passport\Passport;
 use Laravel\Sanctum\Console\Commands\PruneExpired;
 use Modules\Core\System\Console\Commands\CleanupOldLogs;
 use Modules\Core\System\Console\Commands\DynamicOpenApiExport;
+use Modules\Core\System\Console\Commands\LicenseCheckCommand;
 use Modules\Core\System\Console\Commands\SystemAudit;
 use Modules\Core\System\Console\Commands\SystemClearCache;
 use Modules\Core\System\Console\Commands\SystemHealthCheck;
@@ -21,6 +22,7 @@ use Modules\Core\System\Contracts\OutboundWebhookPortInterface;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Facades\SandboxStorage;
 use Modules\Core\System\Http\Controllers\Console\DashboardController;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Registries\DashboardRegistry;
 use Modules\Core\System\Registries\HookRegistry;
 use Modules\Core\System\Registries\LayoutRegistry;
@@ -88,7 +90,7 @@ class SystemServiceProvider extends ServiceProvider
                 ->values()
                 ->all();
 
-            return redirect()->to('/' . \Modules\Core\System\Models\Setting::resolveConsoleDashboardSlug() . '/oauth/consent?'.http_build_query([
+            return redirect()->to('/'.Setting::resolveConsoleDashboardSlug().'/oauth/consent?'.http_build_query([
                 'auth_token' => $authToken,
                 'client' => $client->name,
                 'scopes' => implode(' ', $scopeIds),
@@ -104,7 +106,7 @@ class SystemServiceProvider extends ServiceProvider
             PruneExpired::class,
             SystemClearCache::class,
             SystemHealthCheck::class,
-            \Modules\Core\System\Console\Commands\LicenseCheckCommand::class,
+            LicenseCheckCommand::class,
         ]);
     }
 

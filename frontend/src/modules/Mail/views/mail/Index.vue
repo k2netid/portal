@@ -337,6 +337,7 @@
       :is-open="isComposerOpen"
       :composer-data="composerData"
       :templates="templates"
+      @update:composer-data="composerData = $event"
       @close="isComposerOpen = false"
       @send="sendEmail"
       @save-draft="saveDraft"

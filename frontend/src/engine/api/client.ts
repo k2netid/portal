@@ -179,6 +179,11 @@ apiClient.interceptors.response.use(
         const status = error.response?.status;
         const currentPath = window.location.pathname;
 
+        // Permission denied — do not treat as session expiry
+        if (status === 403) {
+            return Promise.reject(error);
+        }
+
         // 1. Session Expiry (401/419)
         if (status === 401 || status === 419) {
             if (window.__factoryResetInProgress) {
@@ -209,7 +214,6 @@ apiClient.interceptors.response.use(
                 || url.includes('/public/')
                 || url.includes('factory-reset')
                 || url.includes('maintenance')
-                || status === 403
             ) {
                 return Promise.reject(error);
             }

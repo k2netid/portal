@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\ActivityLog;
+use Modules\Core\System\Models\ContentType;
+use Modules\Core\System\Models\ScheduledTask;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\DashboardRegistry;
 
@@ -39,14 +41,14 @@ class DashboardController extends BaseApiController
             'stats' => array_merge([
                 'users' => $this->getUserStats(),
                 'models' => [
-                    'total' => \Modules\Core\System\Models\ContentType::count(),
+                    'total' => ContentType::count(),
                 ],
                 'tasks' => [
-                    'total' => \Modules\Core\System\Models\ScheduledTask::count(),
-                    'active' => \Modules\Core\System\Models\ScheduledTask::where('is_active', true)->count(),
+                    'total' => ScheduledTask::count(),
+                    'active' => ScheduledTask::where('is_active', true)->count(),
                 ],
                 'journal' => [
-                    'total' => \Modules\Core\System\Models\ActivityLog::count(),
+                    'total' => ActivityLog::count(),
                 ],
                 'system' => $this->getSystemStats(),
             ], $registry->getAllStats()),

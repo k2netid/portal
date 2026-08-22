@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Core\System\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Core\Infra\Models\InfraRedirect;
 use Modules\Core\System\Models\Webhook;
 use Tests\TestCase;
 

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Core\System\Http\Controllers\Api;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Modules\Core\System\Contracts\OutboundWebhookPortInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\ActivityLog;
 use Modules\Core\System\Models\ContentType;
 use Modules\Core\System\Models\DynamicRecord;
 use Modules\Core\System\Support\DataModelFieldRulesBuilder;
@@ -47,8 +50,7 @@ class DataModelApiController extends BaseApiController
     /**
      * Hydrate relational fields for a list of records or single record.
      *
-     * @param  array<int, mixed>|DynamicRecord|\Illuminate\Contracts\Pagination\LengthAwarePaginator  $records
-     * @return mixed
+     * @param  array<int, mixed>|DynamicRecord|LengthAwarePaginator  $records
      */
     protected function hydrateRelations(ContentType $contentType, mixed $records): mixed
     {
@@ -77,7 +79,7 @@ class DataModelApiController extends BaseApiController
         }
 
         $isSingle = $records instanceof DynamicRecord;
-        $items = $isSingle ? [$records] : ($records instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator ? $records->items() : $records);
+        $items = $isSingle ? [$records] : ($records instanceof LengthAwarePaginator ? $records->items() : $records);
 
         // Collect target IDs grouped by target_type
         $targetIdsByType = [];
@@ -362,9 +364,9 @@ class DataModelApiController extends BaseApiController
         $recordData = $recordOrId instanceof DynamicRecord ? $recordOrId->toArray() : ['id' => $recordOrId];
 
         try {
-            if (interface_exists(\Modules\Core\System\Contracts\OutboundWebhookPortInterface::class)) {
-                /** @var \Modules\Core\System\Contracts\OutboundWebhookPortInterface $dispatcher */
-                $dispatcher = app(\Modules\Core\System\Contracts\OutboundWebhookPortInterface::class);
+            if (interface_exists(OutboundWebhookPortInterface::class)) {
+                /** @var OutboundWebhookPortInterface $dispatcher */
+                $dispatcher = app(OutboundWebhookPortInterface::class);
                 $dispatcher->dispatch($event, [
                     'model' => [
                         'id' => $contentType->id,
@@ -379,9 +381,9 @@ class DataModelApiController extends BaseApiController
         }
 
         try {
-            if (class_exists(\Modules\Core\System\Models\ActivityLog::class)) {
+            if (class_exists(ActivityLog::class)) {
                 $model = $recordOrId instanceof DynamicRecord ? $recordOrId : null;
-                \Modules\Core\System\Models\ActivityLog::log(
+                ActivityLog::log(
                     $action,
                     $model,
                     [

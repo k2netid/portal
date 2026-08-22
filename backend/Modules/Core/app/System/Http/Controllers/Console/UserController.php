@@ -23,8 +23,6 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends BaseApiController
 {
-
-
     /**
      * List users with filters.
      */

@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
-use Modules\Mail\Models\MailAccount;
 use Modules\Core\System\Models\User;
+use Modules\Mail\Models\MailAccount;
 use Modules\Mail\Support\MailHostValidator;
 
 class MailAccountController extends BaseApiController

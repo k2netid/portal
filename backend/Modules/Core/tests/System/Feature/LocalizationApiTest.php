@@ -6,7 +6,6 @@ namespace Modules\Core\System\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Core\System\Models\Language;
-use Modules\Core\System\Models\Translation;
 use Tests\TestCase;
 
 class LocalizationApiTest extends TestCase

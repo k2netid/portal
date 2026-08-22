@@ -31,9 +31,7 @@ final class MailHostValidator
         }
 
         foreach ($resolved as $ip) {
-            if (is_string($ip)) {
-                self::assertPublicIp($ip);
-            }
+            self::assertPublicIp($ip);
         }
     }
 

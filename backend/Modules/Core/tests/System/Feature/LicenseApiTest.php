@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Core\System\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
 use Tests\TestCase;
 

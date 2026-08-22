@@ -2,11 +2,14 @@
 
 use App\Http\Middleware\CheckIfInstalled;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Modules\Core\Infra\Http\Middleware\HandleDomainRedirects;
 use Modules\Core\Security\Http\Middleware\BlockMaliciousBots;
 use Modules\Core\Security\Http\Middleware\HoneypotMiddleware;
@@ -19,6 +22,7 @@ use Modules\Core\System\Http\Middleware\LazyExtensionBootMiddleware;
 use Modules\Core\System\Http\Middleware\LogSlowQueries;
 use Modules\Core\System\Http\Middleware\NormalizePaginationParams;
 use Modules\Core\System\Http\Middleware\TrustProxies;
+use Modules\Core\System\Models\ScheduledTask;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
@@ -30,18 +34,18 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule): void {
+    ->withSchedule(function (Schedule $schedule): void {
         // Dynamic Database-backed Scheduled Tasks (sys_scheduled_tasks)
         try {
-            if (\Illuminate\Support\Facades\Schema::hasTable('sys_scheduled_tasks')) {
-                $tasks = \Modules\Core\System\Models\ScheduledTask::where('is_active', true)->get();
+            if (Schema::hasTable('sys_scheduled_tasks')) {
+                $tasks = ScheduledTask::where('is_active', true)->get();
 
                 foreach ($tasks as $task) {
-                    if (! \Modules\Core\System\Models\ScheduledTask::isCommandAllowed($task->command)) {
+                    if (! ScheduledTask::isCommandAllowed($task->command)) {
                         continue;
                     }
 
-                    if (! \Modules\Core\System\Models\ScheduledTask::isValidCronExpression($task->schedule)) {
+                    if (! ScheduledTask::isValidCronExpression($task->schedule)) {
                         continue;
                     }
 
@@ -54,37 +58,37 @@ return Application::configure(basePath: dirname(__DIR__))
 
                     $event->before(function () use ($taskId) {
                         try {
-                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                            ScheduledTask::where('id', $taskId)->update([
                                 'status' => 'running',
                                 'last_run_at' => now(),
                             ]);
-                        } catch (\Throwable) {
+                        } catch (Throwable) {
                         }
                     });
 
                     $event->onSuccess(function () use ($taskId) {
                         try {
-                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                            ScheduledTask::where('id', $taskId)->update([
                                 'status' => 'completed',
                                 'output' => 'Executed successfully via system scheduler.',
                             ]);
-                        } catch (\Throwable) {
+                        } catch (Throwable) {
                         }
                     });
 
                     $event->onFailure(function () use ($taskId) {
                         try {
-                            \Modules\Core\System\Models\ScheduledTask::where('id', $taskId)->update([
+                            ScheduledTask::where('id', $taskId)->update([
                                 'status' => 'failed',
                                 'output' => 'Task execution failed via system scheduler.',
                             ]);
-                        } catch (\Throwable) {
+                        } catch (Throwable) {
                         }
                     });
                 }
             }
-        } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::debug('Dynamic Schedule registration error: '.$e->getMessage());
+        } catch (Throwable $e) {
+            Log::debug('Dynamic Schedule registration error: '.$e->getMessage());
         }
     })
     ->withProviders()

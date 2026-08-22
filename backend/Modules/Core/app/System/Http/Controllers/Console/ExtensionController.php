@@ -14,6 +14,7 @@ use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\ExtensionLog;
 use Modules\Core\System\Models\Feature;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
 use Modules\Core\System\Support\ExtensionPaths;
 use ZipArchive;
@@ -682,7 +683,7 @@ class ExtensionController extends BaseApiController
                                         'label' => is_scalar($labelVal) ? (string) $labelVal : $ext->name,
                                         'icon' => is_scalar($iconVal) ? (string) $iconVal : 'settings',
                                         'group' => is_scalar($groupVal) ? (string) $groupVal : 'operations',
-                                        'to' => is_scalar($toVal) ? (string) $toVal : "/" . \Modules\Core\System\Models\Setting::resolveConsoleDashboardSlug() . "/{$ext->slug}",
+                                        'to' => is_scalar($toVal) ? (string) $toVal : '/'.Setting::resolveConsoleDashboardSlug()."/{$ext->slug}",
                                     ];
                                 }
                             }

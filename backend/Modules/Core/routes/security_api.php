@@ -9,6 +9,7 @@ use Modules\Core\Security\Http\Controllers\SecurityController;
 use Modules\Core\Security\Http\Controllers\SiemExportController;
 use Modules\Core\System\Http\Controllers\Console\DependencyPackageController;
 use Modules\Core\System\Http\Controllers\Console\DependencyVulnerabilityController;
+use Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController;
 
 Route::prefix('v1')->group(function (): void {
     // Security Public (Infrastructure Layer)
@@ -36,8 +37,8 @@ Route::prefix('v1')->group(function (): void {
             Route::post('csp-reports/bulk-action', [CspReportController::class, 'bulkAction']);
 
             if (class_exists('Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController')) {
-                Route::get('slow-queries', [\Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController::class, 'index']);
-                Route::get('slow-queries/statistics', [\Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController::class, 'statistics']);
+                Route::get('slow-queries', [SlowQueryController::class, 'index']);
+                Route::get('slow-queries/statistics', [SlowQueryController::class, 'statistics']);
             }
 
             Route::get('dependency-vulnerabilities', [DependencyVulnerabilityController::class, 'index']);

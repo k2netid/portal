@@ -6,6 +6,8 @@ namespace Modules\Mail\Http\Controllers\Concerns;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Services\UserMailRepository;
@@ -32,13 +34,13 @@ trait InteractsWithUserMailbox
      */
     protected function calculateStorageStatsForUser(User $user): array
     {
-        $query = \Modules\Mail\Models\MailMessage::query()->where('user_id', $user->id);
-        $bodyBytes = (int) (clone $query)->sum(\Illuminate\Support\Facades\DB::raw('LENGTH(body) + LENGTH(COALESCE(snippet, \'\'))'));
+        $query = MailMessage::query()->where('user_id', $user->id);
+        $bodyBytes = (int) (clone $query)->sum(DB::raw('LENGTH(body) + LENGTH(COALESCE(snippet, \'\'))'));
         $count = (clone $query)->count();
         $overhead = $count * 2048;
         $usedBytes = max(24576, $bodyBytes + $overhead);
 
-        $quotaGbRaw = \Modules\Core\System\Models\Setting::where('key', 'mail_client_storage_quota_gb')->value('value') ?? 15;
+        $quotaGbRaw = Setting::where('key', 'mail_client_storage_quota_gb')->value('value') ?? 15;
         $quotaGb = is_numeric($quotaGbRaw) ? (int) $quotaGbRaw : 15;
         $quotaBytes = $quotaGb * 1024 * 1024 * 1024;
         $percentage = $quotaBytes > 0 ? min(100.0, round(($usedBytes / $quotaBytes) * 100, 2)) : 0.0;
@@ -67,9 +69,6 @@ trait InteractsWithUserMailbox
         return $bytes.' B';
     }
 
-    /**
-     * @return MailMessage|JsonResponse
-     */
     protected function ownedMessage(Request $request, string $id): MailMessage|JsonResponse
     {
         $repo = $this->mailRepo($request);

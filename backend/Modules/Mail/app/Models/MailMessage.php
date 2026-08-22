@@ -34,8 +34,8 @@ use Modules\Core\System\Traits\CoreLogsActivity;
  */
 class MailMessage extends Model
 {
-    use HasUuids;
     use CoreLogsActivity;
+    use HasUuids;
 
     protected $keyType = 'string';
 
