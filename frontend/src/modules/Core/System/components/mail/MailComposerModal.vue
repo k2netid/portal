@@ -109,23 +109,53 @@
           />
         </div>
 
-        <!-- AI Assistant Action Bar -->
-        <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-primary/5 border border-primary/15 shrink-0">
-          <div class="flex items-center gap-1.5 text-[11px] text-primary font-semibold">
-            <Sparkles class="w-3.5 h-3.5 text-amber-500" />
-            <span>AI Copilot Assist</span>
-          </div>
+        <!-- AI Assistant & Canned Templates Action Bar -->
+        <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-muted/20 border border-border/60 shrink-0 gap-2">
+          <!-- Canned Templates Dropdown -->
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button
+                variant="outline"
+                size="sm"
+                class="h-6 text-[10px] gap-1 px-2 border-border/60 text-muted-foreground hover:text-foreground shadow-xs"
+              >
+                <Bookmark class="w-3 h-3 text-primary" />
+                <span>Templates</span>
+                <ChevronDown class="w-2.5 h-2.5 opacity-60" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" class="w-64 text-xs">
+              <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                Canned Response Templates
+              </div>
+              <DropdownMenuItem
+                v-for="tpl in cannedTemplates"
+                :key="tpl.title"
+                class="flex flex-col items-start gap-0.5 py-1.5 cursor-pointer"
+                @click="insertTemplate(tpl)"
+              >
+                <span class="font-semibold text-xs text-foreground">{{ tpl.title }}</span>
+                <span class="text-[10px] text-muted-foreground line-clamp-1">{{ tpl.snippet }}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
+          <!-- AI Assistant Tools -->
           <div class="flex items-center gap-1.5">
+            <div class="hidden sm:flex items-center gap-1 text-[11px] text-primary font-semibold mr-1">
+              <Sparkles class="w-3 h-3 text-amber-500" />
+              <span>AI Assist:</span>
+            </div>
+
             <Button
               variant="outline"
               size="sm"
               class="h-6 text-[10px] gap-1 px-2 border-primary/20 hover:bg-primary/10 text-primary"
               :disabled="generatingAi"
-              @click="generateWithAi('Write a professional and polite email draft')"
+              @click="generateWithAi('Write a professional, clear, and polite email draft')"
             >
               <Loader2 v-if="generatingAi" class="w-2.5 h-2.5 animate-spin" />
-              <span>Generate Draft</span>
+              <span>Draft</span>
             </Button>
             <Button
               variant="outline"
@@ -227,6 +257,8 @@ import {
   Send,
   Sparkles,
   Loader2,
+  Bookmark,
+  ChevronDown,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -236,6 +268,49 @@ import {
   Input,
   Textarea,
 } from '@/shared/components/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
+
+const cannedTemplates = [
+    {
+        title: 'Meeting Confirmation',
+        snippet: 'Hi, confirming our meeting scheduled for...',
+        body: 'Hi,\n\nThis is to confirm our meeting scheduled for [Date & Time]. Please let me know if you need to adjust the schedule or add additional attendees.\n\nLooking forward to speaking with you.\n\nBest regards,',
+    },
+    {
+        title: 'General Acknowledgment',
+        snippet: 'Thank you for reaching out. We have received...',
+        body: 'Hi,\n\nThank you for reaching out. We have received your message and our team is currently reviewing it. We will get back to you with an update shortly.\n\nBest regards,',
+    },
+    {
+        title: 'Price Quotation & Proposal',
+        snippet: 'Please find attached our formal quotation...',
+        body: 'Dear Client,\n\nThank you for your interest in our services. Please find attached our formal quotation and project scope for your review.\n\nFeel free to reach out if you have any questions.\n\nBest regards,',
+    },
+    {
+        title: 'Technical Support Inquiry',
+        snippet: 'Could you please provide account details...',
+        body: 'Hello,\n\nThank you for contacting technical support. To help us resolve this swiftly, could you please provide your account email and a screenshot/log of the issue?\n\nThank you for your patience.\n\nBest regards,',
+    },
+    {
+        title: 'Follow-up Check-in',
+        snippet: 'Quick follow-up on my previous message...',
+        body: 'Hi,\n\nI wanted to quickly follow up on my previous message regarding [Subject]. Please let me know if you need any additional information from our side.\n\nBest regards,',
+    },
+];
+
+const insertTemplate = (tpl: { title: string; body: string }) => {
+    if (props.composerData.body.trim()) {
+        props.composerData.body += `\n\n${tpl.body}`;
+    } else {
+        props.composerData.body = tpl.body;
+    }
+    toast.success.action(`Inserted "${tpl.title}" template`);
+};
 
 const props = defineProps<{
     isOpen: boolean;

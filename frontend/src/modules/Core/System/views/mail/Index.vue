@@ -1,51 +1,50 @@
 <template>
-  <div class="h-[calc(100vh-7.5rem)] lg:h-[calc(100vh-8.5rem)] flex flex-col rounded-2xl border border-border/60 shadow-xs overflow-hidden bg-card">
-    <!-- Top Navbar / Main Webmail Toolbar -->
-    <header class="h-12 px-3 lg:px-4 border-b border-border/40 flex items-center justify-between shrink-0 bg-card/80 backdrop-blur-sm select-none">
-      <!-- Left: Sidebar Toggle, Brand, Folder Name & Sync -->
-      <div class="flex items-center gap-2.5">
+  <div class="h-full flex flex-col bg-background overflow-hidden select-none">
+    <!-- Top Unified Mail Toolbar Header -->
+    <header class="h-12 border-b border-border/40 bg-card/60 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-30">
+      <!-- Left: Brand & Sidebar Toggle -->
+      <div class="flex items-center gap-2">
         <Button
           variant="ghost"
           size="icon"
-          class="hidden lg:flex h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
-          :title="isSidebarMinimized ? $t('system.mail.expand_sidebar') : $t('system.mail.minimize_sidebar')"
+          class="h-8 w-8 text-muted-foreground hover:text-foreground hidden lg:flex rounded-lg"
+          :title="isSidebarMinimized ? 'Expand Sidebar' : 'Collapse Sidebar'"
           @click="toggleSidebarMinimize"
         >
           <PanelLeftClose v-if="!isSidebarMinimized" class="w-4 h-4" />
-          <PanelLeftOpen v-else class="w-4 h-4 text-primary" />
+          <PanelLeftOpen v-else class="w-4 h-4" />
         </Button>
 
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+          <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
             <Mail class="w-3.5 h-3.5" />
           </div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="text-xs font-bold text-foreground tracking-tight">
-              {{ $t('system.mail.title') }}
+          <div>
+            <h1 class="text-xs font-bold tracking-tight text-foreground flex items-center gap-1.5">
+              <span>{{ $t('system.mail.title') }}</span>
+              <span class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-primary/10 text-primary border border-primary/20">
+                PRO
+              </span>
             </h1>
-            <span class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-primary/10 text-primary uppercase">
-              {{ activeLabel ? activeLabel : $t(`system.mail.folder_${activeFolder}`) }}
-            </span>
           </div>
         </div>
+      </div>
 
+      <!-- Right: Global Actions (Sync, Empty Trash, Shortcuts, Labels, Settings, Compose) -->
+      <div class="flex items-center gap-1.5">
         <!-- Sync Button -->
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
-          class="h-7 text-xs gap-1.5 text-muted-foreground hover:text-foreground px-2 ml-1"
-          :disabled="syncing"
-          :title="$t('system.mail.sync_mailbox')"
+          class="h-7 text-xs gap-1.5 px-2.5 shadow-xs"
+          :disabled="syncing || loading"
           @click="syncMailbox"
         >
           <RefreshCw :class="['w-3.5 h-3.5', syncing ? 'animate-spin text-primary' : '']" />
-          <span class="hidden sm:inline text-[11px]">{{ syncing ? $t('system.mail.syncing') : $t('system.mail.sync_mailbox') }}</span>
+          <span class="hidden sm:inline">{{ $t('system.mail.sync') }}</span>
         </Button>
-      </div>
 
-      <!-- Right: Empty Trash (if in trash), Manage Labels, Settings & Primary Compose Button -->
-      <div class="flex items-center gap-1.5">
-        <!-- Empty Trash Button (when active folder is trash) -->
+        <!-- Empty Trash (Conditional) -->
         <Button
           v-if="activeFolder === 'trash' && messages.length > 0"
           variant="destructive"
@@ -55,6 +54,17 @@
         >
           <Trash2 class="w-3.5 h-3.5" />
           <span class="hidden sm:inline">{{ $t('system.mail.empty_trash') }}</span>
+        </Button>
+
+        <!-- Keyboard Shortcuts Help Button -->
+        <Button
+          variant="ghost"
+          size="icon"
+          class="h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
+          title="Keyboard Shortcuts (?)"
+          @click="isShortcutsOpen = true"
+        >
+          <Keyboard class="w-4 h-4" />
         </Button>
 
         <!-- Manage Labels Button -->
@@ -117,7 +127,7 @@
         />
       </aside>
 
-      <!-- Column 2: Message List (Draggable resizable width on desktop) -->
+      <!-- Column 2: Message List & Search (Draggable width on desktop) -->
       <section
         :style="{ width: isDesktop ? `${listWidth}px` : undefined }"
         :class="[
@@ -158,8 +168,8 @@
       <!-- Column 3: Message Detail View (flex-1) -->
       <main
         :class="[
-          'flex-1 overflow-hidden bg-card/20 min-h-0 flex flex-col',
-          !isMobileDetailOpen ? 'hidden md:flex' : 'flex'
+          'flex-1 flex flex-col overflow-hidden min-h-0 bg-card/20',
+          isMobileDetailOpen ? 'flex' : 'hidden md:flex'
         ]"
       >
         <MailDetail
@@ -178,6 +188,37 @@
       </main>
     </div>
 
+    <!-- Floating Undo Send Toast Banner -->
+    <Teleport to="body">
+      <div
+        v-if="isUndoToastVisible"
+        class="fixed bottom-6 right-6 z-[1000] flex items-center gap-3 p-3 px-4 rounded-xl bg-card border border-primary/40 shadow-2xl animate-in slide-in-from-bottom-5 duration-200"
+      >
+        <div class="flex items-center gap-2 text-xs">
+          <span class="w-2 h-2 rounded-full bg-primary animate-ping" />
+          <span class="font-medium text-foreground">Sending email in <strong class="text-primary font-bold">{{ undoCountdown }}s</strong>...</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <Button
+            variant="default"
+            size="sm"
+            class="h-7 text-xs px-2.5 font-bold shadow-xs bg-primary text-primary-foreground hover:bg-primary/90"
+            @click="undoSend"
+          >
+            Undo
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            class="h-7 text-xs px-2 text-muted-foreground hover:text-foreground"
+            @click="sendNow"
+          >
+            Send Now
+          </Button>
+        </div>
+      </div>
+    </Teleport>
+
     <!-- Mail Composer Modal -->
     <MailComposerModal
       :is-open="isComposerOpen"
@@ -190,6 +231,12 @@
     <MailSettingsModal
       :is-open="isSettingsOpen"
       @close="isSettingsOpen = false"
+    />
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <MailShortcutsModal
+      :is-open="isShortcutsOpen"
+      @close="isShortcutsOpen = false"
     />
 
     <!-- Custom Labels & Categories Manager Modal -->
@@ -213,6 +260,7 @@ import {
   Settings,
   Tag,
   Trash2,
+  Keyboard,
 } from 'lucide-vue-next';
 import { Button } from '@/shared/components/ui';
 import { useMailClient } from '@/modules/Core/System/composables/useMailClient';
@@ -222,6 +270,7 @@ import MailDetail from '@/modules/Core/System/components/mail/MailDetail.vue';
 import MailComposerModal from '@/modules/Core/System/components/mail/MailComposerModal.vue';
 import MailSettingsModal from '@/modules/Core/System/components/mail/MailSettingsModal.vue';
 import MailLabelsModal from '@/modules/Core/System/components/mail/MailLabelsModal.vue';
+import MailShortcutsModal from '@/modules/Core/System/components/mail/MailShortcutsModal.vue';
 
 const {
     isSidebarMinimized,
@@ -250,6 +299,10 @@ const {
     isLabelsModalOpen,
     isComposerOpen,
     composerData,
+    isUndoToastVisible,
+    undoCountdown,
+    undoSend,
+    sendNow,
     fetchMessages,
     syncMailbox,
     selectFolder,
@@ -268,71 +321,104 @@ const {
     sendEmail,
 } = useMailClient();
 
-// Draggable List Panel Resizing Logic
-const layoutContainerRef = ref<HTMLElement | null>(null);
-const listWidth = ref(340);
+const isShortcutsOpen = ref(false);
+
+// Draggable Resizer State
+const listWidth = ref(380);
 const isResizing = ref(false);
-const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
+const layoutContainerRef = ref<HTMLElement | null>(null);
+const isDesktop = computed(() => typeof window !== 'undefined' && window.innerWidth >= 768);
 
-const isDesktop = computed(() => windowWidth.value >= 768);
-
-const handleResizeWindow = () => {
-    windowWidth.value = window.innerWidth;
-};
-
-const startResize = (event: MouseEvent) => {
-    event.preventDefault();
+const startResize = (e: MouseEvent) => {
+    e.preventDefault();
     isResizing.value = true;
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', stopResize);
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
+    window.addEventListener('mousemove', handleResize);
+    window.addEventListener('mouseup', stopResize);
 };
 
-const onMouseMove = (event: MouseEvent) => {
+const handleResize = (e: MouseEvent) => {
     if (!isResizing.value || !layoutContainerRef.value) return;
     const containerRect = layoutContainerRef.value.getBoundingClientRect();
     const sidebarWidth = isSidebarMinimized.value ? 64 : 240;
-    const rawWidth = event.clientX - containerRect.left - (windowWidth.value >= 1024 ? sidebarWidth : 0);
-    
-    // Constraints: min 260px, max 540px
-    const clamped = Math.max(260, Math.min(540, rawWidth));
-    listWidth.value = clamped;
+    const newWidth = e.clientX - containerRect.left - (isDesktop.value ? sidebarWidth : 0);
+
+    // Clamp between 260px and 560px
+    if (newWidth >= 260 && newWidth <= 560) {
+        listWidth.value = newWidth;
+    }
 };
 
 const stopResize = () => {
-    if (isResizing.value) {
-        isResizing.value = false;
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', stopResize);
-        document.body.style.cursor = '';
-        document.body.style.userSelect = '';
-        try {
-            localStorage.setItem('ja_mail_list_width', String(listWidth.value));
-        } catch {
-            // localStorage not accessible
-        }
+    isResizing.value = false;
+    window.removeEventListener('mousemove', handleResize);
+    window.removeEventListener('mouseup', stopResize);
+    localStorage.setItem('ja_mail_list_width', String(listWidth.value));
+};
+
+// Next & Prev Email Selection Helpers for Shortcuts
+const selectNextEmail = () => {
+    if (messages.value.length === 0) return;
+    const currentIndex = messages.value.findIndex(m => m.id === selectedMessageId.value);
+    if (currentIndex < messages.value.length - 1) {
+        selectMessage(messages.value[currentIndex + 1]!.id);
+    }
+};
+
+const selectPrevEmail = () => {
+    if (messages.value.length === 0) return;
+    const currentIndex = messages.value.findIndex(m => m.id === selectedMessageId.value);
+    if (currentIndex > 0) {
+        selectMessage(messages.value[currentIndex - 1]!.id);
+    }
+};
+
+// Global Keyboard Shortcuts Handler
+const handleGlobalKeydown = (e: KeyboardEvent) => {
+    const target = e.target as HTMLElement;
+    const isInput = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
+
+    if (isInput) return;
+
+    if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        isShortcutsOpen.value = true;
+    } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        openComposer();
+    } else if (e.key === 'j' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectNextEmail();
+    } else if (e.key === 'k' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectPrevEmail();
+    } else if ((e.key === 'r' || e.key === 'R') && selectedMessage.value) {
+        e.preventDefault();
+        reply(selectedMessage.value);
+    } else if ((e.key === 'f' || e.key === 'F') && selectedMessage.value) {
+        e.preventDefault();
+        forward(selectedMessage.value);
+    } else if ((e.key === 's' || e.key === 'S') && selectedMessage.value) {
+        e.preventDefault();
+        toggleStar(selectedMessage.value.id);
+    } else if ((e.key === '#' || e.key === 'Delete') && selectedMessage.value) {
+        e.preventDefault();
+        moveToTrash(selectedMessage.value.id);
+    } else if (e.key === '/') {
+        e.preventDefault();
+        const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement;
+        searchInput?.focus();
     }
 };
 
 onMounted(() => {
-    window.addEventListener('resize', handleResizeWindow);
-    try {
-        const saved = localStorage.getItem('ja_mail_list_width');
-        if (saved) {
-            const parsed = parseInt(saved, 10);
-            if (!isNaN(parsed) && parsed >= 260 && parsed <= 540) {
-                listWidth.value = parsed;
-            }
-        }
-    } catch {
-        // localStorage not accessible
+    const saved = localStorage.getItem('ja_mail_list_width');
+    if (saved && !isNaN(Number(saved))) {
+        listWidth.value = Number(saved);
     }
+    window.addEventListener('keydown', handleGlobalKeydown);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('resize', handleResizeWindow);
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', stopResize);
+    window.removeEventListener('keydown', handleGlobalKeydown);
 });
 </script>

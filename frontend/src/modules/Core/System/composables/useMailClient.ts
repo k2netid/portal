@@ -408,26 +408,89 @@ export function useMailClient() {
         });
     };
 
-    const sendEmail = async () => {
+    // Undo Send State
+    const isUndoToastVisible = ref(false);
+    const undoCountdown = ref(5);
+    let undoInterval: any = null;
+    const pendingEmailData = ref<{
+        to: string;
+        cc: string;
+        bcc: string;
+        subject: string;
+        body: string;
+    } | null>(null);
+
+    const executeActualSend = async (payload: { to: string; cc: string; bcc: string; subject: string; body: string }) => {
+        try {
+            await api.post('/manage/mail/send', payload);
+            toast.success.action('Email delivered successfully');
+            fetchMessages(1);
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+        } finally {
+            pendingEmailData.value = null;
+        }
+    };
+
+    const sendEmail = () => {
         if (!composerData.value.to.trim()) {
             toast.error.action('Please provide a recipient email address');
             return;
         }
 
-        try {
-            await api.post('/manage/mail/send', {
-                to: composerData.value.to,
-                cc: composerData.value.cc,
-                bcc: composerData.value.bcc,
-                subject: composerData.value.subject,
-                body: composerData.value.body,
-            });
+        const payload = {
+            to: composerData.value.to,
+            cc: composerData.value.cc,
+            bcc: composerData.value.bcc,
+            subject: composerData.value.subject,
+            body: composerData.value.body,
+        };
 
-            toast.success.action('Email sent successfully!');
-            isComposerOpen.value = false;
-            fetchMessages(1);
-        } catch (error: unknown) {
-            toast.error.fromResponse(error);
+        pendingEmailData.value = payload;
+        isComposerOpen.value = false;
+        isUndoToastVisible.value = true;
+        undoCountdown.value = 5;
+
+        if (undoInterval) clearInterval(undoInterval);
+
+        undoInterval = setInterval(() => {
+            undoCountdown.value -= 1;
+            if (undoCountdown.value <= 0) {
+                clearInterval(undoInterval);
+                undoInterval = null;
+                isUndoToastVisible.value = false;
+                if (pendingEmailData.value) {
+                    executeActualSend(pendingEmailData.value);
+                }
+            }
+        }, 1000);
+    };
+
+    const undoSend = () => {
+        if (undoInterval) {
+            clearInterval(undoInterval);
+            undoInterval = null;
+        }
+        isUndoToastVisible.value = false;
+        if (pendingEmailData.value) {
+            composerData.value = {
+                ...pendingEmailData.value,
+                attachments: [],
+            };
+            isComposerOpen.value = true;
+            pendingEmailData.value = null;
+            toast.info('Sending cancelled', 'Draft restored.');
+        }
+    };
+
+    const sendNow = () => {
+        if (undoInterval) {
+            clearInterval(undoInterval);
+            undoInterval = null;
+        }
+        isUndoToastVisible.value = false;
+        if (pendingEmailData.value) {
+            executeActualSend(pendingEmailData.value);
         }
     };
 
@@ -465,6 +528,10 @@ export function useMailClient() {
         isLabelsModalOpen,
         isComposerOpen,
         composerData,
+        isUndoToastVisible,
+        undoCountdown,
+        undoSend,
+        sendNow,
         fetchMessages,
         syncMailbox,
         selectFolder,

@@ -196,10 +196,15 @@
 
         <div class="text-right shrink-0 space-y-1">
           <span class="text-[11px] text-muted-foreground block">{{ message.date }}</span>
-          <div class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold" title="Encrypted via TLS 1.3, SPF & DKIM verified">
+          <button
+            type="button"
+            class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-semibold transition-colors cursor-pointer"
+            title="Click to view Security Authentication & Raw MIME Headers"
+            @click="isSecurityModalOpen = true"
+          >
             <ShieldCheck class="w-3 h-3" />
             <span>TLS Verified</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -312,6 +317,12 @@
       <p class="text-xs font-semibold">{{ $t('system.mail.select_message') }}</p>
       <p class="text-[11px] text-muted-foreground/70 max-w-xs">{{ $t('system.mail.select_message_desc') }}</p>
     </div>
+    <!-- Security Inspector Modal -->
+    <MailSecurityModal
+      :is-open="isSecurityModalOpen"
+      :message="message"
+      @close="isSecurityModalOpen = false"
+    />
   </div>
 </template>
 
@@ -319,6 +330,7 @@
 import { ref, computed } from 'vue';
 import DOMPurify from 'dompurify';
 import { useToast } from '@/shared/composables/useToast';
+import MailSecurityModal from '@/modules/Core/System/components/mail/MailSecurityModal.vue';
 import {
   Reply,
   Forward,
@@ -371,6 +383,7 @@ const emit = defineEmits<{
 const toast = useToast();
 const quickReplyText = ref('');
 const showRemoteImages = ref(false);
+const isSecurityModalOpen = ref(false);
 
 const hasRemoteImages = computed(() => {
     if (!props.message?.body) return false;
