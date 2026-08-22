@@ -30,6 +30,16 @@ const systemRoutes: RouteRecordRaw[] = [
         meta: { title: 'system.navigation.menu.extensions', breadcrumb: 'system.navigation.menu.extensions', permission: 'manage settings' },
     },
     {
+        path: 'settings/menus',
+        name: 'settings-menus',
+        component: () => import('@/modules/Core/System/views/settings/menus/Index.vue'),
+        meta: {
+            title: 'system.navigation.menuEditor.title',
+            breadcrumb: 'system.navigation.menu.menuEditor',
+            permission: 'manage settings',
+        },
+    },
+    {
         path: 'cache',
         name: 'cache',
         component: () => import('@/modules/Core/System/views/settings/cache/Index.vue'),

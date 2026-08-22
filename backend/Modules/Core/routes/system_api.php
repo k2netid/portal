@@ -13,6 +13,7 @@ use Modules\Core\System\Http\Controllers\Console\AiController;
 use Modules\Core\System\Http\Controllers\Console\AnalyticsController;
 use Modules\Core\System\Http\Controllers\Console\AuthController;
 use Modules\Core\System\Http\Controllers\Console\CaptchaController;
+use Modules\Core\System\Http\Controllers\Console\ConsoleMenuController;
 use Modules\Core\System\Http\Controllers\Console\ConsoleThemeController;
 use Modules\Core\System\Http\Controllers\Console\DashboardController;
 use Modules\Core\System\Http\Controllers\Console\EmailTemplateController;
@@ -223,6 +224,17 @@ Route::prefix('v1')->group(function (): void {
         Route::post('templates', [MailController::class, 'saveTemplates']);
         Route::get('settings', [MailController::class, 'getSettings']);
         Route::post('settings', [MailController::class, 'saveSettings']);
+    });
+
+    // Console Menu Editor Management API
+    Route::prefix('manage/console-menus')->middleware(['auth:sanctum'])->group(function (): void {
+        Route::get('', [ConsoleMenuController::class, 'index']);
+        Route::post('', [ConsoleMenuController::class, 'store']);
+        Route::post('reorder', [ConsoleMenuController::class, 'reorder']);
+        Route::post('reset', [ConsoleMenuController::class, 'resetDefaults']);
+        Route::get('{id}', [ConsoleMenuController::class, 'show']);
+        Route::put('{id}', [ConsoleMenuController::class, 'update']);
+        Route::delete('{id}', [ConsoleMenuController::class, 'destroy']);
     });
 
     // Notifications Management API (Canonical for SPA)

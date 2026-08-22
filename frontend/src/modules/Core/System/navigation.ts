@@ -68,6 +68,7 @@ export const systemNavigation: NavItem[] = [
             { name: 'mail', label: 'Mailbox', labelKey: 'system.navigation.menu.mail', permission: 'manage system', role: 'super', priority: 90, icon: 'mail' },
             { name: 'settings', label: 'System Settings', labelKey: 'system.navigation.menu.settings', permission: 'view settings', icon: 'settings' },
             { name: 'settings-console-appearance', label: 'Console Appearance', labelKey: 'system.navigation.menu.consoleAppearance', permission: 'manage settings', icon: 'palette' },
+            { name: 'settings-menus', label: 'Menu Editor', labelKey: 'system.navigation.menu.menuEditor', permission: 'manage settings', role: 'super', priority: 82, icon: 'menu' },
             { name: 'languages', label: 'Languages', labelKey: 'system.navigation.menu.languages', permission: 'view settings', icon: 'languages' },
             { name: 'system-notifications', label: 'Notifications', labelKey: 'system.navigation.menu.systemNotifications', permission: 'manage system', icon: 'system-notifications' },
         ],
