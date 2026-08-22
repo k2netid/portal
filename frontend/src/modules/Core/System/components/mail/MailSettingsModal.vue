@@ -308,7 +308,131 @@
           </div>
         </div>
 
-        <!-- Tab 3: AI Copilot & Governance Scope (With Global AI Check & Logic) -->
+        <!-- Tab 3: Canned Email Templates & Snippets Manager -->
+        <div v-if="activeTab === 'templates'" class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-bold text-foreground">Canned Response Templates</p>
+              <p class="text-[11px] text-muted-foreground">Create and manage reusable message snippets for quick composition.</p>
+            </div>
+            <Button
+              v-if="!isEditingTemplate"
+              size="sm"
+              class="h-7 text-xs gap-1.5 px-3"
+              @click="createNewTemplate"
+            >
+              <Plus class="w-3.5 h-3.5" />
+              <span>New Template</span>
+            </Button>
+          </div>
+
+          <!-- Inline Template Editor Form -->
+          <div v-if="isEditingTemplate" class="p-4 rounded-xl bg-muted/20 border border-primary/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-foreground flex items-center gap-1.5">
+                <Bookmark class="w-3.5 h-3.5 text-primary" />
+                <span>{{ currentTemplate.id ? 'Edit Template' : 'Create New Template' }}</span>
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="h-6 w-6 text-muted-foreground hover:text-foreground"
+                @click="isEditingTemplate = false"
+              >
+                <X class="w-3.5 h-3.5" />
+              </Button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="text-[11px] font-bold text-foreground">Template Title</label>
+                <Input
+                  v-model="currentTemplate.title"
+                  placeholder="e.g. Project Delivery Handover"
+                  class="h-8 text-xs"
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] font-bold text-foreground">Short Snippet / Description</label>
+                <Input
+                  v-model="currentTemplate.snippet"
+                  placeholder="e.g. Delivery notice with links..."
+                  class="h-8 text-xs"
+                />
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[11px] font-bold text-foreground">Email Message Content</label>
+              <Textarea
+                v-model="currentTemplate.body"
+                :rows="4"
+                placeholder="Dear Client,&#10;&#10;We are pleased to inform you..."
+                class="text-xs rounded-xl resize-none leading-relaxed"
+              />
+            </div>
+
+            <div class="flex justify-end gap-2 pt-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                class="h-7 text-xs"
+                @click="isEditingTemplate = false"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                class="h-7 text-xs font-semibold px-3 gap-1"
+                @click="saveCurrentTemplate"
+              >
+                <Save class="w-3 h-3" />
+                <span>Save Template</span>
+              </Button>
+            </div>
+          </div>
+
+          <!-- Templates List -->
+          <div class="space-y-2.5">
+            <div
+              v-for="tpl in templateList"
+              :key="tpl.id"
+              class="p-3.5 rounded-xl border border-border/60 bg-muted/10 hover:bg-muted/20 transition-all flex items-start justify-between gap-3 group"
+            >
+              <div class="space-y-1 flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <Bookmark class="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span class="text-xs font-bold text-foreground truncate">{{ tpl.title }}</span>
+                </div>
+                <p class="text-[11px] text-muted-foreground line-clamp-1 font-medium">{{ tpl.snippet }}</p>
+                <p class="text-[10px] text-muted-foreground/80 line-clamp-2 whitespace-pre-line font-mono bg-background/50 p-2 rounded-lg border border-border/40 mt-1.5">
+                  {{ tpl.body }}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-1 shrink-0 pt-0.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  class="h-6 text-[10px] px-2"
+                  @click="editTemplate(tpl)"
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  class="h-6 w-6 text-muted-foreground hover:text-destructive"
+                  @click="deleteTemplate(tpl.id)"
+                >
+                  <Trash2 class="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: AI Copilot & Governance Scope (With Global AI Check & Logic) -->
         <div v-if="activeTab === 'ai'" class="space-y-4">
           <!-- Global AI Inactive Notice -->
           <div
@@ -472,7 +596,7 @@
           </div>
         </div>
 
-        <!-- Tab 4: Out-of-Office / Auto-Reply -->
+        <!-- Tab 5: Out-of-Office / Auto-Reply -->
         <div v-if="activeTab === 'vacation'" class="space-y-4">
           <div class="flex items-center justify-between p-3 rounded-xl bg-muted/30 border border-border/40">
             <div>
@@ -505,7 +629,7 @@
           </div>
         </div>
 
-        <!-- Tab 5: Server & Transport -->
+        <!-- Tab 6: Server & Transport -->
         <div v-if="activeTab === 'server'" class="space-y-4">
           <div class="p-4 rounded-xl bg-muted/30 border border-border/40 space-y-3">
             <div class="flex items-center justify-between">
@@ -582,6 +706,9 @@ import {
   Sparkles,
   Upload,
   AlertTriangle,
+  Bookmark,
+  Plus,
+  Trash2,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -598,10 +725,17 @@ import {
   Switch,
 } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
+import type { MailTemplate } from '@/modules/Core/System/composables/useMailClient';
 
-const props = defineProps<{
-    isOpen: boolean;
-}>();
+const props = withDefaults(
+    defineProps<{
+        isOpen: boolean;
+        initialTab?: 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server';
+    }>(),
+    {
+        initialTab: 'general',
+    }
+);
 
 const emit = defineEmits<{
     (e: 'close'): void;
@@ -609,12 +743,13 @@ const emit = defineEmits<{
 
 const toast = useToast();
 const router = useRouter();
-const activeTab = ref<'general' | 'signature' | 'ai' | 'vacation' | 'server'>('general');
+const activeTab = ref<'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
 const saving = ref(false);
 
 const tabs = [
     { id: 'general' as const, label: 'Preferences', icon: Sliders },
     { id: 'signature' as const, label: 'Signature & Logo', icon: PenTool },
+    { id: 'templates' as const, label: 'Canned Templates', icon: Bookmark },
     { id: 'ai' as const, label: 'AI Copilot & Scope', icon: Sparkles },
     { id: 'vacation' as const, label: 'Auto-Reply', icon: Calendar },
     { id: 'server' as const, label: 'Server & Transport', icon: Server },
@@ -656,6 +791,79 @@ const settingsData = ref({
     ai_guardrail_human_review: true,
     ai_guardrail_pii_masking: true,
 });
+
+// Templates CRUD State
+const templateList = ref<MailTemplate[]>([]);
+const isEditingTemplate = ref(false);
+const currentTemplate = ref<MailTemplate>({
+    id: '',
+    title: '',
+    snippet: '',
+    body: '',
+});
+
+const createNewTemplate = () => {
+    currentTemplate.value = {
+        id: `tpl_${Date.now()}`,
+        title: '',
+        snippet: '',
+        body: '',
+    };
+    isEditingTemplate.value = true;
+};
+
+const editTemplate = (tpl: MailTemplate) => {
+    currentTemplate.value = { ...tpl };
+    isEditingTemplate.value = true;
+};
+
+const saveCurrentTemplate = async () => {
+    if (!currentTemplate.value.title.trim()) {
+        toast.error.action('Please enter a template title');
+        return;
+    }
+    if (!currentTemplate.value.body.trim()) {
+        toast.error.action('Please enter email body content');
+        return;
+    }
+
+    const idx = templateList.value.findIndex(t => t.id === currentTemplate.value.id);
+    if (idx >= 0) {
+        templateList.value[idx] = { ...currentTemplate.value };
+    } else {
+        templateList.value.unshift({ ...currentTemplate.value });
+    }
+
+    try {
+        await api.post('/manage/mail/templates', { templates: templateList.value });
+        toast.success.action('Template saved successfully');
+        isEditingTemplate.value = false;
+    } catch (error: unknown) {
+        toast.error.fromResponse(error);
+    }
+};
+
+const deleteTemplate = async (id: string) => {
+    templateList.value = templateList.value.filter(t => t.id !== id);
+    try {
+        await api.post('/manage/mail/templates', { templates: templateList.value });
+        toast.success.action('Template removed');
+    } catch (error: unknown) {
+        toast.error.fromResponse(error);
+    }
+};
+
+const fetchTemplates = async () => {
+    try {
+        const res = await api.get('/manage/mail/templates');
+        const data = res.data?.data || res.data;
+        if (Array.isArray(data)) {
+            templateList.value = data;
+        }
+    } catch {
+        // Fallback
+    }
+};
 
 const handleMediaSelect = (media: any) => {
     if (media?.url) {
@@ -761,12 +969,17 @@ watch(
     () => props.isOpen,
     (open) => {
         if (open) {
+            if (props.initialTab) {
+                activeTab.value = props.initialTab;
+            }
             loadSettings();
+            fetchTemplates();
         }
     }
 );
 
 onMounted(() => {
     loadSettings();
+    fetchTemplates();
 });
 </script>

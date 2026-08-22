@@ -37,8 +37,71 @@ export interface MailLabel {
     color: string;
 }
 
+export interface MailTemplate {
+    id: string;
+    title: string;
+    snippet: string;
+    body: string;
+}
+
 export function useMailClient() {
     const toast = useToast();
+
+    // Templates State
+    const templates = ref<MailTemplate[]>([
+        {
+            id: 'tpl_meeting',
+            title: 'Meeting Confirmation',
+            snippet: 'Hi, confirming our meeting scheduled for...',
+            body: 'Hi,\n\nThis is to confirm our meeting scheduled for [Date & Time]. Please let me know if you need to adjust the schedule or add additional attendees.\n\nLooking forward to speaking with you.\n\nBest regards,',
+        },
+        {
+            id: 'tpl_ack',
+            title: 'General Acknowledgment',
+            snippet: 'Thank you for reaching out. We have received...',
+            body: 'Hi,\n\nThank you for reaching out. We have received your message and our team is currently reviewing it. We will get back to you with an update shortly.\n\nBest regards,',
+        },
+        {
+            id: 'tpl_quote',
+            title: 'Price Quotation & Proposal',
+            snippet: 'Please find attached our formal quotation...',
+            body: 'Dear Client,\n\nThank you for your interest in our services. Please find attached our formal quotation and project scope for your review.\n\nFeel free to reach out if you have any questions.\n\nBest regards,',
+        },
+        {
+            id: 'tpl_support',
+            title: 'Technical Support Inquiry',
+            snippet: 'Could you please provide account details...',
+            body: 'Hello,\n\nThank you for contacting technical support. To help us resolve this swiftly, could you please provide your account email and a screenshot/log of the issue?\n\nThank you for your patience.\n\nBest regards,',
+        },
+        {
+            id: 'tpl_followup',
+            title: 'Follow-up Check-in',
+            snippet: 'Quick follow-up on my previous message...',
+            body: 'Hi,\n\nI wanted to quickly follow up on my previous message regarding [Subject]. Please let me know if you need any additional information from our side.\n\nBest regards,',
+        },
+    ]);
+
+    const fetchTemplates = async () => {
+        try {
+            const res = await api.get('/manage/mail/templates');
+            const data = res.data?.data || res.data;
+            if (Array.isArray(data) && data.length > 0) {
+                templates.value = data;
+            }
+        } catch {
+            // Keep default templates
+        }
+    };
+
+    const saveTemplates = async (newTemplates: MailTemplate[]) => {
+        try {
+            await api.post('/manage/mail/templates', { templates: newTemplates });
+            templates.value = newTemplates;
+            toast.success.action('Templates saved successfully');
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+        }
+    };
 
     // Sidebar state
     const isSidebarMinimized = ref(false);
@@ -497,6 +560,7 @@ export function useMailClient() {
     onMounted(async () => {
         await fetchClientSettings();
         fetchLabels();
+        fetchTemplates();
         fetchMessages(1);
     });
 
@@ -519,6 +583,7 @@ export function useMailClient() {
         nextPage,
         prevPage,
         labels,
+        templates,
         messages,
         folderCounts,
         storageStats,
@@ -548,5 +613,7 @@ export function useMailClient() {
         reply,
         forward,
         sendEmail,
+        fetchTemplates,
+        saveTemplates,
     };
 }

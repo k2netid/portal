@@ -223,13 +223,16 @@
     <MailComposerModal
       :is-open="isComposerOpen"
       :composer-data="composerData"
+      :templates="templates"
       @close="isComposerOpen = false"
       @send="sendEmail"
+      @manage-templates="openSettingsWithTab('templates')"
     />
 
     <!-- Mail Settings Modal -->
     <MailSettingsModal
       :is-open="isSettingsOpen"
+      :initial-tab="settingsInitialTab"
       @close="isSettingsOpen = false"
     />
 
@@ -290,6 +293,7 @@ const {
     nextPage,
     prevPage,
     labels,
+    templates,
     messages,
     folderCounts,
     storageStats,
@@ -322,6 +326,12 @@ const {
 } = useMailClient();
 
 const isShortcutsOpen = ref(false);
+const settingsInitialTab = ref<'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server'>('general');
+
+const openSettingsWithTab = (tab: 'general' | 'signature' | 'templates' | 'ai' | 'vacation' | 'server' = 'general') => {
+    settingsInitialTab.value = tab;
+    isSettingsOpen.value = true;
+};
 
 // Draggable Resizer State
 const listWidth = ref(380);

@@ -124,18 +124,28 @@
                 <ChevronDown class="w-2.5 h-2.5 opacity-60" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" class="w-64 text-xs">
+            <DropdownMenuContent align="start" class="!z-[1000] w-72 text-xs max-h-80 overflow-y-auto custom-scrollbar p-1.5 shadow-2xl">
               <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                 Canned Response Templates
               </div>
               <DropdownMenuItem
-                v-for="tpl in cannedTemplates"
-                :key="tpl.title"
-                class="flex flex-col items-start gap-0.5 py-1.5 cursor-pointer"
+                v-for="tpl in activeTemplates"
+                :key="tpl.id || tpl.title"
+                class="flex flex-col items-start gap-0.5 py-1.5 px-2 rounded-lg cursor-pointer hover:bg-primary/10"
                 @click="insertTemplate(tpl)"
               >
                 <span class="font-semibold text-xs text-foreground">{{ tpl.title }}</span>
                 <span class="text-[10px] text-muted-foreground line-clamp-1">{{ tpl.snippet }}</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator class="my-1" />
+
+              <DropdownMenuItem
+                class="flex items-center gap-1.5 py-1.5 px-2 text-xs text-primary font-semibold cursor-pointer rounded-lg hover:bg-primary/10"
+                @click="$emit('manage-templates')"
+              >
+                <Settings class="w-3.5 h-3.5" />
+                <span>Manage & Add Templates</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -259,6 +269,7 @@ import {
   Loader2,
   Bookmark,
   ChevronDown,
+  Settings,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -272,45 +283,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
-
-const cannedTemplates = [
-    {
-        title: 'Meeting Confirmation',
-        snippet: 'Hi, confirming our meeting scheduled for...',
-        body: 'Hi,\n\nThis is to confirm our meeting scheduled for [Date & Time]. Please let me know if you need to adjust the schedule or add additional attendees.\n\nLooking forward to speaking with you.\n\nBest regards,',
-    },
-    {
-        title: 'General Acknowledgment',
-        snippet: 'Thank you for reaching out. We have received...',
-        body: 'Hi,\n\nThank you for reaching out. We have received your message and our team is currently reviewing it. We will get back to you with an update shortly.\n\nBest regards,',
-    },
-    {
-        title: 'Price Quotation & Proposal',
-        snippet: 'Please find attached our formal quotation...',
-        body: 'Dear Client,\n\nThank you for your interest in our services. Please find attached our formal quotation and project scope for your review.\n\nFeel free to reach out if you have any questions.\n\nBest regards,',
-    },
-    {
-        title: 'Technical Support Inquiry',
-        snippet: 'Could you please provide account details...',
-        body: 'Hello,\n\nThank you for contacting technical support. To help us resolve this swiftly, could you please provide your account email and a screenshot/log of the issue?\n\nThank you for your patience.\n\nBest regards,',
-    },
-    {
-        title: 'Follow-up Check-in',
-        snippet: 'Quick follow-up on my previous message...',
-        body: 'Hi,\n\nI wanted to quickly follow up on my previous message regarding [Subject]. Please let me know if you need any additional information from our side.\n\nBest regards,',
-    },
-];
-
-const insertTemplate = (tpl: { title: string; body: string }) => {
-    if (props.composerData.body.trim()) {
-        props.composerData.body += `\n\n${tpl.body}`;
-    } else {
-        props.composerData.body = tpl.body;
-    }
-    toast.success.action(`Inserted "${tpl.title}" template`);
-};
+import { computed } from 'vue';
+import type { MailTemplate } from '@/modules/Core/System/composables/useMailClient';
 
 const props = defineProps<{
     isOpen: boolean;
@@ -322,12 +299,60 @@ const props = defineProps<{
         body: string;
         attachments: File[];
     };
+    templates?: MailTemplate[];
 }>();
 
 const emit = defineEmits<{
     (e: 'close'): void;
     (e: 'send'): void;
+    (e: 'manage-templates'): void;
 }>();
+
+const cannedTemplates = [
+    {
+        id: 'tpl_meeting',
+        title: 'Meeting Confirmation',
+        snippet: 'Hi, confirming our meeting scheduled for...',
+        body: 'Hi,\n\nThis is to confirm our meeting scheduled for [Date & Time]. Please let me know if you need to adjust the schedule or add additional attendees.\n\nLooking forward to speaking with you.\n\nBest regards,',
+    },
+    {
+        id: 'tpl_ack',
+        title: 'General Acknowledgment',
+        snippet: 'Thank you for reaching out. We have received...',
+        body: 'Hi,\n\nThank you for reaching out. We have received your message and our team is currently reviewing it. We will get back to you with an update shortly.\n\nBest regards,',
+    },
+    {
+        id: 'tpl_quote',
+        title: 'Price Quotation & Proposal',
+        snippet: 'Please find attached our formal quotation...',
+        body: 'Dear Client,\n\nThank you for your interest in our services. Please find attached our formal quotation and project scope for your review.\n\nFeel free to reach out if you have any questions.\n\nBest regards,',
+    },
+    {
+        id: 'tpl_support',
+        title: 'Technical Support Inquiry',
+        snippet: 'Could you please provide account details...',
+        body: 'Hello,\n\nThank you for contacting technical support. To help us resolve this swiftly, could you please provide your account email and a screenshot/log of the issue?\n\nThank you for your patience.\n\nBest regards,',
+    },
+    {
+        id: 'tpl_followup',
+        title: 'Follow-up Check-in',
+        snippet: 'Quick follow-up on my previous message...',
+        body: 'Hi,\n\nI wanted to quickly follow up on my previous message regarding [Subject]. Please let me know if you need any additional information from our side.\n\nBest regards,',
+    },
+];
+
+const activeTemplates = computed(() => {
+    return props.templates && props.templates.length > 0 ? props.templates : cannedTemplates;
+});
+
+const insertTemplate = (tpl: { title: string; body: string }) => {
+    if (props.composerData.body.trim()) {
+        props.composerData.body += `\n\n${tpl.body}`;
+    } else {
+        props.composerData.body = tpl.body;
+    }
+    toast.success.action(`Inserted "${tpl.title}" template`);
+};
 
 const toast = useToast();
 const isMaximized = ref(false);

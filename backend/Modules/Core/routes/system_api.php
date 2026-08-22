@@ -216,6 +216,8 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('trash/empty', [MailController::class, 'emptyTrash']);
         Route::get('labels', [MailController::class, 'getLabels']);
         Route::post('labels', [MailController::class, 'saveLabels']);
+        Route::get('templates', [MailController::class, 'getTemplates']);
+        Route::post('templates', [MailController::class, 'saveTemplates']);
         Route::get('settings', [MailController::class, 'getSettings']);
         Route::post('settings', [MailController::class, 'saveSettings']);
     });

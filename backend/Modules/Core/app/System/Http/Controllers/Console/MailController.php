@@ -347,16 +347,71 @@ class MailController extends BaseApiController
             'labels.*.color' => 'required|string|max:50',
         ]);
 
-        Setting::updateOrCreate(
-            ['key' => 'mail_client_labels'],
-            [
-                'value' => $validated['labels'],
-                'group' => 'mail_client',
-                'type' => 'array',
-            ]
-        );
+        Setting::set('mail_client_labels', $validated['labels'], 'array', 'mail_client');
 
         return $this->success($validated['labels'], 'Labels saved successfully');
+    }
+
+    /**
+     * Get list of canned email response templates
+     */
+    public function getTemplates(): JsonResponse
+    {
+        $templatesSetting = Setting::where('key', 'mail_client_templates')->first();
+        $templates = $templatesSetting && is_array($templatesSetting->value)
+            ? $templatesSetting->value
+            : [
+                [
+                    'id' => 'tpl_meeting',
+                    'title' => 'Meeting Confirmation',
+                    'snippet' => 'Hi, confirming our meeting scheduled for...',
+                    'body' => "Hi,\n\nThis is to confirm our meeting scheduled for [Date & Time]. Please let me know if you need to adjust the schedule or add additional attendees.\n\nLooking forward to speaking with you.\n\nBest regards,",
+                ],
+                [
+                    'id' => 'tpl_ack',
+                    'title' => 'General Acknowledgment',
+                    'snippet' => 'Thank you for reaching out. We have received...',
+                    'body' => "Hi,\n\nThank you for reaching out. We have received your message and our team is currently reviewing it. We will get back to you with an update shortly.\n\nBest regards,",
+                ],
+                [
+                    'id' => 'tpl_quote',
+                    'title' => 'Price Quotation & Proposal',
+                    'snippet' => 'Please find attached our formal quotation...',
+                    'body' => "Dear Client,\n\nThank you for your interest in our services. Please find attached our formal quotation and project scope for your review.\n\nFeel free to reach out if you have any questions.\n\nBest regards,",
+                ],
+                [
+                    'id' => 'tpl_support',
+                    'title' => 'Technical Support Inquiry',
+                    'snippet' => 'Could you please provide account details...',
+                    'body' => "Hello,\n\nThank you for contacting technical support. To help us resolve this swiftly, could you please provide your account email and a screenshot/log of the issue?\n\nThank you for your patience.\n\nBest regards,",
+                ],
+                [
+                    'id' => 'tpl_followup',
+                    'title' => 'Follow-up Check-in',
+                    'snippet' => 'Quick follow-up on my previous message...',
+                    'body' => "Hi,\n\nI wanted to quickly follow up on my previous message regarding [Subject]. Please let me know if you need any additional information from our side.\n\nBest regards,",
+                ],
+            ];
+
+        return $this->success($templates, 'Templates retrieved successfully');
+    }
+
+    /**
+     * Save canned email response templates list
+     */
+    public function saveTemplates(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'templates' => 'required|array',
+            'templates.*.id' => 'required|string',
+            'templates.*.title' => 'required|string|max:100',
+            'templates.*.snippet' => 'nullable|string|max:200',
+            'templates.*.body' => 'required|string',
+        ]);
+
+        Setting::set('mail_client_templates', $validated['templates'], 'array', 'mail_client');
+
+        return $this->success($validated['templates'], 'Templates saved successfully');
     }
 
     /**
