@@ -70,12 +70,15 @@ return new class extends Migration
         // 4. Deleted Files (Recycle Bin)
         Schema::create('infra_deleted_files', function (Blueprint $table): void {
             $table->uuid('id')->primary();
-            $table->string('original_name');
             $table->string('original_path');
-            $table->string('disk')->default('local');
-            $table->unsignedBigInteger('size');
+            $table->string('trash_path')->index();
+            $table->string('disk')->default('public');
+            $table->string('name')->nullable();
+            $table->string('type')->default('file');
+            $table->unsignedBigInteger('size')->default(0)->nullable();
+            $table->string('extension', 50)->nullable();
             $table->string('mime_type')->nullable();
-            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->uuid('deleted_by')->nullable()->index();
             $table->timestamp('deleted_at')->useCurrent();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
