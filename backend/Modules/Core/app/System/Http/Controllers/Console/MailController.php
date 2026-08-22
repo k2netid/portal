@@ -360,11 +360,38 @@ class MailController extends BaseApiController
     }
 
     /**
-     * Get mail client standard preferences
+     * Get mail client standard preferences & active global AI status
      */
     public function getSettings(): JsonResponse
     {
         $settings = Setting::getGroup('mail_client');
+        $globalAi = Setting::getGroup('ai');
+
+        $isGlobalAiEnabled = (bool) ($globalAi['ai_enabled'] ?? false);
+        $defaultProvider = (string) ($globalAi['ai_default_provider'] ?? 'gemini');
+
+        // Check active AI providers in system
+        $providerCatalog = [
+            'gemini' => ['name' => 'Google Gemini', 'model' => $globalAi['gemini_model'] ?? 'gemini-2.0-flash', 'has_key' => ! empty($globalAi['gemini_api_key'])],
+            'openai' => ['name' => 'OpenAI GPT', 'model' => $globalAi['openai_model'] ?? 'gpt-4o-mini', 'has_key' => ! empty($globalAi['openai_api_key'])],
+            'claude' => ['name' => 'Anthropic Claude', 'model' => $globalAi['claude_model'] ?? 'claude-3-5-sonnet-20241022', 'has_key' => ! empty($globalAi['claude_api_key'])],
+            'deepseek' => ['name' => 'DeepSeek', 'model' => $globalAi['deepseek_model'] ?? 'deepseek-chat', 'has_key' => ! empty($globalAi['deepseek_api_key'])],
+            'grok' => ['name' => 'xAI Grok', 'model' => $globalAi['grok_model'] ?? 'grok-2-latest', 'has_key' => ! empty($globalAi['grok_api_key'])],
+            'openrouter' => ['name' => 'OpenRouter', 'model' => $globalAi['openrouter_model'] ?? 'openrouter/auto', 'has_key' => ! empty($globalAi['openrouter_api_key'])],
+        ];
+
+        $activeProviders = [];
+        foreach ($providerCatalog as $slug => $info) {
+            if ($info['has_key'] || $slug === $defaultProvider) {
+                $activeProviders[] = [
+                    'id' => $slug,
+                    'name' => $info['name'],
+                    'model' => $info['model'],
+                    'has_key' => $info['has_key'],
+                    'is_default' => $slug === $defaultProvider,
+                ];
+            }
+        }
 
         return $this->success([
             'per_page' => (int) ($settings['mail_client_per_page'] ?? 25),
@@ -383,7 +410,7 @@ class MailController extends BaseApiController
             'vacation_body' => (string) ($settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.'),
             // AI Governance & Scope
             'ai_enabled' => (bool) ($settings['mail_client_ai_enabled'] ?? true),
-            'ai_provider' => (string) ($settings['mail_client_ai_provider'] ?? 'system'),
+            'ai_provider' => (string) ($settings['mail_client_ai_provider'] ?? $defaultProvider),
             'ai_tone' => (string) ($settings['mail_client_ai_tone'] ?? 'professional'),
             'ai_scope_drafting' => (bool) ($settings['mail_client_ai_scope_drafting'] ?? true),
             'ai_scope_summarize' => (bool) ($settings['mail_client_ai_scope_summarize'] ?? true),
@@ -392,6 +419,12 @@ class MailController extends BaseApiController
             'ai_guardrail_human_review' => (bool) ($settings['mail_client_ai_guardrail_human_review'] ?? true),
             'ai_guardrail_pii_masking' => (bool) ($settings['mail_client_ai_guardrail_pii_masking'] ?? true),
             'storage_stats' => $this->calculateStorageStats(),
+            // System Global AI Integration Info
+            'global_ai' => [
+                'enabled' => $isGlobalAiEnabled,
+                'default_provider' => $defaultProvider,
+                'active_providers' => $activeProviders,
+            ],
         ], 'Mail client settings retrieved successfully');
     }
 
@@ -405,9 +438,9 @@ class MailController extends BaseApiController
             'storage_quota_gb' => 'nullable|integer|min:1|max:500',
             'trash_retention_days' => 'nullable|integer|min:0|max:365',
             'signature' => 'nullable|string',
-            'signature_logo' => 'nullable|string|max:500',
+            'signature_logo' => 'nullable|string',
             'signature_company' => 'nullable|string|max:100',
-            'reply_to' => 'nullable|email',
+            'reply_to' => 'nullable|string|max:150',
             'auto_read_delay' => 'nullable|integer',
             'auto_check_interval' => 'nullable|integer',
             'sound_notifications' => 'nullable|boolean',
@@ -428,14 +461,12 @@ class MailController extends BaseApiController
         ]);
 
         foreach ($validated as $key => $val) {
-            if ($val === null) {
-                continue;
-            }
+            $cleanVal = $val === null ? '' : $val;
             $type = is_bool($val) ? 'boolean' : (is_int($val) ? 'integer' : 'string');
-            Setting::set('mail_client_'.$key, $val, $type, 'mail_client');
+            Setting::set('mail_client_'.$key, $cleanVal, $type, 'mail_client');
         }
 
-        return $this->success($validated, 'Mail client settings saved successfully');
+        return $this->getSettings();
     }
 
     /**

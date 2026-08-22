@@ -41,6 +41,11 @@
           >
             <component :is="tab.icon" class="w-3.5 h-3.5" />
             <span>{{ tab.label }}</span>
+            <span
+              v-if="tab.id === 'ai' && globalAiState.enabled"
+              class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"
+              title="Global AI Active"
+            />
           </button>
         </div>
       </div>
@@ -303,20 +308,57 @@
           </div>
         </div>
 
-        <!-- Tab 3: AI Copilot & Governance Scope -->
+        <!-- Tab 3: AI Copilot & Governance Scope (With Global AI Check & Logic) -->
         <div v-if="activeTab === 'ai'" class="space-y-4">
-          <div class="flex items-center justify-between p-3.5 rounded-xl bg-primary/5 border border-primary/20">
+          <!-- Global AI Inactive Notice -->
+          <div
+            v-if="!globalAiState.enabled"
+            class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-3"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <AlertTriangle class="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                <span class="text-xs font-bold text-amber-900 dark:text-amber-200">Global AI Integration Disabled</span>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300">
+                Disabled in System
+              </span>
+            </div>
+            <p class="text-[11px] text-amber-800/90 dark:text-amber-300/90 leading-relaxed">
+              Global AI integration is currently turned off in system configuration. To enable AI drafting, email thread summarization, and smart replies in Webmail, please enable AI in Global Settings.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-7 text-xs gap-1.5 border-amber-500/30 text-amber-900 dark:text-amber-200 hover:bg-amber-500/20"
+              @click="goToAiSettings"
+            >
+              <ExternalLink class="w-3.5 h-3.5" />
+              <span>Configure Global AI Settings</span>
+            </Button>
+          </div>
+
+          <!-- Active AI Header Banner -->
+          <div
+            v-else
+            class="flex items-center justify-between p-3.5 rounded-xl bg-primary/5 border border-primary/20"
+          >
             <div>
-              <p class="text-xs font-bold text-primary flex items-center gap-1.5">
-                <Sparkles class="w-4 h-4 text-amber-500" />
-                <span>AI Email Copilot Integration</span>
-              </p>
-              <p class="text-[11px] text-muted-foreground">Enable LLM-assisted drafting, summarizing, and smart replies in Webmail.</p>
+              <div class="flex items-center gap-2">
+                <p class="text-xs font-bold text-primary flex items-center gap-1.5">
+                  <Sparkles class="w-4 h-4 text-amber-500" />
+                  <span>AI Email Copilot Integration</span>
+                </p>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  Active ({{ globalAiState.default_provider }})
+                </span>
+              </div>
+              <p class="text-[11px] text-muted-foreground mt-0.5">Enable LLM-assisted drafting, summarizing, and smart replies in Webmail.</p>
             </div>
             <Switch v-model="settingsData.ai_enabled" />
           </div>
 
-          <!-- Writing Tone Selection -->
+          <!-- Writing Tone & Active Provider Selection -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="space-y-1.5">
               <label class="text-xs font-bold text-foreground">Default Writing Tone</label>
@@ -334,18 +376,26 @@
             </div>
 
             <div class="space-y-1.5">
-              <label class="text-xs font-bold text-foreground">Preferred AI Engine</label>
+              <label class="text-xs font-bold text-foreground">Preferred AI Engine & Model</label>
               <Select v-model="settingsData.ai_provider">
                 <SelectTrigger class="h-8 text-xs">
                   <SelectValue placeholder="Select AI provider" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="system">System Default AI</SelectItem>
-                  <SelectItem value="claude">Anthropic Claude</SelectItem>
-                  <SelectItem value="gemini">Google Gemini</SelectItem>
-                  <SelectItem value="openai">OpenAI GPT</SelectItem>
-                  <SelectItem value="grok">xAI Grok</SelectItem>
-                  <SelectItem value="deepseek">DeepSeek</SelectItem>
+                  <SelectItem
+                    v-for="prov in globalAiState.active_providers"
+                    :key="prov.id"
+                    :value="prov.id"
+                  >
+                    {{ prov.name }} ({{ prov.model }}) {{ prov.is_default ? '• Default' : '' }}
+                  </SelectItem>
+                  <template v-if="globalAiState.active_providers.length === 0">
+                    <SelectItem value="gemini">Google Gemini (gemini-2.0-flash)</SelectItem>
+                    <SelectItem value="openai">OpenAI GPT (gpt-4o-mini)</SelectItem>
+                    <SelectItem value="claude">Anthropic Claude (claude-3-5-sonnet)</SelectItem>
+                    <SelectItem value="deepseek">DeepSeek (deepseek-chat)</SelectItem>
+                    <SelectItem value="grok">xAI Grok (grok-2-latest)</SelectItem>
+                  </template>
                 </SelectContent>
               </Select>
             </div>
@@ -379,6 +429,14 @@
                   <p class="text-[10px] text-muted-foreground">Suggest intelligent 1-click quick replies for incoming mail.</p>
                 </div>
                 <Switch v-model="settingsData.ai_scope_smart_reply" />
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+                <div>
+                  <p class="text-xs font-semibold text-foreground">Urgency & Sentiment Analysis</p>
+                  <p class="text-[10px] text-muted-foreground">Detect urgency and classify priority status of incoming messages.</p>
+                </div>
+                <Switch v-model="settingsData.ai_scope_sentiment" />
               </div>
             </div>
           </div>
@@ -523,6 +581,7 @@ import {
   ImageIcon,
   Sparkles,
   Upload,
+  AlertTriangle,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -561,6 +620,16 @@ const tabs = [
     { id: 'server' as const, label: 'Server & Transport', icon: Server },
 ];
 
+const globalAiState = ref<{
+    enabled: boolean;
+    default_provider: string;
+    active_providers: Array<{ id: string; name: string; model: string; has_key: boolean; is_default: boolean }>;
+}>({
+    enabled: true,
+    default_provider: 'gemini',
+    active_providers: [],
+});
+
 const settingsData = ref({
     per_page: 25,
     storage_quota_gb: 15,
@@ -578,7 +647,7 @@ const settingsData = ref({
     vacation_body: 'Thank you for your message. I am currently away from my desk.',
     // AI Governance
     ai_enabled: true,
-    ai_provider: 'system',
+    ai_provider: 'gemini',
     ai_tone: 'professional',
     ai_scope_drafting: true,
     ai_scope_summarize: true,
@@ -601,7 +670,34 @@ const loadSettings = async () => {
         const response = await api.get('/manage/mail/settings');
         const data = response.data?.data || response.data;
         if (data) {
-            settingsData.value = { ...settingsData.value, ...data };
+            settingsData.value = {
+                per_page: data.per_page ?? 25,
+                storage_quota_gb: data.storage_quota_gb ?? 15,
+                trash_retention_days: data.trash_retention_days ?? 30,
+                auto_check_interval: data.auto_check_interval ?? 5,
+                auto_read_delay: data.auto_read_delay ?? 0,
+                sound_notifications: Boolean(data.sound_notifications),
+                block_remote_images: Boolean(data.block_remote_images),
+                signature_company: data.signature_company ?? '',
+                signature_logo: data.signature_logo ?? '',
+                signature: data.signature ?? '',
+                reply_to: data.reply_to ?? '',
+                vacation_enabled: Boolean(data.vacation_enabled),
+                vacation_subject: data.vacation_subject ?? 'Out of Office Auto-Reply',
+                vacation_body: data.vacation_body ?? 'Thank you for your message. I am currently away from my desk.',
+                ai_enabled: Boolean(data.ai_enabled),
+                ai_provider: data.ai_provider || 'gemini',
+                ai_tone: data.ai_tone || 'professional',
+                ai_scope_drafting: Boolean(data.ai_scope_drafting),
+                ai_scope_summarize: Boolean(data.ai_scope_summarize),
+                ai_scope_smart_reply: Boolean(data.ai_scope_smart_reply),
+                ai_scope_sentiment: Boolean(data.ai_scope_sentiment),
+                ai_guardrail_human_review: Boolean(data.ai_guardrail_human_review),
+                ai_guardrail_pii_masking: Boolean(data.ai_guardrail_pii_masking),
+            };
+            if (data.global_ai) {
+                globalAiState.value = data.global_ai;
+            }
         }
     } catch {
         // Fallback to local state
@@ -614,7 +710,34 @@ const saveSettings = async () => {
         const res = await api.post('/manage/mail/settings', settingsData.value);
         const data = res.data?.data || res.data;
         if (data) {
-            settingsData.value = { ...settingsData.value, ...data };
+            settingsData.value = {
+                per_page: data.per_page ?? settingsData.value.per_page,
+                storage_quota_gb: data.storage_quota_gb ?? settingsData.value.storage_quota_gb,
+                trash_retention_days: data.trash_retention_days ?? settingsData.value.trash_retention_days,
+                auto_check_interval: data.auto_check_interval ?? settingsData.value.auto_check_interval,
+                auto_read_delay: data.auto_read_delay ?? settingsData.value.auto_read_delay,
+                sound_notifications: Boolean(data.sound_notifications),
+                block_remote_images: Boolean(data.block_remote_images),
+                signature_company: data.signature_company ?? settingsData.value.signature_company,
+                signature_logo: data.signature_logo ?? settingsData.value.signature_logo,
+                signature: data.signature ?? settingsData.value.signature,
+                reply_to: data.reply_to ?? settingsData.value.reply_to,
+                vacation_enabled: Boolean(data.vacation_enabled),
+                vacation_subject: data.vacation_subject ?? settingsData.value.vacation_subject,
+                vacation_body: data.vacation_body ?? settingsData.value.vacation_body,
+                ai_enabled: Boolean(data.ai_enabled),
+                ai_provider: data.ai_provider || settingsData.value.ai_provider,
+                ai_tone: data.ai_tone || settingsData.value.ai_tone,
+                ai_scope_drafting: Boolean(data.ai_scope_drafting),
+                ai_scope_summarize: Boolean(data.ai_scope_summarize),
+                ai_scope_smart_reply: Boolean(data.ai_scope_smart_reply),
+                ai_scope_sentiment: Boolean(data.ai_scope_sentiment),
+                ai_guardrail_human_review: Boolean(data.ai_guardrail_human_review),
+                ai_guardrail_pii_masking: Boolean(data.ai_guardrail_pii_masking),
+            };
+            if (data.global_ai) {
+                globalAiState.value = data.global_ai;
+            }
         }
         toast.success.action('Mail preferences saved successfully');
     } catch (error: unknown) {
@@ -627,6 +750,11 @@ const saveSettings = async () => {
 const goToEmailSettings = () => {
     emit('close');
     router.push({ name: 'settings', query: { tab: 'email' } });
+};
+
+const goToAiSettings = () => {
+    emit('close');
+    router.push({ name: 'settings', query: { tab: 'ai' } });
 };
 
 watch(
