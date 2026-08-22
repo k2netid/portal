@@ -322,5 +322,168 @@
                 "deleteFailed": "Gagal menghapus record"
             }
         }
+    },
+    "fileManager": {
+        "title": "Manajer Berkas",
+        "description": "Kelola dan atur aset digital dan berkas sistem Anda.",
+        "actions": {
+            "cancel": "Batal",
+            "close": "Tutup",
+            "compress": "Kompres ke ZIP",
+            "copy": "Salin",
+            "copyPath": "Salin Path",
+            "copyUrl": "Salin URL",
+            "create": "Buat",
+            "creating": "Membuat...",
+            "delete": "Hapus",
+            "delete_file": "Hapus Berkas",
+            "delete_folder": "Hapus Folder",
+            "delete_permanent": "Hapus Permanen",
+            "download": "Unduh",
+            "extract": "Ekstrak di sini",
+            "home": "Beranda",
+            "launch": "Luncurkan",
+            "move": "Pindahkan",
+            "newFolder": "Folder Baru",
+            "open": "Buka",
+            "paste": "Tempel",
+            "quickActions": "Aksi Cepat",
+            "remove": "Hapus",
+            "restore": "Pulihkan",
+            "search": "Cari...",
+            "upload": "Unggah",
+            "uploadFiles": "Unggah Berkas",
+            "uploading": "Mengunggah..."
+        },
+        "bulk": {
+            "cancel": "Batal",
+            "clearSelection": "Hapus Pilihan",
+            "clear_selection": "Hapus Pilihan",
+            "confirmDelete": "Apakah Anda yakin ingin menghapus {count} item? | Apakah Anda yakin ingin menghapus {count} item?",
+            "delete": "Hapus",
+            "deleteSelected": "Hapus yang Dipilih",
+            "downloadSelected": "Unduh yang Dipilih",
+            "grid_view": "Tampilan Grid",
+            "label": "{count} Dipilih",
+            "label_count": "item terpilih",
+            "list_view": "Tampilan List",
+            "selectAll": "Pilih Semua",
+            "selected": "{count} item dipilih | {count} item dipilih"
+        },
+        "filter": {
+            "all": "Semua Berkas",
+            "archives": "Arsip",
+            "audio": "Audio",
+            "documents": "Dokumen",
+            "images": "Gambar",
+            "other": "Lainnya",
+            "videos": "Video"
+        },
+        "labels": {
+            "clickToUpload": "Klik untuk mengunggah",
+            "dragAndDrop": "atau seret dan lepas",
+            "files": "Berkas & Folder",
+            "folderName": "Nama Folder",
+            "folders": "Folder",
+            "multipleSupported": "Mendukung banyak berkas",
+            "selectedFiles": "Berkas Terpilih:"
+        },
+        "messages": {
+            "bulkDeleted": "Berhasil memindahkan item ke tempat sampah",
+            "copiedToClipboard": "Item berhasil disalin ke clipboard",
+            "createFolderFailed": "Gagal membuat folder",
+            "deleteFailed": "Gagal menghapus item",
+            "deleteFileConfirm": "Apakah Anda yakin ingin menghapus \"{name}\"?",
+            "deleteFileFailed": "Gagal menghapus berkas",
+            "deleteFolderConfirm": "Apakah Anda yakin ingin menghapus folder \"{name}\"? Semua isi di dalamnya akan dipindahkan ke tempat sampah.",
+            "deleteFolderFailed": "Gagal menghapus folder",
+            "deleteSuccess": "Item berhasil dihapus",
+            "emptyTrashFailed": "Gagal mengosongkan sampah",
+            "fileDeleted": "Berkas dihapus secara permanen",
+            "folderCreatedSuccess": "Folder berhasil dibuat",
+            "folderDeleted": "Folder dihapus secara permanen",
+            "loading": "Memuat...",
+            "moved": "Item berhasil dipindahkan",
+            "movedToClipboard": "Item berhasil dipindahkan ke clipboard",
+            "noFiles": "Tidak ada berkas ditemukan",
+            "pasted": "Item berhasil ditempel",
+            "restored": "Item berhasil dipulihkan",
+            "trashEmptied": "Sampah berhasil dikosongkan",
+            "uploadFailed": "Gagal mengunggah berkas",
+            "uploadedSuccess": "Berkas berhasil diunggah",
+            "path_copied": "Path disalin",
+            "url_copied": "URL disalin",
+            "copy_failed": "Gagal menyalin",
+            "extracted": "Berhasil diekstrak",
+            "extract_failed": "Ekstraksi gagal",
+            "compressed": "Berhasil dikompres",
+            "compress_failed": "Kompresi gagal"
+        },
+        "modals": {
+            "createFolder": {
+                "cancel": "Batal",
+                "create": "Buat Folder",
+                "creating": "Membuat...",
+                "name": "Nama Folder",
+                "placeholder": "Masukkan nama folder",
+                "title": "Buat Folder"
+            },
+            "upload": {
+                "cancel": "Batal",
+                "clickToUpload": "Klik untuk mengunggah",
+                "dragAndDrop": "atau seret dan lepas",
+                "formats": "Mendukung semua jenis berkas",
+                "placeholder": "Pilih berkas...",
+                "selectedFiles": "Berkas Terpilih:",
+                "title": "Unggah Berkas",
+                "uploadAction": "Unggah {count} Berkas",
+                "uploading": "Mengunggah..."
+            }
+        },
+        "nav": {
+            "root": "Root"
+        },
+        "pagination": {
+            "next": "Berikutnya",
+            "perPage": "Item per halaman",
+            "previous": "Sebelumnya",
+            "showing": "Menampilkan {from} sampai {to} dari {total} item"
+        },
+        "placeholders": {
+            "folderName": "Nama folder baru",
+            "newDetails": "Rincian baru"
+        },
+        "properties": {
+            "modified": "Diubah",
+            "name": "Nama",
+            "path": "Path",
+            "select_item": "Pilih file atau folder untuk melihat detail",
+            "size": "Ukuran",
+            "title": "Detail",
+            "type": "Tipe"
+        },
+        "search": {
+            "noResults": "Tidak ada berkas atau folder yang cocok dengan pencarian Anda",
+            "placeholder": "Cari berkas dan folder..."
+        },
+        "sort": {
+            "asc": "Naik",
+            "date": "Tanggal Diubah",
+            "desc": "Turun",
+            "label": "Urutkan berdasarkan",
+            "name": "Nama",
+            "size": "Ukuran"
+        },
+        "trash": {
+            "confirmPermanentDelete": "Apakah Anda yakin ingin menghapus \"{name}\" secara permanen?",
+            "empty": "Kosongkan Sampah",
+            "emptyConfirm": "Apakah Anda yakin ingin menghapus semua item di sampah secara permanen? Tindakan ini tidak dapat dibatalkan.",
+            "emptyDescription": "Berkas atau folder apa pun yang Anda hapus akan muncul di sini untuk waktu terbatas sebelum dihapus selamanya.",
+            "emptyTitle": "Tempat sampah Anda kosong",
+            "permanent_delete": "Hapus Permanen",
+            "refresh": "Segarkan",
+            "scanning": "Memindai tempat sampah...",
+            "title": "Tempat Sampah"
+        }
     }
 }

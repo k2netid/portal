@@ -79,6 +79,7 @@ export const systemNavigation: NavItem[] = [
         priority: 80,
         children: [
             { name: 'system', label: 'System Info', labelKey: 'system.navigation.menu.systemInfo', permission: 'view system', role: 'super', priority: 100, icon: 'system' },
+            { name: 'file-manager', label: 'File Manager', labelKey: 'infra.fileManager.title', permission: 'manage settings', role: 'super', priority: 95, icon: 'folder' },
             { name: 'backups', label: 'Backups', labelKey: 'system.navigation.menu.backups', permission: 'view backups', role: 'super', priority: 90, icon: 'backups' },
             { name: 'redis', label: 'Redis Cache', labelKey: 'system.navigation.menu.redis', permission: 'manage settings', role: 'super', priority: 80, icon: 'redis' },
             { name: 'scheduled-tasks', label: 'Scheduled Tasks', labelKey: 'system.navigation.menu.scheduledTasks', permission: 'view scheduled tasks', role: 'super', priority: 70, icon: 'scheduled-tasks' },

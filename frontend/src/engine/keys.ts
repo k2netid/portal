@@ -1,8 +1,4 @@
 import { type InjectionKey } from 'vue';
+import type { FileManager } from '@/modules/Core/Infra/composables/useFileManager';
 
-export interface FileManagerContext {
-    currentPath: string;
-    refresh: () => Promise<void>;
-}
-
-export const FileManagerKey: InjectionKey<FileManagerContext> = Symbol('FileManager');
+export const FileManagerKey: InjectionKey<FileManager> = Symbol('FileManager');

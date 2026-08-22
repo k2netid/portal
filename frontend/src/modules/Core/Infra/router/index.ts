@@ -61,6 +61,26 @@ const infraRoutes: RouteRecordRaw[] = [
             breadcrumb: 'infra.dynamic.record.editTitle',
         },
     },
+    {
+        path: 'infra/file-manager',
+        name: 'file-manager',
+        component: () => import('@/modules/Core/Infra/views/file-manager/Index.vue'),
+        meta: {
+            permission: 'manage settings',
+            title: 'infra.fileManager.title',
+            breadcrumb: 'infra.fileManager.title',
+        },
+    },
+    {
+        path: 'file-manager',
+        name: 'file-manager-alias',
+        component: () => import('@/modules/Core/Infra/views/file-manager/Index.vue'),
+        meta: {
+            permission: 'manage settings',
+            title: 'infra.fileManager.title',
+            breadcrumb: 'infra.fileManager.title',
+        },
+    },
 ];
 
 export default infraRoutes;

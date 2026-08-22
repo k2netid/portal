@@ -322,5 +322,168 @@
                 "deleteFailed": "Failed to delete record"
             }
         }
+    },
+    "fileManager": {
+        "title": "File Manager",
+        "description": "Manage and organize your digital assets and system files.",
+        "actions": {
+            "cancel": "Cancel",
+            "close": "Close",
+            "compress": "Compress to ZIP",
+            "copy": "Copy",
+            "copyPath": "Copy Path",
+            "copyUrl": "Copy URL",
+            "create": "Create",
+            "creating": "Creating...",
+            "delete": "Delete",
+            "delete_file": "Delete File",
+            "delete_folder": "Delete Folder",
+            "delete_permanent": "Delete Permanently",
+            "download": "Download",
+            "extract": "Extract here",
+            "home": "Home",
+            "launch": "Launch",
+            "move": "Move",
+            "newFolder": "New Folder",
+            "open": "Open",
+            "paste": "Paste",
+            "quickActions": "Quick Actions",
+            "remove": "Remove",
+            "restore": "Restore",
+            "search": "Search...",
+            "upload": "Upload",
+            "uploadFiles": "Upload Files",
+            "uploading": "Uploading..."
+        },
+        "bulk": {
+            "cancel": "Cancel",
+            "clearSelection": "Clear Selection",
+            "clear_selection": "Clear Selection",
+            "confirmDelete": "Are you sure you want to delete {count} item? | Are you sure you want to delete {count} items?",
+            "delete": "Delete",
+            "deleteSelected": "Delete Selected",
+            "downloadSelected": "Download Selected",
+            "grid_view": "Grid View",
+            "label": "{count} Selected",
+            "label_count": "items selected",
+            "list_view": "List View",
+            "selectAll": "Select All",
+            "selected": "{count} item selected | {count} items selected"
+        },
+        "filter": {
+            "all": "All Files",
+            "archives": "Archives",
+            "audio": "Audio",
+            "documents": "Documents",
+            "images": "Images",
+            "other": "Other",
+            "videos": "Videos"
+        },
+        "labels": {
+            "clickToUpload": "Click to upload",
+            "dragAndDrop": "or drag and drop",
+            "files": "Files & Folders",
+            "folderName": "Folder Name",
+            "folders": "Folders",
+            "multipleSupported": "Multiple files supported",
+            "selectedFiles": "Selected Files:"
+        },
+        "messages": {
+            "bulkDeleted": "Successfully moved items to recycle bin",
+            "copiedToClipboard": "Items copied to clipboard",
+            "createFolderFailed": "Failed to create folder",
+            "deleteFailed": "Failed to delete item",
+            "deleteFileConfirm": "Are you sure you want to delete \"{name}\"?",
+            "deleteFileFailed": "Failed to delete file",
+            "deleteFolderConfirm": "Are you sure you want to delete the folder \"{name}\"? Any contents inside will be moved to the recycle bin.",
+            "deleteFolderFailed": "Failed to delete folder",
+            "deleteSuccess": "Items deleted successfully",
+            "emptyTrashFailed": "Failed to empty trash",
+            "fileDeleted": "File deleted permanently",
+            "folderCreatedSuccess": "Folder created successfully",
+            "folderDeleted": "Folder deleted permanently",
+            "loading": "Loading...",
+            "moved": "Items moved successfully",
+            "movedToClipboard": "Items moved to clipboard",
+            "noFiles": "No files found",
+            "pasted": "Items pasted successfully",
+            "restored": "Items restored successfully",
+            "trashEmptied": "Trash emptied successfully",
+            "uploadFailed": "Failed to upload files",
+            "uploadedSuccess": "Files uploaded successfully",
+            "path_copied": "Path copied",
+            "url_copied": "URL copied",
+            "copy_failed": "Failed to copy",
+            "extracted": "Extracted",
+            "extract_failed": "Extraction failed",
+            "compressed": "Compressed",
+            "compress_failed": "Compression failed"
+        },
+        "modals": {
+            "createFolder": {
+                "cancel": "Cancel",
+                "create": "Create Folder",
+                "creating": "Creating...",
+                "name": "Folder Name",
+                "placeholder": "Enter folder name",
+                "title": "Create Folder"
+            },
+            "upload": {
+                "cancel": "Cancel",
+                "clickToUpload": "Click to upload",
+                "dragAndDrop": "or drag and drop",
+                "formats": "Any file type supported",
+                "placeholder": "Select files...",
+                "selectedFiles": "Selected Files:",
+                "title": "Upload Files",
+                "uploadAction": "Upload {count} File | Upload {count} Files",
+                "uploading": "Uploading..."
+            }
+        },
+        "nav": {
+            "root": "Root"
+        },
+        "pagination": {
+            "next": "Next",
+            "perPage": "Items per page",
+            "previous": "Previous",
+            "showing": "Showing {from} to {to} of {total} items"
+        },
+        "placeholders": {
+            "folderName": "New folder name",
+            "newDetails": "New details"
+        },
+        "properties": {
+            "modified": "Modified",
+            "name": "Name",
+            "path": "Path",
+            "select_item": "Select a file or folder to see details",
+            "size": "Size",
+            "title": "Details",
+            "type": "Type"
+        },
+        "search": {
+            "noResults": "No files or folders match your search",
+            "placeholder": "Search files and folders..."
+        },
+        "sort": {
+            "asc": "Ascending",
+            "date": "Date Modified",
+            "desc": "Descending",
+            "label": "Sort by",
+            "name": "Name",
+            "size": "Size"
+        },
+        "trash": {
+            "confirmPermanentDelete": "Are you sure you want to permanently delete \"{name}\"?",
+            "empty": "Empty Trash",
+            "emptyConfirm": "Are you sure you want to permanently delete all items in trash? This action cannot be undone.",
+            "emptyDescription": "Any files or folders you delete will appear here for a limited time before being cleared for good.",
+            "emptyTitle": "Your trash is empty",
+            "permanent_delete": "Delete Permanently",
+            "refresh": "Refresh",
+            "scanning": "Scanning recycle bin...",
+            "title": "Recycle Bin"
+        }
     }
 }
