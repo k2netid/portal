@@ -23,6 +23,7 @@ use Modules\Core\System\Http\Controllers\Console\LanguageController;
 use Modules\Core\System\Http\Controllers\Console\LicenseController;
 use Modules\Core\System\Http\Controllers\Console\LogController;
 use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
+use Modules\Core\System\Http\Controllers\Console\MailController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
 use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
 use Modules\Core\System\Http\Controllers\Console\OnboardingStatusController;
@@ -197,6 +198,19 @@ Route::prefix('v1')->group(function (): void {
         Route::get('models/{provider}', [AiController::class, 'getModels']);
         Route::post('test', [AiController::class, 'testConnection']);
         Route::post('generate', [AiController::class, 'generate']);
+    });
+
+    // Mail & Webmail Client Management API
+    Route::prefix('manage/mail')->middleware(['auth:sanctum'])->group(function (): void {
+        Route::get('messages', [MailController::class, 'index']);
+        Route::get('messages/{id}', [MailController::class, 'show']);
+        Route::post('send', [MailController::class, 'send']);
+        Route::post('sync', [MailController::class, 'sync']);
+        Route::patch('messages/{id}/star', [MailController::class, 'toggleStar']);
+        Route::patch('messages/{id}/read', [MailController::class, 'markRead']);
+        Route::delete('messages/{id}/trash', [MailController::class, 'moveToTrash']);
+        Route::post('messages/{id}/restore', [MailController::class, 'restore']);
+        Route::delete('messages/{id}', [MailController::class, 'destroy']);
     });
 
     // Notifications Management API (Canonical for SPA)

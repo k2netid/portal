@@ -3428,6 +3428,9 @@
     "attach": "Lampirkan File",
     "discard": "Buang",
     "send": "Kirim Email",
-    "storage": "Penyimpanan Mail"
+    "storage": "Penyimpanan Mail",
+    "refresh": "Segarkan",
+    "sync_mailbox": "Sinkronisasi Kotak Surat",
+    "syncing": "Menyinkronkan..."
   }
 }

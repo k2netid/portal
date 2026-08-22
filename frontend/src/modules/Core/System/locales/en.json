@@ -3428,6 +3428,9 @@
     "attach": "Attach Files",
     "discard": "Discard",
     "send": "Send Email",
-    "storage": "Mail Storage"
+    "storage": "Mail Storage",
+    "refresh": "Refresh",
+    "sync_mailbox": "Sync Mailbox",
+    "syncing": "Syncing..."
   }
 }

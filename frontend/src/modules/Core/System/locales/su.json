@@ -3428,6 +3428,9 @@
     "attach": "Gantelkeun Berkas",
     "discard": "Piceun",
     "send": "Kirim Surélék",
-    "storage": "Panyimpenan Surélék"
+    "storage": "Panyimpenan Surélék",
+    "refresh": "Segarkeun",
+    "sync_mailbox": "Singkronkeun Kotak Surat",
+    "syncing": "Nyingkronkeun..."
   }
 }
