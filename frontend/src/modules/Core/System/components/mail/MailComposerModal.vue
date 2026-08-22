@@ -180,12 +180,13 @@
         </div>
 
         <!-- Message Body Input with Tiptap Rich-Text Editor -->
-        <div class="flex-1 flex flex-col min-h-0 pt-1 overflow-y-auto custom-scrollbar">
+        <div class="flex-1 flex flex-col min-h-0 pt-1">
           <TiptapEditor
             v-model="composerData.body"
             :compact="true"
+            :resizable="false"
             :placeholder="$t('system.mail.body_placeholder')"
-            class="flex-1 border-border/40 rounded-xl"
+            class="flex-1 flex flex-col min-h-0 border-border/40 rounded-xl overflow-hidden shadow-none"
           />
         </div>
 

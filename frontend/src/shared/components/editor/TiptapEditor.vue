@@ -19,28 +19,29 @@
 
     <!-- Scrollable Content Area -->
     <div 
-      class="relative overflow-auto border-b border-border/10 group/editor rounded-b-xl"
+      class="relative overflow-auto border-b border-border/10 group/editor rounded-b-xl flex-1 cursor-text custom-scrollbar flex flex-col"
       :class="[
-        compact ? 'min-h-[120px] max-h-[600px]' : 'min-h-[400px] max-h-[calc(100vh-16rem)]',
-        'resize-y'
+        compact ? 'min-h-[220px]' : 'min-h-[400px] max-h-[calc(100vh-16rem)]',
+        resizable ? 'resize-y' : ''
       ]"
-      style="display: block; width: 100%;"
+      style="display: flex; width: 100%;"
+      @click="focusEditor"
     >
       <!-- Editor Content (WYSIWYG View) -->
       <editor-content 
         v-show="!showHtmlView"
         :editor="editor" 
-        class="prose prose-sm sm:prose-base dark:prose-invert max-w-none focus:outline-none p-5 text-card-foreground" 
+        class="prose prose-sm sm:prose-base dark:prose-invert max-w-none focus:outline-none p-4 text-card-foreground flex-1 min-h-[200px]" 
       />
 
       <!-- HTML Source View -->
       <div
         v-show="showHtmlView"
-        class="html-view"
+        class="html-view flex-1 flex flex-col"
       >
         <textarea
           v-model="htmlContent"
-          class="w-full min-h-[500px] p-8 font-mono text-sm bg-card text-card-foreground border-none resize-y focus:outline-none focus:ring-0"
+          class="w-full flex-1 min-h-[220px] p-4 font-mono text-sm bg-card text-card-foreground border-none resize-none focus:outline-none focus:ring-0"
           :placeholder="t('publishing.editor.placeholder.htmlCode')"
           @blur="applyHtmlChanges"
         />
@@ -157,17 +158,25 @@ interface Props {
     modelValue?: string;
     placeholder?: string;
     compact?: boolean;
+    resizable?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
     placeholder: 'Start writing...',
-    compact: false
+    compact: false,
+    resizable: false,
 });
 
 const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
 }>();
+
+const focusEditor = () => {
+    if (editor.value && !editor.value.isFocused) {
+        editor.value.chain().focus().run();
+    }
+};
 
 const showMediaPicker = ref(false);
 const showTableDialog = ref(false);
@@ -466,5 +475,19 @@ onBeforeUnmount(() => {
   background-repeat: no-repeat;
   background-position: bottom right;
   opacity: 0.5;
+}
+
+:deep(.ProseMirror) {
+  min-height: 180px;
+  height: 100%;
+  outline: none !important;
+}
+
+:deep(.ProseMirror p.is-editor-empty:first-child::before) {
+  color: var(--muted-foreground, #9ca3af);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
 </style>

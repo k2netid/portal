@@ -367,8 +367,9 @@
               <TiptapEditor
                 v-model="currentTemplate.body"
                 :compact="true"
+                :resizable="false"
                 placeholder="Dear Client, write your formatted email template content here..."
-                class="border-border/40 rounded-xl"
+                class="border-border/40 rounded-xl overflow-hidden"
               />
             </div>
 
