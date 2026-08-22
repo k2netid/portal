@@ -4,7 +4,7 @@
     @update:open="v => { if(!v) $emit('close') }"
   >
     <DialogContent
-      class="!p-0 !gap-0 max-w-2xl h-[600px] max-h-[92vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden"
+      class="!p-0 !gap-0 max-w-3xl w-[94vw] h-auto max-h-[88vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden"
       @pointer-down-outside.prevent
       @interact-outside.prevent
     >
@@ -25,26 +25,28 @@
         </Button>
       </div>
 
-      <!-- Navigation Tabs -->
-      <div class="flex items-center gap-1 px-5 pt-2.5 border-b border-border/40 shrink-0 bg-background/50 overflow-x-auto custom-scrollbar">
-        <button
-          v-for="tab in tabs"
-          :key="tab.id"
-          :class="[
-            'px-3 py-2 text-xs font-semibold border-b-2 transition-colors flex items-center gap-1.5 -mb-px shrink-0',
-            activeTab === tab.id
-              ? 'border-primary text-primary font-bold'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          ]"
-          @click="activeTab = tab.id"
-        >
-          <component :is="tab.icon" class="w-3.5 h-3.5" />
-          <span>{{ tab.label }}</span>
-        </button>
+      <!-- Navigation Tabs (Pill style, no ugly scrollbar) -->
+      <div class="px-5 pt-3 border-b border-border/40 shrink-0 bg-background/50">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <button
+            v-for="tab in tabs"
+            :key="tab.id"
+            :class="[
+              'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none',
+              activeTab === tab.id
+                ? 'bg-primary text-primary-foreground shadow-xs font-bold'
+                : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
+            ]"
+            @click="activeTab = tab.id"
+          >
+            <component :is="tab.icon" class="w-3.5 h-3.5" />
+            <span>{{ tab.label }}</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Tab Contents (Scrollable) -->
-      <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar min-h-0">
+      <!-- Tab Contents (Responsive & Scrollable) -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar max-h-[calc(88vh-135px)] min-h-[320px]">
         <!-- Tab 1: General Preferences & Security -->
         <div v-if="activeTab === 'general'" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -301,7 +303,7 @@
           </div>
         </div>
 
-        <!-- Tab 3: AI Copilot & Governance Scope (NEW) -->
+        <!-- Tab 3: AI Copilot & Governance Scope -->
         <div v-if="activeTab === 'ai'" class="space-y-4">
           <div class="flex items-center justify-between p-3.5 rounded-xl bg-primary/5 border border-primary/20">
             <div>
@@ -381,7 +383,7 @@
             </div>
           </div>
 
-          <!-- Safety Boundaries & Guardrails (Batasan & Larangan) -->
+          <!-- Safety Boundaries & Guardrails (Batasan Keamanan) -->
           <div class="space-y-2 pt-1">
             <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               Safety Guardrails & Boundaries (Batasan Keamanan)
@@ -484,7 +486,7 @@
             class="h-8 text-xs"
             @click="$emit('close')"
           >
-            Cancel
+            Close
           </Button>
           <Button
             size="sm"
@@ -503,7 +505,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from '@/shared/composables/useToast';
 import api from '@/engine/api/client';
@@ -538,7 +540,7 @@ import {
 } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 
-defineProps<{
+const props = defineProps<{
     isOpen: boolean;
 }>();
 
@@ -609,9 +611,12 @@ const loadSettings = async () => {
 const saveSettings = async () => {
     saving.value = true;
     try {
-        await api.post('/manage/mail/settings', settingsData.value);
+        const res = await api.post('/manage/mail/settings', settingsData.value);
+        const data = res.data?.data || res.data;
+        if (data) {
+            settingsData.value = { ...settingsData.value, ...data };
+        }
         toast.success.action('Mail preferences saved successfully');
-        emit('close');
     } catch (error: unknown) {
         toast.error.fromResponse(error);
     } finally {
@@ -623,6 +628,15 @@ const goToEmailSettings = () => {
     emit('close');
     router.push({ name: 'settings', query: { tab: 'email' } });
 };
+
+watch(
+    () => props.isOpen,
+    (open) => {
+        if (open) {
+            loadSettings();
+        }
+    }
+);
 
 onMounted(() => {
     loadSettings();

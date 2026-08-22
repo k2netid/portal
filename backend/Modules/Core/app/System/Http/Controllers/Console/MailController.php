@@ -364,27 +364,27 @@ class MailController extends BaseApiController
      */
     public function getSettings(): JsonResponse
     {
-        $settings = Setting::where('group', 'mail_client')->pluck('value', 'key')->all();
+        $settings = Setting::getGroup('mail_client');
 
         return $this->success([
             'per_page' => (int) ($settings['mail_client_per_page'] ?? 25),
             'storage_quota_gb' => (int) ($settings['mail_client_storage_quota_gb'] ?? 15),
             'trash_retention_days' => (int) ($settings['mail_client_trash_retention_days'] ?? 30),
-            'signature' => $settings['mail_client_signature'] ?? '',
-            'signature_logo' => $settings['mail_client_signature_logo'] ?? '',
-            'signature_company' => $settings['mail_client_signature_company'] ?? '',
-            'reply_to' => $settings['mail_client_reply_to'] ?? '',
+            'signature' => (string) ($settings['mail_client_signature'] ?? ''),
+            'signature_logo' => (string) ($settings['mail_client_signature_logo'] ?? ''),
+            'signature_company' => (string) ($settings['mail_client_signature_company'] ?? ''),
+            'reply_to' => (string) ($settings['mail_client_reply_to'] ?? ''),
             'auto_read_delay' => (int) ($settings['mail_client_auto_read_delay'] ?? 0),
             'auto_check_interval' => (int) ($settings['mail_client_auto_check_interval'] ?? 5),
             'sound_notifications' => (bool) ($settings['mail_client_sound_notifications'] ?? true),
             'block_remote_images' => (bool) ($settings['mail_client_block_remote_images'] ?? true),
             'vacation_enabled' => (bool) ($settings['mail_client_vacation_enabled'] ?? false),
-            'vacation_subject' => $settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply',
-            'vacation_body' => $settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.',
+            'vacation_subject' => (string) ($settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply'),
+            'vacation_body' => (string) ($settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.'),
             // AI Governance & Scope
             'ai_enabled' => (bool) ($settings['mail_client_ai_enabled'] ?? true),
-            'ai_provider' => $settings['mail_client_ai_provider'] ?? 'system',
-            'ai_tone' => $settings['mail_client_ai_tone'] ?? 'professional',
+            'ai_provider' => (string) ($settings['mail_client_ai_provider'] ?? 'system'),
+            'ai_tone' => (string) ($settings['mail_client_ai_tone'] ?? 'professional'),
             'ai_scope_drafting' => (bool) ($settings['mail_client_ai_scope_drafting'] ?? true),
             'ai_scope_summarize' => (bool) ($settings['mail_client_ai_scope_summarize'] ?? true),
             'ai_scope_smart_reply' => (bool) ($settings['mail_client_ai_scope_smart_reply'] ?? true),
@@ -428,14 +428,11 @@ class MailController extends BaseApiController
         ]);
 
         foreach ($validated as $key => $val) {
-            Setting::updateOrCreate(
-                ['key' => 'mail_client_'.$key],
-                [
-                    'value' => $val,
-                    'group' => 'mail_client',
-                    'type' => is_bool($val) ? 'boolean' : (is_int($val) ? 'integer' : 'string'),
-                ]
-            );
+            if ($val === null) {
+                continue;
+            }
+            $type = is_bool($val) ? 'boolean' : (is_int($val) ? 'integer' : 'string');
+            Setting::set('mail_client_'.$key, $val, $type, 'mail_client');
         }
 
         return $this->success($validated, 'Mail client settings saved successfully');
