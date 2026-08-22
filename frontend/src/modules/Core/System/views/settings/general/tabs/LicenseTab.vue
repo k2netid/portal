@@ -105,10 +105,10 @@
     <div class="rounded-xl border border-border/70 bg-card p-6 shadow-sm">
       <div class="mb-4">
         <h4 class="text-base font-semibold text-foreground">
-          {{ licenseData.masked_key ? 'Update License Key' : 'Activate JA-CMS License' }}
+          {{ licenseData.masked_key ? 'Update License Key' : 'Activate Core Engine License' }}
         </h4>
         <p class="text-sm text-muted-foreground">
-          Enter your license key provided from the JA-CP (Jejak Awan Control Plane) dashboard to unlock premium themes, visual builder modules, and enterprise white-labeling.
+          Enter your license key from the JA-CP (Jejakawan licensing hub) dashboard to unlock Pro extensions, white-label console, and enterprise features.
         </p>
       </div>
 
@@ -271,16 +271,16 @@ const statusDotClass = computed(() => {
 const licenseDescription = computed(() => {
   const t = licenseData.value.tier;
   if (t === 'enterprise' || t === 'white_label') return 'Full enterprise access with custom branding, white-labeling, unlimited sites and priority syncing.';
-  if (t === 'pro') return 'Professional plan with premium themes, visual builder pro widgets, custom code injection, and watermark removal.';
-  if (t === 'starter') return 'Starter license with custom CSS styling and extended theme options.';
-  return 'Free community edition. Upgrade via JA-CP to unlock premium themes, builder widgets, and custom code.';
+  if (t === 'pro') return 'Professional plan with premium extensions, advanced builder modules, custom code injection, and watermark removal.';
+  if (t === 'starter') return 'Starter license with custom styling and extended module options.';
+  return 'Free community edition. Upgrade via JA-CP to unlock premium extensions and custom branding.';
 });
 
 const featureDefinitions = [
-  { key: 'premium_themes', name: 'Premium Themes', description: 'Access to Zenith, Janari Pro, and marketplace themes.' },
-  { key: 'pro_builder_modules', name: 'Visual Builder Pro Modules', description: 'Post sliders, dynamic portfolios, countdowns & pricing tables.' },
-  { key: 'custom_code_injection', name: 'Theme Customizer Code Injection', description: 'Inject custom header/footer CSS & JS snippets directly.' },
-  { key: 'remove_watermark', name: 'Watermark Removal', description: 'Remove JA-CMS brand footers and watermarks.' },
+  { key: 'premium_themes', name: 'Premium Extensions', description: 'Access to marketplace extensions and pro modules.' },
+  { key: 'pro_builder_modules', name: 'Advanced Builder Modules', description: 'Dynamic components, sliders, portfolios, and pricing blocks.' },
+  { key: 'custom_code_injection', name: 'Custom Code Injection', description: 'Inject custom header/footer CSS and JS snippets.' },
+  { key: 'remove_watermark', name: 'Watermark Removal', description: 'Remove Core Engine brand footers and watermarks.' },
   { key: 'white_label', name: 'White Label Console', description: 'Custom console logos, brand naming, and admin customization.' },
   { key: 'multi_site', name: 'Multi-Site Fleet Management', description: 'Centralized management across multiple tenant instances.' },
   { key: 'priority_updates', name: 'Priority Updates & Support', description: 'Instant OTA patches and direct JA-CP sync.' },

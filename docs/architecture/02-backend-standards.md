@@ -1,37 +1,38 @@
-# 02. Backend Standards & Patterns — Jejakawan CMS
+# 02. Backend Standards & Patterns — Jejakawan Core Engine
 
-Panduan standar pengembangan backend Laravel di **Jejakawan CMS (`ja-cms`)**.
+Panduan standar pengembangan backend Laravel di **Jejakawan Core Engine (`ja-core_engine`)**.
+
+Modul contoh di bawah memakai domain **System** (kernel). Downstream apps menambah modul sendiri di `backend/Modules/{Product}/` — lihat [downstream-apps-and-licensing.md](../product/downstream-apps-and-licensing.md).
 
 ---
 
 ## 🏗️ 1. Struktur Modul Backend
 
-Setiap modul di `backend/Modules/{Tier}/{Module}/` memiliki struktur folder terstandardisasi:
+Setiap modul di `backend/Modules/{Module}/` memiliki struktur folder terstandardisasi:
 
 ```
-Modules/Content/Publishing/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Console/          # Controller untuk Admin Console
-│   │   │   └── Public/           # Controller untuk Publik / Visitor
-│   │   ├── Middleware/
-│   │   └── Requests/             # FormRequest Validasi
-│   ├── Models/                   # Eloquent Models
-│   ├── Providers/                # Module Service Providers
-│   ├── Services/                 # Business Logic & Service Layer
-│   ├── Events/                   # Domain Events
-│   └── Listeners/                # Event Handlers
-├── database/
-│   ├── migrations/               # Migrasi database spesifik modul
-│   ├── seeders/                  # Seeder data awal
-│   └── factories/                # Model Factories untuk testing
-├── routes/
-│   ├── publishing_api.php        # Rute API (/api/v1/manage/publishing/...)
-│   └── publishing_web.php        # Rute Web jika ada
-└── Tests/
-    ├── Feature/                  # Feature Tests (Pest/PHPUnit)
-    └── Unit/                     # Unit Tests
+Modules/Core/app/System/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Console/          # Admin console API
+│   │   └── Public/           # Public / guest API bila ada
+│   ├── Middleware/
+│   └── Requests/             # FormRequest validasi
+├── Models/
+├── Providers/
+├── Services/                 # Business logic
+├── Events/
+└── Listeners/
+Modules/Core/database/
+├── migrations/
+├── seeders/
+└── factories/
+Modules/Core/routes/
+├── system_api.php            # /api/v1/manage/system/...
+└── ...
+Modules/Core/tests/
+├── Feature/
+└── Unit/
 ```
 
 ---
@@ -62,24 +63,22 @@ Modules/Content/Publishing/
 - Jangan letakkan aturan validasi inline di dalam Controller.
 - Contoh:
   ```php
-  namespace Modules\Content\Publishing\app\Http\Requests;
+  namespace Modules\Core\System\Http\Requests;
 
   use Illuminate\Foundation\Http\FormRequest;
 
-  class StoreContentRequest extends FormRequest
+  class UpdateSettingRequest extends FormRequest
   {
       public function authorize(): bool
       {
-          return $this->user()->can('manage publishing');
+          return $this->user()->can('manage settings');
       }
 
       public function rules(): array
       {
           return [
-              'title' => ['required', 'string', 'max:255'],
-              'slug' => ['required', 'string', 'max:255', 'unique:pub_contents,slug'],
-              'content' => ['nullable', 'string'],
-              'status' => ['required', 'in:draft,published,scheduled'],
+              'key' => ['required', 'string', 'max:255'],
+              'value' => ['nullable', 'string'],
           ];
       }
   }
@@ -98,10 +97,10 @@ Modules/Content/Publishing/
   ```
 
 ### D. Pencegahan Query N+1
-- Pada environment lokal/testing, CMS mengaktifkan `Model::preventLazyLoading(true)` untuk mendeteksi loop N+1.
+- Pada environment lokal/testing, kernel mengaktifkan `Model::preventLazyLoading(true)` untuk mendeteksi loop N+1.
 - Selalu gunakan eager loading:
   ```php
-  $contents = Content::with(['category', 'tags', 'author'])->paginate(20);
+  $users = User::with(['roles', 'permissions'])->paginate(20);
   ```
 
 ---

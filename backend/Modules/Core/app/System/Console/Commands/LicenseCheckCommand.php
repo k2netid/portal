@@ -14,18 +14,18 @@ class LicenseCheckCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'license:check {--force : Force sync with JA-CP control plane even if not due}';
+    protected $signature = 'license:check {--force : Force sync with JA-CP licensing hub even if not due}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Verify JA-CMS license status and sync heartbeat with JA-CP control plane';
+    protected $description = 'Verify Core Engine license status and sync heartbeat with JA-CP licensing hub';
 
     public function handle(LicenseService $licenseService): int
     {
-        $this->info('Checking JA-CMS license status...');
+        $this->info('Checking Core Engine license status...');
 
         $status = $licenseService->getLicenseStatus();
         $tier = is_string($status['tier'] ?? null) ? $status['tier'] : 'community';

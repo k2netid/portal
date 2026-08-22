@@ -1,8 +1,16 @@
 # Panduan Agen — Jejakawan Core Engine (`ja-core_engine`)
 
-**Lingkup:** Repositori Jejakawan Core Engine (`/home/jejakawan/dev/ja-core_engine`).
+**Lingkup:** Repositori Jejakawan Core Engine — master kernel untuk aplikasi downstream.
 
-## 📋 Aturan Utama
-1. Struktur backend mengikuti **Modular Monolith** di `backend/Modules/Core` (`System`, `Security`, `Infra`).
-2. Struktur frontend mengikuti **Engine Architecture** di `frontend/src/` (`engine/`, `modules/Core/`, `shared/`).
-3. Selalu jalankan `npm run agent:verify` sebelum menyelesaikan perubahan untuk memastikan seluruh test suite backend dan frontend lulus.
+## Baca dulu
+
+1. [docs/AGENT_START_HERE.md](docs/AGENT_START_HERE.md)
+2. [docs/architectural-status.md](docs/architectural-status.md)
+3. [docs/README.md](docs/README.md)
+
+## Aturan utama
+
+1. Backend: **Modular Monolith** di `backend/Modules/Core` (`System`, `Security`, `Infra`).
+2. Frontend: **Engine Architecture** di `frontend/src/` (`engine/`, `modules/Core/`, `shared/`).
+3. Jangan sebut produk ini `ja-cms`. JA-CP = hub lisensi eksternal, bukan identitas repo ini.
+4. Jalankan `npm run agent:verify` sebelum menyelesaikan perubahan.

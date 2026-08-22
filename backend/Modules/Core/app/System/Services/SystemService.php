@@ -848,7 +848,7 @@ class SystemService
             'current_value' => $phpVersion,
             'required_value' => '>= 8.2.0',
             'status' => $phpVersionOk ? 'ok' : 'error',
-            'description' => 'Versi runtime PHP minimum yang didukung JA-CMS adalah 8.2.0 (disarankan 8.3+).',
+            'description' => 'Versi runtime PHP minimum yang didukung Core Engine adalah 8.2.0 (disarankan 8.3+).',
             'fix_guide' => [
                 'ubuntu' => 'sudo apt-get install -y php8.3 php8.3-cli php8.3-fpm',
                 'rhel' => 'sudo dnf module enable php:8.3 && sudo dnf install -y php php-cli php-fpm',
@@ -925,7 +925,7 @@ class SystemService
             'current_value' => $opcacheEnabled ? 'Aktif (Enabled)' : 'Nonaktif (Disabled)',
             'required_value' => 'Aktif (Disarankan untuk Production)',
             'status' => $opcacheEnabled ? 'ok' : 'warning',
-            'description' => 'OPcache mengompilasi bytecode PHP di memori sehingga performa JA-CMS meningkat hingga 3x lipat.',
+            'description' => 'OPcache mengompilasi bytecode PHP di memori sehingga performa Core Engine meningkat hingga 3x lipat.',
             'fix_guide' => [
                 'ubuntu' => 'Edit php.ini: set opcache.enable=1 dan opcache.memory_consumption=128, lalu restart PHP-FPM',
                 'rhel' => 'Edit php.ini: set opcache.enable=1 dan opcache.memory_consumption=128, lalu restart PHP-FPM',

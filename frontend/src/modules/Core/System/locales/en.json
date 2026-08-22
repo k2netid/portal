@@ -3201,7 +3201,7 @@
   },
   "oauth": {
     "title": "OAuth Clients",
-    "description": "Register external applications that use this control plane as an OAuth2 identity provider.",
+    "description": "Register external applications that use this Core Engine instance as an OAuth2 identity provider.",
     "actions": {
       "create": "New client"
     },

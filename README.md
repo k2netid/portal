@@ -29,6 +29,8 @@
 | **Cache & Queue** | Redis (Dedicated session & cache DB) |
 | **Lisensi** | MIT / Proprietary |
 
+> **Asal fork:** Repo ini diekstrak dari `ja-cms` menjadi **master kernel** untuk aplikasi downstream (CMS, portal, SaaS). Hub lisensi tetap **JA-CP** (`ja-control-plane`). Detail: [docs/AGENT_START_HERE.md](docs/AGENT_START_HERE.md).
+
 ---
 
 ## 🌟 Fitur Utama

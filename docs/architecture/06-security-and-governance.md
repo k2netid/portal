@@ -1,12 +1,12 @@
-# 06. Security & Governance Standards — Jejakawan CMS
+# 06. Security & Governance Standards — Jejakawan Core Engine
 
-Panduan arsitektur keamanan, mitigasi celah, dan kepatuhan sistem di **Jejakawan CMS (`ja-cms`)**.
+Panduan arsitektur keamanan, mitigasi celah, dan kepatuhan sistem di **Jejakawan Core Engine (`ja-core_engine`)**.
 
 ---
 
 ## 🛡️ 1. Lapisan Keamanan Utama
 
-Jejakawan CMS menerapkan prinsip *Defense in Depth* di seluruh tingkatan aplikasi:
+Jejakawan Core Engine menerapkan prinsip *Defense in Depth* di seluruh tingkatan aplikasi:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐

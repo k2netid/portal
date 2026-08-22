@@ -1,8 +1,19 @@
 # Changelog
 
-Semua perubahan penting pada **Jejakawan CMS (`ja-cms`)**.
+Semua perubahan penting pada **Jejakawan Core Engine (`ja-core_engine`)**.
+
+> Repo ini berasal dari fork **`ja-cms`**, direfaktor sebagai master kernel. Entri historis di bawah mungkin masih menyebut CMS — lihat [docs/architectural-status.md](docs/architectural-status.md).
 
 Format changelog ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) dan mematuhi [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [Unreleased]
+
+### Changed
+- Identitas produk: dokumentasi & string UI diselaraskan ke **Core Engine** (post-fork cleanup dari `ja-cms` / `ja-control-plane` DNA).
+- Docs SoT: `docs/AGENT_START_HERE.md`, `docs/architectural-status.md`, `docs/product/downstream-apps-and-licensing.md`.
+- CI/E2E smoke: hapus referensi platform billing & payment-env-check yang bukan scope kernel.
 
 ---
 

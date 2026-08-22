@@ -106,14 +106,14 @@
             "@php ./vendor/phpstan/phpstan/phpstan analyse --level=9 --memory-limit=2G --generate-baseline=phpstan-baseline.neon --allow-empty-baseline"
         ],
         "security:smoke-check": [
-            "@php artisan security:smoke-check --ansi"
+            "@php artisan security:audit-dependencies --ansi"
         ],
         "security:audit": [
-            "@php artisan security:smoke-check --ansi",
+            "@php artisan security:audit-dependencies --ansi",
             "@php artisan test Modules/Core/tests/System/Feature/ExtensionSecuritySandboxTest.php --ansi"
         ],
         "security:kpi": [
-            "@php artisan security:kpi-report --days=30 --max-rto-seconds=600 --max-rpo-minutes=1440 --max-noise-rate=0.70 --ansi"
+            "@php artisan security:maintenance --ansi"
         ],
         "test:coverage": [
             "bash ./scripts/test-with-pcov.sh"

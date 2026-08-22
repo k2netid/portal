@@ -1,12 +1,12 @@
-# 05. Internationalization (i18n) Guidelines — Jejakawan CMS
+# 05. Internationalization (i18n) Guidelines — Jejakawan Core Engine
 
-Panduan arsitektur translasi dan internasionalisasi multi-bahasa di **Jejakawan CMS (`ja-cms`)**.
+Panduan arsitektur translasi dan internasionalisasi multi-bahasa di **Jejakawan Core Engine (`ja-core_engine`)**.
 
 ---
 
 ## 🌍 1. Standar Bahasa yang Didukung
 
-Jejakawan CMS mendukung 3 bahasa utama secara simetris:
+Jejakawan Core Engine mendukung 3 bahasa utama secara simetris:
 1. **`id`**: Bahasa Indonesia (Default Sistem)
 2. **`en`**: English (International)
 3. **`su`**: Basa Sunda (Regional)
@@ -74,7 +74,7 @@ frontend/src/
 
 ## 🧪 4. Skrip Verifikasi & Quality Gates
 
-Jejakawan CMS dilengkapi alat validator otomatis untuk memeriksa kepatuhan i18n sebelum rilis:
+Jejakawan Core Engine dilengkapi alat validator otomatis untuk memeriksa kepatuhan i18n sebelum rilis:
 
 1. **Cek Paritas Lengkap**:
    ```bash

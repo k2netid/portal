@@ -154,7 +154,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        // Advanced 429 response (Parity with ja-cms)
+        // Advanced 429 response (rate-limit UX parity)
         $exceptions->render(function (TooManyRequestsHttpException $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 $headers = $e->getHeaders();

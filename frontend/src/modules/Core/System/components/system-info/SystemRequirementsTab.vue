@@ -427,7 +427,7 @@ const searchQuery = ref<string>('');
 const itemTranslationsEn: Record<string, { name?: string; desc: string }> = {
     php_version: {
         name: 'PHP Version',
-        desc: 'Minimum supported PHP runtime version for JA-CMS is 8.2.0 (8.3+ recommended).'
+        desc: 'Minimum supported PHP runtime version for Core Engine is 8.2.0 (8.3+ recommended).'
     },
     php_memory_limit: {
         name: 'PHP Memory Limit',
@@ -443,7 +443,7 @@ const itemTranslationsEn: Record<string, { name?: string; desc: string }> = {
     },
     php_opcache: {
         name: 'Zend OPcache Accelerator',
-        desc: 'Pre-compiles PHP bytecode in memory to boost JA-CMS execution performance by up to 3x.'
+        desc: 'Pre-compiles PHP bytecode in memory to boost Core Engine execution performance by up to 3x.'
     },
     ext_bcmath: { name: 'PHP Ext: BCMath', desc: 'Arbitrary precision mathematics for financial calculations and hashing.' },
     ext_ctype: { name: 'PHP Ext: Ctype', desc: 'Character type checking and user input sanitization.' },
@@ -476,11 +476,11 @@ const itemTranslationsEn: Record<string, { name?: string; desc: string }> = {
 };
 
 const itemTranslationsSu: Record<string, { name?: string; desc: string }> = {
-    php_version: { name: 'Vérsi PHP', desc: 'Vérsi runtime PHP minimum anu dirojong ku JA-CMS nyaéta 8.2.0 (disarankeun 8.3+).' },
+    php_version: { name: 'Vérsi PHP', desc: 'Vérsi runtime PHP minimum anu dirojong ku Core Engine nyaéta 8.2.0 (disarankeun 8.3+).' },
     php_memory_limit: { name: 'Wates Mémori PHP', desc: 'Wates alokasi mémori RAM pikeun pamrosésan skrip PHP, rendering téma, sareng ngolah média.' },
     php_max_execution_time: { name: 'Waktu Maksimum Éksékusi', desc: 'Waktu éksékusi maksimum skrip pikeun nyegah timeout nalika cadangan atanapi impor kusi.' },
     php_upload_max_filesize: { name: 'Ukuran Maksimal Unggahan', desc: 'Ukuran maksimal berkas tunggal anu diwidian diunggah ka Pabukon Média.' },
-    php_opcache: { name: 'Akselerator Zend OPcache', desc: 'OPcache ngompilasi bytecode PHP dina mémori sangkan performa JA-CMS ningkat dugi ka 3x lipet.' },
+    php_opcache: { name: 'Akselerator Zend OPcache', desc: 'OPcache ngompilasi bytecode PHP dina mémori sangkan performa Core Engine ningkat dugi ka 3x lipet.' },
     service_db: { name: 'Sambungan Database & Énkoding', desc: 'Koneksi aktip ka database kalayan rojongan énkoding aksara UTF-8.' },
     service_redis: { name: 'Sérver In-Memory Redis', desc: 'Panyimpenan data in-memory pikeun cache gancang sareng antrean worker.' },
     storage_views: { name: 'Widi: storage/framework/views', desc: 'Polder tempat Laravel ngompilasi citakan Blade kana PHP.' },

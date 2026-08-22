@@ -30,13 +30,12 @@
         "purpose": "Standard instructions for AI/coding agents when creating or updating this project.",
         "scope": "Jejakawan Core Engine; repo ja-core_engine (Core System, Security, Infra, Data Model Studio, IAM, Engine Architecture).",
         "when_creating_or_updating_project": [
-            "Read docs/AGENT_START_HERE.md and docs/product/control-plane-and-editions.md first, then docs/.agent-rules.md, docs/architectural-status.md, docs/blueprint/*, and docs/plan/module-communication-standard.md. Use only paths listed in docs/README.md.",
-            "For UI/UX changes read docs/blueprint/03-ui-ux-design-system.md and docs/blueprint/04-ui-ux-page-patterns.md.",
-            "Use branch-based workflow; avoid direct edits on main.",
+            "Read docs/AGENT_START_HERE.md and docs/architectural-status.md first, then docs/product/downstream-apps-and-licensing.md and docs/architecture/*.md listed in docs/README.md.",
+            "Use branch-based workflow; avoid direct edits on main unless explicitly requested.",
             "Prefer package managers for dependency changes (npm/composer), avoid manual lockfile edits.",
             "Keep changes minimal and focused; avoid unrelated refactors.",
             "Do not commit secrets or environment-specific credentials.",
-            "After edits, run quality gates before proposing merge."
+            "After edits, run npm run agent:verify before proposing merge."
         ],
         "required_validation_before_pr": [
             "npm run quality:frontend",

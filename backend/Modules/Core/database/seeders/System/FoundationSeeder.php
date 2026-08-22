@@ -38,7 +38,7 @@ class FoundationSeeder extends Seeder
     }
 
     /**
-     * Hub control plane RBAC (APP_ROLE=ops):
+     * Hub ops RBAC (APP_ROLE=ops):
      * - Internal operators: super, system-admin, security-officer
      * - Subscription Jejakawan users: member (self-service under X-Subscription-Domain)
      */

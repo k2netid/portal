@@ -25,7 +25,7 @@ class ActivityJournalApiTest extends TestCase
         ActivityLog::create([
             'user_id' => $admin->id,
             'action' => 'login',
-            'description' => 'User logged into control plane',
+            'description' => 'User logged into admin console',
             'ip_address' => '127.0.0.1',
             'user_agent' => 'PHPUnit/Test',
         ]);
@@ -55,7 +55,7 @@ class ActivityJournalApiTest extends TestCase
         ActivityLog::create([
             'user_id' => $admin->id,
             'action' => 'login',
-            'description' => 'User logged into control plane',
+            'description' => 'User logged into admin console',
             'ip_address' => '127.0.0.1',
         ]);
 

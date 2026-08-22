@@ -4,11 +4,13 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "30 1 * * *"
-    - cron: "0 2 * * 1"
 
 jobs:
   smoke-check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,16 +29,14 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+          touch database/database.sqlite
           php artisan migrate --force
 
-      - name: Security smoke check
+      - name: Dependency audit
         run: composer security:smoke-check
 
-      - name: Granular permission matrix
-        run: php artisan test Modules/Core/tests/Feature/SecurityPermissionDomainTest.php --ansi
+      - name: Extension security sandbox
+        run: php artisan test Modules/Core/tests/System/Feature/ExtensionSecuritySandboxTest.php --ansi
 
-      - name: Recovery drill (weekly baseline)
-        run: php artisan security:recovery-drill --create-backup --max-rto-seconds=600 --max-rpo-minutes=1440 --ansi
-
-      - name: KPI report (30d)
-        run: composer security:kpi
+      - name: Security maintenance
+        run: php artisan security:maintenance --ansi

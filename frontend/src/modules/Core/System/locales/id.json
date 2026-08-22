@@ -3201,7 +3201,7 @@
   },
   "oauth": {
     "title": "Klien OAuth",
-    "description": "Daftarkan aplikasi eksternal yang memakai control plane sebagai penyedia identitas OAuth2.",
+    "description": "Daftarkan aplikasi eksternal yang memakai instance Core Engine ini sebagai penyedia identitas OAuth2.",
     "actions": {
       "create": "Klien baru"
     },
