@@ -15,7 +15,7 @@
   "hexColor": "#000000",
   "urlShort": "https://",
   "urlEllipsis": "https://...",
-  "jsonObject": "{}",
+  "jsonObject": "{'{}'}",
   "passwordMask": "••••••••",
   "numericZero": "0",
   "durationMs": "1000",
