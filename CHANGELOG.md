@@ -11,10 +11,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 ## [Unreleased]
 
 ### Added
+- JA-Mail: honest AI gating vs Settings → AI; Core `AI_DISABLED` on generate; `mail-ai-governance` rule
+- JA-Mail: in-app notification bridge (send failure / vacation); per-module README + CHANGELOG; agent rule `module-documentation.mdc`
 - `docs/product/bootstrap-downstream-app.md` + `scripts/bootstrap-downstream-app.sh` — scaffold modul produk downstream.
 - `Modules/Core/app/System/Services/Ai/AiHttpResponse.php` — typed HTTP helpers untuk provider AI.
 
 ### Changed
+- JA-Mail: IMAP/SPF/DKIM documented as mail-server/DNS (out of kernel backlog)
 - Identitas produk diselaraskan ke **Core Engine** (docs, UI, artisan, OAuth copy).
 - PHPStan: perbaiki 138 error di luar baseline; baseline diregenerasi (~85 entri FileManager).
 - E2E: hanya smoke kernel (auth, onboarding, console a11y); hapus theme/content/member specs.

@@ -6,6 +6,7 @@ namespace Modules\Mail\Http\Controllers\Concerns;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
@@ -30,7 +31,7 @@ trait InteractsWithUserMailbox
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array{used_bytes: int, quota_bytes: int, used_formatted: string, quota_formatted: string, percentage: float}
      */
     protected function calculateStorageStatsForUser(User $user): array
     {
@@ -52,6 +53,36 @@ trait InteractsWithUserMailbox
             'quota_formatted' => "{$quotaGb} GB",
             'percentage' => $percentage,
         ];
+    }
+
+    /**
+     * @param  array<int, UploadedFile|mixed>  $files
+     */
+    protected function estimateUploadBytes(array $files): int
+    {
+        $total = 0;
+        foreach ($files as $file) {
+            if ($file instanceof UploadedFile && $file->isValid()) {
+                $total += (int) $file->getSize();
+            }
+        }
+
+        return $total;
+    }
+
+    protected function assertWithinStorageQuota(User $user, int $additionalBytes = 0): ?JsonResponse
+    {
+        $stats = $this->calculateStorageStatsForUser($user);
+        if (($stats['used_bytes'] + $additionalBytes) > $stats['quota_bytes']) {
+            return $this->error(
+                'Mailbox storage quota exceeded. Free space or ask an admin to raise the quota.',
+                422,
+                [],
+                'MAIL_QUOTA_EXCEEDED',
+            );
+        }
+
+        return null;
     }
 
     protected function formatBytes(int $bytes): string

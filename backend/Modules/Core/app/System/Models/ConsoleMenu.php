@@ -154,7 +154,7 @@ class ConsoleMenu extends Model
                         'label_key' => 'system.navigation.menu.mail',
                         'route_name' => 'mail',
                         'icon' => 'mail',
-                        'permission' => 'manage system',
+                        'permission' => 'use mail',
                         'extension_slug' => 'mail',
                         'badge_text' => 'PRO',
                         'badge_variant' => 'primary',

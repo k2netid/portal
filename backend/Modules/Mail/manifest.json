@@ -2,7 +2,7 @@
   "name": "JA-Mail",
   "slug": "mail",
   "version": "1.0.0",
-  "description": "Full-featured webmail client, multi-account manager, canned templates, and scheduled dispatcher",
+  "description": "Console outbound webmail: compose/send via SMTP, multi-account credentials, templates, and scheduled dispatch",
   "author": "Jejakawan Team",
   "type": "module",
   "is_core": false,
@@ -11,12 +11,12 @@
     {
       "name": "Webmail Client",
       "slug": "webmail-client",
-      "description": "Interactive inbox, sent, drafts, trash, and conversation threads"
+      "description": "Local mailbox UI — inbox, sent, drafts, trash (local index; not IMAP sync)"
     },
     {
-      "name": "Multi-Account Mailbox",
+      "name": "Multi-Account SMTP",
       "slug": "multi-account",
-      "description": "Connect personal SMTP/IMAP accounts with instant switching"
+      "description": "Connect personal SMTP accounts with encrypted credentials and switching"
     },
     {
       "name": "Canned Responses",
@@ -26,7 +26,7 @@
     {
       "name": "Scheduled Dispatcher",
       "slug": "scheduled-send",
-      "description": "Schedule outbound emails with background queue worker"
+      "description": "Schedule outbound emails via mail:process-scheduled"
     }
   ]
 }

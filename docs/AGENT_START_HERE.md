@@ -30,6 +30,10 @@ Branch **`develop`** (line CMS) **dihapus Aug 2026**. Content/themes/member = do
 npm run agent:verify
 ```
 
+## Dokumentasi modul
+
+Setiap modul di `backend/Modules/*` dan `frontend/src/modules/*` wajib punya **`README.md`** + **`CHANGELOG.md`**. Rule: `.cursor/rules/module-documentation.mdc`.
+
 ## Aturan singkat
 
 - Jangan sebut produk ini `ja-cms` / `JA-CMS` di string user-facing baru.

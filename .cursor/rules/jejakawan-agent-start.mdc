@@ -23,3 +23,4 @@ This repo is the **headless kernel + unified admin console**, not `ja-cms` and n
 - Do not re-add Content/Layout/Publishing/themes to `main` unless explicitly building a downstream product line.
 - Prefer minimal diffs; run `npm run agent:verify` (or CI gates) before calling work done.
 - Never commit secrets / `.env`.
+- Keep per-module `README.md` + `CHANGELOG.md` updated (see `.cursor/rules/module-documentation.mdc`).

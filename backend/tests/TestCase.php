@@ -105,6 +105,10 @@ abstract class TestCase extends BaseTestCase
             'view analytics',
             'view activity logs',
             'view security logs',
+            // JA-Mail
+            'use mail',
+            'manage personal mail account',
+            'manage multi mail accounts',
 
         ];
 

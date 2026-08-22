@@ -36,6 +36,18 @@
           <span>{{ $t('system.mail.forward') }}</span>
         </Button>
 
+        <Button
+          v-if="message.folder === 'scheduled'"
+          variant="outline"
+          size="sm"
+          class="h-7 gap-1.5 text-xs px-2.5 shadow-xs text-amber-700 dark:text-amber-400 border-amber-500/30"
+          :title="$t('system.mail.cancel_schedule')"
+          @click="$emit('cancel-schedule', message.id)"
+        >
+          <Clock class="w-3.5 h-3.5" />
+          <span>{{ $t('system.mail.cancel_schedule') }}</span>
+        </Button>
+
         <!-- Move To Folder Dropdown -->
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
@@ -52,7 +64,7 @@
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" class="w-44 text-xs shadow-2xl">
             <DropdownMenuItem
-              v-for="target in ['inbox', 'spam', 'trash', 'drafts']"
+              v-for="target in ['inbox', 'archive', 'spam', 'trash', 'drafts']"
               :key="target"
               :disabled="message.folder === target"
               class="gap-2 cursor-pointer text-xs"
@@ -263,10 +275,12 @@
               <span>From: <strong class="text-foreground">{{ tMsg.sender.name }}</strong> &lt;{{ tMsg.sender.email }}&gt;</span>
               <span>To: {{ tMsg.recipients.join(', ') }}</span>
             </div>
+            <!-- eslint-disable vue/no-v-html -- sanitized via DOMPurify -->
             <div
               class="prose prose-sm dark:prose-invert max-w-none text-foreground/90 leading-relaxed text-xs overflow-x-auto"
               v-html="sanitizeBody(tMsg.body)"
             />
+            <!-- eslint-enable vue/no-v-html -->
           </div>
         </div>
       </div>
@@ -305,11 +319,11 @@
           <button
             type="button"
             class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-semibold transition-colors cursor-pointer"
-            title="Click to view Security Authentication & Raw MIME Headers"
+            title="Local message security info (auth is configured on your mail server / DNS)"
             @click="isSecurityModalOpen = true"
           >
             <ShieldCheck class="w-3 h-3" />
-            <span>TLS Verified</span>
+            <span>Security info</span>
           </button>
         </div>
       </div>
@@ -373,7 +387,9 @@
 
       <!-- Sanitized Body Content (Protected against XSS with DOMPurify) -->
       <div class="prose prose-sm dark:prose-invert max-w-none pt-3 border-t border-border/40 text-foreground/90 leading-relaxed text-xs overflow-x-auto">
+        <!-- eslint-disable vue/no-v-html -- sanitized via DOMPurify -->
         <div v-html="sanitizedHtmlBody" />
+        <!-- eslint-enable vue/no-v-html -->
       </div>
 
       <!-- Quick Reply Section -->
@@ -474,7 +490,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import DOMPurify from 'dompurify';
 import { useToast } from '@/shared/composables/useToast';
 import {
@@ -523,10 +539,12 @@ const props = withDefaults(
         message: MailMessage | null;
         allMessages?: MailMessage[];
         availableLabels?: MailLabel[];
+        blockRemoteImages?: boolean;
     }>(),
     {
         allMessages: () => [],
         availableLabels: () => [],
+        blockRemoteImages: true,
     }
 );
 
@@ -541,15 +559,23 @@ const emit = defineEmits<{
     (e: 'move-to-folder', id: string, folder: string): void;
     (e: 'toggle-label', id: string, labelId: string): void;
     (e: 'snooze', id: string, snoozeUntil: string): void;
+    (e: 'cancel-schedule', id: string): void;
     (e: 'send-reply', replyText: string): void;
 }>();
 
 const toast = useToast();
 const quickReplyText = ref('');
-const showRemoteImages = ref(false);
+const showRemoteImages = ref(!props.blockRemoteImages);
 const isSecurityModalOpen = ref(false);
 const isUnsubscribeModalOpen = ref(false);
 const expandedThreadCardIds = ref<Set<string>>(new Set());
+
+watch(
+    () => [props.message?.id, props.blockRemoteImages] as const,
+    () => {
+        showRemoteImages.value = !props.blockRemoteImages;
+    },
+);
 
 // Conversation Threading Calculations
 const allThreadMessages = computed<MailMessage[]>(() => {
@@ -588,20 +614,19 @@ const toggleAllThreadCards = () => {
     }
 };
 
-// RFC 8058 One-Click Unsubscribe Detection
+// Heuristic only — kernel has no List-Unsubscribe header pipeline.
 const hasUnsubscribe = computed(() => {
     if (!props.message) return false;
     const body = props.message.body || '';
-    return Boolean(
-        /unsubscribe|berhenti berlangganan/i.test(body) ||
-        props.message.labels?.includes('newsletter') ||
-        props.message.labels?.includes('promo')
-    );
+    return /https?:\/\/[^\s"'<>]*unsubscribe/i.test(body);
 });
 
 const confirmUnsubscribe = () => {
     isUnsubscribeModalOpen.value = false;
-    toast.success.action('Unsubscribe request sent successfully');
+    toast.warning(
+        'Unsubscribe',
+        'JA-Mail does not auto-unsubscribe. Use the sender’s unsubscribe link in the message body.',
+    );
 };
 
 const handleSnooze = (preset: 'later_today' | 'tomorrow' | 'next_week') => {

@@ -238,6 +238,7 @@
           :message="selectedMessage"
           :all-messages="messages"
           :available-labels="labels"
+          :block-remote-images="blockRemoteImages"
           @back="isMobileDetailOpen = false"
           @reply="reply"
           @forward="forward"
@@ -248,6 +249,7 @@
           @move-to-folder="moveMessage"
           @toggle-label="toggleMessageLabel"
           @snooze="snoozeMessage"
+          @cancel-schedule="cancelSchedule"
         />
       </main>
     </div>
@@ -337,6 +339,7 @@
       :is-open="isComposerOpen"
       :composer-data="composerData"
       :templates="templates"
+      :ai-prefs="mailAiPrefs"
       @update:composer-data="composerData = $event"
       @close="isComposerOpen = false"
       @send="sendEmail"
@@ -435,6 +438,8 @@ const {
     isLabelsModalOpen,
     isComposerOpen,
     composerData,
+    mailAiPrefs,
+    blockRemoteImages,
     isUndoToastVisible,
     undoCountdown,
     undoSend,
@@ -458,6 +463,7 @@ const {
     saveDraft,
     scheduleSend,
     snoozeMessage,
+    cancelSchedule,
     saveLabels,
     accounts,
     activeAccountId,

@@ -8,10 +8,11 @@ export interface AiGeneratePayload {
     action?: string;
 }
 
+/** Core AI API — paths must match `manage/ai/*` in system_api.php */
 export const AiService = {
     async providers(): Promise<{ data: Array<{ id: string; name: string; logo?: string }> }> {
         try {
-            const res = await apiClient.get('/manage/system/ai/providers');
+            const res = await apiClient.get('/manage/ai/providers');
             return res.data;
         } catch {
             return { data: [] };
@@ -20,19 +21,20 @@ export const AiService = {
 
     async models(provider: string): Promise<{ data: Array<{ id: string; name: string }> }> {
         try {
-            const res = await apiClient.get(`/manage/system/ai/models?provider=${encodeURIComponent(provider)}`);
+            const res = await apiClient.get(`/manage/ai/models/${encodeURIComponent(provider)}`);
             return res.data;
         } catch {
             return { data: [] };
         }
     },
 
-    async generate(payload: AiGeneratePayload): Promise<{ data: { content?: string } }> {
-        try {
-            const res = await apiClient.post('/manage/system/ai/generate', payload);
-            return res.data;
-        } catch {
-            return { data: {} };
+    async generate(payload: AiGeneratePayload): Promise<{ data: { content?: string; provider?: string } }> {
+        const res = await apiClient.post('/manage/ai/generate', payload);
+        const body = res.data;
+        // Laravel success envelope: { data: { content, provider } }
+        if (body?.data && typeof body.data === 'object') {
+            return { data: body.data };
         }
+        return { data: body ?? {} };
     },
 };

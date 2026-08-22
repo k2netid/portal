@@ -7,6 +7,7 @@ namespace Modules\Core\System\Http\Controllers\Console;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Services\Ai\AiAvailability;
 use Modules\Core\System\Services\Ai\AiProviderFactory;
 
 class AiController extends BaseApiController
@@ -74,6 +75,15 @@ class AiController extends BaseApiController
             'model' => 'nullable|string',
         ]);
 
+        if (! AiAvailability::isGloballyEnabled()) {
+            return $this->error(
+                'Global AI is disabled in Settings → AI.',
+                403,
+                [],
+                'AI_DISABLED',
+            );
+        }
+
         try {
             $providerNameRaw = $request->input('provider');
             $providerName = is_string($providerNameRaw) && $providerNameRaw !== '' ? $providerNameRaw : null;
@@ -83,6 +93,16 @@ class AiController extends BaseApiController
             $prompt = is_string($promptRaw) ? $promptRaw : '';
             $contextRaw = $request->input('context', '');
             $context = is_string($contextRaw) ? $contextRaw : '';
+
+            $resolvedProvider = $providerName ?? AiAvailability::defaultProvider();
+            if (! AiAvailability::providerHasKey($resolvedProvider)) {
+                return $this->error(
+                    'AI provider API key is not configured for '.$resolvedProvider.'.',
+                    401,
+                    [],
+                    'AI_KEY_MISSING',
+                );
+            }
 
             $service = AiProviderFactory::make($providerName);
             $result = $service->generateText($prompt, $context, $model);

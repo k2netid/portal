@@ -1,0 +1,28 @@
+---
+description: Module README + CHANGELOG required for Modules work
+alwaysApply: true
+---
+
+# Module documentation (backend + frontend)
+
+When you **create or meaningfully change** a first-party module under `backend/Modules/*` or `frontend/src/modules/*`:
+
+## Required artifacts
+
+1. **`README.md`** in the module root (BE and FE separately if both exist)
+   - Purpose, quick path map, permissions/gates, runtime deps (if any)
+   - Links to `docs/extensions/*.md` or architecture docs when relevant
+   - Short “Agent notes” (do/don’t for the next agent)
+2. **`CHANGELOG.md`** in the same module root
+   - Keep a Changelog style; put new entries under `[Unreleased]`
+   - Move to a dated/versioned section when the work ships/merges
+
+## Also update
+
+- Extension/product doc if one exists (e.g. `docs/extensions/ja-mail.md`)
+- Root `CHANGELOG.md` `[Unreleased]` with a one-line pointer for user-visible releases
+
+## Do not
+
+- Leave hanging “future backlog” items that belong to other systems (e.g. MTA/DNS/IMAP for JA-Mail)
+- Skip changelog when behavior, API, or permissions change

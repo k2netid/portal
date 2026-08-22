@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Mail\Contracts\MailInboundSyncInterface;
 use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Http\Controllers\Concerns\InteractsWithUserMailbox;
 use Modules\Mail\Models\MailMessage;
@@ -28,6 +29,7 @@ class MailController extends BaseApiController
     public function __construct(
         protected MailDispatchService $mailDispatch,
         protected MailAttachmentStore $attachmentStore,
+        protected MailInboundSyncInterface $inboundSync,
     ) {}
 
     /**
@@ -68,6 +70,14 @@ class MailController extends BaseApiController
             $query->where('folder', $folder);
         }
 
+        // Hide still-snoozed messages from normal folder views (Gmail-style).
+        if ($label === null && $folder === 'inbox') {
+            $query->where(function ($q): void {
+                $q->whereNull('snoozed_until')
+                    ->orWhere('snoozed_until', '<=', now());
+            });
+        }
+
         if ($filter === 'unread') {
             $query->where('is_read', false);
         } elseif ($filter === 'starred') {
@@ -89,10 +99,20 @@ class MailController extends BaseApiController
         $messages = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
         $user = $repo->user();
+        $inboxUnread = $repo->messages($accountId)
+            ->where('folder', 'inbox')
+            ->where('is_read', false)
+            ->where(function ($q): void {
+                $q->whereNull('snoozed_until')
+                    ->orWhere('snoozed_until', '<=', now());
+            })
+            ->count();
         $folderCounts = [
-            'inbox' => $repo->messages($accountId)->where('folder', 'inbox')->where('is_read', false)->count(),
+            'inbox' => $inboxUnread,
             'sent' => $repo->messages($accountId)->where('folder', 'sent')->where('is_read', false)->count(),
             'drafts' => $repo->messages($accountId)->where('folder', 'drafts')->count(),
+            'scheduled' => $repo->messages($accountId)->where('folder', 'scheduled')->count(),
+            'archive' => $repo->messages($accountId)->where('folder', 'archive')->count(),
             'trash' => $repo->messages($accountId)->where('folder', 'trash')->count(),
             'spam' => $repo->messages($accountId)->where('folder', 'spam')->where('is_read', false)->count(),
         ];
@@ -170,7 +190,17 @@ class MailController extends BaseApiController
         $user = $repo->user();
         $files = $request->file('attachments', []);
         $files = is_array($files) ? $files : [];
-        $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
+
+        $quotaError = $this->assertWithinStorageQuota($user, $this->estimateUploadBytes($files));
+        if ($quotaError instanceof JsonResponse) {
+            return $quotaError;
+        }
+
+        try {
+            $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
+        } catch (InvalidArgumentException $e) {
+            return $this->error($e->getMessage(), 422, [], 'MAIL_ATTACHMENT_BLOCKED');
+        }
 
         try {
             $dispatch = $this->mailDispatch->sendOutbound(
@@ -330,7 +360,17 @@ class MailController extends BaseApiController
         $account = $repo->resolveAccount($accountId);
         $files = $request->file('attachments', []);
         $files = is_array($files) ? $files : [];
-        $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
+
+        $quotaError = $this->assertWithinStorageQuota($user, $this->estimateUploadBytes($files));
+        if ($quotaError instanceof JsonResponse) {
+            return $quotaError;
+        }
+
+        try {
+            $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
+        } catch (InvalidArgumentException $e) {
+            return $this->error($e->getMessage(), 422, [], 'MAIL_ATTACHMENT_BLOCKED');
+        }
 
         $scheduled = MailMessage::create([
             'user_id' => $user->id,
@@ -379,8 +419,13 @@ class MailController extends BaseApiController
         $path = is_string($attachment['path'] ?? null) ? $attachment['path'] : '';
         $disk = is_string($attachment['disk'] ?? null) ? $attachment['disk'] : 'local';
         $name = is_string($attachment['name'] ?? null) ? $attachment['name'] : 'attachment.bin';
+        $ownerId = is_string($message->user_id) ? $message->user_id : '';
 
-        if ($path === '' || ! Storage::disk($disk)->exists($path)) {
+        if ($path === '' || $ownerId === '' || ! $this->attachmentStore->isOwnedPath($ownerId, $path)) {
+            return $this->error('Attachment not found', 404);
+        }
+
+        if (! Storage::disk($disk)->exists($path)) {
             return $this->error('Attachment file missing', 404);
         }
 
@@ -427,9 +472,50 @@ class MailController extends BaseApiController
             return $message;
         }
 
-        $message->update(['folder' => $validated['folder']]);
+        $folder = (string) $validated['folder'];
+        $labels = is_array($message->labels) ? $message->labels : [];
+        $updates = [
+            'folder' => $folder,
+            'trashed_at' => $folder === 'trash' ? now() : null,
+        ];
 
-        return $this->success($message, 'Message moved to '.$validated['folder']);
+        if ($folder !== 'scheduled') {
+            $labels = array_values(array_diff($labels, ['scheduled']));
+            $updates['scheduled_at'] = null;
+            $updates['labels'] = $labels;
+        }
+
+        $message->update($updates);
+
+        return $this->success($message, 'Message moved to '.$folder);
+    }
+
+    /**
+     * Cancel a scheduled send — returns message to drafts.
+     */
+    public function cancelSchedule(Request $request, string $id): JsonResponse
+    {
+        $message = $this->ownedMessage($request, $id);
+        if ($message instanceof JsonResponse) {
+            return $message;
+        }
+
+        if ($message->folder !== 'scheduled') {
+            return $this->error('Message is not scheduled', 422, [], 'MAIL_NOT_SCHEDULED');
+        }
+
+        $labels = is_array($message->labels) ? $message->labels : [];
+        $labels = array_values(array_diff($labels, ['scheduled']));
+
+        $message->update([
+            'folder' => 'drafts',
+            'scheduled_at' => null,
+            'dispatch_locked_at' => null,
+            'labels' => $labels,
+            'subject' => preg_replace('/^\[Scheduled\]\s*/i', '', (string) $message->subject) ?: '(No Subject)',
+        ]);
+
+        return $this->success($message->fresh(), 'Scheduled send cancelled — moved to Drafts');
     }
 
     public function toggleMessageLabel(Request $request, string $id): JsonResponse
@@ -489,7 +575,10 @@ class MailController extends BaseApiController
             return $message;
         }
 
-        $message->update(['folder' => 'trash']);
+        $message->update([
+            'folder' => 'trash',
+            'trashed_at' => now(),
+        ]);
 
         return $this->success(null, 'Message moved to Trash');
     }
@@ -501,7 +590,10 @@ class MailController extends BaseApiController
             return $message;
         }
 
-        $message->update(['folder' => 'inbox']);
+        $message->update([
+            'folder' => 'inbox',
+            'trashed_at' => null,
+        ]);
 
         return $this->success(null, 'Message restored to Inbox');
     }
@@ -513,6 +605,8 @@ class MailController extends BaseApiController
             return $message;
         }
 
+        $raw = is_array($message->attachments) ? $message->attachments : [];
+        $this->attachmentStore->deleteStored($raw);
         $message->delete();
 
         return $this->success(null, 'Message permanently deleted');
@@ -525,9 +619,14 @@ class MailController extends BaseApiController
             return $repo;
         }
 
-        $count = $repo->messages()->where('folder', 'trash')->delete();
+        $messages = $repo->messages()->where('folder', 'trash')->get();
+        foreach ($messages as $message) {
+            $raw = is_array($message->attachments) ? $message->attachments : [];
+            $this->attachmentStore->deleteStored($raw);
+            $message->delete();
+        }
 
-        return $this->success(['deleted_count' => $count], 'Trash folder emptied successfully');
+        return $this->success(['deleted_count' => $messages->count()], 'Trash folder emptied successfully');
     }
 
     public function getLabels(Request $request): JsonResponse
@@ -677,16 +776,20 @@ class MailController extends BaseApiController
 
         $activeProviders = [];
         foreach ($providerCatalog as $slug => $info) {
-            if ($info['has_key'] || $slug === $defaultProvider) {
+            if ($info['has_key']) {
                 $activeProviders[] = [
                     'id' => $slug,
                     'name' => $info['name'],
                     'model' => $info['model'],
-                    'has_key' => $info['has_key'],
+                    'has_key' => true,
                     'is_default' => $slug === $defaultProvider,
                 ];
             }
         }
+
+        $mailAiEnabled = $this->userSettingBool($user, 'ai_enabled', $this->settingBool($globalSettings, 'mail_client_ai_enabled', true));
+        $readyProvider = $this->userSettingString($user, 'ai_provider', $this->settingString($globalSettings, 'mail_client_ai_provider', $defaultProvider));
+        $providerReady = $isGlobalAiEnabled && collect($activeProviders)->contains(fn (array $p): bool => $p['id'] === $readyProvider);
 
         return $this->success([
             'per_page' => $this->userSettingInt($user, 'per_page', $this->settingInt($globalSettings, 'mail_client_per_page', 25)),
@@ -703,21 +806,31 @@ class MailController extends BaseApiController
             'vacation_enabled' => $this->userSettingBool($user, 'vacation_enabled', $this->settingBool($globalSettings, 'mail_client_vacation_enabled')),
             'vacation_subject' => $this->userSettingString($user, 'vacation_subject', $this->settingString($globalSettings, 'mail_client_vacation_subject', 'Out of Office Auto-Reply')),
             'vacation_body' => $this->userSettingString($user, 'vacation_body', $this->settingString($globalSettings, 'mail_client_vacation_body', 'Thank you for your message. I am currently out of office.')),
-            'ai_enabled' => $this->userSettingBool($user, 'ai_enabled', $this->settingBool($globalSettings, 'mail_client_ai_enabled', true)),
-            'ai_provider' => $this->userSettingString($user, 'ai_provider', $this->settingString($globalSettings, 'mail_client_ai_provider', $defaultProvider)),
+            'ai_enabled' => $mailAiEnabled,
+            'ai_provider' => $readyProvider,
             'ai_tone' => $this->userSettingString($user, 'ai_tone', $this->settingString($globalSettings, 'mail_client_ai_tone', 'professional')),
+            // Only drafting is live in kernel; other scopes are preferences reserved for future — FE must not pretend they work.
             'ai_scope_drafting' => $this->userSettingBool($user, 'ai_scope_drafting', (bool) ($globalSettings['mail_client_ai_scope_drafting'] ?? true)),
-            'ai_scope_summarize' => $this->userSettingBool($user, 'ai_scope_summarize', (bool) ($globalSettings['mail_client_ai_scope_summarize'] ?? true)),
-            'ai_scope_smart_reply' => $this->userSettingBool($user, 'ai_scope_smart_reply', (bool) ($globalSettings['mail_client_ai_scope_smart_reply'] ?? true)),
-            'ai_scope_sentiment' => $this->userSettingBool($user, 'ai_scope_sentiment', (bool) ($globalSettings['mail_client_ai_scope_sentiment'] ?? true)),
-            'ai_guardrail_human_review' => $this->userSettingBool($user, 'ai_guardrail_human_review', (bool) ($globalSettings['mail_client_ai_guardrail_human_review'] ?? true)),
+            'ai_scope_summarize' => false,
+            'ai_scope_smart_reply' => false,
+            'ai_scope_sentiment' => false,
+            'ai_capabilities' => [
+                'drafting' => 'live',
+                'summarize' => 'unavailable',
+                'smart_reply' => 'unavailable',
+                'sentiment' => 'unavailable',
+            ],
+            'ai_guardrail_human_review' => true,
             'ai_guardrail_pii_masking' => $this->userSettingBool($user, 'ai_guardrail_pii_masking', (bool) ($globalSettings['mail_client_ai_guardrail_pii_masking'] ?? true)),
+            'ai_ready' => $mailAiEnabled && $providerReady && $this->userSettingBool($user, 'ai_scope_drafting', true),
+            'can_manage_globals' => $user->can('manage system') || $user->hasRole('super'),
             'storage_stats' => $this->calculateStorageStatsForUser($user),
             // System Global AI Integration Info
             'global_ai' => [
                 'enabled' => $isGlobalAiEnabled,
                 'default_provider' => $defaultProvider,
                 'active_providers' => $activeProviders,
+                'ready' => $isGlobalAiEnabled && $activeProviders !== [],
             ],
         ], 'Mail client settings retrieved successfully');
     }
@@ -762,8 +875,19 @@ class MailController extends BaseApiController
         ]);
 
         $globalKeys = ['storage_quota_gb', 'trash_retention_days'];
+        $canManageGlobals = $user->can('manage system') || $user->hasRole('super');
+
+        // Kernel-enforced: only drafting is live; human review always on (AI never auto-sends).
+        $validated['ai_scope_summarize'] = false;
+        $validated['ai_scope_smart_reply'] = false;
+        $validated['ai_scope_sentiment'] = false;
+        $validated['ai_guardrail_human_review'] = true;
 
         foreach ($validated as $key => $val) {
+            if (in_array($key, $globalKeys, true) && ! $canManageGlobals) {
+                continue;
+            }
+
             $cleanVal = $val === null ? '' : $val;
             $type = is_bool($val) ? 'boolean' : (is_int($val) ? 'integer' : 'string');
             $settingKey = in_array($key, $globalKeys, true)
@@ -776,7 +900,7 @@ class MailController extends BaseApiController
     }
 
     /**
-     * Sync mailbox from mail server
+     * Sync mailbox — kernel uses local index; bind MailInboundSyncInterface for IMAP downstream.
      */
     public function sync(Request $request): JsonResponse
     {
@@ -786,14 +910,17 @@ class MailController extends BaseApiController
         }
 
         $user = $repo->user();
-        $total = $repo->messages()->count();
+        $result = $this->inboundSync->sync($user);
 
         return $this->success([
-            'synced_at' => now()->toIso8601String(),
-            'total_messages' => $total,
+            'synced_at' => $result['synced_at'],
+            'total_messages' => $result['total_messages'],
+            'imported' => $result['imported'],
             'storage' => $this->calculateStorageStatsForUser($user),
-            'mode' => 'local_index',
-        ], 'Mailbox index refreshed (IMAP sync ships in downstream mail product line)');
+            'mode' => $result['mode'],
+        ], $result['mode'] === 'local_index'
+            ? 'Mailbox index refreshed (IMAP sync ships in downstream mail product line)'
+            : 'Mailbox synced');
     }
 
     private function resolveMailFromAddress(): string

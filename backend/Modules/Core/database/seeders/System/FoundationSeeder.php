@@ -83,6 +83,7 @@ class FoundationSeeder extends Seeder
             'manage module access',
 
             // JA-Mail extension
+            'use mail',
             'manage personal mail account',
             'manage multi mail accounts',
         ];
@@ -119,6 +120,7 @@ class FoundationSeeder extends Seeder
             'manage kyc reviews',
             'view security logs',
             'manage module access',
+            'use mail',
             'manage personal mail account',
             'manage multi mail accounts',
         ])->get());

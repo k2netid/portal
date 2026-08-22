@@ -76,6 +76,7 @@ final class AiControllerTest extends TestCase
 
     public function test_generate_with_mocked_http(): void
     {
+        Setting::set('ai_enabled', true, 'boolean', 'ai');
         Setting::set('gemini_api_key', 'AIzaSyTestMockKey123', 'password', 'ai');
 
         Http::fake([

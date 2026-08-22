@@ -32,6 +32,8 @@ class ScheduledTaskSeeder extends Seeder
 
             // JA-Mail
             ['name' => 'Process Scheduled Mail', 'command' => 'mail:process-scheduled', 'schedule' => '*/5 * * * *', 'is_active' => true],
+            ['name' => 'Wake Snoozed Mail', 'command' => 'mail:process-snoozed', 'schedule' => '*/5 * * * *', 'is_active' => true],
+            ['name' => 'Purge Trashed Mail', 'command' => 'mail:purge-trash', 'schedule' => '15 3 * * *', 'is_active' => true],
 
             // System & Diagnostics
             ['name' => 'System Health Diagnostic', 'command' => 'system:health-check', 'schedule' => '*/30 * * * *', 'is_active' => false],

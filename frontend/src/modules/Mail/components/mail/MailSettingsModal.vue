@@ -281,8 +281,12 @@
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div class="col-span-full rounded-lg border border-border/50 bg-muted/30 px-3 py-2 text-[10px] text-muted-foreground">
+                  IMAP fields are stored for account records only. Kernel sync is
+                  <strong class="text-foreground">local index</strong> — inbox pull is not implemented in JA-Mail.
+                </div>
                 <div class="space-y-1">
-                  <label class="text-[11px] font-semibold text-foreground">IMAP Host</label>
+                  <label class="text-[11px] font-semibold text-foreground">IMAP Host (unused in kernel)</label>
                   <Input
                     :model-value="accountForm.imap_host ?? ''"
                     placeholder="imap.gmail.com"
@@ -422,12 +426,18 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Storage Quota Allocation -->
-            <div class="space-y-1.5">
+            <!-- Storage Quota Allocation (global — admin only) -->
+            <div
+              class="space-y-1.5"
+              :class="{ 'opacity-60': !canManageGlobals }"
+            >
               <label class="text-xs font-bold text-foreground">Mail Storage Quota</label>
-              <p class="text-[11px] text-muted-foreground">Total mailbox capacity allocated.</p>
+              <p class="text-[11px] text-muted-foreground">
+                {{ canManageGlobals ? 'Global mailbox capacity (manage system).' : 'Global setting — view only (requires manage system).' }}
+              </p>
               <Select
                 :model-value="String(settingsData.storage_quota_gb)"
+                :disabled="!canManageGlobals"
                 @update:model-value="v => settingsData.storage_quota_gb = Number(v)"
               >
                 <SelectTrigger class="h-8 text-xs">
@@ -443,12 +453,18 @@
               </Select>
             </div>
 
-            <!-- Trash Retention -->
-            <div class="space-y-1.5">
+            <!-- Trash Retention (global — admin only) -->
+            <div
+              class="space-y-1.5"
+              :class="{ 'opacity-60': !canManageGlobals }"
+            >
               <label class="text-xs font-bold text-foreground">Auto-Purge Trash Retention</label>
-              <p class="text-[11px] text-muted-foreground">Automatically clean deleted emails.</p>
+              <p class="text-[11px] text-muted-foreground">
+                {{ canManageGlobals ? 'Global trash purge policy.' : 'Global setting — view only (requires manage system).' }}
+              </p>
               <Select
                 :model-value="String(settingsData.trash_retention_days)"
+                :disabled="!canManageGlobals"
                 @update:model-value="v => settingsData.trash_retention_days = Number(v)"
               >
                 <SelectTrigger class="h-8 text-xs">
@@ -799,17 +815,30 @@
                   <Sparkles class="w-4 h-4 text-amber-500" />
                   <span>AI Email Copilot Integration</span>
                 </p>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  Active ({{ globalAiState.default_provider }})
+                <span
+                  class="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                  :class="globalAiState.ready
+                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-amber-500/10 text-amber-700 dark:text-amber-300'"
+                >
+                  {{ globalAiState.ready ? `Ready (${globalAiState.default_provider})` : 'Needs API key' }}
                 </span>
               </div>
-              <p class="text-[11px] text-muted-foreground mt-0.5">Enable LLM-assisted drafting, summarizing, and smart replies in Webmail.</p>
+              <p class="text-[11px] text-muted-foreground mt-0.5">
+                Depends on Settings → AI. Only <strong>drafting &amp; polish</strong> is live in kernel webmail.
+              </p>
             </div>
-            <Switch v-model="settingsData.ai_enabled" />
+            <Switch
+              v-model="settingsData.ai_enabled"
+              :disabled="!globalAiState.ready"
+            />
           </div>
 
           <!-- Writing Tone & Active Provider Selection -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 gap-3"
+            :class="{ 'opacity-50 pointer-events-none': !globalAiState.enabled || !settingsData.ai_enabled }"
+          >
             <div class="space-y-1.5">
               <label class="text-xs font-bold text-foreground">Default Writing Tone</label>
               <Select v-model="settingsData.ai_tone">
@@ -839,62 +868,80 @@
                   >
                     {{ prov.name }} ({{ prov.model }}) {{ prov.is_default ? '• Default' : '' }}
                   </SelectItem>
-                  <template v-if="globalAiState.active_providers.length === 0">
-                    <SelectItem value="gemini">Google Gemini (gemini-2.0-flash)</SelectItem>
-                    <SelectItem value="openai">OpenAI GPT (gpt-4o-mini)</SelectItem>
-                    <SelectItem value="claude">Anthropic Claude (claude-3-5-sonnet)</SelectItem>
-                    <SelectItem value="deepseek">DeepSeek (deepseek-chat)</SelectItem>
-                    <SelectItem value="grok">xAI Grok (grok-2-latest)</SelectItem>
-                  </template>
+                  <SelectItem
+                    v-if="globalAiState.active_providers.length === 0"
+                    value="__none"
+                    disabled
+                  >
+                    No provider with API key — configure Settings → AI
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          <!-- Permitted Contexts (Konteks yang Diizinkan) -->
-          <div class="space-y-2 pt-1">
+          <!-- Permitted Contexts -->
+          <div
+            class="space-y-2 pt-1"
+            :class="{ 'opacity-50 pointer-events-none': !globalAiState.enabled || !settingsData.ai_enabled }"
+          >
             <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Permitted AI Capabilities (Konteks yang Diizinkan)
+              Permitted AI Capabilities
             </h4>
             <div class="space-y-2 rounded-xl border border-border/40 p-3 bg-muted/20">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-xs font-semibold text-foreground">AI Email Drafting & Polish</p>
-                  <p class="text-[10px] text-muted-foreground">Generate drafts and polish business tone in composer.</p>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    AI Email Drafting & Polish
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-600">LIVE</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">Generate drafts and polish tone in composer.</p>
                 </div>
                 <Switch v-model="settingsData.ai_scope_drafting" />
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+              <div class="flex items-center justify-between pt-2 border-t border-border/30 opacity-70">
                 <div>
-                  <p class="text-xs font-semibold text-foreground">Thread Summarization</p>
-                  <p class="text-[10px] text-muted-foreground">Summarize long email threads into actionable key points.</p>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    Thread Summarization
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-muted text-muted-foreground">NOT AVAILABLE</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">Not implemented in kernel — switch is locked off.</p>
                 </div>
-                <Switch v-model="settingsData.ai_scope_summarize" />
+                <Switch :model-value="false" disabled />
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+              <div class="flex items-center justify-between pt-2 border-t border-border/30 opacity-70">
                 <div>
-                  <p class="text-xs font-semibold text-foreground">Contextual Smart Replies</p>
-                  <p class="text-[10px] text-muted-foreground">Suggest intelligent 1-click quick replies for incoming mail.</p>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    Contextual Smart Replies
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-muted text-muted-foreground">NOT AVAILABLE</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">Not implemented in kernel — switch is locked off.</p>
                 </div>
-                <Switch v-model="settingsData.ai_scope_smart_reply" />
+                <Switch :model-value="false" disabled />
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-border/30">
+              <div class="flex items-center justify-between pt-2 border-t border-border/30 opacity-70">
                 <div>
-                  <p class="text-xs font-semibold text-foreground">Urgency & Sentiment Analysis</p>
-                  <p class="text-[10px] text-muted-foreground">Detect urgency and classify priority status of incoming messages.</p>
+                  <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    Urgency & Sentiment Analysis
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-muted text-muted-foreground">NOT AVAILABLE</span>
+                  </p>
+                  <p class="text-[10px] text-muted-foreground">Not implemented in kernel — switch is locked off.</p>
                 </div>
-                <Switch v-model="settingsData.ai_scope_sentiment" />
+                <Switch :model-value="false" disabled />
               </div>
             </div>
           </div>
 
-          <!-- Safety Boundaries & Guardrails (Batasan Keamanan) -->
-          <div class="space-y-2 pt-1">
+          <!-- Safety Boundaries -->
+          <div
+            class="space-y-2 pt-1"
+            :class="{ 'opacity-50 pointer-events-none': !globalAiState.enabled || !settingsData.ai_enabled }"
+          >
             <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Safety Guardrails & Boundaries (Batasan Keamanan)
+              Safety Guardrails
             </h4>
             <div class="space-y-2 rounded-xl border border-border/40 p-3 bg-muted/20">
               <div class="flex items-center justify-between">
@@ -902,10 +949,11 @@
                   <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
                     <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Human-in-the-Loop Required</span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-600">ALWAYS ON</span>
                   </p>
-                  <p class="text-[10px] text-muted-foreground">AI is strictly prohibited from autonomous dispatch; manual click required.</p>
+                  <p class="text-[10px] text-muted-foreground">AI never auto-sends; operator must click Send.</p>
                 </div>
-                <Switch v-model="settingsData.ai_guardrail_human_review" />
+                <Switch :model-value="true" disabled />
               </div>
 
               <div class="flex items-center justify-between pt-2 border-t border-border/30">
@@ -914,7 +962,7 @@
                     <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Sensitive Data & PII Sanitization</span>
                   </p>
-                  <p class="text-[10px] text-muted-foreground">Automatically redact passwords, tokens, and credit cards before AI prompt.</p>
+                  <p class="text-[10px] text-muted-foreground">Redact passwords, tokens, and card-like numbers before the AI prompt.</p>
                 </div>
                 <Switch v-model="settingsData.ai_guardrail_pii_masking" />
               </div>
@@ -1203,12 +1251,16 @@ watch(() => props.isOpen, (open) => {
     }
 });
 
+const canManageGlobals = ref(false);
+
 const globalAiState = ref<{
     enabled: boolean;
+    ready: boolean;
     default_provider: string;
     active_providers: Array<{ id: string; name: string; model: string; has_key: boolean; is_default: boolean }>;
 }>({
-    enabled: true,
+    enabled: false,
+    ready: false,
     default_provider: 'gemini',
     active_providers: [],
 });
@@ -1228,14 +1280,14 @@ const settingsData = ref({
     vacation_enabled: false,
     vacation_subject: 'Out of Office Auto-Reply',
     vacation_body: 'Thank you for your message. I am currently away from my desk.',
-    // AI Governance
-    ai_enabled: true,
+    // AI Governance — only drafting is live
+    ai_enabled: false,
     ai_provider: 'gemini',
     ai_tone: 'professional',
     ai_scope_drafting: true,
-    ai_scope_summarize: true,
-    ai_scope_smart_reply: true,
-    ai_scope_sentiment: true,
+    ai_scope_summarize: false,
+    ai_scope_smart_reply: false,
+    ai_scope_sentiment: false,
     ai_guardrail_human_review: true,
     ai_guardrail_pii_masking: true,
 });
@@ -1318,7 +1370,7 @@ const fetchTemplates = async () => {
     }
 };
 
-const handleMediaSelect = (media: any) => {
+const handleMediaSelect = (media: { url?: string; path?: string }) => {
     if (media?.url) {
         settingsData.value.signature_logo = media.url;
     } else if (media?.path) {
@@ -1330,7 +1382,8 @@ const loadSettings = async () => {
     try {
         const response = await api.get('/manage/mail/settings');
         const data = response.data?.data || response.data;
-        if (data) {
+            if (data) {
+            canManageGlobals.value = Boolean(data.can_manage_globals);
             settingsData.value = {
                 per_page: data.per_page ?? 25,
                 storage_quota_gb: data.storage_quota_gb ?? 15,
@@ -1350,14 +1403,19 @@ const loadSettings = async () => {
                 ai_provider: data.ai_provider || 'gemini',
                 ai_tone: data.ai_tone || 'professional',
                 ai_scope_drafting: Boolean(data.ai_scope_drafting),
-                ai_scope_summarize: Boolean(data.ai_scope_summarize),
-                ai_scope_smart_reply: Boolean(data.ai_scope_smart_reply),
-                ai_scope_sentiment: Boolean(data.ai_scope_sentiment),
-                ai_guardrail_human_review: Boolean(data.ai_guardrail_human_review),
+                ai_scope_summarize: false,
+                ai_scope_smart_reply: false,
+                ai_scope_sentiment: false,
+                ai_guardrail_human_review: true,
                 ai_guardrail_pii_masking: Boolean(data.ai_guardrail_pii_masking),
             };
             if (data.global_ai) {
-                globalAiState.value = data.global_ai;
+                globalAiState.value = {
+                    enabled: Boolean(data.global_ai.enabled),
+                    ready: Boolean(data.global_ai.ready),
+                    default_provider: data.global_ai.default_provider || 'gemini',
+                    active_providers: Array.isArray(data.global_ai.active_providers) ? data.global_ai.active_providers : [],
+                };
             }
         }
         initialSnapshot.value = JSON.stringify(settingsData.value);
@@ -1372,6 +1430,7 @@ const saveSettings = async () => {
         const res = await api.post('/manage/mail/settings', settingsData.value);
         const data = res.data?.data || res.data;
         if (data) {
+            canManageGlobals.value = Boolean(data.can_manage_globals);
             settingsData.value = {
                 per_page: data.per_page ?? settingsData.value.per_page,
                 storage_quota_gb: data.storage_quota_gb ?? settingsData.value.storage_quota_gb,
@@ -1391,14 +1450,19 @@ const saveSettings = async () => {
                 ai_provider: data.ai_provider || settingsData.value.ai_provider,
                 ai_tone: data.ai_tone || settingsData.value.ai_tone,
                 ai_scope_drafting: Boolean(data.ai_scope_drafting),
-                ai_scope_summarize: Boolean(data.ai_scope_summarize),
-                ai_scope_smart_reply: Boolean(data.ai_scope_smart_reply),
-                ai_scope_sentiment: Boolean(data.ai_scope_sentiment),
-                ai_guardrail_human_review: Boolean(data.ai_guardrail_human_review),
+                ai_scope_summarize: false,
+                ai_scope_smart_reply: false,
+                ai_scope_sentiment: false,
+                ai_guardrail_human_review: true,
                 ai_guardrail_pii_masking: Boolean(data.ai_guardrail_pii_masking),
             };
             if (data.global_ai) {
-                globalAiState.value = data.global_ai;
+                globalAiState.value = {
+                    enabled: Boolean(data.global_ai.enabled),
+                    ready: Boolean(data.global_ai.ready),
+                    default_provider: data.global_ai.default_provider || 'gemini',
+                    active_providers: Array.isArray(data.global_ai.active_providers) ? data.global_ai.active_providers : [],
+                };
             }
         }
         initialSnapshot.value = JSON.stringify(settingsData.value);

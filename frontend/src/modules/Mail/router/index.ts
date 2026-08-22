@@ -8,7 +8,7 @@ const mailRoutes: RouteRecordRaw[] = [
         meta: {
             title: 'system.mail.title',
             breadcrumb: 'system.navigation.menu.mail',
-            permission: 'manage system',
+            permission: 'use mail',
             extension: 'mail',
         },
     },

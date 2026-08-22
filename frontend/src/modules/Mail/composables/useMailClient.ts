@@ -2,6 +2,8 @@ import { ref, computed, onMounted } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
 import api from '@/engine/api/client';
 
+export type MailFolder = 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam' | 'archive' | 'scheduled';
+
 export interface MailAttachment {
     id: string;
     name: string;
@@ -12,7 +14,7 @@ export interface MailAttachment {
 
 export interface MailMessage {
     id: string;
-    folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam';
+    folder: MailFolder;
     sender: {
         name: string;
         email: string;
@@ -29,6 +31,7 @@ export interface MailMessage {
     isStarred: boolean;
     labels: string[];
     attachments?: MailAttachment[];
+    scheduledAt?: string | null;
 }
 
 export interface MailLabel {
@@ -162,7 +165,7 @@ export function useMailClient() {
     };
 
     // Navigation & Filtering
-    const activeFolder = ref<'inbox' | 'sent' | 'drafts' | 'trash' | 'spam'>('inbox');
+    const activeFolder = ref<MailFolder>('inbox');
     const activeLabel = ref<string | null>(null);
     const selectedMessageId = ref<string | null>(null);
     const searchQuery = ref('');
@@ -207,6 +210,8 @@ export function useMailClient() {
         inbox: 0,
         sent: 0,
         drafts: 0,
+        scheduled: 0,
+        archive: 0,
         trash: 0,
         spam: 0,
     });
@@ -236,26 +241,33 @@ export function useMailClient() {
     };
 
     // Transform backend message model to frontend interface
-    const transformMessage = (item: any): MailMessage => {
+    const transformMessage = (item: Record<string, unknown>): MailMessage => {
+        const senderName = typeof item.sender_name === 'string' ? item.sender_name : 'Unknown';
+        const senderEmail = typeof item.sender_email === 'string' ? item.sender_email : '';
+        const folderRaw = typeof item.folder === 'string' ? item.folder : 'inbox';
+        const dateRaw = [item.sent_at, item.received_at, item.created_at].find((v): v is string => typeof v === 'string');
         return {
-            id: item.id,
-            folder: item.folder || 'inbox',
+            id: String(item.id ?? ''),
+            folder: folderRaw as MailFolder,
             sender: {
-                name: item.sender_name || 'Unknown',
-                email: item.sender_email || '',
-                avatar: item.sender_name ? item.sender_name.charAt(0).toUpperCase() : 'M',
+                name: senderName,
+                email: senderEmail,
+                avatar: senderName ? senderName.charAt(0).toUpperCase() : 'M',
             },
-            recipients: Array.isArray(item.recipients) ? item.recipients : [item.recipients || ''],
-            cc: Array.isArray(item.cc) ? item.cc : [],
-            bcc: Array.isArray(item.bcc) ? item.bcc : [],
-            subject: item.subject || '(No Subject)',
-            snippet: item.snippet || '',
-            body: item.body || '',
-            date: formatMessageDate(item.sent_at || item.received_at || item.created_at),
+            recipients: Array.isArray(item.recipients)
+                ? item.recipients.map(String)
+                : [item.recipients != null ? String(item.recipients) : ''],
+            cc: Array.isArray(item.cc) ? item.cc.map(String) : [],
+            bcc: Array.isArray(item.bcc) ? item.bcc.map(String) : [],
+            subject: typeof item.subject === 'string' ? item.subject : '(No Subject)',
+            snippet: typeof item.snippet === 'string' ? item.snippet : '',
+            body: typeof item.body === 'string' ? item.body : '',
+            date: formatMessageDate(dateRaw),
             isRead: Boolean(item.is_read),
             isStarred: Boolean(item.is_starred),
-            labels: Array.isArray(item.labels) ? item.labels : [],
-            attachments: Array.isArray(item.attachments) ? item.attachments : [],
+            labels: Array.isArray(item.labels) ? item.labels.map(String) : [],
+            attachments: Array.isArray(item.attachments) ? (item.attachments as MailAttachment[]) : [],
+            scheduledAt: typeof item.scheduled_at === 'string' ? item.scheduled_at : null,
         };
     };
 
@@ -282,13 +294,37 @@ export function useMailClient() {
         }
     };
 
-    // Fetch settings preference
+    // Fetch settings preference (incl. AI readiness for composer)
+    const mailAiPrefs = ref({
+        ai_ready: false,
+        ai_enabled: false,
+        ai_provider: 'gemini',
+        ai_tone: 'professional',
+        ai_scope_drafting: true,
+        ai_guardrail_pii_masking: true,
+        global_ready: false,
+    });
+
+    const blockRemoteImages = ref(true);
+
     const fetchClientSettings = async () => {
         try {
             const res = await api.get('/manage/mail/settings');
             const data = res.data?.data || res.data;
             if (data?.per_page && typeof data.per_page === 'number') {
                 perPage.value = data.per_page;
+            }
+            if (data) {
+                blockRemoteImages.value = data.block_remote_images !== false;
+                mailAiPrefs.value = {
+                    ai_ready: Boolean(data.ai_ready),
+                    ai_enabled: Boolean(data.ai_enabled),
+                    ai_provider: typeof data.ai_provider === 'string' ? data.ai_provider : 'gemini',
+                    ai_tone: typeof data.ai_tone === 'string' ? data.ai_tone : 'professional',
+                    ai_scope_drafting: Boolean(data.ai_scope_drafting),
+                    ai_guardrail_pii_masking: Boolean(data.ai_guardrail_pii_masking),
+                    global_ready: Boolean(data.global_ai?.ready),
+                };
             }
         } catch {
             // Keep default
@@ -393,7 +429,7 @@ export function useMailClient() {
         return getThreadMessages(selectedMessage.value);
     });
 
-    const selectFolder = (folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam') => {
+    const selectFolder = (folder: MailFolder) => {
         activeFolder.value = folder;
         activeLabel.value = null;
         selectedMessageId.value = null;
@@ -567,7 +603,7 @@ export function useMailClient() {
     // Undo Send State
     const isUndoToastVisible = ref(false);
     const undoCountdown = ref(5);
-    let undoInterval: any = null;
+    let undoInterval: ReturnType<typeof setInterval> | null = null;
     const pendingEmailData = ref<{
         to: string;
         cc: string;
@@ -659,8 +695,10 @@ export function useMailClient() {
         undoInterval = setInterval(() => {
             undoCountdown.value -= 1;
             if (undoCountdown.value <= 0) {
-                clearInterval(undoInterval);
-                undoInterval = null;
+                if (undoInterval) {
+                    clearInterval(undoInterval);
+                    undoInterval = null;
+                }
                 isUndoToastVisible.value = false;
                 if (pendingEmailData.value) {
                     executeActualSend(pendingEmailData.value);
@@ -754,6 +792,22 @@ export function useMailClient() {
                 snooze_until: snoozeUntil,
             });
             toast.success.action(`Message snoozed until ${snoozeUntil}`);
+            fetchMessages(1);
+            return true;
+        } catch (error: unknown) {
+            toast.error.fromResponse(error);
+            return false;
+        }
+    };
+
+    const cancelSchedule = async (id: string) => {
+        try {
+            await api.post(`/manage/mail/messages/${id}/cancel-schedule`);
+            toast.success.action('Scheduled send cancelled — moved to Drafts');
+            if (selectedMessageId.value === id) {
+                selectedMessageId.value = null;
+                isMobileDetailOpen.value = false;
+            }
             fetchMessages(1);
             return true;
         } catch (error: unknown) {
@@ -878,6 +932,8 @@ export function useMailClient() {
         isLabelsModalOpen,
         isComposerOpen,
         composerData,
+        mailAiPrefs,
+        blockRemoteImages,
         isUndoToastVisible,
         undoCountdown,
         undoSend,
@@ -901,6 +957,7 @@ export function useMailClient() {
         saveDraft,
         scheduleSend,
         snoozeMessage,
+        cancelSchedule,
         activeThreadMessages,
         getThreadMessages,
         saveLabels,

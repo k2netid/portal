@@ -23,34 +23,33 @@
 
       <!-- Security Details & Raw Headers -->
       <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
-        <p class="text-[11px] text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
-          Preview UI only — SPF/DKIM/DMARC/TLS are not verified against live message headers in kernel webmail.
+        <p class="text-[11px] text-muted-foreground bg-muted/40 border border-border/40 rounded-lg px-3 py-2">
+          Message authentication (SPF/DKIM/DMARC) and TLS are handled by your
+          <strong class="font-semibold text-foreground">mail server / DNS (MTA)</strong>,
+          not by JA-Mail. This panel only shows local message metadata.
         </p>
 
-        <!-- Authentication preview cards (not live verification) -->
+        <!-- Local metadata (not MTA verification) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
           <div class="p-3 rounded-xl border border-border/60 bg-muted/20 space-y-1">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-foreground">SPF Check</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-muted text-muted-foreground">PREVIEW</span>
+              <span class="text-[11px] font-bold text-foreground">From domain</span>
             </div>
-            <p class="text-[10px] text-muted-foreground truncate">smtp.mailfrom={{ message?.sender.email }}</p>
+            <p class="text-[10px] text-muted-foreground truncate">{{ senderDomain }}</p>
           </div>
 
           <div class="p-3 rounded-xl border border-border/60 bg-muted/20 space-y-1">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-foreground">DKIM Signature</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-muted text-muted-foreground">PREVIEW</span>
+              <span class="text-[11px] font-bold text-foreground">Sender</span>
             </div>
-            <p class="text-[10px] text-muted-foreground truncate">header.d={{ senderDomain }}</p>
+            <p class="text-[10px] text-muted-foreground truncate">{{ message?.sender.email }}</p>
           </div>
 
           <div class="p-3 rounded-xl border border-border/60 bg-muted/20 space-y-1">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-foreground">DMARC Policy</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-muted text-muted-foreground">PREVIEW</span>
+              <span class="text-[11px] font-bold text-foreground">Auth (MTA)</span>
             </div>
-            <p class="text-[10px] text-muted-foreground truncate">Not verified in kernel</p>
+            <p class="text-[10px] text-muted-foreground truncate">Configure SPF/DKIM/DMARC on DNS</p>
           </div>
         </div>
 
@@ -61,8 +60,8 @@
             <span class="font-mono text-[11px] text-foreground">&lt;{{ message?.id }}@{{ senderDomain }}&gt;</span>
           </div>
           <div class="flex justify-between py-0.5 border-b border-border/20">
-            <span class="text-muted-foreground font-medium">TLS Protocol:</span>
-            <span class="font-mono text-[11px] text-muted-foreground">Not available (local index only)</span>
+            <span class="text-muted-foreground font-medium">Stored:</span>
+            <span class="font-mono text-[11px] text-muted-foreground">Local mailbox index</span>
           </div>
           <div class="flex justify-between py-0.5">
             <span class="text-muted-foreground font-medium">Delivery Time:</span>
@@ -70,12 +69,12 @@
           </div>
         </div>
 
-        <!-- Raw MIME Headers Viewer -->
+        <!-- Local field summary (not live MIME) -->
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <label class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
               <FileCode class="w-3.5 h-3.5" />
-              <span>Raw RFC 822 MIME Headers (synthetic preview)</span>
+              <span>Local field summary</span>
             </label>
             <Button
               variant="outline"
@@ -142,30 +141,21 @@ const senderDomain = computed(() => {
 
 const rawHeaders = computed(() => {
     if (!props.message) return '';
-    return `Delivered-To: ${props.message.recipients[0] || 'user@example.com'}
-Received: by 2002:a05:6808:14d5:b0:3b1:6e93 with SMTP id abc123xyz;
-        ${new Date().toUTCString()}
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@${senderDomain.value} header.s=2026 header.b=X9z...;
-       spf=pass (google.com: domain of ${props.message.sender.email} designates 198.51.100.1 as permitted sender) smtp.mailfrom=${props.message.sender.email};
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=${senderDomain.value}
-Return-Path: <${props.message.sender.email}>
-From: "${props.message.sender.name}" <${props.message.sender.email}>
+    return `From: "${props.message.sender.name}" <${props.message.sender.email}>
 To: <${props.message.recipients.join(', ')}>
 Subject: ${props.message.subject}
 Message-ID: <${props.message.id}@${senderDomain.value}>
-MIME-Version: 1.0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Mailer: Jejakawan Enterprise Mail Client 1.0`;
+Date: ${props.message.date}
+X-Jejakawan-Store: local-mailbox-index
+Note: SPF/DKIM/DMARC are configured on your mail server DNS, not by JA-Mail.`;
 });
 
 const copyHeaders = async () => {
     try {
         await navigator.clipboard.writeText(rawHeaders.value);
-        toast.success.action('Raw email headers copied to clipboard');
+        toast.success.action('Message summary copied to clipboard');
     } catch {
-        toast.error.action('Failed to copy headers');
+        toast.error.action('Failed to copy');
     }
 };
 </script>

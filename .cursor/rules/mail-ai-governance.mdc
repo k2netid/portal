@@ -1,0 +1,35 @@
+---
+description: JA-Mail AI must depend on global Settings→AI; no fake AI features
+globs: backend/Modules/Mail/**/*,frontend/src/modules/Mail/**/*
+alwaysApply: false
+---
+
+# JA-Mail AI governance
+
+## Dependency
+
+Mail AI **requires** Core global AI (`Settings → AI` / Setting group `ai`):
+
+1. `ai_enabled` must be true
+2. Selected (or default) provider must have `{provider}_api_key`
+3. Mail prefs: `ai_enabled` + `ai_scope_drafting`
+4. Effective flag from API: `ai_ready`
+
+Do not call `/manage/ai/generate` unless `ai_ready` is true.
+
+## Live vs unavailable (kernel)
+
+| Capability | Status |
+|------------|--------|
+| Drafting / polish in composer | **Live** |
+| Summarize / smart reply / sentiment | **Unavailable** — keep switches locked off; do not ship fake UI |
+| Human-in-the-loop | **Always on** — AI never auto-sends |
+| PII masking | Live client-side redact before prompt when enabled |
+
+## Agent rules
+
+- Never present unavailable scopes as working product.
+- Never invent IMAP/SPF/DKIM AI features.
+- Prefer `AiAvailability` (PHP) / `useAiAvailability` (FE) / mail `ai_ready`.
+- Core `AiController::generate` must refuse when global AI is off (`AI_DISABLED`).
+- Update `docs/extensions/ja-mail.md` + Mail CHANGELOGs when AI behavior changes.

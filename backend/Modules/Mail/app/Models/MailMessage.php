@@ -26,11 +26,13 @@ use Modules\Core\System\Traits\CoreLogsActivity;
  * @property bool $is_starred
  * @property array<string>|null $labels
  * @property array<int, array<string, mixed>>|null $attachments
+ * @property Carbon|null $trashed_at
  * @property Carbon|null $sent_at
  * @property Carbon|null $scheduled_at
  * @property string|null $user_id
  * @property Carbon|null $snoozed_until
  * @property Carbon|null $dispatch_locked_at
+ * @property Carbon|null $received_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -50,6 +52,7 @@ class MailMessage extends Model
         'account_id',
         'message_id',
         'folder',
+        'trashed_at',
         'sender_name',
         'sender_email',
         'recipients',
@@ -77,6 +80,7 @@ class MailMessage extends Model
         'is_starred' => 'boolean',
         'labels' => 'array',
         'attachments' => 'array',
+        'trashed_at' => 'datetime',
         'sent_at' => 'datetime',
         'scheduled_at' => 'datetime',
         'snoozed_until' => 'datetime',

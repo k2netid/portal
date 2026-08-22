@@ -7,7 +7,7 @@ use Modules\Mail\Http\Controllers\MailAccountController;
 use Modules\Mail\Http\Controllers\MailController;
 
 Route::prefix('v1/manage/mail')
-    ->middleware(['auth:sanctum', 'mail.extension', 'permission:manage system'])
+    ->middleware(['auth:sanctum', 'mail.extension', 'permission:use mail'])
     ->group(function (): void {
         Route::get('messages', [MailController::class, 'index']);
         Route::get('messages/{id}', [MailController::class, 'show']);
@@ -15,6 +15,7 @@ Route::prefix('v1/manage/mail')
             ->whereNumber('index');
         Route::post('messages/draft', [MailController::class, 'saveDraft']);
         Route::post('messages/schedule', [MailController::class, 'schedule'])->middleware('throttle:20,1');
+        Route::post('messages/{id}/cancel-schedule', [MailController::class, 'cancelSchedule']);
         Route::post('messages/{id}/snooze', [MailController::class, 'snooze']);
         Route::post('messages/{id}/move', [MailController::class, 'move']);
         Route::post('messages/{id}/label', [MailController::class, 'toggleMessageLabel']);

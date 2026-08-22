@@ -4,6 +4,8 @@
 **Marketplace slug:** `mail`  
 **Status:** Optional Pro extension (inactive until activated in App Store)
 
+Module READMEs: [backend](../../backend/Modules/Mail/README.md) · [frontend](../../frontend/src/modules/Mail/README.md) · [CHANGELOG](../../backend/Modules/Mail/CHANGELOG.md)
+
 ## Architecture
 
 JA-Mail is a **first-class Laravel + Vue module**, not embedded Core code:
@@ -25,61 +27,112 @@ JA-Mail is a **first-class Laravel + Vue module**, not embedded Core code:
 
 Activate via **Settings → Extensions (App Store)** before use.
 
-## Capabilities (kernel `main`)
+## Capabilities (kernel)
 
 | Feature | Status |
 |---------|--------|
-| Webmail UI (inbox, compose, folders) | Live |
+| Webmail UI (inbox, compose, folders incl. scheduled + archive) | Live |
 | Multi-account CRUD + encrypted credentials | Live |
 | Send via system SMTP or custom account SMTP | Live |
-| Scheduled send (`scheduled_at` + `mail:process-scheduled`) | Live |
+| Scheduled send + cancel → drafts (`mail:process-scheduled`) | Live |
+| Storage quota enforcement on send/schedule | Live |
+| Attachment extension blocklist + path ownership checks | Live |
+| Trash retention purge (`mail:purge-trash`) | Live |
+| Vacation / OOO on `MailboxIngestService` | Live |
+| Soft Media Library register on attach | When Content/Media present |
+| In-app notifications on send failure / vacation | Live |
 | Canned templates / labels / settings | Live |
-| IMAP inbox sync | **Not in kernel** — local index refresh only; full IMAP = downstream product line |
+| Remote image blocking (`block_remote_images`) | Live |
+
+### Explicitly out of scope (mail server / DNS / MTA)
+
+| Concern | Owner |
+|---------|--------|
+| IMAP / POP inbox pull | Mail server or separate product — **not** this module |
+| SPF / DKIM / DMARC signing & verification | DNS + MTA |
+| TLS between MTAs | Mail server |
+
+JA-Mail is an **outbound + local mailbox UI** for the console. Do not track IMAP/SPF/DKIM as kernel backlog.
+
+## AI Copilot (depends on Settings → AI)
+
+Mail AI is **not** standalone. Effective readiness:
+
+`global ai_enabled` ∧ provider API key ∧ mail `ai_enabled` ∧ `ai_scope_drafting` → API field `ai_ready`
+
+| Capability | Kernel status |
+|------------|---------------|
+| Composer Draft / Polish | Live (gated) |
+| Summarize / smart reply / sentiment | Unavailable (locked off) |
+| Human-in-the-loop | Always on (AI never sends) |
+| PII masking | Optional client redact before prompt |
+
+Global generate API (`POST /manage/ai/generate`) returns `403 AI_DISABLED` when Settings → AI is off.
+
+Agent rule: `.cursor/rules/mail-ai-governance.mdc`
 
 ## Permissions
 
-Seeded in `FoundationSeeder`:
+- `use mail` — API + console nav
+- `manage personal mail account` / `manage multi mail accounts` — account CRUD depth
 
-- `manage system` — required for all JA-Mail API routes (`permission:manage system`)
-- `manage personal mail account`
-- `manage multi mail accounts`
+## Runtime dependencies
 
-Super / system-admin bypass via role for account RBAC checks.
+| Dependency | Required? | Notes |
+|------------|-----------|-------|
+| PostgreSQL or SQLite | Yes | Message/account tables |
+| SMTP (`MAIL_*` and/or Settings `mail_*`) | Yes for real send | Dev often uses `MAIL_MAILER=log` |
+| Disk `local` | Yes | Attachments under `mail-attachments/` |
+| Redis | Optional | Cache + Horizon; vacation rate-limit uses Cache (works with `file`/`database` too) |
+| Queue worker | Optional | Needed only if `MAIL_QUEUE_OUTBOUND=true` or vacation/port `queue: true` |
+| Horizon / Supervisor | Optional | Prefer `queue:work` or Horizon when queueing outbound |
+| IMAP PHP extension / libs | **No** | Not used |
+| Spatie Media Library | Soft | Register attach only if Content bridge bound |
 
-## Security model (kernel `main`)
+Default queue in `.env.example` is `QUEUE_CONNECTION=database` — a worker is enough; Redis/Horizon are platform choices, not Mail-hard requirements.
 
-| Control | Implementation |
-|---------|----------------|
-| Mailbox isolation | `user_id` on `sys_mail_messages`; all queries via `UserMailRepository` |
-| Extension gate | `mail.extension` middleware + router `meta.extension` |
-| RBAC | `permission:manage system` on API group |
-| Send rate limit | `throttle:30,1` on `POST /send` |
-| Schedule rate limit | `throttle:20,1` on `POST /messages/schedule` |
-| Connection test SSRF | `MailHostValidator` blocks private/reserved IPs |
-| Send failures | `MailDispatchException` → HTTP 502 `MAIL_SEND_FAILED` |
-| Scheduled dispatch | `mail:process-scheduled` with cache lock + `dispatch_locked_at` |
-| Credential logging | `MailAccount` activity log redacts SMTP/IMAP passwords |
+## Notifications integration
 
-## UI stub inventory (honest labels)
+**Direction:** Mail → in-app `sys_notifications` (bell). Not the reverse.
 
-These UI surfaces are **preview-only** in kernel webmail until IMAP/full MIME pipeline ships:
+| Event | In-app notification |
+|-------|---------------------|
+| `MailMessageFailed` | `error` for mailbox user |
+| `VacationAutoReplySent` | `info` for mailbox user |
 
-| Surface | Kernel behavior |
-|---------|-----------------|
-| SPF/DKIM/DMARC badges | Labeled **PREVIEW** — not verified against live headers |
-| TLS protocol row | Shows “not available (local index only)” |
-| Raw MIME headers | Synthetic preview from local message fields |
-| Quick reply inline send | Opens reply composer (no direct SMTP from detail pane) |
-| Attachment upload → SMTP | Live — multipart `attachments[]` on send/schedule; download via API |
-| Sync button | Refreshes local index only (message explains IMAP downstream) |
-| AI draft reply button | Disabled preview |
-| Global SMTP (`mail_*` settings) | Applied via `SystemMailConfig` on system-global mailer |
-| `reply_to` | Applied from per-user / global `mail_client_reply_to*` |
+Auth verify / password reset / Security alerts still use Laravel `Mail::` / Notifiable and **bypass** JA-Mail by design (kernel always-on).
+
+Cross-module **outbound** email should use `OutboundMailPortInterface` (not NotificationController).
+
+## Cross-module send
+
+```php
+app(OutboundMailPortInterface::class)->send(
+    to: 'user@example.com',
+    subject: 'Hello',
+    htmlBody: '<p>Hi</p>',
+    queue: true,
+);
+```
+
+## Inbound (local)
+
+```php
+app(MailboxIngestService::class)->ingest($user, [/* fields */]);
+```
+
+Fires `MailMessageReceived`, then vacation. `MailInboundSyncInterface` defaults to local index refresh only.
 
 ## Cron
 
-`mail:process-scheduled` — seeded every 5 minutes in `ScheduledTaskSeeder`, whitelisted in `ScheduledTask::ALLOWED_COMMANDS`.
+| Command | Seeded schedule |
+|---------|-----------------|
+| `mail:process-scheduled` | every 5 minutes |
+| `mail:process-snoozed` | every 5 minutes |
+| `mail:purge-trash` | daily 03:15 |
 
-## Downstream
+## Security
 
-Forks that need full webmail (IMAP pull, calendar, etc.) extend `Modules/Mail/` or ship a separate product repo — do not re-embed mail into `Modules/Core`.
+Mailbox isolation via `user_id`, extension gate, `permission:use mail`, send/schedule throttles, SSRF host validation on account test, attachment extension blocklist, download path prefix ownership, and storage quota checks on outbound attach.
+
+Optional env: `MAIL_QUEUE_OUTBOUND=true` to dispatch outbound sends via queue.

@@ -6,6 +6,8 @@ namespace Modules\Mail\Tests\Feature;
 
 use Illuminate\Support\Facades\Mail;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Permission;
+use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
 use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Services\MailDispatchService;
@@ -81,13 +83,28 @@ class MailSecurityTest extends TestCase
             ->assertJsonValidationErrors(['host']);
     }
 
-    public function test_user_without_manage_system_permission_is_forbidden(): void
+    public function test_user_without_use_mail_permission_is_forbidden(): void
     {
         $user = $this->createViewerUser();
 
         $this->actingAs($user, 'sanctum')
             ->getJson('/api/v1/manage/mail/messages')
             ->assertForbidden();
+    }
+
+    public function test_user_with_use_mail_can_access_without_manage_system(): void
+    {
+        Permission::firstOrCreate(['name' => 'use mail', 'guard_name' => 'web']);
+
+        $role = Role::firstOrCreate(['name' => 'mail-user', 'guard_name' => 'web']);
+        $role->syncPermissions(['use mail']);
+
+        $user = User::factory()->create();
+        $user->assignRole($role);
+
+        $this->actingAs($user, 'sanctum')
+            ->getJson('/api/v1/manage/mail/messages')
+            ->assertOk();
     }
 
     public function test_scheduled_command_only_dispatches_due_messages(): void

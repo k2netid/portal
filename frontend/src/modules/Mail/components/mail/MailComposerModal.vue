@@ -160,8 +160,11 @@
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <!-- AI Assistant Tools -->
-            <div class="flex items-center gap-1.5">
+            <!-- AI Assistant Tools — only when global AI + mail drafting ready -->
+            <div
+              v-if="aiCopilotVisible"
+              class="flex items-center gap-1.5"
+            >
               <div class="hidden sm:flex items-center gap-1 text-[11px] text-primary font-semibold mr-1">
                 <Sparkles class="w-3 h-3 text-amber-500" />
                 <span>AI Copilot:</span>
@@ -171,8 +174,9 @@
                 variant="outline"
                 size="sm"
                 class="h-6 text-[10px] gap-1 px-2 border-primary/20 hover:bg-primary/10 text-primary"
-                :disabled="generatingAi"
-                @click="generateWithAi('Write a professional, clear, and polite email draft')"
+                :disabled="generatingAi || !aiCopilotEnabled"
+                :title="aiCopilotEnabled ? 'Generate draft' : aiBlockedReason"
+                @click="runDraftAi"
               >
                 <Loader2 v-if="generatingAi" class="w-2.5 h-2.5 animate-spin" />
                 <span>Draft</span>
@@ -181,12 +185,20 @@
                 variant="outline"
                 size="sm"
                 class="h-6 text-[10px] gap-1 px-2 border-primary/20 hover:bg-primary/10 text-primary"
-                :disabled="generatingAi || !composerData.body"
-                @click="generateWithAi('Refine and polish this email text with professional business tone')"
+                :disabled="generatingAi || !composerData.body || !aiCopilotEnabled"
+                :title="aiCopilotEnabled ? 'Polish tone' : aiBlockedReason"
+                @click="runPolishAi"
               >
                 <span>Polish Tone</span>
               </Button>
             </div>
+            <p
+              v-else-if="aiBlockedReason"
+              class="hidden sm:block text-[10px] text-muted-foreground max-w-[220px] truncate"
+              :title="aiBlockedReason"
+            >
+              {{ aiBlockedReason }}
+            </p>
           </div>
 
           <!-- Message Body Input with Tiptap Rich-Text Editor -->
@@ -364,7 +376,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
-import api from '@/engine/api/client';
+import { AiService } from '@/shared/services/aiService';
 import {
   Edit3,
   X,
@@ -407,10 +419,21 @@ type ComposerData = {
     attachments: File[];
 };
 
+type MailAiPrefs = {
+    ai_ready: boolean;
+    ai_enabled: boolean;
+    ai_provider: string;
+    ai_tone: string;
+    ai_scope_drafting: boolean;
+    ai_guardrail_pii_masking: boolean;
+    global_ready: boolean;
+};
+
 const props = defineProps<{
     isOpen: boolean;
     composerData: ComposerData;
     templates?: MailTemplate[];
+    aiPrefs?: MailAiPrefs;
 }>();
 
 const emit = defineEmits<{
@@ -427,6 +450,37 @@ const patchComposer = (patch: Partial<ComposerData>): void => {
 };
 
 const toast = useToast();
+
+const toneLabel = (tone: string): string => {
+    const map: Record<string, string> = {
+        professional: 'professional business',
+        friendly: 'friendly and warm',
+        concise: 'concise and direct',
+        executive: 'formal executive',
+    };
+    return map[tone] || 'professional business';
+};
+
+const maskPii = (text: string): string => {
+    return text
+        .replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, '[REDACTED_EMAIL]')
+        .replace(/\b(?:\d[ -]*?){13,19}\b/g, '[REDACTED_CARD]')
+        .replace(/(?:password|passwd|pwd|token|secret|api[_-]?key)\s*[:=]\s*\S+/gi, '[REDACTED_SECRET]');
+};
+
+const aiCopilotEnabled = computed(() => Boolean(props.aiPrefs?.ai_ready));
+const aiCopilotVisible = computed(() => {
+    // Show bar when mail AI master is on OR when we need to explain why it's blocked
+    return Boolean(props.aiPrefs?.ai_enabled) || Boolean(props.aiPrefs?.global_ready);
+});
+const aiBlockedReason = computed(() => {
+    if (!props.aiPrefs) return 'AI prefs not loaded';
+    if (!props.aiPrefs.global_ready) return 'Enable Settings → AI and add a provider API key';
+    if (!props.aiPrefs.ai_enabled) return 'Enable AI Copilot in Mail settings';
+    if (!props.aiPrefs.ai_scope_drafting) return 'Enable drafting scope in Mail AI settings';
+    if (!props.aiPrefs.ai_ready) return 'AI not ready';
+    return '';
+});
 const isMaximized = ref(false);
 const showCc = ref(false);
 const showBcc = ref(false);
@@ -564,21 +618,45 @@ const removeFile = (index: number) => {
 };
 
 const generateWithAi = async (instruction: string) => {
+    if (!aiCopilotEnabled.value) {
+        toast.error.action(aiBlockedReason.value || 'AI Copilot unavailable');
+        return;
+    }
+
     generatingAi.value = true;
     try {
-        const response = await api.post('/manage/ai/generate', {
+        const provider = props.aiPrefs?.ai_provider || undefined;
+        let context = props.composerData.body
+            ? `Current Content:\n${props.composerData.body}`
+            : `Subject: ${props.composerData.subject || 'General inquiry'}`;
+        if (props.aiPrefs?.ai_guardrail_pii_masking) {
+            context = maskPii(context);
+        }
+
+        const response = await AiService.generate({
             prompt: instruction,
-            context: props.composerData.body ? `Current Content:\n${props.composerData.body}` : `Subject: ${props.composerData.subject || 'General inquiry'}`,
+            context,
+            provider,
         });
-        const content = response.data?.data?.content || response.data?.content || '';
+        const content = response.data?.content || '';
         if (content) {
             patchComposer({ body: content.replace(/\n/g, '<br/>') });
-            toast.success.action('AI draft generated successfully');
+            toast.success.action('AI draft generated — review before sending');
         }
     } catch (error: unknown) {
         toast.error.fromResponse(error);
     } finally {
         generatingAi.value = false;
     }
+};
+
+const runDraftAi = () => {
+    const tone = toneLabel(props.aiPrefs?.ai_tone || 'professional');
+    void generateWithAi(`Write a ${tone}, clear email draft. Do not invent facts not present in the context.`);
+};
+
+const runPolishAi = () => {
+    const tone = toneLabel(props.aiPrefs?.ai_tone || 'professional');
+    void generateWithAi(`Refine and polish this email with a ${tone} tone. Keep meaning; do not invent new claims.`);
 };
 </script>

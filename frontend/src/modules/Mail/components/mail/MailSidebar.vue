@@ -250,7 +250,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, type Component } from 'vue';
 import {
   Inbox,
   Send,
@@ -262,10 +262,13 @@ import {
   ChevronDown,
   ChevronRight,
   GripVertical,
+  Clock,
+  Archive,
 } from 'lucide-vue-next';
 import type {
   useMailClient,
   MailLabel,
+  MailFolder,
 } from '@/modules/Mail/composables/useMailClient';
 
 type MailClient = ReturnType<typeof useMailClient>;
@@ -280,7 +283,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'select-folder', folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam'): void;
+    (e: 'select-folder', folder: MailFolder): void;
     (e: 'select-label', labelId: string): void;
     (e: 'update:labels', labels: MailLabel[]): void;
     (e: 'manage-labels'): void;
@@ -423,7 +426,7 @@ const handleDragEnd = () => {
     isHeaderDropHover.value = false;
 };
 
-const selectFolder = (folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam') => {
+const selectFolder = (folder: MailFolder) => {
     emit('select-folder', folder);
 };
 
@@ -431,10 +434,12 @@ const selectLabel = (labelId: string) => {
     emit('select-label', labelId);
 };
 
-const folderList: { id: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam'; icon: any }[] = [
+const folderList: { id: MailFolder; icon: Component }[] = [
     { id: 'inbox', icon: Inbox },
     { id: 'sent', icon: Send },
     { id: 'drafts', icon: FileText },
+    { id: 'scheduled', icon: Clock },
+    { id: 'archive', icon: Archive },
     { id: 'trash', icon: Trash2 },
     { id: 'spam', icon: AlertOctagon },
 ];

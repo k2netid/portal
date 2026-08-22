@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Modules\Mail\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
+use Modules\Core\Infra\Services\MediaLibraryBridge;
 use Modules\Core\System\Models\User;
 
 class MailAttachmentStore
@@ -17,9 +20,20 @@ class MailAttachmentStore
 
     private const MAX_BYTES = 10_485_760; // 10 MB each
 
+    /** High-risk extensions blocked on outbound attach (industry blocklist approach). */
+    private const BLOCKED_EXTENSIONS = [
+        'exe', 'bat', 'cmd', 'com', 'cpl', 'scr', 'js', 'jse', 'vbs', 'vbe', 'wsf', 'wsh',
+        'ps1', 'msi', 'dll', 'jar', 'hta', 'msp', 'msc', 'pif', 'reg', 'inf', 'lnk',
+        'iso', 'img', 'dmg',
+    ];
+
+    public function __construct(
+        protected MediaLibraryBridge $mediaBridge,
+    ) {}
+
     /**
      * @param  array<int, UploadedFile|mixed>  $files
-     * @return list<array{name: string, size: int, mime: string, path: string, disk: string}>
+     * @return list<array{name: string, size: int, mime: string, path: string, disk: string, media_id?: int|string|null}>
      */
     public function storeMany(User $user, array $files): array
     {
@@ -34,7 +48,13 @@ class MailAttachmentStore
                 continue;
             }
 
-            $safeName = Str::limit(preg_replace('/[^\w.\-]+/', '_', $file->getClientOriginalName()) ?: 'file.bin', 180, '');
+            $original = $file->getClientOriginalName();
+            $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
+            if ($ext !== '' && in_array($ext, self::BLOCKED_EXTENSIONS, true)) {
+                throw new InvalidArgumentException('Attachment type not allowed: .'.$ext);
+            }
+
+            $safeName = Str::limit(preg_replace('/[^\w.\-]+/', '_', $original) ?: 'file.bin', 180, '');
             $relative = 'mail-attachments/'.$user->id.'/'.Str::uuid()->toString().'/'.$safeName;
             Storage::disk(self::DISK)->putFileAs(
                 dirname($relative),
@@ -42,16 +62,73 @@ class MailAttachmentStore
                 basename($relative),
             );
 
-            $stored[] = [
-                'name' => $file->getClientOriginalName(),
+            $mime = (string) ($file->getMimeType() ?: 'application/octet-stream');
+            $meta = [
+                'name' => $original,
                 'size' => (int) $file->getSize(),
-                'mime' => (string) ($file->getMimeType() ?: 'application/octet-stream'),
+                'mime' => $mime,
                 'path' => $relative,
                 'disk' => self::DISK,
             ];
+
+            $mediaId = $this->tryRegisterWithMediaLibrary($relative, $user->id, $mime);
+            if ($mediaId !== null) {
+                $meta['media_id'] = $mediaId;
+            }
+
+            $stored[] = $meta;
         }
 
         return $stored;
+    }
+
+    public function isOwnedPath(string $userId, string $path): bool
+    {
+        $normalized = ltrim(str_replace('\\', '/', $path), '/');
+        if ($normalized === '' || str_contains($normalized, '..')) {
+            return false;
+        }
+
+        return str_starts_with($normalized, 'mail-attachments/'.$userId.'/');
+    }
+
+    /**
+     * @param  array<int, array<string, mixed>>  $attachments
+     */
+    public function deleteStored(array $attachments): void
+    {
+        $sync = $this->mediaBridge->sync();
+
+        foreach ($attachments as $attachment) {
+            if (! is_array($attachment)) {
+                continue;
+            }
+
+            $path = is_string($attachment['path'] ?? null) ? $attachment['path'] : '';
+            $disk = is_string($attachment['disk'] ?? null) ? $attachment['disk'] : self::DISK;
+
+            if ($path !== '' && Storage::disk($disk)->exists($path)) {
+                Storage::disk($disk)->delete($path);
+            }
+
+            if ($sync === null) {
+                continue;
+            }
+
+            $mediaId = $attachment['media_id'] ?? null;
+            if ($mediaId === null && $path !== '') {
+                $record = $this->mediaBridge->findByPath($path);
+                if ($record !== null) {
+                    try {
+                        $sync->delete($record, true);
+                    } catch (\Throwable $e) {
+                        Log::debug('Mail attachment media delete skipped', ['error' => $e->getMessage()]);
+                    }
+                }
+
+                continue;
+            }
+        }
     }
 
     /**
@@ -106,5 +183,35 @@ class MailAttachmentStore
         }
 
         return $out;
+    }
+
+    private function tryRegisterWithMediaLibrary(string $relativePath, string $authorId, string $mime): int|string|null
+    {
+        $sync = $this->mediaBridge->sync();
+        if ($sync === null) {
+            return null;
+        }
+
+        try {
+            if (! $sync->shouldIndexPublicPath($relativePath)) {
+                return null;
+            }
+
+            $record = $sync->registerFromDisk(
+                self::DISK,
+                $relativePath,
+                $authorId,
+                str_starts_with($mime, 'image/'),
+            );
+
+            return $record?->getId();
+        } catch (\Throwable $e) {
+            Log::debug('Mail attachment media register skipped', [
+                'path' => $relativePath,
+                'error' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 }

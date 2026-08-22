@@ -6,12 +6,16 @@ namespace Modules\Mail\Services;
 
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\SystemMailConfig;
+use Modules\Mail\Events\MailMessageFailed;
+use Modules\Mail\Events\MailMessageSent;
 use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Models\MailAccount;
 use Modules\Mail\Models\MailMessage;
@@ -63,12 +67,33 @@ class MailDispatchService
                 'error' => $e->getMessage(),
             ]);
 
+            Event::dispatch(new MailMessageFailed(
+                $to,
+                $subject,
+                $e->getMessage(),
+                $user?->id,
+                $account?->id,
+            ));
+
             throw new MailDispatchException(
                 'Failed to send email: '.$e->getMessage(),
                 (int) $e->getCode(),
                 $e,
             );
         }
+
+        Event::dispatch(new MailMessageSent(
+            $to,
+            $subject,
+            $fromAddress,
+            $fromName,
+            $account?->id,
+            $user?->id,
+            $ccList,
+            $bccList,
+        ));
+
+        Hook::action('mail.message_sent', $to, $subject, $user, $account);
 
         return [
             'from_name' => $fromName,

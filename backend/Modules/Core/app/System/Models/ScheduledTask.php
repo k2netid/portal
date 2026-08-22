@@ -68,6 +68,8 @@ class ScheduledTask extends Model
         'system:clear-cache',
         'license:check',
         'mail:process-scheduled',
+        'mail:process-snoozed',
+        'mail:purge-trash',
 
         // Security & WAF
         'security:update-cf-ips',
