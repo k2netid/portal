@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex flex-col bg-background overflow-hidden select-none">
+  <div class="h-[calc(100vh-6.5rem)] flex flex-col bg-card border border-border/70 rounded-2xl shadow-xs overflow-hidden select-none">
     <!-- Top Unified Mail Toolbar Header -->
     <header class="h-12 border-b border-border/40 bg-card/60 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-30">
       <!-- Left: Brand & Sidebar Toggle -->

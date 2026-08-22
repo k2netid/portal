@@ -3441,6 +3441,10 @@
     "existing_labels": "Existing Labels",
     "delete": "Delete",
     "move": "Move to Folder",
-    "empty_trash": "Empty Trash"
+    "empty_trash": "Empty Trash",
+    "sync": "Sync Mailbox",
+    "shortcuts": "Keyboard Shortcuts",
+    "undo": "Undo",
+    "send_now": "Send Now"
   }
 }

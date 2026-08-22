@@ -3441,6 +3441,10 @@
     "existing_labels": "Label anu Aya",
     "delete": "Hapus",
     "move": "Pindahkeun ka Polder",
-    "empty_trash": "Kosongkeun Piceunan"
+    "empty_trash": "Kosongkeun Piceunan",
+    "sync": "Singkronisasi Kotak Surat",
+    "shortcuts": "Pintasan Keyboard",
+    "undo": "Bolay",
+    "send_now": "Kirim Ayeuna"
   }
 }

@@ -3441,6 +3441,10 @@
     "existing_labels": "Label yang Ada",
     "delete": "Hapus",
     "move": "Pindahkan ke Folder",
-    "empty_trash": "Kosongkan Sampah"
+    "empty_trash": "Kosongkan Sampah",
+    "sync": "Sinkronisasi Kotak Surat",
+    "shortcuts": "Pintasan Keyboard",
+    "undo": "Batal",
+    "send_now": "Kirim Sekarang"
   }
 }
