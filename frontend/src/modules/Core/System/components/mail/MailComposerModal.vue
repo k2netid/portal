@@ -6,7 +6,7 @@
     <DialogContent
       :class="[
         '!p-0 !gap-0 flex flex-col overflow-hidden bg-card border border-border/80 shadow-2xl transition-all duration-200 rounded-2xl [&>button[aria-label=Close]]:hidden',
-        isMaximized ? 'max-w-[96vw] h-[92vh]' : 'max-w-3xl h-[520px] max-h-[85vh]'
+        isMaximized ? 'max-w-[96vw] h-[92vh]' : 'max-w-4xl h-[640px] max-h-[90vh]'
       ]"
     >
       <!-- Header -->
@@ -179,12 +179,13 @@
           </div>
         </div>
 
-        <!-- Message Body Input (Takes all remaining vertical space) -->
-        <div class="flex-1 flex flex-col min-h-0 pt-1">
-          <Textarea
+        <!-- Message Body Input with Tiptap Rich-Text Editor -->
+        <div class="flex-1 flex flex-col min-h-0 pt-1 overflow-y-auto custom-scrollbar">
+          <TiptapEditor
             v-model="composerData.body"
+            :compact="true"
             :placeholder="$t('system.mail.body_placeholder')"
-            class="flex-1 w-full resize-none border-border/40 bg-muted/10 text-xs rounded-xl focus-visible:bg-background p-3 leading-relaxed"
+            class="flex-1 border-border/40 rounded-xl"
           />
         </div>
 
@@ -277,7 +278,6 @@ import {
   DialogTitle,
   Button,
   Input,
-  Textarea,
 } from '@/shared/components/ui';
 import {
   DropdownMenu,
@@ -286,6 +286,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
+import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
 import { computed } from 'vue';
 import type { MailTemplate } from '@/modules/Core/System/composables/useMailClient';
 

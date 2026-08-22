@@ -4,7 +4,7 @@
     @update:open="v => { if(!v) $emit('close') }"
   >
     <DialogContent
-      class="!p-0 !gap-0 max-w-3xl w-[94vw] h-auto max-h-[88vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden"
+      class="!p-0 !gap-0 max-w-4xl w-[96vw] h-auto max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden"
       @pointer-down-outside.prevent
       @interact-outside.prevent
     >
@@ -25,14 +25,14 @@
         </Button>
       </div>
 
-      <!-- Navigation Tabs (Pill style, no ugly scrollbar) -->
+      <!-- Navigation Tabs (Pill style, smooth horizontal scroll) -->
       <div class="px-5 pt-3 border-b border-border/40 shrink-0 bg-background/50">
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-2.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             :class="[
-              'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none',
+              'px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none whitespace-nowrap',
               activeTab === tab.id
                 ? 'bg-primary text-primary-foreground shadow-xs font-bold'
                 : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -363,12 +363,12 @@
             </div>
 
             <div class="space-y-1">
-              <label class="text-[11px] font-bold text-foreground">Email Message Content</label>
-              <Textarea
+              <label class="text-[11px] font-bold text-foreground">Email Message Content (Rich HTML)</label>
+              <TiptapEditor
                 v-model="currentTemplate.body"
-                :rows="4"
-                placeholder="Dear Client,&#10;&#10;We are pleased to inform you..."
-                class="text-xs rounded-xl resize-none leading-relaxed"
+                :compact="true"
+                placeholder="Dear Client, write your formatted email template content here..."
+                class="border-border/40 rounded-xl"
               />
             </div>
 
@@ -725,6 +725,7 @@ import {
   Switch,
 } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
+import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
 import type { MailTemplate } from '@/modules/Core/System/composables/useMailClient';
 
 const props = withDefaults(
