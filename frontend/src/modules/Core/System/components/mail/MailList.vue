@@ -149,6 +149,40 @@
         </div>
       </div>
     </div>
+
+    <!-- Pagination Footer -->
+    <div
+      v-if="totalMessages > 0"
+      class="h-10 px-3 border-t border-border/40 flex items-center justify-between shrink-0 bg-background/50 text-[11px] text-muted-foreground select-none"
+    >
+      <span>
+        {{ fromRange }}-{{ toRange }} of {{ totalMessages }}
+      </span>
+
+      <div class="flex items-center gap-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          class="h-7 w-7 text-muted-foreground hover:text-foreground rounded"
+          :disabled="currentPage <= 1"
+          @click="$emit('prev-page')"
+        >
+          <ChevronLeft class="w-3.5 h-3.5" />
+        </Button>
+        <span class="text-[10px] font-semibold text-foreground px-1">
+          {{ currentPage }} / {{ lastPage }}
+        </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          class="h-7 w-7 text-muted-foreground hover:text-foreground rounded"
+          :disabled="currentPage >= lastPage"
+          @click="$emit('next-page')"
+        >
+          <ChevronRight class="w-3.5 h-3.5" />
+        </Button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -159,17 +193,34 @@ import {
   Star,
   Paperclip,
   RefreshCw,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-vue-next';
 import { Input, Button } from '@/shared/components/ui';
 import type { MailMessage } from '@/modules/Core/System/composables/useMailClient';
 
-defineProps<{
-    messages: MailMessage[];
-    selectedMessageId: string | null;
-    searchQuery: string;
-    filterType: 'all' | 'unread' | 'starred' | 'attachments';
-    loading?: boolean;
-}>();
+withDefaults(
+    defineProps<{
+        messages: MailMessage[];
+        selectedMessageId: string | null;
+        searchQuery: string;
+        filterType: 'all' | 'unread' | 'starred' | 'attachments';
+        loading?: boolean;
+        currentPage?: number;
+        lastPage?: number;
+        totalMessages?: number;
+        fromRange?: number;
+        toRange?: number;
+    }>(),
+    {
+        loading: false,
+        currentPage: 1,
+        lastPage: 1,
+        totalMessages: 0,
+        fromRange: 0,
+        toRange: 0,
+    }
+);
 
 defineEmits<{
     (e: 'select-message', id: string): void;
@@ -177,6 +228,8 @@ defineEmits<{
     (e: 'update:search-query', query: string): void;
     (e: 'update:filter-type', filter: 'all' | 'unread' | 'starred' | 'attachments'): void;
     (e: 'refresh'): void;
+    (e: 'next-page'): void;
+    (e: 'prev-page'): void;
 }>();
 
 const filterTabs: { id: 'all' | 'unread' | 'starred' | 'attachments' }[] = [

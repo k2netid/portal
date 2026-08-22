@@ -56,6 +56,14 @@ export function useMailClient() {
     const loading = ref(false);
     const syncing = ref(false);
 
+    // Pagination
+    const currentPage = ref(1);
+    const lastPage = ref(1);
+    const totalMessages = ref(0);
+    const fromRange = ref(0);
+    const toRange = ref(0);
+    const perPage = ref(25);
+
     // Modals
     const isSettingsOpen = ref(false);
     const isLabelsModalOpen = ref(false);
@@ -126,13 +134,28 @@ export function useMailClient() {
         }
     };
 
+    // Fetch settings preference
+    const fetchClientSettings = async () => {
+        try {
+            const res = await api.get('/manage/mail/settings');
+            const data = res.data?.data || res.data;
+            if (data?.per_page && typeof data.per_page === 'number') {
+                perPage.value = data.per_page;
+            }
+        } catch {
+            // Keep default
+        }
+    };
+
     // Fetch messages from backend API
-    const fetchMessages = async () => {
+    const fetchMessages = async (page: number = currentPage.value) => {
         loading.value = true;
         try {
-            const params: Record<string, string> = {
+            const params: Record<string, string | number> = {
                 folder: activeFolder.value,
                 filter: filterType.value,
+                page,
+                per_page: perPage.value,
             };
             if (activeLabel.value) {
                 params.label = activeLabel.value;
@@ -145,6 +168,12 @@ export function useMailClient() {
             const data = response.data?.data || response.data;
             const items = data?.items || [];
             messages.value = items.map(transformMessage);
+
+            currentPage.value = data?.current_page || page;
+            lastPage.value = data?.last_page || 1;
+            totalMessages.value = data?.total || 0;
+            fromRange.value = data?.from || 0;
+            toRange.value = data?.to || 0;
 
             if (data?.folder_counts) {
                 folderCounts.value = { ...folderCounts.value, ...data.folder_counts };
@@ -163,12 +192,24 @@ export function useMailClient() {
         }
     };
 
+    const nextPage = () => {
+        if (currentPage.value < lastPage.value) {
+            fetchMessages(currentPage.value + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+            fetchMessages(currentPage.value - 1);
+        }
+    };
+
     // Synchronize mailbox
     const syncMailbox = async () => {
         syncing.value = true;
         try {
             await api.post('/manage/mail/sync');
-            await fetchMessages();
+            await fetchMessages(1);
             toast.success.action('Mailbox synchronized');
         } catch (error: unknown) {
             toast.error.fromResponse(error);
@@ -188,14 +229,16 @@ export function useMailClient() {
         activeLabel.value = null;
         selectedMessageId.value = null;
         isMobileDetailOpen.value = false;
-        fetchMessages();
+        currentPage.value = 1;
+        fetchMessages(1);
     };
 
     const selectLabel = (labelId: string) => {
         activeLabel.value = labelId;
         selectedMessageId.value = null;
         isMobileDetailOpen.value = false;
-        fetchMessages();
+        currentPage.value = 1;
+        fetchMessages(1);
     };
 
     const selectMessage = async (id: string) => {
@@ -301,7 +344,7 @@ export function useMailClient() {
             messages.value = [];
             selectedMessageId.value = null;
             toast.success.action('Trash folder emptied');
-            fetchMessages();
+            fetchMessages(1);
         } catch (error: unknown) {
             toast.error.fromResponse(error);
         }
@@ -369,15 +412,16 @@ export function useMailClient() {
 
             toast.success.action('Email sent successfully!');
             isComposerOpen.value = false;
-            fetchMessages();
+            fetchMessages(1);
         } catch (error: unknown) {
             toast.error.fromResponse(error);
         }
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+        await fetchClientSettings();
         fetchLabels();
-        fetchMessages();
+        fetchMessages(1);
     });
 
     return {
@@ -390,6 +434,14 @@ export function useMailClient() {
         searchQuery,
         filterType,
         isMobileDetailOpen,
+        currentPage,
+        lastPage,
+        totalMessages,
+        fromRange,
+        toRange,
+        perPage,
+        nextPage,
+        prevPage,
         labels,
         messages,
         folderCounts,

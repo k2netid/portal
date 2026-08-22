@@ -44,6 +44,25 @@
         <!-- Tab 1: General Preferences -->
         <div v-if="activeTab === 'general'" class="space-y-4">
           <div class="space-y-1.5">
+            <label class="text-xs font-bold text-foreground">Messages per Page</label>
+            <p class="text-[11px] text-muted-foreground">Default number of emails to display per page in the list.</p>
+            <Select
+              :model-value="String(settingsData.per_page)"
+              @update:model-value="v => settingsData.per_page = Number(v)"
+            >
+              <SelectTrigger class="h-8 text-xs">
+                <SelectValue placeholder="Select items per page" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10 messages per page</SelectItem>
+                <SelectItem value="25">25 messages per page (Default)</SelectItem>
+                <SelectItem value="50">50 messages per page</SelectItem>
+                <SelectItem value="100">100 messages per page</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div class="space-y-1.5">
             <label class="text-xs font-bold text-foreground">Auto-check Mail Interval</label>
             <p class="text-[11px] text-muted-foreground">Frequency to automatically synchronize incoming emails in background.</p>
             <Select
@@ -256,6 +275,7 @@ const tabs = [
 ];
 
 const settingsData = ref({
+    per_page: 25,
     auto_check_interval: 5,
     auto_read_delay: 0,
     sound_notifications: true,

@@ -130,11 +130,18 @@
           :search-query="searchQuery"
           :filter-type="filterType"
           :loading="loading"
+          :current-page="currentPage"
+          :last-page="lastPage"
+          :total-messages="totalMessages"
+          :from-range="fromRange"
+          :to-range="toRange"
           @select-message="selectMessage"
           @toggle-star="toggleStar"
-          @update:search-query="v => { searchQuery = v; fetchMessages(); }"
-          @update:filter-type="v => { filterType = v; fetchMessages(); }"
-          @refresh="fetchMessages"
+          @update:search-query="v => { searchQuery = v; fetchMessages(1); }"
+          @update:filter-type="v => { filterType = v; fetchMessages(1); }"
+          @refresh="() => fetchMessages()"
+          @next-page="nextPage"
+          @prev-page="prevPage"
         />
       </section>
 
@@ -225,6 +232,13 @@ const {
     searchQuery,
     filterType,
     isMobileDetailOpen,
+    currentPage,
+    lastPage,
+    totalMessages,
+    fromRange,
+    toRange,
+    nextPage,
+    prevPage,
     labels,
     messages,
     folderCounts,

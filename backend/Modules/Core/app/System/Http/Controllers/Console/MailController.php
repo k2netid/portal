@@ -24,7 +24,12 @@ class MailController extends BaseApiController
         $label = $request->input('label');
         $filter = (string) $request->input('filter', 'all');
         $search = (string) $request->input('q', '');
-        $perPage = (int) $request->input('per_page', 30);
+
+        $defaultPerPage = (int) (Setting::where('key', 'mail_client_per_page')->value('value') ?? 25);
+        $perPage = (int) $request->input('per_page', $defaultPerPage);
+        if ($perPage < 5 || $perPage > 100) {
+            $perPage = 25;
+        }
 
         $query = MailMessage::query();
 
@@ -66,8 +71,11 @@ class MailController extends BaseApiController
         return $this->success([
             'items' => $messages->items(),
             'total' => $messages->total(),
+            'per_page' => $messages->perPage(),
             'current_page' => $messages->currentPage(),
             'last_page' => $messages->lastPage(),
+            'from' => $messages->firstItem() ?? 0,
+            'to' => $messages->lastItem() ?? 0,
             'folder_counts' => $folderCounts,
         ], 'Mail messages retrieved successfully');
     }
@@ -343,6 +351,7 @@ class MailController extends BaseApiController
         $settings = Setting::where('group', 'mail_client')->pluck('value', 'key')->all();
 
         return $this->success([
+            'per_page' => (int) ($settings['mail_client_per_page'] ?? 25),
             'signature' => $settings['mail_client_signature'] ?? '',
             'reply_to' => $settings['mail_client_reply_to'] ?? '',
             'auto_read_delay' => (int) ($settings['mail_client_auto_read_delay'] ?? 0),
@@ -360,6 +369,7 @@ class MailController extends BaseApiController
     public function saveSettings(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            'per_page' => 'nullable|integer|min:5|max:100',
             'signature' => 'nullable|string',
             'reply_to' => 'nullable|email',
             'auto_read_delay' => 'nullable|integer',
