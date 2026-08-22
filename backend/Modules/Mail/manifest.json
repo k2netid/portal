@@ -1,0 +1,31 @@
+{
+  "name": "Enterprise Mail Suite",
+  "slug": "mail",
+  "version": "1.0.0",
+  "description": "Full-featured webmail client, multi-account manager, canned templates, and scheduled dispatcher",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "features": [
+    {
+      "name": "Webmail Client",
+      "slug": "webmail-client",
+      "description": "Interactive inbox, sent, drafts, trash, and conversation threads"
+    },
+    {
+      "name": "Multi-Account Mailbox",
+      "slug": "multi-account",
+      "description": "Connect personal SMTP/IMAP accounts with instant switching"
+    },
+    {
+      "name": "Canned Responses",
+      "slug": "templates",
+      "description": "Reusable quick-reply email snippets"
+    },
+    {
+      "name": "Scheduled Dispatcher",
+      "slug": "scheduled-send",
+      "description": "Schedule outbound emails with background queue worker"
+    }
+  ]
+}
