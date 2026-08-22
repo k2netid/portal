@@ -10,7 +10,7 @@ Update: 2026-08-22
 | Infra (data studio, backup, webhooks) | **Live** | `backend/Modules/Core/app/Infra/` |
 | Security (RBAC/ABAC, SIEM, CSP) | **Live** | `backend/Modules/Core/app/Security/` |
 | Unified console SPA | **Live** | `frontend/src/modules/Core/` |
-| Extension engine | **Live** | Mail manifest + marketplace |
+| Extension engine | **Live** | Mail module + manifest + marketplace |
 | License → JA-CP | **Live** | `LicenseService`, `license:check` |
 | Downstream bootstrap | **Live** | `scripts/bootstrap-downstream-app.sh` |
 
@@ -36,4 +36,5 @@ Lihat [bootstrap-downstream-app.md](product/bootstrap-downstream-app.md).
 - [x] Router guards tanpa member
 - [x] PHPStan 138 fixes + baseline regen
 - [x] Bootstrap scaffold script
-- [ ] FileManager PHPStan baseline debt (~85 entries) — optional next pass
+- [x] FileManager typed media bridge (`MediaLibraryBridge` + contracts; baseline −9 entries)
+- [x] JA-Mail modularized (`Modules/Mail/` + `frontend/src/modules/Mail/`)

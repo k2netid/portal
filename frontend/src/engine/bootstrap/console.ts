@@ -33,6 +33,10 @@ export async function bootstrapConsoleApp() {
         const { coreModules } = await import('@/modules/Core');
         coreModules.forEach((m) => registry.register(m));
         await registry.initializeModules(coreModules);
+
+        const { mailModules } = await import('@/modules/Mail');
+        mailModules.forEach((m) => registry.register(m));
+        await registry.initializeModules(mailModules);
     } catch (error) {
         logger.error('[Kernel] Failed to register core console modules during bootstrap', error);
     }

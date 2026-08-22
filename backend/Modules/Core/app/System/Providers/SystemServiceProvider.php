@@ -105,7 +105,6 @@ class SystemServiceProvider extends ServiceProvider
             SystemClearCache::class,
             SystemHealthCheck::class,
             \Modules\Core\System\Console\Commands\LicenseCheckCommand::class,
-            \Modules\Core\System\Console\Commands\ProcessScheduledMailCommand::class,
         ]);
     }
 

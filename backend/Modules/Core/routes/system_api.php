@@ -24,8 +24,6 @@ use Modules\Core\System\Http\Controllers\Console\LanguageController;
 use Modules\Core\System\Http\Controllers\Console\LicenseController;
 use Modules\Core\System\Http\Controllers\Console\LogController;
 use Modules\Core\System\Http\Controllers\Console\LoginHistoryController;
-use Modules\Core\System\Http\Controllers\Console\MailAccountController;
-use Modules\Core\System\Http\Controllers\Console\MailController;
 use Modules\Core\System\Http\Controllers\Console\NotificationController;
 use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
 use Modules\Core\System\Http\Controllers\Console\OnboardingStatusController;
@@ -200,38 +198,6 @@ Route::prefix('v1')->group(function (): void {
         Route::get('models/{provider}', [AiController::class, 'getModels']);
         Route::post('test', [AiController::class, 'testConnection']);
         Route::post('generate', [AiController::class, 'generate']);
-    });
-
-    // Mail & Webmail Client Management API
-    Route::prefix('manage/mail')->middleware(['auth:sanctum'])->group(function (): void {
-        Route::get('messages', [MailController::class, 'index']);
-        Route::get('messages/{id}', [MailController::class, 'show']);
-        Route::post('messages/draft', [MailController::class, 'saveDraft']);
-        Route::post('messages/schedule', [MailController::class, 'schedule']);
-        Route::post('messages/{id}/snooze', [MailController::class, 'snooze']);
-        Route::post('messages/{id}/move', [MailController::class, 'move']);
-        Route::post('messages/{id}/label', [MailController::class, 'toggleMessageLabel']);
-        Route::post('send', [MailController::class, 'send']);
-        Route::post('sync', [MailController::class, 'sync']);
-        Route::patch('messages/{id}/star', [MailController::class, 'toggleStar']);
-        Route::patch('messages/{id}/read', [MailController::class, 'markRead']);
-        Route::delete('messages/{id}/trash', [MailController::class, 'moveToTrash']);
-        Route::post('messages/{id}/restore', [MailController::class, 'restore']);
-        Route::delete('messages/{id}', [MailController::class, 'destroy']);
-        Route::delete('trash/empty', [MailController::class, 'emptyTrash']);
-        Route::get('labels', [MailController::class, 'getLabels']);
-        Route::post('labels', [MailController::class, 'saveLabels']);
-        Route::get('templates', [MailController::class, 'getTemplates']);
-        Route::post('templates', [MailController::class, 'saveTemplates']);
-        Route::get('settings', [MailController::class, 'getSettings']);
-        Route::post('settings', [MailController::class, 'saveSettings']);
-        Route::get('accounts', [MailAccountController::class, 'index']);
-        Route::post('accounts', [MailAccountController::class, 'store']);
-        Route::post('accounts/test', [MailAccountController::class, 'testConnection']);
-        Route::get('accounts/{id}', [MailAccountController::class, 'show']);
-        Route::put('accounts/{id}', [MailAccountController::class, 'update']);
-        Route::delete('accounts/{id}', [MailAccountController::class, 'destroy']);
-        Route::post('accounts/{id}/default', [MailAccountController::class, 'setDefault']);
     });
 
     // Console Menu Editor Management API

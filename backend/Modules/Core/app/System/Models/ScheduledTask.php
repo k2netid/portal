@@ -67,6 +67,7 @@ class ScheduledTask extends Model
         'system:audit',
         'system:clear-cache',
         'license:check',
+        'mail:process-scheduled',
 
         // Security & WAF
         'security:update-cf-ips',

@@ -20,7 +20,6 @@ export const systemNavigation: NavItem[] = [
         group: 'communications',
         priority: 92,
         children: [
-            { name: 'mail', label: 'JA-Mail', labelKey: 'system.navigation.menu.mail', permission: 'manage system', role: 'super', priority: 100, icon: 'mail', extension: 'mail' },
             { name: 'system-notifications', label: 'Notifications', labelKey: 'system.navigation.menu.systemNotifications', permission: 'manage system', priority: 90, icon: 'system-notifications' },
         ],
     },

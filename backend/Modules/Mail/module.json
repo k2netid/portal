@@ -1,0 +1,11 @@
+{
+    "name": "Mail",
+    "alias": "mail",
+    "description": "JA-Mail webmail extension module",
+    "keywords": ["mail", "webmail", "ja-mail"],
+    "priority": 10,
+    "providers": [
+        "Modules\\Mail\\Providers\\MailServiceProvider"
+    ],
+    "files": []
+}

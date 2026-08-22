@@ -226,4 +226,9 @@ export const handleBeforeEachGuard = async (
     if (to.meta.requiresSuperAdmin && authStore.getRoleRank() < 100) {
         return { path: '/403' };
     }
+
+    const extensionSlug = to.meta.extension as string | undefined;
+    if (extensionSlug && !systemStore.activeExtensions.includes(extensionSlug)) {
+        return { path: '/403' };
+    }
 };

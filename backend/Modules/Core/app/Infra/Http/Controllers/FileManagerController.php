@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\Infra\Helpers\UploadSettingsHelper;
 use Modules\Core\Infra\Models\DeletedFile;
+use Modules\Core\Infra\Services\MediaLibraryBridge;
 use Modules\Core\System\Contracts\StorageQuotaServiceInterface;
 use Modules\Core\System\Exceptions\StorageQuotaExceededException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
@@ -34,36 +35,9 @@ class FileManagerController extends BaseApiController
      */
     protected array $allowedDisks = ['public'];
 
-    public function __construct() {}
-
-    /**
-     * Get MediaService if available.
-     */
-    protected function getMediaService(): ?object
-    {
-        if (class_exists('Modules\Content\Media\Services\MediaService') && app()->bound('Modules\Content\Media\Services\MediaService')) {
-            return app('Modules\Content\Media\Services\MediaService');
-        }
-
-        return null;
-    }
-
-    /**
-     * Find Media record if model exists.
-     */
-    protected function findMediaRecord(string $path): ?object
-    {
-        $class = 'Modules\Content\Media\Models\File';
-        if (class_exists($class)) {
-            return $class::where(function ($q) use ($path): void {
-                $q->where('path', $path)
-                    ->orWhere('path', '/'.$path)
-                    ->orWhere('path', trim($path, '/'));
-            })->first();
-        }
-
-        return null;
-    }
+    public function __construct(
+        protected MediaLibraryBridge $mediaLibrary,
+    ) {}
 
     /**
      * Validate the requested disk.
@@ -466,7 +440,7 @@ class FileManagerController extends BaseApiController
             Storage::disk($disk)->put($filePath, $content);
 
             $mediaRecord = null;
-            $mediaService = $this->getMediaService();
+            $mediaService = $this->mediaLibrary->sync();
             if ($disk === 'public' && $mediaService && $mediaService->shouldIndexPublicPath($filePath)) {
                 $authorId = Auth::id();
                 $mediaRecord = $mediaService->registerFromDisk(
@@ -485,7 +459,7 @@ class FileManagerController extends BaseApiController
                 'size' => $file->getSize(),
                 'extension' => $file->getClientOriginalExtension(),
                 'updated_at' => now(),
-                'media_id' => $mediaRecord?->id,
+                'media_id' => $mediaRecord?->getId(),
             ];
         }
 
@@ -534,10 +508,11 @@ class FileManagerController extends BaseApiController
 
         if ($permanent) {
             // Find media if any
-            $media = $this->findMediaRecord($path);
+            $media = $this->mediaLibrary->findByPath($path);
+            $mediaService = $this->mediaLibrary->sync();
 
-            if ($media && $this->getMediaService()) {
-                $this->getMediaService()->delete($media, true);
+            if ($media && $mediaService) {
+                $mediaService->delete($media, true);
             } else {
                 Storage::disk($disk)->delete($path);
             }
@@ -570,13 +545,14 @@ class FileManagerController extends BaseApiController
 
         // Sync with Media Library (Delete)
         try {
-            $media = $this->findMediaRecord($path);
+            $media = $this->mediaLibrary->findByPath($path);
+            $mediaService = $this->mediaLibrary->sync();
 
             if ($media) {
                 // Move thumbnails and variants for this media item too
-                $this->getMediaService()?->moveVariantsToTrash($media, $trashPath);
+                $mediaService?->moveVariantsToTrash($media, $trashPath);
 
-                $media->path = $trashPath; // Update path to point to trash
+                $media->setPath($trashPath); // Update path to point to trash
                 $media->save();
                 $media->delete(); // Soft delete
             }
@@ -675,23 +651,16 @@ class FileManagerController extends BaseApiController
 
         // Sync with Media Library (Update paths for all files inside the folder) if present
         try {
-            $mediaClass = 'Modules\Content\Media\Models\File';
-            if (class_exists($mediaClass)) {
-                $searchPath = $path.'/';
-                $mediaItems = $mediaClass::where('path', 'like', $searchPath.'%')
-                    ->orWhere('path', 'like', '/'.$searchPath.'%')
-                    ->get();
+            $mediaService = $this->mediaLibrary->sync();
+            foreach ($this->mediaLibrary->findByFolderPath($path) as $media) {
+                $relativePart = str_replace([$path, '/'.$path], '', $media->getPath());
+                $newMediaPath = $trashPath.$relativePart;
 
-                foreach ($mediaItems as $media) {
-                    $relativePart = str_replace([$path, '/'.$path], '', $media->path);
-                    $newMediaPath = $trashPath.$relativePart;
+                $mediaService?->moveVariantsToTrash($media, $newMediaPath);
 
-                    $this->getMediaService()?->moveVariantsToTrash($media, $newMediaPath);
-
-                    $media->path = $newMediaPath;
-                    $media->save();
-                    $media->delete(); // Soft delete found media too
-                }
+                $media->setPath($newMediaPath);
+                $media->save();
+                $media->delete(); // Soft delete found media too
             }
         } catch (\Exception) {
             // ignore
@@ -832,7 +801,7 @@ class FileManagerController extends BaseApiController
                 Storage::disk($disk)->move($source, $newPath);
             }
 
-            $this->getMediaService()?->syncAfterMove($disk, $source, $newPath, $type === 'folder');
+            $this->mediaLibrary->sync()?->syncAfterMove($disk, $source, $newPath, $type === 'folder');
 
             return $this->success([
                 'oldPath' => '/'.$source,
@@ -900,7 +869,7 @@ class FileManagerController extends BaseApiController
             }
 
             $authorId = Auth::id();
-            $this->getMediaService()?->syncAfterCopy(
+            $this->mediaLibrary->sync()?->syncAfterCopy(
                 $disk,
                 $newPath,
                 $type === 'folder',
@@ -1091,52 +1060,39 @@ class FileManagerController extends BaseApiController
         }
 
         // Sync with Media Library (Restore) if present
-        $mediaClass = 'Modules\Content\Media\Models\File';
-        if (class_exists($mediaClass)) {
-            if ($deletedFile->type === 'file') {
-                try {
-                    $media = $mediaClass::withTrashed()
-                        ->where(function ($q) use ($trashPath): void {
-                            $q->where('path', $trashPath)
-                                ->orWhere('path', '/'.$trashPath);
-                        })
-                        ->first();
+        $mediaService = $this->mediaLibrary->sync();
+        if ($deletedFile->type === 'file') {
+            try {
+                $media = $this->mediaLibrary->findTrashedByTrashPath($trashPath);
 
-                    if ($media) {
-                        // Move variants back from trash
-                        $this->getMediaService()?->moveVariantsFromTrash($media, $trashPath, $finalOriginalPath);
+                if ($media) {
+                    // Move variants back from trash
+                    $mediaService?->moveVariantsFromTrash($media, $trashPath, $finalOriginalPath);
 
-                        $media->path = $finalOriginalPath; // Update to restored path
-                        $media->save(); // Save path change
-                        $media->restore(); // Un-soft-delete
-                    }
-                } catch (\Exception $e) {
-                    // Log but continue
-                    Log::warning('Failed to sync media restore: '.$e->getMessage());
+                    $media->setPath($finalOriginalPath); // Update to restored path
+                    $media->save(); // Save path change
+                    $media->restore(); // Un-soft-delete
                 }
-            } else {
-                // Sync with Media Library (Restore items inside folder)
-                try {
-                    // Find all media items starting with the trash path
-                    $mediaItems = $mediaClass::withTrashed()
-                        ->where('path', 'like', $trashPath.'%')
-                        ->orWhere('path', 'like', '/'.$trashPath.'%')
-                        ->get();
+            } catch (\Exception $e) {
+                // Log but continue
+                Log::warning('Failed to sync media restore: '.$e->getMessage());
+            }
+        } else {
+            // Sync with Media Library (Restore items inside folder)
+            try {
+                foreach ($this->mediaLibrary->findTrashedByFolderTrash($trashPath) as $media) {
+                    $relativePart = str_replace([$trashPath, '/'.$trashPath], '', $media->getPath());
+                    $newPath = $finalOriginalPath.$relativePart;
 
-                    foreach ($mediaItems as $media) {
-                        $relativePart = str_replace([$trashPath, '/'.$trashPath], '', $media->path);
-                        $newPath = $finalOriginalPath.$relativePart;
+                    // Move variants back from trash
+                    $mediaService?->moveVariantsFromTrash($media, $media->getPath(), $newPath);
 
-                        // Move variants back from trash
-                        $this->getMediaService()?->moveVariantsFromTrash($media, $media->path, $newPath);
-
-                        $media->path = $newPath;
-                        $media->save();
-                        $media->restore();
-                    }
-                } catch (\Exception $e) {
-                    Log::warning('Failed to sync folder media restore: '.$e->getMessage());
+                    $media->setPath($newPath);
+                    $media->save();
+                    $media->restore();
                 }
+            } catch (\Exception $e) {
+                Log::warning('Failed to sync folder media restore: '.$e->getMessage());
             }
         }
 
@@ -1170,38 +1126,25 @@ class FileManagerController extends BaseApiController
             $trashPath = $record->trash_path;
 
             // Sync with Media Library (Force Delete) if present
-            $mediaClass = 'Modules\Content\Media\Models\File';
-            if (class_exists($mediaClass)) {
-                if ($record->type === 'file') {
-                    try {
-                        $media = $mediaClass::withTrashed()
-                            ->where(function ($q) use ($trashPath): void {
-                                $q->where('path', $trashPath)
-                                    ->orWhere('path', '/'.$trashPath);
-                            })
-                            ->first();
+            $mediaService = $this->mediaLibrary->sync();
+            if ($record->type === 'file') {
+                try {
+                    $media = $this->mediaLibrary->findTrashedByTrashPath((string) $trashPath);
 
-                        if ($media) {
-                            $this->getMediaService()?->delete($media, true);
-                        }
-                    } catch (\Exception) {
-                        // ignore
+                    if ($media) {
+                        $mediaService?->delete($media, true);
                     }
-                } else {
-                    // For folders, find and force delete all media records inside
-                    try {
-                        $searchPath = $record->trash_path;
-                        $mediaItems = $mediaClass::withTrashed()
-                            ->where('path', 'like', $searchPath.'%')
-                            ->orWhere('path', 'like', '/'.$searchPath.'%')
-                            ->get();
-
-                        foreach ($mediaItems as $media) {
-                            $this->getMediaService()?->delete($media, true);
-                        }
-                    } catch (\Exception) {
-                        // ignore
+                } catch (\Exception) {
+                    // ignore
+                }
+            } else {
+                // For folders, find and force delete all media records inside
+                try {
+                    foreach ($this->mediaLibrary->findTrashedByFolderTrash((string) $record->trash_path) as $media) {
+                        $mediaService?->delete($media, true);
                     }
+                } catch (\Exception) {
+                    // ignore
                 }
             }
 
@@ -1277,38 +1220,25 @@ class FileManagerController extends BaseApiController
         $trashPath = $deletedFile->trash_path;
 
         // Sync with Media Library (Force Delete) if present
-        $mediaClass = 'Modules\Content\Media\Models\File';
-        if (class_exists($mediaClass)) {
-            if ($deletedFile->type === 'file') {
-                try {
-                    $media = $mediaClass::withTrashed()
-                        ->where(function ($q) use ($trashPath): void {
-                            $q->where('path', $trashPath)
-                                ->orWhere('path', '/'.$trashPath);
-                        })
-                        ->first();
+        $mediaService = $this->mediaLibrary->sync();
+        if ($deletedFile->type === 'file') {
+            try {
+                $media = $this->mediaLibrary->findTrashedByTrashPath((string) $trashPath);
 
-                    if ($media) {
-                        $this->getMediaService()?->delete($media, true);
-                    }
-                } catch (\Exception) {
-                    // ignore
+                if ($media) {
+                    $mediaService?->delete($media, true);
                 }
-            } else {
-                // For folders, find and force delete all media records inside
-                try {
-                    $searchPath = $deletedFile->trash_path;
-                    $mediaItems = $mediaClass::withTrashed()
-                        ->where('path', 'like', $searchPath.'%')
-                        ->orWhere('path', 'like', '/'.$searchPath.'%')
-                        ->get();
-
-                    foreach ($mediaItems as $media) {
-                        $this->getMediaService()?->delete($media, true);
-                    }
-                } catch (\Exception) {
-                    // ignore
+            } catch (\Exception) {
+                // ignore
+            }
+        } else {
+            // For folders, find and force delete all media records inside
+            try {
+                foreach ($this->mediaLibrary->findTrashedByFolderTrash((string) $deletedFile->trash_path) as $media) {
+                    $mediaService?->delete($media, true);
                 }
+            } catch (\Exception) {
+                // ignore
             }
         }
 
