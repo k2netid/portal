@@ -417,6 +417,7 @@ interface Notification {
     type: string;
     recipient_count: number;
     created_at: string;
+    broadcast_id?: string;
 }
 
 interface NotificationForm {
@@ -443,6 +444,8 @@ interface PaginationInfo {
 }
 
 interface SelectedItem {
+    id?: string;
+    broadcast_id?: string;
     title: string;
     message: string;
     created_at: string;
@@ -550,23 +553,25 @@ const fetchHistory = async (page = 1) : Promise<void> => {
 
 const isSelected = (item: Notification) => {
     return selectedItems.value.some((i: SelectedItem) => 
-        i.title === item.title && 
-        i.message === item.message && 
-        i.created_at === item.created_at
+        (i.id && item.id && i.id === item.id) ||
+        (i.broadcast_id && item.broadcast_id && i.broadcast_id === item.broadcast_id) ||
+        (i.title === item.title && i.message === item.message)
     );
 };
 
 const toggleSelect = (item: Notification) => {
     const index = selectedItems.value.findIndex((i: SelectedItem) => 
-        i.title === item.title && 
-        i.message === item.message && 
-        i.created_at === item.created_at
+        (i.id && item.id && i.id === item.id) ||
+        (i.broadcast_id && item.broadcast_id && i.broadcast_id === item.broadcast_id) ||
+        (i.title === item.title && i.message === item.message)
     );
     
     if (index > -1) {
         selectedItems.value.splice(index, 1);
     } else {
         selectedItems.value.push({
+            id: item.id,
+            broadcast_id: item.broadcast_id,
             title: item.title,
             message: item.message,
             created_at: item.created_at
@@ -585,6 +590,8 @@ const toggleSelectAll = () => {
         history.value.forEach((item: Notification) => {
             if (!isSelected(item)) {
                 selectedItems.value.push({
+                    id: item.id,
+                    broadcast_id: item.broadcast_id,
                     title: item.title,
                     message: item.message,
                     created_at: item.created_at
@@ -611,7 +618,7 @@ const handleBulkRevoke = async () => {
         });
         toast.success.action(t('system.system.notifications.messages.revoked'));
         selectedItems.value = [];
-        fetchHistory(pagination.value?.current_page || 1);
+        await fetchHistory(pagination.value?.current_page || 1);
         window.dispatchEvent(new CustomEvent('notification:updated'));
     } catch (error: unknown) {
         logger.error('Failed to bulk revoke:', error);
@@ -634,12 +641,14 @@ const handleRevoke = async (notification: Notification) => {
     revoking.value = notification.id;
     try {
         await api.post('/manage/notifications/system/revoke', {
+            id: notification.id,
+            broadcast_id: notification.broadcast_id,
             title: notification.title,
             message: notification.message,
             created_at: notification.created_at
         });
         toast.success.action(t('system.system.notifications.messages.revoked'));
-        fetchHistory(pagination.value?.current_page || 1);
+        await fetchHistory(pagination.value?.current_page || 1);
         window.dispatchEvent(new CustomEvent('notification:updated'));
     } catch (error: unknown) {
         logger.error('Failed to revoke:', error);

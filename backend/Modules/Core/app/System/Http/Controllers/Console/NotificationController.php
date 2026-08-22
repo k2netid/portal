@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Modules\Core\System\Http\Controllers\BaseApiController;
@@ -141,9 +142,10 @@ class NotificationController extends BaseApiController
         $limitRaw = $request->input('limit', 20);
         $limit = is_numeric($limitRaw) ? (int) $limitRaw : 20;
 
-        // Group by title, message, type, and approximate created_at to find unique "broadcasts"
-        $notifications = Notification::selectRaw('MIN(CAST(id AS TEXT)) as id, title, message, type, MIN(created_at) as created_at, COUNT(*) as recipient_count')
-            ->groupBy('title', 'message', 'type')
+        // Group by title, message, type to find unique "broadcasts"
+        $notifications = Notification::query()
+            ->selectRaw("MIN(CAST(id AS TEXT)) as id, title, message, type, MIN(created_at) as created_at, COUNT(*) as recipient_count, COALESCE(MAX(jsonb_extract_path_text(data, 'broadcast_id')), '') as broadcast_id")
+            ->groupBy('title', 'message', 'type', DB::raw("COALESCE(jsonb_extract_path_text(data, 'broadcast_id'), '')"))
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
 
@@ -162,21 +164,26 @@ class NotificationController extends BaseApiController
             return $this->forbidden('Unauthorized');
         }
 
-        /** @var array{title: string, message: string, created_at: string} $validated */
         $validated = $request->validate([
-            'title' => 'required|string',
-            'message' => 'required|string',
-            'created_at' => 'required|string',
+            'id' => 'nullable|string',
+            'broadcast_id' => 'nullable|string',
+            'title' => 'nullable|string',
+            'message' => 'nullable|string',
+            'created_at' => 'nullable|string',
         ]);
 
-        $createdAt = Carbon::parse($validated['created_at']);
-        $startOfMinute = (clone $createdAt)->startOfMinute();
-        $endOfMinute = (clone $createdAt)->endOfMinute();
+        $broadcastId = $validated['broadcast_id'] ?? null;
+        $id = $validated['id'] ?? null;
+        $title = $validated['title'] ?? '';
+        $message = $validated['message'] ?? '';
+        $createdAt = ! empty($validated['created_at']) ? Carbon::parse($validated['created_at']) : null;
 
-        $deleted = app(BroadcastNotificationService::class)->revoke(
-            $validated['title'],
-            $validated['message'],
-            $validated['created_at'],
+        $deleted = app(BroadcastNotificationService::class)->recall(
+            $title,
+            $message,
+            $createdAt,
+            $broadcastId,
+            $id
         );
         $total = $deleted['console'] + $deleted['member'];
 
@@ -197,37 +204,30 @@ class NotificationController extends BaseApiController
 
         $request->validate([
             'broadcasts' => 'required|array',
-            'broadcasts.*.title' => 'required|string',
-            'broadcasts.*.message' => 'required|string',
-            'broadcasts.*.created_at' => 'required|string',
+            'broadcasts.*.title' => 'nullable|string',
+            'broadcasts.*.message' => 'nullable|string',
+            'broadcasts.*.id' => 'nullable|string',
+            'broadcasts.*.broadcast_id' => 'nullable|string',
+            'broadcasts.*.created_at' => 'nullable|string',
         ]);
 
         $totalDeleted = 0;
         $broadcasts = is_array($request->broadcasts) ? $request->broadcasts : [];
+        $service = app(BroadcastNotificationService::class);
 
         foreach ($broadcasts as $broadcast) {
             if (! is_array($broadcast)) {
                 continue;
             }
-            $createdAtRaw = $broadcast['created_at'] ?? '';
-            $createdAtStr = is_string($createdAtRaw) ? $createdAtRaw : '';
-            $createdAt = Carbon::parse($createdAtStr);
-            $startOfMinute = (clone $createdAt)->startOfMinute();
-            $endOfMinute = (clone $createdAt)->endOfMinute();
+            $broadcastId = is_string($broadcast['broadcast_id'] ?? null) ? $broadcast['broadcast_id'] : null;
+            $id = is_string($broadcast['id'] ?? null) ? $broadcast['id'] : null;
+            $title = is_string($broadcast['title'] ?? null) ? $broadcast['title'] : '';
+            $message = is_string($broadcast['message'] ?? null) ? $broadcast['message'] : '';
+            $createdAtStr = is_string($broadcast['created_at'] ?? null) ? $broadcast['created_at'] : null;
+            $createdAt = $createdAtStr ? Carbon::parse($createdAtStr) : null;
 
-            $titleRaw = $broadcast['title'] ?? '';
-            $title = is_string($titleRaw) ? $titleRaw : '';
-            $messageRaw = $broadcast['message'] ?? '';
-            $message = is_string($messageRaw) ? $messageRaw : '';
-
-            $countRaw = Notification::where('title', $title)
-                ->where('message', $message)
-                ->whereBetween('created_at', [$startOfMinute, $endOfMinute])
-                ->delete();
-
-            $count = is_numeric($countRaw) ? (int) $countRaw : 0;
-
-            $totalDeleted += $count;
+            $deleted = $service->recall($title, $message, $createdAt, $broadcastId, $id);
+            $totalDeleted += ($deleted['console'] + $deleted['member']);
         }
 
         $totalDeletedStr = (string) $totalDeleted;

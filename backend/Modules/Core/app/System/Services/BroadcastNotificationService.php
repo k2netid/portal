@@ -47,17 +47,27 @@ class BroadcastNotificationService
     /**
      * @return array{console: int, member: int}
      */
-    public function recall(string $title, string $message, Carbon $sentAt): array
+    public function recall(string $title, string $message, ?Carbon $sentAt = null, ?string $broadcastId = null, ?string $id = null): array
     {
-        $startOfMinute = $sentAt->copy()->startOfMinute();
-        $endOfMinute = $sentAt->copy()->endOfMinute();
+        $query = Notification::query();
 
-        $consoleDeleted = Notification::query()
-            ->where('title', $title)
-            ->where('message', $message)
-            ->whereBetween('created_at', [$startOfMinute, $endOfMinute])
-            ->delete();
+        if (! empty($broadcastId)) {
+            $query->whereRaw("jsonb_extract_path_text(data, 'broadcast_id') = ?", [$broadcastId]);
+        } elseif (! empty($id)) {
+            $query->where('id', $id);
+        } else {
+            $query->where('title', $title)
+                ->where('message', $message);
 
+            if ($sentAt) {
+                $query->whereBetween('created_at', [
+                    $sentAt->copy()->subHours(24),
+                    $sentAt->copy()->addHours(24),
+                ]);
+            }
+        }
+
+        $consoleDeleted = $query->delete();
         $consoleCount = is_int($consoleDeleted) ? $consoleDeleted : 0;
 
         return [
@@ -69,10 +79,10 @@ class BroadcastNotificationService
     /**
      * @return array{console: int, member: int}
      */
-    public function revoke(string $title, string $message, string|Carbon $sentAt): array
+    public function revoke(string $title, string $message, string|Carbon|null $sentAt = null, ?string $broadcastId = null, ?string $id = null): array
     {
         $carbon = is_string($sentAt) ? Carbon::parse($sentAt) : $sentAt;
 
-        return $this->recall($title, $message, $carbon);
+        return $this->recall($title, $message, $carbon, $broadcastId, $id);
     }
 }
