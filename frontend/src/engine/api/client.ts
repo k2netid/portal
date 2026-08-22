@@ -122,6 +122,11 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig & { _perf
         config.signal = abortController.signal;
     }
 
+    // Let the browser set multipart boundary for FormData uploads.
+    if (typeof FormData !== 'undefined' && config.data instanceof FormData && config.headers) {
+        delete config.headers['Content-Type'];
+    }
+
     return config;
 });
 

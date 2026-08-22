@@ -7,6 +7,7 @@ namespace Modules\Mail\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
@@ -15,8 +16,10 @@ use Modules\Core\System\Models\User;
 use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Http\Controllers\Concerns\InteractsWithUserMailbox;
 use Modules\Mail\Models\MailMessage;
+use Modules\Mail\Services\MailAttachmentStore;
 use Modules\Mail\Services\MailDispatchService;
 use Modules\Mail\Support\MailAddressParser;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MailController extends BaseApiController
 {
@@ -24,6 +27,7 @@ class MailController extends BaseApiController
 
     public function __construct(
         protected MailDispatchService $mailDispatch,
+        protected MailAttachmentStore $attachmentStore,
     ) {}
 
     /**
@@ -141,6 +145,8 @@ class MailController extends BaseApiController
             'subject' => 'nullable|string|max:255',
             'body' => 'nullable|string',
             'account_id' => 'nullable|string|uuid',
+            'attachments' => 'nullable|array|max:10',
+            'attachments.*' => 'file|max:10240',
         ]);
 
         $repo = $this->mailRepo($request);
@@ -162,9 +168,21 @@ class MailController extends BaseApiController
         $accountId = is_string($validated['account_id'] ?? null) ? $validated['account_id'] : null;
         $account = $repo->resolveAccount($accountId);
         $user = $repo->user();
+        $files = $request->file('attachments', []);
+        $files = is_array($files) ? $files : [];
+        $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
 
         try {
-            $dispatch = $this->mailDispatch->sendOutbound($to, $subject, $body, $ccList, $bccList, $user, $account);
+            $dispatch = $this->mailDispatch->sendOutbound(
+                $to,
+                $subject,
+                $body,
+                $ccList,
+                $bccList,
+                $user,
+                $account,
+                $attachmentMeta,
+            );
         } catch (MailDispatchException $e) {
             return $this->error($e->getMessage(), 502, [], 'MAIL_SEND_FAILED');
         }
@@ -181,13 +199,18 @@ class MailController extends BaseApiController
             'subject' => $subject,
             'snippet' => $dispatch['snippet'],
             'body' => $body,
+            'attachments' => [],
             'is_read' => true,
             'is_starred' => false,
             'labels' => [],
             'sent_at' => now(),
         ]);
 
-        return $this->success($messageRecord, 'Email sent successfully', 201);
+        $messageRecord->update([
+            'attachments' => $this->attachmentStore->withPublicMeta($attachmentMeta, $messageRecord->id),
+        ]);
+
+        return $this->success($messageRecord->fresh(), 'Email sent successfully', 201);
     }
 
     /**
@@ -282,6 +305,8 @@ class MailController extends BaseApiController
             'body' => 'required|string',
             'scheduled_at' => 'required|string',
             'account_id' => 'nullable|string|uuid',
+            'attachments' => 'nullable|array|max:10',
+            'attachments.*' => 'file|max:10240',
         ]);
 
         try {
@@ -303,6 +328,9 @@ class MailController extends BaseApiController
 
         $accountId = is_string($validated['account_id'] ?? null) ? $validated['account_id'] : null;
         $account = $repo->resolveAccount($accountId);
+        $files = $request->file('attachments', []);
+        $files = is_array($files) ? $files : [];
+        $attachmentMeta = $this->attachmentStore->storeMany($user, $files);
 
         $scheduled = MailMessage::create([
             'user_id' => $user->id,
@@ -317,6 +345,7 @@ class MailController extends BaseApiController
             'subject' => '[Scheduled] '.$subject,
             'snippet' => $snippet,
             'body' => $body,
+            'attachments' => [],
             'is_read' => true,
             'is_starred' => false,
             'labels' => ['scheduled'],
@@ -324,7 +353,38 @@ class MailController extends BaseApiController
             'sent_at' => null,
         ]);
 
-        return $this->success($scheduled, 'Email scheduled successfully', 201);
+        $scheduled->update([
+            'attachments' => $this->attachmentStore->withPublicMeta($attachmentMeta, $scheduled->id),
+        ]);
+
+        return $this->success($scheduled->fresh(), 'Email scheduled successfully', 201);
+    }
+
+    /**
+     * Download a stored outbound attachment for an owned message.
+     */
+    public function downloadAttachment(Request $request, string $id, int $index): StreamedResponse|JsonResponse
+    {
+        $message = $this->ownedMessage($request, $id);
+        if ($message instanceof JsonResponse) {
+            return $message;
+        }
+
+        $attachments = is_array($message->attachments) ? array_values($message->attachments) : [];
+        $attachment = $attachments[$index] ?? null;
+        if (! is_array($attachment)) {
+            return $this->error('Attachment not found', 404);
+        }
+
+        $path = is_string($attachment['path'] ?? null) ? $attachment['path'] : '';
+        $disk = is_string($attachment['disk'] ?? null) ? $attachment['disk'] : 'local';
+        $name = is_string($attachment['name'] ?? null) ? $attachment['name'] : 'attachment.bin';
+
+        if ($path === '' || ! Storage::disk($disk)->exists($path)) {
+            return $this->error('Attachment file missing', 404);
+        }
+
+        return Storage::disk($disk)->download($path, $name);
     }
 
     /**

@@ -362,7 +362,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
 import api from '@/engine/api/client';
 import {
@@ -434,6 +434,13 @@ const generatingAi = ref(false);
 const fileInputRef = ref<HTMLInputElement | null>(null);
 const uploadedFiles = ref<File[]>([]);
 const isUnsavedConfirmOpen = ref(false);
+
+watch(
+    () => props.isOpen,
+    (open) => {
+        uploadedFiles.value = open ? [...(props.composerData.attachments || [])] : [];
+    },
+);
 
 const isDirty = computed(() => {
     return Boolean(
@@ -544,11 +551,16 @@ const handleFileUpload = (event: Event) => {
                 uploadedFiles.value.push(f);
             }
         }
+        patchComposer({ attachments: [...uploadedFiles.value] });
+    }
+    if (target) {
+        target.value = '';
     }
 };
 
 const removeFile = (index: number) => {
     uploadedFiles.value.splice(index, 1);
+    patchComposer({ attachments: [...uploadedFiles.value] });
 };
 
 const generateWithAi = async (instruction: string) => {

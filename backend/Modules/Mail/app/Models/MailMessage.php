@@ -4,7 +4,9 @@ namespace Modules\Mail\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Modules\Core\System\Models\User;
 use Modules\Core\System\Traits\CoreLogsActivity;
 
 /**
@@ -81,4 +83,20 @@ class MailMessage extends Model
         'dispatch_locked_at' => 'datetime',
         'received_at' => 'datetime',
     ];
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return BelongsTo<MailAccount, $this>
+     */
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(MailAccount::class, 'account_id');
+    }
 }

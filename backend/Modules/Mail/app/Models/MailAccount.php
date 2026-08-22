@@ -7,6 +7,7 @@ namespace Modules\Mail\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Crypt;
 use Modules\Core\System\Models\ActivityLog;
 use Modules\Core\System\Models\User;
@@ -120,6 +121,14 @@ class MailAccount extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return HasMany<MailMessage, $this>
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(MailMessage::class, 'account_id');
     }
 
     public function setSmtpPasswordAttribute(?string $value): void

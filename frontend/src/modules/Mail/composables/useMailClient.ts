@@ -574,11 +574,57 @@ export function useMailClient() {
         bcc: string;
         subject: string;
         body: string;
+        attachments: File[];
     } | null>(null);
 
-    const executeActualSend = async (payload: { to: string; cc: string; bcc: string; subject: string; body: string }) => {
+    const buildMailFormData = (payload: {
+        to: string;
+        cc: string;
+        bcc: string;
+        subject: string;
+        body: string;
+        attachments?: File[];
+        scheduled_at?: string;
+    }): FormData | Record<string, string> => {
+        const files = payload.attachments ?? [];
+        const withAccount = withAccountId({
+            to: payload.to,
+            cc: payload.cc,
+            bcc: payload.bcc,
+            subject: payload.subject,
+            body: payload.body,
+            ...(payload.scheduled_at ? { scheduled_at: payload.scheduled_at } : {}),
+        });
+
+        if (files.length === 0) {
+            return withAccount;
+        }
+
+        const form = new FormData();
+        Object.entries(withAccount).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+                form.append(key, String(value));
+            }
+        });
+        files.forEach((file) => {
+            form.append('attachments[]', file);
+        });
+        return form;
+    };
+
+    const executeActualSend = async (payload: {
+        to: string;
+        cc: string;
+        bcc: string;
+        subject: string;
+        body: string;
+        attachments: File[];
+    }) => {
         try {
-            await api.post('/manage/mail/send', withAccountId(payload));
+            const body = buildMailFormData(payload);
+            await api.post('/manage/mail/send', body, body instanceof FormData
+                ? { headers: { 'Content-Type': 'multipart/form-data' } }
+                : undefined);
             toast.success.action('Email delivered successfully');
             fetchMessages(1);
         } catch (error: unknown) {
@@ -600,6 +646,7 @@ export function useMailClient() {
             bcc: composerData.value.bcc,
             subject: composerData.value.subject,
             body: composerData.value.body,
+            attachments: [...composerData.value.attachments],
         };
 
         pendingEmailData.value = payload;
@@ -630,8 +677,12 @@ export function useMailClient() {
         isUndoToastVisible.value = false;
         if (pendingEmailData.value) {
             composerData.value = {
-                ...pendingEmailData.value,
-                attachments: [],
+                to: pendingEmailData.value.to,
+                cc: pendingEmailData.value.cc,
+                bcc: pendingEmailData.value.bcc,
+                subject: pendingEmailData.value.subject,
+                body: pendingEmailData.value.body,
+                attachments: [...pendingEmailData.value.attachments],
             };
             isComposerOpen.value = true;
             pendingEmailData.value = null;
@@ -670,14 +721,22 @@ export function useMailClient() {
         }
 
         try {
-            await api.post('/manage/mail/messages/schedule', withAccountId({
+            const body = buildMailFormData({
                 to: composerData.value.to,
                 cc: composerData.value.cc,
                 bcc: composerData.value.bcc,
                 subject: composerData.value.subject,
                 body: composerData.value.body,
+                attachments: [...composerData.value.attachments],
                 scheduled_at: scheduledAt,
-            }));
+            });
+            await api.post(
+                '/manage/mail/messages/schedule',
+                body,
+                body instanceof FormData
+                    ? { headers: { 'Content-Type': 'multipart/form-data' } }
+                    : undefined,
+            );
 
             toast.success.action(`Email scheduled for ${scheduledAt}`);
             isComposerOpen.value = false;

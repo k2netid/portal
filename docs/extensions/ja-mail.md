@@ -70,9 +70,11 @@ These UI surfaces are **preview-only** in kernel webmail until IMAP/full MIME pi
 | TLS protocol row | Shows “not available (local index only)” |
 | Raw MIME headers | Synthetic preview from local message fields |
 | Quick reply inline send | Opens reply composer (no direct SMTP from detail pane) |
-| Attachment download | Disabled unless `attachment.url` present |
+| Attachment upload → SMTP | Live — multipart `attachments[]` on send/schedule; download via API |
 | Sync button | Refreshes local index only (message explains IMAP downstream) |
 | AI draft reply button | Disabled preview |
+| Global SMTP (`mail_*` settings) | Applied via `SystemMailConfig` on system-global mailer |
+| `reply_to` | Applied from per-user / global `mail_client_reply_to*` |
 
 ## Cron
 

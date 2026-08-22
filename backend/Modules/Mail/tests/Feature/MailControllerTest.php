@@ -2,8 +2,12 @@
 
 namespace Modules\Mail\Tests\Feature;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Core\System\Services\SystemMailConfig;
 use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Tests\Support\ActivatesMailExtension;
 use Modules\Mail\Tests\Support\CreatesMailMessages;
@@ -252,6 +256,66 @@ class MailControllerTest extends TestCase
             'folder' => 'sent',
             'subject' => 'Quarterly Investor Update',
         ]);
+    }
+
+    public function test_admin_can_send_email_with_attachment(): void
+    {
+        Mail::fake();
+        Storage::fake('local');
+
+        $file = UploadedFile::fake()->create('brief.txt', 12, 'text/plain');
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->post('/api/v1/manage/mail/send', [
+                'to' => 'ops@example.com',
+                'subject' => 'With Attachment',
+                'body' => '<p>See attached</p>',
+                'attachments' => [$file],
+            ], [
+                'Accept' => 'application/json',
+            ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.folder', 'sent');
+
+        $attachments = $response->json('data.attachments');
+        $this->assertIsArray($attachments);
+        $this->assertCount(1, $attachments);
+        $this->assertSame('brief.txt', $attachments[0]['name'] ?? null);
+        $this->assertNotEmpty($attachments[0]['url'] ?? null);
+
+        $messageId = $response->json('data.id');
+        $download = $this->actingAs($this->user, 'sanctum')
+            ->get("/api/v1/manage/mail/messages/{$messageId}/attachments/0");
+
+        $download->assertOk();
+    }
+
+    public function test_system_mail_config_applies_setting_host_and_reply_to(): void
+    {
+        Mail::fake();
+
+        Setting::set('mail_host', 'smtp.settings.example', 'string', 'email');
+        Setting::set('mail_port', '587', 'integer', 'email');
+        Setting::set('mail_from_address', 'noreply@settings.example', 'string', 'email');
+        Setting::set('mail_client_reply_to', 'reply@settings.example', 'string', 'mail_client');
+
+        $applied = app(SystemMailConfig::class)->apply();
+        $this->assertSame('smtp.settings.example', $applied['host']);
+        $this->assertSame(587, $applied['port']);
+        $this->assertSame('smtp.settings.example', config('mail.mailers.smtp.host'));
+
+        $this->actingAs($this->user, 'sanctum')
+            ->postJson('/api/v1/manage/mail/send', [
+                'to' => 'peer@example.com',
+                'subject' => 'Config Check',
+                'body' => '<p>Hi</p>',
+            ])
+            ->assertStatus(201);
+
+        $this->assertSame('smtp.settings.example', config('mail.mailers.smtp.host'));
+        $this->assertSame('noreply@settings.example', config('mail.from.address'));
     }
 
     public function test_unauthenticated_cannot_access_mail(): void

@@ -12,10 +12,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Modules\Core\System\Http\Controllers\BaseApiController;
-use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\SystemMailConfig;
 
 class EmailTestController extends BaseApiController
 {
+    public function __construct(
+        protected SystemMailConfig $systemMailConfig,
+    ) {}
+
     /**
      * Test SMTP connection
      * Attempts to connect to the SMTP server using current configuration
@@ -328,34 +332,27 @@ class EmailTestController extends BaseApiController
         }
 
         // Otherwise, get from settings or config
-        $settings = Setting::getGroup('email');
-
-        return [
-            'host' => $settings['email.smtp_host'] ?? config('mail.mailers.smtp.host'),
-            'port' => $settings['email.smtp_port'] ?? config('mail.mailers.smtp.port'),
-            'username' => $settings['email.smtp_username'] ?? config('mail.mailers.smtp.username'),
-            'password' => $settings['email.smtp_password'] ?? config('mail.mailers.smtp.password'),
-            'encryption' => $settings['email.smtp_encryption'] ?? config('mail.mailers.smtp.encryption'),
-            'from_address' => $settings['email.from_address'] ?? config('mail.from.address'),
-            'from_name' => $settings['email.from_name'] ?? config('mail.from.name'),
-        ];
+        return $this->systemMailConfig->resolve();
     }
 
     /**
-     * Temporarily update mail configuration
      * Temporarily update mail configuration
      *
      * @param  array<string, mixed>  $config
      */
     private function updateMailConfig(array $config): void
     {
-        Config::set('mail.mailers.smtp.host', $config['host']);
-        Config::set('mail.mailers.smtp.port', $config['port']);
+        Config::set('mail.mailers.smtp.host', $config['host'] ?? null);
+        Config::set('mail.mailers.smtp.port', $config['port'] ?? null);
         Config::set('mail.mailers.smtp.username', $config['username'] ?? null);
         Config::set('mail.mailers.smtp.password', $config['password'] ?? null);
         Config::set('mail.mailers.smtp.encryption', $config['encryption'] ?? null);
-        Config::set('mail.from.address', $config['from_address']);
-        Config::set('mail.from.name', $config['from_name'] ?? config('app.name'));
+        if (! empty($config['from_address']) && is_string($config['from_address'])) {
+            Config::set('mail.from.address', $config['from_address']);
+        }
+        if (! empty($config['from_name']) && is_string($config['from_name'])) {
+            Config::set('mail.from.name', $config['from_name']);
+        }
     }
 
     /**

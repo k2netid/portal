@@ -11,6 +11,8 @@ Route::prefix('v1/manage/mail')
     ->group(function (): void {
         Route::get('messages', [MailController::class, 'index']);
         Route::get('messages/{id}', [MailController::class, 'show']);
+        Route::get('messages/{id}/attachments/{index}', [MailController::class, 'downloadAttachment'])
+            ->whereNumber('index');
         Route::post('messages/draft', [MailController::class, 'saveDraft']);
         Route::post('messages/schedule', [MailController::class, 'schedule'])->middleware('throttle:20,1');
         Route::post('messages/{id}/snooze', [MailController::class, 'snooze']);
