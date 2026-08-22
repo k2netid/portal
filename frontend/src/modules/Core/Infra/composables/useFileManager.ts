@@ -543,7 +543,8 @@ export function useFileManager(options: { rootPath?: string } = {}) {
         trashLoading.value = true;
         try {
             const response = await api.get(infraPaths.fileManagerTrash);
-            trashItems.value = response.data?.data?.items || [];
+            const data = parseSingleResponse<{ items?: TrashItem[] }>(response) || (response.data as { items?: TrashItem[] } | undefined);
+            trashItems.value = Array.isArray(data?.items) ? data.items : [];
         } catch (error) {
             logger.error('Failed to fetch trash:', error);
         } finally {
