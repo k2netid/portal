@@ -1,34 +1,6 @@
 <template>
   <div class="h-[calc(100vh-7.5rem)] lg:h-[calc(100vh-8.5rem)] flex flex-col rounded-2xl border border-border/60 shadow-xs overflow-hidden bg-card">
-    <!-- Top Bar Title -->
-    <div class="h-12 px-4 border-b border-border/40 flex items-center justify-between shrink-0 bg-card/60 backdrop-blur-sm">
-      <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
-          <Mail class="w-3.5 h-3.5" />
-        </div>
-        <div>
-          <h1 class="text-xs font-bold text-foreground tracking-tight flex items-center gap-1.5">
-            {{ $t('system.mail.title') }}
-            <span class="text-[9px] font-semibold px-1.5 py-0.2 rounded-full bg-muted text-muted-foreground">
-              v1.0
-            </span>
-          </h1>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <Button
-          size="sm"
-          class="h-7 gap-1.5 text-xs font-semibold px-3 shadow-xs"
-          @click="openComposer()"
-        >
-          <Edit3 class="w-3 h-3" />
-          <span>{{ $t('system.mail.compose') }}</span>
-        </Button>
-      </div>
-    </div>
-
-    <!-- 3-Column Layout Container -->
+    <!-- 3-Column Unified Layout Container -->
     <div
       ref="layoutContainerRef"
       class="flex-1 flex overflow-hidden min-h-0 relative select-none"
@@ -119,8 +91,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { Mail, Edit3 } from 'lucide-vue-next';
-import { Button } from '@/shared/components/ui';
 import { useMailClient } from '@/modules/Core/System/composables/useMailClient';
 import MailSidebar from '@/modules/Core/System/components/mail/MailSidebar.vue';
 import MailList from '@/modules/Core/System/components/mail/MailList.vue';

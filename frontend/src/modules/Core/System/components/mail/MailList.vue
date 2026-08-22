@@ -1,46 +1,44 @@
 <template>
   <div class="h-full flex flex-col border-r border-border/40 bg-card">
-    <!-- Header: Search & Filter Tabs -->
-    <div class="p-3 border-b border-border/40 space-y-2 shrink-0 bg-background/50 backdrop-blur-sm">
-      <div class="flex items-center gap-2">
-        <div class="relative flex-1">
-          <Search class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            :model-value="searchQuery"
-            type="text"
-            :placeholder="$t('system.mail.search_placeholder')"
-            class="pl-8 h-8 text-xs bg-muted/40 border-border/60 rounded-lg focus-visible:bg-background transition-colors"
-            @update:model-value="$emit('update:search-query', String($event || ''))"
-          />
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground shrink-0 rounded-lg"
-          :disabled="loading"
-          :title="$t('system.mail.refresh')"
-          @click="$emit('refresh')"
-        >
-          <RefreshCw :class="['w-3.5 h-3.5', loading ? 'animate-spin text-primary' : '']" />
-        </Button>
+    <!-- Header: Search Bar (Aligned with h-12 top row) -->
+    <div class="h-12 px-3 border-b border-border/40 flex items-center gap-2 shrink-0 bg-background/50 backdrop-blur-sm">
+      <div class="relative flex-1">
+        <Search class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          :model-value="searchQuery"
+          type="text"
+          :placeholder="$t('system.mail.search_placeholder')"
+          class="pl-8 h-8 text-xs bg-muted/40 border-border/60 rounded-lg focus-visible:bg-background transition-colors"
+          @update:model-value="$emit('update:search-query', String($event || ''))"
+        />
       </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        class="h-8 w-8 text-muted-foreground hover:text-foreground shrink-0 rounded-lg"
+        :disabled="loading"
+        :title="$t('system.mail.refresh')"
+        @click="$emit('refresh')"
+      >
+        <RefreshCw :class="['w-3.5 h-3.5', loading ? 'animate-spin text-primary' : '']" />
+      </Button>
+    </div>
 
-      <!-- Filter Pills -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5 custom-scrollbar">
-        <button
-          v-for="tab in filterTabs"
-          :key="tab.id"
-          :class="[
-            'px-2 py-0.5 rounded-md text-[10px] font-medium transition-colors shrink-0',
-            filterType === tab.id
-              ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-              : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
-          ]"
-          @click="$emit('update:filter-type', tab.id)"
-        >
-          {{ $t(`system.mail.filter_${tab.id}`) }}
-        </button>
-      </div>
+    <!-- Sub-header Filter Pills -->
+    <div class="px-3 py-1.5 border-b border-border/30 bg-muted/10 flex items-center gap-1.5 overflow-x-auto custom-scrollbar shrink-0">
+      <button
+        v-for="tab in filterTabs"
+        :key="tab.id"
+        :class="[
+          'px-2 py-0.5 rounded-md text-[10px] font-medium transition-colors shrink-0',
+          filterType === tab.id
+            ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+            : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+        ]"
+        @click="$emit('update:filter-type', tab.id)"
+      >
+        {{ $t(`system.mail.filter_${tab.id}`) }}
+      </button>
     </div>
 
     <!-- Message List Container -->

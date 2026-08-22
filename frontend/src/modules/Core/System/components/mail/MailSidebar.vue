@@ -1,41 +1,47 @@
 <template>
   <div
     :class="[
-      'h-full flex flex-col justify-between p-2.5 select-none transition-all duration-300 relative',
-      isMinimized ? 'w-16 items-center' : 'w-60'
+      'h-full flex flex-col justify-between select-none transition-all duration-300 relative bg-card/40',
+      isMinimized ? 'w-16' : 'w-60'
     ]"
   >
-    <!-- Top Section -->
-    <div class="space-y-3 w-full flex flex-col flex-1 min-h-0">
-      <!-- Minimized Mode Header -->
-      <div v-if="isMinimized" class="flex flex-col items-center gap-2 w-full">
-        <!-- Expand Button Prominent -->
-        <Button
-          variant="outline"
-          size="icon"
-          class="h-8 w-8 text-foreground hover:text-primary hover:border-primary/40 rounded-lg shadow-xs transition-colors"
-          :title="$t('system.mail.expand_sidebar')"
-          @click="$emit('toggle-minimize')"
-        >
-          <PanelLeftOpen class="w-4 h-4 text-primary" />
-        </Button>
-
-        <!-- Compose Icon Button -->
-        <Button
-          variant="default"
-          size="icon"
-          class="h-8 w-8 rounded-xl shadow-xs"
-          :title="$t('system.mail.compose')"
-          @click="openComposer()"
-        >
-          <Edit3 class="w-3.5 h-3.5" />
-        </Button>
+    <!-- Top Header Bar (Unified with List & Detail header row: h-12) -->
+    <div
+      :class="[
+        'h-12 border-b border-border/40 flex items-center shrink-0 bg-background/50 backdrop-blur-sm',
+        isMinimized ? 'justify-center px-2' : 'justify-between px-3'
+      ]"
+    >
+      <div v-if="!isMinimized" class="flex items-center gap-2 min-w-0">
+        <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/20 shrink-0">
+          <Mail class="w-3.5 h-3.5" />
+        </div>
+        <span class="text-xs font-bold text-foreground tracking-tight truncate">{{ $t('system.mail.title') }}</span>
       </div>
 
-      <!-- Expanded Mode Header -->
-      <div v-else class="flex items-center gap-2 w-full">
+      <!-- Minimize / Expand Toggle Button -->
+      <Button
+        variant="ghost"
+        size="icon"
+        :class="[
+          'rounded-lg shrink-0 transition-colors',
+          isMinimized ? 'h-8 w-8 text-primary hover:bg-primary/10' : 'h-7 w-7 text-muted-foreground hover:text-foreground'
+        ]"
+        :title="isMinimized ? $t('system.mail.expand_sidebar') : $t('system.mail.minimize_sidebar')"
+        @click="$emit('toggle-minimize')"
+      >
+        <PanelLeftOpen v-if="isMinimized" class="w-4 h-4" />
+        <PanelLeftClose v-else class="w-3.5 h-3.5" />
+      </Button>
+    </div>
+
+    <!-- Main Navigation Body -->
+    <div class="flex-1 flex flex-col p-2.5 space-y-3 min-h-0 overflow-hidden">
+      <!-- Compose Button (Single Primary Button) -->
+      <div>
         <Button
-          class="flex-1 justify-center gap-2 h-9 shadow-xs font-semibold text-xs tracking-tight rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all active:scale-[0.98]"
+          v-if="!isMinimized"
+          class="w-full justify-center gap-2 h-9 shadow-xs font-semibold text-xs tracking-tight rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all active:scale-[0.98]"
           @click="openComposer()"
         >
           <Edit3 class="w-3.5 h-3.5" />
@@ -43,13 +49,14 @@
         </Button>
 
         <Button
-          variant="ghost"
+          v-else
+          variant="default"
           size="icon"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground shrink-0 rounded-lg"
-          :title="$t('system.mail.minimize_sidebar')"
-          @click="$emit('toggle-minimize')"
+          class="w-full h-9 rounded-xl shadow-xs"
+          :title="$t('system.mail.compose')"
+          @click="openComposer()"
         >
-          <PanelLeftClose class="w-4 h-4" />
+          <Edit3 class="w-3.5 h-3.5" />
         </Button>
       </div>
 
@@ -138,7 +145,7 @@
     </div>
 
     <!-- Bottom Footer Tools -->
-    <div class="w-full pt-2 border-t border-border/40 space-y-2 mt-2">
+    <div class="p-2.5 pt-2 border-t border-border/40 space-y-2 shrink-0">
       <!-- Sync Button -->
       <Button
         variant="ghost"
@@ -174,6 +181,7 @@
 
 <script setup lang="ts">
 import {
+  Mail,
   Inbox,
   Send,
   FileText,
