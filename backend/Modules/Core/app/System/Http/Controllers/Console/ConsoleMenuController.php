@@ -62,7 +62,8 @@ class ConsoleMenuController extends BaseApiController
         ]);
 
         if (! isset($validated['order'])) {
-            $maxOrder = ConsoleMenu::where('parent_id', $validated['parent_id'] ?? null)->max('order') ?? 0;
+            $maxOrderRaw = ConsoleMenu::where('parent_id', $validated['parent_id'] ?? null)->max('order') ?? 0;
+            $maxOrder = is_numeric($maxOrderRaw) ? (int) $maxOrderRaw : 0;
             $validated['order'] = $maxOrder + 1;
         }
 

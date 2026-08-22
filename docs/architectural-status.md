@@ -1,8 +1,8 @@
-# Architectural Status — `main` vs legacy
+# Architectural Status — `main` (canonical kernel)
 
 Update: 2026-08-22
 
-## Status `main` (canonical kernel)
+## Status `main`
 
 | Area | Status | Path |
 | :--- | :--- | :--- |
@@ -10,38 +10,30 @@ Update: 2026-08-22
 | Infra (data studio, backup, webhooks) | **Live** | `backend/Modules/Core/app/Infra/` |
 | Security (RBAC/ABAC, SIEM, CSP) | **Live** | `backend/Modules/Core/app/Security/` |
 | Unified console SPA | **Live** | `frontend/src/modules/Core/` |
-| Extension engine | **Live** | Mail manifest + marketplace hooks |
+| Extension engine | **Live** | Mail manifest + marketplace |
 | License → JA-CP | **Live** | `LicenseService`, `license:check` |
+| Downstream bootstrap | **Live** | `scripts/bootstrap-downstream-app.sh` |
 
-## Legacy / tidak ada di `main`
+## Removed from repo (Aug 2026)
 
-| Area | Asal fork | Catatan |
-| :--- | :--- | :--- |
-| Content / Publishing / Builder | `ja-cms`, branch `develop` | Referensi di docs lama & CHANGELOG |
-| Member portal / platform billing | `ja-control-plane` DNA | E2E & router guards masih ada sisa referensi |
-| Theme public site (Janari) | `ja-cms` | Beberapa E2E theme masih ada; tier Content tidak di `main` |
-| `Modules/Content/*` scan path | Config legacy | Dihapus dari scan default `main` |
+| Item | Notes |
+| :--- | :--- |
+| Branch **`develop`** | CMS line — gunakan repo downstream / fork produk |
+| E2E theme/content/member | Bukan scope kernel |
+| Router `member-*` guards | DNA ja-control-plane |
+| CI `develop` trigger | Single canonical branch |
 
-## Integrasi ekosistem
+## Downstream products
 
-```mermaid
-flowchart TB
-  JACP[ja-control-plane / JA-CP]
-  Core[ja-core_engine]
-  Apps[Downstream apps]
-  JACP -->|license activate + heartbeat| Core
-  Core -->|OAuth IdP optional| Apps
-  Core -->|clone + extend modules| Apps
-```
+Content, themes, member portal, platform billing → **fork `main`** + modul produk sendiri.  
+Lihat [bootstrap-downstream-app.md](product/bootstrap-downstream-app.md).
 
-- **JA-CP**: lisensi komersial, bukan runtime kernel.
-- **Core Engine**: fondasi; downstream app menambah modul (Content, Operational, …).
+## Cleanup checklist
 
-## Cleanup backlog (post-fork)
-
-- [x] Docs SoT: AGENT_START_HERE, architectural-status
-- [x] Identitas string: JA-CMS → Core Engine (UI + artisan)
-- [x] CI smoke: hapus referensi platform billing / payment-env-check
-- [ ] Merge atau split `develop` Content tier (keputusan produk)
-- [ ] Kurangi E2E CMS-only di `main` atau pindah ke repo downstream
-- [ ] PHPStan baseline debt (277 baris)
+- [x] Docs SoT + identitas Core Engine
+- [x] Hapus branch `develop`
+- [x] E2E kernel-only
+- [x] Router guards tanpa member
+- [x] PHPStan 138 fixes + baseline regen
+- [x] Bootstrap scaffold script
+- [ ] FileManager PHPStan baseline debt (~85 entries) — optional next pass

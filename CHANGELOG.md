@@ -2,74 +2,72 @@
 
 Semua perubahan penting pada **Jejakawan Core Engine (`ja-core_engine`)**.
 
-> Repo ini berasal dari fork **`ja-cms`**, direfaktor sebagai master kernel. Entri historis di bawah mungkin masih menyebut CMS — lihat [docs/architectural-status.md](docs/architectural-status.md).
+> Fork dari **`ja-cms`** → master kernel untuk aplikasi downstream. Branch `develop` (line CMS) dihapus Aug 2026; Content/member/themes = downstream, bukan scope `main`.
 
-Format changelog ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) dan mematuhi [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
 ## [Unreleased]
 
+### Added
+- `docs/product/bootstrap-downstream-app.md` + `scripts/bootstrap-downstream-app.sh` — scaffold modul produk downstream.
+- `Modules/Core/app/System/Services/Ai/AiHttpResponse.php` — typed HTTP helpers untuk provider AI.
+
 ### Changed
-- Identitas produk: dokumentasi & string UI diselaraskan ke **Core Engine** (post-fork cleanup dari `ja-cms` / `ja-control-plane` DNA).
-- Docs SoT: `docs/AGENT_START_HERE.md`, `docs/architectural-status.md`, `docs/product/downstream-apps-and-licensing.md`.
-- CI/E2E smoke: hapus referensi platform billing & payment-env-check yang bukan scope kernel.
+- Identitas produk diselaraskan ke **Core Engine** (docs, UI, artisan, OAuth copy).
+- PHPStan: perbaiki 138 error di luar baseline; baseline diregenerasi (~85 entri FileManager).
+- E2E: hanya smoke kernel (auth, onboarding, console a11y); hapus theme/content/member specs.
+- Router guards & error pages: hapus sisa `member-*` routes.
+- CI: trigger hanya `main`; hapus payment-env-check & security audit commands orphan.
+
+### Removed
+- Branch **`develop`** (remote + local) — line CMS tidak lagi di repo ini.
+- E2E legacy: `theme-*.spec.ts`, `member-register`, `member-a11y`, `console-content-studio`.
+- Frontend scripts: `test:e2e:theme`, `build:theme:janari`, Janari theme schema merge/split.
 
 ---
 
 ## [1.0.0-beta.2] — 2026-08-19
 
-Rilis penyempurnaan menyeluruh: isolasi modul visual builder, pembersihan total artefak kontrol-plane, peningkatan arsitektur i18n 3 bahasa, dan stabilisasi UI/UX.
+Rilis stabilisasi kernel pasca-fork: i18n 3 bahasa, performance settings cache, dan pembersihan DNA control-plane/CRM dari tree.
 
 ### Added
-- **JA-Builder Isolated Localization Architecture**:
-  - Struktur modul translasi mandiri di `frontend/src/modules/Content/Layout/locales/builder/` (`en.json`, `id.json`, `su.json`, `index.ts`).
-  - Kamus builder lengkap (>350 entri) mencakup seluruh kanvas, sidebar, toolbar, popover variabel global, menu konteks, dan modal penyisipan blok.
-  - Integrasi dynamic loader builder di `engine/i18n/loaders/content.ts` dan validator kunci di `scripts/i18n-check-keys.mjs`.
-- **Dukungan Penuh 3 Bahasa Simetris**: Paritas 100% tanpa kunci hilang pada seluruh modul (English, Bahasa Indonesia, dan Basa Sunda).
-- **Z-Index Layering Fix pada Dialog Global**:
-  - `DialogOverlay` ditingkatkan ke `z-[100050]` dan `DialogContent` ke `z-[100060]` untuk mencegah tertutupnya modal konfirmasi saat builder dalam mode fullscreen atau modal overlay.
-  - Dukungan prop `overlayClass` pada komponen `DialogContent.vue`.
-- **Smart Settings Caching & Database Performance**:
-  - Memory caching permanen (`Cache::rememberForever`) pada kueri settings global dengan auto-invalidation via Eloquent boot observers (`saved`, `deleted`).
-  - Indeks komposit performa pada tabel `srv_auth_users`, `pub_contents`, `lay_themes`, `forms`, dan `med_media`.
-  - Rutin pemeliharaan native `VACUUM ANALYZE` PostgreSQL pada `SysMaintenanceService`.
+- **Isolated i18n architecture** untuk modul berat (builder pattern — kini downstream CMS).
+- **Paritas i18n `id` / `en` / `su`** dengan validator otomatis (`i18n-check-keys.mjs`).
+- **Dialog z-index layering** — modal konfirmasi di atas fullscreen overlay.
+- **Settings caching** — `Cache::rememberForever` + observer invalidation; indeks DB performa; `VACUUM ANALYZE` di maintenance.
 
 ### Changed
-- **Penyelarasan Identitas Proyek ke `ja-cms`**:
-  - Memperbarui seluruh konfigurasi, metadata (`package.json`), dan dokumentasi arsitektur (`frontend/README.md`, `backend/README.md`) ke repositori mandiri **Jejakawan CMS (`ja-cms`)**.
-  - Standardisasi konfigurasi environment (`.env.example`, `backend/.env.example`) untuk penggunaan CMS murni (`ja_cms_db`).
-- **Page Settings Panel Refactoring**:
-  - Migrasi seluruh kunci template di `PageSettingsPanel.vue` dari prefix legacy `features.content.*` / `features.menus.*` ke `builder.panels.pageSettings.*`.
-  - Penambahan tipe parameter eksplisit `(media: { url?: string } | string | null)` pada event handler `MediaPicker`.
-- **Module Governance**:
-  - Memperbarui daftar modul terkelola di `ModuleAccessController` ke CMS: `['publishing', 'layout', 'library', 'forms', 'media', 'intelligence']`.
+- **Identitas repo** disepakati sebagai fondasi modular (transisi ke `ja-core_engine`).
+- **Module governance** disederhanakan ke tier Core (System, Infra, Security).
+- Environment template: database schema `core_engine` (bukan `ja_cms_db`).
 
 ### Removed
-- **Pembersihan Total Sisa Control-Plane**:
-  - **Backend**: Menghapus konfigurasi `sme`, `aksara`, dan `exambro` dari `config/services.php`; menghapus `Modules/Operational/*` dari scan paths `config/modules.php`; menghapus scheduled tasks `accounting:*` dan `platform:*` dari `routes/console.php` dan `ScheduledTask.php`.
-  - **Database & Permissions**: Menghapus permission `view/manage crm`, `accounting`, role `finance`, dan membersihkan permission `view crm` dari `security-officer` di `FoundationSeeder.php` serta database live.
-  - **Frontend**: Menghapus komponen `FormCrmLeadSettings.vue` dan membersihkan form `Create.vue` / `Edit.vue`; menghapus filter tag `crm` di modul Library; menghapus export `crmPaths`, `accountingPaths`, dan `memberPaths` dari `paths.ts`.
-  - **Build & Tests**: Menghapus manual chunks `mod-crm` dan `mod-accounting` dari `vite.config.ts`; menghapus seluruh spec file dan snapshot E2E CRM / Billing dari `tests/e2e/`; menghapus file `.cursorignore` usang.
+- Sisa **control-plane operational** dari kernel: SME/Aksara/Exambro service keys, `Modules/Operational` scan, accounting/platform scheduled tasks, CRM/accounting frontend paths & E2E billing specs.
 
 ---
 
 ## [1.0.0-beta.1] — 2026-05-25
 
-Baseline fondasi arsitektur Modular Monolith Jejakawan CMS.
+Baseline **Modular Monolith kernel** (upstream: ja-cms monolith).
 
-### Added
-- **Core Tier**: Sistem IAM (RBAC Spatie, ABAC Policies, Passkeys WebAuthn, 2FA TOTP), Infrastructure (Backups, URL Redirects, Scheduled Tasks, Webhooks, CCK Content Types), dan Security (IP Management, Rate Limiting, Audit Activity Logs).
-- **Content Tier**:
-  - **Publishing**: Manajemen konten, kategori hierarkis, sistem taksonomi, editorial workflow, revisi konten, dan sistem komentar anti-spam.
-  - **Layout**: JA-Builder Visual Editor, manajemen tema (Janari Theme), customizer, blok tata letak, dan navigasi menu hierarkis.
-  - **Media**: Pengelola file & folder, upload chunked, konversi WebP otomatis, sanitasi SVG, dan image thumbnail generator.
-  - **Forms**: Visual form builder, validasi dinamis, reCAPTCHA v3 / Cloudflare Turnstile, dan submission viewer.
-  - **Library**: Tagging system, custom field manager, dan komponen template reusable.
-- **Intelligence Tier**:
-  - **AI Integration**: Multi-provider LLM (DeepSeek, OpenAI, Google Gemini) untuk content drafting, SEO metadata generation, dan taxonomy suggestions.
-  - **Unified Search**: Indeks pencarian terpusat dengan auto-sync listener event.
-  - **Analytics**: Privacy-friendly visitor & pageview analytics.
-  - **Newsletter**: Manajemen subscriber dan email blast.
-- **Frontend Architecture**: Vue 3 SPA + Vite + Tailwind CSS + Lucide Icons + Vue I18n.
-- **Production Verification**: 446 test suite PHPUnit backend dan 182 unit test Vitest frontend.
+### Added — Core tier (tetap di `main`)
+- **System:** IAM (RBAC Spatie, ABAC, Passkeys, 2FA), settings, extensions marketplace, languages.
+- **Infra:** Data Model Studio, backups, webhooks, Redis explorer, scheduled tasks, file manager.
+- **Security:** IP management, rate limiting, audit/activity/system journals, CSP/SIEM hooks.
+- **Frontend:** Vue 3 unified console SPA, engine router, Pinia, i18n.
+
+### Added — Content/Intelligence tier *(dipindah ke downstream / ex-develop)*
+- Publishing, Layout/Builder, Media, Forms, Library, AI, Analytics, Newsletter — **tidak lagi bagian `main`**.
+
+---
+
+## Catatan fork (Aug 2026)
+
+| Keputusan | Detail |
+|---|---|
+| **`main`** | Canonical **Core Engine** kernel |
+| **`develop`** | **Dihapus** — CMS line hidup di repo produk terpisah |
+| **JA-CP** | Hub lisensi eksternal; bukan identitas engine |
+| **Downstream** | Fork `main` + `bootstrap-downstream-app.sh` + modul produk |

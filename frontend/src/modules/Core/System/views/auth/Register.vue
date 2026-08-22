@@ -352,12 +352,7 @@ const handleRegister = async () => {
         message.value = 'Registration successful! Please verify your email.';
         messageType.value = 'success';
         setTimeout(() => {
-            const isMember = router.currentRoute.value.meta.authContext === 'member';
-            if (isMember) {
-                router.push({ name: 'member-login' });
-            } else {
-                router.push(resolveConsoleDashboardLocation());
-            }
+            router.push(resolveConsoleDashboardLocation());
         }, 2000);
     } else {
         message.value = result.message || '';

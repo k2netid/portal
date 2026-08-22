@@ -13,10 +13,9 @@ Repo ini **bukan** `ja-control-plane`. Control plane (`ja-control-plane`) tetap 
 
 | Branch | Peran |
 | :--- | :--- |
-| **`main`** | Kernel slim: `Modules/Core` (`System`, `Infra`, `Security`) + unified console SPA |
-| **`develop`** | Line legacy CMS — tier Content, themes, member portal (87+ commit di depan `main` saat audit Aug 2026) |
+| **`main`** | Kernel canonical: `Modules/Core` (`System`, `Infra`, `Security`) + unified console SPA |
 
-Untuk kerja agent di **`main`**: jangan asumsikan modul `Content`, `Operational`, atau rute member/platform billing ada.
+Branch **`develop`** (line CMS) **dihapus Aug 2026**. Content/themes/member = downstream repo forked from `main`.
 
 ## Struktur wajib dibaca
 

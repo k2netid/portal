@@ -467,8 +467,10 @@ class RedisController extends BaseApiController
         }
 
         try {
-            $connName = (string) $request->input('connection', 'cache');
-            $rawInputKey = (string) $request->input('key');
+            $connRaw = $request->input('connection', 'cache');
+            $connName = is_string($connRaw) ? $connRaw : 'cache';
+            $keyRaw = $request->input('key');
+            $rawInputKey = is_string($keyRaw) ? $keyRaw : '';
             $redis = Redis::connection($connName);
             $prefix = $this->getConnectionPrefix($redis);
 
@@ -512,16 +514,27 @@ class RedisController extends BaseApiController
         }
 
         try {
-            $connName = (string) $request->input('connection', 'cache');
+            $connRaw = $request->input('connection', 'cache');
+            $connName = is_string($connRaw) ? $connRaw : 'cache';
             $redis = Redis::connection($connName);
             $prefix = $this->getConnectionPrefix($redis);
 
             $targetKeys = [];
             if ($request->filled('key')) {
-                $targetKeys[] = (string) $request->input('key');
+                $keyRaw = $request->input('key');
+                if (is_string($keyRaw)) {
+                    $targetKeys[] = $keyRaw;
+                }
             }
-            if ($request->filled('keys') && is_array($request->input('keys'))) {
-                $targetKeys = array_merge($targetKeys, $request->input('keys'));
+            if ($request->filled('keys')) {
+                $keysRaw = $request->input('keys');
+                if (is_array($keysRaw)) {
+                    foreach ($keysRaw as $keyItem) {
+                        if (is_string($keyItem)) {
+                            $targetKeys[] = $keyItem;
+                        }
+                    }
+                }
             }
 
             $targetKeys = array_unique(array_filter($targetKeys));

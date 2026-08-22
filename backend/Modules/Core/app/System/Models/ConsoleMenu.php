@@ -63,11 +63,17 @@ class ConsoleMenu extends Model
         'meta' => 'array',
     ];
 
+    /**
+     * @return HasMany<ConsoleMenu, $this>
+     */
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('order', 'asc');
     }
 
+    /**
+     * @return BelongsTo<ConsoleMenu, $this>
+     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
@@ -385,7 +391,16 @@ class ConsoleMenu extends Model
         $defaults = self::getDefaultMenus();
 
         foreach ($defaults as $groupIndex => $group) {
-            $children = $group['children'] ?? [];
+            /** @var list<array<string, mixed>> $children */
+            $children = [];
+            $childrenRaw = $group['children'] ?? null;
+            if (is_array($childrenRaw)) {
+                foreach ($childrenRaw as $child) {
+                    if (is_array($child)) {
+                        $children[] = $child;
+                    }
+                }
+            }
             unset($group['children']);
 
             $parent = self::create([

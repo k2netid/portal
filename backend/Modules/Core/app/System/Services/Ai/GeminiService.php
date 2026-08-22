@@ -69,15 +69,14 @@ class GeminiService implements AiProviderInterface
                 $this->handleError($response);
             }
 
-            $data = $response->json();
+            $data = AiHttpResponse::jsonArray($response);
+            $text = AiHttpResponse::geminiTextContent($data);
 
-            if (is_array($data) && isset($data['candidates'][0]['content']['parts'][0]['text'])) {
-                $textRaw = $data['candidates'][0]['content']['parts'][0]['text'];
-
-                return is_string($textRaw) ? $textRaw : (string) $textRaw;
+            if ($text === '') {
+                throw new \Exception('Unexpected response format from Gemini.');
             }
 
-            throw new \Exception('Unexpected response format from Gemini.');
+            return $text;
         } catch (\Exception $e) {
             Log::error('Gemini Generation Exception', ['message' => $e->getMessage()]);
             throw $e;
@@ -100,12 +99,12 @@ class GeminiService implements AiProviderInterface
                 return $this->getDefaultModels();
             }
 
-            $data = $response->json();
+            $data = AiHttpResponse::jsonArray($response);
             $models = [];
 
-            if (is_array($data) && isset($data['models']) && is_array($data['models'])) {
+            if (isset($data['models']) && is_array($data['models'])) {
                 foreach ($data['models'] as $m) {
-                    if (isset($m['name']) && is_string($m['name'])) {
+                    if (is_array($m) && isset($m['name']) && is_string($m['name'])) {
                         $name = str_replace('models/', '', $m['name']);
                         $displayName = isset($m['displayName']) && is_string($m['displayName']) ? $m['displayName'] : $name;
                         if (str_contains(strtolower($name), 'gemini') && ! str_contains(strtolower($name), 'embedding') && ! str_contains(strtolower($name), 'aqa')) {
@@ -151,7 +150,7 @@ class GeminiService implements AiProviderInterface
     protected function handleError(Response $response): void
     {
         $status = $response->status();
-        $error = $response->json('error.message') ?? $response->body();
+        $error = AiHttpResponse::errorMessage($response);
 
         Log::error('Gemini API Error', ['status' => $status, 'error' => $error]);
 

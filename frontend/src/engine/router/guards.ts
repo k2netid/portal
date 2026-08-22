@@ -92,12 +92,6 @@ export const handleBeforeEachGuard = async (
         to.name === 'reset-password' ||
         to.name === 'verify-email' ||
         to.name === 'session-expired' ||
-        to.name === 'member-login' ||
-        to.name === 'member-register' ||
-        to.name === 'member-profile' ||
-        to.name === 'member-bookmarks' ||
-        to.name === 'member-comments' ||
-        to.name === 'member-newsletter' ||
         to.path === '/maintenance' ||
         to.path === paths.loginPath ||
         to.path === paths.registerPath;
@@ -200,10 +194,6 @@ export const handleBeforeEachGuard = async (
     }
 
     if (requiresGuest && authStore.isAuthenticated) {
-        if (to.name === 'member-login' || to.name === 'member-register') {
-            return;
-        }
-
         if (to.name === 'login' || to.name === 'register') {
             // Stale FE auth after 401 vapor lock — stay on login, do not bounce to /dash
             if (typeof window !== 'undefined' && window.__isSessionTerminated) {

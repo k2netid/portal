@@ -20,20 +20,26 @@ class MailController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $folder = (string) $request->input('folder', 'inbox');
-        $label = $request->input('label');
-        $filter = (string) $request->input('filter', 'all');
-        $search = (string) $request->input('q', '');
+        $folderRaw = $request->input('folder', 'inbox');
+        $folder = is_string($folderRaw) ? $folderRaw : 'inbox';
+        $labelRaw = $request->input('label');
+        $label = is_string($labelRaw) && $labelRaw !== '' ? $labelRaw : null;
+        $filterRaw = $request->input('filter', 'all');
+        $filter = is_string($filterRaw) ? $filterRaw : 'all';
+        $searchRaw = $request->input('q', '');
+        $search = is_string($searchRaw) ? $searchRaw : '';
 
-        $defaultPerPage = (int) (Setting::where('key', 'mail_client_per_page')->value('value') ?? 25);
-        $perPage = (int) $request->input('per_page', $defaultPerPage);
+        $defaultPerPageRaw = Setting::where('key', 'mail_client_per_page')->value('value') ?? 25;
+        $defaultPerPage = is_numeric($defaultPerPageRaw) ? (int) $defaultPerPageRaw : 25;
+        $perPageRaw = $request->input('per_page', $defaultPerPage);
+        $perPage = is_numeric($perPageRaw) ? (int) $perPageRaw : $defaultPerPage;
         if ($perPage < 5 || $perPage > 100) {
             $perPage = 25;
         }
 
         $query = MailMessage::query();
 
-        if ($label && is_string($label) && $label !== '') {
+        if ($label !== null) {
             $query->whereJsonContains('labels', $label);
         } else {
             $query->where('folder', $folder);
@@ -140,8 +146,10 @@ class MailController extends BaseApiController
         }
 
         // Get sender info from settings or system defaults
-        $fromName = config('mail.from.name', 'Jejakawan Core');
-        $fromAddress = config('mail.from.address', 'noreply@jejakawan.com');
+        $fromNameRaw = config('mail.from.name', 'Jejakawan Core');
+        $fromName = is_string($fromNameRaw) ? $fromNameRaw : 'Jejakawan Core';
+        $fromAddressRaw = config('mail.from.address', 'noreply@jejakawan.com');
+        $fromAddress = is_string($fromAddressRaw) ? $fromAddressRaw : 'noreply@jejakawan.com';
 
         $ccList = ! empty($validated['cc']) ? array_filter(array_map('trim', explode(',', (string) $validated['cc']))) : [];
         $bccList = ! empty($validated['bcc']) ? array_filter(array_map('trim', explode(',', (string) $validated['bcc']))) : [];
@@ -198,8 +206,8 @@ class MailController extends BaseApiController
             'body' => 'nullable|string',
         ]);
 
-        $fromAddress = (string) (Setting::get('mail_from_address') ?: config('mail.from.address', 'admin@jejakawan.com'));
-        $fromName = (string) (Setting::get('mail_from_name') ?: config('mail.from.name', 'Jejakawan Mail'));
+        $fromAddress = $this->resolveMailFromAddress();
+        $fromName = $this->resolveMailFromName();
 
         $to = trim((string) ($validated['to'] ?? ''));
         $subject = trim((string) ($validated['subject'] ?? '')) ?: '(Draft) No Subject';
@@ -210,19 +218,22 @@ class MailController extends BaseApiController
         $bccList = ! empty($validated['bcc']) ? array_filter(array_map('trim', explode(',', $validated['bcc']))) : [];
 
         if (! empty($validated['id'])) {
-            $draft = MailMessage::find($validated['id']);
-            if ($draft) {
-                $draft->update([
-                    'recipients' => $to ? [$to] : [],
-                    'cc' => $ccList,
-                    'bcc' => $bccList,
-                    'subject' => $subject,
-                    'snippet' => $snippet,
-                    'body' => $body,
-                    'folder' => 'drafts',
-                ]);
+            $draftId = $validated['id'];
+            if (is_string($draftId)) {
+                $draft = MailMessage::find($draftId);
+                if ($draft instanceof MailMessage) {
+                    $draft->update([
+                        'recipients' => $to ? [$to] : [],
+                        'cc' => $ccList,
+                        'bcc' => $bccList,
+                        'subject' => $subject,
+                        'snippet' => $snippet,
+                        'body' => $body,
+                        'folder' => 'drafts',
+                    ]);
 
-                return $this->success($draft, 'Draft updated successfully');
+                    return $this->success($draft, 'Draft updated successfully');
+                }
             }
         }
 
@@ -259,12 +270,12 @@ class MailController extends BaseApiController
             'scheduled_at' => 'required|string',
         ]);
 
-        $fromAddress = (string) (Setting::get('mail_from_address') ?: config('mail.from.address', 'admin@jejakawan.com'));
-        $fromName = (string) (Setting::get('mail_from_name') ?: config('mail.from.name', 'Jejakawan Mail'));
+        $fromAddress = $this->resolveMailFromAddress();
+        $fromName = $this->resolveMailFromName();
 
-        $to = trim($validated['to']);
-        $subject = trim($validated['subject']);
-        $body = $validated['body'];
+        $to = is_string($validated['to']) ? trim($validated['to']) : '';
+        $subject = is_string($validated['subject']) ? trim($validated['subject']) : '';
+        $body = is_string($validated['body']) ? $validated['body'] : '';
         $snippet = Str::limit(strip_tags($body), 100);
 
         $ccList = ! empty($validated['cc']) ? array_filter(array_map('trim', explode(',', $validated['cc']))) : [];
@@ -552,8 +563,8 @@ class MailController extends BaseApiController
         $settings = Setting::getGroup('mail_client');
         $globalAi = Setting::getGroup('ai');
 
-        $isGlobalAiEnabled = (bool) ($globalAi['ai_enabled'] ?? false);
-        $defaultProvider = (string) ($globalAi['ai_default_provider'] ?? 'gemini');
+        $isGlobalAiEnabled = $this->settingBool($globalAi, 'ai_enabled', false);
+        $defaultProvider = $this->settingString($globalAi, 'ai_default_provider', 'gemini');
 
         // Check active AI providers in system
         $providerCatalog = [
@@ -579,24 +590,24 @@ class MailController extends BaseApiController
         }
 
         return $this->success([
-            'per_page' => (int) ($settings['mail_client_per_page'] ?? 25),
-            'storage_quota_gb' => (int) ($settings['mail_client_storage_quota_gb'] ?? 15),
-            'trash_retention_days' => (int) ($settings['mail_client_trash_retention_days'] ?? 30),
-            'signature' => (string) ($settings['mail_client_signature'] ?? ''),
-            'signature_logo' => (string) ($settings['mail_client_signature_logo'] ?? ''),
-            'signature_company' => (string) ($settings['mail_client_signature_company'] ?? ''),
-            'reply_to' => (string) ($settings['mail_client_reply_to'] ?? ''),
-            'auto_read_delay' => (int) ($settings['mail_client_auto_read_delay'] ?? 0),
-            'auto_check_interval' => (int) ($settings['mail_client_auto_check_interval'] ?? 5),
-            'sound_notifications' => (bool) ($settings['mail_client_sound_notifications'] ?? true),
-            'block_remote_images' => (bool) ($settings['mail_client_block_remote_images'] ?? true),
-            'vacation_enabled' => (bool) ($settings['mail_client_vacation_enabled'] ?? false),
-            'vacation_subject' => (string) ($settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply'),
-            'vacation_body' => (string) ($settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.'),
+            'per_page' => $this->settingInt($settings, 'mail_client_per_page', 25),
+            'storage_quota_gb' => $this->settingInt($settings, 'mail_client_storage_quota_gb', 15),
+            'trash_retention_days' => $this->settingInt($settings, 'mail_client_trash_retention_days', 30),
+            'signature' => $this->settingString($settings, 'mail_client_signature'),
+            'signature_logo' => $this->settingString($settings, 'mail_client_signature_logo'),
+            'signature_company' => $this->settingString($settings, 'mail_client_signature_company'),
+            'reply_to' => $this->settingString($settings, 'mail_client_reply_to'),
+            'auto_read_delay' => $this->settingInt($settings, 'mail_client_auto_read_delay'),
+            'auto_check_interval' => $this->settingInt($settings, 'mail_client_auto_check_interval', 5),
+            'sound_notifications' => $this->settingBool($settings, 'mail_client_sound_notifications', true),
+            'block_remote_images' => $this->settingBool($settings, 'mail_client_block_remote_images', true),
+            'vacation_enabled' => $this->settingBool($settings, 'mail_client_vacation_enabled'),
+            'vacation_subject' => $this->settingString($settings, 'mail_client_vacation_subject', 'Out of Office Auto-Reply'),
+            'vacation_body' => $this->settingString($settings, 'mail_client_vacation_body', 'Thank you for your message. I am currently out of office.'),
             // AI Governance & Scope
-            'ai_enabled' => (bool) ($settings['mail_client_ai_enabled'] ?? true),
-            'ai_provider' => (string) ($settings['mail_client_ai_provider'] ?? $defaultProvider),
-            'ai_tone' => (string) ($settings['mail_client_ai_tone'] ?? 'professional'),
+            'ai_enabled' => $this->settingBool($settings, 'mail_client_ai_enabled', true),
+            'ai_provider' => $this->settingString($settings, 'mail_client_ai_provider', $defaultProvider),
+            'ai_tone' => $this->settingString($settings, 'mail_client_ai_tone', 'professional'),
             'ai_scope_drafting' => (bool) ($settings['mail_client_ai_scope_drafting'] ?? true),
             'ai_scope_summarize' => (bool) ($settings['mail_client_ai_scope_summarize'] ?? true),
             'ai_scope_smart_reply' => (bool) ($settings['mail_client_ai_scope_smart_reply'] ?? true),
@@ -670,6 +681,8 @@ class MailController extends BaseApiController
 
     /**
      * Calculate mailbox storage usage and quota
+     *
+     * @return array{used_bytes: int, quota_bytes: int, used_formatted: string, quota_formatted: string, percentage: float}
      */
     private function calculateStorageStats(): array
     {
@@ -677,7 +690,8 @@ class MailController extends BaseApiController
         $overhead = MailMessage::count() * 2048;
         $usedBytes = max(24576, $bodyBytes + $overhead);
 
-        $quotaGb = (int) (Setting::where('key', 'mail_client_storage_quota_gb')->value('value') ?? 15);
+        $quotaGbRaw = Setting::where('key', 'mail_client_storage_quota_gb')->value('value') ?? 15;
+        $quotaGb = is_numeric($quotaGbRaw) ? (int) $quotaGbRaw : 15;
         $quotaBytes = $quotaGb * 1024 * 1024 * 1024;
 
         $percentage = $quotaBytes > 0 ? min(100.0, round(($usedBytes / $quotaBytes) * 100, 2)) : 0.0;
@@ -707,5 +721,59 @@ class MailController extends BaseApiController
         }
 
         return $bytes.' B';
+    }
+
+    private function resolveMailFromAddress(): string
+    {
+        $settingValue = Setting::get('mail_from_address');
+        if (is_string($settingValue) && $settingValue !== '') {
+            return $settingValue;
+        }
+
+        $configValue = config('mail.from.address', 'admin@jejakawan.com');
+
+        return is_string($configValue) ? $configValue : 'admin@jejakawan.com';
+    }
+
+    private function resolveMailFromName(): string
+    {
+        $settingValue = Setting::get('mail_from_name');
+        if (is_string($settingValue) && $settingValue !== '') {
+            return $settingValue;
+        }
+
+        $configValue = config('mail.from.name', 'Jejakawan Mail');
+
+        return is_string($configValue) ? $configValue : 'Jejakawan Mail';
+    }
+
+    /**
+     * @param  array<string, mixed>  $settings
+     */
+    private function settingString(array $settings, string $key, string $default = ''): string
+    {
+        $value = $settings[$key] ?? $default;
+
+        return is_string($value) ? $value : (is_scalar($value) ? (string) $value : $default);
+    }
+
+    /**
+     * @param  array<string, mixed>  $settings
+     */
+    private function settingInt(array $settings, string $key, int $default = 0): int
+    {
+        $value = $settings[$key] ?? $default;
+
+        return is_numeric($value) ? (int) $value : $default;
+    }
+
+    /**
+     * @param  array<string, mixed>  $settings
+     */
+    private function settingBool(array $settings, string $key, bool $default = false): bool
+    {
+        $value = $settings[$key] ?? $default;
+
+        return is_bool($value) ? $value : (bool) $value;
     }
 }

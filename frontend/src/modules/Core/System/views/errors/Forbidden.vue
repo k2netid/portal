@@ -20,17 +20,7 @@
 
     <template #actions>
       <button
-        v-if="isMemberContext"
-        type="button"
-        class="flex-1 inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-2xl text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500 shadow-sm transition-[background-color,transform] active:scale-95"
-        @click="goMemberLogin"
-      >
-        <LogIn class="w-4 h-4 mr-2" />
-        {{ t('common.errors.403.login') }}
-      </button>
-
-      <button
-        v-else-if="!user"
+        v-if="!user"
         type="button"
         class="flex-1 inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-2xl text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500 shadow-sm transition-[background-color,transform] active:scale-95"
         @click="handleGuestLogin"
@@ -70,8 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useI18n } from 'vue-i18n';
 import { useErrorPageNavigation } from '@/shared/composables/useErrorPageNavigation';
@@ -83,26 +73,14 @@ import {
 } from 'lucide-vue-next';
 
 const route = useRoute();
-const router = useRouter();
 const authStore = useAuthStore();
-
-const isMemberContext = computed(() => {
-    const path = route.fullPath || '';
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '';
-    return path.startsWith('/member') || redirect.startsWith('/member');
-});
 const { t } = useI18n();
 
-const user = computed(() => (isMemberContext.value ? null : authStore.user));
+const user = computed(() => authStore.user);
 const traceId = ref(`TRC-${Date.now().toString().slice(-6)}-${Math.random().toString(36).substring(7).toUpperCase()}`);
 
 const { goBack, goToLogin, prepareErrorPage } = useErrorPageNavigation({ errorPath: '/403' });
 prepareErrorPage();
-
-const goMemberLogin = (): void => {
-    authStore.clearAuth();
-    void router.replace({ name: 'member-login' });
-};
 
 const handleGuestLogin = () => {
     authStore.clearAuth();
@@ -115,12 +93,4 @@ const logout = async () => {
     await authStore.logout();
     void goToLogin();
 };
-
-onMounted(() => {
-    const rank = authStore.getRoleRank();
-    if (rank > 0 && rank <= 10) {
-        authStore.clearAuth();
-        void router.replace({ name: 'member-login' });
-    }
-});
 </script>

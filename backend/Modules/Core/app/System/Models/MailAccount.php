@@ -73,6 +73,9 @@ class MailAccount extends Model
         'imap_port' => 'integer',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -87,12 +90,13 @@ class MailAccount extends Model
 
     public function getDecryptedSmtpPassword(): ?string
     {
-        if (empty($this->attributes['smtp_password'])) {
+        $payload = $this->attributes['smtp_password'] ?? null;
+        if (! is_string($payload) || $payload === '') {
             return null;
         }
 
         try {
-            return Crypt::decryptString($this->attributes['smtp_password']);
+            return Crypt::decryptString($payload);
         } catch (\Throwable) {
             return null;
         }
@@ -107,12 +111,13 @@ class MailAccount extends Model
 
     public function getDecryptedImapPassword(): ?string
     {
-        if (empty($this->attributes['imap_password'])) {
+        $payload = $this->attributes['imap_password'] ?? null;
+        if (! is_string($payload) || $payload === '') {
             return null;
         }
 
         try {
-            return Crypt::decryptString($this->attributes['imap_password']);
+            return Crypt::decryptString($payload);
         } catch (\Throwable) {
             return null;
         }

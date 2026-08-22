@@ -61,13 +61,9 @@ class ClaudeService implements AiProviderInterface
                 $this->handleError($response);
             }
 
-            $data = $response->json();
+            $data = AiHttpResponse::jsonArray($response);
 
-            if (is_array($data) && isset($data['content'][0]['text'])) {
-                return (string) $data['content'][0]['text'];
-            }
-
-            return '';
+            return AiHttpResponse::claudeTextContent($data);
         } catch (\Exception $e) {
             Log::error('Claude Generation Exception', ['message' => $e->getMessage()]);
             throw $e;
@@ -110,7 +106,7 @@ class ClaudeService implements AiProviderInterface
     protected function handleError(Response $response): void
     {
         $status = $response->status();
-        $error = $response->json('error.message') ?? $response->body();
+        $error = AiHttpResponse::errorMessage($response);
 
         Log::error('Anthropic Claude API Error', ['status' => $status, 'error' => $error]);
 

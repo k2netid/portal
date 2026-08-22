@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\MailAccount;
+use Modules\Core\System\Models\User;
 
 class MailAccountController extends BaseApiController
 {
@@ -17,7 +18,11 @@ class MailAccountController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $user = $request->user();
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
         $accounts = MailAccount::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
         // Auto-initialize default system account if user has no accounts yet
@@ -33,7 +38,7 @@ class MailAccountController extends BaseApiController
             $accounts = collect([$defaultAccount]);
         }
 
-        $isSuperOrAdmin = (bool) ($user->is_super_admin || $user->isAtLeastRole('admin') || ($user->relationLoaded('roles') ? $user->roles->contains('name', 'super') : $user->roles()->where('name', 'super')->exists()));
+        $isSuperOrAdmin = $this->userIsSuperOrAdmin($user);
         $canManagePersonal = $isSuperOrAdmin || $user->can('manage personal mail account');
         $canManageMulti = $isSuperOrAdmin || $user->can('manage multi mail accounts');
 
@@ -51,10 +56,14 @@ class MailAccountController extends BaseApiController
      */
     public function store(Request $request): JsonResponse
     {
-        $user = $request->user();
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
         $existingCount = MailAccount::where('user_id', $user->id)->count();
 
-        $isSuperOrAdmin = (bool) ($user->is_super_admin || $user->isAtLeastRole('admin') || ($user->relationLoaded('roles') ? $user->roles->contains('name', 'super') : $user->roles()->where('name', 'super')->exists()));
+        $isSuperOrAdmin = $this->userIsSuperOrAdmin($user);
         $canManageMulti = $isSuperOrAdmin || $user->can('manage multi mail accounts');
         $canManagePersonal = $isSuperOrAdmin || $user->can('manage personal mail account');
 
@@ -103,7 +112,12 @@ class MailAccountController extends BaseApiController
      */
     public function show(Request $request, string $id): JsonResponse
     {
-        $account = MailAccount::where('user_id', $request->user()->id)->findOrFail($id);
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
+        $account = MailAccount::where('user_id', $user->id)->findOrFail($id);
 
         return $this->success($account, 'Mail account retrieved successfully');
     }
@@ -113,10 +127,14 @@ class MailAccountController extends BaseApiController
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        $user = $request->user();
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
         $account = MailAccount::where('user_id', $user->id)->findOrFail($id);
 
-        $isSuperOrAdmin = (bool) ($user->is_super_admin || $user->isAtLeastRole('admin') || ($user->relationLoaded('roles') ? $user->roles->contains('name', 'super') : $user->roles()->where('name', 'super')->exists()));
+        $isSuperOrAdmin = $this->userIsSuperOrAdmin($user);
         $canManagePersonal = $isSuperOrAdmin || $user->can('manage personal mail account');
 
         $validated = $request->validate([
@@ -164,7 +182,11 @@ class MailAccountController extends BaseApiController
      */
     public function destroy(Request $request, string $id): JsonResponse
     {
-        $user = $request->user();
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
         $account = MailAccount::where('user_id', $user->id)->findOrFail($id);
 
         $wasDefault = $account->is_default;
@@ -186,7 +208,11 @@ class MailAccountController extends BaseApiController
      */
     public function setDefault(Request $request, string $id): JsonResponse
     {
-        $user = $request->user();
+        $user = $this->resolveConsoleUser($request);
+        if ($user === null) {
+            return $this->unauthorized();
+        }
+
         $account = MailAccount::where('user_id', $user->id)->findOrFail($id);
 
         DB::transaction(function () use ($user, $id): void {
@@ -226,5 +252,13 @@ class MailAccountController extends BaseApiController
             'status' => 'connected',
             'latency_ms' => 12,
         ], "Successfully established handshake with {$host}:{$port}");
+    }
+
+    private function userIsSuperOrAdmin(User $user): bool
+    {
+        return $user->isAtLeastRole('admin')
+            || ($user->relationLoaded('roles')
+                ? $user->roles->contains('name', 'super')
+                : $user->roles()->where('name', 'super')->exists());
     }
 }

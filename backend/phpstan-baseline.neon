@@ -111,25 +111,7 @@ parameters:
 		-
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
-			count: 5
-			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
-
-		-
-			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
-
-		-
-			message: '#^Parameter \#1 \$key of method Modules\\Core\\System\\Http\\Controllers\\Console\\RedisController\:\:stripPrefix\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
-
-		-
-			message: '#^Parameter \#1 \$key of method Redis\:\:del\(\) expects array\<string\>\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
+			count: 4
 			path: Modules/Core/app/System/Http/Controllers/Console/RedisController.php
 
 		-
@@ -173,12 +155,6 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: Modules/Core/app/System/Http/Controllers/Console/SystemController.php
-
-		-
-			message: '#^Call to static method create\(\) on an unknown class Modules\\Intelligence\\Analytics\\Models\\SlowQuery\.$#'
-			identifier: class.notFound
-			count: 1
-			path: Modules/Core/app/System/Http/Middleware/LogSlowQueries.php
 
 		-
 			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$name\.$#'
@@ -269,9 +245,3 @@ parameters:
 			identifier: argument.type
 			count: 5
 			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
-
-		-
-			message: '#^Class DependencyPackageController not found\.$#'
-			identifier: class.notFound
-			count: 2
-			path: Modules/Core/routes/security_api.php

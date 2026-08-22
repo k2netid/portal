@@ -19,7 +19,8 @@ class AnalyticsController extends BaseApiController
      */
     public function cleanup(): JsonResponse
     {
-        $retentionDays = (int) Setting::get('analytics_retention_days', 90);
+        $retentionRaw = Setting::get('analytics_retention_days', 90);
+        $retentionDays = is_numeric($retentionRaw) ? (int) $retentionRaw : 90;
         $cutoffDate = now()->subDays($retentionDays);
         $totalDeleted = 0;
 

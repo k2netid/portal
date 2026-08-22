@@ -64,9 +64,9 @@ class OpenRouterService implements AiProviderInterface
                 $this->handleError($response);
             }
 
-            $data = $response->json();
+            $data = AiHttpResponse::jsonArray($response);
 
-            return $data['choices'][0]['message']['content'] ?? '';
+            return AiHttpResponse::chatCompletionContent($data);
         } catch (\Exception $e) {
             Log::error('OpenRouter Generation Exception', ['message' => $e->getMessage()]);
             throw $e;
@@ -89,12 +89,12 @@ class OpenRouterService implements AiProviderInterface
                 return $this->getDefaultModels();
             }
 
-            $data = $response->json();
+            $data = AiHttpResponse::jsonArray($response);
             $models = [];
 
-            if (is_array($data) && isset($data['data']) && is_array($data['data'])) {
+            if (isset($data['data']) && is_array($data['data'])) {
                 foreach ($data['data'] as $m) {
-                    if (isset($m['id']) && is_string($m['id'])) {
+                    if (is_array($m) && isset($m['id']) && is_string($m['id'])) {
                         $id = $m['id'];
                         $name = isset($m['name']) && is_string($m['name']) ? $m['name'] : $id;
                         $models[] = [
@@ -131,7 +131,7 @@ class OpenRouterService implements AiProviderInterface
     protected function handleError(Response $response): void
     {
         $status = $response->status();
-        $error = $response->json('error.message') ?? $response->body();
+        $error = AiHttpResponse::errorMessage($response);
 
         Log::error('OpenRouter API Error', ['status' => $status, 'error' => $error]);
 

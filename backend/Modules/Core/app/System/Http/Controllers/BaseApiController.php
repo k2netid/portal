@@ -5,11 +5,13 @@ namespace Modules\Core\System\Http\Controllers;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Helpers\IpHelper;
+use Modules\Core\System\Models\User;
 
 /**
  * Base API Controller
@@ -137,6 +139,16 @@ class BaseApiController extends Controller
             [],
             'UNAUTHORIZED'
         );
+    }
+
+    /**
+     * Resolve the authenticated console user from the request.
+     */
+    protected function resolveConsoleUser(Request $request): ?User
+    {
+        $user = $request->user();
+
+        return $user instanceof User ? $user : null;
     }
 
     /**

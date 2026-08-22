@@ -34,7 +34,7 @@ Public theme pages can expose **slots**; active plugins register Vue blocks into
 ## Tests
 
 - Unit: `pluginRegistry.spec.ts`, `PluginThemeBlocksServiceTest.php`
-- E2E: `tests/e2e/theme-plugin-slot.spec.ts`
+- Public theme E2E lives in downstream CMS repos (removed from kernel `main`).
 
 ## Admin: theme block slots per plugin
 
