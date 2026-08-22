@@ -13,7 +13,11 @@ export const SystemModule: AppModule = {
             id: 'system-admin',
             priority: 100,
             routeName: 'system.dashboard',
-            condition: (user) => user?.roles?.some((r: any) => r.name === 'super') ?? false,
+            condition: (user) => {
+                if (!user || typeof user !== 'object') return false;
+                const roles = (user as { roles?: Array<{ name?: string }> }).roles;
+                return roles?.some((r) => r.name === 'super') ?? false;
+            },
             component: defineAsyncComponent(() => import('./components/dashboard/ConsoleDashboard.vue'))
         }
     ]

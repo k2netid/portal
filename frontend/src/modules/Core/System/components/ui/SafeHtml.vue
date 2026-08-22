@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue';
 import DOMPurify from 'dompurify';
+import type { Config } from 'dompurify';
 import { DEFAULT_SANITIZE_CONFIG, CMS_SANITIZE_CONFIG } from '@/shared/utils/sanitizer';
 
 defineOptions({
@@ -11,7 +12,7 @@ const props = defineProps<{
   html: string;
   tag?: string;
   mode?: 'default' | 'cms' | 'Jejakawan';
-  config?: Record<string, any>;
+  config?: Config;
 }>();
 
 const attrs = useAttrs();

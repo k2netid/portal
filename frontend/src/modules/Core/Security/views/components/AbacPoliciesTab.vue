@@ -145,7 +145,7 @@ interface Policy {
   description: string | null;
   target_resource: string;
   action: string;
-  conditions: any[];
+  conditions: unknown[];
   is_active: boolean;
 }
 
@@ -170,7 +170,7 @@ const fetchPolicies = async () => {
     const response = await api.get('/manage/security/abac-policies');
     const data = response.data;
     policies.value = Array.isArray(data) ? data : [];
-  } catch (err: any) {
+  } catch (err: unknown) {
     toast.error.fromResponse(err);
   } finally {
     loading.value = false;
@@ -210,7 +210,7 @@ const savePolicy = async () => {
     try {
       parsedConditions = JSON.parse(form.value.conditions);
       if (!Array.isArray(parsedConditions)) throw new Error('Conditions must be an array');
-    } catch (e) {
+    } catch (_e) {
       toast.error.default('Conditions must be a valid JSON array');
       return;
     }
@@ -231,7 +231,7 @@ const savePolicy = async () => {
 
     isModalOpen.value = false;
     fetchPolicies();
-  } catch (err: any) {
+  } catch (err: unknown) {
     toast.error.fromResponse(err);
   } finally {
     saving.value = false;
@@ -251,7 +251,7 @@ const confirmDelete = async (policy: Policy) => {
     await api.delete(`/manage/security/abac-policies/${policy.id}`);
     toast.success.delete('policy');
     fetchPolicies();
-  } catch (err: any) {
+  } catch (err: unknown) {
     toast.error.fromResponse(err);
   }
 };

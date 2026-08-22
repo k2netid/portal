@@ -47,7 +47,35 @@ export const useNavigationStore = defineStore('navigation', () => {
         registry.value[moduleId] = items;
     };
 
-    const setDatabaseMenus = (menus: Array<any>) => {
+    const setDatabaseMenus = (menus: Array<{
+        is_visible?: boolean;
+        route_name?: string;
+        url?: string;
+        name: string;
+        label_key?: string;
+        icon?: string;
+        group_slug?: string;
+        order?: number;
+        permission?: string;
+        role?: string;
+        extension_slug?: string;
+        badge_text?: string;
+        badge_variant?: string;
+        children?: Array<{
+            is_visible?: boolean;
+            route_name?: string;
+            url?: string;
+            name: string;
+            label_key?: string;
+            icon?: string;
+            permission?: string;
+            role?: string;
+            extension_slug?: string;
+            badge_text?: string;
+            badge_variant?: string;
+            order?: number;
+        }>;
+    }>) => {
         if (!Array.isArray(menus) || menus.length === 0) {
             dbMenuRegistry.value = null;
             return;
@@ -63,15 +91,15 @@ export const useNavigationStore = defineStore('navigation', () => {
                     label: m.name,
                     labelKey: m.label_key || undefined,
                     icon: m.icon || 'folder',
-                    group: m.group_slug as any,
+                    group: m.group_slug,
                     priority: 100 - (m.order || 0),
                     permission: m.permission || undefined,
                     role: m.role || undefined,
                     extension: m.extension_slug || undefined,
                     children: isGroupHeader
-                        ? m.children
-                              .filter((c: any) => c.is_visible !== false)
-                              .map((c: any) => ({
+                        ? m.children!
+                              .filter((c) => c.is_visible !== false)
+                              .map((c) => ({
                                   name: c.route_name || undefined,
                                   to: c.url ? c.url : (c.route_name ? { name: c.route_name } : undefined),
                                   label: c.name,

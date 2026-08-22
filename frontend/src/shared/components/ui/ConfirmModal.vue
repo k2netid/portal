@@ -128,7 +128,7 @@ const props = withDefaults(defineProps<{
 
 const _isOpen = ref(false);
 const emit = defineEmits<{
-    'confirm': [value: any];
+    'confirm': [value: unknown];
     'cancel': [];
     'update:isOpen': [value: boolean];
 }>();
@@ -158,9 +158,21 @@ const checkbox = computed(() => props.checkbox || _checkbox.value);
 const checkboxLabel = computed(() => props.checkboxLabel || _checkboxLabel.value);
 const checkboxDefault = computed(() => props.checkboxDefault || _checkboxDefault.value);
 
-const resolvePromise = ref<((value: any) => void) | null>(null);
+const resolvePromise = ref<((value: unknown) => void) | null>(null);
 
-const confirm = (options: any) => {
+const confirm = (options: {
+    title?: string;
+    description?: string;
+    message?: string;
+    variant?: ConfirmVariant;
+    confirmText?: string;
+    cancelText?: string;
+    input?: boolean;
+    inputPlaceholder?: string;
+    checkbox?: boolean;
+    checkboxLabel?: string;
+    checkboxDefault?: boolean;
+}) => {
     _title.value = options.title || t('common.messages.confirm.title');
     _description.value = options.description || options.message || '';
     _message.value = options.message || '';
@@ -175,13 +187,13 @@ const confirm = (options: any) => {
     checkboxValue.value = options.checkboxDefault || false;
     _isOpen.value = true;
     
-    return new Promise<any>((resolve) => {
+    return new Promise<unknown>((resolve) => {
         resolvePromise.value = resolve;
     });
 };
 
 const handleConfirm = () => {
-    let val: any = true;
+    let val: unknown = true;
     if (input.value) {
         val = inputValue.value;
     } else if (checkbox.value) {

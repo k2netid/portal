@@ -263,7 +263,7 @@ export function useConsoleTheme() {
                     settings.value = resolved as ConsoleThemeSettings;
                     // Note: CSS vars and layout attrs are computed, so we need to wait for them to update
                     setTimeout(() => {
-                        writeConsoleThemeCache(settings.value, (useConsoleTheme() as any).cssVars.value, (useConsoleTheme() as any).layoutAttrs.value);
+                        writeConsoleThemeCache(settings.value, cssVars.value, layoutAttrs.value);
                     }, 0);
                     isThemeBootstrapped.value = true;
                 } catch (error) {
@@ -280,7 +280,7 @@ export function useConsoleTheme() {
                 const data = response.data?.settings ?? response.data ?? {};
                 settings.value = data as ConsoleThemeSettings;
                 setTimeout(() => {
-                    writeConsoleThemeCache(settings.value, (useConsoleTheme() as any).cssVars.value, (useConsoleTheme() as any).layoutAttrs.value);
+                    writeConsoleThemeCache(settings.value, cssVars.value, layoutAttrs.value);
                 }, 0);
                 isThemeBootstrapped.value = true;
             } catch (error) {
@@ -289,7 +289,7 @@ export function useConsoleTheme() {
                     const fallback = await api.get('/manage/system/settings/group/console_branding');
                     settings.value = (fallback.data ?? {}) as ConsoleThemeSettings;
                     setTimeout(() => {
-                        writeConsoleThemeCache(settings.value, (useConsoleTheme() as any).cssVars.value, (useConsoleTheme() as any).layoutAttrs.value);
+                        writeConsoleThemeCache(settings.value, cssVars.value, layoutAttrs.value);
                     }, 0);
                     isThemeBootstrapped.value = true;
                 } catch {

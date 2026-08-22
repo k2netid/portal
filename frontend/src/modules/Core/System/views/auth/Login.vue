@@ -302,7 +302,7 @@ import {
   Loader2,
   Fingerprint,
 } from 'lucide-vue-next';
-import { resetLockdown } from '@/engine/api/client';
+import { resetLockdown, type ApiRequestConfig } from '@/engine/api/client';
 import api from '@/engine/api/client';
 import AuthLayout from '../../components/auth/AuthLayout.vue';
 import { resolveConsoleDashboardLocation } from '@/config/console';
@@ -412,7 +412,7 @@ onMounted(async () => {
     // Fetch latest public settings and install status in parallel
     const [, installStatusResult] = await Promise.allSettled([
         systemStore.fetchPublicSettings(),
-        api.get('/install/status', { _skipManualRedirect: true } as any),
+        api.get('/install/status', { _skipManualRedirect: true } as ApiRequestConfig),
     ]);
 
     // Check if system is in post-reset state
@@ -717,9 +717,10 @@ const loginWithPasskey = async () => {
         });
         
         completeLogin();
-    } catch (error: any) {
+    } catch (error: unknown) {
         logger.error('Passkey login error:', error);
-        message.value = error?.response?.data?.message || t('system.auth.messages.passkeyError', 'Passkey login failed');
+        const axiosErr = error as { response?: { data?: { message?: string } } };
+        message.value = axiosErr?.response?.data?.message || t('system.auth.messages.passkeyError', 'Passkey login failed');
         messageType.value = 'error';
     } finally {
         loading.value = false;

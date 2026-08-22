@@ -172,7 +172,7 @@ const askRemove = async (passkey: Passkey) => {
     await api.delete(`/user/passkeys/${passkey.id}`);
     toast.success.default(t('system.profile.passkeys.removeSuccess', 'Passkey removed successfully'));
     await fetchPasskeys();
-  } catch (error) {
+  } catch (_error) {
     toast.error.default(t('system.profile.passkeys.removeError', 'Failed to remove passkey'));
   }
 };

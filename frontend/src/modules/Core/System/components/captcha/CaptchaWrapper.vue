@@ -67,24 +67,24 @@ const fetchSettings = async () => {
     try {
         const response = await api.get('/captcha/settings')
         const responseData = response.data
-        // Unwrap data envelope if it exists (legacy API client used to do this automatically)
-        const data = (responseData as any)?.data || responseData
+        const data = (responseData as { data?: Record<string, unknown> } | Record<string, unknown>);
+        const unwrapped = (data && typeof data === 'object' && 'data' in data ? data.data : data) as Record<string, unknown> | undefined;
         
         if (props.action === 'login') {
-            enabled.value = data.enabled_login
+            enabled.value = Boolean(unwrapped?.enabled_login)
         } else if (props.action === 'register') {
-            enabled.value = data.enabled_register
+            enabled.value = Boolean(unwrapped?.enabled_register)
         } else if (props.action === 'comment') {
-            enabled.value = data.enabled_comment || data.enabled_guest_comment
+            enabled.value = Boolean(unwrapped?.enabled_comment || unwrapped?.enabled_guest_comment)
         } else if (props.action === 'contact') {
-            enabled.value = data.enabled_contact
+            enabled.value = Boolean(unwrapped?.enabled_contact)
         } else if (props.action === 'forgot-password') {
-            enabled.value = data.enabled_forgot_password
+            enabled.value = Boolean(unwrapped?.enabled_forgot_password)
         } else {
             enabled.value = false
         }
         
-        method.value = data.method
+        method.value = String(unwrapped?.method ?? '')
         
         // Fallback to slider if method is not recognized
         if (!['slider', 'math', 'image'].includes(method.value)) {

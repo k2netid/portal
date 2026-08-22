@@ -133,7 +133,7 @@ export function useIconHydration() {
             if (opacity) el.style.opacity = String(opacity);
 
             // Create vnode
-            const vnode = h(IconComponent as any, {
+            const vnode = h(IconComponent as Component, {
                 size: size,
                 color: color,
                 strokeWidth: strokeWidth,

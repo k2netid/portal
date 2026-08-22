@@ -352,7 +352,7 @@ const currentRoleName = computed(() => {
     });
     
     const topRole = sortedRoles[0];
-    const label = (topRole as any)?.label || topRole?.name || '';
+    const label = (topRole as { label?: string; name?: string })?.label || topRole?.name || '';
     return label.replace(/-/g, ' ');
 });
 

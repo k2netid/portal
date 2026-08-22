@@ -22,7 +22,7 @@ export async function bootstrapConsoleApp() {
                 authStore.clearAuth();
             }
         }
-    } catch (e) {
+    } catch (_e) {
         authStore.clearAuth();
         logger.warning('[Kernel] No active session found or profile fetch failed.');
     } finally {

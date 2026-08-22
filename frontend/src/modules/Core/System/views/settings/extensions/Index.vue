@@ -325,7 +325,7 @@ const toggleFeatureStatus = async (feature: FeatureItem) => {
         } else {
             toast.error(response.data?.message || t('system.appStore.messages.featureToggleFailed'));
         }
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
         toast.error(t('system.appStore.messages.featureToggleError'));
     } finally {
         togglingFeature.value[feature.slug] = false;
@@ -344,7 +344,7 @@ const fetchExtensions = async () => {
         } else if (response.data?.success) {
             extensions.value = response.data.data || [];
         }
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
         toast.error(t('system.appStore.messages.loadFailed'));
     } finally {
         loading.value = false;
@@ -393,7 +393,7 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
         } else {
             toast.error(t('system.appStore.messages.toggleFailed', { action }));
         }
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
         toast.error(t('system.appStore.messages.toggleError', { action }));
     }
 };
@@ -417,7 +417,7 @@ const uninstallExtension = async (slug: string) => {
             await fetchExtensions();
             await systemStore.fetchPublicSettings({ force: true });
         }
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
         toast.error(t('system.appStore.messages.uninstallFailed'));
     }
 };
@@ -506,7 +506,7 @@ const saveSettings = async () => {
     let parsedSettings: Record<string, unknown>;
     try {
         parsedSettings = JSON.parse(rawSettingsJson.value);
-    } catch (e) {
+    } catch (_e) {
         toast.error(t('system.appStore.messages.invalidJson'));
         return;
     }
@@ -522,7 +522,7 @@ const saveSettings = async () => {
             settingsModalOpen.value = false;
             await fetchExtensions();
         }
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
         toast.error(t('system.appStore.messages.settingsSaveFailed'));
     }
 };
@@ -557,7 +557,7 @@ const cloneGitRepo = async (repoUrl: string) => {
     }
 };
 
-const scaffoldPlugin = async (payload: any) => {
+const scaffoldPlugin = async (payload: Record<string, unknown>) => {
     scaffolding.value = true;
     scaffoldError.value = '';
     try {
@@ -574,14 +574,14 @@ const scaffoldPlugin = async (payload: any) => {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `${payload.slug}.zip`);
+            link.setAttribute('download', `${String(payload.slug ?? 'plugin')}.zip`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             toast.success(t('system.appStore.scaffolder.downloadSuccess'));
             scaffolderModalOpen.value = false;
         }
-    } catch (err: any) {
+    } catch (err: unknown) {
         const axiosErr = err as { response?: { data?: { message?: string } } };
         scaffoldError.value = axiosErr.response?.data?.message || t('system.appStore.scaffolder.scaffoldFailed');
         toast.error(scaffoldError.value);

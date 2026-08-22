@@ -19,8 +19,12 @@ function toPlainError(err: unknown): Record<string, unknown> | undefined {
             name: err.name,
             message: err.message,
             stack: err.stack,
-            // Preserve any custom fields on the error instance
-            ...(err as any),
+            // Preserve enumerable own fields without copying prototype junk via `any`
+            ...Object.fromEntries(
+                Object.getOwnPropertyNames(err)
+                    .filter((k) => !['name', 'message', 'stack'].includes(k))
+                    .map((k) => [k, (err as unknown as Record<string, unknown>)[k]]),
+            ),
         };
     }
     if (typeof err === 'object') {
@@ -297,12 +301,15 @@ export default {
             const isError = err instanceof Error;
             const message = isError ? (err.message || 'Vue Error') : (typeof err === 'string' ? err : 'Vue Error');
 
-            // Vue 3: `$options` is not always populated the same way in production builds.
+            const inst = instance as {
+                $?: { type?: { __file?: string; name?: string } };
+                $options?: { __file?: string; name?: string };
+            } | null;
             const component =
-                (instance as any)?.$?.type?.__file ||
-                (instance as any)?.$?.type?.name ||
-                (instance as any)?.$options?.__file ||
-                (instance as any)?.$options?.name;
+                inst?.$?.type?.__file ||
+                inst?.$?.type?.name ||
+                inst?.$options?.__file ||
+                inst?.$options?.name;
 
             logger.error(message, {
                 stack: isError ? err.stack : undefined,

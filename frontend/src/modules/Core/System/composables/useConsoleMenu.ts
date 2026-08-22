@@ -19,7 +19,7 @@ export interface ConsoleMenuItem {
     badge_variant?: 'default' | 'primary' | 'amber' | 'emerald' | 'rose';
     order: number;
     is_visible: boolean;
-    meta?: Record<string, any> | null;
+    meta?: Record<string, unknown> | null;
     children?: ConsoleMenuItem[];
 }
 

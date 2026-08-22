@@ -162,7 +162,7 @@ apiClient.interceptors.response.use(
         if (responseData && typeof responseData === 'object' && 'success' in responseData) {
             if (responseData.success && responseData.data !== undefined) {
                 if ('meta' in responseData) {
-                    (response as any).meta = responseData.meta;
+                    (response as AxiosResponse & { meta?: unknown }).meta = responseData.meta;
                 }
                 response.data = responseData.data;
             }

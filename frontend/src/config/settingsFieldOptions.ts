@@ -273,5 +273,5 @@ export function shouldUseDropdown(fieldKey: string): boolean {
 
 // Get mail port options based on encryption
 export function getMailPortOptions(encryption: string): SettingsOption[] {
-    return (mailPortOptions as Record<string, any>)[encryption] || mailPortOptions.null
+    return (mailPortOptions as Record<string, SettingsOption[]>)[encryption] ?? mailPortOptions.null ?? []
 }

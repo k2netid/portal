@@ -158,8 +158,8 @@ export const useAuthStore = defineStore('auth', {
             } catch (error: unknown) {
                 // Handle different error statuses
                 const axiosError = isAxiosError(error) ? error : null;
-                const errorData = (axiosError?.response?.data as any) || {};
-                const errors = errorData.errors || errorData.data || {};
+                const errorData = (axiosError?.response?.data as Record<string, unknown>) || {};
+                const errors = (errorData.errors || errorData.data || {}) as Record<string, unknown>;
                 const status = axiosError?.response?.status;
                 const headers = axiosError?.response?.headers || {};
 
@@ -169,7 +169,7 @@ export const useAuthStore = defineStore('auth', {
                     let retryAfter = 60; // Default 60 seconds
 
                     // Try from response body first
-                    if (errorData.retry_after) {
+                    if (errorData.retry_after != null) {
                         retryAfter = parseInt(String(errorData.retry_after), 10);
                     }
                     // Try from headers (axios lowercases header names)
@@ -194,18 +194,20 @@ export const useAuthStore = defineStore('auth', {
                     // Email not verified
                     return {
                         success: false,
-                        message: errorData.message || 'Please verify your email address before logging in.',
+                        message: String(errorData.message || 'Please verify your email address before logging in.'),
                         errors: {},
-                        requiresVerification: errorData.requires_verification || false,
+                        requiresVerification: Boolean(errorData.requires_verification),
                     };
                 }
 
                 // Extract first error message if available
-                let errorMessage = errorData.message;
-                if (!errorMessage && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
-                    errorMessage = errors.email[0];
-                } else if (!errorMessage && errors.password && Array.isArray(errors.password) && errors.password.length > 0) {
-                    errorMessage = errors.password[0];
+                let errorMessage = typeof errorData.message === 'string' ? errorData.message : undefined;
+                const emailErrors = errors.email;
+                const passwordErrors = errors.password;
+                if (!errorMessage && Array.isArray(emailErrors) && typeof emailErrors[0] === 'string') {
+                    errorMessage = emailErrors[0];
+                } else if (!errorMessage && Array.isArray(passwordErrors) && typeof passwordErrors[0] === 'string') {
+                    errorMessage = passwordErrors[0];
                 } else if (!errorMessage) {
                     errorMessage = 'Login failed. Please check your credentials.';
                 }
@@ -213,7 +215,7 @@ export const useAuthStore = defineStore('auth', {
                 return {
                     success: false,
                     message: errorMessage,
-                    errors: errors,
+                    errors: errors as Record<string, string[]>,
                 };
             }
         },
@@ -271,13 +273,16 @@ export const useAuthStore = defineStore('auth', {
                     _schema: userModelSchema,
                     _skipManualRedirect: true,
                 } as ApiRequestConfig);
-                const userData = (response.data as any)?.data || response.data;
-                this.user = userData as User;
+                const userData = (response.data as { data?: User } | User);
+                const resolvedUser = (userData && typeof userData === 'object' && 'data' in userData && userData.data)
+                    ? userData.data
+                    : (userData as User);
+                this.user = resolvedUser;
                 this.isAuthenticated = true;
-                if (userData) {
-                    this.setAuth({ user: userData as User });
+                if (resolvedUser) {
+                    this.setAuth({ user: resolvedUser });
                 }
-                return { success: true, data: { user: userData as User } };
+                return { success: true, data: { user: resolvedUser } };
             };
 
             const attempt = async (refreshCsrf: boolean): Promise<AuthResponse> => {

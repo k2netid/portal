@@ -143,10 +143,10 @@ const endDrag = async (_e?: MouseEvent | TouchEvent) => {
     if (!dragging.value) return
     
     dragging.value = false
-    document.removeEventListener('mousemove', onDrag as any)
-    document.removeEventListener('mouseup', endDrag as any)
-    document.removeEventListener('touchmove', onDrag as any)
-    document.removeEventListener('touchend', endDrag as any)
+    document.removeEventListener('mousemove', onDrag as (evt: MouseEvent) => void)
+    document.removeEventListener('mouseup', endDrag as (evt: MouseEvent) => void)
+    document.removeEventListener('touchmove', onDrag as (evt: TouchEvent) => void)
+    document.removeEventListener('touchend', endDrag as (evt: TouchEvent) => void)
     
     // Server-side verification
     try {
@@ -183,9 +183,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    document.removeEventListener('mousemove', onDrag as any)
-    document.removeEventListener('mouseup', endDrag as any)
-    document.removeEventListener('touchmove', onDrag as any)
-    document.removeEventListener('touchend', endDrag as any)
+    document.removeEventListener('mousemove', onDrag as (evt: MouseEvent) => void)
+    document.removeEventListener('mouseup', endDrag as (evt: MouseEvent) => void)
+    document.removeEventListener('touchmove', onDrag as (evt: TouchEvent) => void)
+    document.removeEventListener('touchend', endDrag as (evt: TouchEvent) => void)
 })
 </script>

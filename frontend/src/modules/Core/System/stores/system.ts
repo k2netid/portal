@@ -2,7 +2,7 @@ import { persistConsoleDashboardSlug, readConsoleDashboardSlugFromPayload } from
 import { persistConsoleDarkModeToStorage, readConsoleDarkModeFromStorage } from '@/config/theme';
 import { logger } from '@/shared/utils/logger';
 import { defineStore } from 'pinia';
-import api from '@/engine/api/client';
+import api, { type ApiRequestConfig } from '@/engine/api/client';
 import { applyFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
 
 
@@ -14,11 +14,11 @@ export interface SiteSettings {
     site_version: string;
     site_logo: string;
     site_favicon: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export interface SystemState {
-    settings: Record<string, any>;
+    settings: Record<string, unknown>;
     appIdentity: {
         app_name: string;
         app_logo: string;
@@ -35,9 +35,9 @@ export interface SystemState {
         end_time: string;
     };
     loadingGroups: Record<string, boolean>;
-    settingsPromises: Record<string, Promise<any>>;
+    settingsPromises: Record<string, Promise<unknown>>;
     publicSettingsLoaded: boolean;
-    publicSettingsPromise: Promise<any> | null;
+    publicSettingsPromise: Promise<unknown> | null;
     themeMode: 'light' | 'dark' | 'system';
     isDarkMode: boolean;
     consoleDashboardSlug: string;
@@ -212,7 +212,7 @@ export const useSystemStore = defineStore('system', {
             }
         },
 
-        getSetting(key: string, defaultValue: any = null) {
+        getSetting(key: string, defaultValue: unknown = null) {
             return this.settings[key] !== undefined ? this.settings[key] : defaultValue;
         },
 
@@ -258,7 +258,7 @@ export const useSystemStore = defineStore('system', {
         async loadThemePreferences() {
             if (!this.isAuthenticatedLocally()) return;
             try {
-                const response = await api.get('/manage/system/profile/preferences', { _skipManualRedirect: true } as any);
+                const response = await api.get('/manage/system/profile/preferences', { _skipManualRedirect: true } as ApiRequestConfig);
                 const backendMode = response.data?.dark_mode;
                 const isValidThemeMode = backendMode === 'light' || backendMode === 'dark' || backendMode === 'system';
                 if (isValidThemeMode) {
@@ -275,7 +275,7 @@ export const useSystemStore = defineStore('system', {
         async syncThemeWithBackend(mode: string) {
             if (!this.isAuthenticatedLocally()) return;
             try {
-                await api.put('/manage/system/profile/preferences', { dark_mode: mode }, { _skipManualRedirect: true } as any);
+                await api.put('/manage/system/profile/preferences', { dark_mode: mode }, { _skipManualRedirect: true } as ApiRequestConfig);
             } catch (error: unknown) {
                 const message = error instanceof Error ? error.message : String(error);
                 logger.debug('[System Store] Theme sync failed:', { message });

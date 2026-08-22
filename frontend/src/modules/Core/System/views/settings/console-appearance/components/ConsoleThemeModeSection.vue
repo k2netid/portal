@@ -49,7 +49,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { ConsoleThemeMode } from '@/modules/Core/System/constants/consoleThemeMode';
 
-const props = defineProps<{
+defineProps<{
     themeMode: ConsoleThemeMode;
 }>();
 

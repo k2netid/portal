@@ -5,7 +5,7 @@ import type { Component } from 'vue';
 export interface DashboardConfig {
     id: string;
     priority: number;
-    condition: (user: any, authStore: any) => boolean;
+    condition: (user: unknown, authStore: unknown) => boolean;
     component: Component | (() => Promise<Component>);
     routeName?: string;
 }

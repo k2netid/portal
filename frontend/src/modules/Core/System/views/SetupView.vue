@@ -103,14 +103,15 @@ const handleSetup = async () => {
         
         try {
             await getCsrfCookie();
-        } catch (e) {
+        } catch (_e) {
             // Proceed even if this fails
         }
         
         window.location.href = '/auth/console-sign-in';
     }, 1000);
-  } catch (err: any) {
-    toast.error.default(err.response?.data?.message || 'Failed to setup admin account.');
+  } catch (err: unknown) {
+    const axiosErr = err as { response?: { data?: { message?: string } } };
+    toast.error.default(axiosErr.response?.data?.message || 'Failed to setup admin account.');
   } finally {
     loading.value = false;
   }

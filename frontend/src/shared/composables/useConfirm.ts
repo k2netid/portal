@@ -17,7 +17,7 @@ export interface ConfirmOptions {
 
 interface ConfirmState extends ConfirmOptions {
     isOpen: boolean;
-    onConfirm: (val: any) => void;
+    onConfirm: (val: unknown) => void;
     onCancel: () => void;
 }
 
@@ -53,8 +53,12 @@ export function useConfirm() {
                 checkbox: options.checkbox || false,
                 checkboxLabel: options.checkboxLabel || '',
                 checkboxDefault: options.checkboxDefault || false,
-                onConfirm: (val?: any) => {
-                    resolve(options.input || options.checkbox ? (val ?? '') : true);
+                onConfirm: (val?: unknown) => {
+                    if (options.input || options.checkbox) {
+                        resolve(typeof val === 'string' || typeof val === 'boolean' ? val : String(val ?? ''));
+                    } else {
+                        resolve(true);
+                    }
                     confirmState.value.isOpen = false;
                 },
                 onCancel: () => {

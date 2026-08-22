@@ -519,7 +519,7 @@ const checkUsername = async () => {
     try {
         const response = await api.post('/manage/system/profile/username/check', { username: profileForm.value.username });
         usernameAvailable.value = response.data.data.available;
-    } catch (error) {
+    } catch (_error) {
         usernameAvailable.value = null;
     } finally {
         checkingUsername.value = false;

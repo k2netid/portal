@@ -239,7 +239,7 @@ import {
   DropdownMenuItem, DropdownMenuTrigger 
 } from '@/shared/components/ui';
 import { Loader2, CheckCircle2, XCircle, ArrowRight, Languages } from 'lucide-vue-next';
-import api from '@/engine/api/client';
+import api, { type ApiRequestConfig } from '@/engine/api/client';
 import { useToast } from '@/shared/composables/useToast';
 import { useI18n } from 'vue-i18n';
 import { PageHeader } from '@/shared/components/shell';
@@ -252,7 +252,7 @@ const currentLocale = computed(() => getLocale());
 const step = ref('requirements');
 const loading = ref(true);
 const submitting = ref(false);
-const requirements = ref<any>({});
+const requirements = ref<Record<string, unknown>>({});
 const serverOS = ref({ family: 'unknown', distro: 'unknown' });
 const toast = useToast();
 
@@ -283,7 +283,7 @@ const isRequirementsMet = computed(() => {
 
 const fetchStatus = async () => {
   try {
-    const response = await api.get('/install/status', { _skipManualRedirect: true } as any);
+    const response = await api.get('/install/status', { _skipManualRedirect: true } as ApiRequestConfig);
     requirements.value = response.data.requirements;
     serverOS.value = response.data.os || { family: 'unknown', distro: 'unknown' };
     if (response.data.is_installed) {
@@ -300,11 +300,12 @@ const fetchStatus = async () => {
 const handleInstall = async () => {
   submitting.value = true;
   try {
-    const response = await api.post('/install', form.value, { _skipManualRedirect: true } as any);
+    const response = await api.post('/install', form.value, { _skipManualRedirect: true } as ApiRequestConfig);
     toast.success.default(response.data.message);
     step.value = 'success';
-  } catch (err: any) {
-    toast.error.default(err.response?.data?.message || t('system.installer.messages.configCheckError'));
+  } catch (err: unknown) {
+    const axiosErr = err as { response?: { data?: { message?: string } } };
+    toast.error.default(axiosErr.response?.data?.message || t('system.installer.messages.configCheckError'));
   } finally {
     submitting.value = false;
   }

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import api from '../api/client';
 import { logger } from '@/shared/utils/logger';
+import type { LoginCredentials } from '@/engine/types/auth';
 
 interface User {
     id: string;
@@ -34,34 +35,44 @@ export const useAuthStore = defineStore('auth', {
     }),
 
     actions: {
-        async login(credentials: any): Promise<LoginResult> {
+        async login(credentials: LoginCredentials): Promise<LoginResult> {
             this.loading = true;
             try {
-                const response = await api.post('/login', credentials) as any;
+                const response = await api.post('/login', credentials) as {
+                    requires_two_factor?: boolean;
+                    user_id?: string | number;
+                    user?: User;
+                };
                 
                 // If backend says 2FA is needed
                 if (response.requires_two_factor) {
+                    const rawId = response.user_id;
                     return { 
                         success: true, 
                         requiresTwoFactor: true, 
-                        userId: response.user_id 
+                        userId: typeof rawId === 'number' ? rawId : (rawId != null ? Number(rawId) : undefined),
                     };
                 }
 
                 // Normal Success
-                this.user = response.user;
+                this.user = response.user ?? null;
                 this.isAuthenticated = true;
                 return { success: true };
 
-            } catch (error: any) {
-                const response = error.response;
+            } catch (error: unknown) {
+                const response = (error as {
+                    response?: {
+                        status?: number;
+                        data?: { retry_after?: number; message?: string; errors?: Record<string, string[]> };
+                    };
+                }).response;
                 
                 if (response?.status === 429) {
                     return {
                         success: false,
                         rateLimited: true,
-                        retryAfter: response.data.retry_after,
-                        message: response.data.message
+                        retryAfter: response.data?.retry_after,
+                        message: response.data?.message
                     };
                 }
 

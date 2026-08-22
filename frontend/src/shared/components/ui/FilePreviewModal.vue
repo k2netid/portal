@@ -75,7 +75,7 @@ const props = defineProps<{
   mimeType?: string;
 }>();
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'update:open', value: boolean): void;
 }>();
 

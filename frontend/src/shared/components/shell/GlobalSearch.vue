@@ -491,15 +491,15 @@ const matchingStaticActions = computed<SearchItem[]>(() => {
     return staticActions.value
         .filter(action => {
             // 1. Role check
-            const role = (action as any).role;
+            const role = (action as SearchItem & { role?: string }).role;
             if (role && !authStore.isAtLeastRole(role)) return false;
             
             // 2. Permission check
-            const permission = (action as any).permission;
+            const permission = (action as SearchItem & { permission?: string }).permission;
             if (permission && !authStore.hasPermission(permission)) return false;
             
             // 3. organization context check
-            const context = (action as any).context;
+            const context = (action as SearchItem & { context?: string }).context;
             if (context) {
                 if (context === 'foundation' && !isGlobal) return false;
                 if (context === 'unit' && isGlobal) return false;

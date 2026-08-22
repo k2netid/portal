@@ -328,8 +328,9 @@ const handleActivate = async () => {
     toast.success(res.data?.message || 'License activated successfully!');
     inputKey.value = '';
     await fetchLicense();
-  } catch (err: any) {
-    const message = err.response?.data?.message || err.message || 'Failed to activate license.';
+  } catch (err: unknown) {
+    const axiosErr = err as { response?: { data?: { message?: string } }; message?: string };
+    const message = axiosErr.response?.data?.message || axiosErr.message || 'Failed to activate license.';
     toast.error(message);
   } finally {
     activating.value = false;
@@ -342,8 +343,9 @@ const refreshLicense = async () => {
     const res = await api.post('/manage/system/license/refresh');
     toast.success(res.data?.message || 'License verified with JA-CP!');
     await fetchLicense();
-  } catch (err: any) {
-    const message = err.response?.data?.message || err.message || 'Failed to sync with JA-CP.';
+  } catch (err: unknown) {
+    const axiosErr = err as { response?: { data?: { message?: string } }; message?: string };
+    const message = axiosErr.response?.data?.message || axiosErr.message || 'Failed to sync with JA-CP.';
     toast.error(message);
   } finally {
     syncing.value = false;
@@ -365,8 +367,9 @@ const handleDeactivate = async () => {
     const res = await api.post('/manage/system/license/deactivate');
     toast.success(res.data?.message || 'License deactivated.');
     await fetchLicense();
-  } catch (err: any) {
-    const message = err.response?.data?.message || err.message || 'Failed to deactivate.';
+  } catch (err: unknown) {
+    const axiosErr = err as { response?: { data?: { message?: string } }; message?: string };
+    const message = axiosErr.response?.data?.message || axiosErr.message || 'Failed to deactivate.';
     toast.error(message);
   } finally {
     deactivating.value = false;

@@ -20,7 +20,7 @@
         "test:e2e:list": "playwright test --list",
         "test:e2e:smoke": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts tests/e2e/onboarding-wizard.spec.ts",
         "test:e2e:auth": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts",
-        "quality:frontend": "eslint src tests --max-warnings=320 && npm run i18n:check && npm run i18n:check:full && npm run type-check && npm run test:unit && npm run test:e2e:list",
+        "quality:frontend": "eslint src tests --max-warnings=0 && npm run i18n:check && npm run i18n:check:full && npm run type-check && npm run test:unit && npm run test:e2e:list",
         "quality:frontend:gate": "npm run quality:frontend && PLAYWRIGHT_USE_FULL_STACK=1 npm run test:e2e:ci",
         "quality:perf": "node ./scripts/check-perf-budget.mjs",
         "clean:ts": "rm -rf node_modules/.tmp",

@@ -57,7 +57,15 @@ defineProps<{
 }>();
 
  
-const shouldShow = (props: any) => {
+type BubbleShouldShowProps = {
+    editor: {
+        isActive: (name: string) => boolean;
+        isEditable: boolean;
+        state: { selection: { empty: boolean } };
+    };
+};
+
+const shouldShow = (props: BubbleShouldShowProps) => {
     const { editor } = props;
     // Don't show if image or video is selected (we will have a different bubble for that)
     if (editor.isActive('image') || editor.isActive('video') || editor.isActive('htmlEmbed') || editor.isActive('icon')) {

@@ -101,7 +101,7 @@ async function triggerWebhook(id: string) {
   try {
     await api.post(`/manage/infra/webhooks/${id}/trigger`, { payload: { message: 'Ping from Jejakawan Control Plane' } });
     toast.success.default(t('system.webhooks.messages.testDispatched'));
-  } catch (e) {
+  } catch (_e) {
     toast.error.default(t('system.webhooks.messages.testFailed'));
   }
 }

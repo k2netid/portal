@@ -30,7 +30,8 @@ export async function ensureDeferredLocales(modules: DeferredLocaleModule[]): Pr
         return;
     }
 
-    const currentLocale = (i18n.global.locale as any).value as 'en' | 'id' | 'su';
+    const localeRef = i18n.global.locale;
+    const currentLocale = (typeof localeRef === 'string' ? localeRef : (localeRef as { value: string }).value) as 'en' | 'id' | 'su';
 
     await Promise.all(
         pending.map(async (key) => {

@@ -447,7 +447,7 @@ const fetchSettings = async () => {
 
         settings.value = Array.from(uniqueSettingsMap.values());
 
-        const ensureSetting = (key: string, defaultValue: any, type: string, group: string, description = '') => {
+        const ensureSetting = (key: string, defaultValue: unknown, type: string, group: string, description = '') => {
             if (!uniqueSettingsMap.has(key)) {
                 settings.value.push({
                     id: 'temp_' + key,

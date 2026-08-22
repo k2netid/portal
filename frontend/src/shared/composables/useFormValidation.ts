@@ -21,7 +21,7 @@ export function useFormValidation<T extends Record<string, unknown>>(zodSchema: 
      * Built-in validation rules (legacy support)
      */
      
-    const rules: Record<string, any> = {
+    const rules: Record<string, (...args: never[]) => unknown> = {
         required: (value: unknown) => {
             const valid = value !== null && value !== undefined && value !== '' &&
                 (Array.isArray(value) ? value.length > 0 : true);
@@ -201,28 +201,28 @@ export function useFormValidation<T extends Record<string, unknown>>(zodSchema: 
 
         for (const rule of fieldRules) {
              
-            let validator: any;
+            let validator: ValidatorFunction | undefined;
             let result: boolean | string | undefined;
 
             if (typeof rule === 'string') {
-                validator = rules[rule] as ValidatorFunction;
-                if (validator) {
+                const candidate = rules[rule];
+                if (typeof candidate === 'function') {
+                    validator = candidate as ValidatorFunction;
                     result = validator(value, formData);
                 }
             } else if (rule && typeof rule === 'object') {
                 const keys = Object.keys(rule);
                 const ruleName = keys[0];
                 if (ruleName) {
-                    const ruleParams = (rule as Record<string, any>)[ruleName];
+                    const ruleParams = (rule as Record<string, unknown>)[ruleName];
                     const ruleCreator = rules[ruleName];
 
-                    if (ruleCreator) {
-                        if (Array.isArray(ruleParams)) {
-                            validator = ruleCreator(...ruleParams);
-                        } else {
-                            validator = ruleCreator(ruleParams);
-                        }
-                        if (validator) {
+                    if (typeof ruleCreator === 'function') {
+                        const built = Array.isArray(ruleParams)
+                            ? (ruleCreator as (...args: unknown[]) => unknown)(...ruleParams)
+                            : (ruleCreator as (arg: unknown) => unknown)(ruleParams);
+                        if (typeof built === 'function') {
+                            validator = built as ValidatorFunction;
                             result = validator(value, formData);
                         }
                     }

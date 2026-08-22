@@ -72,7 +72,13 @@ defineEmits<{
 }>();
 
  
-const shouldShow = (props: any) => {
+type BubbleShouldShowProps = {
+    editor: {
+        isActive: (name: string) => boolean;
+    };
+};
+
+const shouldShow = (props: BubbleShouldShowProps) => {
     const { editor } = props;
     return editor.isActive('image') || editor.isActive('video');
 };

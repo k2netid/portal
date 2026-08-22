@@ -44,4 +44,11 @@ export default tseslint.config(
             'no-unused-vars': 'off', // handled by @typescript-eslint/no-unused-vars
         },
     },
+    {
+        // Vitest specs lean on loose doubles/mocks; keep production `src/` any-free.
+        files: ['tests/**/*.{ts,tsx,vue,js}', '**/*.{spec,test}.{ts,tsx,vue,js}'],
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'off',
+        },
+    },
 );

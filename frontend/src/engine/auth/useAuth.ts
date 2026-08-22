@@ -3,6 +3,7 @@ import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useConsoleContextStore } from '../stores/consoleContext';
 import { useRouter } from 'vue-router';
 import { buildConsolePath, resolveConsoleDashboardLocation } from '@/config/console';
+import type { LoginCredentials } from '@/engine/types/auth';
 
 export function useAuth() {
     const authStore = useAuthStore();
@@ -12,18 +13,18 @@ export function useAuth() {
     const loading = ref(false);
     const error = ref<string | null>(null);
     const retryAfter = ref(0);
-    let retryTimer: any = null;
+    let retryTimer: ReturnType<typeof setInterval> | null = null;
 
     const startRetryTimer = (seconds: number) => {
         retryAfter.value = seconds;
         if (retryTimer) clearInterval(retryTimer);
         retryTimer = setInterval(() => {
             retryAfter.value--;
-            if (retryAfter.value <= 0) clearInterval(retryTimer);
+            if (retryAfter.value <= 0 && retryTimer) clearInterval(retryTimer);
         }, 1000);
     };
 
-    const performLogin = async (credentials: any) => {
+    const performLogin = async (credentials: LoginCredentials) => {
         loading.value = true;
         error.value = null;
 

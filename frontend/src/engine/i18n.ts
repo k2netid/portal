@@ -41,7 +41,7 @@ const localeLoaders: Record<string, () => Promise<{ default: Record<string, unkn
 const loadedLocales = new Set<string>(['id']);
 
 // Bootstrap with the primary locale to keep initial bundle compact and eliminate main-thread deepCopy overhead
-const initialMessages: Record<string, any> = {
+const initialMessages = {
     id,
 };
 
@@ -59,7 +59,7 @@ export const loadLocaleMessages = async (locale: string): Promise<void> => {
     const loader = localeLoaders[resolved];
     if (loader) {
         const bundle = await loader();
-        getComposer().setLocaleMessage(resolved, bundle.default as any);
+        getComposer().setLocaleMessage(resolved, bundle.default);
         loadedLocales.add(resolved);
     }
 };

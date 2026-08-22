@@ -520,9 +520,13 @@ const { confirm } = useConfirm();
 const toast = useToast();
 
 // Refs for child components
-const overviewTabRef = ref<any>(null);
-const blocklistTabRef = ref<any>(null);
-const whitelistTabRef = ref<any>(null);
+const overviewTabRef = ref<{
+    refresh?: () => void;
+    setIpStatus?: (status: IpStatus | null) => void;
+    clearSelection?: () => void;
+} | null>(null);
+const blocklistTabRef = ref<{ refresh?: () => void; clearSelection?: () => void } | null>(null);
+const whitelistTabRef = ref<{ refresh?: () => void; clearSelection?: () => void } | null>(null);
 
 // Core Data
 const logs = ref<Log[]>([]);
@@ -751,7 +755,7 @@ const checkIPStatus = async (ip: string): Promise<void> => {
     try {
         const response = await api.get('/manage/security/check-ip', { params: { ip_address: ip } });
         const status = parseSingleResponse<IpStatus>(response) as IpStatus || null;
-        overviewTabRef.value?.setIpStatus(status);
+        overviewTabRef.value?.setIpStatus?.(status);
     } catch (_error: unknown) {
         logger.error('Failed to check IP status:', _error);
         toast.error.fromResponse(_error);
@@ -787,7 +791,7 @@ const bulkBlockFromLogs = async (ips: string[]): Promise<void> => {
     try {
         await api.post('/manage/security/bulk-block', { ip_addresses: ips });
         toast.success.action(t('system.security.messages.bulkBlockSuccess'));
-        overviewTabRef.value?.clearSelection();
+        overviewTabRef.value?.clearSelection?.();
         await fetchBlocklist();
         await fetchLogs();
     } catch (_error: unknown) {
@@ -846,7 +850,7 @@ const bulkUnblock = async (ips: string[]): Promise<void> => {
     try {
         await api.post('/manage/security/bulk-unblock', { ip_addresses: ips });
         toast.success.action(t('system.security.messages.bulkUnblockSuccess'));
-        blocklistTabRef.value?.clearSelection();
+        blocklistTabRef.value?.clearSelection?.();
         await fetchBlocklist();
     } catch (_error: unknown) {
         logger.error('Failed to bulk unblock:', _error);
@@ -896,7 +900,7 @@ const bulkRemoveWhitelist = async (ips: string[]): Promise<void> => {
     try {
         await api.post('/manage/security/bulk-remove-whitelist', { ip_addresses: ips });
         toast.success.action(t('system.security.messages.bulkWhitelistRemoveSuccess'));
-        whitelistTabRef.value?.clearSelection();
+        whitelistTabRef.value?.clearSelection?.();
         await fetchWhitelist();
     } catch (_error: unknown) {
         logger.error('Failed to bulk remove whitelist:', _error);

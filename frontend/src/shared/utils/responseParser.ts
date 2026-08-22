@@ -150,7 +150,7 @@ export function getResponseList<T>(payload: unknown): T[] {
         return Array.isArray(payload) ? payload as T[] : [];
     }
 
-    const obj = payload as Record<string, any>;
+    const obj = payload as Record<string, unknown>;
     
     // 1. If payload is directly the array
     if (Array.isArray(obj)) return obj as T[];
@@ -159,7 +159,10 @@ export function getResponseList<T>(payload: unknown): T[] {
     if (Array.isArray(obj.data)) return obj.data as T[];
 
     // 3. If it's paginated { data: { data: [...] } }
-    if (obj.data && Array.isArray(obj.data.data)) return obj.data.data as T[];
+    const nested = obj.data;
+    if (nested && typeof nested === 'object' && Array.isArray((nested as Record<string, unknown>).data)) {
+        return (nested as Record<string, unknown>).data as T[];
+    }
 
     // 4. If it's wrapped in { items: [...] }
     if (Array.isArray(obj.items)) return obj.items as T[];
