@@ -110,6 +110,7 @@
           :active-label="activeLabel"
           :folder-counts="folderCounts"
           :labels="labels"
+          :storage-stats="storageStats"
           @select-folder="selectFolder"
           @select-label="selectLabel"
           @manage-labels="isLabelsModalOpen = true"
@@ -242,6 +243,7 @@ const {
     labels,
     messages,
     folderCounts,
+    storageStats,
     loading,
     syncing,
     isSettingsOpen,

@@ -3,7 +3,7 @@
     :open="isOpen"
     @update:open="v => { if(!v) $emit('close') }"
   >
-    <DialogContent class="!p-0 !gap-0 max-w-2xl h-[560px] max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden">
+    <DialogContent class="!p-0 !gap-0 max-w-2xl h-[580px] max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl [&>button[aria-label=Close]]:hidden">
       <!-- Header -->
       <div class="h-12 px-5 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
@@ -41,46 +41,95 @@
 
       <!-- Tab Contents (Scrollable) -->
       <div class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar min-h-0">
-        <!-- Tab 1: General Preferences -->
+        <!-- Tab 1: General Preferences & Security -->
         <div v-if="activeTab === 'general'" class="space-y-4">
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-foreground">Messages per Page</label>
-            <p class="text-[11px] text-muted-foreground">Default number of emails to display per page in the list.</p>
-            <Select
-              :model-value="String(settingsData.per_page)"
-              @update:model-value="v => settingsData.per_page = Number(v)"
-            >
-              <SelectTrigger class="h-8 text-xs">
-                <SelectValue placeholder="Select items per page" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10 messages per page</SelectItem>
-                <SelectItem value="25">25 messages per page (Default)</SelectItem>
-                <SelectItem value="50">50 messages per page</SelectItem>
-                <SelectItem value="100">100 messages per page</SelectItem>
-              </SelectContent>
-            </Select>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Messages per page -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Messages per Page</label>
+              <p class="text-[11px] text-muted-foreground">Default number of emails per page.</p>
+              <Select
+                :model-value="String(settingsData.per_page)"
+                @update:model-value="v => settingsData.per_page = Number(v)"
+              >
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select items" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 messages per page</SelectItem>
+                  <SelectItem value="25">25 messages per page (Default)</SelectItem>
+                  <SelectItem value="50">50 messages per page</SelectItem>
+                  <SelectItem value="100">100 messages per page</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <!-- Auto-check interval -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Auto-check Mail Interval</label>
+              <p class="text-[11px] text-muted-foreground">Background sync frequency.</p>
+              <Select
+                :model-value="String(settingsData.auto_check_interval)"
+                @update:model-value="v => settingsData.auto_check_interval = Number(v)"
+              >
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select interval" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Every 1 minute (Real-time)</SelectItem>
+                  <SelectItem value="5">Every 5 minutes (Recommended)</SelectItem>
+                  <SelectItem value="15">Every 15 minutes</SelectItem>
+                  <SelectItem value="0">Manual only</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-foreground">Auto-check Mail Interval</label>
-            <p class="text-[11px] text-muted-foreground">Frequency to automatically synchronize incoming emails in background.</p>
-            <Select
-              :model-value="String(settingsData.auto_check_interval)"
-              @update:model-value="v => settingsData.auto_check_interval = Number(v)"
-            >
-              <SelectTrigger class="h-8 text-xs">
-                <SelectValue placeholder="Select interval" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Every 1 minute (Real-time)</SelectItem>
-                <SelectItem value="5">Every 5 minutes (Recommended)</SelectItem>
-                <SelectItem value="15">Every 15 minutes</SelectItem>
-                <SelectItem value="0">Manual only</SelectItem>
-              </SelectContent>
-            </Select>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Storage Quota Allocation -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Mail Storage Quota</label>
+              <p class="text-[11px] text-muted-foreground">Total mailbox capacity allocated.</p>
+              <Select
+                :model-value="String(settingsData.storage_quota_gb)"
+                @update:model-value="v => settingsData.storage_quota_gb = Number(v)"
+              >
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select quota" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="5">5 GB Storage</SelectItem>
+                  <SelectItem value="15">15 GB Storage (Default)</SelectItem>
+                  <SelectItem value="30">30 GB Storage</SelectItem>
+                  <SelectItem value="50">50 GB Storage</SelectItem>
+                  <SelectItem value="100">100 GB Storage</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <!-- Trash Retention -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Auto-Purge Trash Retention</label>
+              <p class="text-[11px] text-muted-foreground">Automatically clean deleted emails.</p>
+              <Select
+                :model-value="String(settingsData.trash_retention_days)"
+                @update:model-value="v => settingsData.trash_retention_days = Number(v)"
+              >
+                <SelectTrigger class="h-8 text-xs">
+                  <SelectValue placeholder="Select retention" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="7">After 7 days</SelectItem>
+                  <SelectItem value="14">After 14 days</SelectItem>
+                  <SelectItem value="30">After 30 days (Recommended)</SelectItem>
+                  <SelectItem value="90">After 90 days</SelectItem>
+                  <SelectItem value="0">Never (Manual delete)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
+          <!-- Mark as Read Behavior -->
           <div class="space-y-1.5">
             <label class="text-xs font-bold text-foreground">Mark as Read Behavior</label>
             <p class="text-[11px] text-muted-foreground">When viewing an unread email in message viewer.</p>
@@ -99,6 +148,19 @@
             </Select>
           </div>
 
+          <!-- Security & Privacy: Block Remote Images -->
+          <div class="flex items-center justify-between p-3 rounded-xl bg-muted/30 border border-border/40">
+            <div>
+              <p class="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                <ShieldCheck class="w-3.5 h-3.5 text-primary" />
+                <span>Privacy Shield: Block Remote Images</span>
+              </p>
+              <p class="text-[11px] text-muted-foreground">Blocks external tracking pixels and remote image downloads until approved.</p>
+            </div>
+            <Switch v-model="settingsData.block_remote_images" />
+          </div>
+
+          <!-- Sound Notifications -->
           <div class="flex items-center justify-between p-3 rounded-xl bg-muted/30 border border-border/40">
             <div>
               <p class="text-xs font-semibold text-foreground">Sound & Push Notifications</p>
@@ -110,26 +172,85 @@
 
         <!-- Tab 2: Identity & Signature -->
         <div v-if="activeTab === 'signature'" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Company / Organization</label>
+              <Input
+                v-model="settingsData.signature_company"
+                type="text"
+                placeholder="e.g. Jejakawan Cloud Technologies"
+                class="h-8 text-xs"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-foreground">Reply-To Address</label>
+              <Input
+                v-model="settingsData.reply_to"
+                type="email"
+                placeholder="support@company.com"
+                class="h-8 text-xs"
+              />
+            </div>
+          </div>
+
+          <!-- Logo Field -->
           <div class="space-y-1.5">
-            <label class="text-xs font-bold text-foreground">Reply-To Address</label>
-            <p class="text-[11px] text-muted-foreground">Optional custom address where recipient replies will be directed.</p>
-            <Input
-              v-model="settingsData.reply_to"
-              type="email"
-              placeholder="support@company.com"
-              class="h-8 text-xs"
+            <label class="text-xs font-bold text-foreground flex items-center gap-1.5">
+              <Image class="w-3.5 h-3.5 text-primary" />
+              <span>Signature Logo URL</span>
+            </label>
+            <p class="text-[11px] text-muted-foreground">Image URL or corporate brand emblem to display in your signature.</p>
+            <div class="flex items-center gap-2">
+              <Input
+                v-model="settingsData.signature_logo"
+                type="url"
+                placeholder="https://example.com/logo.png or /assets/branding/logo.svg"
+                class="h-8 text-xs flex-1"
+              />
+              <div
+                v-if="settingsData.signature_logo"
+                class="w-8 h-8 rounded-lg border border-border/60 p-1 flex items-center justify-center bg-muted/40 shrink-0 overflow-hidden"
+              >
+                <img :src="settingsData.signature_logo" class="max-h-full max-w-full object-contain" alt="Logo Preview">
+              </div>
+            </div>
+          </div>
+
+          <!-- Signature Text -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-foreground">Signature Text</label>
+            <Textarea
+              v-model="settingsData.signature"
+              :rows="3"
+              placeholder="Best regards,&#10;Your Name | Lead Engineer&#10;Direct: +62 812-3456-7890"
+              class="text-xs rounded-xl resize-none leading-relaxed"
             />
           </div>
 
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-foreground">Email Signature</label>
-            <p class="text-[11px] text-muted-foreground">Appended automatically to the bottom of all composed outgoing emails.</p>
-            <Textarea
-              v-model="settingsData.signature"
-              :rows="4"
-              placeholder="Best regards,&#10;Your Name&#10;Company Title | Jejakawan"
-              class="text-xs rounded-xl resize-none leading-relaxed"
-            />
+          <!-- Live Signature Preview Box -->
+          <div class="space-y-1.5 pt-1">
+            <label class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Live Signature Preview
+            </label>
+            <div class="p-3.5 rounded-xl border border-border/60 bg-muted/20">
+              <div class="flex items-center gap-3">
+                <div
+                  v-if="settingsData.signature_logo"
+                  class="w-12 h-12 rounded-xl border border-border/60 p-1 flex items-center justify-center bg-card shrink-0 shadow-xs"
+                >
+                  <img :src="settingsData.signature_logo" class="max-h-full max-w-full object-contain" alt="Logo">
+                </div>
+                <div class="text-xs leading-relaxed">
+                  <p v-if="settingsData.signature_company" class="font-bold text-foreground">
+                    {{ settingsData.signature_company }}
+                  </p>
+                  <p class="text-muted-foreground whitespace-pre-line text-[11px]">
+                    {{ settingsData.signature || 'Your Name | Title\ncontact@example.com' }}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -166,7 +287,7 @@
           </div>
         </div>
 
-        <!-- Tab 4: Server & SMTP Status -->
+        <!-- Tab 4: Server & Transport -->
         <div v-if="activeTab === 'server'" class="space-y-4">
           <div class="p-4 rounded-xl bg-muted/30 border border-border/40 space-y-3">
             <div class="flex items-center justify-between">
@@ -196,7 +317,7 @@
 
       <!-- Footer -->
       <div class="h-14 px-5 bg-muted/30 border-t border-border/40 flex items-center justify-between shrink-0">
-        <span class="text-[11px] text-muted-foreground">Preferences saved to user profile.</span>
+        <span class="text-[11px] text-muted-foreground">Preferences saved to system profile.</span>
 
         <div class="flex items-center gap-2">
           <Button
@@ -238,6 +359,8 @@ import {
   Save,
   Loader2,
   ExternalLink,
+  ShieldCheck,
+  Image,
 } from 'lucide-vue-next';
 import {
   Dialog,
@@ -269,18 +392,23 @@ const saving = ref(false);
 
 const tabs = [
     { id: 'general' as const, label: 'Preferences', icon: Sliders },
-    { id: 'signature' as const, label: 'Signature', icon: PenTool },
+    { id: 'signature' as const, label: 'Signature & Logo', icon: PenTool },
     { id: 'vacation' as const, label: 'Auto-Reply', icon: Calendar },
     { id: 'server' as const, label: 'Server & Transport', icon: Server },
 ];
 
 const settingsData = ref({
     per_page: 25,
+    storage_quota_gb: 15,
+    trash_retention_days: 30,
     auto_check_interval: 5,
     auto_read_delay: 0,
     sound_notifications: true,
-    reply_to: '',
+    block_remote_images: true,
+    signature_company: '',
+    signature_logo: '',
     signature: '',
+    reply_to: '',
     vacation_enabled: false,
     vacation_subject: 'Out of Office Auto-Reply',
     vacation_body: 'Thank you for your message. I am currently away from my desk.',

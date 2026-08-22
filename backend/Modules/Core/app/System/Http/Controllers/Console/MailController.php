@@ -77,6 +77,7 @@ class MailController extends BaseApiController
             'from' => $messages->firstItem() ?? 0,
             'to' => $messages->lastItem() ?? 0,
             'folder_counts' => $folderCounts,
+            'storage' => $this->calculateStorageStats(),
         ], 'Mail messages retrieved successfully');
     }
 
@@ -119,8 +120,23 @@ class MailController extends BaseApiController
 
         // Append signature from client preferences if configured
         $signatureSetting = Setting::where('key', 'mail_client_signature')->first();
-        if ($signatureSetting && ! empty($signatureSetting->value)) {
-            $body .= '<br/><br/>--<br/>'.(string) $signatureSetting->value;
+        $signatureLogo = Setting::where('key', 'mail_client_signature_logo')->first();
+        $signatureCompany = Setting::where('key', 'mail_client_signature_company')->first();
+
+        if (($signatureSetting && ! empty($signatureSetting->value)) || ($signatureLogo && ! empty($signatureLogo->value))) {
+            $sigHtml = '<br/><br/>--<br/><table style="font-family: sans-serif; font-size: 13px; color: #333; margin-top: 16px;"><tr>';
+            if ($signatureLogo && ! empty($signatureLogo->value)) {
+                $sigHtml .= '<td style="padding-right: 12px; vertical-align: middle;"><img src="'.htmlspecialchars((string) $signatureLogo->value).'" style="max-height: 48px; border-radius: 6px;" alt="Logo" /></td>';
+            }
+            $sigHtml .= '<td style="vertical-align: middle; line-height: 1.4;">';
+            if ($signatureCompany && ! empty($signatureCompany->value)) {
+                $sigHtml .= '<strong>'.htmlspecialchars((string) $signatureCompany->value).'</strong><br/>';
+            }
+            if ($signatureSetting && ! empty($signatureSetting->value)) {
+                $sigHtml .= nl2br(htmlspecialchars((string) $signatureSetting->value));
+            }
+            $sigHtml .= '</td></tr></table>';
+            $body .= $sigHtml;
         }
 
         // Get sender info from settings or system defaults
@@ -352,14 +368,20 @@ class MailController extends BaseApiController
 
         return $this->success([
             'per_page' => (int) ($settings['mail_client_per_page'] ?? 25),
+            'storage_quota_gb' => (int) ($settings['mail_client_storage_quota_gb'] ?? 15),
+            'trash_retention_days' => (int) ($settings['mail_client_trash_retention_days'] ?? 30),
             'signature' => $settings['mail_client_signature'] ?? '',
+            'signature_logo' => $settings['mail_client_signature_logo'] ?? '',
+            'signature_company' => $settings['mail_client_signature_company'] ?? '',
             'reply_to' => $settings['mail_client_reply_to'] ?? '',
             'auto_read_delay' => (int) ($settings['mail_client_auto_read_delay'] ?? 0),
             'auto_check_interval' => (int) ($settings['mail_client_auto_check_interval'] ?? 5),
             'sound_notifications' => (bool) ($settings['mail_client_sound_notifications'] ?? true),
+            'block_remote_images' => (bool) ($settings['mail_client_block_remote_images'] ?? true),
             'vacation_enabled' => (bool) ($settings['mail_client_vacation_enabled'] ?? false),
             'vacation_subject' => $settings['mail_client_vacation_subject'] ?? 'Out of Office Auto-Reply',
             'vacation_body' => $settings['mail_client_vacation_body'] ?? 'Thank you for your message. I am currently out of office.',
+            'storage_stats' => $this->calculateStorageStats(),
         ], 'Mail client settings retrieved successfully');
     }
 
@@ -370,11 +392,16 @@ class MailController extends BaseApiController
     {
         $validated = $request->validate([
             'per_page' => 'nullable|integer|min:5|max:100',
+            'storage_quota_gb' => 'nullable|integer|min:1|max:500',
+            'trash_retention_days' => 'nullable|integer|min:0|max:365',
             'signature' => 'nullable|string',
+            'signature_logo' => 'nullable|string|max:500',
+            'signature_company' => 'nullable|string|max:100',
             'reply_to' => 'nullable|email',
             'auto_read_delay' => 'nullable|integer',
             'auto_check_interval' => 'nullable|integer',
             'sound_notifications' => 'nullable|boolean',
+            'block_remote_images' => 'nullable|boolean',
             'vacation_enabled' => 'nullable|boolean',
             'vacation_subject' => 'nullable|string|max:255',
             'vacation_body' => 'nullable|string',
@@ -404,6 +431,48 @@ class MailController extends BaseApiController
         return $this->success([
             'synced_at' => now()->toIso8601String(),
             'total_messages' => $total,
+            'storage' => $this->calculateStorageStats(),
         ], 'Mailbox synchronized successfully');
+    }
+
+    /**
+     * Calculate mailbox storage usage and quota
+     */
+    private function calculateStorageStats(): array
+    {
+        $bodyBytes = (int) MailMessage::sum(DB::raw('LENGTH(body) + LENGTH(COALESCE(snippet, \'\'))'));
+        $overhead = MailMessage::count() * 2048;
+        $usedBytes = max(24576, $bodyBytes + $overhead);
+
+        $quotaGb = (int) (Setting::where('key', 'mail_client_storage_quota_gb')->value('value') ?? 15);
+        $quotaBytes = $quotaGb * 1024 * 1024 * 1024;
+
+        $percentage = $quotaBytes > 0 ? min(100.0, round(($usedBytes / $quotaBytes) * 100, 2)) : 0.0;
+
+        return [
+            'used_bytes' => $usedBytes,
+            'quota_bytes' => $quotaBytes,
+            'used_formatted' => $this->formatBytes($usedBytes),
+            'quota_formatted' => "{$quotaGb} GB",
+            'percentage' => $percentage,
+        ];
+    }
+
+    /**
+     * Format bytes into human-readable string
+     */
+    private function formatBytes(int $bytes): string
+    {
+        if ($bytes >= 1073741824) {
+            return round($bytes / 1073741824, 2).' GB';
+        }
+        if ($bytes >= 1048576) {
+            return round($bytes / 1048576, 2).' MB';
+        }
+        if ($bytes >= 1024) {
+            return round($bytes / 1024, 2).' KB';
+        }
+
+        return $bytes.' B';
     }
 }

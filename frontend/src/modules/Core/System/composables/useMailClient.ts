@@ -64,6 +64,15 @@ export function useMailClient() {
     const toRange = ref(0);
     const perPage = ref(25);
 
+    // Storage Quota Stats
+    const storageStats = ref({
+        used_bytes: 24576,
+        quota_bytes: 16106127360,
+        used_formatted: '24 KB',
+        quota_formatted: '15 GB',
+        percentage: 0.01,
+    });
+
     // Modals
     const isSettingsOpen = ref(false);
     const isLabelsModalOpen = ref(false);
@@ -177,6 +186,10 @@ export function useMailClient() {
 
             if (data?.folder_counts) {
                 folderCounts.value = { ...folderCounts.value, ...data.folder_counts };
+            }
+
+            if (data?.storage) {
+                storageStats.value = data.storage;
             }
 
             // Auto select first message if nothing selected
@@ -445,6 +458,7 @@ export function useMailClient() {
         labels,
         messages,
         folderCounts,
+        storageStats,
         loading,
         syncing,
         isSettingsOpen,

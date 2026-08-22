@@ -104,22 +104,35 @@
       </div>
     </div>
 
-    <!-- Bottom Footer: Storage Info -->
+    <!-- Bottom Footer: Storage Info (100% Dynamic from Backend Settings) -->
     <div class="w-full pt-2 border-t border-border/40 shrink-0">
-      <div v-if="!isMinimized" class="p-2 rounded-xl bg-muted/30 border border-border/40 space-y-1.5">
+      <div
+        v-if="!isMinimized"
+        class="p-2 rounded-xl bg-muted/30 border border-border/40 space-y-1.5"
+        :title="storageStats ? `${storageStats.used_formatted} of ${storageStats.quota_formatted} (${storageStats.percentage}%)` : undefined"
+      >
         <div class="flex items-center justify-between text-[11px] text-muted-foreground">
           <span class="flex items-center gap-1">
-            <HardDrive class="w-3 h-3" />
+            <HardDrive class="w-3 h-3 text-primary" />
             {{ $t('system.mail.storage') }}
           </span>
-          <span class="font-semibold text-foreground text-[10px]">1.8 GB / 15 GB</span>
+          <span class="font-semibold text-foreground text-[10px]">
+            {{ storageStats?.used_formatted || '0 B' }} / {{ storageStats?.quota_formatted || '...' }}
+          </span>
         </div>
-        <div class="w-full bg-border/60 h-1 rounded-full overflow-hidden">
-          <div class="bg-primary h-full rounded-full w-[12%]" />
+        <div class="w-full bg-border/60 h-1.5 rounded-full overflow-hidden">
+          <div
+            class="bg-primary h-full rounded-full transition-all duration-500"
+            :style="{ width: `${Math.max(1, Math.min(100, storageStats?.percentage ?? 0))}%` }"
+          />
         </div>
       </div>
-      <div v-else class="flex justify-center p-1 text-muted-foreground" :title="$t('system.mail.storage')">
-        <HardDrive class="w-4 h-4 opacity-60" />
+      <div
+        v-else
+        class="flex justify-center p-1 text-muted-foreground cursor-help"
+        :title="storageStats ? `${storageStats.used_formatted} / ${storageStats.quota_formatted} (${storageStats.percentage}%)` : undefined"
+      >
+        <HardDrive class="w-4 h-4 opacity-75 text-primary" />
       </div>
     </div>
   </div>
@@ -145,6 +158,7 @@ defineProps<{
     activeLabel: MailClient['activeLabel']['value'];
     folderCounts: MailClient['folderCounts']['value'];
     labels: MailClient['labels']['value'];
+    storageStats?: MailClient['storageStats']['value'];
 }>();
 
 const emit = defineEmits<{

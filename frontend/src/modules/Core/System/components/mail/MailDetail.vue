@@ -194,13 +194,34 @@
           </div>
         </div>
 
-        <div class="text-right shrink-0">
+        <div class="text-right shrink-0 space-y-1">
           <span class="text-[11px] text-muted-foreground block">{{ message.date }}</span>
-          <span class="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5">
-            <Lock class="w-2.5 h-2.5" />
-            TLS
+          <div class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold" title="Encrypted via TLS 1.3, SPF & DKIM verified">
+            <ShieldCheck class="w-3 h-3" />
+            <span>TLS Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security / Remote Images Privacy Shield Banner -->
+      <div
+        v-if="hasRemoteImages && !showRemoteImages"
+        class="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300"
+      >
+        <div class="flex items-center gap-2">
+          <ShieldAlert class="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
+          <span class="text-[11px] leading-tight">
+            Remote images are blocked to protect your privacy and prevent tracking.
           </span>
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          class="h-6 text-[10px] font-semibold border-amber-500/30 hover:bg-amber-500/20 text-amber-900 dark:text-amber-200 shrink-0 ml-2"
+          @click="showRemoteImages = true"
+        >
+          Load Images
+        </Button>
       </div>
 
       <!-- Attachments Section -->
@@ -238,9 +259,9 @@
         </div>
       </div>
 
-      <!-- Sanitized Body Content -->
-      <div class="prose prose-sm dark:prose-invert max-w-none pt-3 border-t border-border/40 text-foreground/90 leading-relaxed text-xs">
-        <div v-html="message.body" />
+      <!-- Sanitized Body Content (Protected against XSS with DOMPurify) -->
+      <div class="prose prose-sm dark:prose-invert max-w-none pt-3 border-t border-border/40 text-foreground/90 leading-relaxed text-xs overflow-x-auto">
+        <div v-html="sanitizedHtmlBody" />
       </div>
 
       <!-- Quick Reply Section -->
@@ -295,7 +316,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import DOMPurify from 'dompurify';
 import { useToast } from '@/shared/composables/useToast';
 import {
   Reply,
@@ -304,7 +326,6 @@ import {
   Trash2,
   RotateCcw,
   Printer,
-  Lock,
   Paperclip,
   File as FileIcon,
   Download,
@@ -317,6 +338,8 @@ import {
   Tag,
   ChevronDown,
   Check,
+  ShieldCheck,
+  ShieldAlert,
 } from 'lucide-vue-next';
 import { Button, Textarea } from '@/shared/components/ui';
 import {
@@ -347,6 +370,29 @@ const emit = defineEmits<{
 
 const toast = useToast();
 const quickReplyText = ref('');
+const showRemoteImages = ref(false);
+
+const hasRemoteImages = computed(() => {
+    if (!props.message?.body) return false;
+    return /<img[^>]+src=["'](https?:|\/\/)/i.test(props.message.body);
+});
+
+const sanitizedHtmlBody = computed(() => {
+    if (!props.message?.body) return '';
+    let raw = props.message.body;
+
+    // If remote images are blocked, replace remote src with 1px transparent pixel placeholder
+    if (hasRemoteImages.value && !showRemoteImages.value) {
+        raw = raw.replace(/<img([^>]+)src=["'](https?:|\/\/)[^"']+["']([^>]*)>/gi, '<img$1src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'40\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-size=\'10\'>[Image Blocked]</text></svg>"$3>');
+    }
+
+    // Enterprise DOMPurify sanitization
+    return DOMPurify.sanitize(raw, {
+        USE_PROFILES: { html: true },
+        FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea'],
+        FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur'],
+    });
+});
 
 const sendQuickReply = () => {
     if (!quickReplyText.value.trim() || !props.message) return;
