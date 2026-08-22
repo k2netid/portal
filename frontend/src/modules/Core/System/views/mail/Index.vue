@@ -175,6 +175,7 @@
       >
         <MailDetail
           :message="selectedMessage"
+          :all-messages="messages"
           :available-labels="labels"
           @back="isMobileDetailOpen = false"
           @reply="reply"

@@ -3469,6 +3469,12 @@
     "delete_label_confirm": "Apakah Anda yakin ingin menghapus label ini?",
     "label_exists": "Label dengan nama ini sudah ada",
     "empty_recipient_error": "Mohon masukkan alamat email penerima yang valid",
-    "folder_scheduled": "Terjadwal"
+    "folder_scheduled": "Terjadwal",
+    "thread_messages": "{count} pesan",
+    "unsubscribe": "Berhenti Berlangganan",
+    "unsubscribe_confirm_title": "Berhenti berlangganan dari pengirim ini?",
+    "unsubscribe_confirm_desc": "Kami akan memproses permintaan penghapusan email Anda dari daftar distribusi otomatis pengirim ini.",
+    "expand_all": "Buka semua",
+    "collapse_all": "Tutup semua"
   }
 }

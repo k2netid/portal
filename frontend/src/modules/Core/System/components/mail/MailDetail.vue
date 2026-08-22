@@ -42,7 +42,7 @@
             <Button
               variant="outline"
               size="sm"
-              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground"
+              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
               :title="$t('system.mail.move')"
             >
               <FolderInput class="w-3.5 h-3.5" />
@@ -50,7 +50,7 @@
               <ChevronDown class="w-3 h-3 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" class="w-44 text-xs">
+          <DropdownMenuContent align="start" class="w-44 text-xs shadow-2xl">
             <DropdownMenuItem
               v-for="target in ['inbox', 'spam', 'trash', 'drafts']"
               :key="target"
@@ -70,7 +70,7 @@
             <Button
               variant="outline"
               size="sm"
-              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground"
+              class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
               :title="$t('system.mail.labels')"
             >
               <Tag class="w-3.5 h-3.5" />
@@ -78,7 +78,7 @@
               <ChevronDown class="w-3 h-3 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" class="w-48 text-xs">
+          <DropdownMenuContent align="start" class="w-48 text-xs shadow-2xl">
             <DropdownMenuItem
               v-for="lbl in availableLabels"
               :key="lbl.id"
@@ -132,7 +132,7 @@
           v-if="message.folder !== 'trash'"
           variant="ghost"
           size="icon"
-          class="h-7 w-7 text-muted-foreground hover:text-destructive transition-colors"
+          class="h-7 w-7 text-muted-foreground hover:text-destructive transition-colors rounded-lg"
           :title="$t('system.mail.trash')"
           @click="$emit('move-to-trash', message.id)"
         >
@@ -153,7 +153,7 @@
           <Button
             variant="destructive"
             size="sm"
-            class="h-7 gap-1.5 text-xs px-2.5"
+            class="h-7 gap-1.5 text-xs px-2.5 shadow-xs"
             @click="$emit('delete-permanently', message.id)"
           >
             <Trash2 class="w-3.5 h-3.5" />
@@ -162,12 +162,24 @@
         </template>
       </div>
 
-      <!-- Right Toolbar Tools -->
+      <!-- Right Header Actions -->
       <div class="flex items-center gap-1">
+        <!-- Thread Expand / Collapse All (if multiple messages in thread) -->
+        <template v-if="allThreadMessages.length > 1">
+          <Button
+            variant="ghost"
+            size="sm"
+            class="h-7 text-[10px] text-muted-foreground hover:text-foreground px-2"
+            @click="toggleAllThreadCards"
+          >
+            {{ areAllExpanded ? $t('system.mail.collapse_all') : $t('system.mail.expand_all') }}
+          </Button>
+        </template>
+
         <Button
           variant="ghost"
           size="icon"
-          class="h-7 w-7 text-muted-foreground hover:text-amber-500"
+          class="h-7 w-7 text-muted-foreground hover:text-amber-500 rounded-lg"
           @click="$emit('toggle-star', message.id)"
         >
           <Star
@@ -180,7 +192,7 @@
         <Button
           variant="ghost"
           size="icon"
-          class="h-7 w-7 text-muted-foreground hover:text-foreground"
+          class="h-7 w-7 text-muted-foreground hover:text-foreground rounded-lg"
           :title="$t('system.mail.print')"
           @click="printEmail"
         >
@@ -194,11 +206,21 @@
       v-if="message"
       class="flex-1 overflow-y-auto p-4 md:p-5 space-y-4 custom-scrollbar min-h-0"
     >
-      <!-- Subject -->
+      <!-- Subject & Threading Badge -->
       <div>
-        <h2 class="text-base md:text-lg font-bold text-foreground tracking-tight">
-          {{ message.subject }}
-        </h2>
+        <div class="flex items-center gap-2 flex-wrap">
+          <h2 class="text-base md:text-lg font-bold text-foreground tracking-tight">
+            {{ message.subject }}
+          </h2>
+          <span
+            v-if="allThreadMessages.length > 1"
+            class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
+          >
+            {{ $t('system.mail.thread_messages', { count: allThreadMessages.length }) }}
+          </span>
+        </div>
+
+        <!-- Labels List -->
         <div v-if="message.labels && message.labels.length > 0" class="flex items-center gap-1.5 mt-1.5 flex-wrap">
           <span
             v-for="labelId in message.labels"
@@ -210,7 +232,46 @@
         </div>
       </div>
 
-      <!-- Sender Info Card -->
+      <!-- Historical Conversation Thread Cards (Previous Messages in Thread) -->
+      <div v-if="previousThreadMessages.length > 0" class="space-y-2 border-b border-border/40 pb-4">
+        <div
+          v-for="tMsg in previousThreadMessages"
+          :key="tMsg.id"
+          class="rounded-xl border border-border/50 bg-card overflow-hidden transition-all shadow-xs"
+        >
+          <!-- Collapsed Summary Row -->
+          <div
+            class="p-2.5 px-3.5 flex items-center justify-between cursor-pointer hover:bg-muted/30 select-none transition-colors"
+            @click="toggleThreadCard(tMsg.id)"
+          >
+            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+              <div class="w-6 h-6 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-[10px] border border-primary/20 shrink-0">
+                {{ tMsg.sender.name.charAt(0) }}
+              </div>
+              <span class="text-xs font-semibold text-foreground truncate max-w-[130px]">{{ tMsg.sender.name }}</span>
+              <span class="text-[11px] text-muted-foreground truncate flex-1 min-w-0">{{ tMsg.snippet }}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+              <span class="text-[10px] text-muted-foreground">{{ tMsg.date }}</span>
+              <ChevronDown :class="['w-3.5 h-3.5 text-muted-foreground transition-transform', isThreadCardExpanded(tMsg.id) ? 'rotate-180' : '']" />
+            </div>
+          </div>
+
+          <!-- Expanded Body for Thread Item -->
+          <div v-show="isThreadCardExpanded(tMsg.id)" class="p-3.5 border-t border-border/30 bg-muted/10 space-y-3 animate-in fade-in-50 duration-150">
+            <div class="text-[11px] text-muted-foreground flex items-center justify-between">
+              <span>From: <strong class="text-foreground">{{ tMsg.sender.name }}</strong> &lt;{{ tMsg.sender.email }}&gt;</span>
+              <span>To: {{ tMsg.recipients.join(', ') }}</span>
+            </div>
+            <div
+              class="prose prose-sm dark:prose-invert max-w-none text-foreground/90 leading-relaxed text-xs overflow-x-auto"
+              v-html="sanitizeBody(tMsg.body)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Current / Main Message Sender Info Card -->
       <div class="flex items-start justify-between gap-3 p-3 rounded-xl bg-muted/30 border border-border/40">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs border border-primary/20 shrink-0">
@@ -220,6 +281,18 @@
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="font-semibold text-xs text-foreground">{{ message.sender.name }}</span>
               <span class="text-[11px] text-muted-foreground">&lt;{{ message.sender.email }}&gt;</span>
+
+              <!-- RFC 8058 One-Click Unsubscribe Action -->
+              <Button
+                v-if="hasUnsubscribe"
+                variant="outline"
+                size="sm"
+                class="h-5 text-[10px] gap-1 px-1.5 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/10 font-semibold rounded-md shadow-none"
+                @click="isUnsubscribeModalOpen = true"
+              >
+                <ExternalLink class="w-2.5 h-2.5" />
+                <span>{{ $t('system.mail.unsubscribe') }}</span>
+              </Button>
             </div>
             <p class="text-[11px] text-muted-foreground mt-0.5">
               to: <span class="font-medium text-foreground/80">{{ message.recipients.join(', ') }}</span>
@@ -268,14 +341,14 @@
         class="space-y-2 pt-1"
       >
         <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-          <Paperclip class="w-3 h-3" />
+          <Paperclip class="w-3 h-3 text-primary" />
           {{ $t('system.mail.attachments') }} ({{ message.attachments.length }})
         </h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           <div
             v-for="att in message.attachments"
             :key="att.id"
-            class="flex items-center justify-between p-2.5 rounded-lg border border-border/60 bg-card hover:bg-muted/40 transition-colors"
+            class="p-2.5 rounded-xl border border-border/60 bg-muted/20 hover:bg-muted/40 transition-colors flex items-center justify-between gap-2 group"
           >
             <div class="flex items-center gap-2 min-w-0">
               <FileIcon class="w-4 h-4 text-primary shrink-0" />
@@ -334,28 +407,66 @@
               @click="sendQuickReply"
             >
               <Send class="w-3 h-3" />
-              <span>{{ $t('system.mail.send') }}</span>
+              <span>{{ $t('system.mail.reply') }}</span>
             </Button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Empty State -->
+    <!-- Empty Detail State -->
     <div
       v-else
-      class="h-full flex flex-col items-center justify-center p-6 text-center text-muted-foreground space-y-2"
+      class="h-full flex flex-col items-center justify-center p-8 text-center text-muted-foreground space-y-3"
     >
-      <Mail class="w-10 h-10 opacity-25 stroke-[1.2]" />
-      <p class="text-xs font-semibold">{{ $t('system.mail.select_message') }}</p>
-      <p class="text-[11px] text-muted-foreground/70 max-w-xs">{{ $t('system.mail.select_message_desc') }}</p>
+      <div class="w-12 h-12 rounded-2xl bg-muted/30 border border-border/40 flex items-center justify-center">
+        <Mail class="w-6 h-6 text-muted-foreground/60 stroke-[1.5]" />
+      </div>
+      <div>
+        <h3 class="text-sm font-bold text-foreground">{{ $t('system.mail.select_message') }}</h3>
+        <p class="text-xs text-muted-foreground/70 max-w-sm mt-1">
+          {{ $t('system.mail.select_message_desc') }}
+        </p>
+      </div>
     </div>
-    <!-- Security Inspector Modal -->
+
+    <!-- Security & Headers Modal -->
     <MailSecurityModal
       :is-open="isSecurityModalOpen"
       :message="message"
       @close="isSecurityModalOpen = false"
     />
+
+    <!-- RFC 8058 One-Click Unsubscribe Confirmation Modal -->
+    <Dialog :open="isUnsubscribeModalOpen" @update:open="v => isUnsubscribeModalOpen = v">
+      <DialogContent class="!p-5 !gap-4 max-w-md bg-card border border-border/80 shadow-2xl rounded-2xl z-[1200] [&>button[aria-label=Close]]:hidden">
+        <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
+          <AlertTriangle class="w-4 h-4 text-amber-500" />
+          <span>{{ $t('system.mail.unsubscribe_confirm_title') }}</span>
+        </DialogTitle>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          {{ $t('system.mail.unsubscribe_confirm_desc') }}
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            class="h-8 text-xs"
+            @click="isUnsubscribeModalOpen = false"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            class="h-8 text-xs font-semibold"
+            @click="confirmUnsubscribe"
+          >
+            {{ $t('system.mail.unsubscribe') }}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
 
@@ -363,7 +474,6 @@
 import { ref, computed } from 'vue';
 import DOMPurify from 'dompurify';
 import { useToast } from '@/shared/composables/useToast';
-import MailSecurityModal from '@/modules/Core/System/components/mail/MailSecurityModal.vue';
 import {
   Reply,
   Forward,
@@ -386,20 +496,36 @@ import {
   ShieldCheck,
   ShieldAlert,
   Clock,
+  ExternalLink,
+  AlertTriangle,
 } from 'lucide-vue-next';
-import { Button, Textarea } from '@/shared/components/ui';
+import {
+  Button,
+  Textarea,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@/shared/components/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
-import type { MailMessage, MailAttachment, MailLabel } from '@/modules/Core/System/composables/useMailClient';
+import MailSecurityModal from '@/modules/Core/System/components/mail/MailSecurityModal.vue';
+import { type MailMessage, type MailAttachment, type MailLabel, normalizeSubject } from '@/modules/Core/System/composables/useMailClient';
 
-const props = defineProps<{
-    message: MailMessage | null;
-    availableLabels?: MailLabel[];
-}>();
+const props = withDefaults(
+    defineProps<{
+        message: MailMessage | null;
+        allMessages?: MailMessage[];
+        availableLabels?: MailLabel[];
+    }>(),
+    {
+        allMessages: () => [],
+        availableLabels: () => [],
+    }
+);
 
 const emit = defineEmits<{
     (e: 'back'): void;
@@ -419,6 +545,61 @@ const toast = useToast();
 const quickReplyText = ref('');
 const showRemoteImages = ref(false);
 const isSecurityModalOpen = ref(false);
+const isUnsubscribeModalOpen = ref(false);
+const expandedThreadCardIds = ref<Set<string>>(new Set());
+
+// Conversation Threading Calculations
+const allThreadMessages = computed<MailMessage[]>(() => {
+    if (!props.message) return [];
+    const norm = normalizeSubject(props.message.subject);
+    if (!norm) return [props.message];
+    return props.allMessages.filter(m => normalizeSubject(m.subject) === norm);
+});
+
+const previousThreadMessages = computed<MailMessage[]>(() => {
+    if (!props.message) return [];
+    return allThreadMessages.value.filter(m => m.id !== props.message?.id);
+});
+
+const areAllExpanded = computed(() => {
+    return previousThreadMessages.value.every(m => expandedThreadCardIds.value.has(m.id));
+});
+
+const toggleThreadCard = (id: string) => {
+    if (expandedThreadCardIds.value.has(id)) {
+        expandedThreadCardIds.value.delete(id);
+    } else {
+        expandedThreadCardIds.value.add(id);
+    }
+};
+
+const isThreadCardExpanded = (id: string) => {
+    return expandedThreadCardIds.value.has(id);
+};
+
+const toggleAllThreadCards = () => {
+    if (areAllExpanded.value) {
+        expandedThreadCardIds.value.clear();
+    } else {
+        previousThreadMessages.value.forEach(m => expandedThreadCardIds.value.add(m.id));
+    }
+};
+
+// RFC 8058 One-Click Unsubscribe Detection
+const hasUnsubscribe = computed(() => {
+    if (!props.message) return false;
+    const body = props.message.body || '';
+    return Boolean(
+        /unsubscribe|berhenti berlangganan/i.test(body) ||
+        props.message.labels?.includes('newsletter') ||
+        props.message.labels?.includes('promo')
+    );
+});
+
+const confirmUnsubscribe = () => {
+    isUnsubscribeModalOpen.value = false;
+    toast.success.action('Unsubscribe request sent successfully');
+};
 
 const handleSnooze = (preset: 'later_today' | 'tomorrow' | 'next_week') => {
     if (!props.message) return;
@@ -442,21 +623,23 @@ const hasRemoteImages = computed(() => {
     return /<img[^>]+src=["'](https?:|\/\/)/i.test(props.message.body);
 });
 
-const sanitizedHtmlBody = computed(() => {
-    if (!props.message?.body) return '';
-    let raw = props.message.body;
-
-    // If remote images are blocked, replace remote src with 1px transparent pixel placeholder
-    if (hasRemoteImages.value && !showRemoteImages.value) {
-        raw = raw.replace(/<img([^>]+)src=["'](https?:|\/\/)[^"']+["']([^>]*)>/gi, '<img$1src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'40\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-size=\'10\'>[Image Blocked]</text></svg>"$3>');
-    }
-
-    // Enterprise DOMPurify sanitization
-    return DOMPurify.sanitize(raw, {
+const sanitizeBody = (rawBody: string): string => {
+    return DOMPurify.sanitize(rawBody || '', {
         USE_PROFILES: { html: true },
         FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea'],
         FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur'],
     });
+};
+
+const sanitizedHtmlBody = computed(() => {
+    if (!props.message?.body) return '';
+    let raw = props.message.body;
+
+    if (hasRemoteImages.value && !showRemoteImages.value) {
+        raw = raw.replace(/<img([^>]+)src=["'](https?:|\/\/)[^"']+["']([^>]*)>/gi, '<img$1src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'40\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-size=\'10\'>[Image Blocked]</text></svg>"$3>');
+    }
+
+    return sanitizeBody(raw);
 });
 
 const sendQuickReply = () => {

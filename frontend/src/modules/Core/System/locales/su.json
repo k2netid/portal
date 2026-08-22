@@ -3469,6 +3469,12 @@
     "delete_label_confirm": "Naha anjeun yakin hoyong ngahapus label ieu?",
     "label_exists": "Label kalayan nami ieu parantos aya",
     "empty_recipient_error": "Punten lebetkeun alamat email panampi anu sah",
-    "folder_scheduled": "Dijadwalkeun"
+    "folder_scheduled": "Dijadwalkeun",
+    "thread_messages": "{count} serat",
+    "unsubscribe": "Eureun Ngalanggan",
+    "unsubscribe_confirm_title": "Eureun ngalanggan ti pangirim ieu?",
+    "unsubscribe_confirm_desc": "Kami bakal ngolah pamundut miceun email anjeun tina daptar distribusi otomatis ieu.",
+    "expand_all": "Buka sadayana",
+    "collapse_all": "Tutup sadayana"
   }
 }

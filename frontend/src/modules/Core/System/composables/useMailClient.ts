@@ -46,6 +46,13 @@ export interface MailTemplate {
     body: string;
 }
 
+export const normalizeSubject = (subject: string): string => {
+    return (subject || '')
+        .replace(/^(\s*(re|fwd|fw|reply|scheduled|\[scheduled\])\s*[:\-])+/gi, '')
+        .trim()
+        .toLowerCase();
+};
+
 export function useMailClient() {
     const toast = useToast();
 
@@ -310,6 +317,18 @@ export function useMailClient() {
     const selectedMessage = computed(() => {
         if (!selectedMessageId.value) return null;
         return messages.value.find((m) => m.id === selectedMessageId.value) || null;
+    });
+
+    const getThreadMessages = (message: MailMessage | null): MailMessage[] => {
+        if (!message) return [];
+        const norm = normalizeSubject(message.subject);
+        if (!norm) return [message];
+        return messages.value.filter((m) => normalizeSubject(m.subject) === norm);
+    };
+
+    const activeThreadMessages = computed<MailMessage[]>(() => {
+        if (!selectedMessage.value) return [];
+        return getThreadMessages(selectedMessage.value);
     });
 
     const selectFolder = (folder: 'inbox' | 'sent' | 'drafts' | 'trash' | 'spam') => {
@@ -681,6 +700,8 @@ export function useMailClient() {
         saveDraft,
         scheduleSend,
         snoozeMessage,
+        activeThreadMessages,
+        getThreadMessages,
         saveLabels,
         fetchTemplates,
         saveTemplates,

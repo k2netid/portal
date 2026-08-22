@@ -3469,6 +3469,12 @@
     "delete_label_confirm": "Are you sure you want to delete this label?",
     "label_exists": "A label with this name already exists",
     "empty_recipient_error": "Please provide a valid recipient email address",
-    "folder_scheduled": "Scheduled"
+    "folder_scheduled": "Scheduled",
+    "thread_messages": "{count} messages",
+    "unsubscribe": "Unsubscribe",
+    "unsubscribe_confirm_title": "Unsubscribe from this mailing list?",
+    "unsubscribe_confirm_desc": "We will process your request to remove your email address from this sender's automated distribution list.",
+    "expand_all": "Expand all",
+    "collapse_all": "Collapse all"
   }
 }

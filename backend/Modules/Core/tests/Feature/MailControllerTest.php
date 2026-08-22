@@ -222,6 +222,44 @@ class MailControllerTest extends TestCase
         $this->assertDatabaseMissing('sys_mail_messages', ['subject' => 'To be emptied']);
     }
 
+    public function test_admin_can_save_draft_and_process_scheduled_mail(): void
+    {
+        // 1. Save Draft
+        $draftRes = $this->actingAs($this->user, 'sanctum')
+            ->postJson('/api/v1/manage/mail/messages/draft', [
+                'to' => 'partner@example.com',
+                'subject' => 'Draft Proposal',
+                'body' => '<p>Proposal draft content</p>',
+            ]);
+
+        $draftRes->assertStatus(201);
+        $this->assertDatabaseHas('sys_mail_messages', [
+            'folder' => 'drafts',
+            'subject' => 'Draft Proposal',
+        ]);
+
+        // 2. Schedule Send
+        $scheduleRes = $this->actingAs($this->user, 'sanctum')
+            ->postJson('/api/v1/manage/mail/messages/schedule', [
+                'to' => 'investor@example.com',
+                'subject' => 'Quarterly Investor Update',
+                'body' => '<p>Growth report</p>',
+                'scheduled_at' => now()->addMinutes(10)->toIso8601String(),
+            ]);
+
+        $scheduleRes->assertStatus(201);
+
+        // 3. Process Scheduled Mail Artisan Command
+        $this->artisan('mail:process-scheduled')
+            ->expectsOutput('Checking for scheduled emails to dispatch...')
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('sys_mail_messages', [
+            'folder' => 'sent',
+            'subject' => 'Quarterly Investor Update',
+        ]);
+    }
+
     public function test_unauthenticated_cannot_access_mail(): void
     {
         $this->getJson('/api/v1/manage/mail/messages')

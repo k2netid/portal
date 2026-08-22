@@ -94,6 +94,13 @@
             >
               {{ msg.sender.name }}
             </span>
+            <span
+              v-if="getThreadCount(msg) > 1"
+              class="px-1.5 py-0.5 rounded bg-muted text-[9px] font-bold text-muted-foreground shrink-0"
+              :title="$t('system.mail.thread_messages', { count: getThreadCount(msg) })"
+            >
+              {{ getThreadCount(msg) }}
+            </span>
           </div>
 
           <!-- Date & Star Action -->
@@ -197,9 +204,9 @@ import {
   ChevronRight,
 } from 'lucide-vue-next';
 import { Input, Button } from '@/shared/components/ui';
-import type { MailMessage } from '@/modules/Core/System/composables/useMailClient';
+import { type MailMessage, normalizeSubject } from '@/modules/Core/System/composables/useMailClient';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         messages: MailMessage[];
         selectedMessageId: string | null;
@@ -221,6 +228,12 @@ withDefaults(
         toRange: 0,
     }
 );
+
+const getThreadCount = (msg: MailMessage): number => {
+    const norm = normalizeSubject(msg.subject);
+    if (!norm) return 1;
+    return props.messages.filter((m) => normalizeSubject(m.subject) === norm).length;
+};
 
 defineEmits<{
     (e: 'select-message', id: string): void;
