@@ -16,7 +16,6 @@ use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Http\Controllers\Concerns\InteractsWithUserMailbox;
 use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Services\MailDispatchService;
-use Modules\Mail\Services\UserMailRepository;
 use Modules\Mail\Support\MailAddressParser;
 
 class MailController extends BaseApiController
@@ -26,6 +25,7 @@ class MailController extends BaseApiController
     public function __construct(
         protected MailDispatchService $mailDispatch,
     ) {}
+
     /**
      * Get mail messages with filtering & folder statistics
      */

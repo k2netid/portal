@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Core\Tests\Feature;
 
-use Illuminate\Support\Facades\Http;
 use Modules\Core\System\Services\LicenseService;
 use Tests\TestCase;
 

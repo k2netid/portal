@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Mail\Exceptions\MailDispatchException;
 use Modules\Mail\Models\MailAccount;
 use Modules\Mail\Models\MailMessage;
 
@@ -42,7 +43,7 @@ class MailDispatchService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new \Modules\Mail\Exceptions\MailDispatchException(
+            throw new MailDispatchException(
                 'Failed to send email: '.$e->getMessage(),
                 (int) $e->getCode(),
                 $e,

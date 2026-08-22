@@ -19,7 +19,7 @@ interface MediaFileRecordInterface
 
     public function save(): bool;
 
-    public function delete(): bool|null;
+    public function delete(): ?bool;
 
     public function restore(): bool;
 }

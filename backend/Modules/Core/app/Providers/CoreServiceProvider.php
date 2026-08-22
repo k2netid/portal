@@ -18,8 +18,10 @@ use Modules\Core\Security\Console\Commands\SecurityAuditDependencies;
 use Modules\Core\Security\Console\Commands\SecurityMaintenance;
 use Modules\Core\Security\Console\Commands\UpdateCloudflareIps;
 use Modules\Core\Security\Services\AbacEvaluator;
+use Modules\Core\System\Contracts\StorageQuotaServiceInterface;
 use Modules\Core\System\Http\Middleware\EnsureKycLevel;
 use Modules\Core\System\Providers\SystemServiceProvider;
+use Modules\Core\System\Services\LocalStorageQuotaService;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -83,8 +85,8 @@ class CoreServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            \Modules\Core\System\Contracts\StorageQuotaServiceInterface::class,
-            \Modules\Core\System\Services\LocalStorageQuotaService::class
+            StorageQuotaServiceInterface::class,
+            LocalStorageQuotaService::class
         );
     }
 }

@@ -74,7 +74,7 @@ export interface MailAccountCapabilities {
 
 export const normalizeSubject = (subject: string): string => {
     return (subject || '')
-        .replace(/^(\s*(re|fwd|fw|reply|scheduled|\[scheduled\])\s*[:\-])+/gi, '')
+        .replace(/^(\s*(re|fwd|fw|reply|scheduled|\[scheduled\])\s*[:-])+/gi, '')
         .trim()
         .toLowerCase();
 };

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Core\Tests\Feature;
 
 use Illuminate\Support\Facades\Http;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Tests\TestCase;
 
@@ -75,7 +76,7 @@ final class AiControllerTest extends TestCase
 
     public function test_generate_with_mocked_http(): void
     {
-        \Modules\Core\System\Models\Setting::set('gemini_api_key', 'AIzaSyTestMockKey123', 'password', 'ai');
+        Setting::set('gemini_api_key', 'AIzaSyTestMockKey123', 'password', 'ai');
 
         Http::fake([
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent*' => Http::response([

@@ -54,7 +54,7 @@ class TwoFactorAndSecurityApiTest extends TestCase
         $this->assertNotEmpty($secret);
 
         // 2. Compute valid TOTP code
-        $google2fa = new Google2FA();
+        $google2fa = new Google2FA;
         $validCode = $google2fa->getCurrentOtp($secret);
 
         // 3. Verify and Enable

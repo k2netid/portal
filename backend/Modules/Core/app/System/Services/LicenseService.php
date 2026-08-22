@@ -14,14 +14,21 @@ use Modules\Core\System\Models\Setting;
 class LicenseService
 {
     public const TIER_COMMUNITY = 'community';
+
     public const TIER_STARTER = 'starter';
+
     public const TIER_PRO = 'pro';
+
     public const TIER_ENTERPRISE = 'enterprise';
+
     public const TIER_WHITE_LABEL = 'white_label';
 
     public const STATUS_ACTIVE = 'active';
+
     public const STATUS_GRACE_PERIOD = 'grace_period';
+
     public const STATUS_EXPIRED = 'expired';
+
     public const STATUS_TRIAL = 'trial';
 
     /**
@@ -43,7 +50,7 @@ class LicenseService
         $graceUntil = Setting::get('license_grace_until');
 
         // Check if grace period has expired
-        if ($status === self::STATUS_GRACE_PERIOD && is_string($graceUntil) && !empty($graceUntil)) {
+        if ($status === self::STATUS_GRACE_PERIOD && is_string($graceUntil) && ! empty($graceUntil)) {
             if (Carbon::parse($graceUntil)->isPast()) {
                 $status = self::STATUS_EXPIRED;
                 $tier = self::TIER_COMMUNITY;
@@ -130,7 +137,7 @@ class LicenseService
         }
 
         $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
-        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com') . '/api/v1/licenses/activate';
+        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com').'/api/v1/licenses/activate';
 
         try {
             $response = Http::timeout(10)->post($endpoint, [
@@ -156,12 +163,12 @@ class LicenseService
 
                 return [
                     'success' => true,
-                    'message' => 'License activated successfully for tier ' . strtoupper($tier),
+                    'message' => 'License activated successfully for tier '.strtoupper($tier),
                     'data' => $this->getLicenseStatus(),
                 ];
             }
         } catch (\Throwable $e) {
-            Log::warning('JA-CP activation remote call failed: ' . $e->getMessage());
+            Log::warning('JA-CP activation remote call failed: '.$e->getMessage());
         }
 
         // Fallback local key format verification (e.g. JACP-PRO-*, JACP-ENT-*, JACP-WL-*)
@@ -193,7 +200,7 @@ class LicenseService
 
             return [
                 'success' => true,
-                'message' => 'License activated (' . ucfirst(str_replace('_', ' ', $tier)) . ').',
+                'message' => 'License activated ('.ucfirst(str_replace('_', ' ', $tier)).').',
                 'data' => $this->getLicenseStatus(),
             ];
         }
@@ -219,7 +226,7 @@ class LicenseService
         }
 
         $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
-        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com') . '/api/v1/licenses/heartbeat';
+        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com').'/api/v1/licenses/heartbeat';
 
         try {
             $response = Http::timeout(10)->post($endpoint, [
@@ -241,7 +248,7 @@ class LicenseService
                 return ['success' => true, 'message' => 'License heartbeat synchronized.', 'status' => self::STATUS_ACTIVE];
             }
         } catch (\Throwable $e) {
-            Log::warning('JA-CP heartbeat sync failed: ' . $e->getMessage());
+            Log::warning('JA-CP heartbeat sync failed: '.$e->getMessage());
         }
 
         // On network failure, grant 30-day offline grace period instead of disabling site
@@ -255,7 +262,7 @@ class LicenseService
 
         return [
             'success' => true,
-            'message' => 'Operating in offline grace period until ' . $graceUntilStr,
+            'message' => 'Operating in offline grace period until '.$graceUntilStr,
             'status' => self::STATUS_GRACE_PERIOD,
         ];
     }
@@ -310,7 +317,7 @@ class LicenseService
     /**
      * Helper to persist license settings in bulk.
      *
-     * @param array<string, mixed> $values
+     * @param  array<string, mixed>  $values
      */
     private function persistLicense(array $values): void
     {
@@ -333,7 +340,7 @@ class LicenseService
         $prefix = substr($key, 0, 9);
         $suffix = substr($key, -4);
 
-        return $prefix . '****-' . $suffix;
+        return $prefix.'****-'.$suffix;
     }
 
     private function getTierDisplayName(string $tier): string

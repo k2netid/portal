@@ -103,7 +103,6 @@ class DataModelTest extends TestCase
         $this->assertDatabaseMissing('sys_content_types', ['id' => $typeId]);
     }
 
-
     /**
      * Test instant EAV CRUD operations, validation rules, and SQLite/MySQL dynamic searching.
      */

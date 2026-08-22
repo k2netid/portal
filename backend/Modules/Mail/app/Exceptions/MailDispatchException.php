@@ -6,6 +6,4 @@ namespace Modules\Mail\Exceptions;
 
 use RuntimeException;
 
-class MailDispatchException extends RuntimeException
-{
-}
+class MailDispatchException extends RuntimeException {}

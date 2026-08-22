@@ -555,7 +555,8 @@ class RedisController extends BaseApiController
                         }
                     }
                     $deletedCount += $delRes;
-                } catch (\Throwable) {}
+                } catch (\Throwable) {
+                }
             }
 
             return $this->success([
@@ -594,7 +595,8 @@ class RedisController extends BaseApiController
                     return $p;
                 }
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         $prefixRaw = config('database.redis.options.prefix');
 
@@ -620,14 +622,16 @@ class RedisController extends BaseApiController
                     return $type;
                 }
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         try {
             $type = $redis->type($cleanKey);
             if ($type !== 0 && $type !== 'none' && $type !== false && $type !== null) {
                 return $type;
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         return 0;
     }
@@ -642,14 +646,16 @@ class RedisController extends BaseApiController
                     return (int) $ttl;
                 }
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         try {
             $ttl = $redis->ttl($cleanKey);
             if (is_numeric($ttl)) {
                 return (int) $ttl;
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         return -1;
     }
@@ -664,14 +670,16 @@ class RedisController extends BaseApiController
                     return (int) $usage;
                 }
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         try {
             $val = $redis->get($cleanKey);
             if (is_string($val)) {
                 return strlen($val);
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         return 0;
     }
@@ -687,7 +695,8 @@ class RedisController extends BaseApiController
                     if ($client instanceof \Redis) {
                         try {
                             $val = $client->rawCommand('GET', $rawKey);
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
                     if ($val === null || $val === false) {
                         $val = $redis->get($cleanKey);
@@ -700,7 +709,8 @@ class RedisController extends BaseApiController
                                 if ($unserialized !== false || $val === 'b:0;') {
                                     return $unserialized;
                                 }
-                            } catch (\Throwable) {}
+                            } catch (\Throwable) {
+                            }
                         }
                         $json = json_decode($val, true);
                         if (json_last_error() === JSON_ERROR_NONE) {
@@ -727,7 +737,8 @@ class RedisController extends BaseApiController
                                     $hash = $rawHash;
                                 }
                             }
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
                     if (empty($hash)) {
                         $hash = $redis->hgetall($cleanKey);
@@ -739,7 +750,8 @@ class RedisController extends BaseApiController
                     if ($client instanceof \Redis) {
                         try {
                             return $client->rawCommand('LRANGE', $rawKey, 0, 99);
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
 
                     return $redis->lrange($cleanKey, 0, 99);
@@ -748,7 +760,8 @@ class RedisController extends BaseApiController
                     if ($client instanceof \Redis) {
                         try {
                             return $client->rawCommand('SMEMBERS', $rawKey);
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
 
                     return $redis->smembers($cleanKey);
@@ -757,7 +770,8 @@ class RedisController extends BaseApiController
                     if ($client instanceof \Redis) {
                         try {
                             return $client->rawCommand('ZRANGE', $rawKey, 0, 99, 'WITHSCORES');
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
 
                     return $redis->zrange($cleanKey, 0, 99, ['WITHSCORES' => true]);
@@ -766,7 +780,8 @@ class RedisController extends BaseApiController
                     if ($client instanceof \Redis) {
                         try {
                             return $client->rawCommand('GET', $rawKey);
-                        } catch (\Throwable) {}
+                        } catch (\Throwable) {
+                        }
                     }
 
                     return $redis->get($cleanKey);
@@ -888,11 +903,13 @@ class RedisController extends BaseApiController
         $count = 0;
         try {
             $count += $this->getDatabaseSize(Redis::connection('default'));
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         try {
             $count += $this->getDatabaseSize(Redis::connection('cache'));
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         return $count;
     }
@@ -944,7 +961,8 @@ class RedisController extends BaseApiController
     {
         try {
             Redis::connection($connection)->flushdb();
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
     }
 
     private function getConnectionKeys(string $connection): int

@@ -1,9 +1,15 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\RedisConfigServiceProvider;
+use Modules\Core\Providers\CoreServiceProvider;
+use Modules\Core\System\Providers\ExtensionAutoloadServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\HorizonServiceProvider::class,
-    App\Providers\RedisConfigServiceProvider::class,
-    Modules\Core\Providers\CoreServiceProvider::class,
-    Modules\Core\System\Providers\ExtensionAutoloadServiceProvider::class,
+    AppServiceProvider::class,
+    HorizonServiceProvider::class,
+    RedisConfigServiceProvider::class,
+    CoreServiceProvider::class,
+    ExtensionAutoloadServiceProvider::class,
 ];

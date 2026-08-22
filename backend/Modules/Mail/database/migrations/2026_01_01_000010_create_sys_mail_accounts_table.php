@@ -21,14 +21,14 @@ return new class extends Migration
             $table->string('name', 128);
             $table->string('email', 191)->index();
             $table->string('account_type', 32)->default('system_global'); // system_global | custom_personal
-            
+
             // SMTP Settings
             $table->string('smtp_host', 191)->nullable();
             $table->integer('smtp_port')->nullable();
             $table->string('smtp_username', 191)->nullable();
             $table->text('smtp_password')->nullable(); // Encrypted
             $table->string('smtp_encryption', 16)->nullable(); // tls | ssl | null
-            
+
             // IMAP Settings
             $table->string('imap_host', 191)->nullable();
             $table->integer('imap_port')->nullable();

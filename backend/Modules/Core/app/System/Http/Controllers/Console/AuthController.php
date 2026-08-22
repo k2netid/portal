@@ -349,7 +349,7 @@ class AuthController extends BaseApiController
 
         // Determine target domain for redirection
         $baseUrl = config('app.url');
-        $targetUrl = (is_string($baseUrl) ? rtrim($baseUrl, '/') : '').'/' . \Modules\Core\System\Models\Setting::resolveConsoleDashboardSlug();
+        $targetUrl = (is_string($baseUrl) ? rtrim($baseUrl, '/') : '').'/'.Setting::resolveConsoleDashboardSlug();
 
         $user->load('roles');
 

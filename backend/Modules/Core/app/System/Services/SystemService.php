@@ -771,7 +771,9 @@ class SystemService
             if (! $cronConfigured && is_dir('/etc/cron.d')) {
                 $cronFiles = @scandir('/etc/cron.d') ?: [];
                 foreach ($cronFiles as $file) {
-                    if ($file === '.' || $file === '..') continue;
+                    if ($file === '.' || $file === '..') {
+                        continue;
+                    }
                     $content = @file_get_contents('/etc/cron.d/'.$file);
                     if ($content && str_contains($content, 'schedule:run')) {
                         $cronConfigured = true;
@@ -1231,4 +1233,3 @@ class SystemService
         }
     }
 }
-

@@ -5,6 +5,7 @@ namespace Modules\Core\System\Http\Controllers\Console;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Setting;
 
 /**
@@ -55,7 +56,7 @@ class PublicSettingsController extends BaseApiController
             'maintenance_end_time' => Setting::get('maintenance_end_time', ''),
 
             // Active Extensions & Modules
-            'active_extensions' => \Modules\Core\System\Models\Extension::where('status', 'active')->pluck('slug')->values()->toArray(),
+            'active_extensions' => Extension::where('status', 'active')->pluck('slug')->values()->toArray(),
         ];
 
         $response = $this->success($payload, 'Public settings retrieved successfully');

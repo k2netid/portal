@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Mail\Tests\Feature;
 
-use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
 use Modules\Mail\Models\MailAccount;
 use Modules\Mail\Tests\Support\ActivatesMailExtension;

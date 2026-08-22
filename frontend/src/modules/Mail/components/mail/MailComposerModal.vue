@@ -55,7 +55,7 @@
               type="email"
               placeholder="recipient@example.com"
               class="border-none shadow-none focus-visible:ring-0 h-7 text-xs p-0 bg-transparent flex-1"
-              @update:model-value="v => composerData.to = String(v || '')"
+              @update:model-value="v => patchComposer({ to: String(v || '') })"
             />
             <div class="flex items-center gap-2 text-xs">
               <button
@@ -89,7 +89,7 @@
               type="email"
               placeholder="cc@example.com"
               class="border-none shadow-none focus-visible:ring-0 h-7 text-xs p-0 bg-transparent flex-1"
-              @update:model-value="v => composerData.cc = String(v || '')"
+              @update:model-value="v => patchComposer({ cc: String(v || '') })"
             />
           </div>
 
@@ -101,7 +101,7 @@
               type="email"
               placeholder="bcc@example.com"
               class="border-none shadow-none focus-visible:ring-0 h-7 text-xs p-0 bg-transparent flex-1"
-              @update:model-value="v => composerData.bcc = String(v || '')"
+              @update:model-value="v => patchComposer({ bcc: String(v || '') })"
             />
           </div>
 
@@ -115,7 +115,7 @@
               type="text"
               :placeholder="$t('system.mail.subject_placeholder')"
               class="border-none shadow-none focus-visible:ring-0 h-7 text-xs p-0 bg-transparent flex-1 font-semibold text-foreground"
-              @update:model-value="v => composerData.subject = String(v || '')"
+              @update:model-value="v => patchComposer({ subject: String(v || '') })"
             />
           </div>
 
@@ -192,11 +192,12 @@
           <!-- Message Body Input with Tiptap Rich-Text Editor -->
           <div class="flex-1 flex flex-col min-h-0 pt-1">
             <TiptapEditor
-              v-model="composerData.body"
+              :model-value="composerData.body"
               :compact="true"
               :resizable="false"
               :placeholder="$t('system.mail.body_placeholder')"
               class="flex-1 flex flex-col min-h-0 border-border/40 rounded-xl overflow-hidden shadow-none"
+              @update:model-value="v => patchComposer({ body: String(v || '') })"
             />
           </div>
 
@@ -397,26 +398,33 @@ import {
 import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
 import type { MailTemplate } from '@/modules/Mail/composables/useMailClient';
 
+type ComposerData = {
+    to: string;
+    cc: string;
+    bcc: string;
+    subject: string;
+    body: string;
+    attachments: File[];
+};
+
 const props = defineProps<{
     isOpen: boolean;
-    composerData: {
-        to: string;
-        cc: string;
-        bcc: string;
-        subject: string;
-        body: string;
-        attachments: File[];
-    };
+    composerData: ComposerData;
     templates?: MailTemplate[];
 }>();
 
 const emit = defineEmits<{
     (e: 'close'): void;
     (e: 'send'): void;
-    (e: 'save-draft', data: any): void;
+    (e: 'save-draft', data: ComposerData): void;
     (e: 'schedule-send', scheduledAt: string): void;
     (e: 'manage-templates'): void;
+    (e: 'update:composerData', data: ComposerData): void;
 }>();
+
+const patchComposer = (patch: Partial<ComposerData>): void => {
+    emit('update:composerData', { ...props.composerData, ...patch });
+};
 
 const toast = useToast();
 const isMaximized = ref(false);
@@ -514,11 +522,12 @@ const activeTemplates = computed(() => {
 });
 
 const insertTemplate = (tpl: { title: string; body: string }) => {
-    if (props.composerData.body.trim() && props.composerData.body !== '<p></p>') {
-        props.composerData.body += `<br/><br/>${tpl.body.replace(/\n/g, '<br/>')}`;
-    } else {
-        props.composerData.body = tpl.body.replace(/\n/g, '<br/>');
-    }
+    const htmlBody = tpl.body.replace(/\n/g, '<br/>');
+    const currentBody = props.composerData.body;
+    const nextBody = currentBody.trim() && currentBody !== '<p></p>'
+        ? `${currentBody}<br/><br/>${htmlBody}`
+        : htmlBody;
+    patchComposer({ body: nextBody });
     toast.success.action(`Inserted "${tpl.title}" template`);
 };
 
@@ -551,7 +560,7 @@ const generateWithAi = async (instruction: string) => {
         });
         const content = response.data?.data?.content || response.data?.content || '';
         if (content) {
-            props.composerData.body = content.replace(/\n/g, '<br/>');
+            patchComposer({ body: content.replace(/\n/g, '<br/>') });
             toast.success.action('AI draft generated successfully');
         }
     } catch (error: unknown) {

@@ -304,7 +304,7 @@ return new class extends Migration
         Schema::dropIfExists('kyc_submissions');
         Schema::dropIfExists('passkeys');
 
-        if (!empty($tableNames)) {
+        if (! empty($tableNames)) {
             Schema::dropIfExists($tableNames['role_has_permissions']);
             Schema::dropIfExists($tableNames['model_has_roles']);
             Schema::dropIfExists($tableNames['model_has_permissions']);

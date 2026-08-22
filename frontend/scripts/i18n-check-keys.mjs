@@ -173,6 +173,14 @@ function loadMergedLocaleKeys(lang) {
             for (const k of loadJsonKeys(join(localesDir, `${lang}.json`), 'system.analytics')) keys.add(k);
             return;
         }
+        if (rel === 'Mail/locales') {
+            const mailJson = JSON.parse(readFileSync(join(localesDir, `${lang}.json`), 'utf8'));
+            for (const k of flatten(mailJson.mail ?? {}, 'system.mail')) keys.add(k);
+            if (typeof mailJson.navigationMenuMail === 'string') {
+                keys.add('system.navigation.menu.mail');
+            }
+            return;
+        }
         const namespace = namespaceFromPath(rel);
         for (const k of loadJsonKeys(join(localesDir, `${lang}.json`), namespace)) keys.add(k);
     });
