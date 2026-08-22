@@ -153,7 +153,7 @@
         <!-- Floating Toggle Button (Desktop, like main sidebar) -->
         <button
           type="button"
-          class="hidden lg:flex absolute -right-3 top-3.5 items-center justify-center h-6 w-6 rounded-full border border-border bg-sidebar text-muted-foreground hover:text-foreground hover:bg-muted shadow-xs z-30 transition-all cursor-pointer"
+          class="hidden lg:flex absolute -right-3 top-3 items-center justify-center h-6 w-6 rounded-full border border-border bg-sidebar text-muted-foreground hover:text-foreground hover:bg-muted shadow-xs z-30 transition-all cursor-pointer"
           :title="isSidebarMinimized ? $t('common.navigation.sidebar.expand') : $t('common.navigation.sidebar.minimize')"
           :aria-label="isSidebarMinimized ? $t('common.navigation.sidebar.expand') : $t('common.navigation.sidebar.minimize')"
           @click="toggleSidebarMinimize"
