@@ -400,29 +400,13 @@ class ExtensionController extends BaseApiController
                         continue;
                     }
 
-                    $name = isset($manifest['name']) && is_string($manifest['name'])
-                        ? $manifest['name']
-                        : basename($dir);
-                    $version = isset($manifest['version']) && is_string($manifest['version'])
-                        ? $manifest['version']
-                        : '1.0.0';
-                    $author = isset($manifest['author']) && is_string($manifest['author'])
-                        ? $manifest['author']
-                        : 'Core';
-                    $featuresRaw = $manifest['features'] ?? [];
-                    $features = is_array($featuresRaw) ? $featuresRaw : [];
+                    $extracted = $this->extractDiscoveryMeta($manifest, 'module', 'Core');
+                    if ($extracted === null) {
+                        continue;
+                    }
 
-                    $manifestMarksCore = array_key_exists('is_core', $manifest)
-                        && filter_var($manifest['is_core'], FILTER_VALIDATE_BOOLEAN);
-
-                    $discovered[$slugRaw] = [
-                        'type' => 'module',
-                        'name' => $name,
-                        'version' => $version,
-                        'author' => $author,
-                        'is_core' => $manifestMarksCore || $this->isKernelSlug($slugRaw),
-                        'features' => $features,
-                    ];
+                    $extracted['is_core'] = $extracted['is_core'] || $this->isKernelSlug($slugRaw);
+                    $discovered[$slugRaw] = $extracted;
                 }
             }
         }
@@ -441,26 +425,13 @@ class ExtensionController extends BaseApiController
                 }
 
                 $pluginSlug = $manifest['slug'];
-                $name = isset($manifest['name']) && is_string($manifest['name'])
-                    ? $manifest['name']
-                    : basename($dir);
-                $version = isset($manifest['version']) && is_string($manifest['version'])
-                    ? $manifest['version']
-                    : '1.0.0';
-                $author = isset($manifest['author']) && is_string($manifest['author'])
-                    ? $manifest['author']
-                    : 'Anonymous';
-                $featuresRaw = $manifest['features'] ?? [];
-                $features = is_array($featuresRaw) ? $featuresRaw : [];
+                $extracted = $this->extractDiscoveryMeta($manifest, 'plugin', 'Anonymous');
+                if ($extracted === null) {
+                    continue;
+                }
 
-                $discovered[$pluginSlug] = [
-                    'type' => 'plugin',
-                    'name' => $name,
-                    'version' => $version,
-                    'author' => $author,
-                    'is_core' => false,
-                    'features' => $features,
-                ];
+                $extracted['is_core'] = false;
+                $discovered[$pluginSlug] = $extracted;
             }
         }
 
@@ -472,6 +443,25 @@ class ExtensionController extends BaseApiController
                 ? 'active'
                 : ($existing?->status ?? 'inactive');
 
+            $author = $meta['author'] !== '' && $meta['author'] !== 'Core'
+                ? $meta['author']
+                : 'jejakawan';
+
+            $license = $meta['license']
+                ?? ($meta['is_core'] ? 'Platform' : ($existing?->license ?: 'Proprietary'));
+
+            $requirements = $meta['dependencies_declared']
+                ? $meta['requirements']
+                : (is_array($existing?->requirements) ? $existing->requirements : []);
+
+            $settings = is_array($existing?->settings) ? $existing->settings : [];
+            if (is_string($meta['settings_route']) && $meta['settings_route'] !== '') {
+                $settings['settings_route'] = $meta['settings_route'];
+            }
+            if (is_string($meta['license_tier']) && $meta['license_tier'] !== '') {
+                $settings['license_tier'] = $meta['license_tier'];
+            }
+
             $extension = Extension::updateOrCreate(
                 ['slug' => $slug],
                 [
@@ -481,11 +471,15 @@ class ExtensionController extends BaseApiController
                     'database_version' => $existing?->database_version ?? '1.0.0',
                     'status' => $status,
                     'is_core' => $meta['is_core'],
-                    'author' => $meta['author'] !== '' && $meta['author'] !== 'Core'
-                        ? $meta['author']
-                        : 'jejakawan',
-                    'license' => $meta['is_core'] ? 'Platform' : 'Proprietary',
-                    'requirements' => [],
+                    'author' => $author,
+                    'description' => $meta['description'] ?? $existing?->description,
+                    'license' => $license,
+                    'requirements' => $requirements,
+                    'manifest' => [
+                        'settings_route' => $meta['settings_route'],
+                        'license_tier' => $meta['license_tier'],
+                    ],
+                    'settings' => $settings,
                 ]
             );
 
@@ -499,6 +493,95 @@ class ExtensionController extends BaseApiController
                 }
             }
         }
+    }
+
+    /**
+     * Normalize disk manifest / module.json into discovery meta.
+     *
+     * @param  array<mixed, mixed>  $manifest
+     * @return array{
+     *     type: string,
+     *     name: string,
+     *     version: string,
+     *     author: string,
+     *     description: string|null,
+     *     license: string|null,
+     *     license_tier: string|null,
+     *     settings_route: string|null,
+     *     is_core: bool,
+     *     features: array<int, mixed>,
+     *     requirements: array<string, string>,
+     *     dependencies_declared: bool
+     * }|null
+     */
+    private function extractDiscoveryMeta(array $manifest, string $defaultType, string $defaultAuthor): ?array
+    {
+        $slugRaw = $manifest['slug'] ?? $manifest['alias'] ?? null;
+        if (! is_string($slugRaw) || $slugRaw === '') {
+            return null;
+        }
+
+        $name = isset($manifest['name']) && is_string($manifest['name'])
+            ? $manifest['name']
+            : $slugRaw;
+        $version = isset($manifest['version']) && is_string($manifest['version'])
+            ? $manifest['version']
+            : '1.0.0';
+        $author = isset($manifest['author']) && is_string($manifest['author'])
+            ? $manifest['author']
+            : $defaultAuthor;
+
+        $type = $defaultType;
+        if (isset($manifest['type']) && is_string($manifest['type'])
+            && in_array($manifest['type'], ['module', 'plugin'], true)) {
+            $type = $manifest['type'];
+        }
+
+        $manifestMarksCore = array_key_exists('is_core', $manifest)
+            && filter_var($manifest['is_core'], FILTER_VALIDATE_BOOLEAN);
+
+        $description = isset($manifest['description']) && is_string($manifest['description'])
+            ? $manifest['description']
+            : null;
+        $license = isset($manifest['license']) && is_string($manifest['license'])
+            ? $manifest['license']
+            : null;
+        $licenseTier = isset($manifest['license_tier']) && is_string($manifest['license_tier'])
+            ? $manifest['license_tier']
+            : null;
+        $settingsRoute = isset($manifest['settings_route']) && is_string($manifest['settings_route'])
+            ? $manifest['settings_route']
+            : null;
+
+        $featuresRaw = $manifest['features'] ?? [];
+        $features = is_array($featuresRaw) ? $featuresRaw : [];
+
+        $requirements = [];
+        $dependenciesDeclared = array_key_exists('dependencies', $manifest);
+        $dependencies = $manifest['dependencies'] ?? null;
+        if (is_array($dependencies)) {
+            foreach ($dependencies as $depSlug => $constraint) {
+                if (! is_string($depSlug) || ! is_scalar($constraint)) {
+                    continue;
+                }
+                $requirements[$depSlug] = (string) $constraint;
+            }
+        }
+
+        return [
+            'type' => $type,
+            'name' => $name,
+            'version' => $version,
+            'author' => $author,
+            'description' => $description,
+            'license' => $license,
+            'license_tier' => $licenseTier,
+            'settings_route' => $settingsRoute,
+            'is_core' => $manifestMarksCore,
+            'features' => $features,
+            'requirements' => $requirements,
+            'dependencies_declared' => $dependenciesDeclared,
+        ];
     }
 
     /**

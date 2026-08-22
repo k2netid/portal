@@ -14,6 +14,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | [**Architectural status**](architectural-status.md) | Apa yang live di `main` vs legacy CMS/CP |
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
+| [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |
 
 ---
 

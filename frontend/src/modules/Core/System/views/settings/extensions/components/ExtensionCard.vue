@@ -29,13 +29,13 @@
           </Badge>
           
           <span 
-            v-if="getExtensionLicenseTier(ext.slug) === 'free'"
+            v-if="getExtensionLicenseTier(ext) === 'free'"
             class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-500/10 text-slate-400 border border-slate-500/20"
           >
             {{ t('system.appStore.card.licenseCommunity') }}
           </span>
           <span 
-            v-else-if="getExtensionLicenseTier(ext.slug) === 'pro'"
+            v-else-if="getExtensionLicenseTier(ext) === 'pro'"
             class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30"
           >
             {{ t('system.appStore.card.licensePro') }}
@@ -63,7 +63,7 @@
         <div class="flex justify-between">
           <span class="text-muted-foreground">{{ t('system.appStore.license') }}:</span>
           <span class="font-mono text-foreground">
-            {{ licenseLabel(ext.slug) }}
+            {{ licenseLabel(ext) }}
           </span>
         </div>
         <div class="flex justify-between" v-if="ext.is_core">
@@ -246,6 +246,7 @@ interface ExtensionItem {
   status: 'active' | 'inactive';
   is_core: boolean;
   author?: string;
+  description?: string;
   license?: string;
   settings?: Record<string, unknown>;
   features?: FeatureItem[];
@@ -287,8 +288,13 @@ const groupedFeatures = computed(() => {
   return { core, operational };
 });
 
-// License tiers for registry badges (kernel vs first-party vs legacy CMS leftovers)
-const getExtensionLicenseTier = (slug: string): 'free' | 'pro' | 'pro_plus' => {
+// License tiers: prefer settings.license_tier from manifest sync, then legacy slug map
+const getExtensionLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus' => {
+  const fromSettings = ext.settings?.license_tier;
+  if (fromSettings === 'free' || fromSettings === 'pro' || fromSettings === 'pro_plus') {
+    return fromSettings;
+  }
+
   const tierMap: Record<string, 'free' | 'pro' | 'pro_plus'> = {
     core: 'free',
     system: 'free',
@@ -303,14 +309,17 @@ const getExtensionLicenseTier = (slug: string): 'free' | 'pro' | 'pro_plus' => {
     infra: 'pro_plus',
     ai: 'pro_plus',
   };
-  return tierMap[slug] || 'pro';
+  return tierMap[ext.slug] || 'pro';
 };
 
-const licenseLabel = (slug: string) => {
-  if (slug === 'core' || props.ext.is_core) {
+const licenseLabel = (ext: ExtensionItem) => {
+  if (ext.slug === 'core' || ext.is_core) {
     return t('system.appStore.card.licensePlatform');
   }
-  const tier = getExtensionLicenseTier(slug);
+  if (ext.license && ext.license.trim() !== '' && ext.license !== 'Proprietary') {
+    return ext.license;
+  }
+  const tier = getExtensionLicenseTier(ext);
   if (tier === 'free') return t('system.appStore.card.licenseMit');
   if (tier === 'pro') return t('system.appStore.card.licenseCommercialPro');
   return t('system.appStore.card.licenseEnterprise');

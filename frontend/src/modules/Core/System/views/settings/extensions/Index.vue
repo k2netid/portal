@@ -195,12 +195,15 @@ interface ExtensionItem {
     status: 'active' | 'inactive';
     is_core: boolean;
     author?: string;
+    description?: string;
     license?: string;
     settings?: Record<string, unknown>;
     features?: FeatureItem[];
 }
 
 import { useSystemStore } from '@/modules/Core/System/stores/system';
+import { registry } from '@/engine/registry';
+import { isOptionalFirstPartySlug } from '@/engine/bootstrap/deferredConsoleModules';
 
 const { t, te } = useI18n();
 const router = useRouter();
@@ -263,6 +266,9 @@ const trans = computed(() => ({
 }));
 
 const getLocalizedDescription = (ext: ExtensionItem) => {
+    if (ext.description && ext.description.trim() !== '') {
+        return ext.description;
+    }
     const key = `system.appStore.descriptions.${ext.slug}`;
     return te(key) ? t(key) : t('system.appStore.descriptions.fallback', { type: ext.type });
 };
@@ -406,6 +412,11 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
                 : t('system.appStore.messages.toggleSuccessDeactivated', { name: ext.name }));
             await fetchExtensions();
             await systemStore.fetchPublicSettings({ force: true });
+            // Optional FE modules are registered only when active; router snapshot needs reload.
+            if (isActivating && isOptionalFirstPartySlug(ext.slug) && !registry.hasModule(ext.slug)) {
+                window.location.reload();
+                return;
+            }
         } else {
             toast.error(t('system.appStore.messages.toggleFailed', { action }));
         }
@@ -476,7 +487,11 @@ const uploadZip = async (file: File) => {
 
 // Configure Settings Modal
 const openSettingsModal = (ext: ExtensionItem) => {
-    // Check if the module has a dedicated settings page route
+    // Prefer manifest-driven settings_route, then legacy hardcoded map
+    const settingsRoute = typeof ext.settings?.settings_route === 'string'
+        ? ext.settings.settings_route
+        : null;
+
     const routeMap: Record<string, { name: string; query?: Record<string, string> } | string> = {
         core: { name: 'settings', query: { tab: 'system' } },
         system: { name: 'settings', query: { tab: 'system' } },
@@ -493,7 +508,18 @@ const openSettingsModal = (ext: ExtensionItem) => {
         search: { name: 'settings', query: { tab: 'system' } },
     };
 
-    const target = routeMap[ext.slug];
+    let target: { name: string; query?: Record<string, string> } | string | undefined;
+    if (settingsRoute) {
+        if (settingsRoute.startsWith('/')) {
+            target = settingsRoute;
+        } else if (settingsRoute === 'mail') {
+            target = routeMap.mail;
+        } else {
+            target = { name: settingsRoute };
+        }
+    } else {
+        target = routeMap[ext.slug];
+    }
     if (target) {
         toast.success(t('system.appStore.messages.redirectingTo', { name: ext.name }));
         if (typeof target === 'object' && target.name) {

@@ -19,9 +19,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Manifest: `license`, `license_tier`, feature `category` — aligns with frozen module contract
 - Docs: IMAP / SPF / DKIM removed from kernel backlog (mail server / DNS ownership)
 - Mail AI settings no longer present summarize/smart-reply/sentiment as live
 - Manifest copy aligned to kernel reality (no threads / live IMAP claims)
+- FE: Mail AppModule registers only when registry status is active (reload after first activate)
 
 ## [P2] — 2026-08-23
 

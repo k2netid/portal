@@ -533,4 +533,38 @@ class ExtensionControllerTest extends TestCase
         $this->assertNotNull(Extension::where('slug', 'core')->first());
         $this->assertDirectoryExists(base_path('Modules/Core'));
     }
+
+    /**
+     * Mail rediscovery persists settings_route / license_tier and does not wipe requirements.
+     */
+    public function test_mail_discovery_syncs_manifest_contract_fields(): void
+    {
+        Extension::create([
+            'slug' => 'mail',
+            'type' => 'module',
+            'name' => 'JA-Mail',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['core' => '>=1.0.0'],
+            'settings' => ['custom_flag' => true],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+
+        $mail = collect($response->json('data'))->firstWhere('slug', 'mail');
+        $this->assertNotNull($mail);
+        $this->assertFalse((bool) $mail['is_core']);
+        $this->assertEquals('Commercial PRO', $mail['license']);
+        $this->assertStringContainsString('webmail', strtolower((string) ($mail['description'] ?? '')));
+        $this->assertEquals('mail', $mail['settings']['settings_route'] ?? null);
+        $this->assertEquals('pro', $mail['settings']['license_tier'] ?? null);
+        $this->assertTrue((bool) ($mail['settings']['custom_flag'] ?? false));
+        // dependencies not declared on Mail manifest → preserve prior requirements
+        $this->assertEquals(['core' => '>=1.0.0'], $mail['requirements']);
+    }
 }

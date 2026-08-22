@@ -19,8 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $status
  * @property bool $is_core
  * @property string|null $author
+ * @property string|null $description
  * @property string $license
  * @property array<string, mixed>|null $requirements
+ * @property array<string, mixed>|null $manifest
  * @property array<string, mixed>|null $settings
  */
 class Extension extends Model
@@ -61,14 +63,17 @@ class Extension extends Model
         'status',
         'is_core',
         'author',
+        'description',
         'license',
         'requirements',
+        'manifest',
         'settings',
     ];
 
     protected $casts = [
         'is_core' => 'boolean',
         'requirements' => 'array',
+        'manifest' => 'array',
         'settings' => 'array',
     ];
 }

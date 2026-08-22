@@ -14,6 +14,8 @@ export interface DashboardConfig {
 export interface AppModule {
     id: string;
     name: string;
+    /** Registry slug when this AppModule is an optional first-party extension (=== manifest.slug). */
+    extensionSlug?: string;
     routes?: RouteRecordRaw[];
     navigation?: NavItem[];
     dashboards?: DashboardConfig[];

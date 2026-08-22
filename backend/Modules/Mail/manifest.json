@@ -6,27 +6,33 @@
   "author": "Jejakawan Team",
   "type": "module",
   "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
   "settings_route": "mail",
   "features": [
     {
       "name": "Webmail Client",
       "slug": "webmail-client",
-      "description": "Local mailbox UI — inbox, sent, drafts, trash (local index; not IMAP sync)"
+      "description": "Local mailbox UI — inbox, sent, drafts, trash (local index; not IMAP sync)",
+      "category": "business"
     },
     {
       "name": "Multi-Account SMTP",
       "slug": "multi-account",
-      "description": "Connect personal SMTP accounts with encrypted credentials and switching"
+      "description": "Connect personal SMTP accounts with encrypted credentials and switching",
+      "category": "business"
     },
     {
       "name": "Canned Responses",
       "slug": "templates",
-      "description": "Reusable quick-reply email snippets"
+      "description": "Reusable quick-reply email snippets",
+      "category": "business"
     },
     {
       "name": "Scheduled Dispatcher",
       "slug": "scheduled-send",
-      "description": "Schedule outbound emails via mail:process-scheduled"
+      "description": "Schedule outbound emails via mail:process-scheduled",
+      "category": "business"
     }
   ]
 }

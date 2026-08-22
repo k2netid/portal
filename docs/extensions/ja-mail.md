@@ -21,11 +21,16 @@ JA-Mail is a **first-class Laravel + Vue module**, not embedded Core code:
 
 ## Gating
 
-- **API:** middleware `mail.extension` — requires `sys_extensions.slug=mail` with `status=active`
+See the frozen contract: [module-contract.md](./module-contract.md).
+
+- **Package boot:** nwidart `modules_statuses.json` → Mail always loaded
+- **Product active:** `sys_extensions.slug=mail` + `status=active`
+- **API:** middleware `mail.extension`
 - **Router:** `meta.extension: 'mail'` — checked in `engine/router/guards.ts`
 - **Sidebar:** `extension: 'mail'` on nav item + `TheSidebar.vue`
+- **FE register:** console bootstrap registers Mail **only when** `active_extensions` includes `mail`
 
-Activate via **Settings → Extensions (App Store)** before use.
+Activate via **Identity → Module Registry & App Store** before use.
 
 ## Capabilities (kernel)
 
