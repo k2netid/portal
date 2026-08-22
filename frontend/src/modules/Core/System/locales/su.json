@@ -117,7 +117,8 @@
       "oauthClients": "Klién OAuth",
       "identityIntegrations": "Idéntitas & Integrasi",
       "kycReviews": "Ulasan KYC",
-      "integrations": "Integrasi"
+      "integrations": "Integrasi",
+      "mail": "Kotak Surat"
     }
   },
   "auth": {
@@ -1909,6 +1910,10 @@
         }
       }
     },
+    "email": {
+      "quick_presets": "Preset Gancang",
+      "quick_presets_desc": "Otomatis ngarobah host, port, sareng enkripsi dina 1-klik."
+    },
     "emailTest": {
       "title": "Pengujian Konfigurasi Email",
       "configStatus": "Validasi Konfigurasi",
@@ -3385,5 +3390,44 @@
       "approved": "KYC disatujuan",
       "rejected": "KYC ditampik"
     }
+  },
+  "mail": {
+    "title": "Kotak Surat & Klién Surélék",
+    "compose": "Tulis Surélék",
+    "folders": "Polder",
+    "labels": "Label",
+    "folder_inbox": "Kotak Asup",
+    "folder_sent": "Kirim",
+    "folder_drafts": "Draf",
+    "folder_trash": "Runtah",
+    "folder_spam": "Spam",
+    "filter_all": "Sadaya",
+    "filter_unread": "Teu Acan Dibaca",
+    "filter_starred": "Bentang",
+    "filter_attachments": "Kalayan Gagantel",
+    "search_placeholder": "Milari surélék dumasar judul, pangirim, atanapi eusi...",
+    "no_messages": "Teu aya pesen",
+    "no_messages_desc": "Kotak asup anjeun beresih atanapi teu aya surélék anu cocog.",
+    "select_message": "Teu aya surélék anu dipilih",
+    "select_message_desc": "Pilih pesen tina daptar pikeun ningali eusi lengkep sareng gagantelna.",
+    "reply": "Waler",
+    "forward": "Teruskeun",
+    "trash": "Pindahkeun ka Runtah",
+    "restore": "Pulihkeun ka Kotak Asup",
+    "delete_permanently": "Hapus Salilana",
+    "print": "Citak Surélék",
+    "attachments": "Gagantel",
+    "download": "Unduh",
+    "quick_reply": "Waleran Gancang",
+    "quick_reply_placeholder": "Tulis waleran gancang ka {name}...",
+    "new_message": "Pesen Anyar",
+    "to": "Ka",
+    "subject": "Judul",
+    "subject_placeholder": "Judul Surélék",
+    "body_placeholder": "Tulis pesen surélék anjeun di dieu...",
+    "attach": "Gantelkeun Berkas",
+    "discard": "Piceun",
+    "send": "Kirim Surélék",
+    "storage": "Panyimpenan Surélék"
   }
 }

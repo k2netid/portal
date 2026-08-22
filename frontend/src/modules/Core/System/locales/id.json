@@ -117,7 +117,8 @@
       "oauthClients": "OAuth Clients",
       "identityIntegrations": "Identitas & Integrasi",
       "kycReviews": "Review KYC",
-      "integrations": "Integrations"
+      "integrations": "Integrations",
+      "mail": "Kotak Masuk"
     }
   },
   "auth": {
@@ -1909,6 +1910,10 @@
         }
       }
     },
+    "email": {
+      "quick_presets": "Preset Cepat",
+      "quick_presets_desc": "Otomatis mengonfigurasi host, port, dan enkripsi dalam 1-klik."
+    },
     "emailTest": {
       "title": "Pengujian Konfigurasi Email",
       "configStatus": "Validasi Konfigurasi",
@@ -3385,5 +3390,44 @@
       "approved": "KYC disetujui",
       "rejected": "KYC ditolak"
     }
+  },
+  "mail": {
+    "title": "Kotak Masuk & Klien Email",
+    "compose": "Tulis Email",
+    "folders": "Folder",
+    "labels": "Label",
+    "folder_inbox": "Kotak Masuk",
+    "folder_sent": "Terkirim",
+    "folder_drafts": "Draf",
+    "folder_trash": "Sampah",
+    "folder_spam": "Spam",
+    "filter_all": "Semua",
+    "filter_unread": "Belum Dibaca",
+    "filter_starred": "Berbintang",
+    "filter_attachments": "Dengan Lampiran",
+    "search_placeholder": "Cari email berdasarkan subjek, pengirim, atau konten...",
+    "no_messages": "Tidak ada pesan",
+    "no_messages_desc": "Kotak masuk Anda sudah rapi atau tidak ada email yang sesuai dengan filter pencarian.",
+    "select_message": "Tidak ada email yang dipilih",
+    "select_message_desc": "Pilih pesan dari daftar untuk melihat konten lengkap dan lampirannya.",
+    "reply": "Balas",
+    "forward": "Teruskan",
+    "trash": "Pindahkan ke Sampah",
+    "restore": "Pulihkan ke Kotak Masuk",
+    "delete_permanently": "Hapus Permanen",
+    "print": "Cetak Email",
+    "attachments": "Lampiran",
+    "download": "Unduh",
+    "quick_reply": "Balasan Cepat",
+    "quick_reply_placeholder": "Tulis balasan cepat ke {name}...",
+    "new_message": "Pesan Baru",
+    "to": "Kepada",
+    "subject": "Subjek",
+    "subject_placeholder": "Subjek Email",
+    "body_placeholder": "Tulis pesan email Anda di sini...",
+    "attach": "Lampirkan File",
+    "discard": "Buang",
+    "send": "Kirim Email",
+    "storage": "Penyimpanan Mail"
   }
 }

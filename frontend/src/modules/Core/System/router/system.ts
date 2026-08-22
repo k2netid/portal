@@ -146,7 +146,16 @@ const systemRoutes: RouteRecordRaw[] = [
             permission: 'view system logs',
         },
     },
-
+    {
+        path: 'mail',
+        name: 'mail',
+        component: () => import('@/modules/Core/System/views/mail/Index.vue'),
+        meta: {
+            title: 'system.mail.title',
+            breadcrumb: 'system.navigation.menu.mail',
+            permission: 'manage system',
+        },
+    },
 ];
 
 export default systemRoutes;

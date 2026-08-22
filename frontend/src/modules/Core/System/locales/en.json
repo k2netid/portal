@@ -117,7 +117,8 @@
       "oauthClients": "OAuth Clients",
       "identityIntegrations": "Identity & Integrations",
       "kycReviews": "KYC Reviews",
-      "integrations": "Integrations"
+      "integrations": "Integrations",
+      "mail": "Mailbox"
     }
   },
   "auth": {
@@ -1909,6 +1910,10 @@
         }
       }
     },
+    "email": {
+      "quick_presets": "Quick Presets",
+      "quick_presets_desc": "Auto-configure host, port, and encryption with 1-click."
+    },
     "emailTest": {
       "title": "Email Configuration Testing",
       "configStatus": "Configuration Validation",
@@ -3385,5 +3390,44 @@
       "approved": "KYC approved",
       "rejected": "KYC rejected"
     }
+  },
+  "mail": {
+    "title": "Mailbox & Email Client",
+    "compose": "Compose Email",
+    "folders": "Folders",
+    "labels": "Labels",
+    "folder_inbox": "Inbox",
+    "folder_sent": "Sent",
+    "folder_drafts": "Drafts",
+    "folder_trash": "Trash",
+    "folder_spam": "Spam",
+    "filter_all": "All",
+    "filter_unread": "Unread",
+    "filter_starred": "Starred",
+    "filter_attachments": "With Attachments",
+    "search_placeholder": "Search emails by subject, sender, or content...",
+    "no_messages": "No messages found",
+    "no_messages_desc": "Your inbox is all caught up or no emails match the search filter.",
+    "select_message": "No email selected",
+    "select_message_desc": "Select a message from the list to view its complete content and attachments.",
+    "reply": "Reply",
+    "forward": "Forward",
+    "trash": "Move to Trash",
+    "restore": "Restore to Inbox",
+    "delete_permanently": "Delete Permanently",
+    "print": "Print Email",
+    "attachments": "Attachments",
+    "download": "Download",
+    "quick_reply": "Quick Reply",
+    "quick_reply_placeholder": "Write a fast reply to {name}...",
+    "new_message": "New Message",
+    "to": "To",
+    "subject": "Subject",
+    "subject_placeholder": "Email Subject",
+    "body_placeholder": "Compose your email message here...",
+    "attach": "Attach Files",
+    "discard": "Discard",
+    "send": "Send Email",
+    "storage": "Mail Storage"
   }
 }

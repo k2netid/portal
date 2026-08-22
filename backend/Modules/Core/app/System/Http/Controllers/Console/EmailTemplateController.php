@@ -32,7 +32,7 @@ class EmailTemplateController extends BaseApiController
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:email_templates,slug',
+            'slug' => 'required|string|unique:sys_email_templates,slug',
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
             'text_body' => 'nullable|string',
@@ -55,7 +55,7 @@ class EmailTemplateController extends BaseApiController
     {
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'slug' => 'sometimes|required|string|unique:email_templates,slug,'.$emailTemplate->id,
+            'slug' => 'sometimes|required|string|unique:sys_email_templates,slug,'.$emailTemplate->id,
             'subject' => 'sometimes|required|string|max:255',
             'body' => 'sometimes|required|string',
             'text_body' => 'nullable|string',
