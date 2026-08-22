@@ -110,12 +110,8 @@
           :active-label="activeLabel"
           :folder-counts="folderCounts"
           :labels="labels"
-          :syncing="syncing"
           @select-folder="selectFolder"
           @select-label="selectLabel"
-          @open-composer="openComposer()"
-          @toggle-minimize="toggleSidebarMinimize"
-          @sync="syncMailbox"
           @manage-labels="isLabelsModalOpen = true"
         />
       </aside>
