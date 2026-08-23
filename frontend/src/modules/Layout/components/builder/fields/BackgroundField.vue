@@ -1722,7 +1722,7 @@ import DimensionField from '@/modules/Layout/components/builder/fields/Dimension
 import PatternField from '@/modules/Layout/components/builder/fields/PatternField.vue'
 import MaskField from '@/modules/Layout/components/builder/fields/MaskField.vue'
 import { IconButton } from '@/modules/Layout/components/builder/ui'
-import MediaPicker from '@/components/media/MediaPicker.vue'
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue'
 import ResponsiveFieldModal from '@/modules/Layout/components/builder/modals/ResponsiveFieldModal.vue'
 import FieldActions from '@/modules/Layout/components/builder/fields/FieldActions.vue'
 import { BaseDropdown } from '@/modules/Layout/components/builder/ui'

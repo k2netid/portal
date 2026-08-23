@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('is_system')->default(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('user_id')->references('id')->on('srv_auth_users')->nullOnDelete();
         });
     }
 

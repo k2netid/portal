@@ -2,13 +2,12 @@
   <Dialog :open="isOpen" @update:open="onOpenUpdate">
     <DialogContent 
       :class="cn(
-        'sm:max-w-md p-0 overflow-hidden !z-[100001]',
+        'sm:max-w-md p-0 overflow-hidden',
         placement !== 'center' && 'fixed',
         placementClass,
         themeClasses,
         props.class
       )"
-      :overlay-class="'!z-[100000]'"
       :style="{ width: typeof width === 'number' ? `${width}px` : width }"
     >
       <DialogHeader v-if="$slots.header || title" class="px-6 py-4 border-b bg-background">

@@ -403,7 +403,7 @@ import Tags from 'lucide-vue-next/dist/esm/icons/tags.js';
 import FileText from 'lucide-vue-next/dist/esm/icons/file-text.js';
 import MenuSquare from 'lucide-vue-next/dist/esm/icons/square-menu.js';
 import MessageSquare from 'lucide-vue-next/dist/esm/icons/message-square.js';
-import MediaPicker from '@/components/media/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import api from '@/engine/api/client';
 import type { BuilderInstance } from '@/modules/Layout/types/builder';
 

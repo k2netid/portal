@@ -57,7 +57,7 @@
                     class="flex-1"
                 />
                 
-                <MediaPicker @selected="handleSelection" :constraints="{ allowedExtensions, maxSize }">
+                <MediaPicker @selected="handleSelection" :constraints="{ allowedExtensions, maxSize: maxSize ?? undefined }">
                     <template #trigger="{ open }">
                     <IconButton 
                         :icon="Upload" 
@@ -116,7 +116,7 @@ import File from 'lucide-vue-next/dist/esm/icons/file.js';
 
 import LinkIcon from 'lucide-vue-next/dist/esm/icons/link.js';
 import Variable from 'lucide-vue-next/dist/esm/icons/variable.js';
-import MediaPicker from '@/components/media/MediaPicker.vue'
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue'
 import { BaseInput, IconButton } from '@/modules/Layout/components/builder/ui'
 import { useToast } from '@/composables/useToast'
 import type { BuilderInstance, SettingDefinition, GlobalVariable, BlockInstance } from '@/modules/Layout/types/builder'

@@ -239,7 +239,7 @@ import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
 import { useI18n } from 'vue-i18n'
 import { DEVICE_MODES } from '@/modules/Layout/components/builder/core/constants'
 import { IconButton, BaseDropdown, BaseDivider } from '@/modules/Layout/components/builder/ui'
-import AdminLogo from '@/components/layouts/AdminLogo.vue'
+import AdminLogo from '@/shared/layouts/partials/AdminLogo.vue'
 import type { BuilderInstance } from '@/modules/Layout/types/builder'
 
 import type { Component } from 'vue';

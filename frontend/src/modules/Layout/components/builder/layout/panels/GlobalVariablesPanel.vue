@@ -410,7 +410,7 @@ import draggable from 'vuedraggable';
 import { 
     BaseCollapsible, BaseInput, BaseSlider, IconButton, BaseButton, BaseColorSlider
 } from '@/modules/Layout/components/builder/ui';
-import MediaPicker from '@/components/media/MediaPicker.vue';
+import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const ColorPickerModal = defineAsyncComponent(() => import('@/modules/Layout/components/builder/modals/ColorPickerModal.vue'));
