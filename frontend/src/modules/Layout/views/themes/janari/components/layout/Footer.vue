@@ -220,6 +220,7 @@ import { useResponsiveDevice } from '@/shared/composables/useResponsiveDevice';
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 import { useJanariIdentity, trimStr, toWhatsAppDialDigits } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity';
 import { newsletterSchema } from '@/shared/schemas'
+import { NewsletterService } from '@/modules/Newsletter/services/newsletterService'
 import type { MenuItem } from '@/modules/Layout/types/menu';
 import {
   Twitter,
@@ -396,7 +397,7 @@ const submitNewsletter = async () => {
     clearErrors()
     
     try {
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await NewsletterService.subscribe({ email: email.value })
         toast.success.action(t('publishing.frontend.newsletter.success'))
         email.value = ''
     } catch (error: unknown) {

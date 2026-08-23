@@ -155,6 +155,15 @@ export const tagSchema = z.object({
 });
 
 /**
+ * Newsletter subscription schema
+ */
+export const newsletterSchema = z.object({
+    email: z.string()
+        .min(1, t('common.validation.required', { field: 'Email' }))
+        .email(t('common.validation.email')),
+});
+
+/**
  * Form settings schema (Forms)
  */
 export const formSettingsSchema = z.object({

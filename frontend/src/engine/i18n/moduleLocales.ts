@@ -9,6 +9,7 @@ import library from '@/modules/Library/locales';
 import publishing from '@/modules/Publishing/locales';
 import layoutPack from '@/modules/Layout/locales';
 import formsPack from '@/modules/Forms/locales';
+import newsletterPack from '@/modules/Newsletter/locales';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -56,6 +57,7 @@ export const moduleLocaleBundles = {
         publishing: publishing.en,
         layout: layoutPack.en,
         forms: formsPack.en,
+        newsletter: newsletterPack.en,
     },
     id: {
         ...coLocatedId,
@@ -66,6 +68,7 @@ export const moduleLocaleBundles = {
         publishing: publishing.id,
         layout: layoutPack.id,
         forms: formsPack.id,
+        newsletter: newsletterPack.id,
     },
     su: {
         ...coLocatedSu,
@@ -76,5 +79,6 @@ export const moduleLocaleBundles = {
         publishing: publishing.su,
         layout: layoutPack.su,
         forms: formsPack.su,
+        newsletter: newsletterPack.su,
     },
 } as const;

@@ -626,4 +626,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $forms['is_core']);
         $this->assertEquals('module', $forms['type']);
     }
+
+    public function test_newsletter_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $newsletter = collect($response->json('data'))->firstWhere('slug', 'newsletter');
+
+        $this->assertNotNull($newsletter);
+        $this->assertFalse((bool) $newsletter['is_core']);
+        $this->assertEquals('module', $newsletter['type']);
+    }
 }

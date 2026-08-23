@@ -27,6 +27,16 @@ export const libraryPaths = {
     publicCategory: (id: string) => `/public/library/categories/${id}`,
 } as const;
 
+export const newsletterPaths = {
+    subscribe: '/public/newsletter/subscribe',
+    subscribers: '/manage/newsletter/subscribers',
+    subscriber: (id: string) => `/manage/newsletter/subscribers/${id}`,
+    subscriberForce: (id: string) => `/manage/newsletter/subscribers/${id}/force`,
+    subscriberRestore: (id: string) => `/manage/newsletter/subscribers/${id}/restore`,
+    subscribersExport: '/manage/newsletter/subscribers/export',
+    subscribersBulk: '/manage/newsletter/subscribers/bulk',
+} as const;
+
 export const formsPaths = {
     index: '/manage/forms',
     bulkAction: '/manage/forms/bulk-action',
