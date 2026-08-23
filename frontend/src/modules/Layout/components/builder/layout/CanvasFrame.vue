@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { computed, inject, onMounted, watch } from 'vue'
-import type { BuilderInstance } from '@/types/builder'
+import type { BuilderInstance } from '@/modules/Layout/types/builder'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 
 interface Props {

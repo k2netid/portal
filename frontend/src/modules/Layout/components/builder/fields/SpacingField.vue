@@ -43,8 +43,8 @@
 import { ref, watch, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Link2 from 'lucide-vue-next/dist/esm/icons/link.js';
-import { BaseLabel, BaseInput, BaseSegmentedControl } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseLabel, BaseInput, BaseSegmentedControl } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const { t } = useI18n()
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Modules\CmsAi\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Modules\Core\System\Support\HubSubscriptionScope;
 use Modules\CmsAi\Jobs\ProcessAiTaxonomyBatchJob;
 use Modules\CmsAi\Models\AiTaxonomyBatch;
 use Modules\CmsAi\Services\Exceptions\TaxonomySuggestParseException;
+use Modules\Core\System\Support\HubSubscriptionScope;
 
 class AiTaxonomyBatchService
 {

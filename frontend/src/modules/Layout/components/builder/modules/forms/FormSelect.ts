@@ -1,4 +1,4 @@
-import type { ModuleDefinition } from '@/types/builder';
+import type { ModuleDefinition } from '@/modules/Layout/types/builder';
 import {
     spacingSettings,
     borderSettings,
@@ -18,7 +18,7 @@ import {
     attributesSettings,
     adminLabelSettings,
     layoutSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 import { formVisibilitySettings } from './formLogicSettings';
 
 /**

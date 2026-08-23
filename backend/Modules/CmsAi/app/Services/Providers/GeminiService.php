@@ -6,8 +6,8 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Modules\Core\System\Models\Setting;
 use Modules\CmsAi\Contracts\AiProviderInterface;
+use Modules\Core\System\Models\Setting;
 
 class GeminiService implements AiProviderInterface
 {

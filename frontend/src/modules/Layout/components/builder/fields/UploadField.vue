@@ -117,9 +117,9 @@ import File from 'lucide-vue-next/dist/esm/icons/file.js';
 import LinkIcon from 'lucide-vue-next/dist/esm/icons/link.js';
 import Variable from 'lucide-vue-next/dist/esm/icons/variable.js';
 import MediaPicker from '@/components/media/MediaPicker.vue'
-import { BaseInput, IconButton } from '@/components/builder/ui'
+import { BaseInput, IconButton } from '@/modules/Layout/components/builder/ui'
 import { useToast } from '@/composables/useToast'
-import type { BuilderInstance, SettingDefinition, GlobalVariable, BlockInstance } from '@/types/builder'
+import type { BuilderInstance, SettingDefinition, GlobalVariable, BlockInstance } from '@/modules/Layout/types/builder'
 import { toCssVarName } from '../core/cssVariables'
 
 

@@ -19,9 +19,9 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry'
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry'
 import SettingsGroup from './SettingsGroup.vue'
-import type { BlockInstance, ModuleDefinition, ModuleGroup, SettingDefinition, ModuleField } from '@/types/builder'
+import type { BlockInstance, ModuleDefinition, ModuleGroup, SettingDefinition, ModuleField } from '@/modules/Layout/types/builder'
 
 const props = withDefaults(defineProps<{
   module: BlockInstance;

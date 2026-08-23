@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js';
 import AlignLeft from 'lucide-vue-next/dist/esm/icons/align-start-horizontal.js';
 import AlignCenter from 'lucide-vue-next/dist/esm/icons/align-center-horizontal.js';

@@ -267,7 +267,12 @@ const siteSettings = computed(() => systemStore.settings);
 const { displaySiteName, displaySiteDescription } = useJanariIdentity();
 
 const siteName = computed(() => displaySiteName.value);
-const siteLogo = computed(() => (getSetting('brand_logo') as string) || siteSettings.value?.site_logo || '');
+const siteLogo = computed((): string => {
+    const fromSetting = getSetting('brand_logo');
+    const fromSite = siteSettings.value?.site_logo;
+    return (typeof fromSetting === 'string' ? fromSetting : '')
+        || (typeof fromSite === 'string' ? fromSite : '');
+});
 const siteVersion = computed(() => siteSettings.value?.site_version || tt('footer.versionDefault'));
 
 const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);

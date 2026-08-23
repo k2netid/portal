@@ -1,4 +1,4 @@
-import type { ModuleDefinition } from '@/types/builder';
+import type { ModuleDefinition } from '@/modules/Layout/types/builder';
 import {
     backgroundSettings,
     spacingSettings,
@@ -19,7 +19,7 @@ import {
     adminLabelSettings,
     layoutSettings,
     linkSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Logo Module Definition

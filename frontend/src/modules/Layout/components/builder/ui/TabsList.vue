@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { TabsList, type TabsListProps, useForwardProps } from 'radix-vue';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/lib-utils';
 
 const props = defineProps<TabsListProps & { class?: HTMLAttributes['class'] }>();
 

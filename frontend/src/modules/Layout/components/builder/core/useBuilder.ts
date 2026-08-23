@@ -10,7 +10,7 @@ import type {
     BuilderOptions,
     BuilderInstance,
     BlockDefinition
-} from '@/types/builder'
+} from '@/modules/Layout/types/builder'
 
 // Sub-composables
 import { useBuilderState } from './composables/useBuilderState'

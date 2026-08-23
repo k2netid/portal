@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { BaseInput } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseInput } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

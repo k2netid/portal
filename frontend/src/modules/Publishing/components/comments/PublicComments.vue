@@ -466,8 +466,8 @@ const submitComment = async () => {
     // Reset form
     commentBody.value = '';
     cancelReply();
-  } catch (error: any) {
-    const msg = error?.response?.data?.message || t('publishing.comments.public.failed', 'Gagal mengirim komentar. Silakan coba kembali.');
+  } catch (error: unknown) {
+    const msg = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || t('publishing.comments.public.failed', 'Gagal mengirim komentar. Silakan coba kembali.');
     submitErrorMessage.value = msg;
   } finally {
     submitting.value = false;

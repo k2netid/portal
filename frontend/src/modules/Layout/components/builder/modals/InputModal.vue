@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
-import { BaseModal } from '@/components/builder/ui';
+import { BaseModal } from '@/modules/Layout/components/builder/ui';
 
 interface Props {
   isOpen?: boolean;

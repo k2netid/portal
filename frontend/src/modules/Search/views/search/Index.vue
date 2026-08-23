@@ -173,7 +173,11 @@ interface SearchResult {
 const query = ref(route.query.q || '');
 const searchQuery = ref(route.query.q || '');
 const results = ref<SearchResult[]>([]);
-const suggestions = ref<any[]>([]);
+interface SearchSuggestion {
+    text: string;
+}
+
+const suggestions = ref<SearchSuggestion[]>([]);
 const loading = ref(false);
 const typeFilters = ref<string[]>([]);
 
@@ -208,9 +212,17 @@ const performSearch = async () => {
     
     try {
         const response = await SearchService.search({ q: query.value });
-        const responseData = response.data as any;
-        results.value = ensureArray(responseData?.results || responseData || []);
-        suggestions.value = ensureArray(responseData?.suggestions || []);
+        const responseData = response.data as {
+            results?: SearchResult[];
+            suggestions?: SearchSuggestion[];
+        } | SearchResult[];
+        if (Array.isArray(responseData)) {
+            results.value = ensureArray(responseData);
+            suggestions.value = [];
+        } else {
+            results.value = ensureArray(responseData?.results || []);
+            suggestions.value = ensureArray(responseData?.suggestions || []);
+        }
         
         // Update URL
         router.replace({ query: { q: query.value } });

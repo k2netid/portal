@@ -110,7 +110,7 @@ import FormPicker from './FormPicker';
 import FormStep from './FormStep';
 import FormProgressBar from './FormProgressBar';
 
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 
 export default [
     // Structure

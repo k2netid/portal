@@ -33,7 +33,7 @@ import { computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Clock from 'lucide-vue-next/dist/esm/icons/clock.js';
 import Flag from 'lucide-vue-next/dist/esm/icons/flag.js';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 // Inject builder state

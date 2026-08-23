@@ -169,7 +169,7 @@ import Layers from 'lucide-vue-next/dist/esm/icons/layers.js';
 import Eye from 'lucide-vue-next/dist/esm/icons/eye.js';
 import EyeOff from 'lucide-vue-next/dist/esm/icons/eye-off.js';
 import BookmarkPlus from 'lucide-vue-next/dist/esm/icons/bookmark-plus.js';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');

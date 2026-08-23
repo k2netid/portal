@@ -28,9 +28,9 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { BaseCollapsible } from '@/components/builder/ui'
-import FieldRenderer from '@/components/builder/fields/FieldRenderer.vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/types/builder'
+import { BaseCollapsible } from '@/modules/Layout/components/builder/ui'
+import FieldRenderer from '@/modules/Layout/components/builder/fields/FieldRenderer.vue'
+import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

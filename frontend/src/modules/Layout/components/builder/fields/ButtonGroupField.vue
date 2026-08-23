@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, inject } from 'vue'
-import type { SettingDefinition, BlockInstance } from '@/types/builder'
+import type { SettingDefinition, BlockInstance } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
 import AlignLeft from 'lucide-vue-next/dist/esm/icons/align-start-horizontal.js';
 import AlignCenter from 'lucide-vue-next/dist/esm/icons/align-center-horizontal.js';
@@ -49,7 +49,7 @@ const iconMap: Record<string, Component> = {
   Eye, EyeOff, Lock, Unlock, Settings, Trash2,
   Smartphone, Tablet, Monitor, Minimize, Maximize
 }
-import { BaseSegmentedControl } from '@/components/builder/ui'
+import { BaseSegmentedControl } from '@/modules/Layout/components/builder/ui'
 
 interface FieldOption {
   value: string | number | boolean;

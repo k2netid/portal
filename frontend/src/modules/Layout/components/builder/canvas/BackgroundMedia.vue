@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { computed, ref, type CSSProperties } from 'vue';
 
 interface Settings {

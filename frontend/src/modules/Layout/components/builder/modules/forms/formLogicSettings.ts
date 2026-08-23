@@ -1,4 +1,4 @@
-import type { ModuleGroup } from '@/types/builder';
+import type { ModuleGroup } from '@/modules/Layout/types/builder';
 
 export const formVisibilitySettings: ModuleGroup = {
     id: 'form_visibility',

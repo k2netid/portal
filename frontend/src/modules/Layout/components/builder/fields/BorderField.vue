@@ -101,9 +101,9 @@ import {
   BaseSegmentedControl, 
   BaseSliderInput, 
   BaseNumberInput
-} from '@/components/builder/ui'
+} from '@/modules/Layout/components/builder/ui'
 import ColorField from './ColorField.vue'
-import type { SettingDefinition } from '@/types/builder'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

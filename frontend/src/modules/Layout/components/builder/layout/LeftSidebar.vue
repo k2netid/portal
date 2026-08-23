@@ -41,8 +41,8 @@ import Database from 'lucide-vue-next/dist/esm/icons/database.js';
 import Grid from 'lucide-vue-next/dist/esm/icons/grid-2x2.js';
 import { inject, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { SIDEBAR_PANELS } from '@/components/builder/core/constants'
-import type { BuilderInstance } from '@/types/builder'
+import { SIDEBAR_PANELS } from '@/modules/Layout/components/builder/core/constants'
+import type { BuilderInstance } from '@/modules/Layout/types/builder'
 
 // Props
 interface Props {

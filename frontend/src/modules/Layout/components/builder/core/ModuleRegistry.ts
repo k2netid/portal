@@ -3,7 +3,7 @@ import { logger } from '@/shared/utils/logger';
  * Module Registry
  * Manages module definitions and their Vue components
  */
-import type { BlockInstance, ModuleSettings, ModuleDefinition } from '@/types/builder'
+import type { BlockInstance, ModuleSettings, ModuleDefinition } from '@/modules/Layout/types/builder'
 import type { Component } from 'vue'
 import ValidationService from './ValidationService';
 

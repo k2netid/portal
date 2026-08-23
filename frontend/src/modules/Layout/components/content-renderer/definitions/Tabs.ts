@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import LayoutList from 'lucide-vue-next/dist/esm/icons/layout-list.js';
 import { defineAsyncComponent } from 'vue';
 

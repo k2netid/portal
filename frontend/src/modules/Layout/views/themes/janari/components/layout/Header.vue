@@ -633,9 +633,12 @@ const systemStore = useSystemStore();
 const siteSettings = computed(() => systemStore.settings);
 const { displaySiteName } = useJanariIdentity();
 const siteName = computed(() => displaySiteName.value);
-const siteLogo = computed(() => {
-    const logo = (getSetting('brand_logo') as string) || siteSettings.value?.site_logo || '';
-    // In monolithic setup, /storage is relative to root
+const siteLogo = computed((): string => {
+    const fromSetting = getSetting('brand_logo');
+    const fromSite = siteSettings.value?.site_logo;
+    const logo = (typeof fromSetting === 'string' ? fromSetting : '')
+        || (typeof fromSite === 'string' ? fromSite : '');
+
     return logo;
 });
 

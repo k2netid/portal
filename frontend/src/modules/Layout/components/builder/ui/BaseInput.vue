@@ -38,8 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { Input, Textarea } from '@/components/ui';
+import { cn } from '@/shared/utils/lib-utils';
+import { Input, Textarea } from '@/shared/components/ui';
 
 interface Props {
   modelValue?: string | number;

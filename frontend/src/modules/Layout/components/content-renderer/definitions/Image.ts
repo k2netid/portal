@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 /**
  * Enhanced Image Block Definition
  * Display images with comprehensive effects, sizing, and styling

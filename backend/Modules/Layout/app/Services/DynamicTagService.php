@@ -2,9 +2,9 @@
 
 namespace Modules\Layout\Services;
 
-use Modules\Publishing\Models\Content;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Publishing\Models\Content;
 
 class DynamicTagService
 {

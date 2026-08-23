@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { Label } from '@/components/ui';
+import { Label } from '@/shared/components/ui';
 
 interface Props {
   muted?: boolean;

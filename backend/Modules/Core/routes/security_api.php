@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Analytics\Http\Controllers\SlowQueryController;
 use Modules\Core\Security\Http\Controllers\AbacPolicyController;
 use Modules\Core\Security\Http\Controllers\CspReportController;
 use Modules\Core\Security\Http\Controllers\SecurityController;
 use Modules\Core\Security\Http\Controllers\SiemExportController;
 use Modules\Core\System\Http\Controllers\Console\DependencyPackageController;
 use Modules\Core\System\Http\Controllers\Console\DependencyVulnerabilityController;
-use Modules\Analytics\Http\Controllers\SlowQueryController;
 
 Route::prefix('v1')->group(function (): void {
     // Security Public (Infrastructure Layer)

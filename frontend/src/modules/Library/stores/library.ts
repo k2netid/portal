@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { logger } from '@/shared/utils/logger';
-import { ensureArray, parseResponse } from '@/shared/utils/responseParser';
+import { ensureArray, parseResponse, type PaginationData } from '@/shared/utils/responseParser';
 import { LibraryService } from '@/modules/Library/services/libraryService';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 export type { Tag };
@@ -9,7 +9,7 @@ export type { Tag };
 
 export interface LibraryState {
     tags: Tag[];
-    pagination: any | null;
+    pagination: PaginationData | null;
     statistics: Record<string, number> | null;
     loading: boolean;
 }
@@ -23,7 +23,7 @@ export const useLibraryStore = defineStore('library', {
     }),
 
     actions: {
-        async fetchTags(params: Record<string, any> = {}) {
+        async fetchTags(params: Record<string, unknown> = {}) {
             this.loading = true;
             try {
                 const response = await LibraryService.listTags(params);

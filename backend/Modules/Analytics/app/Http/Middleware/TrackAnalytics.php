@@ -4,9 +4,9 @@ namespace Modules\Analytics\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Modules\Core\System\Models\Setting;
 use Modules\Analytics\Models\AnalyticsSession;
 use Modules\Analytics\Models\AnalyticsVisit;
+use Modules\Core\System\Models\Setting;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackAnalytics

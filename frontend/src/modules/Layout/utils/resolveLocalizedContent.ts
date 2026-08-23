@@ -2,9 +2,14 @@ import { normalizeLocaleCode } from '@/engine/i18n';
 
 type ContentRecord = Record<string, unknown> | null | undefined;
 
-const LOCALIZABLE_FIELDS = ['title', 'excerpt', 'intro', 'body', 'content', 'meta_title', 'meta_description'] as const;
-
-export type LocalizableContentField = (typeof LOCALIZABLE_FIELDS)[number];
+export type LocalizableContentField =
+    | 'title'
+    | 'excerpt'
+    | 'intro'
+    | 'body'
+    | 'content'
+    | 'meta_title'
+    | 'meta_description';
 
 /**
  * Pick a localized Jejakawan field from API payload (already merged by backend) or meta fallbacks.

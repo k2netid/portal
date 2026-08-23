@@ -6,10 +6,10 @@ namespace Modules\CmsAi\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\CmsAi\Models\AiTaxonomyBatch;
 use Modules\CmsAi\Services\AiTaxonomyBatchService;
 use Modules\CmsAi\Services\Exceptions\AiSubscriptionQuotaExceededException;
+use Modules\Core\System\Http\Controllers\BaseApiController;
 
 class AiTaxonomyBatchController extends BaseApiController
 {

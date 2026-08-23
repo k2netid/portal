@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Modules\Analytics\Database\Factories\AnalyticsSessionFactory;
 use Modules\Core\System\Helpers\IpHelper;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\GeoIpService;
-use Modules\Analytics\Database\Factories\AnalyticsSessionFactory;
 
 /**
  * @property int $id

@@ -139,7 +139,7 @@ import Minus from 'lucide-vue-next/dist/esm/icons/minus.js';
 import Undo from 'lucide-vue-next/dist/esm/icons/undo.js';
 import Redo from 'lucide-vue-next/dist/esm/icons/redo.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import { BaseDropdown } from '@/components/builder/ui'
+import { BaseDropdown } from '@/modules/Layout/components/builder/ui'
 
 const props = defineProps<{
   editor: Editor;

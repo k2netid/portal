@@ -57,6 +57,29 @@ function loadJsonKeys(filePath, prefix) {
 
 function namespaceFromPath(relPath) {
     const parts = relPath.split('/');
+    const flatModuleMap = {
+        Layout: 'layout',
+        Library: 'library',
+        Publishing: 'publishing',
+        Media: 'media',
+        Forms: 'forms',
+        Newsletter: 'newsletter',
+        Search: 'search',
+        CmsAi: 'ai',
+        Analytics: 'system.analytics',
+    };
+
+    if (parts[1] === 'locales' && flatModuleMap[parts[0]]) {
+        if (parts[2]) {
+            return parts[2].toLowerCase();
+        }
+        return flatModuleMap[parts[0]];
+    }
+
+    if (parts[0] === 'Layout' && parts[1] === 'views' && parts[2] === 'themes' && parts[3] && parts[4] === 'locales') {
+        return `theme.${parts[3]}`;
+    }
+
     if (parts[0] === 'Content' && parts[1]) {
         const map = { Library: 'library', Publishing: 'publishing', Media: 'media', Forms: 'forms', Layout: 'layout' };
         return map[parts[1]] ?? parts[1].toLowerCase();
@@ -86,6 +109,17 @@ function collectModuleLocaleDirs(dir, acc = []) {
         const full = join(dir, name);
         if (!statSync(full).isDirectory()) continue;
         if (full.includes('/views/themes/')) {
+            const localesPath = join(full, 'locales');
+            try {
+                if (
+                    statSync(localesPath).isDirectory() &&
+                    readdirSync(localesPath).some((f) => f.endsWith('.json'))
+                ) {
+                    acc.push(localesPath);
+                }
+            } catch {
+                /* no locales/ */
+            }
             collectModuleLocaleDirs(full, acc);
             continue;
         }
@@ -109,7 +143,7 @@ function collectModuleLocaleDirs(dir, acc = []) {
 function collectThemeLocaleDirs(themesRoot, acc = []) {
     let themesDir;
     try {
-        themesDir = join(themesRoot, 'Content/Layout/views/themes');
+        themesDir = join(themesRoot, 'Layout/views/themes');
         if (!statSync(themesDir).isDirectory()) return acc;
     } catch {
         return acc;
@@ -163,13 +197,20 @@ function loadMergedLocaleKeys(lang) {
     keys.add('publishing.content.form.maxSizeHint');
     keys.add('publishing.content.form.minHint');
 
+    const layoutBuilderLocale = join(modulesRoot, 'Layout/locales/builder', `${lang}.json`);
+    try {
+        for (const k of loadJsonKeys(layoutBuilderLocale, 'builder')) keys.add(k);
+    } catch {
+        /* optional */
+    }
+
     collectModuleLocaleDirs(modulesRoot).forEach((localesDir) => {
         const rel = localesDir.split('/src/modules/')[1] ?? '';
         if (rel === 'Core/Security/locales') {
             for (const k of loadJsonKeys(join(localesDir, `${lang}.json`), 'system.security')) keys.add(k);
             return;
         }
-        if (rel === 'Intelligence/Analytics/locales') {
+        if (rel === 'Intelligence/Analytics/locales' || rel === 'Analytics/locales') {
             for (const k of loadJsonKeys(join(localesDir, `${lang}.json`), 'system.analytics')) keys.add(k);
             return;
         }

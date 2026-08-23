@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CSS_UNITS } from '@/components/builder/core/constants'
-import { BaseInput } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { CSS_UNITS } from '@/modules/Layout/components/builder/core/constants'
+import { BaseInput } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

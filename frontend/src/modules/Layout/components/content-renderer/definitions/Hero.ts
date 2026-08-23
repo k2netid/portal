@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 /**
  * Enhanced Hero Block Definition
  * Hero header with comprehensive styling options for each sub-component

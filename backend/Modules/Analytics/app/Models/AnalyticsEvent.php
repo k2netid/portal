@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Modules\Analytics\Database\Factories\AnalyticsEventFactory;
 use Modules\Core\System\Helpers\IpHelper;
 use Modules\Core\System\Models\User;
-use Modules\Analytics\Database\Factories\AnalyticsEventFactory;
 
 /**
  * @property string $id

@@ -1,4 +1,4 @@
-import type { SettingOption, SettingDefinition, ModuleSettings } from '@/types/builder';
+import type { SettingOption, SettingDefinition, ModuleSettings } from '@/modules/Layout/types/builder';
 
 /**
  * Border Property Presets

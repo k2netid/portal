@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Modules\CmsAi\Services;
 
 use Illuminate\Support\Facades\Schema;
-use Modules\Core\System\Support\HubSubscriptionScope;
 use Modules\CmsAi\Models\AiUsageLog;
 use Modules\CmsAi\Services\Exceptions\AiSubscriptionQuotaExceededException;
+use Modules\Core\System\Support\HubSubscriptionScope;
 
 class AiSubscriptionQuotaService
 {

@@ -82,15 +82,15 @@
 import { computed, inject, watch, onMounted } from 'vue'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js'
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js'
-import { saasLandingPage, homePage, aboutPage, contactPage } from '@/components/builder/templates/PageTemplates';
-import { pricingSection, faqSection, heroGradient, ctaDark } from '@/components/builder/templates/SectionTemplates';
+import { saasLandingPage, homePage, aboutPage, contactPage } from '@/modules/Layout/components/builder/templates/PageTemplates';
+import { pricingSection, faqSection, heroGradient, ctaDark } from '@/modules/Layout/components/builder/templates/SectionTemplates';
 import { useI18n } from 'vue-i18n'
 import draggable from 'vuedraggable'
 import ModuleWrapper from './ModuleWrapper.vue'
 import CanvasGridView from './CanvasGridView.vue'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
-import type { BuilderInstance, BlockInstance } from '@/types/builder'
-import type { ThemeData } from '@/types/theme'
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder'
+import type { ThemeData } from '@/modules/Layout/types/theme'
 
 // Inject builder
 const builder = inject<BuilderInstance>('builder')

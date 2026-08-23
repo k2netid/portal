@@ -168,13 +168,13 @@ import { computed, inject, ref, onMounted, onUnmounted } from 'vue'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Repeat from 'lucide-vue-next/dist/esm/icons/repeat.js';
 import draggable from 'vuedraggable'
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry'
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry'
 import ModuleRenderer from './ModuleRenderer.vue'
 import AddModuleButton from './AddModuleButton.vue'
 import ModuleActions from '../fields/ModuleActions.vue'
 import { useI18n } from 'vue-i18n'
 import { getAnimationStyles, getResponsiveValue } from '@/shared/utils/styleUtils'
-import type { BlockInstance, BuilderInstance } from '@/types/builder'
+import type { BlockInstance, BuilderInstance } from '@/modules/Layout/types/builder'
 
 const icons = { Plus, Repeat }
 

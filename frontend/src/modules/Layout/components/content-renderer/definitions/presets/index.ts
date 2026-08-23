@@ -3,7 +3,7 @@
  * Export all presets for easy import
  */
 
-import type { SettingDefinition, ModuleSettings } from '@/types/builder';
+import type { SettingDefinition, ModuleSettings } from '@/modules/Layout/types/builder';
 
 // Typography
 export {

@@ -78,8 +78,8 @@ import Type from 'lucide-vue-next/dist/esm/icons/type.js';
 import ImageIcon from 'lucide-vue-next/dist/esm/icons/image.js';
 import Square from 'lucide-vue-next/dist/esm/icons/square.js';
 import MoreVertical from 'lucide-vue-next/dist/esm/icons/ellipsis-vertical.js';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
-import type { BuilderInstance, BlockInstance } from '@/types/builder';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
 
 // CRITICAL: Define name for recursion
 defineOptions({

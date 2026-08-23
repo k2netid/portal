@@ -324,7 +324,7 @@
 
 <script setup lang="ts">
 import { ref, computed, inject, watch, nextTick } from 'vue'
-import type { BuilderInstance, SettingDefinition, BlockInstance } from '@/types/builder'
+import type { BuilderInstance, SettingDefinition, BlockInstance } from '@/modules/Layout/types/builder'
 import type { Gradient, GradientStop } from '@/shared/utils/styleUtils'
 import { useI18n } from 'vue-i18n'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';

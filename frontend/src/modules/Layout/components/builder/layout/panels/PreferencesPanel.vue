@@ -79,11 +79,11 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { BaseToggle, BaseDropdown } from '@/components/builder/ui';
+import { BaseToggle, BaseDropdown } from '@/modules/Layout/components/builder/ui';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import { useLanguage } from '@/composables/useLanguage';
 import { useCmsStore } from '@/stores/cms';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const cmsStore = useCmsStore();

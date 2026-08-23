@@ -11,7 +11,7 @@ import {
     faqSection,
     videoSection,
     countdownSection
-} from '@/components/builder/templates/SectionTemplates';
+} from '@/modules/Layout/components/builder/templates/SectionTemplates';
 
 interface TemplateNode {
     id: string;

@@ -129,7 +129,7 @@ const fetchMenus = async () => {
             trashed: trashedFilter.value,
             per_page: 100
         });
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
         toast.error.action(t('layout.menus.messages.loadingFailed') || 'Failed to load menus');
     }
 };

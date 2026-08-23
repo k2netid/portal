@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { SelectPortal, SelectContent, type SelectContentProps, SelectViewport } from 'radix-vue';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/lib-utils';
 
 const props = withDefaults(defineProps<SelectContentProps & { class?: string }>(), {
   class: '',

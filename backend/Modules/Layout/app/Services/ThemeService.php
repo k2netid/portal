@@ -5,10 +5,10 @@ namespace Modules\Layout\Services;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Contracts\LayoutRegistryInterface;
+use Modules\Core\System\Models\Extension;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Support\ThemeViews;
-use Modules\Core\System\Contracts\LayoutRegistryInterface;
-use Modules\Core\System\Models\Plugin;
 
 class ThemeService
 {
@@ -341,8 +341,8 @@ class ThemeService
                 if (! is_string($requiredPlugin)) {
                     continue;
                 }
-                $plugin = Plugin::where('slug', $requiredPlugin)->first();
-                if (! $plugin || ! $plugin->is_active) {
+                $extension = Extension::query()->where('slug', $requiredPlugin)->first();
+                if ($extension === null || $extension->status !== 'active') {
                     return false;
                 }
             }

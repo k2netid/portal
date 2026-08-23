@@ -4,9 +4,9 @@ namespace Modules\Layout\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Layout\Models\Widget;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Layout\Models\Widget;
 
 class WidgetController extends BaseApiController
 {
@@ -109,7 +109,12 @@ class WidgetController extends BaseApiController
 
         $widget->update($payload);
 
-        return $this->success($this->presentWidget($widget->fresh()), 'Widget updated successfully');
+        $fresh = $widget->fresh();
+        if ($fresh === null) {
+            return $this->error('Widget not found after update', 404);
+        }
+
+        return $this->success($this->presentWidget($fresh), 'Widget updated successfully');
     }
 
     public function destroy(Widget $widget): JsonResponse

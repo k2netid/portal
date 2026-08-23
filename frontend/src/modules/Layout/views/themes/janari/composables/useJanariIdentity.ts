@@ -30,7 +30,7 @@ export function useJanariIdentity() {
     const { t } = useI18n()
     const { getSetting } = useTheme()
     const systemStore = useSystemStore()
-    const site = computed(() => systemStore.settings as SiteSettings)
+    const site = computed(() => systemStore.settings as unknown as SiteSettings)
 
     const displayEmail = computed(() => {
         const t = trimStr(getSetting('contact_email', ''))

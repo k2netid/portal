@@ -40,7 +40,7 @@
 import Ban from 'lucide-vue-next/dist/esm/icons/ban.js';
 import { useI18n } from 'vue-i18n'
 import { BackgroundPatterns } from '@/shared/utils/AssetLibrary'
-import type { SettingDefinition } from '@/types/builder'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 defineProps<{
   field?: SettingDefinition;

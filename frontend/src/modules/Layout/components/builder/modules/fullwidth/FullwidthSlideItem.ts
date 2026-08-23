@@ -1,4 +1,4 @@
-import type { ModuleDefinition, SettingDefinition } from '@/types/builder';
+import type { ModuleDefinition, SettingDefinition } from '@/modules/Layout/types/builder';
 import {
     adminLabelSettings,
     backgroundSettings,
@@ -18,7 +18,7 @@ import {
     interactionsSettings,
     scrollEffectsSettings,
     attributesSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Fullwidth Slide Item Module Definition

@@ -21,7 +21,7 @@
 import { computed, type HTMLAttributes } from 'vue'
 import { SelectItem, type SelectItemProps, SelectItemIndicator, SelectItemText, useForwardProps } from 'radix-vue';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/lib-utils';
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>();
 

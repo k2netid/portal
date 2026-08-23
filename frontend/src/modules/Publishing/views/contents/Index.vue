@@ -111,7 +111,7 @@ const isBuilderContent = (content: Content): boolean => {
     return !!(
         (content.meta?.builder_blocks && Array.isArray(content.meta.builder_blocks) && content.meta.builder_blocks.length > 0) ||
         content.meta?.editor_type === 'builder' ||
-        (content as any).editor_type === 'builder'
+        content.editor_type === 'builder'
     );
 };
 

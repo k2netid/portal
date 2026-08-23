@@ -54,14 +54,14 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
-import { BaseInput } from '@/components/builder/ui';
-import type { BuilderInstance, ThemeData } from '@/types/builder';
+import { BaseInput } from '@/modules/Layout/components/builder/ui';
+import type { BuilderInstance, ThemeData } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');

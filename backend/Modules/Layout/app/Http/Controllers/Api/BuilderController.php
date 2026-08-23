@@ -4,21 +4,21 @@ namespace Modules\Layout\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Modules\Publishing\Models\Content;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Setting;
+use Modules\Layout\Services\DynamicTagService;
+use Modules\Publishing\Models\Content;
 
 class BuilderController extends BaseApiController
 {
     public function __construct(
-        protected \Modules\Layout\Services\DynamicTagService $dynamicTagService
+        protected DynamicTagService $dynamicTagService
     ) {}
 
     /**
      * Get available dynamic data sources for the builder
      */
-    public function dynamicSources(Request $request): \Illuminate\Http\JsonResponse
+    public function dynamicSources(Request $request): JsonResponse
     {
         $contentId = $request->query('content_id');
         $contextRaw = $request->query('context', 'all'); // all | page | loop | site
@@ -110,7 +110,7 @@ class BuilderController extends BaseApiController
     /**
      * Resolve dynamic tags to actual values for preview
      */
-    public function resolveDynamic(Request $request): \Illuminate\Http\JsonResponse
+    public function resolveDynamic(Request $request): JsonResponse
     {
         $request->validate([
             'tags' => 'required|array',

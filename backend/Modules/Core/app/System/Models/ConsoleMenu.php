@@ -651,7 +651,8 @@ class ConsoleMenu extends Model
             ->keyBy('group_slug');
 
         foreach (self::getDefaultMenus() as $groupIndex => $group) {
-            $groupSlug = (string) ($group['group_slug'] ?? '');
+            $groupSlugRaw = $group['group_slug'] ?? '';
+            $groupSlug = is_string($groupSlugRaw) ? $groupSlugRaw : '';
             if ($groupSlug === '') {
                 continue;
             }

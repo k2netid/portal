@@ -1,4 +1,4 @@
-import type { ModuleDefinition, SettingDefinition } from '@/types/builder';
+import type { ModuleDefinition, SettingDefinition } from '@/modules/Layout/types/builder';
 import {
     backgroundSettings,
     spacingSettings,
@@ -18,7 +18,7 @@ import {
     attributesSettings,
     adminLabelSettings,
     layoutSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Social Links Module Definition

@@ -65,7 +65,7 @@ interface Props {
   fieldName?: string;
 }
 
-import type { BuilderInstance, BuilderPreset } from '@/types/builder';
+import type { BuilderInstance, BuilderPreset } from '@/modules/Layout/types/builder';
 
 const props = withDefaults(defineProps<Props>(), {
   fieldName: ''

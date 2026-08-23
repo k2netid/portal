@@ -94,8 +94,8 @@
 import { watch, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Droplets from 'lucide-vue-next/dist/esm/icons/droplets.js';
-import { BaseLabel, BaseSliderInput, BaseCollapsible } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseLabel, BaseSliderInput, BaseCollapsible } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 interface FilterState {
   opacity: number;

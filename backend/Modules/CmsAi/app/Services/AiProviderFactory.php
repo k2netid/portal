@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\CmsAi\Services;
 
-use Modules\Core\System\Models\Setting;
 use Modules\CmsAi\Contracts\AiProviderInterface;
 use Modules\CmsAi\Services\Providers\DeepSeekService;
 use Modules\CmsAi\Services\Providers\GeminiService;
 use Modules\CmsAi\Services\Providers\OpenAiService;
+use Modules\Core\System\Models\Setting;
 
 class AiProviderFactory
 {

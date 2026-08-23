@@ -3,9 +3,9 @@
 namespace Modules\Analytics\Console\Commands;
 
 use Illuminate\Console\Command;
+use Modules\Analytics\Models\SlowQuery;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Support\DatabaseConsoleInts;
-use Modules\Analytics\Models\SlowQuery;
 
 class CleanupSlowQueryLogs extends Command
 {

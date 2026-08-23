@@ -193,11 +193,13 @@
               v-if="form.meta?.builder_blocks && form.meta.builder_blocks.length > 0"
               :blocks="form.meta.builder_blocks"
             />
+            <!-- eslint-disable vue/no-v-html -- trusted author preview of own draft -->
             <div
               v-else
               class="prose prose-slate dark:prose-invert max-w-none"
               v-html="form.body || '<p class=\'text-muted-foreground italic\'>Belum ada konten.</p>'"
             />
+            <!-- eslint-enable vue/no-v-html -->
           </div>
         </div>
       </DialogContent>
@@ -260,6 +262,7 @@ import type { Menu } from '@/modules/Layout/types/menu';
 import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { ContentForm } from '@/modules/Publishing/types/content';
+import type { BlockInstance } from '@/modules/Layout/types/builder';
 
 interface ConflictDetails {
     id: string;
@@ -284,7 +287,7 @@ const isVisualBuilderOpen = ref(false);
 const isPreviewModalOpen = ref(false);
 const previewDevice = ref<'desktop' | 'tablet' | 'mobile'>('desktop');
 
-const handleBuilderUpdate = (payload: { blocks: any[] }) => {
+const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
   if (!form.value.meta) {
     form.value.meta = {};
   }
@@ -526,7 +529,7 @@ const handleSubmit = async (status: string | null = null) => {
     }
 
      
-    if (!validateWithZod(form.value as any)) return;
+    if (!validateWithZod(form.value)) return;
 
     loading.value = true;
     clearErrors();

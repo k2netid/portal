@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\CmsAi\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Modules\Core\System\Support\HubSubscriptionScope;
 use Modules\CmsAi\Models\AiUsageLog;
+use Modules\Core\System\Support\HubSubscriptionScope;
 
 class AiUsageRecorder
 {

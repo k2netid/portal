@@ -10,8 +10,8 @@ use Modules\Publishing\Dto\SearchableContentSnapshot;
 use Modules\Publishing\Models\Content;
 use Modules\Search\Contracts\SearchIndexerInterface;
 use Modules\Search\Models\SearchIndex;
-use Tests\Helpers\TestHelpers;
 use Modules\Search\Tests\SearchTestCase;
+use Tests\Helpers\TestHelpers;
 
 class SearchFunctionalityTest extends SearchTestCase
 {

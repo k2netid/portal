@@ -106,15 +106,15 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 import Settings from 'lucide-vue-next/dist/esm/icons/settings.js';
-import { BaseInput, BaseModal } from '@/components/builder/ui';
-import type { BuilderInstance, PageMetadata, Category } from '@/types/builder';
+import { BaseInput, BaseModal } from '@/modules/Layout/components/builder/ui';
+import type { BuilderInstance, PageMetadata, Category } from '@/modules/Layout/types/builder';
 
 interface Template extends Omit<Partial<PageMetadata>, 'id'> {
   id: number | string;

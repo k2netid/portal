@@ -1,7 +1,7 @@
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { shallowRef, type Ref, type Component } from 'vue';
 import blockDefinitions from './definitions';
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 
 class BlockRegistry {
     private blocks: Ref<Map<string, BlockDefinition>>;

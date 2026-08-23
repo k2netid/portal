@@ -52,10 +52,10 @@
 <script setup lang="ts">
 import { inject, computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ChevronRight from 'lucide-vue-next/dist/esm/icons/chevron-right.js';import FieldRenderer from '@/components/builder/fields/FieldRenderer.vue'
+import ChevronRight from 'lucide-vue-next/dist/esm/icons/chevron-right.js';import FieldRenderer from '@/modules/Layout/components/builder/fields/FieldRenderer.vue'
 import DesignPresetsSelector from './DesignPresetsSelector.vue'
 import SettingsGroup from './SettingsGroup.vue'
-import type { BuilderInstance, ModuleGroup, ModuleField, BlockInstance, SettingDefinition } from '@/types/builder'
+import type { BuilderInstance, ModuleGroup, ModuleField, BlockInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = withDefaults(defineProps<{
   group: ModuleGroup;
@@ -160,7 +160,7 @@ const isFieldVisible = (field: ModuleField): boolean => {
   return dependencyValue === expectedValue
 }
 
-const handlePresetAction = (payload: { type: string; data: import('@/types/builder').BuilderPreset | null }) => {
+const handlePresetAction = (payload: { type: string; data: import('@/modules/Layout/types/builder').BuilderPreset | null }) => {
   const { type, data } = payload
   if (type === 'addNew' || type === 'newFromCurrent') {
     builder?.openSavePresetModal?.(props.module.id)

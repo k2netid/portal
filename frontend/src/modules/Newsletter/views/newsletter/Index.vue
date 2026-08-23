@@ -393,7 +393,7 @@ const exportCsv = async () => {
             responseType: 'blob',
         });
         
-        const url = window.URL.createObjectURL(new Blob([response.data as any]));
+        const url = window.URL.createObjectURL(new Blob([response.data as Blob]));
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', `subscribers-${new Date().toISOString().split('T')[0]}.csv`);

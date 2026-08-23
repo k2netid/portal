@@ -297,6 +297,7 @@ import type { Menu } from '@/modules/Layout/types/menu';
 import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { Content, ContentForm } from '@/modules/Publishing/types/content';
+import type { BlockInstance } from '@/modules/Layout/types/builder';
 
 interface LockStatus {
     is_locked: boolean;
@@ -361,7 +362,7 @@ const handleReject = async () => {
 // Visual Builder State
 const isVisualBuilderOpen = ref(false);
 
-const handleBuilderUpdate = (payload: { blocks: any[] }) => {
+const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
   if (!form.value.meta) {
     form.value.meta = {};
   }
@@ -832,7 +833,7 @@ const handleSubmit = async (status: string | null = null) => {
     }
 
      
-    if (!validateWithZod(form.value as any)) return;
+    if (!validateWithZod(form.value)) return;
 
     loading.value = true;
     clearErrors();

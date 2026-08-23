@@ -143,13 +143,13 @@ import Tablet from 'lucide-vue-next/dist/esm/icons/tablet.js';
 import MousePointer from 'lucide-vue-next/dist/esm/icons/mouse-pointer.js';
 import Settings from 'lucide-vue-next/dist/esm/icons/settings.js';
 import ChevronsRight from 'lucide-vue-next/dist/esm/icons/chevrons-right.js';
-import { SETTINGS_TABS } from '@/components/builder/core/constants'
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry'
-import SettingsPanel from '@/components/builder/settings/SettingsPanel.vue'
-import ResponsiveBreakpointsModal from '@/components/builder/modals/ResponsiveBreakpointsModal.vue'
-import { IconButton, BaseInput, BaseDropdown, BaseDivider } from '@/components/builder/ui'
-import DesignPresetsSelector from '@/components/builder/settings/DesignPresetsSelector.vue'
-import ThemeSettingsPanel from '@/components/builder/layout/panels/ThemeSettingsPanel.vue'
+import { SETTINGS_TABS } from '@/modules/Layout/components/builder/core/constants'
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry'
+import SettingsPanel from '@/modules/Layout/components/builder/settings/SettingsPanel.vue'
+import ResponsiveBreakpointsModal from '@/modules/Layout/components/builder/modals/ResponsiveBreakpointsModal.vue'
+import { IconButton, BaseInput, BaseDropdown, BaseDivider } from '@/modules/Layout/components/builder/ui'
+import DesignPresetsSelector from '@/modules/Layout/components/builder/settings/DesignPresetsSelector.vue'
+import ThemeSettingsPanel from '@/modules/Layout/components/builder/layout/panels/ThemeSettingsPanel.vue'
 import type { BuilderInstance, BlockInstance, BuilderPreset } from '../../../types/builder'
 
 const { t, te } = useI18n()

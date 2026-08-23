@@ -65,11 +65,11 @@
 
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/types/builder'
+import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Layout from 'lucide-vue-next/dist/esm/icons/layout-dashboard.js';
-import { BaseButton } from '@/components/builder/ui'
+import { BaseButton } from '@/modules/Layout/components/builder/ui'
 import ModuleActions from './ModuleActions.vue'
 
 const props = defineProps<{

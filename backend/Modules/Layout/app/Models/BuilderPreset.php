@@ -2,9 +2,11 @@
 
 namespace Modules\Layout\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Modules\Core\System\Models\User;
 
 /**
@@ -14,8 +16,8 @@ use Modules\Core\System\Models\User;
  * @property string $name
  * @property array<string, mixed> $settings
  * @property bool $is_system
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class BuilderPreset extends Model
 {
@@ -53,8 +55,8 @@ class BuilderPreset extends Model
     /**
      * Scope for system presets.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<$this>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<$this>
+     * @param  Builder<$this>  $query
+     * @return Builder<$this>
      */
     public function scopeSystem($query)
     {
@@ -64,9 +66,9 @@ class BuilderPreset extends Model
     /**
      * Scope for user presets.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<$this>  $query
+     * @param  Builder<$this>  $query
      * @param  int|string  $userId
-     * @return \Illuminate\Database\Eloquent\Builder<$this>
+     * @return Builder<$this>
      */
     public function scopeForUser($query, $userId)
     {
@@ -76,9 +78,9 @@ class BuilderPreset extends Model
     /**
      * Scope by module type.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<$this>  $query
+     * @param  Builder<$this>  $query
      * @param  string  $type
-     * @return \Illuminate\Database\Eloquent\Builder<$this>
+     * @return Builder<$this>
      */
     public function scopeOfType($query, $type)
     {

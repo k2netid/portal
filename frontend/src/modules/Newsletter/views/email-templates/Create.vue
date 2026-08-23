@@ -242,7 +242,9 @@ const previewTemplate = async () => {
         const response = await api.post('/manage/system/email-templates/preview', form.value);
         const previewWindow = window.open('', '_blank');
         if (previewWindow) {
-            previewWindow.document.write((response.data as any).body);
+            previewWindow.document.write(
+                (response.data as { body?: string }).body ?? String(response.data ?? ''),
+            );
         }
     } catch (error: unknown) {
         logger.error('Failed to preview template:', error);

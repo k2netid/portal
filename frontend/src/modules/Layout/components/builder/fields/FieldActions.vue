@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import type { BuilderInstance } from '@/types/builder'
+import type { BuilderInstance } from '@/modules/Layout/types/builder'
 import Smartphone from 'lucide-vue-next/dist/esm/icons/smartphone.js';
 import Database from 'lucide-vue-next/dist/esm/icons/database.js';
 import MoreVertical from 'lucide-vue-next/dist/esm/icons/ellipsis-vertical.js';

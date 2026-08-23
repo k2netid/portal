@@ -276,14 +276,6 @@ const filteredCategories = computed(() => {
     }))
 })
 
-const calculateTotal = (cats: Category[]): number => {
-  return cats.reduce((acc, cat) => {
-    let total = cat.contents_count || 0
-    if (cat.children) total += calculateTotal(cat.children)
-    return acc + total
-  }, 0)
-}
-
 const totalPostsCount = computed(() => {
   return categories.value.reduce((acc, cat) => {
     let count = cat.contents_count || 0

@@ -59,11 +59,23 @@
                 <span class="range-value">{{ formValues[setting.key] }}{{ (setting as any).unit || 'px' }}</span>
               </div>
 
-              <textarea v-else-if="setting.type === 'textarea'" v-model="formValues[setting.key]" class="textarea-input" rows="3" @input="handleInput"></textarea>
+              <textarea
+                v-else-if="setting.type === 'textarea'"
+                :value="String(formValues[setting.key] ?? '')"
+                class="textarea-input"
+                rows="3"
+                @input="formValues[setting.key] = ($event.target as HTMLTextAreaElement).value; handleInput()"
+              />
 
               <input v-else-if="setting.type === 'number'" type="number" v-model.number="formValues[setting.key]" class="number-input" @input="handleInput" />
               
-              <input v-else type="text" v-model="formValues[setting.key]" class="text-input" @input="handleInput" />
+              <input
+                v-else
+                type="text"
+                :value="String(formValues[setting.key] ?? '')"
+                class="text-input"
+                @input="formValues[setting.key] = ($event.target as HTMLInputElement).value; handleInput()"
+              />
 
               <p v-if="setting.description" class="setting-hint">{{ setting.description }}</p>
             </div>
@@ -86,19 +98,19 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, watch, onMounted, defineAsyncComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
-import type { BuilderInstance, ThemeData } from '@/types/builder';
-import type { ThemeSetting } from '@/types/theme';
+import type { BuilderInstance, ThemeData } from '@/modules/Layout/types/builder';
+import type { ThemeSetting } from '@/modules/Layout/types/theme';
 
 interface SettingItem extends ThemeSetting {
   key: string;
 }
 
-const ColorField = defineAsyncComponent(() => import('@/components/builder/fields/ColorField.vue'));
-const UploadField = defineAsyncComponent(() => import('@/components/builder/fields/UploadField.vue'));
+const ColorField = defineAsyncComponent(() => import('@/modules/Layout/components/builder/fields/ColorField.vue'));
+const UploadField = defineAsyncComponent(() => import('@/modules/Layout/components/builder/fields/UploadField.vue'));
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');
@@ -106,8 +118,7 @@ const builder = inject<BuilderInstance>('builder');
 const loading = ref(false);
 const saving = ref(false);
 const isDirty = ref(false);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formValues = ref<Record<string, any>>({});
+const formValues = ref<Record<string, unknown>>({});
 
 const selectedThemeSlug = computed(() => builder?.selectedThemeSlug?.value);
 const themes = computed(() => builder?.availableThemes?.value || []);

@@ -25,9 +25,9 @@ use Modules\Publishing\Contracts\PublishingSearchReadPortInterface;
 use Modules\Publishing\Database\Seeders\PublishingPermissionSeeder;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
+use Modules\Publishing\Repositories\EloquentPublishingSearchReadRepository;
 use Modules\Publishing\Services\NullNewsletterSubscriberCountPort;
 use Modules\Publishing\Services\PublishedContentAnalyticsPortAdapter;
-use Modules\Publishing\Repositories\EloquentPublishingSearchReadRepository;
 use Modules\Publishing\Services\PublishingCacheService;
 
 class PublishingServiceProvider extends ServiceProvider

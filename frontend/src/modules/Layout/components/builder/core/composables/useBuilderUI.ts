@@ -1,5 +1,5 @@
 
-import type { BuilderState, Canvas, ResponsiveModalState, ConfirmModalState, InputModalState, ModuleManager } from '@/types/builder'
+import type { BuilderState, Canvas, ResponsiveModalState, ConfirmModalState, InputModalState, ModuleManager } from '@/modules/Layout/types/builder'
 import type { HistoryManager } from './useBuilderModules'
 
 export function useBuilderUI(state: BuilderState, _historyManager: HistoryManager, moduleManager: ModuleManager) {

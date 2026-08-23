@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 /**
  * Enhanced Button Block Definition
  * Customizable CTA button with comprehensive styling options

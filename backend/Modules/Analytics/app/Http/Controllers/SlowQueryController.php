@@ -4,9 +4,9 @@ namespace Modules\Analytics\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Analytics\Models\SlowQuery;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Support\SqlLikeEscape;
-use Modules\Analytics\Models\SlowQuery;
 
 class SlowQueryController extends BaseApiController
 {

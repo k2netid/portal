@@ -61,7 +61,7 @@ class ThemeExportCommand extends Command
 
         $this->info("Packaging theme [{$slug}] from: {$sourcePath}");
 
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         if ($zip->open($destPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
             $this->error("Cannot create zip archive at: {$destPath}");
 
@@ -79,6 +79,7 @@ class ThemeExportCommand extends Command
             // Skip git and dev lockfiles in package
             if (str_starts_with($relative, '.git') || str_ends_with($relative, '.DS_Store')) {
                 $progressBar->advance();
+
                 continue;
             }
 

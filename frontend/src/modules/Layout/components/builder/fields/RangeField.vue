@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { BaseSliderInput } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseSliderInput } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 defineProps<{
   field: SettingDefinition;

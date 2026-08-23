@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { BaseModal, BaseInput, BaseCheckbox } from '@/components/builder/ui';
+import { BaseModal, BaseInput, BaseCheckbox } from '@/modules/Layout/components/builder/ui';
 
 const emit = defineEmits<{
   (e: 'close'): void;

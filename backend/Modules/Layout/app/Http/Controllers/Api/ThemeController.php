@@ -6,10 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Services\ThemePackageInstallService;
 use Modules\Layout\Services\ThemeService;
-use Modules\Core\System\Http\Controllers\BaseApiController;
 
 class ThemeController extends BaseApiController
 {

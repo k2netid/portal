@@ -11,7 +11,6 @@ class SearchIndexHealthApiTest extends SearchTestCase
 {
     use RefreshDatabase;
 
-
     public function test_admin_can_fetch_index_health_snapshot(): void
     {
         $admin = $this->createAdminUser();

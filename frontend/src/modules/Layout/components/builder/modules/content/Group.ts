@@ -1,4 +1,4 @@
-import type { ModuleDefinition } from '@/types/builder';
+import type { ModuleDefinition } from '@/modules/Layout/types/builder';
 import {
     backgroundSettings,
     spacingSettings,
@@ -20,7 +20,7 @@ import {
     scrollEffectsSettings,
     attributesSettings,
     layoutSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Group Module Definition

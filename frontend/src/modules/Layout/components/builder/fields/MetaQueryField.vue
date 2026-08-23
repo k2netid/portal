@@ -108,8 +108,8 @@
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import { BaseButton, BaseInput, BaseDropdown } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseButton, BaseInput, BaseDropdown } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 interface MetaQueryItem {
   key: string;

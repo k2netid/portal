@@ -164,17 +164,17 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, defineAsyncComponent, inject, onMounted, onUnmounted } from 'vue'
-import type { BuilderInstance, SettingDefinition } from '@/types/builder'
+import type { BuilderInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
-import { parseColor, rgbToHex } from '@/components/builder/core/colorUtils'
-import { themeVariables, toCssVarName } from '@/components/builder/core/cssVariables'
+import { parseColor, rgbToHex } from '@/modules/Layout/components/builder/core/colorUtils'
+import { themeVariables, toCssVarName } from '@/modules/Layout/components/builder/core/cssVariables'
 import ChevronUp from 'lucide-vue-next/dist/esm/icons/chevron-up.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Pipette from 'lucide-vue-next/dist/esm/icons/pipette.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import RotateCcw from 'lucide-vue-next/dist/esm/icons/rotate-ccw.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
-import { BaseColorSlider } from '@/components/builder/ui'
+import { BaseColorSlider } from '@/modules/Layout/components/builder/ui'
 
 const ColorPickerModal = defineAsyncComponent(() => import('../modals/ColorPickerModal.vue'))
 const { t } = useI18n()

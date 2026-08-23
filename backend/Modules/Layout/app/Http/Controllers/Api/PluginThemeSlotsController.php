@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Layout\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Modules\Layout\Services\PluginThemeBlocksValidator;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Layout\Services\PluginThemeBlocksValidator;
 
 final class PluginThemeSlotsController extends BaseApiController
 {

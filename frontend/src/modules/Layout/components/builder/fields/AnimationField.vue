@@ -83,8 +83,8 @@
 import { watch, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import PlayCircle from 'lucide-vue-next/dist/esm/icons/circle-play.js';
-import { BaseLabel, BaseSliderInput, BaseCollapsible } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseLabel, BaseSliderInput, BaseCollapsible } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 interface AnimationState {
   effect: string;

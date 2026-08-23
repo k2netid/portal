@@ -61,8 +61,8 @@
 import { ref, computed, watch } from 'vue'
 import ChevronUp from 'lucide-vue-next/dist/esm/icons/chevron-up.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import { BaseSlider, BaseDropdown } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseSlider, BaseDropdown } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

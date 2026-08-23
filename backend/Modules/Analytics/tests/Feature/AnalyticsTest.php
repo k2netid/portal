@@ -3,13 +3,13 @@
 namespace Modules\Analytics\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Core\System\Models\Extension;
-use Modules\Publishing\Models\Content;
-use Modules\Core\System\Models\Permission;
-use Modules\Core\System\Models\User;
 use Modules\Analytics\Models\AnalyticsEvent;
 use Modules\Analytics\Models\AnalyticsSession;
 use Modules\Analytics\Models\AnalyticsVisit;
+use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Permission;
+use Modules\Core\System\Models\User;
+use Modules\Publishing\Models\Content;
 use Tests\Helpers\TestHelpers;
 use Tests\TestCase;
 

@@ -4,9 +4,9 @@ namespace Modules\Layout\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Layout\Models\Redirect;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Support\SqlLikeEscape;
+use Modules\Layout\Models\Redirect;
 
 class RedirectController extends BaseApiController
 {

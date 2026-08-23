@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Checkbox, Label } from '@/components/ui';
+import { Checkbox, Label } from '@/shared/components/ui';
 
 interface Props {
   modelValue?: boolean;

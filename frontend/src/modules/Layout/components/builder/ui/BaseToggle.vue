@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { Switch, Label } from '@/components/ui';
+import { Switch, Label } from '@/shared/components/ui';
 
 interface Props {
   modelValue?: boolean;

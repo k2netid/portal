@@ -237,10 +237,10 @@ import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
 import { useI18n } from 'vue-i18n'
-import { DEVICE_MODES } from '@/components/builder/core/constants'
-import { IconButton, BaseDropdown, BaseDivider } from '@/components/builder/ui'
+import { DEVICE_MODES } from '@/modules/Layout/components/builder/core/constants'
+import { IconButton, BaseDropdown, BaseDivider } from '@/modules/Layout/components/builder/ui'
 import AdminLogo from '@/components/layouts/AdminLogo.vue'
-import type { BuilderInstance } from '@/types/builder'
+import type { BuilderInstance } from '@/modules/Layout/types/builder'
 
 import type { Component } from 'vue';
 

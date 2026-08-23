@@ -112,13 +112,13 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import type { BlockInstance, SettingDefinition } from '@/types/builder'
+import type { BlockInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Settings2 from 'lucide-vue-next/dist/esm/icons/settings.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 import ChevronUp from 'lucide-vue-next/dist/esm/icons/chevron-up.js';
-import { BaseButton, BasePopover, IconButton, BaseLabel } from '@/components/builder/ui'
+import { BaseButton, BasePopover, IconButton, BaseLabel } from '@/modules/Layout/components/builder/ui'
 
 interface ConditionItem {
   type: string;

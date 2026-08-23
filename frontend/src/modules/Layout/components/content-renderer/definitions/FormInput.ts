@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue';
 import Type from 'lucide-vue-next/dist/esm/icons/type.js';
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 
 export default {
     name: 'form_input',

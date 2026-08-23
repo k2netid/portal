@@ -2,11 +2,11 @@ import { logger } from '@/shared/utils/logger';
 import api from '@/engine/api/client'
 import { triggerRef } from 'vue'
 import ModuleRegistry from '../ModuleRegistry'
-import { saasLandingPage, homePage, aboutPage, blogPage, contactPage } from '@/components/builder/templates/PageTemplates';
-import { pricingSection, faqSection, teamGrid, ctaDark, heroGradient, featuresGrid, aboutSplit } from '@/components/builder/templates/SectionTemplates';
-import type { BuilderState } from '@/types/builder'
-import type { Category, Tag } from '@/types/taxonomy'
-import type { Menu } from '@/types/menu'
+import { saasLandingPage, homePage, aboutPage, blogPage, contactPage } from '@/modules/Layout/components/builder/templates/PageTemplates';
+import { pricingSection, faqSection, teamGrid, ctaDark, heroGradient, featuresGrid, aboutSplit } from '@/modules/Layout/components/builder/templates/SectionTemplates';
+import type { BuilderState } from '@/modules/Layout/types/builder'
+import type { Category, Tag } from '@/modules/Publishing/types/taxonomy'
+import type { Menu } from '@/modules/Layout/types/menu'
 import type { HistoryManager } from './useBuilderModules'
 import type { GlobalVariablesManager } from '../useGlobalVariables'
 

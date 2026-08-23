@@ -76,7 +76,7 @@ import { reactive, computed } from 'vue';
 import Info from 'lucide-vue-next/dist/esm/icons/info.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import { BaseModal, BaseInput, BaseToggle, BaseDropdown } from '@/components/builder/ui';
+import { BaseModal, BaseInput, BaseToggle, BaseDropdown } from '@/modules/Layout/components/builder/ui';
 
 const emit = defineEmits<{
   (e: 'close'): void;

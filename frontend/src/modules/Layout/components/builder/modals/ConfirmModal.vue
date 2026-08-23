@@ -31,7 +31,7 @@ import AlertCircle from 'lucide-vue-next/dist/esm/icons/circle-alert.js';
 import Info from 'lucide-vue-next/dist/esm/icons/info.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 
-import { BaseModal, BaseButton } from '@/components/builder/ui';
+import { BaseModal, BaseButton } from '@/modules/Layout/components/builder/ui';
 
 interface Props {
   isOpen?: boolean;

@@ -1,13 +1,20 @@
 import type { Category, Tag } from './taxonomy';
 import type { MenuItem } from '@/modules/Layout/types/menu';
+import type { BlockInstance } from '@/modules/Layout/types/builder';
 
 export * from './taxonomy';
+
+export interface ContentMeta {
+    builder_blocks?: BlockInstance[];
+    [key: string]: unknown;
+}
 
 export interface ContentForm {
     title: string;
     slug: string;
     type: 'post' | 'page' | 'custom' | string;
     status: 'draft' | 'published' | 'scheduled' | 'archived' | 'pending' | 'trashed' | string;
+    editor_type?: string;
     excerpt?: string;
     intro?: string;
     body?: string; // content alias
@@ -25,7 +32,7 @@ export interface ContentForm {
     comment_status?: boolean;
     is_featured?: boolean;
     tags?: Tag[];
-    meta?: Record<string, any>;
+    meta?: ContentMeta;
     menu_item?: MenuItem;
     menu_items?: MenuItem[];
 }

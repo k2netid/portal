@@ -28,7 +28,7 @@ export const contentSchema = z.object({
         .max(500, t('common.validation.max', { field: 'Intro', max: 500 }))
         .optional()
         .or(z.literal('')),
-    status: z.enum(['draft', 'published', 'scheduled', 'archived']).optional(),
+    status: z.string().optional(),
     type: z.string().optional(),
     category_id: z.union([z.number(), z.string()]).nullable().optional(),
     featured_image: z.string().nullable().optional(),
@@ -40,7 +40,7 @@ export const contentSchema = z.object({
         .max(255, t('common.validation.max', { field: 'Featured Image Caption', max: 255 }))
         .optional()
         .or(z.literal('')),
-    featured_image_position: z.enum(['hero', 'inline-top', 'full-bleed']).optional(),
+    featured_image_position: z.string().optional(),
     meta_title: z.string()
         .max(60, t('common.validation.max', { field: 'Meta Title', max: 60 }))
         .optional()

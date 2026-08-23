@@ -41,14 +41,14 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { BaseModal } from '@/components/builder/ui';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
-import { pageTemplates } from '@/components/builder/templates/PageTemplates';
+import { BaseModal } from '@/modules/Layout/components/builder/ui';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
+import { pageTemplates } from '@/modules/Layout/components/builder/templates/PageTemplates';
 import LayoutTemplate from 'lucide-vue-next/dist/esm/icons/layout-template.js';
 import AlertTriangle from 'lucide-vue-next/dist/esm/icons/triangle-alert.js';
-import type { BuilderInstance, BlockInstance } from '@/types/builder';
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
 
-import type { PageTemplate } from '@/components/builder/templates/PageTemplates';
+import type { PageTemplate } from '@/modules/Layout/components/builder/templates/PageTemplates';
 
 const emit = defineEmits<{
   (e: 'close'): void;

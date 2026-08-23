@@ -55,7 +55,7 @@ import RotateCw from 'lucide-vue-next/dist/esm/icons/rotate-cw.js';
 import Droplet from 'lucide-vue-next/dist/esm/icons/droplet.js';
 import Layers from 'lucide-vue-next/dist/esm/icons/layers.js';
 import { BaseLabel, BaseToggle } from '../ui'
-import type { SettingDefinition } from '@/types/builder'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 interface ScrollEffectState {
   enabled: boolean;

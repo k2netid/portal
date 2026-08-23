@@ -29,7 +29,7 @@ return new class extends Migration
                 if (Schema::hasColumn('ai_taxonomy_batches', 'user_id')) {
                     try {
                         $table->dropIndex(['user_id', 'created_at']);
-                    } catch (\Throwable) {
+                    } catch (Throwable) {
                         // ignore if index does not exist
                     }
                     $table->dropColumn('user_id');
@@ -64,7 +64,7 @@ return new class extends Migration
                 if (Schema::hasColumn('ai_taxonomy_batches', 'user_id')) {
                     try {
                         $table->dropIndex(['user_id', 'created_at']);
-                    } catch (\Throwable) {
+                    } catch (Throwable) {
                         // ignore
                     }
                     $table->dropColumn('user_id');

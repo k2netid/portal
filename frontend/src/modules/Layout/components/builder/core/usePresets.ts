@@ -1,6 +1,6 @@
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref } from 'vue'
-import api from '@/services/api'
+import api from '@/engine/api/client'
 import { useToast } from '@/composables/useToast'
 
 export interface Preset {

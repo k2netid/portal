@@ -1,5 +1,5 @@
 import { computed, ref, onBeforeUnmount } from 'vue'
-import type { BuilderState } from '@/types/builder'
+import type { BuilderState } from '@/modules/Layout/types/builder'
 
 export function useBuilderHistory(state: BuilderState) {
     const { blocks, history, historyIndex, maxHistory, markAsDirty } = state

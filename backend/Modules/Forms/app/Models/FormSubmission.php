@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Modules\Forms\Database\Factories\FormSubmissionFactory;
 use Modules\Core\System\Models\User;
+use Modules\Forms\Database\Factories\FormSubmissionFactory;
 
 /**
  * @property int $id

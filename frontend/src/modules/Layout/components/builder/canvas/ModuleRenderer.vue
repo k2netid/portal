@@ -54,9 +54,9 @@
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
-import type { BlockInstance, BuilderInstance } from '@/types/builder';
+import type { BlockInstance, BuilderInstance } from '@/modules/Layout/types/builder';
 
 const props = defineProps<{
   module: BlockInstance;

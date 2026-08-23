@@ -1,5 +1,6 @@
 import api from '@/engine/api/client';
 import { cmsAiPaths } from '@/engine/api/paths';
+import { AiService as CoreAiService } from '@/shared/services/aiService';
 import type { AxiosResponse } from 'axios';
 
 export const AiService = {
@@ -25,6 +26,12 @@ export const AiService = {
 
     usageStats(): Promise<AxiosResponse> {
         return api.get(cmsAiPaths.usageStats);
+    },
+
+    providers(): Promise<AxiosResponse<{ data: Array<{ id: string; name: string; logo?: string }> }>> {
+        return CoreAiService.providers().then((payload) => ({
+            data: payload,
+        } as AxiosResponse<{ data: Array<{ id: string; name: string; logo?: string }> }>));
     },
 };
 

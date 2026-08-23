@@ -1689,7 +1689,7 @@
 
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition, SubFieldGroup } from '@/types/builder'
+import type { BlockInstance, BuilderInstance, SettingDefinition, SubFieldGroup } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
 import PaintBucket from 'lucide-vue-next/dist/esm/icons/paint-bucket.js';
 import Image from 'lucide-vue-next/dist/esm/icons/image.js';
@@ -1712,20 +1712,20 @@ import RectangleVertical from 'lucide-vue-next/dist/esm/icons/rectangle-vertical
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 
 import Contrast from 'lucide-vue-next/dist/esm/icons/contrast.js';
-import ColorField from '@/components/builder/fields/ColorField.vue'
-import GradientField from '@/components/builder/fields/GradientField.vue'
-import UploadField from '@/components/builder/fields/UploadField.vue'
-import ToggleField from '@/components/builder/fields/ToggleField.vue'
-import SelectField from '@/components/builder/fields/SelectField.vue'
+import ColorField from '@/modules/Layout/components/builder/fields/ColorField.vue'
+import GradientField from '@/modules/Layout/components/builder/fields/GradientField.vue'
+import UploadField from '@/modules/Layout/components/builder/fields/UploadField.vue'
+import ToggleField from '@/modules/Layout/components/builder/fields/ToggleField.vue'
+import SelectField from '@/modules/Layout/components/builder/fields/SelectField.vue'
 
-import DimensionField from '@/components/builder/fields/DimensionField.vue'
-import PatternField from '@/components/builder/fields/PatternField.vue'
-import MaskField from '@/components/builder/fields/MaskField.vue'
-import { IconButton } from '@/components/builder/ui'
+import DimensionField from '@/modules/Layout/components/builder/fields/DimensionField.vue'
+import PatternField from '@/modules/Layout/components/builder/fields/PatternField.vue'
+import MaskField from '@/modules/Layout/components/builder/fields/MaskField.vue'
+import { IconButton } from '@/modules/Layout/components/builder/ui'
 import MediaPicker from '@/components/media/MediaPicker.vue'
-import ResponsiveFieldModal from '@/components/builder/modals/ResponsiveFieldModal.vue'
-import FieldActions from '@/components/builder/fields/FieldActions.vue'
-import { BaseDropdown } from '@/components/builder/ui'
+import ResponsiveFieldModal from '@/modules/Layout/components/builder/modals/ResponsiveFieldModal.vue'
+import FieldActions from '@/modules/Layout/components/builder/fields/FieldActions.vue'
+import { BaseDropdown } from '@/modules/Layout/components/builder/ui'
 import { getHarmoniousGradientColors, getBackgroundStyles, generateGradientCSS } from '@/shared/utils/styleUtils'
 import type { Gradient } from '@/shared/utils/styleUtils'
 import { BackgroundPatterns, BackgroundMasks } from '@/shared/utils/AssetLibrary'

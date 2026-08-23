@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import MessageSquare from 'lucide-vue-next/dist/esm/icons/message-square.js';
 import { defineAsyncComponent } from 'vue';
 

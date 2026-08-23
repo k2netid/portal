@@ -2,10 +2,12 @@ import { defineStore } from 'pinia';
 import { ref, markRaw, type Component } from 'vue';
 import type { User } from '@/engine/types/auth';
 
+import type { AuthPermissionGate } from '@/engine/types/module';
+
 export interface DashboardEntry {
     id: string;
     priority: number;
-    condition: (user: User, authStore: unknown) => boolean;
+    condition: (user: User, authStore: AuthPermissionGate) => boolean;
     component: Component;
 }
 
@@ -23,7 +25,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         registry.value.sort((a, b) => b.priority - a.priority);
     };
 
-    const getActiveDashboard = (user: User, authStore: unknown) => {
+    const getActiveDashboard = (user: User, authStore: AuthPermissionGate) => {
         const match = registry.value.find(entry => entry.condition(user, authStore));
         return match ? match.component : null;
     };

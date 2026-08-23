@@ -53,13 +53,13 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { BlockInstance, SettingDefinition, ModuleField } from '@/types/builder'
+import type { BlockInstance, SettingDefinition, ModuleField } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 import GripVertical from 'lucide-vue-next/dist/esm/icons/grip-vertical.js';
-import FieldRenderer from '@/components/builder/fields/FieldRenderer.vue'
+import FieldRenderer from '@/modules/Layout/components/builder/fields/FieldRenderer.vue'
 
 // Recursive component definition is handled automatically by Vue for local registration if loop is indirect.
 // But since FieldRenderer imports RepeaterField (via dynamic import), we should be fine.

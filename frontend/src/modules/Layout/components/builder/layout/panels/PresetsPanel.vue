@@ -78,7 +78,7 @@ import Trash from 'lucide-vue-next/dist/esm/icons/trash.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import ChevronRight from 'lucide-vue-next/dist/esm/icons/chevron-right.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
-import type { BuilderInstance, BuilderPreset } from '@/types/builder';
+import type { BuilderInstance, BuilderPreset } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');

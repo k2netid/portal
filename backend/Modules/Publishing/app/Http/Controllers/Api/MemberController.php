@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\User;
+use Modules\Newsletter\Models\NewsletterSubscriber;
 use Modules\Publishing\Models\Bookmark;
 use Modules\Publishing\Models\Comment;
 
@@ -139,11 +140,11 @@ class MemberController extends BaseApiController
     // ─── NEWSLETTER PREFERENCES ────────────────────────────────────
 
     /**
-     * @return class-string|null
+     * @return class-string<NewsletterSubscriber>|null
      */
     private function newsletterSubscriberClass(): ?string
     {
-        $class = 'Modules\\Intelligence\\Newsletter\\Models\\NewsletterSubscriber';
+        $class = 'Modules\\Newsletter\\Models\\NewsletterSubscriber';
 
         return class_exists($class) ? $class : null;
     }

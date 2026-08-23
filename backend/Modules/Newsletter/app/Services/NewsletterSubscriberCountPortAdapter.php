@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Newsletter\Services;
 
-use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 use Modules\Newsletter\Models\NewsletterSubscriber;
+use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 
 class NewsletterSubscriberCountPortAdapter implements NewsletterSubscriberCountPortInterface
 {

@@ -51,7 +51,7 @@ import Smartphone from 'lucide-vue-next/dist/esm/icons/smartphone.js';
 import Tablet from 'lucide-vue-next/dist/esm/icons/tablet.js';
 import Monitor from 'lucide-vue-next/dist/esm/icons/monitor.js';
 import type { Component } from 'vue';
-import { BaseModal, BaseToggle, BaseButton, BaseInput } from '@/components/builder/ui';
+import { BaseModal, BaseToggle, BaseButton, BaseInput } from '@/modules/Layout/components/builder/ui';
 
 interface Props {
   isOpen?: boolean;

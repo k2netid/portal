@@ -721,8 +721,8 @@ import { logger } from '@/shared/utils/logger';
 import { useToast } from '@/shared/composables/useToast';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { Sparkles, ArrowRight, Check, Star, Play, Share2, ChevronDown } from 'lucide-vue-next';
-import { ConditionEvaluator } from '@/services/ConditionEvaluator';
-import type { BlockInstance, BuilderInstance } from '@/types/builder';
+import { ConditionEvaluator } from '@/shared/services/ConditionEvaluator';
+import type { BlockInstance, BuilderInstance } from '@/modules/Layout/types/builder';
 
 const route = useRoute();
 const builder = inject<BuilderInstance | null>('builder', null);

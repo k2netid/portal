@@ -1,8 +1,8 @@
 import { computed, triggerRef } from 'vue'
 import ModuleRegistry from '../ModuleRegistry'
 import ValidationService from '../ValidationService'
-import type { BlockInstance, BuilderState, ModuleSettings, BuilderPreset, BlockDefinition } from '@/types/builder'
-import { logger } from '@/utils/logger'
+import type { BlockInstance, BuilderState, ModuleSettings, BuilderPreset, BlockDefinition } from '@/modules/Layout/types/builder'
+import { logger } from '@/shared/utils/logger'
 
 export interface HistoryManager {
     takeSnapshot: (options?: { immediate?: boolean; delay?: number }) => void;

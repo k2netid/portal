@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { BaseToggle } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseToggle } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 defineProps<{
   field: SettingDefinition;

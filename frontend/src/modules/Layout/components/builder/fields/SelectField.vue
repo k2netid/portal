@@ -86,13 +86,13 @@
 
 <script setup lang="ts">
 import { computed, inject, ref, watch } from 'vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition, SettingOption } from '@/types/builder'
+import type { BlockInstance, BuilderInstance, SettingDefinition, SettingOption } from '@/modules/Layout/types/builder'
 import { useI18n } from 'vue-i18n'
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import X from 'lucide-vue-next/dist/esm/icons/x.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
-import { BaseDropdown } from '@/components/builder/ui'
+import { BaseDropdown } from '@/modules/Layout/components/builder/ui'
 
 declare global {
   interface Window {

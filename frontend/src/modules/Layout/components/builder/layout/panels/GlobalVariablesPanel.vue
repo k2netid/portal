@@ -398,7 +398,7 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, computed, nextTick, onMounted, inject, watch, defineAsyncComponent } from 'vue';
 import type { Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -409,14 +409,14 @@ import ImageIcon from 'lucide-vue-next/dist/esm/icons/image.js';
 import draggable from 'vuedraggable';
 import { 
     BaseCollapsible, BaseInput, BaseSlider, IconButton, BaseButton, BaseColorSlider
-} from '@/components/builder/ui';
+} from '@/modules/Layout/components/builder/ui';
 import MediaPicker from '@/components/media/MediaPicker.vue';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
-const ColorPickerModal = defineAsyncComponent(() => import('@/components/builder/modals/ColorPickerModal.vue'));
+const ColorPickerModal = defineAsyncComponent(() => import('@/modules/Layout/components/builder/modals/ColorPickerModal.vue'));
 
 // Using the imported GlobalVariable now from builder.ts
-import type { GlobalVariable } from '@/types/builder';
+import type { GlobalVariable } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');

@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { BaseModal, BaseInput } from '@/components/builder/ui';
+import { BaseModal, BaseInput } from '@/modules/Layout/components/builder/ui';
 
 interface Props {
   loading?: boolean;

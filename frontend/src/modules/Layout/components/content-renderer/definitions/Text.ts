@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 /**
  * Enhanced Text Block Definition
  * Rich text with comprehensive typography and styling

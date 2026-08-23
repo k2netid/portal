@@ -73,9 +73,9 @@ import { reactive, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Ban from 'lucide-vue-next/dist/esm/icons/ban.js';
 import Layers from 'lucide-vue-next/dist/esm/icons/layers.js';
-import { BaseLabel, BaseSliderInput, BaseToggle, BaseCollapsible } from '@/components/builder/ui'
-import ColorField from '@/components/builder/fields/ColorField.vue'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseLabel, BaseSliderInput, BaseToggle, BaseCollapsible } from '@/modules/Layout/components/builder/ui'
+import ColorField from '@/modules/Layout/components/builder/fields/ColorField.vue'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 
 interface ShadowValue {

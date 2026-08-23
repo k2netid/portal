@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Modules\Analytics\Database\Factories\AnalyticsVisitFactory;
 use Modules\Core\System\Helpers\IpHelper;
 use Modules\Core\System\Models\User;
-use Modules\Analytics\Database\Factories\AnalyticsVisitFactory;
 
 /**
  * @property int $id

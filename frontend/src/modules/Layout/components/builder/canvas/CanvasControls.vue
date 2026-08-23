@@ -64,7 +64,7 @@ import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
 import { IconButton, BaseDivider, BaseDropdown } from '../ui';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 // Props & Emits
 defineEmits<{

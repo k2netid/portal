@@ -99,12 +99,12 @@
 
 <script setup lang="ts">
 import { ref, watch, inject, computed } from 'vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/types/builder'
+import type { BlockInstance, BuilderInstance, SettingDefinition } from '@/modules/Layout/types/builder'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Settings2 from 'lucide-vue-next/dist/esm/icons/settings.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 import ChevronUp from 'lucide-vue-next/dist/esm/icons/chevron-up.js';
-import { BaseButton, IconButton, BaseLabel, BasePopover } from '@/components/builder/ui'
+import { BaseButton, IconButton, BaseLabel, BasePopover } from '@/modules/Layout/components/builder/ui'
 
 interface InteractionItem {
   trigger: string;

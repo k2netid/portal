@@ -4,11 +4,11 @@ namespace Modules\Analytics\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Modules\Core\System\Models\Setting;
-use Modules\Core\System\Support\DatabaseConsoleInts;
 use Modules\Analytics\Models\AnalyticsEvent;
 use Modules\Analytics\Models\AnalyticsSession;
 use Modules\Analytics\Models\AnalyticsVisit;
+use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Support\DatabaseConsoleInts;
 
 class CleanupAnalytics extends Command
 {

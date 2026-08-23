@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import { defineAsyncComponent } from 'vue';
 import GalleryHorizontal from 'lucide-vue-next/dist/esm/icons/gallery-horizontal.js';
 

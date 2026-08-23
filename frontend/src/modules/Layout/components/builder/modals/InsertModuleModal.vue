@@ -210,9 +210,9 @@ import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import SquareCheck from 'lucide-vue-next/dist/esm/icons/square-check.js';
 import Disc from 'lucide-vue-next/dist/esm/icons/disc.js';
 import TextAlignStart from 'lucide-vue-next/dist/esm/icons/text-align-start.js';
-import { BaseModal, BaseInput, Tabs, TabsList, TabsTrigger } from '@/components/builder/ui';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
-import type { BuilderInstance, BlockInstance, BuilderPreset, ModuleDefinition } from '@/types/builder';
+import { BaseModal, BaseInput, Tabs, TabsList, TabsTrigger } from '@/modules/Layout/components/builder/ui';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
+import type { BuilderInstance, BlockInstance, BuilderPreset, ModuleDefinition } from '@/modules/Layout/types/builder';
 
 import { 
     equalLayouts, 
@@ -223,7 +223,7 @@ import {
     masonryPresets,
     sidebarPresets,
     type LayoutPreset
-} from '@/components/builder/constants/layouts';
+} from '@/modules/Layout/components/builder/constants/layouts';
 
 
 const icons: Record<string, Component> = { 

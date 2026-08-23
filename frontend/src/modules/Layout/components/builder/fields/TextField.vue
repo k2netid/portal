@@ -22,8 +22,8 @@
 import { computed } from 'vue'
 import Database from 'lucide-vue-next/dist/esm/icons/database.js';
 import X from 'lucide-vue-next/dist/esm/icons/x.js';
-import { BaseInput } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseInput } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field: SettingDefinition;

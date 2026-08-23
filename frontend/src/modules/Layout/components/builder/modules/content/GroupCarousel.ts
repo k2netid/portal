@@ -1,4 +1,4 @@
-import type { ModuleDefinition } from '@/types/builder';
+import type { ModuleDefinition } from '@/modules/Layout/types/builder';
 import {
     backgroundSettings,
     spacingSettings,
@@ -19,7 +19,7 @@ import {
     interactionsSettings,
     scrollEffectsSettings,
     attributesSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Group Carousel Module Definition

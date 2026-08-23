@@ -68,8 +68,8 @@ import { TextAlign } from '@tiptap/extension-text-align'
 import { Link } from '@tiptap/extension-link'
 import { Image as ImageExt } from '@tiptap/extension-image'
 
-import RichtextToolbar from '@/components/builder/fields/RichtextToolbar.vue'
-import type { SettingDefinition } from '@/types/builder'
+import RichtextToolbar from '@/modules/Layout/components/builder/fields/RichtextToolbar.vue'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = defineProps<{
   field?: SettingDefinition;

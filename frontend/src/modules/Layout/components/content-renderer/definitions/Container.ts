@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 /**
  * Enhanced Container Block Definition
  * Flexible container with Flexbox controls, box styling, and layout options

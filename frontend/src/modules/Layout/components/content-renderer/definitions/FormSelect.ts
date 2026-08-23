@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 
 export default {
     name: 'form_select',

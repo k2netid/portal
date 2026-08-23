@@ -1,6 +1,6 @@
 import { getSchemaForBlock } from './schemas'
 import SanitizationService from '@/shared/utils/SanitizationService'
-import type { ModuleSettings } from '@/types/builder'
+import type { ModuleSettings } from '@/modules/Layout/types/builder'
 
 export interface ValidationResult {
     success: boolean;

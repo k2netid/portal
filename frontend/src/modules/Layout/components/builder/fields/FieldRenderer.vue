@@ -63,10 +63,10 @@
 import { computed, defineAsyncComponent, inject, ref, type Component } from 'vue'
 import { useI18n } from 'vue-i18n'
 import FieldWrapper from './FieldWrapper.vue'
-import BasePopover from '@/components/builder/ui/BasePopover.vue'
-import DynamicDataPopover from '@/components/builder/ui/DynamicDataPopover.vue'
-import PresetPopoverContent from '@/components/builder/ui/PresetPopoverContent.vue'
-import type { BlockInstance, BuilderInstance, SettingDefinition, BuilderPreset } from '@/types/builder'
+import BasePopover from '@/modules/Layout/components/builder/ui/BasePopover.vue'
+import DynamicDataPopover from '@/modules/Layout/components/builder/ui/DynamicDataPopover.vue'
+import PresetPopoverContent from '@/modules/Layout/components/builder/ui/PresetPopoverContent.vue'
+import type { BlockInstance, BuilderInstance, SettingDefinition, BuilderPreset } from '@/modules/Layout/types/builder'
 
 // Inject builder
 const builder = inject<BuilderInstance>('builder')!

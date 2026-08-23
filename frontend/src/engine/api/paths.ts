@@ -182,4 +182,8 @@ export const infraPaths = {
     fileManagerTrashPermanent: '/manage/infra/file-manager/trash/permanent',
 } as const;
 
+export const platformPaths = {
+    publicCatalog: '/public/platform/catalog',
+    publicSubscriptionFeatures: '/public/subscription/features',
+} as const;
 

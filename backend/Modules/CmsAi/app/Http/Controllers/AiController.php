@@ -6,8 +6,6 @@ namespace Modules\CmsAi\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Core\System\Http\Controllers\BaseApiController;
-use Modules\Core\System\Services\Ai\AiAvailability;
 use Modules\CmsAi\Models\AiUsageLog;
 use Modules\CmsAi\Services\AiSubscriptionQuotaService;
 use Modules\CmsAi\Services\AiUsageRecorder;
@@ -16,6 +14,8 @@ use Modules\CmsAi\Services\Exceptions\PublishingDraftParseException;
 use Modules\CmsAi\Services\Exceptions\TaxonomySuggestParseException;
 use Modules\CmsAi\Services\PublishingContentDraftService;
 use Modules\CmsAi\Services\PublishingTaxonomySuggestService;
+use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Services\Ai\AiAvailability;
 
 class AiController extends BaseApiController
 {

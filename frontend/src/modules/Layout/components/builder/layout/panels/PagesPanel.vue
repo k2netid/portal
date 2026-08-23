@@ -114,8 +114,8 @@ import Edit2 from 'lucide-vue-next/dist/esm/icons/pen-line.js';
 import Trash2 from 'lucide-vue-next/dist/esm/icons/trash-2.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
-import { BaseInput } from '@/components/builder/ui';
-import type { BuilderInstance, PageMetadata } from '@/types/builder';
+import { BaseInput } from '@/modules/Layout/components/builder/ui';
+import type { BuilderInstance, PageMetadata } from '@/modules/Layout/types/builder';
 
 interface ContentItem extends PageMetadata {
   type?: string

@@ -6,13 +6,13 @@ namespace Modules\CmsAi\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Modules\Core\System\Facades\Hook;
-use Modules\Core\System\Models\Extension;
 use Modules\CmsAi\Services\AiSubscriptionQuotaService;
 use Modules\CmsAi\Services\AiTaxonomyBatchService;
 use Modules\CmsAi\Services\AiUsageRecorder;
 use Modules\CmsAi\Services\PublishingContentDraftService;
 use Modules\CmsAi\Services\PublishingTaxonomySuggestService;
+use Modules\Core\System\Facades\Hook;
+use Modules\Core\System\Models\Extension;
 
 class CmsAiServiceProvider extends ServiceProvider
 {

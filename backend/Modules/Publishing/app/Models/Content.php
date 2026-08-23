@@ -18,7 +18,6 @@ use Modules\Library\Models\Category;
 use Modules\Library\Models\CustomField;
 use Modules\Library\Models\Tag;
 use Modules\Publishing\Database\Factories\ContentFactory;
-use Modules\Publishing\Support\UnboundMorphModel;
 
 /**
  * @property string $id
@@ -149,15 +148,11 @@ class Content extends Model
     }
 
     /**
-     * @return MorphMany<Model, $this>
+     * @return MorphMany<MenuItem, $this>
      */
     public function menuItems(): MorphMany
     {
-        $related = class_exists(MenuItem::class)
-            ? MenuItem::class
-            : UnboundMorphModel::class;
-
-        return $this->morphMany($related, 'target');
+        return $this->morphMany(MenuItem::class, 'target');
     }
 
     /**

@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import Hash from 'lucide-vue-next/dist/esm/icons/hash.js';
 import { defineAsyncComponent } from 'vue';
 

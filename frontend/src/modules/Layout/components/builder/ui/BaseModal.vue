@@ -37,8 +37,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter
-} from '@/components/ui';
-import { cn } from '@/lib/utils';
+} from '@/shared/components/ui';
+import { cn } from '@/shared/utils/lib-utils';
 
 interface Props {
   isOpen?: boolean;

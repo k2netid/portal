@@ -92,8 +92,8 @@ import { ref, watch, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Move from 'lucide-vue-next/dist/esm/icons/move.js';
 
-import { BaseLabel, BaseSliderInput, BaseCollapsible, BaseSegmentedControl } from '@/components/builder/ui'
-import type { SettingDefinition } from '@/types/builder'
+import { BaseLabel, BaseSliderInput, BaseCollapsible, BaseSegmentedControl } from '@/modules/Layout/components/builder/ui'
+import type { SettingDefinition } from '@/modules/Layout/types/builder'
 
 const props = withDefaults(defineProps<{
   field?: SettingDefinition;

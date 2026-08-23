@@ -87,7 +87,7 @@ import { ref, onMounted, computed, nextTick, onBeforeUnmount, defineAsyncCompone
 import { useI18n } from 'vue-i18n'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue'
-import type { BlockInstance } from '@/types/builder'
+import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
 import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
 

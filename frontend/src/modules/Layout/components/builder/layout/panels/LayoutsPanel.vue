@@ -84,11 +84,11 @@ import FileText from 'lucide-vue-next/dist/esm/icons/file-text.js';
 import Megaphone from 'lucide-vue-next/dist/esm/icons/megaphone.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import draggable from 'vuedraggable';
-import { sectionTemplates } from '@/components/builder/templates/SectionTemplates';
-import { pageTemplates } from '@/components/builder/templates/PageTemplates';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
-import type { BuilderInstance, BlockInstance } from '@/types/builder';
-import type { SectionTemplate } from '@/components/builder/templates/SectionTemplates';
+import { sectionTemplates } from '@/modules/Layout/components/builder/templates/SectionTemplates';
+import { pageTemplates } from '@/modules/Layout/components/builder/templates/PageTemplates';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
+import type { SectionTemplate } from '@/modules/Layout/components/builder/templates/SectionTemplates';
 
 interface Template {
   id: string;
@@ -122,7 +122,7 @@ const filteredTemplates = computed<Template[]>(() => {
     } as Template));
     
     // Add pages
-    (pageTemplates as import('@/components/builder/templates/PageTemplates').PageTemplate[]).forEach((p) => all.push({ 
+    (pageTemplates as import('@/modules/Layout/components/builder/templates/PageTemplates').PageTemplate[]).forEach((p) => all.push({ 
         ...p, 
         category: 'pages', 
         templateType: 'page' 

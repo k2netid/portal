@@ -221,7 +221,6 @@ import { EmptyState } from '@/shared/components/feedback';
 
 import { PageHeader } from '@/shared/components/shell';
 import { ref, onMounted, onUnmounted, provide } from 'vue';
-import { ensureDeferredLocales } from '@/engine/i18n/deferredLocales';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -337,7 +336,6 @@ const changePage = (page: number) => {
 };
 
 onMounted(async () => {
-    await ensureDeferredLocales(['content']);
     syncSidebarForViewport();
     if (typeof window !== 'undefined') {
         window.addEventListener('resize', syncSidebarForViewport);

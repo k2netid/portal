@@ -97,14 +97,14 @@ class File extends Model implements MediaFileRecordInterface
      */
     public function tags(): MorphToMany
     {
-        $related = class_exists(Tag::class) ? Tag::class : self::class;
-
-        return $this->morphToMany($related, 'taggable', 'lib_taggables');
+        return $this->morphToMany(Tag::class, 'taggable', 'lib_taggables');
     }
 
     public function getId(): int|string|null
     {
-        return $this->getKey();
+        $key = $this->getKey();
+
+        return is_int($key) || is_string($key) ? $key : null;
     }
 
     public function getPath(): string

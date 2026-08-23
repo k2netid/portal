@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Layout\Services;
 
-use Modules\Core\System\Models\Plugin;
+use Modules\Core\System\Models\Extension;
 
 final class PluginThemeBlocksService
 {
@@ -24,19 +24,19 @@ final class PluginThemeBlocksService
 
         $out = [];
 
-        foreach (Plugin::getActivePlugins() as $plugin) {
-            $slug = $plugin->slug;
-            $slots = $this->resolveSlotsForPlugin($plugin, $defaults);
+        foreach ($this->getActiveExtensions() as $extension) {
+            $slug = $extension->slug;
+            $slots = $this->resolveSlotsForExtension($extension, $defaults);
             if ($slots === []) {
                 continue;
             }
 
             $entry = [
                 'slug' => $slug,
-                'priority' => (int) $plugin->priority,
+                'priority' => $this->extensionPriority($extension),
                 'slots' => $slots,
             ];
-            $blocksUrl = $this->resolveRemoteBlocksUrl($plugin);
+            $blocksUrl = $this->resolveRemoteBlocksUrl($extension);
             if ($blocksUrl !== null) {
                 $entry['blocks_url'] = $blocksUrl;
             }
@@ -47,17 +47,39 @@ final class PluginThemeBlocksService
     }
 
     /**
+     * @return list<Extension>
+     */
+    private function getActiveExtensions(): array
+    {
+        return array_values(
+            Extension::query()
+                ->where('status', 'active')
+                ->orderBy('slug')
+                ->get()
+                ->all()
+        );
+    }
+
+    private function extensionPriority(Extension $extension): int
+    {
+        $manifest = is_array($extension->manifest) ? $extension->manifest : [];
+        $priority = $manifest['priority'] ?? null;
+
+        return is_numeric($priority) ? (int) $priority : 0;
+    }
+
+    /**
      * @param  array<string, mixed>  $defaults
      * @return list<string>
      */
-    private function resolveSlotsForPlugin(Plugin $plugin, array $defaults): array
+    private function resolveSlotsForExtension(Extension $extension, array $defaults): array
     {
-        $slug = $plugin->slug;
+        $slug = $extension->slug;
         $fromConfig = isset($defaults[$slug]) && is_array($defaults[$slug])
             ? array_values(array_map(static fn (mixed $v): string => is_scalar($v) ? (string) $v : '', $defaults[$slug]))
             : [];
 
-        $settings = is_array($plugin->settings) ? $plugin->settings : [];
+        $settings = is_array($extension->settings) ? $extension->settings : [];
         $blocks = $settings['theme_blocks'] ?? null;
 
         if (! is_array($blocks) || $blocks === []) {
@@ -81,9 +103,9 @@ final class PluginThemeBlocksService
         return $this->filterAllowedSlots($merged);
     }
 
-    private function resolveRemoteBlocksUrl(Plugin $plugin): ?string
+    private function resolveRemoteBlocksUrl(Extension $extension): ?string
     {
-        $settings = is_array($plugin->settings) ? $plugin->settings : [];
+        $settings = is_array($extension->settings) ? $extension->settings : [];
         $raw = $settings['theme_blocks_remote_url'] ?? $settings['blocks_url'] ?? null;
 
         return $this->remoteUrls->validate(is_string($raw) ? $raw : null);

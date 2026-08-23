@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue';
 import MoreHorizontal from 'lucide-vue-next/dist/esm/icons/ellipsis.js';
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 
 export default {
     name: 'form_progress',

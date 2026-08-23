@@ -158,9 +158,9 @@
 <script setup lang="ts">
 import { ref, computed, inject, type Component } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { BaseModal, BaseInput } from '@/components/builder/ui';
+import { BaseModal, BaseInput } from '@/modules/Layout/components/builder/ui';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
-import ModuleRegistry from '@/components/builder/core/ModuleRegistry';
+import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
 import { 
     equalLayouts, 
     offsetLayouts, 
@@ -170,9 +170,9 @@ import {
     masonryPresets,
     sidebarPresets,
     type LayoutPreset
-} from '@/components/builder/constants/layouts';
-import { sectionTemplates, type SectionTemplate } from '@/components/builder/templates/SectionTemplates';
-import { pageTemplates, type PageTemplate } from '@/components/builder/templates/PageTemplates';
+} from '@/modules/Layout/components/builder/constants/layouts';
+import { sectionTemplates, type SectionTemplate } from '@/modules/Layout/components/builder/templates/SectionTemplates';
+import { pageTemplates, type PageTemplate } from '@/modules/Layout/components/builder/templates/PageTemplates';
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js';
 import Layout from 'lucide-vue-next/dist/esm/icons/layout-dashboard.js';
 import Users from 'lucide-vue-next/dist/esm/icons/users.js';
@@ -180,7 +180,7 @@ import MessageSquare from 'lucide-vue-next/dist/esm/icons/message-square.js';
 import FileText from 'lucide-vue-next/dist/esm/icons/file-text.js';
 import Megaphone from 'lucide-vue-next/dist/esm/icons/megaphone.js';
 import LayoutTemplate from 'lucide-vue-next/dist/esm/icons/layout-template.js';
-import type { BuilderInstance, BlockInstance } from '@/types/builder';
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
 
 interface Props {
   targetIndex?: number;
@@ -218,7 +218,7 @@ const filteredPresets = computed(() => {
 });
 
 const groupedPresets = computed(() => {
-  const groups: Record<string, import('@/types/builder').BuilderPreset[]> = {};
+  const groups: Record<string, import('@/modules/Layout/types/builder').BuilderPreset[]> = {};
   filteredPresets.value.forEach(preset => {
     const type = preset.type.charAt(0).toUpperCase() + preset.type.slice(1);
     if (!groups[type]) groups[type] = [];
@@ -227,7 +227,7 @@ const groupedPresets = computed(() => {
   return groups;
 });
 
-const selectPreset = (preset: import('@/types/builder').BuilderPreset) => {
+const selectPreset = (preset: import('@/modules/Layout/types/builder').BuilderPreset) => {
   emit('inserted', 'preset', preset);
   emit('close');
 };
@@ -312,10 +312,10 @@ const insertTemplate = async (template: LocalTemplate) => {
             type: 'warning'
         });
         if (confirmed) {
-            const blocks = template.factory() as import('@/types/builder').BlockInstance[];
+            const blocks = template.factory() as import('@/modules/Layout/types/builder').BlockInstance[];
             
             // Regenerate all IDs for safety
-            const regenerateAll = (nodes: import('@/types/builder').BlockInstance[]) => {
+            const regenerateAll = (nodes: import('@/modules/Layout/types/builder').BlockInstance[]) => {
                 nodes.forEach(node => {
                     node.id = ModuleRegistry.generateId();
                     if (node.children) regenerateAll(node.children);
@@ -332,8 +332,8 @@ const insertTemplate = async (template: LocalTemplate) => {
     }
 
     // Handle Section Templates
-    const clonedSection = template.factory() as import('@/types/builder').BlockInstance;
-    const regenerateIds = (node: import('@/types/builder').BlockInstance) => {
+    const clonedSection = template.factory() as import('@/modules/Layout/types/builder').BlockInstance;
+    const regenerateIds = (node: import('@/modules/Layout/types/builder').BlockInstance) => {
         node.id = ModuleRegistry.generateId();
         if (node.children) {
             node.children.forEach(regenerateIds);

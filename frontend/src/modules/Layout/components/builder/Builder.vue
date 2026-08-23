@@ -198,7 +198,7 @@ import { useDarkMode } from '@/shared/composables/useDarkMode'
 import { useCmsStore } from '@/stores/cms'
 const { isDark: isDarkMode } = useDarkMode()
 import { throttle, debounce } from '@/shared/utils/performance'
-import type { BlockInstance, BuilderInstance, Canvas as ICanvas, BuilderPreset } from '@/shared/types/builder'
+import type { BlockInstance, BuilderInstance, Canvas as ICanvas, BuilderPreset } from '@/modules/Layout/types/builder'
 
 // Register Module Definitions (side-effect import)
 import './modules'
@@ -523,7 +523,6 @@ const handleKeydown = (e: KeyboardEvent) => {
 import { useToast } from '@/composables/useToast'
 import { useI18n } from 'vue-i18n'
 import i18n from '@/engine/i18n'
-import { ensureDeferredLocales } from '@/engine/i18n/deferredLocales'
 import builderEn from '@/modules/Layout/locales/builder/en.json'
 import builderId from '@/modules/Layout/locales/builder/id.json'
 import builderSu from '@/modules/Layout/locales/builder/su.json'
@@ -533,7 +532,7 @@ try {
   i18n.global.mergeLocaleMessage('en', { builder: builderEn })
   i18n.global.mergeLocaleMessage('id', { builder: builderId })
   i18n.global.mergeLocaleMessage('su', { builder: builderSu })
-} catch (e) {
+} catch {
   // safe fallback
 }
 
@@ -576,7 +575,6 @@ const canvasAreaRef = ref<HTMLElement | null>(null)
 let resizeObserver: ResizeObserver | null = null
 
 onMounted(async () => {
-    void ensureDeferredLocales(['content'])
     window.addEventListener('keydown', handleKeydown)
     builder.loadTheme()
     builder.fetchMetadata()

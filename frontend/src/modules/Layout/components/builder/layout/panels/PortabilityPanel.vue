@@ -51,7 +51,7 @@
 import { ref, computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Copy from 'lucide-vue-next/dist/esm/icons/copy.js';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
 const icons = { Copy };

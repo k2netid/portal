@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { computed, inject } from 'vue'
-import type { BuilderInstance, SettingDefinition } from '@/types/builder'
-import SelectField from '@/components/builder/fields/SelectField.vue'
+import type { BuilderInstance, SettingDefinition } from '@/modules/Layout/types/builder'
+import SelectField from '@/modules/Layout/components/builder/fields/SelectField.vue'
 
 const props = defineProps<{
   field?: SettingDefinition;

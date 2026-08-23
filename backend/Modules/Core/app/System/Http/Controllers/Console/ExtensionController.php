@@ -441,7 +441,7 @@ class ExtensionController extends BaseApiController
             // Kernel packages are always active — heal stale inactive rows from old discovery.
             $status = $meta['is_core']
                 ? 'active'
-                : ($existing?->status ?? 'inactive');
+                : ($existing !== null ? $existing->status : 'inactive');
 
             $author = $meta['author'] !== '' && $meta['author'] !== 'Core'
                 ? $meta['author']
@@ -468,7 +468,7 @@ class ExtensionController extends BaseApiController
                     'type' => $meta['type'],
                     'name' => $meta['name'],
                     'version' => $meta['version'],
-                    'database_version' => $existing?->database_version ?? '1.0.0',
+                    'database_version' => $existing !== null ? $existing->database_version : '1.0.0',
                     'status' => $status,
                     'is_core' => $meta['is_core'],
                     'author' => $author,

@@ -193,11 +193,11 @@ import FlipVertical from 'lucide-vue-next/dist/esm/icons/flip-vertical-2.js';
 import RefreshCw from 'lucide-vue-next/dist/esm/icons/refresh-cw.js';
 import Contrast from 'lucide-vue-next/dist/esm/icons/contrast.js';
 import { useI18n } from 'vue-i18n';
-import { BaseModal, BaseDropdown } from '@/components/builder/ui';
-import FieldActions from '@/components/builder/fields/FieldActions.vue';
+import { BaseModal, BaseDropdown } from '@/modules/Layout/components/builder/ui';
+import FieldActions from '@/modules/Layout/components/builder/fields/FieldActions.vue';
 import { getBackgroundStyles } from '@/shared/utils/styleUtils';
 import { BackgroundPatterns, BackgroundMasks } from '@/shared/utils/AssetLibrary';
-import type { BuilderInstance, BlockInstance, ModuleField, SubFieldGroup, SettingDefinition } from '@/types/builder';
+import type { BuilderInstance, BlockInstance, ModuleField, SubFieldGroup, SettingDefinition } from '@/modules/Layout/types/builder';
 
 // Local alias for clarity if needed, but we'll use ModuleField/SettingDefinition
 

@@ -1,4 +1,4 @@
-import type { BlockDefinition } from '@/types/builder';
+import type { BlockDefinition } from '@/modules/Layout/types/builder';
 import Star from 'lucide-vue-next/dist/esm/icons/star.js';
 import { defineAsyncComponent } from 'vue';
 

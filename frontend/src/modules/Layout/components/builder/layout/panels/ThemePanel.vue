@@ -100,13 +100,13 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/utils/logger';
+import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ChevronRight from 'lucide-vue-next/dist/esm/icons/chevron-right.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
-import type { BuilderInstance } from '@/types/builder';
-import type { ThemeSetting } from '@/types/theme';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
+import type { ThemeSetting } from '@/modules/Layout/types/theme';
 
 interface SettingItem extends ThemeSetting {
   key: string;

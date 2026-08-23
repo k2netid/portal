@@ -1,4 +1,4 @@
-import type { ModuleDefinition } from '@/types/builder';
+import type { ModuleDefinition } from '@/modules/Layout/types/builder';
 import {
     adminLabelSettings,
     visibilitySettings,
@@ -7,7 +7,7 @@ import {
     interactionsSettings,
     scrollEffectsSettings,
     attributesSettings
-} from '@/components/builder/modules/commonSettings';
+} from '@/modules/Layout/components/builder/modules/commonSettings';
 
 /**
  * Fullwidth Map Pin Module Definition

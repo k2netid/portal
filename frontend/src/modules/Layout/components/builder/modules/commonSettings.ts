@@ -1,4 +1,4 @@
-import type { ModuleGroup, ModuleField } from '@/types/builder';
+import type { ModuleGroup, ModuleField } from '@/modules/Layout/types/builder';
 
 /**
  * Common Settings Definitions

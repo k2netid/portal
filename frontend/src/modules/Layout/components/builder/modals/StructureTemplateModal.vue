@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { BaseModal } from '@/components/builder/ui';
+import { BaseModal } from '@/modules/Layout/components/builder/ui';
 import { 
     equalLayouts, 
     offsetLayouts, 
@@ -86,7 +86,7 @@ import {
     masonryPresets,
     sidebarPresets,
     type LayoutPreset
-} from '@/components/builder/constants/layouts.js';
+} from '@/modules/Layout/components/builder/constants/layouts.js';
 
 interface Props {
   targetType: string;

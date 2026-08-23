@@ -344,11 +344,11 @@ import List from 'lucide-vue-next/dist/esm/icons/list.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js';
 import Layout from 'lucide-vue-next/dist/esm/icons/layout-dashboard.js';
-import { parseColor, hsvToRgb, rgbToHex, rgbToHsv, hexToRgb } from '@/components/builder/core/colorUtils';
-import { themeVariables, toCssVarName } from '@/components/builder/core/cssVariables';
-import { BaseModal, BaseColorSlider } from '@/components/builder/ui';
-import { MATERIAL_COLORS } from '@/components/builder/core/MaterialColors';
-import type { BuilderInstance, GlobalVariable } from '@/types/builder';
+import { parseColor, hsvToRgb, rgbToHex, rgbToHsv, hexToRgb } from '@/modules/Layout/components/builder/core/colorUtils';
+import { themeVariables, toCssVarName } from '@/modules/Layout/components/builder/core/cssVariables';
+import { BaseModal, BaseColorSlider } from '@/modules/Layout/components/builder/ui';
+import { MATERIAL_COLORS } from '@/modules/Layout/components/builder/core/MaterialColors';
+import type { BuilderInstance, GlobalVariable } from '@/modules/Layout/types/builder';
 
 // Props
 interface Props {

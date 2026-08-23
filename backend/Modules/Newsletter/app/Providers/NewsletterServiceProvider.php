@@ -11,10 +11,10 @@ use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Permission;
 use Modules\Newsletter\Database\Seeders\NewsletterPermissionSeeder;
-use Modules\Publishing\Contracts\NewsletterSampleDataPortInterface;
-use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 use Modules\Newsletter\Services\NewsletterSampleDataPortAdapter;
 use Modules\Newsletter\Services\NewsletterSubscriberCountPortAdapter;
+use Modules\Publishing\Contracts\NewsletterSampleDataPortInterface;
+use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 
 class NewsletterServiceProvider extends ServiceProvider
 {

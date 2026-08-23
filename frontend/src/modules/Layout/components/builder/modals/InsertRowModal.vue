@@ -134,10 +134,10 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { BaseModal, BaseInput } from '@/components/builder/ui';
+import { BaseModal, BaseInput } from '@/modules/Layout/components/builder/ui';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Layout from 'lucide-vue-next/dist/esm/icons/layout-dashboard.js';
-import type { BuilderInstance } from '@/types/builder';
+import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const icons = { Search, Layout };
 import { 
@@ -149,7 +149,7 @@ import {
     masonryPresets,
     sidebarPresets,
     type LayoutPreset
-} from '@/components/builder/constants/layouts';
+} from '@/modules/Layout/components/builder/constants/layouts';
 
 interface Props {
   mode?: string;
@@ -196,7 +196,7 @@ const filteredPresets = computed(() => {
 });
 
 const groupedPresets = computed(() => {
-  const groups: Record<string, import('@/types/builder').BuilderPreset[]> = {};
+  const groups: Record<string, import('@/modules/Layout/types/builder').BuilderPreset[]> = {};
   filteredPresets.value.forEach(preset => {
     const type = preset.type.charAt(0).toUpperCase() + preset.type.slice(1);
     if (!groups[type]) groups[type] = [];
@@ -205,7 +205,7 @@ const groupedPresets = computed(() => {
   return groups;
 });
 
-const selectPreset = (preset: import('@/types/builder').BuilderPreset) => {
+const selectPreset = (preset: import('@/modules/Layout/types/builder').BuilderPreset) => {
   emit('insert', 'preset', preset);
 };
 

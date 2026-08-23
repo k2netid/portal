@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
-use Modules\Publishing\Contracts\PublishedContentAnalyticsPortInterface;
-use Modules\Core\System\Http\Controllers\BaseApiController;
-use Modules\Core\System\Models\Setting;
 use Modules\Analytics\Models\AnalyticsEvent;
 use Modules\Analytics\Models\AnalyticsSession;
 use Modules\Analytics\Models\AnalyticsVisit;
 use Modules\Analytics\Services\AnalyticsService;
+use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\Setting;
+use Modules\Publishing\Contracts\PublishedContentAnalyticsPortInterface;
 
 class AnalyticsController extends BaseApiController
 {

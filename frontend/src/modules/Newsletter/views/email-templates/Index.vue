@@ -184,7 +184,9 @@ const previewTemplate = async (template: Template) => {
         const response = await api.post(`/manage/system/email-templates/${template.id}/preview`);
         const previewWindow = window.open('', '_blank');
         if (previewWindow) {
-            previewWindow.document.write((response.data as any).body || response.data);
+            previewWindow.document.write(
+                (response.data as { body?: string }).body ?? String(response.data ?? ''),
+            );
         }
     } catch (error: unknown) {
         logger.error('Failed to preview template:', error);

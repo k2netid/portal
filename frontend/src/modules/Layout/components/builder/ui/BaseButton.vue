@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
-import { Button } from '@/components/ui';
+import { Button } from '@/shared/components/ui';
 
 interface Props {
   variant?: string;

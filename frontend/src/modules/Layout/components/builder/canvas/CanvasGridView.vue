@@ -50,7 +50,7 @@ import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Layout from 'lucide-vue-next/dist/esm/icons/layout-dashboard.js';
 import MoreVertical from 'lucide-vue-next/dist/esm/icons/ellipsis-vertical.js';
 import { useI18n } from 'vue-i18n'
-import type { BuilderInstance, Canvas } from '@/types/builder'
+import type { BuilderInstance, Canvas } from '@/modules/Layout/types/builder'
 
 const builder = inject<BuilderInstance>('builder')
 const { t } = useI18n()

@@ -9,10 +9,10 @@ import type {
     InputModalState,
     SavePresetModalState,
     ResponsiveModalState
-} from '@/types/builder'
-import type { ThemeData, ThemeSettings } from '@/types/theme'
-import type { Category, Tag } from '@/types/taxonomy'
-import type { Menu } from '@/types/menu'
+} from '@/modules/Layout/types/builder'
+import type { ThemeData, ThemeSettings } from '@/modules/Layout/types/theme'
+import type { Category, Tag } from '@/modules/Publishing/types/taxonomy'
+import type { Menu } from '@/modules/Layout/types/menu'
 
 function transformHtmlToBlocks(html: string): BlockInstance[] {
     if (!html || !html.trim()) return []

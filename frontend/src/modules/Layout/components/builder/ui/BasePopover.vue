@@ -49,9 +49,9 @@ import {
     Popover, 
     PopoverTrigger, 
     PopoverContent, 
-} from '@/components/ui';
+} from '@/shared/components/ui';
 import { PopoverAnchor, PopoverClose } from 'radix-vue';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils/lib-utils';
 
 interface Props {
   isOpen?: boolean;
