@@ -67,7 +67,7 @@ const publishingRoutes: RouteRecordRaw[] = [
         path: 'seo',
         name: 'publishing.seo',
         component: () => import('@/modules/Publishing/views/seo/Index.vue'),
-        meta: { extension: 'publishing', permission: 'manage settings', title: 'publishing.seo.title', breadcrumb: 'publishing.navigation.menu.seo' },
+        meta: { extension: 'publishing', permission: 'view seo', title: 'publishing.seo.title', breadcrumb: 'publishing.navigation.menu.seo' },
     },
 ];
 

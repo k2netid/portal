@@ -17,10 +17,8 @@ class ConsoleMenuController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
-        // Auto-seed defaults if table is empty
-        if (ConsoleMenu::count() === 0) {
-            ConsoleMenu::seedDefaults();
-        }
+        // Auto-seed when empty; soft-sync new pack defaults (publishing/library) without wipe
+        ConsoleMenu::ensureMissingDefaults();
 
         $query = ConsoleMenu::with(['children' => function ($q) {
             $q->orderBy('order', 'asc');

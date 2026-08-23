@@ -8,6 +8,8 @@ const MERGE_BY_GROUP = new Set<NonNullable<NavItem['group']>>([
     'accounting',
     'platform',
     'studio',
+    'editorial',
+    'library',
     'nexus',
     'identity',
     'communications',

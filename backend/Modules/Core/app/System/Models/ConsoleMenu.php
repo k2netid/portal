@@ -106,6 +106,86 @@ class ConsoleMenu extends Model
                 ],
             ],
 
+            // Group: Editorial (Publishing pack — visible when extension active)
+            [
+                'group_slug' => 'editorial',
+                'name' => 'Editorial',
+                'label_key' => 'sharedConsole.navigation.menu.editorial',
+                'icon' => 'file-text',
+                'order' => 6,
+                'children' => [
+                    [
+                        'name' => 'Content',
+                        'label_key' => 'publishing.navigation.menu.studio',
+                        'route_name' => 'contents.index',
+                        'icon' => 'file-text',
+                        'permission' => 'view content',
+                        'extension_slug' => 'publishing',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 1,
+                    ],
+                    [
+                        'name' => 'Categories',
+                        'label_key' => 'publishing.navigation.menu.categories',
+                        'route_name' => 'categories.index',
+                        'icon' => 'folder',
+                        'permission' => 'view categories',
+                        'extension_slug' => 'publishing',
+                        'order' => 2,
+                    ],
+                    [
+                        'name' => 'Comments',
+                        'label_key' => 'publishing.navigation.menu.comments',
+                        'route_name' => 'comments.index',
+                        'icon' => 'message-square',
+                        'permission' => 'view comments',
+                        'extension_slug' => 'publishing',
+                        'order' => 3,
+                    ],
+                    [
+                        'name' => 'SEO',
+                        'label_key' => 'publishing.navigation.menu.seo',
+                        'route_name' => 'publishing.seo',
+                        'icon' => 'globe',
+                        'permission' => 'view seo',
+                        'extension_slug' => 'publishing',
+                        'order' => 4,
+                    ],
+                ],
+            ],
+
+            // Group: Library (taxonomy pack — visible when extension active)
+            [
+                'group_slug' => 'library',
+                'name' => 'Library',
+                'label_key' => 'sharedConsole.navigation.menu.library',
+                'icon' => 'tags',
+                'order' => 7,
+                'children' => [
+                    [
+                        'name' => 'Tags',
+                        'label_key' => 'library.navigation.menu.tags',
+                        'route_name' => 'tags',
+                        'icon' => 'tags',
+                        'permission' => 'manage tags',
+                        'extension_slug' => 'library',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 1,
+                    ],
+                    [
+                        'name' => 'Custom Fields',
+                        'label_key' => 'library.navigation.menu.customFields',
+                        'route_name' => 'custom-fields',
+                        'icon' => 'layers',
+                        'permission' => 'manage tags',
+                        'extension_slug' => 'library',
+                        'order' => 2,
+                    ],
+                ],
+            ],
+
             // Group: Users & Access
             [
                 'group_slug' => 'identity',
@@ -388,9 +468,40 @@ class ConsoleMenu extends Model
             return;
         }
 
-        $defaults = self::getDefaultMenus();
+        foreach (self::getDefaultMenus() as $groupIndex => $group) {
+            self::createGroupWithChildren($group, $groupIndex);
+        }
+    }
 
-        foreach ($defaults as $groupIndex => $group) {
+    /**
+     * Soft-sync: add any default groups/items missing from an already-seeded table
+     * (e.g. after new optional packs land) without wiping custom menu edits.
+     */
+    public static function ensureMissingDefaults(): void
+    {
+        if (self::count() === 0) {
+            self::seedDefaults();
+
+            return;
+        }
+
+        $existingRoutes = self::query()
+            ->whereNotNull('route_name')
+            ->pluck('route_name')
+            ->flip()
+            ->all();
+
+        $parentsBySlug = self::query()
+            ->whereNull('parent_id')
+            ->get()
+            ->keyBy('group_slug');
+
+        foreach (self::getDefaultMenus() as $groupIndex => $group) {
+            $groupSlug = (string) ($group['group_slug'] ?? '');
+            if ($groupSlug === '') {
+                continue;
+            }
+
             /** @var list<array<string, mixed>> $children */
             $children = [];
             $childrenRaw = $group['children'] ?? null;
@@ -401,24 +512,33 @@ class ConsoleMenu extends Model
                     }
                 }
             }
-            unset($group['children']);
 
-            $parent = self::create([
-                'group_slug' => $group['group_slug'],
-                'name' => $group['name'],
-                'label_key' => $group['label_key'] ?? null,
-                'icon' => $group['icon'] ?? 'folder',
-                'order' => $group['order'] ?? ($groupIndex * 10),
-                'is_visible' => true,
-            ]);
+            $parent = $parentsBySlug->get($groupSlug);
+            if (! $parent) {
+                $parent = self::createGroupWithChildren($group, $groupIndex);
+                $parentsBySlug->put($groupSlug, $parent);
+                foreach ($children as $child) {
+                    $route = $child['route_name'] ?? null;
+                    if (is_string($route) && $route !== '') {
+                        $existingRoutes[$route] = true;
+                    }
+                }
+
+                continue;
+            }
 
             foreach ($children as $childIndex => $child) {
+                $route = $child['route_name'] ?? null;
+                if (! is_string($route) || $route === '' || isset($existingRoutes[$route])) {
+                    continue;
+                }
+
                 self::create([
                     'parent_id' => $parent->id,
-                    'group_slug' => $group['group_slug'],
+                    'group_slug' => $groupSlug,
                     'name' => $child['name'],
                     'label_key' => $child['label_key'] ?? null,
-                    'route_name' => $child['route_name'] ?? null,
+                    'route_name' => $route,
                     'url' => $child['url'] ?? null,
                     'icon' => $child['icon'] ?? 'circle',
                     'permission' => $child['permission'] ?? null,
@@ -429,7 +549,56 @@ class ConsoleMenu extends Model
                     'order' => $child['order'] ?? $childIndex,
                     'is_visible' => true,
                 ]);
+                $existingRoutes[$route] = true;
             }
         }
+    }
+
+    /**
+     * @param  array<string, mixed>  $group
+     */
+    protected static function createGroupWithChildren(array $group, int $groupIndex): self
+    {
+        /** @var list<array<string, mixed>> $children */
+        $children = [];
+        $childrenRaw = $group['children'] ?? null;
+        if (is_array($childrenRaw)) {
+            foreach ($childrenRaw as $child) {
+                if (is_array($child)) {
+                    $children[] = $child;
+                }
+            }
+        }
+        unset($group['children']);
+
+        $parent = self::create([
+            'group_slug' => $group['group_slug'],
+            'name' => $group['name'],
+            'label_key' => $group['label_key'] ?? null,
+            'icon' => $group['icon'] ?? 'folder',
+            'order' => $group['order'] ?? ($groupIndex * 10),
+            'is_visible' => true,
+        ]);
+
+        foreach ($children as $childIndex => $child) {
+            self::create([
+                'parent_id' => $parent->id,
+                'group_slug' => $group['group_slug'],
+                'name' => $child['name'],
+                'label_key' => $child['label_key'] ?? null,
+                'route_name' => $child['route_name'] ?? null,
+                'url' => $child['url'] ?? null,
+                'icon' => $child['icon'] ?? 'circle',
+                'permission' => $child['permission'] ?? null,
+                'role' => $child['role'] ?? null,
+                'extension_slug' => $child['extension_slug'] ?? null,
+                'badge_text' => $child['badge_text'] ?? null,
+                'badge_variant' => $child['badge_variant'] ?? 'primary',
+                'order' => $child['order'] ?? $childIndex,
+                'is_visible' => true,
+            ]);
+        }
+
+        return $parent;
     }
 }

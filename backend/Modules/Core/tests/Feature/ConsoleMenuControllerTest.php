@@ -27,7 +27,41 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('success', true);
 
-        $this->assertDatabaseCount('sys_console_menus', 31);
+        // 9 root groups + children (includes editorial/publishing + library packs)
+        $this->assertDatabaseCount('sys_console_menus', 39);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'contents.index',
+            'extension_slug' => 'publishing',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'tags',
+            'extension_slug' => 'library',
+        ]);
+    }
+
+    public function test_index_soft_syncs_missing_pack_menu_defaults(): void
+    {
+        ConsoleMenu::seedDefaults();
+        ConsoleMenu::query()
+            ->whereIn('extension_slug', ['publishing', 'library'])
+            ->orWhereIn('group_slug', ['editorial', 'library'])
+            ->delete();
+
+        $this->assertDatabaseMissing('sys_console_menus', ['route_name' => 'contents.index']);
+        $this->assertDatabaseMissing('sys_console_menus', ['route_name' => 'tags']);
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->getJson('/api/v1/manage/console-menus');
+
+        $response->assertOk();
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'contents.index',
+            'extension_slug' => 'publishing',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'tags',
+            'extension_slug' => 'library',
+        ]);
     }
 
     public function test_admin_can_create_menu_item(): void

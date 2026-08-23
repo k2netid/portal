@@ -6,7 +6,7 @@ const libraryRoutes: RouteRecordRaw[] = [
         name: 'tags',
         component: () => import('@/modules/Library/views/tags/Index.vue'),
         meta: {
-            permission: 'manage content',
+            permission: 'manage tags',
             extension: 'library',
             title: 'library.tags.title',
             breadcrumb: 'library.navigation.menu.tags',
@@ -17,7 +17,7 @@ const libraryRoutes: RouteRecordRaw[] = [
         name: 'custom-fields',
         component: () => import('@/modules/Library/views/custom-fields/Index.vue'),
         meta: {
-            permission: 'manage content',
+            permission: 'manage tags',
             extension: 'library',
             title: 'library.customFields.title',
             breadcrumb: 'library.navigation.menu.customFields',

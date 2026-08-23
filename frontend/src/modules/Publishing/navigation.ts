@@ -1,47 +1,52 @@
 import type { NavItem } from '@/shared/utils/navigation';
 
+/** Fallback when console DB menus are empty; live sidebar prefers sys_console_menus. */
 export const publishingNavigation: NavItem[] = [
     {
-        name: 'div-editorial',
-        type: 'divider',
+        label: 'Editorial',
         labelKey: 'sharedConsole.navigation.menu.editorial',
-        group: 'studio',
-        context: 'studio',
-        priority: 101,
+        icon: 'file-text',
+        group: 'editorial',
+        priority: 94,
+        children: [
+            {
+                name: 'contents.index',
+                label: 'Content',
+                labelKey: 'publishing.navigation.menu.studio',
+                permission: 'view content',
+                extension: 'publishing',
+                icon: 'file-text',
+                priority: 100,
+            },
+            {
+                name: 'categories.index',
+                label: 'Categories',
+                labelKey: 'publishing.navigation.menu.categories',
+                permission: 'view categories',
+                extension: 'publishing',
+                icon: 'folder',
+                priority: 95,
+            },
+            {
+                name: 'comments.index',
+                label: 'Comments',
+                labelKey: 'publishing.navigation.menu.comments',
+                permission: 'view comments',
+                extension: 'publishing',
+                icon: 'message-square',
+                priority: 90,
+            },
+            {
+                name: 'publishing.seo',
+                label: 'SEO',
+                labelKey: 'publishing.navigation.menu.seo',
+                permission: 'view seo',
+                extension: 'publishing',
+                icon: 'globe',
+                priority: 85,
+            },
+        ],
     },
-    { 
-        name: 'contents.index', 
-        label: 'Content', 
-        labelKey: 'publishing.navigation.menu.studio', 
-        permission: 'view content', 
-        extension: 'publishing',
-        icon: 'file-text', 
-        group: 'studio',
-        context: 'studio',
-        priority: 100 
-    },
-    { 
-        name: 'comments.index', 
-        label: 'Comments', 
-        labelKey: 'publishing.navigation.menu.comments', 
-        permission: 'view comments', 
-        extension: 'publishing',
-        icon: 'message-square', 
-        group: 'studio',
-        context: 'studio',
-        priority: 95 
-    },
-    { 
-        name: 'publishing.seo', 
-        label: 'SEO', 
-        labelKey: 'publishing.navigation.menu.seo', 
-        permission: 'manage settings',
-        extension: 'publishing',
-        icon: 'globe', 
-        group: 'insight',
-        context: 'insight',
-        priority: 85
-    }
 ];
 
 export default publishingNavigation;
