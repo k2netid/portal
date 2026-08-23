@@ -39,6 +39,10 @@ const OPTIONAL_FIRST_PARTY: Array<{
         slug: 'layout',
         load: () => import('@/modules/Layout'),
     },
+    {
+        slug: 'forms',
+        load: () => import('@/modules/Forms'),
+    },
 ];
 
 function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {

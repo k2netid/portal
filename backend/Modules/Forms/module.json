@@ -1,0 +1,11 @@
+{
+  "name": "Forms",
+  "alias": "forms",
+  "description": "Dynamic forms, submissions, and analytics",
+  "keywords": ["forms", "submissions", "lead-capture"],
+  "priority": 35,
+  "providers": [
+    "Modules\\Forms\\Providers\\FormsServiceProvider"
+  ],
+  "files": []
+}

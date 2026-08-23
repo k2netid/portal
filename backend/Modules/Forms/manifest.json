@@ -1,0 +1,32 @@
+{
+  "name": "Forms",
+  "slug": "forms",
+  "version": "1.0.0",
+  "description": "Console dynamic forms with field builder, submissions inbox, export, and public embed API.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "forms",
+  "features": [
+    {
+      "slug": "form-builder",
+      "name": "Form Builder",
+      "description": "Design multi-field forms with validation",
+      "category": "marketing"
+    },
+    {
+      "slug": "submissions",
+      "name": "Submissions",
+      "description": "Inbox, export, and analytics for form responses",
+      "category": "marketing"
+    },
+    {
+      "slug": "public-embed",
+      "name": "Public Embed",
+      "description": "Public submit API for themes and builder blocks",
+      "category": "utility"
+    }
+  ]
+}

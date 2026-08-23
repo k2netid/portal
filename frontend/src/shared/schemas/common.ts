@@ -155,6 +155,21 @@ export const tagSchema = z.object({
 });
 
 /**
+ * Form settings schema (Forms)
+ */
+export const formSettingsSchema = z.object({
+    name: z.string()
+        .min(1, t('common.validation.required', { field: 'Name' }))
+        .max(255, t('common.validation.max', { field: 'Name', max: 255 })),
+    slug: z.string()
+        .min(1, t('common.validation.required', { field: 'Slug' }))
+        .max(255, t('common.validation.max', { field: 'Slug', max: 255 })),
+    description: z.string().optional().or(z.literal('')),
+    success_message: z.string().optional().or(z.literal('')),
+    is_active: z.boolean().optional(),
+});
+
+/**
  * Content template form schema (Publishing)
  */
 export const contentTemplateSchema = z.object({

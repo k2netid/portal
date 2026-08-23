@@ -27,6 +27,26 @@ export const libraryPaths = {
     publicCategory: (id: string) => `/public/library/categories/${id}`,
 } as const;
 
+export const formsPaths = {
+    index: '/manage/forms',
+    bulkAction: '/manage/forms/bulk-action',
+    form: (id: string) => `/manage/forms/${id}`,
+    formFields: (formId: string | number) => `/manage/forms/${formId}/fields`,
+    formField: (formId: string | number, fieldId: string | number) => `/manage/forms/${formId}/fields/${fieldId}`,
+    reorderFields: (formId: string | number) => `/manage/forms/${formId}/reorder-fields`,
+    submissions: (formId: string | number) => `/manage/forms/${formId}/submissions`,
+    submissionsExport: (formId: string | number) => `/manage/forms/${formId}/submissions/export`,
+    submissionsStatistics: (formId: string | number) => `/manage/forms/${formId}/submissions/statistics`,
+    publicForm: (slug: string) => `/public/forms/${slug}`,
+    publicSubmit: (slug: string) => `/public/forms/${slug}/submit`,
+    publicTrack: (slug: string) => `/public/forms/${slug}/track`,
+} as const;
+
+export const formSubmissionPaths = {
+    submission: (id: string) => `/manage/form-submissions/${id}`,
+    exportPdf: (id: string) => `/manage/form-submissions/${id}/export-pdf`,
+} as const;
+
 export const layoutPaths = {
     menus: '/manage/layout/menus',
     menu: (id: string) => `/manage/layout/menus/${id}`,

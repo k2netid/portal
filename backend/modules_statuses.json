@@ -4,5 +4,6 @@
     "Library": true,
     "Publishing": true,
     "Media": true,
-    "Layout": true
+    "Layout": true,
+    "Forms": true
 }

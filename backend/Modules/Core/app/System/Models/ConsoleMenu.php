@@ -241,6 +241,28 @@ class ConsoleMenu extends Model
                 ],
             ],
 
+            // Group: Audience (Forms pack)
+            [
+                'group_slug' => 'audience',
+                'name' => 'Audience',
+                'label_key' => 'forms.navigation.menu.audience',
+                'icon' => 'users',
+                'order' => 8,
+                'children' => [
+                    [
+                        'name' => 'Forms',
+                        'label_key' => 'forms.navigation.menu.forms',
+                        'route_name' => 'forms',
+                        'icon' => 'clipboard-list',
+                        'permission' => 'view forms',
+                        'extension_slug' => 'forms',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 1,
+                    ],
+                ],
+            ],
+
             // Group: Users & Access
             [
                 'group_slug' => 'identity',

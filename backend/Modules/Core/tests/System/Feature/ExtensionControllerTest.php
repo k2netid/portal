@@ -613,4 +613,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $layout['is_core']);
         $this->assertEquals('module', $layout['type']);
     }
+
+    public function test_forms_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $forms = collect($response->json('data'))->firstWhere('slug', 'forms');
+
+        $this->assertNotNull($forms);
+        $this->assertFalse((bool) $forms['is_core']);
+        $this->assertEquals('module', $forms['type']);
+    }
 }
