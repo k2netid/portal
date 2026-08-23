@@ -567,4 +567,24 @@ class ExtensionControllerTest extends TestCase
         // dependencies not declared on Mail manifest → preserve prior requirements
         $this->assertEquals(['core' => '>=1.0.0'], $mail['requirements']);
     }
+
+    public function test_library_and_publishing_are_discovered_as_optional_modules(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $data = collect($response->json('data'));
+
+        $library = $data->firstWhere('slug', 'library');
+        $publishing = $data->firstWhere('slug', 'publishing');
+
+        $this->assertNotNull($library);
+        $this->assertFalse((bool) $library['is_core']);
+        $this->assertEquals('module', $library['type']);
+
+        $this->assertNotNull($publishing);
+        $this->assertFalse((bool) $publishing['is_core']);
+        $this->assertEquals(['library' => '>=1.0.0'], $publishing['requirements']);
+    }
 }

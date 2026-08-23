@@ -76,7 +76,7 @@ ZIP/Git **plugins** (`extensions/`) remain for 3rd-party — not for first-party
 4. nwidart scan already covers `Modules/*` — no new scan path unless custom.
 5. Routes: `auth:sanctum` + `extension.active:<slug>` + permission.
 6. Migrations under `database/migrations/`; provider `loadMigrationsFrom`.
-7. Permissions seeded when pack boots or via pack seeder (do not dump CMS perms into Core forever).
+7. Permissions seeded on pack activate (`extension_activated`) or via pack seeder (do not dump CMS perms into Core forever).
 
 ### Frontend
 
@@ -94,13 +94,13 @@ ZIP/Git **plugins** (`extensions/`) remain for 3rd-party — not for first-party
 
 Do **not** ship mega-`Modules/Content`. Extract Mail-shaped packs:
 
-| Wave | Pack slug(s) | Source in ja-cms |
-|------|----------------|------------------|
-| P3-1 | `publishing` + `library` | `Content/Publishing`, `Content/Library` |
-| P3-2 | `media` | `Content/Media` |
-| P3-3 | `layout` | `Content/Layout` (+ themes) |
-| P3-4 | `forms` | `Content/Forms` |
-| P3-5+ | `analytics`, `newsletter`, `search`, `cms-ai` | `Intelligence/*` |
+| Wave | Pack slug(s) | Source in ja-cms | Status |
+|------|----------------|------------------|--------|
+| P3-1 | `publishing` + `library` | `Content/Publishing`, `Content/Library` | **In-tree on kernel** (soft stubs for Media/Layout/Newsletter/AI) |
+| P3-2 | `media` | `Content/Media` | pending |
+| P3-3 | `layout` | `Content/Layout` (+ themes) | pending |
+| P3-4 | `forms` | `Content/Forms` | pending |
+| P3-5+ | `analytics`, `newsletter`, `search`, `cms-ai` | `Intelligence/*` | pending |
 
 `dependencies` in manifest e.g. publishing → `"library": ">=1.0.0"`.
 

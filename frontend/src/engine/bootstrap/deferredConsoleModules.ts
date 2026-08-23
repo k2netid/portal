@@ -23,6 +23,14 @@ const OPTIONAL_FIRST_PARTY: Array<{
         slug: 'mail',
         load: () => import('@/modules/Mail'),
     },
+    {
+        slug: 'library',
+        load: () => import('@/modules/Library'),
+    },
+    {
+        slug: 'publishing',
+        load: () => import('@/modules/Publishing'),
+    },
 ];
 
 function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {

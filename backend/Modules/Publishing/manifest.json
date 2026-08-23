@@ -1,0 +1,35 @@
+{
+  "name": "Publishing",
+  "slug": "publishing",
+  "version": "1.0.0",
+  "description": "Console content publishing — articles, pages, revisions, comments, and SEO tools. Depends on Library.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "publishing",
+  "dependencies": {
+    "library": ">=1.0.0"
+  },
+  "features": [
+    {
+      "slug": "contents",
+      "name": "Contents",
+      "description": "Articles and pages with editorial workflow",
+      "category": "marketing"
+    },
+    {
+      "slug": "comments",
+      "name": "Comments",
+      "description": "Comment moderation",
+      "category": "marketing"
+    },
+    {
+      "slug": "seo",
+      "name": "SEO tools",
+      "description": "Per-content SEO analysis helpers",
+      "category": "marketing"
+    }
+  ]
+}

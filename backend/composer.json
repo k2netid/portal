@@ -69,6 +69,8 @@
             "Modules\\Core\\Infra\\Database\\Factories\\": "Modules/Core/database/factories/Infra/",
             "Modules\\Core\\Infra\\Database\\Seeders\\": "Modules/Core/database/seeders/Infra/",
             "Modules\\Mail\\": "Modules/Mail/app/",
+            "Modules\\Library\\": "Modules/Library/app/",
+            "Modules\\Publishing\\": "Modules/Publishing/app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -76,7 +78,9 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Modules\\Mail\\Tests\\": "Modules/Mail/tests/"
+            "Modules\\Mail\\Tests\\": "Modules/Mail/tests/",
+            "Modules\\Library\\Tests\\": "Modules/Library/tests/",
+            "Modules\\Publishing\\Tests\\": "Modules/Publishing/tests/"
         }
     },
     "scripts": {

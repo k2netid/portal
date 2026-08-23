@@ -1,4 +1,6 @@
 {
     "Core": true,
-    "Mail": true
+    "Mail": true,
+    "Library": true,
+    "Publishing": true
 }
