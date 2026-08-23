@@ -355,6 +355,8 @@ export const useAuthStore = defineStore('auth', {
             this.isAuthenticated = true;
             localStorage.setItem('user', JSON.stringify(data.user));
             resetLockdown();
+            // Dashboard fires manage/* probes immediately; a 401 here must not vapor-lock to /419.
+            window.__authHandshakeUntil = Date.now() + 15000;
         },
 
         clearAuth() {
@@ -377,6 +379,7 @@ export const useAuthStore = defineStore('auth', {
                             // Hydrate display only — session validity comes from fetchUser()
                             this.user = parsedUser;
                             this.isAuthenticated = true;
+                            window.__authHandshakeUntil = Date.now() + 15000;
                         } else {
                             this.clearAuth();
                         }

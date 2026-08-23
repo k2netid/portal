@@ -573,14 +573,10 @@ const completeLogin = async () => {
 
         const finalTarget = shouldFallbackToDashboard ? defaultDashboard : target;
 
-        if (typeof finalTarget === 'string') {
-            window.location.assign(finalTarget);
-        } else {
-            window.location.assign(router.resolve(finalTarget).fullPath);
-        }
+        await router.replace(finalTarget);
     } catch (error) {
         logger.error('Post-login redirect failed:', error);
-        window.location.assign(typeof defaultDashboard === 'string' ? defaultDashboard : '/dash');
+        await router.replace(defaultDashboard);
     } finally {
         isCompletingLogin.value = false;
     }

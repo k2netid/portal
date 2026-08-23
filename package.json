@@ -18,6 +18,7 @@
         "test:backend:coverage": "cd backend && php artisan test --coverage",
         "test:e2e:list": "npm --prefix frontend run test:e2e:list",
         "test:e2e:smoke": "npm --prefix frontend run test:e2e:smoke",
+        "test:e2e:smoke:docker": "bash scripts/e2e-docker.sh",
         "test:e2e:auth": "npm --prefix frontend run test:e2e:auth",
         "format:backend": "cd backend && ./vendor/bin/pint",
         "quality:frontend": "bash scripts/use-node22.sh npm --prefix frontend run quality:frontend",

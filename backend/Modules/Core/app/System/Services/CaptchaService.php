@@ -68,10 +68,33 @@ class CaptchaService
     }
 
     /**
+     * Playwright sends X-E2E-Captcha-Bypass; never honoured in production.
+     */
+    public static function isE2eBypassed(): bool
+    {
+        if (! app()->environment(['local', 'testing'])) {
+            return false;
+        }
+
+        $token = (string) env('E2E_CAPTCHA_BYPASS_TOKEN', 'local-e2e');
+        if ($token === '') {
+            return false;
+        }
+
+        $header = (string) request()->header('X-E2E-Captcha-Bypass', '');
+
+        return $header !== '' && hash_equals($token, $header);
+    }
+
+    /**
      * Check if captcha is enabled for the given action.
      */
     public static function isEnabled(string $action = 'login'): bool
     {
+        if (self::isE2eBypassed()) {
+            return false;
+        }
+
         if (! Setting::get('enable_captcha', false)) {
             return false;
         }

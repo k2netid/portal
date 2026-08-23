@@ -126,4 +126,9 @@ cd frontend && npm run test:unit
 
 # Production Build Test
 cd frontend && npm run build
+
+# E2E smoke — Playwright browsers are not supported on this PVE host.
+# Use the official image (same pin as CI: mcr.microsoft.com/playwright:v1.59.1-noble).
+# Requires Docker Engine + Vite :5173 + Laravel :8000.
+npm run test:e2e:smoke:docker
 ```
