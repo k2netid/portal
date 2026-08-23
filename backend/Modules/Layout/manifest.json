@@ -1,8 +1,8 @@
 {
   "name": "Layout",
   "slug": "layout",
-  "version": "1.0.0",
-  "description": "Console site menus, widgets, and URL redirects. Soft-integrates with Publishing content sidebar. Themes and Visual Builder ship in a later wave.",
+  "version": "1.1.0",
+  "description": "Site layout pack — menus, widgets, redirects, themes, visual builder, and block renderer for Publishing.",
   "author": "Jejakawan Team",
   "type": "module",
   "is_core": false,
@@ -27,6 +27,18 @@
       "name": "Redirects",
       "description": "301/302 URL redirects and aliases",
       "category": "utility"
+    },
+    {
+      "slug": "themes",
+      "name": "Themes",
+      "description": "Install, activate, and customize frontend themes",
+      "category": "marketing"
+    },
+    {
+      "slug": "visual-builder",
+      "name": "Visual Builder",
+      "description": "Drag-and-drop page and site block editor",
+      "category": "marketing"
     }
   ]
 }

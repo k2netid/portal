@@ -3,14 +3,21 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Layout\Http\Controllers\Api\BuilderController;
+use Modules\Layout\Http\Controllers\Api\BuilderPresetController;
 use Modules\Layout\Http\Controllers\Api\MenuController;
+use Modules\Layout\Http\Controllers\Api\PluginThemeSlotsController;
+use Modules\Layout\Http\Controllers\Api\PublicPluginBlocksController;
 use Modules\Layout\Http\Controllers\Api\RedirectController;
+use Modules\Layout\Http\Controllers\Api\ThemeController;
 use Modules\Layout\Http\Controllers\Api\WidgetController;
 
 Route::prefix('v1')->group(function (): void {
     Route::prefix('public/layout')->group(function (): void {
         Route::get('menus/location/{location}', [MenuController::class, 'getByLocation']);
         Route::get('widgets/location/{location}', [WidgetController::class, 'getByLocation']);
+        Route::get('themes/active', [ThemeController::class, 'getActive']);
+        Route::get('plugin-blocks', [PublicPluginBlocksController::class, 'index']);
     });
 
     Route::prefix('manage/layout')->middleware(['auth:sanctum', 'extension.active:layout'])->group(function (): void {
@@ -42,7 +49,29 @@ Route::prefix('v1')->group(function (): void {
             'destroy' => 'layout.redirects.destroy',
         ]);
 
-        // P3-3a: FE MenuModal still calls themes/active/locations — map to registry defaults.
-        Route::get('themes/active/locations', [MenuController::class, 'locations']);
+        // Themes
+        Route::get('themes/active', [ThemeController::class, 'getActive']);
+        Route::get('themes/active/locations', [ThemeController::class, 'locations']);
+        Route::get('themes/available', [ThemeController::class, 'available']);
+        Route::post('themes/{theme}/activate', [ThemeController::class, 'activate']);
+        Route::get('themes/upload-status', [ThemeController::class, 'uploadStatus']);
+        Route::post('themes/install', [ThemeController::class, 'install']);
+        Route::post('themes/scan', [ThemeController::class, 'scan']);
+        Route::match(['put', 'patch'], 'themes/{theme}/customization', [ThemeController::class, 'updateCustomization']);
+        Route::match(['put', 'patch'], 'themes/{theme}/settings', [ThemeController::class, 'updateSettings']);
+        Route::match(['put', 'patch'], 'themes/{theme}/custom-css', [ThemeController::class, 'updateCustomCss']);
+        Route::get('themes/{theme}/components', [ThemeController::class, 'getComponents']);
+        Route::get('themes/{theme}/config', [ThemeController::class, 'getConfig']);
+        Route::get('themes/{theme}/composables', [ThemeController::class, 'getComposables']);
+        Route::post('themes/{theme}/validate', [ThemeController::class, 'validate']);
+        Route::get('plugin-theme-slots', [PluginThemeSlotsController::class, 'index']);
+        Route::apiResource('themes', ThemeController::class);
+
+        // Visual Builder
+        Route::prefix('builder')->group(function (): void {
+            Route::get('dynamic-sources', [BuilderController::class, 'dynamicSources']);
+            Route::post('resolve-dynamic', [BuilderController::class, 'resolveDynamic']);
+        });
+        Route::apiResource('builder-presets', BuilderPresetController::class);
     });
 });

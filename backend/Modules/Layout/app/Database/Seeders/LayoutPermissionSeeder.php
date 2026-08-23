@@ -31,6 +31,11 @@ class LayoutPermissionSeeder extends Seeder
             'edit redirects',
             'delete redirects',
             'manage redirects',
+            'view themes',
+            'upload themes',
+            'edit themes',
+            'delete themes',
+            'manage themes',
         ];
 
         foreach ($perms as $name) {

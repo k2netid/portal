@@ -284,7 +284,7 @@ import AutoSaveIndicator from '@/shared/components/AutoSaveIndicator.vue';
 import ContentPreviewModal from '@/modules/Core/System/components/console/ContentPreviewModal.vue';
 import ContentMain from '@/modules/Publishing/components/content/ContentMain.vue';
 import ContentSidebar from '@/modules/Publishing/components/content/ContentSidebar.vue';
-import Builder from '@/modules/Publishing/shims/layout/components/builder/Builder.vue';
+import Builder from '@/modules/Layout/components/builder/Builder.vue';
 
 // Composables & Utils
 import { parseSingleResponse, parseResponse, ensureArray, getResponseList } from '@/shared/utils/responseParser';
@@ -293,7 +293,7 @@ import { useConfirm } from '@/shared/composables/useConfirm';
 import { useToast } from '@/shared/composables/useToast';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
 import { contentSchema } from '@/modules/Publishing/schemas/content';
-import type { Menu } from '@/modules/Publishing/shims/layout/types/menu';
+import type { Menu } from '@/modules/Layout/types/menu';
 import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { Content, ContentForm } from '@/modules/Publishing/types/content';

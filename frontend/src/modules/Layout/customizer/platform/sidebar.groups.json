@@ -1,0 +1,99 @@
+{
+    "groups": [
+        {
+            "id": "identity",
+            "labelKey": "publishing.theme_customizer.sidebar.categories.identity",
+            "items": [
+                {
+                    "id": "identity-general",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.general",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.general_desc",
+                    "icon": "globe",
+                    "manifestCategories": ["General"]
+                },
+                {
+                    "id": "identity-site-profile",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.site_profile",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.site_profile_desc",
+                    "icon": "sparkles",
+                    "manifestCategories": ["Site Info", "Organization Info"]
+                },
+                {
+                    "id": "identity-menus",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.menus.title",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.menus.description",
+                    "icon": "menu",
+                    "panel": "menus"
+                },
+                {
+                    "id": "identity-social",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.social",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.social_desc",
+                    "icon": "share-2",
+                    "manifestCategories": ["Social Media"]
+                }
+            ]
+        },
+        {
+            "id": "design",
+            "labelKey": "publishing.theme_customizer.sidebar.categories.design",
+            "items": [
+                {
+                    "id": "design-branding",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.styles",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.styles_desc",
+                    "icon": "palette",
+                    "manifestCategories": ["Appearance", "Buttons"]
+                },
+                {
+                    "id": "design-colors",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.palette",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.palette_desc",
+                    "icon": "sparkles",
+                    "manifestCategories": ["Colors"]
+                },
+                {
+                    "id": "design-typo",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.typo",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.typo_desc",
+                    "icon": "type",
+                    "manifestCategories": ["Typography", "Fonts"]
+                },
+                {
+                    "id": "styling-css",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.css",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.css_desc",
+                    "icon": "code-2",
+                    "panel": "css"
+                }
+            ]
+        },
+        {
+            "id": "interaction",
+            "labelKey": "publishing.theme_customizer.sidebar.categories.interaction",
+            "items": [
+                {
+                    "id": "ux-layout",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.layout",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.layout_desc",
+                    "icon": "panels-top-left",
+                    "manifestCategories": ["Layout"]
+                },
+                {
+                    "id": "ux-motion",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.motion",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.motion_desc",
+                    "icon": "sparkles",
+                    "manifestCategories": ["Animations"]
+                },
+                {
+                    "id": "ux-footer",
+                    "labelKey": "publishing.theme_customizer.sidebar.items.footer",
+                    "descriptionKey": "publishing.theme_customizer.sidebar.items.footer_desc",
+                    "icon": "panel-bottom",
+                    "manifestCategories": ["Footer"]
+                }
+            ]
+        }
+    ]
+}

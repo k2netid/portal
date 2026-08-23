@@ -1,0 +1,121 @@
+{
+    "components": [
+        {
+            "id": "hero",
+            "nameKey": "publishing.theme_customizer.items.hero_section",
+            "descriptionKey": "publishing.theme_customizer.items.hero_section_desc",
+            "icon": "hero",
+            "manifestCategory": "Hero Section",
+            "slots": [
+                {
+                    "id": "news",
+                    "labelKey": "publishing.theme_customizer.items.news_overlay",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.news_title" },
+                        { "key": "category", "labelKey": "publishing.theme_customizer.items.badge" },
+                        { "key": "date", "labelKey": "publishing.theme_customizer.items.date" },
+                        { "key": "image", "labelKey": "publishing.theme_customizer.items.thumbnail" },
+                        { "key": "url", "labelKey": "publishing.theme_customizer.items.target_url" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "testimonials",
+            "nameKey": "publishing.theme_customizer.items.testimonials",
+            "descriptionKey": "publishing.theme_customizer.items.testimonials_desc",
+            "icon": "testimonials",
+            "slots": [
+                {
+                    "id": "items",
+                    "labelKey": "publishing.theme_customizer.items.testimonial_list",
+                    "props": [
+                        { "key": "name", "labelKey": "publishing.theme_customizer.items.name" },
+                        { "key": "role", "labelKey": "publishing.theme_customizer.items.role" },
+                        { "key": "content", "labelKey": "publishing.theme_customizer.items.quote" },
+                        { "key": "image", "labelKey": "publishing.theme_customizer.items.avatar" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "partners",
+            "nameKey": "publishing.theme_customizer.items.partners_section",
+            "descriptionKey": "publishing.theme_customizer.items.partners_desc",
+            "icon": "partners",
+            "manifestCategory": "Partners Section",
+            "slots": [
+                {
+                    "id": "partners",
+                    "labelKey": "publishing.theme_customizer.items.partners_list",
+                    "props": [
+                        { "key": "name", "labelKey": "publishing.theme_customizer.items.name" },
+                        { "key": "image", "labelKey": "publishing.theme_customizer.items.logo" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "careers",
+            "nameKey": "publishing.theme_customizer.items.careers_page",
+            "descriptionKey": "publishing.theme_customizer.items.careers_page_desc",
+            "icon": "careers",
+            "manifestCategory": "Careers Page",
+            "slots": [
+                {
+                    "id": "jobs",
+                    "labelKey": "publishing.theme_customizer.items.career_list",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.title" },
+                        { "key": "company", "labelKey": "publishing.theme_customizer.items.company" },
+                        { "key": "location", "labelKey": "publishing.theme_customizer.items.location" },
+                        { "key": "type", "labelKey": "publishing.theme_customizer.items.job_type" },
+                        { "key": "excerpt", "labelKey": "publishing.theme_customizer.items.excerpt" },
+                        { "key": "url", "labelKey": "publishing.theme_customizer.items.target_url" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "achievements",
+            "nameKey": "publishing.theme_customizer.items.achievements_page",
+            "descriptionKey": "publishing.theme_customizer.items.achievements_page_desc",
+            "icon": "achievements",
+            "manifestCategory": "Achievements Page",
+            "slots": [
+                {
+                    "id": "list",
+                    "labelKey": "publishing.theme_customizer.items.achievement_list",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.title" },
+                        { "key": "excerpt", "labelKey": "publishing.theme_customizer.items.excerpt" },
+                        { "key": "description", "labelKey": "publishing.theme_customizer.items.detail" },
+                        { "key": "image", "labelKey": "publishing.theme_customizer.items.thumbnail" },
+                        { "key": "winner", "labelKey": "publishing.theme_customizer.items.name" },
+                        { "key": "role", "labelKey": "publishing.theme_customizer.items.role" },
+                        { "key": "level", "labelKey": "publishing.theme_customizer.items.badge" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "cta",
+            "nameKey": "publishing.theme_customizer.items.cta",
+            "descriptionKey": "publishing.theme_customizer.items.cta_desc",
+            "icon": "cta",
+            "manifestCategory": "CTA Section",
+            "slots": [
+                {
+                    "id": "content",
+                    "labelKey": "publishing.theme_customizer.items.active_content",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.header" },
+                        { "key": "subtitle", "labelKey": "publishing.theme_customizer.items.detail" },
+                        { "key": "buttonText", "labelKey": "publishing.theme_customizer.items.label" },
+                        { "key": "buttonUrl", "labelKey": "publishing.theme_customizer.items.path" }
+                    ]
+                }
+            ]
+        }
+    ]
+}

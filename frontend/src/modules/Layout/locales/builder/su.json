@@ -1,0 +1,908 @@
+{
+  "common": {
+    "save": "Simpen",
+    "saving": "Nuju nyimpen...",
+    "cancel": "Bongkar/Batal",
+    "delete": "Hapus",
+    "close": "Tutup",
+    "search": "Milari",
+    "select": "Pilih",
+    "settings": "Setelan",
+    "retry": "Cobian Deui",
+    "none": "Henteu Aya",
+    "all": "Sadaya",
+    "no_results": "Teu aya hasil kapendak"
+  },
+  "actions": {
+    "add": "Tambah",
+    "addSection": "Tambah Seksi Anyar",
+    "addRow": "Tambah Baris Anyar",
+    "addColumn": "Tambah Kolom Anyar"
+  },
+  "items": {
+    "delete": "Hapus Élémén",
+    "drag": "Tarik kanggo Ngaruntuykeun",
+    "duplicate": "Duplikat Élémén",
+    "layout": "Gentos Tata Letak",
+    "more": "Pilihan Lianna",
+    "settings": "Buka Setelan"
+  },
+  "messages": {
+    "loading": "Nuju ngamuat mesin builder..."
+  },
+  "canvas": {
+    "empty": "Mimitian kaca anjeun kalawan nambihan séksi énggal.",
+    "gridViewTitle": "Pintonan Grid"
+  },
+  "toolbar": {
+    "undo": "Bolaykeun (Undo)",
+    "redo": "Balikan (Redo)",
+    "theme": "Setelan Téma",
+    "switchTheme": "Gentos Téma",
+    "switchLanguage": "Gentos Basa",
+    "saveDraft": "Simpen Rarancang",
+    "publish": "Medalkeun",
+    "update": "Ropéa / Anyarkeun",
+    "draft": "Rarancang",
+    "wireframe": "Modeu Rorongkong",
+    "gridView": "Pintonan Kisi",
+    "fullscreen": "Layar Pinuh",
+    "exitFullscreen": "Kaluar Layar Pinuh",
+    "preferences": "Pangresep",
+    "menu": "Menu",
+    "close": "Tutup Éditor",
+    "zoom": "Gegedéan (Zoom)",
+    "devices": {
+      "desktop": "Kompouter (Desktop)",
+      "tablet": "Tablét",
+      "mobile": "Hapé (Mobile)",
+      "auto": "Résponsif (Otomatis)"
+    }
+  },
+  "rightPanel": {
+    "settings": "Setelan",
+    "searchPlaceholder": "Milari setelan...",
+    "noSettings": "Pilih élémén dina kanvas kanggo ngarobih pasipatanana",
+    "back": "Mulang",
+    "collapse": "Sumputkeun Panel",
+    "responsiveMode": "Modeu Résponsif"
+  },
+  "sidebars": {
+    "theme": "Téma",
+    "layers": "Lapisan",
+    "pages": "Kaca",
+    "templates": "Citakan",
+    "presets": "Prasét",
+    "globalVariables": "Variabel Global",
+    "preferences": "Pangresep",
+    "history": "Sajarah",
+    "code": "Éditor Kode",
+    "settings": "Setelan",
+    "layouts": "Tata Letak",
+    "global_variables": "Variabel Global",
+    "portability": "Impor / Ékspor",
+    "help": "Pitulung"
+  },
+  "tabs": {
+    "content": "Eusi Kontén",
+    "design": "Desain",
+    "advanced": "Lalengkepan"
+  },
+  "categories": {
+    "all": "Sadaya Modul",
+    "basic": "Dasar",
+    "content": "Eusi",
+    "media": "Média",
+    "dynamic": "Dinamis & Tulisan",
+    "forms": "Formulir",
+    "fullwidth": "Lega Pinuh",
+    "interactive": "Interaktif",
+    "structure": "Struktur",
+    "suggested": "Disarankeun"
+  },
+  "breakpoints": {
+    "desktop": "Kompouter (Desktop)",
+    "tablet": "Tablét",
+    "mobile": "Hapé (Mobile)",
+    "hover": "Kaayaan Hover"
+  },
+  "contextMenu": {
+    "duplicate": "Pikeunkeun (Duplikat)",
+    "delete": "Hapus",
+    "renameLabel": "Gentos Nami Élémén",
+    "reset": "Setél Ulang Gaya"
+  },
+  "dynamic": {
+    "loading": "Nuju ngamuat data...",
+    "noResults": "Teu aya data anu cocog",
+    "title": "Sumber Data Dinamis",
+    "search": "Milari widang dinamis..."
+  },
+  "advanced": {
+    "attributes": {
+      "add": "Tambih Atribut",
+      "custom": "Atribut Data Kustom"
+    },
+    "conditions": {
+      "add": "Tambih Sarat",
+      "search": "Milari aturan sarat..."
+    },
+    "css": {
+      "info": "Aturan CSS kustom kanggo élémén ieu",
+      "elementsInfo": "Tujukeun sub-élémén kalawan CSS kustom"
+    },
+    "interactions": {
+      "add": "Tambih Interaksi"
+    },
+    "scroll": {
+      "configure": "Atur animasi ngagulung kanggo {type}",
+      "level": "Kakuatan / Inténsitas",
+      "tabDisabled": "Pangaruh ngagulung dipareuman kanggo {type}"
+    }
+  },
+  "settings": {
+    "groups": {
+      "animation": {
+        "label": "Animasi",
+        "empty": "Pilih gaya animasi kanggo ningali pilihan."
+      },
+      "filters": {
+        "label": "Saringan Gambar"
+      },
+      "transform": {
+        "label": "Transformasi",
+        "tabs": {
+          "rotate": "Puter (Rotate)",
+          "scale": "Skala (Scale)",
+          "skew": "Doyong (Skew)",
+          "translate": "Gésér (Translate)"
+        }
+      }
+    },
+    "fields": {
+      "animation_effect": "Gaya Animasi",
+      "animation_duration": "Lilana (md)",
+      "animation_delay": "Reureuh Waktos (md)",
+      "animation_repeat": "Jumlah Ngulang",
+      "animation_curve": "Kurva Animasi",
+      "transition_curve": "Waktos Transisi",
+      "blend_mode": "Modeu Campuran",
+      "blur": "Kasureman (Blur)",
+      "brightness": "Caangna",
+      "contrast": "Kontras",
+      "grayscale": "Skala Kulawu",
+      "hue_rotate": "Puteran Kelir (Hue)",
+      "invert": "Balikeun Kelir",
+      "opacity": "Katerangan (Opacity)",
+      "origin": "Titik Tengah Transformasi",
+      "rotateX": "Puter Sumbu X",
+      "rotateY": "Puter Sumbu Y",
+      "rotateZ": "Puter Sumbu Z",
+      "saturate": "Saturasi",
+      "scale": "Skala Pembesaran",
+      "sepia": "Sepia",
+      "skewX": "Doyong Sumbu X",
+      "skewY": "Doyong Sumbu Y",
+      "translateX": "Gésér Sumbu X",
+      "translateY": "Gésér Sumbu Y"
+    },
+    "options": {
+      "animation_repeat": {
+        "1": "Sakali (Baku)",
+        "infinite": "Ulang Salawasna"
+      },
+      "blend_mode": {
+        "normal": "Normal",
+        "multiply": "Multiply",
+        "screen": "Screen",
+        "overlay": "Overlay",
+        "darken": "Darken",
+        "lighten": "Lighten",
+        "color": "Color",
+        "luminosity": "Luminosity",
+        "difference": "Difference",
+        "exclusion": "Exclusion",
+        "hue": "Hue",
+        "saturation": "Saturation",
+        "color-burn": "Color Burn",
+        "color-dodge": "Color Dodge",
+        "hard-light": "Hard Light",
+        "soft-light": "Soft Light"
+      }
+    },
+    "meta_query": {
+      "add": "Tambih Kueri Meta",
+      "key": "Konci (Key)",
+      "key_placeholder": "meta_key",
+      "compare": "Babandingan",
+      "type": "Jinis Data",
+      "value": "Nilai",
+      "value_placeholder": "meta_value"
+    }
+  },
+  "fields": {
+    "inherited": "Katurunkeun tina téma",
+    "actions": {
+      "remove": "Piceun",
+      "select": "Pilih Asét",
+      "edit": "Ropéa",
+      "duplicate": "Duplikat",
+      "delete": "Hapus",
+      "reset": "Setél Ulang",
+      "copy": "Salin",
+      "paste": "Témpél",
+      "apply": "Larapkeun",
+      "cancel": "Batal",
+      "dynamicData": "Data Dinamis",
+      "findReplace": "Milari & Gentos",
+      "info": "Inpormasi Pitulung",
+      "manageGlobal": "Atur Variabel Global",
+      "responsive": "Pangaturan Résponsif",
+      "copyAttributes": "Salin Atribut",
+      "extendAttributes": "Legaan Atribut",
+      "resetAttributes": "Setél Ulang Atribut"
+    },
+    "children": {
+      "applyTemplate": "Larapkeun Citakan Élémén Anak",
+      "empty": "Teu acan aya élémén anak.",
+      "add": "Tambih Élémén Anak"
+    },
+    "common": {
+      "color": "Kelir",
+      "height": "Jangkungna",
+      "heightPlaceholder": "auto atanapi px/%/vh",
+      "position": "Posisi",
+      "width": "Lebarna",
+      "widthPlaceholder": "100% atanapi px/%/vw"
+    },
+    "layoutTypes": {
+      "flex": "Flexbox",
+      "grid": "Kisi CSS (Grid)"
+    },
+    "types": {
+      "element": "Élémén",
+      "item": "Item",
+      "row": "Baris"
+    },
+    "upload": {
+      "mode": {
+        "manual": "Unggah / URL",
+        "var": "Variabel Téma"
+      },
+      "placeholder": "Lebetkeun URL média atanapi pilih berkas",
+      "select": "Pilih tina Perpustakaan Média",
+      "dragPrompt": "Tarik gambar ka dieu atanapi klik kanggo ngunggah"
+    },
+    "color": {
+      "placeholder": "Milari kelir & variabel...",
+      "noMatches": "Kelir teu kapendak",
+      "solid": "Kelir Maneuh (Solid)",
+      "gradient": "Kelir Gradasi",
+      "variables": "Variabel Téma",
+      "saved": "Palét Disimpen",
+      "hex": "Kode Hex",
+      "inherited": "Katurunkeun",
+      "openPicker": "Buka Pamilih Kelir",
+      "var": "Variabel CSS"
+    },
+    "repeater": {
+      "empty": "Teu acan aya item. Klik Tambih Item kanggo ngawitan.",
+      "add": "Tambih Item",
+      "item": "Item #{index}"
+    },
+    "icon": {
+      "search": "Milari ikon...",
+      "filter": "Saring Golongan",
+      "noResults": "Ikon teu kapendak",
+      "pickIcon": "Pilih Ikon",
+      "searchLarge": "Milari dina perpustakaan 1000+ ikon..."
+    },
+    "border": {
+      "radius": {
+        "label": "Pojok Lingkar (Radius)"
+      },
+      "styles": {
+        "label": "Gaya & Kandel Bingkai"
+      },
+      "width": "Kandel Garis",
+      "color": "Kelir Bingkai",
+      "style": "Gaya Garis",
+      "styleOptions": {
+        "solid": "Garis Maneuh (Solid)",
+        "dashed": "Garis Pegat (Dashed)",
+        "dotted": "Titik-titik (Dotted)",
+        "double": "Garis Ganda (Double)",
+        "none": "Tanpa Bingkai"
+      }
+    },
+    "spacing": {
+      "link": "Tumbukeun sadaya sisi (sarua)",
+      "unlink": "Leupaskeun sisi kanggo jarak kustom",
+      "margin": "Jarak Luar (Margin)",
+      "padding": "Jarak Jero (Padding)",
+      "top": "Luhur",
+      "right": "Katuhu",
+      "bottom": "Handap",
+      "left": "Kénca",
+      "sides": {
+        "top": "Luhur",
+        "bottom": "Handap",
+        "left": "Kénca",
+        "right": "Katuhu"
+      }
+    },
+    "typography": {
+      "fontSize": "Ukuran Aksara",
+      "fontWeight": "Kandelna Aksara",
+      "lineHeight": "Jangkungna Baris",
+      "letterSpacing": "Jarak Aksara",
+      "textAlign": "Perataan Téks",
+      "textTransform": "Wangun Aksara",
+      "fontFamily": "Jinis Hurup (Font)"
+    },
+    "shadow": {
+      "controls": {
+        "blur": "Tingkat Kasureman Bayangan",
+        "color": "Kelir Bayangan",
+        "horizontal": "Offset Horizontal",
+        "vertical": "Offset Vertikal",
+        "inset": "Bayangan ka Jero (Inset)",
+        "spread": "Radius Sumebarna Bayangan"
+      },
+      "presets": {
+        "label": "Prasét Bayangan",
+        "none": "Tanpa Bayangan",
+        "sm": "Leutik",
+        "lg": "Gedé",
+        "xl": "Gedé Pisan",
+        "inner": "Bayangan Jero"
+      }
+    },
+    "background": {
+      "proportional": "Jaga Babandingan Ukuran",
+      "tabs": {
+        "color": "Kelir",
+        "gradient": "Gradasi",
+        "image": "Gambar",
+        "pattern": "Pola",
+        "mask": "Topéng (Mask)",
+        "video": "Video"
+      },
+      "image": {
+        "repeat": {
+          "options": {
+            "space": "Jarak Sarua (Space)",
+            "noRepeat": "Ulah Diulang",
+            "repeat": "Ulangi (Tile)",
+            "repeatX": "Ulangi Horizontal",
+            "repeatY": "Ulangi Vertikal",
+            "round": "Rantangkeun / Bulatkeun"
+          },
+          "label": "Ngulang Gambar"
+        },
+        "size": {
+          "label": "Ukuran Gambar Latar",
+          "options": {
+            "actual": "Ukuran Asli",
+            "auto": "Otomatis",
+            "cover": "Tutup Pinuh (Cover)",
+            "custom": "Kustom",
+            "fit": "Pas (Fit)",
+            "stretch": "Mentangkeun"
+          }
+        },
+        "add": "Tambih Gambar Latar",
+        "attachment": {
+          "label": "Kacekelna Latar (Attachment)",
+          "options": {
+            "fixed": "Maneuh / Fixed (Parallax)",
+            "scroll": "Milu Ngagulung"
+          }
+        },
+        "blend": "Modeu Campuran Gambar",
+        "label": "Gambar Latar Tukang",
+        "parallax": "Hurungkeun Balukar Parallax",
+        "parallaxMethod": {
+          "label": "Metodeu Parallax",
+          "options": {
+            "css": "CSS Maneuh (Fixed)",
+            "true": "JavaScript Leuleus"
+          }
+        },
+        "position": {
+          "label": "Posisi Gambar",
+          "options": {
+            "bottomCenter": "Handap Tengah",
+            "bottomLeft": "Handap Kénca",
+            "bottomRight": "Handap Katuhu",
+            "center": "Tengah",
+            "centerLeft": "Tengah Kénca",
+            "centerRight": "Tengah Katuhu",
+            "topCenter": "Luhur Tengah",
+            "topLeft": "Luhur Kénca",
+            "topRight": "Luhur Katuhu"
+          }
+        }
+      },
+      "mask": {
+        "add": "Tambih Topéng Latar (Mask)",
+        "aspectRatio": {
+          "label": "Babandingan Wangun Topéng",
+          "options": {
+            "landscape": "Lanskap",
+            "portrait": "Potrét",
+            "square": "Pasagi"
+          }
+        },
+        "blend_mode": {
+          "label": "Modeu Campuran Topéng"
+        },
+        "color": "Kelir Topéng",
+        "flipH": "Balikkeun Horizontal",
+        "flipV": "Balikkeun Vertikal",
+        "invert": "Inversi Topéng",
+        "position": {
+          "label": "Posisi Topéng"
+        },
+        "rotate": "Puter Topéng",
+        "size": {
+          "height": "Jangkung Topéng",
+          "label": "Ukuran Topéng",
+          "width": "Lebar Topéng"
+        },
+        "transform": "Transformasi Topéng"
+      },
+      "pattern": {
+        "add": "Tambih Pola Latar (Pattern)",
+        "blendMode": {
+          "label": "Modeu Campuran Pola"
+        },
+        "color": "Kelir Pola",
+        "flipH": "Balikkeun Horizontal",
+        "flipV": "Balikkeun Vertikal",
+        "horizontalOffset": "Offset Horizontal",
+        "invert": "Inversi Pola",
+        "repeat": {
+          "label": "Pengulangan Pola"
+        },
+        "repeatOrigin": {
+          "label": "Titik Mimitian",
+          "options": {
+            "bottomCenter": "Handap Tengah",
+            "bottomLeft": "Handap Kénca",
+            "bottomRight": "Handap Katuhu",
+            "center": "Tengah",
+            "centerLeft": "Tengah Kénca",
+            "centerRight": "Tengah Katuhu",
+            "topCenter": "Luhur Tengah",
+            "topLeft": "Luhur Kénca",
+            "topRight": "Luhur Katuhu"
+          }
+        },
+        "rotate": "Puter Pola",
+        "size": {
+          "height": "Jangkung Pola",
+          "label": "Ukuran Pola",
+          "width": "Lebar Pola"
+        },
+        "transform": "Transformasi Pola",
+        "verticalOffset": "Offset Vertikal",
+        "options": {
+          "polkaDots": "Titik Polkadot",
+          "grid": "Garis Kisi",
+          "diagonalStripes": "Garis Diagonal",
+          "chevrons": "Pola Chevron",
+          "waves": "Ombak",
+          "triangles": "Segitilu"
+        }
+      },
+      "video": {
+        "add": "Tambih Video Latar",
+        "height": "Jangkung Video",
+        "label": "Sumber Video Latar",
+        "loop": "Ulangi Video",
+        "mp4": "URL Video MP4",
+        "mute": "Pareuman Sora",
+        "overlay": "Kelir Lapisan Luhur Video",
+        "pauseNotInView": "Reureuh Lamun di Luar Layar",
+        "pauseOnPlay": "Reureuh Pas Diputer",
+        "webm": "URL Video WebM",
+        "width": "Lebar Video"
+      },
+      "color": {
+        "add": "Tambih Kelir Latar",
+        "inherited": "Kelir Katurunkeun",
+        "label": "Kelir Latar Tukang"
+      },
+      "gradient": {
+        "add": "Tambih Gradasi Latar",
+        "direction": "Arah Gradasi",
+        "directionInfo": "Sudut darajat atanapi arah",
+        "label": "Gradasi Latar Tukang",
+        "length": "Panjang Gradasi",
+        "lengthInfo": "Jangkoan sumebarna kelir gradasi",
+        "placeAbove": "Simpen Gradasi di Luhureun Gambar Latar",
+        "repeat": "Ulangi Gradasi",
+        "repeatInfo": "Ulangi pola gradasi salawasna",
+        "selectedStop": "Titik Kelir Kapilih",
+        "type": {
+          "label": "Jinis Gradasi"
+        },
+        "typeInfo": "Modeu gradasi liniér atanapi radial"
+      }
+    },
+    "contextMenu": {
+      "canvasSettings": "Setelan Kanvas",
+      "moduleSettings": "Setelan Modul",
+      "sectionSettings": "Setelan Séksi",
+      "rowSettings": "Setelan Baris",
+      "addElement": "Tambih Élémén",
+      "copyStyles": "Salin Gaya",
+      "deleteCanvas": "Hapus Kanvas",
+      "disable": "Pareuman Élémén",
+      "duplicateCanvas": "Duplikat Kanvas",
+      "editCanvas": "Ropéa Kanvas",
+      "enable": "Hurungkeun Élémén",
+      "exportCanvas": "Ékspor Élémén",
+      "goToLayer": "Buka Lapisan Patali",
+      "goToParent": "Buka Élémén Indung",
+      "makeMainCanvas": "Jantenkeun Kanvas Utama",
+      "paste": "Témpél Élémén",
+      "pasteStyles": "Témpél Gaya",
+      "redo": "Balikan Lampah",
+      "renameLabel": "Gentos Nami Élémén",
+      "resetStyles": "Setél Ulang Gaya",
+      "saveToLibrary": "Simpen ka Perpustakaan",
+      "undo": "Bolaykeun Lampah",
+      "duplicate": "Duplikat {type}",
+      "delete": "Hapus {type}",
+      "copy": "Salin {type}",
+      "cut": "Teukteuk {type}"
+    }
+  },
+  "insertModal": {
+    "title": "Selapkeun Modul",
+    "searchPlaceholder": "Milari modul (contona: judul, tombol)...",
+    "libraryEmpty": "Teu aya modul perpustakaan disimpen.",
+    "tabs": {
+      "modules": "Modul",
+      "saved": "Tata Letak Disimpen",
+      "global": "Élémén Global"
+    },
+    "noResults": "Modul atanapi citakan teu kapendak.",
+    "layoutGroups": {
+      "columns": "Tata Letak Kolom"
+    }
+  },
+  "insertRowModal": {
+    "title": "Selapkeun Baris",
+    "libraryPlaceholder": "Milari tata letak baris..."
+  },
+  "insertSectionModal": {
+    "title": "Selapkeun Séksi",
+    "tabs": {
+      "regular": "Séksi Biasa",
+      "specialty": "Séksi Husus",
+      "fullwidth": "Séksi Lega Pinuh",
+      "templates": "Citakan Jadi"
+    }
+  },
+  "modals": {
+    "confirm": {
+      "deleteModule": "Hapus Modul",
+      "deleteModuleDesc": "Naha anjeun yakin hoyong ngahapus modul ieu tina kaca? Lampah ieu teu tiasa dibolaykeun.",
+      "deleteSection": "Hapus Séksi",
+      "deleteSectionDesc": "Naha anjeun yakin hoyong ngahapus séksi ieu sareng sadaya baris sarta modul di jerona?",
+      "deleteRow": "Hapus Baris",
+      "deleteRowDesc": "Naha anjeun yakin hoyong ngahapus baris ieu sareng sadaya kolomna?",
+      "deletePage": "Hapus Kaca",
+      "deletePageDesc": "Naha anjeun yakin hoyong ngahapus kaca ieu sacara permanén?",
+      "deletePreset": "Hapus Prasét",
+      "deletePresetDesc": "Naha anjeun yakin hoyong ngahapus prasét desain ieu?",
+      "discard": "Bongkar Parobahan",
+      "discardChanges": "Bongkar Parobahan Anu Teu Acan Disimpen",
+      "discardChangesDesc": "Anjeun gaduh parobahan anu teu acan disimpen. Ngabongkar bakal malikkeun kana édisi pamungkas.",
+      "resetLayout": "Setél Ulang Tata Letak",
+      "resetLayoutDesc": "Nyetél ulang bakal malikkeun séksi ieu kana kaayaan baku.",
+      "confirm": "Tegeskeun Lampah",
+      "delete": "Hapus",
+      "cancel": "Batal"
+    },
+    "insertModule": {
+      "title": "Selapkeun Modul",
+      "searchPlaceholder": "Milari modul (contona: judul, tombol, formulir)...",
+      "noResults": "Teu aya modul anu cocog sareng pamarian anjeun."
+    },
+    "insertSection": {
+      "title": "Selapkeun Séksi",
+      "tabs": {
+        "regular": "Séksi Biasa",
+        "specialty": "Tata Letak Husus",
+        "fullwidth": "Séksi Lega Pinuh",
+        "templates": "Citakan Jadi"
+      },
+      "templatesCount": "{count} citakan"
+    },
+    "insertRow": {
+      "title": "Selapkeun Baris",
+      "selectLayout": "Pilih Tata Letak Kolom"
+    },
+    "breakpoints": {
+      "title": "Kustomisasi Résolusi & Breakpoint",
+      "base": "Dasar (100%)",
+      "save": "Simpen Setelan Résolusi",
+      "cancel": "Batal"
+    },
+    "colorPicker": {
+      "title": "Pamilih Kelir & Palét",
+      "custom": "Kelir Kustom",
+      "customColor": "Kelir Kustom",
+      "opacity": "Katerangan",
+      "addGlobal": "Tambih ka Kelir Global",
+      "filters": "Saring Palét",
+      "globalColors": "Kelir Téma Global",
+      "material": "Kelir Material",
+      "hsv": {
+        "h": "Hue (H)",
+        "s": "Saturasi (S)",
+        "v": "Kacaangan / Value (V)"
+      }
+    },
+    "responsiveField": {
+      "title": "Pangaturan Résponsif kanggo {field}",
+      "overrideHint": "Atur nilai husus per pakakas. Nilai bakal nurun tina desktop sacara baku."
+    },
+    "shortcuts": {
+      "title": "Pangringkes Kibor (Shortcuts)",
+      "save": "Simpen Parobahan",
+      "undo": "Bolaykeun Lampah",
+      "redo": "Balikan Lampah",
+      "duplicate": "Duplikat Pilihan",
+      "delete": "Hapus Pilihan",
+      "preview": "Modeu Sawangan"
+    },
+    "structureTemplates": {
+      "title": "Citakan Struktur & Séksi",
+      "noResults": "Teu aya citakan struktur kapendak."
+    },
+    "pageTemplate": {
+      "title": "Pilih Citakan Kaca",
+      "loading": "Nuju ngamuat sawangan citakan..."
+    },
+    "responsive": {
+      "title": "Pangaturan Résponsif"
+    }
+  },
+  "structureTemplateModal": {
+    "title": "Citakan Struktur",
+    "noResults": "Teu aya citakan dina golongan ieu."
+  },
+  "pageTemplateModal": {
+    "title": "Pilih Citakan Kaca",
+    "warning": "Nerapkeun citakan pinuh bakal ngaganti eusi kanvas ayeuna."
+  },
+  "presets": {
+    "title": "Prasét Desain",
+    "addNew": "Simpen Salaku Prasét Énggal",
+    "defaultPreset": "Prasét Baku",
+    "newFromCurrent": "Jieun prasét tina gaya ayeuna",
+    "basedOn": "Dumasar kana {preset}"
+  },
+  "panels": {
+    "comingSoon": "Fitur baris sumping",
+    "fallbackTitle": "Rinci Panel",
+    "layers": {
+      "title": "Tangkal Lapisan (Layers Tree)",
+      "empty": "Teu acan aya élémén dina kanvas",
+      "search": "Saring lapisan...",
+      "searchPlaceholder": "Milari lapisan...",
+      "closeAll": "Tutup Sadaya"
+    },
+    "pages": {
+      "title": "Kaca Loka",
+      "addNew": "Kaca Énggal",
+      "empty": "Teu acan aya kaca dijieun",
+      "loading": "Nuju ngamuat daptar kaca...",
+      "searchPlaceholder": "Milari kaca...",
+      "promptTitle": "Lebetkeun Judul Kaca Énggal:",
+      "actions": {
+        "edit": "Ropéa Kaca",
+        "delete": "Hapus Kaca"
+      }
+    },
+    "layouts": {
+      "title": "Blok Tata Letak",
+      "emptyTitle": "Blok Tata Letak Teu Kapendak",
+      "emptyDesc": "Simpen séksi atanapi baris kustom salaku blok anu tiasa dianggo deui.",
+      "search": "Milari tata letak..."
+    },
+    "templates": {
+      "title": "Citakan Kaca & Téma",
+      "addNew": "Jieun Citakan",
+      "loading": "Nuju ngamuat citakan...",
+      "searchPlaceholder": "Milari citakan...",
+      "category": "Golongan Citakan",
+      "contentType": "Jinis Kontén",
+      "applyTo": "Larapkeun Citakan Ka:",
+      "assignmentTitle": "Aturan Panetepan Citakan",
+      "contentTypeOptions": {
+        "post": "Tulisan Blog",
+        "page": "Kaca Biasa",
+        "custom": "Jinis Kustom"
+      },
+      "applyOptions": {
+        "all": "Sadaya Kontén dina Jinis Ieu",
+        "front_page": "Kaca Utama (Hareup)",
+        "specific_category": "Golongan Husus",
+        "specific_type": "Jinis Kontén Husus"
+      }
+    },
+    "presets": {
+      "title": "Prasét Disimpen",
+      "empty": "Teu acan aya prasét gaya kanggo modul ieu.",
+      "actions": {
+        "apply": "Larapkeun Prasét",
+        "delete": "Hapus Prasét"
+      },
+      "saveModal": {
+        "title": "Simpen Prasét Desain",
+        "description": "Simpen tipografi, kelir, sareng tata letak ayeuna salaku prasét.",
+        "nameLabel": "Nami Prasét",
+        "placeholder": "contona: Kartu Utama Hero",
+        "saveBtn": "Simpen Prasét"
+      }
+    },
+    "theme": {
+      "title": "Kustomisasi Téma",
+      "settings": "Variabel & Kelir Téma",
+      "loading": "Nuju ngamuat manifes téma...",
+      "noActive": "Teu aya téma anu nuju aktip",
+      "selectHint": "Pilih téma aktip kanggo ngarobih tipografi global, kelir, sareng token desain.",
+      "searchPlaceholder": "Milari pilihan téma...",
+      "activate": "Aktipkeun Téma"
+    },
+    "globalVariables": {
+      "title": "Variabel Global",
+      "empty": "Teu acan aya variabel global",
+      "add": "Tambih Variabel",
+      "name": "Nami Variabel",
+      "value": "Nilai",
+      "type": "Jinis Variabel",
+      "actions": {
+        "addColor": "Tambih Kelir",
+        "addFont": "Tambih Font",
+        "addImage": "Tambih Gambar",
+        "addLink": "Tambih Tumbu URL",
+        "addNumber": "Tambih Angka",
+        "addString": "Tambih Téks",
+        "cancel": "Batal",
+        "save": "Simpen Variabel",
+        "select": "Pilih Asét",
+        "selectImage": "Pilih Berkas Média",
+        "addGeneric": "Tambih Variabel Énggal"
+      },
+      "messages": {
+        "saveError": "Gagal nyimpen variabel global.",
+        "saveSuccess": "Variabel global parantos hasil dianyarkeun.",
+        "fillName": "Mangga lebetkeun nami variabel anu sah.",
+        "invalidHex": "Kode kelir hex teu sah."
+      },
+      "placeholders": {
+        "name": "nami_variabel",
+        "none": "Teu acan dikonfigurasi",
+        "empty": "Teu acan aya variabel global dina golongan ieu."
+      },
+      "table": {
+        "color": "Kelir",
+        "image": "Sawangan Média",
+        "name": "Nami Token",
+        "string": "Nilai Téks",
+        "url": "Tujuan Tumbu",
+        "value": "Nilai"
+      },
+      "numbers": "Angka & Satuan",
+      "text": "Téks & Kalimah",
+      "images": "Gambar & Média",
+      "links": "Tumbu & URL",
+      "colors": "Kelir & Palét",
+      "fonts": "Font & Tipografi"
+    },
+    "preferences": {
+      "title": "Pangresep Builder",
+      "editor": "Paripolah Éditor",
+      "interface": "Antarbeungeut & Pintonan",
+      "autoSave": "Panyimpenan Otomatis (Auto Save)",
+      "showGrid": "Témbongkeun Garis Kisi Tata Letak",
+      "snapToObjects": "Rapetkeun ka Sisi Objék (Snap)",
+      "darkMode": "Sawangan Modeu Poék Kanvas",
+      "system": "Inpormasi Sistem",
+      "version": "Vérsi Mesin Builder",
+      "build": "Waktos Kompilasi Build"
+    },
+    "portability": {
+      "tabs": {
+        "export": "Ékspor JSON",
+        "import": "Impor JSON"
+      },
+      "export": {
+        "file": "Unduh Berkas Citakan",
+        "copy": "Salin JSON ka Papan Klip",
+        "helper": "Ékspor struktur tata letak ayeuna kanggo dibagikeun atanapi cadangan."
+      },
+      "import": {
+        "placeholder": "Témpélkeun struktur JSON di dieu...",
+        "button": "Impor & Gantos Kanvas",
+        "helper": "Impor bakal ngaganti struktur kanvas anu aya ayeuna.",
+        "invalid": "Wangun JSON teu sah. Mangga parios téks anu ditémpélkeun.",
+        "success": "Tata letak parantos hasil diimpor!"
+      }
+    },
+    "pageSettings": {
+      "status": {
+        "draft": "Rarancang",
+        "published": "Dipedalkeun",
+        "pending": "Nuju Ditaliti",
+        "archived": "Diarsipkeun"
+      },
+      "placeholders": {
+        "selectImage": "Pilih gambar utama..."
+      },
+      "publishing": "Publikasi",
+      "publishDate": "Kaping Publikasi",
+      "slug": "Slug URL",
+      "slugPlaceholder": "dijieun-otomatis-tina-judul",
+      "type": "Jinis Kontén",
+      "featured": "Kontén Utama",
+      "featuredDesc": "Pangluhurkeun kontén ieu",
+      "menus": "Menu",
+      "addToMenu": "Tambihkeun ka Menu",
+      "addToMenuDesc": "Tambihkeun kaca ieu kana struktur menu",
+      "selectMenu": "Pilih Menu",
+      "parentItem": "Item Indung",
+      "rootItem": "Pangluhurna (Tanpa Indung)",
+      "menuLabel": "Labél Menu",
+      "menuLabelPlaceholder": "Labél menu...",
+      "taxonomy": "Taksonomi & Golongan",
+      "category": "Golongan",
+      "selectCategory": "Pilih Golongan",
+      "tags": "Tag",
+      "addTags": "Milari atanapi tambih tag...",
+      "featuredImage": "Gambar Utama",
+      "removeImage": "Hapus Gambar",
+      "excerpt": "Ringkesan",
+      "excerptPlaceholder": "Ringkesan singget kontén...",
+      "discussion": "Sawala & Koméntar",
+      "allowComments": "Widian Koméntar",
+      "allowCommentsDesc": "Hurungkeun kolom koméntar dina kaca ieu",
+      "metaTitle": "Judul Méta (SEO)",
+      "metaDescription": "Pedaran Méta (SEO)",
+      "metaKeywords": "Kecap Konci Méta",
+      "ogImage": "Gambar Open Graph (Média Sosial)",
+      "selectOgImage": "Pilih Gambar OG",
+      "statusLabel": "Status"
+    },
+    "history": {
+      "change": "Ngarobih {property}",
+      "current": "Kaayaan Damel Ayeuna",
+      "initial": "Pamuatan Mimitian Kaca",
+      "sessionStart": "Sési Dikawitan",
+      "action": "Lampah #{id}"
+    },
+    "help": {
+      "shortcuts": "Pangringkes Kibor",
+      "footer": {
+        "docs": "Dokuméntasi",
+        "support": "Hubungi Rojongan"
+      },
+      "labels": {
+        "copy": "Salin",
+        "delete": "Hapus",
+        "duplicate": "Duplikat",
+        "paste": "Témpél",
+        "redo": "Balikan",
+        "save": "Simpen",
+        "undo": "Bolaykeun"
+      }
+    }
+  }
+}

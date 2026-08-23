@@ -1,8 +1,6 @@
 # Layout (P3-3a)
 
-Optional first-party pack: **site menus**, **widgets**, and **URL redirects**.
-
-Themes, Visual Builder, and BlockRenderer remain deferred to **P3-3b**. Publishing continues to use soft stubs for builder/renderer until then.
+Optional first-party pack: **site menus**, **widgets**, **redirects**, **themes**, and **visual builder** (with block renderer for Publishing).
 
 ## Activate
 
@@ -15,5 +13,6 @@ Themes, Visual Builder, and BlockRenderer remain deferred to **P3-3b**. Publishi
 | Consumer | Behavior when Layout active |
 |----------|----------------------------|
 | Publishing Content sidebar | `/manage/layout/menus` live |
+| Publishing create/edit | Visual Builder + BlockRenderer |
 | Publishing `HandleRedirects` | Uses `Modules\Layout\Models\Redirect` |
-| Menu usage analysis | Soft-reads `lay_themes.settings` if table exists |
+| Menu usage analysis | Reads `lay_themes.settings` when present |

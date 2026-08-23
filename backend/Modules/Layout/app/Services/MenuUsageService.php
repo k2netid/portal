@@ -2,7 +2,6 @@
 
 namespace Modules\Layout\Services;
 
-use Illuminate\Support\Facades\Schema;
 use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\Theme;
 
@@ -57,10 +56,6 @@ class MenuUsageService
     private function themeSettingUsages(Menu $menu): array
     {
         $usages = [];
-
-        if (! Schema::hasTable('lay_themes')) {
-            return $usages;
-        }
 
         Theme::query()
             ->where('type', 'frontend')

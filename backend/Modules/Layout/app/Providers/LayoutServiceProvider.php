@@ -11,13 +11,25 @@ use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Permission;
+use Modules\Layout\Console\Commands\BackfillThemeJanariParentCommand;
+use Modules\Layout\Console\Commands\ThemeBackfillSourceCommand;
+use Modules\Layout\Console\Commands\ThemeBuildCommand;
+use Modules\Layout\Console\Commands\ThemeChecksumCommand;
+use Modules\Layout\Console\Commands\ThemeExportCommand;
+use Modules\Layout\Console\Commands\ThemeMake;
+use Modules\Layout\Console\Commands\ThemePackageCommand;
+use Modules\Layout\Console\Commands\ThemePathsCommand;
+use Modules\Layout\Console\Commands\ThemeScanRegisterCommand;
+use Modules\Layout\Console\Commands\ThemeStagingUploadedCommand;
+use Modules\Layout\Console\Commands\ThemeValidateCommand;
 use Modules\Layout\Database\Seeders\LayoutPermissionSeeder;
+use Modules\Layout\Services\ThemeService;
 
 class LayoutServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(ThemeService::class, ThemeService::class);
     }
 
     public function boot(): void
@@ -30,7 +42,23 @@ class LayoutServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group($moduleRoot.'/routes/api.php');
 
-        $this->registerDefaultLayoutLocations();
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                BackfillThemeJanariParentCommand::class,
+                ThemeMake::class,
+                ThemePathsCommand::class,
+                ThemeValidateCommand::class,
+                ThemePackageCommand::class,
+                ThemeExportCommand::class,
+                ThemeStagingUploadedCommand::class,
+                ThemeScanRegisterCommand::class,
+                ThemeBackfillSourceCommand::class,
+                ThemeBuildCommand::class,
+                ThemeChecksumCommand::class,
+            ]);
+        }
+
+        $this->registerLayoutRegistryIntegrations();
 
         Hook::listen('extension_activated', function (Extension $extension): void {
             if ($extension->slug !== 'layout') {
@@ -55,7 +83,7 @@ class LayoutServiceProvider extends ServiceProvider
             }
 
             $missing = ! Permission::query()
-                ->where('name', 'view menus')
+                ->where('name', 'manage themes')
                 ->where('guard_name', 'web')
                 ->exists();
 
@@ -67,46 +95,59 @@ class LayoutServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * P3-3a: without Themes pack, register sensible publishing location defaults.
-     */
-    protected function registerDefaultLayoutLocations(): void
+    protected function registerLayoutRegistryIntegrations(): void
     {
-        if (! $this->app->bound(LayoutRegistryInterface::class)) {
-            return;
-        }
+        $this->app->booted(function (): void {
+            if (! $this->app->bound(LayoutRegistryInterface::class)) {
+                return;
+            }
 
-        /** @var LayoutRegistryInterface $registry */
-        $registry = $this->app->make(LayoutRegistryInterface::class);
+            /** @var LayoutRegistryInterface $registry */
+            $registry = $this->app->make(LayoutRegistryInterface::class);
+            $themeService = $this->app->make(ThemeService::class);
 
-        if ($registry->getMenuLocations('publishing') === []) {
-            $registry->registerMenuLocations('publishing', [
-                'header',
-                'header_top',
-                'footer',
-                'footer_col_1',
-                'footer_col_2',
-                'sidebar',
+            try {
+                $activeTheme = $themeService->getActiveTheme('frontend');
+            } catch (\Throwable) {
+                $activeTheme = null;
+            }
+
+            if ($activeTheme) {
+                $registry->registerMenuLocations('publishing', $themeService->getMenuLocations($activeTheme));
+                $registry->registerWidgetLocations('publishing', $themeService->getWidgetLocations($activeTheme));
+
+                return;
+            }
+
+            if ($registry->getMenuLocations('publishing') === []) {
+                $registry->registerMenuLocations('publishing', [
+                    'header',
+                    'header_top',
+                    'footer',
+                    'footer_col_1',
+                    'footer_col_2',
+                    'sidebar',
+                ]);
+            }
+
+            if ($registry->getWidgetLocations('publishing') === []) {
+                $registry->registerWidgetLocations('publishing', [
+                    'sidebar',
+                    'footer_top',
+                    'footer_bottom',
+                ]);
+            }
+
+            $registry->registerWidgetTypes('publishing', [
+                'html' => 'Custom HTML',
+                'content_list' => 'Content List',
+                'menu' => 'Navigation Menu',
+                'form' => 'Custom Form',
+                'text' => 'Text',
+                'recent_posts' => 'Recent Posts',
+                'categories' => 'Categories',
+                'custom' => 'Custom',
             ]);
-        }
-
-        if ($registry->getWidgetLocations('publishing') === []) {
-            $registry->registerWidgetLocations('publishing', [
-                'sidebar',
-                'footer_top',
-                'footer_bottom',
-            ]);
-        }
-
-        $registry->registerWidgetTypes('publishing', [
-            'html' => 'Custom HTML',
-            'content_list' => 'Content List',
-            'menu' => 'Navigation Menu',
-            'form' => 'Custom Form',
-            'text' => 'Text',
-            'recent_posts' => 'Recent Posts',
-            'categories' => 'Categories',
-            'custom' => 'Custom',
-        ]);
+        });
     }
 }

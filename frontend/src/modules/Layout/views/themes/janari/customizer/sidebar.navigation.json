@@ -1,0 +1,22 @@
+{
+    "reservedManifestCategories": [
+        "General",
+        "Site Info",
+        "Organization Info",
+        "Social Media",
+        "Appearance",
+        "Buttons",
+        "Colors",
+        "Typography",
+        "Fonts",
+        "Layout",
+        "Animations",
+        "Footer",
+        "Public Pages",
+        "About Page",
+        "Achievements Page",
+        "Careers Page",
+        "News Page",
+        "Contact Page"
+    ]
+}

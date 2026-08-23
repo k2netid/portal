@@ -692,7 +692,7 @@ import {
 import FeaturedImage from '@/modules/Publishing/components/content/FeaturedImage.vue';
 import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 import MarkdownEditor from '@/shared/components/editor/MarkdownEditor.vue';
-import type { Menu, MenuItem } from '@/modules/Publishing/shims/layout/types/menu';
+import type { Menu, MenuItem } from '@/modules/Layout/types/menu';
 import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { ContentForm } from '@/modules/Publishing/types/content';

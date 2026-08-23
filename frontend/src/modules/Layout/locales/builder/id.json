@@ -1,0 +1,908 @@
+{
+  "common": {
+    "save": "Simpan",
+    "saving": "Menyimpan...",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "close": "Tutup",
+    "search": "Cari",
+    "select": "Pilih",
+    "settings": "Pengaturan",
+    "retry": "Coba Lagi",
+    "none": "Tidak Ada",
+    "all": "Semua",
+    "no_results": "Tidak ada hasil ditemukan"
+  },
+  "actions": {
+    "add": "Tambah",
+    "addSection": "Tambah Seksi Baru",
+    "addRow": "Tambah Baris Baru",
+    "addColumn": "Tambah Kolom Baru"
+  },
+  "items": {
+    "delete": "Hapus Elemen",
+    "drag": "Tarik untuk Urutkan",
+    "duplicate": "Duplikat Elemen",
+    "layout": "Ubah Tata Letak",
+    "more": "Opsi Lainnya",
+    "settings": "Buka Pengaturan"
+  },
+  "messages": {
+    "loading": "Memuat mesin builder..."
+  },
+  "canvas": {
+    "empty": "Mulai halaman Anda dengan menambahkan seksi baru.",
+    "gridViewTitle": "Tampilan Kisi (Grid)"
+  },
+  "toolbar": {
+    "undo": "Urungkan (Undo)",
+    "redo": "Ulangi (Redo)",
+    "theme": "Pengaturan Tema",
+    "switchTheme": "Ganti Tema",
+    "switchLanguage": "Ganti Bahasa",
+    "saveDraft": "Simpan Draf",
+    "publish": "Terbitkan",
+    "update": "Perbarui",
+    "draft": "Draf",
+    "wireframe": "Mode Wireframe",
+    "gridView": "Tampilan Kisi",
+    "fullscreen": "Layar Penuh",
+    "exitFullscreen": "Keluar Layar Penuh",
+    "preferences": "Preferensi",
+    "menu": "Menu",
+    "close": "Tutup Editor",
+    "zoom": "Perbesaran (Zoom)",
+    "devices": {
+      "desktop": "Komputer (Desktop)",
+      "tablet": "Tablet",
+      "mobile": "Ponsel (Mobile)",
+      "auto": "Responsif (Otomatis)"
+    }
+  },
+  "rightPanel": {
+    "settings": "Pengaturan",
+    "searchPlaceholder": "Cari pengaturan...",
+    "noSettings": "Pilih elemen di canvas untuk mengatur propertinya",
+    "back": "Kembali",
+    "collapse": "Sembunyikan Panel",
+    "responsiveMode": "Mode Responsif"
+  },
+  "sidebars": {
+    "theme": "Tema",
+    "layers": "Lapisan",
+    "pages": "Halaman",
+    "templates": "Templat",
+    "presets": "Preset",
+    "globalVariables": "Variabel Global",
+    "preferences": "Preferensi",
+    "history": "Riwayat",
+    "code": "Editor Kode",
+    "settings": "Pengaturan",
+    "layouts": "Tata Letak",
+    "global_variables": "Variabel Global",
+    "portability": "Impor / Ekspor",
+    "help": "Bantuan"
+  },
+  "tabs": {
+    "content": "Konten",
+    "design": "Desain",
+    "advanced": "Lanjutan"
+  },
+  "categories": {
+    "all": "Semua Modul",
+    "basic": "Dasar",
+    "content": "Konten",
+    "media": "Media",
+    "dynamic": "Dinamis & Pos",
+    "forms": "Formulir & Input",
+    "fullwidth": "Lebar Penuh",
+    "interactive": "Interaktif",
+    "structure": "Struktur",
+    "suggested": "Disarankan"
+  },
+  "breakpoints": {
+    "desktop": "Komputer (Desktop)",
+    "tablet": "Tablet",
+    "mobile": "Ponsel (Mobile)",
+    "hover": "Keadaan Hover"
+  },
+  "contextMenu": {
+    "duplicate": "Duplikat",
+    "delete": "Hapus",
+    "renameLabel": "Ganti Nama Elemen",
+    "reset": "Reset Gaya"
+  },
+  "dynamic": {
+    "loading": "Memuat data...",
+    "noResults": "Tidak ada data yang cocok",
+    "title": "Sumber Data Dinamis",
+    "search": "Cari field dinamis..."
+  },
+  "advanced": {
+    "attributes": {
+      "add": "Tambah Atribut",
+      "custom": "Atribut Data Kustom"
+    },
+    "conditions": {
+      "add": "Tambah Kondisi",
+      "search": "Cari aturan kondisi..."
+    },
+    "css": {
+      "info": "Aturan CSS kustom untuk elemen ini",
+      "elementsInfo": "Targetkan sub-elemen spesifik dengan CSS kustom"
+    },
+    "interactions": {
+      "add": "Tambah Interaksi"
+    },
+    "scroll": {
+      "configure": "Konfigurasi animasi gulir untuk {type}",
+      "level": "Intensitas",
+      "tabDisabled": "Efek gulir dinonaktifkan untuk {type}"
+    }
+  },
+  "settings": {
+    "groups": {
+      "animation": {
+        "label": "Animasi",
+        "empty": "Pilih gaya animasi untuk melihat opsi pengaturan."
+      },
+      "filters": {
+        "label": "Filter Gambar"
+      },
+      "transform": {
+        "label": "Transformasi",
+        "tabs": {
+          "rotate": "Putar (Rotate)",
+          "scale": "Skala (Scale)",
+          "skew": "Kemiringan (Skew)",
+          "translate": "Geser (Translate)"
+        }
+      }
+    },
+    "fields": {
+      "animation_effect": "Gaya Animasi",
+      "animation_duration": "Durasi (md)",
+      "animation_delay": "Jeda Waktu (md)",
+      "animation_repeat": "Jumlah Pengulangan",
+      "animation_curve": "Kurva Animasi",
+      "transition_curve": "Waktu Transisi",
+      "blend_mode": "Mode Campuran (Blend Mode)",
+      "blur": "Keburaman (Blur)",
+      "brightness": "Kecerahan",
+      "contrast": "Kontras",
+      "grayscale": "Skala Abu-abu",
+      "hue_rotate": "Putaran Warna (Hue)",
+      "invert": "Inversi Warna",
+      "opacity": "Transparansi (Opacity)",
+      "origin": "Titik Pusat Transformasi",
+      "rotateX": "Putar Sumbu X",
+      "rotateY": "Putar Sumbu Y",
+      "rotateZ": "Putar Sumbu Z",
+      "saturate": "Saturasi",
+      "scale": "Skala Pembesaran",
+      "sepia": "Efek Sepia",
+      "skewX": "Miring Sumbu X",
+      "skewY": "Miring Sumbu Y",
+      "translateX": "Geser Sumbu X",
+      "translateY": "Geser Sumbu Y"
+    },
+    "options": {
+      "animation_repeat": {
+        "1": "Sekali (Default)",
+        "infinite": "Ulangi Terus Menerus"
+      },
+      "blend_mode": {
+        "normal": "Normal",
+        "multiply": "Multiply",
+        "screen": "Screen",
+        "overlay": "Overlay",
+        "darken": "Darken",
+        "lighten": "Lighten",
+        "color": "Color",
+        "luminosity": "Luminosity",
+        "difference": "Difference",
+        "exclusion": "Exclusion",
+        "hue": "Hue",
+        "saturation": "Saturation",
+        "color-burn": "Color Burn",
+        "color-dodge": "Color Dodge",
+        "hard-light": "Hard Light",
+        "soft-light": "Soft Light"
+      }
+    },
+    "meta_query": {
+      "add": "Tambah Kueri Meta",
+      "key": "Kunci (Key)",
+      "key_placeholder": "meta_key",
+      "compare": "Operator Perbandingan",
+      "type": "Tipe Data",
+      "value": "Nilai",
+      "value_placeholder": "meta_value"
+    }
+  },
+  "fields": {
+    "inherited": "Diwarisi dari tema",
+    "actions": {
+      "remove": "Hapus",
+      "select": "Pilih Aset",
+      "edit": "Ubah",
+      "duplicate": "Duplikat",
+      "delete": "Hapus",
+      "reset": "Atur Ulang",
+      "copy": "Salin",
+      "paste": "Tempel",
+      "apply": "Terapkan",
+      "cancel": "Batal",
+      "dynamicData": "Data Dinamis",
+      "findReplace": "Cari & Ganti",
+      "info": "Info Bantuan",
+      "manageGlobal": "Kelola Variabel Global",
+      "responsive": "Penyesuaian Responsif",
+      "copyAttributes": "Salin Atribut",
+      "extendAttributes": "Perluas Atribut",
+      "resetAttributes": "Reset Atribut"
+    },
+    "children": {
+      "applyTemplate": "Terapkan Templat Elemen Anak",
+      "empty": "Belum ada elemen anak.",
+      "add": "Tambah Elemen Anak"
+    },
+    "common": {
+      "color": "Warna",
+      "height": "Tinggi",
+      "heightPlaceholder": "auto atau px/%/vh",
+      "position": "Posisi",
+      "width": "Lebar",
+      "widthPlaceholder": "100% atau px/%/vw"
+    },
+    "layoutTypes": {
+      "flex": "Flexbox",
+      "grid": "Kisi CSS (Grid)"
+    },
+    "types": {
+      "element": "Elemen",
+      "item": "Item",
+      "row": "Baris"
+    },
+    "upload": {
+      "mode": {
+        "manual": "Unggah / URL",
+        "var": "Variabel Tema"
+      },
+      "placeholder": "Masukkan URL media atau pilih berkas",
+      "select": "Pilih dari Pustaka Media",
+      "dragPrompt": "Tarik gambar ke sini atau klik untuk mengunggah"
+    },
+    "color": {
+      "placeholder": "Cari warna & variabel...",
+      "noMatches": "Warna tidak ditemukan",
+      "solid": "Warna Solid",
+      "gradient": "Gradien",
+      "variables": "Variabel Tema",
+      "saved": "Palet Tersimpan",
+      "hex": "Kode Hex",
+      "inherited": "Mewarisi",
+      "openPicker": "Buka Pemilih Warna",
+      "var": "Variabel CSS"
+    },
+    "repeater": {
+      "empty": "Belum ada item. Klik Tambah Item untuk memulai.",
+      "add": "Tambah Item",
+      "item": "Item #{index}"
+    },
+    "icon": {
+      "search": "Cari ikon...",
+      "filter": "Filter Kategori",
+      "noResults": "Ikon tidak ditemukan",
+      "pickIcon": "Pilih Ikon",
+      "searchLarge": "Cari di perpustakaan 1000+ ikon..."
+    },
+    "border": {
+      "radius": {
+        "label": "Sudut Lengkung (Radius)"
+      },
+      "styles": {
+        "label": "Gaya & Ketebalan Bingkai"
+      },
+      "width": "Tebal Garis",
+      "color": "Warna Bingkai",
+      "style": "Gaya Garis",
+      "styleOptions": {
+        "solid": "Garis Solid",
+        "dashed": "Garis Putus (Dashed)",
+        "dotted": "Titik-titik (Dotted)",
+        "double": "Garis Ganda (Double)",
+        "none": "Tanpa Bingkai"
+      }
+    },
+    "spacing": {
+      "link": "Kaitkan semua sisi (seragam)",
+      "unlink": "Bebaskan sisi untuk jarak kustom",
+      "margin": "Batas Luar (Margin)",
+      "padding": "Batas Dalam (Padding)",
+      "top": "Atas",
+      "right": "Kanan",
+      "bottom": "Bawah",
+      "left": "Kiri",
+      "sides": {
+        "top": "Atas",
+        "bottom": "Bawah",
+        "left": "Kiri",
+        "right": "Kanan"
+      }
+    },
+    "typography": {
+      "fontSize": "Ukuran Huruf",
+      "fontWeight": "Ketebalan Huruf",
+      "lineHeight": "Tinggi Baris",
+      "letterSpacing": "Jarak Huruf",
+      "textAlign": "Perataan Teks",
+      "textTransform": "Kapitalisasi Huruf",
+      "fontFamily": "Jenis Huruf (Font)"
+    },
+    "shadow": {
+      "controls": {
+        "blur": "Tingkat Keburaman Bayangan",
+        "color": "Warna Bayangan",
+        "horizontal": "Offset Horizontal",
+        "vertical": "Offset Vertikal",
+        "inset": "Bayangan ke Dalam (Inset)",
+        "spread": "Radius Sebaran Bayangan"
+      },
+      "presets": {
+        "label": "Preset Bayangan",
+        "none": "Tanpa Bayangan",
+        "sm": "Kecil",
+        "lg": "Besar",
+        "xl": "Sangat Besar",
+        "inner": "Bayangan Dalam"
+      }
+    },
+    "background": {
+      "proportional": "Pertahankan Proporsi",
+      "tabs": {
+        "color": "Warna",
+        "gradient": "Gradien",
+        "image": "Gambar",
+        "pattern": "Pola",
+        "mask": "Topeng (Mask)",
+        "video": "Video"
+      },
+      "image": {
+        "repeat": {
+          "options": {
+            "space": "Jarak Rata (Space)",
+            "noRepeat": "Jangan Ulangi",
+            "repeat": "Ulangi (Tile)",
+            "repeatX": "Ulangi Horizontal",
+            "repeatY": "Ulangi Vertikal",
+            "round": "Ratakan / Bulatkan"
+          },
+          "label": "Pengulangan Gambar"
+        },
+        "size": {
+          "label": "Ukuran Gambar Latar",
+          "options": {
+            "actual": "Ukuran Asli",
+            "auto": "Otomatis",
+            "cover": "Tutup Penuh (Cover)",
+            "custom": "Kustom",
+            "fit": "Pas (Fit)",
+            "stretch": "Rentangkan"
+          }
+        },
+        "add": "Tambah Gambar Latar",
+        "attachment": {
+          "label": "Penempelan Latar (Attachment)",
+          "options": {
+            "fixed": "Tetap / Fixed (Parallax)",
+            "scroll": "Ikut Gulir Halaman"
+          }
+        },
+        "blend": "Mode Campuran Gambar",
+        "label": "Gambar Latar Belakang",
+        "parallax": "Aktifkan Efek Parallax",
+        "parallaxMethod": {
+          "label": "Metode Parallax",
+          "options": {
+            "css": "CSS Fixed",
+            "true": "JavaScript Halus"
+          }
+        },
+        "position": {
+          "label": "Posisi Gambar",
+          "options": {
+            "bottomCenter": "Bawah Tengah",
+            "bottomLeft": "Bawah Kiri",
+            "bottomRight": "Bawah Kanan",
+            "center": "Tengah",
+            "centerLeft": "Tengah Kiri",
+            "centerRight": "Tengah Kanan",
+            "topCenter": "Atas Tengah",
+            "topLeft": "Atas Kiri",
+            "topRight": "Atas Kanan"
+          }
+        }
+      },
+      "mask": {
+        "add": "Tambah Topeng Latar (Mask)",
+        "aspectRatio": {
+          "label": "Rasio Aspek Topeng",
+          "options": {
+            "landscape": "Lanskap",
+            "portrait": "Potret",
+            "square": "Persegi"
+          }
+        },
+        "blend_mode": {
+          "label": "Mode Campuran Topeng"
+        },
+        "color": "Warna Topeng",
+        "flipH": "Balik Horizontal",
+        "flipV": "Balik Vertikal",
+        "invert": "Inversi Topeng",
+        "position": {
+          "label": "Posisi Topeng"
+        },
+        "rotate": "Putar Topeng",
+        "size": {
+          "height": "Tinggi Topeng",
+          "label": "Ukuran Topeng",
+          "width": "Lebar Topeng"
+        },
+        "transform": "Transformasi Topeng"
+      },
+      "pattern": {
+        "add": "Tambah Pola Latar (Pattern)",
+        "blendMode": {
+          "label": "Mode Campuran Pola"
+        },
+        "color": "Warna Pola",
+        "flipH": "Balik Horizontal",
+        "flipV": "Balik Vertikal",
+        "horizontalOffset": "Offset Horizontal",
+        "invert": "Inversi Pola",
+        "repeat": {
+          "label": "Pengulangan Pola"
+        },
+        "repeatOrigin": {
+          "label": "Titik Awal Pengulangan",
+          "options": {
+            "bottomCenter": "Bawah Tengah",
+            "bottomLeft": "Bawah Kiri",
+            "bottomRight": "Bawah Kanan",
+            "center": "Tengah",
+            "centerLeft": "Tengah Kiri",
+            "centerRight": "Tengah Kanan",
+            "topCenter": "Atas Tengah",
+            "topLeft": "Atas Kiri",
+            "topRight": "Atas Kanan"
+          }
+        },
+        "rotate": "Putar Pola",
+        "size": {
+          "height": "Tinggi Pola",
+          "label": "Ukuran Pola",
+          "width": "Lebar Pola"
+        },
+        "transform": "Transformasi Pola",
+        "verticalOffset": "Offset Vertikal",
+        "options": {
+          "polkaDots": "Titik Polkadot",
+          "grid": "Garis Kisi",
+          "diagonalStripes": "Garis Diagonal",
+          "chevrons": "Pola Chevron",
+          "waves": "Gelombang",
+          "triangles": "Segitiga"
+        }
+      },
+      "video": {
+        "add": "Tambah Video Latar",
+        "height": "Tinggi Video",
+        "label": "Sumber Video Latar",
+        "loop": "Ulangi Video",
+        "mp4": "URL Video MP4",
+        "mute": "Bisukan Suara",
+        "overlay": "Warna Lapisan Atas Video",
+        "pauseNotInView": "Jeda Saat di Luar Layar",
+        "pauseOnPlay": "Jeda Saat Diputar",
+        "webm": "URL Video WebM",
+        "width": "Lebar Video"
+      },
+      "color": {
+        "add": "Tambah Warna Latar",
+        "inherited": "Warna Diwarisi",
+        "label": "Warna Latar Belakang"
+      },
+      "gradient": {
+        "add": "Tambah Gradien Latar",
+        "direction": "Arah Gradien",
+        "directionInfo": "Sudut derajat atau kata kunci arah",
+        "label": "Gradien Latar Belakang",
+        "length": "Panjang Gradien",
+        "lengthInfo": "Jangkauan sebaran warna gradien",
+        "placeAbove": "Tempatkan Gradien di Atas Gambar Latar",
+        "repeat": "Ulangi Gradien",
+        "repeatInfo": "Ulangi pola gradien secara terus menerus",
+        "selectedStop": "Titik Warna Terpilih",
+        "type": {
+          "label": "Tipe Gradien"
+        },
+        "typeInfo": "Mode gradien linier atau radial"
+      }
+    },
+    "contextMenu": {
+      "canvasSettings": "Pengaturan Kanvas",
+      "moduleSettings": "Pengaturan Modul",
+      "sectionSettings": "Pengaturan Seksi",
+      "rowSettings": "Pengaturan Baris",
+      "addElement": "Tambah Elemen",
+      "copyStyles": "Salin Gaya",
+      "deleteCanvas": "Hapus Kanvas",
+      "disable": "Nonaktifkan Elemen",
+      "duplicateCanvas": "Duplikat Kanvas",
+      "editCanvas": "Ubah Kanvas",
+      "enable": "Aktifkan Elemen",
+      "exportCanvas": "Ekspor Elemen",
+      "goToLayer": "Buka Lapisan Terkait",
+      "goToParent": "Buka Elemen Induk",
+      "makeMainCanvas": "Jadikan Kanvas Utama",
+      "paste": "Tempel Elemen",
+      "pasteStyles": "Tempel Gaya",
+      "redo": "Ulangi Aksi",
+      "renameLabel": "Ganti Nama Elemen",
+      "resetStyles": "Reset Gaya",
+      "saveToLibrary": "Simpan ke Pustaka",
+      "undo": "Urungkan Aksi",
+      "duplicate": "Duplikat {type}",
+      "delete": "Hapus {type}",
+      "copy": "Salin {type}",
+      "cut": "Potong {type}"
+    }
+  },
+  "insertModal": {
+    "title": "Sisipkan Modul",
+    "searchPlaceholder": "Cari modul (contoh: judul, tombol)...",
+    "libraryEmpty": "Tidak ada modul pustaka tersimpan.",
+    "tabs": {
+      "modules": "Modul",
+      "saved": "Tata Letak Tersimpan",
+      "global": "Elemen Global"
+    },
+    "noResults": "Modul atau templat tidak ditemukan.",
+    "layoutGroups": {
+      "columns": "Tata Letak Kolom"
+    }
+  },
+  "insertRowModal": {
+    "title": "Sisipkan Baris",
+    "libraryPlaceholder": "Cari tata letak baris..."
+  },
+  "insertSectionModal": {
+    "title": "Sisipkan Seksi",
+    "tabs": {
+      "regular": "Seksi Reguler",
+      "specialty": "Seksi Khusus",
+      "fullwidth": "Seksi Lebar Penuh",
+      "templates": "Templat Jadi"
+    }
+  },
+  "modals": {
+    "confirm": {
+      "deleteModule": "Hapus Modul",
+      "deleteModuleDesc": "Apakah Anda yakin ingin menghapus modul ini dari halaman? Tindakan ini tidak dapat dibatalkan.",
+      "deleteSection": "Hapus Seksi",
+      "deleteSectionDesc": "Apakah Anda yakin ingin menghapus seksi ini serta semua baris dan modul di dalamnya?",
+      "deleteRow": "Hapus Baris",
+      "deleteRowDesc": "Apakah Anda yakin ingin menghapus baris ini beserta semua kolomnya?",
+      "deletePage": "Hapus Halaman",
+      "deletePageDesc": "Apakah Anda yakin ingin menghapus halaman ini secara permanen?",
+      "deletePreset": "Hapus Preset",
+      "deletePresetDesc": "Apakah Anda yakin ingin menghapus preset desain ini?",
+      "discard": "Buang Perubahan",
+      "discardChanges": "Buang Perubahan yang Belum Disimpan",
+      "discardChangesDesc": "Anda memiliki perubahan yang belum disimpan. Membuang perubahan akan mengembalikan ke revisi terakhir.",
+      "resetLayout": "Atur Ulang Tata Letak",
+      "resetLayoutDesc": "Pengaturan ulang akan mengembalikan seksi ini ke kondisi default.",
+      "confirm": "Konfirmasi Tindakan",
+      "delete": "Hapus",
+      "cancel": "Batal"
+    },
+    "insertModule": {
+      "title": "Sisipkan Modul",
+      "searchPlaceholder": "Cari modul (contoh: judul, tombol, formulir)...",
+      "noResults": "Tidak ada modul yang cocok dengan pencarian Anda."
+    },
+    "insertSection": {
+      "title": "Sisipkan Seksi",
+      "tabs": {
+        "regular": "Seksi Reguler",
+        "specialty": "Tata Letak Khusus",
+        "fullwidth": "Seksi Lebar Penuh",
+        "templates": "Templat Jadi"
+      },
+      "templatesCount": "{count} templat"
+    },
+    "insertRow": {
+      "title": "Sisipkan Baris",
+      "selectLayout": "Pilih Tata Letak Kolom"
+    },
+    "breakpoints": {
+      "title": "Kustomisasi Resolusi & Breakpoint",
+      "base": "Dasar (100%)",
+      "save": "Simpan Pengaturan Resolusi",
+      "cancel": "Batal"
+    },
+    "colorPicker": {
+      "title": "Pemilih Warna & Palet",
+      "custom": "Warna Kustom",
+      "customColor": "Warna Kustom",
+      "opacity": "Transparansi",
+      "addGlobal": "Tambah ke Warna Global",
+      "filters": "Filter Palet",
+      "globalColors": "Warna Tema Global",
+      "material": "Warna Material",
+      "hsv": {
+        "h": "Hue (H)",
+        "s": "Saturasi (S)",
+        "v": "Kecerahan / Value (V)"
+      }
+    },
+    "responsiveField": {
+      "title": "Penyesuaian Responsif untuk {field}",
+      "overrideHint": "Atur nilai spesifik untuk tiap perangkat. Nilai akan mewarisi pengaturan desktop secara default."
+    },
+    "shortcuts": {
+      "title": "Pintasan Papan Tombol (Shortcuts)",
+      "save": "Simpan Perubahan",
+      "undo": "Urungkan Perubahan",
+      "redo": "Ulangi Perubahan",
+      "duplicate": "Duplikat Pilihan",
+      "delete": "Hapus Pilihan",
+      "preview": "Mode Pratinjau"
+    },
+    "structureTemplates": {
+      "title": "Templat Struktur & Seksi",
+      "noResults": "Tidak ada templat struktur ditemukan."
+    },
+    "pageTemplate": {
+      "title": "Pilih Templat Halaman",
+      "loading": "Memuat pratinjau templat..."
+    },
+    "responsive": {
+      "title": "Penyesuaian Responsif"
+    }
+  },
+  "structureTemplateModal": {
+    "title": "Templat Struktur",
+    "noResults": "Tidak ada templat dalam kategori ini."
+  },
+  "pageTemplateModal": {
+    "title": "Pilih Templat Halaman",
+    "warning": "Menerapkan templat penuh akan menggantikan isi kanvas saat ini."
+  },
+  "presets": {
+    "title": "Preset Desain",
+    "addNew": "Simpan Sebagai Preset Baru",
+    "defaultPreset": "Preset Default",
+    "newFromCurrent": "Buat preset dari gaya saat ini",
+    "basedOn": "Berdasarkan {preset}"
+  },
+  "panels": {
+    "comingSoon": "Fitur segera hadir",
+    "fallbackTitle": "Rincian Panel",
+    "layers": {
+      "title": "Pohon Lapisan (Layers Tree)",
+      "empty": "Belum ada elemen di kanvas",
+      "search": "Filter lapisan...",
+      "searchPlaceholder": "Cari lapisan...",
+      "closeAll": "Tutup Semua"
+    },
+    "pages": {
+      "title": "Daftar Halaman Situs",
+      "addNew": "Halaman Baru",
+      "empty": "Belum ada halaman dibuat",
+      "loading": "Memuat daftar halaman...",
+      "searchPlaceholder": "Cari halaman...",
+      "promptTitle": "Masukkan Judul Halaman Baru:",
+      "actions": {
+        "edit": "Ubah Halaman",
+        "delete": "Hapus Halaman"
+      }
+    },
+    "layouts": {
+      "title": "Blok Tata Letak",
+      "emptyTitle": "Blok Tata Letak Tidak Ditemukan",
+      "emptyDesc": "Simpan seksi atau baris kustom sebagai blok yang dapat digunakan kembali.",
+      "search": "Cari tata letak..."
+    },
+    "templates": {
+      "title": "Templat Halaman & Tema",
+      "addNew": "Buat Templat",
+      "loading": "Memuat templat...",
+      "searchPlaceholder": "Cari templat...",
+      "category": "Kategori Templat",
+      "contentType": "Tipe Konten",
+      "applyTo": "Terapkan Templat Ke:",
+      "assignmentTitle": "Aturan Penetapan Templat",
+      "contentTypeOptions": {
+        "post": "Pos Blog",
+        "page": "Halaman Standar",
+        "custom": "Tipe Kustom"
+      },
+      "applyOptions": {
+        "all": "Semua Konten di Tipe Ini",
+        "front_page": "Halaman Utama (Depan)",
+        "specific_category": "Kategori Tertentu",
+        "specific_type": "Tipe Konten Spesifik"
+      }
+    },
+    "presets": {
+      "title": "Preset Tersimpan",
+      "empty": "Belum ada preset gaya untuk modul ini.",
+      "actions": {
+        "apply": "Terapkan Preset",
+        "delete": "Hapus Preset"
+      },
+      "saveModal": {
+        "title": "Simpan Preset Desain",
+        "description": "Simpan tipografi, warna, dan tata letak saat ini sebagai preset.",
+        "nameLabel": "Nama Preset",
+        "placeholder": "contoh: Kartu Utama Hero",
+        "saveBtn": "Simpan Preset"
+      }
+    },
+    "theme": {
+      "title": "Kustomisasi Tema",
+      "settings": "Variabel & Warna Tema",
+      "loading": "Memuat manifes tema...",
+      "noActive": "Tidak ada tema yang aktif saat ini",
+      "selectHint": "Pilih tema aktif untuk mengubah tipografi global, warna, dan token desain.",
+      "searchPlaceholder": "Cari opsi tema...",
+      "activate": "Aktifkan Tema"
+    },
+    "globalVariables": {
+      "title": "Variabel Global",
+      "empty": "Belum ada variabel global",
+      "add": "Tambah Variabel",
+      "name": "Nama Variabel",
+      "value": "Nilai",
+      "type": "Tipe Variabel",
+      "actions": {
+        "addColor": "Tambah Warna",
+        "addFont": "Tambah Font",
+        "addImage": "Tambah Gambar",
+        "addLink": "Tambah Tautan URL",
+        "addNumber": "Tambah Angka",
+        "addString": "Tambah Teks",
+        "cancel": "Batal",
+        "save": "Simpan Variabel",
+        "select": "Pilih Aset",
+        "selectImage": "Pilih Berkas Media",
+        "addGeneric": "Tambah Variabel Baru"
+      },
+      "messages": {
+        "saveError": "Gagal menyimpan variabel global.",
+        "saveSuccess": "Variabel global berhasil diperbarui.",
+        "fillName": "Silakan masukkan nama variabel yang valid.",
+        "invalidHex": "Kode warna hex tidak valid."
+      },
+      "placeholders": {
+        "name": "nama_variabel",
+        "none": "Belum dikonfigurasi",
+        "empty": "Belum ada variabel global di kategori ini."
+      },
+      "table": {
+        "color": "Warna",
+        "image": "Pratinjau Media",
+        "name": "Nama Token",
+        "string": "Nilai Teks",
+        "url": "Tujuan Tautan",
+        "value": "Nilai"
+      },
+      "numbers": "Angka & Satuan",
+      "text": "Teks & Kalimat",
+      "images": "Gambar & Media",
+      "links": "Tautan & URL",
+      "colors": "Warna & Palet",
+      "fonts": "Font & Tipografi"
+    },
+    "preferences": {
+      "title": "Preferensi Builder",
+      "editor": "Perilaku Editor",
+      "interface": "Antarmuka & Tampilan",
+      "autoSave": "Penyimpanan Otomatis (Auto Save)",
+      "showGrid": "Tampilkan Garis Kisi Tata Letak",
+      "snapToObjects": "Rapatkan ke Sisi Objek (Snap)",
+      "darkMode": "Pratinjau Mode Gelap Kanvas",
+      "system": "Informasi Sistem",
+      "version": "Versi Mesin Builder",
+      "build": "Waktu Kompilasi Build"
+    },
+    "portability": {
+      "tabs": {
+        "export": "Ekspor JSON",
+        "import": "Impor JSON"
+      },
+      "export": {
+        "file": "Unduh Berkas Templat",
+        "copy": "Salin JSON ke Papan Klip",
+        "helper": "Ekspor pohon tata letak saat ini untuk dibagikan antar situs atau cadangan."
+      },
+      "import": {
+        "placeholder": "Tempelkan struktur JSON di sini...",
+        "button": "Impor & Ganti Kanvas",
+        "helper": "Proses impor akan menggantikan struktur kanvas yang ada saat ini.",
+        "invalid": "Format JSON tidak valid. Silakan periksa isi teks yang ditempelkan.",
+        "success": "Tata letak berhasil diimpor!"
+      }
+    },
+    "pageSettings": {
+      "status": {
+        "draft": "Draf",
+        "published": "Diterbitkan",
+        "pending": "Menunggu Peninjauan",
+        "archived": "Diarsipkan"
+      },
+      "placeholders": {
+        "selectImage": "Pilih gambar unggulan..."
+      },
+      "publishing": "Publikasi",
+      "publishDate": "Tanggal Publikasi",
+      "slug": "Slug URL",
+      "slugPlaceholder": "dibuat-otomatis-dari-judul",
+      "type": "Tipe Konten",
+      "featured": "Konten Unggulan",
+      "featuredDesc": "Sematkan konten ini di paling atas",
+      "menus": "Menu",
+      "addToMenu": "Tambahkan ke Menu",
+      "addToMenuDesc": "Tambahkan halaman ini ke struktur menu",
+      "selectMenu": "Pilih Menu",
+      "parentItem": "Item Induk",
+      "rootItem": "Akar (Tanpa Induk)",
+      "menuLabel": "Label Menu",
+      "menuLabelPlaceholder": "Label menu...",
+      "taxonomy": "Taksonomi & Kategori",
+      "category": "Kategori",
+      "selectCategory": "Pilih Kategori",
+      "tags": "Tag",
+      "addTags": "Cari atau tambah tag...",
+      "featuredImage": "Gambar Unggulan",
+      "removeImage": "Hapus Gambar",
+      "excerpt": "Kutipan / Ringkasan",
+      "excerptPlaceholder": "Ringkasan singkat konten...",
+      "discussion": "Diskusi & Komentar",
+      "allowComments": "Izinkan Komentar",
+      "allowCommentsDesc": "Aktifkan kolom komentar pada halaman ini",
+      "metaTitle": "Judul Meta (SEO)",
+      "metaDescription": "Deskripsi Meta (SEO)",
+      "metaKeywords": "Kata Kunci Meta",
+      "ogImage": "Gambar Open Graph (Media Sosial)",
+      "selectOgImage": "Pilih Gambar OG",
+      "statusLabel": "Status"
+    },
+    "history": {
+      "change": "Mengubah {property}",
+      "current": "Kondisi Kerja Saat Ini",
+      "initial": "Pemuatan Awal Halaman",
+      "sessionStart": "Sesi Dimulai",
+      "action": "Aksi #{id}"
+    },
+    "help": {
+      "shortcuts": "Pintasan Kibor",
+      "footer": {
+        "docs": "Dokumentasi",
+        "support": "Hubungi Dukungan"
+      },
+      "labels": {
+        "copy": "Salin",
+        "delete": "Hapus",
+        "duplicate": "Duplikat",
+        "paste": "Tempel",
+        "redo": "Ulangi",
+        "save": "Simpan",
+        "undo": "Urungkan"
+      }
+    }
+  }
+}

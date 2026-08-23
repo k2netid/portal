@@ -1,0 +1,1087 @@
+@reference "../../../../../../../styles/shell/public-tailwind.css";
+
+/**
+ * Janari (public): editorial monochrome canvas + selectable accent presets.
+ * Layout adds: class `theme-janari`, `data-janari-preset`, `data-janari-mono`.
+ * `custom` preset uses --theme-primary-color-hsl from theme color picker.
+ */
+
+@layer base {
+    /* Performance baseline for all Janari pages:
+       keep first section eager, let below-fold sections render on demand. */
+    .theme-janari .main-content section + section {
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+    }
+
+    /* Some pages start with wrappers before the first section. */
+    .theme-janari .main-content > div > section + section {
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+    }
+
+    /* ─── MODERN BOLD Canvas: clean white with strong typography & vibrant accents ─── */
+    .theme-janari {
+        --background: 0 0% 99.5%;
+        --foreground: 0 0% 7%;
+        background-color: hsl(var(--background)) !important;
+        color: hsl(var(--foreground)) !important;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 7%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 7%;
+        --muted: 0 0% 92%;
+        --muted-foreground: 0 0% 50%;
+        --border: 0 0% 85%;
+        --input: 0 0% 85%;
+        --secondary: 0 0% 95%;
+        --secondary-foreground: 0 0% 12%;
+        --accent: 0 0% 92%;
+        --accent-foreground: 0 0% 12%;
+        --destructive: 0 0% 18%;
+        --destructive-foreground: 0 0% 100%;
+        --success: 0 0% 22%;
+        --success-foreground: 0 0% 100%;
+        --warning: 0 0% 32%;
+        --warning-foreground: 0 0% 100%;
+        --info: 0 0% 26%;
+        --info-foreground: 0 0% 100%;
+        /* VIBRANT electric blue accent (builder.io style) */
+        --janari-accent-hsl: var(--janari-accent-hsl-inline, 213 100% 48%);
+        --primary: var(--janari-accent-hsl);
+        --primary-foreground: 0 0% 100%;
+        --ring: var(--janari-accent-hsl);
+        /* Intensity: balanced + stronger shadows & borders */
+        --janari-surface-tint-alpha: 0.06;
+        --janari-border-tint-alpha: 0.2;
+        --janari-shadow-alpha: 0.15;
+        --janari-texture-opacity: 0;
+        --janari-texture-dot-size: 12px;
+        --janari-texture-grain-size: 5px;
+    }
+
+    .dark .theme-janari {
+        --background: 0 0% 0%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 4%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3%;
+        --popover-foreground: 0 0% 98%;
+        --muted: 0 0% 9%;
+        --muted-foreground: 0 0% 68%;
+        --border: 0 0% 16%;
+        --input: 0 0% 16%;
+        --secondary: 0 0% 8%;
+        --secondary-foreground: 0 0% 98%;
+        --accent: 0 0% 9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 0% 86%;
+        --destructive-foreground: 0 0% 6%;
+        --success: 0 0% 78%;
+        --success-foreground: 0 0% 6%;
+        --warning: 0 0% 70%;
+        --warning-foreground: 0 0% 6%;
+        --info: 0 0% 74%;
+        --info-foreground: 0 0% 6%;
+        --janari-accent-hsl: var(--janari-accent-hsl-inline-dark, 0 0% 100%);
+        --primary: var(--janari-accent-hsl);
+        --primary-foreground: 0 0% 0%;
+        --ring: var(--janari-accent-hsl);
+        --janari-surface-tint-alpha: 0.14;
+        --janari-border-tint-alpha: 0.28;
+        color-scheme: dark;
+    }
+
+    /* Monochrome base depth (optional) */
+    .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="soft"] {
+        --foreground: 0 0% 12%;
+        --muted: 0 0% 95%;
+        --border: 0 0% 88%;
+    }
+
+    .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="matte"] {
+        --background: 0 0% 98%;
+        --card: 0 0% 98%;
+        --muted: 0 0% 93%;
+    }
+
+    .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="high_contrast"] {
+        --foreground: 0 0% 0%;
+        --background: 0 0% 100%;
+        --border: 0 0% 82%;
+    }
+
+    .dark .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="soft"] {
+        --foreground: 0 0% 94%;
+        --muted: 0 0% 11%;
+        --border: 0 0% 20%;
+    }
+
+    .dark .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="matte"] {
+        --card: 0 0% 5%;
+        --muted: 0 0% 10%;
+    }
+
+    .dark .theme-janari[data-janari-preset="monochrome_clean"][data-janari-mono="high_contrast"] {
+        --foreground: 0 0% 100%;
+        --border: 0 0% 22%;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BACKGROUND COLOR SYSTEM (Light Mode)
+       data-janari-bg-light + data-janari-bg-light-v
+       ═══════════════════════════════════════════════════════ */
+
+    /* ─── White ─── */
+    .theme-janari[data-janari-bg-light="white"][data-janari-bg-light-v="clean"] {
+        --background: 0 0% 100%; --card: 0 0% 100%; --popover: 0 0% 100%; --muted: 0 0% 96%;
+    }
+    .theme-janari[data-janari-bg-light="white"][data-janari-bg-light-v="soft"] {
+        --background: 0 0% 98%; --card: 0 0% 99%; --popover: 0 0% 99%; --muted: 0 0% 95%;
+    }
+    .theme-janari[data-janari-bg-light="white"][data-janari-bg-light-v="matte"] {
+        --background: 0 0% 96%; --card: 0 0% 97%; --popover: 0 0% 97%; --muted: 0 0% 93%;
+    }
+    .theme-janari[data-janari-bg-light="white"][data-janari-bg-light-v="warm"] {
+        --background: 30 15% 97%; --card: 30 12% 98%; --popover: 30 12% 98%; --muted: 30 10% 94%;
+    }
+
+    /* ─── Cream / Ivory ─── */
+    .theme-janari[data-janari-bg-light="cream"][data-janari-bg-light-v="clean"] {
+        --background: 42 33% 96%; --card: 42 30% 97%; --popover: 42 30% 97%; --muted: 42 25% 93%;
+    }
+    .theme-janari[data-janari-bg-light="cream"][data-janari-bg-light-v="soft"] {
+        --background: 40 28% 94%; --card: 40 25% 96%; --popover: 40 25% 96%; --muted: 40 20% 91%;
+    }
+    .theme-janari[data-janari-bg-light="cream"][data-janari-bg-light-v="matte"] {
+        --background: 38 22% 92%; --card: 38 20% 94%; --popover: 38 20% 94%; --muted: 38 15% 89%;
+    }
+    .theme-janari[data-janari-bg-light="cream"][data-janari-bg-light-v="warm"] {
+        --background: 45 38% 95%; --card: 45 35% 97%; --popover: 45 35% 97%; --muted: 45 30% 92%;
+    }
+
+    /* ─── Cool Gray ─── */
+    .theme-janari[data-janari-bg-light="cool_gray"][data-janari-bg-light-v="clean"] {
+        --background: 210 12% 97%; --card: 210 10% 98%; --popover: 210 10% 98%; --muted: 210 8% 94%;
+    }
+    .theme-janari[data-janari-bg-light="cool_gray"][data-janari-bg-light-v="soft"] {
+        --background: 215 10% 95%; --card: 215 8% 97%; --popover: 215 8% 97%; --muted: 215 6% 92%;
+    }
+    .theme-janari[data-janari-bg-light="cool_gray"][data-janari-bg-light-v="matte"] {
+        --background: 220 8% 93%; --card: 220 6% 95%; --popover: 220 6% 95%; --muted: 220 5% 90%;
+    }
+    .theme-janari[data-janari-bg-light="cool_gray"][data-janari-bg-light-v="warm"] {
+        --background: 205 14% 96%; --card: 205 12% 97%; --popover: 205 12% 97%; --muted: 205 10% 93%;
+    }
+
+    /* ─── Warm Gray ─── */
+    .theme-janari[data-janari-bg-light="warm_gray"][data-janari-bg-light-v="clean"] {
+        --background: 30 6% 96%; --card: 30 5% 98%; --popover: 30 5% 98%; --muted: 30 4% 93%;
+    }
+    .theme-janari[data-janari-bg-light="warm_gray"][data-janari-bg-light-v="soft"] {
+        --background: 25 8% 94%; --card: 25 6% 96%; --popover: 25 6% 96%; --muted: 25 5% 91%;
+    }
+    .theme-janari[data-janari-bg-light="warm_gray"][data-janari-bg-light-v="matte"] {
+        --background: 20 5% 92%; --card: 20 4% 94%; --popover: 20 4% 94%; --muted: 20 3% 89%;
+    }
+    .theme-janari[data-janari-bg-light="warm_gray"][data-janari-bg-light-v="warm"] {
+        --background: 35 10% 95%; --card: 35 8% 97%; --popover: 35 8% 97%; --muted: 35 6% 92%;
+    }
+
+    /* ─── Mint ─── */
+    .theme-janari[data-janari-bg-light="mint"][data-janari-bg-light-v="clean"] {
+        --background: 152 18% 96%; --card: 152 15% 98%; --popover: 152 15% 98%; --muted: 152 12% 93%;
+    }
+    .theme-janari[data-janari-bg-light="mint"][data-janari-bg-light-v="soft"] {
+        --background: 155 14% 94%; --card: 155 12% 96%; --popover: 155 12% 96%; --muted: 155 10% 91%;
+    }
+    .theme-janari[data-janari-bg-light="mint"][data-janari-bg-light-v="matte"] {
+        --background: 148 10% 92%; --card: 148 8% 94%; --popover: 148 8% 94%; --muted: 148 6% 89%;
+    }
+    .theme-janari[data-janari-bg-light="mint"][data-janari-bg-light-v="warm"] {
+        --background: 160 20% 95%; --card: 160 18% 97%; --popover: 160 18% 97%; --muted: 160 15% 92%;
+    }
+
+    /* ─── Lavender ─── */
+    .theme-janari[data-janari-bg-light="lavender"][data-janari-bg-light-v="clean"] {
+        --background: 262 18% 97%; --card: 262 15% 98%; --popover: 262 15% 98%; --muted: 262 12% 94%;
+    }
+    .theme-janari[data-janari-bg-light="lavender"][data-janari-bg-light-v="soft"] {
+        --background: 265 14% 95%; --card: 265 12% 97%; --popover: 265 12% 97%; --muted: 265 10% 92%;
+    }
+    .theme-janari[data-janari-bg-light="lavender"][data-janari-bg-light-v="matte"] {
+        --background: 258 10% 93%; --card: 258 8% 95%; --popover: 258 8% 95%; --muted: 258 6% 90%;
+    }
+    .theme-janari[data-janari-bg-light="lavender"][data-janari-bg-light-v="warm"] {
+        --background: 270 20% 96%; --card: 270 18% 97%; --popover: 270 18% 97%; --muted: 270 15% 93%;
+    }
+
+    /* ─── Blush / Rose ─── */
+    .theme-janari[data-janari-bg-light="blush"][data-janari-bg-light-v="clean"] {
+        --background: 350 18% 97%; --card: 350 15% 98%; --popover: 350 15% 98%; --muted: 350 12% 94%;
+    }
+    .theme-janari[data-janari-bg-light="blush"][data-janari-bg-light-v="soft"] {
+        --background: 345 14% 95%; --card: 345 12% 97%; --popover: 345 12% 97%; --muted: 345 10% 92%;
+    }
+    .theme-janari[data-janari-bg-light="blush"][data-janari-bg-light-v="matte"] {
+        --background: 355 10% 93%; --card: 355 8% 95%; --popover: 355 8% 95%; --muted: 355 6% 90%;
+    }
+    .theme-janari[data-janari-bg-light="blush"][data-janari-bg-light-v="warm"] {
+        --background: 348 22% 96%; --card: 348 20% 97%; --popover: 348 20% 97%; --muted: 348 16% 93%;
+    }
+
+    /* ─── Sky ─── */
+    .theme-janari[data-janari-bg-light="sky"][data-janari-bg-light-v="clean"] {
+        --background: 200 20% 97%; --card: 200 16% 98%; --popover: 200 16% 98%; --muted: 200 14% 94%;
+    }
+    .theme-janari[data-janari-bg-light="sky"][data-janari-bg-light-v="soft"] {
+        --background: 205 16% 95%; --card: 205 14% 97%; --popover: 205 14% 97%; --muted: 205 10% 92%;
+    }
+    .theme-janari[data-janari-bg-light="sky"][data-janari-bg-light-v="matte"] {
+        --background: 198 12% 93%; --card: 198 10% 95%; --popover: 198 10% 95%; --muted: 198 8% 90%;
+    }
+    .theme-janari[data-janari-bg-light="sky"][data-janari-bg-light-v="warm"] {
+        --background: 195 22% 96%; --card: 195 20% 97%; --popover: 195 20% 97%; --muted: 195 16% 93%;
+    }
+
+    /* ─── Sand ─── */
+    .theme-janari[data-janari-bg-light="sand"][data-janari-bg-light-v="clean"] {
+        --background: 35 25% 95%; --card: 35 22% 97%; --popover: 35 22% 97%; --muted: 35 18% 92%;
+    }
+    .theme-janari[data-janari-bg-light="sand"][data-janari-bg-light-v="soft"] {
+        --background: 32 20% 93%; --card: 32 18% 95%; --popover: 32 18% 95%; --muted: 32 14% 90%;
+    }
+    .theme-janari[data-janari-bg-light="sand"][data-janari-bg-light-v="matte"] {
+        --background: 38 16% 91%; --card: 38 14% 93%; --popover: 38 14% 93%; --muted: 38 10% 88%;
+    }
+    .theme-janari[data-janari-bg-light="sand"][data-janari-bg-light-v="warm"] {
+        --background: 40 30% 94%; --card: 40 28% 96%; --popover: 40 28% 96%; --muted: 40 22% 91%;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BACKGROUND COLOR SYSTEM (Dark Mode)
+       data-janari-bg-dark + data-janari-bg-dark-v
+       ═══════════════════════════════════════════════════════ */
+
+    /* ─── Black ─── */
+    .dark .theme-janari[data-janari-bg-dark="black"][data-janari-bg-dark-v="clean"] {
+        --background: 0 0% 0%; --card: 0 0% 4%; --popover: 0 0% 3%; --muted: 0 0% 9%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="black"][data-janari-bg-dark-v="soft"] {
+        --background: 0 0% 4%; --card: 0 0% 7%; --popover: 0 0% 6%; --muted: 0 0% 12%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="black"][data-janari-bg-dark-v="matte"] {
+        --background: 0 0% 7%; --card: 0 0% 10%; --popover: 0 0% 9%; --muted: 0 0% 14%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="black"][data-janari-bg-dark-v="deep"] {
+        --background: 0 0% 2%; --card: 0 0% 5%; --popover: 0 0% 4%; --muted: 0 0% 10%;
+    }
+
+    /* ─── Charcoal ─── */
+    .dark .theme-janari[data-janari-bg-dark="charcoal"][data-janari-bg-dark-v="clean"] {
+        --background: 0 0% 12%; --card: 0 0% 15%; --popover: 0 0% 14%; --muted: 0 0% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="charcoal"][data-janari-bg-dark-v="soft"] {
+        --background: 0 0% 15%; --card: 0 0% 18%; --popover: 0 0% 17%; --muted: 0 0% 21%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="charcoal"][data-janari-bg-dark-v="matte"] {
+        --background: 210 3% 11%; --card: 210 3% 14%; --popover: 210 3% 13%; --muted: 210 3% 17%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="charcoal"][data-janari-bg-dark-v="deep"] {
+        --background: 220 5% 8%; --card: 220 5% 11%; --popover: 220 5% 10%; --muted: 220 5% 14%;
+    }
+
+    /* ─── Navy ─── */
+    .dark .theme-janari[data-janari-bg-dark="navy"][data-janari-bg-dark-v="clean"] {
+        --background: 222 25% 8%; --card: 222 22% 11%; --popover: 222 22% 10%; --muted: 222 18% 15%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="navy"][data-janari-bg-dark-v="soft"] {
+        --background: 220 20% 12%; --card: 220 18% 15%; --popover: 220 18% 14%; --muted: 220 15% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="navy"][data-janari-bg-dark-v="matte"] {
+        --background: 215 15% 10%; --card: 215 13% 13%; --popover: 215 13% 12%; --muted: 215 10% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="navy"][data-janari-bg-dark-v="deep"] {
+        --background: 225 30% 5%; --card: 225 28% 8%; --popover: 225 28% 7%; --muted: 225 22% 12%;
+    }
+
+    /* ─── Slate ─── */
+    .dark .theme-janari[data-janari-bg-dark="slate"][data-janari-bg-dark-v="clean"] {
+        --background: 215 16% 14%; --card: 215 14% 17%; --popover: 215 14% 16%; --muted: 215 10% 20%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="slate"][data-janari-bg-dark-v="soft"] {
+        --background: 220 12% 18%; --card: 220 10% 21%; --popover: 220 10% 20%; --muted: 220 8% 24%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="slate"][data-janari-bg-dark-v="matte"] {
+        --background: 210 10% 12%; --card: 210 8% 15%; --popover: 210 8% 14%; --muted: 210 6% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="slate"][data-janari-bg-dark-v="deep"] {
+        --background: 220 20% 10%; --card: 220 18% 13%; --popover: 220 18% 12%; --muted: 220 14% 16%;
+    }
+
+    /* ─── Forest ─── */
+    .dark .theme-janari[data-janari-bg-dark="forest"][data-janari-bg-dark-v="clean"] {
+        --background: 150 20% 8%; --card: 150 18% 11%; --popover: 150 18% 10%; --muted: 150 14% 15%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="forest"][data-janari-bg-dark-v="soft"] {
+        --background: 155 15% 12%; --card: 155 13% 15%; --popover: 155 13% 14%; --muted: 155 10% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="forest"][data-janari-bg-dark-v="matte"] {
+        --background: 145 12% 10%; --card: 145 10% 13%; --popover: 145 10% 12%; --muted: 145 8% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="forest"][data-janari-bg-dark-v="deep"] {
+        --background: 160 25% 5%; --card: 160 22% 8%; --popover: 160 22% 7%; --muted: 160 18% 12%;
+    }
+
+    /* ─── Wine / Burgundy ─── */
+    .dark .theme-janari[data-janari-bg-dark="wine"][data-janari-bg-dark-v="clean"] {
+        --background: 350 25% 8%; --card: 350 22% 11%; --popover: 350 22% 10%; --muted: 350 18% 15%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="wine"][data-janari-bg-dark-v="soft"] {
+        --background: 345 20% 12%; --card: 345 18% 15%; --popover: 345 18% 14%; --muted: 345 14% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="wine"][data-janari-bg-dark-v="matte"] {
+        --background: 355 15% 10%; --card: 355 13% 13%; --popover: 355 13% 12%; --muted: 355 10% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="wine"][data-janari-bg-dark-v="deep"] {
+        --background: 350 30% 5%; --card: 350 28% 8%; --popover: 350 28% 7%; --muted: 350 22% 12%;
+    }
+
+    /* ─── Midnight (Deep Blue) ─── */
+    .dark .theme-janari[data-janari-bg-dark="midnight"][data-janari-bg-dark-v="clean"] {
+        --background: 230 30% 6%; --card: 230 28% 9%; --popover: 230 28% 8%; --muted: 230 22% 13%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="midnight"][data-janari-bg-dark-v="soft"] {
+        --background: 235 25% 10%; --card: 235 22% 13%; --popover: 235 22% 12%; --muted: 235 18% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="midnight"][data-janari-bg-dark-v="matte"] {
+        --background: 225 20% 8%; --card: 225 18% 11%; --popover: 225 18% 10%; --muted: 225 14% 14%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="midnight"][data-janari-bg-dark-v="deep"] {
+        --background: 240 35% 4%; --card: 240 32% 7%; --popover: 240 32% 6%; --muted: 240 26% 10%;
+    }
+
+    /* ─── Dark Plum ─── */
+    .dark .theme-janari[data-janari-bg-dark="plum"][data-janari-bg-dark-v="clean"] {
+        --background: 280 22% 8%; --card: 280 20% 11%; --popover: 280 20% 10%; --muted: 280 16% 15%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="plum"][data-janari-bg-dark-v="soft"] {
+        --background: 275 18% 12%; --card: 275 16% 15%; --popover: 275 16% 14%; --muted: 275 12% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="plum"][data-janari-bg-dark-v="matte"] {
+        --background: 285 14% 10%; --card: 285 12% 13%; --popover: 285 12% 12%; --muted: 285 10% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="plum"][data-janari-bg-dark-v="deep"] {
+        --background: 290 28% 5%; --card: 290 25% 8%; --popover: 290 25% 7%; --muted: 290 20% 12%;
+    }
+
+    /* ─── Dark Earth ─── */
+    .dark .theme-janari[data-janari-bg-dark="earth"][data-janari-bg-dark-v="clean"] {
+        --background: 25 20% 8%; --card: 25 18% 11%; --popover: 25 18% 10%; --muted: 25 14% 15%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="earth"][data-janari-bg-dark-v="soft"] {
+        --background: 30 16% 12%; --card: 30 14% 15%; --popover: 30 14% 14%; --muted: 30 10% 18%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="earth"][data-janari-bg-dark-v="matte"] {
+        --background: 20 12% 10%; --card: 20 10% 13%; --popover: 20 10% 12%; --muted: 20 8% 16%;
+    }
+    .dark .theme-janari[data-janari-bg-dark="earth"][data-janari-bg-dark-v="deep"] {
+        --background: 28 25% 5%; --card: 28 22% 8%; --popover: 28 22% 7%; --muted: 28 18% 12%;
+    }
+
+    .theme-janari[data-janari-intensity="soft"] {
+        --janari-surface-tint-alpha: 0.01;
+        --janari-border-tint-alpha: 0.08;
+        --janari-shadow-alpha: 0.05;
+    }
+
+    .theme-janari[data-janari-intensity="balanced"] {
+        --janari-surface-tint-alpha: 0.03;
+        --janari-border-tint-alpha: 0.15;
+        --janari-shadow-alpha: 0.12;
+    }
+
+    .theme-janari[data-janari-intensity="vibrant"] {
+        --janari-surface-tint-alpha: 0.06;
+        --janari-border-tint-alpha: 0.25;
+        --janari-shadow-alpha: 0.22;
+        /* Subtle glow without overriding background */
+        box-shadow: inset 0 0 100px hsl(var(--primary) / 0.03);
+    }
+
+    /* Texture from customizer (available for ALL presets) */
+    .theme-janari[data-janari-texture="clean"] {
+        --janari-texture-opacity: 0;
+        background-image: none;
+    }
+
+    .theme-janari[data-janari-texture="dots"] {
+        background-image:
+            radial-gradient(
+                circle at 1px 1px,
+                hsl(var(--foreground) / var(--janari-texture-opacity)) 1px,
+                transparent 1.5px
+            );
+        background-size: var(--janari-texture-dot-size) var(--janari-texture-dot-size);
+    }
+
+    .theme-janari[data-janari-texture="grain"] {
+        background-image:
+            repeating-linear-gradient(
+                0deg,
+                hsl(var(--foreground) / calc(var(--janari-texture-opacity) * 0.5)) 0,
+                hsl(var(--foreground) / calc(var(--janari-texture-opacity) * 0.5)) 1px,
+                transparent 1px,
+                transparent var(--janari-texture-grain-size)
+            ),
+            repeating-linear-gradient(
+                90deg,
+                hsl(var(--foreground) / calc(var(--janari-texture-opacity) * 0.35)) 0,
+                hsl(var(--foreground) / calc(var(--janari-texture-opacity) * 0.35)) 1px,
+                transparent 1px,
+                transparent var(--janari-texture-grain-size)
+            );
+        background-size: auto;
+    }
+
+    /* Texture strength comes as 0..35 from customizer (available for ALL presets) */
+    .theme-janari[data-janari-texture-strength="0"] { --janari-texture-opacity: 0; }
+    .theme-janari[data-janari-texture-strength="1"] { --janari-texture-opacity: 0.01; }
+    .theme-janari[data-janari-texture-strength="2"] { --janari-texture-opacity: 0.02; }
+    .theme-janari[data-janari-texture-strength="3"] { --janari-texture-opacity: 0.03; }
+    .theme-janari[data-janari-texture-strength="4"] { --janari-texture-opacity: 0.04; }
+    .theme-janari[data-janari-texture-strength="5"] { --janari-texture-opacity: 0.05; }
+    .theme-janari[data-janari-texture-strength="6"] { --janari-texture-opacity: 0.06; }
+    .theme-janari[data-janari-texture-strength="7"] { --janari-texture-opacity: 0.07; }
+    .theme-janari[data-janari-texture-strength="8"] { --janari-texture-opacity: 0.08; }
+    .theme-janari[data-janari-texture-strength="9"] { --janari-texture-opacity: 0.09; }
+    .theme-janari[data-janari-texture-strength="10"] { --janari-texture-opacity: 0.1; }
+    .theme-janari[data-janari-texture-strength="11"] { --janari-texture-opacity: 0.11; }
+    .theme-janari[data-janari-texture-strength="12"] { --janari-texture-opacity: 0.12; }
+    .theme-janari[data-janari-texture-strength="13"] { --janari-texture-opacity: 0.13; }
+    .theme-janari[data-janari-texture-strength="14"] { --janari-texture-opacity: 0.14; }
+    .theme-janari[data-janari-texture-strength="15"] { --janari-texture-opacity: 0.15; }
+    .theme-janari[data-janari-texture-strength="16"] { --janari-texture-opacity: 0.16; }
+    .theme-janari[data-janari-texture-strength="17"] { --janari-texture-opacity: 0.17; }
+    .theme-janari[data-janari-texture-strength="18"] { --janari-texture-opacity: 0.18; }
+    .theme-janari[data-janari-texture-strength="19"] { --janari-texture-opacity: 0.19; }
+    .theme-janari[data-janari-texture-strength="20"] { --janari-texture-opacity: 0.2; }
+    .theme-janari[data-janari-texture-strength="21"] { --janari-texture-opacity: 0.21; }
+    .theme-janari[data-janari-texture-strength="22"] { --janari-texture-opacity: 0.22; }
+    .theme-janari[data-janari-texture-strength="23"] { --janari-texture-opacity: 0.23; }
+    .theme-janari[data-janari-texture-strength="24"] { --janari-texture-opacity: 0.24; }
+    .theme-janari[data-janari-texture-strength="25"] { --janari-texture-opacity: 0.25; }
+    .theme-janari[data-janari-texture-strength="26"] { --janari-texture-opacity: 0.26; }
+    .theme-janari[data-janari-texture-strength="27"] { --janari-texture-opacity: 0.27; }
+    .theme-janari[data-janari-texture-strength="28"] { --janari-texture-opacity: 0.28; }
+    .theme-janari[data-janari-texture-strength="29"] { --janari-texture-opacity: 0.29; }
+    .theme-janari[data-janari-texture-strength="30"] { --janari-texture-opacity: 0.3; }
+    .theme-janari[data-janari-texture-strength="31"] { --janari-texture-opacity: 0.31; }
+    .theme-janari[data-janari-texture-strength="32"] { --janari-texture-opacity: 0.32; }
+    .theme-janari[data-janari-texture-strength="33"] { --janari-texture-opacity: 0.33; }
+    .theme-janari[data-janari-texture-strength="34"] { --janari-texture-opacity: 0.34; }
+    .theme-janari[data-janari-texture-strength="35"] { --janari-texture-opacity: 0.35; }
+
+    /* ─── Presets: editorial accents (low chroma, 2026-ish) ─── */
+
+    .theme-janari[data-janari-preset="custom"] {
+        --janari-accent-hsl: var(--theme-color-primary-hsl, var(--theme-primary-color-hsl, 0 0% 0%));
+    }
+
+    .dark .theme-janari[data-janari-preset="custom"] {
+        --janari-accent-hsl: var(--theme-color-primary-hsl, var(--theme-primary-color-hsl, 0 0% 100%));
+    }
+
+    .theme-janari[data-janari-preset="monochrome_clean"] {
+        --janari-accent-hsl: 0 0% 0%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="monochrome_clean"] {
+        --janari-accent-hsl: 0 0% 100%;
+        --primary-foreground: 0 0% 0%;
+    }
+
+    .theme-janari[data-janari-preset="oceanic_clean"] {
+        --janari-accent-hsl: 212 92% 45%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="oceanic_clean"] {
+        --janari-accent-hsl: 206 100% 65%;
+        --primary-foreground: 212 92% 10%;
+    }
+
+    .theme-janari[data-janari-preset="emerald_fresh"] {
+        --janari-accent-hsl: 158 75% 36%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="emerald_fresh"] {
+        --janari-accent-hsl: 150 100% 55%;
+        --primary-foreground: 158 75% 10%;
+    }
+
+    .theme-janari[data-janari-preset="royal_violet"] {
+        --janari-accent-hsl: 265 82% 52%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="royal_violet"] {
+        --janari-accent-hsl: 265 92% 72%;
+        --primary-foreground: 265 82% 10%;
+    }
+
+    .theme-janari[data-janari-preset="sunset_coral"] {
+        --janari-accent-hsl: 12 95% 58%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="sunset_coral"] {
+        --janari-accent-hsl: 12 100% 68%;
+        --primary-foreground: 12 95% 10%;
+    }
+
+    .theme-janari[data-janari-preset="midnight_cyan"] {
+        --janari-accent-hsl: 192 95% 42%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="midnight_cyan"] {
+        --janari-accent-hsl: 188 100% 55%;
+        --primary-foreground: 192 95% 10%;
+    }
+
+    .theme-janari[data-janari-preset="forest_earth"] {
+        --janari-accent-hsl: 142 65% 40%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="forest_earth"] {
+        --janari-accent-hsl: 142 85% 60%;
+        --primary-foreground: 142 65% 10%;
+    }
+
+    .theme-janari[data-janari-preset="ruby_night"] {
+        --janari-accent-hsl: 350 85% 50%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="ruby_night"] {
+        --janari-accent-hsl: 350 100% 65%;
+        --primary-foreground: 350 85% 10%;
+    }
+
+    .theme-janari[data-janari-preset="aurora_mint"] {
+        --janari-accent-hsl: 162 82% 44%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="aurora_mint"] {
+        --janari-accent-hsl: 162 92% 64%;
+        --primary-foreground: 162 82% 10%;
+    }
+
+    .theme-janari[data-janari-preset="slate_indigo"] {
+        --janari-accent-hsl: 235 85% 60%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="slate_indigo"] {
+        --janari-accent-hsl: 235 95% 75%;
+        --primary-foreground: 235 85% 10%;
+    }
+
+    .theme-janari[data-janari-preset="arctic_blue"] {
+        --janari-accent-hsl: 202 95% 48%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="arctic_blue"] {
+        --janari-accent-hsl: 202 100% 68%;
+        --primary-foreground: 202 95% 10%;
+    }
+
+    .theme-janari[data-janari-preset="sand_stone"] {
+        --janari-accent-hsl: 35 75% 48%;
+        --primary-foreground: 0 0% 100%;
+    }
+
+    .dark .theme-janari[data-janari-preset="sand_stone"] {
+        --janari-accent-hsl: 35 95% 68%;
+        --primary-foreground: 35 75% 10%;
+    }
+
+    /* ─── Global Visual Styles ─── */
+
+    /* [data-janari-style="clean"] - Default: Minimalist, crisp */
+    .theme-janari[data-janari-style="clean"] {
+        --radius: 0.25rem;
+    }
+
+    /* [data-janari-style="flat"] - Modern Flat: Solid, no depth */
+    .theme-janari[data-janari-style="flat"] {
+        --radius: 0px;
+        box-shadow: none !important;
+    }
+    .theme-janari[data-janari-style="flat"] * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* [data-janari-style="soft"] - Playful Soft: Large radius, pastel vibe */
+    .theme-janari[data-janari-style="soft"] {
+        --radius: 1.25rem;
+        --background: 0 0% 99%;
+    }
+    .dark .theme-janari[data-janari-style="soft"] {
+        --background: 240 10% 4%;
+    }
+
+    /* [data-janari-style="glass"] - Premium Glass: Translucency, blur */
+    .theme-janari[data-janari-style="glass"] {
+        --radius: 1rem;
+    }
+    .theme-janari[data-janari-style="glass"] .card,
+    .theme-janari[data-janari-style="glass"] section > div {
+        background-color: hsl(var(--background) / 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ─── Button Radius & Shadows ─── */
+    .theme-janari[data-janari-button-radius] button,
+    .theme-janari[data-janari-button-radius] .btn {
+        border-radius: var(--theme-button-radius, var(--janari-button-radius-fallback, 6px)) !important;
+    }
+    /* Fallback if CSS var from customizer is not set yet */
+    .theme-janari[data-janari-button-radius="0px"] { --janari-button-radius-fallback: 0px; }
+    .theme-janari[data-janari-button-radius="4px"] { --janari-button-radius-fallback: 4px; }
+    .theme-janari[data-janari-button-radius="6px"] { --janari-button-radius-fallback: 6px; }
+    .theme-janari[data-janari-button-radius="8px"] { --janari-button-radius-fallback: 8px; }
+    .theme-janari[data-janari-button-radius="12px"] { --janari-button-radius-fallback: 12px; }
+    .theme-janari[data-janari-button-radius="9999px"] { --janari-button-radius-fallback: 9999px; }
+
+    .theme-janari[data-janari-button-shadow="none"] button { box-shadow: none !important; }
+    .theme-janari[data-janari-button-shadow="subtle"] button { box-shadow: 0 2px 4px hsl(var(--primary) / var(--janari-shadow-alpha)) !important; }
+    .theme-janari[data-janari-button-shadow="medium"] button { box-shadow: 0 4px 12px hsl(var(--primary) / var(--janari-shadow-alpha)) !important; }
+    .theme-janari[data-janari-button-shadow="strong"] button { box-shadow: 0 12px 24px -4px hsl(var(--primary) / var(--janari-shadow-alpha)) !important; }
+    .theme-janari[data-janari-button-shadow="glow"] button { 
+        box-shadow: 0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.1) !important;
+    }
+
+    /* Enhanced Button Physics & Colors - Builder.io style */
+    .theme-janari button:not([class*="bg-transparent"]),
+    .theme-janari .btn:not([class*="btn-ghost"]) {
+        border: 1px solid hsl(var(--primary) / 0.2) !important;
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98) !important;
+    }
+
+    .theme-janari button.bg-primary,
+    .theme-janari .btn-primary {
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9)) !important;
+        border: none !important;
+        color: hsl(var(--primary-foreground)) !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.8px !important;
+        font-size: 0.875rem !important;
+        padding: 12px 28px !important;
+        box-shadow: 0 4px 16px hsl(var(--primary) / 0.25) !important;
+    }
+
+    .theme-janari button.bg-primary:hover,
+    .theme-janari .btn-primary:hover {
+        filter: brightness(1.12) saturate(1.1);
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px hsl(var(--primary) / 0.4) !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CHROMATIC ACCENT SYSTEM
+       Every element below reacts to --primary (preset color)
+       ═══════════════════════════════════════════════════════ */
+
+    /* ─── Section Borders: accent-tinted top & bottom lines ─── */
+    .theme-janari section {
+        border-color: hsl(var(--primary) / 0.1);
+    }
+
+    .theme-janari section .border-border,
+    .theme-janari section .border-y,
+    .theme-janari section .border-t,
+    .theme-janari section .border-b {
+        border-color: hsl(var(--primary) / 0.11) !important;
+    }
+
+    .theme-janari section .divide-border > :not(:last-child) {
+        border-color: hsl(var(--primary) / 0.09) !important;
+    }
+
+    .theme-janari section .border-x {
+        border-color: hsl(var(--primary) / 0.07) !important;
+    }
+
+    /* ─── Horizontal Rules / Lines ─── */
+    .theme-janari hr {
+        border-color: hsl(var(--primary) / 0.15) !important;
+    }
+
+    /* ─── Footer accent line ─── */
+    .theme-janari footer {
+        border-color: hsl(var(--primary) / 0.15) !important;
+    }
+
+    .theme-janari footer .border-t,
+    .theme-janari footer .border-border {
+        border-color: hsl(var(--primary) / 0.12) !important;
+    }
+
+    /* ─── Section Header Badges (the "EXPLORE OPPORTUNITIES" style labels) ─── */
+    .theme-janari section .tracking-\[0\.5em\],
+    .theme-janari section .tracking-\[0\.8em\],
+    .theme-janari section .tracking-\[0\.4em\] {
+        /* Keep labels readable on light backgrounds */
+        color: hsl(var(--foreground) / 0.88) !important;
+    }
+    .dark .theme-janari section .tracking-\[0\.5em\],
+    .dark .theme-janari section .tracking-\[0\.8em\],
+    .dark .theme-janari section .tracking-\[0\.4em\] {
+        color: hsl(var(--primary)) !important;
+    }
+
+    /* Preserve readability on dark hero/testimonial sections */
+    .theme-janari section.bg-black .tracking-\[0\.5em\],
+    .theme-janari section.bg-black .tracking-\[0\.8em\],
+    .theme-janari section.bg-black .tracking-\[0\.4em\] {
+        color: hsl(0 0% 100%) !important;
+    }
+
+    /* Hero: keep LATEST NEWS label white on black strip */
+    .theme-janari .w-12.bg-black .rotate-\[-90deg\] {
+        color: hsl(0 0% 100% / 0.9) !important;
+    }
+
+    /* ─── Small accent lines (the w-8 h-px bg-primary) are already primary ─── */
+    /* ─── Make the w-2 h-px bg-foreground/30 lines also tinted ─── */
+    .theme-janari section [class*="h-px"][class*="bg-foreground"] {
+        background-color: hsl(var(--primary) / 0.4) !important;
+    }
+
+    /* ─── Category Tags / Badges ─── */
+    .theme-janari section .border .tracking-\[0\.2em\],
+    .theme-janari section .border .tracking-widest {
+        border-color: hsl(var(--primary) / 0.3) !important;
+        color: hsl(var(--foreground) / 0.82) !important;
+    }
+    .dark .theme-janari section .border .tracking-\[0\.2em\],
+    .dark .theme-janari section .border .tracking-widest {
+        color: hsl(var(--primary) / 0.9) !important;
+    }
+
+    /* ─── Stats accent bar ─── */
+    .theme-janari .bg-primary {
+        background-color: hsl(var(--primary)) !important;
+    }
+
+    /* ─── Form Inputs: accent border on focus ─── */
+    .theme-janari input:focus,
+    .theme-janari textarea:focus {
+        border-color: hsl(var(--primary) / 0.6) !important;
+        box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1), 0 0 20px hsl(var(--primary) / 0.05) !important;
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    /* ─── Cards & Panels ─── */
+    .theme-janari .card,
+    .theme-janari section .border.border-border {
+        border-color: hsl(var(--primary) / 0.1) !important;
+        transition: border-color 0.35s cubic-bezier(0.37, 0.01, 0, 0.98), box-shadow 0.35s cubic-bezier(0.37, 0.01, 0, 0.98), transform 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    .theme-janari .card:hover,
+    .theme-janari section .border.border-border:hover {
+        border-color: hsl(var(--primary) / 0.35) !important;
+        box-shadow: 0 16px 48px hsl(var(--primary) / 0.15), 0 0 1px hsl(var(--primary) / 0.1);
+        transform: translateY(-4px);
+    }
+
+    /* ─── Grid Card Hover: the major cards that flip bg ─── */
+    .theme-janari section .hover\:bg-primary:hover {
+        background-color: hsl(var(--primary)) !important;
+    }
+
+    /* ─── View All / Action Buttons: tinted borders & hover ─── */
+    .theme-janari a.border.border-border,
+    .theme-janari a[class*="border-border"] {
+        border-color: hsl(var(--primary) / 0.15) !important;
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    .theme-janari a.border.border-border:hover,
+    .theme-janari a[class*="border-border"]:hover {
+        border-color: hsl(var(--primary) / 0.5) !important;
+        color: hsl(var(--primary)) !important;
+        background-color: hsl(var(--primary) / 0.06) !important;
+        box-shadow: 0 8px 24px hsl(var(--primary) / 0.1);
+        transform: translateY(-2px);
+    }
+
+    /* ─── CTA Section glow blob ─── */
+    .theme-janari section .bg-primary\/10 {
+        background-color: hsl(var(--primary) / 0.10) !important;
+    }
+
+    /* ─── Newsletter / Footer submit button ─── */
+    .theme-janari footer button[type="submit"],
+    .theme-janari .bg-foreground:hover {
+        background-color: hsl(var(--primary)) !important;
+        color: hsl(var(--primary-foreground)) !important;
+    }
+
+    /* ─── Vertical column labels ─── */
+    .theme-janari section [class*="writing-mode"] {
+        transition: color 0.5s ease;
+    }
+
+    /* ─── Hero slide indicator active dot ─── */
+    .theme-janari .bg-primary {
+        background-color: hsl(var(--primary)) !important;
+    }
+
+    /* ─── Dropdown / Popover borders ─── */
+    .theme-janari .border.border-border.p-6 {
+        border-color: hsl(var(--primary) / 0.12) !important;
+        box-shadow: 0 15px 40px hsl(var(--primary) / 0.06);
+    }
+
+    /* ─── Navigation Styles ─── */
+    .theme-janari[data-janari-nav] nav a {
+        position: relative;
+        z-index: 10;
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    /* [data-janari-nav="glass"] */
+    .theme-janari[data-janari-nav="glass"] nav a {
+        border-radius: 0.5rem;
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+    .theme-janari[data-janari-nav="glass"] nav a:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-color: hsl(var(--primary) / 0.2);
+    }
+    .theme-janari[data-janari-nav="glass"] nav a.is-active {
+        background-color: hsl(var(--primary) / 0.25);
+        color: hsl(var(--primary));
+        border: 1px solid hsl(var(--primary) / 0.4);
+    }
+
+    /* [data-janari-nav="spotlight"] */
+    .theme-janari[data-janari-nav="spotlight"] nav a:hover {
+        color: hsl(var(--primary));
+    }
+    .theme-janari[data-janari-nav="spotlight"] nav a::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        background: radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, hsl(var(--primary) / 0.1) 70%);
+        border-radius: 9999px;
+        filter: blur(24px);
+        opacity: 0;
+        transition: opacity 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+        z-index: -10;
+    }
+    .theme-janari[data-janari-nav="spotlight"] nav a:hover::before {
+        opacity: 1;
+    }
+
+    /* [data-janari-nav="magnetic"] */
+    .theme-janari[data-janari-nav="magnetic"] nav a {
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+    .theme-janari[data-janari-nav="magnetic"] nav a:hover {
+        transform: scale(1.08) translateY(-3px);
+        color: hsl(var(--primary));
+    }
+
+    /* [data-janari-nav="slide"] */
+    .theme-janari[data-janari-nav="slide"] nav a {
+        overflow: hidden;
+    }
+    .theme-janari[data-janari-nav="slide"] nav a span {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+    .theme-janari[data-janari-nav="slide"] nav a:hover span {
+        transform: translateY(-100%);
+    }
+    .theme-janari[data-janari-nav="slide"] nav a::after {
+        content: attr(data-title);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: hsl(var(--primary));
+        font-weight: 700;
+        transition: transform 0.3s ease;
+    }
+    .theme-janari[data-janari-nav="slide"] nav a:hover::after {
+        transform: translateY(-100%);
+    }
+
+    /* [data-janari-nav="pill"] */
+    .theme-janari[data-janari-nav="pill"] nav a,
+    .theme-janari[data-janari-nav="pill"] nav button {
+        border-radius: 9999px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    .theme-janari[data-janari-nav="pill"] nav a:hover {
+        background-color: hsl(var(--primary) / 0.1);
+    }
+    .theme-janari[data-janari-nav="pill"] nav a.is-active {
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+    }
+
+    /* [data-janari-nav="glow"] */
+    .theme-janari[data-janari-nav="glow"] nav a:hover {
+        text-shadow: 0 0 8px hsl(var(--primary) / 0.8);
+        color: hsl(var(--primary));
+    }
+
+    /* [data-janari-nav="underline"] */
+    .theme-janari[data-janari-nav="underline"] nav a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: hsl(var(--primary));
+        transform: scaleX(0);
+        transition: transform 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+        transform-origin: right;
+    }
+    .theme-janari[data-janari-nav="underline"] nav a:hover::after,
+    .theme-janari[data-janari-nav="underline"] nav a.is-active::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    /* [data-janari-nav="floating"] */
+    .theme-janari[data-janari-nav="floating"] nav a:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px hsl(var(--primary) / 0.25);
+        color: hsl(var(--primary));
+        transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    /* ─── Sync with shared variables ─── */
+    .theme-janari {
+        --primary: var(--janari-accent-hsl);
+        --ring: var(--janari-accent-hsl);
+    }
+}
+
+@layer components {
+    .janari-breadcrumb {
+        @apply flex items-center gap-1.5 py-4 overflow-x-auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .janari-breadcrumb::-webkit-scrollbar { display: none; }
+
+    .janari-breadcrumb-item {
+        @apply flex items-center whitespace-nowrap;
+    }
+
+    .janari-breadcrumb-separator {
+        @apply mx-2 text-[8px] opacity-20 font-light select-none;
+    }
+
+    .janari-breadcrumb-link {
+        @apply text-[9px] font-black uppercase tracking-[0.3em] text-foreground/40 hover:text-foreground transition-all duration-500 ease-out;
+        position: relative;
+    }
+
+    .janari-breadcrumb-link::after {
+        content: '';
+        @apply absolute -bottom-1 left-0 w-full h-[1px] bg-foreground scale-x-0 origin-right transition-transform duration-500 ease-out;
+    }
+
+    .janari-breadcrumb-link:hover::after {
+        @apply scale-x-100 origin-left;
+    }
+
+    .janari-breadcrumb-current {
+        @apply text-[9px] font-black uppercase tracking-[0.3em] text-foreground;
+    }
+
+    /* ─── Premium Scrollbar Styling ─── */
+    .theme-janari {
+        scroll-behavior: smooth;
+    }
+
+    .theme-janari::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .theme-janari::-webkit-scrollbar-track {
+        background: hsl(var(--background) / 0.5);
+    }
+
+    .theme-janari::-webkit-scrollbar-thumb {
+        background: hsl(var(--primary) / 0.5);
+        border-radius: 5px;
+        transition: background-color 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
+    }
+
+    .theme-janari::-webkit-scrollbar-thumb:hover {
+        background: hsl(var(--primary) / 0.8);
+    }
+
+    /* Firefox scrollbar */
+    .theme-janari {
+        scrollbar-color: hsl(var(--primary) / 0.5) hsl(var(--background) / 0.5);
+        scrollbar-width: thin;
+    }
+
+    /* ─── Premium Link & Focus States ─── */
+    .theme-janari a:focus-visible {
+        outline: 2px solid hsl(var(--primary) / 0.5);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    .theme-janari button:not([class*="bg-transparent"]):focus-visible {
+        outline: 2px solid hsl(var(--primary) / 0.5);
+        outline-offset: 2px;
+    }
+
+    /* Header: toolbar + language dropdown above 2nd (artist) bar */
+    .theme-janari header {
+        isolation: isolate;
+    }
+
+    .theme-janari .artist-bar {
+        z-index: 0;
+    }
+
+    .theme-janari .janari-header-toolbar {
+        position: relative;
+        z-index: 30;
+    }
+
+    .janari-overlay-panel,
+    [data-janari-overlay] {
+        z-index: 150 !important;
+    }
+}

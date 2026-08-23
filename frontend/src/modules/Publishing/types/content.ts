@@ -1,5 +1,5 @@
 import type { Category, Tag } from './taxonomy';
-import type { MenuItem } from '@/modules/Publishing/shims/layout/types/menu';
+import type { MenuItem } from '@/modules/Layout/types/menu';
 
 export * from './taxonomy';
 

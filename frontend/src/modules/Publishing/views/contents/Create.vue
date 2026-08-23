@@ -246,8 +246,8 @@ import ActionToolbar from '@/modules/Publishing/components/content/ActionToolbar
 import AutoSaveIndicator from '@/shared/components/AutoSaveIndicator.vue';
 import ContentMain from '@/modules/Publishing/components/content/ContentMain.vue';
 import ContentSidebar from '@/modules/Publishing/components/content/ContentSidebar.vue';
-import Builder from '@/modules/Publishing/shims/layout/components/builder/Builder.vue';
-import BlockRenderer from '@/modules/Publishing/shims/layout/components/content-renderer/BlockRenderer.vue';
+import Builder from '@/modules/Layout/components/builder/Builder.vue';
+import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import { Monitor, Tablet, Smartphone } from 'lucide-vue-next';
 
 // Composables & Utils
@@ -256,7 +256,7 @@ import { useAutoSave } from '@/shared/composables/useAutoSave';
 import { useToast } from '@/shared/composables/useToast';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
 import { contentSchema } from '@/modules/Publishing/schemas/content';
-import type { Menu } from '@/modules/Publishing/shims/layout/types/menu';
+import type { Menu } from '@/modules/Layout/types/menu';
 import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { ContentForm } from '@/modules/Publishing/types/content';

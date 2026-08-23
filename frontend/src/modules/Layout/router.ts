@@ -34,6 +34,39 @@ const layoutRoutes: RouteRecordRaw[] = [
             breadcrumb: 'layout.navigation.menu.redirects',
         },
     },
+    {
+        path: 'themes',
+        name: 'themes',
+        component: () => import('@/modules/Layout/views/themes/Index.vue'),
+        meta: {
+            permission: 'manage themes',
+            extension: 'layout',
+            title: 'publishing.themes.title',
+            breadcrumb: 'publishing.navigation.menu.themes',
+        },
+    },
+    {
+        path: 'themes/:slug/customizer',
+        name: 'themes.customizer',
+        component: () => import('@/modules/Layout/customizer/shell/ThemeCustomizerView.vue'),
+        meta: {
+            permission: 'manage themes',
+            extension: 'layout',
+            title: 'publishing.theme_customizer.title',
+            breadcrumb: 'publishing.theme_customizer.title',
+        },
+    },
+    {
+        path: 'site-editor',
+        name: 'builder.site',
+        component: () => import('@/modules/Layout/views/builder/SiteEditor.vue'),
+        meta: {
+            permission: 'manage settings',
+            extension: 'layout',
+            title: 'Visual Site Editor',
+            breadcrumb: 'layout.navigation.menu.siteEditor',
+        },
+    },
 ];
 
 export default layoutRoutes;
