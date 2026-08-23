@@ -78,6 +78,7 @@
             "Modules\\Analytics\\": "Modules/Analytics/app/",
             "Modules\\Analytics\\Database\\Factories\\": "Modules/Analytics/database/factories/",
             "Modules\\Search\\": "Modules/Search/app/",
+            "Modules\\CmsAi\\": "Modules/CmsAi/app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -93,7 +94,8 @@
             "Modules\\Forms\\Tests\\": "Modules/Forms/tests/",
             "Modules\\Newsletter\\Tests\\": "Modules/Newsletter/tests/",
             "Modules\\Analytics\\Tests\\": "Modules/Analytics/tests/",
-            "Modules\\Search\\Tests\\": "Modules/Search/tests/"
+            "Modules\\Search\\Tests\\": "Modules/Search/tests/",
+            "Modules\\CmsAi\\Tests\\": "Modules/CmsAi/tests/"
         }
     },
     "scripts": {

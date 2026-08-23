@@ -1,0 +1,30 @@
+{
+  "name": "CMS AI",
+  "slug": "cms-ai",
+  "version": "1.0.0",
+  "description": "Publishing draft and taxonomy assist, usage logs, and batch taxonomy jobs. Kernel Settings → AI governs provider keys and global enable.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "ai-panel",
+  "dependencies": {
+    "publishing": ">=1.0.0",
+    "library": ">=1.0.0"
+  },
+  "features": [
+    {
+      "slug": "publishing-assist",
+      "name": "Publishing Assist",
+      "description": "AI draft and taxonomy suggestions in the content editor",
+      "category": "productivity"
+    },
+    {
+      "slug": "usage-metering",
+      "name": "Usage Metering",
+      "description": "Track AI feature usage and subscription token quotas",
+      "category": "insight"
+    }
+  ]
+}

@@ -55,6 +55,10 @@ const OPTIONAL_FIRST_PARTY: Array<{
         slug: 'search',
         load: () => import('@/modules/Search'),
     },
+    {
+        slug: 'cms-ai',
+        load: () => import('@/modules/CmsAi'),
+    },
 ];
 
 function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {

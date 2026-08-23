@@ -11,6 +11,7 @@ import layoutPack from '@/modules/Layout/locales';
 import formsPack from '@/modules/Forms/locales';
 import newsletterPack from '@/modules/Newsletter/locales';
 import searchPack from '@/modules/Search/locales';
+import cmsAiPack from '@/modules/CmsAi/locales';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -60,6 +61,7 @@ export const moduleLocaleBundles = {
         forms: formsPack.en,
         newsletter: newsletterPack.en,
         search: searchPack.en,
+        ai: cmsAiPack.en,
     },
     id: {
         ...coLocatedId,
@@ -72,6 +74,7 @@ export const moduleLocaleBundles = {
         forms: formsPack.id,
         newsletter: newsletterPack.id,
         search: searchPack.id,
+        ai: cmsAiPack.id,
     },
     su: {
         ...coLocatedSu,
@@ -84,5 +87,6 @@ export const moduleLocaleBundles = {
         forms: formsPack.su,
         newsletter: newsletterPack.su,
         search: searchPack.su,
+        ai: cmsAiPack.su,
     },
 } as const;

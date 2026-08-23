@@ -240,6 +240,17 @@ class ConsoleMenu extends Model
                         'badge_variant' => 'primary',
                         'order' => 2,
                     ],
+                    [
+                        'name' => 'AI Assistant',
+                        'label_key' => 'ai.navigation.panel',
+                        'route_name' => 'ai-panel',
+                        'icon' => 'sparkles',
+                        'permission' => 'manage settings',
+                        'extension_slug' => 'cms-ai',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 3,
+                    ],
                 ],
             ],
 

@@ -98,9 +98,9 @@ Do **not** ship mega-`Modules/Content`. Extract Mail-shaped packs:
 |------|----------------|------------------|--------|
 | P3-1 | `publishing` + `library` | `Content/Publishing`, `Content/Library` | **In-tree on kernel** (soft stubs for Layout/Newsletter/AI) |
 | P3-2 | `media` | `Content/Media` | **In-tree on kernel** (File Manager stays Core Infra) |
-| P3-3 | `layout` | `Content/Layout` (+ themes) | pending |
-| P3-4 | `forms` | `Content/Forms` | pending |
-| P3-5+ | `analytics`, `newsletter`, `search`, `cms-ai` | `Intelligence/*` | pending |
+| P3-3 | `layout` | `Content/Layout` (+ themes) | **In-tree on kernel** |
+| P3-4 | `forms` | `Content/Forms` | **In-tree on kernel** |
+| P3-5+ | `analytics`, `newsletter`, `search`, `cms-ai` | `Intelligence/*` | **In-tree on kernel** |
 
 `dependencies` in manifest e.g. publishing → `"library": ">=1.0.0"`.
 

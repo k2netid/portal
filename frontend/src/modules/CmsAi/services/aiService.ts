@@ -2,7 +2,6 @@ import api from '@/engine/api/client';
 import { cmsAiPaths } from '@/engine/api/paths';
 import type { AxiosResponse } from 'axios';
 
-/** Publishing editor assist — delegates to cms-ai pack endpoints. */
 export const AiService = {
     draftPublishing(payload: Record<string, unknown>): Promise<AxiosResponse> {
         return api.post(cmsAiPaths.draftPublishing, payload);

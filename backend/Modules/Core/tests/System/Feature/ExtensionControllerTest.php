@@ -665,4 +665,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $search['is_core']);
         $this->assertEquals('module', $search['type']);
     }
+
+    public function test_cms_ai_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $cmsAi = collect($response->json('data'))->firstWhere('slug', 'cms-ai');
+
+        $this->assertNotNull($cmsAi);
+        $this->assertFalse((bool) $cmsAi['is_core']);
+        $this->assertEquals('module', $cmsAi['type']);
+    }
 }

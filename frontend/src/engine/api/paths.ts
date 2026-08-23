@@ -138,6 +138,14 @@ export const searchPaths = {
     reindex: '/manage/search/reindex',
 } as const;
 
+export const cmsAiPaths = {
+    draftPublishing: '/manage/ai/draft-publishing',
+    suggestTaxonomy: '/manage/ai/suggest-taxonomy',
+    taxonomyBatches: '/manage/ai/taxonomy-batches',
+    taxonomyBatch: (id: string) => `/manage/ai/taxonomy-batches/${id}`,
+    usageStats: '/manage/ai/usage-stats',
+} as const;
+
 export const systemPaths = {
     emailTemplates: '/manage/system/email-templates',
     emailTemplate: (id: string) => `/manage/system/email-templates/${id}`,

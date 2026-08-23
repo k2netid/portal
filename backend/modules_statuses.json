@@ -8,5 +8,6 @@
     "Forms": true,
     "Newsletter": true,
     "Analytics": true,
-    "Search": true
+    "Search": true,
+    "CmsAi": true
 }
