@@ -5,6 +5,8 @@
 ### Added
 - Module contract freeze docs + `ModuleManifestValidator` for first-party manifests.
 - Discovery sync: `description`, manifest `license` / `license_tier` / `settings_route`; preserve `requirements` when dependencies omitted.
+- `EnsureExtensionActive` middleware alias `extension.active:{slug}` for optional packs.
+- Docs: `external-module-packaging.md` + `scripts/scaffold-optional-module.sh`.
 
 ### Fixed
 - Extension discovery: slug `core` is platform kernel (`is_core`, always `active`); heals stale Inactive App Store rows.

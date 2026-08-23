@@ -8,16 +8,40 @@ import { logger } from '@/shared/utils/logger';
 type NavStore = ReturnType<typeof useNavigationStore>;
 type DashboardStore = ReturnType<typeof useDashboardStore>;
 
-/** First-party optional modules: FE AppModule id === registry slug. */
+type OptionalPackLoader = () => Promise<Record<string, unknown>>;
+
+/**
+ * First-party optional modules: FE AppModule id === registry slug.
+ * Add CMS packs here when extracted (forms, media, publishing, …).
+ * Loader must export either `mailModules` / `{Studly}Modules` or a `modules: AppModule[]` array.
+ */
 const OPTIONAL_FIRST_PARTY: Array<{
     slug: string;
-    load: () => Promise<{ mailModules: AppModule[] }>;
+    load: OptionalPackLoader;
 }> = [
     {
         slug: 'mail',
         load: () => import('@/modules/Mail'),
     },
 ];
+
+function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {
+    if (Array.isArray(mod.modules)) {
+        return mod.modules as AppModule[];
+    }
+    if (Array.isArray(mod.mailModules)) {
+        return mod.mailModules as AppModule[];
+    }
+    const studly = slug
+        .split(/[-_]/)
+        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+        .join('');
+    const named = mod[`${studly}Modules`];
+    if (Array.isArray(named)) {
+        return named as AppModule[];
+    }
+    return [];
+}
 
 /**
  * Register optional first-party FE modules when product-active in the registry.
@@ -37,7 +61,7 @@ export async function registerOptionalFirstPartyModules(activeExtensions: string
 
         try {
             const mod = await entry.load();
-            const modules = mod.mailModules ?? [];
+            const modules = resolveAppModules(mod, entry.slug);
 
             if (modules.length === 0) {
                 logger.warning(`[OptionalModules] No AppModule export for slug ${entry.slug}`);

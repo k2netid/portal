@@ -48,10 +48,12 @@ Discovery **must preserve** existing `requirements` and `settings` keys it does 
 
 ## Backend gating checklist
 
-1. API routes under `auth:sanctum` + permission + extension middleware that checks `sys_extensions.slug=<slug>` + `status=active` (Mail: `mail.extension`).
+1. API routes under `auth:sanctum` + permission + **`extension.active:<slug>`** (Mail may still use legacy alias `mail.extension`).
 2. Migrations live under `database/migrations/` (run on activate **and** via `loadMigrationsFrom` — keep idempotent).
 3. Deactivate = status flip only (no provider unload, no rollback).
 4. Uninstall of first-party shipped modules is discouraged; kernel uninstall is refused.
+
+Packaging from other repos: [external-module-packaging.md](./external-module-packaging.md) · scaffold: `scripts/scaffold-optional-module.sh`.
 
 ## Frontend gating checklist
 

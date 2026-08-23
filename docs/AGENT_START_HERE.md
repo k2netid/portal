@@ -23,7 +23,8 @@ Branch **`develop`** (line CMS) **dihapus Aug 2026**. Content/themes/member = do
 2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md)
 3. [docs/product/downstream-apps-and-licensing.md](product/downstream-apps-and-licensing.md)
 4. [docs/extensions/module-contract.md](extensions/module-contract.md) — kontrak modul optional (Mail = golden sample)
-5. [AGENTS.md](../AGENTS.md)
+5. [docs/extensions/external-module-packaging.md](extensions/external-module-packaging.md) — packaging pack eksternal / CMS extract
+6. [AGENTS.md](../AGENTS.md)
 
 ## Quality gate sebelum selesai
 

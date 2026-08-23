@@ -19,6 +19,7 @@ use Modules\Core\Security\Console\Commands\SecurityMaintenance;
 use Modules\Core\Security\Console\Commands\UpdateCloudflareIps;
 use Modules\Core\Security\Services\AbacEvaluator;
 use Modules\Core\System\Contracts\StorageQuotaServiceInterface;
+use Modules\Core\System\Http\Middleware\EnsureExtensionActive;
 use Modules\Core\System\Http\Middleware\EnsureKycLevel;
 use Modules\Core\System\Providers\SystemServiceProvider;
 use Modules\Core\System\Services\LocalStorageQuotaService;
@@ -60,6 +61,7 @@ class CoreServiceProvider extends ServiceProvider
         ]);
 
         Route::aliasMiddleware('kyc', EnsureKycLevel::class);
+        Route::aliasMiddleware('extension.active', EnsureExtensionActive::class);
 
         // ABAC Global Interceptor
         Gate::after(function ($user, $ability, $result, $arguments) {

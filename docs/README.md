@@ -15,6 +15,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
 | [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |
+| [**External module packaging**](extensions/external-module-packaging.md) | P2: path/VCS/in-tree packs tanpa fork kernel; CMS extract order |
 
 ---
 

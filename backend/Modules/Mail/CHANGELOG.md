@@ -19,6 +19,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- `EnsureMailExtensionActive` delegates to Core `EnsureExtensionActive` (same `MAIL_EXTENSION_INACTIVE` code)
 - Manifest: `license`, `license_tier`, feature `category` — aligns with frozen module contract
 - Docs: IMAP / SPF / DKIM removed from kernel backlog (mail server / DNS ownership)
 - Mail AI settings no longer present summarize/smart-reply/sentiment as live
