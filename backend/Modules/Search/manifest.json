@@ -1,0 +1,30 @@
+{
+  "name": "Search",
+  "slug": "search",
+  "version": "1.0.0",
+  "description": "Full-text search index synced from Publishing and Library, public search API, and index health console.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "search",
+  "dependencies": {
+    "publishing": ">=1.0.0",
+    "library": ">=1.0.0"
+  },
+  "features": [
+    {
+      "slug": "unified-index",
+      "name": "Unified Index",
+      "description": "Index published content, categories, and tags",
+      "category": "insight"
+    },
+    {
+      "slug": "public-search",
+      "name": "Public Search",
+      "description": "Site-wide and console global search API",
+      "category": "utility"
+    }
+  ]
+}

@@ -7,5 +7,6 @@
     "Layout": true,
     "Forms": true,
     "Newsletter": true,
-    "Analytics": true
+    "Analytics": true,
+    "Search": true
 }

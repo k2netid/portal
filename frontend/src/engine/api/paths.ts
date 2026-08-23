@@ -127,6 +127,17 @@ export const analyticsPaths = {
     purgeAll: '/manage/analytics/purge-all',
 } as const;
 
+export const searchPaths = {
+    public: '/public/search',
+    suggestions: '/public/search/suggestions',
+    indexHealth: '/manage/search/index-health',
+    manageStats: '/manage/search/stats',
+    manageQueries: '/manage/search/queries',
+    deleteQuery: (id: string) => `/manage/search/queries/${id}`,
+    clearQueries: '/manage/search/queries/clear',
+    reindex: '/manage/search/reindex',
+} as const;
+
 export const systemPaths = {
     emailTemplates: '/manage/system/email-templates',
     emailTemplate: (id: string) => `/manage/system/email-templates/${id}`,

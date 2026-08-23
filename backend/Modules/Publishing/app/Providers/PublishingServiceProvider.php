@@ -21,11 +21,13 @@ use Modules\Library\Models\Tag;
 use Modules\Publishing\Console\Commands\PublishScheduledContentCommand;
 use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 use Modules\Publishing\Contracts\PublishedContentAnalyticsPortInterface;
+use Modules\Publishing\Contracts\PublishingSearchReadPortInterface;
 use Modules\Publishing\Database\Seeders\PublishingPermissionSeeder;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
 use Modules\Publishing\Services\NullNewsletterSubscriberCountPort;
 use Modules\Publishing\Services\PublishedContentAnalyticsPortAdapter;
+use Modules\Publishing\Repositories\EloquentPublishingSearchReadRepository;
 use Modules\Publishing\Services\PublishingCacheService;
 
 class PublishingServiceProvider extends ServiceProvider
@@ -39,6 +41,10 @@ class PublishingServiceProvider extends ServiceProvider
         $this->app->singleton(
             PublishedContentAnalyticsPortInterface::class,
             PublishedContentAnalyticsPortAdapter::class
+        );
+        $this->app->singleton(
+            PublishingSearchReadPortInterface::class,
+            EloquentPublishingSearchReadRepository::class
         );
     }
 

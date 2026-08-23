@@ -1,0 +1,54 @@
+{
+    "navigation": {
+        "menu": {
+            "insights": "Insights",
+            "analytics": "Analytics",
+            "search": "Search"
+        }
+    },
+    "empty": "No results found",
+    "filterBy": "Filter by type:",
+    "initial": "Enter a search query to get started",
+    "placeholder": "Search...",
+    "resultsFor": "Results for:",
+    "searching": "Searching...",
+    "title": "Search Results",
+    "types": {
+        "category": "Category",
+        "content": "Content",
+        "media": "Media",
+        "page": "Page",
+        "tag": "Tag",
+        "post": "Post",
+        "user": "User"
+    },
+    "ops": {
+        "title": "Index health",
+        "subtitle": "Approximate lag vs published content and taxonomy (ports).",
+        "refresh": "Refresh",
+        "reindex": "Rebuild index",
+        "reindexing": "Reindexing…",
+        "loading": "Loading index health…",
+        "inSync": "Index in sync",
+        "lagDetected": "Lag detected ({count} items)",
+        "checkedMeta": "Checked {time} · {total} rows in index",
+        "table": {
+            "resource": "Resource",
+            "source": "Source",
+            "indexed": "Indexed",
+            "lag": "Lag"
+        },
+        "cliHint": "CLI: php artisan search:index-health · php artisan search:reindex",
+        "reindexDone": "Search index rebuild completed.",
+        "loadFailed": "Failed to load index health",
+        "reindexFailed": "Reindex failed"
+    },
+    "hub": {
+        "title": "Search & indexing",
+        "subtitle": "Explore unified search or monitor index lag.",
+        "tabs": {
+            "search": "Search",
+            "ops": "Index health"
+        }
+    }
+}

@@ -229,6 +229,17 @@ class ConsoleMenu extends Model
                         'badge_variant' => 'primary',
                         'order' => 1,
                     ],
+                    [
+                        'name' => 'Search',
+                        'label_key' => 'search.navigation.menu.search',
+                        'route_name' => 'search',
+                        'icon' => 'search',
+                        'permission' => 'manage search',
+                        'extension_slug' => 'search',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 2,
+                    ],
                 ],
             ],
 

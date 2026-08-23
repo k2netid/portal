@@ -1,0 +1,11 @@
+{
+  "name": "Search",
+  "alias": "search",
+  "description": "Unified search index, public search API, and console hub",
+  "keywords": ["search", "index", "fulltext"],
+  "priority": 34,
+  "providers": [
+    "Modules\\Search\\Providers\\SearchServiceProvider"
+  ],
+  "files": []
+}

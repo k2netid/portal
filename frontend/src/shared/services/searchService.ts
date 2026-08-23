@@ -1,4 +1,6 @@
-import apiClient from '@/engine/api/client';
+import api from '@/engine/api/client';
+import { searchPaths } from '@/engine/api/paths';
+import type { AxiosResponse } from 'axios';
 
 export interface SearchResultItem {
     id?: string;
@@ -8,6 +10,8 @@ export interface SearchResultItem {
     url?: string;
     route?: string;
     group?: string;
+    searchable_id?: string;
+    searchable_type?: string;
 }
 
 export interface SearchQueryOptions {
@@ -17,47 +21,31 @@ export interface SearchQueryOptions {
 }
 
 export const SearchService = {
-    async search(params: string | SearchQueryOptions): Promise<{ data: { results: SearchResultItem[]; suggestions?: Array<{ text: string; type?: string }>; is_loose?: boolean } }> {
-        try {
-            const query = typeof params === 'string' ? params : (params.q || '');
-            const res = await apiClient.get(`/manage/system/search?q=${encodeURIComponent(query)}`);
-            return res.data;
-        } catch {
-            return { data: { results: [] } };
-        }
+    search(params: string | SearchQueryOptions): Promise<AxiosResponse> {
+        const queryParams = typeof params === 'string' ? { q: params } : params;
+        return api.get(searchPaths.public, { params: queryParams });
     },
 
-    async suggestions(params: string | SearchQueryOptions): Promise<{ data: Array<{ text: string; type?: string }> }> {
-        try {
-            const query = typeof params === 'string' ? params : (params.q || '');
-            const res = await apiClient.get(`/manage/system/search/suggestions?q=${encodeURIComponent(query)}`);
-            return res.data;
-        } catch {
-            return { data: [] };
-        }
+    suggestions(params: string | SearchQueryOptions): Promise<AxiosResponse> {
+        const queryParams = typeof params === 'string' ? { q: params } : params;
+        return api.get(searchPaths.suggestions, { params: queryParams });
     },
 
-    async deleteQuery(id: string): Promise<void> {
-        try {
-            await apiClient.delete(`/manage/system/search/history/${id}`);
-        } catch {
-            // ignore
-        }
+    deleteQuery(id: string): Promise<AxiosResponse> {
+        return api.delete(searchPaths.deleteQuery(id));
     },
 
-    async clearQueries(): Promise<void> {
-        try {
-            await apiClient.delete('/manage/system/search/history');
-        } catch {
-            // ignore
-        }
+    clearQueries(): Promise<AxiosResponse> {
+        return api.post(searchPaths.clearQueries);
     },
 
-    async deleteHistory(id: string): Promise<void> {
+    deleteHistory(id: string): Promise<AxiosResponse> {
         return this.deleteQuery(id);
     },
 
-    async clearHistory(): Promise<void> {
+    clearHistory(): Promise<AxiosResponse> {
         return this.clearQueries();
     },
 };
+
+export default SearchService;

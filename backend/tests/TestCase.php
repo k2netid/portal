@@ -103,6 +103,7 @@ abstract class TestCase extends BaseTestCase
             // Logs & Analytics
             'view logs', 'delete logs',
             'view analytics',
+            'manage search',
             'view activity logs',
             'view security logs',
             // JA-Mail

@@ -10,6 +10,7 @@ import publishing from '@/modules/Publishing/locales';
 import layoutPack from '@/modules/Layout/locales';
 import formsPack from '@/modules/Forms/locales';
 import newsletterPack from '@/modules/Newsletter/locales';
+import searchPack from '@/modules/Search/locales';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -58,6 +59,7 @@ export const moduleLocaleBundles = {
         layout: layoutPack.en,
         forms: formsPack.en,
         newsletter: newsletterPack.en,
+        search: searchPack.en,
     },
     id: {
         ...coLocatedId,
@@ -69,6 +71,7 @@ export const moduleLocaleBundles = {
         layout: layoutPack.id,
         forms: formsPack.id,
         newsletter: newsletterPack.id,
+        search: searchPack.id,
     },
     su: {
         ...coLocatedSu,
@@ -80,5 +83,6 @@ export const moduleLocaleBundles = {
         layout: layoutPack.su,
         forms: formsPack.su,
         newsletter: newsletterPack.su,
+        search: searchPack.su,
     },
 } as const;
