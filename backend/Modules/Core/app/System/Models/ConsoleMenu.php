@@ -210,6 +210,28 @@ class ConsoleMenu extends Model
                 ],
             ],
 
+            // Group: Insight (Analytics pack)
+            [
+                'group_slug' => 'insight',
+                'name' => 'Insight',
+                'label_key' => 'sharedConsole.navigation.menu.insight',
+                'icon' => 'bar-chart-2',
+                'order' => 7,
+                'children' => [
+                    [
+                        'name' => 'Analytics',
+                        'label_key' => 'sharedConsole.navigation.menu.analytics',
+                        'route_name' => 'analytics',
+                        'icon' => 'bar-chart',
+                        'permission' => 'view analytics',
+                        'extension_slug' => 'analytics',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 1,
+                    ],
+                ],
+            ],
+
             // Group: Library (taxonomy pack — visible when extension active)
             [
                 'group_slug' => 'library',

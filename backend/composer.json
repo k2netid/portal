@@ -75,6 +75,8 @@
             "Modules\\Layout\\": "Modules/Layout/app/",
             "Modules\\Forms\\": "Modules/Forms/app/",
             "Modules\\Newsletter\\": "Modules/Newsletter/app/",
+            "Modules\\Analytics\\": "Modules/Analytics/app/",
+            "Modules\\Analytics\\Database\\Factories\\": "Modules/Analytics/database/factories/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -88,7 +90,8 @@
             "Modules\\Media\\Tests\\": "Modules/Media/tests/",
             "Modules\\Layout\\Tests\\": "Modules/Layout/tests/",
             "Modules\\Forms\\Tests\\": "Modules/Forms/tests/",
-            "Modules\\Newsletter\\Tests\\": "Modules/Newsletter/tests/"
+            "Modules\\Newsletter\\Tests\\": "Modules/Newsletter/tests/",
+            "Modules\\Analytics\\Tests\\": "Modules/Analytics/tests/"
         }
     },
     "scripts": {

@@ -639,4 +639,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $newsletter['is_core']);
         $this->assertEquals('module', $newsletter['type']);
     }
+
+    public function test_analytics_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $analytics = collect($response->json('data'))->firstWhere('slug', 'analytics');
+
+        $this->assertNotNull($analytics);
+        $this->assertFalse((bool) $analytics['is_core']);
+        $this->assertEquals('module', $analytics['type']);
+    }
 }

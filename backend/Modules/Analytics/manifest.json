@@ -1,0 +1,26 @@
+{
+  "name": "Analytics",
+  "slug": "analytics",
+  "version": "1.0.0",
+  "description": "Visitor traffic auditing, session tracking, event lifecycle counters, and console dashboard.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "analytics",
+  "features": [
+    {
+      "slug": "traffic-dashboard",
+      "name": "Traffic Dashboard",
+      "description": "Overview stats, charts, top pages, and content performance",
+      "category": "insight"
+    },
+    {
+      "slug": "public-tracking",
+      "name": "Public Tracking",
+      "description": "Frontend visit and event tracking API",
+      "category": "utility"
+    }
+  ]
+}

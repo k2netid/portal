@@ -58,7 +58,7 @@ class LogSlowQueries
                     ]);
 
                     // Store in database for analytics if analytics module is available
-                    $slowQueryClass = 'Modules\\Intelligence\\Analytics\\Models\\SlowQuery';
+                    $slowQueryClass = 'Modules\\Analytics\\Models\\SlowQuery';
                     if (config('database.store_slow_queries', false) && class_exists($slowQueryClass)) {
                         foreach ($slowQueries as $query) {
                             $slowQueryClass::create([

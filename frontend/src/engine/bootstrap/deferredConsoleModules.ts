@@ -47,6 +47,10 @@ const OPTIONAL_FIRST_PARTY: Array<{
         slug: 'newsletter',
         load: () => import('@/modules/Newsletter'),
     },
+    {
+        slug: 'analytics',
+        load: () => import('@/modules/Analytics'),
+    },
 ];
 
 function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {

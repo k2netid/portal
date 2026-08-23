@@ -6,5 +6,6 @@
     "Media": true,
     "Layout": true,
     "Forms": true,
-    "Newsletter": true
+    "Newsletter": true,
+    "Analytics": true
 }

@@ -1,0 +1,11 @@
+{
+  "name": "Analytics",
+  "alias": "analytics",
+  "description": "Traffic analytics, visit tracking, events, and reporting dashboard",
+  "keywords": ["analytics", "traffic", "visits", "tracking"],
+  "priority": 35,
+  "providers": [
+    "Modules\\Analytics\\Providers\\AnalyticsServiceProvider"
+  ],
+  "files": []
+}
