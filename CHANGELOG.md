@@ -17,7 +17,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - `Modules/Core/app/System/Services/Ai/AiHttpResponse.php` — typed HTTP helpers untuk provider AI.
 
 ### Changed
-- **Module Registry P3-1:** port `library` + `publishing` from ja-cms as optional packs (Mail contract); soft-stub Media/Layout/Newsletter/AI until later waves.
+- **Module Registry P3-2:** port `media` from ja-cms as optional pack (picker + library; File Manager stays Core); retarget MediaLibraryBridge; console menu soft-sync.
+- **Module Registry P3-1:** port `library` + `publishing` from ja-cms as optional packs (Mail contract); soft-stub Layout/Newsletter/AI until later waves.
 - **Module Registry P2:** external packaging guide + `scaffold-optional-module.sh`; kernel middleware `extension.active:{slug}` (Mail alias delegates).
 - **Module Registry P1:** freeze first-party module contract (`docs/extensions/module-contract.md` + JSON Schema); discovery syncs description/license/settings_route/license_tier and preserves requirements; FE registers Mail only when `active_extensions` includes `mail`.
 - **Module Registry P0:** Core discovery marks slug `core` as kernel (`is_core` + always `active`); heal stale Inactive rows; uninstall/deactivate refuse kernel slugs even if `is_core` flag wrong; App Store UI → Platform / Modules / Plugins shelves + rename copy.

@@ -96,8 +96,8 @@ Do **not** ship mega-`Modules/Content`. Extract Mail-shaped packs:
 
 | Wave | Pack slug(s) | Source in ja-cms | Status |
 |------|----------------|------------------|--------|
-| P3-1 | `publishing` + `library` | `Content/Publishing`, `Content/Library` | **In-tree on kernel** (soft stubs for Media/Layout/Newsletter/AI) |
-| P3-2 | `media` | `Content/Media` | pending |
+| P3-1 | `publishing` + `library` | `Content/Publishing`, `Content/Library` | **In-tree on kernel** (soft stubs for Layout/Newsletter/AI) |
+| P3-2 | `media` | `Content/Media` | **In-tree on kernel** (File Manager stays Core Infra) |
 | P3-3 | `layout` | `Content/Layout` (+ themes) | pending |
 | P3-4 | `forms` | `Content/Forms` | pending |
 | P3-5+ | `analytics`, `newsletter`, `search`, `cms-ai` | `Intelligence/*` | pending |

@@ -71,6 +71,7 @@
             "Modules\\Mail\\": "Modules/Mail/app/",
             "Modules\\Library\\": "Modules/Library/app/",
             "Modules\\Publishing\\": "Modules/Publishing/app/",
+            "Modules\\Media\\": "Modules/Media/app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -80,7 +81,8 @@
             "Tests\\": "tests/",
             "Modules\\Mail\\Tests\\": "Modules/Mail/tests/",
             "Modules\\Library\\Tests\\": "Modules/Library/tests/",
-            "Modules\\Publishing\\Tests\\": "Modules/Publishing/tests/"
+            "Modules\\Publishing\\Tests\\": "Modules/Publishing/tests/",
+            "Modules\\Media\\Tests\\": "Modules/Media/tests/"
         }
     },
     "scripts": {

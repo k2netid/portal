@@ -196,7 +196,7 @@ import { useToast } from '@/shared/composables/useToast';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
 import { categorySchema } from '@/shared/schemas';
 import type { z } from 'zod';
-import MediaPicker from '@/modules/Publishing/shims/media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 import {
   Loader2,
   X,

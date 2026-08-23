@@ -8,13 +8,13 @@ use Modules\Core\Infra\Contracts\MediaFileRecordInterface;
 use Modules\Core\Infra\Contracts\MediaLibrarySyncInterface;
 
 /**
- * Typed bridge to optional Content/Media module — absent in kernel-only installs.
+ * Typed bridge to optional Media pack — absent in kernel-only installs.
  */
 class MediaLibraryBridge
 {
-    private const MEDIA_SERVICE_CLASS = 'Modules\Content\Media\Services\MediaService';
+    private const MEDIA_SERVICE_CLASS = 'Modules\Media\Services\MediaService';
 
-    private const MEDIA_FILE_CLASS = 'Modules\Content\Media\Models\File';
+    private const MEDIA_FILE_CLASS = 'Modules\Media\Models\File';
 
     public function sync(): ?MediaLibrarySyncInterface
     {

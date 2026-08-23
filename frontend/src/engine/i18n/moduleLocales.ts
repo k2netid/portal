@@ -4,6 +4,9 @@
 import system from '@/modules/Core/System/locales';
 import infra from '@/modules/Core/Infra/locales';
 import mail from '@/modules/Mail/locales';
+import mediaPack from '@/modules/Media/locales';
+import library from '@/modules/Library/locales';
+import publishing from '@/modules/Publishing/locales';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -46,15 +49,24 @@ export const moduleLocaleBundles = {
         ...coLocated,
         sharedConsole: consoleEn,
         console: consoleEn,
+        media: mediaPack.en,
+        library: library.en,
+        publishing: publishing.en,
     },
     id: {
         ...coLocatedId,
         sharedConsole: consoleId,
         console: consoleId,
+        media: mediaPack.id,
+        library: library.id,
+        publishing: publishing.id,
     },
     su: {
         ...coLocatedSu,
         sharedConsole: consoleSu,
         console: consoleSu,
+        media: mediaPack.su,
+        library: library.su,
+        publishing: publishing.su,
     },
 } as const;

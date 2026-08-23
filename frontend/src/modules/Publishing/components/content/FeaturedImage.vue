@@ -59,7 +59,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import MediaPicker from '@/modules/Publishing/shims/media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 import { ConsoleFormCard } from '@/shared/components/shell';
 import { Button } from '@/shared/components/ui';
 import {

@@ -27,8 +27,8 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('success', true);
 
-        // 9 root groups + children (includes editorial/publishing + library packs)
-        $this->assertDatabaseCount('sys_console_menus', 39);
+        // 9 root groups + children (includes editorial/publishing + library + media packs)
+        $this->assertDatabaseCount('sys_console_menus', 40);
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'contents.index',
             'extension_slug' => 'publishing',
@@ -36,6 +36,10 @@ class ConsoleMenuControllerTest extends TestCase
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'tags',
             'extension_slug' => 'library',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'media',
+            'extension_slug' => 'media',
         ]);
     }
 

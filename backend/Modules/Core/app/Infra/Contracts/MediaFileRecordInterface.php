@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Modules\Core\Infra\Contracts;
 
 /**
- * Optional downstream media record (e.g. Content module File model).
+ * Optional downstream media record (e.g. Media pack File model).
  *
  * Downstream apps should implement this on their media File Eloquent model.
+ * Method signatures intentionally match Eloquent Model (no conflicting return types).
  */
 interface MediaFileRecordInterface
 {
@@ -17,9 +18,19 @@ interface MediaFileRecordInterface
 
     public function setPath(string $path): void;
 
-    public function save(): bool;
+    /**
+     * @param  array<string, mixed>  $options
+     * @return bool
+     */
+    public function save(array $options = []);
 
-    public function delete(): ?bool;
+    /**
+     * @return bool|null
+     */
+    public function delete();
 
-    public function restore(): bool;
+    /**
+     * @return bool
+     */
+    public function restore();
 }

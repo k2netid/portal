@@ -587,4 +587,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $publishing['is_core']);
         $this->assertEquals(['library' => '>=1.0.0'], $publishing['requirements']);
     }
+
+    public function test_media_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $media = collect($response->json('data'))->firstWhere('slug', 'media');
+
+        $this->assertNotNull($media);
+        $this->assertFalse((bool) $media['is_core']);
+        $this->assertEquals('module', $media['type']);
+    }
 }

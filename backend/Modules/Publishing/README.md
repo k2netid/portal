@@ -10,10 +10,11 @@ Contract: `docs/extensions/module-contract.md`
 
 | Missing pack | Behavior |
 |--------------|----------|
-| Media | Featured image / OG pickers → URL shim |
 | Layout | Visual Builder → placeholder UI |
 | Newsletter | Member newsletter endpoints → 503 |
 | cms-ai | AI assist → stub service |
+
+Media picker uses `@/modules/Media` when the Media pack is present (P3-2).
 
 ## Activate
 

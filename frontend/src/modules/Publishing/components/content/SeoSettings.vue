@@ -129,7 +129,7 @@ import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import MediaPicker from '@/modules/Publishing/shims/media/components/picker/MediaPicker.vue';
+import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 import { ConsoleFormCard } from '@/shared/components/shell';
 import {
     Label,

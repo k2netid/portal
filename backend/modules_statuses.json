@@ -2,5 +2,6 @@
     "Core": true,
     "Mail": true,
     "Library": true,
-    "Publishing": true
+    "Publishing": true,
+    "Media": true
 }

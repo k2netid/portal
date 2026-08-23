@@ -1,0 +1,26 @@
+{
+  "name": "Media",
+  "slug": "media",
+  "version": "1.0.0",
+  "description": "Console media library with uploads, folders, thumbnails, and usage tracking. Soft-integrates with File Manager and Publishing pickers.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "media",
+  "features": [
+    {
+      "slug": "media-library",
+      "name": "Media Library",
+      "description": "Browse, upload, and organize media files",
+      "category": "utility"
+    },
+    {
+      "slug": "media-picker",
+      "name": "Media Picker",
+      "description": "Embeddable picker for Publishing and other packs",
+      "category": "utility"
+    }
+  ]
+}
