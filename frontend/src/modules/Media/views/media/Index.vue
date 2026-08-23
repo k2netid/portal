@@ -250,7 +250,7 @@ import MoveToFolderModal from '@/modules/Media/components/picker/MoveToFolderMod
 import BulkUpdateAltModal from '@/modules/Media/components/picker/BulkUpdateAltModal.vue';
 
 // Composables & Sub-components
-import { useMediaManager } from '@/engine/composables/useMediaManager';
+import { useMediaManager } from '@/modules/Media/composables/useMediaManager';
 import MediaStats from '@/modules/Media/components/picker/MediaStats.vue';
 import MediaSidebar from '@/modules/Media/components/picker/MediaSidebar.vue';
 import MediaToolbar from '@/modules/Media/components/picker/MediaToolbar.vue';

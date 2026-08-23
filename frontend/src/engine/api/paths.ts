@@ -1,5 +1,49 @@
 /** Canonical API paths (relative to axios baseURL `/api/v1`). */
 
+export const publishingPaths = {
+    contents: '/manage/publishing/contents',
+    content: (id: string) => `/manage/publishing/contents/${id}`,
+    publicContents: '/public/publishing/contents',
+    publicContent: (slug: string) => `/public/publishing/contents/${slug}`,
+    publicContentRelated: (slug: string) => `/public/publishing/contents/${slug}/related`,
+    publicContentComments: (contentId: string) => `/public/publishing/contents/${contentId}/comments`,
+    settings: '/manage/publishing/settings',
+    comments: '/manage/publishing/comments',
+    contentTemplates: '/manage/publishing/content-templates',
+    seo: '/manage/publishing/seo',
+} as const;
+
+export const libraryPaths = {
+    tags: '/manage/library/tags',
+    tagStatistics: '/manage/library/tags/statistics',
+    tag: (id: string) => `/manage/library/tags/${id}`,
+    customFields: '/manage/library/custom-fields',
+    customField: (id: string) => `/manage/library/custom-fields/${id}`,
+    fieldGroups: '/manage/library/field-groups',
+    fieldGroup: (id: string) => `/manage/library/field-groups/${id}`,
+    categories: '/manage/library/categories',
+    category: (id: string) => `/manage/library/categories/${id}`,
+    publicCategories: '/public/library/categories',
+    publicCategory: (id: string) => `/public/library/categories/${id}`,
+} as const;
+
+export const mediaPaths = {
+    index: '/manage/media',
+    upload: '/manage/media/upload',
+    statistics: '/manage/media/statistics',
+    filters: '/manage/media/filters',
+    bulk: '/manage/media/bulk-action',
+    emptyTrash: '/manage/media/empty-trash',
+    file: (id: string) => `/manage/media/${id}`,
+    restore: (id: string) => `/manage/media/${id}/restore`,
+    usage: (id: string) => `/manage/media/${id}/usage`,
+    thumbnail: (id: string) => `/manage/media/${id}/thumbnail`,
+    resize: (id: string) => `/manage/media/${id}/resize`,
+    edit: (id: string) => `/manage/media/${id}/edit`,
+    folders: '/manage/folders',
+    folder: (id: string) => `/manage/folders/${id}`,
+} as const;
+
 export const analyticsPaths = {
     track: '/public/analytics/track',
     trackBatch: '/public/analytics/track/batch',
