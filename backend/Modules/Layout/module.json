@@ -1,0 +1,11 @@
+{
+  "name": "Layout",
+  "alias": "layout",
+  "description": "Site menus, widgets, and redirects (themes & visual builder deferred to P3-3b)",
+  "keywords": ["layout", "menus", "widgets", "redirects"],
+  "priority": 30,
+  "providers": [
+    "Modules\\Layout\\Providers\\LayoutServiceProvider"
+  ],
+  "files": []
+}

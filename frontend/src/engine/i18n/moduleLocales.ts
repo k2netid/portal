@@ -7,6 +7,7 @@ import mail from '@/modules/Mail/locales';
 import mediaPack from '@/modules/Media/locales';
 import library from '@/modules/Library/locales';
 import publishing from '@/modules/Publishing/locales';
+import layoutPack from '@/modules/Layout/locales';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -52,6 +53,7 @@ export const moduleLocaleBundles = {
         media: mediaPack.en,
         library: library.en,
         publishing: publishing.en,
+        layout: layoutPack.en,
     },
     id: {
         ...coLocatedId,
@@ -60,6 +62,7 @@ export const moduleLocaleBundles = {
         media: mediaPack.id,
         library: library.id,
         publishing: publishing.id,
+        layout: layoutPack.id,
     },
     su: {
         ...coLocatedSu,
@@ -68,5 +71,6 @@ export const moduleLocaleBundles = {
         media: mediaPack.su,
         library: library.su,
         publishing: publishing.su,
+        layout: layoutPack.su,
     },
 } as const;

@@ -27,6 +27,23 @@ export const libraryPaths = {
     publicCategory: (id: string) => `/public/library/categories/${id}`,
 } as const;
 
+export const layoutPaths = {
+    menus: '/manage/layout/menus',
+    menu: (id: string) => `/manage/layout/menus/${id}`,
+    menuUsage: (id: string) => `/manage/layout/menus/${id}/usage`,
+    menuRestore: (id: string) => `/manage/layout/menus/${id}/restore`,
+    menuForceDelete: (id: string) => `/manage/layout/menus/${id}/force-delete`,
+    publicMenuByLocation: (location: string) => `/public/layout/menus/location/${location}`,
+    widgets: '/manage/layout/widgets',
+    widget: (id: string) => `/manage/layout/widgets/${id}`,
+    publicWidgetsByLocation: (location: string) => `/public/layout/widgets/location/${location}`,
+    redirects: '/manage/layout/redirects',
+    redirect: (id: string) => `/manage/layout/redirects/${id}`,
+    redirectStatistics: '/manage/layout/redirects/statistics',
+    themeLocations: '/manage/layout/themes/active/locations',
+    publicThemeActive: '/public/layout/themes/active',
+} as const;
+
 export const mediaPaths = {
     index: '/manage/media',
     upload: '/manage/media/upload',

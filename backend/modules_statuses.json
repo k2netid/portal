@@ -3,5 +3,6 @@
     "Mail": true,
     "Library": true,
     "Publishing": true,
-    "Media": true
+    "Media": true,
+    "Layout": true
 }

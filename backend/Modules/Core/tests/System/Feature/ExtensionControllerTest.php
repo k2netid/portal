@@ -600,4 +600,17 @@ class ExtensionControllerTest extends TestCase
         $this->assertFalse((bool) $media['is_core']);
         $this->assertEquals('module', $media['type']);
     }
+
+    public function test_layout_is_discovered_as_optional_module(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $layout = collect($response->json('data'))->firstWhere('slug', 'layout');
+
+        $this->assertNotNull($layout);
+        $this->assertFalse((bool) $layout['is_core']);
+        $this->assertEquals('module', $layout['type']);
+    }
 }

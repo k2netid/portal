@@ -1,0 +1,32 @@
+{
+  "name": "Layout",
+  "slug": "layout",
+  "version": "1.0.0",
+  "description": "Console site menus, widgets, and URL redirects. Soft-integrates with Publishing content sidebar. Themes and Visual Builder ship in a later wave.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "layout",
+  "features": [
+    {
+      "slug": "menus",
+      "name": "Menus",
+      "description": "Build nested site navigation menus",
+      "category": "marketing"
+    },
+    {
+      "slug": "widgets",
+      "name": "Widgets",
+      "description": "Manage sidebar and footer widgets",
+      "category": "marketing"
+    },
+    {
+      "slug": "redirects",
+      "name": "Redirects",
+      "description": "301/302 URL redirects and aliases",
+      "category": "utility"
+    }
+  ]
+}

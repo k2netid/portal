@@ -27,8 +27,8 @@ class ConsoleMenuControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('success', true);
 
-        // 9 root groups + children (includes editorial/publishing + library + media packs)
-        $this->assertDatabaseCount('sys_console_menus', 40);
+        // 9 root groups + children (editorial/publishing + library + media + layout packs)
+        $this->assertDatabaseCount('sys_console_menus', 43);
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'contents.index',
             'extension_slug' => 'publishing',
@@ -41,18 +41,27 @@ class ConsoleMenuControllerTest extends TestCase
             'route_name' => 'media',
             'extension_slug' => 'media',
         ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'menus',
+            'extension_slug' => 'layout',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'redirects',
+            'extension_slug' => 'layout',
+        ]);
     }
 
     public function test_index_soft_syncs_missing_pack_menu_defaults(): void
     {
         ConsoleMenu::seedDefaults();
         ConsoleMenu::query()
-            ->whereIn('extension_slug', ['publishing', 'library'])
+            ->whereIn('extension_slug', ['publishing', 'library', 'layout'])
             ->orWhereIn('group_slug', ['editorial', 'library'])
             ->delete();
 
         $this->assertDatabaseMissing('sys_console_menus', ['route_name' => 'contents.index']);
         $this->assertDatabaseMissing('sys_console_menus', ['route_name' => 'tags']);
+        $this->assertDatabaseMissing('sys_console_menus', ['route_name' => 'menus']);
 
         $response = $this->actingAs($this->user, 'sanctum')
             ->getJson('/api/v1/manage/console-menus');
@@ -65,6 +74,10 @@ class ConsoleMenuControllerTest extends TestCase
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'tags',
             'extension_slug' => 'library',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'menus',
+            'extension_slug' => 'layout',
         ]);
     }
 

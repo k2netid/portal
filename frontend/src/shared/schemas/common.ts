@@ -10,6 +10,53 @@ import { userModelSchema } from './models/core';
 const t = (key: string, params: Record<string, unknown> = {}) => JSON.stringify({ key, params });
 
 /**
+ * Menu form schema (Layout)
+ */
+export const menuSchema = z.object({
+    name: z.string()
+        .min(1, t('common.validation.required', { field: 'Name' }))
+        .max(255, t('common.validation.max', { field: 'Name', max: 255 })),
+    location: z.string().optional().or(z.literal('')),
+});
+
+/**
+ * Menu item form schema (Layout)
+ */
+export const menuItemSchema = z.object({
+    title: z.string()
+        .min(1, t('common.validation.required', { field: 'Title' }))
+        .max(255, t('common.validation.max', { field: 'Title', max: 255 })),
+    url: z.string().optional().or(z.literal('')),
+    target: z.enum(['_self', '_blank']).optional(),
+    icon: z.string().optional().or(z.literal('')),
+});
+
+/**
+ * Redirect form schema (Layout)
+ */
+export const redirectSchema = z.object({
+    from_url: z.string()
+        .min(1, t('common.validation.required', { field: 'From URL' })),
+    to_url: z.string()
+        .min(1, t('common.validation.required', { field: 'To URL' })),
+    status_code: z.union([z.number(), z.string()]).optional(),
+    is_active: z.boolean().optional(),
+});
+
+/**
+ * Widget form schema (Layout)
+ */
+export const widgetSchema = z.object({
+    title: z.string()
+        .min(1, t('common.validation.required', { field: 'Name' }))
+        .max(255, t('common.validation.max', { field: 'Name', max: 255 })),
+    type: z.enum(['text', 'html', 'recent_posts', 'categories', 'custom']),
+    location: z.string().optional().or(z.literal('')),
+    content: z.string().optional().or(z.literal('')),
+    is_active: z.boolean().optional(),
+});
+
+/**
  * Role form schema
  */
 export const roleSchema = z.object({

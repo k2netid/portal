@@ -35,6 +35,10 @@ const OPTIONAL_FIRST_PARTY: Array<{
         slug: 'media',
         load: () => import('@/modules/Media'),
     },
+    {
+        slug: 'layout',
+        load: () => import('@/modules/Layout'),
+    },
 ];
 
 function resolveAppModules(mod: Record<string, unknown>, slug: string): AppModule[] {
