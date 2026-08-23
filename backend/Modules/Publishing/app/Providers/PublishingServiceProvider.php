@@ -7,10 +7,12 @@ namespace Modules\Publishing\Providers;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\EmailTemplate;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\CacheService;
 use Modules\Core\System\Services\CacheWarmingService;
@@ -61,6 +63,7 @@ class PublishingServiceProvider extends ServiceProvider
         $this->registerModelRelations();
         $this->registerCacheIntegrations();
         $this->registerActivationHooks();
+        $this->ensurePermissionsIfMissing();
     }
 
     /**
@@ -69,6 +72,30 @@ class PublishingServiceProvider extends ServiceProvider
     public static function seedPermissions(): void
     {
         (new PublishingPermissionSeeder)->run();
+    }
+
+    /**
+     * Heal installs where packs were marked active without extension_activated
+     * (or seeder never ran) so create/edit routes and APIs have real permissions.
+     */
+    protected function ensurePermissionsIfMissing(): void
+    {
+        try {
+            if (! Schema::hasTable('permissions')) {
+                return;
+            }
+
+            $missing = ! Permission::query()
+                ->where('name', 'create content')
+                ->where('guard_name', 'web')
+                ->exists();
+
+            if ($missing) {
+                self::seedPermissions();
+            }
+        } catch (\Throwable) {
+            // Avoid boot failure if permissions tables are mid-migrate.
+        }
     }
 
     protected function registerActivationHooks(): void

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Modules\Publishing\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Modules\Core\System\Models\Permission;
+use Modules\Core\System\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 /**
  * CMS publishing + library permissions (shared manage content for taxonomy UI).
@@ -15,12 +16,16 @@ class PublishingPermissionSeeder extends Seeder
 {
     public function run(): void
     {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
         $perms = [
             'view content',
             'create content',
             'edit content',
             'delete content',
             'approve content',
+            'publish content',
+            'manage content',
             'view categories',
             'manage categories',
             'manage tags',
@@ -28,6 +33,10 @@ class PublishingPermissionSeeder extends Seeder
             'manage comments',
             'view seo',
             'manage seo',
+            'view content templates',
+            'manage content templates',
+            'edit content templates',
+            'delete content templates',
         ];
 
         foreach ($perms as $name) {

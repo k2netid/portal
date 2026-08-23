@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Modules\Media\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Modules\Core\System\Models\Permission;
+use Modules\Core\System\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class MediaPermissionSeeder extends Seeder
 {
     public function run(): void
     {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
         $perms = [
             'view media',
             'upload media',

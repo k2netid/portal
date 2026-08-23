@@ -6,9 +6,11 @@ namespace Modules\Media\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Permission;
 use Modules\Media\Console\Commands\CleanupTempMedia;
 use Modules\Media\Console\Commands\GenerateThumbnails;
 use Modules\Media\Console\Commands\SyncMediaFromDisk;
@@ -59,10 +61,32 @@ class MediaServiceProvider extends ServiceProvider
             }
             self::seedPermissions();
         });
+
+        $this->ensurePermissionsIfMissing();
     }
 
     public static function seedPermissions(): void
     {
         (new MediaPermissionSeeder)->run();
+    }
+
+    protected function ensurePermissionsIfMissing(): void
+    {
+        try {
+            if (! Schema::hasTable('permissions')) {
+                return;
+            }
+
+            $missing = ! Permission::query()
+                ->where('name', 'view media')
+                ->where('guard_name', 'web')
+                ->exists();
+
+            if ($missing) {
+                self::seedPermissions();
+            }
+        } catch (\Throwable) {
+            // Avoid boot failure if permissions tables are mid-migrate.
+        }
     }
 }
