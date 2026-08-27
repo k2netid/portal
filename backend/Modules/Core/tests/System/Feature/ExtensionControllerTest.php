@@ -6,11 +6,16 @@ namespace Modules\Core\System\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Modules\Core\System\Facades\Hook;
+use Modules\Core\System\Models\ConsoleMenu;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\ExtensionLog;
+use Modules\Core\System\Models\Permission;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Core\System\Services\ExtensionGraphService;
 use Modules\Core\System\Support\ExtensionPaths;
 use Tests\TestCase;
 use ZipArchive;
@@ -534,6 +539,27 @@ class ExtensionControllerTest extends TestCase
         $this->assertDirectoryExists(base_path('Modules/Core'));
     }
 
+    public function test_first_party_in_tree_module_cannot_be_uninstalled(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'layout',
+            'type' => 'module',
+            'name' => 'Layout',
+            'version' => '1.1.0',
+            'database_version' => '1.1.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->deleteJson("/api/v1/manage/infra/extensions/{$ext->slug}/uninstall");
+
+        $response->assertStatus(422);
+        $this->assertStringContainsString('first-party', strtolower((string) $response->json('message')));
+        $this->assertNotNull(Extension::where('slug', 'layout')->first());
+        $this->assertDirectoryExists(base_path('Modules/Layout'));
+    }
+
     /**
      * Mail rediscovery persists settings_route / license_tier and does not wipe requirements.
      */
@@ -677,5 +703,532 @@ class ExtensionControllerTest extends TestCase
         $this->assertNotNull($cmsAi);
         $this->assertFalse((bool) $cmsAi['is_core']);
         $this->assertEquals('module', $cmsAi['type']);
+        $this->assertEquals('cms', $cmsAi['family']);
+    }
+
+    public function test_publishing_is_discovered_in_cms_family(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $publishing = collect($response->json('data'))->firstWhere('slug', 'publishing');
+        $mail = collect($response->json('data'))->firstWhere('slug', 'mail');
+
+        $this->assertNotNull($publishing);
+        $this->assertEquals('cms', $publishing['family']);
+        $this->assertNotNull($mail);
+        $this->assertEquals('communications', $mail['family']);
+    }
+
+    public function test_lifecycle_preview_lists_unsatisfied_requires(): void
+    {
+        Extension::create([
+            'slug' => 'preview-base',
+            'type' => 'plugin',
+            'name' => 'Preview Base',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $ext = Extension::create([
+            'slug' => 'preview-child',
+            'type' => 'plugin',
+            'name' => 'Preview Child',
+            'version' => '1.0.0',
+            'database_version' => '0.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['preview-base' => '>=1.0.0'],
+            'manifest' => ['suggests' => ['optional-pack' => '*']],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson("/api/v1/manage/infra/extensions/{$ext->slug}/lifecycle-preview?intent=activate");
+
+        $response->assertStatus(200);
+        $this->assertFalse($response->json('data.can_proceed'));
+        $this->assertSame('preview-base', $response->json('data.requires.0.slug'));
+        $this->assertFalse($response->json('data.requires.0.satisfied'));
+    }
+
+    public function test_deactivate_blocked_when_active_dependent_exists(): void
+    {
+        $base = Extension::create([
+            'slug' => 'graph-base',
+            'type' => 'plugin',
+            'name' => 'Graph Base',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+
+        Extension::create([
+            'slug' => 'graph-child',
+            'type' => 'plugin',
+            'name' => 'Graph Child',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'requirements' => ['graph-base' => '>=1.0.0'],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$base->slug}/deactivate");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('masih dipakai', $response->json('message'));
+        $this->assertEquals('active', $base->fresh()->status);
+    }
+
+    public function test_lifecycle_preview_cascade_can_proceed_when_required_dep_is_inactive(): void
+    {
+        Extension::create([
+            'slug' => 'cascade-lib',
+            'type' => 'plugin',
+            'name' => 'Cascade Lib',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'family' => 'cms',
+        ]);
+
+        $child = Extension::create([
+            'slug' => 'cascade-pub',
+            'type' => 'plugin',
+            'name' => 'Cascade Pub',
+            'version' => '1.0.0',
+            'database_version' => '0.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'family' => 'cms',
+            'requirements' => ['cascade-lib' => '>=1.0.0'],
+        ]);
+
+        $blocked = $this->actingAs($this->admin, 'sanctum')
+            ->getJson("/api/v1/manage/infra/extensions/{$child->slug}/lifecycle-preview?intent=activate");
+        $blocked->assertStatus(200);
+        $this->assertFalse($blocked->json('data.can_proceed'));
+
+        $cascaded = $this->actingAs($this->admin, 'sanctum')
+            ->getJson("/api/v1/manage/infra/extensions/{$child->slug}/lifecycle-preview?intent=activate&cascade=1");
+        $cascaded->assertStatus(200);
+        $this->assertTrue($cascaded->json('data.can_proceed'));
+        $this->assertSame(
+            ['cascade-lib', 'cascade-pub'],
+            array_column($cascaded->json('data.cascade_plan.will_activate'), 'slug'),
+        );
+    }
+
+    public function test_cascade_activate_activates_required_dependencies(): void
+    {
+        $base = Extension::create([
+            'slug' => 'cascade-base',
+            'type' => 'plugin',
+            'name' => 'Cascade Base',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $child = Extension::create([
+            'slug' => 'cascade-child',
+            'type' => 'plugin',
+            'name' => 'Cascade Child',
+            'version' => '1.0.0',
+            'database_version' => '0.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['cascade-base' => '>=1.0.0'],
+        ]);
+
+        $without = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$child->slug}/activate");
+        $without->assertStatus(400);
+        $this->assertEquals('inactive', $base->fresh()->status);
+
+        $with = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$child->slug}/activate?cascade=1");
+        $with->assertStatus(200);
+        $this->assertEquals('active', $base->fresh()->status);
+        $this->assertEquals('active', $child->fresh()->status);
+    }
+
+    public function test_cascade_activate_fails_on_dependency_cycle(): void
+    {
+        Extension::create([
+            'slug' => 'cycle-a',
+            'type' => 'plugin',
+            'name' => 'Cycle A',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['cycle-b' => '*'],
+        ]);
+        Extension::create([
+            'slug' => 'cycle-b',
+            'type' => 'plugin',
+            'name' => 'Cycle B',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['cycle-a' => '*'],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/cycle-a/activate?cascade=1');
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('Siklus', $response->json('message'));
+        $this->assertEquals('inactive', Extension::where('slug', 'cycle-a')->value('status'));
+        $this->assertEquals('inactive', Extension::where('slug', 'cycle-b')->value('status'));
+    }
+
+    public function test_bulk_activate_cms_family_follows_dependency_order(): void
+    {
+        Extension::create([
+            'slug' => 'library',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Library',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+        Extension::create([
+            'slug' => 'publishing',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Publishing',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['library' => '>=1.0.0'],
+        ]);
+        Extension::create([
+            'slug' => 'layout',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Layout',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['publishing' => '>=1.0.0'],
+        ]);
+
+        $plan = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions/activation-plan?family=cms');
+        $plan->assertStatus(200);
+        $this->assertSame(
+            ['library', 'publishing', 'layout'],
+            array_column($plan->json('data.will_activate'), 'slug'),
+        );
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/bulk-activate', ['family' => 'cms']);
+        $response->assertStatus(200);
+        $this->assertEquals('active', Extension::where('slug', 'library')->value('status'));
+        $this->assertEquals('active', Extension::where('slug', 'publishing')->value('status'));
+        $this->assertEquals('active', Extension::where('slug', 'layout')->value('status'));
+    }
+
+    public function test_runtime_php_constraint_blocks_activation(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'needs-future-php',
+            'type' => 'plugin',
+            'name' => 'Future PHP',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'manifest' => ['requires' => ['php' => '>=99.0']],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('php', strtolower((string) $response->json('message')));
+        $this->assertEquals('inactive', $ext->fresh()->status);
+    }
+
+    public function test_failed_cascade_rolls_back_earlier_activations(): void
+    {
+        $base = Extension::create([
+            'slug' => 'rollback-base',
+            'type' => 'plugin',
+            'name' => 'Rollback Base',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        Extension::create([
+            'slug' => 'rollback-child',
+            'type' => 'plugin',
+            'name' => 'Rollback Child',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['rollback-base' => '>=1.0.0'],
+            'settings' => ['__test_fail_activate' => true],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/rollback-child/activate?cascade=1');
+
+        $response->assertStatus(400);
+        $this->assertEquals('inactive', $base->fresh()->status);
+        $this->assertEquals('inactive', Extension::where('slug', 'rollback-child')->value('status'));
+        $this->assertTrue(
+            ExtensionLog::query()
+                ->where('extension_slug', 'rollback-base')
+                ->where('action', 'activate_rollback')
+                ->exists(),
+        );
+    }
+
+    public function test_activate_writes_audit_log_with_actor(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'audit-plugin',
+            'type' => 'plugin',
+            'name' => 'Audit Plugin',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate")
+            ->assertStatus(200);
+
+        $log = ExtensionLog::query()
+            ->where('extension_slug', 'audit-plugin')
+            ->where('action', 'activate')
+            ->where('status', 'success')
+            ->first();
+
+        $this->assertNotNull($log);
+        $this->assertEquals($this->admin->id, $log->performed_by);
+        $this->assertNotNull($log->created_at);
+    }
+
+    public function test_community_license_blocks_pro_pack_activation(): void
+    {
+        Setting::set('license_type', 'community', 'string', 'license');
+
+        $ext = Extension::create([
+            'slug' => 'pro-only-pack',
+            'type' => 'plugin',
+            'name' => 'Pro Only Pack',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'settings' => ['license_tier' => 'pro'],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('Lisensi', (string) $response->json('message'));
+        $this->assertEquals('inactive', $ext->fresh()->status);
+    }
+
+    public function test_index_health_flags_route_conflicts(): void
+    {
+        Extension::create([
+            'slug' => 'pack-alpha',
+            'type' => 'plugin',
+            'name' => 'Pack Alpha',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+        Extension::create([
+            'slug' => 'pack-beta',
+            'type' => 'plugin',
+            'name' => 'Pack Beta',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+
+        ConsoleMenu::create([
+            'group_slug' => 'editorial',
+            'name' => 'Alpha Route',
+            'route_name' => 'shared.conflict.route',
+            'extension_slug' => 'pack-alpha',
+            'order' => 1,
+            'is_visible' => true,
+        ]);
+        ConsoleMenu::create([
+            'group_slug' => 'insight',
+            'name' => 'Beta Route',
+            'route_name' => 'shared.conflict.route',
+            'extension_slug' => 'pack-beta',
+            'order' => 1,
+            'is_visible' => true,
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $alpha = collect($response->json('data'))->firstWhere('slug', 'pack-alpha');
+        $this->assertNotNull($alpha);
+        $this->assertEquals('error', $alpha['health']['status'] ?? null);
+        $codes = array_column($alpha['health']['issues'] ?? [], 'code');
+        $this->assertContains('route_conflict', $codes);
+    }
+
+    public function test_activate_seeds_manifest_permissions(): void
+    {
+        $ext = Extension::create([
+            'slug' => 'caps-pack',
+            'type' => 'plugin',
+            'name' => 'Caps Pack',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'manifest' => ['permissions' => ['view caps pack', 'manage caps pack']],
+        ]);
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate")
+            ->assertStatus(200);
+
+        $this->assertTrue(
+            Permission::query()->where('name', 'view caps pack')->where('guard_name', 'web')->exists(),
+        );
+        $this->assertTrue(
+            Permission::query()->where('name', 'manage caps pack')->where('guard_name', 'web')->exists(),
+        );
+    }
+
+    public function test_health_warns_when_declared_permissions_missing(): void
+    {
+        Extension::create([
+            'slug' => 'ghost-caps',
+            'type' => 'plugin',
+            'name' => 'Ghost Caps',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'manifest' => ['permissions' => ['view ghost caps']],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertStatus(200);
+        $row = collect($response->json('data'))->firstWhere('slug', 'ghost-caps');
+        $this->assertNotNull($row);
+        $codes = array_column($row['health']['issues'] ?? [], 'code');
+        $this->assertContains('missing_permissions', $codes);
+        $this->assertEquals('warning', $row['health']['status']);
+    }
+
+    public function test_is_product_active_follows_registry_status(): void
+    {
+        Extension::flushProductActiveMemo();
+        $this->assertFalse(Extension::isProductActive('gated-pack'));
+
+        Extension::create([
+            'slug' => 'gated-pack',
+            'type' => 'plugin',
+            'name' => 'Gated Pack',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+        Extension::flushProductActiveMemo();
+        $this->assertFalse(Extension::isProductActive('gated-pack'));
+
+        Extension::query()->where('slug', 'gated-pack')->update(['status' => 'active']);
+        Extension::flushProductActiveMemo();
+        $this->assertTrue(Extension::isProductActive('gated-pack'));
+    }
+
+    public function test_lifecycle_cache_forget_clears_sidebar_navigation(): void
+    {
+        Cache::put(ExtensionGraphService::NAV_CACHE_KEY, ['stale' => true], 300);
+        app(ExtensionGraphService::class)->forgetLifecycleCaches();
+        $this->assertNull(Cache::get(ExtensionGraphService::NAV_CACHE_KEY));
+    }
+
+    public function test_activating_publishing_reveals_editorial_console_menus(): void
+    {
+        Extension::create([
+            'slug' => 'library',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Library',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+        ]);
+        Extension::create([
+            'slug' => 'publishing',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Publishing',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'inactive',
+            'is_core' => false,
+            'requirements' => ['library' => '>=1.0.0'],
+        ]);
+
+        ConsoleMenu::ensureMissingDefaults();
+        ConsoleMenu::syncVisibilityForExtension('library', false);
+        ConsoleMenu::syncVisibilityForExtension('publishing', false);
+
+        $this->assertFalse((bool) ConsoleMenu::query()->where('route_name', 'contents.index')->value('is_visible'));
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/publishing/activate?cascade=1')
+            ->assertStatus(200);
+
+        $this->assertEquals('active', Extension::where('slug', 'library')->value('status'));
+        $this->assertEquals('active', Extension::where('slug', 'publishing')->value('status'));
+        $this->assertTrue((bool) ConsoleMenu::query()->where('route_name', 'contents.index')->value('is_visible'));
+        $this->assertTrue((bool) ConsoleMenu::query()->where('route_name', 'tags')->value('is_visible'));
+
+        $menus = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/console-menus')
+            ->assertOk()
+            ->json('data');
+
+        $visibleContent = collect($menus)
+            ->flatMap(fn ($root) => $root['children'] ?? [])
+            ->firstWhere('route_name', 'contents.index');
+
+        $this->assertNotNull($visibleContent);
+        $this->assertTrue((bool) $visibleContent['is_visible']);
+        $this->assertEquals('publishing', $visibleContent['extension_slug']);
     }
 }

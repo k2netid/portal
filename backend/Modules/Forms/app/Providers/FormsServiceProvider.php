@@ -50,6 +50,9 @@ class FormsServiceProvider extends ServiceProvider
             if (! Schema::hasTable('permissions')) {
                 return;
             }
+            if (! Extension::query()->where('slug', 'forms')->where('status', 'active')->exists()) {
+                return;
+            }
 
             $missing = ! Permission::query()
                 ->where('name', 'view forms')

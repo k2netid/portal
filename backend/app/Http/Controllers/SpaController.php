@@ -78,6 +78,28 @@ class SpaController extends Controller
     }
 
     /**
+     * Public theme runtime (pack site). Console stays on index.html.
+     */
+    public function publicSite(): Response
+    {
+        foreach (['public.html', 'public/index.html'] as $file) {
+            $path = public_path($file);
+            if (is_file($path)) {
+                $content = file_get_contents($path);
+                if (is_string($content)) {
+                    return response($content)->header('Content-Type', 'text/html');
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'shell' => 'public',
+            'message' => 'Public theme runtime — build frontend public.html',
+        ]);
+    }
+
+    /**
      * SPA Fallback handler.
      */
     public function fallback(Request $request): Response

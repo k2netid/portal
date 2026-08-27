@@ -44,6 +44,27 @@
           <ThemeToggle />
 
           <Button
+            v-if="memberStore.isAuthenticated"
+            as="router-link"
+            to="/member/account"
+            variant="outline"
+            size="sm"
+            class="hidden sm:inline-flex"
+          >
+            {{ t('theme.zenith.header.account', 'Account') }}
+          </Button>
+          <Button
+            v-else
+            as="router-link"
+            to="/member/login"
+            variant="outline"
+            size="sm"
+            class="hidden sm:inline-flex"
+          >
+            {{ t('theme.zenith.header.signIn', 'Sign in') }}
+          </Button>
+
+          <Button
             as="router-link"
             to="/contact"
             variant="primary"
@@ -88,7 +109,18 @@
       >
         {{ item.name }}
       </router-link>
-      <div class="pt-3">
+      <div class="pt-3 space-y-2">
+        <Button
+          as="router-link"
+          :to="memberStore.isAuthenticated ? '/member/account' : '/member/login'"
+          variant="outline"
+          class="w-full justify-center"
+          @click="mobileMenuOpen = false"
+        >
+          {{ memberStore.isAuthenticated
+            ? t('theme.zenith.header.account', 'Account')
+            : t('theme.zenith.header.signIn', 'Sign in') }}
+        </Button>
         <Button
           as="router-link"
           to="/contact"
@@ -109,11 +141,13 @@ import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { ThemeToggle, Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { useMemberStore } from '@/modules/Member/stores/member';
 import { Menu, X } from 'lucide-vue-next';
 
 const { t } = useI18n();
 const { getSetting } = useTheme();
 const systemStore = useSystemStore();
+const memberStore = useMemberStore();
 
 const mobileMenuOpen = ref(false);
 

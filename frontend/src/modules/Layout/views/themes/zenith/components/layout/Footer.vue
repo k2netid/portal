@@ -87,6 +87,10 @@
         </div>
       </div>
 
+      <div class="mt-12">
+        <WidgetArea location="footer_bottom" />
+      </div>
+
       <!-- Bottom Bar -->
       <div class="mt-12 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
         <p>{{ copyrightText }}</p>
@@ -103,6 +107,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
+import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 
 const { t } = useI18n();
 const { getSetting } = useTheme();

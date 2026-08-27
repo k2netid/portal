@@ -12,7 +12,7 @@
       <div class="h-12 px-5 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
           <Settings class="w-4 h-4 text-primary" />
-          <span>{{ $t('system.mail.settings_title') }}</span>
+          <span>{{ $t('mail.settings_title') }}</span>
         </DialogTitle>
 
         <Button
@@ -58,7 +58,7 @@
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                {{ $t('system.mail.accounts.connectedAccounts') }} ({{ accounts?.length || 0 }})
+                {{ $t('mail.accounts.connectedAccounts') }} ({{ accounts?.length || 0 }})
               </label>
               <Button
                 v-if="capabilities?.can_manage_personal || capabilities?.can_manage_multi"
@@ -68,7 +68,7 @@
                 @click="startNewAccount"
               >
                 <Plus class="w-3.5 h-3.5 text-primary" />
-                <span>{{ $t('system.mail.accounts.addAccount') }}</span>
+                <span>{{ $t('mail.accounts.addAccount') }}</span>
               </Button>
             </div>
 
@@ -139,7 +139,7 @@
 
             <!-- Mode Selector -->
             <div class="space-y-2">
-              <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.integrationMode') }}</label>
+              <label class="text-xs font-bold text-foreground">{{ $t('mail.accounts.integrationMode') }}</label>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <label
                   :class="[
@@ -156,8 +156,8 @@
                     class="mt-0.5 text-primary"
                   >
                   <div class="text-xs">
-                    <p class="font-bold text-foreground">{{ $t('system.mail.accounts.inheritGlobal') }}</p>
-                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('system.mail.accounts.inheritGlobalDesc') }}</p>
+                    <p class="font-bold text-foreground">{{ $t('mail.accounts.inheritGlobal') }}</p>
+                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('mail.accounts.inheritGlobalDesc') }}</p>
                   </div>
                 </label>
 
@@ -176,8 +176,8 @@
                     class="mt-0.5 text-primary"
                   >
                   <div class="text-xs">
-                    <p class="font-bold text-foreground">{{ $t('system.mail.accounts.customPersonal') }}</p>
-                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('system.mail.accounts.customPersonalDesc') }}</p>
+                    <p class="font-bold text-foreground">{{ $t('mail.accounts.customPersonal') }}</p>
+                    <p class="text-[11px] text-muted-foreground mt-0.5">{{ $t('mail.accounts.customPersonalDesc') }}</p>
                   </div>
                 </label>
               </div>
@@ -186,7 +186,7 @@
             <!-- Basic Identity Fields -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="space-y-1">
-                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.accountName') }} *</label>
+                <label class="text-xs font-bold text-foreground">{{ $t('mail.accounts.accountName') }} *</label>
                 <Input
                   v-model="accountForm.name"
                   placeholder="e.g. Sales Department or John Personal"
@@ -194,7 +194,7 @@
                 />
               </div>
               <div class="space-y-1">
-                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.emailAddress') }} *</label>
+                <label class="text-xs font-bold text-foreground">{{ $t('mail.accounts.emailAddress') }} *</label>
                 <Input
                   v-model="accountForm.email"
                   type="email"
@@ -346,7 +346,7 @@
             <!-- Signature & Default Toggle -->
             <div class="space-y-3 pt-2 border-t border-border/40">
               <div class="space-y-1">
-                <label class="text-xs font-bold text-foreground">{{ $t('system.mail.accounts.signature') }}</label>
+                <label class="text-xs font-bold text-foreground">{{ $t('mail.accounts.signature') }}</label>
                 <Textarea
                   :model-value="accountForm.signature ?? ''"
                   rows="2"
@@ -358,8 +358,8 @@
 
               <div class="flex items-center justify-between p-2.5 rounded-lg bg-muted/20 border border-border/40">
                 <div class="text-xs">
-                  <p class="font-bold text-foreground">{{ $t('system.mail.accounts.makeDefault') }}</p>
-                  <p class="text-[11px] text-muted-foreground">{{ $t('system.mail.accounts.makeDefaultDesc') }}</p>
+                  <p class="font-bold text-foreground">{{ $t('mail.accounts.makeDefault') }}</p>
+                  <p class="text-[11px] text-muted-foreground">{{ $t('mail.accounts.makeDefaultDesc') }}</p>
                 </div>
                 <Switch
                   :checked="!!accountForm.is_default"
@@ -1036,7 +1036,7 @@
         <span class="text-[11px] text-muted-foreground flex items-center gap-1.5">
           <span v-if="isDirty" class="text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1">
             <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            {{ $t('system.mail.unsaved_changes') }}
+            {{ $t('mail.unsaved_changes') }}
           </span>
           <span v-else>Preferences saved to system profile.</span>
         </span>
@@ -1058,7 +1058,7 @@
           >
             <Loader2 v-if="saving" class="w-3.5 h-3.5 animate-spin" />
             <Save v-else class="w-3.5 h-3.5" />
-            <span>{{ $t('system.mail.save_preferences') }}</span>
+            <span>{{ $t('mail.save_preferences') }}</span>
           </Button>
         </div>
       </div>

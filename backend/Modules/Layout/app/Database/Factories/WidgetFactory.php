@@ -23,7 +23,8 @@ class WidgetFactory extends Factory
             'name' => $name,
             'type' => 'text',
             'location' => 'sidebar',
-            'content' => ['text' => fake()->paragraph()],
+            'settings' => ['content' => fake()->paragraph()],
+            'module_scope' => 'publishing',
             'sort_order' => fake()->numberBetween(0, 100),
             'is_active' => true,
         ];

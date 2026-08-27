@@ -195,6 +195,22 @@ class ConsoleMenuControllerTest extends TestCase
         $this->assertDatabaseHas('sys_console_menus', ['name' => 'Configuration']);
     }
 
+    public function test_menu_groups_include_editorial_and_insight(): void
+    {
+        ConsoleMenu::seedDefaults();
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->getJson('/api/v1/manage/console-menus/groups');
+
+        $response->assertOk();
+        $slugs = collect($response->json('data'))->pluck('slug')->all();
+        $this->assertContains('all', $slugs);
+        $this->assertContains('editorial', $slugs);
+        $this->assertContains('insight', $slugs);
+        $this->assertContains('library', $slugs);
+        $this->assertContains('audience', $slugs);
+    }
+
     public function test_unauthenticated_cannot_access_console_menus(): void
     {
         $this->getJson('/api/v1/manage/console-menus')

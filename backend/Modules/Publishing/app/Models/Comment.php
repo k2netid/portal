@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Modules\Core\System\Models\User;
+use Modules\Member\Models\Member;
 use Modules\Publishing\Database\Factories\CommentFactory;
 use Spatie\Activitylog\LogOptions;
 
@@ -55,6 +56,7 @@ class Comment extends Model
     protected $fillable = [
         'content_id',
         'user_id',
+        'member_id',
         'parent_id',
         'body',
         'status',
@@ -89,6 +91,14 @@ class Comment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Member, $this>
+     */
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class, 'member_id');
     }
 
     /**

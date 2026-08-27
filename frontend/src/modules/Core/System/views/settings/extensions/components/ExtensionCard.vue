@@ -177,7 +177,7 @@
       <div class="flex items-center gap-2">
         <!-- Uninstall Inactive Non-Core -->
         <Button
-          v-if="ext.status === 'inactive' && !ext.is_core"
+          v-if="ext.status === 'inactive' && !ext.is_core && ext.can_uninstall !== false"
           variant="destructive"
           size="sm"
           class="px-2 hover:bg-destructive/90"
@@ -245,6 +245,7 @@ interface ExtensionItem {
   version: string;
   status: 'active' | 'inactive';
   is_core: boolean;
+  can_uninstall?: boolean;
   author?: string;
   description?: string;
   license?: string;

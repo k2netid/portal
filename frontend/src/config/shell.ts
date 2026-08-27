@@ -1,8 +1,14 @@
-/** Single Unified Console SPA Shell for Core Engine. */
+/** Dual SPA: console kernel vs public theme runtime. */
 export type AppShell = 'console' | 'public';
 
-export const currentAppShell = (): AppShell => 'console';
+let activeShell: AppShell = 'console';
 
-export const isConsoleShell = (): boolean => true;
+export const setAppShell = (shell: AppShell): void => {
+    activeShell = shell;
+};
 
-export const isPublicShell = (): boolean => false;
+export const currentAppShell = (): AppShell => activeShell;
+
+export const isConsoleShell = (): boolean => currentAppShell() === 'console';
+
+export const isPublicShell = (): boolean => currentAppShell() === 'public';

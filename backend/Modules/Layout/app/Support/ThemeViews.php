@@ -35,6 +35,8 @@ final class ThemeViews
 
         // 3. Monorepo development relative candidates
         $monorepoCandidates = [
+            '../frontend/src/modules/Layout/views/themes',
+            '../frontend/src/modules/Layout/views/themes',
             '../frontend/src/modules/Content/Layout/views/themes',
             '../frontend/src/modules/Content/Publishing/views/themes',
             'frontend/src/modules/Content/Layout/views/themes',

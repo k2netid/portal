@@ -12,6 +12,8 @@ export interface ApiRequestConfig extends AxiosRequestConfig {
 }
 import { logger } from '@/shared/utils/logger';
 import { getActivePinia } from 'pinia';
+import { isPublicShell } from '@/config/shell';
+import { MEMBER_TOKEN_KEY } from '@/modules/Member/constants';
 import { buildSessionExpiredHref } from '@/shared/utils/errorReturn';
 
 // --- SECURITY & STATE FLAGS ---
@@ -128,6 +130,15 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig & { _perf
         delete config.headers['Content-Type'];
     }
 
+    if (isPublicShell()) {
+        const memberToken = typeof localStorage !== 'undefined'
+            ? localStorage.getItem(MEMBER_TOKEN_KEY)
+            : null;
+        if (memberToken) {
+            config.headers.Authorization = `Bearer ${memberToken}`;
+        }
+    }
+
     return config;
 });
 
@@ -192,6 +203,10 @@ apiClient.interceptors.response.use(
 
         // 1. Session Expiry (401/419)
         if (status === 401 || status === 419) {
+            if (isPublicShell()) {
+                return Promise.reject(error);
+            }
+
             if (window.__factoryResetInProgress) {
                 return Promise.reject(error);
             }

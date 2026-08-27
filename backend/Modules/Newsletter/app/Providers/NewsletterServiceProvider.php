@@ -56,6 +56,9 @@ class NewsletterServiceProvider extends ServiceProvider
             if (! Schema::hasTable('permissions')) {
                 return;
             }
+            if (! Extension::query()->where('slug', 'newsletter')->where('status', 'active')->exists()) {
+                return;
+            }
 
             $missing = ! Permission::query()
                 ->where('name', 'view newsletter')

@@ -9,5 +9,7 @@
     "Newsletter": true,
     "Analytics": true,
     "Search": true,
-    "CmsAi": true
+    "CmsAi": true,
+    "Member": true,
+    "Site": true
 }

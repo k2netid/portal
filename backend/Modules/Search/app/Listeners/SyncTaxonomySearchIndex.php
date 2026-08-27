@@ -17,6 +17,10 @@ class SyncTaxonomySearchIndex
 
     public function handle(TaxonomySearchIndexChanged $event): void
     {
+        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+            return;
+        }
+
         if ($event->action === 'remove') {
             $type = $event->taxonomyType === 'category'
                 ? $this->taxonomySearchPort->categorySearchableType()

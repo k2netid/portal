@@ -119,10 +119,16 @@ class Theme extends Model
             ->first();
 
         if (! $activeTheme) {
-            $defaultTheme = self::query()
-                ->where('type', $type)
-                ->where('slug', 'default')
-                ->first();
+            $defaultTheme = null;
+            foreach (['zenith', 'janari', 'default'] as $slug) {
+                $defaultTheme = self::query()
+                    ->where('type', $type)
+                    ->where('slug', $slug)
+                    ->first();
+                if ($defaultTheme) {
+                    break;
+                }
+            }
 
             if (! $defaultTheme) {
                 $defaultTheme = self::query()

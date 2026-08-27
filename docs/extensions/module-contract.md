@@ -68,7 +68,7 @@ Packaging from other repos: [external-module-packaging.md](./external-module-pac
 discover (disk → sys_extensions)
   → activate (migrate path + status=active + hook)
   → deactivate (status=inactive + hook)
-  → uninstall (plugins only in practice; kernel blocked)
+  → uninstall (uploaded plugins only; first-party Modules/* and kernel blocked)
 ```
 
 ## Golden sample

@@ -46,6 +46,10 @@ class PublishingServiceProvider extends ServiceProvider
             PublishingSearchReadPortInterface::class,
             EloquentPublishingSearchReadRepository::class
         );
+        $this->app->singletonIf(
+            \Modules\Publishing\Contracts\MemberIdentityPort::class,
+            \Modules\Publishing\Services\GuestMemberIdentityPort::class
+        );
     }
 
     public function boot(): void
@@ -88,6 +92,9 @@ class PublishingServiceProvider extends ServiceProvider
     {
         try {
             if (! Schema::hasTable('permissions')) {
+                return;
+            }
+            if (! Extension::query()->where('slug', 'publishing')->where('status', 'active')->exists()) {
                 return;
             }
 

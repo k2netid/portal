@@ -42,5 +42,8 @@ describe('security path helpers', () => {
         expect(isReservedPublicContentSlug('about')).toBe(false);
         expect(shouldBlockOnPublicSite('/system')).toBe(true);
         expect(shouldBlockOnPublicSite('/auth/console-sign-in')).toBe(true);
+        expect(shouldBlockOnPublicSite('/member/login')).toBe(false);
+        expect(shouldBlockOnPublicSite('/member/register')).toBe(false);
+        expect(shouldBlockOnPublicSite('/member/account')).toBe(false);
     });
 });

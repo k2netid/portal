@@ -8,7 +8,7 @@
       <div class="h-12 px-4 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
         <DialogTitle class="text-xs font-bold text-foreground flex items-center gap-2">
           <Tag class="w-3.5 h-3.5 text-primary" />
-          <span>{{ $t('system.mail.manage_labels') }}</span>
+          <span>{{ $t('mail.manage_labels') }}</span>
         </DialogTitle>
 
         <Button
@@ -26,7 +26,7 @@
         <!-- Create Label Box -->
         <div class="p-3 rounded-xl bg-muted/30 border border-border/40 space-y-2.5">
           <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            {{ $t('system.mail.add_label') }}
+            {{ $t('mail.add_label') }}
           </h4>
           <div class="space-y-2">
             <div class="flex items-center gap-2">
@@ -43,7 +43,7 @@
                 @click="createLabel"
               >
                 <Plus class="w-3.5 h-3.5" />
-                <span>{{ $t('system.mail.add') }}</span>
+                <span>{{ $t('mail.add') }}</span>
               </Button>
             </div>
 
@@ -92,7 +92,7 @@
         <!-- Existing Labels List with Hierarchical Sub-tree -->
         <div class="space-y-1.5">
           <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-1">
-            {{ $t('system.mail.existing_labels') }} ({{ labels.length }})
+            {{ $t('mail.existing_labels') }} ({{ labels.length }})
           </h4>
 
           <div class="divide-y divide-border/30 rounded-xl border border-border/40 overflow-hidden bg-card">
@@ -111,7 +111,7 @@
                     variant="ghost"
                     size="icon"
                     class="h-6 w-6 text-muted-foreground hover:text-destructive rounded"
-                    :title="$t('system.mail.delete')"
+                    :title="$t('mail.delete')"
                     @click="removeLabel(label.id)"
                   >
                     <Trash2 class="w-3 h-3" />
@@ -135,7 +135,7 @@
                   variant="ghost"
                   size="icon"
                   class="h-6 w-6 text-muted-foreground hover:text-destructive rounded"
-                  :title="$t('system.mail.delete')"
+                  :title="$t('mail.delete')"
                   @click="removeLabel(sub.id)"
                 >
                   <Trash2 class="w-3 h-3" />

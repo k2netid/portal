@@ -42,13 +42,15 @@ class SearchServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group($moduleRoot.'/routes/api.php');
 
-        /** @var Dispatcher $events */
-        $events = $this->app->make(Dispatcher::class);
-        $searchSync = SyncContentSearchIndex::class;
-        $events->listen(ContentPublished::class, [$searchSync, 'handlePublished']);
-        $events->listen(ContentUnpublished::class, [$searchSync, 'handleUnpublished']);
-        $events->listen(ContentDeleted::class, [$searchSync, 'handleDeleted']);
-        $events->listen(TaxonomySearchIndexChanged::class, SyncTaxonomySearchIndex::class);
+        if (Extension::isProductActive('search')) {
+            /** @var Dispatcher $events */
+            $events = $this->app->make(Dispatcher::class);
+            $searchSync = SyncContentSearchIndex::class;
+            $events->listen(ContentPublished::class, [$searchSync, 'handlePublished']);
+            $events->listen(ContentUnpublished::class, [$searchSync, 'handleUnpublished']);
+            $events->listen(ContentDeleted::class, [$searchSync, 'handleDeleted']);
+            $events->listen(TaxonomySearchIndexChanged::class, SyncTaxonomySearchIndex::class);
+        }
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -76,6 +78,9 @@ class SearchServiceProvider extends ServiceProvider
     {
         try {
             if (! Schema::hasTable('permissions')) {
+                return;
+            }
+            if (! Extension::query()->where('slug', 'search')->where('status', 'active')->exists()) {
                 return;
             }
 

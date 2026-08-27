@@ -202,6 +202,7 @@ Route::prefix('v1')->group(function (): void {
     // Console Menu Editor Management API
     Route::prefix('manage/console-menus')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('', [ConsoleMenuController::class, 'index']);
+        Route::get('groups', [ConsoleMenuController::class, 'groups']);
         Route::post('', [ConsoleMenuController::class, 'store']);
         Route::post('reorder', [ConsoleMenuController::class, 'reorder']);
         Route::post('reset', [ConsoleMenuController::class, 'resetDefaults']);
@@ -273,6 +274,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('upload', [ExtensionController::class, 'upload']);
         Route::post('git-clone', [ExtensionController::class, 'gitClone']);
         Route::put('features/{slug}/toggle', [ExtensionController::class, 'toggleFeature']);
+        Route::get('activation-plan', [ExtensionController::class, 'activationPlan']);
+        Route::post('bulk-activate', [ExtensionController::class, 'bulkActivate']);
+        Route::get('{slug}/lifecycle-preview', [ExtensionController::class, 'lifecyclePreview']);
         Route::post('{slug}/activate', [ExtensionController::class, 'activate']);
         Route::post('{slug}/deactivate', [ExtensionController::class, 'deactivate']);
         Route::put('{slug}/settings', [ExtensionController::class, 'updateSettings']);

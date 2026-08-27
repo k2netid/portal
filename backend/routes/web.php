@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SpaController::class, 'index']);
 
+Route::get('/site/{any?}', [SpaController::class, 'publicSite'])->where('any', '.*');
+
 Route::any('/cdn-cgi/{path?}', [SpaController::class, 'cdnCgi'])->where('path', '.*');
 
 $probePaths = [

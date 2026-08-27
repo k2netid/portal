@@ -76,6 +76,9 @@ class MediaServiceProvider extends ServiceProvider
             if (! Schema::hasTable('permissions')) {
                 return;
             }
+            if (! Extension::query()->where('slug', 'media')->where('status', 'active')->exists()) {
+                return;
+            }
 
             $missing = ! Permission::query()
                 ->where('name', 'view media')

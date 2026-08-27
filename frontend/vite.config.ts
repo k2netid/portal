@@ -15,7 +15,7 @@ const devApiProxyTarget =
   process.env.E2E_API_PROXY_TARGET?.trim() ||
   'http://127.0.0.1:8000'
 
-const devServerPort = Number(process.env.VITE_DEV_PORT || 5173)
+const devServerPort = Number(process.env.VITE_DEV_PORT || 5273)
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -38,6 +38,18 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     sri(),
+    {
+      name: 'ja-public-site-rewrite',
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const url = req.url ?? '';
+          if (url === '/site' || url.startsWith('/site/') || url.startsWith('/site?')) {
+            req.url = '/public.html';
+          }
+          next();
+        });
+      },
+    },
     visualizer({
       filename: './dist/stats.html',
       open: false,
@@ -57,6 +69,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, 'index.html'),
+        public: resolve(__dirname, 'public.html'),
       },
       output: {
         chunkFileNames: 'assets/[hash].js',

@@ -11,6 +11,8 @@
         </p>
       </div>
 
+      <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_18rem] gap-10 items-start">
+      <div>
       <!-- Articles Grid -->
       <div
         v-if="loading"
@@ -82,6 +84,9 @@
       >
         {{ t('theme.zenith.pages.blog.noPosts', 'No articles published yet.') }}
       </div>
+      </div>
+        <WidgetArea location="sidebar" />
+      </div>
     </div>
   </div>
 </template>
@@ -91,6 +96,7 @@ import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
 import { Card } from '@/modules/Layout/views/themes/zenith/ui';
+import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 import { ArrowRight } from 'lucide-vue-next';
 
 interface Post {

@@ -44,8 +44,8 @@ export const LayoutService = {
         return api.delete(layoutPaths.widget(id));
     },
 
-    publicWidgetsByLocation(location: string, module = 'Jejakawan'): Promise<AxiosResponse> {
-        return api.get(layoutPaths.publicWidgetsByLocation(location), { params: { module } });
+    publicWidgetsByLocation(location: string, module = 'publishing'): Promise<AxiosResponse> {
+        return api.get(layoutPaths.publicWidgetsByLocation(location), { params: { module_scope: module } });
     },
 
     themeLocations(): Promise<AxiosResponse> {

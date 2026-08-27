@@ -5,6 +5,12 @@
   "description": "Console outbound webmail: compose/send via SMTP, multi-account credentials, templates, and scheduled dispatch",
   "author": "Jejakawan Team",
   "type": "module",
+  "family": "communications",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=12.0",
+    "core": ">=1.0.0-beta"
+  },
   "is_core": false,
   "license": "Commercial PRO",
   "license_tier": "pro",

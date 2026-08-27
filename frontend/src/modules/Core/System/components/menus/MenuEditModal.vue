@@ -263,12 +263,15 @@ import {
 } from '@/shared/components/ui';
 import type { ConsoleMenuItem } from '@/modules/Core/System/composables/useConsoleMenu';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     isOpen: boolean;
     menu: ConsoleMenuItem | null;
     rootMenus: ConsoleMenuItem[];
+    groups?: Array<{ slug: string; name: string; icon?: string }>;
     saving?: boolean;
-}>();
+}>(), {
+    groups: () => [],
+});
 
 const emit = defineEmits<{
     (e: 'close'): void;
@@ -277,14 +280,24 @@ const emit = defineEmits<{
 
 const isEditing = computed(() => Boolean(props.menu?.id));
 
-const groupOptions = [
-    { slug: 'identity', name: 'Identity & Access' },
-    { slug: 'observability', name: 'Observability & Journals' },
-    { slug: 'system_config', name: 'System Config' },
-    { slug: 'infrastructure', name: 'Infrastructure' },
-    { slug: 'content', name: 'Content & Publishing' },
-    { slug: 'extensions', name: 'Extensions & Plugins' },
-];
+const groupOptions = computed(() => {
+    const fromProps = (Array.isArray(props.groups) ? props.groups : []).filter((g) => g && g.slug && g.slug !== 'all');
+    if (fromProps.length > 0) {
+        return fromProps;
+    }
+    return [
+        { slug: 'editorial', name: 'Editorial' },
+        { slug: 'insight', name: 'Insight' },
+        { slug: 'library', name: 'Library' },
+        { slug: 'audience', name: 'Audience' },
+        { slug: 'identity', name: 'Users & Access' },
+        { slug: 'communications', name: 'Communications' },
+        { slug: 'observability', name: 'Journals' },
+        { slug: 'system_config', name: 'Configuration' },
+        { slug: 'infrastructure', name: 'Infrastructure' },
+        { slug: 'integrations_dev', name: 'Identity & Integrations' },
+    ];
+});
 
 const selectedParentId = ref('none');
 const selectedRole = ref('none');

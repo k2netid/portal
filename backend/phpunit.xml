@@ -20,6 +20,8 @@
         <testsuite name="Modules">
             <directory>Modules/Core/tests</directory>
             <directory>Modules/Mail/tests</directory>
+            <directory>Modules/Member/tests</directory>
+            <directory>Modules/Site/tests</directory>
         </testsuite>
     </testsuites>
     <php>

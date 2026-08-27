@@ -52,16 +52,15 @@
 <script setup lang="ts">
 import { shallowRef, watch, ref, computed, defineAsyncComponent, onBeforeUnmount, type Component } from 'vue'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
-import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
+import { BUNDLED_FRONTEND_THEME_SLUGS, buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { isUploadedThemeActive, loadDynamicThemeComponent } from '@/modules/Layout/utils/dynamicThemeLoader'
 import { logger } from '@/shared/utils/logger'
 
 // Shared across all resolver instances (header/footer/page content) to avoid
 // rebuilding the module map and cache on every route navigation.
-const viewModules = import.meta.glob([
+const viewModules = import.meta.glob(
     '@/modules/Layout/views/themes/**/*.vue',
-
-]) as Record<string, () => Promise<{ default: Component }>>
+) as Record<string, () => Promise<{ default: Component }>>
 const componentCache = new Map<string, Component>()
 
 const props = defineProps<{
@@ -74,14 +73,14 @@ const isNotFound = ref(false)
 const isDestroyed = ref(false)
 const lastResolveDebug = ref<{ matchingKey: string; page: string }>({ matchingKey: '', page: '' })
 let currentResolveId = 0
-const isLoadingTheme = computed(() => loading.value || !activeTheme.value)
+const isLoadingTheme = computed(() => loading.value)
 
 function resolveView() {
   if (isDestroyed.value) return
 
   // Jangan tampilkan fallback saat data tema belum siap (initial load),
   // agar landing publik tidak berkedip error palsu.
-  if (loading.value || !activeTheme.value) {
+  if (loading.value) {
     isNotFound.value = false
     resolvedComponent.value = null
     return
@@ -103,7 +102,10 @@ function resolveView() {
   }
 
   const themeSlugs = buildThemeViewResolveCandidates(activeTheme.value)
-  const matchingKey = findThemeViewKey(viewModules, themeSlugs, pageName)
+  let matchingKey = findThemeViewKey(viewModules, themeSlugs, pageName)
+  if (!matchingKey) {
+    matchingKey = findThemeViewKey(viewModules, [...BUNDLED_FRONTEND_THEME_SLUGS], pageName)
+  }
   lastResolveDebug.value = { matchingKey: matchingKey ?? '', page: pageName }
 
   const resolveId = ++currentResolveId

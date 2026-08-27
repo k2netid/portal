@@ -211,8 +211,21 @@ export function useTheme() {
 
             // Handle null response (no active theme)
             if (!data) {
-                 activeTheme.value = null;
+                 activeTheme.value = {
+                     name: 'Zenith',
+                     slug: 'zenith',
+                     type: 'frontend',
+                 };
                  return;
+            }
+            if (typeof (data as Theme).slug !== 'string' || (data as Theme).slug.trim() === '') {
+                (data as Theme).slug = 'zenith';
+                if (!(data as Theme).name) {
+                    (data as Theme).name = 'Zenith';
+                }
+                if (!(data as Theme).type) {
+                    (data as Theme).type = 'frontend';
+                }
             }
             // Compare fields that affect UI; avoid stringifying entire payload (manifest is large).
             const prev = activeTheme.value

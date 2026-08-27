@@ -54,6 +54,9 @@ class AnalyticsServiceProvider extends ServiceProvider
             if (! Schema::hasTable('permissions')) {
                 return;
             }
+            if (! Extension::query()->where('slug', 'analytics')->where('status', 'active')->exists()) {
+                return;
+            }
 
             $missing = ! Permission::query()
                 ->where('name', 'view analytics')

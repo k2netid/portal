@@ -20,6 +20,7 @@
         "test:e2e:list": "playwright test --list",
         "test:e2e:smoke": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts tests/e2e/onboarding-wizard.spec.ts",
         "test:e2e:smoke:docker": "bash ../scripts/e2e-docker.sh",
+        "test:e2e:public": "playwright test tests/e2e/public-site-smoke.spec.ts",
         "test:e2e:auth": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts",
         "quality:frontend": "eslint src tests --max-warnings=0 && npm run i18n:check && npm run i18n:check:full && npm run type-check && npm run test:unit && npm run test:e2e:list",
         "quality:frontend:gate": "npm run quality:frontend && PLAYWRIGHT_USE_FULL_STACK=1 npm run test:e2e:ci",
@@ -40,7 +41,8 @@
         "test:e2e:console-pagination": "playwright test tests/e2e/console-pagination-mobile.spec.ts",
         "lighthouse:console": "node scripts/lighthouse-console-manual.mjs sign-in",
         "lighthouse:console:mobile": "node scripts/lighthouse-console-manual.mjs sign-in-mobile",
-        "test:e2e:console-modal": "playwright test tests/e2e/console-modal-a11y.spec.ts"
+        "test:e2e:console-modal": "playwright test tests/e2e/console-modal-a11y.spec.ts",
+        "test:e2e:cms": "playwright test tests/e2e/cms-registry-publishing.spec.ts"
     },
     "dependencies": {
         "@fullcalendar/core": "^6.1.19",

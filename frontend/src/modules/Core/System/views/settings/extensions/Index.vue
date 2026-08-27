@@ -83,17 +83,91 @@
       v-else
       class="space-y-6 p-4 sm:p-6"
     >
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <ExtensionCard
-          v-for="ext in paginatedExtensions"
-          :key="ext.slug"
-          :ext="ext"
-          :get-localized-description="getLocalizedDescription"
-          @toggle-feature="toggleFeatureStatus"
-          @toggle-status="toggleExtensionStatus"
-          @configure="openSettingsModal"
-          @uninstall="uninstallExtension"
-        />
+      <div class="space-y-8">
+        <section
+          v-for="group in groupedExtensions"
+          :key="group.key"
+          class="space-y-3"
+        >
+          <div class="flex items-center justify-between gap-2 px-1">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {{ group.label }}
+              <span class="font-normal text-muted-foreground/70">({{ group.items.length }})</span>
+            </h3>
+            <Button
+              v-if="group.key === 'cms' && activeTab === 'cms' && inactiveCms.length > 0"
+              variant="secondary"
+              size="sm"
+              class="gap-1.5"
+              @click="bulkActivateCms"
+            >
+              <Layers class="h-3.5 w-3.5" />
+              {{ t('system.appStore.bulkActivateCms') }}
+            </Button>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-border/60">
+            <table class="min-w-full divide-y divide-border text-sm">
+              <thead class="bg-muted/50">
+                <tr>
+                  <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.name') }}</th>
+                  <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.status') }}</th>
+                  <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.license') }}</th>
+                  <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.requires') }}</th>
+                  <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.health') }}</th>
+                  <th class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider text-foreground/70">{{ t('system.appStore.table.actions') }}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-border bg-card">
+                <tr
+                  v-for="ext in group.items"
+                  :key="ext.slug"
+                  class="hover:bg-muted/40"
+                >
+                  <td class="px-4 py-3">
+                    <div class="font-medium text-foreground">{{ ext.name }}</div>
+                    <div class="font-mono text-[11px] text-muted-foreground">{{ ext.slug }} · v{{ ext.version }}</div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <Badge :variant="ext.status === 'active' ? 'success' : 'secondary'">
+                      {{ ext.status === 'active' ? t('system.appStore.card.statusActive') : t('system.appStore.card.statusInactive') }}
+                    </Badge>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span :class="licenseBadgeClass(ext)">{{ licenseBadgeLabel(ext) }}</span>
+                  </td>
+                  <td class="px-4 py-3 text-xs text-muted-foreground">
+                    {{ requirementLabels(ext) }}
+                  </td>
+                  <td class="px-4 py-3">
+                    <Badge
+                      :variant="healthVariant(ext)"
+                      :title="healthTitle(ext)"
+                    >
+                      {{ healthLabel(ext) }}
+                    </Badge>
+                  </td>
+                  <td class="px-4 py-3 text-right whitespace-nowrap space-x-1">
+                    <Button
+                      v-if="!ext.is_core"
+                      variant="ghost"
+                      size="sm"
+                      @click="toggleExtensionStatus(ext)"
+                    >
+                      {{ ext.status === 'active' ? trans.deactivate : trans.activate }}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      @click="openSettingsModal(ext)"
+                    >
+                      {{ trans.configure }}
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
 
       <!-- Standard Shared Pagination Component -->
@@ -158,10 +232,9 @@ import { useRouter, useRoute } from 'vue-router';
 import api from '@/engine/api/client';
 import toast from '@/shared/services/toastService';
 import { useConfirm } from '@/shared/composables/useConfirm';
-import { Button, Input, Pagination } from '@/shared/components/ui';
+import { Badge, Button, Input, Pagination } from '@/shared/components/ui';
 
 // Sub-components
-import ExtensionCard from './components/ExtensionCard.vue';
 import UploadModal from './components/UploadModal.vue';
 import GitModal from './components/GitModal.vue';
 import ConfigureModal from './components/ConfigureModal.vue';
@@ -170,6 +243,7 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 // Lucide icons
 import {
   GitBranch,
+  Layers,
   Puzzle,
   SearchIcon,
   UploadIcon,
@@ -190,15 +264,24 @@ interface ExtensionItem {
     id: string;
     slug: string;
     type: 'module' | 'plugin';
+    family?: string;
+    parent_slug?: string | null;
     name: string;
     version: string;
     status: 'active' | 'inactive';
     is_core: boolean;
+    can_uninstall?: boolean;
     author?: string;
     description?: string;
     license?: string;
+    requirements?: Record<string, string> | null;
     settings?: Record<string, unknown>;
+    manifest?: Record<string, unknown>;
     features?: FeatureItem[];
+    health?: {
+        status?: 'ok' | 'warning' | 'error';
+        issues?: Array<{ code: string; message: string }>;
+    };
 }
 
 import { useSystemStore } from '@/modules/Core/System/stores/system';
@@ -225,6 +308,8 @@ const trans = computed(() => ({
     platform: t('system.appStore.platform'),
     modules: t('system.appStore.modules'),
     plugins: t('system.appStore.plugins'),
+    familyCms: t('system.appStore.familyCms'),
+    familyCommunications: t('system.appStore.familyCommunications'),
     author: t('system.appStore.author'),
     license: t('system.appStore.license'),
     core: t('system.appStore.core'),
@@ -276,20 +361,39 @@ const getLocalizedDescription = (ext: ExtensionItem) => {
 const filterTabs = computed(() => [
     { label: trans.value.all, value: 'all' },
     { label: trans.value.platform, value: 'platform' },
-    { label: trans.value.modules, value: 'module' },
+    { label: trans.value.familyCms, value: 'cms' },
+    { label: trans.value.familyCommunications, value: 'communications' },
     { label: trans.value.plugins, value: 'plugin' },
 ]);
 
-const extensionShelf = (ext: ExtensionItem): 'platform' | 'module' | 'plugin' => {
+const resolveFamily = (ext: ExtensionItem): string => {
+    if (ext.family) {
+        return ext.family;
+    }
     if (ext.is_core || ext.slug === 'core') {
         return 'platform';
     }
     return ext.type === 'plugin' ? 'plugin' : 'module';
 };
 
+const familyLabel = (key: string): string => {
+    const map: Record<string, string> = {
+        platform: trans.value.platform,
+        cms: trans.value.familyCms,
+        communications: trans.value.familyCommunications,
+        plugin: trans.value.plugins,
+        module: trans.value.modules,
+    };
+    return map[key] || key;
+};
+
+const inactiveCms = computed(() =>
+    extensions.value.filter((ext) => resolveFamily(ext) === 'cms' && ext.status !== 'active' && !ext.is_core),
+);
+
 // Pagination state
 const currentPage = ref(1);
-const itemsPerPage = ref(6);
+const itemsPerPage = ref(24);
 const totalPages = computed(() => Math.ceil(filteredExtensions.value.length / itemsPerPage.value));
 const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage.value);
 const endIndex = computed(() => startIndex.value + itemsPerPage.value);
@@ -349,6 +453,13 @@ const toggleFeatureStatus = async (feature: FeatureItem) => {
 
 const { confirm } = useConfirm();
 
+const unwrapApiData = <T,>(payload: unknown): T | undefined => {
+    if (payload && typeof payload === 'object' && 'data' in payload && (payload as { data?: unknown }).data !== undefined) {
+        return (payload as { data: T }).data;
+    }
+    return payload as T | undefined;
+};
+
 // Fetch Extensions
 const fetchExtensions = async () => {
     loading.value = true;
@@ -366,10 +477,9 @@ const fetchExtensions = async () => {
     }
 };
 
-// Filter logic — shelves: platform (kernel) · modules · plugins
-const filteredExtensions = computed(() => {
-    const shelfOrder = { platform: 0, module: 1, plugin: 2 } as const;
+const FAMILY_ORDER = ['platform', 'cms', 'communications', 'module', 'plugin'] as const;
 
+const filteredExtensions = computed(() => {
     return extensions.value
         .filter((ext) => {
             const matchesSearch =
@@ -377,26 +487,229 @@ const filteredExtensions = computed(() => {
                 ext.slug.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                 (ext.author || '').toLowerCase().includes(searchQuery.value.toLowerCase());
 
-            const shelf = extensionShelf(ext);
-            const matchesTab = activeTab.value === 'all' || activeTab.value === shelf;
+            const family = resolveFamily(ext);
+            const matchesTab = activeTab.value === 'all' || activeTab.value === family;
 
             return matchesSearch && matchesTab;
         })
-        .sort((a, b) => shelfOrder[extensionShelf(a)] - shelfOrder[extensionShelf(b)]);
+        .sort((a, b) => FAMILY_ORDER.indexOf(resolveFamily(a) as typeof FAMILY_ORDER[number]) - FAMILY_ORDER.indexOf(resolveFamily(b) as typeof FAMILY_ORDER[number]));
 });
+
+const groupedExtensions = computed(() => {
+    const buckets = new Map<string, ExtensionItem[]>();
+    for (const ext of paginatedExtensions.value) {
+        const key = resolveFamily(ext);
+        const list = buckets.get(key) ?? [];
+        list.push(ext);
+        buckets.set(key, list);
+    }
+
+    return FAMILY_ORDER
+        .filter((key) => buckets.has(key))
+        .map((key) => ({
+            key,
+            label: familyLabel(key),
+            items: buckets.get(key) ?? [],
+        }));
+});
+
+const requirementLabels = (ext: ExtensionItem): string => {
+    const req = ext.requirements;
+    if (!req || Object.keys(req).length === 0) {
+        return '—';
+    }
+    return Object.keys(req).join(', ');
+};
+
+const healthVariant = (ext: ExtensionItem): 'success' | 'warning' | 'destructive' | 'secondary' => {
+    const status = ext.health?.status;
+    if (status === 'error') {
+        return 'destructive';
+    }
+    if (status === 'warning') {
+        return 'warning';
+    }
+    return 'success';
+};
+
+const healthLabel = (ext: ExtensionItem): string => {
+    const status = ext.health?.status;
+    if (status === 'error') {
+        return t('system.appStore.healthError');
+    }
+    if (status === 'warning') {
+        return t('system.appStore.healthWarning');
+    }
+    return t('system.appStore.healthOk');
+};
+
+const healthTitle = (ext: ExtensionItem): string => {
+    const issues = ext.health?.issues || [];
+    if (issues.length === 0) {
+        return t('system.appStore.healthOk');
+    }
+    return issues.map((issue) => issue.message).join('\n');
+};
+
+const packLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus' => {
+    if (ext.is_core || ext.slug === 'core') {
+        return 'free';
+    }
+    const fromSettings = ext.settings?.license_tier;
+    const fromManifest = ext.manifest?.license_tier;
+    for (const value of [fromSettings, fromManifest]) {
+        if (value === 'free' || value === 'pro' || value === 'pro_plus') {
+            return value;
+        }
+    }
+    const fallback: Record<string, 'free' | 'pro' | 'pro_plus'> = {
+        core: 'free',
+        system: 'free',
+        search: 'free',
+        mail: 'pro',
+        media: 'pro',
+        publishing: 'pro',
+        library: 'pro',
+        layout: 'pro',
+        forms: 'pro',
+        newsletter: 'pro',
+        analytics: 'pro',
+        'cms-ai': 'pro_plus',
+        security: 'pro_plus',
+        infra: 'pro_plus',
+        ai: 'pro_plus',
+    };
+    return fallback[ext.slug] || 'pro';
+};
+
+const licenseBadgeLabel = (ext: ExtensionItem): string => {
+    if (ext.is_core || ext.slug === 'core') {
+        return t('system.appStore.card.licensePlatform');
+    }
+    const tier = packLicenseTier(ext);
+    if (tier === 'free') {
+        return t('system.appStore.card.licenseCommunity');
+    }
+    if (tier === 'pro_plus') {
+        return t('system.appStore.card.licenseProPlus');
+    }
+    return t('system.appStore.card.licensePro');
+};
+
+const licenseBadgeClass = (ext: ExtensionItem): string => {
+    const tier = packLicenseTier(ext);
+    if (ext.is_core || ext.slug === 'core' || tier === 'free') {
+        return 'inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-500/10 text-slate-500 dark:text-slate-400 border border-slate-500/20';
+    }
+    if (tier === 'pro_plus') {
+        return 'inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30';
+    }
+    return 'inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30';
+};
+
+type LifecycleRelation = {
+    slug: string;
+    name: string;
+    satisfied?: boolean;
+};
+
+type LifecyclePreview = {
+    can_proceed: boolean;
+    can_cascade?: boolean;
+    requires: LifecycleRelation[];
+    suggests: LifecycleRelation[];
+    dependents: LifecycleRelation[];
+    blockers?: Array<{ name?: string; slug?: string; reason?: string; constraint?: string }>;
+    runtime?: Array<{ name?: string; constraint?: string; version?: string; satisfied?: boolean }>;
+    license?: string;
+    cascade_plan?: {
+        will_activate: Array<{ slug: string; name: string; reason?: string }>;
+        can_cascade?: boolean;
+    };
+};
+
+const formatLifecycleMessage = (base: string, preview: LifecyclePreview, activating: boolean): string => {
+    const parts = [base];
+    if (activating) {
+        const cascadeExtras = (preview.cascade_plan?.will_activate || []).filter((row) => row.reason === 'required');
+        if (cascadeExtras.length > 0) {
+            parts.push(t('system.appStore.messages.lifecycleCascade', {
+                list: cascadeExtras.map((row) => row.name).join(', '),
+            }));
+        } else {
+            const missing = (preview.requires || []).filter((row) => !row.satisfied);
+            if (missing.length > 0) {
+                parts.push(t('system.appStore.messages.lifecycleRequiresMissing', {
+                    list: missing.map((row) => row.name).join(', '),
+                }));
+            }
+        }
+        if (preview.license) {
+            parts.push(t('system.appStore.messages.lifecycleLicense', { detail: preview.license }));
+        }
+        const runtime = (preview.runtime || []).filter((row) => row.satisfied === false);
+        if (runtime.length > 0) {
+            parts.push(t('system.appStore.messages.lifecycleRuntime', {
+                list: runtime.map((row) => `${row.name} ${row.constraint}`).join(', '),
+            }));
+        }
+        const recommended = (preview.suggests || []).filter((row) => !row.satisfied);
+        if (recommended.length > 0) {
+            parts.push(t('system.appStore.messages.lifecycleSuggests', {
+                list: recommended.map((row) => row.name).join(', '),
+            }));
+        }
+        parts.push(t('system.appStore.messages.lifecycleSidebarActivate'));
+    } else {
+        if ((preview.dependents || []).length > 0) {
+            parts.push(t('system.appStore.messages.lifecycleDependents', {
+                list: preview.dependents.map((row) => row.name).join(', '),
+            }));
+        }
+        parts.push(t('system.appStore.messages.lifecycleSidebarDeactivate'));
+    }
+
+    return parts.join('\n\n');
+};
 
 // Toggle Status (Activate / Deactivate)
 const toggleExtensionStatus = async (ext: ExtensionItem) => {
     const action = ext.status === 'active' ? 'deactivate' : 'activate';
     const isActivating = action === 'activate';
 
+    let preview: LifecyclePreview = {
+        can_proceed: true,
+        requires: [],
+        suggests: [],
+        dependents: [],
+    };
+    try {
+        const previewResponse = await api.get(`/manage/infra/extensions/${ext.slug}/lifecycle-preview`, {
+            params: { intent: action, cascade: isActivating ? 1 : 0 },
+        });
+        const previewPayload = unwrapApiData<LifecyclePreview>(previewResponse.data);
+        if (previewPayload && typeof previewPayload === 'object') {
+            preview = previewPayload;
+        }
+    } catch {
+        /* fall back to generic copy */
+    }
+
+    const baseMessage = isActivating
+        ? t('system.appStore.messages.toggleConfirmMessageActivate', { name: ext.name })
+        : t('system.appStore.messages.toggleConfirmMessageDeactivate', { name: ext.name });
+    const detailMessage = formatLifecycleMessage(baseMessage, preview, isActivating);
+
+    if (!preview.can_proceed) {
+        toast.error(t('system.appStore.messages.lifecycleBlocked', { detail: detailMessage }));
+        return;
+    }
+
     const confirmed = await confirm({
         title: isActivating
             ? t('system.appStore.messages.toggleConfirmTitleActivate', { name: ext.name })
             : t('system.appStore.messages.toggleConfirmTitleDeactivate', { name: ext.name }),
-        message: isActivating
-            ? t('system.appStore.messages.toggleConfirmMessageActivate', { name: ext.name })
-            : t('system.appStore.messages.toggleConfirmMessageDeactivate', { name: ext.name }),
+        message: detailMessage,
         variant: isActivating ? 'warning' : 'danger',
         confirmText: isActivating ? t('system.appStore.activate') : t('system.appStore.deactivate'),
     });
@@ -404,7 +717,11 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
     if (!confirmed) return;
 
     try {
-        const response = await api.post(`/manage/infra/extensions/${ext.slug}/${action}`);
+        const response = await api.post(
+            `/manage/infra/extensions/${ext.slug}/${action}`,
+            {},
+            isActivating ? { params: { cascade: 1 } } : undefined,
+        );
         const isSuccess = response.status === 200 || response.status === 201 || response.data?.success || (response.data && response.data.slug === ext.slug);
         if (isSuccess) {
             toast.success(isActivating
@@ -420,8 +737,84 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
         } else {
             toast.error(t('system.appStore.messages.toggleFailed', { action }));
         }
-    } catch (_err: unknown) {
-        toast.error(t('system.appStore.messages.toggleError', { action }));
+    } catch (err: unknown) {
+        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        toast.error(axiosMessage || t('system.appStore.messages.toggleError', { action }));
+    }
+};
+
+const cmsSlugsToActivate = () => inactiveCms.value.map((ext) => ext.slug);
+
+const bulkActivateCms = async () => {
+    const slugs = cmsSlugsToActivate();
+    let plan: { will_activate?: Array<{ slug: string; name: string }>; can_cascade?: boolean } = {};
+    try {
+        const planResponse = await api.get('/manage/infra/extensions/activation-plan', {
+            params: { family: 'cms', slugs },
+        });
+        const raw = planResponse.data as typeof plan & { data?: typeof plan };
+        const planPayload = unwrapApiData<typeof plan>(raw) ?? raw;
+        if (planPayload && typeof planPayload === 'object') {
+            plan = planPayload;
+        }
+    } catch {
+        toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
+        return;
+    }
+
+    const willActivate = plan.will_activate || [];
+    if (willActivate.length === 0) {
+        if (slugs.length > 0) {
+            toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
+            return;
+        }
+        toast.success(t('system.appStore.messages.bulkActivateCmsEmpty'));
+        return;
+    }
+
+    if (plan.can_cascade === false) {
+        toast.error(t('system.appStore.messages.lifecycleBlocked', {
+            detail: willActivate.map((row) => row.name).join(', '),
+        }));
+        return;
+    }
+
+    const list = willActivate.map((row) => row.name).join(', ');
+    const confirmed = await confirm({
+        title: t('system.appStore.messages.bulkActivateCmsTitle'),
+        message: t('system.appStore.messages.bulkActivateCmsMessage', { list }),
+        variant: 'warning',
+        confirmText: t('system.appStore.bulkActivateCms'),
+    });
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        const response = await api.post('/manage/infra/extensions/bulk-activate', { family: 'cms', slugs });
+        const payload = unwrapApiData<{ activated?: Array<{ slug?: string; name?: string }> }>(response.data);
+        const activated = payload?.activated || [];
+        if (activated.length === 0) {
+            toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
+            return;
+        }
+
+        const activatedSlugs = new Set(activated.map((row) => row.slug).filter(Boolean));
+        extensions.value = extensions.value.map((ext) => (
+            activatedSlugs.has(ext.slug) ? { ...ext, status: 'active' as const } : ext
+        ));
+
+        const names = activated.map((row) => row.name).filter(Boolean).join(', ');
+        toast.success(t('system.appStore.messages.bulkActivateCmsSuccess', {
+            count: activated.length,
+            list: names,
+        }));
+        await fetchExtensions();
+        await systemStore.fetchPublicSettings({ force: true });
+        window.location.reload();
+    } catch (err: unknown) {
+        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        toast.error(axiosMessage || t('system.appStore.messages.bulkActivateCmsFailed'));
     }
 };
 

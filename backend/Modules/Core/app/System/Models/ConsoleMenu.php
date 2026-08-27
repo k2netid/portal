@@ -756,4 +756,76 @@ class ConsoleMenu extends Model
 
         return $parent;
     }
+
+    /**
+     * @return list<array{slug: string, name: string, icon: string}>
+     */
+    public static function catalogGroups(): array
+    {
+        $groups = [];
+        foreach (self::getDefaultMenus() as $group) {
+            $slug = $group['group_slug'] ?? null;
+            if (! is_string($slug) || $slug === '') {
+                continue;
+            }
+            $groups[] = [
+                'slug' => $slug,
+                'name' => is_string($group['name'] ?? null) ? $group['name'] : $slug,
+                'icon' => is_string($group['icon'] ?? null) ? $group['icon'] : 'folder',
+                'label_key' => 'system.navigation.menuGroups.'.$slug,
+            ];
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Catalog groups plus any extra roots already in the database.
+     *
+     * @return list<array{slug: string, name: string, icon: string}>
+     */
+    public static function groupsForEditor(): array
+    {
+        $catalog = [];
+        foreach (self::catalogGroups() as $group) {
+            $catalog[$group['slug']] = $group;
+        }
+
+        $roots = self::query()->whereNull('parent_id')->orderBy('order')->get();
+        foreach ($roots as $root) {
+            $slug = $root->group_slug;
+            if (! is_string($slug) || $slug === '' || isset($catalog[$slug])) {
+                continue;
+            }
+            $catalog[$slug] = [
+                'slug' => $slug,
+                'name' => $root->name,
+                'icon' => $root->icon ?: 'folder',
+                'label_key' => 'system.navigation.menuGroups.'.$slug,
+            ];
+        }
+
+        return array_values($catalog);
+    }
+
+    public static function syncVisibilityForExtension(string $slug, bool $visible): void
+    {
+        self::query()->where('extension_slug', $slug)->update(['is_visible' => $visible]);
+    }
+
+    public static function applyActiveExtensionVisibility(): void
+    {
+        $active = Extension::query()->where('status', 'active')->pluck('slug')->all();
+        $items = self::query()
+            ->whereNotNull('extension_slug')
+            ->where('extension_slug', '!=', '')
+            ->get();
+
+        foreach ($items as $item) {
+            $shouldShow = in_array($item->extension_slug, $active, true);
+            if ((bool) $item->is_visible !== $shouldShow) {
+                $item->update(['is_visible' => $shouldShow]);
+            }
+        }
+    }
 }

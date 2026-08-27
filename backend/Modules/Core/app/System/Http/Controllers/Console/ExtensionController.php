@@ -10,12 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Modules\Core\System\Helpers\IpHelper;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\ConsoleMenu;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\ExtensionLog;
 use Modules\Core\System\Models\Feature;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\ExtensionContributionService;
+use Modules\Core\System\Services\ExtensionGraphService;
+use Modules\Core\System\Services\ExtensionHealthService;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
+use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
 use ZipArchive;
 
@@ -38,6 +44,10 @@ class ExtensionController extends BaseApiController
         $this->discoverExtensions();
 
         $extensions = Extension::with('features')->latest()->get();
+        app(ExtensionHealthService::class)->attach($extensions);
+        $extensions->each(function (Extension $extension): void {
+            $extension->setAttribute('can_uninstall', $this->canUninstall($extension));
+        });
 
         return $this->success($extensions, 'Extensions retrieved successfully');
     }
@@ -48,6 +58,29 @@ class ExtensionController extends BaseApiController
     protected function isKernelSlug(string $slug): bool
     {
         return in_array(strtolower($slug), self::KERNEL_SLUGS, true);
+    }
+
+    /**
+     * In-tree Modules/* packs stay on disk. Deactivate hides them; uninstall is plugins only.
+     */
+    protected function isShippedFirstPartyModule(Extension $extension): bool
+    {
+        if ($extension->type !== 'module') {
+            return false;
+        }
+
+        $folder = base_path('Modules/'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $extension->slug))));
+
+        return is_dir($folder);
+    }
+
+    protected function canUninstall(Extension $extension): bool
+    {
+        if ($extension->is_core || $this->isKernelSlug($extension->slug)) {
+            return false;
+        }
+
+        return ! $this->isShippedFirstPartyModule($extension);
     }
 
     /**
@@ -63,57 +96,57 @@ class ExtensionController extends BaseApiController
     }
 
     /**
-     * Activate a module/plugin.
+     * Activate a module/plugin. Pass cascade=1 to activate required deps first (topo order).
      */
-    public function activate(string $slug): JsonResponse
+    public function activate(Request $request, string $slug): JsonResponse
     {
         $extension = Extension::where('slug', $slug)->firstOrFail();
-
-        if ($extension->status === 'active') {
-            return $this->error('Extension is already active');
-        }
-
+        $cascade = $request->boolean('cascade');
+        $graph = app(ExtensionGraphService::class);
+        $failedSlug = $extension->slug;
         $versionBefore = $extension->version;
 
         try {
-            // 0. Verify cross-dependencies before activation
-            $this->verifyDependencies($extension);
+            if ($cascade) {
+                $plan = $graph->activationPlan([$extension->slug]);
+                if ($plan['can_cascade'] !== true) {
+                    throw new Exception($graph->planFailureMessage($plan));
+                }
+                if ($plan['will_activate'] === []) {
+                    return $this->error('Extension is already active');
+                }
 
-            // 1. Run dynamic migrations if any exist in the package folder
-            $migrationPath = $extension->type === 'module'
-                ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace('-', ' ', $extension->slug))).'/database/migrations')
-                : ExtensionPaths::pluginMigrationsDirectory($extension->slug);
+                $activatedRows = $this->activatePlanWithRollback($plan['will_activate']);
+                $last = $activatedRows !== [] ? Extension::where('slug', $activatedRows[array_key_last($activatedRows)]['slug'])->first() : $extension;
 
-            if (is_dir($migrationPath)) {
-                Artisan::call('migrate', [
-                    '--path' => str_replace(base_path().'/', '', $migrationPath),
-                    '--force' => true,
-                ]);
+                return $this->success($last ?? $extension, 'Extension activated successfully');
             }
 
-            // 2. Trigger onActivate lifecycle event/hook
-            \Hook::action('extension_activated', $extension);
+            if ($extension->status === 'active') {
+                return $this->error('Extension is already active');
+            }
 
-            // 3. Update status
-            $extension->update([
-                'status' => 'active',
-                'database_version' => $extension->version,
-            ]);
+            $licenseBlock = app(ExtensionHealthService::class)->licenseBlocker($extension);
+            if ($licenseBlock !== null) {
+                throw new Exception($licenseBlock);
+            }
 
-            ExtensionLog::create([
-                'extension_slug' => $extension->slug,
-                'action' => 'activate',
-                'version_before' => $versionBefore,
-                'version_after' => $extension->version,
-                'status' => 'success',
-                'performed_by' => auth()->id(),
-            ]);
+            $this->verifyDependencies($extension);
+            $runtime = $graph->runtimeBlockers($extension);
+            if ($runtime !== []) {
+                throw new Exception($graph->planFailureMessage([
+                    'runtime_conflicts' => $runtime,
+                    'missing' => [],
+                    'version_conflicts' => [],
+                    'cycle' => [],
+                ]));
+            }
+            $activated = $this->performActivation($extension);
 
-            return $this->success($extension, 'Extension activated successfully');
-
+            return $this->success($activated, 'Extension activated successfully');
         } catch (Exception $e) {
             ExtensionLog::create([
-                'extension_slug' => $extension->slug,
+                'extension_slug' => $failedSlug,
                 'action' => 'activate',
                 'version_before' => $versionBefore,
                 'version_after' => $extension->version,
@@ -142,6 +175,8 @@ class ExtensionController extends BaseApiController
         }
 
         try {
+            app(ExtensionGraphService::class)->assertCanDeactivate($extension);
+
             // 1. Trigger onDeactivate lifecycle event/hook
             \Hook::action('extension_deactivated', $extension);
 
@@ -157,6 +192,9 @@ class ExtensionController extends BaseApiController
                 'performed_by' => auth()->id(),
             ]);
 
+            app(ExtensionGraphService::class)->forgetLifecycleCaches();
+            ConsoleMenu::syncVisibilityForExtension($extension->slug, false);
+
             return $this->success($extension, 'Extension deactivated successfully');
 
         } catch (Exception $e) {
@@ -171,6 +209,72 @@ class ExtensionController extends BaseApiController
             ]);
 
             return $this->error('Failed to deactivate extension: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Preview activate/deactivate impact (requires, suggests, reverse dependents).
+     */
+    public function lifecyclePreview(Request $request, string $slug): JsonResponse
+    {
+        $extension = Extension::where('slug', $slug)->firstOrFail();
+        $intent = is_string($request->query('intent')) ? (string) $request->query('intent') : 'activate';
+
+        $preview = app(ExtensionGraphService::class)->preview($extension, $intent, $request->boolean('cascade'));
+        if ($intent === 'activate') {
+            $license = app(ExtensionHealthService::class)->licenseBlocker($extension);
+            if ($license !== null) {
+                $preview['license'] = $license;
+                $preview['can_proceed'] = false;
+                $preview['blockers'][] = [
+                    'slug' => 'license',
+                    'name' => 'license',
+                    'reason' => 'license',
+                    'satisfied' => false,
+                ];
+            }
+        }
+
+        return $this->success($preview, 'Lifecycle preview');
+    }
+
+    /**
+     * Preview topo-sorted activation for a family or explicit slug list.
+     */
+    public function activationPlan(Request $request): JsonResponse
+    {
+        $targets = $this->resolveActivationTargets($request);
+        $plan = app(ExtensionGraphService::class)->activationPlan($targets);
+
+        return $this->success($plan, 'Activation plan');
+    }
+
+    /**
+     * Activate a family (e.g. cms) or an explicit slug list in dependency order.
+     */
+    public function bulkActivate(Request $request): JsonResponse
+    {
+        $targets = $this->resolveActivationTargets($request);
+        if ($targets === []) {
+            return $this->success(['activated' => []], 'Nothing to activate');
+        }
+
+        $graph = app(ExtensionGraphService::class);
+        $plan = $graph->activationPlan($targets);
+        if ($plan['can_cascade'] !== true) {
+            return $this->error($graph->planFailureMessage($plan));
+        }
+
+        try {
+            $activated = $this->activatePlanWithRollback($plan['will_activate']);
+
+            return $this->success(['activated' => $activated], 'Extensions activated successfully');
+        } catch (Exception $e) {
+            $this->writeExtensionLog($targets[0], 'activate', 'failed', null, null, $e->getMessage(), [
+                'targets' => $targets,
+            ]);
+
+            return $this->error('Failed to activate extension: '.$e->getMessage());
         }
     }
 
@@ -199,6 +303,13 @@ class ExtensionController extends BaseApiController
 
         if ($guard = $this->guardKernelLifecycle($extension, 'uninstalled')) {
             return $guard;
+        }
+
+        if ($this->isShippedFirstPartyModule($extension)) {
+            return $this->error(
+                'First-party modules cannot be uninstalled. Deactivate them instead. Uninstall is reserved for uploaded plugins.',
+                422
+            );
         }
 
         if ($extension->status === 'active') {
@@ -461,11 +572,22 @@ class ExtensionController extends BaseApiController
             if (is_string($meta['license_tier']) && $meta['license_tier'] !== '') {
                 $settings['license_tier'] = $meta['license_tier'];
             }
+            if ($meta['suggests_declared']) {
+                $settings['suggests'] = $meta['suggests'];
+            }
+            if ($meta['runtime_requires'] !== []) {
+                $settings['runtime_requires'] = $meta['runtime_requires'];
+            }
+            if ($meta['permissions'] !== []) {
+                $settings['permissions'] = $meta['permissions'];
+            }
 
             $extension = Extension::updateOrCreate(
                 ['slug' => $slug],
                 [
                     'type' => $meta['type'],
+                    'family' => $meta['family'],
+                    'parent_slug' => $meta['parent_slug'],
                     'name' => $meta['name'],
                     'version' => $meta['version'],
                     'database_version' => $existing !== null ? $existing->database_version : '1.0.0',
@@ -478,6 +600,15 @@ class ExtensionController extends BaseApiController
                     'manifest' => [
                         'settings_route' => $meta['settings_route'],
                         'license_tier' => $meta['license_tier'],
+                        'suggests' => $meta['suggests_declared']
+                            ? $meta['suggests']
+                            : (is_array($existing?->manifest) ? ($existing->manifest['suggests'] ?? []) : []),
+                        'requires' => $meta['runtime_requires'] !== []
+                            ? $meta['runtime_requires']
+                            : (is_array($existing?->manifest) ? ($existing->manifest['requires'] ?? []) : []),
+                        'permissions' => $meta['permissions'] !== []
+                            ? $meta['permissions']
+                            : (is_array($existing?->manifest) ? ($existing->manifest['permissions'] ?? []) : []),
                     ],
                     'settings' => $settings,
                 ]
@@ -509,9 +640,15 @@ class ExtensionController extends BaseApiController
      *     license_tier: string|null,
      *     settings_route: string|null,
      *     is_core: bool,
+     *     family: string,
+     *     parent_slug: string|null,
      *     features: array<int, mixed>,
      *     requirements: array<string, string>,
-     *     dependencies_declared: bool
+     *     dependencies_declared: bool,
+     *     suggests: array<string, string>,
+     *     suggests_declared: bool,
+     *     runtime_requires: array<string, string>,
+     *     permissions: list<string>
      * }|null
      */
     private function extractDiscoveryMeta(array $manifest, string $defaultType, string $defaultAuthor): ?array
@@ -540,6 +677,17 @@ class ExtensionController extends BaseApiController
         $manifestMarksCore = array_key_exists('is_core', $manifest)
             && filter_var($manifest['is_core'], FILTER_VALIDATE_BOOLEAN);
 
+        $familyRaw = $manifest['family'] ?? null;
+        $family = ExtensionFamilyCatalog::resolve(
+            is_string($familyRaw) ? $familyRaw : null,
+            $slugRaw,
+            $type,
+            $manifestMarksCore,
+        );
+        $parentSlug = isset($manifest['parent_slug']) && is_string($manifest['parent_slug'])
+            ? $manifest['parent_slug']
+            : null;
+
         $description = isset($manifest['description']) && is_string($manifest['description'])
             ? $manifest['description']
             : null;
@@ -556,6 +704,26 @@ class ExtensionController extends BaseApiController
         $featuresRaw = $manifest['features'] ?? [];
         $features = is_array($featuresRaw) ? $featuresRaw : [];
 
+        $runtimeRequires = [];
+        $requiresRaw = $manifest['requires'] ?? null;
+        if (is_array($requiresRaw)) {
+            foreach ($requiresRaw as $reqKey => $constraint) {
+                if (! is_string($reqKey) || ! is_scalar($constraint)) {
+                    continue;
+                }
+                $normalized = strtolower($reqKey);
+                if ($normalized === 'laravel/framework') {
+                    $normalized = 'laravel';
+                }
+                if ($normalized === 'kernel') {
+                    $normalized = 'core';
+                }
+                if (in_array($normalized, ['php', 'laravel', 'core'], true)) {
+                    $runtimeRequires[$normalized] = (string) $constraint;
+                }
+            }
+        }
+
         $requirements = [];
         $dependenciesDeclared = array_key_exists('dependencies', $manifest);
         $dependencies = $manifest['dependencies'] ?? null;
@@ -568,6 +736,29 @@ class ExtensionController extends BaseApiController
             }
         }
 
+        $suggests = [];
+        $suggestsDeclared = array_key_exists('suggests', $manifest);
+        $suggestsRaw = $manifest['suggests'] ?? null;
+        if (is_array($suggestsRaw)) {
+            foreach ($suggestsRaw as $sugSlug => $constraint) {
+                if (! is_string($sugSlug) || ! is_scalar($constraint)) {
+                    continue;
+                }
+                $suggests[$sugSlug] = (string) $constraint;
+            }
+        }
+
+        $permissions = [];
+        $permissionsRaw = $manifest['permissions'] ?? null;
+        if (is_array($permissionsRaw)) {
+            foreach ($permissionsRaw as $permName) {
+                if (is_string($permName) && $permName !== '') {
+                    $permissions[] = $permName;
+                }
+            }
+            $permissions = array_values(array_unique($permissions));
+        }
+
         return [
             'type' => $type,
             'name' => $name,
@@ -578,9 +769,15 @@ class ExtensionController extends BaseApiController
             'license_tier' => $licenseTier,
             'settings_route' => $settingsRoute,
             'is_core' => $manifestMarksCore,
+            'family' => $family,
+            'parent_slug' => $parentSlug,
             'features' => $features,
             'requirements' => $requirements,
             'dependencies_declared' => $dependenciesDeclared,
+            'suggests' => $suggests,
+            'suggests_declared' => $suggestsDeclared,
+            'runtime_requires' => $runtimeRequires,
+            'permissions' => $permissions,
         ];
     }
 
@@ -819,6 +1016,188 @@ class ExtensionController extends BaseApiController
         }
 
         return $items;
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function resolveActivationTargets(Request $request): array
+    {
+        $family = $request->input('family', $request->query('family'));
+        $slugs = $request->input('slugs', $request->query('slugs'));
+
+        $extraSlugs = [];
+        if (is_array($slugs)) {
+            foreach ($slugs as $slug) {
+                if (is_string($slug) && $slug !== '') {
+                    $extraSlugs[] = $slug;
+                }
+            }
+        }
+
+        if (is_string($family) && $family !== '') {
+            $catalog = ExtensionFamilyCatalog::slugsInFamily($family);
+            $fromDb = Extension::query()->where('family', $family)->pluck('slug')->all();
+            $merged = array_values(array_unique(array_merge($catalog, $fromDb, $extraSlugs)));
+            if ($merged === []) {
+                return [];
+            }
+
+            return Extension::query()
+                ->whereIn('slug', $merged)
+                ->where('status', '!=', 'active')
+                ->where('is_core', false)
+                ->pluck('slug')
+                ->all();
+        }
+
+        if (! is_array($slugs)) {
+            return [];
+        }
+
+        $clean = [];
+        foreach ($slugs as $slug) {
+            if (is_string($slug) && $slug !== '') {
+                $clean[] = $slug;
+            }
+        }
+
+        return array_values(array_unique($clean));
+    }
+
+    /**
+     * @param  list<array{slug: string, name: string, reason?: string}>  $willActivate
+     * @return list<array{slug: string, name: string}>
+     *
+     * @throws Exception
+     */
+    protected function activatePlanWithRollback(array $willActivate): array
+    {
+        $activated = [];
+        $graph = app(ExtensionGraphService::class);
+
+        try {
+            foreach ($willActivate as $row) {
+                $step = Extension::where('slug', $row['slug'])->firstOrFail();
+                if ($step->status === 'active') {
+                    continue;
+                }
+                $licenseBlock = app(ExtensionHealthService::class)->licenseBlocker($step);
+                if ($licenseBlock !== null) {
+                    throw new Exception($licenseBlock);
+                }
+                $runtime = $graph->runtimeBlockers($step);
+                if ($runtime !== []) {
+                    throw new Exception($graph->planFailureMessage([
+                        'runtime_conflicts' => $runtime,
+                        'missing' => [],
+                        'version_conflicts' => [],
+                        'cycle' => [],
+                    ]));
+                }
+                $this->performActivation($step, array_column($willActivate, 'slug'));
+                $activated[] = [
+                    'slug' => $step->slug,
+                    'name' => $step->name,
+                ];
+            }
+
+            return $activated;
+        } catch (Exception $e) {
+            foreach (array_reverse($activated) as $row) {
+                $model = Extension::where('slug', $row['slug'])->first();
+                if ($model !== null && $model->status === 'active') {
+                    $this->rollbackActivation($model, $e->getMessage());
+                }
+            }
+            throw $e;
+        }
+    }
+
+    protected function rollbackActivation(Extension $extension, string $reason): void
+    {
+        \Hook::action('extension_deactivated', $extension);
+        $extension->update(['status' => 'inactive']);
+        ConsoleMenu::syncVisibilityForExtension($extension->slug, false);
+        app(ExtensionGraphService::class)->forgetLifecycleCaches();
+        $this->writeExtensionLog(
+            $extension->slug,
+            'activate_rollback',
+            'success',
+            $extension->version,
+            $extension->version,
+            $reason,
+            ['rolled_back' => true],
+        );
+    }
+
+    /**
+     * @param  array<string, mixed>  $meta
+     */
+    protected function writeExtensionLog(
+        string $slug,
+        string $action,
+        string $status,
+        ?string $versionBefore,
+        ?string $versionAfter,
+        ?string $error = null,
+        array $meta = [],
+    ): void {
+        ExtensionLog::create([
+            'extension_slug' => $slug,
+            'action' => $action,
+            'version_before' => $versionBefore,
+            'version_after' => $versionAfter,
+            'status' => $status,
+            'error_message' => $error,
+            'performed_by' => auth()->id(),
+            'ip_address' => IpHelper::getClientIp(request()),
+            'meta' => $meta === [] ? null : $meta,
+        ]);
+    }
+
+    protected function performActivation(Extension $extension, array $cascadeSlugs = []): Extension
+    {
+        $versionBefore = $extension->version;
+        $settings = is_array($extension->settings) ? $extension->settings : [];
+        if (app()->runningUnitTests() && ($settings['__test_fail_activate'] ?? false) === true) {
+            throw new Exception('simulated activation failure');
+        }
+
+        $migrationPath = $extension->type === 'module'
+            ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace('-', ' ', $extension->slug))).'/database/migrations')
+            : ExtensionPaths::pluginMigrationsDirectory($extension->slug);
+
+        if (is_dir($migrationPath)) {
+            Artisan::call('migrate', [
+                '--path' => str_replace(base_path().'/', '', $migrationPath),
+                '--force' => true,
+            ]);
+        }
+
+        \Hook::action('extension_activated', $extension);
+        app(ExtensionContributionService::class)->seedPermissions($extension);
+
+        $extension->update([
+            'status' => 'active',
+            'database_version' => $extension->version,
+        ]);
+
+        $this->writeExtensionLog(
+            $extension->slug,
+            'activate',
+            'success',
+            $versionBefore,
+            $extension->version,
+            null,
+            $cascadeSlugs === [] ? [] : ['cascade' => $cascadeSlugs],
+        );
+
+        app(ExtensionGraphService::class)->forgetLifecycleCaches();
+        ConsoleMenu::ensureMissingDefaults();
+        ConsoleMenu::syncVisibilityForExtension($extension->slug, true);
+
+        return $extension->fresh() ?? $extension;
     }
 
     /**

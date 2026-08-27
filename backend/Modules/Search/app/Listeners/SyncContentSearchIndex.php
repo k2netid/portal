@@ -19,6 +19,10 @@ class SyncContentSearchIndex
 
     public function handlePublished(ContentPublished $event): void
     {
+        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+            return;
+        }
+
         $key = $event->content->getKey();
         $contentId = is_scalar($key) ? (string) $key : '';
         if ($contentId === '') {
@@ -32,6 +36,10 @@ class SyncContentSearchIndex
 
     public function handleUnpublished(ContentUnpublished $event): void
     {
+        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+            return;
+        }
+
         $key = $event->content->getKey();
         $contentId = is_scalar($key) ? (string) $key : '';
         if ($contentId === '') {
@@ -45,6 +53,10 @@ class SyncContentSearchIndex
 
     public function handleDeleted(ContentDeleted $event): void
     {
+        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+            return;
+        }
+
         $this->searchIndexer->removePublishing(
             $this->publishingSearchRead->publishingSearchableType(),
             $event->contentId,

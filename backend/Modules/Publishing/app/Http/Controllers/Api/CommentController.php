@@ -27,8 +27,8 @@ class CommentController extends BaseApiController
      */
     public function index(Content $content): JsonResponse
     {
-        $comments = Comment::with(['user', 'replies' => function ($q): void {
-            $q->where('status', 'approved')->with('user');
+        $comments = Comment::with(['user', 'member', 'replies' => function ($q): void {
+            $q->where('status', 'approved')->with(['user', 'member']);
         }])
             ->where('content_id', $content->id)
             ->whereNull('parent_id')
@@ -63,9 +63,14 @@ class CommentController extends BaseApiController
         $user = $request->user();
         /** @var User|null $user */
         $authorEmail = '';
+        $member = app(\Modules\Publishing\Contracts\MemberIdentityPort::class)->current($request);
 
-        // If user is authenticated, use user data
-        if ($user) {
+        if ($member !== null) {
+            $validated['member_id'] = $member->id;
+            $validated['name'] = $member->name;
+            $validated['email'] = $member->email;
+            $authorEmail = $member->email;
+        } elseif ($user instanceof User && ! $request->is('api/v1/public/*')) {
             $validated['user_id'] = $user->id;
             $authorEmail = (string) $user->email;
         } else {

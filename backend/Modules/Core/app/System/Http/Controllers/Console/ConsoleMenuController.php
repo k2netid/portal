@@ -37,6 +37,24 @@ class ConsoleMenuController extends BaseApiController
     }
 
     /**
+     * Groups for the menu editor (factory catalog + extra DB roots).
+     */
+    public function groups(): JsonResponse
+    {
+        $groups = array_values(array_merge(
+            [[
+                'slug' => 'all',
+                'name' => 'All Groups',
+                'icon' => 'layers',
+                'label_key' => 'system.navigation.menuGroups.all',
+            ]],
+            ConsoleMenu::groupsForEditor(),
+        ));
+
+        return $this->success($groups, 'Menu groups retrieved successfully');
+    }
+
+    /**
      * Store a newly created console menu item.
      */
     public function store(Request $request): JsonResponse
@@ -160,6 +178,7 @@ class ConsoleMenuController extends BaseApiController
     public function resetDefaults(): JsonResponse
     {
         ConsoleMenu::seedDefaults(true);
+        ConsoleMenu::applyActiveExtensionVisibility();
 
         $menus = ConsoleMenu::with(['children' => function ($q) {
             $q->orderBy('order', 'asc');

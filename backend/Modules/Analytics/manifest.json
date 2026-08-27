@@ -5,10 +5,19 @@
   "description": "Visitor traffic auditing, session tracking, event lifecycle counters, and console dashboard.",
   "author": "Jejakawan Team",
   "type": "module",
+  "family": "cms",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=12.0",
+    "core": ">=1.0.0-beta"
+  },
   "is_core": false,
   "license": "Commercial PRO",
   "license_tier": "pro",
   "settings_route": "analytics",
+  "suggests": {
+    "publishing": ">=1.0.0"
+  },
   "features": [
     {
       "slug": "traffic-dashboard",
@@ -22,5 +31,8 @@
       "description": "Frontend visit and event tracking API",
       "category": "utility"
     }
+  ],
+  "permissions": [
+    "view analytics"
   ]
 }

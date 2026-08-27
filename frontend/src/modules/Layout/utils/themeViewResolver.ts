@@ -33,13 +33,30 @@ const fileBaseFromThemeComponentsPath = (normalizedKey: string, slugLower: strin
   const marker = `/themes/${slugLower}/components/`
   const idx = normalizedKey.indexOf(marker)
   if (idx === -1) return null
-  const file = normalizedKey.slice(normalizedKey.lastIndexOf('/') + 1)
+  const file = normalizedKey.slice(normalizedKey.lastIndexOf('/') + 1).split('?')[0] ?? ''
   if (!file.endsWith('.vue')) return null
   return file.slice(0, -4)
 }
 
+/** In-tree themes used when the API row has no slug or no active theme. */
+export const BUNDLED_FRONTEND_THEME_SLUGS = ['zenith', 'janari'] as const
+
+export const withBundledThemeFallbacks = (slugs: string[]): string[] => {
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const raw of [...slugs, ...BUNDLED_FRONTEND_THEME_SLUGS]) {
+    const slug = raw.trim()
+    if (!slug) continue
+    const key = slug.toLowerCase()
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push(slug)
+  }
+  return out
+}
+
 export const buildThemeViewResolveCandidates = (theme: Theme | null | undefined): string[] => {
-  if (!theme) return []
+  if (!theme) return withBundledThemeFallbacks([])
 
   const slug =
     typeof theme.slug === 'string' && theme.slug.trim() !== ''
@@ -50,9 +67,7 @@ export const buildThemeViewResolveCandidates = (theme: Theme | null | undefined)
       ? theme.parent_theme.trim()
       : ''
 
-  if (!slug && !parentSlug) return []
-  if (parentSlug && parentSlug !== slug) return [slug, parentSlug].filter(Boolean)
-  return [slug].filter(Boolean)
+  return withBundledThemeFallbacks([slug, parentSlug].filter(Boolean))
 }
 
 export const findThemeViewKey = (
@@ -60,11 +75,10 @@ export const findThemeViewKey = (
   themeSlugs: string[],
   pageName: string,
 ): string | undefined => {
-  if (themeSlugs.length === 0) return undefined
-
+  const slugs = themeSlugs.length > 0 ? themeSlugs : [...BUNDLED_FRONTEND_THEME_SLUGS]
   const pageBase = themePageBaseName(pageName)
 
-  for (const slug of themeSlugs) {
+  for (const slug of slugs) {
     const slugLower = slug.toLowerCase()
 
     const found = Object.keys(viewModules).find((key) => {
@@ -88,7 +102,7 @@ export const findThemeViewKey = (
   // Last resort: any theme package file whose basename matches (case-insensitive).
   return Object.keys(viewModules).find((key) => {
     const k = normalizeGlobKey(key)
-    const file = k.slice(k.lastIndexOf('/') + 1)
+    const file = k.slice(k.lastIndexOf('/') + 1).split('?')[0] ?? ''
     if (!file.endsWith('.vue')) return false
     return file.slice(0, -4) === pageBase
   })

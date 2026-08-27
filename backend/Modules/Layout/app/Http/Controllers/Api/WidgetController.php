@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Layout\Models\Widget;
+use Modules\Layout\Services\PublicWidgetPresenter;
 
 class WidgetController extends BaseApiController
 {
-    public function __construct(protected LayoutRegistryInterface $registry) {}
+    public function __construct(
+        protected LayoutRegistryInterface $registry,
+        protected PublicWidgetPresenter $publicWidgets,
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -156,17 +160,10 @@ class WidgetController extends BaseApiController
 
     public function getByLocation(string $location, Request $request): JsonResponse
     {
-        $scopeRaw = $request->input('module_scope', 'publishing');
-        $scope = is_string($scopeRaw) ? $scopeRaw : 'publishing';
-
-        $widgets = Widget::where('location', $location)
-            ->where('module_scope', $scope)
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get()
-            ->map(fn (Widget $widget) => $this->presentWidget($widget));
-
-        return $this->success($widgets, 'Widgets retrieved successfully');
+        return $this->success(
+            $this->publicWidgets->forLocation($location, $request),
+            'Widgets retrieved successfully'
+        );
     }
 
     /**
