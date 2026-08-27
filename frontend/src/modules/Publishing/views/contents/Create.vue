@@ -262,6 +262,7 @@ import type { Category } from '@/modules/Publishing/types/taxonomy';
 import type { Tag } from '@/modules/Library/types/taxonomy';
 import type { ContentForm } from '@/modules/Publishing/types/content';
 import type { BlockInstance } from '@/modules/Layout/types/builder';
+import { builderToHtml } from '@/modules/Layout/utils/builderTransformer';
 
 interface ConflictDetails {
     id: string;
@@ -297,6 +298,13 @@ const handleBuilderSave = async (status?: string | null) => {
   if (status && (status === 'draft' || status === 'published')) {
     form.value.status = status;
   }
+  const blocks = form.value.meta?.builder_blocks;
+  if (Array.isArray(blocks) && blocks.length > 0) {
+    const html = builderToHtml(blocks as BlockInstance[]);
+    if (html) {
+      form.value.body = html;
+    }
+  }
   if (form.value.title && form.value.title.trim().length > 0) {
     try {
       await handleSubmit(form.value.status);
@@ -304,8 +312,7 @@ const handleBuilderSave = async (status?: string | null) => {
       logger.error('Auto-submitting content after builder save failed', e);
     }
   }
-  toast.success.default(t('publishing.content.builder.savedSuccess', 'Blok visual builder berhasil disinkronkan ke halaman!'));
-};
+}
 
 const { validateWithZod, setErrors, clearErrors } = useFormValidation(contentSchema);
 

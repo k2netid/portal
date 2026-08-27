@@ -2,8 +2,7 @@ import { logger } from '@/shared/utils/logger';
 import api from '@/engine/api/client'
 import { triggerRef } from 'vue'
 import ModuleRegistry from '../ModuleRegistry'
-import { saasLandingPage, homePage, aboutPage, blogPage, contactPage } from '@/modules/Layout/components/builder/templates/PageTemplates';
-import { pricingSection, faqSection, teamGrid, ctaDark, heroGradient, featuresGrid, aboutSplit } from '@/modules/Layout/components/builder/templates/SectionTemplates';
+import { BUILDER_SCHEMA_VERSION } from '../constants'
 import type { BuilderState } from '@/modules/Layout/types/builder'
 import type { Category, Tag } from '@/modules/Publishing/types/taxonomy'
 import type { Menu } from '@/modules/Layout/types/menu'
@@ -141,36 +140,13 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
                     blocks.value = [section]
                 } else {
-                    // Smart theme page template resolver: If page is newly created or unpopulated, load its purpose-built template
-                    const slug = (data.slug || '').toLowerCase()
-                    if (slug === 'solusi' || slug === 'products' || slug === 'produk') {
-                        blocks.value = saasLandingPage() as any
-                    } else if (slug === 'home' || slug === 'beranda') {
-                        blocks.value = homePage() as any
-                    } else if (slug === 'about' || slug === 'tentang') {
-                        blocks.value = aboutPage() as any
-                    } else if (slug === 'tim' || slug === 'team') {
-                        blocks.value = [aboutSplit(), teamGrid(), ctaDark()] as any
-                    } else if (slug === 'pricing' || slug === 'harga') {
-                        blocks.value = [heroGradient(), pricingSection(), faqSection(), ctaDark()] as any
-                    } else if (slug === 'contact' || slug === 'kontak') {
-                        blocks.value = contactPage() as any
-                    } else if (slug === 'blog' || slug === 'berita') {
-                        blocks.value = blogPage() as any
-                    } else if (slug === 'careers' || slug === 'karier') {
-                        blocks.value = [heroGradient(), teamGrid(), faqSection(), ctaDark()] as any
-                    } else if (slug === 'highlights' || slug === 'sorotan') {
-                        blocks.value = [heroGradient(), aboutSplit(), ctaDark()] as any
-                    } else {
-                        blocks.value = [heroGradient(), featuresGrid(), ctaDark()] as any
-                    }
+                    // Empty stays empty. Templates are an explicit insert from the canvas library.
+                    blocks.value = []
                 }
 
-                if (blocks.value.length > 0) {
-                    triggerRef(blocks)
-                    takeSnapshot({ immediate: true })
-                    markAsSaved()
-                }
+                triggerRef(blocks)
+                takeSnapshot({ immediate: true })
+                markAsSaved()
 
                 if (data.global_variables) {
                     globalVariables.loadVariables(data.global_variables)
@@ -265,8 +241,9 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                     html += `<h${level}>${text}</h${level}>\n`
                 }
             }
-            if (Array.isArray(b.children)) {
-                b.children.forEach(traverse)
+            const nested = Array.isArray(b.children) ? b.children : b.children
+            if (Array.isArray(nested)) {
+                nested.forEach(traverse)
             }
         }
         (blocksList || []).forEach(traverse)
@@ -284,7 +261,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 blocks: blocks.value,
                 meta: {
                     ...currentMeta,
-                    builder_blocks: blocks.value
+                    builder_blocks: blocks.value,
+                    builder_schema_version: BUILDER_SCHEMA_VERSION,
                 },
                 global_variables: globalVariables.getVariables()
             }

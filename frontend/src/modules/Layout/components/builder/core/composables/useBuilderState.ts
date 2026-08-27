@@ -96,6 +96,7 @@ export function useBuilderState(initialData: { blocks?: BlockInstance[], body?: 
     const customViewportWidth = ref<number | null>(null)
     const zoom = ref(100)
     const wireframeMode = ref(false)
+    const previewMode = ref(false)
     const gridViewMode = ref(false)
     const isFullscreen = ref(false)
     const activeTheme = ref('janari')
@@ -227,6 +228,7 @@ export function useBuilderState(initialData: { blocks?: BlockInstance[], body?: 
         customViewportWidth,
         zoom,
         wireframeMode,
+        previewMode,
         gridViewMode,
         isFullscreen,
         activeTheme,

@@ -372,15 +372,8 @@ const handleBuilderSave = async (status?: string | null) => {
   if (status && (status === 'draft' || status === 'published')) {
     form.value.status = status;
   }
-  if (contentId) {
-    try {
-      await handleSubmit(form.value.status);
-    } catch (e) {
-      logger.error('Auto-submitting content after builder save failed', e);
-    }
-  }
-  toast.success.default(t('publishing.content.builder.savedSuccess', 'Blok visual builder berhasil disinkronkan ke halaman!'));
-};
+  // Builder already PUT contents when contentId exists. Avoid a second stale form submit.
+}
 
 const isSidebarOpen = ref(true);
 const contentId = route.params.id as string;

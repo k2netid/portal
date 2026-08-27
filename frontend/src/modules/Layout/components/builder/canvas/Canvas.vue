@@ -51,6 +51,14 @@
           </div>
         </div>
 
+        <div
+          v-else-if="previewMode"
+          class="canvas-public-preview flex-1 w-full"
+          data-builder-preview="public"
+        >
+          <CanvasPublicPreview :blocks="blocks" />
+        </div>
+
         <!-- Modules -->
         <draggable
           v-else
@@ -87,6 +95,7 @@ import { pricingSection, faqSection, heroGradient, ctaDark } from '@/modules/Lay
 import { useI18n } from 'vue-i18n'
 import draggable from 'vuedraggable'
 import ModuleWrapper from './ModuleWrapper.vue'
+import CanvasPublicPreview from './CanvasPublicPreview.vue'
 import CanvasGridView from './CanvasGridView.vue'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
 import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder'
@@ -104,6 +113,7 @@ const blocks = computed<BlockInstance[]>({
 })
 const contentTitle = computed(() => builder?.content?.value?.title || '')
 const wireframeMode = computed(() => builder?.wireframeMode.value || false)
+const previewMode = computed(() => builder?.previewMode.value || false)
 const gridViewMode = computed(() => builder?.gridViewMode.value || false)
 const activeTheme = computed(() => builder?.activeTheme.value || 'janari')
 const device = computed(() => builder?.device.value || 'desktop')
@@ -274,11 +284,7 @@ const handleCanvasContextMenu = (e: MouseEvent) => {
     }
 }
 
-// Initialize default section if empty
 onMounted(() => {
-    if (builder && builder.blocks.value.length === 0) {
-        addSection()
-    }
     if (builder?.themeData.value) {
         injectThemeStyles()
     }

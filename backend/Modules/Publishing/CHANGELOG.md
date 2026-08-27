@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- `BuilderDocumentValidator` rejects malformed `meta.builder_blocks` on content write.
+
 ### Changed
 - Settings groups are `seo` + `comments` only. Site identity (`general`) stays on kernel Identity.
 - SEO and Discussion setting tabs live in this pack (`views/settings/tabs/`).

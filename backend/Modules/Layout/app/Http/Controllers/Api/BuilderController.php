@@ -24,11 +24,6 @@ class BuilderController extends BaseApiController
         $contextRaw = $request->query('context', 'all'); // all | page | loop | site
         $context = is_string($contextRaw) ? $contextRaw : 'all';
 
-        \Log::info('BuilderController::dynamicSources', [
-            'context' => $context,
-            'all_query' => $request->query(),
-        ]);
-
         $sources = [];
 
         if (in_array($context, ['all', 'page'])) {

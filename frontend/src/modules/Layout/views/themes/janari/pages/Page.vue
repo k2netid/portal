@@ -11,7 +11,7 @@
       <!-- CASE 1: BLANK CANVAS (LANDING PAGE FUNNEL - 100% Custom Visual Blocks) -->
       <div v-if="pageTemplate === 'blank_canvas'" class="w-full min-h-screen">
         <BlockRenderer v-if="hasBuilderBlocks" :blocks="builderBlocks" />
-        <div v-else-if="hasBody" class="w-full prose prose-lg max-w-none px-4 py-8" v-html="pageBody" />
+        <SafeHtml v-else-if="hasBody" class="w-full prose prose-lg max-w-none px-4 py-8" mode="publishing" :html="pageBody" />
         <section v-else class="container mx-auto px-4 py-16">
           <div class="mx-auto max-w-2xl rounded-2xl border border-dashed border-border bg-card/40 p-10 text-center">
             <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">

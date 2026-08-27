@@ -323,6 +323,7 @@
           v-if="getVideoEmbedUrl(getSettingStr(block, 'url'))"
           :src="getVideoEmbedUrl(getSettingStr(block, 'url'))"
           class="w-full h-full border-0"
+          sandbox="allow-scripts allow-same-origin allow-presentation"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         />
@@ -372,7 +373,7 @@
       </component>
 
       <!-- 14. TEXT / RICHTEXT BLOCK -->
-      <div
+      <SafeHtml
         v-else-if="block.type === 'text' || block.type === 'rich_text'"
         :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-text prose prose-slate dark:prose-invert max-w-none leading-relaxed"
@@ -381,7 +382,8 @@
           getSettingStr(block, 'css_class')
         ]"
         :style="resolveBlockStyles(block)"
-        v-html="resolveDynamicText(getSettingStr(block, 'content') || getSettingStr(block, 'text') || getSettingStr(block, 'body'))"
+        mode="publishing"
+        :html="resolveDynamicText(getSettingStr(block, 'content') || getSettingStr(block, 'text') || getSettingStr(block, 'body'))"
       />
 
       <!-- 15. IMAGE BLOCK -->
@@ -670,10 +672,11 @@
       </div>
 
       <!-- 21. HTML / CODE EMBED BLOCK -->
-      <div
+      <SafeHtml
         v-else-if="block.type === 'html' || block.type === 'code' || block.type === 'embed'"
         class="builder-raw-html w-full overflow-hidden"
-        v-html="getSettingStr(block, 'code') || getSettingStr(block, 'html')"
+        mode="publishing"
+        :html="getSettingStr(block, 'code') || getSettingStr(block, 'html')"
       />
 
       <!-- 21B. COMMENTS BLOCK -->
@@ -716,6 +719,7 @@
 import { computed, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import PublicComments from '@/modules/Publishing/components/comments/PublicComments.vue';
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import api from '@/engine/api/client';
 import { logger } from '@/shared/utils/logger';
 import { useToast } from '@/shared/composables/useToast';
@@ -784,13 +788,26 @@ const resolveDynamicText = (text: string): string => {
 
 const getVideoEmbedUrl = (url?: string): string => {
   if (!url) return '';
-  if (url.includes('youtube.com/watch?v=')) {
-    return url.replace('watch?v=', 'embed/');
+  try {
+    const parsed = new URL(url, 'https://invalid.local');
+    const host = parsed.hostname.replace(/^www\./, '');
+    if (host === 'youtube.com' && parsed.searchParams.get('v')) {
+      return `https://www.youtube.com/embed/${parsed.searchParams.get('v')}`;
+    }
+    if (host === 'youtu.be' && parsed.pathname.length > 1) {
+      return `https://www.youtube.com/embed/${parsed.pathname.slice(1).split('/')[0]}`;
+    }
+    if (host === 'youtube.com' && parsed.pathname.startsWith('/embed/')) {
+      return `https://www.youtube.com/embed/${parsed.pathname.replace('/embed/', '').split('/')[0]}`;
+    }
+    if ((host === 'vimeo.com' || host === 'player.vimeo.com') && parsed.pathname.length > 1) {
+      const id = parsed.pathname.split('/').filter(Boolean).pop();
+      return id ? `https://player.vimeo.com/video/${id}` : '';
+    }
+  } catch {
+    return '';
   }
-  if (url.includes('youtu.be/')) {
-    return url.replace('youtu.be/', 'www.youtube.com/embed/');
-  }
-  return url;
+  return '';
 };
 
 const getSocialLinks = () => [

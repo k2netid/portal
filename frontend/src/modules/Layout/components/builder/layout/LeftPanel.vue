@@ -26,6 +26,14 @@
             >
                 <component :is="icons.Eye" :size="16" />
             </button>
+            <button 
+                class="panel-action-btn" 
+                :class="{ 'panel-action-btn--active': builder.previewMode.value }"
+                @click="togglePreview"
+                :title="t('builder.toolbar.preview', 'Public preview')"
+            >
+                <component :is="icons.EyeOff" :size="16" />
+            </button>
         </div>
         <button class="panel-close" @click="$emit('close')">
           <component :is="icons.ChevronsLeft" :size="20" />
@@ -122,6 +130,7 @@ import ChevronsLeft from 'lucide-vue-next/dist/esm/icons/chevrons-left.js';
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import LayoutGrid from 'lucide-vue-next/dist/esm/icons/layout-grid.js';
 import Eye from 'lucide-vue-next/dist/esm/icons/eye.js';
+import EyeOff from 'lucide-vue-next/dist/esm/icons/eye-off.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Filter from 'lucide-vue-next/dist/esm/icons/list-filter.js';
 import MoreVertical from 'lucide-vue-next/dist/esm/icons/ellipsis-vertical.js';import { SIDEBAR_PANELS } from '../core/constants'
@@ -141,7 +150,7 @@ import type { BuilderInstance, BlockInstance } from '../../../types/builder'
 
 import type { Component } from 'vue';
 
-const icons: Record<string, Component> = { X, Construction, ChevronsLeft, Plus, LayoutGrid, Eye, Search, Filter, MoreVertical }
+const icons: Record<string, Component> = { X, Construction, ChevronsLeft, Plus, LayoutGrid, Eye, EyeOff, Search, Filter, MoreVertical }
 
 interface Props {
   activePanel: string;
@@ -166,6 +175,14 @@ const collapseSignal = ref(0)
 
 const collapseAll = () => {
     collapseSignal.value++
+}
+
+const togglePreview = () => {
+    builder.previewMode.value = !builder.previewMode.value
+    if (builder.previewMode.value) {
+        builder.wireframeMode.value = false
+        builder.gridViewMode.value = false
+    }
 }
 
 const title = computed(() => {

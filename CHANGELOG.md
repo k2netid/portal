@@ -11,6 +11,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 ## [Unreleased]
 
 ### Fixed
+- Visual builder: empty pages no longer auto-fill demo sections or mark unsaved demo as saved.
+- Visual builder keyboard (Delete, Esc, duplicate/copy/paste) matches Help; site editor waits for a page pick.
+- Visual builder canvas leaves use public BlockRenderer; public preview is a sandboxed iframe; `meta.builder_schema_version` on save.
+- Publishing rejects malformed `meta.builder_blocks` on create/update.
+- Publishing overlay no longer double-PUTs; new content body is derived from builder blocks.
+- Public builder HTML/embed and Janari classic body go through SafeHtml.
+- Layout `dynamicSources` dropped query-string debug log.
 - Honesty pass: uninstall refuses when deactivate is blocked; kernel Identity owns `general`; Publishing no longer writes site identity; Member APIs gated; public theme pages follow the active theme; Sanctum 5273; layout public menus/themes gated; Mail/cron skip when pack off.
 
 Kernel `/manage/ai/generate` stays settings-flag gated (`ai_enabled`), not `cms-ai` pack — by design for downstream apps without CMS.

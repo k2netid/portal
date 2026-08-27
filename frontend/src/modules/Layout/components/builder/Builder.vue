@@ -505,18 +505,64 @@ const handleKeydown = (e: KeyboardEvent) => {
     return
   }
 
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') {
+  const selectedId = builder.selectedModuleId?.value
+  const selected = builder.selectedModule?.value
+  const cmd = e.metaKey || e.ctrlKey
+  const key = e.key.toLowerCase()
+
+  if (cmd && key === 'z') {
     e.preventDefault()
     if (e.shiftKey) {
       builder.redo()
     } else {
       builder.undo()
     }
+    return
   }
-  
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+
+  if (cmd && key === 'y') {
     e.preventDefault()
-    emit('save', null)
+    builder.redo()
+    return
+  }
+
+  if (cmd && key === 's') {
+    e.preventDefault()
+    void handleSave(null)
+    return
+  }
+
+  if (cmd && key === 'd') {
+    e.preventDefault()
+    if (selectedId) {
+      builder.duplicateModule(selectedId)
+    }
+    return
+  }
+
+  if (cmd && key === 'c') {
+    if (selectedId) {
+      e.preventDefault()
+      builder.copyModule(selectedId)
+    }
+    return
+  }
+
+  if (cmd && key === 'v') {
+    e.preventDefault()
+    const parentId = selected && Array.isArray(selected.children) ? selectedId : null
+    builder.pasteModule(parentId ?? null)
+    return
+  }
+
+  if (e.key === 'Escape') {
+    builder.clearSelection()
+    return
+  }
+
+  if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) {
+    e.preventDefault()
+    void handleDeleteModule(selectedId)
   }
 }
 

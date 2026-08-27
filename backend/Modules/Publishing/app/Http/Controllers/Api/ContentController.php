@@ -17,6 +17,7 @@ use Modules\Core\System\Support\SqlLikeEscape;
 use Modules\Publishing\Models\Content;
 use Modules\Publishing\Services\ContentService;
 use Modules\Publishing\Services\PublishingCacheService;
+use Modules\Publishing\Support\BuilderDocumentValidator;
 
 /**
  * @OA\Tag(name="Content")
@@ -530,6 +531,11 @@ class ContentController extends BaseApiController
             return $this->validationError($e->errors());
         }
 
+        $builderErrors = $this->validateBuilderMeta($validated);
+        if ($builderErrors !== []) {
+            return $this->validationError($builderErrors, 'Invalid builder document');
+        }
+
         // Handle slug generation and uniqueness
         if (! isset($validated['slug']) || empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
@@ -633,6 +639,11 @@ class ContentController extends BaseApiController
             Log::error('Content update validation failed', ['errors' => $e->errors(), 'input' => $request->all()]);
 
             return $this->validationError($e->errors());
+        }
+
+        $builderErrors = $this->validateBuilderMeta($validated);
+        if ($builderErrors !== []) {
+            return $this->validationError($builderErrors, 'Invalid builder document');
         }
 
         // Ownership check
@@ -1166,5 +1177,19 @@ class ContentController extends BaseApiController
         $image = trim((string) ($content->featured_image ?? ''));
 
         return $body !== '' || $intro !== '' || $image !== '';
+    }
+
+    /**
+     * @param  array<string, mixed>  $validated
+     * @return array<string, list<string>>
+     */
+    private function validateBuilderMeta(array $validated): array
+    {
+        $meta = $validated['meta'] ?? null;
+        if (! is_array($meta)) {
+            return [];
+        }
+
+        return app(BuilderDocumentValidator::class)->validate($meta);
     }
 }

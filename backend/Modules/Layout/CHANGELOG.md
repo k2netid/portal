@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- `dynamicSources` no longer logs the full query string.
+
 ### Changed
 - Manifest widget types match runtime (`content_list`, `menu`, `form`).
 - Public menus/themes return empty when the layout pack is inactive.

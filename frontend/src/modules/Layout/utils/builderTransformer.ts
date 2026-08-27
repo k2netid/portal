@@ -84,7 +84,6 @@ export const builderToHtml = (blocks: BlockInstance[]): string => {
                 }
             }
 
-            // Recurse into children
             if (module.children && Array.isArray(module.children)) {
                 processModules(module.children);
             }

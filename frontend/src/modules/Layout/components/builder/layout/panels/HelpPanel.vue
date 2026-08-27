@@ -37,7 +37,8 @@ const shortcuts = computed<Shortcut[]>(() => [
   { label: t('builder.panels.help.labels.delete'), keys: ['Del'] },
   { label: t('builder.panels.help.labels.duplicate'), keys: ['Ctrl', 'D'] },
   { label: t('builder.panels.help.labels.copy'), keys: ['Ctrl', 'C'] },
-  { label: t('builder.panels.help.labels.paste'), keys: ['Ctrl', 'V'] }
+  { label: t('builder.panels.help.labels.paste'), keys: ['Ctrl', 'V'] },
+  { label: t('builder.panels.help.labels.deselect', 'Deselect'), keys: ['Esc'] },
 ]);
 </script>
 

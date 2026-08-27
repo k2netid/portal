@@ -118,12 +118,7 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
     fetchPresets()
 
     if (state.mode.value === 'site') {
-        syncManager.fetchPages().then(() => {
-            const firstPage = state.pages.value?.[0]
-            if (state.pages.value.length > 0 && !state.currentPageId.value && firstPage?.id) {
-                syncManager.setCurrentPage(firstPage.id)
-            }
-        })
+        void syncManager.fetchPages()
     }
 
     // UI state

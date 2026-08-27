@@ -138,6 +138,7 @@ export interface BuilderState {
     customViewportWidth: Ref<number | null>;
     zoom: Ref<number>;
     wireframeMode: Ref<boolean>;
+    previewMode: Ref<boolean>;
     gridViewMode: Ref<boolean>;
     isFullscreen: Ref<boolean>;
     activeTheme: Ref<string>;

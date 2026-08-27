@@ -2,6 +2,9 @@
  * Builder Constants
  */
 
+/** Document schema stamped onto `meta.builder_schema_version` on save. */
+export const BUILDER_SCHEMA_VERSION = 1
+
 // Module Categories
 export const MODULE_CATEGORIES = {
     structure: {

@@ -54,7 +54,6 @@
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import ModuleRegistry from '@/modules/Layout/components/builder/core/ModuleRegistry';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import type { BlockInstance, BuilderInstance } from '@/modules/Layout/types/builder';
 
@@ -65,9 +64,8 @@ const props = defineProps<{
 const builder = inject<BuilderInstance>('builder');
 const currentDevice = computed(() => builder?.device?.value || 'desktop');
 
-const BlockComponent = computed(() => {
-  return ModuleRegistry.getComponent(props.module.type);
-});
+// Leaves always go through BlockRenderer (same as /site). Structure shells stay here for DnD slots.
+const BlockComponent = computed(() => null)
 
 const getSettingStr = (block: BlockInstance, key: string, fallback = ''): string => {
   const val = block.settings?.[key];
