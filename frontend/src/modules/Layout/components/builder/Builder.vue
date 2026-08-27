@@ -13,6 +13,8 @@
       <!-- Top Toolbar -->
       <TopToolbar 
         :active-panel="activePanel"
+        :read-only="isReadOnly"
+        :generating-ai="generatingAi"
         @toggle-sidebar="toggleSidebar"
         @change-device="changeDevice"
         @open-pages="showInsertSectionModal = true"
@@ -20,6 +22,15 @@
         @save="handleSave"
         @generate-ai="handleGenerateAi"
       />
+      <div
+        v-if="isReadOnly"
+        class="ja-builder__lock-banner"
+      >
+        <span>{{ lockHolder || t('builder.lock.held', 'This page is being edited by someone else. You can look, not save.') }}</span>
+        <button type="button" class="ja-builder__lock-steal" @click="stealLock">
+          {{ t('builder.lock.takeOver', 'Take over') }}
+        </button>
+      </div>
       
       <!-- Main Content Area -->
       <div class="ja-builder__main">
@@ -46,6 +57,7 @@
             :device="builder.device.value" 
             :zoom="builder.zoom.value" 
             :width="builder.customViewportWidth.value"
+            :class="{ 'ja-builder__canvas--readonly': isReadOnly }"
           >
             <Canvas />
           </CanvasFrame>
@@ -600,7 +612,15 @@ const handleDeleteModule = async (id: string) => {
     }
 }
 
+const isReadOnly = ref(false)
+const lockHolder = ref('')
+const generatingAi = ref(false)
+
 const handleSave = async (status: string | null = null) => {
+  if (isReadOnly.value) {
+    toast.error.default(t('builder.lock.cannotSave', 'This page is locked. Take over or close the editor.'))
+    return
+  }
   if (status && builder.content?.value) {
     builder.content.value.status = status
   }
@@ -624,14 +644,18 @@ let resizeObserver: ResizeObserver | null = null
 let lockTimer: number | undefined
 
 const handleGenerateAi = async () => {
+  if (isReadOnly.value || generatingAi.value) {
+    return
+  }
   const prompt = await builder.prompt({
     title: t('builder.toolbar.generateAi', 'Generate layout with AI'),
-    message: t('builder.toolbar.generateAiHint', 'Describe the section you want. This replaces the current canvas.'),
+    message: t('builder.toolbar.generateAiHint', 'Describe the section. You will choose whether to append it or replace the canvas.'),
     placeholder: t('builder.toolbar.generateAiPlaceholder', 'e.g. pricing table for a SaaS landing page'),
   })
   if (!prompt) {
     return
   }
+  generatingAi.value = true
   try {
     const response = await api.post('/manage/layout/builder/generate-blocks', { prompt })
     const next = response.data?.data?.blocks || response.data?.blocks
@@ -639,12 +663,40 @@ const handleGenerateAi = async () => {
       toast.error.default(t('builder.toolbar.generateAiEmpty', 'AI returned an empty layout'))
       return
     }
-    builder.blocks.value = next
+    const hasExisting = (builder.blocks.value?.length ?? 0) > 0
+    if (hasExisting) {
+      const replace = await builder.confirm({
+        title: t('builder.toolbar.generateAiApply', 'Apply generated layout'),
+        message: t('builder.toolbar.generateAiReplaceAsk', 'Replace the current canvas? Cancel to append the new sections underneath.'),
+        confirmText: t('builder.toolbar.replace', 'Replace'),
+        cancelText: t('builder.toolbar.append', 'Append'),
+        type: 'warning',
+      })
+      builder.blocks.value = replace ? next : [...builder.blocks.value, ...next]
+    } else {
+      builder.blocks.value = next
+    }
     builder.takeSnapshot?.({ immediate: true })
     toast.success.default(t('builder.toolbar.generateAiDone', 'Layout generated. Review, then save.'))
   } catch (error: unknown) {
-    const err = error as { response?: { data?: { message?: string } } }
-    toast.error.default(err.response?.data?.message || t('builder.toolbar.generateAiFailed', 'AI generate failed'))
+    const err = error as { response?: { data?: { message?: string; error_code?: string } } }
+    toast.error.default(err.response?.data?.message || t('builder.toolbar.generateAiFailed', 'AI generate failed. Turn on Settings → AI and add a provider key.'))
+  } finally {
+    generatingAi.value = false
+  }
+}
+
+const stealLock = async () => {
+  const lock = await builder.acquireLock?.()
+  if (lock?.ok) {
+    isReadOnly.value = false
+    lockHolder.value = ''
+    lockTimer = window.setInterval(() => {
+      void builder.acquireLock?.()
+    }, 120000)
+    toast.success.default(t('builder.lock.taken', 'You now hold the edit lock.'))
+  } else {
+    toast.error.default(lock?.message || t('builder.lock.held', 'Still locked'))
   }
 }
 
@@ -681,7 +733,8 @@ onMounted(async () => {
         await builder.loadContent(props.contentId)
         const lock = await builder.acquireLock?.()
         if (lock && !lock.ok) {
-          toast.error.default(lock.message || 'This page is locked by another editor')
+          isReadOnly.value = true
+          lockHolder.value = lock.message || t('builder.lock.held', 'This page is being edited by someone else.')
         } else {
           lockTimer = window.setInterval(() => {
             void builder.acquireLock?.()

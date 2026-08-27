@@ -16,6 +16,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - Visual builder canvas leaves use public BlockRenderer; public preview is a sandboxed iframe; `meta.builder_schema_version` on save.
 - Publishing rejects malformed `meta.builder_blocks` on create/update.
 - Builder save snapshots a content revision; History panel can restore saved trees. Canvas acquires a 60-minute edit lock. AI generate-blocks is gated by Settings → AI.
+- Builder lock shows a banner and blocks save; AI asks append vs replace; restore asks for confirmation.
 - Publishing overlay no longer double-PUTs; new content body is derived from builder blocks.
 - Public builder HTML/embed and Janari classic body go through SafeHtml.
 - Layout `dynamicSources` dropped query-string debug log.

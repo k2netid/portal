@@ -164,8 +164,9 @@ class BuilderController extends BaseApiController
         $prompt = (string) $validated['prompt'];
         $instruction = <<<PROMPT
 Return JSON only (no markdown) as {"blocks":[{"id":"module-1","type":"section","settings":{},"children":[{"id":"module-2","type":"heading","settings":{"text":"..."}},{"id":"module-3","type":"text","settings":{"content":"<p>...</p>"}}]}]}.
-Allowed types: section, row, column, heading, text, button, image, cta.
-Build a simple landing section for: {$prompt}
+Allowed types (use these exact slugs): section, row, column, heading, text, image, button, cta, hero, features, faq, testimonial, pricing, video, form_picker.
+Prefer one section with a row of columns. Do not invent types.
+Build a landing section for: {$prompt}
 PROMPT;
 
         try {
@@ -214,6 +215,20 @@ PROMPT;
             if (! isset($node['type']) || ! is_string($node['type'])) {
                 $node['type'] = 'text';
             }
+            $aliases = [
+                'headline' => 'heading',
+                'title' => 'heading',
+                'paragraph' => 'text',
+                'richtext' => 'text',
+                'rich_text' => 'text',
+                'call_to_action' => 'cta',
+                'hero_banner' => 'hero',
+                'form' => 'form_picker',
+                'contact' => 'form_picker',
+                'testimonials' => 'testimonial',
+            ];
+            $type = strtolower((string) $node['type']);
+            $node['type'] = $aliases[$type] ?? $type;
             if (! isset($node['settings']) || ! is_array($node['settings'])) {
                 $node['settings'] = [];
             }

@@ -713,3 +713,27 @@
     min-height: 32px !important;
     padding: 4px !important;
 }
+
+.ja-builder__lock-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #f59e0b;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 500;
+}
+.ja-builder__lock-steal {
+    border: 0;
+    background: #111827;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.ja-builder__canvas--readonly {
+    pointer-events: none;
+    opacity: 0.85;
+}

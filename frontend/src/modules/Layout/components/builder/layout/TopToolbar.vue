@@ -183,7 +183,8 @@
       <IconButton
         variant="ghost"
         :icon="Sparkles"
-        :title="t('builder.toolbar.generateAi', 'Generate layout with AI')"
+        :disabled="props.readOnly || props.generatingAi"
+        :title="props.generatingAi ? t('builder.toolbar.generateAiWorking', 'Generating…') : t('builder.toolbar.generateAi', 'Generate layout with AI')"
         @click="$emit('generate-ai')"
       />
 <!-- Save Actions -->
@@ -191,8 +192,8 @@
         <button 
           class="save-draft-btn" 
           @click="$emit('save', 'draft')"
-          :disabled="!builder.isDirty.value"
-          :class="{ 'opacity-50 cursor-not-allowed': !builder.isDirty.value }"
+          :disabled="props.readOnly || !builder.isDirty.value"
+          :class="{ 'opacity-50 cursor-not-allowed': props.readOnly || !builder.isDirty.value }"
           :title="t('builder.toolbar.saveDraft') || 'Save as Draft'"
         >
           {{ t('builder.toolbar.draft') || 'Draft' }}
@@ -200,8 +201,8 @@
         <button 
           class="publish-btn" 
           @click="$emit('save', 'published')"
-          :disabled="!builder.isDirty.value"
-          :class="{ 'opacity-50 cursor-not-allowed': !builder.isDirty.value }"
+          :disabled="props.readOnly || !builder.isDirty.value"
+          :class="{ 'opacity-50 cursor-not-allowed': props.readOnly || !builder.isDirty.value }"
           :title="builder.content.value.status === 'published' ? t('builder.toolbar.update') : t('builder.toolbar.publish')"
         >
           <Save class="w-3.5 h-3.5 mr-1.5" />
@@ -258,8 +259,10 @@ const icons: Record<string, Component> = { Monitor, Tablet, Smartphone, Wand2 }
 const builder = inject<BuilderInstance>('builder')!
 
 // Props & Emits
-defineProps<{
+const props = defineProps<{
   sidebarVisible?: boolean
+  readOnly?: boolean
+  generatingAi?: boolean
 }>()
 defineEmits<{
   (e: 'toggle-sidebar'): void

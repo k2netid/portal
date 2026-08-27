@@ -98,6 +98,14 @@ const loadSaved = async () => {
 
 const restoreSaved = async (id: string) => {
   if (!builder?.restoreRevision) return;
+  const ok = await builder.confirm({
+    title: t('builder.panels.history.restoreTitle', 'Restore this revision?'),
+    message: t('builder.panels.history.restoreAsk', 'The current canvas will be replaced. A backup revision is created first.'),
+    confirmText: t('builder.panels.history.restore', 'Restore'),
+    cancelText: t('builder.common.cancel', 'Cancel'),
+    type: 'warning',
+  });
+  if (!ok) return;
   await builder.restoreRevision(id);
   await loadSaved();
 };
