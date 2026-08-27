@@ -9,7 +9,7 @@ Laravel API Kernel untuk **Jejakawan Core Engine** dengan schema PostgreSQL teri
 
 ## Stack
 
-- Laravel 12/13, PHP ^8.3
+- Laravel 13, PHP ^8.2 (tested on 8.3)
 - PostgreSQL (schema: `core_engine`) / SQLite (CI)
 - Redis (dedicated cache & session database)
 

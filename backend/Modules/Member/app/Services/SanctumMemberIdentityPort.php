@@ -27,6 +27,7 @@ class SanctumMemberIdentityPort implements MemberIdentityPort
             id: (string) $user->id,
             name: (string) $user->name,
             email: (string) $user->email,
+            emailVerified: $user->email_verified_at !== null,
         );
     }
 }

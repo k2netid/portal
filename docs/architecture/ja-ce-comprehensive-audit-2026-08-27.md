@@ -107,6 +107,8 @@ Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yan
 | **P2-17** | Kernel Identity tab Media = S3/FTP; Media pack = library. Dua “media settings”. | Dokumentasikan split atau pindahkan storage ke pack. |
 | **P2-18** | Orphan `SeoTab.vue` / `DiscussionTab.vue` / `AnalyticsTab.vue` di Core settings. | Publishing sudah reuse SEO/discussion. Hapus atau alias. |
 
+**Refine pass 2026-08-28:** landed P2-2, P2-7, P2-9, P2-10, P2-12, P2-15, P2-16 (SafeHtml mode), P2-17, P2-18. P5 still deferred.
+
 ---
 
 ## 5. Docs vs kode (drift yang harus dibahas)
@@ -119,11 +121,11 @@ Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yan
 | P6 “kernel tidak punya SEO/discussion/analytics” | `architectural-status.md` | API ya; **Identity masih `general`**; tab Analytics kernel sudah mati tapi App Store map masih `tab=analytics` |
 | Reserved slugs tanpa `site`/`sites` | `data-studio-vs-cck.md` | `ContentType::RESERVED_SLUGS` + FE mirror sudah |
 | i18n path `modules/Content/...` | `05-i18n-guidelines.md` | Pack di `frontend/src/modules/{Publishing,Layout,...}` |
-| PHP 8.3+ | overview docs | `composer.json` `"php": "^8.2"` |
-| Laravel 12/13 | overview + manifests | Lock Laravel **13** |
+| PHP 8.3+ | overview docs | Aligned: PHP 8.2+ / Laravel 13 |
+| Laravel 12/13 | overview + manifests | Pack manifests `laravel: ">=13.0"` |
 | Console slug `/dash` vs seed `ja-dash` | status vs README login | Constant FE `dash`; seed/UI default `ja-dash` — dua kebenaran |
 | `settings_route` = console route | `module-contract.md` | Publishing `"publishing"` ≠ `publishing-settings` |
-| Setiap optional module punya `frontend/.../module.ts` | contract | Member: views only; Site: tidak ada folder FE |
+| Setiap optional module punya `frontend/.../module.ts` | contract | Member now has console `module.ts`; Site remains host-only |
 
 ### 5.2 Perilaku kode yang belum didokumentasikan
 

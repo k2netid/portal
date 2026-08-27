@@ -38,7 +38,7 @@
               v-if="pageIntro"
               class="mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base prose prose-sm prose-p:my-3 prose-strong:text-foreground prose-a:text-primary"
               :html="pageIntro"
-              mode="Jejakawan"
+              mode="publishing"
             />
           </div>
         </section>
@@ -171,7 +171,7 @@
                 <SafeHtml
                   class="janari-page-content prose prose-slate max-w-none prose-p:my-4 prose-p:leading-relaxed prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-ul:my-4 prose-ol:my-4"
                   :html="pageBody"
-                  mode="Jejakawan"
+                  mode="publishing"
                 />
 
                 <!-- Public Comments on Page if enabled -->

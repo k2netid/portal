@@ -1403,6 +1403,10 @@
         "title": "Petélan Unggahan",
         "description": "Batas unggahan file sareng tipe file anu diizinkan"
       },
+      "mediaSplit": {
+        "title": "Panyimpenan objék, sanés pustaka média",
+        "description": "Tab Identity ieu ngatur disk (lokal, S3, FTP). File éditorial sareng picker aya di pack Media sanggeus pack éta aktif. File Manager kernel tetep di dieu."
+      },
       "imageProcessing": {
         "title": "Pemrosesan Gambar",
         "description": "Petélan pembuatan thumbnail sareng watermark"

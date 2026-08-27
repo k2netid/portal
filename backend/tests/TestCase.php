@@ -85,6 +85,7 @@ abstract class TestCase extends BaseTestCase
             'view comments', 'create comments', 'edit comments', 'delete comments', 'approve comments', 'manage comments',
             'view forms', 'create forms', 'edit forms', 'delete forms', 'manage forms',
             'view newsletter', 'manage newsletter',
+            'view members', 'manage members',
             // Users & Roles
             'view users', 'create users', 'edit users', 'delete users', 'manage users',
             'view roles', 'create roles', 'edit roles', 'delete roles', 'manage roles', 'manage permissions',

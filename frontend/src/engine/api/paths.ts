@@ -29,6 +29,14 @@ export const libraryPaths = {
     publicCategory: (id: string) => `/public/library/categories/${id}`,
 } as const;
 
+export const memberPaths = {
+    index: '/manage/members',
+    publicRegister: '/public/member/register',
+    publicLogin: '/public/member/login',
+    me: '/member/me',
+    bookmarks: '/member/bookmarks',
+} as const;
+
 export const newsletterPaths = {
     subscribe: '/public/newsletter/subscribe',
     subscribers: '/manage/newsletter/subscribers',

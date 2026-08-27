@@ -364,4 +364,35 @@ class DataModelTest extends TestCase
             'slug' => 'inventory_items',
         ]);
     }
+
+    public function test_grandfather_renames_existing_reserved_slugs(): void
+    {
+        ContentType::query()->create([
+            'name' => 'Taken Studio',
+            'slug' => 'posts_studio',
+            'description' => 'Collision',
+            'is_active' => true,
+            'fields' => [],
+        ]);
+        $legacy = ContentType::query()->create([
+            'name' => 'Legacy Posts',
+            'slug' => 'posts',
+            'description' => 'Old Data Studio row',
+            'is_active' => true,
+            'fields' => [],
+        ]);
+
+        $renamed = ContentType::grandfatherReservedSlugs();
+
+        $this->assertSame(1, $renamed);
+        $this->assertDatabaseHas('sys_content_types', [
+            'id' => $legacy->id,
+            'slug' => 'posts_studio_2',
+        ]);
+        $this->assertStringContainsString(
+            'posts',
+            (string) $legacy->fresh()?->description,
+        );
+        $this->assertDatabaseMissing('sys_content_types', ['slug' => 'posts']);
+    }
 }

@@ -109,6 +109,17 @@ class LayoutServiceProvider extends ServiceProvider
             $registry = $this->app->make(LayoutRegistryInterface::class);
             $themeService = $this->app->make(ThemeService::class);
 
+            $registry->registerWidgetTypes('publishing', [
+                'html' => 'Custom HTML',
+                'content_list' => 'Content List',
+                'menu' => 'Navigation Menu',
+                'form' => 'Custom Form',
+                'text' => 'Text',
+                'recent_posts' => 'Recent Posts',
+                'categories' => 'Categories',
+                'custom' => 'Custom',
+            ]);
+
             try {
                 $activeTheme = $themeService->getActiveTheme('frontend');
             } catch (\Throwable) {
@@ -140,17 +151,6 @@ class LayoutServiceProvider extends ServiceProvider
                     'footer_bottom',
                 ]);
             }
-
-            $registry->registerWidgetTypes('publishing', [
-                'html' => 'Custom HTML',
-                'content_list' => 'Content List',
-                'menu' => 'Navigation Menu',
-                'form' => 'Custom Form',
-                'text' => 'Text',
-                'recent_posts' => 'Recent Posts',
-                'categories' => 'Categories',
-                'custom' => 'Custom',
-            ]);
         });
     }
 }

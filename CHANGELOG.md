@@ -16,12 +16,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 Kernel `/manage/ai/generate` stays settings-flag gated (`ai_enabled`), not `cms-ai` pack — by design for downstream apps without CMS.
 
 ### Added
+- P2 refine: public SPA defers Member/Analytics; Data Studio grandfathers reserved slugs; member email verify gates bookmarks/comments; console Members directory; pack tests for Layout/Media/Library/Newsletter/Publishing content; Identity Media vs Media pack split documented.
 - JA-Mail: honest AI gating vs Settings → AI; Core `AI_DISABLED` on generate; `mail-ai-governance` rule
 - JA-Mail: in-app notification bridge (send failure / vacation); per-module README + CHANGELOG; agent rule `module-documentation.mdc`
 - `docs/product/bootstrap-downstream-app.md` + `scripts/bootstrap-downstream-app.sh` — scaffold modul produk downstream.
 - `Modules/Core/app/System/Services/Ai/AiHttpResponse.php` — typed HTTP helpers untuk provider AI.
 
 ### Changed
+- PHP/Laravel claims: PHP 8.2+ (tested 8.3), Laravel 13. Pack manifests `laravel: ">=13.0"`.
+- Janari SafeHtml mode `publishing` (alias `Jejakawan` kept for old builder HTML).
+- Publishing SEO/Discussion tabs live under the Publishing pack; unused Core Analytics tab removed.
 - **Module Registry P3-2:** port `media` from ja-cms as optional pack (picker + library; File Manager stays Core); retarget MediaLibraryBridge; console menu soft-sync.
 - **Module Registry P3-1:** port `library` + `publishing` from ja-cms as optional packs (Mail contract); soft-stub Layout/Newsletter/AI until later waves.
 - **Module Registry P2:** external packaging guide + `scaffold-optional-module.sh`; kernel middleware `extension.active:{slug}` (Mail alias delegates).

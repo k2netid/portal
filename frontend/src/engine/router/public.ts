@@ -127,6 +127,17 @@ export const createPublicRouter = () => {
             return result;
         }
 
+        const { useSystemStore } = await import('@/modules/Core/System/stores/system');
+        const active = useSystemStore().activeExtensions ?? [];
+        const memberRoute = to.path.startsWith('/member');
+        if (memberRoute && !active.includes('member')) {
+            return { path: '/404' };
+        }
+
+        if (!active.includes('member')) {
+            return true;
+        }
+
         const { useMemberStore } = await import('@/modules/Member/stores/member');
         const memberStore = useMemberStore();
         if (!memberStore.hydrated) {

@@ -36,7 +36,7 @@
             v-if="cmsBody"
             class="container mx-auto px-4 py-16 Jejakawan-content"
             :html="cmsBody"
-            mode="Jejakawan"
+            mode="publishing"
           />
 
           <!-- Header -->

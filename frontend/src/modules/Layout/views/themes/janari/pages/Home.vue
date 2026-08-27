@@ -13,7 +13,7 @@
         v-else-if="cmsHtml" 
         class="Jejakawan-content"
         :html="cmsHtml"
-        mode="Jejakawan"
+        mode="publishing"
       />
         
       <!-- Default Janari home: render immediately to avoid full-viewport layout swap (CLS) -->

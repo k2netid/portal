@@ -1,0 +1,31 @@
+{
+  "navigation": {
+    "menu": {
+      "members": "Anggota"
+    }
+  },
+  "title": "Anggota",
+  "subtitle": "Akun pamiarsa publik. Sanés operator konsol.",
+  "filters": {
+    "search": "Pilari nami atanapi email..."
+  },
+  "messages": {
+    "loading": "Ngamuat anggota...",
+    "empty": "Teu aya anggota",
+    "loadFailed": "Gagal ngamuat anggota"
+  },
+  "table": {
+    "member": "Anggota",
+    "status": "Status",
+    "verified": "Email",
+    "joinedAt": "Ngagabung"
+  },
+  "status": {
+    "active": "Aktif",
+    "inactive": "Nonaktif"
+  },
+  "verified": {
+    "yes": "Kavérifikasi",
+    "no": "Can vériifikasi"
+  }
+}

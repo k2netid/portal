@@ -43,8 +43,8 @@ class ContentType extends Model
     ];
 
     /**
-     * Existing rows with these slugs are not auto-renamed. Create/update of new
-     * collisions is rejected with DATA_MODEL_SLUG_RESERVED.
+     * Create/update of new collisions is rejected with DATA_MODEL_SLUG_RESERVED.
+     * Existing reserved rows are renamed once via grandfatherReservedSlugs().
      */
 
     public static function isReservedSlug(string $slug): bool
@@ -52,6 +52,41 @@ class ContentType extends Model
         $normalized = strtolower(trim($slug));
 
         return $normalized !== '' && in_array($normalized, self::RESERVED_SLUGS, true);
+    }
+
+    /**
+     * Rename leftover Data Studio rows that collide with CMS/kernel slugs.
+     * Records stay attached by content_type_id; only the public slug changes.
+     */
+    public static function grandfatherReservedSlugs(): int
+    {
+        $renamed = 0;
+
+        foreach (self::query()->get() as $type) {
+            $original = strtolower(trim((string) $type->slug));
+            if ($original === '' || ! in_array($original, self::RESERVED_SLUGS, true)) {
+                continue;
+            }
+
+            $base = $original.'_studio';
+            $candidate = $base;
+            $n = 2;
+            while (self::query()->where('slug', $candidate)->where('id', '!=', $type->id)->exists()) {
+                $candidate = $base.'_'.$n;
+                $n++;
+            }
+
+            $prefix = '[Renamed from reserved Data Studio slug "'.$original.'"] ';
+            $description = is_string($type->description) ? $type->description : '';
+            if (! str_starts_with($description, '[Renamed from reserved Data Studio slug')) {
+                $type->description = $prefix.$description;
+            }
+            $type->slug = $candidate;
+            $type->save();
+            $renamed++;
+        }
+
+        return $renamed;
     }
 
     protected $keyType = 'string';

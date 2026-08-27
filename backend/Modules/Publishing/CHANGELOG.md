@@ -4,6 +4,7 @@
 
 ### Changed
 - Settings groups are `seo` + `comments` only. Site identity (`general`) stays on kernel Identity.
+- SEO and Discussion setting tabs live in this pack (`views/settings/tabs/`).
 
 ### Added
 

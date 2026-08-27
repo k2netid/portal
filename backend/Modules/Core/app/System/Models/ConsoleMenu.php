@@ -303,6 +303,17 @@ class ConsoleMenu extends Model
                 'order' => 8,
                 'children' => [
                     [
+                        'name' => 'Members',
+                        'label_key' => 'member.navigation.menu.members',
+                        'route_name' => 'members.index',
+                        'icon' => 'user',
+                        'permission' => 'view members',
+                        'extension_slug' => 'member',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
+                        'order' => 0,
+                    ],
+                    [
                         'name' => 'Forms',
                         'label_key' => 'forms.navigation.menu.forms',
                         'route_name' => 'forms',

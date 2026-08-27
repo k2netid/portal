@@ -6,6 +6,8 @@ Contract: `docs/extensions/module-contract.md`
 
 **Not included:** Core File Manager stays in `Modules/Core/Infra` (disk browser). This pack is the DB-backed library + picker (`/manage/media`).
 
+Kernel Identity → Settings → Media is **object storage** (local / S3 / FTP). It is not this pack. Do not move File Manager out of Core.
+
 ## Soft deps
 
 | Pack | Behavior |

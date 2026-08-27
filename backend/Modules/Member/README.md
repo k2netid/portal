@@ -10,15 +10,17 @@ Public reader accounts. Not console IAM.
 
 - API: `routes/api.php` — gated `extension.active:member`
 - Verify email: signed `GET /api/v1/public/member/verify-email/{id}/{hash}` → `/site/member/verified`
-- FE: `frontend/src/modules/Member/views/` (public shell only; no console `module.ts`)
+- FE public: `frontend/src/modules/Member/views/` (`/site/member/*`)
+- FE console: `members.index` (`/dash/members`) — list only, permission `view members`
 
 ## Gates
 
 - Pack off → register/login/me/bookmarks 403
-- Email verification is **soft**: register still issues a token; `email_verified_at` is set after the signed link
+- Register still issues a Sanctum token so `me` and resend-verification work
+- Bookmarks and member comments require `email_verified_at` (`member.verified` / `EMAIL_UNVERIFIED`)
 - Outbound verify mail uses JA-Mail when the **mail** pack is product-active; otherwise Laravel `Mail::html`
 
 ## Agent notes
 
 - Do not wire comments to `User`
-- Do not add a console member-admin UI unless a later product asks for it
+- Console Members is a thin directory, not IAM. Operators stay on `srv_auth_users`.

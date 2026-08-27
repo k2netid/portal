@@ -13,6 +13,7 @@ import formsPack from '@/modules/Forms/locales';
 import newsletterPack from '@/modules/Newsletter/locales';
 import searchPack from '@/modules/Search/locales';
 import cmsAiPack from '@/modules/CmsAi/locales';
+import memberPack from '@/modules/Member/locales';
 
 import zenithEn from '@/modules/Layout/views/themes/zenith/locales/en.json';
 import zenithId from '@/modules/Layout/views/themes/zenith/locales/id.json';
@@ -51,6 +52,7 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.en,
         search: searchPack.en,
         ai: cmsAiPack.en,
+        member: memberPack.en,
         theme: { zenith: zenithEn, janari: janariEn },
     },
     id: {
@@ -67,6 +69,7 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.id,
         search: searchPack.id,
         ai: cmsAiPack.id,
+        member: memberPack.id,
         theme: { zenith: zenithId, janari: janariId },
     },
     su: {
@@ -83,6 +86,7 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.su,
         search: searchPack.su,
         ai: cmsAiPack.su,
+        member: memberPack.su,
         theme: { zenith: zenithSu, janari: janariSu },
     },
 } as const;

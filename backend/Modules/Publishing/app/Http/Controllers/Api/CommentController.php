@@ -66,6 +66,9 @@ class CommentController extends BaseApiController
         $member = app(\Modules\Publishing\Contracts\MemberIdentityPort::class)->current($request);
 
         if ($member !== null) {
+            if (! $member->emailVerified) {
+                return $this->error('Verify your email before commenting', 403, [], 'EMAIL_UNVERIFIED');
+            }
             $validated['member_id'] = $member->id;
             $validated['name'] = $member->name;
             $validated['email'] = $member->email;

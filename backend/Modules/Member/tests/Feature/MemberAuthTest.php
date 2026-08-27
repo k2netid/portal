@@ -42,6 +42,11 @@ class MemberAuthTest extends TestCase
         return ['token' => $token, 'id' => $id];
     }
 
+    private function verifyMember(string $id): void
+    {
+        Member::query()->whereKey($id)->update(['email_verified_at' => now()]);
+    }
+
     public function test_member_can_login_with_token_not_console_session(): void
     {
         $this->registerMember();
@@ -83,6 +88,7 @@ class MemberAuthTest extends TestCase
         ]);
 
         $auth = $this->registerMember();
+        $this->verifyMember($auth['id']);
 
         $this->withToken($auth['token'])
             ->postJson('/api/v1/member/bookmarks', [
@@ -109,6 +115,7 @@ class MemberAuthTest extends TestCase
         ]);
 
         $auth = $this->registerMember();
+        $this->verifyMember($auth['id']);
 
         $this->withToken($auth['token'])
             ->postJson("/api/v1/public/publishing/contents/{$content->id}/comments", [
@@ -122,6 +129,33 @@ class MemberAuthTest extends TestCase
         $this->assertNull($comment->user_id);
         $this->assertDatabaseMissing('srv_auth_users', ['id' => $auth['id']]);
         $this->assertTrue(Member::query()->whereKey($auth['id'])->exists());
+    }
+
+    public function test_unverified_member_cannot_bookmark_or_comment(): void
+    {
+        $this->seedPermissionsAndRoles();
+        $admin = $this->createAdminUser();
+        $content = Content::factory()->published()->create([
+            'author_id' => $admin->id,
+            'category_id' => null,
+            'comment_status' => 'open',
+        ]);
+
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->postJson('/api/v1/member/bookmarks', [
+                'content_id' => $content->id,
+            ])
+            ->assertForbidden()
+            ->assertJsonPath('error_code', 'EMAIL_UNVERIFIED');
+
+        $this->withToken($auth['token'])
+            ->postJson("/api/v1/public/publishing/contents/{$content->id}/comments", [
+                'body' => 'Unverified reader should not comment.',
+            ])
+            ->assertForbidden()
+            ->assertJsonPath('error_code', 'EMAIL_UNVERIFIED');
     }
 
     public function test_register_sends_verify_mail_and_signed_link_confirms(): void

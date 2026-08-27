@@ -93,7 +93,7 @@
                 ref="contentRef"
                 class="prose prose-sm md:prose-lg prose-indigo mx-auto dark:prose-invert"
                 :html="post.body || ''"
-                mode="Jejakawan"
+                mode="publishing"
               />
                       
               <!-- Tags -->

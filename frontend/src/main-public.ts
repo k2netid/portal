@@ -22,29 +22,36 @@ async function bootstrap(): Promise<void> {
     const app = createShellApp(PublicApp);
     const { logger } = await useLoggerPlugin(app);
 
+    let active: string[] = [];
     try {
         const { useSystemStore } = await import('@/modules/Core/System/stores/system');
-        await useSystemStore().fetchPublicSettings();
+        const systemStore = useSystemStore();
+        await systemStore.fetchPublicSettings();
+        active = systemStore.activeExtensions ?? [];
     } catch {
         /* theme runtime still mounts without public settings */
     }
 
-    try {
-        const { useMemberStore } = await import('@/modules/Member/stores/member');
-        await useMemberStore().hydrate();
-    } catch {
-        /* public visitors can browse as guests */
+    if (active.includes('member')) {
+        try {
+            const { useMemberStore } = await import('@/modules/Member/stores/member');
+            await useMemberStore().hydrate();
+        } catch {
+            /* public visitors can browse as guests */
+        }
     }
 
     const { createPublicRouter } = await import('@/engine/router/public');
     const router = createPublicRouter();
     app.use(router);
 
-    try {
-        const { installPublicAnalytics } = await import('@/modules/Analytics/composables/usePublicAnalytics');
-        installPublicAnalytics(router);
-    } catch {
-        /* analytics pack optional */
+    if (active.includes('analytics')) {
+        try {
+            const { installPublicAnalytics } = await import('@/modules/Analytics/composables/usePublicAnalytics');
+            installPublicAnalytics(router);
+        } catch {
+            /* analytics pack optional */
+        }
     }
 
     logger.info('[SPA] Mounting public theme runtime');

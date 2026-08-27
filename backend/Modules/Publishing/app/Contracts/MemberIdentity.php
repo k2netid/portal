@@ -13,5 +13,6 @@ final readonly class MemberIdentity
         public string $id,
         public string $name,
         public string $email,
+        public bool $emailVerified = false,
     ) {}
 }

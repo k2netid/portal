@@ -1411,6 +1411,10 @@
         "title": "Upload Settings",
         "description": "File upload limits and allowed file types"
       },
+      "mediaSplit": {
+        "title": "Object storage, not the media library",
+        "description": "This Identity tab configures disks (local, S3, FTP). Editorial files and the picker live in the Media pack after that pack is active. Core File Manager stays here."
+      },
       "imageProcessing": {
         "title": "Image Processing",
         "description": "Thumbnail generation and watermark settings"

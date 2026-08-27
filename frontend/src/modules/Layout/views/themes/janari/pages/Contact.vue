@@ -60,7 +60,7 @@
             v-if="cmsBody"
             class="mb-16 Jejakawan-content max-w-4xl"
             :html="cmsBody"
-            mode="Jejakawan"
+            mode="publishing"
           />
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">

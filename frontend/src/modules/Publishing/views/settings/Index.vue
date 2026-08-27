@@ -77,8 +77,8 @@ import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
 import { Button, Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
-import SeoTab from '@/modules/Core/System/views/settings/general/tabs/SeoTab.vue';
-import DiscussionTab from '@/modules/Core/System/views/settings/general/tabs/DiscussionTab.vue';
+import SeoTab from '@/modules/Publishing/views/settings/tabs/SeoTab.vue';
+import DiscussionTab from '@/modules/Publishing/views/settings/tabs/DiscussionTab.vue';
 
 interface Setting {
     id: string;

@@ -6,6 +6,7 @@ namespace Modules\Member\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Member\Http\Middleware\EnsureMemberEmailVerified;
 use Modules\Member\Services\SanctumMemberIdentityPort;
 use Modules\Publishing\Contracts\MemberIdentityPort;
 
@@ -21,6 +22,8 @@ class MemberServiceProvider extends ServiceProvider
         $moduleRoot = dirname(__DIR__, 2);
 
         $this->loadMigrationsFrom($moduleRoot.'/database/migrations');
+
+        Route::aliasMiddleware('member.verified', EnsureMemberEmailVerified::class);
 
         Route::middleware('api')
             ->prefix('api')

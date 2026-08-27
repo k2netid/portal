@@ -90,10 +90,8 @@ const discussionSettingsGrouped = computed(() => {
     ]
     
     groups.forEach(group => {
-        // Filter settings for this group
         const groupSettings = discussionSettings.filter(s => group.keys.includes(s.key))
         
-        // Sort settings based on the order in the keys array
         group.settings = groupSettings.sort((a, b) => {
             return group.keys.indexOf(a.key) - group.keys.indexOf(b.key)
         })

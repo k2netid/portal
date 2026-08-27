@@ -1,0 +1,31 @@
+{
+  "navigation": {
+    "menu": {
+      "members": "Anggota"
+    }
+  },
+  "title": "Anggota",
+  "subtitle": "Akun pembaca publik. Bukan operator konsol.",
+  "filters": {
+    "search": "Cari nama atau email..."
+  },
+  "messages": {
+    "loading": "Memuat anggota...",
+    "empty": "Tidak ada anggota",
+    "loadFailed": "Gagal memuat anggota"
+  },
+  "table": {
+    "member": "Anggota",
+    "status": "Status",
+    "verified": "Email",
+    "joinedAt": "Bergabung"
+  },
+  "status": {
+    "active": "Aktif",
+    "inactive": "Nonaktif"
+  },
+  "verified": {
+    "yes": "Terverifikasi",
+    "no": "Belum verifikasi"
+  }
+}

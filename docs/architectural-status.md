@@ -29,7 +29,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, `/site` 404, member login/register/account, member verify-email via Mail.
 
-P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`.
+P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`. Identity **Media** tab is object storage (S3/FTP/disk); editorial library is the **media** pack. Core File Manager stays in Infra.
 
 P4: Data Studio (`sys_content_types`) is operational entities; Library `lib_fields` is CMS CCK. Reserved slugs block CMS collisions. See [data-studio-vs-cck.md](architecture/data-studio-vs-cck.md).
 
@@ -40,6 +40,7 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 | Item | Notes |
 | :--- | :--- |
 | ja-CE honesty pass (pre-P5) | Landed 2026-08-27 — [audit](architecture/ja-ce-comprehensive-audit-2026-08-27.md). P5 still deferred. |
+| P2 refine leftover (2, 7, 9–10, 12, 15–18) | Landed 2026-08-28. Public SPA defers Member/Analytics; Data Studio grandfathers reserved slugs; member verify gates bookmarks/comments; console Members list; pack tests; PHP 8.2 / Laravel 13 claims; SafeHtml `publishing`; Identity Media vs Media pack; SEO/Discussion tabs live on Publishing. |
 | P5 vertical product modules | Same Mail contract; catalog grows later — needs a named product |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |

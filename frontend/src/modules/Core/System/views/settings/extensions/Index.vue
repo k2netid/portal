@@ -899,6 +899,7 @@ const openSettingsModal = (ext: ExtensionItem) => {
         forms: '/dash/forms',
         library: consolePath('/library'),
         newsletter: consolePath('/newsletter'),
+        member: { name: 'members.index' },
         search: { name: 'settings', query: { tab: 'system' } },
     };
 

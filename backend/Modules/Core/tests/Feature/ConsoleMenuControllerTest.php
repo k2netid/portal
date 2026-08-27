@@ -28,7 +28,7 @@ class ConsoleMenuControllerTest extends TestCase
             ->assertJsonPath('success', true);
 
         // 10 root groups + children (includes audience/forms pack + publishing settings)
-        $this->assertDatabaseCount('sys_console_menus', 54);
+        $this->assertDatabaseCount('sys_console_menus', 55);
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'contents.index',
             'extension_slug' => 'publishing',
@@ -56,6 +56,10 @@ class ConsoleMenuControllerTest extends TestCase
         $this->assertDatabaseHas('sys_console_menus', [
             'route_name' => 'forms',
             'extension_slug' => 'forms',
+        ]);
+        $this->assertDatabaseHas('sys_console_menus', [
+            'route_name' => 'members.index',
+            'extension_slug' => 'member',
         ]);
     }
 

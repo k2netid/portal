@@ -1403,6 +1403,10 @@
         "title": "Pengaturan Unggahan",
         "description": "Batas unggahan file dan tipe file yang diizinkan"
       },
+      "mediaSplit": {
+        "title": "Penyimpanan objek, bukan pustaka media",
+        "description": "Tab Identity ini mengatur disk (lokal, S3, FTP). File editorial dan picker ada di pack Media setelah pack itu aktif. File Manager kernel tetap di sini."
+      },
       "imageProcessing": {
         "title": "Pemrosesan Gambar",
         "description": "Pengaturan pembuatan thumbnail dan watermark"

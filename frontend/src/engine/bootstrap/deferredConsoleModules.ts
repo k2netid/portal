@@ -56,6 +56,10 @@ const OPTIONAL_FIRST_PARTY: Array<{
         load: () => import('@/modules/Search'),
     },
     {
+        slug: 'member',
+        load: () => import('@/modules/Member'),
+    },
+    {
         slug: 'cms-ai',
         load: () => import('@/modules/CmsAi'),
     },

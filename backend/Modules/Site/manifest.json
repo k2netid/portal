@@ -8,7 +8,7 @@
   "family": "audience",
   "requires": {
     "php": ">=8.2",
-    "laravel": ">=12.0",
+    "laravel": ">=13.0",
     "core": ">=1.0.0-beta"
   },
   "dependencies": {

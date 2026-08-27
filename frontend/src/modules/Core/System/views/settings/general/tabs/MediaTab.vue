@@ -284,6 +284,14 @@ const handleStopMigration = () => {
 
 <template>
   <div class="space-y-4">
+    <div class="rounded-lg border border-border bg-muted/40 p-4 text-sm text-muted-foreground">
+      <p class="font-medium text-foreground">
+        {{ t('system.settings.groups.mediaSplit.title') }}
+      </p>
+      <p class="mt-1">
+        {{ t('system.settings.groups.mediaSplit.description') }}
+      </p>
+    </div>
     <SettingGroup
       v-for="group in mediaSettingsGrouped"
       :key="group.id"

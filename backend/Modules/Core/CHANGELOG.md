@@ -5,6 +5,7 @@
 ### Fixed
 - Plugin uninstall returns the deactivate error instead of deleting files when dependents are still active.
 - Kernel settings list includes `general` (Identity). Product groups remain refused.
+- Data Studio one-shot rename of reserved slugs (`grandfatherReservedSlugs`).
 
 ### Added
 - Module contract freeze docs + `ModuleManifestValidator` for first-party manifests.
