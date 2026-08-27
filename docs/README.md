@@ -11,7 +11,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | Dokumen | Deskripsi |
 | :--- | :--- |
 | [**AGENT_START_HERE**](AGENT_START_HERE.md) | Cerita fork, branch strategy, aturan agent |
-| [**Architectural status**](architectural-status.md) | Apa yang live di `main` vs legacy CMS/CP |
+| [**Architectural status**](architectural-status.md) | Kernel `main` + CMS packs / `/site` di branch registry |
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
 | [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |

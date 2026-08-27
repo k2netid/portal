@@ -15,7 +15,7 @@ Repo ini **bukan** `ja-control-plane`. Control plane (`ja-control-plane`) tetap 
 | :--- | :--- |
 | **`main`** | Kernel canonical: `Modules/Core` (`System`, `Infra`, `Security`) + unified console SPA |
 
-Branch **`develop`** (line CMS) **dihapus Aug 2026**. Content/themes/member = downstream repo forked from `main`.
+Branch **`develop`** (line CMS) **dihapus Aug 2026**. Pack CMS opsional (Publishing, Layout, Member, Site, …) sekarang **in-tree** di kernel, di-gate registry. Billing member / JA-CP tetap downstream. Snapshot terbaru: [architectural-status.md](architectural-status.md).
 
 ## Struktur wajib dibaca
 
