@@ -40,6 +40,13 @@ async function bootstrap(): Promise<void> {
     const router = createPublicRouter();
     app.use(router);
 
+    try {
+        const { installPublicAnalytics } = await import('@/modules/Analytics/composables/usePublicAnalytics');
+        installPublicAnalytics(router);
+    } catch {
+        /* analytics pack optional */
+    }
+
     logger.info('[SPA] Mounting public theme runtime');
     app.mount('#app');
 }

@@ -165,6 +165,7 @@ const navItems = computed(() => [
   { name: t('theme.zenith.header.solusi', 'Solutions'), path: '/solusi' },
   { name: t('theme.zenith.header.services', 'Services'), path: '/services' },
   { name: t('theme.zenith.header.blog', 'Blog'), path: '/blog' },
+  { name: t('theme.zenith.header.search', 'Search'), path: '/search' },
   { name: t('theme.zenith.header.pricing', 'Pricing'), path: '/pricing' },
   { name: t('theme.zenith.header.contact', 'Contact'), path: '/contact' },
 ]);

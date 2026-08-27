@@ -53,7 +53,7 @@
               </span>
               <h3 class="text-xl font-bold text-foreground font-heading line-clamp-2">
                 <router-link
-                  :to="`/${post.slug}`"
+                  :to="`/blog/${post.slug}`"
                   class="hover:text-primary transition-colors"
                 >
                   {{ post.title }}
@@ -68,7 +68,7 @@
           <div class="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs text-muted-foreground">
             <span>{{ post.published_at ? new Date(post.published_at).toLocaleDateString() : 'Recent' }}</span>
             <router-link
-              :to="`/${post.slug}`"
+              :to="`/blog/${post.slug}`"
               class="font-semibold text-primary inline-flex items-center gap-1 hover:underline"
             >
               {{ t('theme.zenith.common.readMore', 'Read More') }}

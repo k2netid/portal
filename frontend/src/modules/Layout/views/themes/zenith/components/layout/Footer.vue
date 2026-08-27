@@ -1,7 +1,7 @@
 <template>
   <footer class="w-full border-t border-border/40 bg-muted/20 mt-auto transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12">
         <!-- Brand Summary -->
         <div class="space-y-4 md:col-span-2">
           <router-link
@@ -61,6 +61,32 @@
           </ul>
         </div>
 
+        <!-- Newsletter -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-foreground">
+            {{ t('theme.zenith.footer.newsletter', 'Newsletter') }}
+          </h4>
+          <form
+            class="space-y-2"
+            @submit.prevent="subscribe"
+          >
+            <input
+              v-model="newsletterEmail"
+              type="email"
+              required
+              class="w-full px-3 py-2 rounded-xl border border-border/80 bg-background text-sm"
+              placeholder="email"
+            >
+            <button
+              type="submit"
+              class="w-full text-xs font-semibold rounded-xl px-3 py-2 bg-primary text-primary-foreground disabled:opacity-50"
+              :disabled="newsletterBusy"
+            >
+              {{ newsletterStatus || t('theme.zenith.footer.subscribe', 'Subscribe') }}
+            </button>
+          </form>
+        </div>
+
         <!-- Resources -->
         <div class="space-y-3">
           <h4 class="text-xs font-bold uppercase tracking-wider text-foreground">
@@ -83,6 +109,14 @@
                 {{ t('theme.zenith.header.contact', 'Contact') }}
               </router-link>
             </li>
+            <li>
+              <router-link
+                to="/career"
+                class="hover:text-foreground transition-colors"
+              >
+                {{ t('theme.zenith.header.career', 'Careers') }}
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -103,10 +137,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
+import api from '@/engine/api/client';
 import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 
 const { t } = useI18n();
@@ -120,4 +155,25 @@ const siteName = computed(() => {
 const copyrightText = computed(() => {
   return String(getSetting('footer_copyright') || `© ${new Date().getFullYear()} ${siteName.value}. ${t('theme.zenith.footer.copyright', 'All rights reserved.')}`);
 });
+
+const newsletterEmail = ref('');
+const newsletterBusy = ref(false);
+const newsletterStatus = ref('');
+
+const subscribe = async (): Promise<void> => {
+  newsletterBusy.value = true;
+  newsletterStatus.value = '';
+  try {
+    await api.post('/public/newsletter/subscribe', { email: newsletterEmail.value });
+    newsletterEmail.value = '';
+    newsletterStatus.value = t('theme.zenith.footer.subscribed', 'Subscribed');
+  } catch {
+    newsletterStatus.value = t('theme.zenith.footer.subscribeFailed', 'Unavailable');
+  } finally {
+    newsletterBusy.value = false;
+    setTimeout(() => {
+      newsletterStatus.value = '';
+    }, 3000);
+  }
+};
 </script>

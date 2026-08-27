@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Permission;
+use Modules\Forms\Database\Seeders\ContactFormSeeder;
 use Modules\Forms\Database\Seeders\FormsPermissionSeeder;
 
 class FormsServiceProvider extends ServiceProvider
@@ -34,9 +35,11 @@ class FormsServiceProvider extends ServiceProvider
                 return;
             }
             self::seedPermissions();
+            ContactFormSeeder::ensure();
         });
 
         $this->ensurePermissionsIfMissing();
+        $this->ensureContactFormIfPackActive();
     }
 
     public static function seedPermissions(): void
@@ -64,6 +67,18 @@ class FormsServiceProvider extends ServiceProvider
             }
         } catch (\Throwable) {
             // Avoid boot failure if permissions tables are mid-migrate.
+        }
+    }
+
+    protected function ensureContactFormIfPackActive(): void
+    {
+        try {
+            if (! Extension::query()->where('slug', 'forms')->where('status', 'active')->exists()) {
+                return;
+            }
+            ContactFormSeeder::ensure();
+        } catch (\Throwable) {
+            // Skip while forms tables are mid-migrate.
         }
     }
 }

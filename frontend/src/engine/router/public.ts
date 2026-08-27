@@ -32,9 +32,45 @@ const publicRoutes: RouteRecordRaw[] = [
                 meta: { public: true },
             },
             {
+                path: 'solusi',
+                name: 'public-solusi',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/Solusi.vue'),
+                meta: { public: true },
+            },
+            {
+                path: 'services',
+                name: 'public-services',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/Services.vue'),
+                meta: { public: true },
+            },
+            {
+                path: 'pricing',
+                name: 'public-pricing',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/Pricing.vue'),
+                meta: { public: true },
+            },
+            {
+                path: 'career',
+                name: 'public-career',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/CareerCenter.vue'),
+                meta: { public: true },
+            },
+            {
+                path: 'achievement',
+                name: 'public-achievement',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/Achievement.vue'),
+                meta: { public: true },
+            },
+            {
                 path: 'contact',
                 name: 'public-contact',
                 component: () => import('@/modules/Layout/views/themes/zenith/pages/Contact.vue'),
+                meta: { public: true },
+            },
+            {
+                path: 'search',
+                name: 'public-search',
+                component: () => import('@/modules/Layout/views/themes/zenith/pages/Search.vue'),
                 meta: { public: true },
             },
             {
