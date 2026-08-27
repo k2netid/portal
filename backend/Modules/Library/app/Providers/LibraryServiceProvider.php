@@ -9,7 +9,6 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Library\Contracts\TaxonomySearchPortInterface;
 use Modules\Library\Models\Category;
 use Modules\Library\Models\Tag;
-use Modules\Core\System\Models\Extension;
 use Modules\Library\Observers\CategorySearchObserver;
 use Modules\Library\Observers\TagSearchObserver;
 use Modules\Library\Services\TaxonomySearchPortAdapter;
@@ -31,10 +30,8 @@ class LibraryServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group($moduleRoot.'/routes/api.php');
 
-        if (Extension::isProductActive('library')) {
-            Category::observe(CategorySearchObserver::class);
-            Tag::observe(TagSearchObserver::class);
-        }
+        Category::observe(CategorySearchObserver::class);
+        Tag::observe(TagSearchObserver::class);
 
         if ($this->app->runningInConsole()) {
             // Permissions seeded from Publishing pack (shared CMS perms).

@@ -62,7 +62,10 @@
         </div>
 
         <!-- Newsletter -->
-        <div class="space-y-3">
+        <div
+          v-if="newsletterEnabled"
+          class="space-y-3"
+        >
           <h4 class="text-xs font-bold uppercase tracking-wider text-foreground">
             {{ t('theme.zenith.footer.newsletter', 'Newsletter') }}
           </h4>
@@ -129,7 +132,7 @@
       <div class="mt-12 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
         <p>{{ copyrightText }}</p>
         <p class="text-muted-foreground/60">
-          Powered by <span class="font-semibold text-foreground">JA-CMS & Zenith Theme</span>
+          Powered by <span class="font-semibold text-foreground">Jejakawan Core Engine</span>
         </p>
       </div>
     </div>
@@ -147,6 +150,8 @@ import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 const { t } = useI18n();
 const { getSetting } = useTheme();
 const systemStore = useSystemStore();
+
+const newsletterEnabled = computed(() => systemStore.activeExtensions.includes('newsletter'));
 
 const siteName = computed(() => {
   return String(getSetting('site_title') || systemStore.siteSettings?.site_name || systemStore.appIdentity?.app_name || 'Zenith');

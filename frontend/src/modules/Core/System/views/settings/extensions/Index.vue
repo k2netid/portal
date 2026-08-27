@@ -892,8 +892,9 @@ const openSettingsModal = (ext: ExtensionItem) => {
         infra: { name: 'settings', query: { tab: 'performance' } },
         ai: { name: 'settings', query: { tab: 'ai' } },
         media: { name: 'settings', query: { tab: 'media' } },
-        analytics: { name: 'settings', query: { tab: 'analytics' } },
-        Jejakawan: { name: 'Jejakawan-settings' },
+        analytics: { name: 'analytics' },
+        publishing: { name: 'publishing-settings' },
+        Jejakawan: { name: 'publishing-settings' },
         mail: { name: 'mail', query: { openSettings: 'true', tab: 'accounts' } },
         forms: '/dash/forms',
         library: consolePath('/library'),
@@ -908,7 +909,7 @@ const openSettingsModal = (ext: ExtensionItem) => {
         } else if (settingsRoute === 'mail') {
             target = routeMap.mail;
         } else {
-            target = { name: settingsRoute };
+            target = routeMap[settingsRoute] ?? { name: settingsRoute };
         }
     } else {
         target = routeMap[ext.slug];
@@ -1028,6 +1029,12 @@ const scaffoldPlugin = async (payload: Record<string, unknown>) => {
 
 onMounted(() => {
     fetchExtensions();
+});
+
+defineExpose({
+    getLocalizedDescription,
+    toggleFeatureStatus,
+    uninstallExtension,
 });
 </script>
 

@@ -1,5 +1,5 @@
 /**
- * JA-CMS Visual Builder
+ * Visual Builder
  * Main entry point
  */
 

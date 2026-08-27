@@ -302,6 +302,7 @@ const getExtensionLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus
     search: 'free',
     mail: 'pro',
     media: 'pro',
+    publishing: 'pro',
     Jejakawan: 'pro',
     forms: 'pro',
     newsletter: 'pro',

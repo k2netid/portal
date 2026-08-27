@@ -4,7 +4,7 @@
 #
 # Copy this script to other repos. It pins the image to @playwright/test in that repo's lockfile.
 #
-# Usage (app + Vite already up on :8000 / :5173):
+# Usage (app + Vite already up on :8000 / :5273):
 #   ./scripts/e2e-docker.sh
 #   ./scripts/e2e-docker.sh npm run test:e2e:auth
 #   PW_WORKDIR=/path/to/other-app/frontend ./scripts/e2e-docker.sh npm run test:e2e:smoke
@@ -59,7 +59,7 @@ fi
 echo "Engine: ${ENGINE[*]}"
 echo "Playwright image: $IMAGE"
 echo "Workdir: $WORKDIR"
-echo "Base URL: ${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5173}"
+echo "Base URL: ${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5273}"
 
 # If node_modules is a symlink (e.g. ja-core_engine → ja-cms), mount the parent
 # so the symlink still resolves inside the container.
@@ -84,7 +84,7 @@ fi
   -e HOME=/tmp \
   -e PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
   -e PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
-  -e PLAYWRIGHT_BASE_URL="${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5173}" \
+  -e PLAYWRIGHT_BASE_URL="${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5273}" \
   -e E2E_LOGIN_EMAIL="${E2E_LOGIN_EMAIL:-super@jejakawan.com}" \
   -e E2E_LOGIN_PASSWORD="${E2E_LOGIN_PASSWORD:-password}" \
   -e E2E_CAPTCHA_BYPASS_TOKEN="${E2E_CAPTCHA_BYPASS_TOKEN:-local-e2e}" \

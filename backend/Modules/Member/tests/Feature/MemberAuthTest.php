@@ -15,6 +15,12 @@ use Tests\TestCase;
 
 class MemberAuthTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->activatePack('member');
+    }
+
     /**
      * @return array{token: string, id: string}
      */
@@ -120,6 +126,7 @@ class MemberAuthTest extends TestCase
 
     public function test_register_sends_verify_mail_and_signed_link_confirms(): void
     {
+        $this->activatePack('mail');
         $html = null;
         $this->mock(OutboundMailPortInterface::class, function ($mock) use (&$html): void {
             $mock->shouldReceive('send')
@@ -185,6 +192,7 @@ class MemberAuthTest extends TestCase
 
     public function test_member_can_resend_verification_email(): void
     {
+        $this->activatePack('mail');
         $this->mock(OutboundMailPortInterface::class, function ($mock): void {
             $mock->shouldReceive('send')->twice()->andReturn(['status' => 'sent']);
         });
@@ -194,5 +202,18 @@ class MemberAuthTest extends TestCase
         $this->withToken($auth['token'])
             ->postJson('/api/v1/member/email/verification-notification')
             ->assertOk();
+    }
+
+    public function test_member_api_forbidden_when_pack_inactive(): void
+    {
+        $memberPack = \Modules\Core\System\Models\Extension::query()->where('slug', 'member')->first();
+        $memberPack?->update(['status' => 'inactive']);
+
+        $this->postJson('/api/v1/public/member/register', [
+            'name' => 'Reader Two',
+            'email' => 'reader2@example.com',
+            'password' => 'password12',
+            'password_confirmation' => 'password12',
+        ])->assertForbidden();
     }
 }

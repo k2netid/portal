@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Log;
 use Modules\Analytics\Models\AnalyticsEvent;
 use Modules\Analytics\Models\AnalyticsSession;
 use Modules\Analytics\Models\AnalyticsVisit;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Support\DatabaseConsoleInts;
 
 class CleanupAnalytics extends Command
 {
+    use SkipsWhenProductInactive;
     /**
      * The name and signature of the console command.
      */
@@ -29,6 +31,10 @@ class CleanupAnalytics extends Command
      */
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('analytics')) {
+            return self::SUCCESS;
+        }
+
         $retentionDaysRaw = $this->option('days') ?? Setting::get('analytics_retention_days', 90);
         $retentionDays = DatabaseConsoleInts::fromMixed($retentionDaysRaw, 90);
         $dryRun = $this->option('dry-run');

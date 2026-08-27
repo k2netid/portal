@@ -28,7 +28,7 @@ export const LayoutService = {
         return api.post(layoutPaths.menuRestore(id));
     },
 
-    publicMenuByLocation(location: string, module = 'Jejakawan'): Promise<AxiosResponse> {
+    publicMenuByLocation(location: string, module = 'publishing'): Promise<AxiosResponse> {
         return api.get(layoutPaths.publicMenuByLocation(location), { params: { module } });
     },
 

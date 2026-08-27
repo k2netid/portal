@@ -27,9 +27,8 @@ class SettingController extends BaseApiController
             }
             $query->where('group', $group);
         } else {
-            // Exclude Publishing / Analytics groups from kernel settings list
-            $cmsGroups = ['general', 'seo', 'comments', 'analytics'];
-            $query->whereNotIn('group', array_values(array_unique([...$cmsGroups, ...Setting::PRODUCT_SETTING_GROUPS])));
+            // Product packs own seo/comments/analytics. Kernel Identity owns general.
+            $query->whereNotIn('group', Setting::PRODUCT_SETTING_GROUPS);
         }
 
         if ($request->has('public_only')) {
@@ -58,6 +57,7 @@ class SettingController extends BaseApiController
         if (! $user->can('view settings')) {
             $allowedGroups = [
                 'media' => ['view media', 'upload media'],
+                'general' => ['view content', 'create content', 'edit content'],
                 'system' => [],
                 'monitoring' => [],
                 'console_branding' => [],

@@ -109,7 +109,7 @@
             {{ t('theme.zenith.pages.home.ctaTitle', 'Ready to elevate your digital presence?') }}
           </h2>
           <p class="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            {{ t('theme.zenith.pages.home.ctaSubtitle', 'Join thousands of creators and businesses powered by JA-CMS.') }}
+            {{ t('theme.zenith.pages.home.ctaSubtitle', 'Join thousands of creators and businesses powered by Jejakawan Core Engine.') }}
           </p>
           <div class="pt-4">
             <Button

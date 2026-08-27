@@ -1,5 +1,11 @@
 # Changelog — Layout
 
+## [Unreleased]
+
+### Changed
+- Manifest widget types match runtime (`content_list`, `menu`, `form`).
+- Public menus/themes return empty when the layout pack is inactive.
+
 ## 1.1.0 — P3-3b (themes + visual builder)
 
 - Full Theme API, theme CLI commands, and Janari theme bundle.

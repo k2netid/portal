@@ -93,7 +93,7 @@ class ThemeExportCommand extends Command
 
         $sizeMb = round(filesize($destPath) / (1024 * 1024), 2);
         $this->info("✓ Theme package successfully exported to: {$destPath} ({$sizeMb} MB)");
-        $this->line('You can now distribute or upload this package via JA-CMS Themes Manager.');
+        $this->line('You can now distribute or upload this package via Layout → Themes.');
 
         return self::SUCCESS;
     }

@@ -6,7 +6,7 @@
           Data Model Studio Live Showcase
         </span>
         <h2 class="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
-          Apa Kata Pengguna JA-CMS?
+          Apa Kata Pengguna?
         </h2>
         <p class="text-muted-foreground text-sm md:text-base leading-relaxed">
           Umpan balik nyata yang dikumpulkan dan disajikan secara dinamis langsung dari tabel <span class="font-mono text-primary font-semibold">user_survey</span> di Data Model Studio.
@@ -159,7 +159,7 @@ onMounted(async () => {
       if (Array.isArray(rawData) && rawData.length > 0) {
         surveyRecords.value = rawData.map((r: any) => ({
           id: r.id,
-          respondent_name: r.data?.respondent_name || 'Pengguna JA-CMS',
+          respondent_name: r.data?.respondent_name || 'Pengguna',
           organization: r.data?.organization || '',
           user_role: r.data?.user_role || 'User',
           satisfaction_score: Number(r.data?.satisfaction_score) || 10,

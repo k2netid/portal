@@ -26,6 +26,9 @@
     "widgets": [
       { "type": "html", "name": "HTML", "areas": ["sidebar", "footer"] },
       { "type": "text", "name": "Text", "areas": ["sidebar", "footer"] },
+      { "type": "content_list", "name": "Content list", "areas": ["sidebar", "footer"] },
+      { "type": "menu", "name": "Navigation menu", "areas": ["sidebar", "footer"] },
+      { "type": "form", "name": "Form", "areas": ["sidebar", "footer"] },
       { "type": "recent_posts", "name": "Recent posts", "areas": ["sidebar"] },
       { "type": "categories", "name": "Categories", "areas": ["sidebar"] },
       { "type": "custom", "name": "Custom", "areas": ["sidebar", "footer"] }

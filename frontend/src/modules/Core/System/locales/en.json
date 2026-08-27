@@ -701,7 +701,7 @@
         "version": "1.0.0",
         "description": "Custom plugin boilerplate generated automatically.",
         "routeUri": "/api/v1/my-endpoint",
-        "routeAction": "MyController@index",
+        "routeAction": "MyController{'@'}index",
         "menuTitle": "Menu Title",
         "menuRoute": "/dash/my-route",
         "icon": "icon"
@@ -721,7 +721,8 @@
         "empty": "No dashboard menus registered yet.",
         "groups": {
           "academic": "Academic",
-          "Jejakawan": "Jejakawan",
+          "publishing": "Publishing",
+          "Jejakawan": "Publishing",
           "system": "System"
         }
       },

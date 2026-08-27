@@ -14,7 +14,7 @@ class SettingController extends BaseApiController
     /**
      * @var list<string>
      */
-    private const GROUPS = ['general', 'seo', 'comments'];
+    private const GROUPS = ['seo', 'comments'];
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class SettingController extends BaseApiController
     }
 
     /**
-     * Get all Jejakawan settings.
+     * Get Publishing-owned settings (SEO + discussion). Site identity stays on kernel Identity.
      */
     public function index(): JsonResponse
     {
@@ -33,7 +33,7 @@ class SettingController extends BaseApiController
             ->orderBy('key')
             ->get();
 
-        return $this->success($settings, 'Jejakawan settings retrieved successfully');
+        return $this->success($settings, 'Publishing settings retrieved successfully');
     }
 
     /**
@@ -47,7 +47,7 @@ class SettingController extends BaseApiController
 
         $settings = Setting::getGroup($group);
 
-        return $this->success($settings, 'Jejakawan settings retrieved successfully');
+        return $this->success($settings, 'Publishing settings retrieved successfully');
     }
 
     public function update(Request $request): JsonResponse
@@ -56,7 +56,7 @@ class SettingController extends BaseApiController
     }
 
     /**
-     * Bulk update Jejakawan settings.
+     * Bulk update Publishing settings.
      */
     public function bulkUpdate(Request $request): JsonResponse
     {
@@ -76,8 +76,8 @@ class SettingController extends BaseApiController
                 $sValue = $settingData['value'] ?? null;
                 $sTypeRaw = $settingData['type'] ?? 'string';
                 $sType = is_scalar($sTypeRaw) ? (string) $sTypeRaw : 'string';
-                $sGroupRaw = $settingData['group'] ?? 'general';
-                $sGroup = is_scalar($sGroupRaw) ? (string) $sGroupRaw : 'general';
+                $sGroupRaw = $settingData['group'] ?? 'seo';
+                $sGroup = is_scalar($sGroupRaw) ? (string) $sGroupRaw : 'seo';
                 if (! in_array($sGroup, self::GROUPS, true)) {
                     continue;
                 }
@@ -99,6 +99,6 @@ class SettingController extends BaseApiController
             }
         }
 
-        return $this->success(null, 'Jejakawan settings updated successfully');
+        return $this->success(null, 'Publishing settings updated successfully');
     }
 }

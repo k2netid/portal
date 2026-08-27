@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Support\SqlLikeEscape;
 use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\MenuItem;
@@ -296,6 +297,10 @@ class MenuController extends BaseApiController
 
     public function getByLocation(string $location): JsonResponse
     {
+        if (! Extension::isProductActive('layout')) {
+            return $this->success(null, 'No active menu found for this location');
+        }
+
         $cacheKey = "menu_location_{$location}";
 
         $menu = Cache::remember($cacheKey, 3600, fn () => Menu::query()

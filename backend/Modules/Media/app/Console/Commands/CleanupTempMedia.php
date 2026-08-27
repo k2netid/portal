@@ -5,9 +5,11 @@ namespace Modules\Media\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 
 class CleanupTempMedia extends Command
 {
+    use SkipsWhenProductInactive;
     /**
      * The name and signature of the console command.
      */
@@ -23,6 +25,10 @@ class CleanupTempMedia extends Command
      */
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('media')) {
+            return self::SUCCESS;
+        }
+
         $hours = $this->option('hours');
         $hours = is_numeric($hours) ? (int) $hours : 24;
 

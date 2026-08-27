@@ -40,7 +40,7 @@ JSON Schema: [`module-manifest.schema.json`](./module-manifest.schema.json)
 | `description` | yes | Shown in registry UI |
 | `license` | recommended | Stored on `sys_extensions.license` |
 | `license_tier` | recommended | `free` \| `pro` \| `pro_plus` → badge |
-| `settings_route` | recommended | Console route **name** (or path string) for Configure |
+| `settings_route` | recommended | Vue console **route name** that already exists (e.g. `publishing-settings`, not the pack slug) |
 | `features[]` | optional | `{ slug, name, description?, category? }` |
 | `dependencies` | optional | `{ "<slug>": ">=1.0.0" }` → `sys_extensions.requirements` |
 

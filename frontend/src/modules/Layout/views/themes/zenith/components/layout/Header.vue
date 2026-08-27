@@ -44,7 +44,7 @@
           <ThemeToggle />
 
           <Button
-            v-if="memberStore.isAuthenticated"
+            v-if="memberEnabled && memberStore.isAuthenticated"
             as="router-link"
             to="/member/account"
             variant="outline"
@@ -54,7 +54,7 @@
             {{ t('theme.zenith.header.account', 'Account') }}
           </Button>
           <Button
-            v-else
+            v-else-if="memberEnabled"
             as="router-link"
             to="/member/login"
             variant="outline"
@@ -111,6 +111,7 @@
       </router-link>
       <div class="pt-3 space-y-2">
         <Button
+          v-if="memberEnabled"
           as="router-link"
           :to="memberStore.isAuthenticated ? '/member/account' : '/member/login'"
           variant="outline"
@@ -148,6 +149,7 @@ const { t } = useI18n();
 const { getSetting } = useTheme();
 const systemStore = useSystemStore();
 const memberStore = useMemberStore();
+const memberEnabled = computed(() => systemStore.activeExtensions.includes('member'));
 
 const mobileMenuOpen = ref(false);
 

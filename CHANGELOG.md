@@ -10,6 +10,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 
 ## [Unreleased]
 
+### Fixed
+- Honesty pass: uninstall refuses when deactivate is blocked; kernel Identity owns `general`; Publishing no longer writes site identity; Member APIs gated; public theme pages follow the active theme; Sanctum 5273; layout public menus/themes gated; Mail/cron skip when pack off.
+
+Kernel `/manage/ai/generate` stays settings-flag gated (`ai_enabled`), not `cms-ai` pack — by design for downstream apps without CMS.
+
 ### Added
 - JA-Mail: honest AI gating vs Settings → AI; Core `AI_DISABLED` on generate; `mail-ai-governance` rule
 - JA-Mail: in-app notification bridge (send failure / vacation); per-module README + CHANGELOG; agent rule `module-documentation.mdc`

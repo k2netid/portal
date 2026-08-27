@@ -30,7 +30,7 @@ class ContactFormSeeder
 
         $fields = [
             ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'sort_order' => 1, 'placeholder' => 'Your name'],
-            ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'sort_order' => 2, 'placeholder' => 'you@example.com'],
+            ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'sort_order' => 2, 'placeholder' => 'name@site.com'],
             ['name' => 'message', 'label' => 'Message', 'type' => 'textarea', 'sort_order' => 3, 'placeholder' => 'How can we help?'],
         ];
 

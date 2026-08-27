@@ -44,7 +44,7 @@ export const useLayoutStore = defineStore('layout', {
             }
         },
 
-        async fetchMenu(location: string, module: string = 'Jejakawan') {
+        async fetchMenu(location: string, module: string = 'publishing') {
             this.loading = true;
             try {
                 const response = await LayoutService.publicMenuByLocation(location, module);

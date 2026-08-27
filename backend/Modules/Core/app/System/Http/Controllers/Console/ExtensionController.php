@@ -313,7 +313,11 @@ class ExtensionController extends BaseApiController
         }
 
         if ($extension->status === 'active') {
-            $this->deactivate($extension->slug);
+            $deactivated = $this->deactivate($extension->slug);
+            if ($deactivated->getStatusCode() >= 400) {
+                return $deactivated;
+            }
+            $extension->refresh();
         }
 
         try {
@@ -324,7 +328,7 @@ class ExtensionController extends BaseApiController
             $keepData = $request->boolean('keep_data');
             if (! $keepData) {
                 $migrationPath = $extension->type === 'module'
-                    ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace('-', ' ', $extension->slug))).'/database/migrations')
+                    ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $extension->slug))).'/database/migrations')
                     : ExtensionPaths::pluginMigrationsDirectory($extension->slug);
 
                 if (is_dir($migrationPath)) {
@@ -337,7 +341,7 @@ class ExtensionController extends BaseApiController
 
             // 2. Delete physical folder files
             $folderPath = $extension->type === 'module'
-                ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace('-', ' ', $extension->slug))))
+                ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $extension->slug))))
                 : ExtensionPaths::pluginDirectory($extension->slug);
 
             if (is_dir($folderPath)) {

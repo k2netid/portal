@@ -785,6 +785,38 @@ class ExtensionControllerTest extends TestCase
         $this->assertEquals('active', $base->fresh()->status);
     }
 
+    public function test_uninstall_blocked_when_active_dependent_exists(): void
+    {
+        $base = Extension::create([
+            'slug' => 'graph-base-uninstall',
+            'type' => 'plugin',
+            'name' => 'Graph Base Uninstall',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+
+        Extension::create([
+            'slug' => 'graph-child-uninstall',
+            'type' => 'plugin',
+            'name' => 'Graph Child Uninstall',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'requirements' => ['graph-base-uninstall' => '>=1.0.0'],
+        ]);
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->deleteJson("/api/v1/manage/infra/extensions/{$base->slug}/uninstall");
+
+        $response->assertStatus(400);
+        $this->assertStringContainsString('masih dipakai', $response->json('message'));
+        $this->assertNotNull($base->fresh());
+        $this->assertEquals('active', $base->fresh()->status);
+    }
+
     public function test_lifecycle_preview_cascade_can_proceed_when_required_dep_is_inactive(): void
     {
         Extension::create([

@@ -263,7 +263,7 @@ onMounted(async () => {
       id: 1,
       title: 'Building Modern Web Experiences with Vue 3 & Laravel',
       slug,
-      body: '<p>Modern digital experiences demand lightning-fast reactivity paired with an uncompromising, rock-solid backend foundation. JA-CMS delivers both through its modular monolith architecture.</p>',
+      body: '<p>Modern digital experiences demand lightning-fast reactivity paired with an uncompromising, rock-solid backend foundation. Jejakawan Core Engine delivers both through its modular monolith architecture.</p>',
       published_at: new Date().toISOString(),
       category: { name: 'Engineering' },
     };

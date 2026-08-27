@@ -7,7 +7,6 @@ use Modules\Publishing\Http\Controllers\Api\CommentController;
 use Modules\Publishing\Http\Controllers\Api\ContentController;
 use Modules\Publishing\Http\Controllers\Api\ContentRevisionController;
 use Modules\Publishing\Http\Controllers\Api\ContentTemplateController;
-use Modules\Publishing\Http\Controllers\Api\MemberController;
 use Modules\Publishing\Http\Controllers\Api\SeoController;
 use Modules\Publishing\Http\Controllers\Api\SettingController;
 
@@ -21,23 +20,7 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/contents/{content}/comments', [CommentController::class, 'store'])->middleware('throttle:10,1');
     });
 
-    // Member Portal API (authenticated readers/members)
-    Route::prefix('member')->middleware(['auth:sanctum', 'throttle:120,1'])->group(function (): void {
-        // My Comments
-        Route::get('comments', [MemberController::class, 'myComments']);
-
-        // Bookmarks
-        Route::get('bookmarks', [MemberController::class, 'myBookmarks']);
-        Route::post('bookmarks', [MemberController::class, 'addBookmark']);
-        Route::post('bookmarks/check', [MemberController::class, 'isBookmarked']);
-        Route::delete('bookmarks/{bookmark}', [MemberController::class, 'removeBookmark']);
-
-        // Newsletter Preferences
-        Route::get('newsletter', [MemberController::class, 'newsletterStatus']);
-        Route::put('newsletter', [MemberController::class, 'updateNewsletter']);
-    });
-
-    // Console Management (Jejakawan)
+    // Console Management
     Route::prefix('manage/publishing')->middleware(['auth:sanctum', 'extension.active:publishing'])->group(function (): void {
         // Contents
         Route::get('contents/stats', [ContentController::class, 'stats'])->middleware('permission:view content');

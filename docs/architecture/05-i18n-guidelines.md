@@ -20,21 +20,14 @@ Translasi diorganisasi secara modular per domain fitur:
 ```
 frontend/src/
 ├── engine/i18n/
-│   ├── config.ts                 # Vue I18n instance configuration
-│   └── loaders/
-│       ├── core.ts               # Core tier loader (System, Infra, Security)
-│       ├── content.ts            # Content tier loader (Publishing, Layout, Builder, Forms, Media, Library)
-│       └── intelligence.ts       # Intelligence tier loader (Ai, Search, Analytics, Newsletter)
+│   ├── messages/{en,id,su}.ts    # Global + moduleLocaleBundles
+│   └── moduleLocales.ts          # Pack + theme bundles (theme.zenith.*, theme.janari.*)
 └── modules/
-    ├── Core/System/locales/{en,id,su}.json
-    ├── Core/Security/locales/{en,id,su}.json
-    ├── Content/Publishing/locales/{en,id,su}.json
-    ├── Content/Layout/locales/
-    │   ├── {en,id,su}.json       # Theme & layout strings
-    │   └── builder/              # 🛡️ Isolated Builder Locales
-    │       ├── {en,id,su}.json
-    │       └── index.ts
-    └── Intelligence/Ai/locales/{en,id,su}.json
+    ├── Core/{System,Infra,Security}/locales/{en,id,su}.json
+    ├── Publishing/locales/{en,id,su}.json
+    ├── Layout/locales/{en,id,su}.json
+    ├── Layout/locales/builder/{en,id,su}.json
+    └── Layout/views/themes/{zenith,janari}/locales/{en,id,su}.json
 ```
 
 ---

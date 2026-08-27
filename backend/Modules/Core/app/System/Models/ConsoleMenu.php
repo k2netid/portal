@@ -207,6 +207,15 @@ class ConsoleMenu extends Model
                         'extension_slug' => 'publishing',
                         'order' => 9,
                     ],
+                    [
+                        'name' => 'Publishing Settings',
+                        'label_key' => 'publishing.navigation.menu.publishingSettings',
+                        'route_name' => 'publishing-settings',
+                        'icon' => 'settings',
+                        'permission' => 'view settings',
+                        'extension_slug' => 'publishing',
+                        'order' => 10,
+                    ],
                 ],
             ],
 

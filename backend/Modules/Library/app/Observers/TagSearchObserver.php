@@ -12,7 +12,7 @@ class TagSearchObserver
 {
     public function saved(Tag $tag): void
     {
-        if (! Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('library') || ! Extension::isProductActive('search')) {
             return;
         }
 
@@ -26,7 +26,7 @@ class TagSearchObserver
 
     public function deleted(Tag $tag): void
     {
-        if (! Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('library') || ! Extension::isProductActive('search')) {
             return;
         }
 

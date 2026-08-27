@@ -123,7 +123,10 @@
         </div>
 
         <!-- Newsletter (High-end Contrast) -->
-        <div class="space-y-8">
+        <div
+          v-if="newsletterEnabled"
+          class="space-y-8"
+        >
           <h2 class="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/90">
             {{ t('publishing.frontend.newsletter.title') }}
           </h2>
@@ -263,6 +266,7 @@ const email = ref('')
 
 const brandingDisplay = computed(() => getSetting('branding_display', 'logo_only'));
 const systemStore = useSystemStore();
+const newsletterEnabled = computed(() => systemStore.activeExtensions.includes('newsletter'));
 const siteSettings = computed(() => systemStore.settings);
 const { displaySiteName, displaySiteDescription } = useJanariIdentity();
 

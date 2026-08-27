@@ -30,10 +30,7 @@ class EnsureExtensionActive
             ], 500);
         }
 
-        $active = Extension::query()
-            ->where('slug', $slug)
-            ->where('status', 'active')
-            ->exists();
+        $active = Extension::isProductActive($slug);
 
         if (! $active) {
             $code = strtoupper(str_replace('-', '_', $slug)).'_EXTENSION_INACTIVE';

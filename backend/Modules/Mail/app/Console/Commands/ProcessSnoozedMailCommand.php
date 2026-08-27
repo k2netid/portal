@@ -6,16 +6,22 @@ namespace Modules\Mail\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Mail\Models\MailMessage;
 
 class ProcessSnoozedMailCommand extends Command
 {
+    use SkipsWhenProductInactive;
     protected $signature = 'mail:process-snoozed';
 
     protected $description = 'Wake snoozed messages whose snooze_until time has passed';
 
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('mail')) {
+            return self::SUCCESS;
+        }
+
         $now = now();
         $due = MailMessage::query()
             ->whereNotNull('snoozed_until')

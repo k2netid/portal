@@ -81,7 +81,7 @@ import SeoTab from '@/modules/Core/System/views/settings/general/tabs/SeoTab.vue
 import DiscussionTab from '@/modules/Core/System/views/settings/general/tabs/DiscussionTab.vue';
 
 interface Setting {
-    id: string | number;
+    id: string;
     key: string;
     value: unknown;
     type: string;

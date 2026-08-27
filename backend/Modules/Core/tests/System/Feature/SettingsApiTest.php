@@ -141,4 +141,26 @@ class SettingsApiTest extends TestCase
 
         $this->assertSame('Kernel should not own this', Setting::get('meta_title'));
     }
+
+    public function test_kernel_settings_list_includes_general_identity_group(): void
+    {
+        $admin = $this->createAdminUser();
+
+        Setting::create([
+            'key' => 'site_name',
+            'value' => 'Public identity',
+            'type' => 'string',
+            'group' => 'general',
+            'is_public' => true,
+        ]);
+
+        $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings')
+            ->assertOk()
+            ->assertJsonFragment(['key' => 'site_name', 'group' => 'general']);
+
+        $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings/group/general')
+            ->assertOk();
+    }
 }

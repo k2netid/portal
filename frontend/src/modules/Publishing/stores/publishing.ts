@@ -6,7 +6,7 @@ import type { CMSState, Content } from '@/modules/Publishing/types/content';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 
 
-export const usePublishingStore = defineStore('Jejakawan', {
+export const usePublishingStore = defineStore('publishing', {
     state: (): CMSState => ({
         contents: [],
         categories: [],
@@ -19,18 +19,6 @@ export const usePublishingStore = defineStore('Jejakawan', {
     }),
 
     actions: {
-        isAuthenticatedLocally(): boolean {
-            const userRaw = localStorage.getItem('user');
-            if (!userRaw) return false;
-
-            try {
-                const parsed = JSON.parse(userRaw);
-                return !!parsed && typeof parsed === 'object';
-            } catch {
-                return false;
-            }
-        },
-
         async fetchSettingsGroup(group: string) {
             // If already loading, return existing promise
             if (this.loadingGroups[group]) {
@@ -114,19 +102,8 @@ export const usePublishingStore = defineStore('Jejakawan', {
         async fetchPublicSettings() {
             if (this.publicSettingsLoaded) return this.settings;
             try {
-                if (!this.isAuthenticatedLocally()) {
-                    // Skip fetching /manage/ endpoints for guest users to prevent 401 redirect loops.
-                    // Instead, fetch canonical public settings.
-                    const systemStore = useSystemStore();
-                    await systemStore.fetchPublicSettings();
-                    this.publicSettingsLoaded = true;
-                    return this.settings;
-                }
-                // Fetch basic Jejakawan and Layout settings as "public" settings (when logged in)
-                await Promise.all([
-                    this.fetchSettingsGroup('Jejakawan'),
-                    this.fetchSettingsGroup('layout')
-                ]);
+                const systemStore = useSystemStore();
+                await systemStore.fetchPublicSettings();
                 this.publicSettingsLoaded = true;
                 return this.settings;
             } catch (error: unknown) {

@@ -599,7 +599,8 @@ const handleSubmit = async () => {
         });
         
         await fetchSettings();
-        await systemStore.fetchSettingsGroup(activeTab.value); // Force refresh store for reactivity
+        const refreshGroup = activeTab.value === 'identity' ? 'general' : activeTab.value;
+        await systemStore.fetchSettingsGroup(refreshGroup);
 
         // Refetch public settings to update the store's dashboard slug
         systemStore.publicSettingsLoaded = false;

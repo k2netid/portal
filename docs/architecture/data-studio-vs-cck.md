@@ -14,7 +14,7 @@ Three similar-looking “custom field” surfaces exist. They are **not** interc
 ## Rules
 
 1. **Do not model blog posts, pages, categories, or members as Data Studio types.** Publishing, Library, and Member already own those.
-2. Data Studio slugs **cannot** collide with CMS/kernel names (`post`/`posts`, `page`/`pages`, `content`/`contents`, `category`/`categories`, `tag`/`tags`, `media`, `comment`/`comments`, `member`/`members`, `user`/`users`, `form`/`forms`, `mail`, `newsletter`). API returns `DATA_MODEL_SLUG_RESERVED`.
+2. Data Studio slugs **cannot** collide with CMS/kernel names (`post`/`posts`, `page`/`pages`, `content`/`contents`, `category`/`categories`, `tag`/`tags`, `media`, `comment`/`comments`, `member`/`members`, `user`/`users`, `form`/`forms`, `mail`, `newsletter`, `site`/`sites`). API returns `DATA_MODEL_SLUG_RESERVED`. Existing rows with those slugs are not auto-renamed.
 3. Library custom fields must not import Data Studio schemas. Content remains `pub_contents` + `lib_fields`.
 4. Vertical products (P5) add **modules**, or compose Data Studio types for *their* operational records. They do not fork CCK into Core.
 5. The PHP class `ContentType` is a historical name for a Data Studio schema. Treat it as a data model, not a CMS content type.

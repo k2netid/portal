@@ -104,7 +104,7 @@ npm install
 npm run dev
 ```
 
-Akses browser: **`http://localhost:5173/`** atau **`http://192.168.88.66:5173/`**
+Akses browser: **`http://localhost:5273/`** atau **`http://192.168.88.66:5273/`**
 
 **Default Kredensial Super Admin:**
 - **Username / Email:** `super` / `super@jejakawan.com`
@@ -129,6 +129,6 @@ cd frontend && npm run build
 
 # E2E smoke — Playwright browsers are not supported on this PVE host.
 # Use the official image (same pin as CI: mcr.microsoft.com/playwright:v1.59.1-noble).
-# Requires Docker Engine + Vite :5173 + Laravel :8000.
+# Requires Docker Engine + Vite :5273 + Laravel :8000.
 npm run test:e2e:smoke:docker
 ```

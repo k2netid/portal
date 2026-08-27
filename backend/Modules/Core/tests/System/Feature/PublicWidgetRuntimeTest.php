@@ -39,6 +39,30 @@ class PublicWidgetRuntimeTest extends TestCase
             ->assertJsonCount(0, 'data');
     }
 
+    public function test_public_menus_empty_when_layout_pack_inactive(): void
+    {
+        Extension::query()->updateOrCreate(
+            ['slug' => 'layout'],
+            [
+                'type' => 'module',
+                'name' => 'Layout',
+                'version' => '1.0.0',
+                'database_version' => '1.0.0',
+                'status' => 'inactive',
+                'is_core' => false,
+            ]
+        );
+        Extension::flushProductActiveMemo();
+
+        $this->getJson('/api/v1/public/layout/menus/location/header')
+            ->assertOk()
+            ->assertJsonPath('data', null);
+
+        $this->getJson('/api/v1/public/layout/themes/active')
+            ->assertOk()
+            ->assertJsonPath('data', null);
+    }
+
     public function test_public_widgets_render_when_layout_is_active(): void
     {
         $this->activatePack('layout');
@@ -76,7 +100,7 @@ class PublicWidgetRuntimeTest extends TestCase
             'is_active' => true,
         ]);
 
-        $this->getJson('/api/v1/public/layout/widgets/location/sidebar?module=Jejakawan')
+        $this->getJson('/api/v1/public/layout/widgets/location/sidebar?module=publishing')
             ->assertOk()
             ->assertJsonPath('data.0.type', 'recent_posts');
 
@@ -84,24 +108,5 @@ class PublicWidgetRuntimeTest extends TestCase
         $this->assertIsArray($items);
         $this->assertNotEmpty($items);
         $this->assertSame('Public widget post', $items[0]['title']);
-    }
-
-    /**
-     * @param  array<string, mixed>  $extra
-     */
-    private function activatePack(string $slug, array $extra = []): void
-    {
-        Extension::query()->updateOrCreate(
-            ['slug' => $slug],
-            array_merge([
-                'type' => 'module',
-                'name' => ucfirst($slug),
-                'version' => '1.0.0',
-                'database_version' => '1.0.0',
-                'status' => 'active',
-                'is_core' => false,
-            ], $extra)
-        );
-        Extension::flushProductActiveMemo();
     }
 }

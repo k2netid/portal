@@ -7,6 +7,7 @@ namespace Modules\Member\Services;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Modules\Core\System\Contracts\OutboundMailPortInterface;
+use Modules\Core\System\Models\Extension;
 use Modules\Member\Models\Member;
 
 class MemberEmailVerification
@@ -39,7 +40,7 @@ class MemberEmailVerification
         $subject = 'Verify your email';
         $html = '<p>Confirm your reader account email ('.e($member->email).').</p><p><a href="'.e($url).'">Verify email</a></p>';
 
-        if (app()->bound(OutboundMailPortInterface::class)) {
+        if (Extension::isProductActive('mail') && app()->bound(OutboundMailPortInterface::class)) {
             try {
                 app(OutboundMailPortInterface::class)->send(
                     $member->email,

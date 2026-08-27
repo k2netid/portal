@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace Modules\Search\Console\Commands;
 
 use Illuminate\Console\Command;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Search\Services\SearchIndexHealthService;
 
 class SearchIndexHealth extends Command
 {
+    use SkipsWhenProductInactive;
     protected $signature = 'search:index-health';
 
     protected $description = 'Report search index lag vs published content and active taxonomy';
 
     public function handle(SearchIndexHealthService $health): int
     {
+        if ($this->skipUnlessProductActive('search')) {
+            return self::SUCCESS;
+        }
+
         $snapshot = $health->snapshot();
 
         $rows = [];

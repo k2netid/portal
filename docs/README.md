@@ -24,6 +24,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | Dokumen | Deskripsi |
 | :--- | :--- |
 | [**01. Overview & Architecture**](architecture/01-overview-and-tier-design.md) | Modular monolith, tier System / Infra / Security |
+| [**ja-CE comprehensive audit (2026-08-27)**](architecture/ja-ce-comprehensive-audit-2026-08-27.md) | Docs↔kode, bugs, refine — bahan diskusi pre-P5 |
 | [**02. Backend Standards**](architecture/02-backend-standards.md) | Laravel patterns, FormRequest, services, tests |
 | [**03. Frontend Standards**](architecture/03-frontend-standards.md) | Vue 3 SPA, Pinia, engine layout |
 | [**05. i18n Guidelines**](architecture/05-i18n-guidelines.md) | Paritas `id` / `en` / `su` |

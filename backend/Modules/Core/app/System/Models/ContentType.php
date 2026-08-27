@@ -42,6 +42,11 @@ class ContentType extends Model
         'site', 'sites',
     ];
 
+    /**
+     * Existing rows with these slugs are not auto-renamed. Create/update of new
+     * collisions is rejected with DATA_MODEL_SLUG_RESERVED.
+     */
+
     public static function isReservedSlug(string $slug): bool
     {
         $normalized = strtolower(trim($slug));

@@ -33,7 +33,7 @@ const ping = (path: string): void => {
 export const installPublicAnalytics = (router: Router): void => {
     const systemStore = useSystemStore();
     const active = systemStore.activeExtensions ?? [];
-    if (active.length > 0 && !active.includes('analytics')) {
+    if (active.length === 0 || !active.includes('analytics')) {
         return;
     }
 

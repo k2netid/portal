@@ -14,6 +14,13 @@ import newsletterPack from '@/modules/Newsletter/locales';
 import searchPack from '@/modules/Search/locales';
 import cmsAiPack from '@/modules/CmsAi/locales';
 
+import zenithEn from '@/modules/Layout/views/themes/zenith/locales/en.json';
+import zenithId from '@/modules/Layout/views/themes/zenith/locales/id.json';
+import zenithSu from '@/modules/Layout/views/themes/zenith/locales/su.json';
+import janariEn from '@/modules/Layout/views/themes/janari/locales/en.json';
+import janariId from '@/modules/Layout/views/themes/janari/locales/id.json';
+import janariSu from '@/modules/Layout/views/themes/janari/locales/su.json';
+
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
 import consoleSu from '@/locales/su/console.json';
@@ -44,6 +51,7 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.en,
         search: searchPack.en,
         ai: cmsAiPack.en,
+        theme: { zenith: zenithEn, janari: janariEn },
     },
     id: {
         system: system.id,
@@ -59,6 +67,7 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.id,
         search: searchPack.id,
         ai: cmsAiPack.id,
+        theme: { zenith: zenithId, janari: janariId },
     },
     su: {
         system: system.su,
@@ -74,5 +83,6 @@ export const moduleLocaleBundles = {
         newsletter: newsletterPack.su,
         search: searchPack.su,
         ai: cmsAiPack.su,
+        theme: { zenith: zenithSu, janari: janariSu },
     },
 } as const;

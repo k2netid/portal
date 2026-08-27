@@ -20,7 +20,7 @@ Branch **`develop`** (line CMS) **dihapus Aug 2026**. Pack CMS opsional (Publish
 ## Struktur wajib dibaca
 
 1. [docs/architectural-status.md](architectural-status.md) — apa yang live vs legacy
-2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md) · [Data Studio vs CCK](architecture/data-studio-vs-cck.md)
+2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md) · [Data Studio vs CCK](architecture/data-studio-vs-cck.md) · [ja-CE audit 2026-08-27](architecture/ja-ce-comprehensive-audit-2026-08-27.md)
 3. [docs/product/downstream-apps-and-licensing.md](product/downstream-apps-and-licensing.md)
 4. [docs/extensions/module-contract.md](extensions/module-contract.md) — kontrak modul optional (Mail = golden sample)
 5. [docs/extensions/external-module-packaging.md](extensions/external-module-packaging.md) — packaging pack eksternal / CMS extract

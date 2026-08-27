@@ -11,14 +11,14 @@ export const PublishingModule: AppModule = {
     navigation: publishingNavigation,
     dashboards: [
         {
-            id: 'Jejakawan-creator',
+            id: 'publishing-creator',
             priority: 40,
             routeName: 'contents.index',
             condition: (_user, auth) => auth.hasPermission('create content') || auth.hasPermission('edit content') || auth.hasPermission('upload media'),
             component: defineAsyncComponent(() => import('./components/dashboard/CreatorDashboard.vue'))
         },
         {
-            id: 'Jejakawan-viewer',
+            id: 'publishing-viewer',
             priority: 0,
             routeName: 'contents',
             condition: (_user, auth) => auth.hasPermission('manage content'),

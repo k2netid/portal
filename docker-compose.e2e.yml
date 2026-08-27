@@ -14,7 +14,7 @@ services:
       HOME: /tmp
       PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
-      PLAYWRIGHT_BASE_URL: ${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5173}
+      PLAYWRIGHT_BASE_URL: ${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5273}
       E2E_LOGIN_EMAIL: ${E2E_LOGIN_EMAIL:-super@jejakawan.com}
       E2E_LOGIN_PASSWORD: ${E2E_LOGIN_PASSWORD:-password}
     command: ["npm", "run", "test:e2e:smoke"]

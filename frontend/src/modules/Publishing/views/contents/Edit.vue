@@ -249,7 +249,6 @@ import type { Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useHead } from '@unhead/vue';
-import { usePublishingStore } from '@/modules/Publishing/stores/publishing';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import api from '@/engine/api/client';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
@@ -316,7 +315,6 @@ const route = useRoute();
 const id = String(route.params.id || '');
 const toast = useToast();
 const { confirm } = useConfirm();
-const publishingStore = usePublishingStore();
 const systemStore = useSystemStore();
 const authStore = useAuthStore();
 
@@ -508,12 +506,12 @@ const handleAutoSaveToggle = (isEnabled: boolean) => {
 
 const loadAutoSavePreference = async () => {
     try {
-        await publishingStore.fetchSettingsGroup('general');
-        const raw = publishingStore.settings['content.autosave_enabled'];
+        await systemStore.fetchSettingsGroup('general');
+        const raw = systemStore.settings['content.autosave_enabled'];
         autoSaveDefaultEnabled.value = raw === undefined
             ? true
             : raw === true || raw === "1" || raw === '1' || raw === 'true';
-        autoSaveIntervalMs.value = resolveAutoSaveIntervalMs(publishingStore.settings['content.autosave_interval_seconds']);
+        autoSaveIntervalMs.value = resolveAutoSaveIntervalMs(systemStore.settings['content.autosave_interval_seconds']);
     } catch {
         autoSaveDefaultEnabled.value = true;
         autoSaveIntervalMs.value = 30000;

@@ -14,6 +14,8 @@ abstract class SearchTestCase extends BaseTestCase
         parent::setUp();
         $this->seedPermissionsAndRoles();
         $this->activateSearchExtension();
+        $this->activatePack('library');
+        $this->activatePack('publishing');
     }
 
     protected function activateSearchExtension(): void

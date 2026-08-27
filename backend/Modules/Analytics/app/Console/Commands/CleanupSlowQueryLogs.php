@@ -4,11 +4,13 @@ namespace Modules\Analytics\Console\Commands;
 
 use Illuminate\Console\Command;
 use Modules\Analytics\Models\SlowQuery;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Support\DatabaseConsoleInts;
 
 class CleanupSlowQueryLogs extends Command
 {
+    use SkipsWhenProductInactive;
     /**
      * The name and signature of the console command.
      */
@@ -24,6 +26,10 @@ class CleanupSlowQueryLogs extends Command
      */
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('analytics')) {
+            return self::SUCCESS;
+        }
+
         $daysRaw = $this->option('days') ?? Setting::get('slow_query_retention_days', 7);
         $days = DatabaseConsoleInts::fromMixed($daysRaw, 7);
 

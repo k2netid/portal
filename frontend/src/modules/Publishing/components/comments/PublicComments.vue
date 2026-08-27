@@ -127,7 +127,7 @@
               v-model="guestEmail"
               type="email"
               required
-              :placeholder="t('publishing.comments.public.emailPlaceholder', 'nama@example.com')"
+              :placeholder="t('publishing.comments.public.emailPlaceholder', 'Enter your email')"
               class="w-full h-10 px-3.5 text-xs rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
             >
           </div>

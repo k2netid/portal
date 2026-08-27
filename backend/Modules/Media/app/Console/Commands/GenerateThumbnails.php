@@ -3,11 +3,13 @@
 namespace Modules\Media\Console\Commands;
 
 use Illuminate\Console\Command;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Media\Models\File;
 use Modules\Media\Services\MediaService;
 
 class GenerateThumbnails extends Command
 {
+    use SkipsWhenProductInactive;
     /**
      * The name and signature of the console command.
      *
@@ -27,6 +29,10 @@ class GenerateThumbnails extends Command
      */
     public function handle(MediaService $mediaService): int
     {
+        if ($this->skipUnlessProductActive('media')) {
+            return self::SUCCESS;
+        }
+
         $force = $this->option('force');
 
         $this->info('Generating thumbnails...');

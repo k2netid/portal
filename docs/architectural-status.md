@@ -29,7 +29,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, `/site` 404, member login/register/account, member verify-email via Mail.
 
-P6 residue: kernel settings no longer own SEO / discussion / analytics. Those groups live on Publishing (`/dash/publishing/settings`) and Analytics retention. Kernel API refuses product setting groups.
+P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`.
 
 P4: Data Studio (`sys_content_types`) is operational entities; Library `lib_fields` is CMS CCK. Reserved slugs block CMS collisions. See [data-studio-vs-cck.md](architecture/data-studio-vs-cck.md).
 
@@ -39,7 +39,8 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 
 | Item | Notes |
 | :--- | :--- |
-| P5 vertical product modules | Same Mail contract; catalog grows later |
+| ja-CE honesty pass (pre-P5) | Landed 2026-08-27 — [audit](architecture/ja-ce-comprehensive-audit-2026-08-27.md). P5 still deferred. |
+| P5 vertical product modules | Same Mail contract; catalog grows later — needs a named product |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
 

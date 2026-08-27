@@ -4,11 +4,13 @@ namespace Modules\Media\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Media\Contracts\MediaServiceInterface;
 use Modules\Media\Models\File;
 
 class SyncMediaFromDisk extends Command
 {
+    use SkipsWhenProductInactive;
     protected $signature = 'media:sync-from-disk
                             {--disk=public : Storage disk name}
                             {--path=media : Directory relative to disk root}
@@ -19,6 +21,10 @@ class SyncMediaFromDisk extends Command
 
     public function handle(MediaServiceInterface $mediaService): int
     {
+        if ($this->skipUnlessProductActive('media')) {
+            return self::SUCCESS;
+        }
+
         $disk = (string) $this->option('disk');
         $basePath = trim((string) $this->option('path'), '/');
         $dryRun = (bool) $this->option('dry-run');

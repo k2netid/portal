@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\Extension;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Services\ThemePackageInstallService;
 use Modules\Layout\Services\ThemeService;
@@ -145,6 +146,10 @@ class ThemeController extends BaseApiController
 
     public function getActive(Request $request): JsonResponse
     {
+        if (! Extension::isProductActive('layout')) {
+            return $this->success(null, 'No active theme found');
+        }
+
         $profile = (bool) config('publishing.profile_public_theme_api', false);
         $t0 = $profile ? microtime(true) : 0.0;
 

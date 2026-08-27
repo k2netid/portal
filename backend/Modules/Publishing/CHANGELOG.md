@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Settings groups are `seo` + `comments` only. Site identity (`general`) stays on kernel Identity.
+
 ### Added
 
 - Initial port from `ja-cms` Content/Publishing (+ ContentTemplate model).

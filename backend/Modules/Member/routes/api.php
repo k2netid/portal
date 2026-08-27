@@ -7,7 +7,7 @@ use Modules\Member\Http\Controllers\Api\AuthController;
 use Modules\Member\Http\Controllers\Api\BookmarkController;
 
 Route::prefix('v1')->group(function (): void {
-    Route::prefix('public/member')->middleware('throttle:30,1')->group(function (): void {
+    Route::prefix('public/member')->middleware(['throttle:30,1', 'extension.active:member'])->group(function (): void {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
         Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
@@ -15,7 +15,7 @@ Route::prefix('v1')->group(function (): void {
             ->name('member.verify-email');
     });
 
-    Route::prefix('member')->middleware(['auth:member', 'throttle:120,1'])->group(function (): void {
+    Route::prefix('member')->middleware(['auth:member', 'throttle:120,1', 'extension.active:member'])->group(function (): void {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);

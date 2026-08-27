@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import { handleBeforeEachGuard } from './guards';
-import { SECURITY_ROUTES } from '@/config/security';
+
+const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
 const publicRoutes: RouteRecordRaw[] = [
     {
@@ -10,68 +11,68 @@ const publicRoutes: RouteRecordRaw[] = [
             {
                 path: '',
                 name: 'public-home',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Home.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Home' },
             },
             {
                 path: 'blog',
                 name: 'public-blog',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Blog.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Blog' },
             },
             {
                 path: 'blog/:slug',
                 name: 'public-post',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Post.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Post' },
             },
             {
                 path: 'about',
                 name: 'public-about',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/About.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/About' },
             },
             {
                 path: 'solusi',
                 name: 'public-solusi',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Solusi.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Solusi' },
             },
             {
                 path: 'services',
                 name: 'public-services',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Services.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Services' },
             },
             {
                 path: 'pricing',
                 name: 'public-pricing',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Pricing.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Pricing' },
             },
             {
                 path: 'career',
                 name: 'public-career',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/CareerCenter.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/CareerCenter' },
             },
             {
                 path: 'achievement',
                 name: 'public-achievement',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Achievement.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Achievement' },
             },
             {
                 path: 'contact',
                 name: 'public-contact',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Contact.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Contact' },
             },
             {
                 path: 'search',
                 name: 'public-search',
-                component: () => import('@/modules/Layout/views/themes/zenith/pages/Search.vue'),
-                meta: { public: true },
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Search' },
             },
             {
                 path: 'member/login',

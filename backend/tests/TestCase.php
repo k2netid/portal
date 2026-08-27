@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Cache;
+use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
@@ -197,5 +198,24 @@ abstract class TestCase extends BaseTestCase
         $user = $user ?? $this->createAdminUser();
 
         return $this->actingAs($user, 'sanctum');
+    }
+
+    /**
+     * @param  array<string, mixed>  $extra
+     */
+    protected function activatePack(string $slug, array $extra = []): void
+    {
+        Extension::query()->updateOrCreate(
+            ['slug' => $slug],
+            array_merge([
+                'type' => 'module',
+                'name' => ucfirst($slug),
+                'version' => '1.0.0',
+                'database_version' => '1.0.0',
+                'status' => 'active',
+                'is_core' => false,
+            ], $extra),
+        );
+        Extension::flushProductActiveMemo();
     }
 }

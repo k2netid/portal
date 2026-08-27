@@ -701,7 +701,7 @@
         "version": "1.0.0",
         "description": "Plugin boilerplate kustom yang dihasilkan otomatis.",
         "routeUri": "/api/v1/my-endpoint",
-        "routeAction": "MyController@index",
+        "routeAction": "MyController{'@'}index",
         "menuTitle": "Judul Menu",
         "menuRoute": "/dash/my-route",
         "icon": "ikon"
@@ -721,7 +721,8 @@
         "empty": "Belum ada menu dashboard terdaftar.",
         "groups": {
           "academic": "Academic",
-          "Jejakawan": "Jejakawan",
+          "publishing": "Publishing",
+          "Jejakawan": "Publishing",
           "system": "System"
         }
       },

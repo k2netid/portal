@@ -28,7 +28,7 @@ export const PublishingService = {
     },
 
     publicComments(contentId: string): Promise<AxiosResponse> {
-        return api.get(`/publishing/contents/${contentId}/comments`);
+        return api.get(publishingPaths.publicContentComments(contentId));
     },
 
     postPublicComment(contentId: string, data: {
@@ -39,7 +39,7 @@ export const PublishingService = {
         captcha_token?: string;
         captcha_input?: string;
     }): Promise<AxiosResponse> {
-        return api.post(`/publishing/contents/${contentId}/comments`, data);
+        return api.post(publishingPaths.publicContentComments(contentId), data);
     },
 };
 

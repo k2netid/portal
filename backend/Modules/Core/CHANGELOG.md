@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+- Plugin uninstall returns the deactivate error instead of deleting files when dependents are still active.
+- Kernel settings list includes `general` (Identity). Product groups remain refused.
+
 ### Added
 - Module contract freeze docs + `ModuleManifestValidator` for first-party manifests.
 - Discovery sync: `description`, manifest `license` / `license_tier` / `settings_route`; preserve `requirements` when dependencies omitted.

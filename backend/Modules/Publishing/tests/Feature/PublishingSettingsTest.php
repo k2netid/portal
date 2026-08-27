@@ -75,4 +75,35 @@ class PublishingSettingsTest extends TestCase
 
         $this->assertEquals(90, Setting::get('analytics_retention_days'));
     }
+
+    public function test_publishing_rejects_general_group(): void
+    {
+        $admin = $this->createAdminUser();
+
+        Setting::create([
+            'key' => 'site_name',
+            'value' => 'Kernel identity',
+            'type' => 'string',
+            'group' => 'general',
+        ]);
+
+        $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/publishing/settings/group/general')
+            ->assertForbidden();
+
+        $this->actingAs($admin, 'sanctum')
+            ->postJson('/api/v1/manage/publishing/settings/bulk-update', [
+                'settings' => [
+                    [
+                        'key' => 'site_name',
+                        'value' => 'Hijacked by publishing',
+                        'type' => 'string',
+                        'group' => 'general',
+                    ],
+                ],
+            ])
+            ->assertOk();
+
+        $this->assertSame('Kernel identity', Setting::get('site_name'));
+    }
 }

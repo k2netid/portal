@@ -177,7 +177,7 @@
                 class="col-span-2 bg-background border border-border rounded-lg text-xs py-1 px-2 text-foreground focus:outline-none focus:ring-1 focus:ring-emerald-500/30"
               >
                 <option value="academic">{{ t('system.appStore.scaffolder.menus.groups.academic') }}</option>
-                <option value="Jejakawan">{{ t('system.appStore.scaffolder.menus.groups.Jejakawan') }}</option>
+                <option value="publishing">{{ t('system.appStore.scaffolder.menus.groups.publishing') }}</option>
                 <option value="system">{{ t('system.appStore.scaffolder.menus.groups.system') }}</option>
               </select>
 

@@ -1,6 +1,6 @@
 # Zenith Theme
 
-Zenith is a flagship ultra-clean, modern minimalist theme for JA-CMS designed for high-performance SaaS, corporate, agency, and creator publications.
+Zenith is a flagship ultra-clean, modern minimalist theme for Jejakawan Core Engine designed for high-performance SaaS, corporate, agency, and creator publications.
 
 ## Key Features
 - **Modern Typography**: Seamlessly powered by Plus Jakarta Sans and Inter with automatic dynamic Google Fonts pre-connection.

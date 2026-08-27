@@ -12,7 +12,7 @@ class CategorySearchObserver
 {
     public function saved(Category $category): void
     {
-        if (! Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('library') || ! Extension::isProductActive('search')) {
             return;
         }
 
@@ -26,7 +26,7 @@ class CategorySearchObserver
 
     public function deleted(Category $category): void
     {
-        if (! Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('library') || ! Extension::isProductActive('search')) {
             return;
         }
 
