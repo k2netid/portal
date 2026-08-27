@@ -52,6 +52,12 @@ test.describe('public /site theme runtime', () => {
         await expect(page.getByRole('link', { name: /sign in/i }).first()).toBeVisible();
     });
 
+    test('member verified result page is public', async ({ page }) => {
+        await page.goto('/site/member/verified?status=ok');
+        await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15000 });
+        await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15000 });
+    });
+
     test('guest account route redirects to member login', async ({ page }) => {
         await page.goto('/site/member/account');
         await expect(page).toHaveURL(/\/site\/member\/login/);

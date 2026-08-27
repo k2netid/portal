@@ -91,6 +91,12 @@ const publicRoutes: RouteRecordRaw[] = [
                 component: () => import('@/modules/Member/views/Account.vue'),
                 meta: { public: true, requiresMember: true },
             },
+            {
+                path: 'member/verified',
+                name: 'public-member-verified',
+                component: () => import('@/modules/Member/views/Verified.vue'),
+                meta: { public: true },
+            },
         ],
     },
     {

@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'frontend_url' => env('FRONTEND_URL', env('APP_URL', 'http://localhost')),
+
     'root_domain' => env('APP_ROOT_DOMAIN', 'localhost'),
     'installed' => env('APP_INSTALLED', false),
 

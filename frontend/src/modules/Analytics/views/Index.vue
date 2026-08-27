@@ -425,12 +425,15 @@ class="space-y-3 max-h-[240px] overflow-y-auto pr-2 custom-scrollbar focus-visib
           </div>
         </CardContent>
       </Card>
+
+      <RetentionPanel />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import {PageHeader, ConsoleListCard} from '@/shared/components/shell';
+import RetentionPanel from '@/modules/Analytics/components/RetentionPanel.vue';
 
 import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, onUnmounted, computed } from 'vue';

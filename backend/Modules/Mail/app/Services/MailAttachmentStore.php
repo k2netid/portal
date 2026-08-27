@@ -27,6 +27,24 @@ class MailAttachmentStore
         'iso', 'img', 'dmg',
     ];
 
+    /** Dangerous MIME types even when the filename extension is renamed. */
+    private const BLOCKED_MIME_TYPES = [
+        'application/x-msdownload',
+        'application/x-msdos-program',
+        'application/x-ms-installer',
+        'application/x-dosexec',
+        'application/x-executable',
+        'application/x-msi',
+        'application/vnd.microsoft.portable-executable',
+        'application/x-sh',
+        'application/x-bat',
+        'application/x-csh',
+        'application/javascript',
+        'text/javascript',
+        'application/x-java-archive',
+        'application/java-archive',
+    ];
+
     public function __construct(
         protected MediaLibraryBridge $mediaBridge,
     ) {}
@@ -52,6 +70,12 @@ class MailAttachmentStore
             $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
             if ($ext !== '' && in_array($ext, self::BLOCKED_EXTENSIONS, true)) {
                 throw new InvalidArgumentException('Attachment type not allowed: .'.$ext);
+            }
+
+            $clientMime = strtolower((string) ($file->getClientMimeType() ?: ''));
+            $detectedMime = strtolower((string) ($file->getMimeType() ?: 'application/octet-stream'));
+            if ($this->isBlockedMime($clientMime) || $this->isBlockedMime($detectedMime)) {
+                throw new InvalidArgumentException('Attachment MIME type not allowed: '.($detectedMime !== '' ? $detectedMime : $clientMime));
             }
 
             $safeName = Str::limit(preg_replace('/[^\w.\-]+/', '_', $original) ?: 'file.bin', 180, '');
@@ -213,5 +237,17 @@ class MailAttachmentStore
 
             return null;
         }
+    }
+
+    private function isBlockedMime(string $mime): bool
+    {
+        $mime = strtolower(trim($mime));
+        if ($mime === '') {
+            return false;
+        }
+
+        $base = strtolower(trim(explode(';', $mime, 2)[0]));
+
+        return in_array($base, self::BLOCKED_MIME_TYPES, true);
     }
 }

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Member\Tests\Feature;
 
+use Illuminate\Support\Facades\URL;
+use Modules\Core\System\Contracts\OutboundMailPortInterface;
 use Modules\Member\Models\Member;
 use Modules\Member\Models\MemberBookmark;
+use Modules\Member\Services\MemberEmailVerification;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
 use Tests\TestCase;
@@ -55,7 +58,8 @@ class MemberAuthTest extends TestCase
         $this->withToken($auth['token'])
             ->getJson('/api/v1/member/me')
             ->assertOk()
-            ->assertJsonPath('data.email', 'reader@example.com');
+            ->assertJsonPath('data.email', 'reader@example.com')
+            ->assertJsonPath('data.email_verified', false);
 
         $this->assertDatabaseHas('mem_members', [
             'email' => 'reader@example.com',
@@ -112,5 +116,83 @@ class MemberAuthTest extends TestCase
         $this->assertNull($comment->user_id);
         $this->assertDatabaseMissing('srv_auth_users', ['id' => $auth['id']]);
         $this->assertTrue(Member::query()->whereKey($auth['id'])->exists());
+    }
+
+    public function test_register_sends_verify_mail_and_signed_link_confirms(): void
+    {
+        $html = null;
+        $this->mock(OutboundMailPortInterface::class, function ($mock) use (&$html): void {
+            $mock->shouldReceive('send')
+                ->once()
+                ->andReturnUsing(function (...$args) use (&$html): array {
+                    $html = is_string($args[2] ?? null) ? $args[2] : '';
+
+                    return ['status' => 'sent'];
+                });
+        });
+
+        $auth = $this->registerMember();
+        $this->assertIsString($html);
+        $this->assertStringContainsString('reader@example.com', (string) $html);
+        $this->assertMatchesRegularExpression('/href="([^"]+)"/', (string) $html);
+        preg_match('/href="([^"]+)"/', (string) $html, $matches);
+        $url = html_entity_decode($matches[1], ENT_QUOTES);
+
+        $this->getJson($url)
+            ->assertOk()
+            ->assertJsonPath('data.email_verified', true);
+
+        $this->assertNotNull(
+            Member::query()->whereKey($auth['id'])->value('email_verified_at'),
+        );
+
+        $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/me')
+            ->assertOk()
+            ->assertJsonPath('data.email_verified', true);
+    }
+
+    public function test_verify_email_rejects_unsigned_and_wrong_hash(): void
+    {
+        $auth = $this->registerMember();
+        $member = Member::query()->findOrFail($auth['id']);
+        $hash = sha1((string) $member->email);
+
+        $this->getJson("/api/v1/public/member/verify-email/{$member->id}/{$hash}")
+            ->assertForbidden();
+
+        $bad = URL::temporarySignedRoute(
+            'member.verify-email',
+            now()->addHour(),
+            ['id' => $member->id, 'hash' => sha1('other@example.com')],
+        );
+
+        $this->getJson($bad)->assertForbidden();
+        $this->assertNull($member->fresh()?->email_verified_at);
+    }
+
+    public function test_verify_email_browser_hit_redirects_to_public_site(): void
+    {
+        config(['app.frontend_url' => 'http://localhost:5273']);
+
+        $auth = $this->registerMember();
+        $member = Member::query()->findOrFail($auth['id']);
+        $url = app(MemberEmailVerification::class)->signedUrl($member);
+
+        $this->get($url, ['Accept' => 'text/html'])->assertRedirect('http://localhost:5273/site/member/verified?status=ok');
+        $this->assertNotNull($member->fresh()?->email_verified_at);
+    }
+
+    public function test_member_can_resend_verification_email(): void
+    {
+        $this->mock(OutboundMailPortInterface::class, function ($mock): void {
+            $mock->shouldReceive('send')->twice()->andReturn(['status' => 'sent']);
+        });
+
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->postJson('/api/v1/member/email/verification-notification')
+            ->assertOk();
     }
 }

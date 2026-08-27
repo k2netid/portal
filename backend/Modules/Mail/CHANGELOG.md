@@ -13,7 +13,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Honest AI gating vs Settings → AI (`ai_ready`, locked unavailable scopes)
 - `mail:process-snoozed` wake path; global quota/retention require `manage system`
 - Cancel scheduled send → drafts; archive + scheduled folder counts
-- Attachment extension blocklist + owned-path download checks
+- Attachment extension + MIME blocklist + owned-path download checks
 - Storage quota enforcement on send/schedule (`MAIL_QUOTA_EXCEEDED`)
 - `MAIL_QUEUE_OUTBOUND` documented in `.env.example`
 

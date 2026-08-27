@@ -7,6 +7,7 @@ export interface PublicMember {
     name: string;
     email: string;
     status: string;
+    email_verified?: boolean;
 }
 
 interface MemberAuthPayload {
@@ -97,6 +98,13 @@ export const useMemberStore = defineStore('member', {
         }): Promise<void> {
             const response = await api.post('/public/member/register', input);
             this.applyAuth(response.data as MemberAuthPayload);
+        },
+
+        async resendVerification(): Promise<void> {
+            await api.post('/member/email/verification-notification');
+            if (this.member) {
+                this.member = { ...this.member };
+            }
         },
 
         async logout(): Promise<void> {

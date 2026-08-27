@@ -27,7 +27,7 @@ class AnalyticsController extends BaseApiController
     ) {
         $this->middleware('auth:sanctum')->except(['trackVisit', 'trackEvent', 'trackBatch']);
         $this->middleware('permission:view analytics')->except(['trackVisit', 'trackEvent', 'trackBatch']);
-        $this->middleware('permission:manage settings')->only(['cleanup', 'purgeAll']);
+        $this->middleware('permission:manage settings')->only(['cleanup', 'purgeAll', 'updateSettings']);
     }
 
     /**
@@ -773,5 +773,44 @@ class AnalyticsController extends BaseApiController
 
             return $this->error('Failed to purge analytics data', 500);
         }
+    }
+
+    public function settings(): JsonResponse
+    {
+        $rows = Setting::query()
+            ->where('group', 'analytics')
+            ->orderBy('key')
+            ->get();
+
+        return $this->success($rows, 'Analytics settings retrieved successfully');
+    }
+
+    public function updateSettings(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'settings' => 'required|array',
+            'settings.*.key' => 'required|string',
+            'settings.*.value' => 'nullable',
+            'settings.*.type' => 'sometimes|in:string,integer,boolean,json,text,password,number,datetime,image,media',
+            'settings.*.group' => 'sometimes|string',
+        ]);
+
+        $settings = is_array($validated['settings']) ? $validated['settings'] : [];
+        foreach ($settings as $settingData) {
+            if (! is_array($settingData) || ! isset($settingData['key'])) {
+                continue;
+            }
+            $key = is_scalar($settingData['key']) ? (string) $settingData['key'] : '';
+            $typeRaw = $settingData['type'] ?? 'integer';
+            $type = is_scalar($typeRaw) ? (string) $typeRaw : 'integer';
+            $groupRaw = $settingData['group'] ?? 'analytics';
+            $group = is_scalar($groupRaw) ? (string) $groupRaw : 'analytics';
+            if ($group !== 'analytics') {
+                continue;
+            }
+            Setting::set($key, $settingData['value'] ?? null, $type, 'analytics');
+        }
+
+        return $this->success(null, 'Analytics settings updated successfully');
     }
 }

@@ -51,6 +51,7 @@ Mengelola utilitas komputasi, storage, automasi, dan schema modeling:
 1. **Data Model Studio**:
    - Desain data model dinamis (entities, custom fields, validation rules, OpenAPI schema generation).
    - Dynamic Record CRUD engine otomatis untuk model yang dibuat di runtime.
+   - **Not** CMS CCK. Editorial fields stay in pack Library. See [data-studio-vs-cck.md](data-studio-vs-cck.md).
 2. **Task Scheduler & Automation**:
    - Cron runner terpadu dengan reporting status eksekusi, preset runtime, dan scheduler logs.
 3. **Backup & Snapshot Manager**:

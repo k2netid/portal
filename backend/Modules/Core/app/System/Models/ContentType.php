@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Modules\Core\System\Models\ContentType
+ * Data Studio operational schema (kernel Infra), not Publishing CCK.
+ *
+ * Editorial custom fields live on Library `lib_fields`. This table stores
+ * runtime entity types for operator-defined records (`sys_dynamic_records`).
  *
  * @property string $id
  * @property string $name
@@ -24,6 +27,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ContentType extends Model
 {
     use HasUuids;
+
+    /**
+     * Slugs owned by CMS packs or kernel identity. Data Studio must not use them.
+     *
+     * @var list<string>
+     */
+    public const RESERVED_SLUGS = [
+        'post', 'posts', 'page', 'pages', 'content', 'contents',
+        'category', 'categories', 'tag', 'tags',
+        'media', 'comment', 'comments',
+        'member', 'members', 'user', 'users',
+        'form', 'forms', 'mail', 'newsletter',
+        'site', 'sites',
+    ];
+
+    public static function isReservedSlug(string $slug): bool
+    {
+        $normalized = strtolower(trim($slug));
+
+        return $normalized !== '' && in_array($normalized, self::RESERVED_SLUGS, true);
+    }
 
     protected $keyType = 'string';
 

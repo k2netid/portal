@@ -12,6 +12,17 @@
       "analytics": "Analytics"
     }
   },
+  "settings": {
+    "title": "Publishing settings",
+    "subtitle": "SEO and discussion defaults for the public site.",
+    "loading": "Loading settings…",
+    "save": "Save",
+    "saving": "Saving…",
+    "tabs": {
+      "seo": "SEO",
+      "discussion": "Discussion"
+    }
+  },
   "content": {
     "title": "Content Studio",
     "description": "Manage your content, media, and taxonomy",

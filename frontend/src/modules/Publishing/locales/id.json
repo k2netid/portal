@@ -12,6 +12,17 @@
       "analytics": "Analitik"
     }
   },
+  "settings": {
+    "title": "Pengaturan publikasi",
+    "subtitle": "Default SEO dan diskusi untuk situs publik.",
+    "loading": "Memuat pengaturan…",
+    "save": "Simpan",
+    "saving": "Menyimpan…",
+    "tabs": {
+      "seo": "SEO",
+      "discussion": "Diskusi"
+    }
+  },
   "content": {
     "title": "Studio Konten",
     "description": "Kelola konten, media, dan taksonomi Anda",

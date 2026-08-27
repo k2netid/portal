@@ -6,7 +6,7 @@
           {{ t('member.register.title', 'Create a reader account') }}
         </h1>
         <p class="text-sm text-muted-foreground">
-          {{ t('member.register.subtitle', 'Comments and bookmarks use this identity, not console IAM.') }}
+          {{ t('member.register.subtitle', 'Comments and bookmarks use this identity, not console IAM. We send a confirmation link to your email.') }}
         </p>
       </div>
 

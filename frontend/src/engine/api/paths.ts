@@ -8,6 +8,8 @@ export const publishingPaths = {
     publicContentRelated: (slug: string) => `/public/publishing/contents/${slug}/related`,
     publicContentComments: (contentId: string) => `/public/publishing/contents/${contentId}/comments`,
     settings: '/manage/publishing/settings',
+    settingsGroup: (group: string) => `/manage/publishing/settings/group/${group}`,
+    settingsBulkUpdate: '/manage/publishing/settings/bulk-update',
     comments: '/manage/publishing/comments',
     contentTemplates: '/manage/publishing/content-templates',
     seo: '/manage/publishing/seo',
@@ -125,6 +127,8 @@ export const analyticsPaths = {
     export: '/manage/analytics/export',
     cleanup: '/manage/analytics/cleanup',
     purgeAll: '/manage/analytics/purge-all',
+    settings: '/manage/analytics/settings',
+    settingsBulkUpdate: '/manage/analytics/settings/bulk-update',
 } as const;
 
 export const searchPaths = {

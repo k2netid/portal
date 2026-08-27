@@ -1,5 +1,5 @@
 import api from '@/engine/api/client';
-import { libraryPaths, publishingPaths, systemPaths } from '@/engine/api/paths';
+import { libraryPaths, publishingPaths } from '@/engine/api/paths';
 import type { AxiosResponse } from 'axios';
 
 export const PublishingService = {
@@ -16,7 +16,7 @@ export const PublishingService = {
     },
 
     settingsGroup(group: string): Promise<AxiosResponse> {
-        return api.get(systemPaths.settingsGroup(group));
+        return api.get(publishingPaths.settingsGroup(group));
     },
 
     manageContents(params: Record<string, unknown> = {}): Promise<AxiosResponse> {

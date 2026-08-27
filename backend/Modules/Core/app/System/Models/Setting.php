@@ -25,6 +25,18 @@ class Setting extends Model
 
     public const LEGACY_KEY_ADMIN_DASHBOARD_SLUG = 'admin_dashboard_slug';
 
+    /**
+     * Setting groups owned by product packs (Publishing / Analytics), not kernel settings.
+     *
+     * @var list<string>
+     */
+    public const PRODUCT_SETTING_GROUPS = ['seo', 'comments', 'analytics'];
+
+    public static function isProductSettingGroup(string $group): bool
+    {
+        return in_array($group, self::PRODUCT_SETTING_GROUPS, true);
+    }
+
     use HasUuids;
 
     protected $keyType = 'string';

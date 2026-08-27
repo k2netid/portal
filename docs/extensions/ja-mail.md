@@ -41,7 +41,7 @@ Activate via **Identity → Module Registry & App Store** before use.
 | Send via system SMTP or custom account SMTP | Live |
 | Scheduled send + cancel → drafts (`mail:process-scheduled`) | Live |
 | Storage quota enforcement on send/schedule | Live |
-| Attachment extension blocklist + path ownership checks | Live |
+| Attachment extension + MIME blocklist + path ownership checks | Live |
 | Trash retention purge (`mail:purge-trash`) | Live |
 | Vacation / OOO on `MailboxIngestService` | Live |
 | Soft Media Library register on attach | When Content/Media present |

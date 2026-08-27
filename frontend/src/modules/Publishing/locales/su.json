@@ -12,6 +12,17 @@
       "analytics": "Analitik"
     }
   },
+  "settings": {
+    "title": "Setélan publikasi",
+    "subtitle": "Default SEO jeung diskusi pikeun situs publik.",
+    "loading": "Ngamuat setélan…",
+    "save": "Simpen",
+    "saving": "Nyimpen…",
+    "tabs": {
+      "seo": "SEO",
+      "discussion": "Diskusi"
+    }
+  },
   "content": {
     "title": "Studio Kusi",
     "description": "Ngokolakeun kusi, media, sareng taksonomi salira",

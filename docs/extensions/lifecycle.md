@@ -41,7 +41,7 @@ Public `/site` reads `GET /api/v1/public/layout/widgets/location/{sidebar|footer
 
 Visitor accounts are pack **member** (`mem_members`, `auth:member`). Console IAM (`srv_auth_users`) is operators only. Public comments and bookmarks use `MemberIdentityPort`, not `User`.
 
-`email_verified_at` exists on `mem_members`. **Transactional verify-email via Mail is not implemented yet** (register logs the reader in immediately).
+Register still issues a Sanctum token so the reader can use `/site`. `email_verified_at` is set only after the signed Mail link (`GET /api/v1/public/member/verify-email/{id}/{hash}`). Send uses `OutboundMailPortInterface` when JA-Mail is bound, otherwise Laravel `Mail::html`. Authenticated resend: `POST /api/v1/member/email/verification-notification`. Browser clicks redirect to `/site/member/verified`.
 
 ## Public `/site` (this branch)
 
@@ -52,9 +52,11 @@ Visitor accounts are pack **member** (`mem_members`, `auth:member`). Console IAM
 | Contact | Forms slug `contact` (seeded when Forms is active) |
 | Newsletter footer | `POST /api/v1/public/newsletter/subscribe` |
 | Pageviews | `POST /api/v1/public/analytics/track-visit` |
+| Member verify-email | Signed `GET /api/v1/public/member/verify-email/{id}/{hash}` → `/site/member/verified` |
+| Publishing settings | SEO + discussion at `/dash/publishing/settings`; kernel settings API refuses those groups |
 
 Console remains `/dash`. Do not send public 404 Home to the console SPA.
 
 ## Still not this document
 
-DMS/CCK composition, vertical modules, Core settings residue, GitHub Actions billing — see [architectural-status.md](../architectural-status.md).
+Vertical modules and GitHub Actions billing — see [architectural-status.md](../architectural-status.md). Data Studio vs CCK: [data-studio-vs-cck.md](../architecture/data-studio-vs-cck.md).

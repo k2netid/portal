@@ -22,11 +22,14 @@ class SettingController extends BaseApiController
         if ($request->has('group')) {
             $groupRaw = $request->group;
             $group = is_string($groupRaw) ? $groupRaw : '';
+            if (Setting::isProductSettingGroup($group)) {
+                return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
+            }
             $query->where('group', $group);
         } else {
-            // Exclude Publishing specific groups from core settings list
+            // Exclude Publishing / Analytics groups from kernel settings list
             $cmsGroups = ['general', 'seo', 'comments', 'analytics'];
-            $query->whereNotIn('group', $cmsGroups);
+            $query->whereNotIn('group', array_values(array_unique([...$cmsGroups, ...Setting::PRODUCT_SETTING_GROUPS])));
         }
 
         if ($request->has('public_only')) {
@@ -44,6 +47,10 @@ class SettingController extends BaseApiController
         /** @var User|null $user */
         if (! $user) {
             return $this->unauthorized();
+        }
+
+        if (Setting::isProductSettingGroup($group)) {
+            return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
         }
 
         // Permission check: if user doesn't have 'view settings',
@@ -99,6 +106,11 @@ class SettingController extends BaseApiController
             'is_public' => 'boolean',
         ]);
 
+        $group = is_string($validated['group'] ?? null) ? $validated['group'] : '';
+        if (Setting::isProductSettingGroup($group)) {
+            return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
+        }
+
         $setting = Setting::create($validated);
 
         return $this->success($setting, 'Setting created successfully', 201);
@@ -113,6 +125,11 @@ class SettingController extends BaseApiController
             'description' => 'nullable|string',
             'is_public' => 'boolean',
         ]);
+
+        $nextGroup = is_string($validated['group'] ?? null) ? $validated['group'] : (string) $setting->group;
+        if (Setting::isProductSettingGroup((string) $setting->group) || Setting::isProductSettingGroup($nextGroup)) {
+            return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
+        }
 
         $setting->update($validated);
 
@@ -146,6 +163,12 @@ class SettingController extends BaseApiController
                 $sType = is_scalar($sTypeRaw) ? (string) $sTypeRaw : 'string';
                 $sGroupRaw = $settingData['group'] ?? 'system';
                 $sGroup = is_scalar($sGroupRaw) ? (string) $sGroupRaw : 'system';
+
+                $existing = Setting::query()->where('key', $sKey)->first();
+                $existingGroup = is_string($existing?->group) ? $existing->group : '';
+                if (Setting::isProductSettingGroup($sGroup) || Setting::isProductSettingGroup($existingGroup)) {
+                    continue;
+                }
 
                 // In Core context, we want settings to be Global by default unless explicitly specified.
                 // Hub-wide system settings (no subscription or organization column on Setting).

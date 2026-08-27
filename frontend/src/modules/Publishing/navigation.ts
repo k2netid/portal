@@ -45,6 +45,15 @@ export const publishingNavigation: NavItem[] = [
                 icon: 'globe',
                 priority: 85,
             },
+            {
+                name: 'publishing-settings',
+                label: 'Publishing Settings',
+                labelKey: 'publishing.navigation.menu.publishingSettings',
+                permission: 'view settings',
+                extension: 'publishing',
+                icon: 'settings',
+                priority: 80,
+            },
         ],
     },
 ];

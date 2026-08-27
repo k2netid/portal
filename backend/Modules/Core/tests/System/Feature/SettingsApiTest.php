@@ -104,4 +104,41 @@ class SettingsApiTest extends TestCase
         $this->getJson('/api/v1/manage/system/settings')->assertUnauthorized();
         $this->postJson('/api/v1/manage/system/settings', [])->assertUnauthorized();
     }
+
+    public function test_kernel_settings_reject_product_setting_groups(): void
+    {
+        $admin = $this->createAdminUser();
+
+        Setting::create([
+            'key' => 'meta_title',
+            'value' => 'Kernel should not own this',
+            'type' => 'string',
+            'group' => 'seo',
+            'is_public' => true,
+        ]);
+
+        $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings')
+            ->assertOk()
+            ->assertJsonMissing(['key' => 'meta_title']);
+
+        $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/system/settings/group/seo')
+            ->assertForbidden();
+
+        $this->actingAs($admin, 'sanctum')
+            ->postJson('/api/v1/manage/system/settings/bulk-update', [
+                'settings' => [
+                    [
+                        'key' => 'meta_title',
+                        'value' => 'Hijacked by kernel',
+                        'type' => 'string',
+                        'group' => 'seo',
+                    ],
+                ],
+            ])
+            ->assertOk();
+
+        $this->assertSame('Kernel should not own this', Setting::get('meta_title'));
+    }
 }

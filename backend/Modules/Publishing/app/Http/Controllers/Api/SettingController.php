@@ -11,11 +11,16 @@ use Modules\Layout\Services\ThemeService;
 
 class SettingController extends BaseApiController
 {
+    /**
+     * @var list<string>
+     */
+    private const GROUPS = ['general', 'seo', 'comments'];
+
     public function __construct()
     {
         $this->middleware('auth:sanctum');
         $this->middleware('permission:view settings')->only(['index', 'getGroup']);
-        $this->middleware('permission:manage settings')->only(['bulkUpdate']);
+        $this->middleware('permission:manage settings')->only(['update', 'bulkUpdate']);
     }
 
     /**
@@ -23,8 +28,7 @@ class SettingController extends BaseApiController
      */
     public function index(): JsonResponse
     {
-        $cmsGroups = ['general', 'seo', 'comments', 'analytics'];
-        $settings = Setting::whereIn('group', $cmsGroups)
+        $settings = Setting::whereIn('group', self::GROUPS)
             ->orderBy('group')
             ->orderBy('key')
             ->get();
@@ -37,9 +41,18 @@ class SettingController extends BaseApiController
      */
     public function getGroup(string $group): JsonResponse
     {
+        if (! in_array($group, self::GROUPS, true)) {
+            return $this->forbidden('This setting group is not owned by Publishing.');
+        }
+
         $settings = Setting::getGroup($group);
 
         return $this->success($settings, 'Jejakawan settings retrieved successfully');
+    }
+
+    public function update(Request $request): JsonResponse
+    {
+        return $this->bulkUpdate($request);
     }
 
     /**
@@ -65,6 +78,9 @@ class SettingController extends BaseApiController
                 $sType = is_scalar($sTypeRaw) ? (string) $sTypeRaw : 'string';
                 $sGroupRaw = $settingData['group'] ?? 'general';
                 $sGroup = is_scalar($sGroupRaw) ? (string) $sGroupRaw : 'general';
+                if (! in_array($sGroup, self::GROUPS, true)) {
+                    continue;
+                }
 
                 Setting::set($sKey, $sValue, $sType, $sGroup);
 

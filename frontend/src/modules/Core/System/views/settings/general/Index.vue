@@ -148,22 +148,6 @@
               />
             </TabsContent>
 
-            <TabsContent value="seo">
-              <SeoTab
-                v-model:form-data="formData"
-                :settings="settings"
-                :errors="errors"
-              />
-            </TabsContent>
-
-            <TabsContent value="analytics">
-              <AnalyticsTab
-                v-model:form-data="formData"
-                :settings="settings"
-                :errors="errors"
-              />
-            </TabsContent>
-
             <TabsContent value="ai">
               <AiTab
                 v-model:form-data="formData"
@@ -172,13 +156,6 @@
               />
             </TabsContent>
 
-            <TabsContent value="comments">
-              <DiscussionTab
-                v-model:form-data="formData"
-                :settings="settings"
-                :errors="errors"
-              />
-            </TabsContent>
           </template>
 
           <!-- Actions -->
@@ -238,15 +215,12 @@ import {
 // Async Tab Components
 const LicenseTab = defineAsyncComponent(() => import('./tabs/LicenseTab.vue'));
 const PlatformIdentityTab = defineAsyncComponent(() => import('./tabs/PlatformIdentityTab.vue'));
-const SeoTab = defineAsyncComponent(() => import('./tabs/SeoTab.vue'));
-const AnalyticsTab = defineAsyncComponent(() => import('./tabs/AnalyticsTab.vue'));
 const GeneralTab = defineAsyncComponent(() => import('./tabs/GeneralTab.vue'));
 const EmailTab = defineAsyncComponent(() => import('./tabs/EmailTab.vue'));
 const SecurityTab = defineAsyncComponent(() => import('./tabs/SecurityTab.vue'));
 const PerformanceTab = defineAsyncComponent(() => import('./tabs/PerformanceTab.vue'));
 const MediaTab = defineAsyncComponent(() => import('./tabs/MediaTab.vue'));
 const AiTab = defineAsyncComponent(() => import('./tabs/AiTab.vue'));
-const DiscussionTab = defineAsyncComponent(() => import('./tabs/DiscussionTab.vue'));
 const MonitoringTab = defineAsyncComponent(() => import('./tabs/MonitoringTab.vue'));
 const EmailTestSection = defineAsyncComponent(() => import('./EmailTestSection.vue'));
 
@@ -275,7 +249,7 @@ const toast = useToast();
 const loading = ref(false);
 const saving = ref(false);
 // Initialize tab from query param if present (e.g., ?tab=license)
-const validTabs = ['system', 'license', 'identity', 'seo', 'analytics', 'security', 'comments', 'performance', 'monitoring', 'email', 'media', 'ai'];
+const validTabs = ['system', 'license', 'identity', 'security', 'performance', 'monitoring', 'email', 'media', 'ai'];
 const initialTab = validTabs.includes(route.query.tab as string) ? (route.query.tab as string) : 'system';
 const activeTab = ref(initialTab);
 const settings = ref<Setting[]>([]);
@@ -321,10 +295,7 @@ const tabs = computed<Tab[]>(() => {
         { id: 'system', label: 'System' },
         { id: 'license', label: 'License' },
         { id: 'identity', label: 'Identity' },
-        { id: 'seo', label: 'SEO' },
-        { id: 'analytics', label: 'Analytics' },
         { id: 'security', label: 'Security' },
-        { id: 'comments', label: 'Discussion' },
         { id: 'performance', label: 'Performance' },
         { id: 'monitoring', label: 'Monitoring' },
         { id: 'media', label: 'Media' },
@@ -353,8 +324,6 @@ const getTabIcon = (tabId: string) => {
         case 'media': return ImageIcon;
         case 'ai': return Sparkles;
         case 'identity': return ImageIcon;
-        case 'seo': return SettingsIcon;
-        case 'analytics': return Activity;
         default: return SettingsIcon;
     }
 };
@@ -404,8 +373,6 @@ const fetchSettings = async () => {
             'email_to', 'webhook_url', 'console_dashboard_slug'
         ];
         const brandKeys = ['admin_email', 'app_name', 'brand_logo', 'brand_favicon', 'branding_display'];
-        const seoKeys = ['meta_title', 'meta_description', 'meta_keywords', 'google_analytics_id', 'google_search_console', 'enable_sitemap', 'enable_robots_txt'];
-        const analyticsKeys = ['analytics_retention_days', 'analytics_event_retention_days', 'analytics_visitor_retention_days'];
         const emailKeys = ['mail_from_address', 'mail_from_name', 'mail_driver', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption'];
         const monitoringKeys = ['log_retention_days', 'activity_log_retention_days', 'security_log_retention_days', 'login_history_retention_days', 'security_alert_failed_login_threshold', 'backup_retention_days'];
         const aiKeys = [
@@ -430,10 +397,6 @@ const fetchSettings = async () => {
                     s.group = 'security';
                 } else if (brandKeys.includes(s.key)) {
                     s.group = 'brand';
-                } else if (seoKeys.includes(s.key)) {
-                    s.group = 'seo';
-                } else if (analyticsKeys.includes(s.key)) {
-                    s.group = 'analytics';
                 } else if (emailKeys.includes(s.key)) {
                     s.group = 'email';
                 } else if (monitoringKeys.includes(s.key)) {
@@ -530,20 +493,6 @@ const fetchSettings = async () => {
         ensureSetting('site_description', '', 'string', 'general');
         ensureSetting('site_url', 'http://localhost', 'string', 'general');
 
-        // Ensure SEO Settings
-        ensureSetting('meta_title', 'Jejakawan', 'string', 'seo');
-        ensureSetting('meta_description', 'Modern Platform', 'text', 'seo');
-        ensureSetting('meta_keywords', 'jejakawan, enterprise, Jejakawan', 'string', 'seo');
-        ensureSetting('google_analytics_id', '', 'string', 'seo');
-        ensureSetting('google_search_console', '', 'string', 'seo');
-        ensureSetting('enable_sitemap', true, 'boolean', 'seo');
-        ensureSetting('enable_robots_txt', true, 'boolean', 'seo');
-
-        // Ensure Analytics Settings
-        ensureSetting('analytics_retention_days', 90, 'integer', 'analytics');
-        ensureSetting('analytics_event_retention_days', 30, 'integer', 'analytics');
-        ensureSetting('analytics_visitor_retention_days', 365, 'integer', 'analytics');
-
         // Ensure Email Settings
         ensureSetting('mail_driver', 'smtp', 'string', 'email');
         ensureSetting('mail_host', 'smtp.mailtrap.io', 'string', 'email');
@@ -576,14 +525,6 @@ const fetchSettings = async () => {
         ensureSetting('grok_model', 'grok-2-latest', 'string', 'ai');
         ensureSetting('openrouter_api_key', '', 'password', 'ai');
         ensureSetting('openrouter_model', 'openrouter/auto', 'string', 'ai');
-
-        // Ensure Discussion Settings
-        ensureSetting('comments.security.enable_reply', true, 'boolean', 'comments');
-        ensureSetting('comments.security.allow_guests', false, 'boolean', 'comments');
-        ensureSetting('comments.security.moderation_enabled', true, 'boolean', 'comments');
-        ensureSetting('comments.security.guest_captcha', true, 'boolean', 'comments');
-        ensureSetting('comments.security.max_links', 2, 'integer', 'comments');
-        ensureSetting('comments.security.banned_words', '[]', 'string', 'comments');
 
         initializeFormData();
     } catch (error: unknown) {

@@ -114,8 +114,11 @@
                   :placeholder="$t('infra.models.form.slugPlaceholder')"
                   @input="sanitizeSlug"
                 />
-                <p class="text-[11px] text-muted-foreground mt-1">
-                  {{ $t('infra.models.form.slugHint') }}
+                <p
+                  class="text-[11px] mt-1"
+                  :class="slugReserved ? 'text-destructive' : 'text-muted-foreground'"
+                >
+                  {{ slugReserved ? $t('infra.models.messages.slugReserved') : $t('infra.models.form.slugHint') }}
                 </p>
               </div>
 
@@ -480,6 +483,7 @@ import { useToast } from '@/shared/composables/useToast';
 import { parseSingleResponse } from '@/shared/utils/responseParser';
 import DataModelBuilder from '../../components/models/DataModelBuilder.vue';
 import DataModelService, { type DataModelSchema, type DataModelFieldDefinition } from '../../services/dataModelService';
+import { isReservedDataStudioSlug } from '../../constants/reservedDataStudioSlugs';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -506,6 +510,8 @@ const form = ref({
     is_active: true,
     fields: [] as DataModelFieldDefinition[],
 });
+
+const slugReserved = computed(() => isReservedDataStudioSlug(form.value.slug));
 
 const modelsSubtitle = computed(() => {
     const base = t('infra.models.subtitle');
@@ -722,6 +728,11 @@ function downloadOpenApiSpec(): void {
 }
 
 async function handleSave(): Promise<void> {
+    if (isReservedDataStudioSlug(form.value.slug)) {
+        toast.error.default(t('infra.models.messages.slugReserved'));
+        return;
+    }
+
     saving.value = true;
     const payload = {
         name: form.value.name,

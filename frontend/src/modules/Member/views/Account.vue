@@ -19,6 +19,21 @@
         </Button>
       </div>
 
+      <p
+        v-if="memberStore.member && memberStore.member.email_verified !== true"
+        class="text-sm rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3"
+      >
+        {{ t('member.account.verifyHint', 'Confirm your email to finish setting up this reader account.') }}
+        <button
+          type="button"
+          class="ml-2 font-semibold text-primary"
+          :disabled="resending"
+          @click="resend"
+        >
+          {{ resendLabel }}
+        </button>
+      </p>
+
       <section class="rounded-3xl border border-border/60 bg-card/70 p-6 space-y-4">
         <h2 class="text-lg font-bold">
           {{ t('member.account.bookmarks', 'Bookmarks') }}
@@ -65,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import api from '@/engine/api/client';
@@ -83,6 +98,24 @@ const memberStore = useMemberStore();
 
 const bookmarks = ref<BookmarkRow[]>([]);
 const loading = ref(true);
+const resending = ref(false);
+const resent = ref(false);
+
+const resendLabel = computed(() => (
+    resent.value
+        ? t('member.account.resent', 'Sent')
+        : t('member.account.resend', 'Resend email')
+));
+
+const resend = async (): Promise<void> => {
+    resending.value = true;
+    try {
+        await memberStore.resendVerification();
+        resent.value = true;
+    } finally {
+        resending.value = false;
+    }
+};
 
 const load = async (): Promise<void> => {
     loading.value = true;

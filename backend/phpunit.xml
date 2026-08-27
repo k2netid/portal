@@ -23,6 +23,7 @@
             <directory>Modules/Member/tests</directory>
             <directory>Modules/Site/tests</directory>
             <directory>Modules/Forms/tests</directory>
+            <directory>Modules/Publishing/tests</directory>
         </testsuite>
     </testsuites>
     <php>

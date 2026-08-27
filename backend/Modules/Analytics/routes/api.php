@@ -27,6 +27,8 @@ Route::prefix('v1')->group(function (): void {
         Route::get('export', [AnalyticsController::class, 'export']);
         Route::post('cleanup', [AnalyticsController::class, 'cleanup'])->middleware('permission:manage settings');
         Route::post('purge-all', [AnalyticsController::class, 'purgeAll'])->middleware(['permission:manage settings', 'throttle:5,60']);
+        Route::get('settings', [AnalyticsController::class, 'settings'])->middleware('permission:view analytics');
+        Route::post('settings/bulk-update', [AnalyticsController::class, 'updateSettings'])->middleware('permission:manage settings');
     });
 
     Route::prefix('manage/publishing/analytics')->middleware(['auth:sanctum', 'extension.active:analytics', 'permission:view analytics'])->group(function (): void {

@@ -27,18 +27,20 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
 | **site** | Public theme runtime at **`/site`** (console stays **`/dash`**) |
 
-Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, `/site` 404, member login/register/account.
+Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, `/site` 404, member login/register/account, member verify-email via Mail.
+
+P6 residue: kernel settings no longer own SEO / discussion / analytics. Those groups live on Publishing (`/dash/publishing/settings`) and Analytics retention. Kernel API refuses product setting groups.
+
+P4: Data Studio (`sys_content_types`) is operational entities; Library `lib_fields` is CMS CCK. Reserved slugs block CMS collisions. See [data-studio-vs-cck.md](architecture/data-studio-vs-cck.md).
+
+Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklist) is live in JA-Mail.
 
 ## Still open (docs vs backlog)
 
 | Item | Notes |
 | :--- | :--- |
-| Member email verification | `email_verified_at` column only; no Mail send/verify flow |
-| P4 DMS/CCK vs Data Studio | Registry architecture audit — not started |
 | P5 vertical product modules | Same Mail contract; catalog grows later |
-| P6 Core settings residue | SEO / Analytics / Discussion leftovers in kernel |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
-| Mail SHOULD list | Archive folder, quota, MIME blocklist — not merge blockers |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
 
 ## Removed from repo (Aug 2026)
