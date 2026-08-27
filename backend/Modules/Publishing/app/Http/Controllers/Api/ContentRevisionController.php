@@ -119,13 +119,16 @@ class ContentRevisionController extends BaseApiController
             ? $revisionMeta['revision_data']
             : [];
 
+        $restoredMeta = is_array($revisionMeta) ? $revisionMeta : [];
+        unset($restoredMeta['revision_data']);
+
         $content->update([
             'title' => $revision->title,
             'body' => $revision->body,
-            'excerpt' => $revisionData['excerpt'] ?? $content->excerpt, // Fallback to current if missing
+            'excerpt' => $revisionData['excerpt'] ?? $content->excerpt,
             'slug' => $revisionData['slug'] ?? $content->slug,
-            'meta' => $revisionMeta, // This might overwrite revision_data into content meta, which is fine
-            'status' => $revisionData['status'] ?? 'draft', // Safe default
+            'meta' => $restoredMeta,
+            'status' => $revisionData['status'] ?? 'draft',
         ]);
 
         return $this->success([

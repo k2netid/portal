@@ -4,6 +4,7 @@
 
 - Empty pages stay empty in the builder; demo templates are library inserts only.
 - Keyboard: Delete, Esc, Ctrl+D/C/V match Help. Site editor does not auto-open the first page.
+- History panel lists saved server revisions. Canvas takes a content lock while open. Toolbar can generate layout blocks via Settings → AI.
 - Canvas leaves render via public BlockRenderer; Layers Eye-off toggles sandboxed iframe preview. Save stamps `builder_schema_version`.
 - Publishing overlay no longer double-saves; Create derives body from builder blocks.
 - Public BlockRenderer + Janari Page body use SafeHtml (`publishing`).

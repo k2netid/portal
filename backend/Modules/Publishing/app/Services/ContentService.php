@@ -595,7 +595,11 @@ class ContentService
      */
     public function isLockedByOther(Content $content, string $userId): bool
     {
-        return $content->locked_by && $content->locked_by !== $userId;
+        if (! $content->locked_by || $content->locked_by === $userId) {
+            return false;
+        }
+
+        return $content->locked_at !== null && $content->locked_at->diffInMinutes(now()) < 60;
     }
 
     /**

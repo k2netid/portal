@@ -1,14 +1,22 @@
 <template>
   <div class="history-panel">
-    <!-- History List -->
-    <div class="history-list">
-      <button 
-        v-for="(_, index) in history"
+    <div class="history-tabs">
+      <button class="history-tab" :class="{ 'is-active': tab === 'session' }" @click="tab = 'session'">
+        {{ t('builder.panels.history.session', 'Session') }}
+      </button>
+      <button class="history-tab" :class="{ 'is-active': tab === 'saved' }" @click="tab = 'saved'; loadSaved()">
+        {{ t('builder.panels.history.saved', 'Saved') }}
+      </button>
+    </div>
+
+    <div v-if="tab === 'session'" class="history-list">
+      <button
+        v-for="(_, index) in sessionHistory"
         :key="index"
         class="history-item"
-        :class="{ 
-          'history-item--active': index === historyIndex,
-          'history-item--future': index > historyIndex 
+        :class="{
+          'history-item--active': index === sessionIndex,
+          'history-item--future': index > sessionIndex
         }"
         @click="jumpTo(index)"
       >
@@ -17,11 +25,27 @@
           <Clock v-else :size="14" />
         </div>
         <div class="history-info">
-          <span class="history-label">{{ getLabel(index) }}</span>
+          <span class="history-label">{{ index === 0 ? t('builder.panels.history.sessionStart') : t('builder.panels.history.action', { index }) }}</span>
           <span class="history-time">{{ index === 0 ? t('builder.panels.history.initial') : t('builder.panels.history.change') }}</span>
         </div>
-        <div v-if="index === historyIndex" class="history-current">
-          {{ t('builder.panels.history.current') }}
+      </button>
+    </div>
+
+    <div v-else class="history-list">
+      <p v-if="loadingSaved" class="history-empty">{{ t('builder.panels.history.loading', 'Loading…') }}</p>
+      <p v-else-if="saved.length === 0" class="history-empty">{{ t('builder.panels.history.noSaved', 'No saved revisions yet. Save the page to snapshot the canvas.') }}</p>
+      <button
+        v-for="row in saved"
+        :key="String(row.id)"
+        class="history-item"
+        @click="restoreSaved(String(row.id))"
+      >
+        <div class="history-icon">
+          <Clock :size="14" />
+        </div>
+        <div class="history-info">
+          <span class="history-label">{{ String(row.reason || t('builder.panels.history.savedRevision', 'Saved revision')) }}</span>
+          <span class="history-time">{{ formatTime(row.created_at) }}</span>
         </div>
       </button>
     </div>
@@ -29,45 +53,66 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Clock from 'lucide-vue-next/dist/esm/icons/clock.js';
 import Flag from 'lucide-vue-next/dist/esm/icons/flag.js';
 import type { BuilderInstance } from '@/modules/Layout/types/builder';
 
 const { t } = useI18n();
-// Inject builder state
 const builder = inject<BuilderInstance>('builder');
 
-// History State
-const history = computed(() => builder?.history?.value || []);
-const historyIndex = computed(() => builder?.historyIndex?.value ?? -1);
+const tab = ref<'session' | 'saved'>('session');
+const loadingSaved = ref(false);
+const saved = ref<Array<Record<string, unknown>>>([]);
 
-// Methods
+const sessionHistory = computed(() => builder?.history?.value || []);
+const sessionIndex = computed(() => builder?.historyIndex?.value ?? -1);
+
 const jumpTo = (index: number) => {
-  // We need to support jump in useBuilder or just use undo/redo loop
-  // For now, let's implement a simple jump wrapper if logic exists, 
-  // or fall back to loop undo/redo
   if (!builder) return;
-  
-  const current = historyIndex.value;
+  const current = sessionIndex.value;
   const diff = index - current;
-  
   if (diff === 0) return;
-  
   if (diff < 0) {
-    // Undo X times
     for (let i = 0; i < Math.abs(diff); i++) builder.undo();
   } else {
-    // Redo X times
     for (let i = 0; i < diff; i++) builder.redo();
   }
 };
 
-const getLabel = (index: number) => {
-  if (index === 0) return t('builder.panels.history.sessionStart');
-  return t('builder.panels.history.action', { index: index });
+const loadSaved = async () => {
+  if (!builder?.fetchRevisions || !builder.content?.value?.id) {
+    saved.value = [];
+    return;
+  }
+  loadingSaved.value = true;
+  try {
+    saved.value = await builder.fetchRevisions();
+  } catch {
+    saved.value = [];
+  } finally {
+    loadingSaved.value = false;
+  }
 };
+
+const restoreSaved = async (id: string) => {
+  if (!builder?.restoreRevision) return;
+  await builder.restoreRevision(id);
+  await loadSaved();
+};
+
+const formatTime = (value: unknown): string => {
+  if (typeof value !== 'string') return '';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+};
+
+onMounted(() => {
+  if (builder?.content?.value?.id) {
+    void loadSaved();
+  }
+});
 </script>
 
 <style scoped>
@@ -76,13 +121,34 @@ const getLabel = (index: number) => {
   flex-direction: column;
   height: 100%;
 }
-
+.history-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: var(--spacing-sm);
+}
+.history-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--builder-text-muted);
+}
+.history-tab.is-active {
+  color: var(--builder-text-primary);
+  border-bottom: 2px solid var(--builder-accent);
+}
 .history-list {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-
+.history-empty {
+  font-size: 12px;
+  color: var(--builder-text-muted);
+  padding: var(--spacing-sm);
+}
 .history-item {
   display: flex;
   align-items: center;
@@ -93,58 +159,31 @@ const getLabel = (index: number) => {
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s;
 }
-
 .history-item:hover {
   background: var(--builder-bg-primary);
-  box-shadow: 0 0 0 1px var(--builder-border);
 }
-
 .history-item--active {
   background: var(--builder-bg-primary);
   border-left: 3px solid var(--builder-accent);
-  box-shadow: 0 0 0 1px var(--builder-border);
 }
-
 .history-item--future {
   opacity: 0.5;
 }
-
 .history-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: var(--builder-text-muted);
 }
-
-.history-item--active .history-icon {
-  color: var(--builder-accent);
-}
-
 .history-info {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-
 .history-label {
   font-size: var(--font-size-sm);
-  color: var(--builder-text-primary);
   font-weight: 500;
 }
-
 .history-time {
   font-size: 10px;
   color: var(--builder-text-muted);
-}
-
-.history-current {
-  font-size: 10px;
-  color: white;
-  background: var(--builder-accent);
-  padding: 2px 6px;
-  border-radius: 10px;
-  font-weight: 600;
 }
 </style>

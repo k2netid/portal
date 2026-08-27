@@ -331,6 +331,10 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     markAsSaved: () => void;
     loadContent: (id: string | number) => Promise<void>;
     saveContent: () => Promise<Record<string, unknown> | false>;
+    fetchRevisions: () => Promise<Array<Record<string, unknown>>>;
+    restoreRevision: (revisionId: string) => Promise<void>;
+    acquireLock: () => Promise<{ ok: boolean; message?: string }>;
+    releaseLock: () => Promise<void>;
     fetchMetadata: () => Promise<void>;
     applyThemeStyles: () => void;
     openIconPickerModal?: (value: string, onSelect: (icon: string) => void) => void;

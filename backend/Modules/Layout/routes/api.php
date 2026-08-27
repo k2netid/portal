@@ -71,6 +71,7 @@ Route::prefix('v1')->group(function (): void {
         Route::prefix('builder')->group(function (): void {
             Route::get('dynamic-sources', [BuilderController::class, 'dynamicSources']);
             Route::post('resolve-dynamic', [BuilderController::class, 'resolveDynamic']);
+            Route::post('generate-blocks', [BuilderController::class, 'generateBlocks']);
         });
         Route::apiResource('builder-presets', BuilderPresetController::class);
     });

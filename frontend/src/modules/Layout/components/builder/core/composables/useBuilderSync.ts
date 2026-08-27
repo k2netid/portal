@@ -259,6 +259,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 ...content.value,
                 body: extractedHtml || content.value.body || '',
                 blocks: blocks.value,
+                create_revision: true,
+                revision_note: 'Builder save',
                 meta: {
                     ...currentMeta,
                     builder_blocks: blocks.value,
@@ -438,6 +440,64 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         }
     }
 
+    async function fetchRevisions(): Promise<Array<Record<string, unknown>>> {
+        const id = content.value.id
+        if (!id) {
+            return []
+        }
+        const response = await api.get(`/manage/publishing/contents/${id}/revisions`)
+        const payload = response.data?.data
+        if (Array.isArray(payload)) {
+            return payload
+        }
+        if (payload && Array.isArray(payload.data)) {
+            return payload.data
+        }
+        return []
+    }
+
+    async function restoreRevision(revisionId: string): Promise<void> {
+        const id = content.value.id
+        if (!id) {
+            return
+        }
+        const response = await api.post(`/manage/publishing/contents/${id}/revisions/${revisionId}/restore`)
+        const restored = response.data?.data?.content || response.data?.content
+        const metaBlocks = restored?.meta?.builder_blocks
+        if (Array.isArray(metaBlocks)) {
+            blocks.value = metaBlocks
+            triggerRef(blocks)
+            takeSnapshot({ immediate: true })
+            markAsSaved()
+        }
+    }
+
+    async function acquireLock(): Promise<{ ok: boolean; message?: string }> {
+        const id = content.value.id
+        if (!id) {
+            return { ok: true }
+        }
+        try {
+            await api.post(`/manage/publishing/contents/${id}/lock`)
+            return { ok: true }
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string }; status?: number } }
+            return { ok: false, message: err.response?.data?.message || 'Content is locked' }
+        }
+    }
+
+    async function releaseLock(): Promise<void> {
+        const id = content.value.id
+        if (!id) {
+            return
+        }
+        try {
+            await api.post(`/manage/publishing/contents/${id}/unlock`)
+        } catch {
+            /* unlock is best-effort on close */
+        }
+    }
+
     async function updateContentMeta(id: number | string, meta: Record<string, unknown>): Promise<Record<string, unknown>> {
         try {
             const response = await api.put(`/manage/publishing/contents/${id}`, { meta })
@@ -465,6 +525,10 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         fetchTemplates,
         createTemplate,
         deleteTemplate,
-        updateContentMeta
+        updateContentMeta,
+        fetchRevisions,
+        restoreRevision,
+        acquireLock,
+        releaseLock,
     }
 }

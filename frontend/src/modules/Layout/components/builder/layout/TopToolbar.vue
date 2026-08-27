@@ -180,6 +180,12 @@
     
     <!-- Right Section: Save & Status -->
     <div class="top-toolbar__right">
+      <IconButton
+        variant="ghost"
+        :icon="Sparkles"
+        :title="t('builder.toolbar.generateAi', 'Generate layout with AI')"
+        @click="$emit('generate-ai')"
+      />
 <!-- Save Actions -->
       <div class="save-actions">
         <button 
@@ -236,6 +242,7 @@ import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
 import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
+import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js';
 import { useI18n } from 'vue-i18n'
 import { DEVICE_MODES } from '@/modules/Layout/components/builder/core/constants'
 import { IconButton, BaseDropdown, BaseDivider } from '@/modules/Layout/components/builder/ui'
@@ -260,6 +267,7 @@ defineEmits<{
   (e: 'open-pages'): void
   (e: 'close-builder'): void
   (e: 'save', status: 'draft' | 'published'): void
+  (e: 'generate-ai'): void
 }>()
 
 const { t } = useI18n()

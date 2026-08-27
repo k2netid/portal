@@ -6,8 +6,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\Ai\AiAvailability;
+use Modules\Core\System\Services\Ai\AiProviderFactory;
 use Modules\Layout\Services\DynamicTagService;
 use Modules\Publishing\Models\Content;
+use Modules\Publishing\Support\BuilderDocumentValidator;
 
 class BuilderController extends BaseApiController
 {
@@ -136,5 +139,99 @@ class BuilderController extends BaseApiController
         }
 
         return $this->success($resolved, 'Tags resolved successfully');
+    }
+
+    public function generateBlocks(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'prompt' => 'required|string|max:2000',
+            'provider' => 'nullable|string',
+            'model' => 'nullable|string',
+        ]);
+
+        if (! AiAvailability::isGloballyEnabled()) {
+            return $this->error('Global AI is disabled in Settings → AI.', 403, [], 'AI_DISABLED');
+        }
+
+        $providerName = is_string($validated['provider'] ?? null) && $validated['provider'] !== ''
+            ? $validated['provider']
+            : AiAvailability::defaultProvider();
+
+        if (! AiAvailability::providerHasKey($providerName)) {
+            return $this->error('AI provider API key is not configured for '.$providerName.'.', 401, [], 'AI_KEY_MISSING');
+        }
+
+        $prompt = (string) $validated['prompt'];
+        $instruction = <<<PROMPT
+Return JSON only (no markdown) as {"blocks":[{"id":"module-1","type":"section","settings":{},"children":[{"id":"module-2","type":"heading","settings":{"text":"..."}},{"id":"module-3","type":"text","settings":{"content":"<p>...</p>"}}]}]}.
+Allowed types: section, row, column, heading, text, button, image, cta.
+Build a simple landing section for: {$prompt}
+PROMPT;
+
+        try {
+            $service = AiProviderFactory::make($providerName);
+            $model = is_string($validated['model'] ?? null) ? (string) $validated['model'] : '';
+            $raw = $service->generateText($instruction, '', $model);
+            $blocks = $this->parseGeneratedBlocks($raw);
+            $metaErrors = app(BuilderDocumentValidator::class)->validate([
+                'builder_blocks' => $blocks,
+                'builder_schema_version' => 1,
+            ]);
+            if ($metaErrors !== []) {
+                return $this->error('Generated layout failed document validation.', 422, $metaErrors, 'BUILDER_AI_INVALID');
+            }
+
+            return $this->success(['blocks' => $blocks], 'Layout blocks generated');
+        } catch (\Throwable $e) {
+            return $this->error('Failed to generate layout: '.$e->getMessage(), 500, [], 'BUILDER_AI_ERROR');
+        }
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function parseGeneratedBlocks(string $raw): array
+    {
+        $trimmed = trim($raw);
+        if (preg_match('/```(?:json)?\s*([\s\S]*?)```/i', $trimmed, $matches) === 1) {
+            $trimmed = trim($matches[1]);
+        }
+        $decoded = json_decode($trimmed, true);
+        $blocks = [];
+        if (is_array($decoded) && isset($decoded['blocks']) && is_array($decoded['blocks'])) {
+            $blocks = $decoded['blocks'];
+        } elseif (is_array($decoded) && array_is_list($decoded)) {
+            $blocks = $decoded;
+        }
+        if (! array_is_list($blocks)) {
+            throw new \RuntimeException('AI response did not contain a block list.');
+        }
+
+        $stamp = static function (array &$node) use (&$stamp): void {
+            if (! isset($node['id']) || ! is_string($node['id']) || $node['id'] === '') {
+                $node['id'] = 'module-'.bin2hex(random_bytes(4));
+            }
+            if (! isset($node['type']) || ! is_string($node['type'])) {
+                $node['type'] = 'text';
+            }
+            if (! isset($node['settings']) || ! is_array($node['settings'])) {
+                $node['settings'] = [];
+            }
+            if (isset($node['children']) && is_array($node['children'])) {
+                foreach ($node['children'] as &$child) {
+                    if (is_array($child)) {
+                        $stamp($child);
+                    }
+                }
+            }
+        };
+        foreach ($blocks as &$block) {
+            if (is_array($block)) {
+                $stamp($block);
+            }
+        }
+
+        /** @var list<array<string, mixed>> $blocks */
+        return $blocks;
     }
 }
