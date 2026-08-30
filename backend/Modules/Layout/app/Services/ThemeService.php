@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Models\Extension;
+use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Support\ThemeViews;
 
@@ -566,19 +567,61 @@ class ThemeService
 
         foreach ($settingsInput as $key => $value) {
             $keyStr = (string) $key;
-            if (isset($allowed[$keyStr]) || str_starts_with($keyStr, '_')) {
+            // Menu slot assignments (customizer / Menu Builder sync) live outside settings_schema.
+            if (isset($allowed[$keyStr]) || str_starts_with($keyStr, '_') || str_starts_with($keyStr, 'menu_location_')) {
                 $next[$keyStr] = $value;
             }
         }
 
         foreach ($existing as $key => $value) {
             $keyStr = (string) $key;
-            if (str_starts_with($keyStr, '_') && ! array_key_exists($keyStr, $next)) {
+            if (
+                (str_starts_with($keyStr, '_') || str_starts_with($keyStr, 'menu_location_'))
+                && ! array_key_exists($keyStr, $next)
+            ) {
                 $next[$keyStr] = $value;
             }
         }
 
         return $this->normalizeThemeDataBindingsInSettings($next);
+    }
+
+    /**
+     * Keep theme settings menu_location_{slot} in sync with Menu.location column.
+     * Public themes (Janari) prefer settings UUID, then fall back to slot name.
+     */
+    public function syncMenuLocationAssignment(Menu $menu, ?string $previousLocation = null): void
+    {
+        $theme = Theme::getActiveTheme('frontend');
+        if (! $theme) {
+            return;
+        }
+
+        $settings = is_array($theme->settings) ? $theme->settings : [];
+        $menuId = (string) $menu->id;
+
+        $clearSlot = static function (array &$bag, string $slot, string $id): void {
+            $slot = trim($slot);
+            if ($slot === '' || $slot === 'none') {
+                return;
+            }
+            $key = 'menu_location_'.$slot;
+            if (($bag[$key] ?? null) === $id) {
+                unset($bag[$key]);
+            }
+        };
+
+        if (is_string($previousLocation)) {
+            $clearSlot($settings, $previousLocation, $menuId);
+        }
+
+        $nextLocation = is_string($menu->location) ? trim($menu->location) : '';
+        if ($nextLocation !== '' && $nextLocation !== 'none') {
+            $settings['menu_location_'.$nextLocation] = $menuId;
+        }
+
+        $theme->update(['settings' => $settings]);
+        $this->clearThemeCache($theme);
     }
 
     /**

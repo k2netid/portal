@@ -83,10 +83,25 @@
         </div>
       </div>
 
-      <div class="panel-footer" v-if="isDirty">
-        <button class="save-btn" :disabled="saving" @click="saveSettings">
+      <div class="panel-footer actions">
+        <button
+          v-if="isDirty"
+          class="save-btn"
+          :disabled="saving"
+          @click="saveSettings"
+        >
           {{ saving ? t('builder.common.saving') : t('builder.common.save') }}
         </button>
+        <RouterLink
+          v-if="currentTheme?.slug"
+          class="link-btn"
+          :to="{ name: 'themes.customizer', params: { slug: currentTheme.slug } }"
+        >
+          {{ t('builder.panels.theme.openCustomizer', 'Open Theme Customizer') }}
+        </RouterLink>
+        <RouterLink class="link-btn" :to="{ name: 'menus' }">
+          {{ t('builder.panels.theme.openMenus', 'Edit Menus') }}
+        </RouterLink>
       </div>
     </template>
 
@@ -100,6 +115,7 @@
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, watch, onMounted, defineAsyncComponent } from 'vue';
+import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
 import type { BuilderInstance, ThemeData } from '@/modules/Layout/types/builder';
@@ -311,6 +327,27 @@ onMounted(() => {
 .panel-footer {
   padding: 16px 20px;
   border-top: 1px solid var(--builder-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel-footer.actions {
+  gap: 10px;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--builder-primary, #2563eb);
+  text-decoration: none;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
 }
 
 .save-btn {

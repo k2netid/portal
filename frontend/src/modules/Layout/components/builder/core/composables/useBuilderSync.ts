@@ -1,5 +1,6 @@
 import { logger } from '@/shared/utils/logger';
 import api from '@/engine/api/client'
+import { layoutPaths } from '@/engine/api/paths'
 import { triggerRef } from 'vue'
 import ModuleRegistry from '../ModuleRegistry'
 import { BUILDER_SCHEMA_VERSION } from '../constants'
@@ -24,6 +25,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         autoSave,
         activeTheme,
         themeSettings,
+        themeData,
         dataVersion,
         lastSavedVersion
     } = state
@@ -32,6 +34,25 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
     function markAsSaved(): void {
         lastSavedVersion.value = dataVersion.value
+    }
+
+    /** Resolve active theme UUID/slug for manage theme APIs. */
+    function resolveThemeRouteKey(preferredSlug?: string): string {
+        const slug = (preferredSlug || (typeof activeTheme.value === 'string' ? activeTheme.value : '') || '').trim()
+        const fromThemeData = themeData.value && typeof themeData.value === 'object'
+            ? (themeData.value as { id?: string; slug?: string })
+            : null
+        if (fromThemeData?.id && (!slug || fromThemeData.slug === slug)) {
+            return String(fromThemeData.id)
+        }
+        const fromList = (availableThemes.value || []).find((t) => t.slug === slug || t.id === slug)
+        if (fromList?.id) {
+            return String(fromList.id)
+        }
+        if (slug) {
+            return slug
+        }
+        throw new Error('No active theme to update')
     }
 
     async function fetchPages(): Promise<void> {
@@ -300,7 +321,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             try {
                 const currentSettings = themeSettings.value || {}
                 const newSettings = { ...currentSettings, global_variables: vars }
-                const response = await api.put('/manage/layout/themes/active/customizer', { settings: newSettings })
+                const themeKey = resolveThemeRouteKey()
+                const response = await api.put(layoutPaths.themeSettings(themeKey), { settings: newSettings })
                 themeSettings.value = newSettings
                 return response.data
             } catch (error: unknown) {
@@ -389,10 +411,17 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         }
     }
 
-    async function updateThemeSettings(_themeSlug: string, settings: Record<string, unknown>): Promise<void> {
+    async function updateThemeSettings(themeSlug: string, settings: Record<string, unknown>): Promise<void> {
         try {
-            await api.put('/manage/layout/themes/active/customizer', { settings })
-            themeSettings.value = { ...settings }
+            const themeKey = resolveThemeRouteKey(themeSlug)
+            await api.put(layoutPaths.themeSettings(themeKey), { settings })
+            themeSettings.value = { ...themeSettings.value, ...settings }
+            if (themeData.value && typeof themeData.value === 'object') {
+                themeData.value = {
+                    ...themeData.value,
+                    settings: { ...(themeData.value.settings || {}), ...settings },
+                }
+            }
         } catch (error: unknown) {
             logger.error('Failed to update theme settings:', error instanceof Error ? error.message : String(error));
             throw error

@@ -102,10 +102,13 @@ const fetchMenuByIdentifier = async (identifier: string | number, cacheKey?: str
     }
 
     const isNumericId = /^\d+$/.test(raw);
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(raw);
     const targetKey = cacheKey || raw;
 
     try {
-        const endpoint = isNumericId ? `/public/layout/menus/${raw}` : `/public/layout/menus/location/${raw}`;
+        const endpoint = (isNumericId || isUuid)
+            ? `/public/layout/menus/${raw}`
+            : `/public/layout/menus/location/${raw}`;
         const response = await api.get(endpoint);
         const menu = parseSingleResponse(response) as Menu;
         if (menu) {

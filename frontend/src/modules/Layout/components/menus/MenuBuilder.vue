@@ -117,6 +117,13 @@
                     </SelectItem>
                   </SelectContent>
                 </Select>
+                <RouterLink
+                  v-if="activeThemeSlug"
+                  class="text-xs font-medium text-primary whitespace-nowrap hover:underline"
+                  :to="{ name: 'themes.customizer', params: { slug: activeThemeSlug }, query: { panel: 'menus' } }"
+                >
+                  {{ t('layout.menus.actions.themeSlots', 'Theme slots') }}
+                </RouterLink>
               </div>
             </div>
 
@@ -331,10 +338,12 @@
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
 
 import { useMenu, provideMenu } from '@/modules/Layout/composables/useMenu';
+import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useToast } from '@/shared/composables/useToast';
 import type { Menu } from '@/modules/Layout/types/menu';
 
@@ -401,6 +410,8 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const toast = useToast();
+const { activeTheme, loadActiveTheme } = useTheme();
+const activeThemeSlug = computed(() => activeTheme.value?.slug || '');
 
 // Initialize useMenu composable
 // We need a ref that mirrors props.menuId but can change
@@ -569,6 +580,7 @@ defineExpose({
 });
 
 onMounted(() => {
+    void loadActiveTheme('frontend');
     fetchLocations();
     window.addEventListener('keydown', handleKeydown);
     window.addEventListener('mousemove', doResizing);

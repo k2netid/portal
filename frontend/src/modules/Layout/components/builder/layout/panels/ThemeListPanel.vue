@@ -50,12 +50,25 @@
         {{ t('builder.panels.theme.activate') }}
       </button>
     </div>
+    <div class="panel-footer links">
+      <RouterLink
+        v-if="selectedThemeSlug || activeTheme"
+        class="link-btn"
+        :to="{ name: 'themes.customizer', params: { slug: selectedThemeSlug || activeTheme } }"
+      >
+        {{ t('builder.panels.theme.openCustomizer', 'Open Theme Customizer') }}
+      </RouterLink>
+      <RouterLink class="link-btn" :to="{ name: 'menus' }">
+        {{ t('builder.panels.theme.openMenus', 'Edit Menus') }}
+      </RouterLink>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
@@ -205,6 +218,23 @@ onMounted(() => {
   padding: 16px;
   border-top: 1px solid var(--builder-border);
   background: var(--builder-bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel-footer.links .link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--builder-primary, #2563eb);
+  text-decoration: none;
+}
+
+.panel-footer.links .link-btn:hover {
+  text-decoration: underline;
 }
 
 .activate-theme-btn {

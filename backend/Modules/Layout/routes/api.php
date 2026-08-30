@@ -15,6 +15,7 @@ use Modules\Layout\Http\Controllers\Api\WidgetController;
 Route::prefix('v1')->group(function (): void {
     Route::prefix('public/layout')->group(function (): void {
         Route::get('menus/location/{location}', [MenuController::class, 'getByLocation']);
+        Route::get('menus/{menu}', [MenuController::class, 'showPublic']);
         Route::get('widgets/location/{location}', [WidgetController::class, 'getByLocation']);
         Route::get('themes/active', [ThemeController::class, 'getActive']);
         Route::get('plugin-blocks', [PublicPluginBlocksController::class, 'index']);

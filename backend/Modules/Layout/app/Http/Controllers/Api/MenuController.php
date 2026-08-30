@@ -14,6 +14,7 @@ use Modules\Core\System\Support\SqlLikeEscape;
 use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\MenuItem;
 use Modules\Layout\Services\MenuUsageService;
+use Modules\Layout\Services\ThemeService;
 use Modules\Layout\Support\MenuItemUrlValidator;
 
 class MenuController extends BaseApiController
@@ -21,6 +22,7 @@ class MenuController extends BaseApiController
     public function __construct(
         protected LayoutRegistryInterface $registry,
         protected MenuUsageService $menuUsageService,
+        protected ThemeService $themeService,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -85,11 +87,27 @@ class MenuController extends BaseApiController
 
         $menu = Menu::create($validated);
 
+        if (! empty($menu->location) && $menu->location !== 'none') {
+            $this->themeService->syncMenuLocationAssignment($menu);
+        }
+
         return $this->success($menu, 'Menu created successfully', 201);
     }
 
     public function show(Menu $menu): JsonResponse
     {
+        return $this->success($menu->load('parentItems.children'), 'Menu retrieved successfully');
+    }
+
+    /**
+     * Public resolve by menu id (UUID) for theme settings menu_location_* assignments.
+     */
+    public function showPublic(Menu $menu): JsonResponse
+    {
+        if (! Extension::isProductActive('layout') || ! $menu->is_active) {
+            return $this->success(null, 'Menu not available');
+        }
+
         return $this->success($menu->load('parentItems.children'), 'Menu retrieved successfully');
     }
 
@@ -103,11 +121,17 @@ class MenuController extends BaseApiController
             'is_active' => 'boolean',
         ]);
 
+        $previousLocation = is_string($menu->location) ? $menu->location : null;
+
         $menu->update($validated);
 
         $this->forgetMenuLocationCache($menu);
 
-        return $this->success($menu, 'Menu updated successfully');
+        if (array_key_exists('location', $validated)) {
+            $this->themeService->syncMenuLocationAssignment($menu->fresh() ?? $menu, $previousLocation);
+        }
+
+        return $this->success($menu->fresh(), 'Menu updated successfully');
     }
 
     public function usage(Menu $menu): JsonResponse

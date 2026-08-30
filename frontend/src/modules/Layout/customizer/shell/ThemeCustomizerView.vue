@@ -120,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import type { Theme } from '@/modules/Layout/types/theme';
@@ -272,11 +272,25 @@ const handleKey = (e: KeyboardEvent) => {
   }
 };
 
+/** Deep-link from Menu Builder / Site Editor: ?panel=menus (or css). */
+function applyPanelQuery(): void {
+  const panel = typeof route.query.panel === 'string' ? route.query.panel.trim() : '';
+  if (!panel) return;
+  const match = flatNavItems.value.find((item) => item.panel === panel);
+  if (match) {
+    selectItem(match);
+  }
+}
+
+watch(flatNavItems, () => applyPanelQuery(), { once: true });
+watch(() => route.query.panel, () => applyPanelQuery());
+
 onMounted(() => {
   fetchThemeData();
   fetchMenus();
   fetchCategories();
   fetchPages();
+  applyPanelQuery();
   window.addEventListener('keydown', handleKey);
   window.addEventListener('beforeunload', handleBeforeUnload);
 });

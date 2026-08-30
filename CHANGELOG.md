@@ -16,6 +16,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - PHPStan baseline regenerated; Member model `@property` docs for Larastan.
 - **Site boot gate:** when pack `site` is product-active, apex `/` serves the public theme SPA; console stays on `/dash` + `/auth/console-*`; legacy `/site/*` 301 to apex.
 - Default public theme prefers **Janari** (CMS reference / builder contract); scaffolded themes get `parent_theme: janari` + `janari_canvas`.
+- **Builder ↔ theme ↔ menus:** Site Editor saves theme settings to the real theme API; Menu Builder location syncs `menu_location_*` on the active theme; customizer publish keeps those keys; public resolve by menu UUID; deep-links between Site Editor, Theme Customizer (`?panel=menus`), and Menu Builder.
 
 ### Fixed
 - Visual builder: empty pages no longer auto-fill demo sections or mark unsaved demo as saved.
