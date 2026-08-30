@@ -425,16 +425,24 @@ const handleCustomizerSync = (event: MessageEvent) => {
   if (parentOrigin) allowed.add(parentOrigin)
   if (!allowed.has(event.origin)) return
 
+  if (event.data?.type === 'JA_CUSTOMIZER_THEME_BOOT' && event.data?.theme) {
+    activeTheme.value = event.data.theme
+    return
+  }
+
   if (event.data?.type === 'JA_THEME_CUSTOMIZER_SYNC' && event.data?.theme) {
-    if (activeTheme.value) {
-      activeTheme.value = {
-        ...activeTheme.value,
-        ...event.data.theme,
-        settings: {
-          ...(activeTheme.value.settings || {}),
-          ...(event.data.theme.settings || {}),
-        },
-      }
+    const incoming = event.data.theme
+    if (!activeTheme.value || activeTheme.value.slug !== incoming.slug) {
+      activeTheme.value = { ...incoming }
+      return
+    }
+    activeTheme.value = {
+      ...activeTheme.value,
+      ...incoming,
+      settings: {
+        ...(activeTheme.value.settings || {}),
+        ...(incoming.settings || {}),
+      },
     }
   }
 }

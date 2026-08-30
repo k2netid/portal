@@ -278,6 +278,8 @@ const previewTheme = computed<Theme>(() => {
   const baseSettings = (base.settings || {}) as Record<string, unknown>;
   return {
     ...base,
+    name: base.name || slug,
+    slug: base.slug || slug,
     settings: {
       ...baseSettings,
       ...formValues.value,

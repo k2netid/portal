@@ -60,6 +60,8 @@ import {
   isCustomizerSelectTargetMessage,
   withCustomizerPreviewParams,
   MSG_FOCUS_TARGET,
+  MSG_THEME_BOOT,
+  storePreviewTheme,
   type CustomizerPreviewMode,
 } from '@/modules/Layout/customizer/preview/protocol';
 
@@ -88,7 +90,8 @@ const loadError = ref(false);
 const iframeSrc = computed(() => {
   const base = props.previewUrl || '/';
   if (!props.enableClickSelect || typeof window === 'undefined') return base;
-  return withCustomizerPreviewParams(base, window.location.origin);
+  const slug = typeof props.theme?.slug === 'string' ? props.theme.slug : null;
+  return withCustomizerPreviewParams(base, window.location.origin, slug);
 });
 
 const iframeTargetOrigin = computed(() => {
@@ -103,6 +106,27 @@ function postToPreview(message: Record<string, unknown>) {
   const win = previewFrame.value?.contentWindow;
   if (!win) return;
   win.postMessage(message, iframeTargetOrigin.value);
+}
+
+function bootPreviewTheme() {
+  if (!props.enableClickSelect || !props.theme) return;
+  const themeRaw = JSON.parse(JSON.stringify(toRaw(props.theme)));
+  storePreviewTheme(themeRaw);
+  postToPreview({
+    type: MSG_THEME_BOOT,
+    theme: themeRaw,
+  });
+  postToPreview({
+    type: 'JA_THEME_CUSTOMIZER_SYNC',
+    theme: themeRaw,
+    settings: themeRaw.settings,
+    custom_css: themeRaw.custom_css,
+  });
+  postToPreview({
+    type: 'THEME_UPDATE',
+    settings: themeRaw.settings,
+    custom_css: themeRaw.custom_css,
+  });
 }
 
 const injectThemeStyles = () => {
@@ -244,6 +268,7 @@ const onPreviewLoad = () => {
   }
 
   injectThemeStyles();
+  bootPreviewTheme();
   // Home sections may mount async — retry focus a few times
   scheduleFocus();
 };
@@ -306,19 +331,7 @@ watch(() => props.previewUrl, () => {
 watch(() => props.theme, () => {
   if (loadError.value) return;
   if (previewFrame.value && previewFrame.value.contentWindow) {
-    const themeRaw = JSON.parse(JSON.stringify(toRaw(props.theme)));
-    postToPreview({
-      type: 'JA_THEME_CUSTOMIZER_SYNC',
-      theme: themeRaw,
-      settings: themeRaw.settings,
-      custom_css: themeRaw.custom_css,
-    });
-
-    postToPreview({
-      type: 'THEME_UPDATE',
-      settings: themeRaw.settings,
-      custom_css: themeRaw.custom_css,
-    });
+    bootPreviewTheme();
 
     if (previewFrame.value.contentDocument) {
       injectThemeStyles();

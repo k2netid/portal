@@ -6,6 +6,13 @@ import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/ja
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { hexToHslString } from '@/shared/utils/color';
 import { applyMergedSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema';
+import {
+    isCustomizerPreviewQuery,
+    isCustomizerThemeBootMessage,
+    readStoredPreviewTheme,
+    readThemeSlugFromQuery,
+    storePreviewTheme,
+} from '@/modules/Layout/customizer/preview/protocol';
 
 export interface ThemeManifest {
     name?: string;
@@ -210,17 +217,64 @@ export function useTheme() {
 
         activeLoadPromise = (async () => {
             try {
+            let data: Theme | null = null;
+
+            // Customizer iframe: prefer the theme being edited, not the public active theme.
+            if (type === 'frontend' && typeof window !== 'undefined') {
+                const search = window.location.search;
+                const previewSlug = readThemeSlugFromQuery(search)
+                    || (typeof sessionStorage !== 'undefined'
+                        ? String(sessionStorage.getItem('ja_customizer_theme_slug') || '').toLowerCase() || null
+                        : null);
+                const previewMode = isCustomizerPreviewQuery(search)
+                    || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1');
+
+                if (previewSlug) {
+                    try {
+                        sessionStorage.setItem('ja_customizer_preview', '1');
+                        sessionStorage.setItem('ja_customizer_theme_slug', previewSlug);
+                    } catch { /* ignore */ }
+
+                    const stored = readStoredPreviewTheme(previewSlug);
+                    if (stored && typeof stored.slug === 'string') {
+                        data = stored as Theme;
+                    }
+
+                    if (!data) {
+                        try {
+                            const manageRes = await api.get(`/manage/layout/themes/${previewSlug}`);
+                            let manageData = manageRes.data;
+                            if (manageData && typeof manageData === 'object' && 'success' in manageData && 'data' in manageData) {
+                                manageData = manageData.data;
+                            }
+                            if (manageData && typeof manageData.slug === 'string') {
+                                data = manageData as Theme;
+                            }
+                        } catch {
+                            /* unauthenticated public shell — wait for THEME_BOOT from parent */
+                        }
+                    }
+                } else if (previewMode) {
+                    const stored = readStoredPreviewTheme();
+                    if (stored && typeof stored.slug === 'string') {
+                        data = stored as Theme;
+                    }
+                }
+            }
+
+            if (!data) {
             // Use public endpoint for frontend theme (no auth required)
             const endpoint = type === 'frontend'
                 ? `/public/layout/themes/active?type=${type}`
                 : `/manage/layout/themes/active?type=${type}`;
 
             const response = await api.get(endpoint);
-            let data = response.data;
+            data = response.data;
 
             // Standardized API response unwrapping (defensive)
             if (data && typeof data === 'object' && 'success' in data && 'data' in data) {
-                data = data.data;
+                data = (data as { data: Theme }).data;
+            }
             }
 
             // Handle null response (no active theme) — Janari is the CMS default reference theme
@@ -293,6 +347,27 @@ export function useTheme() {
                 const allowedOrigin = window.location.origin;
                 themeUpdateListener = (event: MessageEvent) => {
                     if (event.origin !== allowedOrigin) {
+                        return;
+                    }
+                    if (isCustomizerThemeBootMessage(event.data)) {
+                        const boot = event.data.theme as Theme;
+                        if (typeof boot.slug === 'string' && boot.slug.trim()) {
+                            applyMergedSettingsSchema(boot, boot.slug);
+                            activeTheme.value = boot;
+                            themeSettings.value = (boot.settings || {}) as Record<string, unknown>;
+                            customCss.value = String(boot.custom_css || '');
+                            storePreviewTheme(boot as unknown as Record<string, unknown>);
+                            try {
+                                sessionStorage.setItem('ja_customizer_preview', '1');
+                                sessionStorage.setItem('ja_customizer_theme_slug', boot.slug);
+                            } catch { /* ignore */ }
+                            applyCustomCss();
+                            applyThemeStyles();
+                            if (themeUsesJanariCanvas(boot)) {
+                                syncJanariStyles(themeSettings.value);
+                            }
+                            writeThemeSnapshot();
+                        }
                         return;
                     }
                     if (event.data && event.data.type === 'THEME_UPDATE') {
