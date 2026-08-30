@@ -62,7 +62,7 @@
           <div class="layers-tree-container">
             <div v-if="blocks.length === 0" class="empty-state">
             <p class="mb-2 text-muted text-center text-xs">{{ t('builder.panels.layers.empty') }}</p>
-            <button class="btn-link text-xs text-accent flex items-center justify-center gap-1 mx-auto" @click="builder.insertModule('section')">
+            <button class="btn-link text-xs text-accent flex items-center justify-center gap-1 mx-auto" @click="addSectionFromLayers">
               <component :is="icons.Plus || 'span'" :size="12" />
               {{ t('builder.actions.addSection', 'Add Section') }}
             </button>
@@ -183,6 +183,14 @@ const togglePreview = () => {
         builder.wireframeMode.value = false
         builder.gridViewMode.value = false
     }
+}
+
+const addSectionFromLayers = () => {
+  if (builder.openInsertSectionModal) {
+    builder.openInsertSectionModal(-1)
+    return
+  }
+  builder.insertModule('section')
 }
 
 const title = computed(() => {

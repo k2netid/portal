@@ -29,22 +29,19 @@
           <CanvasPublicPreview :blocks="blocks" />
         </div>
 
-        <!-- Theme page live preview (Vue theme view, not empty CMS draft) -->
+        <!-- Theme page live preview (view-only until Edit with Builder binds a CMS doc) -->
         <div
-          v-else-if="blocks.length === 0 && activeThemePage"
+          v-else-if="blocks.length === 0 && activeThemePage && !themePageEditable"
           class="canvas-theme-page flex-1 w-full relative"
           data-builder-theme-page="true"
         >
           <!-- Sticky top of canvas scroll — long theme pages used to bury this CTA -->
           <div class="canvas-theme-page__bar sticky top-3 z-30 mx-auto mb-3 w-[min(92%,40rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <p class="text-xs text-slate-600 dark:text-slate-300">
-              {{ themePageEditable
-                ? t('builder.canvas.themePageEditing', 'Editing enabled. Add sections, then Save/Publish to override this theme page.')
-                : t('builder.canvas.themePageHint', 'Live theme page (view only). Enable editing to customize with the visual builder.') }}
+              {{ t('builder.canvas.themePageHint', 'Live theme page (view only). Enable editing to customize with the visual builder.') }}
             </p>
             <div class="flex items-center gap-2">
               <button
-                v-if="!themePageEditable"
                 type="button"
                 class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5 disabled:opacity-60"
                 :disabled="themePageBusy"
@@ -54,36 +51,27 @@
                   ? t('builder.common.saving', 'Working…')
                   : t('builder.canvas.editThemePage', 'Edit with Builder') }}
               </button>
-              <template v-else>
-                <button
-                  type="button"
-                  class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5"
-                  @click="addSection"
-                >
-                  <Plus :size="14" />
-                  {{ $t('builder.actions.addSection', 'Add Section') }}
-                </button>
-                <button
-                  type="button"
-                  class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium"
-                  @click="openTemplateModal"
-                >
-                  {{ t('builder.canvas.templates', 'Templates') }}
-                </button>
-              </template>
             </div>
           </div>
           <ThemePageResolver :page="activeThemePage" />
         </div>
 
-        <!-- Empty State (true blank CMS page) -->
+        <!-- Empty builder workspace (blank CMS or theme bind with no blocks yet) -->
         <div v-else-if="blocks.length === 0" class="canvas-empty flex-1 flex flex-col items-center justify-center p-8 text-center my-6">
           <div class="canvas-empty__content max-w-lg mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
             <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
               <Sparkles :size="28" />
             </div>
-            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">{{ contentTitle ? `Desain Halaman ${contentTitle}` : 'Mulai Mendesain Halaman' }}</h3>
-            <p class="canvas-empty__text text-slate-500 dark:text-slate-400 text-sm mb-6">Pilih template siap pakai atau tambahkan seksi baru dari awal.</p>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">
+              {{ themePageEditable
+                ? t('builder.canvas.themeOverrideTitle', 'Bangun override halaman tema')
+                : (contentTitle ? `Desain Halaman ${contentTitle}` : 'Mulai Mendesain Halaman') }}
+            </h3>
+            <p class="canvas-empty__text text-slate-500 dark:text-slate-400 text-sm mb-6">
+              {{ themePageEditable
+                ? t('builder.canvas.themeOverrideHint', 'Elemen tema (Hero, dll.) bukan blok builder. Tambah Section → Row → Column, atau pakai template — itu yang bisa diedit & di-publish.')
+                : 'Pilih template siap pakai atau tambahkan seksi baru dari awal.' }}
+            </p>
             <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
               <button class="px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium flex items-center gap-2 transition-all shadow-md shadow-indigo-500/20 cursor-pointer" @click="addSection">
                 <Plus :size="16" />
@@ -183,6 +171,10 @@ const startThemePageEdit = async () => {
       themePage: activeThemePage.value || '',
       title: builder.content?.value?.title || '',
     })
+    // Land in builder workspace (empty-state / insert modal), not live theme Vue.
+    if ((builder.blocks.value?.length ?? 0) === 0 && builder.openInsertSectionModal) {
+      builder.openInsertSectionModal(-1)
+    }
   } catch (error) {
     console.error('Failed to enable theme page editing:', error)
     window.alert(
@@ -330,6 +322,11 @@ const addSection = async () => {
     await startThemePageEdit()
   } else if (activeThemePage.value && builder?.ensureThemePageDocument) {
     await builder.ensureThemePageDocument()
+  }
+  // Prefer layout picker (section → row → column) over a bare empty section.
+  if (builder?.openInsertSectionModal) {
+    builder.openInsertSectionModal(-1)
+    return
   }
   builder?.insertModule('section')
 }
