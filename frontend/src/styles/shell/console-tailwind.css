@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 
 /**
- * Console shell — Tailwind scan scope (operators /dash, auth, modules).
+ * Console + kernel landing shell — Tailwind scan scope (operators /dash, auth, Site-off apex).
  * Shared tokens: ../foundation/tokens.css + base-resets.css
  */
 @import 'tailwindcss';
@@ -20,6 +20,8 @@
 @source '../../config/**/*.{vue,ts,js}';
 @source '../../locales/**/*.{vue,ts,js}';
 @source '../../ConsoleApp.vue';
+@source '../../LandingApp.vue';
+@source '../../main-landing.ts';
 
 @source '../../modules/Core/**/*.{vue,ts,js}';
 @source '../../modules/Intelligence/**/*.{vue,ts,js}';

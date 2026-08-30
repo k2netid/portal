@@ -1,0 +1,12 @@
+{
+  "brand": "Jejakawan",
+  "documentTitle": "Jejakawan",
+  "eyebrow": "Core Engine",
+  "headline": "Ready to run.",
+  "body": "The public site is not activated yet. When the {site} pack (CMS theme) is active, this page is replaced by the public theme.",
+  "sitePack": "Site",
+  "docsHint": "For operator login and usage guides, see the project {readme} or {docs}.",
+  "readmeLabel": "README",
+  "docsLabel": "docs.jejakawan.com",
+  "copyright": "© {year} {brand}. All rights reserved."
+}

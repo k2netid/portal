@@ -54,10 +54,12 @@
   - **Security Logs:** Deteksi brute-force, IP rate-limiting, IP blocking progressive, dan probe sinkhole.
   - **KYC & Identity Verification:** Document review flow terstruktur untuk compliance.
 
-### 2. ⚡ Single Unified Console SPA
-- **Clean Architecture:** Menggunakan satu entrypoint `index.html` dan router terpadu tanpa dual-shell overhead.
-- **Instant Auth Routing:** Akses root `/` langsung mengarahkan ke form `/login` untuk guest dan `/ja-dash/dashboard` untuk authenticated admin.
-- **Zero 404 Onboarding:** Alur login langsung mendukung username `super` maupun email `super@jejakawan.com`.
+### 2. ⚡ Console SPA + kernel landing
+- **Console shell:** `index.html` — operator UI after auth (`/dash` or custom slug).
+- **Kernel landing:** When Site pack is off, apex `/` shows a public status page **without** login/dashboard links (anti-recon). Console paths stay out of the landing HTML.
+- **Operator login (docs only on public face):** `/auth/console-sign-in` — see also [docs/extensions/install-profiles.md](docs/extensions/install-profiles.md) and [docs/architectural-status.md](docs/architectural-status.md).
+- **Seed credentials (local):** username `super` / email `super@jejakawan.com`, password `password`.
+- **Guest `/dash`:** intentional SPA 404 sinkhole (do not link from public landing).
 
 ---
 

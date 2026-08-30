@@ -1,5 +1,6 @@
 import { createI18n, type Composer } from 'vue-i18n';
 import config, { type LocaleConfig } from '@/engine/i18n/config';
+import { resolvePreferredLocale } from '@/engine/i18n/resolvePreferredLocale';
 import id from '@/engine/i18n/messages/id';
 
 const availableCodes = () => config.availableLocales.map((l: LocaleConfig) => l.code);
@@ -17,15 +18,14 @@ export const normalizeLocaleCode = (code: string): string => {
 const getComposer = (): Composer => i18n.global as unknown as Composer;
 
 /**
- * Detect the best locale to use
+ * Detect the best locale to use.
  * Priority: 1. localStorage, 2. Browser language, 3. Default
  */
 const detectLocale = (): string => {
-    const savedLocale = localStorage.getItem('locale');
-    if (savedLocale && config.availableLocales.some((l: LocaleConfig) => l.code === savedLocale)) {
-        return savedLocale;
-    }
-    return config.locale;
+    return resolvePreferredLocale(availableCodes(), {
+        stored: localStorage.getItem('locale'),
+        fallback: config.locale,
+    });
 };
 
 const detectedLocale = detectLocale();

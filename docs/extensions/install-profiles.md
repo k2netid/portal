@@ -12,7 +12,7 @@ Fresh `migrate:fresh --seed` must leave a **usable product** without tinker. Pac
 | **cms** | `INSTALL_PROFILE=cms` | Kernel landing | CMS family (library→publishing→media→layout→…) |
 | **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** (overrides landing) | CMS family + **Site** |
 
-Console always stays at `/auth/console-sign-in` and `/dash` — never the default face of apex `/`.
+Console always stays at `/auth/console-sign-in` and `/dash` — never the default face of apex `/`, and **not linked** from the kernel landing HTML (operators learn the path from README / this doc).
 
 ## Entry points (all call the same applicator)
 

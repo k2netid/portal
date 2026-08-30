@@ -34,7 +34,7 @@ Public surfaces landed: search, contact → Forms (`contact` slug), analytics pa
 
 | Site pack | Apex `/` | Console login |
 | :--- | :--- | :--- |
-| **off** | Kernel **landing** (`landing.html`) — not the login form | `/auth/console-sign-in` (tersembunyi dari apex) |
+| **off** | Kernel **landing** (`landing.html`) — no login/dashboard CTAs on the page | `/auth/console-sign-in` (documented in README / this doc; not linked from landing) |
 | **on** | Active CMS **theme** overrides landing | `/auth/console-sign-in` + `/dash` tetap |
 
 **Install profiles (durable):** `INSTALL_PROFILE=core|cms|cms_site` applied by `DatabaseSeeder` / `ja:apply-install-profile` / `POST …/extensions/apply-install-profile`. Default when `Modules/Site` ships = **`cms_site`**. Core-only SKUs set `INSTALL_PROFILE=core`.

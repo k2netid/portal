@@ -1,0 +1,12 @@
+{
+  "brand": "Jejakawan",
+  "documentTitle": "Jejakawan",
+  "eyebrow": "Core Engine",
+  "headline": "Siap dijalankeun.",
+  "body": "Situs publik can diaktipkeun. Lamun pack {site} (téma CMS) aktip, halaman ieu diganti ku téma publik.",
+  "sitePack": "Site",
+  "docsHint": "Pikeun login operator jeung pituduh pamakéan, baca {readme} proyék atawa {docs}.",
+  "readmeLabel": "README",
+  "docsLabel": "docs.jejakawan.com",
+  "copyright": "© {year} {brand}. Sadaya hak cipta ditangtayungan."
+}
