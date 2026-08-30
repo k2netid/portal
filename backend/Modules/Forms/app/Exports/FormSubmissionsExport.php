@@ -45,11 +45,14 @@ class FormSubmissionsExport implements FromQuery, ShouldAutoSize, WithHeadings, 
     }
 
     /**
-     * @param  FormSubmission  $submission
      * @return array<int, mixed>
      */
-    public function map($submission): array
+    public function map(mixed $submission): array
     {
+        if (! $submission instanceof FormSubmission) {
+            return [];
+        }
+
         $row = [
             $submission->id,
             $submission->created_at ? $submission->created_at->format('Y-m-d H:i:s') : '-',
@@ -82,6 +85,8 @@ class FormSubmissionsExport implements FromQuery, ShouldAutoSize, WithHeadings, 
      */
     public function styles(Worksheet $sheet): array
     {
+        unset($sheet);
+
         return [
             1 => [
                 'font' => [

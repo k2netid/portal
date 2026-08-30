@@ -45,7 +45,7 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 | P5 vertical product modules | Deferred until merge + named product. Same Mail contract. |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
-| PHP 8.5 + PhpSpreadsheet 1.x | `maatwebsite/excel` **3.1** pins `phpoffice/phpspreadsheet ^1.30` (composer platform ignore). Prefer upgrade path: **Excel 4.x → PhpSpreadsheet 2+/5+** (official 8.5), or streaming alts **openspout/openspout** / **rap2hpoutre/fast-excel** for export-heavy jobs. Do not stay on 1.x long-term. |
+| PHP 8.5 + spreadsheets | **Done:** `maatwebsite/excel` **4.0.2** + `phpoffice/phpspreadsheet` **^5.3** (no platform ignore). Streaming alts (`openspout` / `fast-excel`) remain optional for export-heavy jobs. |
 
 **Branch hygiene (2026-08-30):** remote heads = `main` + `integrate/cms` only. `feat/mail-*` absorbed and deleted.
 
