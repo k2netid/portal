@@ -80,10 +80,10 @@
                     to="/tim"
                     class="inline-flex text-sm font-bold text-primary hover:underline"
                   >
-                    {{ t('theme.janari.pages.about.teamCta') }} →
+                    {{ teamCta }} →
                   </router-link>
                   <p class="text-xs text-muted-foreground">
-                    {{ t('theme.janari.pages.about.teamCtaHint') }}
+                    {{ teamCtaHint }}
                   </p>
                 </div>
                             
@@ -94,26 +94,26 @@
                 >
                   <div class="motion-stat-item">
                     <div class="text-4xl font-black text-primary">
-                      20+
+                      {{ stat1Value }}
                     </div>
                     <div class="text-xs font-bold text-muted-foreground uppercase mt-2 tracking-widest">
-                      {{ t('theme.janari.pages.about.statYears') }}
+                      {{ stat1Label }}
                     </div>
                   </div>
                   <div class="motion-stat-item">
                     <div class="text-4xl font-black text-primary">
-                      1k+
+                      {{ stat2Value }}
                     </div>
                     <div class="text-xs font-bold text-muted-foreground uppercase mt-2 tracking-widest">
-                      {{ t('theme.janari.pages.about.statCustomers') }}
+                      {{ stat2Label }}
                     </div>
                   </div>
                   <div class="motion-stat-item">
                     <div class="text-4xl font-black text-primary">
-                      6
+                      {{ stat3Value }}
                     </div>
                     <div class="text-xs font-bold text-muted-foreground uppercase mt-2 tracking-widest">
-                      {{ t('theme.janari.pages.about.statModules') }}
+                      {{ stat3Label }}
                     </div>
                   </div>
                 </div>
@@ -204,6 +204,14 @@ const pageSubtitle = computed(() => localizedString('page_about_subtitle') || t(
 const missionTitle = computed(() => localizedString('page_about_mission_title') || t('theme.janari.pages.about.missionTitle'))
 const missionP1 = computed(() => localizedString('page_about_mission_p1') || t('theme.janari.pages.about.missionP1'))
 const missionP2 = computed(() => localizedString('page_about_mission_p2') || t('theme.janari.pages.about.missionP2'))
+const teamCta = computed(() => localizedString('page_about_team_cta') || t('theme.janari.pages.about.teamCta'))
+const teamCtaHint = computed(() => localizedString('page_about_team_cta_hint') || t('theme.janari.pages.about.teamCtaHint'))
+const stat1Value = computed(() => localizedString('page_about_stat1_value') || '20+')
+const stat1Label = computed(() => localizedString('page_about_stat1_label') || t('theme.janari.pages.about.statYears'))
+const stat2Value = computed(() => localizedString('page_about_stat2_value') || '1k+')
+const stat2Label = computed(() => localizedString('page_about_stat2_label') || t('theme.janari.pages.about.statCustomers'))
+const stat3Value = computed(() => localizedString('page_about_stat3_value') || '6')
+const stat3Label = computed(() => localizedString('page_about_stat3_label') || t('theme.janari.pages.about.statModules'))
 const aboutHeroImage = computed(() => {
   const raw = getSetting('page_about_hero')
   return typeof raw === 'string' ? raw.trim() : ''

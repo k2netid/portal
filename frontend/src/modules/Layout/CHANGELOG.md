@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Janari Customizer v8: Header chrome (official lines, login, news marquee); About stats/team CTA; Tim closing links; Contact map/form leftovers.
 - Janari Customizer v7: Footer brand blurb, column titles, newsletter copy, legal links, copyright override.
 - Janari Customizer v6: Search page chrome; News list headings/empty; Achievements filter labels.
 - Janari Customizer v5: Pricing page chrome; News/Careers/Achievements titles + locale variants; Career sidebar + Achievement CTA editable.

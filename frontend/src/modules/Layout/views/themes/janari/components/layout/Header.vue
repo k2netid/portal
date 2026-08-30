@@ -39,7 +39,7 @@
             </span>
             <div class="h-5 w-px bg-foreground/20 hidden sm:block" />
             <span class="text-[7px] font-black tracking-[0.35em] uppercase text-foreground/40 leading-tight whitespace-nowrap hidden sm:block">
-              {{ t('theme.janari.header.officialLine1') }}<br>{{ t('theme.janari.header.officialLine2') }}
+              {{ officialLine1 }}<br>{{ officialLine2 }}
             </span>
           </template>
         </router-link>
@@ -212,7 +212,7 @@
             :href="loginUrl"
             :class="toolbarLoginClass"
           >
-            {{ t('theme.janari.header.login') }}
+            {{ loginLabel }}
           </a>
         </div>
 
@@ -245,7 +245,7 @@
               :key="'m'+i"
               class="text-[10px] font-bold tracking-normal text-foreground/70 flex items-center gap-6"
             >
-              <span class="bg-foreground/10 px-2 py-0.5 text-primary text-[8px] font-black uppercase tracking-widest">{{ t('theme.janari.header.newsBadge') }}</span>
+              <span class="bg-foreground/10 px-2 py-0.5 text-primary text-[8px] font-black uppercase tracking-widest">{{ newsBadge }}</span>
               {{ latestNewsText }}
               <span class="opacity-20 mx-2">|</span>
             </span>
@@ -285,7 +285,7 @@
             data-motion-interactive="off"
             @click="toggleSocialLinks"
           >
-            <span class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{{ t('theme.janari.header.socialLabel') }}</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{{ socialLabel }}</span>
             <ChevronDown
               class="w-3 h-3 opacity-50 transition-transform duration-300"
               :class="{ 'rotate-180': socialExpanded }"
@@ -328,7 +328,7 @@
             >
             <span class="text-lg font-heading font-black tracking-tight uppercase text-white leading-none">{{ siteName }}</span>
             <div class="h-4 w-px bg-white/20" />
-            <span class="text-[7px] font-black tracking-[0.35em] uppercase text-white/40 leading-tight">{{ t('theme.janari.header.officialLine1') }}<br>{{ t('theme.janari.header.officialLine2') }}</span>
+            <span class="text-[7px] font-black tracking-[0.35em] uppercase text-white/40 leading-tight">{{ officialLine1 }}<br>{{ officialLine2 }}</span>
           </router-link>
           <button
             class="text-white/70 hover:text-white p-1 min-w-10 min-h-10"
@@ -377,7 +377,7 @@
             class="ml-auto inline-flex items-center justify-center h-9 px-3 text-xs font-semibold uppercase tracking-wide text-primary bg-primary-foreground rounded-lg hover:bg-primary-foreground/90 transition-all duration-300"
             @click="isOpen = false"
           >
-            {{ t('theme.janari.header.login') }}
+            {{ loginLabel }}
           </a>
         </div>
 
@@ -490,7 +490,7 @@
               class="bg-primary-foreground text-primary text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-foreground/90 transition-colors"
               @click="isOpen = false"
             >
-              {{ t('theme.janari.header.login') }}
+              {{ loginLabel }}
             </a>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
@@ -550,6 +550,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch, inject } from 'vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
@@ -592,6 +593,7 @@ const builder = inject('builder', null);
 const isBuilder = computed(() => !!builder);
 
 const { getSetting } = useTheme();
+const { localizedString } = useLocalizedThemeSetting();
 const { menus, fetchMenuByIdentifier } = useMenu();
 const device = useResponsiveDevice();
 const { motion } = useThemeMotion();
@@ -614,7 +616,19 @@ const handleSelectLanguage = async (code: string) => {
 
 const isOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
-const loginUrl = '/member/login';
+const loginUrl = computed(() => {
+  const raw = getSetting('header_login_url', '/member/login')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/member/login'
+})
+const officialLine1 = computed(() => localizedString('header_official_line1') || t('theme.janari.header.officialLine1'))
+const officialLine2 = computed(() => localizedString('header_official_line2') || t('theme.janari.header.officialLine2'))
+const loginLabel = computed(() => localizedString('header_login_label') || t('theme.janari.header.login'))
+const newsBadge = computed(() => localizedString('header_news_badge') || t('theme.janari.header.newsBadge'))
+const socialLabel = computed(() => localizedString('header_social_label') || t('theme.janari.header.socialLabel'))
+const latestNewsText = computed(() =>
+  localizedString('header_marquee_text')
+    || 'Latest Updates: 35th L\'Anniversary Year - Arena Tour 2026 Underground Announced',
+)
 const handleLogout = async () => {
     await authStore.logout();
     if (route.path.startsWith('/member')) {
@@ -643,6 +657,8 @@ const siteLogo = computed((): string => {
 });
 
 const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);
+
+// marquee text comes from header_marquee_text (see latestNewsText above)
 
 const getSocialIcon = (key: string) => {
     switch (key) {
@@ -710,7 +726,6 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
     }
 };
 
-const latestNewsText = ref('Latest Updates: 35th L\'Anniversary Year - Arena Tour 2026 Underground Announced');
 const socialExpanded = ref(true);
 const socialLinksWrap = ref<HTMLElement>();
 const socialIconCenters = ref<number[]>([]);

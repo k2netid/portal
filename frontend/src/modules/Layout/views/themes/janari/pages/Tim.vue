@@ -75,13 +75,13 @@
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <router-link to="/about" class="text-xs font-bold uppercase tracking-widest text-primary hover:underline">
-              {{ t('pages.team.aboutLink') }}
+              {{ linkAbout }}
             </router-link>
             <router-link to="/careers" class="text-xs font-bold uppercase tracking-widest text-primary hover:underline">
-              {{ t('pages.team.careersLink') }}
+              {{ linkCareers }}
             </router-link>
             <router-link to="/contact" class="text-xs font-bold uppercase tracking-widest text-primary hover:underline">
-              {{ t('pages.team.contactLink') }}
+              {{ linkContact }}
             </router-link>
           </div>
         </div>
@@ -125,6 +125,9 @@ const pageTitle = computed(() => localizedString('page_tim_title') || t('pages.t
 const pageSubtitle = computed(() => localizedString('page_tim_subtitle') || t('pages.team.subtitle'))
 const sectionLabel = computed(() => localizedString('page_tim_section_label') || t('pages.team.sectionLabel'))
 const closingText = computed(() => localizedString('page_tim_closing') || t('pages.team.closing'))
+const linkAbout = computed(() => localizedString('page_tim_link_about') || t('pages.team.aboutLink'))
+const linkCareers = computed(() => localizedString('page_tim_link_careers') || t('pages.team.careersLink'))
+const linkContact = computed(() => localizedString('page_tim_link_contact') || t('pages.team.contactLink'))
 const areasTitle = computed(() => localizedString('page_tim_areas_title') || t('pages.team.areasTitle'))
 
 const PILLAR_ICONS: Record<string, Component> = {

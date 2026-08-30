@@ -3412,6 +3412,475 @@
             "default": "",
             "category": "Footer",
             "scope": "theme"
+        },
+        "header_official_line1": {
+            "label": "Header official line 1 (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line1_en": {
+            "label": "Header official line 1 (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line1_id": {
+            "label": "Header official line 1 (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2": {
+            "label": "Header official line 2 (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2_en": {
+            "label": "Header official line 2 (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2_id": {
+            "label": "Header official line 2 (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label": {
+            "label": "Header login label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label_en": {
+            "label": "Header login label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label_id": {
+            "label": "Header login label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge": {
+            "label": "Header news badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge_en": {
+            "label": "Header news badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge_id": {
+            "label": "Header news badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label": {
+            "label": "Header social label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label_en": {
+            "label": "Header social label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label_id": {
+            "label": "Header social label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text": {
+            "label": "Header news marquee (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text_en": {
+            "label": "Header news marquee (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text_id": {
+            "label": "Header news marquee (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_url": {
+            "label": "Header login URL",
+            "type": "text",
+            "default": "/member/login",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "page_about_team_cta": {
+            "label": "About team CTA (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_en": {
+            "label": "About team CTA (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_id": {
+            "label": "About team CTA (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint": {
+            "label": "About team CTA hint (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint_en": {
+            "label": "About team CTA hint (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint_id": {
+            "label": "About team CTA hint (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value": {
+            "label": "About stat 1 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value_en": {
+            "label": "About stat 1 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value_id": {
+            "label": "About stat 1 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label": {
+            "label": "About stat 1 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label_en": {
+            "label": "About stat 1 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label_id": {
+            "label": "About stat 1 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value": {
+            "label": "About stat 2 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value_en": {
+            "label": "About stat 2 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value_id": {
+            "label": "About stat 2 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label": {
+            "label": "About stat 2 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label_en": {
+            "label": "About stat 2 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label_id": {
+            "label": "About stat 2 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value": {
+            "label": "About stat 3 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value_en": {
+            "label": "About stat 3 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value_id": {
+            "label": "About stat 3 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label": {
+            "label": "About stat 3 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label_en": {
+            "label": "About stat 3 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label_id": {
+            "label": "About stat 3 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about": {
+            "label": "Tim about link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about_en": {
+            "label": "Tim about link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about_id": {
+            "label": "Tim about link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers": {
+            "label": "Tim careers link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers_en": {
+            "label": "Tim careers link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers_id": {
+            "label": "Tim careers link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact": {
+            "label": "Tim contact link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact_en": {
+            "label": "Tim contact link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact_id": {
+            "label": "Tim contact link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address": {
+            "label": "Contact copy address (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address_en": {
+            "label": "Contact copy address (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address_id": {
+            "label": "Contact copy address (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location": {
+            "label": "Contact share location (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location_en": {
+            "label": "Contact share location (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location_id": {
+            "label": "Contact share location (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords": {
+            "label": "Contact copy coordinates (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords_en": {
+            "label": "Contact copy coordinates (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords_id": {
+            "label": "Contact copy coordinates (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title": {
+            "label": "Contact form title fallback (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title_en": {
+            "label": "Contact form title fallback (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title_id": {
+            "label": "Contact form title fallback (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description": {
+            "label": "Contact form description fallback (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description_en": {
+            "label": "Contact form description fallback (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description_id": {
+            "label": "Contact form description fallback (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
         }
     },
     "menus": {

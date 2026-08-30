@@ -198,21 +198,21 @@
                             variant="outline"
                             @click="copyLocationAddress"
                           >
-                            Copy Alamat
+                            {{ labelCopyAddress }}
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             @click="copyLocationCoordinates"
                           >
-                            {{ t('theme.janari.pages.contact.copyCoords') }}
+                            {{ labelCopyCoords }}
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             @click="shareLocation"
                           >
-                            Share Lokasi
+                            {{ labelShareLocation }}
                           </Button>
                         </div>
                       </PopoverContent>
@@ -242,10 +242,10 @@
               <Card class="p-8 md:p-12 shadow-xl border-border/40">
                 <div class="mb-8">
                   <h2 class="text-2xl font-bold mb-2">
-                    {{ formDefinition?.name || t('theme.janari.pages.contact.formTitle') }}
+                    {{ formDefinition?.name || formTitleFallback }}
                   </h2>
                   <p class="text-muted-foreground">
-                    {{ formDefinition?.description || t('theme.janari.pages.contact.formDescription') }}
+                    {{ formDefinition?.description || formDescriptionFallback }}
                   </p>
                 </div>
 
@@ -655,6 +655,11 @@ const labelAddress = computed(() => localizedString('page_contact_label_address'
 const labelSubmit = computed(() => localizedString('page_contact_submit') || 'Kirim Pesan')
 const labelMapOpen = computed(() => localizedString('page_contact_map_open') || 'Buka Peta')
 const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || 'Petunjuk Arah')
+const labelCopyAddress = computed(() => localizedString('page_contact_copy_address') || 'Copy Alamat')
+const labelShareLocation = computed(() => localizedString('page_contact_share_location') || 'Share Lokasi')
+const labelCopyCoords = computed(() => localizedString('page_contact_copy_coords') || t('theme.janari.pages.contact.copyCoords'))
+const formTitleFallback = computed(() => localizedString('page_contact_form_title') || t('theme.janari.pages.contact.formTitle'))
+const formDescriptionFallback = computed(() => localizedString('page_contact_form_description') || t('theme.janari.pages.contact.formDescription'))
 const router = useRouter()
 const publishingStore = usePublishingStore()
 const toast = useToast()
