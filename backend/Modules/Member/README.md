@@ -9,8 +9,8 @@ Public reader accounts. Not console IAM.
 ## Paths
 
 - API: `routes/api.php` — gated `extension.active:member`
-- Verify email: signed `GET /api/v1/public/member/verify-email/{id}/{hash}` → `/site/member/verified`
-- FE public: `frontend/src/modules/Member/views/` (`/site/member/*`)
+- Verify email: signed `GET /api/v1/public/member/verify-email/{id}/{hash}` → `/member/verified`
+- FE public: `frontend/src/modules/Member/views/` (`/member/*` on apex when Site is active)
 - FE console: `members.index` (`/dash/members`) — list only, permission `view members`
 
 ## Gates

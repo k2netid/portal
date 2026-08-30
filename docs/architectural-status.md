@@ -26,9 +26,9 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 | publishing, library, media, layout | Editorial + theme builder |
 | forms, newsletter, analytics, search, cms-ai | Audience / insight |
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
-| **site** | Public theme runtime at **`/site`** (console stays **`/dash`**) |
+| **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |
 
-Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, `/site` 404, member login/register/account, member verify-email via Mail.
+Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail. **Boot gate:** Site pack off → `/` = console login; Site on → `/` = public web.
 
 P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`. Identity **Media** tab is object storage (S3/FTP/disk); editorial library is the **media** pack. Core File Manager stays in Infra.
 

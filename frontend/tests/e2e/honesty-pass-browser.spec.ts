@@ -71,7 +71,7 @@ test.describe('honesty pass browser flows', () => {
         await expect(page.locator('#setting-field-site_name')).toHaveCount(0);
     });
 
-    test('activating Janari switches /site pages and resolves theme i18n', async ({ page }) => {
+    test('activating Janari switches public apex pages and resolves theme i18n', async ({ page }) => {
         test.setTimeout(90_000);
         const i18nErrors: string[] = [];
         page.on('console', (msg) => {
@@ -102,7 +102,7 @@ test.describe('honesty pass browser flows', () => {
         }
 
         try {
-            for (const path of ['/site/', '/site/about', '/site/blog', '/site/contact']) {
+            for (const path of ['/', '/about', '/blog', '/contact']) {
                 await page.goto(path);
                 await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15_000 });
                 await expect(page.locator('.janari-header-toolbar')).toBeVisible({ timeout: 15_000 });

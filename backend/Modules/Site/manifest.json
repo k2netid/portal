@@ -2,7 +2,7 @@
   "name": "Site",
   "slug": "site",
   "version": "1.0.0",
-  "description": "Public-web pack: theme runtime for visitors. Consumes layout + publishing + media. Console stays at /dash.",
+  "description": "Public-web pack: when active, apex / serves the theme runtime. Console stays at /dash and /auth/console-*.",
   "author": "Jejakawan Team",
   "type": "module",
   "family": "audience",

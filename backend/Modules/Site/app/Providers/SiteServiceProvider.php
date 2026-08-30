@@ -7,7 +7,7 @@ namespace Modules\Site\Providers;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Public theme runtime. Routes live in web.php (/site). No console IAM.
+ * Public theme host. Apex `/` boot-gated by product-active status (see SpaController).
  */
 class SiteServiceProvider extends ServiceProvider
 {
@@ -18,6 +18,6 @@ class SiteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Theme runtime is the frontend public.html entry at /site.
+        // Runtime HTML is served by SpaController when slug `site` is product-active.
     }
 }

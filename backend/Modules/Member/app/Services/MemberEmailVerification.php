@@ -65,8 +65,10 @@ class MemberEmailVerification
         $base = config('app.frontend_url');
         $root = is_string($base) && $base !== '' ? $base : (string) config('app.url');
         $root = rtrim($root, '/');
-        if (! str_ends_with($root, '/site')) {
-            $root .= '/site';
+        // Strip legacy `/site` prefix — public SPA now lives at apex when Site is active.
+        if (str_ends_with($root, '/site')) {
+            $root = substr($root, 0, -strlen('/site'));
+            $root = rtrim($root, '/');
         }
 
         return $root.'/member/verified?status='.rawurlencode($status);

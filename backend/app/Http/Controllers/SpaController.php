@@ -8,26 +8,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\Security\Models\SecurityLog;
+use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Setting;
 use Symfony\Component\HttpFoundation\Response;
 
 class SpaController extends Controller
 {
     /**
-     * Serve SPA root.
+     * Apex `/`: console login when Site pack is off; public web when Site is product-active.
      */
     public function index(): Response
     {
-        if (file_exists(public_path('index.html'))) {
-            $content = file_get_contents(public_path('index.html'));
-            if (is_string($content)) {
-                return response($content)->header('Content-Type', 'text/html');
-            }
+        if ($this->siteRuntimeActive()) {
+            return $this->servePublicSpa();
         }
 
-        return response()->json([
-            'status' => 'ok',
-            'message' => 'Jejakawan Core Engine is running',
-        ]);
+        return $this->serveConsoleSpa();
+    }
+
+    /**
+     * Legacy `/site/*` → apex public paths when Site is on; 404 when off.
+     */
+    public function legacySiteRedirect(Request $request, ?string $any = null): Response
+    {
+        if (! $this->siteRuntimeActive()) {
+            abort(404);
+        }
+
+        $rest = trim((string) $any, '/');
+        $target = $rest === '' ? '/' : '/'.$rest;
+        $query = $request->getQueryString();
+
+        return redirect($query ? $target.'?'.$query : $target, 301);
     }
 
     /**
@@ -78,9 +90,65 @@ class SpaController extends Controller
     }
 
     /**
-     * Public theme runtime (pack site). Console stays on index.html.
+     * SPA Fallback: console prefixes stay on console; public owns the rest when Site is on.
      */
-    public function publicSite(): Response
+    public function fallback(Request $request): Response
+    {
+        if ($this->isConsoleSpaPath($request->path())) {
+            return $this->serveConsoleSpa();
+        }
+
+        if ($this->siteRuntimeActive()) {
+            return $this->servePublicSpa();
+        }
+
+        return $this->serveConsoleSpa();
+    }
+
+    protected function siteRuntimeActive(): bool
+    {
+        return Extension::isProductActive('site');
+    }
+
+    protected function isConsoleSpaPath(string $path): bool
+    {
+        $path = trim($path, '/');
+        if ($path === '') {
+            return false;
+        }
+
+        $first = strtolower(explode('/', $path)[0] ?? '');
+        $slug = strtolower(Setting::resolveConsoleDashboardSlug());
+
+        $reserved = array_values(array_unique(array_filter([
+            'auth',
+            'install',
+            'maintenance',
+            'dash',
+            'ja-dash',
+            $slug,
+        ])));
+
+        return in_array($first, $reserved, true);
+    }
+
+    protected function serveConsoleSpa(): Response
+    {
+        if (file_exists(public_path('index.html'))) {
+            $content = file_get_contents(public_path('index.html'));
+            if (is_string($content)) {
+                return response($content)->header('Content-Type', 'text/html');
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'shell' => 'console',
+            'message' => 'Jejakawan Core Engine is running',
+        ]);
+    }
+
+    protected function servePublicSpa(): Response
     {
         foreach (['public.html', 'public/index.html'] as $file) {
             $path = public_path($file);
@@ -97,20 +165,5 @@ class SpaController extends Controller
             'shell' => 'public',
             'message' => 'Public theme runtime — build frontend public.html',
         ]);
-    }
-
-    /**
-     * SPA Fallback handler.
-     */
-    public function fallback(Request $request): Response
-    {
-        if (file_exists(public_path('index.html'))) {
-            $content = file_get_contents(public_path('index.html'));
-            if (is_string($content)) {
-                return response($content)->header('Content-Type', 'text/html');
-            }
-        }
-
-        return response()->json(['message' => 'Resource not found'], 404);
     }
 }

@@ -39,15 +39,87 @@ export default defineConfig({
     tailwindcss(),
     sri(),
     {
-      name: 'ja-public-site-rewrite',
+      name: 'ja-site-boot-gate',
       configureServer(server) {
-        server.middlewares.use((req, _res, next) => {
-          const url = req.url ?? '';
-          if (url === '/site' || url.startsWith('/site/') || url.startsWith('/site?')) {
-            req.url = '/public.html';
+        let siteActiveCache: { at: number; value: boolean } | null = null
+        const CONSOLE_FIRST = new Set([
+          'auth',
+          'install',
+          'maintenance',
+          'dash',
+          'ja-dash',
+        ])
+
+        const pathnameOf = (raw: string): string => {
+          const path = raw.split('?')[0] ?? ''
+          return path.replace(/\/{2,}/g, '/') || '/'
+        }
+
+        const isAssetOrInternal = (pathname: string): boolean => {
+          return (
+            pathname.startsWith('/@') ||
+            pathname.startsWith('/src/') ||
+            pathname.startsWith('/node_modules/') ||
+            pathname.startsWith('/assets/') ||
+            pathname.startsWith('/api/') ||
+            pathname.startsWith('/sanctum') ||
+            pathname.startsWith('/passkeys') ||
+            pathname.startsWith('/user/passkeys') ||
+            pathname.includes('.')
+          )
+        }
+
+        const fetchSiteActive = async (): Promise<boolean> => {
+          const now = Date.now()
+          if (siteActiveCache && now - siteActiveCache.at < 5000) {
+            return siteActiveCache.value
           }
-          next();
-        });
+          try {
+            const res = await fetch(`${devApiProxyTarget}/api/v1/public/system/settings`)
+            const json = (await res.json()) as {
+              data?: { active_extensions?: unknown }
+            }
+            const active = json?.data?.active_extensions
+            const value = Array.isArray(active) && active.includes('site')
+            siteActiveCache = { at: now, value }
+            return value
+          } catch {
+            siteActiveCache = { at: now, value: false }
+            return false
+          }
+        }
+
+        server.middlewares.use(async (req, res, next) => {
+          const raw = req.url ?? '/'
+          const pathname = pathnameOf(raw)
+
+          if (isAssetOrInternal(pathname)) {
+            next()
+            return
+          }
+
+          // Legacy /site/* → apex (mirror Laravel 301)
+          if (pathname === '/site' || pathname.startsWith('/site/')) {
+            const rest = pathname === '/site' ? '/' : pathname.slice('/site'.length) || '/'
+            const qs = raw.includes('?') ? raw.slice(raw.indexOf('?')) : ''
+            res.statusCode = 302
+            res.setHeader('Location', `${rest}${qs}`)
+            res.end()
+            return
+          }
+
+          const first = pathname.replace(/^\//, '').split('/')[0]?.toLowerCase() ?? ''
+          if (CONSOLE_FIRST.has(first)) {
+            next()
+            return
+          }
+
+          const siteOn = await fetchSiteActive()
+          if (siteOn) {
+            req.url = '/public.html'
+          }
+          next()
+        })
       },
     },
     visualizer({

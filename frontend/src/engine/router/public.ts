@@ -114,7 +114,7 @@ const publicRoutes: RouteRecordRaw[] = [
 
 export const createPublicRouter = () => {
     const router = createRouter({
-        history: createWebHistory('/site'),
+        history: createWebHistory('/'),
         routes: publicRoutes,
     });
 

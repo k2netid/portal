@@ -221,7 +221,7 @@ class MemberAuthTest extends TestCase
         $member = Member::query()->findOrFail($auth['id']);
         $url = app(MemberEmailVerification::class)->signedUrl($member);
 
-        $this->get($url, ['Accept' => 'text/html'])->assertRedirect('http://localhost:5273/site/member/verified?status=ok');
+        $this->get($url, ['Accept' => 'text/html'])->assertRedirect('http://localhost:5273/member/verified?status=ok');
         $this->assertNotNull($member->fresh()?->email_verified_at);
     }
 
