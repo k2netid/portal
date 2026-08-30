@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Fix theme i18n mix: `useThemeI18n(packageSlug)` falls back to the calling theme package locales when the active theme slug has no key (e.g. Zenith active + Janari Tim page no longer shows `theme.zenith.pages.team.*` missing keys).
 - Theme Customizer preview follows selected nav item (Contact → /contact, home sections → / + scroll focus); minimized nav/controls use the same chevron rail style as the sidebar.
 - Theme Customizer layout: nav | live preview | controls; nav and controls minimize independently; section edit badges always visible in preview iframe.
 - Theme Customizer uses WordPress/Shopify-style split canvas: left nav+controls, live public preview always on the right (no modal); click section keeps preview open; Ctrl+\\ toggles controls.

@@ -3,36 +3,68 @@ import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 
 /**
- * Theme-scoped i18n: resolves keys under theme.<activeSlug>.*.
- * Use relative keys in theme Vue files, e.g. t('pages.contact.title').
+ * Theme-scoped i18n for in-tree theme Vue files.
+ *
+ * Pass the **package folder slug** of the calling component (e.g. useThemeI18n('janari')).
+ * Keys are tried in order:
+ *   1. theme.<activeSlug>.*     (child / active overrides)
+ *   2. theme.<parent_theme>.*   (parent chain)
+ *   3. theme.<packageSlug>.*    (locale JSON that ships with this Vue file)
+ *
+ * This avoids missing-key noise when ThemePageResolver falls back across bundled
+ * themes (e.g. Zenith active → Janari Tim.vue still needs theme.janari.pages.team).
  */
-export function useThemeI18n(fallbackSlug = 'janari') {
+export function useThemeI18n(packageSlug = 'janari') {
     const { t, te, locale, ...rest } = useI18n();
     const { activeTheme } = useTheme();
 
-    const slug = computed(() => {
-        const s = activeTheme.value?.slug;
-        return typeof s === 'string' && s.length > 0 ? s : fallbackSlug;
+    const candidateSlugs = computed(() => {
+        const out: string[] = [];
+        const seen = new Set<string>();
+        const push = (raw: unknown) => {
+            if (typeof raw !== 'string') return;
+            const s = raw.trim();
+            if (!s) return;
+            const key = s.toLowerCase();
+            if (seen.has(key)) return;
+            seen.add(key);
+            out.push(s);
+        };
+
+        push(activeTheme.value?.slug);
+        push(activeTheme.value?.parent_theme);
+        push(packageSlug);
+
+        return out;
     });
 
-    const prefix = computed(() => `theme.${slug.value}`);
+    const prefix = computed(() => `theme.${candidateSlugs.value[0] || packageSlug}`);
 
-    const themeKey = (key: string) => `${prefix.value}.${key}`;
+    const themeKey = (key: string, slug?: string) =>
+        `theme.${slug || candidateSlugs.value[0] || packageSlug}.${key}`;
 
     const tt = ((key: string, ...args: unknown[]) => {
+        for (const slug of candidateSlugs.value) {
+            const full = themeKey(key, slug);
+            if (te(full)) {
+                // @ts-expect-error vue-i18n overload
+                return t(full, ...args);
+            }
+        }
+        // Last resort: package slug (shows missing-key path under the correct theme)
         // @ts-expect-error vue-i18n overload
-        return t(themeKey(key), ...args);
+        return t(themeKey(key, packageSlug), ...args);
     }) as typeof t;
 
-    const tte = (key: string) => te(themeKey(key));
+    const tte = (key: string) => candidateSlugs.value.some((slug) => te(themeKey(key, slug)));
 
     return {
         ...rest,
         locale,
-        slug,
+        slug: computed(() => candidateSlugs.value[0] || packageSlug),
         prefix,
         t: tt,
         te: tte,
-        globalKey: themeKey,
+        globalKey: (key: string) => themeKey(key, packageSlug),
     };
 }
