@@ -20,8 +20,39 @@
 
       <!-- Main Content Area -->
       <main class="main-content flex-1 w-full flex flex-col">
-        <!-- Empty State -->
-        <div v-if="blocks.length === 0" class="canvas-empty flex-1 flex flex-col items-center justify-center p-8 text-center my-6">
+        <!-- Theme page live preview (Vue theme view, not empty CMS draft) -->
+        <div
+          v-if="blocks.length === 0 && activeThemePage"
+          class="canvas-theme-page flex-1 w-full relative"
+          data-builder-theme-page="true"
+        >
+          <ThemePageResolver :page="activeThemePage" />
+          <div class="canvas-theme-page__bar sticky bottom-4 z-20 mx-auto mt-4 mb-6 w-[min(92%,36rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              {{ t('builder.canvas.themePageHint', 'Live theme page. Add sections to customize with the visual builder.') }}
+            </p>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5"
+                @click="addSection"
+              >
+                <Plus :size="14" />
+                {{ $t('builder.actions.addSection', 'Add Section') }}
+              </button>
+              <button
+                type="button"
+                class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium"
+                @click="openTemplateModal"
+              >
+                {{ t('builder.canvas.templates', 'Templates') }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State (true blank CMS page) -->
+        <div v-else-if="blocks.length === 0" class="canvas-empty flex-1 flex flex-col items-center justify-center p-8 text-center my-6">
           <div class="canvas-empty__content max-w-lg mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
             <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
               <Sparkles :size="28" />
@@ -112,6 +143,7 @@ const blocks = computed<BlockInstance[]>({
   set: (val) => { if (builder) builder.blocks.value = val }
 })
 const contentTitle = computed(() => builder?.content?.value?.title || '')
+const activeThemePage = computed(() => builder?.activeThemePage?.value || null)
 const wireframeMode = computed(() => builder?.wireframeMode.value || false)
 const previewMode = computed(() => builder?.previewMode.value || false)
 const gridViewMode = computed(() => builder?.gridViewMode.value || false)

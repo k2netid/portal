@@ -18,6 +18,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - Default public theme prefers **Janari** (CMS reference / builder contract); scaffolded themes get `parent_theme: janari` + `janari_canvas`.
 - **Builder ↔ theme ↔ menus:** Site Editor saves theme settings to the real theme API; Menu Builder location syncs `menu_location_*` on the active theme; customizer publish keeps those keys; public resolve by menu UUID; deep-links between Site Editor, Theme Customizer (`?panel=menus`), and Menu Builder.
 - Site Editor embeds merged Theme Customizer settings schema; toolbar opens live site preview iframe (`/` or current page slug).
+- Site Editor Theme tab previews live Janari Vue pages instead of creating empty CMS drafts.
 
 ### Fixed
 - Visual builder: empty pages no longer auto-fill demo sections or mark unsaved demo as saved.

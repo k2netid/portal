@@ -24,6 +24,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         loadingThemes,
         autoSave,
         activeTheme,
+        activeThemePage,
         themeSettings,
         themeData,
         dataVersion,
@@ -34,6 +35,27 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
     function markAsSaved(): void {
         lastSavedVersion.value = dataVersion.value
+    }
+
+    /** Preview a theme Vue page (live template) instead of creating an empty CMS draft. */
+    function openThemePage(opts: { slug: string; themePage: string; title: string }): void {
+        activeThemePage.value = opts.themePage
+        currentPageId.value = null
+        blocks.value = []
+        content.value = {
+            ...content.value,
+            id: null,
+            title: opts.title,
+            slug: opts.slug,
+            status: 'published',
+            type: 'page',
+            editor_type: 'builder',
+            body: '',
+            meta: {},
+        }
+        triggerRef(blocks)
+        takeSnapshot({ immediate: true })
+        markAsSaved()
     }
 
     /** Resolve active theme UUID/slug for manage theme APIs. */
@@ -82,6 +104,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             const data = response.data?.data || response.data
 
             if (data) {
+                activeThemePage.value = null
                 content.value = {
                     id: data.id,
                     title: data.title || '',
@@ -190,6 +213,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
     async function addPage(title: string): Promise<void> {
         try {
+            activeThemePage.value = null
             const payload = {
                 title,
                 type: 'page',
@@ -540,6 +564,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
     return {
         fetchPages,
         setCurrentPage,
+        openThemePage,
         addPage,
         deletePage,
         loadContent,

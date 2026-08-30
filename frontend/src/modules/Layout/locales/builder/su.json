@@ -32,7 +32,9 @@
   },
   "canvas": {
     "empty": "Mimitian kaca anjeun kalawan nambihan séksi énggal.",
-    "gridViewTitle": "Pintonan Grid"
+    "gridViewTitle": "Pintonan Grid",
+    "themePageHint": "Kaca téma live. Tambahkeun séksi pikeun ngakustomisasi ku visual builder.",
+    "templates": "Template"
   },
   "toolbar": {
     "undo": "Bolaykeun (Undo)",

@@ -142,6 +142,8 @@ export interface BuilderState {
     gridViewMode: Ref<boolean>;
     isFullscreen: Ref<boolean>;
     activeTheme: Ref<string>;
+    /** Theme Vue page key (e.g. pages/About) when previewing a theme route without builder_blocks. */
+    activeThemePage: Ref<string | null>;
     selectedThemeSlug: Ref<string | null>;
     themeData: Ref<ThemeData | null>;
     themeSettings: Ref<ThemeSettings>;
@@ -351,6 +353,7 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     loadingPresets: Ref<boolean>;
     fetchPages: () => Promise<void>;
     setCurrentPage: (id: number | string) => void;
+    openThemePage: (opts: { slug: string; themePage: string; title: string }) => void;
     addPage: (title: string) => Promise<void>;
     deletePage: (id: number | string) => Promise<void>;
 }

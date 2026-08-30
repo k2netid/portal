@@ -61,7 +61,7 @@
           v-for="(page, index) in filteredItems" 
           :key="page.id || `item-${index}`" 
           class="page-item" 
-          :class="{ 'page-item--active': String(currentPageId) === String(page.id) || (page.isThemeTemplate && builder?.content?.value?.slug === page.slug) }"
+          :class="{ 'page-item--active': String(currentPageId) === String(page.id) || (page.isThemeTemplate && builder?.activeThemePage?.value === page.themePage) }"
           @click="selectItem(page)"
         >
           <div class="page-info">
@@ -120,6 +120,7 @@ import type { BuilderInstance, PageMetadata } from '@/modules/Layout/types/build
 interface ContentItem extends PageMetadata {
   type?: string
   isThemeTemplate?: boolean
+  themePage?: string
 }
 
 const { t } = useI18n();
@@ -132,17 +133,18 @@ const loading = computed(() => builder?.pagesLoading?.value || false);
 const searchQuery = ref('');
 const activeTypeFilter = ref<'all' | 'page' | 'post' | 'theme'>('all');
 
-// Standard theme page templates
+// Standard theme page templates (slug matches public.ts; themePage → ThemePageResolver)
 const themeTemplates: ContentItem[] = [
-  { id: 'theme-home', title: 'Beranda (Home)', slug: 'home', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-about', title: 'Tentang Kami (About)', slug: 'about', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-tim', title: 'Tim Kami (Team)', slug: 'tim', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-pricing', title: 'Harga & Paket (Pricing)', slug: 'pricing', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-solusi', title: 'Produk & Solusi', slug: 'solusi', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-contact', title: 'Hubungi Kami (Contact)', slug: 'contact', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-blog', title: 'Arsip Berita (Blog)', slug: 'blog', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-careers', title: 'Pusat Karier (Careers)', slug: 'careers', type: 'page', isThemeTemplate: true, status: 'published' },
-  { id: 'theme-highlights', title: 'Sorotan & Prestasi', slug: 'highlights', type: 'page', isThemeTemplate: true, status: 'published' }
+  { id: 'theme-home', title: 'Beranda (Home)', slug: 'home', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Home' },
+  { id: 'theme-about', title: 'Tentang Kami (About)', slug: 'about', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/About' },
+  { id: 'theme-tim', title: 'Tim Kami (Team)', slug: 'tim', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Tim' },
+  { id: 'theme-pricing', title: 'Harga & Paket (Pricing)', slug: 'pricing', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Pricing' },
+  { id: 'theme-solusi', title: 'Produk & Solusi', slug: 'solusi', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Solusi' },
+  { id: 'theme-contact', title: 'Hubungi Kami (Contact)', slug: 'contact', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Contact' },
+  { id: 'theme-blog', title: 'Arsip Berita (Blog)', slug: 'blog', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Blog' },
+  { id: 'theme-career', title: 'Pusat Karier (Careers)', slug: 'career', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/CareerCenter' },
+  { id: 'theme-achievement', title: 'Sorotan & Prestasi', slug: 'achievement', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Achievement' },
+  { id: 'theme-search', title: 'Pencarian (Search)', slug: 'search', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Search' },
 ];
 
 const allContentList = computed<ContentItem[]>(() => {
@@ -175,18 +177,23 @@ const filteredItems = computed<ContentItem[]>(() => {
 
 const selectItem = async (item: ContentItem) => {
   if (item.isThemeTemplate) {
-    // If it's a theme template, check if matching page exists in DB
-    const existing = pages.value.find(p => p.slug === item.slug);
-    if (existing && existing.id) {
-      if (builder?.setCurrentPage) {
-        await builder.setCurrentPage(existing.id);
-      }
-    } else {
-      // Create or load template directly
-      if (builder?.addPage) {
-        await builder.addPage(item.title);
+    const themePage = item.themePage || `pages/${item.slug.charAt(0).toUpperCase()}${item.slug.slice(1)}`;
+    const existing = pages.value.find((p) => p.slug === item.slug && !p.isThemeTemplate);
+
+    // Prefer CMS document only when it already has builder blocks to edit.
+    if (existing?.id && builder?.setCurrentPage && builder?.loadContent) {
+      await builder.setCurrentPage(existing.id);
+      if ((builder.blocks.value?.length ?? 0) > 0) {
+        return;
       }
     }
+
+    // Otherwise show the live theme Vue page (do not create an empty draft).
+    builder?.openThemePage?.({
+      slug: item.slug,
+      themePage,
+      title: item.title,
+    });
     return;
   }
 

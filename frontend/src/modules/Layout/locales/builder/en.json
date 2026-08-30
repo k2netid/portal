@@ -32,7 +32,9 @@
   },
   "canvas": {
     "empty": "Start your page by adding a section.",
-    "gridViewTitle": "Grid View"
+    "gridViewTitle": "Grid View",
+    "themePageHint": "Live theme page. Add sections to customize with the visual builder.",
+    "templates": "Templates"
   },
   "toolbar": {
     "undo": "Undo",
