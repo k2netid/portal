@@ -237,7 +237,7 @@ import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/P
 import { Dialog, DialogContent } from '@/shared/components/ui'
 import type { Theme as ThemeModel } from '@/modules/Layout/types/theme'
 import { BUILDER_THEME_OVERRIDE_KEY, type Theme as RuntimeTheme } from '@/modules/Layout/composables/useTheme'
-import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl'
+import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl'
 
 // Core
 import { useBuilder } from './core'
@@ -330,7 +330,7 @@ const showLivePreview = ref(false)
 
 const livePreviewUrl = computed(() => {
   const slug = builderBase.content?.value?.slug
-  return resolvePublicSiteUrl(typeof slug === 'string' ? slug : null)
+  return resolvePublicEmbedUrl(typeof slug === 'string' ? slug : null)
 })
 
 const livePreviewTheme = computed<ThemeModel>(() => {

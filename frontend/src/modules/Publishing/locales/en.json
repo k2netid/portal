@@ -859,7 +859,10 @@
         "body": "Titles, badges, and button labels for this section are edited under Design — not in content bindings.",
         "cta": "Edit section chrome"
       },
-      "preview_hint": "Click a highlighted section to open its settings. Hold Alt for Content bindings when available."
+      "preview_hint": "Click a highlighted section to open its settings. Hold Alt for Content bindings when available.",
+      "preview_failed_title": "Preview could not load",
+      "preview_failed_body": "The live site iframe failed. Prefer opening the same-origin public home, or check that the Site extension is active and the Vite/Laravel server is running.",
+      "preview_open_tab": "Open public site"
     },
     "empty_state": {
       "title": "Choose a section",

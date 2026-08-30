@@ -31,3 +31,18 @@ export function resolvePublicSiteUrl(slugOrPath?: string | null): string {
   if (!origin) return path
   return path === '/' ? `${origin}/` : `${origin}${path}`
 }
+
+/**
+ * URL for embedding the public site in an iframe (Customizer / Site Editor preview).
+ * Always same-origin as the console so X-Frame-Options: SAMEORIGIN and local Vite
+ * boot-gate keep working — env portal URLs often point at a host that cannot be framed.
+ */
+export function resolvePublicEmbedUrl(slugOrPath?: string | null): string {
+  const path = slugOrPath && String(slugOrPath).startsWith('/')
+    ? String(slugOrPath)
+    : resolvePublicSitePath(slugOrPath)
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return path === '/' ? `${window.location.origin}/` : `${window.location.origin}${path}`
+  }
+  return resolvePublicSiteUrl(slugOrPath)
+}

@@ -1,22 +1,51 @@
 <template>
   <div
     class="w-full h-full bg-background relative"
-    :class="{'opacity-50': loading, 'pointer-events-none': loading}"
+    :class="{'opacity-50': loading && !loadError, 'pointer-events-none': loading && !loadError}"
   >
     <iframe
+      v-show="!loadError"
       ref="previewFrame"
       :src="iframeSrc"
       class="w-full h-full border-0"
       @load="onPreviewLoad"
+      @error="onPreviewError"
     />
 
     <div
-      v-if="loading"
+      v-if="loading && !loadError"
       class="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm z-10"
     >
       <div class="flex flex-col items-center gap-2">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
       </div>
+    </div>
+
+    <div
+      v-if="loadError"
+      class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-8 text-center bg-background z-10"
+    >
+      <p class="text-sm font-semibold text-foreground">
+        {{ t('publishing.theme_customizer.bridge.preview_failed_title') }}
+      </p>
+      <p class="text-xs text-muted-foreground max-w-md">
+        {{ t('publishing.theme_customizer.bridge.preview_failed_body') }}
+      </p>
+      <a
+        :href="iframeSrc"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90"
+      >
+        {{ t('publishing.theme_customizer.bridge.preview_open_tab') }}
+      </a>
+      <button
+        type="button"
+        class="text-xs font-medium text-muted-foreground hover:text-foreground underline"
+        @click="retryPreview"
+      >
+        {{ t('publishing.theme_customizer.editor.preview.refresh') }}
+      </button>
     </div>
   </div>
 </template>
@@ -24,6 +53,7 @@
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, watch, toRaw, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import type { Theme } from '@/modules/Layout/types/theme';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import {
@@ -46,8 +76,10 @@ const emit = defineEmits<{
   (e: 'select-target', payload: { target: string; mode?: CustomizerPreviewMode }): void;
 }>();
 
+const { t } = useI18n();
 const previewFrame = ref<HTMLIFrameElement | null>(null);
 const loading = ref(true);
+const loadError = ref(false);
 
 const iframeSrc = computed(() => {
   const base = props.previewUrl || '/';
@@ -175,8 +207,23 @@ const injectThemeStyles = () => {
   }
 };
 
+function detectChromeErrorPage(): boolean {
+  try {
+    const href = previewFrame.value?.contentWindow?.location?.href || '';
+    if (!href) return false;
+    return href.startsWith('chrome-error:') || href.startsWith('about:neterror');
+  } catch {
+    return false;
+  }
+}
+
 const onPreviewLoad = () => {
   loading.value = false;
+  if (detectChromeErrorPage()) {
+    loadError.value = true;
+    return;
+  }
+  loadError.value = false;
 
   if (previewFrame.value && previewFrame.value.contentDocument) {
     const iframeDoc = previewFrame.value.contentDocument;
@@ -195,12 +242,22 @@ const onPreviewLoad = () => {
   injectThemeStyles();
 };
 
+const onPreviewError = () => {
+  loading.value = false;
+  loadError.value = true;
+};
+
 const refreshPreview = () => {
   if (previewFrame.value) {
     loading.value = true;
+    loadError.value = false;
     previewFrame.value.src = iframeSrc.value;
   }
 };
+
+function retryPreview() {
+  refreshPreview();
+}
 
 defineExpose({ refreshPreview });
 
@@ -224,6 +281,7 @@ onUnmounted(() => {
 });
 
 watch(() => props.theme, () => {
+  if (loadError.value) return;
   if (previewFrame.value && previewFrame.value.contentWindow) {
     const themeRaw = JSON.parse(JSON.stringify(toRaw(props.theme)));
     postToPreview({

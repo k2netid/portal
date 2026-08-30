@@ -277,7 +277,7 @@ import { ref, onMounted, toRaw } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/engine/api/client';
 import toast from '@/shared/services/toastService';
-import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl';
+import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 import {
@@ -294,7 +294,7 @@ import ThemeCardLivePreview from '@/modules/Layout/components/themes/ThemeCardLi
 import { useI18n } from 'vue-i18n';
 import { Badge, Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui';
 
-const publicPreviewUrl = resolvePublicSiteUrl('/');
+const publicPreviewUrl = resolvePublicEmbedUrl('/');
 const { t } = useI18n();
 const { confirm } = useConfirm();
 const router = useRouter();
