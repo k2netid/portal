@@ -178,11 +178,13 @@ const writeThemeSnapshot = (): void => {
 
 const initialThemeSnapshot = readThemeSnapshot();
 if (initialThemeSnapshot) {
+    // Hydrate for first paint only — never trust snapshot as authoritative.
+    // Stale slug (e.g. Zenith after Janari activate) caused false "active" + i18n mix.
     activeTheme.value = initialThemeSnapshot.activeTheme;
     themeSettings.value = initialThemeSnapshot.themeSettings;
     themeAssets.value = initialThemeSnapshot.themeAssets;
     customCss.value = initialThemeSnapshot.customCss;
-    lastLoadedAt = initialThemeSnapshot.lastLoadedAt;
+    lastLoadedAt = 0;
 }
 
 /**
@@ -219,46 +221,67 @@ export function useTheme() {
             try {
             let data: Theme | null = null;
 
-            // Customizer iframe: prefer the theme being edited, not the public active theme.
+            // Customizer iframe only: prefer the theme being edited, not the public active theme.
+            // Gate on real preview context — never let leftover session keys override public `/`.
+            // sessionStorage is same-origin shared with the console tab; iframe-only flag avoids that.
             if (type === 'frontend' && typeof window !== 'undefined') {
                 const search = window.location.search;
-                const previewSlug = readThemeSlugFromQuery(search)
-                    || (typeof sessionStorage !== 'undefined'
-                        ? String(sessionStorage.getItem('ja_customizer_theme_slug') || '').toLowerCase() || null
-                        : null);
-                const previewMode = isCustomizerPreviewQuery(search)
-                    || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1');
-
-                if (previewSlug) {
+                const inIframe = (() => {
                     try {
-                        sessionStorage.setItem('ja_customizer_preview', '1');
-                        sessionStorage.setItem('ja_customizer_theme_slug', previewSlug);
-                    } catch { /* ignore */ }
-
-                    const stored = readStoredPreviewTheme(previewSlug);
-                    if (stored && typeof stored.slug === 'string') {
-                        data = stored as Theme;
+                        return window.parent !== window;
+                    } catch {
+                        return true;
                     }
+                })();
+                const previewFromQuery = isCustomizerPreviewQuery(search);
+                const previewMode = previewFromQuery
+                    || (inIframe
+                        && typeof sessionStorage !== 'undefined'
+                        && sessionStorage.getItem('ja_customizer_preview') === '1');
 
-                    if (!data) {
+                if (previewMode) {
+                    const previewSlug = readThemeSlugFromQuery(search)
+                        || (typeof sessionStorage !== 'undefined'
+                            ? String(sessionStorage.getItem('ja_customizer_theme_slug') || '').toLowerCase() || null
+                            : null);
+
+                    if (previewSlug) {
                         try {
-                            const manageRes = await api.get(`/manage/layout/themes/${previewSlug}`);
-                            let manageData = manageRes.data;
-                            if (manageData && typeof manageData === 'object' && 'success' in manageData && 'data' in manageData) {
-                                manageData = manageData.data;
+                            sessionStorage.setItem('ja_customizer_preview', '1');
+                            sessionStorage.setItem('ja_customizer_theme_slug', previewSlug);
+                        } catch { /* ignore */ }
+
+                        const stored = readStoredPreviewTheme(previewSlug);
+                        if (stored && typeof stored.slug === 'string') {
+                            data = stored as Theme;
+                        }
+
+                        if (!data) {
+                            try {
+                                const manageRes = await api.get(`/manage/layout/themes/${previewSlug}`);
+                                let manageData = manageRes.data;
+                                if (manageData && typeof manageData === 'object' && 'success' in manageData && 'data' in manageData) {
+                                    manageData = manageData.data;
+                                }
+                                if (manageData && typeof manageData.slug === 'string') {
+                                    data = manageData as Theme;
+                                }
+                            } catch {
+                                /* unauthenticated public shell — wait for THEME_BOOT from parent */
                             }
-                            if (manageData && typeof manageData.slug === 'string') {
-                                data = manageData as Theme;
-                            }
-                        } catch {
-                            /* unauthenticated public shell — wait for THEME_BOOT from parent */
+                        }
+                    } else {
+                        const stored = readStoredPreviewTheme();
+                        if (stored && typeof stored.slug === 'string') {
+                            data = stored as Theme;
                         }
                     }
-                } else if (previewMode) {
-                    const stored = readStoredPreviewTheme();
-                    if (stored && typeof stored.slug === 'string') {
-                        data = stored as Theme;
-                    }
+                } else if (typeof sessionStorage !== 'undefined') {
+                    // Top-level public/console: drop customizer leftovers so they cannot poison active theme.
+                    try {
+                        sessionStorage.removeItem('ja_customizer_preview');
+                        sessionStorage.removeItem('ja_customizer_theme_slug');
+                    } catch { /* ignore */ }
                 }
             }
 
@@ -366,7 +389,7 @@ export function useTheme() {
                             if (themeUsesJanariCanvas(boot)) {
                                 syncJanariStyles(themeSettings.value);
                             }
-                            writeThemeSnapshot();
+                            // Do not writeThemeSnapshot — preview draft must not overwrite public active cache.
                         }
                         return;
                     }

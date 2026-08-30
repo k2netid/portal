@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Fix false theme detection: customizer `sessionStorage` + theme snapshot TTL no longer override the public active theme (DB Janari was correct; FE could still behave as Zenith). Preview slug override is iframe/query-only; THEME_BOOT does not write the public snapshot.
 - Customizer live preview boots the **edited** theme (query `ja_theme_slug` + THEME_BOOT / manage fetch), not only the public active theme — avoids Janari customizer showing Zenith chrome.
 - Fix theme i18n mix: `useThemeI18n(packageSlug)` falls back to the calling theme package locales when the active theme slug has no key (e.g. Zenith active + Janari Tim page no longer shows `theme.zenith.pages.team.*` missing keys).
 - Theme Customizer preview follows selected nav item (Contact → /contact, home sections → / + scroll focus); minimized nav/controls use the same chevron rail style as the sidebar.
