@@ -235,8 +235,8 @@ import InputModal from './modals/InputModal.vue'
 import ContextMenu from './ui/ContextMenu.vue'
 import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue'
 import { Dialog, DialogContent } from '@/shared/components/ui'
-import type { Theme } from '@/modules/Layout/types/theme'
-import { BUILDER_THEME_OVERRIDE_KEY } from '@/modules/Layout/composables/useTheme'
+import type { Theme as ThemeModel } from '@/modules/Layout/types/theme'
+import { BUILDER_THEME_OVERRIDE_KEY, type Theme as RuntimeTheme } from '@/modules/Layout/composables/useTheme'
 import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl'
 
 // Core
@@ -333,8 +333,8 @@ const livePreviewUrl = computed(() => {
   return resolvePublicSiteUrl(typeof slug === 'string' ? slug : null)
 })
 
-const livePreviewTheme = computed<Theme>(() => {
-  const base = (builderBase.themeData.value || {}) as Theme
+const livePreviewTheme = computed<ThemeModel>(() => {
+  const base = (builderBase.themeData.value || {}) as ThemeModel
   const baseSettings = (base.settings || {}) as Record<string, unknown>
   return {
     ...base,
@@ -381,7 +381,7 @@ function refreshBuilderProvide(): void {
 provide('builder', builder)
 provide('builderDevice', builder.device)
 provide(BUILDER_THEME_OVERRIDE_KEY, {
-  activeTheme: computed(() => (builder.themeData?.value as Theme | null) || null),
+  activeTheme: computed(() => (builder.themeData?.value as RuntimeTheme | null) || null),
   themeSettings: builder.themeSettings,
 })
 
@@ -880,6 +880,26 @@ onActivated(() => {
     })()
   }
 })
+
+/** After theme bind / page switch creates an id, take the edit lock. */
+watch(
+  () => builder.content?.value?.id,
+  (id, prev) => {
+    if (!id || String(id) === String(prev ?? '')) return
+    void (async () => {
+      const lock = await builder.acquireLock?.()
+      if (lock && !lock.ok) {
+        isReadOnly.value = true
+        lockHolder.value = lock.message || t('builder.lock.held', 'This page is being edited by someone else.')
+        stopLockHeartbeat()
+      } else {
+        isReadOnly.value = false
+        lockHolder.value = ''
+        startLockHeartbeat()
+      }
+    })()
+  },
+)
 
 onUnmounted(() => {
     window.removeEventListener('keydown', handleKeydown)

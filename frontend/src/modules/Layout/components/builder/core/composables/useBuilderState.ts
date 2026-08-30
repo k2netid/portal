@@ -141,7 +141,7 @@ export function useBuilderState(initialData: { blocks?: BlockInstance[], body?: 
         excerpt: '',
         body: initialData.body || '',
         status: 'draft',
-        type: 'post',
+        type: options.mode === 'page' ? 'post' : 'page',
         editor_type: 'builder',
         category_id: null,
         featured_image: null,

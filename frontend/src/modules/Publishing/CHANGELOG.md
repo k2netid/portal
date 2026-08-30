@@ -7,4 +7,5 @@
 - Pinia store id is `publishing`. Public settings always come from the public system API.
 
 ### Changed
+- `hasSubstantivePublicContent` treats non-empty `meta.builder_blocks` as public content.
 - SEO and Discussion tabs imported from this pack, not Core Identity.

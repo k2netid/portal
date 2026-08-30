@@ -3,7 +3,7 @@ import { handleBeforeEachGuard } from './guards';
 
 const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
-const publicRoutes: RouteRecordRaw[] = [
+export const publicRoutes: RouteRecordRaw[] = [
     {
         path: '/',
         component: () => import('@/modules/Layout/layouts/FrontendLayout.vue'),
@@ -67,6 +67,12 @@ const publicRoutes: RouteRecordRaw[] = [
                 name: 'public-contact',
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Contact' },
+            },
+            {
+                path: 'tim',
+                name: 'public-tim',
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Tim' },
             },
             {
                 path: 'search',

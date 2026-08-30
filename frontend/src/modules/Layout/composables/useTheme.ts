@@ -1,5 +1,5 @@
 import { logger } from '@/shared/utils/logger';
-import { ref, computed, inject, type InjectionKey, type Ref } from 'vue';
+import { ref, computed, inject, type InjectionKey, type Ref, type ComputedRef } from 'vue';
 import i18n from '@/engine/i18n';
 import api from '@/engine/api/client';
 import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/janariPresets';
@@ -38,7 +38,7 @@ export interface ThemeSettingSchema {
 export interface Theme {
     name: string;
     slug: string;
-    type: string;
+    type?: string;
     manifest?: ThemeManifest;
     settings?: Record<string, unknown>;
     assets?: {
@@ -58,7 +58,7 @@ export interface Theme {
 
 /** When provided under the Visual Builder, theme reads stay canvas-scoped (no public activate / :root CSS). */
 export type BuilderThemeOverride = {
-    activeTheme: Ref<Theme | null>;
+    activeTheme: Ref<Theme | null> | ComputedRef<Theme | null>;
     themeSettings: Ref<Record<string, unknown>>;
 };
 
@@ -546,7 +546,7 @@ export function useTheme() {
         };
 
         return {
-            activeTheme: builderOverride.activeTheme,
+            activeTheme: builderOverride.activeTheme as Ref<Theme | null>,
             themeSettings: builderOverride.themeSettings,
             themeAssets,
             customCss,

@@ -13,7 +13,7 @@ export const layoutNavigation: NavItem[] = [
                 name: 'builder.site',
                 label: 'Site Editor',
                 labelKey: 'layout.navigation.menu.siteEditor',
-                permission: 'manage settings',
+                permission: 'edit content',
                 extension: 'layout',
                 icon: 'layout',
                 priority: 84,

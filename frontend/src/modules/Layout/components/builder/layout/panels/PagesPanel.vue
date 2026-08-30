@@ -116,11 +116,13 @@ import Plus from 'lucide-vue-next/dist/esm/icons/plus.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
 import { BaseInput } from '@/modules/Layout/components/builder/ui';
 import type { BuilderInstance, PageMetadata } from '@/modules/Layout/types/builder';
+import { getPublicThemePageCatalog } from '@/modules/Layout/utils/themePageCatalog';
 
 interface ContentItem extends PageMetadata {
   type?: string
   isThemeTemplate?: boolean
   themePage?: string
+  meta?: Record<string, unknown>
 }
 
 const { t } = useI18n();
@@ -133,22 +135,13 @@ const loading = computed(() => builder?.pagesLoading?.value || false);
 const searchQuery = ref('');
 const activeTypeFilter = ref<'all' | 'page' | 'post' | 'theme'>('all');
 
-// Standard theme page templates (slug matches public.ts; themePage → ThemePageResolver)
-const themeTemplates: ContentItem[] = [
-  { id: 'theme-home', title: 'Beranda (Home)', slug: 'home', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Home' },
-  { id: 'theme-about', title: 'Tentang Kami (About)', slug: 'about', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/About' },
-  { id: 'theme-tim', title: 'Tim Kami (Team)', slug: 'tim', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Tim' },
-  { id: 'theme-pricing', title: 'Harga & Paket (Pricing)', slug: 'pricing', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Pricing' },
-  { id: 'theme-solusi', title: 'Produk & Solusi', slug: 'solusi', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Solusi' },
-  { id: 'theme-contact', title: 'Hubungi Kami (Contact)', slug: 'contact', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Contact' },
-  { id: 'theme-blog', title: 'Arsip Berita (Blog)', slug: 'blog', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Blog' },
-  { id: 'theme-career', title: 'Pusat Karier (Careers)', slug: 'career', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/CareerCenter' },
-  { id: 'theme-achievement', title: 'Sorotan & Prestasi', slug: 'achievement', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Achievement' },
-  { id: 'theme-search', title: 'Pencarian (Search)', slug: 'search', type: 'page', isThemeTemplate: true, status: 'published', themePage: 'pages/Search' },
-];
+/** Derived from public.ts routes — stays in sync with live site catalog. */
+const themeTemplates = getPublicThemePageCatalog() as ContentItem[];
 
 const allContentList = computed<ContentItem[]>(() => {
-  return [...pages.value];
+  const cmsSlugs = new Set(pages.value.map((p) => p.slug));
+  const unboundTheme = themeTemplates.filter((t) => !cmsSlugs.has(t.slug));
+  return [...pages.value, ...unboundTheme];
 });
 
 const pageCount = computed(() => pages.value.filter(p => p.type === 'page' || !p.type).length);
@@ -179,7 +172,7 @@ const selectItem = async (item: ContentItem) => {
   if (item.isThemeTemplate) {
     const themePage = item.themePage || `pages/${item.slug.charAt(0).toUpperCase()}${item.slug.slice(1)}`;
     const existing = pages.value.find((p) => {
-      const meta = (p as ContentItem & { meta?: Record<string, unknown> }).meta;
+      const meta = p.meta;
       if (meta?.theme_page === themePage && p.id != null) return true;
       return p.slug === item.slug && !p.isThemeTemplate && p.id != null;
     });
@@ -213,10 +206,14 @@ const selectItem = async (item: ContentItem) => {
   }
 };
 
-const handleCreate = () => {
-  const title = prompt(t('builder.panels.pages.promptTitle', 'Enter page title:'));
-  if (title) {
-    builder?.addPage(title);
+const handleCreate = async () => {
+  const title = await builder?.prompt?.({
+    title: t('builder.panels.pages.addNew', 'Add New Page'),
+    message: t('builder.panels.pages.promptTitle', 'Enter page title:'),
+    placeholder: t('builder.panels.pages.promptPlaceholder', 'Page title'),
+  });
+  if (title?.trim()) {
+    await builder?.addPage(title.trim());
   }
 };
 

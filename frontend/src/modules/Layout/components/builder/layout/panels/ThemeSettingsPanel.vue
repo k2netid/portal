@@ -104,8 +104,11 @@ const selectedThemeSlug = computed(() => builder?.selectedThemeSlug?.value);
 const themes = computed(() => builder?.availableThemes?.value || []);
 
 const currentTheme = computed(() => {
-  return themes.value.find((t: ThemeData) => t.slug === selectedThemeSlug.value)
-    || (builder?.themeData.value?.slug === selectedThemeSlug.value ? builder.themeData.value : null);
+  const selected = themes.value.find((t: ThemeData) => t.slug === selectedThemeSlug.value);
+  if (selected) return selected;
+  const live = builder?.themeData?.value;
+  if (live?.slug === selectedThemeSlug.value) return live;
+  return null;
 });
 
 /** Platform + theme customizer schema (+ API legacy keys), same as Theme Customizer. */

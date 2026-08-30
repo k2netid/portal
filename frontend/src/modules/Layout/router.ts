@@ -61,7 +61,7 @@ const layoutRoutes: RouteRecordRaw[] = [
         name: 'builder.site',
         component: () => import('@/modules/Layout/views/builder/SiteEditor.vue'),
         meta: {
-            permission: 'manage settings',
+            permission: 'edit content',
             extension: 'layout',
             title: 'Visual Site Editor',
             breadcrumb: 'layout.navigation.menu.siteEditor',

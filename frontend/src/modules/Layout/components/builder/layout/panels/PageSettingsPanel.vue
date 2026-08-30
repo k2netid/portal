@@ -506,7 +506,7 @@ const fetchMenuParentItems = async (menuId: number | string) => {
   
   loadingParentItems.value = true;
   try {
-    const response = await api.get(`/admin/ja/menus/${menuId}/items`);
+    const response = await api.get(`/manage/layout/menus/${menuId}/items`);
     const data = response.data?.data || response.data || [];
     const flatItems = Array.isArray(data) ? data : [];
     

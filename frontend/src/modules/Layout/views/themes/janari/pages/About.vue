@@ -29,16 +29,16 @@
           :context="{ post: pageData, site: { name: 'Jejakawan' } }"
         />
 
-        <!-- Default Theme Template if no Visual Builder blocks exist -->
-        <template v-else>
-          <!-- Page Body Content if available -->
-          <SafeHtml
-            v-if="cmsBody"
-            class="container mx-auto px-4 py-16 Jejakawan-content"
-            :html="cmsBody"
-            mode="publishing"
-          />
+        <!-- Classic CMS body only (exclusive — matches Home; empty bind keeps theme) -->
+        <SafeHtml
+          v-else-if="cmsBody"
+          class="container mx-auto px-4 py-16 Jejakawan-content"
+          :html="cmsBody"
+          mode="publishing"
+        />
 
+        <!-- Default Theme Template if no Visual Builder blocks / body -->
+        <template v-else>
           <!-- Header -->
           <section
             ref="headerSection"

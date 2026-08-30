@@ -159,7 +159,7 @@ class ConsoleMenu extends Model
                         'label_key' => 'layout.navigation.menu.siteEditor',
                         'route_name' => 'builder.site',
                         'icon' => 'layout',
-                        'permission' => 'manage settings',
+                        'permission' => 'edit content',
                         'extension_slug' => 'layout',
                         'badge_text' => 'PRO',
                         'badge_variant' => 'primary',

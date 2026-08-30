@@ -195,21 +195,47 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         throw new Error('No active theme to update')
     }
 
+    let pagesFetchSeq = 0
+
     async function fetchPages(): Promise<void> {
+        const seq = ++pagesFetchSeq
         pagesLoading.value = true
         try {
-            const response = await api.get('/manage/publishing/contents', {
-                params: { per_page: 100 }
-            })
-            const data = response.data?.data || response.data
-            pages.value = (data.data || data || []).map((p: {
+            const collected: Array<{
                 id: number | string | null
                 title: string
                 slug: string
                 status: string
                 type?: string
                 meta?: Record<string, unknown>
-            }) => ({
+            }> = []
+            let page = 1
+            let lastPage = 1
+            const maxPages = 50
+
+            do {
+                const response = await api.get('/manage/publishing/contents', {
+                    params: { per_page: 100, page },
+                })
+                const envelope = response.data?.data || response.data
+                const rows = Array.isArray(envelope)
+                    ? envelope
+                    : (envelope?.data || [])
+                if (Array.isArray(rows)) {
+                    collected.push(...rows)
+                }
+                lastPage = Number(
+                    envelope?.last_page
+                    ?? envelope?.meta?.last_page
+                    ?? response.data?.meta?.last_page
+                    ?? page,
+                ) || page
+                page += 1
+            } while (page <= lastPage && page <= maxPages)
+
+            if (seq !== pagesFetchSeq) return
+
+            pages.value = collected.map((p) => ({
                 id: p.id,
                 title: p.title,
                 slug: p.slug,
@@ -218,9 +244,12 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 meta: p.meta || {},
             }))
         } catch (error: unknown) {
+            if (seq !== pagesFetchSeq) return
             logger.error('Failed to fetch pages:', error instanceof Error ? error.message : String(error));
         } finally {
-            pagesLoading.value = false
+            if (seq === pagesFetchSeq) {
+                pagesLoading.value = false
+            }
         }
     }
 
@@ -269,13 +298,15 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                     }
                 }
 
-                // Check builder_blocks in meta first (CMS standard storage), then root blocks, then fallback to body
+                // Check builder_blocks in meta first (CMS standard storage), then root blocks.
+                // Skip body→blocks hijack for theme_page binds so empty override keeps live theme preview.
                 const metaBlocks = data.meta?.builder_blocks
+                const isThemeBind = Boolean(data.meta?.theme_page)
                 if (Array.isArray(metaBlocks) && metaBlocks.length > 0) {
                     blocks.value = metaBlocks
                 } else if (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) {
                     blocks.value = data.blocks
-                } else if (data.body && data.body.trim().length > 0) {
+                } else if (!isThemeBind && data.body && data.body.trim().length > 0) {
                     const textBlock = ModuleRegistry.createInstance('text', {
                         content: data.body.trim()
                     }) || {
@@ -312,6 +343,11 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 } else {
                     // Empty stays empty. Templates are an explicit insert from the canvas library.
                     blocks.value = []
+                }
+
+                // Restore theme page live preview when bound but still empty.
+                if (isThemeBind && (blocks.value?.length ?? 0) === 0 && typeof data.meta?.theme_page === 'string') {
+                    activeThemePage.value = data.meta.theme_page
                 }
 
                 triggerRef(blocks)
@@ -646,15 +682,9 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         if (!id) {
             return
         }
-        const response = await api.post(`/manage/publishing/contents/${id}/revisions/${revisionId}/restore`)
-        const restored = response.data?.data?.content || response.data?.content
-        const metaBlocks = restored?.meta?.builder_blocks
-        if (Array.isArray(metaBlocks)) {
-            blocks.value = metaBlocks
-            triggerRef(blocks)
-            takeSnapshot({ immediate: true })
-            markAsSaved()
-        }
+        await api.post(`/manage/publishing/contents/${id}/revisions/${revisionId}/restore`)
+        // Reload full document (title/body/status/meta/blocks) — restore API updates the model.
+        await loadContent(id)
     }
 
     async function acquireLock(): Promise<{ ok: boolean; message?: string }> {

@@ -11,9 +11,8 @@
 import { createApp, h, inject, onBeforeUnmount, onMounted, ref, watch, computed, type App } from 'vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import i18n from '@/engine/i18n';
-import { BUILDER_THEME_OVERRIDE_KEY } from '@/modules/Layout/composables/useTheme';
 import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
-import type { Theme } from '@/modules/Layout/types/theme';
+import { BUILDER_THEME_OVERRIDE_KEY, type Theme as RuntimeTheme } from '@/modules/Layout/composables/useTheme';
 
 const props = defineProps<{
   blocks: BlockInstance[];
@@ -59,7 +58,7 @@ const mountPreview = (): void => {
   previewApp.use(i18n);
   if (builder?.themeData && builder?.themeSettings) {
     previewApp.provide(BUILDER_THEME_OVERRIDE_KEY, {
-      activeTheme: computed(() => (builder.themeData.value as Theme | null) || null),
+      activeTheme: computed(() => (builder.themeData.value as RuntimeTheme | null) || null),
       themeSettings: builder.themeSettings,
     });
   }
