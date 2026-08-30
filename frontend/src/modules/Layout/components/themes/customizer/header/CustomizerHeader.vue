@@ -79,15 +79,29 @@
         </button>
       </div>
 
-      <!-- Preview Button -->
+      <!-- Collapse controls (WP-style: preview always on canvas) -->
       <Button
         variant="outline"
         size="sm"
-        class="hidden xl:inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
-        @click="emit('open-preview')"
+        class="inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
+        :aria-pressed="settingsOpen"
+        @click="emit('toggle-settings')"
       >
-        <Eye data-icon="inline-start" class="w-3.5 h-3.5 shrink-0" />
-        {{ t('publishing.theme_customizer.organization.preview', 'Pratinjau') }}
+        <PanelLeft
+          v-if="settingsOpen"
+          data-icon="inline-start"
+          class="w-3.5 h-3.5 shrink-0"
+        />
+        <PanelLeftOpen
+          v-else
+          data-icon="inline-start"
+          class="w-3.5 h-3.5 shrink-0"
+        />
+        {{
+          settingsOpen
+            ? t('publishing.theme_customizer.organization.hide_controls', 'Hide controls')
+            : t('publishing.theme_customizer.organization.show_controls', 'Show controls')
+        }}
       </Button>
 
       <!-- Revert & Publish Controls -->
@@ -165,9 +179,10 @@ import {
 } from '@/shared/components/ui';
 import {
   ArrowLeft,
-  Eye,
   History,
   Loader2,
+  PanelLeft,
+  PanelLeftOpen,
   Redo2,
   RotateCcw,
   Save,
@@ -182,6 +197,7 @@ defineProps<{
   canRedo: boolean;
   isDirty: boolean;
   saving: boolean;
+  settingsOpen?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -189,7 +205,7 @@ const emit = defineEmits<{
   (e: 'undo'): void;
   (e: 'redo'): void;
   (e: 'update:organizationMode', mode: 'design' | 'bindings' | 'advanced'): void;
-  (e: 'open-preview'): void;
+  (e: 'toggle-settings'): void;
   (e: 'reset-initial'): void;
   (e: 'reset-defaults'): void;
   (e: 'save'): void;

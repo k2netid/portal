@@ -3,7 +3,6 @@ import {
   isCustomizerPreviewQuery,
   MSG_PREVIEW_READY,
   MSG_SELECT_TARGET,
-  readParentOriginFromQuery,
   type CustomizerPreviewMode,
 } from '@/modules/Layout/customizer/preview/protocol';
 
@@ -21,24 +20,20 @@ export function useCustomizerPreviewProbe() {
   const enabled = isCustomizerPreviewQuery(window.location.search);
   if (!enabled) return;
 
-  const parentOrigin =
-    readParentOriginFromQuery(window.location.search)
-    || (document.referrer ? (() => {
-      try { return new URL(document.referrer).origin; } catch { return null; }
-    })() : null)
-    || window.location.origin;
-
   let lastTarget: string | null = null;
 
   function postSelect(target: string, mode?: CustomizerPreviewMode) {
     if (!window.parent || window.parent === window) return;
+    // Same-origin embed: always address parent by the iframe's own origin
+    // (query parent_origin can mismatch localhost vs 127.0.0.1).
+    const targetOrigin = window.location.origin;
     window.parent.postMessage(
       {
         type: MSG_SELECT_TARGET,
         target,
         ...(mode ? { mode } : {}),
       },
-      parentOrigin,
+      targetOrigin,
     );
   }
 
@@ -82,7 +77,7 @@ export function useCustomizerPreviewProbe() {
     document.addEventListener('keydown', onKeydown);
 
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: MSG_PREVIEW_READY }, parentOrigin);
+      window.parent.postMessage({ type: MSG_PREVIEW_READY }, window.location.origin);
     }
   });
 

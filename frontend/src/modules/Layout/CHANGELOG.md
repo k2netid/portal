@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Theme Customizer uses WordPress/Shopify-style split canvas: left nav+controls, live public preview always on the right (no modal); click section keeps preview open; Ctrl+\\ toggles controls.
 - Theme Customizer / Site Editor iframe preview uses same-origin embed URL (`resolvePublicEmbedUrl`) so X-Frame-Options and local Vite boot-gate work; clearer load-failure UI.
 - Theme Customizer live preview click-to-select (MVP): Janari Home/Header/Footer/nav targets → open matching sidebar item; Alt-click prefers Content bindings; inactive on public site without preview query.
 - Theme Customizer UX bridges: Menu Builder deep-link from Navigation Map + Footer; Design↔Content jumps for testimonials/partners/careers/achievements/CTA (no schema duplication).

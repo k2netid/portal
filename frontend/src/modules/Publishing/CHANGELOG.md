@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Theme Customizer hide/show controls labels (en/id/su).
 - Theme Customizer preview load-failure copy + open-tab CTA (en/id/su).
 - Theme Customizer preview click hint (en/id/su).
 - Theme Customizer bridge copy (en/id/su): Menu Builder + Design/Content handoff callouts.

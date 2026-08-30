@@ -705,6 +705,8 @@
       },
       "preview": "Preview",
       "preview_dialog_title": "Theme preview",
+      "hide_controls": "Hide controls",
+      "show_controls": "Show controls",
       "hints": {
         "design": "Colors, typography, and section visuals.",
         "bindings": "Connect sections to Jejakawan posts and media.",

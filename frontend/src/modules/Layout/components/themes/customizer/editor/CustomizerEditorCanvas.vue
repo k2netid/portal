@@ -1,30 +1,47 @@
 <template>
-  <main class="flex-1 overflow-y-auto relative bg-background custom-scrollbar">
+  <main
+    class="overflow-y-auto relative bg-background custom-scrollbar"
+    :class="panelMode ? 'flex-1 min-h-0 h-full' : 'flex-1'"
+  >
     <div
       v-if="selectedItem"
-      class="w-full transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300"
-      :class="sidebarCollapsed ? 'max-w-7xl mx-auto' : 'max-w-5xl mx-auto'"
+      class="w-full transition-all duration-300 space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300"
+      :class="panelMode
+        ? 'p-4 max-w-none'
+        : ['p-6 sm:p-8 lg:p-10 space-y-8', sidebarCollapsed ? 'max-w-7xl mx-auto' : 'max-w-5xl mx-auto']"
     >
       <!-- Section Title Header / Banner -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
-        <div class="flex items-center gap-3.5">
-          <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 shadow-inner">
+      <div
+        class="flex flex-col gap-3 pb-4 border-b border-border"
+        :class="panelMode ? '' : 'sm:flex-row sm:items-center justify-between gap-4 pb-6'"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 shadow-inner"
+            :class="panelMode ? 'w-9 h-9' : 'w-11 h-11'"
+          >
             <component
               :is="selectedItem.icon"
-              class="w-5 h-5"
+              :class="panelMode ? 'w-4 h-4' : 'w-5 h-5'"
             />
           </div>
-          <div>
-            <h2 class="text-xl font-bold tracking-tight text-foreground">
+          <div class="min-w-0">
+            <h2
+              class="font-bold tracking-tight text-foreground"
+              :class="panelMode ? 'text-base' : 'text-xl'"
+            >
               {{ selectedItem.label }}
             </h2>
-            <p class="text-xs sm:text-sm text-muted-foreground mt-0.5 font-medium">
+            <p class="text-xs text-muted-foreground mt-0.5 font-medium line-clamp-2">
               {{ selectedItem.description }}
             </p>
           </div>
         </div>
 
-        <div class="flex items-center gap-2 shrink-0">
+        <div
+          v-if="!panelMode"
+          class="flex items-center gap-2 shrink-0"
+        >
           <Badge
             variant="secondary"
             class="rounded-full text-xs font-semibold px-3 py-1 gap-1.5 bg-muted border-border"
@@ -339,6 +356,8 @@ const props = defineProps<{
   previewSlotData: (activeItemId: string, slotId: string) => Promise<void>;
   saveHistory: () => void;
   toggleSlot: (slotId: string) => void;
+  /** Narrow left controls column (WP Customizer layout). */
+  panelMode?: boolean;
 }>();
 
 const emit = defineEmits<{

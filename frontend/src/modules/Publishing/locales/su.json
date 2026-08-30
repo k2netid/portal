@@ -705,6 +705,8 @@
       },
       "preview": "Pratinjau",
       "preview_dialog_title": "Pratinjau tema",
+      "hide_controls": "Sumputkeun kontrol",
+      "show_controls": "Témbongkeun kontrol",
       "hints": {
         "design": "Warna, tipografi, sareng tampilan bagian.",
         "bindings": "Hubungkan bagian ka kusi Jejakawan.",

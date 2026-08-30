@@ -1,13 +1,13 @@
 <template>
   <div
-    class="w-full h-full bg-background relative"
+    class="w-full h-full min-h-0 bg-background relative"
     :class="{'opacity-50': loading && !loadError, 'pointer-events-none': loading && !loadError}"
   >
     <iframe
       v-show="!loadError"
       ref="previewFrame"
       :src="iframeSrc"
-      class="w-full h-full border-0"
+      class="absolute inset-0 w-full h-full border-0"
       @load="onPreviewLoad"
       @error="onPreviewError"
     />
