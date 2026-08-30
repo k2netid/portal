@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Theme Customizer sidebar labels for CMS pages (en/id/su).
 - Theme Customizer sidebar labels for Search page (en/id/su).
 - Theme Customizer sidebar labels for Pricing page (en/id/su).
 - Theme Customizer sidebar labels for Home Partners and CTA sections (en/id/su).

@@ -25,12 +25,12 @@
         </div>
 
         <!-- Text -->
-        <span class="text-[10px] font-black tracking-[0.6em] uppercase text-primary block mb-6">{{ t('theme.janari.pages.disabled.statusLabel') }}</span>
+        <span class="text-[10px] font-black tracking-[0.6em] uppercase text-primary block mb-6">{{ statusLabel }}</span>
         <h1 class="text-3xl md:text-5xl font-heading font-black mb-8 leading-tight tracking-tighter uppercase text-foreground">
           {{ title }}
         </h1>
         <p class="text-foreground/50 text-base md:text-lg mb-12 leading-relaxed">
-          {{ message || t('theme.janari.pages.disabled.defaultMessage') }}
+          {{ message || defaultMessage }}
         </p>
 
         <!-- Action -->
@@ -39,13 +39,13 @@
             to="/"
             class="px-10 py-4 bg-foreground text-background font-black text-[10px] tracking-[0.4em] uppercase hover:bg-primary hover:text-primary-foreground transition-all shadow-xl"
           >
-            {{ t('theme.janari.pages.disabled.backHome') }}
+            {{ backHomeLabel }}
           </router-link>
           <router-link
             to="/contact"
             class="text-[10px] font-black tracking-[0.3em] uppercase text-foreground/40 hover:text-primary transition-colors"
           >
-            {{ t('theme.janari.pages.disabled.contactAdmin') }}
+            {{ contactLabel }}
           </router-link>
         </div>
       </div>
@@ -54,13 +54,21 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { Construction } from 'lucide-vue-next';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 
 const { t } = useI18n();
+const { localizedString } = useLocalizedThemeSetting()
 
 defineProps<{
-  title: string;
+  title?: string;
   message?: string;
 }>();
+
+const statusLabel = computed(() => localizedString('page_disabled_status') || t('theme.janari.pages.disabled.statusLabel'))
+const defaultMessage = computed(() => t('theme.janari.pages.disabled.defaultMessage'))
+const backHomeLabel = computed(() => localizedString('page_disabled_back_home') || t('theme.janari.pages.disabled.backHome'))
+const contactLabel = computed(() => localizedString('page_disabled_contact') || t('theme.janari.pages.disabled.contactAdmin'))
 </script>

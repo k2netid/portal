@@ -8,6 +8,13 @@
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_management_desc"
         },
         {
+            "id": "page-cms",
+            "manifestCategories": ["CMS Page"],
+            "icon": "settings2",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_cms",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_cms_desc"
+        },
+        {
             "id": "page-about",
             "manifestCategories": ["About Page"],
             "icon": "user-circle",

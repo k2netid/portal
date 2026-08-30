@@ -21,7 +21,7 @@
               {{ pageTitle }}
             </h2>
             <p class="mt-4 text-muted-foreground">
-              {{ t('theme.janari.pages.page.emptyPublished') }}
+              {{ emptyPublishedText }}
             </p>
           </div>
         </section>
@@ -135,10 +135,10 @@
           <div class="container mx-auto grid grid-cols-1 gap-8 px-4 lg:grid-cols-12">
             <aside class="lg:col-span-3">
               <div class="sticky top-24 rounded-xl border border-border bg-card/60 p-5 backdrop-blur">
-                <p class="text-[10px] font-bold tracking-wider text-muted-foreground">{{ t('theme.janari.pages.page.metaLabel') }}</p>
+                <p class="text-[10px] font-bold tracking-wider text-muted-foreground">{{ metaLabel }}</p>
                 <div class="mt-4 space-y-3 text-sm text-muted-foreground">
                   <div>
-                    <p class="text-[10px] uppercase tracking-[0.2em]">{{ t('theme.janari.pages.page.typeLabel') }}</p>
+                    <p class="text-[10px] uppercase tracking-[0.2em]">{{ typeLabel }}</p>
                     <p class="mt-1 font-semibold text-foreground/80">{{ pageTypeLabel }}</p>
                   </div>
                 </div>
@@ -197,7 +197,7 @@
               {{ pageTitle }}
             </h2>
             <p class="mt-4 text-muted-foreground">
-              {{ t('theme.janari.pages.page.emptyPublished') }}
+              {{ emptyPublishedText }}
             </p>
           </div>
         </section>
@@ -210,10 +210,10 @@
     >
       <div class="mx-auto max-w-2xl rounded-2xl border border-border bg-card/40 p-10 text-center">
         <h1 class="mt-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          {{ t('theme.janari.pages.page.notFoundTitle') }}
+          {{ notFoundTitle }}
         </h1>
         <p class="mt-4 text-muted-foreground">
-          {{ t('theme.janari.pages.page.notFoundDescription') }}
+          {{ notFoundDescription }}
         </p>
       </div>
     </section>
@@ -225,6 +225,7 @@ import { PluginSlot } from '@/shared/components'
 import { logger } from '@/shared/utils/logger';
 import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { useRoute, useRouter } from 'vue-router';
 import JanariSplitText from '../components/shared/JanariSplitText.vue';
@@ -243,10 +244,17 @@ import {
 import type { Content } from '@/modules/Publishing/types/content'
 
 const { t, locale } = useI18n({ useScope: 'global' });
+const { localizedString } = useLocalizedThemeSetting();
 const route = useRoute();
 const router = useRouter();
 const pageData = ref<Content | null>(null);
 const loading = ref(true);
+
+const emptyPublishedText = computed(() => localizedString('page_cms_empty') || t('theme.janari.pages.page.emptyPublished'));
+const metaLabel = computed(() => localizedString('page_cms_meta_label') || t('theme.janari.pages.page.metaLabel'));
+const typeLabel = computed(() => localizedString('page_cms_type_label') || t('theme.janari.pages.page.typeLabel'));
+const notFoundTitle = computed(() => localizedString('page_cms_not_found_title') || t('theme.janari.pages.page.notFoundTitle'));
+const notFoundDescription = computed(() => localizedString('page_cms_not_found_description') || t('theme.janari.pages.page.notFoundDescription'));
 
 const pageSlug = computed(() => (route.params.slug as string) || '');
 const pageTitle = computed(() => {

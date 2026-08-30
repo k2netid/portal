@@ -753,6 +753,8 @@
         },
         "page_management": "Aktif/nonaktif halaman",
         "page_management_desc": "Nyalakan atau matikan halaman landing hub",
+        "page_cms": "Halaman CMS",
+        "page_cms_desc": "Chrome kosong/not-found untuk halaman CMS generik",
         "page_about": "Tentang",
         "page_about_desc": "Cerita, misi, dan tim Jejakawan",
         "page_solusi": "Solusi / Produk",

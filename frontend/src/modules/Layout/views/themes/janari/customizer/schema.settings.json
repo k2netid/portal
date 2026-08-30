@@ -4020,5 +4020,215 @@
         "default": "",
         "category": "About Page",
         "scope": "theme"
+    },
+    "page_cms_empty": {
+        "label": "CMS page empty body (fallback)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_empty_en": {
+        "label": "CMS page empty body (English)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_empty_id": {
+        "label": "CMS page empty body (Indonesian)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_meta_label": {
+        "label": "CMS page meta label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_meta_label_en": {
+        "label": "CMS page meta label (English)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_meta_label_id": {
+        "label": "CMS page meta label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_type_label": {
+        "label": "CMS page type label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_type_label_en": {
+        "label": "CMS page type label (English)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_type_label_id": {
+        "label": "CMS page type label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_title": {
+        "label": "CMS page not-found title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_title_en": {
+        "label": "CMS page not-found title (English)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_title_id": {
+        "label": "CMS page not-found title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_description": {
+        "label": "CMS page not-found description (fallback)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_description_en": {
+        "label": "CMS page not-found description (English)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "page_cms_not_found_description_id": {
+        "label": "CMS page not-found description (Indonesian)",
+        "type": "textarea",
+        "default": "",
+        "category": "CMS Page",
+        "scope": "theme"
+    },
+    "header_profile_label": {
+        "label": "Header profile label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "header_profile_label_en": {
+        "label": "Header profile label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "header_profile_label_id": {
+        "label": "Header profile label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "header_logout_label": {
+        "label": "Header logout label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "header_logout_label_en": {
+        "label": "Header logout label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "header_logout_label_id": {
+        "label": "Header logout label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Appearance",
+        "scope": "theme"
+    },
+    "page_disabled_status": {
+        "label": "Disabled page status label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_status_en": {
+        "label": "Disabled page status label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_status_id": {
+        "label": "Disabled page status label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_back_home": {
+        "label": "Disabled page back-home (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_back_home_en": {
+        "label": "Disabled page back-home (English)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_back_home_id": {
+        "label": "Disabled page back-home (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_contact": {
+        "label": "Disabled page contact link (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_contact_en": {
+        "label": "Disabled page contact link (English)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
+    },
+    "page_disabled_contact_id": {
+        "label": "Disabled page contact link (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Public Pages",
+        "scope": "theme"
     }
 }

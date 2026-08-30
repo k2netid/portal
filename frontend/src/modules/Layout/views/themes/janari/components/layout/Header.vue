@@ -195,7 +195,7 @@
                   class="flex items-center gap-2 cursor-pointer w-full"
                 >
                   <UserIcon class="w-4 h-4 text-primary" />
-                  <span>{{ t('common.labels.profile', 'Akun Saya') }}</span>
+                  <span>{{ profileLabel }}</span>
                 </router-link>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -203,7 +203,7 @@
                 @click="handleLogout"
               >
                 <LogOut class="w-4 h-4 mr-2" />
-                <span>{{ t('common.actions.logout', 'Keluar') }}</span>
+                <span>{{ logoutLabel }}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -481,7 +481,7 @@
                 @click="isOpen = false"
               >
                 <UserIcon class="w-3.5 h-3.5" />
-                <span class="max-w-[120px] truncate">{{ authStore.user?.name || 'Akun Saya' }}</span>
+                <span class="max-w-[120px] truncate">{{ authStore.user?.name || profileLabel }}</span>
               </router-link>
             </template>
             <a
@@ -623,6 +623,8 @@ const loginUrl = computed(() => {
 const officialLine1 = computed(() => localizedString('header_official_line1') || t('theme.janari.header.officialLine1'))
 const officialLine2 = computed(() => localizedString('header_official_line2') || t('theme.janari.header.officialLine2'))
 const loginLabel = computed(() => localizedString('header_login_label') || t('theme.janari.header.login'))
+const profileLabel = computed(() => localizedString('header_profile_label') || t('common.labels.profile', 'Akun Saya'))
+const logoutLabel = computed(() => localizedString('header_logout_label') || t('common.actions.logout', 'Keluar'))
 const newsBadge = computed(() => localizedString('header_news_badge') || t('theme.janari.header.newsBadge'))
 const socialLabel = computed(() => localizedString('header_social_label') || t('theme.janari.header.socialLabel'))
 const latestNewsText = computed(() =>

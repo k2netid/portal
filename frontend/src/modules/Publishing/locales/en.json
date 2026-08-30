@@ -753,6 +753,8 @@
         },
         "page_management": "Page toggles",
         "page_management_desc": "Turn hub landing pages on or off",
+        "page_cms": "CMS pages",
+        "page_cms_desc": "Generic published page empty/not-found chrome",
         "page_about": "About",
         "page_about_desc": "Company story, mission, and team",
         "page_solusi": "Solusi / Products",

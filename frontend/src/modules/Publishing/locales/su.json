@@ -753,6 +753,8 @@
         },
         "page_management": "Aktif/nonaktif kaca",
         "page_management_desc": "Nyalakan atawa matikan kaca landing hub",
+        "page_cms": "Kaca CMS",
+        "page_cms_desc": "Chrome kosong/not-found pikeun kaca CMS generik",
         "page_about": "Ngeunaan",
         "page_about_desc": "Cerita, misi, sareng tim Jejakawan",
         "page_solusi": "Solusi / Produk",
