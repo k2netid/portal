@@ -3157,6 +3157,261 @@
             "default": "",
             "category": "Achievements Page",
             "scope": "theme"
+        },
+        "footer_description": {
+            "label": "Footer brand description (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_description_en": {
+            "label": "Footer brand description (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_description_id": {
+            "label": "Footer brand description (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col1_title": {
+            "label": "Footer column 1 title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "Used when the linked menu has no name."
+        },
+        "footer_col1_title_en": {
+            "label": "Footer column 1 title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col1_title_id": {
+            "label": "Footer column 1 title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col2_title": {
+            "label": "Footer column 2 title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "Used when the linked menu has no name."
+        },
+        "footer_col2_title_en": {
+            "label": "Footer column 2 title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col2_title_id": {
+            "label": "Footer column 2 title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title": {
+            "label": "Footer newsletter title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title_en": {
+            "label": "Footer newsletter title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title_id": {
+            "label": "Footer newsletter title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description": {
+            "label": "Footer newsletter description (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description_en": {
+            "label": "Footer newsletter description (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description_id": {
+            "label": "Footer newsletter description (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder": {
+            "label": "Footer newsletter placeholder (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder_en": {
+            "label": "Footer newsletter placeholder (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder_id": {
+            "label": "Footer newsletter placeholder (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by": {
+            "label": "Footer “built by” label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by_en": {
+            "label": "Footer “built by” label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by_id": {
+            "label": "Footer “built by” label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link": {
+            "label": "Footer brand link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link_en": {
+            "label": "Footer brand link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link_id": {
+            "label": "Footer brand link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label": {
+            "label": "Footer privacy link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label_en": {
+            "label": "Footer privacy link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label_id": {
+            "label": "Footer privacy link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label": {
+            "label": "Footer terms link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label_en": {
+            "label": "Footer terms link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label_id": {
+            "label": "Footer terms link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_url": {
+            "label": "Footer privacy URL",
+            "type": "text",
+            "default": "/privacy",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_url": {
+            "label": "Footer terms URL",
+            "type": "text",
+            "default": "/terms",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_url": {
+            "label": "Footer brand link URL",
+            "type": "text",
+            "default": "https://jejakawan.com",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_copyright": {
+            "label": "Footer copyright line (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "If set, replaces the default dual credit line."
+        },
+        "footer_copyright_en": {
+            "label": "Footer copyright line (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_copyright_id": {
+            "label": "Footer copyright line (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
         }
     },
     "menus": {

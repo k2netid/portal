@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Janari Customizer v7: Footer brand blurb, column titles, newsletter copy, legal links, copyright override.
 - Janari Customizer v6: Search page chrome; News list headings/empty; Achievements filter labels.
 - Janari Customizer v5: Pricing page chrome; News/Careers/Achievements titles + locale variants; Career sidebar + Achievement CTA editable.
 - Janari Customizer v4: Partners + CTA sidebar entries; CTA secondary label + button URLs editable; logos still via bindings.

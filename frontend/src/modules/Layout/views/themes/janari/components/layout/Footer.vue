@@ -49,7 +49,7 @@
             </div>
           </div>
           <p class="text-foreground/75 text-xs leading-relaxed max-w-xs font-medium">
-            {{ displaySiteDescription || tt('footer.descriptionDefault') }}
+            {{ brandDescription }}
           </p>
                     
           <!-- Social Links -->
@@ -80,7 +80,7 @@
           class="space-y-10"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.35em] text-foreground/75">
-            {{ menus['footer_col_1']?.name || tt('footer.browse') }}
+            {{ col1Title }}
           </h2>
           <ul class="space-y-4">
             <li
@@ -104,7 +104,7 @@
           class="space-y-10"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.35em] text-foreground/75">
-            {{ menus['footer_col_2']?.name || tt('footer.support') }}
+            {{ col2Title }}
           </h2>
           <ul class="space-y-4">
             <li
@@ -128,10 +128,10 @@
           class="space-y-8"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/90">
-            {{ t('publishing.frontend.newsletter.title') }}
+            {{ newsletterTitle }}
           </h2>
           <p class="text-foreground/75 text-xs leading-relaxed font-medium">
-            {{ t('publishing.frontend.newsletter.description') }}
+            {{ newsletterDescription }}
           </p>
           <form
             class="flex flex-col gap-3"
@@ -141,7 +141,7 @@
               <input 
                 v-model="email"
                 type="email" 
-                :placeholder="t('publishing.frontend.newsletter.placeholder')" 
+                :placeholder="newsletterPlaceholder" 
                 class="flex-1 px-4 py-3 bg-muted/30 border border-border text-foreground placeholder-foreground/30 text-xs focus:border-primary/50 outline-none transition-colors"
               >
               <button 
@@ -167,18 +167,21 @@
       <!-- Bottom Bar -->
       <div :class="['mt-24 pt-10 border-t border-border flex justify-between items-center gap-8', isDesktop ? 'flex-row' : 'flex-col']">
         <p class="text-foreground/75 text-[9px] uppercase tracking-[0.2em] font-black flex flex-wrap gap-x-6 gap-y-2">
-          <span>&copy; {{ new Date().getFullYear() }} <a
-            href="https://k2net.id"
-            target="_blank"
-            class="hover:text-primary transition-colors"
-          >K2NET</a></span>
-          <span class="hidden md:inline text-foreground/5">/</span>
-          <span>{{ tt('footer.developedBy') }} <a
-            href="https://jejakawan.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-primary transition-colors"
-          >{{ tt('footer.brandLink') }}</a></span>
+          <span v-if="copyrightText">{{ copyrightText }}</span>
+          <template v-else>
+            <span>&copy; {{ new Date().getFullYear() }} <a
+              href="https://k2net.id"
+              target="_blank"
+              class="hover:text-primary transition-colors"
+            >K2NET</a></span>
+            <span class="hidden md:inline text-foreground/5">/</span>
+            <span>{{ developedByText }} <a
+              :href="brandUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-primary transition-colors"
+            >{{ brandLinkText }}</a></span>
+          </template>
         </p>
                 
         <div class="flex gap-10">
@@ -192,17 +195,17 @@
           </router-link>
           <template v-if="footerItems.length === 0">
             <router-link
-              to="/privacy"
+              :to="privacyUrl"
               class="text-foreground/80 hover:text-foreground text-[9px] font-black uppercase tracking-[0.3em] transition-colors"
             >
-{{ t('publishing.frontend.footer.privacy') }}
-</router-link>
+              {{ privacyLabel }}
+            </router-link>
             <router-link
-              to="/terms"
+              :to="termsUrl"
               class="text-foreground/80 hover:text-foreground text-[9px] font-black uppercase tracking-[0.3em] transition-colors"
             >
-{{ t('publishing.frontend.footer.terms') }}
-</router-link>
+              {{ termsLabel }}
+            </router-link>
           </template>
         </div>
       </div>
@@ -215,6 +218,7 @@ import { ref, computed, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { useMenu } from '@/modules/Layout/composables/useMenu'
 import { useSystemStore } from '@/modules/Core/System/stores/system'
 import { useToast } from '@/shared/composables/useToast'
@@ -242,7 +246,8 @@ import {
 
 const { t } = useI18n()
 const { t: tt } = useThemeI18n('janari')
-const { getSetting } = useTheme()
+const { getSetting, themeSettings } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
 const { menus, fetchMenuByIdentifier } = useMenu()
 const device = useResponsiveDevice();
 const { staggerChildren, magneticHover } = useThemeMotion();
@@ -278,6 +283,62 @@ const siteLogo = computed((): string => {
         || (typeof fromSite === 'string' ? fromSite : '');
 });
 const siteVersion = computed(() => siteSettings.value?.site_version || tt('footer.versionDefault'));
+
+const brandDescription = computed(() =>
+  displaySiteDescription.value
+    || localizedString('footer_description')
+    || tt('footer.descriptionDefault'),
+)
+const col1Title = computed(() =>
+  menus.value['footer_col_1']?.name
+    || localizedString('footer_col1_title')
+    || tt('footer.browse'),
+)
+const col2Title = computed(() =>
+  menus.value['footer_col_2']?.name
+    || localizedString('footer_col2_title')
+    || tt('footer.support'),
+)
+const newsletterTitle = computed(() =>
+  localizedString('footer_newsletter_title') || t('publishing.frontend.newsletter.title'),
+)
+const newsletterDescription = computed(() =>
+  localizedString('footer_newsletter_description') || t('publishing.frontend.newsletter.description'),
+)
+const newsletterPlaceholder = computed(() =>
+  localizedString('footer_newsletter_placeholder') || t('publishing.frontend.newsletter.placeholder'),
+)
+const developedByText = computed(() =>
+  localizedString('footer_developed_by') || tt('footer.developedBy'),
+)
+const brandLinkText = computed(() =>
+  localizedString('footer_brand_link') || tt('footer.brandLink'),
+)
+const privacyLabel = computed(() =>
+  localizedString('footer_privacy_label') || t('publishing.frontend.footer.privacy'),
+)
+const termsLabel = computed(() =>
+  localizedString('footer_terms_label') || t('publishing.frontend.footer.terms'),
+)
+const copyrightText = computed(() => {
+  const fromTheme = localizedString('footer_copyright')
+  if (fromTheme.trim()) return fromTheme.trim()
+  const saved = themeSettings.value?.footer_text
+  if (typeof saved === 'string' && saved.trim()) return saved.trim()
+  return ''
+})
+const privacyUrl = computed(() => {
+  const raw = getSetting('footer_privacy_url', '/privacy')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/privacy'
+})
+const termsUrl = computed(() => {
+  const raw = getSetting('footer_terms_url', '/terms')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/terms'
+})
+const brandUrl = computed(() => {
+  const raw = getSetting('footer_brand_url', 'https://jejakawan.com')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : 'https://jejakawan.com'
+})
 
 const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);
 
