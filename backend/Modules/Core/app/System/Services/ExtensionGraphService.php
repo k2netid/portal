@@ -98,6 +98,141 @@ class ExtensionGraphService
     }
 
     /**
+     * Reverse-topo deactivation plan: active dependents first, then targets.
+     * Includes reverse dependents outside the target set (e.g. Site when CMS is turned off).
+     *
+     * @param  list<string>  $targetSlugs
+     * @return array{
+     *     will_deactivate: list<array{slug: string, name: string, reason: string}>,
+     *     already_inactive: list<array{slug: string, name: string}>,
+     *     blocked_kernel: list<array{slug: string, name: string}>,
+     *     can_cascade: bool
+     * }
+     */
+    public function deactivationPlan(array $targetSlugs): array
+    {
+        $targets = [];
+        foreach ($targetSlugs as $slug) {
+            if (is_string($slug) && $slug !== '' && ! in_array($slug, $targets, true)) {
+                $targets[] = $slug;
+            }
+        }
+
+        $alreadyInactive = [];
+        $blockedKernel = [];
+        /** @var array<string, Extension> $closure */
+        $closure = [];
+
+        foreach ($targets as $slug) {
+            $ext = Extension::query()->where('slug', $slug)->first();
+            if ($ext === null) {
+                continue;
+            }
+            if ($ext->is_core || in_array(strtolower($ext->slug), ['core', 'system', 'security', 'infra'], true)) {
+                $blockedKernel[] = ['slug' => $ext->slug, 'name' => $ext->name];
+
+                continue;
+            }
+            if ($ext->status !== 'active') {
+                $alreadyInactive[] = ['slug' => $ext->slug, 'name' => $ext->name];
+
+                continue;
+            }
+            $closure[$ext->slug] = $ext;
+        }
+
+        // Expand active reverse dependents until fixed point.
+        $changed = true;
+        while ($changed) {
+            $changed = false;
+            $active = Extension::query()
+                ->where('status', 'active')
+                ->where('is_core', false)
+                ->get();
+            foreach ($active as $candidate) {
+                if (isset($closure[$candidate->slug])) {
+                    continue;
+                }
+                if ($candidate->is_core) {
+                    continue;
+                }
+                foreach ($this->requiresOf($candidate) as $depSlug => $_constraint) {
+                    if (isset($closure[$depSlug])) {
+                        $closure[$candidate->slug] = $candidate;
+                        $changed = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Kahn reverse: repeatedly peel nodes with no remaining active dependents inside closure.
+        $remaining = $closure;
+        $ordered = [];
+        $guard = 0;
+        while ($remaining !== [] && $guard < 200) {
+            $guard++;
+            $peel = [];
+            foreach ($remaining as $slug => $ext) {
+                $hasDepInRemaining = false;
+                foreach ($remaining as $other) {
+                    if ($other->slug === $slug) {
+                        continue;
+                    }
+                    if (array_key_exists($slug, $this->requiresOf($other))) {
+                        $hasDepInRemaining = true;
+                        break;
+                    }
+                }
+                if (! $hasDepInRemaining) {
+                    $peel[] = $slug;
+                }
+            }
+
+            if ($peel === []) {
+                // Cycle — fall back to reverse activation priority.
+                $fallback = array_keys($remaining);
+                usort($fallback, static function (string $a, string $b): int {
+                    return ExtensionFamilyCatalog::activationPriority($b)
+                        <=> ExtensionFamilyCatalog::activationPriority($a);
+                });
+                foreach ($fallback as $slug) {
+                    $ext = $remaining[$slug];
+                    $ordered[] = [
+                        'slug' => $ext->slug,
+                        'name' => $ext->name,
+                        'reason' => in_array($slug, $targets, true) ? 'target' : 'dependent',
+                    ];
+                }
+                $remaining = [];
+                break;
+            }
+
+            usort($peel, static function (string $a, string $b): int {
+                return ExtensionFamilyCatalog::activationPriority($b)
+                    <=> ExtensionFamilyCatalog::activationPriority($a);
+            });
+
+            foreach ($peel as $slug) {
+                $ext = $remaining[$slug];
+                $ordered[] = [
+                    'slug' => $ext->slug,
+                    'name' => $ext->name,
+                    'reason' => in_array($slug, $targets, true) ? 'target' : 'dependent',
+                ];
+                unset($remaining[$slug]);
+            }
+        }
+
+        return [
+            'will_deactivate' => $ordered,
+            'already_inactive' => $alreadyInactive,
+            'blocked_kernel' => $blockedKernel,
+            'can_cascade' => $ordered !== [] || ($targets === [] && $alreadyInactive !== []),
+        ];
+    }
+
+    /**
      * Topological activation plan for one or more target slugs (required deps only).
      *
      * @param  list<string>  $targetSlugs

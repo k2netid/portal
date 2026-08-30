@@ -250,6 +250,17 @@ class ExtensionController extends BaseApiController
     }
 
     /**
+     * Preview reverse-topo deactivation for a family or explicit slug list.
+     */
+    public function deactivationPlan(Request $request): JsonResponse
+    {
+        $targets = $this->resolveDeactivationTargets($request);
+        $plan = app(ExtensionGraphService::class)->deactivationPlan($targets);
+
+        return $this->success($plan, 'Deactivation plan');
+    }
+
+    /**
      * Activate a family (e.g. cms) or an explicit slug list in dependency order.
      */
     public function bulkActivate(Request $request): JsonResponse
@@ -275,6 +286,36 @@ class ExtensionController extends BaseApiController
             ]);
 
             return $this->error('Failed to activate extension: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Deactivate a family (e.g. cms) or slug list in reverse-dependency order
+     * (dependents such as Site first, then CMS packs).
+     */
+    public function bulkDeactivate(Request $request): JsonResponse
+    {
+        $targets = $this->resolveDeactivationTargets($request);
+        if ($targets === []) {
+            return $this->success(['deactivated' => []], 'Nothing to deactivate');
+        }
+
+        $graph = app(ExtensionGraphService::class);
+        $plan = $graph->deactivationPlan($targets);
+        if ($plan['will_deactivate'] === []) {
+            return $this->success(['deactivated' => []], 'Nothing to deactivate');
+        }
+
+        try {
+            $deactivated = $this->deactivatePlanOrdered($plan['will_deactivate']);
+
+            return $this->success(['deactivated' => $deactivated], 'Extensions deactivated successfully');
+        } catch (Exception $e) {
+            $this->writeExtensionLog($targets[0] ?? 'bulk', 'deactivate', 'failed', null, null, $e->getMessage(), [
+                'targets' => $targets,
+            ]);
+
+            return $this->error('Failed to deactivate extension: '.$e->getMessage());
         }
     }
 
@@ -1054,6 +1095,22 @@ class ExtensionController extends BaseApiController
      */
     protected function resolveActivationTargets(Request $request): array
     {
+        return $this->resolveFamilyOrSlugTargets($request, activeOnly: false);
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function resolveDeactivationTargets(Request $request): array
+    {
+        return $this->resolveFamilyOrSlugTargets($request, activeOnly: true);
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function resolveFamilyOrSlugTargets(Request $request, bool $activeOnly): array
+    {
         $family = $request->input('family', $request->query('family'));
         $slugs = $request->input('slugs', $request->query('slugs'));
 
@@ -1074,12 +1131,17 @@ class ExtensionController extends BaseApiController
                 return [];
             }
 
-            return Extension::query()
+            $query = Extension::query()
                 ->whereIn('slug', $merged)
-                ->where('status', '!=', 'active')
-                ->where('is_core', false)
-                ->pluck('slug')
-                ->all();
+                ->where('is_core', false);
+
+            if ($activeOnly) {
+                $query->where('status', 'active');
+            } else {
+                $query->where('status', '!=', 'active');
+            }
+
+            return $query->pluck('slug')->all();
         }
 
         if (! is_array($slugs)) {
@@ -1143,6 +1205,49 @@ class ExtensionController extends BaseApiController
             }
             throw $e;
         }
+    }
+
+    /**
+     * @param  list<array{slug: string, name: string, reason?: string}>  $willDeactivate
+     * @return list<array{slug: string, name: string}>
+     *
+     * @throws Exception
+     */
+    protected function deactivatePlanOrdered(array $willDeactivate): array
+    {
+        $deactivated = [];
+        $graph = app(ExtensionGraphService::class);
+
+        foreach ($willDeactivate as $row) {
+            $step = Extension::where('slug', $row['slug'])->firstOrFail();
+            if ($step->status !== 'active') {
+                continue;
+            }
+            if ($this->guardKernelLifecycle($step, 'deactivated') !== null) {
+                throw new Exception('Platform kernel modules cannot be deactivated: '.$step->slug);
+            }
+
+            $graph->assertCanDeactivate($step);
+
+            \Hook::action('extension_deactivated', $step);
+            $step->update(['status' => 'inactive']);
+            ConsoleMenu::syncVisibilityForExtension($step->slug, false);
+            $this->writeExtensionLog(
+                $step->slug,
+                'deactivate',
+                'success',
+                $step->version,
+                $step->version,
+            );
+            $deactivated[] = [
+                'slug' => $step->slug,
+                'name' => $step->name,
+            ];
+        }
+
+        $graph->forgetLifecycleCaches();
+
+        return $deactivated;
     }
 
     protected function rollbackActivation(Extension $extension, string $reason): void

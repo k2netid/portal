@@ -275,7 +275,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('git-clone', [ExtensionController::class, 'gitClone']);
         Route::put('features/{slug}/toggle', [ExtensionController::class, 'toggleFeature']);
         Route::get('activation-plan', [ExtensionController::class, 'activationPlan']);
+        Route::get('deactivation-plan', [ExtensionController::class, 'deactivationPlan']);
         Route::post('bulk-activate', [ExtensionController::class, 'bulkActivate']);
+        Route::post('bulk-deactivate', [ExtensionController::class, 'bulkDeactivate']);
         Route::post('apply-install-profile', [ExtensionController::class, 'applyInstallProfile']);
         Route::get('{slug}/lifecycle-preview', [ExtensionController::class, 'lifecyclePreview']);
         Route::post('{slug}/activate', [ExtensionController::class, 'activate']);

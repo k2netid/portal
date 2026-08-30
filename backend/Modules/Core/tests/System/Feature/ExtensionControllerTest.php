@@ -975,6 +975,69 @@ class ExtensionControllerTest extends TestCase
         $this->assertEquals('active', Extension::where('slug', 'layout')->value('status'));
     }
 
+    public function test_bulk_deactivate_cms_family_follows_reverse_dependency_order(): void
+    {
+        Extension::create([
+            'slug' => 'library',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Library',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+        ]);
+        Extension::create([
+            'slug' => 'publishing',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Publishing',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'requirements' => ['library' => '>=1.0.0'],
+        ]);
+        Extension::create([
+            'slug' => 'layout',
+            'type' => 'module',
+            'family' => 'cms',
+            'name' => 'Layout',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'requirements' => ['publishing' => '>=1.0.0'],
+        ]);
+        Extension::create([
+            'slug' => 'site',
+            'type' => 'module',
+            'family' => 'audience',
+            'name' => 'Site',
+            'version' => '1.0.0',
+            'database_version' => '1.0.0',
+            'status' => 'active',
+            'is_core' => false,
+            'requirements' => ['layout' => '>=1.0.0'],
+        ]);
+
+        $plan = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions/deactivation-plan?family=cms');
+        $plan->assertStatus(200);
+        $this->assertSame(
+            ['site', 'layout', 'publishing', 'library'],
+            array_column($plan->json('data.will_deactivate'), 'slug'),
+        );
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/bulk-deactivate', ['family' => 'cms']);
+        $response->assertStatus(200);
+        $this->assertEquals('inactive', Extension::where('slug', 'site')->value('status'));
+        $this->assertEquals('inactive', Extension::where('slug', 'layout')->value('status'));
+        $this->assertEquals('inactive', Extension::where('slug', 'publishing')->value('status'));
+        $this->assertEquals('inactive', Extension::where('slug', 'library')->value('status'));
+    }
+
     public function test_runtime_php_constraint_blocks_activation(): void
     {
         $ext = Extension::create([

@@ -94,16 +94,28 @@
               {{ group.label }}
               <span class="font-normal text-muted-foreground/70">({{ group.items.length }})</span>
             </h3>
-            <Button
-              v-if="group.key === 'cms' && activeTab === 'cms' && inactiveCms.length > 0"
-              variant="secondary"
-              size="sm"
-              class="gap-1.5"
-              @click="bulkActivateCms"
-            >
-              <Layers class="h-3.5 w-3.5" />
-              {{ t('system.appStore.bulkActivateCms') }}
-            </Button>
+            <div class="flex items-center gap-2 shrink-0">
+              <Button
+                v-if="group.key === 'cms' && activeTab === 'cms' && inactiveCms.length > 0"
+                variant="secondary"
+                size="sm"
+                class="gap-1.5"
+                @click="bulkActivateCms"
+              >
+                <Layers class="h-3.5 w-3.5" />
+                {{ t('system.appStore.bulkActivateCms') }}
+              </Button>
+              <Button
+                v-if="group.key === 'cms' && activeTab === 'cms' && activeCms.length > 0"
+                variant="outline"
+                size="sm"
+                class="gap-1.5"
+                @click="bulkDeactivateCms"
+              >
+                <PowerOff class="h-3.5 w-3.5" />
+                {{ t('system.appStore.bulkDeactivateCms') }}
+              </Button>
+            </div>
           </div>
           <div class="overflow-x-auto rounded-xl border border-border/60">
             <table class="min-w-full divide-y divide-border text-sm">
@@ -244,6 +256,7 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 import {
   GitBranch,
   Layers,
+  PowerOff,
   Puzzle,
   SearchIcon,
   UploadIcon,
@@ -389,6 +402,10 @@ const familyLabel = (key: string): string => {
 
 const inactiveCms = computed(() =>
     extensions.value.filter((ext) => resolveFamily(ext) === 'cms' && ext.status !== 'active' && !ext.is_core),
+);
+
+const activeCms = computed(() =>
+    extensions.value.filter((ext) => resolveFamily(ext) === 'cms' && ext.status === 'active' && !ext.is_core),
 );
 
 // Pagination state
@@ -745,6 +762,8 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
 
 const cmsSlugsToActivate = () => inactiveCms.value.map((ext) => ext.slug);
 
+const cmsSlugsToDeactivate = () => activeCms.value.map((ext) => ext.slug);
+
 const bulkActivateCms = async () => {
     const slugs = cmsSlugsToActivate();
     let plan: { will_activate?: Array<{ slug: string; name: string }>; can_cascade?: boolean } = {};
@@ -815,6 +834,72 @@ const bulkActivateCms = async () => {
     } catch (err: unknown) {
         const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
         toast.error(axiosMessage || t('system.appStore.messages.bulkActivateCmsFailed'));
+    }
+};
+
+const bulkDeactivateCms = async () => {
+    const slugs = cmsSlugsToDeactivate();
+    let plan: { will_deactivate?: Array<{ slug: string; name: string }> } = {};
+    try {
+        const planResponse = await api.get('/manage/infra/extensions/deactivation-plan', {
+            params: { family: 'cms', slugs },
+        });
+        const raw = planResponse.data as typeof plan & { data?: typeof plan };
+        const planPayload = unwrapApiData<typeof plan>(raw) ?? raw;
+        if (planPayload && typeof planPayload === 'object') {
+            plan = planPayload;
+        }
+    } catch {
+        toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
+        return;
+    }
+
+    const willDeactivate = plan.will_deactivate || [];
+    if (willDeactivate.length === 0) {
+        if (slugs.length > 0) {
+            toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
+            return;
+        }
+        toast.success(t('system.appStore.messages.bulkDeactivateCmsEmpty'));
+        return;
+    }
+
+    const list = willDeactivate.map((row) => row.name).join(', ');
+    const confirmed = await confirm({
+        title: t('system.appStore.messages.bulkDeactivateCmsTitle'),
+        message: t('system.appStore.messages.bulkDeactivateCmsMessage', { list }),
+        variant: 'danger',
+        confirmText: t('system.appStore.bulkDeactivateCms'),
+    });
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        const response = await api.post('/manage/infra/extensions/bulk-deactivate', { family: 'cms', slugs });
+        const payload = unwrapApiData<{ deactivated?: Array<{ slug?: string; name?: string }> }>(response.data);
+        const deactivated = payload?.deactivated || [];
+        if (deactivated.length === 0) {
+            toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
+            return;
+        }
+
+        const deactivatedSlugs = new Set(deactivated.map((row) => row.slug).filter(Boolean));
+        extensions.value = extensions.value.map((ext) => (
+            deactivatedSlugs.has(ext.slug) ? { ...ext, status: 'inactive' as const } : ext
+        ));
+
+        const names = deactivated.map((row) => row.name).filter(Boolean).join(', ');
+        toast.success(t('system.appStore.messages.bulkDeactivateCmsSuccess', {
+            count: deactivated.length,
+            list: names,
+        }));
+        await fetchExtensions();
+        await systemStore.fetchPublicSettings({ force: true });
+        window.location.reload();
+    } catch (err: unknown) {
+        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        toast.error(axiosMessage || t('system.appStore.messages.bulkDeactivateCmsFailed'));
     }
 };
 
