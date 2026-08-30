@@ -1,8 +1,9 @@
 # Architectural Status — kernel + CMS line
 
-Update: 2026-08-27
+Update: 2026-08-30
 
-Canonical git branch for this snapshot: **`fix/module-registry-p0-kernel-lock`** (ahead of `main` for CMS packs, member, and `/site`).
+Canonical integration branch for this snapshot: **`integrate/cms`** (rename dari `fix/module-registry-p0-kernel-lock`; ahead of `main` for CMS packs, member, and `/site`).  
+Branching model: [branching.md](branching.md) — trunk `main` + integrate sementara + feat/fix pendek.
 
 ## Kernel (`main` lineage)
 
@@ -50,7 +51,7 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 | Item | Notes |
 | :--- | :--- |
 | Branch **`develop`** | Old CMS line name — packs now live as optional modules on this kernel branch |
-| CI `develop` trigger | Single canonical `main`; this CMS line is a feature branch until merge |
+| CI `develop` trigger | Single canonical `main`; CMS line = `integrate/cms` until merge |
 
 Console IAM (`srv_auth_users`) is **not** the public reader model. Member pack is optional CMS/audience, not ja-control-plane billing.
 

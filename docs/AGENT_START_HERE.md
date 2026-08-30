@@ -13,9 +13,12 @@ Repo ini **bukan** `ja-control-plane`. Control plane (`ja-control-plane`) tetap 
 
 | Branch | Peran |
 | :--- | :--- |
-| **`main`** | Kernel canonical: `Modules/Core` (`System`, `Infra`, `Security`) + unified console SPA |
+| **`main`** | Trunk — kernel canonical (`Modules/Core` + unified console). Pack yang sudah merge ikut di sini. |
+| **`integrate/<domain>`** | Sementara — gelombang besar (saat ini **`integrate/cms`**). Merge ke `main` lalu hapus. |
+| **`feat/…` / `fix/…`** | Pendek — PR ke `main` atau ke integrate aktif; hapus setelah merge. |
 
-Branch **`develop`** (line CMS) **dihapus Aug 2026**. Pack CMS opsional (Publishing, Layout, Member, Site, …) sekarang **in-tree** di kernel, di-gate registry. Billing member / JA-CP tetap downstream. Snapshot terbaru: [architectural-status.md](architectural-status.md).
+Kebijakan penuh: [branching.md](branching.md).  
+Branch **`develop`** dihapus Aug 2026. Snapshot status: [architectural-status.md](architectural-status.md).
 
 ## Struktur wajib dibaca
 
