@@ -75,6 +75,7 @@ const sidebarNavIconByKey: Record<string, any> = {
   award: Award,
   briefcase: Briefcase,
   newspaper: Newspaper,
+  'message-square': MessageSquare,
 };
 
 export function useCustomizerNavigation(

@@ -7,13 +7,13 @@
       >
         <span class="inline-flex items-center px-4 py-2 rounded-full border border-primary/30 bg-primary/5 font-black tracking-[0.5em] uppercase text-[9px] block mb-6 text-primary">
           <span class="w-1 h-1 bg-primary rounded-full mr-2" />
-          {{ t('testimonials.badge') }}
+          {{ badgeText }}
         </span>
         <h2
           ref="headingRef"
           class="text-5xl md:text-7xl font-heading font-black leading-[0.85] uppercase tracking-tighter text-white"
         >
-          <JanariSplitText class="text-white" :text="t('testimonials.title')" />
+          <JanariSplitText class="text-white" :text="titleText" />
         </h2>
       </div>
 
@@ -72,11 +72,13 @@
 
 <script setup lang="ts">
 import JanariSplitText from '../shared/JanariSplitText.vue'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 
 const { t } = useThemeI18n('janari')
+const { localizedString } = useLocalizedThemeSetting()
 
 interface Testimonial {
   name: string;
@@ -88,6 +90,9 @@ interface Testimonial {
 defineProps<{
   items: Testimonial[];
 }>();
+
+const badgeText = computed(() => localizedString('home_testimonials_badge') || t('testimonials.badge'))
+const titleText = computed(() => localizedString('home_testimonials_title') || t('testimonials.title'))
 
 const { fadeInUp, staggerChildren, splitTextRevealSafe, motion } = useThemeMotion()
 

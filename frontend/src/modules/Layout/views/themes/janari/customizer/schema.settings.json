@@ -1599,5 +1599,160 @@
         "default": "Petunjuk Arah",
         "category": "Contact Page",
         "scope": "theme"
+    },
+    "home_testimonials_badge": {
+        "label": "Testimonials badge (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_testimonials_badge_en": {
+        "label": "Testimonials badge (English)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_testimonials_badge_id": {
+        "label": "Testimonials badge (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_testimonials_title": {
+        "label": "Testimonials title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_testimonials_title_en": {
+        "label": "Testimonials title (English)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_testimonials_title_id": {
+        "label": "Testimonials title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Testimonials Section",
+        "scope": "theme"
+    },
+    "home_updates_title": {
+        "label": "Updates section title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_title_en": {
+        "label": "Updates section title (English)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_title_id": {
+        "label": "Updates section title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_announcements": {
+        "label": "Updates column: announcements (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_announcements_en": {
+        "label": "Updates column: announcements (English)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_announcements_id": {
+        "label": "Updates column: announcements (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_agenda": {
+        "label": "Updates column: agenda (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_agenda_en": {
+        "label": "Updates column: agenda (English)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_agenda_id": {
+        "label": "Updates column: agenda (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_holidays": {
+        "label": "Updates column: holidays (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_holidays_en": {
+        "label": "Updates column: holidays (English)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_col_holidays_id": {
+        "label": "Updates column: holidays (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_view_all": {
+        "label": "Updates view-all label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_view_all_en": {
+        "label": "Updates view-all label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_view_all_id": {
+        "label": "Updates view-all label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Updates Section",
+        "scope": "theme"
+    },
+    "home_updates_view_all_url": {
+        "label": "Updates view-all URL",
+        "type": "text",
+        "default": "/blog",
+        "category": "Updates Section",
+        "description": "Shared link for all three View all buttons.",
+        "scope": "theme"
     }
 }

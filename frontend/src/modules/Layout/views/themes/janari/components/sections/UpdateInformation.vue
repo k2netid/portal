@@ -7,7 +7,7 @@
         <div class="flex items-center gap-3 relative z-10">
           <span class="w-1 h-1 bg-primary rounded-full" />
           <h2 class="text-xs md:text-sm font-bold tracking-[0.5em] uppercase text-primary">
-            {{ t('theme.janari.updateInfo.sectionTitle') }}
+            {{ sectionTitle }}
           </h2>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <!-- Vertical Label (Absolute Gutter System) -->
           <div class="absolute top-16 left-8 hidden lg:block pointer-events-none">
             <span class="inline-block [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-xs md:text-sm font-black tracking-[0.3em] uppercase text-foreground/65 group-hover/col:text-foreground transition-colors duration-500 cubic-bezier(0.37, 0.01, 0, 0.98)">
-              {{ t('theme.janari.updateInfo.columnAnnouncements') }}
+              {{ colAnnouncements }}
             </span>
           </div>
           <!-- Content -->
@@ -39,10 +39,10 @@
                 <div class="flex items-center justify-between gap-4 mb-3">
                   <div class="flex items-center gap-3">
                     <span class="w-2 h-px bg-foreground/30 group-hover/item:w-4 group-hover/item:bg-primary transition-all duration-500" />
-                    <span class="text-[10px] font-bold tracking-[0.15em] text-foreground/80 group-hover/item:text-foreground transition-colors uppercase">{{ t('theme.janari.common.dateUpdate', { date: item?.date || '' }) }}</span>
+                    <span class="text-[10px] font-bold tracking-[0.15em] text-foreground/80 group-hover/item:text-foreground transition-colors uppercase">{{ t('common.dateUpdate', { date: item?.date || '' }) }}</span>
                   </div>
                   <span class="text-[9px] px-3 py-1 border border-border text-foreground/85 uppercase tracking-[0.2em] shrink-0 group-hover/item:border-primary group-hover/item:text-primary group-hover/item:shadow-[0_0_10px_hsl(var(--primary)/0.2)] transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)">
-                    {{ item?.category || t('theme.janari.common.info') }}
+                    {{ item?.category || t('common.info') }}
                   </span>
                 </div>
                 <div class="flex items-center justify-between gap-6 pl-5 group-hover/item:pl-7 transition-all duration-500">
@@ -71,10 +71,10 @@
             <!-- View More -->
             <div class="mt-8">
               <router-link
-                to="/blog"
+                :to="viewAllUrl"
                 class="inline-flex items-center gap-6 px-8 py-3 border border-border bg-background text-[9px] font-black tracking-[0.3em] uppercase text-foreground hover:text-foreground hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] transition-all duration-500 group/btn relative z-10"
               >
-                {{ t('theme.janari.common.viewAll') }}
+                {{ viewAllText }}
                 <span class="w-6 h-px bg-foreground/30 group-hover/btn:bg-primary transition-all duration-500" />
               </router-link>
             </div>
@@ -88,7 +88,7 @@
         >
           <div class="absolute top-16 left-8 hidden lg:block pointer-events-none">
             <span class="inline-block [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-xs md:text-sm font-black tracking-[0.3em] uppercase text-foreground/65 group-hover/col:text-foreground transition-colors duration-500">
-              {{ t('theme.janari.updateInfo.columnAgenda') }}
+              {{ colAgenda }}
             </span>
           </div>
           <div class="flex-1 mt-2">
@@ -105,7 +105,7 @@
                     <span class="text-[10px] font-bold tracking-[0.15em] text-foreground/80 group-hover/item:text-foreground transition-colors uppercase">{{ item?.date || '' }} event</span>
                   </div>
                   <span class="text-[9px] px-3 py-1 border border-border text-foreground/85 uppercase tracking-[0.2em] shrink-0 group-hover/item:border-primary group-hover/item:text-primary group-hover/item:shadow-[0_0_10px_hsl(var(--primary)/0.2)] transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)">
-                    {{ item?.category || t('theme.janari.common.info') }}
+                    {{ item?.category || t('common.info') }}
                   </span>
                 </div>
                 <div class="flex items-center justify-between gap-6 pl-5 group-hover/item:pl-7 transition-all duration-500">
@@ -133,10 +133,10 @@
             </div>
             <div class="mt-8">
               <router-link
-                to="/blog"
+                :to="viewAllUrl"
                 class="inline-flex items-center gap-6 px-8 py-3 border border-border bg-background text-[9px] font-black tracking-[0.3em] uppercase text-foreground hover:text-foreground hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] transition-all duration-500 group/btn relative z-10"
               >
-                {{ t('theme.janari.common.viewAll') }}
+                {{ viewAllText }}
                 <span class="w-6 h-px bg-foreground/30 group-hover/btn:bg-primary transition-all duration-500" />
               </router-link>
             </div>
@@ -150,7 +150,7 @@
         >
           <div class="absolute top-16 left-8 hidden lg:block pointer-events-none">
             <span class="inline-block [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-xs md:text-sm font-black tracking-[0.3em] uppercase text-foreground/65 group-hover/col:text-foreground transition-colors duration-500">
-              {{ t('theme.janari.updateInfo.columnHolidays') }}
+              {{ colHolidays }}
             </span>
           </div>
           <div class="flex-1 mt-2">
@@ -164,10 +164,10 @@
                 <div class="flex items-center justify-between gap-4 mb-3">
                   <div class="flex items-center gap-3">
                     <span class="w-2 h-px bg-foreground/30 group-hover/item:w-4 group-hover/item:bg-primary transition-all duration-500" />
-                    <span class="text-[10px] font-bold tracking-[0.15em] text-foreground/80 group-hover/item:text-foreground transition-colors uppercase">{{ t('theme.janari.common.dateDayOff', { date: item?.date || '' }) }}</span>
+                    <span class="text-[10px] font-bold tracking-[0.15em] text-foreground/80 group-hover/item:text-foreground transition-colors uppercase">{{ t('common.dateDayOff', { date: item?.date || '' }) }}</span>
                   </div>
                   <span class="text-[9px] px-3 py-1 border border-border text-foreground/85 uppercase tracking-[0.2em] shrink-0 group-hover/item:border-primary group-hover/item:text-primary group-hover/item:shadow-[0_0_10px_hsl(var(--primary)/0.2)] transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)">
-                    {{ item?.category || t('theme.janari.common.info') }}
+                    {{ item?.category || t('common.info') }}
                   </span>
                 </div>
                 <div class="flex items-center justify-between gap-6 pl-5 group-hover/item:pl-7 transition-all duration-500">
@@ -195,10 +195,10 @@
             </div>
             <div class="mt-8">
               <router-link
-                to="/blog"
+                :to="viewAllUrl"
                 class="inline-flex items-center gap-6 px-8 py-3 border border-border bg-background text-[9px] font-black tracking-[0.3em] uppercase text-foreground hover:text-foreground hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] transition-all duration-500 group/btn relative z-10"
               >
-                {{ t('theme.janari.common.viewAll') }}
+                {{ viewAllText }}
                 <span class="w-6 h-px bg-foreground/30 group-hover/btn:bg-primary transition-all duration-500" />
               </router-link>
             </div>
@@ -210,19 +210,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted, nextTick, computed, onBeforeUnmount, watch } from 'vue'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 import { useThemeComponentBindings } from '@/modules/Layout/composables/useThemeDataBindings'
+import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 
-// Dynamic Data Integration
-const { t } = useI18n()
+const { t } = useThemeI18n('janari')
+const { getSetting } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
 const { slots: dynamicSlots, hasAnyBinding } = useThemeComponentBindings('info')
 
+const sectionTitle = computed(() => localizedString('home_updates_title') || t('updateInfo.sectionTitle'))
+const colAnnouncements = computed(() => localizedString('home_updates_col_announcements') || t('updateInfo.columnAnnouncements'))
+const colAgenda = computed(() => localizedString('home_updates_col_agenda') || t('updateInfo.columnAgenda'))
+const colHolidays = computed(() => localizedString('home_updates_col_holidays') || t('updateInfo.columnHolidays'))
+const viewAllText = computed(() => localizedString('home_updates_view_all') || t('common.viewAll'))
+const viewAllUrl = computed(() => {
+  const raw = getSetting('home_updates_view_all_url', '/blog')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/blog'
+})
+
 const demoItem = (prefix: string, index: number, url: string) => ({
-    date: t(`theme.janari.demo.${prefix}${index}.date`),
-    category: t(`theme.janari.demo.${prefix}${index}.category`),
-    title: t(`theme.janari.demo.${prefix}${index}.title`),
+    date: t(`demo.${prefix}${index}.date`),
+    category: t(`demo.${prefix}${index}.category`),
+    title: t(`demo.${prefix}${index}.title`),
     url,
 })
 
@@ -230,7 +243,6 @@ const mockAnnouncements = [0, 1, 2].map((i) => demoItem('announcement', i, '/blo
 const mockAgenda = [0, 1, 2].map((i) => demoItem('agenda', i, '/blog'))
 const mockHolidays = [0, 1, 2].map((i) => demoItem('holiday', i, '/blog'))
 
-// Helper to transform API data to display format
 function transformApiData(items: any[], defaultUrl: string) {
     if (!Array.isArray(items)) return []
     return items.map(item => {
@@ -238,14 +250,13 @@ function transformApiData(items: any[], defaultUrl: string) {
         const raw = item._raw || item
         return {
             date: raw?.published_at ? new Date(raw.published_at).toLocaleDateString('en-CA').replace(/-/g, '.') : (item?.date || ''),
-            category: raw?.category?.name || raw?.category_name || item?.category || t('theme.janari.common.info'),
+            category: raw?.category?.name || raw?.category_name || item?.category || t('common.info'),
             title: raw?.title || item?.title || '',
             url: raw?.slug ? `/blog/${raw.slug}` : (item?.url || defaultUrl),
         }
     }).filter(i => i !== null)
 }
 
-// Computed data that prioritizes dynamic bindings over mock data
 const announcements = computed(() => {
     if (hasAnyBinding.value && dynamicSlots.value.announcements && dynamicSlots.value.announcements.length > 0) {
         return transformApiData(dynamicSlots.value.announcements, '/pengumuman')
@@ -267,7 +278,6 @@ const holidays = computed(() => {
     return mockHolidays
 })
 
-// GSAP
 const { staggerChildren } = useThemeMotion()
 const col1 = ref<HTMLElement>()
 const col2 = ref<HTMLElement>()
@@ -275,7 +285,6 @@ const col3 = ref<HTMLElement>()
 const isComponentActive = ref(true)
 const isAnimated = ref(false)
 
-import { onBeforeUnmount, watch } from 'vue'
 onBeforeUnmount(() => {
     isComponentActive.value = false
 })
@@ -300,9 +309,7 @@ onMounted(() => {
     runAnimations()
 })
 
-// Re-run if dynamic data arrives (only if not already animated)
 watch([announcements, agenda, holidays], (newVal, oldVal) => {
-    // Simple length check or reference change is often enough for these arrays
     if (newVal.some((arr, i) => arr.length !== oldVal?.[i]?.length)) {
         isAnimated.value = false;
         runAnimations()

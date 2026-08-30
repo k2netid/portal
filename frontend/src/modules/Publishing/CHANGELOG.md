@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- Theme Customizer sidebar labels for Home Testimonials and Updates sections (en/id/su).
+
 ### Fixed
 - Public comment API uses `/public/publishing/contents/{id}/comments`.
 - Pinia store id is `publishing`. Public settings always come from the public system API.

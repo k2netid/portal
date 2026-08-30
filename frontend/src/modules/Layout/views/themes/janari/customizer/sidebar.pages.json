@@ -62,6 +62,20 @@
             "icon": "package",
             "labelKey": "publishing.theme_customizer.sidebar.items.page_products",
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_products_desc"
+        },
+        {
+            "id": "page-testimonials",
+            "manifestCategories": ["Testimonials Section"],
+            "icon": "message-square",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_testimonials",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_testimonials_desc"
+        },
+        {
+            "id": "page-updates",
+            "manifestCategories": ["Updates Section"],
+            "icon": "newspaper",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_updates",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_updates_desc"
         }
     ]
 }
