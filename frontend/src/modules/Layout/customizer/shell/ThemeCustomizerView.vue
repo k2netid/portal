@@ -52,16 +52,23 @@
         @update:search-query="searchQuery = $event"
         @update:sidebar-collapsed="sidebarCollapsed = $event"
       />
-      <button
+      <aside
         v-else
-        type="button"
-        class="w-10 shrink-0 border-r border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-start justify-center pt-3"
-        :title="t('publishing.theme_customizer.organization.show_nav')"
-        :aria-label="t('publishing.theme_customizer.organization.show_nav')"
-        @click="navOpen = true"
+        class="w-16 shrink-0 border-r border-border bg-card flex flex-col"
       >
-        <PanelLeftOpen class="w-4 h-4" />
-      </button>
+        <div class="h-14 px-3.5 border-b border-border flex items-center justify-center shrink-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            class="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
+            :title="t('publishing.theme_customizer.organization.show_nav')"
+            :aria-label="t('publishing.theme_customizer.organization.show_nav')"
+            @click="navOpen = true"
+          >
+            <ChevronsRight class="w-4 h-4" />
+          </Button>
+        </div>
+      </aside>
 
       <!-- PREVIEW (center canvas) -->
       <section class="flex-1 min-w-0 min-h-0 flex flex-col bg-muted/30">
@@ -69,6 +76,7 @@
           class="flex-1 min-h-0"
           :preview-theme="previewTheme"
           :preview-url="publicPreviewUrl"
+          :focus-target="previewFocusTarget"
           enable-click-select
           @select-target="handlePreviewSelectTarget"
         />
@@ -79,6 +87,21 @@
         v-if="controlsOpen"
         class="w-[min(100%,22rem)] xl:w-[24rem] shrink-0 border-l border-border bg-background flex flex-col min-h-0 overflow-hidden"
       >
+        <div class="h-14 px-3.5 border-b border-border flex items-center justify-between shrink-0 bg-card">
+          <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            {{ t('publishing.theme_customizer.organization.controls_label', 'Controls') }}
+          </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
+            :title="t('publishing.theme_customizer.organization.hide_controls')"
+            :aria-label="t('publishing.theme_customizer.organization.hide_controls')"
+            @click="controlsOpen = false"
+          >
+            <ChevronsRight class="w-4 h-4" />
+          </Button>
+        </div>
         <CustomizerEditorCanvas
           v-model:custom-css="customCss"
           panel-mode
@@ -113,16 +136,23 @@
           @open-nav-item="openNavItemById"
         />
       </div>
-      <button
+      <aside
         v-else
-        type="button"
-        class="w-10 shrink-0 border-l border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-start justify-center pt-3"
-        :title="t('publishing.theme_customizer.organization.show_controls')"
-        :aria-label="t('publishing.theme_customizer.organization.show_controls')"
-        @click="controlsOpen = true"
+        class="w-16 shrink-0 border-l border-border bg-card flex flex-col"
       >
-        <PanelRightOpen class="w-4 h-4" />
-      </button>
+        <div class="h-14 px-3.5 border-b border-border flex items-center justify-center shrink-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            class="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
+            :title="t('publishing.theme_customizer.organization.show_controls')"
+            :aria-label="t('publishing.theme_customizer.organization.show_controls')"
+            @click="controlsOpen = true"
+          >
+            <ChevronsLeft class="w-4 h-4" />
+          </Button>
+        </div>
+      </aside>
     </div>
 
     <MediaPicker
@@ -147,12 +177,16 @@ import CustomizerSidebar from '@/modules/Layout/components/themes/customizer/sid
 import CustomizerEditorCanvas from '@/modules/Layout/components/themes/customizer/editor/CustomizerEditorCanvas.vue';
 import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue';
 import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
-import { PanelLeftOpen, PanelRightOpen } from 'lucide-vue-next';
+import { Button } from '@/shared/components/ui';
+import { ChevronsLeft, ChevronsRight } from 'lucide-vue-next';
 
 import { useThemeCustomizer } from '@/modules/Layout/composables/useThemeCustomizer';
 import { useCustomizerNavigation } from '@/modules/Layout/composables/useCustomizerNavigation';
 import { useCustomizerDataSources } from '@/modules/Layout/composables/useCustomizerDataSources';
-import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl';
+import {
+  resolveCustomizerPreviewEmbedUrl,
+  resolveCustomizerPreviewFocus,
+} from '@/modules/Layout/customizer/preview/getThemePreviewPath';
 import {
   getThemePreviewTargets,
   resolvePreviewNavItemId,
@@ -163,7 +197,6 @@ const { t, te } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const slug = route.params.slug as string;
-const publicPreviewUrl = resolvePublicEmbedUrl('/');
 
 const {
   theme,
@@ -236,6 +269,9 @@ const {
 /** Independent panes: nav | preview | controls */
 const navOpen = ref(true);
 const controlsOpen = ref(true);
+
+const publicPreviewUrl = computed(() => resolveCustomizerPreviewEmbedUrl(activeItemId.value));
+const previewFocusTarget = computed(() => resolveCustomizerPreviewFocus(activeItemId.value));
 
 const previewTheme = computed<Theme>(() => {
   const base = (theme.value || {}) as Theme;

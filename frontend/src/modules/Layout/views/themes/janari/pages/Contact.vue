@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-screen bg-background transition-colors duration-300 overflow-x-hidden">
+  <div
+    class="min-h-screen bg-background transition-colors duration-300 overflow-x-hidden"
+    data-ja-customizer-target="contact"
+  >
     <!-- Main Content Area -->
     <div
       v-if="!isEnabled"

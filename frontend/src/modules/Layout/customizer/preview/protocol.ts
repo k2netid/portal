@@ -5,6 +5,7 @@ export const CUSTOMIZER_PARENT_ORIGIN_QUERY = 'ja_parent_origin';
 
 export const MSG_SELECT_TARGET = 'JA_CUSTOMIZER_SELECT_TARGET';
 export const MSG_PREVIEW_READY = 'JA_CUSTOMIZER_PREVIEW_READY';
+export const MSG_FOCUS_TARGET = 'JA_CUSTOMIZER_FOCUS_TARGET';
 
 export type CustomizerPreviewMode = 'design' | 'bindings';
 
@@ -16,6 +17,11 @@ export interface CustomizerSelectTargetMessage {
 
 export interface CustomizerPreviewReadyMessage {
   type: typeof MSG_PREVIEW_READY;
+}
+
+export interface CustomizerFocusTargetMessage {
+  type: typeof MSG_FOCUS_TARGET;
+  target: string;
 }
 
 export interface CustomizerPreviewTargetConfig {

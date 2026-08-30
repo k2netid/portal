@@ -709,6 +709,7 @@
       "show_controls": "Show controls",
       "hide_nav": "Hide nav",
       "show_nav": "Show nav",
+      "controls_label": "Controls",
       "hints": {
         "design": "Colors, typography, and section visuals.",
         "bindings": "Connect sections to Jejakawan posts and media.",

@@ -125,11 +125,27 @@ export function useCustomizerPreviewProbe() {
     lastTarget = null;
   }
 
+  function onParentMessage(event: MessageEvent) {
+    if (event.origin !== window.location.origin) return;
+    if (event.data?.type !== 'JA_CUSTOMIZER_FOCUS_TARGET') return;
+    const target = typeof event.data.target === 'string' ? event.data.target : '';
+    if (!target) return;
+    const el = document.querySelector(`[${ATTR_TARGET}="${CSS.escape(target)}"]`) as HTMLElement | null;
+    if (!el) return;
+    document.querySelectorAll(`[${ATTR_TARGET}].is-selected`).forEach((node) => {
+      node.classList.remove('is-selected');
+    });
+    el.classList.add('is-selected');
+    lastTarget = target;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   onMounted(() => {
     document.documentElement.classList.add(ROOT_CLASS);
     ensureStyles();
     document.addEventListener('click', onClick, true);
     document.addEventListener('keydown', onKeydown);
+    window.addEventListener('message', onParentMessage);
 
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({ type: MSG_PREVIEW_READY }, window.location.origin);
@@ -141,5 +157,6 @@ export function useCustomizerPreviewProbe() {
     document.getElementById(STYLE_ID)?.remove();
     document.removeEventListener('click', onClick, true);
     document.removeEventListener('keydown', onKeydown);
+    window.removeEventListener('message', onParentMessage);
   });
 }

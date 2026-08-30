@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Theme Customizer preview follows selected nav item (Contact → /contact, home sections → / + scroll focus); minimized nav/controls use the same chevron rail style as the sidebar.
 - Theme Customizer layout: nav | live preview | controls; nav and controls minimize independently; section edit badges always visible in preview iframe.
 - Theme Customizer uses WordPress/Shopify-style split canvas: left nav+controls, live public preview always on the right (no modal); click section keeps preview open; Ctrl+\\ toggles controls.
 - Theme Customizer / Site Editor iframe preview uses same-origin embed URL (`resolvePublicEmbedUrl`) so X-Frame-Options and local Vite boot-gate work; clearer load-failure UI.

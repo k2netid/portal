@@ -709,6 +709,7 @@
       "show_controls": "Tampilkan kontrol",
       "hide_nav": "Sembunyikan nav",
       "show_nav": "Tampilkan nav",
+      "controls_label": "Kontrol",
       "hints": {
         "design": "Warna, tipografi, dan tampilan bagian.",
         "bindings": "Hubungkan bagian ke konten Jejakawan.",

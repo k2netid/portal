@@ -59,6 +59,7 @@ import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import {
   isCustomizerSelectTargetMessage,
   withCustomizerPreviewParams,
+  MSG_FOCUS_TARGET,
   type CustomizerPreviewMode,
 } from '@/modules/Layout/customizer/preview/protocol';
 
@@ -67,8 +68,11 @@ const props = withDefaults(defineProps<{
   previewUrl?: string;
   /** When true, iframe loads with preview probe + forwards section clicks. */
   enableClickSelect?: boolean;
+  /** Scroll/highlight this data-ja-customizer-target inside the iframe. */
+  focusTarget?: string | null;
 }>(), {
   enableClickSelect: false,
+  focusTarget: null,
 });
 
 const emit = defineEmits<{
@@ -240,7 +244,17 @@ const onPreviewLoad = () => {
   }
 
   injectThemeStyles();
+  // Home sections may mount async — retry focus a few times
+  scheduleFocus();
 };
+
+function scheduleFocus() {
+  if (!props.focusTarget || !props.enableClickSelect) return;
+  const send = () => postToPreview({ type: MSG_FOCUS_TARGET, target: props.focusTarget });
+  send();
+  window.setTimeout(send, 400);
+  window.setTimeout(send, 1200);
+}
 
 const onPreviewError = () => {
   loading.value = false;
@@ -278,6 +292,15 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('message', onWindowMessage);
+});
+
+watch(() => props.focusTarget, () => {
+  if (!loadError.value) scheduleFocus();
+});
+
+watch(() => props.previewUrl, () => {
+  loading.value = true;
+  loadError.value = false;
 });
 
 watch(() => props.theme, () => {

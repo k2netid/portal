@@ -74,6 +74,7 @@
           :theme="props.previewTheme"
           :preview-url="props.previewUrl"
           :enable-click-select="props.enableClickSelect"
+          :focus-target="props.focusTarget"
           class="w-full flex-1 min-h-0 bg-background"
           @select-target="(payload) => emit('select-target', payload)"
         />
@@ -99,6 +100,7 @@ const props = defineProps<{
   previewTheme: Theme;
   previewUrl?: string;
   enableClickSelect?: boolean;
+  focusTarget?: string | null;
 }>();
 
 const emit = defineEmits<{
