@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Customizer Controls: SERP platform tabs fit the right rail; Footer/Menu bridges stack text + full-width CTAs (no viewport `sm:` squeeze).
 - Customizer Controls panel (Content bindings): stack Query/Mapping in panel mode, fix LIMIT/SORT overlap, stop field-mapping clip; design/menu grids stay single-column in the right rail.
 - Clarify Customizer preview hint: highlights are blue dashed outlines + ✎ badges on annotated Janari sections; skip wrong-theme snapshot paint in preview iframe so targets appear.
 - Fix false theme detection: customizer `sessionStorage` + theme snapshot TTL no longer override the public active theme (DB Janari was correct; FE could still behave as Zenith). Preview slug override is iframe/query-only; THEME_BOOT does not write the public snapshot.

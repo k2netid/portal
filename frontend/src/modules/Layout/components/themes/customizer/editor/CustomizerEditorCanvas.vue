@@ -7,7 +7,7 @@
       v-if="selectedItem"
       class="w-full transition-all duration-300 space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300"
       :class="panelMode
-        ? 'p-4 max-w-none'
+        ? 'p-4 max-w-none min-w-0'
         : ['p-6 sm:p-8 lg:p-10 space-y-8', sidebarCollapsed ? 'max-w-7xl mx-auto' : 'max-w-5xl mx-auto']"
     >
       <!-- Section Title Header / Banner -->
@@ -69,9 +69,9 @@
         >
           <RouterLink
             :to="{ name: 'menus' }"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 h-9 w-full px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
           >
-            <ExternalLink class="w-3.5 h-3.5" />
+            <ExternalLink class="w-3.5 h-3.5 shrink-0" />
             {{ t('publishing.theme_customizer.bridge.menus.cta') }}
           </RouterLink>
         </CustomizerContentBridge>
@@ -83,14 +83,14 @@
         >
           <RouterLink
             :to="{ name: 'menus' }"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 h-9 w-full px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
           >
-            <ExternalLink class="w-3.5 h-3.5" />
+            <ExternalLink class="w-3.5 h-3.5 shrink-0" />
             {{ t('publishing.theme_customizer.bridge.footer.cta_menus') }}
           </RouterLink>
           <button
             type="button"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border bg-background text-foreground text-xs font-semibold hover:bg-muted/60 transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 h-9 w-full px-3 rounded-lg border border-border bg-background text-foreground text-xs font-semibold hover:bg-muted/60 transition-colors"
             @click="emit('openNavItem', 'identity-menus')"
           >
             {{ t('publishing.theme_customizer.bridge.footer.cta_map') }}
@@ -104,10 +104,10 @@
         >
           <button
             type="button"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 h-9 w-full px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
             @click="emit('openNavItem', `comp-${relatedBindingId}`)"
           >
-            <Database class="w-3.5 h-3.5" />
+            <Database class="w-3.5 h-3.5 shrink-0" />
             {{ t('publishing.theme_customizer.bridge.bindings.cta') }}
           </button>
         </CustomizerContentBridge>
@@ -119,7 +119,7 @@
         >
           <button
             type="button"
-            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 h-9 w-full px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
             @click="emit('openNavItem', relatedDesignItemId)"
           >
             {{ t('publishing.theme_customizer.bridge.design.cta') }}
@@ -249,7 +249,8 @@
         <!-- SEO & Social Share Preview (Core Branding / Site Profile) -->
         <section
           v-if="(selectedItem.id === 'brand_core' || selectedItem.id === 'site_profile' || selectedItem.id === 'identity-general') && organizationMode === 'design'"
-          class="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4"
+          class="rounded-2xl border border-border bg-card shadow-sm space-y-4 min-w-0 overflow-hidden"
+          :class="panelMode ? 'p-3.5' : 'p-6'"
         >
           <SocialSharePreview
             :site-title="String(formValues['site_title'] || formValues['site_name'] || '')"
