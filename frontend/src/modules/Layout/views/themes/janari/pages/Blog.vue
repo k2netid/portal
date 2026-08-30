@@ -237,7 +237,7 @@
                     class="mt-4 text-primary font-bold text-sm"
                     @click="router.push('/blog')"
                   >
-                    {{ t('theme.janari.pages.blog.viewAllArticles') }}
+                    {{ viewAllArticlesText }}
                   </button>
                 </div>
               </div>
