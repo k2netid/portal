@@ -13,6 +13,11 @@ import {
     readThemeSlugFromQuery,
     storePreviewTheme,
 } from '@/modules/Layout/customizer/preview/protocol';
+import {
+    FRONTEND_THEME_ACTIVATION_REV_KEY,
+    FRONTEND_THEME_SNAPSHOT_KEY,
+    clearFrontendThemeSnapshot,
+} from '@/modules/Layout/utils/themeActivationSync';
 
 export interface ThemeManifest {
     name?: string;
@@ -126,8 +131,9 @@ let activeLoadPromise: Promise<void> | null = null; // Shared promise to await i
 let themeUpdateListener: ((event: MessageEvent) => void) | null = null;
 let lastLoadedAt = 0;
 const THEME_CACHE_TTL_MS = 60_000;
-const THEME_SNAPSHOT_KEY = 'frontend_theme_snapshot_v1';
-
+const THEME_SNAPSHOT_KEY = FRONTEND_THEME_SNAPSHOT_KEY;
+let themeActivationListenerInstalled = false;
+let sharedForceReloadActiveTheme: ((type?: string) => Promise<void>) | null = null;
 const readThemeSnapshot = (): {
     activeTheme: Theme | null;
     themeSettings: Record<string, unknown>;
@@ -229,7 +235,17 @@ export function useTheme() {
             return;
         }
         const force = options?.force === true;
-        // Return existing promise if already loading
+
+        // Drop stale public snapshot before a forced reconcile (not in customizer iframe).
+        if (force && type === 'frontend' && typeof window !== 'undefined') {
+            const search = window.location.search;
+            if (!isCustomizerPreviewQuery(search)) {
+                clearFrontendThemeSnapshot();
+                lastLoadedAt = 0;
+            }
+        }
+
+        // Return existing promise if already loading (force shares the in-flight fetch).
         if (activeLoadPromise && type === 'frontend') {
             return activeLoadPromise;
         }
@@ -688,6 +704,21 @@ export function useTheme() {
             // Canvas.injectThemeStyles owns scoped CSS — never write #theme-variables on document.
             applyThemeStyles: () => {},
         };
+    }
+
+    // Public shell only — never bind reload to a builder-scoped no-op closure.
+    sharedForceReloadActiveTheme = (type = 'frontend') => loadActiveTheme(type, { force: true });
+    if (typeof window !== 'undefined' && !themeActivationListenerInstalled) {
+        themeActivationListenerInstalled = true;
+        const reloadFromActivation = () => {
+            void sharedForceReloadActiveTheme?.('frontend');
+        };
+        window.addEventListener('storage', (event: StorageEvent) => {
+            if (event.key === FRONTEND_THEME_ACTIVATION_REV_KEY) {
+                reloadFromActivation();
+            }
+        });
+        window.addEventListener('ja-frontend-theme-activated', reloadFromActivation);
     }
 
     return {

@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Rename theme **Zenith → Sarangenge** (Sundanese midday sun; school-focused sibling to Janari dawn): folder/slug/locales/CSS, Member shell classes, bundled fallbacks, and campus UI (teal+sun, bento home, PPDB CTA).
+- Fix public site keeping the previous theme after activate: clear `frontend_theme_snapshot_v1`, broadcast activation to other tabs, drop API payload cache on activate/deactivate, force-reconcile on notification.
 - Fix ThemePageResolver remount loop: cache real SFCs (not async stubs keyed by stale resolveId); keep current view while theme revalidates.
 - Fix public shell sticking on Sarangenge while DB active is Janari: mount always force-reconciles `/public/layout/themes/active`; customizer preview loads no longer write `frontend_theme_snapshot_v1`.
 - Expand Customizer click-select targets to About/Solusi/Tim/Pricing/News/Careers/Achievements/Search; map `/services` → Janari Solusi (stop Sarangenge Services fallback).

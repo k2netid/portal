@@ -150,6 +150,7 @@ class Theme extends Model
                         'status' => 'active',
                     ]);
                     Cache::forget(ThemeCacheService::PREFIX_ACTIVE.$type);
+                    Cache::forget(ThemeCacheService::PREFIX_ACTIVE_API_PAYLOAD.$type);
 
                     return $defaultTheme->fresh();
                 } catch (\Exception $e) {
@@ -194,8 +195,9 @@ class Theme extends Model
             'status' => 'active',
         ]);
 
-        // Clear cache
+        // Clear cache (model + public API payload — both must drop or /themes/active stays stale)
         Cache::forget(ThemeCacheService::PREFIX_ACTIVE.$this->type);
+        Cache::forget(ThemeCacheService::PREFIX_ACTIVE_API_PAYLOAD.$this->type);
 
         return true;
     }
@@ -207,6 +209,7 @@ class Theme extends Model
     {
         $this->update(['is_active' => false]);
         Cache::forget(ThemeCacheService::PREFIX_ACTIVE.$this->type);
+        Cache::forget(ThemeCacheService::PREFIX_ACTIVE_API_PAYLOAD.$this->type);
 
         return true;
     }

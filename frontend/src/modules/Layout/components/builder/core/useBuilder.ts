@@ -101,6 +101,8 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
         const themeId = targetTheme?.id || slug
         try {
             await api.post(`/manage/layout/themes/${themeId}/activate`)
+            const { notifyFrontendThemeActivated } = await import('@/modules/Layout/utils/themeActivationSync')
+            notifyFrontendThemeActivated(slug)
         } catch (e) {
             logger.error('Theme activation endpoint returned:', e instanceof Error ? e.message : String(e))
             throw e

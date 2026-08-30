@@ -363,6 +363,8 @@ const activateTheme = async (theme: Theme) => {
 
     try {
         await api.post(`/manage/layout/themes/${theme.slug}/activate`);
+        const { notifyFrontendThemeActivated } = await import('@/modules/Layout/utils/themeActivationSync');
+        notifyFrontendThemeActivated(theme.slug);
         await fetchThemes();
         toast.success(t('layout.themes.messages.activateSuccess'));
     } catch (error: unknown) {
