@@ -41,6 +41,27 @@
             "icon": "globe",
             "labelKey": "publishing.theme_customizer.sidebar.items.page_contact",
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_contact_desc"
+        },
+        {
+            "id": "page-solusi",
+            "manifestCategories": ["Solusi Page"],
+            "icon": "layers",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_solusi",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_solusi_desc"
+        },
+        {
+            "id": "page-tim",
+            "manifestCategories": ["Tim Page"],
+            "icon": "users",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_tim",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_tim_desc"
+        },
+        {
+            "id": "page-products",
+            "manifestCategories": ["Products Section"],
+            "icon": "package",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_products",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_products_desc"
         }
     ]
 }

@@ -68,13 +68,13 @@
               >
                 <div class="motion-fade space-y-4">
                   <h2 class="text-3xl font-bold text-foreground">
-                    {{ t('theme.janari.pages.about.missionTitle') }}
+                    {{ missionTitle }}
                   </h2>
                   <p class="text-muted-foreground text-lg leading-relaxed">
-                    {{ t('theme.janari.pages.about.missionP1') }}
+                    {{ missionP1 }}
                   </p>
                   <p class="text-muted-foreground text-lg leading-relaxed">
-                    {{ t('theme.janari.pages.about.missionP2') }}
+                    {{ missionP2 }}
                   </p>
                   <router-link
                     to="/tim"
@@ -173,6 +173,7 @@ import { useI18n } from 'vue-i18n'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
@@ -192,13 +193,17 @@ const builderBlocks = computed<BlockInstance[]>(() => {
 })
 const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
 const { getSetting } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
 const router = useRouter()
 const { fadeInRight, splitTextRevealSafe, staggerChildren } = useThemeMotion()
 
 const isEnabled = computed(() => getSetting('enable_about', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
-const pageTitle = computed(() => getSetting('page_about_title') as string)
-const pageSubtitle = computed(() => getSetting('page_about_subtitle') as string)
+const pageTitle = computed(() => localizedString('page_about_title') || t('theme.janari.pages.about.title'))
+const pageSubtitle = computed(() => localizedString('page_about_subtitle') || t('theme.janari.pages.about.subtitle'))
+const missionTitle = computed(() => localizedString('page_about_mission_title') || t('theme.janari.pages.about.missionTitle'))
+const missionP1 = computed(() => localizedString('page_about_mission_p1') || t('theme.janari.pages.about.missionP1'))
+const missionP2 = computed(() => localizedString('page_about_mission_p2') || t('theme.janari.pages.about.missionP2'))
 const aboutHeroImage = computed(() => {
   const raw = getSetting('page_about_hero')
   return typeof raw === 'string' ? raw.trim() : ''

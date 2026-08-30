@@ -19,7 +19,7 @@
     <template v-else>
       <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
-          <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ t('pages.solusi.sectionLabel') }}</span>
+          <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ sectionLabel }}</span>
           <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
             {{ pageTitle }}
           </h1>
@@ -38,29 +38,29 @@
       <section class="py-16 bg-muted/20 border-t border-border">
         <div class="container mx-auto px-4 max-w-3xl text-center space-y-6">
           <h2 class="text-2xl font-bold text-foreground">
-            {{ t('pages.solusi.ctaTitle') }}
+            {{ ctaTitle }}
           </h2>
           <p class="text-muted-foreground leading-relaxed">
-            {{ t('pages.solusi.ctaBody') }}
+            {{ ctaBody }}
           </p>
           <div class="flex flex-wrap justify-center gap-4 pt-4">
             <router-link
               to="/contact"
               class="px-8 py-3 text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground rounded-lg"
             >
-              {{ t('pages.solusi.ctaContact') }}
+              {{ ctaContact }}
             </router-link>
             <router-link
               to="/pricing"
               class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50"
             >
-              {{ t('pages.solusi.ctaPricing') }}
+              {{ ctaPricing }}
             </router-link>
             <a
               href="/auth/console-sign-up"
               class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50"
             >
-              {{ t('pages.solusi.ctaMember') }}
+              {{ ctaMember }}
             </a>
           </div>
         </div>
@@ -103,4 +103,10 @@ const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
 
 const pageTitle = computed(() => localizedString('page_solusi_title') || t('pages.solusi.title'))
 const pageSubtitle = computed(() => localizedString('page_solusi_subtitle') || t('pages.solusi.subtitle'))
+const sectionLabel = computed(() => localizedString('page_solusi_section_label') || t('pages.solusi.sectionLabel'))
+const ctaTitle = computed(() => localizedString('page_solusi_cta_title') || t('pages.solusi.ctaTitle'))
+const ctaBody = computed(() => localizedString('page_solusi_cta_body') || t('pages.solusi.ctaBody'))
+const ctaContact = computed(() => localizedString('page_solusi_cta_contact') || t('pages.solusi.ctaContact'))
+const ctaPricing = computed(() => localizedString('page_solusi_cta_pricing') || t('pages.solusi.ctaPricing'))
+const ctaMember = computed(() => localizedString('page_solusi_cta_member') || t('pages.solusi.ctaMember'))
 </script>

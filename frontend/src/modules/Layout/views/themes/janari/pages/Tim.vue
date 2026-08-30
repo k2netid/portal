@@ -19,12 +19,12 @@
     <template v-else>
       <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
-          <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ t('pages.team.sectionLabel') }}</span>
+          <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ sectionLabel }}</span>
           <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
-            {{ t('pages.team.title') }}
+            {{ pageTitle }}
           </h1>
           <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {{ t('pages.team.subtitle') }}
+            {{ pageSubtitle }}
           </p>
         </div>
       </header>
@@ -74,7 +74,7 @@
       <section class="py-16 border-t border-border bg-muted/20">
         <div class="container mx-auto px-4 max-w-3xl text-center space-y-6">
           <p class="text-muted-foreground leading-relaxed">
-            {{ t('pages.team.closing') }}
+            {{ closingText }}
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <router-link to="/about" class="text-xs font-bold uppercase tracking-widest text-primary hover:underline">
@@ -101,11 +101,13 @@ import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRen
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
 import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
 
 const { t } = useThemeI18n('janari')
 const { locale } = useI18n({ useScope: 'global' })
+const { localizedString } = useLocalizedThemeSetting()
 
 const { pageData } = usePublicPageContent('tim')
 const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
@@ -119,6 +121,11 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   return []
 })
 const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+
+const pageTitle = computed(() => localizedString('page_tim_title') || t('pages.team.title'))
+const pageSubtitle = computed(() => localizedString('page_tim_subtitle') || t('pages.team.subtitle'))
+const sectionLabel = computed(() => localizedString('page_tim_section_label') || t('pages.team.sectionLabel'))
+const closingText = computed(() => localizedString('page_tim_closing') || t('pages.team.closing'))
 
 const pillars = [
   { key: 'craft' as const, icon: Rocket },

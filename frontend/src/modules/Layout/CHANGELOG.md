@@ -4,6 +4,7 @@
 
 - Builder isolation (phases 6–8): theme catalog from public routes; paginated pages fetch; create via builder prompt; About exclusive body; skip body→blocks on theme binds; Site Editor `edit content`; menu parents `/manage/layout/menus`; full revision reload; lock after bind.
 - After Edit with Builder, empty theme binds show the builder empty workspace (not live Hero); Add Section opens section→row→column layout picker.
+- Janari Customizer: Products / Solusi / Tim / About mission copy editable via schema (no code); sidebar pages for those sections.
 - Builder isolation (phases 3–5): theme load is canvas-scoped (no public activate / `:root` CSS); page mode hides chrome + theme switcher; live preview uses absolute public origin.
 - Builder context isolation (phases 0–2): Site Editor `noCache`; release edit lock on deactivate; stable `provide('builder')`.
 - Theme tab keeps CMS id when previewing live Vue pages; Edit-with-Builder creates **draft** binds (not published empties); lookup by `meta.theme_page` + slug.
