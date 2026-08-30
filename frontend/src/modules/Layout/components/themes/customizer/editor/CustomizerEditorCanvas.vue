@@ -167,14 +167,19 @@
             :key="section.id"
             class="space-y-6"
           >
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              class="grid gap-6"
+              :class="panelMode ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'"
+            >
               <div
                 v-for="setting in getVisibleSettings(section.settings)"
                 :key="setting.key"
                 :class="[
-                  setting.type === 'repeater' || setting.type === 'textarea' || setting.type === 'media' || setting.type === 'checkbox_list'
-                    ? 'col-span-1 md:col-span-2'
-                    : 'col-span-1'
+                  panelMode
+                    ? 'col-span-1'
+                    : (setting.type === 'repeater' || setting.type === 'textarea' || setting.type === 'media' || setting.type === 'checkbox_list'
+                      ? 'col-span-1 md:col-span-2'
+                      : 'col-span-1')
                 ]"
               >
                 <SettingControl
@@ -198,16 +203,19 @@
             <MenuIcon class="w-3.5 h-3.5 text-primary" />
             {{ t('publishing.theme_customizer.editor.sections.menus', 'Lokasi Menu') }}
           </h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            class="grid gap-4"
+            :class="panelMode ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 gap-6'"
+          >
             <div
               v-for="menuSetting in menuSections"
               :key="menuSetting.key"
-              class="space-y-2.5 p-4 bg-muted/20 rounded-xl border border-border transition-all hover:border-primary/30"
+              class="space-y-2.5 p-4 bg-muted/20 rounded-xl border border-border transition-all hover:border-primary/30 min-w-0"
             >
-              <div class="flex items-center justify-between">
-                <label class="text-xs font-bold text-foreground tracking-wide">{{ menuSetting.label }}</label>
+              <div class="flex items-center justify-between gap-2">
+                <label class="text-xs font-bold text-foreground tracking-wide truncate">{{ menuSetting.label }}</label>
                 <div
-                  class="w-2 h-2 rounded-full"
+                  class="w-2 h-2 rounded-full shrink-0"
                   :class="formValues[menuSetting.key] && formValues[menuSetting.key] !== 'none' ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground/30'"
                 />
               </div>
@@ -256,6 +264,7 @@
         <BindingsSection
           :selected-item="selectedItem"
           :organization-mode="organizationMode"
+          :panel-mode="panelMode"
           :expanded-slots="expandedSlots"
           :active-binding-component-id="activeBindingComponentId"
           :categories="categories"

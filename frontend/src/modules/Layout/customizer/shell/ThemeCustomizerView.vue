@@ -85,7 +85,7 @@
       <!-- CONTROLS (right) -->
       <div
         v-if="controlsOpen"
-        class="w-[min(100%,22rem)] xl:w-[24rem] shrink-0 border-l border-border bg-background flex flex-col min-h-0 overflow-hidden"
+        class="w-[min(100%,24rem)] xl:w-[26rem] shrink-0 border-l border-border bg-background flex flex-col min-h-0 overflow-hidden"
       >
         <div class="h-14 px-3.5 border-b border-border flex items-center justify-between shrink-0 bg-card">
           <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
