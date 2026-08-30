@@ -82,6 +82,7 @@
         @record-setting-change="recordSettingChange"
         @open-media-picker="openMediaPicker"
         @clear-preview="(id) => delete previewResults[id]"
+        @open-nav-item="openNavItemById"
       />
     </div>
 
@@ -241,6 +242,12 @@ function openMediaPicker(key: string) {
 function handleMediaSelect(m: { url: string }) {
   if (activeMediaField.value) recordSettingChange(activeMediaField.value, m.url);
   showMediaPicker.value = false;
+}
+
+/** Deep-link bridges: jump to Menu Map / Content component / Design chrome item. */
+function openNavItemById(itemId: string) {
+  const item = flatNavItems.value.find((nav) => nav.id === itemId);
+  if (item) selectItem(item);
 }
 
 // Navigation & Exit Guard

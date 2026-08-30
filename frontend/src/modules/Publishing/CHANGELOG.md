@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Theme Customizer bridge copy (en/id/su): Menu Builder + Design/Content handoff callouts.
 - Theme Customizer sidebar labels for CMS pages (en/id/su).
 - Theme Customizer sidebar labels for Search page (en/id/su).
 - Theme Customizer sidebar labels for Pricing page (en/id/su).

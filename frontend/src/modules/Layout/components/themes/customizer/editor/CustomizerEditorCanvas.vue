@@ -44,6 +44,71 @@
           {{ modeHintText }}
         </div>
 
+        <!-- UX bridges: Menu Builder / Content mode (no schema duplication) -->
+        <CustomizerContentBridge
+          v-if="menusBridgeVisible"
+          :title="t('publishing.theme_customizer.bridge.menus.title')"
+          :body="t('publishing.theme_customizer.bridge.menus.body')"
+        >
+          <RouterLink
+            :to="{ name: 'menus' }"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+          >
+            <ExternalLink class="w-3.5 h-3.5" />
+            {{ t('publishing.theme_customizer.bridge.menus.cta') }}
+          </RouterLink>
+        </CustomizerContentBridge>
+
+        <CustomizerContentBridge
+          v-else-if="footerBridgeVisible"
+          :title="t('publishing.theme_customizer.bridge.footer.title')"
+          :body="t('publishing.theme_customizer.bridge.footer.body')"
+        >
+          <RouterLink
+            :to="{ name: 'menus' }"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+          >
+            <ExternalLink class="w-3.5 h-3.5" />
+            {{ t('publishing.theme_customizer.bridge.footer.cta_menus') }}
+          </RouterLink>
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border bg-background text-foreground text-xs font-semibold hover:bg-muted/60 transition-colors"
+            @click="emit('openNavItem', 'identity-menus')"
+          >
+            {{ t('publishing.theme_customizer.bridge.footer.cta_map') }}
+          </button>
+        </CustomizerContentBridge>
+
+        <CustomizerContentBridge
+          v-else-if="bindingsBridgeVisible && relatedBindingId"
+          :title="t('publishing.theme_customizer.bridge.bindings.title')"
+          :body="t('publishing.theme_customizer.bridge.bindings.body')"
+        >
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            @click="emit('openNavItem', `comp-${relatedBindingId}`)"
+          >
+            <Database class="w-3.5 h-3.5" />
+            {{ t('publishing.theme_customizer.bridge.bindings.cta') }}
+          </button>
+        </CustomizerContentBridge>
+
+        <CustomizerContentBridge
+          v-else-if="designBridgeVisible && relatedDesignItemId"
+          :title="t('publishing.theme_customizer.bridge.design.title')"
+          :body="t('publishing.theme_customizer.bridge.design.body')"
+        >
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            @click="emit('openNavItem', relatedDesignItemId)"
+          >
+            {{ t('publishing.theme_customizer.bridge.design.cta') }}
+          </button>
+        </CustomizerContentBridge>
+
         <!-- Type 1: Static CSS Editor (Direct textarea) -->
         <div
           v-if="selectedItem.panel === 'css' && organizationMode === 'advanced'"
@@ -214,7 +279,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { RouterLink } from 'vue-router';
 import type { NavItem } from '@/modules/Layout/composables/useCustomizerNavigation';
 import type { SlotBinding } from '@/modules/Layout/composables/useThemeDataBindings';
 import {
@@ -227,11 +294,25 @@ import {
 } from '@/shared/components/ui';
 import SettingControl from '@/modules/Layout/components/themes/customizer/sidebar/SettingControl.vue';
 import BindingsSection from '@/modules/Layout/components/themes/customizer/editor/BindingsSection.vue';
+import CustomizerContentBridge from '@/modules/Layout/components/themes/customizer/editor/CustomizerContentBridge.vue';
 import ThemePresetSelector from '@/modules/Layout/components/themes/customizer/editor/ThemePresetSelector.vue';
 import SocialSharePreview from '@/modules/Layout/components/themes/customizer/seo/SocialSharePreview.vue';
-import { Code2, Layout, LayoutTemplate, MenuIcon } from 'lucide-vue-next';
+import { Code2, Database, ExternalLink, Layout, LayoutTemplate, MenuIcon } from 'lucide-vue-next';
 
-defineProps<{
+/** Design sidebar item → binding component id (Content mode). */
+const DESIGN_TO_BINDING: Record<string, string> = {
+  'page-testimonials': 'testimonials',
+  'page-partners': 'partners',
+  'page-careers': 'careers',
+  'page-achievements': 'achievements',
+  'page-cta': 'cta',
+};
+
+const BINDING_TO_DESIGN: Record<string, string> = Object.fromEntries(
+  Object.entries(DESIGN_TO_BINDING).map(([designId, bindingId]) => [bindingId, designId]),
+);
+
+const props = defineProps<{
   selectedItem: NavItem | null;
   activeGroupLabel: string;
   sidebarCollapsed: boolean;
@@ -265,9 +346,42 @@ const emit = defineEmits<{
   (e: 'recordSettingChange', key: string, val: unknown): void;
   (e: 'openMediaPicker', key: string): void;
   (e: 'clearPreview', id: string): void;
+  (e: 'openNavItem', itemId: string): void;
 }>();
 
 const { t } = useI18n();
+
+const menusBridgeVisible = computed(
+  () => props.selectedItem?.panel === 'menus' && props.organizationMode === 'design',
+);
+
+const footerBridgeVisible = computed(
+  () => props.selectedItem?.id === 'ux-footer' && props.organizationMode === 'design',
+);
+
+const relatedBindingId = computed(() => {
+  const id = props.selectedItem?.id;
+  return id ? DESIGN_TO_BINDING[id] ?? null : null;
+});
+
+const bindingsBridgeVisible = computed(
+  () =>
+    props.organizationMode === 'design'
+    && !!relatedBindingId.value
+    && props.isItemCompatibleWithMode(props.selectedItem),
+);
+
+const relatedDesignItemId = computed(() => {
+  const bindingId = props.selectedItem?.bindingComponent?.id;
+  return bindingId ? BINDING_TO_DESIGN[bindingId] ?? null : null;
+});
+
+const designBridgeVisible = computed(
+  () =>
+    props.organizationMode === 'bindings'
+    && !!relatedDesignItemId.value
+    && props.isItemCompatibleWithMode(props.selectedItem),
+);
 
 function handlePresetSelect(_key: string, values: { color_preset: string; color_primary?: string }) {
   emit('recordSettingChange', 'color_preset', values.color_preset);

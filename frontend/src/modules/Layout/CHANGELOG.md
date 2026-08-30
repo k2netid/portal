@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Theme Customizer UX bridges: Menu Builder deep-link from Navigation Map + Footer; Design↔Content jumps for testimonials/partners/careers/achievements/CTA (no schema duplication).
 - Janari Customizer v10: CMS page empty/not-found chrome; Header profile/logout labels; disabled-page status/CTA labels.
 - Janari Customizer v9: Blog featured/read/sidebar; Career secondary labels + guide repeater; Pricing unit strings; Post author/not-found; Hero scroll/latest-news; About survey chrome.
 - Janari Customizer v8: Header chrome (official lines, login, news marquee); About stats/team CTA; Tim closing links; Contact map/form leftovers.

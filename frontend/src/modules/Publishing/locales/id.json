@@ -837,6 +837,29 @@
         }
       }
     },
+    "bridge": {
+      "menus": {
+        "title": "Item menu di Menu Builder",
+        "body": "Di sini Anda hanya menetapkan menu mana yang mengisi tiap lokasi tema. Buat, urutkan, dan beri label tautan di Menu Builder.",
+        "cta": "Buka Menu Builder"
+      },
+      "footer": {
+        "title": "Tautan footer memakai menu",
+        "body": "Blurb merek, judul kolom, dan teks newsletter tetap di sini. Daftar tautan kolom berasal dari Menu Builder; tetapkan menu itu di Peta Navigasi.",
+        "cta_menus": "Buka Menu Builder",
+        "cta_map": "Tetapkan lokasi menu"
+      },
+      "bindings": {
+        "title": "Konten daftar di mode Konten",
+        "body": "Judul, badge, dan tombol tetap di Desain. Kutipan, logo, lowongan, penghargaan, dan daftar serupa dihubungkan lewat Konten.",
+        "cta": "Edit konten daftar"
+      },
+      "design": {
+        "title": "Chrome bagian di mode Desain",
+        "body": "Judul, badge, dan label tombol bagian ini diedit di Desain — bukan di binding konten.",
+        "cta": "Edit chrome bagian"
+      }
+    },
     "empty_state": {
       "title": "Pilih bagian",
       "description": "Pilih item di sidebar untuk mengedit visual, konten Jejakawan, menu, atau halaman landing."

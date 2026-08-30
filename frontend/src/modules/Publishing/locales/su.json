@@ -837,6 +837,29 @@
         }
       }
     },
+    "bridge": {
+      "menus": {
+        "title": "Item menu aya di Menu Builder",
+        "body": "Di dieu anjeun ngan nangtukeun menu mana anu ngeusian unggal lokasi téma. Jieun, susun, jeung labélkeun tautan di Menu Builder.",
+        "cta": "Buka Menu Builder"
+      },
+      "footer": {
+        "title": "Tautan footer maké menu",
+        "body": "Blurb merek, judul kolom, jeung téks newsletter tetep di dieu. Daptar tautan kolom asalna ti Menu Builder; tetepkeun menu éta di Peta Navigasi.",
+        "cta_menus": "Buka Menu Builder",
+        "cta_map": "Tetepkeun lokasi menu"
+      },
+      "bindings": {
+        "title": "Kusi daptar dina mode Kusi",
+        "body": "Judul, badge, jeung tombol tetep di Desain. Kutipan, logo, lowongan, panghargaan, jeung daptar sarupa dihubungkeun ngaliwatan Kusi.",
+        "cta": "Edit kusi daptar"
+      },
+      "design": {
+        "title": "Chrome bagian dina mode Desain",
+        "body": "Judul, badge, jeung labél tombol bagian ieu diédit di Desain — lain di binding kusi.",
+        "cta": "Edit chrome bagian"
+      }
+    },
     "empty_state": {
       "title": "Pilih bagian",
       "description": "Pilih item di sidebar pikeun mengedit visual, kusi Jejakawan, menu, atawa kaca landing."

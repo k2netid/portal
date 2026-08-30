@@ -837,6 +837,29 @@
         "object_data": "Untitled item"
       }
     },
+    "bridge": {
+      "menus": {
+        "title": "Menu items live in Menu Builder",
+        "body": "Here you only assign which menu fills each theme location. Create, reorder, and label links in Menu Builder.",
+        "cta": "Open Menu Builder"
+      },
+      "footer": {
+        "title": "Footer links use menus",
+        "body": "Brand blurb, column titles, and newsletter copy stay here. Column link lists come from Menu Builder; assign those menus under Navigation Map.",
+        "cta_menus": "Open Menu Builder",
+        "cta_map": "Assign menu locations"
+      },
+      "bindings": {
+        "title": "List content uses Content mode",
+        "body": "Titles, badges, and buttons stay in Design. Quotes, logos, jobs, awards, and similar lists are wired under Content.",
+        "cta": "Edit list content"
+      },
+      "design": {
+        "title": "Section chrome uses Design mode",
+        "body": "Titles, badges, and button labels for this section are edited under Design — not in content bindings.",
+        "cta": "Edit section chrome"
+      }
+    },
     "empty_state": {
       "title": "Choose a section",
       "description": "Pick an item in the sidebar to edit visuals, Jejakawan content, menus, or landing pages."
