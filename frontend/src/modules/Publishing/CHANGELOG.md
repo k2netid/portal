@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Theme Customizer sidebar labels for Home Partners and CTA sections (en/id/su).
 - Theme Customizer sidebar labels for Home Testimonials and Updates sections (en/id/su).
 
 ### Fixed

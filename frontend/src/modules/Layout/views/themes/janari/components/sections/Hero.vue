@@ -77,13 +77,13 @@
       <!-- CTA Buttons -->
       <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
         <router-link
-          to="/solusi"
+          :to="heroCtaPrimaryUrl"
           class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)"
         >
           {{ heroCtaPrimaryText }}
         </router-link>
         <router-link
-          to="/pricing"
+          :to="heroCtaPricingUrl"
           class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase border border-white/40 text-white rounded-[6px] hover:border-white hover:bg-white/8 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)"
         >
           {{ heroCtaPricingText }}
@@ -367,6 +367,14 @@ const heroCtaPrimaryText = computed(
 const heroCtaConsoleText = computed(
     () => localizedString('hero_cta_console') || t('theme.janari.hero.ctaSecondary'),
 );
+const heroCtaPrimaryUrl = computed(() => {
+    const raw = getSetting('hero_cta_primary_url', '/solusi')
+    return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solusi'
+})
+const heroCtaPricingUrl = computed(() => {
+    const raw = getSetting('cta_secondary_url', '/pricing')
+    return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
+})
 const heroSlideCount = computed(() => parseInt(String(getSetting('hero_slide_count', 3)), 10))
 const heroSlideInterval = computed(() => parseInt(String(getSetting('hero_slide_interval', 6)), 10) * 1000)
 const heroOverlay = computed(() => parseInt(String(getSetting('hero_overlay_opacity', 50)), 10))

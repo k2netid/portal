@@ -64,6 +64,20 @@
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_products_desc"
         },
         {
+            "id": "page-partners",
+            "manifestCategories": ["Partners Section"],
+            "icon": "share-2",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_partners",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_partners_desc"
+        },
+        {
+            "id": "page-cta",
+            "manifestCategories": ["CTA Section"],
+            "icon": "megaphone",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_cta",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_cta_desc"
+        },
+        {
             "id": "page-testimonials",
             "manifestCategories": ["Testimonials Section"],
             "icon": "message-square",

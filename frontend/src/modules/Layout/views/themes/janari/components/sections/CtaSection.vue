@@ -24,13 +24,13 @@
           </p>
           <div class="flex flex-col sm:flex-row items-center gap-6">
             <router-link
-              to="/contact"
+              :to="primaryUrl"
               class="px-10 py-4 text-xs font-bold tracking-[0.5px] uppercase bg-primary text-primary-foreground rounded-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
             >
               {{ buttonText }}
             </router-link>
             <router-link
-              to="/pricing"
+              :to="secondaryUrl"
               class="px-10 py-4 text-xs font-bold tracking-[0.5px] uppercase border border-border rounded-lg hover:bg-muted/50 transition-all"
             >
               {{ secondaryButtonText }}
@@ -47,10 +47,12 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import JanariSplitText from '../shared/JanariSplitText.vue'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 
 const { t } = useI18n({ useScope: 'global' })
 const { localizedString } = useLocalizedThemeSetting()
+const { getSetting } = useTheme()
 const { scaleReveal, splitTextRevealSafe } = useThemeMotion()
 
 const cardRef = ref<HTMLElement>()
@@ -61,6 +63,14 @@ const titleText = computed(() => localizedString('cta_title') || t('theme.janari
 const subtitleText = computed(() => localizedString('cta_subtitle') || '')
 const buttonText = computed(() => localizedString('cta_button_text') || t('theme.janari.cta.buttonDefault'))
 const secondaryButtonText = computed(() => localizedString('cta_secondary_text') || t('theme.janari.cta.pricingDefault'))
+const primaryUrl = computed(() => {
+  const raw = getSetting('cta_button_url', '/contact')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact'
+})
+const secondaryUrl = computed(() => {
+  const raw = getSetting('cta_secondary_url', '/pricing')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
+})
 
 onMounted(() => {
     if (cardRef.value) scaleReveal(cardRef.value)
