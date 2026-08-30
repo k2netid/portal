@@ -12,7 +12,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | :--- | :--- |
 | [**AGENT_START_HERE**](AGENT_START_HERE.md) | Cerita fork, branch strategy, aturan agent |
 | [**Branching**](branching.md) | `main` + `integrate/*` + `feat`/`fix` |
-| [**Architectural status**](architectural-status.md) | Kernel `main` + CMS packs / `/site` di `integrate/cms` |
+| [**Architectural status**](architectural-status.md) | Kernel + CMS packs / `/site` on `main` |
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
 | [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |

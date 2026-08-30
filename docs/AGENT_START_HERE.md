@@ -13,9 +13,9 @@ Repo ini **bukan** `ja-control-plane`. Control plane (`ja-control-plane`) tetap 
 
 | Branch | Peran |
 | :--- | :--- |
-| **`main`** | Trunk — kernel canonical (`Modules/Core` + unified console). Pack yang sudah merge ikut di sini. |
-| **`integrate/<domain>`** | Sementara — gelombang besar (saat ini **`integrate/cms`**). Merge ke `main` lalu hapus. |
-| **`feat/…` / `fix/…`** | Pendek — PR ke `main` atau ke integrate aktif; hapus setelah merge. |
+| **`main`** | Trunk — kernel + CMS packs (PR #14). Default basis semua kerja. |
+| **`integrate/<domain>`** | Sementara — gelombang besar saja; merge ke `main` lalu hapus. (`integrate/cms` sudah merged.) |
+| **`feat/…` / `fix/…`** | Pendek — PR ke `main` (atau ke integrate aktif); hapus setelah merge. |
 
 Kebijakan penuh: [branching.md](branching.md).  
 Branch **`develop`** dihapus Aug 2026. Snapshot status: [architectural-status.md](architectural-status.md).

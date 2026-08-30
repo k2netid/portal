@@ -19,16 +19,13 @@ Model: **trunk + short-lived worktrees**. Hanya `main` yang long-lived. Integras
 
 ```
 main
- └── integrate/cms          ← sementara (CMS packs + honesty pass)
-      └── feat/cms-theme-…  ← kerja harian di line CMS
- └── feat/mail-quota-…      ← pack/kernel kecil langsung ke main (setelah CMS merge)
- └── fix/session-cookie-…
+ └── feat/… / fix/…         ← kerja harian dari trunk
+ └── integrate/<domain>     ← hanya gelombang besar baru (sementara → merge & hapus)
 ```
 
-1. Kernel / pack yang sudah di `main` → branch dari **`main`**.
-2. Kerja di gelombang CMS yang belum merge → branch dari **`integrate/cms`**, PR ke `integrate/cms`.
-3. Selesai honesty + quality gate → PR **`integrate/cms` → `main`**, hapus `integrate/cms`.
-4. Setelah itu semua pack CMS ikut `main`; feature baru dari `main`.
+1. Semua kerja harian → branch dari **`main`**, PR ke **`main`**.
+2. Gelombang besar (jarang) → `integrate/<domain>` dari `main`, lalu PR ke `main` dan **hapus**.
+3. ~~`integrate/cms`~~ → **merged** PR #14 (2026-08-30); hapus remote/local sisa.
 
 ## Hygiene GitHub
 
@@ -41,8 +38,8 @@ main
 
 | Branch | Status |
 | :--- | :--- |
-| `main` | Kernel thin + deps |
-| `integrate/cms` | Line CMS packs — ditahan merge sampai honesty pass |
-| ~~`feat/mail-*`~~ | **Dihapus** — sudah terserap di `integrate/cms` (`ship JA-Mail P1–P2 stack with honesty hardening`) |
+| `main` | Kernel + CMS packs (PR #14) |
+| ~~`integrate/cms`~~ | **Merged** → hapus sisa remote/local |
+| ~~`feat/mail-*`~~ | **Dihapus** — sudah terserap sebelum merge CMS |
 
 Lihat juga: [architectural-status.md](architectural-status.md) · [AGENT_START_HERE.md](AGENT_START_HERE.md)

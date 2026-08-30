@@ -2,8 +2,8 @@
 
 Update: 2026-08-30
 
-Canonical integration branch for this snapshot: **`integrate/cms`** (rename dari `fix/module-registry-p0-kernel-lock`; ahead of `main` for CMS packs, member, and `/site`).  
-Branching model: [branching.md](branching.md) — trunk `main` + integrate sementara + feat/fix pendek.
+Canonical trunk: **`main`** (CMS packs, member, and `/site` landed via [PR #14](https://github.com/jejak-awan/ja-core_engine/pull/14), 2026-08-30).  
+`integrate/cms` merged and should be deleted. Branching model: [branching.md](branching.md).
 
 ## Kernel (`main` lineage)
 
@@ -40,21 +40,21 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 
 | Item | Notes |
 | :--- | :--- |
-| Merge gate `integrate/cms` → `main` | Honesty + P2 + W5 partial landed. `npm run agent:verify` green (2026-08-30). Ready for PR when you want merge. |
+| Merge gate `integrate/cms` → `main` | **Done** — PR #14 merged 2026-08-30 (`7b5180f`). |
 | W5 naming residue | Partial: Media/Library defaults + theme docs use `publishing` / `Layout/*`. Keep API alias `Jejakawan`→`publishing`; do not rewrite customized console menus or seed brand strings. |
-| P5 vertical product modules | Deferred until merge + named product. Same Mail contract. |
-| GitHub Actions | Skipped until billing; local Playwright via Podman |
+| P5 vertical product modules | Unblocked by merge; still needs a named product before build-out. Same Mail contract. |
+| GitHub Actions | Org spending limit blocked CI on the merge PR; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
 | PHP 8.5 + spreadsheets | **Done:** `maatwebsite/excel` **4.0.2** + `phpoffice/phpspreadsheet` **^5.3** (no platform ignore). Streaming alts (`openspout` / `fast-excel`) remain optional for export-heavy jobs. |
 
-**Branch hygiene (2026-08-30):** remote heads = `main` + `integrate/cms` only. `feat/mail-*` absorbed and deleted.
+**Branch hygiene (2026-08-30):** trunk = `main` only after CMS merge. Delete leftover `integrate/cms` remote/local. `feat/mail-*` already absorbed.
 
 ## Removed from repo (Aug 2026)
 
 | Item | Notes |
 | :--- | :--- |
 | Branch **`develop`** | Old CMS line name — packs now live as optional modules on this kernel branch |
-| CI `develop` trigger | Single canonical `main`; CMS line = `integrate/cms` until merge |
+| CI `develop` trigger | Single canonical `main` (CMS packs on trunk) |
 
 Console IAM (`srv_auth_users`) is **not** the public reader model. Member pack is optional CMS/audience, not ja-control-plane billing.
 
