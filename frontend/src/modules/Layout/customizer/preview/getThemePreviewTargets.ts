@@ -8,7 +8,7 @@ const bySlug: Record<string, Record<string, CustomizerPreviewTargetConfig>> = {
 export function getThemePreviewTargets(slug: string): Record<string, CustomizerPreviewTargetConfig> {
   const key = String(slug || '').toLowerCase();
   if (bySlug[key]) return bySlug[key];
-  if (key.startsWith('janari')) return bySlug.janari;
+  if (key.startsWith('janari')) return bySlug.janari ?? {};
   return {};
 }
 

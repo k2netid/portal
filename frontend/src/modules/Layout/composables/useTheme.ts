@@ -318,7 +318,8 @@ export function useTheme() {
 
             // Standardized API response unwrapping (defensive)
             if (data && typeof data === 'object' && 'success' in data && 'data' in data) {
-                data = (data as { data: Theme }).data;
+                const wrapped = data as { data?: Theme | null };
+                data = wrapped.data ?? null;
             }
             }
 
@@ -367,9 +368,12 @@ export function useTheme() {
 
             // Load theme assets
             if (nextAssetsSig !== prevAssetsSig && data.assets) {
-                themeAssets.value = data.assets;
-                injectCssFiles(data.assets.css || []);
-                injectJsFiles(data.assets.js || []);
+                themeAssets.value = {
+                    css: Array.isArray(data.assets.css) ? data.assets.css : [],
+                    js: Array.isArray(data.assets.js) ? data.assets.js : [],
+                };
+                injectCssFiles(themeAssets.value.css);
+                injectJsFiles(themeAssets.value.js);
             }
 
             if (nextCss !== prevCss && data.custom_css) {
