@@ -80,7 +80,7 @@
           to="/solusi"
           class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)"
         >
-          {{ t('theme.janari.hero.ctaPrimary') }}
+          {{ heroCtaPrimaryText }}
         </router-link>
         <router-link
           to="/pricing"
@@ -92,7 +92,7 @@
           href="/auth/console-sign-in"
           class="w-full sm:w-auto px-6 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase text-white/70 hover:text-white transition-colors"
         >
-          {{ t('theme.janari.hero.ctaSecondary') }}
+          {{ heroCtaConsoleText }}
         </a>
       </div>
 
@@ -360,6 +360,12 @@ const heroSubtitleText = computed(
 )
 const heroCtaPricingText = computed(
     () => localizedString('cta_secondary_text') || t('theme.janari.hero.ctaPricing'),
+)
+const heroCtaPrimaryText = computed(
+    () => localizedString('hero_cta_primary') || t('theme.janari.hero.ctaPrimary'),
+)
+const heroCtaConsoleText = computed(
+    () => localizedString('hero_cta_console') || t('theme.janari.hero.ctaSecondary'),
 );
 const heroSlideCount = computed(() => parseInt(String(getSetting('hero_slide_count', 3)), 10))
 const heroSlideInterval = computed(() => parseInt(String(getSetting('hero_slide_interval', 6)), 10) * 1000)

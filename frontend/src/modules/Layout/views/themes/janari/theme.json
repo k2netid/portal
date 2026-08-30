@@ -1803,6 +1803,434 @@
             "default": "",
             "category": "Tim Page",
             "scope": "theme"
+        },
+        "page_tim_areas_title": {
+            "label": "Tim areas title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_areas_title_en": {
+            "label": "Tim areas title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_areas_title_id": {
+            "label": "Tim areas title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_pillars_items": {
+            "label": "Tim pillars",
+            "type": "repeater",
+            "category": "Tim Page",
+            "description": "Empty = theme defaults. key: craft|trust|scale (icons).",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_tim_areas_items": {
+            "label": "Tim areas",
+            "type": "repeater",
+            "category": "Tim Page",
+            "description": "Empty = theme defaults. key: engineering|content|platform|success.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_about_offerings_title": {
+            "label": "About offerings title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_title_en": {
+            "label": "About offerings title (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_title_id": {
+            "label": "About offerings title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle": {
+            "label": "About offerings subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle_en": {
+            "label": "About offerings subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle_id": {
+            "label": "About offerings subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_items": {
+            "label": "About offerings cards",
+            "type": "repeater",
+            "category": "About Page",
+            "description": "Empty = defaults. key: hub|commercial|onprem|organization.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                },
+                {
+                    "name": "link_label",
+                    "label": "Link label",
+                    "type": "text"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_solusi_services_badge": {
+            "label": "Services badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_badge_en": {
+            "label": "Services badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_badge_id": {
+            "label": "Services badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title": {
+            "label": "Services title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title_en": {
+            "label": "Services title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title_id": {
+            "label": "Services title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle": {
+            "label": "Services subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle_en": {
+            "label": "Services subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle_id": {
+            "label": "Services subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_items": {
+            "label": "Services cards",
+            "type": "repeater",
+            "category": "Solusi Page",
+            "description": "Empty = defaults. key: managed|forms|member|onprem. bullets = one per line.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                },
+                {
+                    "name": "bullets",
+                    "label": "Bullets (one per line)",
+                    "type": "textarea"
+                },
+                {
+                    "name": "link_label",
+                    "label": "CTA label",
+                    "type": "text"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_solusi_stack_title": {
+            "label": "Hub stack title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_title_en": {
+            "label": "Hub stack title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_title_id": {
+            "label": "Hub stack title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle": {
+            "label": "Hub stack subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle_en": {
+            "label": "Hub stack subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle_id": {
+            "label": "Hub stack subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note": {
+            "label": "Hub workspace note (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note_en": {
+            "label": "Hub workspace note (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note_id": {
+            "label": "Hub workspace note (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_items": {
+            "label": "Hub stack modules",
+            "type": "repeater",
+            "category": "Solusi Page",
+            "description": "Empty = defaults. features = one per line.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Name",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Summary",
+                    "type": "textarea"
+                },
+                {
+                    "name": "features",
+                    "label": "Features (one per line)",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "hero_cta_primary": {
+            "label": "Hero primary CTA (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_primary_en": {
+            "label": "Hero primary CTA (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_primary_id": {
+            "label": "Hero primary CTA (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console": {
+            "label": "Hero console link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console_en": {
+            "label": "Hero console link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console_id": {
+            "label": "Hero console link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "page_contact_label_email": {
+            "label": "Contact label: email",
+            "type": "text",
+            "default": "Email Resmi",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_label_phone": {
+            "label": "Contact label: phone",
+            "type": "text",
+            "default": "Telepon / WA",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_label_address": {
+            "label": "Contact label: address",
+            "type": "text",
+            "default": "Alamat",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_submit": {
+            "label": "Contact submit button",
+            "type": "text",
+            "default": "Kirim Pesan",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_map_open": {
+            "label": "Contact map: open",
+            "type": "text",
+            "default": "Buka Peta",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_map_directions": {
+            "label": "Contact map: directions",
+            "type": "text",
+            "default": "Petunjuk Arah",
+            "category": "Contact Page",
+            "scope": "theme"
         }
     },
     "menus": {

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Janari Customizer v2: Tim pillars/areas, About offerings, Solusi services/hub stack, Hero CTA labels, Contact UI labels — editable without code (empty = locale defaults).
 - Builder isolation (phases 6–8): theme catalog from public routes; paginated pages fetch; create via builder prompt; About exclusive body; skip body→blocks on theme binds; Site Editor `edit content`; menu parents `/manage/layout/menus`; full revision reload; lock after bind.
 - After Edit with Builder, empty theme binds show the builder empty workspace (not live Hero); Add Section opens section→row→column layout picker.
 - Janari Customizer: Products / Solusi / Tim / About mission copy editable via schema (no code); sidebar pages for those sections.

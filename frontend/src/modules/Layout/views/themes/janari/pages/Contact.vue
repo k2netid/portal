@@ -85,7 +85,7 @@
                   </div>
                   <div class="flex-1 min-w-0">
                     <h3 class="font-bold text-xs uppercase tracking-widest text-muted-foreground mb-1">
-                      Email Resmi
+                      {{ labelEmail }}
                     </h3>
                     <a
                       :href="'mailto:' + displayEmail"
@@ -108,7 +108,7 @@
                   </div>
                   <div>
                     <h3 class="font-bold text-xs uppercase tracking-widest text-muted-foreground mb-1">
-                      Telepon / WA
+                      {{ labelPhone }}
                     </h3>
                     <a
                       v-if="phoneDialHref"
@@ -144,7 +144,7 @@
                   </div>
                   <div>
                     <h3 class="font-bold text-xs uppercase tracking-widest text-muted-foreground mb-1">
-                      Alamat
+                      {{ labelAddress }}
                     </h3>
                     <Popover
                       v-if="displayAddress && mapEnabled"
@@ -184,14 +184,14 @@
                             variant="outline"
                             @click="openMapExternal"
                           >
-                            Buka Peta
+                            {{ labelMapOpen }}
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             @click="openMapDirections"
                           >
-                            Petunjuk Arah
+                            {{ labelMapDirections }}
                           </Button>
                           <Button
                             size="sm"
@@ -535,7 +535,7 @@
                       v-if="submitting"
                       class="w-4 h-4 mr-2 animate-spin"
                     />
-                    Kirim Pesan
+                    {{ labelSubmit }}
                   </Button>
                 </form>
 
@@ -572,6 +572,7 @@ import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRen
 import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import api, { getCsrfCookie } from '@/engine/api/client'
 import { publishingPaths } from '@/engine/api/paths'
@@ -647,6 +648,13 @@ const pageData = ref<PageData | null>(null)
 const mapPopoverOpen = ref(false)
 const mapIframeVisible = ref(false)
 const { getSetting } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
+const labelEmail = computed(() => localizedString('page_contact_label_email') || 'Email Resmi')
+const labelPhone = computed(() => localizedString('page_contact_label_phone') || 'Telepon / WA')
+const labelAddress = computed(() => localizedString('page_contact_label_address') || 'Alamat')
+const labelSubmit = computed(() => localizedString('page_contact_submit') || 'Kirim Pesan')
+const labelMapOpen = computed(() => localizedString('page_contact_map_open') || 'Buka Peta')
+const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || 'Petunjuk Arah')
 const router = useRouter()
 const publishingStore = usePublishingStore()
 const toast = useToast()
