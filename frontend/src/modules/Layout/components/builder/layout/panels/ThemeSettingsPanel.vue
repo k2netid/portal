@@ -8,78 +8,31 @@
     <template v-else-if="currentTheme">
       <div class="theme-header">
         <h3 class="theme-title">{{ currentTheme.name }} {{ t('builder.panels.theme.settings') }}</h3>
+        <p class="theme-subtitle">
+          {{ t('builder.panels.theme.schemaHint', 'Same settings schema as Theme Customizer (platform + theme).') }}
+        </p>
       </div>
 
       <div class="theme-settings-body">
         <div v-for="section in settingsSections" :key="section.id" class="settings-section">
           <div class="section-label">{{ section.label }}</div>
-          
+
           <div class="section-content">
             <div v-for="setting in section.settings" :key="setting.key" class="setting-item">
-              <label class="setting-label">{{ setting.label }}</label>
-              
-              <!-- Field Rendering Logic -->
-              <div v-if="setting.type === 'color'" class="color-field-container">
-                <ColorField 
-                  :field="{ name: setting.key, type: 'color', label: setting.label || setting.key }"
-                  :value="String(formValues[setting.key] || '')"
-                  @update:value="formValues[setting.key] = $event; handleInput()"
-                  :placeholder-value="setting.default as string"
-                />
-              </div>
-
-              <div v-else-if="setting.type === 'media' || setting.type === 'upload'" class="media-field-container">
-                <UploadField 
-                  :field="{ name: setting.key, type: 'upload', label: setting.label || setting.key }"
-                  :value="String(formValues[setting.key] || '')"
-                  @update:value="formValues[setting.key] = $event; handleInput()"
-                  :placeholder-value="setting.default as string"
-                />
-              </div>
-
-              <select v-else-if="setting.type === 'select'" v-model="formValues[setting.key]" class="select-input" @change="handleInput">
-                <template v-if="Array.isArray(setting.options)">
-                  <option 
-                    v-for="opt in setting.options" 
-                    :key="typeof opt === 'object' && opt ? String(opt.value ?? opt.label) : String(opt)" 
-                    :value="typeof opt === 'object' && opt ? opt.value : opt"
-                  >
-                    {{ typeof opt === 'object' && opt ? (opt.label ?? opt.value) : opt }}
-                  </option>
-                </template>
-              </select>
-
-              <div v-else-if="setting.type === 'checkbox'" class="checkbox-setting">
-                <input type="checkbox" v-model="formValues[setting.key]" @change="handleInput" />
-                <span>{{ setting.description || '' }}</span>
-              </div>
-
-              <div v-else-if="setting.type === 'range'" class="range-setting">
-                <input type="range" v-model.number="formValues[setting.key]" :min="setting.min" :max="setting.max" :step="setting.step" @input="handleInput" />
-                <span class="range-value">{{ formValues[setting.key] }}{{ (setting as any).unit || 'px' }}</span>
-              </div>
-
-              <textarea
-                v-else-if="setting.type === 'textarea'"
-                :value="String(formValues[setting.key] ?? '')"
-                class="textarea-input"
-                rows="3"
-                @input="formValues[setting.key] = ($event.target as HTMLTextAreaElement).value; handleInput()"
+              <SettingControl
+                :setting="setting"
+                :model-value="formValues[setting.key]"
+                :theme-slug="currentTheme?.slug"
+                @update:model-value="(val) => { formValues[setting.key] = val; handleInput() }"
+                @change="handleInput"
+                @pick-media="openMediaPicker(setting.key)"
               />
-
-              <input v-else-if="setting.type === 'number'" type="number" v-model.number="formValues[setting.key]" class="number-input" @input="handleInput" />
-              
-              <input
-                v-else
-                type="text"
-                :value="String(formValues[setting.key] ?? '')"
-                class="text-input"
-                @input="formValues[setting.key] = ($event.target as HTMLInputElement).value; handleInput()"
-              />
-
-              <p v-if="setting.description" class="setting-hint">{{ setting.description }}</p>
             </div>
           </div>
+        </div>
+
+        <div v-if="settingsSections.length === 0" class="empty-schema">
+          {{ t('builder.panels.theme.noSettings', 'No editable theme settings for this theme.') }}
         </div>
       </div>
 
@@ -109,24 +62,33 @@
       <Palette :size="48" />
       <p>{{ t('builder.panels.theme.selectHint') }}</p>
     </div>
+
+    <MediaPicker
+      v-model:open="showMediaPicker"
+      @selected="handleMediaSelect"
+    >
+      <template #trigger>
+        <span class="hidden" />
+      </template>
+    </MediaPicker>
   </div>
 </template>
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, computed, inject, watch, onMounted, defineAsyncComponent } from 'vue';
+import { ref, computed, inject, watch, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import Palette from 'lucide-vue-next/dist/esm/icons/palette.js';
 import type { BuilderInstance, ThemeData } from '@/modules/Layout/types/builder';
 import type { ThemeSetting } from '@/modules/Layout/types/theme';
+import { mergeThemeSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema';
+import SettingControl from '@/modules/Layout/components/themes/customizer/sidebar/SettingControl.vue';
+import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 
 interface SettingItem extends ThemeSetting {
   key: string;
 }
-
-const ColorField = defineAsyncComponent(() => import('@/modules/Layout/components/builder/fields/ColorField.vue'));
-const UploadField = defineAsyncComponent(() => import('@/modules/Layout/components/builder/fields/UploadField.vue'));
 
 const { t } = useI18n();
 const builder = inject<BuilderInstance>('builder');
@@ -135,23 +97,38 @@ const loading = ref(false);
 const saving = ref(false);
 const isDirty = ref(false);
 const formValues = ref<Record<string, unknown>>({});
+const showMediaPicker = ref(false);
+const activeMediaKey = ref<string | null>(null);
 
 const selectedThemeSlug = computed(() => builder?.selectedThemeSlug?.value);
 const themes = computed(() => builder?.availableThemes?.value || []);
 
 const currentTheme = computed(() => {
-  return themes.value.find((t: ThemeData) => t.slug === selectedThemeSlug.value);
+  return themes.value.find((t: ThemeData) => t.slug === selectedThemeSlug.value)
+    || (builder?.themeData.value?.slug === selectedThemeSlug.value ? builder.themeData.value : null);
+});
+
+/** Platform + theme customizer schema (+ API legacy keys), same as Theme Customizer. */
+const mergedSchema = computed((): Record<string, ThemeSetting> => {
+  const theme = currentTheme.value;
+  const slug = theme?.slug || selectedThemeSlug.value;
+  if (!slug) return {};
+  return mergeThemeSettingsSchema(
+    slug,
+    (theme?.manifest?.settings_schema || null) as Record<string, unknown> | null,
+  ) as Record<string, ThemeSetting>;
 });
 
 const settingsSections = computed(() => {
-  if (!currentTheme.value?.manifest?.settings_schema) return [];
-  
-  const schema = currentTheme.value.manifest.settings_schema as Record<string, ThemeSetting>;
+  const schema = mergedSchema.value;
   const sections: Record<string, { id: string; label: string; settings: SettingItem[] }> = {};
 
-  Object.keys(schema).forEach(key => {
+  Object.keys(schema).forEach((key) => {
     const setting = schema[key];
-    if (!setting) return;
+    if (!setting || setting.hidden) return;
+    // Menu slots + bindings live in Customizer dedicated panels.
+    if (key.startsWith('menu_location_') || key.startsWith('_')) return;
+
     const category = setting.category || 'General';
     if (!sections[category]) {
       sections[category] = { id: category, label: category, settings: [] };
@@ -163,31 +140,51 @@ const settingsSections = computed(() => {
 });
 
 const loadThemeSettings = () => {
-    if (!currentTheme.value) return;
-    const theme = currentTheme.value;
-    const schema = (theme.manifest?.settings_schema || {}) as Record<string, ThemeSetting>;
-    const defaults: Record<string, unknown> = {};
-    
-    Object.keys(schema).forEach(key => {
-        const item = schema[key];
-        if (item) {
-            defaults[key] = item.default ?? '';
-        }
-    });
-    
-    formValues.value = { ...defaults, ...(theme.settings || {}) };
-    isDirty.value = false;
+  if (!currentTheme.value && !selectedThemeSlug.value) return;
+  const theme = currentTheme.value;
+  const schema = mergedSchema.value;
+  const defaults: Record<string, unknown> = {};
+
+  Object.keys(schema).forEach((key) => {
+    const item = schema[key];
+    if (!item || item.hidden) return;
+    defaults[key] = item.default ?? '';
+  });
+
+  const liveSettings = selectedThemeSlug.value === builder?.activeTheme?.value
+    ? (builder?.themeSettings.value || {})
+    : {};
+
+  formValues.value = {
+    ...defaults,
+    ...(theme?.settings || {}),
+    ...liveSettings,
+  };
+  isDirty.value = false;
 };
 
 const handleInput = () => {
   isDirty.value = true;
-  // Real-time preview if this is the active theme
   if (selectedThemeSlug.value === builder?.activeTheme?.value && builder?.themeSettings) {
     builder.themeSettings.value = { ...formValues.value };
     if (builder.applyThemeStyles) {
-        builder.applyThemeStyles();
+      builder.applyThemeStyles();
     }
   }
+};
+
+const openMediaPicker = (key: string) => {
+  activeMediaKey.value = key;
+  showMediaPicker.value = true;
+};
+
+const handleMediaSelect = (m: { url: string }) => {
+  if (activeMediaKey.value) {
+    formValues.value[activeMediaKey.value] = m.url;
+    handleInput();
+  }
+  showMediaPicker.value = false;
+  activeMediaKey.value = null;
 };
 
 const saveSettings = async () => {
@@ -203,12 +200,12 @@ const saveSettings = async () => {
   }
 };
 
-watch(selectedThemeSlug, () => {
-    loadThemeSettings();
+watch([selectedThemeSlug, mergedSchema], () => {
+  loadThemeSettings();
 });
 
 onMounted(() => {
-    loadThemeSettings();
+  loadThemeSettings();
 });
 </script>
 
@@ -230,6 +227,13 @@ onMounted(() => {
   font-size: 14px;
   font-weight: 700;
   color: var(--builder-text-primary);
+}
+
+.theme-subtitle {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--builder-text-muted);
 }
 
 .theme-settings-body {
@@ -265,63 +269,11 @@ onMounted(() => {
   gap: 6px;
 }
 
-.setting-label {
+.empty-schema {
+  padding: 24px 20px;
   font-size: 12px;
-  font-weight: 500;
-  color: var(--builder-text-secondary);
-}
-
-.text-input, .number-input, .select-input, .textarea-input {
-  width: 100%;
-  height: 32px;
-  padding: 0 8px;
-  background: var(--builder-bg-secondary);
-  border: 1px solid var(--builder-border);
-  border-radius: 4px;
-  color: var(--builder-text-primary);
-  font-size: 12px;
-}
-
-.textarea-input {
-  height: auto;
-  padding: 8px;
-  resize: vertical;
-}
-
-.checkbox-setting {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--builder-text-secondary);
-}
-
-.range-setting {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.range-setting input[type="range"] {
-    flex: 1;
-}
-
-.range-value {
-    min-width: 40px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--builder-text-primary);
-}
-
-.color-field-container, .media-field-container {
-    width: 100%;
-}
-
-.setting-hint {
-  margin: 0;
-  font-size: 11px;
   color: var(--builder-text-muted);
-  font-style: italic;
+  text-align: center;
 }
 
 .panel-footer {

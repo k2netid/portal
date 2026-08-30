@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import ModuleRegistry from './ModuleRegistry'
 import api from '@/engine/api/client'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { applyMergedSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema'
 import { usePresets } from './usePresets'
 import { useGlobalVariables } from './useGlobalVariables'
 import type {
@@ -67,6 +68,7 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
             const data = response.data?.data || response.data
 
             if (data) {
+                applyMergedSettingsSchema(data, data.slug || 'janari')
                 state.themeData.value = data
                 state.themeSettings.value = data.settings || {}
                 state.activeTheme.value = data.slug

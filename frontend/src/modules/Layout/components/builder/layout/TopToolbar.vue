@@ -176,6 +176,13 @@
         :title="isFullscreen ? t('builder.toolbar.exitFullscreen') || 'Exit Full View' : t('builder.toolbar.fullscreen') || 'Enter Full View'" 
         @click="toggleFullscreen"
       />
+
+      <IconButton
+        variant="ghost"
+        :icon="ExternalLink"
+        :title="t('builder.toolbar.livePreview', 'Live site preview')"
+        @click="$emit('open-live-preview')"
+      />
     </div>
     
     <!-- Right Section: Save & Status -->
@@ -244,6 +251,7 @@ import ChevronDown from 'lucide-vue-next/dist/esm/icons/chevron-down.js';
 import Check from 'lucide-vue-next/dist/esm/icons/check.js';
 import Loader2 from 'lucide-vue-next/dist/esm/icons/loader-circle.js';
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js';
+import ExternalLink from 'lucide-vue-next/dist/esm/icons/external-link.js';
 import { useI18n } from 'vue-i18n'
 import { DEVICE_MODES } from '@/modules/Layout/components/builder/core/constants'
 import { IconButton, BaseDropdown, BaseDivider } from '@/modules/Layout/components/builder/ui'
@@ -271,6 +279,7 @@ defineEmits<{
   (e: 'close-builder'): void
   (e: 'save', status: 'draft' | 'published'): void
   (e: 'generate-ai'): void
+  (e: 'open-live-preview'): void
 }>()
 
 const { t } = useI18n()

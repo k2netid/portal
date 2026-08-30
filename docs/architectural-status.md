@@ -23,7 +23,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 | Pack | Role |
 | :--- | :--- |
-| publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference theme). **Surfaces:** Site Editor = page/`builder_blocks` content; Theme Customizer = chrome/settings/CSS/bindings + menu slots; Menu Builder = menu trees + `location` (syncs theme `menu_location_*`). Deep-linked; content blocks still Janari-only. |
+| publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference theme). **Surfaces:** Site Editor = page/`builder_blocks` content + merged theme settings schema + live `/` preview; Theme Customizer = chrome/settings/CSS/bindings + menu slots; Menu Builder = menu trees + `location` (syncs theme `menu_location_*`). Deep-linked; content blocks still Janari-only. |
 | forms, newsletter, analytics, search, cms-ai | Audience / insight |
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
 | **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |

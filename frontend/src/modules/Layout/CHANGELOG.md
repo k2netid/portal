@@ -11,6 +11,7 @@
 - Public BlockRenderer + Janari Page body use SafeHtml (`publishing`).
 - Janari SafeHtml uses `mode="publishing"` (legacy `Jejakawan` alias kept).
 - Site Editor theme panel saves via theme settings API; deep-links to Theme Customizer + Menu Builder. Menu Builder links to customizer menus panel (`?panel=menus`). Public menu fetch accepts UUID when theme settings store `menu_location_*`.
+- Site Editor theme panel uses merged customizer schema (`SettingControl`) + live apex `/` (or page slug) preview dialog.
 
 ## 1.1.0 — P3-3b
 

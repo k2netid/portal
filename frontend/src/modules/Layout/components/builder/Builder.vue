@@ -21,6 +21,7 @@
         @close-builder="handleClose"
         @save="handleSave"
         @generate-ai="handleGenerateAi"
+        @open-live-preview="showLivePreview = true"
       />
       <div
         v-if="isReadOnly"
@@ -159,6 +160,35 @@
         @confirm="builder.closeInputModal"
         @cancel="builder.closeInputModal(null)"
       />
+
+      <Dialog
+        :open="showLivePreview"
+        @update:open="(open) => showLivePreview = open"
+      >
+        <DialogContent class="console-dialog-full">
+          <div class="h-full flex flex-col bg-background">
+            <div class="h-12 px-4 border-b border-border flex items-center justify-between shrink-0 gap-3">
+              <p class="text-sm font-semibold text-foreground">
+                {{ t('builder.toolbar.livePreview', 'Live site preview') }}
+              </p>
+              <a
+                class="text-xs font-medium text-primary hover:underline"
+                :href="livePreviewUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ t('builder.toolbar.openInTab', 'Open in new tab') }}
+              </a>
+            </div>
+            <div class="flex-1 min-h-0">
+              <PreviewArea
+                :preview-theme="livePreviewTheme"
+                :preview-url="livePreviewUrl"
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       
       <ContextMenu 
           :visible="contextMenu.visible"
@@ -203,6 +233,9 @@ import IconPickerModal from './modals/IconPickerModal.vue'
 import ConfirmModal from './modals/ConfirmModal.vue'
 import InputModal from './modals/InputModal.vue'
 import ContextMenu from './ui/ContextMenu.vue'
+import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue'
+import { Dialog, DialogContent } from '@/shared/components/ui'
+import type { Theme } from '@/modules/Layout/types/theme'
 
 // Core
 import { useBuilder } from './core'
@@ -291,6 +324,33 @@ const insertRowTargetId = ref<string | null>(null)
 
 const showInsertSectionModal = ref(false)
 const insertSectionIndex = ref(-1)
+const showLivePreview = ref(false)
+
+const livePreviewUrl = computed(() => {
+  const slug = builderBase.content?.value?.slug
+  if (typeof slug === 'string') {
+    const clean = slug.replace(/^\/+/, '').trim()
+    if (clean && clean !== 'home' && clean !== 'index') {
+      return `/${clean}`
+    }
+  }
+  return '/'
+})
+
+const livePreviewTheme = computed<Theme>(() => {
+  const base = (builderBase.themeData.value || {}) as Theme
+  const baseSettings = (base.settings || {}) as Record<string, unknown>
+  return {
+    ...base,
+    slug: base.slug || builderBase.activeTheme.value || 'janari',
+    name: base.name || 'Theme',
+    settings: {
+      ...baseSettings,
+      ...(builderBase.themeSettings.value || {}),
+    },
+    custom_css: typeof base.custom_css === 'string' ? base.custom_css : '',
+  }
+})
 
 const showStructureTemplateModal = ref(false)
 const structureTemplateTargetId = ref<string | null>(null)
