@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-16">
     <div class="max-w-2xl mx-auto w-full px-4 space-y-8">
       <div class="flex items-start justify-between gap-4">
         <div class="space-y-1">
@@ -84,7 +84,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import api from '@/engine/api/client';
-import { Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';
 
 interface BookmarkRow {

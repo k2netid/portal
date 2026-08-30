@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"
@@ -15,10 +15,10 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 w-full">
       <div class="text-center space-y-4">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.contact.title', 'Get in Touch') }}
+          {{ t('theme.sarangenge.pages.contact.title', 'Get in Touch') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ formDescription || t('theme.zenith.pages.contact.subtitle', "We'd love to hear from you. Reach out with any inquiries.") }}
+          {{ formDescription || t('theme.sarangenge.pages.contact.subtitle', "We'd love to hear from you. Reach out with any inquiries.") }}
         </p>
       </div>
 
@@ -75,8 +75,8 @@
             :disabled="submitting || fields.length === 0"
           >
             {{ submitted
-              ? (successMessage || t('theme.zenith.pages.contact.sent', 'Message Sent!'))
-              : t('theme.zenith.pages.contact.submitButton', 'Send Message') }}
+              ? (successMessage || t('theme.sarangenge.pages.contact.sent', 'Message Sent!'))
+              : t('theme.sarangenge.pages.contact.submitButton', 'Send Message') }}
           </Button>
         </form>
       </Card>
@@ -92,7 +92,7 @@ import api from '@/engine/api/client';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { Card, Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { Card, Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 
 interface PublicField {
     name: string;
@@ -123,9 +123,9 @@ const inputType = (type: string): string => {
 };
 
 const fallbackFields = (): PublicField[] => ([
-    { name: 'name', label: t('theme.zenith.pages.contact.nameLabel', 'Your Name'), type: 'text', is_required: true },
-    { name: 'email', label: t('theme.zenith.pages.contact.emailLabel', 'Email Address'), type: 'email', is_required: true },
-    { name: 'message', label: t('theme.zenith.pages.contact.messageLabel', 'Message'), type: 'textarea', is_required: true },
+    { name: 'name', label: t('theme.sarangenge.pages.contact.nameLabel', 'Your Name'), type: 'text', is_required: true },
+    { name: 'email', label: t('theme.sarangenge.pages.contact.emailLabel', 'Email Address'), type: 'email', is_required: true },
+    { name: 'message', label: t('theme.sarangenge.pages.contact.messageLabel', 'Message'), type: 'textarea', is_required: true },
 ]);
 
 onMounted(async () => {
@@ -146,7 +146,7 @@ onMounted(async () => {
             values[field.name] = '';
         }
         loadError.value = t(
-            'theme.zenith.pages.contact.formsHint',
+            'theme.sarangenge.pages.contact.formsHint',
             'Activate the Forms pack and publish a form with slug “contact” to store submissions.',
         );
     }
@@ -166,7 +166,7 @@ const handleSubmit = async (): Promise<void> => {
         }, 3000);
     } catch {
         submitError.value = t(
-            'theme.zenith.pages.contact.submitFailed',
+            'theme.sarangenge.pages.contact.submitFailed',
             'Could not send this message. Check that the Forms pack is active.',
         );
     } finally {

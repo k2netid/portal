@@ -1,0 +1,117 @@
+{
+  "header": {
+    "home": "Home",
+    "about": "Profile",
+    "services": "Facilities",
+    "solusi": "Programs",
+    "blog": "News",
+    "pricing": "Fees",
+    "contact": "Contact",
+    "career": "Alumni",
+    "achievement": "Achievements",
+    "search": "Search",
+    "account": "Account",
+    "signIn": "Sign in",
+    "getStarted": "Admissions"
+  },
+  "footer": {
+    "description": "Sarangenge — a school website theme named for Sundanese midday sun. Sibling spirit to Janari (dawn). Clear campus storytelling.",
+    "links": "Explore campus",
+    "resources": "Services",
+    "newsletter": "School bulletin",
+    "subscribe": "Subscribe",
+    "subscribed": "Subscribed",
+    "subscribeFailed": "Unavailable",
+    "contact": "Contact school",
+    "copyright": "All rights reserved."
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "explore": "Explore",
+    "learnMore": "Learn more",
+    "back": "Back",
+    "search": "Search news or pages…",
+    "publishedOn": "Published",
+    "by": "by"
+  },
+  "pages": {
+    "home": {
+      "heroBadge": "School theme · Sarangenge",
+      "heroTitle": "Learn at high noon — clear, warm, and future-ready.",
+      "heroSubtitle": "Official school site: profile, programs, achievements, news, and admissions in one accessible canvas.",
+      "heroCta": "Admissions info",
+      "heroSecondary": "Browse programs",
+      "bentoTitle": "Campus quick access",
+      "bentoSubtitle": "Essential school paths in a 2026-style bento layout parents and students scan fast.",
+      "tilePpdb": "Admissions",
+      "tilePpdbDesc": "Dates, requirements, and entry forms.",
+      "tileProgram": "Flagship programs",
+      "tileProgramDesc": "Curriculum, clubs, and talent tracks.",
+      "tilePrestasi": "Achievements",
+      "tilePrestasiDesc": "Academic and extracurricular wins.",
+      "tileBerita": "School news",
+      "tileBeritaDesc": "Announcements and campus stories.",
+      "tileProfil": "School profile",
+      "tileProfilDesc": "Vision, mission, and learning culture.",
+      "tileKontak": "Contact us",
+      "tileKontakDesc": "Address, phone, and messages.",
+      "featuresTitle": "Why Sarangenge for schools",
+      "featuresSubtitle": "Built for parents, students, and staff — not SaaS pitch decks.",
+      "feat1Title": "Clear hierarchy",
+      "feat1Desc": "Admissions, programs, and news do not fight for the first viewport.",
+      "feat2Title": "Accessible contrast",
+      "feat2Desc": "Teal + midday sun with large type that stays readable on phones.",
+      "feat3Title": "Purposeful motion",
+      "feat3Desc": "Light motion guides attention and respects prefers-reduced-motion.",
+      "ctaTitle": "Ready to meet our school?",
+      "ctaSubtitle": "Start with the profile, explore programs, or talk to admissions.",
+      "ctaButton": "Contact school"
+    },
+    "about": {
+      "title": "School profile",
+      "subtitle": "Our identity, learning culture, and educational direction.",
+      "missionTitle": "Mission",
+      "missionDesc": "Grow resilient, characterful learners ready to collaborate in the real world."
+    },
+    "blog": {
+      "title": "News & announcements",
+      "subtitle": "Campus updates, calendars, and learning stories.",
+      "noPosts": "No news published yet."
+    },
+    "post": {
+      "backToBlog": "Back to news",
+      "share": "Share"
+    },
+    "contact": {
+      "title": "Contact school",
+      "subtitle": "Ask about admissions, academics, or partnerships. We will reply soon.",
+      "nameLabel": "Full name",
+      "emailLabel": "Email",
+      "messageLabel": "Message",
+      "submitButton": "Send message"
+    },
+    "pricing": {
+      "title": "Fee information",
+      "subtitle": "A summary of education costs — contact admin for official details.",
+      "monthly": "Per term",
+      "annual": "Per year"
+    },
+    "solusi": {
+      "title": "School programs",
+      "subtitle": "Learning pathways and talent development we offer."
+    },
+    "services": {
+      "title": "Facilities & services",
+      "subtitle": "Learning spaces, labs, library, and student support."
+    },
+    "career_center": {
+      "title": "Alumni & careers",
+      "subtitle": "Graduate journeys plus internship or scholarship paths."
+    },
+    "achievement": {
+      "title": "Achievements",
+      "subtitle": "Awards, olympiads, arts, sports, and shared milestones."
+    }
+  }
+}

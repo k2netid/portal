@@ -10,13 +10,13 @@ use Tests\TestCase;
 
 class DefaultFrontendThemeTest extends TestCase
 {
-    public function test_auto_activate_prefers_janari_over_zenith(): void
+    public function test_auto_activate_prefers_janari_over_sarangenge(): void
     {
         Theme::query()->delete();
 
         Theme::factory()->create([
-            'name' => 'Zenith',
-            'slug' => 'zenith',
+            'name' => 'Sarangenge',
+            'slug' => 'sarangenge',
             'type' => 'frontend',
             'status' => 'active',
             'is_active' => false,
@@ -40,9 +40,9 @@ class DefaultFrontendThemeTest extends TestCase
     {
         Theme::query()->delete();
 
-        $zenith = Theme::factory()->create([
-            'name' => 'Zenith',
-            'slug' => 'zenith',
+        $sarangenge = Theme::factory()->create([
+            'name' => 'Sarangenge',
+            'slug' => 'sarangenge',
             'type' => 'frontend',
             'status' => 'active',
             'is_active' => true,
@@ -58,6 +58,6 @@ class DefaultFrontendThemeTest extends TestCase
         $ensured = app(ThemeService::class)->ensureDefaultFrontendTheme();
 
         $this->assertNotNull($ensured);
-        $this->assertSame($zenith->id, $ensured->id);
+        $this->assertSame($sarangenge->id, $ensured->id);
     }
 }

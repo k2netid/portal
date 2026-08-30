@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"
@@ -15,10 +15,10 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 w-full">
       <div class="text-center space-y-4">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.achievement.title', 'Milestones & Awards') }}
+          {{ t('theme.sarangenge.pages.achievement.title', 'Milestones & Awards') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ t('theme.zenith.pages.achievement.subtitle', 'Celebrating our growth and recognized industry impact.') }}
+          {{ t('theme.sarangenge.pages.achievement.subtitle', 'Celebrating our growth and recognized industry impact.') }}
         </p>
       </div>
 
@@ -52,7 +52,7 @@ import { useI18n } from 'vue-i18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { Card } from '@/modules/Layout/views/themes/zenith/ui';
+import { Card } from '@/modules/Layout/views/themes/sarangenge/ui';
 
 const { t } = useI18n();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('achievement');

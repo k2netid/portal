@@ -1,0 +1,117 @@
+{
+  "header": {
+    "home": "Beranda",
+    "about": "Profil",
+    "services": "Fasilitas",
+    "solusi": "Program",
+    "blog": "Berita",
+    "pricing": "Biaya",
+    "contact": "Kontak",
+    "career": "Alumni",
+    "achievement": "Prestasi",
+    "search": "Cari",
+    "account": "Akun",
+    "signIn": "Masuk",
+    "getStarted": "PPDB"
+  },
+  "footer": {
+    "description": "Sarangenge — tema situs sekolah (tengah hari dalam bahasa Sunda). Kanvas kampus yang hangat, jelas, dan mudah diakses.",
+    "links": "Jelajah Kampus",
+    "resources": "Layanan",
+    "newsletter": "Buletin sekolah",
+    "subscribe": "Langganan",
+    "subscribed": "Terdaftar",
+    "subscribeFailed": "Gagal",
+    "contact": "Hubungi sekolah",
+    "copyright": "Hak cipta dilindungi undang-undang."
+  },
+  "common": {
+    "readMore": "Baca selengkapnya",
+    "viewAll": "Lihat semua",
+    "explore": "Jelajahi",
+    "learnMore": "Pelajari lebih lanjut",
+    "back": "Kembali",
+    "search": "Cari berita atau halaman…",
+    "publishedOn": "Diterbitkan",
+    "by": "oleh"
+  },
+  "pages": {
+    "home": {
+      "heroBadge": "Tema sekolah · Sarangenge",
+      "heroTitle": "Belajar di puncak siang — jelas, hangat, dan siap masa depan.",
+      "heroSubtitle": "Situs resmi sekolah: profil, program, prestasi, berita, dan jalur PPDB dalam satu kanvas yang mudah diakses.",
+      "heroCta": "Info PPDB",
+      "heroSecondary": "Lihat program",
+      "bentoTitle": "Akses cepat kampus",
+      "bentoSubtitle": "Informasi penting disusun ringkas — pola bento yang familiar di situs sekolah 2026.",
+      "tilePpdb": "PPDB & pendaftaran",
+      "tilePpdbDesc": "Jadwal, syarat, dan formulir masuk.",
+      "tileProgram": "Program unggulan",
+      "tileProgramDesc": "Kurikulum, ekstrakurikuler, dan jalur bakat.",
+      "tilePrestasi": "Prestasi",
+      "tilePrestasiDesc": "Capaian akademik dan non-akademik.",
+      "tileBerita": "Berita sekolah",
+      "tileBeritaDesc": "Pengumuman dan cerita kampus.",
+      "tileProfil": "Profil sekolah",
+      "tileProfilDesc": "Visi, misi, dan budaya belajar.",
+      "tileKontak": "Hubungi kami",
+      "tileKontakDesc": "Alamat, telepon, dan pesan.",
+      "featuresTitle": "Mengapa Sarangenge untuk sekolah",
+      "featuresSubtitle": "Dirancang untuk orang tua, siswa, dan staf — bukan untuk pitch deck SaaS.",
+      "feat1Title": "Hierarki jelas",
+      "feat1Desc": "PPDB, program, dan berita tidak saling berebut perhatian di viewport pertama.",
+      "feat2Title": "Kontras ramah akses",
+      "feat2Desc": "Palet teal + matahari siang dengan tipografi besar yang mudah dibaca di HP.",
+      "feat3Title": "Gerak bermakna",
+      "feat3Desc": "Animasi ringan memandu mata — bisa dimatikan lewat prefers-reduced-motion.",
+      "ctaTitle": "Siap mengenal sekolah kami lebih dekat?",
+      "ctaSubtitle": "Mulai dari profil, jelajahi program, atau hubungi panitia PPDB.",
+      "ctaButton": "Hubungi sekolah"
+    },
+    "about": {
+      "title": "Profil sekolah",
+      "subtitle": "Identitas, budaya belajar, dan arah pendidikan kami.",
+      "missionTitle": "Misi",
+      "missionDesc": "Menumbuhkan pembelajar yang tangguh, berkarakter, dan siap berkolaborasi di dunia nyata."
+    },
+    "blog": {
+      "title": "Berita & pengumuman",
+      "subtitle": "Kabar kampus, agenda, dan cerita pembelajaran.",
+      "noPosts": "Belum ada berita yang diterbitkan."
+    },
+    "post": {
+      "backToBlog": "Kembali ke berita",
+      "share": "Bagikan"
+    },
+    "contact": {
+      "title": "Hubungi sekolah",
+      "subtitle": "Tanyakan PPDB, akademik, atau kerja sama. Kami akan membalas secepatnya.",
+      "nameLabel": "Nama lengkap",
+      "emailLabel": "Email",
+      "messageLabel": "Pesan",
+      "submitButton": "Kirim pesan"
+    },
+    "pricing": {
+      "title": "Informasi biaya",
+      "subtitle": "Ringkasan komponen biaya pendidikan — hubungi administrasi untuk rincian resmi.",
+      "monthly": "Per semester",
+      "annual": "Per tahun"
+    },
+    "solusi": {
+      "title": "Program sekolah",
+      "subtitle": "Jalur pembelajaran dan pengembangan bakat yang kami tawarkan."
+    },
+    "services": {
+      "title": "Fasilitas & layanan",
+      "subtitle": "Ruang belajar, laboratorium, perpustakaan, dan dukungan siswa."
+    },
+    "career_center": {
+      "title": "Alumni & karier",
+      "subtitle": "Jejak lulusan dan peluang magang atau beasiswa."
+    },
+    "achievement": {
+      "title": "Prestasi",
+      "subtitle": "Penghargaan, olimpiade, seni, olahraga, dan capaian bersama."
+    }
+  }
+}

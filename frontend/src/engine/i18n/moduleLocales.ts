@@ -15,9 +15,9 @@ import searchPack from '@/modules/Search/locales';
 import cmsAiPack from '@/modules/CmsAi/locales';
 import memberPack from '@/modules/Member/locales';
 
-import zenithEn from '@/modules/Layout/views/themes/zenith/locales/en.json';
-import zenithId from '@/modules/Layout/views/themes/zenith/locales/id.json';
-import zenithSu from '@/modules/Layout/views/themes/zenith/locales/su.json';
+import sarangengeEn from '@/modules/Layout/views/themes/sarangenge/locales/en.json';
+import sarangengeId from '@/modules/Layout/views/themes/sarangenge/locales/id.json';
+import sarangengeSu from '@/modules/Layout/views/themes/sarangenge/locales/su.json';
 import janariEn from '@/modules/Layout/views/themes/janari/locales/en.json';
 import janariId from '@/modules/Layout/views/themes/janari/locales/id.json';
 import janariSu from '@/modules/Layout/views/themes/janari/locales/su.json';
@@ -53,7 +53,7 @@ export const moduleLocaleBundles = {
         search: searchPack.en,
         ai: cmsAiPack.en,
         member: memberPack.en,
-        theme: { zenith: zenithEn, janari: janariEn },
+        theme: { sarangenge: sarangengeEn, janari: janariEn },
     },
     id: {
         system: system.id,
@@ -70,7 +70,7 @@ export const moduleLocaleBundles = {
         search: searchPack.id,
         ai: cmsAiPack.id,
         member: memberPack.id,
-        theme: { zenith: zenithId, janari: janariId },
+        theme: { sarangenge: sarangengeId, janari: janariId },
     },
     su: {
         system: system.su,
@@ -87,6 +87,6 @@ export const moduleLocaleBundles = {
         search: searchPack.su,
         ai: cmsAiPack.su,
         member: memberPack.su,
-        theme: { zenith: zenithSu, janari: janariSu },
+        theme: { sarangenge: sarangengeSu, janari: janariSu },
     },
 } as const;

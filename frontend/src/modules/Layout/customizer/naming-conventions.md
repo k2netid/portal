@@ -191,7 +191,7 @@ cd frontend && npm run theme:schema:split  # re-classify from theme.json (rare)
 5. Register extension in `resolveThemeCustomizerExtension.ts` registry map.
 6. Do **not** edit host sidebar hardcoded lists; use `sidebar.navigation.json` + `sidebar.pages.json` on the theme extension.
 7. Validate host-only flow with `views/themes/hub-stub/` (empty theme schema + extension registered in `resolveThemeCustomizerExtension.ts`).
-8. On first CMS boot (layout/site activate), auto-active frontend theme prefers **janari** over zenith.
+8. On first CMS boot (layout/site activate), auto-active frontend theme prefers **janari** over sarangenge.
 
 ---
 

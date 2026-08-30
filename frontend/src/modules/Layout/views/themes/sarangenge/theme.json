@@ -1,18 +1,18 @@
 {
-    "name": "Zenith",
-    "slug": "zenith",
-    "version": "1.0.0",
+    "name": "Sarangenge",
+    "slug": "sarangenge",
+    "version": "2.0.0",
     "type": "frontend",
-    "description": "Zenith — ultra-clean, modern minimalist theme for high-performance SaaS, corporate, agency, and creator publications.",
+    "description": "Sarangenge — tema situs sekolah (bahasa Sunda: tengah hari). Saudara filosofis Janari (fajar). Fokus kampus, PPDB, prestasi, dan aksesibilitas 2026.",
     "author": "Jejakawan Team",
     "supports": {
-        "zenith_canvas": true
+        "sarangenge_canvas": true
     },
     "settings_schema": {
         "site_title": {
-            "label": "Site Title",
+            "label": "Nama Sekolah",
             "type": "text",
-            "default": "Zenith Modern",
+            "default": "Sarangenge",
             "category": "General",
             "scope": "platform"
         },
@@ -29,63 +29,63 @@
             "scope": "platform"
         },
         "color_primary": {
-            "label": "Primary Accent Color",
+            "label": "Primary (Teal kampus)",
             "type": "color",
-            "default": "#2563eb",
+            "default": "#0F766E",
             "category": "Colors"
         },
         "color_secondary": {
-            "label": "Secondary Color",
+            "label": "Secondary",
             "type": "color",
-            "default": "#475569",
+            "default": "#0F4C48",
             "category": "Colors"
         },
         "font_heading": {
             "label": "Heading Font",
             "type": "font",
-            "default": "Plus Jakarta Sans",
+            "default": "Bricolage Grotesque",
             "category": "Typography"
         },
         "font_body": {
             "label": "Body Font",
             "type": "font",
-            "default": "Inter",
+            "default": "Figtree",
             "category": "Typography"
         },
         "hero_badge_text": {
-            "label": "Hero Badge Text",
+            "label": "Hero eyebrow (opsional)",
             "type": "text",
-            "default": "Introducing Zenith 1.0",
+            "default": "Tema sekolah · Sarangenge",
             "category": "Hero Section"
         },
         "hero_title": {
             "label": "Hero Title",
             "type": "text",
-            "default": "Modern digital experiences built with precision and speed.",
+            "default": "Belajar di puncak siang — jelas, hangat, dan siap masa depan.",
             "category": "Hero Section"
         },
         "hero_subtitle": {
             "label": "Hero Subtitle",
             "type": "textarea",
-            "default": "Empower your brand with cutting-edge performance, clean aesthetics, and effortless content management.",
+            "default": "Situs resmi sekolah: profil, program, prestasi, berita, dan jalur PPDB dalam satu kanvas yang mudah diakses.",
             "category": "Hero Section"
         },
         "hero_primary_cta_text": {
             "label": "Primary CTA Label",
             "type": "text",
-            "default": "Explore Showcase",
+            "default": "Info PPDB",
             "category": "Hero Section"
         },
         "hero_primary_cta_link": {
             "label": "Primary CTA Link",
             "type": "text",
-            "default": "/blog",
+            "default": "/contact",
             "category": "Hero Section"
         },
         "footer_copyright": {
             "label": "Footer Copyright",
             "type": "text",
-            "default": "© 2026 Zenith. All rights reserved.",
+            "default": "© 2026 Sarangenge. Hak cipta dilindungi.",
             "category": "Footer"
         }
     }

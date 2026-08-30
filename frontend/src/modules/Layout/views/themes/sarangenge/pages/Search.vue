@@ -1,12 +1,12 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
       <div class="text-center space-y-4">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.search.title', 'Search') }}
+          {{ t('theme.sarangenge.pages.search.title', 'Search') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ t('theme.zenith.pages.search.subtitle', 'Find articles and pages on this site.') }}
+          {{ t('theme.sarangenge.pages.search.subtitle', 'Find articles and pages on this site.') }}
         </p>
       </div>
 
@@ -20,14 +20,14 @@
           required
           minlength="2"
           class="flex-1 px-4 py-2.5 rounded-xl border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-          :placeholder="t('theme.zenith.pages.search.placeholder', 'Search posts…')"
+          :placeholder="t('theme.sarangenge.pages.search.placeholder', 'Search posts…')"
         >
         <Button
           type="submit"
           variant="primary"
           :disabled="loading"
         >
-          {{ t('theme.zenith.pages.search.submit', 'Search') }}
+          {{ t('theme.sarangenge.pages.search.submit', 'Search') }}
         </Button>
       </form>
 
@@ -78,7 +78,7 @@
         v-else-if="searched"
         class="text-sm text-muted-foreground text-center"
       >
-        {{ t('theme.zenith.pages.search.empty', 'No results for that query.') }}
+        {{ t('theme.sarangenge.pages.search.empty', 'No results for that query.') }}
       </p>
     </div>
   </div>
@@ -89,7 +89,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
-import { Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 
 interface SearchHit {
     id: string;
@@ -142,7 +142,7 @@ const runSearch = async (): Promise<void> => {
     } catch {
         results.value = [];
         error.value = t(
-            'theme.zenith.pages.search.unavailable',
+            'theme.sarangenge.pages.search.unavailable',
             'Search is unavailable. Activate the search pack in the registry.',
         );
     } finally {

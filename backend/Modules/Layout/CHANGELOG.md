@@ -9,7 +9,7 @@
 - Manifest widget types match runtime (`content_list`, `menu`, `form`).
 - Public menus/themes return empty when the layout pack is inactive.
 - Widget types register even when an active theme supplies locations.
-- Default frontend theme is **Janari** (builder/fork reference); Zenith remains optional alternate.
+- Default frontend theme is **Janari** (builder/fork reference); Sarangenge remains optional alternate.
 - Menu location assignments sync into active theme `menu_location_{slot}` settings; customization publish preserves those keys; public `GET /layout/menus/{id}` resolves UUID assignments.
 
 ## 1.1.0 — P3-3b (themes + visual builder)

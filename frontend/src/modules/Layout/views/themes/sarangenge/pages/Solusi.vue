@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"
@@ -15,10 +15,10 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 w-full">
       <div class="text-center space-y-4 max-w-3xl mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.solusi.title', 'Our Solutions') }}
+          {{ t('theme.sarangenge.pages.solusi.title', 'Our Solutions') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ t('theme.zenith.pages.solusi.subtitle', 'Scalable systems tailored to your organizational goals.') }}
+          {{ t('theme.sarangenge.pages.solusi.subtitle', 'Scalable systems tailored to your organizational goals.') }}
         </p>
       </div>
 
@@ -53,7 +53,7 @@ import { useI18n } from 'vue-i18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { Card } from '@/modules/Layout/views/themes/zenith/ui';
+import { Card } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { Globe, Shield, Sparkles, Cpu } from 'lucide-vue-next';
 
 const { t } = useI18n();

@@ -1,0 +1,254 @@
+/* ==========================================================================
+   Sarangenge — school theme (Sundanese midday sun)
+   Sibling philosophy to Janari (dawn). Campus energy, clarity, accessibility.
+   2026 cues: bento hierarchy, purposeful motion, high-contrast education palette.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap');
+
+:root {
+  --sarangenge-sun: #e8a317;
+  --sarangenge-sun-soft: #f6d58a;
+  --sarangenge-teal: #0f766e;
+  --sarangenge-teal-deep: #115e59;
+  --sarangenge-ink: #0f2926;
+  --sarangenge-sky: #e8f4f2;
+  --sarangenge-mist: #f3faf8;
+  --sarangenge-primary: var(--theme-color-primary, var(--sarangenge-teal));
+  --sarangenge-secondary: var(--theme-color-secondary, #0f4c48);
+  --sarangenge-font-heading: var(--theme-font-heading, 'Bricolage Grotesque', Georgia, serif);
+  --sarangenge-font-body: var(--theme-font-body, 'Figtree', system-ui, sans-serif);
+  --sarangenge-radius: 1.25rem;
+  --sarangenge-radius-sm: 0.85rem;
+}
+
+.sarangenge-theme {
+  --primary: 173 80% 26%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 175 60% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 41 84% 50%;
+  --accent-foreground: 175 60% 12%;
+  --background: 168 33% 97%;
+  --foreground: 175 45% 12%;
+  --muted: 168 25% 92%;
+  --muted-foreground: 175 18% 35%;
+  --card: 0 0% 100%;
+  --card-foreground: 175 45% 12%;
+  --border: 168 20% 84%;
+  --ring: 173 80% 26%;
+
+  font-family: var(--sarangenge-font-body);
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.sarangenge-theme .font-heading,
+.sarangenge-heading {
+  font-family: var(--sarangenge-font-heading);
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+/* Atmospheric sun wash (site-wide, subtle) */
+.sarangenge-theme::before {
+  content: '';
+  position: fixed;
+  inset: auto -10% 55% 40%;
+  height: 48vh;
+  background:
+    radial-gradient(ellipse at center, color-mix(in oklab, var(--sarangenge-sun) 28%, transparent), transparent 68%),
+    radial-gradient(ellipse at 30% 40%, color-mix(in oklab, var(--sarangenge-teal) 12%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: sarangenge-sun-drift 18s ease-in-out infinite alternate;
+}
+
+.sarangenge-theme .sarangenge-theme::before {
+  display: none;
+}
+
+.sarangenge-theme > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes sarangenge-sun-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
+  to { transform: translate3d(-4%, 6%, 0) scale(1.08); opacity: 1; }
+}
+
+@keyframes sarangenge-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sarangenge-bento-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.sarangenge-rise {
+  animation: sarangenge-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sarangenge-rise-delay-1 { animation-delay: 0.1s; }
+.sarangenge-rise-delay-2 { animation-delay: 0.2s; }
+.sarangenge-rise-delay-3 { animation-delay: 0.32s; }
+
+.sarangenge-hero {
+  min-height: min(92vh, 860px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, transparent 35%, hsl(var(--background)) 92%),
+    linear-gradient(120deg, color-mix(in oklab, var(--sarangenge-teal-deep) 88%, black) 0%, var(--sarangenge-teal) 48%, color-mix(in oklab, var(--sarangenge-sun) 55%, var(--sarangenge-teal)) 100%);
+  color: #f8fffd;
+}
+
+.sarangenge-hero__brand {
+  font-family: var(--sarangenge-font-heading);
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.sarangenge-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 78% 28%, color-mix(in oklab, var(--sarangenge-sun) 45%, transparent), transparent 42%),
+    radial-gradient(circle at 18% 70%, color-mix(in oklab, white 18%, transparent), transparent 38%),
+    linear-gradient(160deg, transparent 20%, color-mix(in oklab, black 35%, transparent) 100%);
+}
+
+.sarangenge-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 12% 8% auto auto;
+  width: min(42vw, 420px);
+  aspect-ratio: 1;
+  border-radius: 40% 60% 55% 45%;
+  background:
+    radial-gradient(circle at 35% 35%, var(--sarangenge-sun-soft), var(--sarangenge-sun) 55%, transparent 72%);
+  filter: blur(2px);
+  opacity: 0.9;
+  animation: sarangenge-sun-drift 14s ease-in-out infinite alternate-reverse;
+}
+
+.sarangenge-bento {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .sarangenge-bento {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+  }
+
+  .sarangenge-bento__wide {
+    grid-column: span 2;
+  }
+
+  .sarangenge-bento__tall {
+    grid-row: span 2;
+  }
+}
+
+.sarangenge-bento__cell {
+  border-radius: var(--sarangenge-radius);
+  border: 1px solid hsl(var(--border) / 0.9);
+  background: hsl(var(--card) / 0.92);
+  padding: 1.25rem 1.35rem;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+  animation: sarangenge-bento-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+
+.sarangenge-bento__cell:nth-child(1) { animation-delay: 0.05s; }
+.sarangenge-bento__cell:nth-child(2) { animation-delay: 0.12s; }
+.sarangenge-bento__cell:nth-child(3) { animation-delay: 0.18s; }
+.sarangenge-bento__cell:nth-child(4) { animation-delay: 0.24s; }
+.sarangenge-bento__cell:nth-child(5) { animation-delay: 0.3s; }
+.sarangenge-bento__cell:nth-child(6) { animation-delay: 0.36s; }
+
+.sarangenge-bento__cell:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--sarangenge-primary) 35%, hsl(var(--border)));
+  box-shadow: 0 16px 36px -20px color-mix(in oklab, var(--sarangenge-teal) 45%, transparent);
+}
+
+.sarangenge-bento__cell--sun {
+  background: linear-gradient(145deg, color-mix(in oklab, var(--sarangenge-sun) 22%, white), hsl(var(--card)));
+}
+
+.sarangenge-bento__cell--teal {
+  background: linear-gradient(160deg, color-mix(in oklab, var(--sarangenge-teal) 88%, black), var(--sarangenge-teal));
+  color: #f4fffc;
+  border-color: transparent;
+}
+
+.sarangenge-bento__cell--teal:hover {
+  box-shadow: 0 18px 40px -18px color-mix(in oklab, var(--sarangenge-teal) 70%, transparent);
+}
+
+.sarangenge-panel {
+  border-radius: var(--sarangenge-radius);
+  border: 1px solid hsl(var(--border) / 0.85);
+  background: hsl(var(--card) / 0.9);
+  box-shadow: 0 12px 40px -28px color-mix(in oklab, var(--sarangenge-ink) 35%, transparent);
+}
+
+.sarangenge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--sarangenge-radius-sm);
+  background: color-mix(in oklab, var(--sarangenge-sun) 18%, white);
+  color: var(--sarangenge-teal-deep);
+  border: 1px solid color-mix(in oklab, var(--sarangenge-sun) 40%, transparent);
+}
+
+.sarangenge-btn-primary {
+  background: var(--sarangenge-primary);
+  color: #fff;
+  border-radius: var(--sarangenge-radius-sm);
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.sarangenge-btn-primary:hover {
+  opacity: 0.94;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -10px color-mix(in oklab, var(--sarangenge-primary) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sarangenge-theme::before,
+  .sarangenge-hero__media::after,
+  .sarangenge-rise,
+  .sarangenge-bento__cell {
+    animation: none !important;
+  }
+}

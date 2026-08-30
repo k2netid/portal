@@ -8,13 +8,13 @@ import {
 const modules = {
     '/src/modules/Layout/views/themes/Index.vue': () => Promise.resolve({}),
     '/src/modules/Layout/views/themes/ThemeCustomizer.vue': () => Promise.resolve({}),
-    '/src/modules/Layout/views/themes/zenith/components/layout/Header.vue': () => Promise.resolve({}),
-    '/src/modules/Layout/views/themes/zenith/components/layout/Footer.vue': () => Promise.resolve({}),
-    '/src/modules/Layout/views/themes/zenith/pages/Home.vue': () => Promise.resolve({}),
+    '/src/modules/Layout/views/themes/sarangenge/components/layout/Header.vue': () => Promise.resolve({}),
+    '/src/modules/Layout/views/themes/sarangenge/components/layout/Footer.vue': () => Promise.resolve({}),
+    '/src/modules/Layout/views/themes/sarangenge/pages/Home.vue': () => Promise.resolve({}),
 };
 
 describe('themeViewResolver', () => {
-    it('falls back to bundled janari/zenith when theme slug is missing', () => {
+    it('falls back to bundled janari/sarangenge when theme slug is missing', () => {
         expect(buildThemeViewResolveCandidates(null)).toEqual([...BUNDLED_FRONTEND_THEME_SLUGS]);
         expect(BUNDLED_FRONTEND_THEME_SLUGS[0]).toBe('janari');
         expect(buildThemeViewResolveCandidates({ name: 'X', slug: '', type: 'frontend' })).toEqual([
@@ -22,9 +22,9 @@ describe('themeViewResolver', () => {
         ]);
     });
 
-    it('resolves components/Header from zenith when only zenith views exist', () => {
+    it('resolves components/Header from sarangenge when only sarangenge views exist', () => {
         const key = findThemeViewKey(modules, [], 'components/Header');
-        expect(key).toContain('zenith/components/layout/Header.vue');
+        expect(key).toContain('sarangenge/components/layout/Header.vue');
     });
 
     it('resolves Header even when the active slug is unknown', () => {

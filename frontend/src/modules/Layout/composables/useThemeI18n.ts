@@ -12,7 +12,7 @@ import { useTheme } from '@/modules/Layout/composables/useTheme';
  *   3. theme.<packageSlug>.*    (locale JSON that ships with this Vue file)
  *
  * This avoids missing-key noise when ThemePageResolver falls back across bundled
- * themes (e.g. Zenith active → Janari Tim.vue still needs theme.janari.pages.team).
+ * themes (e.g. Sarangenge active → Janari Tim.vue still needs theme.janari.pages.team).
  */
 export function useThemeI18n(packageSlug = 'janari') {
     const { t, te, locale, ...rest } = useI18n();

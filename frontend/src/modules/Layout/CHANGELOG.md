@@ -2,16 +2,17 @@
 
 ## [Unreleased]
 
+- Rename theme **Zenith → Sarangenge** (Sundanese midday sun; school-focused sibling to Janari dawn): folder/slug/locales/CSS, Member shell classes, bundled fallbacks, and campus UI (teal+sun, bento home, PPDB CTA).
 - Fix ThemePageResolver remount loop: cache real SFCs (not async stubs keyed by stale resolveId); keep current view while theme revalidates.
-- Fix public shell sticking on Zenith while DB active is Janari: mount always force-reconciles `/public/layout/themes/active`; customizer preview loads no longer write `frontend_theme_snapshot_v1`.
-- Expand Customizer click-select targets to About/Solusi/Tim/Pricing/News/Careers/Achievements/Search; map `/services` → Janari Solusi (stop Zenith Services fallback).
-- Zenith Home reads `builder_blocks` / CMS body like Janari (builder parity for home).
+- Fix public shell sticking on Sarangenge while DB active is Janari: mount always force-reconciles `/public/layout/themes/active`; customizer preview loads no longer write `frontend_theme_snapshot_v1`.
+- Expand Customizer click-select targets to About/Solusi/Tim/Pricing/News/Careers/Achievements/Search; map `/services` → Janari Solusi (stop Sarangenge Services fallback).
+- Sarangenge Home reads `builder_blocks` / CMS body like Janari (builder parity for home).
 - Customizer Controls: SERP platform tabs fit the right rail; Footer/Menu bridges stack text + full-width CTAs (no viewport `sm:` squeeze).
 - Customizer Controls panel (Content bindings): stack Query/Mapping in panel mode, fix LIMIT/SORT overlap, stop field-mapping clip; design/menu grids stay single-column in the right rail.
 - Clarify Customizer preview hint: highlights are blue dashed outlines + ✎ badges on annotated Janari sections; skip wrong-theme snapshot paint in preview iframe so targets appear.
-- Fix false theme detection: customizer `sessionStorage` + theme snapshot TTL no longer override the public active theme (DB Janari was correct; FE could still behave as Zenith). Preview slug override is iframe/query-only; THEME_BOOT does not write the public snapshot.
-- Customizer live preview boots the **edited** theme (query `ja_theme_slug` + THEME_BOOT / manage fetch), not only the public active theme — avoids Janari customizer showing Zenith chrome.
-- Fix theme i18n mix: `useThemeI18n(packageSlug)` falls back to the calling theme package locales when the active theme slug has no key (e.g. Zenith active + Janari Tim page no longer shows `theme.zenith.pages.team.*` missing keys).
+- Fix false theme detection: customizer `sessionStorage` + theme snapshot TTL no longer override the public active theme (DB Janari was correct; FE could still behave as Sarangenge). Preview slug override is iframe/query-only; THEME_BOOT does not write the public snapshot.
+- Customizer live preview boots the **edited** theme (query `ja_theme_slug` + THEME_BOOT / manage fetch), not only the public active theme — avoids Janari customizer showing Sarangenge chrome.
+- Fix theme i18n mix: `useThemeI18n(packageSlug)` falls back to the calling theme package locales when the active theme slug has no key (e.g. Sarangenge active + Janari Tim page no longer shows `theme.sarangenge.pages.team.*` missing keys).
 - Theme Customizer preview follows selected nav item (Contact → /contact, home sections → / + scroll focus); minimized nav/controls use the same chevron rail style as the sidebar.
 - Theme Customizer layout: nav | live preview | controls; nav and controls minimize independently; section edit badges always visible in preview iframe.
 - Theme Customizer uses WordPress/Shopify-style split canvas: left nav+controls, live public preview always on the right (no modal); click section keeps preview open; Ctrl+\\ toggles controls.

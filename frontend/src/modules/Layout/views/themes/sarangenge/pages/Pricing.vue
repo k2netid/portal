@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"
@@ -16,10 +16,10 @@
       <!-- Header -->
       <div class="text-center space-y-4 max-w-3xl mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.pricing.title', 'Transparent Plans') }}
+          {{ t('theme.sarangenge.pages.pricing.title', 'Transparent Plans') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ t('theme.zenith.pages.pricing.subtitle', 'Choose the perfect plan for your publishing workflow.') }}
+          {{ t('theme.sarangenge.pages.pricing.subtitle', 'Choose the perfect plan for your publishing workflow.') }}
         </p>
       </div>
 
@@ -88,7 +88,7 @@ import { useI18n } from 'vue-i18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { Card, Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { Card, Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { Check } from 'lucide-vue-next';
 
 const { t } = useI18n();

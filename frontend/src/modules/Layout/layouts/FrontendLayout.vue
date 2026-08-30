@@ -138,6 +138,7 @@ import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { useRoute } from 'vue-router'
+import '@/modules/Layout/views/themes/sarangenge/assets/styles/sarangenge.css'
 
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 const route = useRoute()
@@ -168,6 +169,10 @@ const activeThemeClass = computed(() => {
   const classes = [`theme-${slug}`]
   if (usesJanariCanvas.value) {
     classes.push('theme-janari')
+  }
+  // School theme tokens (Header/Footer sit outside page roots that also use this class).
+  if (slug.toLowerCase() === 'sarangenge') {
+    classes.push('sarangenge-theme')
   }
   return classes
 })
@@ -458,7 +463,7 @@ const handleCustomizerSync = (event: MessageEvent) => {
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('message', handleCustomizerSync)
-  // Force reconcile with API — sessionStorage snapshot must not lock a stale Zenith shell.
+  // Force reconcile with API — sessionStorage snapshot must not lock a stale Sarangenge shell.
   await retryThemeLoadIfNeeded({ force: true })
   schedulePublicPrefetch()
 

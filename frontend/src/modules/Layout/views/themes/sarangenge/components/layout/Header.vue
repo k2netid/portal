@@ -1,46 +1,47 @@
 <template>
-  <header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl transition-all duration-300">
+  <header class="sticky top-0 z-50 w-full border-b border-border/50 bg-[hsl(var(--background)/0.88)] backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
-        <!-- Brand Logo & Title -->
+      <div class="flex items-center justify-between h-16 sm:h-[4.25rem]">
         <router-link
           to="/"
-          class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-xl"
+          class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sarangenge-teal)] rounded-[var(--sarangenge-radius-sm)]"
         >
           <img
             v-if="siteLogo"
             :src="siteLogo"
             :alt="siteName"
-            class="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+            class="h-9 w-auto object-contain"
             width="120"
-            height="32"
+            height="36"
           >
           <div
             v-else
-            class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-black text-lg shadow-md shadow-primary/20"
+            class="w-9 h-9 rounded-[var(--sarangenge-radius-sm)] bg-gradient-to-br from-[var(--sarangenge-teal)] to-[var(--sarangenge-sun)] text-white flex items-center justify-center font-black text-base shadow-md shadow-[var(--sarangenge-teal)]/25"
+            aria-hidden="true"
           >
             {{ siteName.charAt(0).toUpperCase() }}
           </div>
-          <span class="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors font-heading">
+          <span class="text-lg sm:text-xl font-bold tracking-tight text-foreground font-heading group-hover:text-[var(--sarangenge-teal)] transition-colors">
             {{ siteName }}
           </span>
         </router-link>
 
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center gap-1">
+        <nav
+          class="hidden lg:flex items-center gap-0.5"
+          aria-label="Main"
+        >
           <router-link
             v-for="item in navItems"
             :key="item.path"
             :to="item.path"
-            class="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
-            active-class="!text-foreground !bg-muted font-semibold"
+            class="px-3.5 py-2 rounded-[var(--sarangenge-radius-sm)] text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+            active-class="!text-[var(--sarangenge-teal-deep)] !bg-[var(--sarangenge-teal)]/10 !font-semibold"
           >
             {{ item.name }}
           </router-link>
         </nav>
 
-        <!-- Right Action Controls -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
 
           <Button
@@ -51,7 +52,7 @@
             size="sm"
             class="hidden sm:inline-flex"
           >
-            {{ t('theme.zenith.header.account', 'Account') }}
+            {{ t('theme.sarangenge.header.account', 'Account') }}
           </Button>
           <Button
             v-else-if="memberEnabled"
@@ -61,7 +62,7 @@
             size="sm"
             class="hidden sm:inline-flex"
           >
-            {{ t('theme.zenith.header.signIn', 'Sign in') }}
+            {{ t('theme.sarangenge.header.signIn', 'Sign in') }}
           </Button>
 
           <Button
@@ -71,14 +72,15 @@
             size="sm"
             class="hidden sm:inline-flex"
           >
-            {{ t('theme.zenith.header.getStarted', 'Get Started') }}
+            {{ t('theme.sarangenge.header.getStarted', 'Admissions') }}
           </Button>
 
-          <!-- Mobile Menu Button -->
           <button
             type="button"
-            aria-label="Open mobile menu"
-            class="md:hidden w-9 h-9 rounded-xl border border-border/60 flex items-center justify-center text-foreground hover:bg-muted"
+            class="lg:hidden w-9 h-9 rounded-[var(--sarangenge-radius-sm)] border border-border/70 flex items-center justify-center text-foreground hover:bg-muted"
+            :aria-expanded="mobileMenuOpen"
+            aria-controls="sarangenge-mobile-nav"
+            :aria-label="mobileMenuOpen ? 'Close menu' : 'Open menu'"
             @click="mobileMenuOpen = !mobileMenuOpen"
           >
             <X
@@ -94,17 +96,17 @@
       </div>
     </div>
 
-    <!-- Mobile Navigation Drawer -->
     <div
       v-if="mobileMenuOpen"
-      class="md:hidden border-b border-border/60 bg-background/95 backdrop-blur-2xl px-4 pt-2 pb-6 space-y-2 animate-in slide-in-from-top duration-200"
+      id="sarangenge-mobile-nav"
+      class="lg:hidden border-b border-border/60 bg-background/95 backdrop-blur-2xl px-4 pt-2 pb-6 space-y-1"
     >
       <router-link
         v-for="item in navItems"
         :key="item.path"
         :to="item.path"
-        class="block px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-muted"
-        active-class="bg-primary/10 text-primary font-bold"
+        class="block px-4 py-2.5 rounded-[var(--sarangenge-radius-sm)] text-base font-medium text-foreground hover:bg-muted"
+        active-class="bg-[var(--sarangenge-teal)]/10 text-[var(--sarangenge-teal-deep)] font-bold"
         @click="mobileMenuOpen = false"
       >
         {{ item.name }}
@@ -119,8 +121,8 @@
           @click="mobileMenuOpen = false"
         >
           {{ memberStore.isAuthenticated
-            ? t('theme.zenith.header.account', 'Account')
-            : t('theme.zenith.header.signIn', 'Sign in') }}
+            ? t('theme.sarangenge.header.account', 'Account')
+            : t('theme.sarangenge.header.signIn', 'Sign in') }}
         </Button>
         <Button
           as="router-link"
@@ -129,7 +131,7 @@
           class="w-full justify-center"
           @click="mobileMenuOpen = false"
         >
-          {{ t('theme.zenith.header.getStarted', 'Get Started') }}
+          {{ t('theme.sarangenge.header.getStarted', 'Admissions') }}
         </Button>
       </div>
     </div>
@@ -141,7 +143,7 @@ import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { ThemeToggle, Button } from '@/modules/Layout/views/themes/zenith/ui';
+import { ThemeToggle, Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';
 import { Menu, X } from 'lucide-vue-next';
 
@@ -154,7 +156,7 @@ const memberEnabled = computed(() => systemStore.activeExtensions.includes('memb
 const mobileMenuOpen = ref(false);
 
 const siteName = computed(() => {
-  return String(getSetting('site_title') || systemStore.siteSettings?.site_name || systemStore.appIdentity?.app_name || 'Zenith');
+  return String(getSetting('site_title') || systemStore.siteSettings?.site_name || systemStore.appIdentity?.app_name || 'Sarangenge');
 });
 
 const siteLogo = computed(() => {
@@ -162,13 +164,11 @@ const siteLogo = computed(() => {
 });
 
 const navItems = computed(() => [
-  { name: t('theme.zenith.header.home', 'Home'), path: '/' },
-  { name: t('theme.zenith.header.about', 'About'), path: '/about' },
-  { name: t('theme.zenith.header.solusi', 'Solutions'), path: '/solusi' },
-  { name: t('theme.zenith.header.services', 'Services'), path: '/services' },
-  { name: t('theme.zenith.header.blog', 'Blog'), path: '/blog' },
-  { name: t('theme.zenith.header.search', 'Search'), path: '/search' },
-  { name: t('theme.zenith.header.pricing', 'Pricing'), path: '/pricing' },
-  { name: t('theme.zenith.header.contact', 'Contact'), path: '/contact' },
+  { name: t('theme.sarangenge.header.home', 'Home'), path: '/' },
+  { name: t('theme.sarangenge.header.about', 'Profile'), path: '/about' },
+  { name: t('theme.sarangenge.header.solusi', 'Programs'), path: '/solusi' },
+  { name: t('theme.sarangenge.header.achievement', 'Achievements'), path: '/achievement' },
+  { name: t('theme.sarangenge.header.blog', 'News'), path: '/blog' },
+  { name: t('theme.sarangenge.header.contact', 'Contact'), path: '/contact' },
 ]);
 </script>

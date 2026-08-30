@@ -82,6 +82,6 @@ test.describe('public apex theme runtime', () => {
         await expect(page.locator('input[name="login"], input[type="text"], input[autocomplete="username"]').first()).toBeVisible({
             timeout: 15000,
         });
-        await expect(page.locator('header.janari-header-toolbar, .zenith-theme')).toHaveCount(0);
+        await expect(page.locator('header.janari-header-toolbar, .sarangenge-theme')).toHaveCount(0);
     });
 });

@@ -23,7 +23,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 | Pack | Role |
 | :--- | :--- |
-| publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference theme). **Surfaces:** Site Editor = page/`builder_blocks` content + merged theme settings schema + live `/` preview; Theme Customizer = chrome/settings/CSS/bindings + menu slots; Menu Builder = menu trees + `location` (syncs theme `menu_location_*`). Deep-linked; content blocks still Janari-only. |
+| publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference; **Sarangenge** = school alternate, Sundanese midday sibling to Janari dawn). **Surfaces:** Site Editor = page/`builder_blocks` content + merged theme settings schema + live `/` preview; Theme Customizer = chrome/settings/CSS/bindings + menu slots; Menu Builder = menu trees + `location` (syncs theme `menu_location_*`). Deep-linked; content blocks still Janari-only. |
 | forms, newsletter, analytics, search, cms-ai | Audience / insight |
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
 | **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |
@@ -43,7 +43,7 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 | Merge gate `integrate/cms` → `main` | **Done** — PR #14 merged 2026-08-30 (`7b5180f`). |
 | W5 naming residue | Partial: Media/Library defaults + theme docs use `publishing` / `Layout/*`. Keep API alias `Jejakawan`→`publishing`; do not rewrite customized console menus or seed brand strings. |
 | P5 vertical product modules | Unblocked by merge; still needs a named product before build-out. Same Mail contract. |
-| GitHub Actions | Org spending limit blocked CI on the merge PR; local Playwright via Podman |
+| GitHub Actions | Org spending limit — **do not treat GHA as the gate**. Quality gate = `npm run agent:verify` + local Playwright smoke (Podman/`scripts/e2e-docker.sh`). Re-enable GHA only after billing is fixed. |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
 | PHP 8.5 + spreadsheets | **Done:** `maatwebsite/excel` **4.0.2** + `phpoffice/phpspreadsheet` **^5.3** (no platform ignore). Streaming alts (`openspout` / `fast-excel`) remain optional for export-heavy jobs. |
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-12 sm:py-16">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"
@@ -16,10 +16,10 @@
       <!-- Header -->
       <div class="text-center space-y-4 max-w-3xl mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-foreground font-heading">
-          {{ t('theme.zenith.pages.blog.title', 'Editorial & Insights') }}
+          {{ t('theme.sarangenge.pages.blog.title', 'Editorial & Insights') }}
         </h1>
         <p class="text-lg text-muted-foreground">
-          {{ t('theme.zenith.pages.blog.subtitle', 'Articles, thoughts, and technical deep dives.') }}
+          {{ t('theme.sarangenge.pages.blog.subtitle', 'Articles, thoughts, and technical deep dives.') }}
         </p>
       </div>
 
@@ -83,7 +83,7 @@
               :to="`/blog/${post.slug}`"
               class="font-semibold text-primary inline-flex items-center gap-1 hover:underline"
             >
-              {{ t('theme.zenith.common.readMore', 'Read More') }}
+              {{ t('theme.sarangenge.common.readMore', 'Read More') }}
               <ArrowRight class="w-3.5 h-3.5" />
             </router-link>
           </div>
@@ -94,7 +94,7 @@
         v-else
         class="text-center py-16 text-muted-foreground"
       >
-        {{ t('theme.zenith.pages.blog.noPosts', 'No articles published yet.') }}
+        {{ t('theme.sarangenge.pages.blog.noPosts', 'No articles published yet.') }}
       </div>
       </div>
         <WidgetArea location="sidebar" />
@@ -111,7 +111,7 @@ import api from '@/engine/api/client';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import { Card } from '@/modules/Layout/views/themes/zenith/ui';
+import { Card } from '@/modules/Layout/views/themes/sarangenge/ui';
 import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 import { ArrowRight } from 'lucide-vue-next';
 

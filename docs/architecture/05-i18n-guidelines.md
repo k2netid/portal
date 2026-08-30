@@ -21,13 +21,13 @@ Translasi diorganisasi secara modular per domain fitur:
 frontend/src/
 ├── engine/i18n/
 │   ├── messages/{en,id,su}.ts    # Global + moduleLocaleBundles
-│   └── moduleLocales.ts          # Pack + theme bundles (theme.zenith.*, theme.janari.*)
+│   └── moduleLocales.ts          # Pack + theme bundles (theme.sarangenge.*, theme.janari.*)
 └── modules/
     ├── Core/{System,Infra,Security}/locales/{en,id,su}.json
     ├── Publishing/locales/{en,id,su}.json
     ├── Layout/locales/{en,id,su}.json
     ├── Layout/locales/builder/{en,id,su}.json
-    └── Layout/views/themes/{zenith,janari}/locales/{en,id,su}.json
+    └── Layout/views/themes/{sarangenge,janari}/locales/{en,id,su}.json
 ```
 
 ---

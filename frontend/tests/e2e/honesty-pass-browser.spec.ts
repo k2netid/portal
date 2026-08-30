@@ -106,7 +106,7 @@ test.describe('honesty pass browser flows', () => {
                 await page.goto(path);
                 await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15_000 });
                 await expect(page.locator('.janari-header-toolbar')).toBeVisible({ timeout: 15_000 });
-                await expect(page.locator('.zenith-theme')).toHaveCount(0);
+                await expect(page.locator('.sarangenge-theme')).toHaveCount(0);
                 await expect(page.getByText(/theme\.janari\./)).toHaveCount(0);
             }
 

@@ -1,0 +1,117 @@
+{
+  "header": {
+    "home": "Tepas",
+    "about": "Profil",
+    "services": "Fasilitas",
+    "solusi": "Program",
+    "blog": "Warta",
+    "pricing": "Biaya",
+    "contact": "Kontak",
+    "career": "Alumni",
+    "achievement": "Prestasi",
+    "search": "Paluruh",
+    "account": "Akun",
+    "signIn": "Lebet",
+    "getStarted": "PPDB"
+  },
+  "footer": {
+    "description": "Sarangenge — téma situs sakola (tengah poé dina basa Sunda). Sadérék filosofis Janari (fajar). Kanvas kampus anu haneut sareng écés.",
+    "links": "Jelajah kampus",
+    "resources": "Layanan",
+    "newsletter": "Buletin sakola",
+    "subscribe": "Langganan",
+    "subscribed": "Kadaftar",
+    "subscribeFailed": "Gagal",
+    "contact": "Hubungi sakola",
+    "copyright": "Sadaya hak ditangtayungan."
+  },
+  "common": {
+    "readMore": "Maca salengkepna",
+    "viewAll": "Tingali sadayana",
+    "explore": "Jelajah",
+    "learnMore": "Diajar langkung seueur",
+    "back": "Mulang",
+    "search": "Paluruh warta atawa kaca…",
+    "publishedOn": "Diterbitkeun",
+    "by": "ku"
+  },
+  "pages": {
+    "home": {
+      "heroBadge": "Téma sakola · Sarangenge",
+      "heroTitle": "Diajar dina tengah poé — écés, haneut, siap mangsa hareup.",
+      "heroSubtitle": "Situs resmi sakola: profil, program, prestasi, warta, sareng jalur PPDB dina hiji kanvas anu gampang diaksés.",
+      "heroCta": "Info PPDB",
+      "heroSecondary": "Tingali program",
+      "bentoTitle": "Aksés gancang kampus",
+      "bentoSubtitle": "Inpormasi penting disusun ringkes — pola bento anu biasa di situs sakola 2026.",
+      "tilePpdb": "PPDB & pendaptaran",
+      "tilePpdbDesc": "Jadwal, syarat, sareng formulir.",
+      "tileProgram": "Program unggulan",
+      "tileProgramDesc": "Kurikulum, ekstrakurikuler, jalur bakat.",
+      "tilePrestasi": "Prestasi",
+      "tilePrestasiDesc": "Capaian akademik sareng non-akademik.",
+      "tileBerita": "Warta sakola",
+      "tileBeritaDesc": "Pengumuman sareng carita kampus.",
+      "tileProfil": "Profil sakola",
+      "tileProfilDesc": "Visi, misi, budaya diajar.",
+      "tileKontak": "Hubungi kami",
+      "tileKontakDesc": "Alamat, telepon, sareng pesen.",
+      "featuresTitle": "Naha Sarangenge pikeun sakola",
+      "featuresSubtitle": "Dirancang pikeun kolot, murid, sareng staf — lain pitch deck SaaS.",
+      "feat1Title": "Hirarki écés",
+      "feat1Desc": "PPDB, program, sareng warta teu saling silih rebut dina viewport kahiji.",
+      "feat2Title": "Kontras ramah aksés",
+      "feat2Desc": "Palet teal + panonpoé siang kalayan tipografi ageung anu gampang dibaca di HP.",
+      "feat3Title": "Gerak bermakna",
+      "feat3Desc": "Animasi hampang nungtun panon — tiasa dipareuman ku prefers-reduced-motion.",
+      "ctaTitle": "Siap ngenal sakola kami langkung caket?",
+      "ctaSubtitle": "Mimitian ti profil, jelajah program, atawa hubungi panitia PPDB.",
+      "ctaButton": "Hubungi sakola"
+    },
+    "about": {
+      "title": "Profil sakola",
+      "subtitle": "Identitas, budaya diajar, sareng arah atikan kami.",
+      "missionTitle": "Misi",
+      "missionDesc": "Ngagedékeun pamejar anu tangguh, boga karakter, siap kolaborasi di dunya nyata."
+    },
+    "blog": {
+      "title": "Warta & pengumuman",
+      "subtitle": "Kabar kampus, agenda, sareng carita pangajaran.",
+      "noPosts": "Teu acan aya warta anu diterbitkeun."
+    },
+    "post": {
+      "backToBlog": "Mulang ka warta",
+      "share": "Bagikeun"
+    },
+    "contact": {
+      "title": "Hubungi sakola",
+      "subtitle": "Tanyakeun PPDB, akademik, atawa gawé bareng. Kami bakal ngawaler enggal.",
+      "nameLabel": "Nami lengkep",
+      "emailLabel": "Email",
+      "messageLabel": "Pesen",
+      "submitButton": "Kintun pesen"
+    },
+    "pricing": {
+      "title": "Inpormasi biaya",
+      "subtitle": "Ringkesan komponen biaya atikan — hubungi administrasi pikeun rincian resmi.",
+      "monthly": "Per semester",
+      "annual": "Per taun"
+    },
+    "solusi": {
+      "title": "Program sakola",
+      "subtitle": "Jalur pangajaran sareng pamekaran bakat anu kami tawar."
+    },
+    "services": {
+      "title": "Fasilitas & layanan",
+      "subtitle": "Rohangan diajar, laboratorium, perpustakaan, sareng dukungan murid."
+    },
+    "career_center": {
+      "title": "Alumni & kariér",
+      "subtitle": "Jejak lulusan sareng kasempetan magang atawa beasiswa."
+    },
+    "achievement": {
+      "title": "Prestasi",
+      "subtitle": "Penghargaan, olimpiade, seni, olahraga, sareng capaian babarengan."
+    }
+  }
+}

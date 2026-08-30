@@ -125,8 +125,8 @@ class Theme extends Model
 
         if (! $activeTheme) {
             $defaultTheme = null;
-            // Janari is the CMS reference theme (builder + fork contract); Zenith is optional alternate.
-            foreach ([self::DEFAULT_FRONTEND_SLUG, 'zenith', 'default'] as $slug) {
+            // Janari is the CMS reference theme (builder + fork contract); Sarangenge is optional alternate.
+            foreach ([self::DEFAULT_FRONTEND_SLUG, 'sarangenge', 'default'] as $slug) {
                 $defaultTheme = self::query()
                     ->where('type', $type)
                     ->where('slug', $slug)

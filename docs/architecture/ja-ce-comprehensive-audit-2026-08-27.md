@@ -59,7 +59,7 @@ Sesi berikutnya idealnya **memutus owner**, bukan langsung PR. Usulan gelombang:
 | :--- | :--- | :--- | :--- |
 | **W0** | Freeze | P5 tetap ditunda? Merge `main` tetap ditahan? | Ya — audit ini jadi backlog, bukan sprint vertikal |
 | **W1** | Honesty / safety | Siapa owner `general` settings? Uninstall plugin harus gagal kalau deactivate gagal? | Kernel vs Publishing untuk `site_*`; guard uninstall |
-| **W2** | Public theme contract | Activate theme = ganti seluruh `/site`, atau Zenith hardcoded adalah keputusan? | Resolver halaman + registrasi i18n tema |
+| **W2** | Public theme contract | Activate theme = ganti seluruh `/site`, atau Sarangenge hardcoded adalah keputusan? | Resolver halaman + registrasi i18n tema |
 | **W3** | Audience identity | Publishing `/member/*` Sanctum dihapus atau di-port ke `auth:member`? Member pack harus `extension.active`? | Satu surface member, satu guard |
 | **W4** | Docs + tes | phpunit suite = semua pack yang punya tes? README modul wajib dipenuhi? | Docs catch-up, suite, module docs gap |
 | **W5** | Naming residue | Store `Jejakawan`, string `JA-CMS`, group API palsu — bersihkan sekarang atau setelah W2? | Rename identifier, jangan sentuh customized menus |
@@ -73,11 +73,11 @@ Severity di sini = **dampak produk / kontrak**, bukan “kode jelek”.
 
 ### P0 — kontrak publik rusak atau destruktif
 
-Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yang P0 adalah **theme activate dusta** dan **uninstall plugin tidak aman**.
+Tidak ada crash i18n di jalur **live Sarangenge** (fallback bahasa Inggris ada). Yang P0 adalah **theme activate dusta** dan **uninstall plugin tidak aman**.
 
 | ID | Temuan | Evidence | Arah (bukan patch) |
 | :--- | :--- | :--- | :--- |
-| **P0-1** | Activate tema **tidak** mengganti halaman `/site`. Header/Footer lewat `ThemePageResolver`; `public.ts` meng-hardcode halaman Zenith. | `frontend/src/engine/router/public.ts` L13–73 vs `FrontendLayout.vue` + `ThemePageResolver.vue` | Putuskan: (A) resolver per-page seperti header, atau (B) dokumentasikan Zenith-only sampai W2. Hari ini (A) dijanjikan UI, (B) yang terjadi. |
+| **P0-1** | Activate tema **tidak** mengganti halaman `/site`. Header/Footer lewat `ThemePageResolver`; `public.ts` meng-hardcode halaman Sarangenge. | `frontend/src/engine/router/public.ts` L13–73 vs `FrontendLayout.vue` + `ThemePageResolver.vue` | Putuskan: (A) resolver per-page seperti header, atau (B) dokumentasikan Sarangenge-only sampai W2. Hari ini (A) dijanjikan UI, (B) yang terjadi. |
 | **P0-2** | Uninstall plugin mengabaikan hasil `deactivate()`. Kalau reverse-dependent masih aktif, uninstall tetap rollback migrasi + hapus folder + `forceDelete`. | `ExtensionController::uninstall()` L315–348 | Cek return `deactivate` / panggil `assertCanDeactivate()` sebelum langkah destruktif. Tes skenario dependent. First-party sudah terblokir — ini utang **plugin**. |
 
 ### P1 — alur utama salah atau dual-owner
@@ -85,7 +85,7 @@ Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yan
 | ID | Temuan | Evidence | Arah |
 | :--- | :--- | :--- | :--- |
 | **P1-1** | Kernel Identity **tidak bisa baca** `general` dari index, tapi **bisa tulis** via bulk-update. Publishing juga owner `general`. Dual-write `site_name` dkk. | Kernel `SettingController::index` exclude `general`; `getGroup` **tidak** menolak `general`; `PRODUCT_SETTING_GROUPS` hanya `seo/comments/analytics`. FE Identity filter `group === 'general'`. Publishing `GROUPS = ['general','seo','comments']`. | Satu owner. Opsi A: `general` tetap kernel (Identity), Publishing hanya `seo`+`comments`. Opsi B: seluruh site identity pindah ke Publishing settings. Jangan dua-duanya. |
-| **P1-2** | `PublishingService.publicComments` / `postPublicComment` hit `/publishing/contents/...` (404). Canonical = `/public/publishing/contents/...`. Janari + `BlockRenderer` pakai service rusak. Zenith `Post.vue` sudah benar. | `publishingService.ts` L30–42 vs `paths.ts` L9 vs `zenith/pages/Post.vue` L191 | Semua klien komentar lewat `publishingPaths.publicContentComments`. |
+| **P1-2** | `PublishingService.publicComments` / `postPublicComment` hit `/publishing/contents/...` (404). Canonical = `/public/publishing/contents/...`. Janari + `BlockRenderer` pakai service rusak. Sarangenge `Post.vue` sudah benar. | `publishingService.ts` L30–42 vs `paths.ts` L9 vs `sarangenge/pages/Post.vue` L191 | Semua klien komentar lewat `publishingPaths.publicContentComments`. |
 | **P1-3** | Publishing member API masih `auth:sanctum` + model `User` (`user_id` bookmarks/comments/newsletter). Member pack punya `auth:member` untuk me/bookmarks. Split brain. | `Publishing/routes/api.php` L25–37; `Member/routes/api.php` L18–25 | Deprecate rute Publishing `/member/*` atau tulis ulang di `mem_*`. Jangan biarkan dua semantik “member”. |
 | **P1-4** | Member API **tanpa** `extension.active:member`. Pack opsional di manifest, API selalu hidup. | `Member/routes/api.php` | Samakan dengan Publishing manage: middleware registry. Putuskan apakah register/login publik ikut mati saat pack off. |
 | **P1-5** | Logged-in console user di `/site` memicu `fetchSettingsGroup('Jejakawan')` + `'layout'` → Publishing 403. | `publishing.ts` L114–129; Publishing `GROUPS` hanya `general\|seo\|comments` | Public shell selalu `fetchPublicSettings()`. Jangan pakai manage API sebagai “public”. |
@@ -98,7 +98,7 @@ Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yan
 
 | ID | Temuan | Notes |
 | :--- | :--- | :--- |
-| **P2-1** | Theme i18n tidak terdaftar. Bundle ada di `Layout/views/themes/{zenith,janari}/locales/` tapi `moduleLocales.ts` hanya `layoutPack`. Zenith selamat karena fallback string. Janari banyak `t('theme.janari.*')` tanpa fallback → raw key **jika** header/footer Janari ter-resolve. | Docs `05-i18n-guidelines.md` masih path `modules/Content/Publishing` — stale parah. |
+| **P2-1** | Theme i18n tidak terdaftar. Bundle ada di `Layout/views/themes/{sarangenge,janari}/locales/` tapi `moduleLocales.ts` hanya `layoutPack`. Sarangenge selamat karena fallback string. Janari banyak `t('theme.janari.*')` tanpa fallback → raw key **jika** header/footer Janari ter-resolve. | Docs `05-i18n-guidelines.md` masih path `modules/Content/Publishing` — stale parah. |
 | **P2-2** | FE public hard-import Layout + Member + Analytics. Console `deferredConsoleModules` meng-gate pack. Public tidak. | `main-public.ts`; `usePublicAnalytics.ts` L36–37: `active.length > 0 && !includes` → array kosong = tracking tetap jalan. |
 | **P2-3** | Newsletter footer selalu `subscribe`; rute 403 jika pack off. | Gate UI dari `active_extensions`. |
 | **P2-4** | Cron/Artisan pack tidak cek `isProductActive` (contoh `PublishScheduledContentCommand`). | Pack “off” masih mutasi data lewat scheduler. |
@@ -113,7 +113,7 @@ Tidak ada crash i18n di jalur **live Zenith** (fallback bahasa Inggris ada). Yan
 | **P2-13** | README root masih Vite **5173**. | `README.md` L107, L132; e2e compose. |
 | **P2-14** | `data-studio-vs-cck.md` belum list `site`/`sites`. | Kode sudah. |
 | **P2-15** | Laravel docs 12/13 campur; lock **13.26**. PHP docs 8.3+ vs composer `^8.2`. Manifests `laravel: ">=12.0"`. | Rapikan klaim. |
-| **P2-16** | Naming: Pinia id `'Jejakawan'`, SafeHtml mode, license map, dashboard ids, string user-facing `JA-CMS` di Zenith CTA. | Melanggar `AGENT_START_HERE.md` L41. |
+| **P2-16** | Naming: Pinia id `'Jejakawan'`, SafeHtml mode, license map, dashboard ids, string user-facing `JA-CMS` di Sarangenge CTA. | Melanggar `AGENT_START_HERE.md` L41. |
 | **P2-17** | Kernel Identity tab Media = S3/FTP; Media pack = library. Dua “media settings”. | Dokumentasikan split atau pindahkan storage ke pack. |
 | **P2-18** | Orphan `SeoTab.vue` / `DiscussionTab.vue` / `AnalyticsTab.vue` di Core settings. | Publishing sudah reuse SEO/discussion. Hapus atau alias. |
 
@@ -222,9 +222,9 @@ Itu bukan bug dual-boot — itu **kontrak yang belum selesai diimplementasi di t
 
 Pendapat agent untuk sesi dewa — **boleh ditolak**:
 
-1. **W1 dulu, W5 belakangan.** Dual-write `general` dan uninstall plugin lebih berbahaya daripada string `JA-CMS` di hero Zenith.
+1. **W1 dulu, W5 belakangan.** Dual-write `general` dan uninstall plugin lebih berbahaya daripada string `JA-CMS` di hero Sarangenge.
 2. **Owner `general` = kernel Identity.** Publishing settings = `seo` + `comments` saja. Site name/tagline adalah platform, bukan CMS — downstream non-CMS tetap butuh Identity. Ini selaras “kernel thin tapi bukan kernel kosong”.
-3. **W2 harus keputusan sadar.** Kalau `/site` Zenith-only sampai tema kedua siap, tulis itu di `architectural-status` dan sembunyikan “Activate Janari” sebagai preview builder, bukan runtime publik. Kalau Activate harus nyata, halaman harus lewat resolver yang sama dengan Header.
+3. **W2 harus keputusan sadar.** Kalau `/site` Sarangenge-only sampai tema kedua siap, tulis itu di `architectural-status` dan sembunyikan “Activate Janari” sebagai preview builder, bukan runtime publik. Kalau Activate harus nyata, halaman harus lewat resolver yang sama dengan Header.
 4. **Publishing `/member/*` Sanctum dihapus**, bukan di-port. Member pack sudah jadi owner. Sisakan `MemberIdentityPort`.
 5. **Member pack off = API publik member mati.** Kalau tidak, App Store toggle dusta.
 6. **Mail port:** verifikasi email member adalah **communications kernel-capable**. Boleh fallback `Mail::html` tanpa pack; jangan pura-pura gate-by-bind.
