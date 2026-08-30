@@ -1,9 +1,9 @@
 <template>
   <div class="theme-page-resolver-wrapper w-full h-full flex-1 flex flex-col">
-    <component 
-      :is="resolvedComponent" 
-      v-if="resolvedComponent" 
-      v-bind="$attrs" 
+    <component
+      :is="resolvedComponent"
+      v-if="resolvedComponent"
+      v-bind="$attrs"
     />
 
     <div
@@ -17,8 +17,7 @@
         <span class="text-sm font-medium">Memuat halaman...</span>
       </div>
     </div>
-    
-    <!-- Resilience: Fallback UI for failed/missing components -->
+
     <div
       v-else-if="isNotFound"
       class="min-h-[40vh] flex flex-col items-center justify-center p-12 text-center border-2 border-dashed border-border/50 m-4 rounded-[2rem] bg-muted/10"
@@ -33,6 +32,7 @@
         Komponen tema gagal dimuat dengan sempurna. Silakan muat ulang halaman atau hubungi administrator.
       </p>
       <button
+        type="button"
         class="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-full text-sm font-bold hover:scale-105 transition-transform"
         @click="resolveView"
       >
@@ -43,24 +43,23 @@
         <div>Page: {{ page }}</div>
         <div>Total: {{ Object.keys(viewModules).length }} files</div>
         <div class="truncate">Match: {{ lastResolveDebug.matchingKey || '—' }}</div>
-        <div class="truncate">Keys: {{ Object.keys(viewModules).slice(0, 2).map(k => k.split('/').pop()).join(', ') }}...</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { shallowRef, watch, ref, computed, defineAsyncComponent, onBeforeUnmount, type Component } from 'vue'
+import { shallowRef, watch, ref, computed, onBeforeUnmount, type Component } from 'vue'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { BUNDLED_FRONTEND_THEME_SLUGS, buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { isUploadedThemeActive, loadDynamicThemeComponent } from '@/modules/Layout/utils/dynamicThemeLoader'
 import { logger } from '@/shared/utils/logger'
 
-// Shared across all resolver instances (header/footer/page content) to avoid
-// rebuilding the module map and cache on every route navigation.
 const viewModules = import.meta.glob(
-    '@/modules/Layout/views/themes/**/*.vue',
-) as Record<string, () => Promise<{ default: Component }>>
+  '@/modules/Layout/views/themes/**/*.vue',
+) as Record<string, () => Promise<{ default: Component } | Component>>
+
+/** Cache resolved SFC components (not defineAsyncComponent — avoids stale resolveId stubs). */
 const componentCache = new Map<string, Component>()
 
 const props = defineProps<{
@@ -73,29 +72,32 @@ const isNotFound = ref(false)
 const isDestroyed = ref(false)
 const lastResolveDebug = ref<{ matchingKey: string; page: string }>({ matchingKey: '', page: '' })
 let currentResolveId = 0
-const isLoadingTheme = computed(() => loading.value)
+const isLoadingTheme = computed(() => loading.value && !resolvedComponent.value)
 
-function resolveView() {
+function unwrapModule(mod: { default: Component } | Component): Component {
+  if (mod && typeof mod === 'object' && 'default' in mod && (mod as { default: Component }).default) {
+    return (mod as { default: Component }).default
+  }
+  return mod as Component
+}
+
+async function resolveView() {
   if (isDestroyed.value) return
 
-  // Jangan tampilkan fallback saat data tema belum siap (initial load),
-  // agar landing publik tidak berkedip error palsu.
+  // While theme revalidates, keep the current view (prevents empty remount / inject storms).
   if (loading.value) {
     isNotFound.value = false
-    resolvedComponent.value = null
     return
   }
 
   const pageName = props.page
 
   if (isUploadedThemeActive(activeTheme.value)) {
-    const bundleUrl = String(activeTheme.value?.bundle_url)
-    const manifest = activeTheme.value?.manifest as { bundle_checksum?: string } | undefined;
     resolvedComponent.value = loadDynamicThemeComponent({
       slug: String(activeTheme.value?.slug ?? ''),
-      bundleUrl,
+      bundleUrl: String(activeTheme.value?.bundle_url),
       page: pageName,
-      bundleChecksum: manifest?.bundle_checksum ?? null,
+      bundleChecksum: (activeTheme.value?.manifest as { bundle_checksum?: string } | undefined)?.bundle_checksum ?? null,
     })
     isNotFound.value = false
     return
@@ -122,52 +124,32 @@ function resolveView() {
     resolvedComponent.value = null
     return
   }
-  
-  const loader = viewModules[matchingKey]
 
   const cacheKey = `${themeSlugs.join('|')}|${pageName}|${matchingKey}`
   const cached = componentCache.get(cacheKey)
   if (cached) {
-    resolvedComponent.value = cached
+    if (resolveId === currentResolveId && !isDestroyed.value) {
+      resolvedComponent.value = cached
+    }
     return
   }
 
-  const asyncComponent = defineAsyncComponent({
-    loader: () => {
-      const id = resolveId
-      return loader!().then(mod => {
-        if (id !== currentResolveId || isDestroyed.value) {
-          return { default: { render: () => null } } as any
-        }
-        return mod
-      }).catch((err) => {
-        if (id === currentResolveId && !isDestroyed.value) {
-          logger.error('[ThemePageResolver] Failed to load view', {
-            page: pageName,
-            matchingKey,
-            err,
-          })
-          isNotFound.value = true
-        }
-        return { default: { render: () => null } } as any
-      })
-    },
-    timeout: 15000,
-    onError(err, _retry, fail) {
-      if (resolveId === currentResolveId && !isDestroyed.value) {
-        logger.error('[ThemePageResolver] Async component error', {
-          page: pageName,
-          matchingKey,
-          err,
-        })
-        isNotFound.value = true
-      }
-      fail()
-    }
-  })
-
-  componentCache.set(cacheKey, asyncComponent)
-  resolvedComponent.value = asyncComponent
+  try {
+    const mod = await viewModules[matchingKey]!()
+    if (resolveId !== currentResolveId || isDestroyed.value) return
+    const comp = unwrapModule(mod)
+    componentCache.set(cacheKey, comp)
+    resolvedComponent.value = comp
+  } catch (err) {
+    if (resolveId !== currentResolveId || isDestroyed.value) return
+    logger.error('[ThemePageResolver] Failed to load view', {
+      page: pageName,
+      matchingKey,
+      err,
+    })
+    isNotFound.value = true
+    resolvedComponent.value = null
+  }
 }
 
 const themeResolveKey = computed(() => {
@@ -182,7 +164,14 @@ onBeforeUnmount(() => {
   currentResolveId++
 })
 
-watch([themeResolveKey, () => props.page], resolveView, { immediate: true })
-watch(() => loading.value, resolveView)
-</script>
+watch([themeResolveKey, () => props.page], () => {
+  void resolveView()
+}, { immediate: true })
 
+watch(() => loading.value, (isLoading, wasLoading) => {
+  // Only re-resolve when a load finishes (true → false), not when it starts.
+  if (wasLoading && !isLoading) {
+    void resolveView()
+  }
+})
+</script>

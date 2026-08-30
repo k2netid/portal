@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Fix ThemePageResolver remount loop: cache real SFCs (not async stubs keyed by stale resolveId); keep current view while theme revalidates.
 - Fix public shell sticking on Zenith while DB active is Janari: mount always force-reconciles `/public/layout/themes/active`; customizer preview loads no longer write `frontend_theme_snapshot_v1`.
 - Expand Customizer click-select targets to About/Solusi/Tim/Pricing/News/Careers/Achievements/Search; map `/services` → Janari Solusi (stop Zenith Services fallback).
 - Zenith Home reads `builder_blocks` / CMS body like Janari (builder parity for home).
