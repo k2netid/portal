@@ -34,7 +34,7 @@ export function usePublicPageContent(slug: MaybeRefOrGetter<string>) {
                         : null;
             }
         } catch (err: unknown) {
-            const e = err as { name?: string; code?: string; message?: string };
+            const e = err as { name?: string; code?: string; message?: string; response?: { status?: number } };
             if (e.name === 'CanceledError' || e.code === 'ERR_CANCELED' || e.message?.includes('aborted')) {
                 return;
             }
@@ -42,7 +42,13 @@ export function usePublicPageContent(slug: MaybeRefOrGetter<string>) {
                 error.value = err;
                 pageData.value = null;
             }
-            logger.error(`[PublicPage] Failed to load "${resolvedSlug}":`, err);
+            // Theme pages often have no CMS row yet — theme Vue is the fallback UI.
+            const status = e.response?.status;
+            if (status === 404) {
+                logger.debug(`[PublicPage] No CMS content for "${resolvedSlug}" (theme fallback)`);
+            } else {
+                logger.error(`[PublicPage] Failed to load "${resolvedSlug}":`, err);
+            }
         } finally {
             if (active) {
                 loading.value = false;

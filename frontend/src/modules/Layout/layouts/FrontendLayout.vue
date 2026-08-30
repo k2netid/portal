@@ -17,7 +17,11 @@
       <!-- Hybrid: Main is boxed | Full: Main is full -->
       <main
         class="main-content flex-1 w-full"
-        :class="{ 'pt-24': headerSticky }"
+        :class="{
+          // Janari sticky = main nav + artist/breadcrumb bar (~7.5–9rem)
+          'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
+          'pt-24': headerSticky && !usesJanariCanvas,
+        }"
       >
         <div
           :class="{
@@ -55,7 +59,10 @@
       
       <main
         class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8"
-        :class="{ 'pt-20': headerSticky }"
+        :class="{
+          'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
+          'pt-20': headerSticky && !usesJanariCanvas,
+        }"
       >
         <!-- Added padding here too -->
         <router-view v-slot="{ Component }">

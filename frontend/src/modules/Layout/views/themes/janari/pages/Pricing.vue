@@ -99,10 +99,10 @@
               :class="tier.featured ? 'border-primary shadow-lg ring-1 ring-primary/30' : ''"
             >
               <h3 class="text-lg font-bold text-foreground mb-4">
-                {{ t(`pages.pricing.staticTiers.${tier.key}.name`) }}
+                {{ t(`pages.pricing.tiers.${tier.key}.name`) }}
               </h3>
               <p class="text-sm text-muted-foreground mb-6 flex-1">
-                {{ t(`pages.pricing.staticTiers.${tier.key}.description`) }}
+                {{ t(`pages.pricing.tiers.${tier.key}.description`) }}
               </p>
               <router-link
                 :to="contactUrl"

@@ -153,10 +153,13 @@ class ContentController extends BaseApiController
             ->where('slug', $slug)
             ->first();
 
-        // Graceful fallback for reserved page slugs if missing
+        // Graceful fallback for reserved / theme page slugs if missing (theme Vue supplies UI)
         if (! $content) {
-            $fallbackSlugs = ['home', 'about', 'blog', 'contact', 'agenda', 'page', 'search'];
-            if (in_array($slug, $fallbackSlugs)) {
+            $fallbackSlugs = [
+                'home', 'about', 'blog', 'contact', 'agenda', 'page', 'search',
+                'solusi', 'services', 'tim', 'pricing', 'career', 'achievement',
+            ];
+            if (in_array($slug, $fallbackSlugs, true)) {
                 return $this->success(null, ucfirst($slug).' content not found, using fallback');
             }
             abort(404);
@@ -180,7 +183,10 @@ class ContentController extends BaseApiController
                 abort(404);
             }
         } elseif (! $this->hasSubstantivePublicBody($content)) {
-            $fallbackSlugs = ['home', 'about', 'blog', 'contact', 'agenda', 'page', 'search'];
+            $fallbackSlugs = [
+                'home', 'about', 'blog', 'contact', 'agenda', 'page', 'search',
+                'solusi', 'services', 'tim', 'pricing', 'career', 'achievement',
+            ];
             if (in_array($slug, $fallbackSlugs, true)) {
                 return $this->success(null, ucfirst($slug).' content not found, using fallback');
             }

@@ -999,6 +999,10 @@
     }
     .janari-breadcrumb::-webkit-scrollbar { display: none; }
 
+    .janari-breadcrumb-list {
+        @apply flex items-center gap-1.5 m-0 p-0 list-none;
+    }
+
     .janari-breadcrumb-item {
         @apply flex items-center whitespace-nowrap;
     }
@@ -1008,13 +1012,13 @@
     }
 
     .janari-breadcrumb-link {
-        @apply text-[9px] font-black uppercase tracking-[0.3em] text-foreground/40 hover:text-foreground transition-all duration-500 ease-out;
+        @apply text-[9px] font-black uppercase tracking-[0.3em] text-foreground/40 hover:text-foreground transition-colors duration-300 ease-out;
         position: relative;
     }
 
     .janari-breadcrumb-link::after {
         content: '';
-        @apply absolute -bottom-1 left-0 w-full h-[1px] bg-foreground scale-x-0 origin-right transition-transform duration-500 ease-out;
+        @apply absolute -bottom-0.5 left-0 w-full h-px bg-foreground scale-x-0 origin-right transition-transform duration-300 ease-out;
     }
 
     .janari-breadcrumb-link:hover::after {
@@ -1023,6 +1027,25 @@
 
     .janari-breadcrumb-current {
         @apply text-[9px] font-black uppercase tracking-[0.3em] text-foreground;
+    }
+
+    /* Compact crumbs inside the thin artist/news bar (avoid py-4 clipping into h-5/h-8). */
+    .artist-bar .janari-breadcrumb--bar,
+    .janari-breadcrumb--bar {
+        @apply py-0 gap-0 overflow-hidden max-w-full;
+    }
+
+    .artist-bar .janari-breadcrumb-list {
+        @apply gap-0;
+    }
+
+    .artist-bar .janari-breadcrumb-link,
+    .artist-bar .janari-breadcrumb-current {
+        @apply text-[10px] font-bold tracking-[0.18em] leading-none;
+    }
+
+    .artist-bar .janari-breadcrumb-separator {
+        @apply mx-1.5 text-[9px] opacity-30;
     }
 
     /* ─── Premium Scrollbar Styling ─── */
@@ -1078,6 +1101,12 @@
     .theme-janari .janari-header-toolbar {
         position: relative;
         z-index: 30;
+    }
+
+    /* Artist-bar SOSIAL toggle: keep hover/focus flush with button (no ring-4 overflow). */
+    .theme-janari .artist-bar .janari-social-toggle:focus-visible {
+        outline: none;
+        box-shadow: none;
     }
 
     .janari-overlay-panel,

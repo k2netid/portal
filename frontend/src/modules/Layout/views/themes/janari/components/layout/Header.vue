@@ -237,7 +237,7 @@
     >
       <div class="absolute inset-0 bg-gradient-to-r from-primary/12 via-background/10 to-primary/12 dark:from-primary/45 dark:via-background/20 dark:to-primary/45 backdrop-blur-md pointer-events-none -z-10 border-t border-primary/20" />
       <div class="container mx-auto px-8 flex justify-between items-center py-2 relative z-10">
-        <div class="flex-1 overflow-hidden h-5 flex items-center">
+        <div class="flex-1 min-w-0 overflow-hidden flex items-center h-8">
           <div
             v-if="isHomePage"
             class="whitespace-nowrap flex items-center gap-12 marquee-track animate-marquee"
@@ -254,22 +254,21 @@
           </div>
           <JanariBreadcrumbs v-else />
         </div>
-        <div class="flex items-center gap-1 bg-background/60 backdrop-blur-sm border border-border/40 rounded-lg px-2 py-1 shadow-xs">
+        <!-- Social dock: expand/collapse via SOSIAL; no magnetic hover on icons -->
+        <div class="flex items-center gap-1 bg-background/60 backdrop-blur-sm border border-border/40 rounded-lg px-2 py-1 shadow-xs shrink-0 ml-4">
           <div
             ref="socialLinksWrap"
-            class="flex items-center gap-0.5 overflow-visible"
-            @mousemove="handleSocialDockMove"
-            @mouseleave="resetSocialDock"
+            class="flex items-center gap-0.5 overflow-hidden"
+            :style="socialExpanded ? undefined : { display: 'none' }"
           >
-            <a 
-              v-for="(link, idx) in socialLinks" 
+            <a
+              v-for="(link, idx) in socialLinks"
               :key="idx"
               :href="resolveSocialHref(link)"
               :target="getSocialTarget(link)"
               :rel="getSocialRel(link)"
               :aria-label="getSocialAriaLabel(link)"
-              data-social-icon="true"
-              class="social-dock-icon flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-primary/5 transition-all duration-300"
+              class="inline-flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-primary/5"
             >
               <component
                 :is="getSocialIcon(link.icon)"
@@ -282,12 +281,14 @@
             />
           </div>
           <button
-            :class="[toolbarPillClass, 'h-8 px-2.5 border-0 bg-transparent hover:bg-primary/5']"
+            class="janari-social-toggle inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-muted-foreground bg-transparent border-0 hover:bg-muted/60 hover:text-foreground focus:outline-none focus-visible:bg-muted/60 focus-visible:ring-1 focus-visible:ring-border/60 focus-visible:ring-inset active:bg-muted/80 cursor-pointer transition-colors duration-150"
             type="button"
             data-motion-interactive="off"
+            :aria-expanded="socialExpanded"
+            :aria-label="socialLabel"
             @click="toggleSocialLinks"
           >
-            <span class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{{ socialLabel }}</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider">{{ socialLabel }}</span>
             <ChevronDown
               class="w-3 h-3 opacity-50 transition-transform duration-300"
               :class="{ 'rotate-180': socialExpanded }"
@@ -554,6 +555,7 @@ import { ref, onMounted, onUnmounted, computed, watch, inject } from 'vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useI18n } from 'vue-i18n';
@@ -597,6 +599,7 @@ const isBuilder = computed(() => !!builder);
 const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting();
 const { menus, fetchMenuByIdentifier } = useMenu();
+const { t: tt } = useThemeI18n('janari');
 const device = useResponsiveDevice();
 const { motion } = useThemeMotion();
 const route = useRoute();
@@ -628,7 +631,6 @@ const loginLabel = computed(() => localizedString('header_login_label') || t('th
 const profileLabel = computed(() => localizedString('header_profile_label') || t('common.labels.profile', 'Akun Saya'))
 const logoutLabel = computed(() => localizedString('header_logout_label') || t('common.actions.logout', 'Keluar'))
 const newsBadge = computed(() => localizedString('header_news_badge') || t('theme.janari.header.newsBadge'))
-const socialLabel = computed(() => localizedString('header_social_label') || t('theme.janari.header.socialLabel'))
 const latestNewsText = computed(() =>
   localizedString('header_marquee_text')
     || 'Latest Updates: 35th L\'Anniversary Year - Arena Tour 2026 Underground Announced',
@@ -661,8 +663,9 @@ const siteLogo = computed((): string => {
 });
 
 const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);
-
-// marquee text comes from header_marquee_text (see latestNewsText above)
+const socialLabel = computed(() => localizedString('header_social_label') || t('theme.janari.header.socialLabel'));
+const socialExpanded = ref(true);
+const socialLinksWrap = ref<HTMLElement>();
 
 const getSocialIcon = (key: string) => {
     switch (key) {
@@ -729,11 +732,6 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
         return `Kunjungi ${icon}`;
     }
 };
-
-const socialExpanded = ref(true);
-const socialLinksWrap = ref<HTMLElement>();
-const socialIconCenters = ref<number[]>([]);
-let socialDockRafId: number | null = null;
 
 const headerStyleClasses = computed(() => {
     switch (headerStyle.value) {
@@ -829,10 +827,22 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
         });
 };
 
+/** Shown when Menu Builder has no active header menu yet (same idea as Footer defaults). */
+const defaultNavItems = computed((): MenuItem[] => [
+    { id: 'janari-nav-home', title: tt('header.navHome'), url: '/', type: 'custom', sort_order: 0 },
+    { id: 'janari-nav-about', title: tt('header.navAbout'), url: '/about', type: 'custom', sort_order: 1 },
+    { id: 'janari-nav-solusi', title: tt('header.navSolutions'), url: '/solusi', type: 'custom', sort_order: 2 },
+    { id: 'janari-nav-tim', title: tt('header.navTeam'), url: '/tim', type: 'custom', sort_order: 3 },
+    { id: 'janari-nav-pricing', title: tt('header.navPricing'), url: '/pricing', type: 'custom', sort_order: 4 },
+    { id: 'janari-nav-news', title: tt('header.navNews'), url: '/blog', type: 'custom', sort_order: 5 },
+    { id: 'janari-nav-contact', title: tt('header.navContact'), url: '/contact', type: 'custom', sort_order: 6 },
+]);
+
 const navItems = computed<MenuItem[]>(() => {
     const menu = menus.value.header || menus.value[currentMenuLocation.value];
     const rawItems = (menu?.items || []) as MenuItem[];
-    return filterMenuItems(rawItems);
+    const filtered = filterMenuItems(rawItems);
+    return filtered.length > 0 ? filtered : filterMenuItems(defaultNavItems.value);
 });
 
 const toggleMenu = () => {
@@ -872,65 +882,6 @@ const toggleSocialLinks = () => {
         ease: 'power2.out',
     });
     socialExpanded.value = true;
-};
-
-const handleSocialDockMove = (event: MouseEvent) => {
-    if (!socialExpanded.value) return;
-    const wrap = socialLinksWrap.value;
-    if (!wrap) return;
-
-    const icons = Array.from(wrap.querySelectorAll<HTMLElement>('[data-social-icon="true"]'));
-    if (!icons.length) return;
-
-    if (socialIconCenters.value.length !== icons.length) {
-        socialIconCenters.value = icons.map((icon) => {
-            const rect = icon.getBoundingClientRect();
-            return rect.left + (rect.width / 2);
-        });
-    }
-
-    const pointerX = event.clientX;
-    const maxDistance = 120;
-
-    if (socialDockRafId !== null) {
-        cancelAnimationFrame(socialDockRafId);
-    }
-    socialDockRafId = requestAnimationFrame(() => {
-        icons.forEach((icon, idx) => {
-            const centerX = socialIconCenters.value[idx] ?? 0;
-            const distance = Math.abs(pointerX - centerX);
-            const intensity = Math.max(0, 1 - distance / maxDistance);
-
-            motion.to(icon, {
-                scale: 1 + (intensity * 0.5),
-                y: -(intensity * 8),
-                duration: 0.18,
-                ease: 'power3.out',
-                overwrite: 'auto',
-            });
-        });
-        socialDockRafId = null;
-    });
-};
-
-const resetSocialDock = () => {
-    const wrap = socialLinksWrap.value;
-    if (!wrap) return;
-    if (socialDockRafId !== null) {
-        cancelAnimationFrame(socialDockRafId);
-        socialDockRafId = null;
-    }
-    const icons = Array.from(wrap.querySelectorAll<HTMLElement>('[data-social-icon="true"]'));
-    socialIconCenters.value = [];
-    icons.forEach((icon) => {
-        motion.to(icon, {
-            scale: 1,
-            y: 0,
-            duration: 0.22,
-            ease: 'power3.out',
-            overwrite: 'auto',
-        });
-    });
 };
 
 // URL Helpers
@@ -1005,16 +956,10 @@ onMounted(() => {
         motion.set(headerRef.value, { y: -100, opacity: 0 });
         motion.to(headerRef.value, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', clearProps: 'all' });
     }
-    socialIconCenters.value = [];
-    window.addEventListener('resize', resetSocialDock);
     initializeLanguage();
 });
 
 onUnmounted(() => {
-    if (socialDockRafId !== null) {
-        cancelAnimationFrame(socialDockRafId);
-    }
-    window.removeEventListener('resize', resetSocialDock);
     document.body.style.overflow = '';
 });
 </script>
@@ -1041,11 +986,4 @@ onUnmounted(() => {
 .mobile-menu-enter-active { transition: opacity 0.3s ease; }
 .mobile-menu-leave-active { transition: opacity 0.2s ease; }
 .mobile-menu-enter-from, .mobile-menu-leave-to { opacity: 0; }
-.social-dock-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transform-origin: center bottom;
-  will-change: transform;
-}
 </style>

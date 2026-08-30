@@ -31,7 +31,15 @@
         "closeNavAria": "Tutup menu navigasi",
         "toggleSubmenuAria": "Buka/tutup submenu {title}",
         "login": "Masuk",
-        "languageAria": "Pilih bahasa"
+        "languageAria": "Pilih bahasa",
+        "navHome": "Beranda",
+        "navAbout": "Tentang",
+        "navSolutions": "Produk",
+        "navTeam": "Tim",
+        "navPricing": "Harga",
+        "navNews": "Berita",
+        "navContact": "Kontak",
+        "navSearch": "Cari"
     },
     "hero": {
         "badgeDefault": "PLATFORM JEJAKAWAN",

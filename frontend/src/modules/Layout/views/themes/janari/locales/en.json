@@ -31,7 +31,15 @@
         "closeNavAria": "Close navigation menu",
         "toggleSubmenuAria": "Toggle submenu {title}",
         "login": "Login",
-        "languageAria": "Select language"
+        "languageAria": "Select language",
+        "navHome": "Home",
+        "navAbout": "About",
+        "navSolutions": "Products",
+        "navTeam": "Team",
+        "navPricing": "Pricing",
+        "navNews": "News",
+        "navContact": "Contact",
+        "navSearch": "Search"
     },
     "hero": {
         "badgeDefault": "JEJAKAWAN PLATFORM",
