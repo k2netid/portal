@@ -245,6 +245,7 @@ export function useTheme() {
         error.value = null;
 
         activeLoadPromise = (async () => {
+            let previewMode = false;
             try {
             let data: Theme | null = null;
 
@@ -261,7 +262,7 @@ export function useTheme() {
                     }
                 })();
                 const previewFromQuery = isCustomizerPreviewQuery(search);
-                const previewMode = previewFromQuery
+                previewMode = previewFromQuery
                     || (inIframe
                         && typeof sessionStorage !== 'undefined'
                         && sessionStorage.getItem('ja_customizer_preview') === '1');
@@ -303,8 +304,6 @@ export function useTheme() {
                             data = stored as Theme;
                         }
                     }
-                } else if (typeof sessionStorage !== 'undefined') {
-                    // Top-level: ignore customizer keys (do not clear — iframe shares sessionStorage).
                 }
             }
 
@@ -447,7 +446,10 @@ export function useTheme() {
 
             lastLoadedAt = Date.now();
             error.value = null;
-            writeThemeSnapshot();
+            // Preview drafts must not poison public sessionStorage (same-origin as console).
+            if (!previewMode) {
+                writeThemeSnapshot();
+            }
 
         } catch (err: unknown) {
             const errorObj = err as Error;

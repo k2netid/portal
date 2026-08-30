@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col" data-ja-customizer-target="news">
     <div
       v-if="!isEnabled"
       class="flex-1"

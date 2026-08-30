@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="min-h-screen bg-background" data-ja-customizer-target="tim">
     <BlockRenderer
       v-if="hasBuilderBlocks"
       :blocks="builderBlocks"

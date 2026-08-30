@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Fix public shell sticking on Zenith while DB active is Janari: mount always force-reconciles `/public/layout/themes/active`; customizer preview loads no longer write `frontend_theme_snapshot_v1`.
+- Expand Customizer click-select targets to About/Solusi/Tim/Pricing/News/Careers/Achievements/Search; map `/services` → Janari Solusi (stop Zenith Services fallback).
+- Zenith Home reads `builder_blocks` / CMS body like Janari (builder parity for home).
 - Customizer Controls: SERP platform tabs fit the right rail; Footer/Menu bridges stack text + full-width CTAs (no viewport `sm:` squeeze).
 - Customizer Controls panel (Content bindings): stack Query/Mapping in panel mode, fix LIMIT/SORT overlap, stop field-mapping clip; design/menu grids stay single-column in the right rail.
 - Clarify Customizer preview hint: highlights are blue dashed outlines + ✎ badges on annotated Janari sections; skip wrong-theme snapshot paint in preview iframe so targets appear.

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col" data-ja-customizer-target="search">
     <div class="py-12 bg-background flex-1">
       <div class="container mx-auto px-4">
         <h1 class="text-4xl font-bold text-center mb-4 text-foreground">

@@ -345,13 +345,14 @@ const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const retryThemeLoadIfNeeded = async () => {
-  if (activeTheme.value || loading.value) return
+const retryThemeLoadIfNeeded = async (options?: { force?: boolean }) => {
+  if (loading.value) return
+  const force = options?.force === true
   const now = Date.now()
-  if (now - lastThemeRetryAt.value < RETRY_INTERVAL_MS) return
+  if (!force && now - lastThemeRetryAt.value < RETRY_INTERVAL_MS) return
   lastThemeRetryAt.value = now
   try {
-    await loadActiveTheme('frontend')
+    await loadActiveTheme('frontend', { force })
   } catch {
     // silent: fallback UI handles service degradation
   }
@@ -450,7 +451,8 @@ const handleCustomizerSync = (event: MessageEvent) => {
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('message', handleCustomizerSync)
-  await retryThemeLoadIfNeeded()
+  // Force reconcile with API — sessionStorage snapshot must not lock a stale Zenith shell.
+  await retryThemeLoadIfNeeded({ force: true })
   schedulePublicPrefetch()
 
   // Apply janari vars immediately on mount

@@ -1,5 +1,19 @@
 <template>
   <div class="zenith-theme flex-1 flex flex-col">
+    <BlockRenderer
+      v-if="hasBuilderBlocks"
+      :blocks="builderBlocks"
+      :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+    />
+
+    <SafeHtml
+      v-else-if="cmsBody"
+      class="container mx-auto px-4 py-16"
+      :html="cmsBody"
+      mode="publishing"
+    />
+
+    <template v-else>
     <!-- Hero Section -->
     <section class="relative overflow-hidden pt-8 pb-16 sm:pt-16 sm:pb-24">
       <!-- Subtle background glow -->
@@ -125,6 +139,7 @@
         </div>
       </div>
     </section>
+    </template>
   </div>
 </template>
 
@@ -132,11 +147,25 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent';
+import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent';
+import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
+import type { BlockInstance } from '@/modules/Layout/types/builder';
 import { Button, Card } from '@/modules/Layout/views/themes/zenith/ui';
 import { Sparkles, ArrowRight, Zap, ShieldCheck, Gauge, Layers } from 'lucide-vue-next';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const { getSetting } = useTheme();
+const { pageData } = usePublicPageContent('home');
+
+const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value));
+const builderBlocks = computed<BlockInstance[]>(() => {
+  const meta = pageData.value?.meta as Record<string, unknown> | undefined;
+  const blocks = meta?.builder_blocks || pageData.value?.blocks;
+  return Array.isArray(blocks) ? (blocks as BlockInstance[]) : [];
+});
+const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
 
 const heroBadge = computed(() => {
   return String(getSetting('hero_badge_text') || t('theme.zenith.pages.home.heroBadge', 'Zenith Edition'));

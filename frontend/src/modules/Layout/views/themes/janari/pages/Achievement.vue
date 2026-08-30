@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="min-h-screen bg-background" data-ja-customizer-target="achievements">
     <!-- If Enabled -->
     <template v-if="isEnabled">
       <!-- Hero / Title -->

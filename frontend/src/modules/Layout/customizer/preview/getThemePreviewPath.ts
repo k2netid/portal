@@ -54,6 +54,14 @@ const PREVIEW_FOCUS_BY_ITEM: Record<string, string> = {
   'comp-testimonials': 'testimonials',
   'comp-cta': 'cta',
   'page-contact': 'contact',
+  'page-about': 'about',
+  'page-solusi': 'solusi',
+  'page-tim': 'tim',
+  'page-pricing': 'pricing',
+  'page-news': 'news',
+  'page-careers': 'careers',
+  'page-achievements': 'achievements',
+  'page-search': 'search',
 };
 
 export function resolveCustomizerPreviewPath(itemId: string | null | undefined): string {

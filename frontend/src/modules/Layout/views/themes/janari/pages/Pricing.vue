@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="min-h-screen bg-background" data-ja-customizer-target="pricing">
     <!-- Visual Builder Content if page was customized in Builder -->
     <BlockRenderer
       v-if="hasBuilderBlocks"
