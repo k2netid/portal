@@ -1,5 +1,8 @@
 <template>
-  <footer class="bg-background text-foreground/90 mt-auto border-t border-border relative">
+  <footer
+    data-ja-customizer-target="footer"
+    class="bg-background text-foreground/90 mt-auto border-t border-border relative"
+  >
     <!-- Signature Gradient Accent Line (Matching Header) -->
     <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10" />
     <div class="absolute top-0 left-0 w-full h-[1px] bg-primary/10 blur-[2px] z-0" />

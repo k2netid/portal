@@ -858,7 +858,8 @@
         "title": "Section chrome uses Design mode",
         "body": "Titles, badges, and button labels for this section are edited under Design — not in content bindings.",
         "cta": "Edit section chrome"
-      }
+      },
+      "preview_hint": "Click a highlighted section to open its settings. Hold Alt for Content bindings when available."
     },
     "empty_state": {
       "title": "Choose a section",

@@ -33,6 +33,13 @@
       </button>
     </div>
 
+    <p
+      v-if="props.enableClickSelect"
+      class="px-6 py-2 text-[11px] text-muted-foreground border-b bg-muted/30"
+    >
+      {{ $t('publishing.theme_customizer.bridge.preview_hint') }}
+    </p>
+
     <div class="flex-1 overflow-auto p-4 md:p-8 flex justify-center items-start custom-scrollbar">
       <!-- Device Container -->
       <div 
@@ -61,9 +68,11 @@
 
         <ThemePreview
           ref="themePreviewRef"
-          :theme="previewTheme"
-          :preview-url="previewUrl"
+          :theme="props.previewTheme"
+          :preview-url="props.previewUrl"
+          :enable-click-select="props.enableClickSelect"
           class="w-full h-full bg-background flex-1"
+          @select-target="(payload) => emit('select-target', payload)"
         />
       </div>
     </div>
@@ -83,9 +92,14 @@ import {
 import ThemePreview from '../../ThemePreview.vue';
 import type { Theme } from '@/modules/Layout/types/theme';
 
-defineProps<{
+const props = defineProps<{
     previewTheme: Theme;
     previewUrl?: string;
+    enableClickSelect?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (e: 'select-target', payload: { target: string; mode?: 'design' | 'bindings' }): void;
 }>();
 
 const themePreviewRef = ref<{ refreshPreview: () => Promise<void> } | null>(null);

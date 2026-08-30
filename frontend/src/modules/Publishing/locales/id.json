@@ -858,7 +858,8 @@
         "title": "Chrome bagian di mode Desain",
         "body": "Judul, badge, dan label tombol bagian ini diedit di Desain — bukan di binding konten.",
         "cta": "Edit chrome bagian"
-      }
+      },
+      "preview_hint": "Klik section yang tersorot untuk membuka pengaturannya. Tahan Alt untuk binding Konten jika ada."
     },
     "empty_state": {
       "title": "Pilih bagian",

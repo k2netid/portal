@@ -99,9 +99,11 @@
             </p>
           </div>
           <div class="flex-1 min-h-0">
-            <PreviewArea
+          <PreviewArea
               :preview-theme="previewTheme"
               :preview-url="publicPreviewUrl"
+              enable-click-select
+              @select-target="handlePreviewSelectTarget"
             />
           </div>
         </div>
@@ -139,6 +141,11 @@ import { useThemeCustomizer } from '@/modules/Layout/composables/useThemeCustomi
 import { useCustomizerNavigation } from '@/modules/Layout/composables/useCustomizerNavigation';
 import { useCustomizerDataSources } from '@/modules/Layout/composables/useCustomizerDataSources';
 import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl';
+import {
+  getThemePreviewTargets,
+  resolvePreviewNavItemId,
+} from '@/modules/Layout/customizer/preview/getThemePreviewTargets';
+import type { CustomizerPreviewMode } from '@/modules/Layout/customizer/preview/protocol';
 
 const { t, te } = useI18n();
 const route = useRoute();
@@ -248,6 +255,15 @@ function handleMediaSelect(m: { url: string }) {
 function openNavItemById(itemId: string) {
   const item = flatNavItems.value.find((nav) => nav.id === itemId);
   if (item) selectItem(item);
+}
+
+/** Live preview click → open matching Customizer sidebar item. */
+function handlePreviewSelectTarget(payload: { target: string; mode?: CustomizerPreviewMode }) {
+  const targets = getThemePreviewTargets(slug);
+  const navItemId = resolvePreviewNavItemId(targets, payload.target, payload.mode);
+  if (!navItemId) return;
+  openNavItemById(navItemId);
+  showPreview.value = false;
 }
 
 // Navigation & Exit Guard

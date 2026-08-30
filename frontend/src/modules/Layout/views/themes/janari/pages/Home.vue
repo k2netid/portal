@@ -23,7 +23,12 @@
       >
         <section class="flex-1 flex flex-col">
           <!-- LCP-critical: keep eager -->
-          <Hero v-show="isSectionActive('hero')" />
+          <div
+            v-show="isSectionActive('hero')"
+            data-ja-customizer-target="hero"
+          >
+            <Hero />
+          </div>
 
           <PluginSlot name="after_hero" class="w-full" />
 
@@ -33,6 +38,7 @@
           <div
             ref="productsRef"
             class="below-fold-section"
+            data-ja-customizer-target="products"
           >
             <ProductsSection
               v-if="isSectionActive('products') && mountedSections.products"
@@ -42,6 +48,7 @@
           <div
             ref="updatesRef"
             class="below-fold-section"
+            data-ja-customizer-target="updates"
           >
             <UpdateInformation
               v-if="isSectionActive('updates') && mountedSections.updates"
@@ -51,6 +58,7 @@
           <div
             ref="partnersRef"
             class="below-fold-section"
+            data-ja-customizer-target="partners"
           >
             <PartnersSection
               v-if="isSectionActive('partners') && mountedSections.partners"
@@ -60,6 +68,7 @@
           <div
             ref="testimonialsRef"
             class="below-fold-section"
+            data-ja-customizer-target="testimonials"
           >
             <Testimonials
               v-if="isSectionActive('testimonials') && mountedSections.testimonials"
@@ -70,6 +79,7 @@
           <div
             ref="ctaRef"
             class="below-fold-section"
+            data-ja-customizer-target="cta"
           >
             <CtaSection
               v-if="isSectionActive('cta') && mountedSections.cta"

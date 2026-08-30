@@ -1,6 +1,7 @@
 <template>
   <header
     ref="headerRef"
+    data-ja-customizer-target="header"
     :class="[
       headerSticky ? 'fixed top-0 left-0 w-full z-[100] bg-background/80 backdrop-blur-xl border-b border-border/20 shadow-sm' : 'relative z-40',
       headerStyleClasses
@@ -47,6 +48,7 @@
         <!-- Desktop Nav -->
         <nav
           v-if="isDesktop"
+          data-ja-customizer-target="nav"
           class="flex items-center ml-auto pr-8"
         >
           <template

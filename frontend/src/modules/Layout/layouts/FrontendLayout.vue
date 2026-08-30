@@ -121,6 +121,8 @@
 import { computed, onMounted, ref, onUnmounted, watch } from 'vue'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
+import { useCustomizerPreviewProbe } from '@/modules/Layout/customizer/preview/useCustomizerPreviewProbe'
+import '@/modules/Layout/customizer/preview/customizer-preview.css'
 import { PluginSlot } from '@/shared/components'
 import {
   ArrowUp,
@@ -132,6 +134,7 @@ import { useRoute } from 'vue-router'
 
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 const route = useRoute()
+useCustomizerPreviewProbe()
 const lastThemeRetryAt = ref(0)
 const RETRY_INTERVAL_MS = 15000
 const prefetchedThemePages = new Set<string>()
@@ -410,6 +413,18 @@ watch(janariRootStyleVars, (vars) => {
 }, { immediate: true, flush: 'post' })
 
 const handleCustomizerSync = (event: MessageEvent) => {
+  const allowed = new Set<string>([window.location.origin])
+  const parentOrigin = (() => {
+    try {
+      const raw = new URLSearchParams(window.location.search).get('ja_parent_origin')
+      return raw ? decodeURIComponent(raw) : null
+    } catch {
+      return null
+    }
+  })()
+  if (parentOrigin) allowed.add(parentOrigin)
+  if (!allowed.has(event.origin)) return
+
   if (event.data?.type === 'JA_THEME_CUSTOMIZER_SYNC' && event.data?.theme) {
     if (activeTheme.value) {
       activeTheme.value = {

@@ -858,7 +858,8 @@
         "title": "Chrome bagian dina mode Desain",
         "body": "Judul, badge, jeung labél tombol bagian ieu diédit di Desain — lain di binding kusi.",
         "cta": "Edit chrome bagian"
-      }
+      },
+      "preview_hint": "Klik section anu disorot pikeun muka setélanana. Tahan Alt pikeun binding Kusi upami aya."
     },
     "empty_state": {
       "title": "Pilih bagian",

@@ -1,0 +1,44 @@
+/* Active only when html.ja-customizer-preview is set by the iframe probe. */
+
+html.ja-customizer-preview [data-ja-customizer-target] {
+  position: relative;
+  cursor: pointer;
+  outline: 2px dashed transparent;
+  outline-offset: 4px;
+  transition: outline-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+html.ja-customizer-preview [data-ja-customizer-target]:hover {
+  outline-color: color-mix(in oklab, var(--primary, #2563eb) 70%, transparent);
+  box-shadow: inset 0 0 0 9999px color-mix(in oklab, var(--primary, #2563eb) 6%, transparent);
+}
+
+html.ja-customizer-preview [data-ja-customizer-target].is-selected {
+  outline-color: var(--primary, #2563eb);
+  outline-style: solid;
+  box-shadow: inset 0 0 0 9999px color-mix(in oklab, var(--primary, #2563eb) 10%, transparent);
+}
+
+html.ja-customizer-preview [data-ja-customizer-target]::after {
+  content: attr(data-ja-customizer-target);
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 50;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: color-mix(in oklab, var(--primary, #2563eb) 85%, #000);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+html.ja-customizer-preview [data-ja-customizer-target]:hover::after,
+html.ja-customizer-preview [data-ja-customizer-target].is-selected::after {
+  opacity: 1;
+}
