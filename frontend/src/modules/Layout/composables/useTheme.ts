@@ -177,9 +177,36 @@ const writeThemeSnapshot = (): void => {
 };
 
 const initialThemeSnapshot = readThemeSnapshot();
-if (initialThemeSnapshot) {
-    // Hydrate for first paint only — never trust snapshot as authoritative.
-    // Stale slug (e.g. Zenith after Janari activate) caused false "active" + i18n mix.
+if (typeof window !== 'undefined') {
+    const search = window.location.search;
+    const previewSlug = isCustomizerPreviewQuery(search) ? readThemeSlugFromQuery(search) : null;
+    const snapSlug =
+        typeof initialThemeSnapshot?.activeTheme?.slug === 'string'
+            ? initialThemeSnapshot.activeTheme.slug.toLowerCase()
+            : '';
+
+    if (previewSlug && snapSlug && snapSlug !== previewSlug) {
+        // Customizer iframe: never first-paint the wrong package (kills click-highlight targets).
+        activeTheme.value = {
+            name: previewSlug,
+            slug: previewSlug,
+            type: 'frontend',
+        };
+        lastLoadedAt = 0;
+    } else if (initialThemeSnapshot) {
+        activeTheme.value = initialThemeSnapshot.activeTheme;
+        themeSettings.value = initialThemeSnapshot.themeSettings;
+        themeAssets.value = initialThemeSnapshot.themeAssets;
+        customCss.value = initialThemeSnapshot.customCss;
+        lastLoadedAt = 0;
+    } else if (previewSlug) {
+        activeTheme.value = {
+            name: previewSlug,
+            slug: previewSlug,
+            type: 'frontend',
+        };
+    }
+} else if (initialThemeSnapshot) {
     activeTheme.value = initialThemeSnapshot.activeTheme;
     themeSettings.value = initialThemeSnapshot.themeSettings;
     themeAssets.value = initialThemeSnapshot.themeAssets;
@@ -277,11 +304,7 @@ export function useTheme() {
                         }
                     }
                 } else if (typeof sessionStorage !== 'undefined') {
-                    // Top-level public/console: drop customizer leftovers so they cannot poison active theme.
-                    try {
-                        sessionStorage.removeItem('ja_customizer_preview');
-                        sessionStorage.removeItem('ja_customizer_theme_slug');
-                    } catch { /* ignore */ }
+                    // Top-level: ignore customizer keys (do not clear — iframe shares sessionStorage).
                 }
             }
 

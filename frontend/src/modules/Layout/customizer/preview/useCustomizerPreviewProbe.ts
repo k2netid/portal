@@ -68,8 +68,23 @@ html.ja-customizer-preview [data-ja-customizer-target].is-selected::after {
 export function useCustomizerPreviewProbe() {
   if (typeof window === 'undefined') return;
 
-  const enabled = isCustomizerPreviewQuery(window.location.search);
+  const inIframe = (() => {
+    try {
+      return window.parent !== window;
+    } catch {
+      return true;
+    }
+  })();
+
+  const enabled =
+    isCustomizerPreviewQuery(window.location.search)
+    || (inIframe && typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1');
+
   if (!enabled) return;
+
+  try {
+    sessionStorage.setItem('ja_customizer_preview', '1');
+  } catch { /* ignore */ }
 
   let lastTarget: string | null = null;
 

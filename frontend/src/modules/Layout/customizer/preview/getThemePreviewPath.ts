@@ -45,6 +45,8 @@ const PREVIEW_FOCUS_BY_ITEM: Record<string, string> = {
   'page-testimonials': 'testimonials',
   'page-updates': 'updates',
   'design-branding': 'header',
+  'identity-site-profile': 'header',
+  'identity-general': 'header',
   'identity-menus': 'nav',
   'ux-footer': 'footer',
   'comp-hero': 'hero',

@@ -864,7 +864,7 @@
         "body": "Judul, badge, jeung labél tombol bagian ieu diédit di Desain — lain di binding kusi.",
         "cta": "Edit chrome bagian"
       },
-      "preview_hint": "Klik section anu disorot pikeun muka setélanana. Tahan Alt pikeun binding Kusi upami aya.",
+      "preview_hint": "Outline biru putus-putus + badge ✎ nandaan section anu bisa diédit (Header, Hero, Products, Footer…). Klik pikeun muka setélanana. Tahan Alt pikeun binding Kusi upami aya.",
       "preview_failed_title": "Pratinjau gagal dimuat",
       "preview_failed_body": "Iframe situs publik gagal. Pastikeun extension Site aktip jeung server Vite/Laravel jalan, teras cobian buka tab publik.",
       "preview_open_tab": "Buka situs publik"
