@@ -147,25 +147,15 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
-import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent';
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent';
+import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
-import type { BlockInstance } from '@/modules/Layout/types/builder';
 import { Button, Card } from '@/modules/Layout/views/themes/zenith/ui';
 import { Sparkles, ArrowRight, Zap, ShieldCheck, Gauge, Layers } from 'lucide-vue-next';
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const { getSetting } = useTheme();
-const { pageData } = usePublicPageContent('home');
-
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value));
-const builderBlocks = computed<BlockInstance[]>(() => {
-  const meta = pageData.value?.meta as Record<string, unknown> | undefined;
-  const blocks = meta?.builder_blocks || pageData.value?.blocks;
-  return Array.isArray(blocks) ? (blocks as BlockInstance[]) : [];
-});
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
+const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('home');
 
 const heroBadge = computed(() => {
   return String(getSetting('hero_badge_text') || t('theme.zenith.pages.home.heroBadge', 'Zenith Edition'));

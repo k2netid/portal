@@ -449,8 +449,8 @@ const defaultCol1Items = computed((): Partial<MenuItem>[] => [
 ]);
 
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
-    { title: tt('footer.defaultAchievements'), url: '/highlights' },
-    { title: tt('footer.defaultCareers'), url: '/careers' },
+    { title: tt('footer.defaultAchievements'), url: '/achievement' },
+    { title: tt('footer.defaultCareers'), url: '/career' },
 ]);
 
 const footerCol1Items = computed(() => {

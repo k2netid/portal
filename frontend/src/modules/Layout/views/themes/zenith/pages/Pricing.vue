@@ -1,5 +1,17 @@
 <template>
   <div class="zenith-theme flex-1 flex flex-col py-12 sm:py-16">
+    <BlockRenderer
+      v-if="hasBuilderBlocks"
+      :blocks="builderBlocks"
+      :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+    />
+    <SafeHtml
+      v-else-if="cmsBody"
+      class="container mx-auto px-4 py-16"
+      :html="cmsBody"
+      mode="publishing"
+    />
+    <template v-else>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 w-full">
       <!-- Header -->
       <div class="text-center space-y-4 max-w-3xl mx-auto">
@@ -67,15 +79,20 @@
         </Card>
       </div>
     </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
+import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
+import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { Card, Button } from '@/modules/Layout/views/themes/zenith/ui';
 import { Check } from 'lucide-vue-next';
 
 const { t } = useI18n();
+const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('pricing');
 
 const plans = [
   {
