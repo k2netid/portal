@@ -11,6 +11,7 @@ use Modules\Core\System\Support\DatabaseConsoleInts;
 class CleanupSlowQueryLogs extends Command
 {
     use SkipsWhenProductInactive;
+
     /**
      * The name and signature of the console command.
      */

@@ -41,13 +41,13 @@ See `themeViewResolver.ts` for matching rules (`pages/` preferred).
 
 ```ts
 // UI kit
-import { Button, ThemeToggle } from '@/modules/Content/Layout/views/themes/janari/ui';
+import { Button, ThemeToggle } from '@/modules/Layout/views/themes/janari/ui';
 
 // Theme composable
-import { useJanariIdentity } from '@/modules/Content/Layout/views/themes/janari/composables/useJanariIdentity';
+import { useJanariIdentity } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity';
 
 // Sanitized Jejakawan HTML (host)
-import ThemeSafeHtml from '@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue';
+import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 ```
 
 ## CSS

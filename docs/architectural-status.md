@@ -40,8 +40,8 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 
 | Item | Notes |
 | :--- | :--- |
-| Merge gate `integrate/cms` → `main` | Honesty + P2 refine landed (`3e343b1` / `3eefdc9`). Before merge: `npm run agent:verify`, close stale mail PRs on GitHub, prune W5 naming residue if touching public strings. |
-| W5 naming residue | Folder/API keys still use `Jejakawan` in places; theme-host-contract paths may lag. Do not rewrite customized console menus. See [audit](architecture/ja-ce-comprehensive-audit-2026-08-27.md). |
+| Merge gate `integrate/cms` → `main` | Honesty + P2 + W5 partial landed. `npm run agent:verify` green (2026-08-30). Ready for PR when you want merge. |
+| W5 naming residue | Partial: Media/Library defaults + theme docs use `publishing` / `Layout/*`. Keep API alias `Jejakawan`→`publishing`; do not rewrite customized console menus or seed brand strings. |
 | P5 vertical product modules | Deferred until merge + named product. Same Mail contract. |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |

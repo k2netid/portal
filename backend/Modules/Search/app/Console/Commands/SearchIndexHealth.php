@@ -11,6 +11,7 @@ use Modules\Search\Services\SearchIndexHealthService;
 class SearchIndexHealth extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'search:index-health';
 
     protected $description = 'Report search index lag vs published content and active taxonomy';

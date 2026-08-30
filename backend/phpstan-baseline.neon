@@ -1,6 +1,36 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Analytics/app/Http/Middleware/TrackAnalytics.php
+
+		-
+			message: '#^Call to static method channel\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/BackupController.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/Infra/Http/Controllers/BackupController.php
+
+		-
+			message: '#^Parameter \#4 \$user of static method Modules\\Core\\System\\Models\\ActivityLog\:\:log\(\) expects Modules\\Core\\System\\Models\\User\|null, Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Modules/Core/app/Infra/Http/Controllers/FileManagerController.php
+
+		-
+			message: '#^Parameter \#2 \$user of static method Modules\\Core\\Security\\Models\\SecurityLog\:\:log\(\) expects Modules\\Core\\System\\Models\\User\|null, Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Modules/Core/app/Security/Http/Controllers/SecurityController.php
+
+		-
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
 			count: 3
@@ -23,6 +53,42 @@ parameters:
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: Modules/Core/app/System/Http/Controllers/Api/DataModelApiController.php
+
+		-
+			message: '#^Call to an undefined method Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\:\:hasRole\(\)\.$#'
+			identifier: method.notFound
+			count: 8
+			path: Modules/Core/app/System/Http/Controllers/Api/MaintenanceApiController.php
+
+		-
+			message: '#^Call to static method raw\(\) on an unknown class Mail\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/EmailTemplateController.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Http\\Controllers\\Console\\ExtensionController\:\:performActivation\(\) has parameter \$cascadeSlugs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Http\\Controllers\\Console\\ExtensionController\:\:resolveActivationTargets\(\) should return list\<string\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
 
 		-
 			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$created_at\.$#'
@@ -103,10 +169,106 @@ parameters:
 			path: Modules/Core/app/System/Http/Controllers/Console/SystemController.php
 
 		-
+			message: '#^Access to an undefined property Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\:\:\$kyc_level\.$#'
+			identifier: property.notFound
+			count: 2
+			path: Modules/Core/app/System/Http/Controllers/Console/UserController.php
+
+		-
+			message: '#^Access to an undefined property Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\:\:\$onboarding_step\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/UserController.php
+
+		-
+			message: '#^Call to an undefined method Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member\:\:passkeys\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Core/app/System/Http/Controllers/Console/UserController.php
+
+		-
+			message: '#^Parameter \#2 \$user of static method Modules\\Core\\Security\\Models\\SecurityLog\:\:log\(\) expects Modules\\Core\\System\\Models\\User\|null, Modules\\Core\\System\\Models\\User\|Modules\\Member\\Models\\Member given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Http/Middleware/CheckPermission.php
+
+		-
 			message: '#^Access to an undefined property Laravel\\Passport\\Client\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
 			path: Modules/Core/app/System/Providers/SystemServiceProvider.php
+
+		-
+			message: '#^Call to static method debug\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Services/CacheService.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Core/app/System/Services/CacheService.php
+
+		-
+			message: '#^Cannot access offset ''widgets'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionContributionService.php
+
+		-
+			message: '#^Parameter \#2 \$arrays of function array_diff expects an array of values castable to string, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionContributionService.php
+
+		-
+			message: '#^Cannot access property \$group_slug on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Services\\ExtensionHealthService\:\:menuSlugConflictsFor\(\) has parameter \$menus with generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Method Modules\\Core\\System\\Services\\ExtensionHealthService\:\:routeConflictsFor\(\) has parameter \$menus with generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<\(int\|string\),mixed\>\:\:filter\(\) expects \(callable\(mixed, int\|string\)\: bool\)\|null, Closure\(Modules\\Core\\System\\Models\\ConsoleMenu\)\: bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array\<int, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Parameter \#2 \$arrays of function array_diff expects an array of values castable to string, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
+
+		-
+			message: '#^Part \$route \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: Modules/Core/app/System/Services/ExtensionHealthService.php
 
 		-
 			message: '#^Part \$dbEngine \(mixed\) of encapsed string cannot be cast to string\.$#'
@@ -191,3 +353,87 @@ parameters:
 			identifier: argument.type
 			count: 5
 			path: Modules/Core/database/migrations/2026_01_01_000002_core_security_schema.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Layout/app/Helpers/ThemeDirectoryHelper.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 2
+			path: Modules/Layout/app/Models/Theme.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 2
+			path: Modules/Layout/app/Models/Theme.php
+
+		-
+			message: '#^Method Modules\\Layout\\Services\\PublicWidgetPresenter\:\:categories\(\) should return list\<array\{id\: string, name\: string, slug\: string\}\> but returns array\<int, array\{id\: string, name\: string, slug\: string\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Modules/Layout/app/Services/PublicWidgetPresenter.php
+
+		-
+			message: '#^Method Modules\\Layout\\Services\\PublicWidgetPresenter\:\:recentPosts\(\) should return list\<array\{id\: string, title\: string, slug\: string, excerpt\?\: string\|null\}\> but returns array\<int, array\{id\: string, title\: string, slug\: string, excerpt\: mixed\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Modules/Layout/app/Services/PublicWidgetPresenter.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Modules/Layout/app/Services/ThemeService.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 4
+			path: Modules/Layout/app/Services/ThemeService.php
+
+		-
+			message: '#^Access to an undefined property Modules\\Member\\Models\\MemberBookmark\:\:\$member_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Modules/Member/app/Http/Controllers/Api/BookmarkController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Modules/Member/app/Http/Controllers/Api/MemberDirectoryController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Modules/Member/app/Services/MemberEmailVerification.php
+
+		-
+			message: '#^Parameter \#1 \$meta of method Modules\\Publishing\\Support\\BuilderDocumentValidator\:\:validate\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Modules/Publishing/app/Http/Controllers/Api/ContentController.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Hash\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Console/Commands/InstallCommand.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Http/Controllers/Api/V1/InstallController.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Hash\.$#'
+			identifier: class.notFound
+			count: 2
+			path: app/Http/Controllers/Api/V1/InstallController.php

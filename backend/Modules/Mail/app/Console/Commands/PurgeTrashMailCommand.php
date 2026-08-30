@@ -14,6 +14,7 @@ use Modules\Mail\Services\MailAttachmentStore;
 class PurgeTrashMailCommand extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'mail:purge-trash
                             {--days= : Override retention days from settings}
                             {--dry-run : Show what would be deleted without deleting}';

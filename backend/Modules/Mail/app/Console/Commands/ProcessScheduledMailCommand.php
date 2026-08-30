@@ -14,6 +14,7 @@ use Modules\Mail\Services\MailDispatchService;
 class ProcessScheduledMailCommand extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'mail:process-scheduled';
 
     protected $description = 'Process and dispatch scheduled emails that have reached their target dispatch time';

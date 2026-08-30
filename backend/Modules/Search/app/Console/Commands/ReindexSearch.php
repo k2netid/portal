@@ -10,6 +10,7 @@ use Modules\Search\Services\SearchService;
 class ReindexSearch extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'search:reindex {--clear : Clear the search index table before reindexing}';
 
     protected $description = 'Rebuild the full search database index for all contents, categories, and tags';

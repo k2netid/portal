@@ -6,6 +6,7 @@ namespace Modules\Member\Tests\Feature;
 
 use Illuminate\Support\Facades\URL;
 use Modules\Core\System\Contracts\OutboundMailPortInterface;
+use Modules\Core\System\Models\Extension;
 use Modules\Member\Models\Member;
 use Modules\Member\Models\MemberBookmark;
 use Modules\Member\Services\MemberEmailVerification;
@@ -240,7 +241,7 @@ class MemberAuthTest extends TestCase
 
     public function test_member_api_forbidden_when_pack_inactive(): void
     {
-        $memberPack = \Modules\Core\System\Models\Extension::query()->where('slug', 'member')->first();
+        $memberPack = Extension::query()->where('slug', 'member')->first();
         $memberPack?->update(['status' => 'inactive']);
 
         $this->postJson('/api/v1/public/member/register', [

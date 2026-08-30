@@ -33,7 +33,7 @@ Public shell loads theme CSS from the active package (e.g. `janari/assets/styles
 
 ## i18n
 
-- **Module Layout** (`layout.*`): menus, widgets admin, redirects, theme manager UI — stays in `src/modules/Content/Layout/locales/`.
+- **Module Layout** (`layout.*`): menus, widgets admin, redirects, theme manager UI — stays in `src/modules/Layout/locales/`.
 - **Theme UI** (`theme.<slug>.*`): all copy inside this folder — `views/themes/<slug>/locales/{en,id}.json`.
 
 Register bundled themes in `src/engine/i18n/themeLocales.ts`. Runtime keys example: `theme.janari.pages.contact.title`.
@@ -41,7 +41,7 @@ Register bundled themes in `src/engine/i18n/themeLocales.ts`. Runtime keys examp
 In theme components, prefer:
 
 ```ts
-import { useThemeI18n } from '@/modules/Content/Layout/composables/useThemeI18n';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 const { t } = useThemeI18n();
 t('pages.contact.title'); // → theme.janari.pages.contact.title
 ```

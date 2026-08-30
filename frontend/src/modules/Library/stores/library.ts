@@ -66,7 +66,7 @@ export const useLibraryStore = defineStore('library', {
             }
         },
 
-        async deleteTag(id: string, type: string = 'Jejakawan') {
+        async deleteTag(id: string, type: string = 'publishing') {
             this.loading = true;
             try {
                 await LibraryService.deleteTag(id);

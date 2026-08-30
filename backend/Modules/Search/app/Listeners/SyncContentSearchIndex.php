@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Search\Listeners;
 
+use Modules\Core\System\Models\Extension;
 use Modules\Publishing\Contracts\PublishingSearchReadPortInterface;
 use Modules\Publishing\Events\ContentDeleted;
 use Modules\Publishing\Events\ContentPublished;
@@ -19,7 +20,7 @@ class SyncContentSearchIndex
 
     public function handlePublished(ContentPublished $event): void
     {
-        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('search')) {
             return;
         }
 
@@ -36,7 +37,7 @@ class SyncContentSearchIndex
 
     public function handleUnpublished(ContentUnpublished $event): void
     {
-        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('search')) {
             return;
         }
 
@@ -53,7 +54,7 @@ class SyncContentSearchIndex
 
     public function handleDeleted(ContentDeleted $event): void
     {
-        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('search')) {
             return;
         }
 

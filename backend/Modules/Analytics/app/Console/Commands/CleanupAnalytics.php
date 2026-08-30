@@ -14,6 +14,7 @@ use Modules\Core\System\Support\DatabaseConsoleInts;
 class CleanupAnalytics extends Command
 {
     use SkipsWhenProductInactive;
+
     /**
      * The name and signature of the console command.
      */

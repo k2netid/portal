@@ -57,7 +57,7 @@ import { computed, inject } from 'vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import type { BlockInstance, BuilderInstance } from '@/modules/Layout/types/builder';
 
-const props = defineProps<{
+defineProps<{
   module: BlockInstance;
 }>();
 

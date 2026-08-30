@@ -44,7 +44,7 @@ Global shell CSS stays in `frontend/src/styles/` (`foundation/`, `shell/*-tailwi
 
 | Component | Path | Use |
 |-----------|------|-----|
-| `ThemeSafeHtml` | `@/modules/Content/Layout/components/themes/ThemeSafeHtml.vue` | Sanitized `v-html` for Jejakawan body (replaces `Core/System/.../SafeHtml` in themes) |
+| `ThemeSafeHtml` | `@/modules/Layout/components/themes/ThemeSafeHtml.vue` | Sanitized `v-html` for Jejakawan body (replaces `Core/System/.../SafeHtml` in themes) |
 | `PluginSlot` | `@/shared/components/PluginSlot.vue` | App Blocks from active plugins (do not register blocks inside theme) |
 
 ## Forbidden in theme views (UI boundary)
@@ -65,7 +65,7 @@ Janari ships primitives under `themes/janari/ui/`:
 Import from:
 
 ```ts
-import { ThemeToggle, Button } from '@/modules/Content/Layout/views/themes/janari/ui';
+import { ThemeToggle, Button } from '@/modules/Layout/views/themes/janari/ui';
 ```
 
 Other themes should copy this pattern or extract a shared **theme-kit** package later — not reuse the console UI kit.

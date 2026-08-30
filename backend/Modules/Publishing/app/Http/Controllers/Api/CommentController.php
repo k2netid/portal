@@ -10,6 +10,7 @@ use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\CaptchaService;
 use Modules\Core\System\Support\SqlLikeEscape;
+use Modules\Publishing\Contracts\MemberIdentityPort;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
 use Modules\Publishing\Services\CommentSecurityService;
@@ -63,7 +64,7 @@ class CommentController extends BaseApiController
         $user = $request->user();
         /** @var User|null $user */
         $authorEmail = '';
-        $member = app(\Modules\Publishing\Contracts\MemberIdentityPort::class)->current($request);
+        $member = app(MemberIdentityPort::class)->current($request);
 
         if ($member !== null) {
             if (! $member->emailVerified) {

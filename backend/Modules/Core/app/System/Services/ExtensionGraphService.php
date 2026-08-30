@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Cache;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
+use Spatie\Permission\PermissionRegistrar;
 
 class ExtensionGraphService
 {
@@ -140,6 +141,7 @@ class ExtensionGraphService
                     'slug' => $slug,
                     'required_by' => '',
                 ];
+
                 continue;
             }
 
@@ -154,6 +156,7 @@ class ExtensionGraphService
                         'slug' => $depSlug,
                         'required_by' => $slug,
                     ];
+
                     continue;
                 }
 
@@ -189,6 +192,7 @@ class ExtensionGraphService
                     'slug' => $ext->slug,
                     'name' => $ext->name,
                 ];
+
                 continue;
             }
 
@@ -526,7 +530,7 @@ class ExtensionGraphService
         Cache::forget('system_settings_all');
         Extension::flushProductActiveMemo();
         try {
-            app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+            app(PermissionRegistrar::class)->forgetCachedPermissions();
         } catch (\Throwable) {
             // Registrar may be unbound during early boot.
         }

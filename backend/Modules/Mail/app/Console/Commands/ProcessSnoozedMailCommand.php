@@ -12,6 +12,7 @@ use Modules\Mail\Models\MailMessage;
 class ProcessSnoozedMailCommand extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'mail:process-snoozed';
 
     protected $description = 'Wake snoozed messages whose snooze_until time has passed';

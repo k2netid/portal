@@ -10,6 +10,7 @@ use Modules\Media\Services\MediaService;
 class GenerateThumbnails extends Command
 {
     use SkipsWhenProductInactive;
+
     /**
      * The name and signature of the console command.
      *

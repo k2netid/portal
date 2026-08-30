@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Search\Listeners;
 
+use Modules\Core\System\Models\Extension;
 use Modules\Library\Contracts\TaxonomySearchPortInterface;
 use Modules\Library\Events\TaxonomySearchIndexChanged;
 use Modules\Search\Contracts\SearchIndexerInterface;
@@ -17,7 +18,7 @@ class SyncTaxonomySearchIndex
 
     public function handle(TaxonomySearchIndexChanged $event): void
     {
-        if (! \Modules\Core\System\Models\Extension::isProductActive('search')) {
+        if (! Extension::isProductActive('search')) {
             return;
         }
 

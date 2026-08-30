@@ -14,7 +14,7 @@ P5 (modul produk vertikal bernama) **tetap ditunda**. Merge `integrate/cms` → 
 | **W0** | Freeze tetap: jangan P5; merge `main` setelah gate |
 | **W1–W3** | Landed di `3e343b1` — Identity owns `general`; uninstall respects deactivate; Member gated; theme pages resolve active theme; layout public menus/themes gated; Mail/cron skip when off |
 | **W4** | Partial — docs/suite catch-up in same land + P2 refine; teruskan bila drift baru muncul |
-| **W5** | **Masih open** — identifier/docs path residue (`Jejakawan` sebagai folder module key, theme-host-contract path lama); string user-facing `JA-CMS` sudah jarang |
+| **W5** | **Partial** — pack keys default `publishing` (Media/Library); theme docs paths `Layout/*`; title fallbacks tanpa `JA Jejakawan`. Alias API `Jejakawan`→`publishing` tetap. Locale/extension map keys & seed brand `Jejakawan` sengaja. |
 | **W6** | Tertutup sampai W5 + gate |
 
 ---

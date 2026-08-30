@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Core\System\Models\User;
+use Modules\Member\Models\Member;
 
 return [
 
@@ -72,7 +73,7 @@ return [
         ],
         'members' => [
             'driver' => 'eloquent',
-            'model' => \Modules\Member\Models\Member::class,
+            'model' => Member::class,
         ],
 
         // 'users' => [

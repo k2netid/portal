@@ -102,7 +102,7 @@ const router = useRouter();
 const systemStore = useSystemStore();
 
 useHead({
-    title: computed(() => `${systemStore.siteSettings?.site_name || 'JA Jejakawan'} | ${t('publishing.content.title')}`)
+    title: computed(() => `${systemStore.siteSettings?.site_name || 'Jejakawan'} | ${t('publishing.content.title')}`)
 });
 
 const activeTab = ref((route.query.tab as string) || 'contents');

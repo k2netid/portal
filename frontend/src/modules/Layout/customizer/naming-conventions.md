@@ -18,7 +18,7 @@ Inspired by **Shopify** (`settings_schema.json` global vs section `{% schema %}`
 ## Directory layout
 
 ```
-src/modules/Content/Layout/
+src/modules/Layout/
 ├── customizer/                          # HOST — admin theme customizer (console UI)
 │   ├── naming-conventions.md            # this file
 │   ├── readme.md
@@ -125,14 +125,14 @@ During migration, `scope` may be omitted; host treats unknown as `theme` if key 
 
 ## TypeScript / import paths
 
-Use alias `@/modules/Content/Layout/...` (no new barrel unless `index.ts` is the extension entry).
+Use alias `@/modules/Layout/...` (no new barrel unless `index.ts` is the extension entry).
 
 ```ts
 // Host loading theme extension
-import { resolveThemeCustomizerExtension } from '@/modules/Content/Layout/customizer/loaders/resolveThemeCustomizerExtension';
+import { resolveThemeCustomizerExtension } from '@/modules/Layout/customizer/loaders/resolveThemeCustomizerExtension';
 
 // Theme extension (inside janari only)
-import { janariCustomizerExtension } from '@/modules/Content/Layout/views/themes/janari/customizer';
+import { janariCustomizerExtension } from '@/modules/Layout/views/themes/janari/customizer';
 ```
 
 **Do not** import `janari/customizer` from other themes or from `PublicApp` / `FrontendLayout`.

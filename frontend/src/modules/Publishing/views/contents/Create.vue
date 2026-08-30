@@ -365,7 +365,7 @@ watch(() => form.value.title, (newTitle) => {
 });
 
 useHead({
-    title: computed(() => `${t('publishing.content.list.createNew')} | ${systemStore.siteSettings?.site_name || 'JA Jejakawan'}`)
+    title: computed(() => `${t('publishing.content.list.createNew')} | ${systemStore.siteSettings?.site_name || 'Jejakawan'}`)
 });
 
 watch(() => form.value.excerpt, (newExcerpt) => {

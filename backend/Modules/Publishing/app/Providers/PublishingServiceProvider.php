@@ -19,6 +19,7 @@ use Modules\Core\System\Services\CacheWarmingService;
 use Modules\Core\System\Services\DashboardRegistry;
 use Modules\Library\Models\Tag;
 use Modules\Publishing\Console\Commands\PublishScheduledContentCommand;
+use Modules\Publishing\Contracts\MemberIdentityPort;
 use Modules\Publishing\Contracts\NewsletterSubscriberCountPortInterface;
 use Modules\Publishing\Contracts\PublishedContentAnalyticsPortInterface;
 use Modules\Publishing\Contracts\PublishingSearchReadPortInterface;
@@ -26,6 +27,7 @@ use Modules\Publishing\Database\Seeders\PublishingPermissionSeeder;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
 use Modules\Publishing\Repositories\EloquentPublishingSearchReadRepository;
+use Modules\Publishing\Services\GuestMemberIdentityPort;
 use Modules\Publishing\Services\NullNewsletterSubscriberCountPort;
 use Modules\Publishing\Services\PublishedContentAnalyticsPortAdapter;
 use Modules\Publishing\Services\PublishingCacheService;
@@ -47,8 +49,8 @@ class PublishingServiceProvider extends ServiceProvider
             EloquentPublishingSearchReadRepository::class
         );
         $this->app->singletonIf(
-            \Modules\Publishing\Contracts\MemberIdentityPort::class,
-            \Modules\Publishing\Services\GuestMemberIdentityPort::class
+            MemberIdentityPort::class,
+            GuestMemberIdentityPort::class
         );
     }
 

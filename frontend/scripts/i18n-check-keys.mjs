@@ -67,6 +67,8 @@ function namespaceFromPath(relPath) {
         Search: 'search',
         CmsAi: 'ai',
         Analytics: 'system.analytics',
+        Member: 'member',
+        Site: 'site',
     };
 
     if (parts[1] === 'locales' && flatModuleMap[parts[0]]) {

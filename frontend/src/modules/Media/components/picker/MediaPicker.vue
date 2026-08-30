@@ -486,12 +486,12 @@ const fetchMedia = async () => {
         const folderId = currentFolderId.value;
         const params = {
             folder_id: folderId || 'null',
-            module: props.module || 'Jejakawan',
+            module: props.module || 'publishing',
         };
         
         // Fetch both folders and media in parallel
         const [foldersRes, mediaRes] = await Promise.all([
-             api.get('/manage/folders', { params: { parent_id: folderId || 'null', module: props.module || 'Jejakawan' } }),
+             api.get('/manage/folders', { params: { parent_id: folderId || 'null', module: props.module || 'publishing' } }),
              api.get('/manage/media', { params })
         ]);
 

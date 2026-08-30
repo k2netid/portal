@@ -420,7 +420,7 @@ const form = ref<ContentForm>({
 useRouteBreadcrumbLabel(computed(() => form.value.title));
 
 useHead({
-    title: computed(() => `${form.value.title || t('publishing.content.form.editTitle')} | ${systemStore.siteSettings?.site_name || 'JA Jejakawan'}`)
+    title: computed(() => `${form.value.title || t('publishing.content.form.editTitle')} | ${systemStore.siteSettings?.site_name || 'Jejakawan'}`)
 });
 
 const isDirty = computed(() => {

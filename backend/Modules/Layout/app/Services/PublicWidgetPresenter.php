@@ -7,6 +7,8 @@ namespace Modules\Layout\Services;
 use Illuminate\Http\Request;
 use Modules\Core\System\Models\Extension;
 use Modules\Layout\Models\Widget;
+use Modules\Library\Models\Category;
+use Modules\Publishing\Models\Content;
 
 /**
  * Public theme widgets: registry-gated, enriched for visitor runtime.
@@ -92,7 +94,7 @@ class PublicWidgetPresenter
      */
     private function recentPosts(array $settings): array
     {
-        if (! Extension::isProductActive('publishing') || ! class_exists(\Modules\Publishing\Models\Content::class)) {
+        if (! Extension::isProductActive('publishing') || ! class_exists(Content::class)) {
             return [];
         }
 
@@ -100,7 +102,7 @@ class PublicWidgetPresenter
             ? max(1, min(12, (int) $settings['count']))
             : 5;
 
-        return \Modules\Publishing\Models\Content::query()
+        return Content::query()
             ->where('status', 'published')
             ->where('type', 'post')
             ->whereNotNull('published_at')
@@ -123,7 +125,7 @@ class PublicWidgetPresenter
      */
     private function categories(array $settings): array
     {
-        if (! Extension::isProductActive('library') || ! class_exists(\Modules\Library\Models\Category::class)) {
+        if (! Extension::isProductActive('library') || ! class_exists(Category::class)) {
             return [];
         }
 
@@ -131,7 +133,7 @@ class PublicWidgetPresenter
             ? max(1, min(24, (int) $settings['count']))
             : 12;
 
-        return \Modules\Library\Models\Category::query()
+        return Category::query()
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->limit($limit)

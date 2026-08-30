@@ -46,7 +46,6 @@ class ContentType extends Model
      * Create/update of new collisions is rejected with DATA_MODEL_SLUG_RESERVED.
      * Existing reserved rows are renamed once via grandfatherReservedSlugs().
      */
-
     public static function isReservedSlug(string $slug): bool
     {
         $normalized = strtolower(trim($slug));

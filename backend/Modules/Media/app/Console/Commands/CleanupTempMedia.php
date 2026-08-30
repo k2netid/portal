@@ -10,6 +10,7 @@ use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 class CleanupTempMedia extends Command
 {
     use SkipsWhenProductInactive;
+
     /**
      * The name and signature of the console command.
      */

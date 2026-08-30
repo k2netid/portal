@@ -11,6 +11,7 @@ use Modules\Media\Models\File;
 class SyncMediaFromDisk extends Command
 {
     use SkipsWhenProductInactive;
+
     protected $signature = 'media:sync-from-disk
                             {--disk=public : Storage disk name}
                             {--path=media : Directory relative to disk root}

@@ -16,19 +16,19 @@ Route::prefix('v1')->group(function (): void {
             ->name('member.verify-email');
     });
 
-        Route::prefix('member')->middleware(['auth:member', 'throttle:120,1', 'extension.active:member'])->group(function (): void {
-            Route::get('me', [AuthController::class, 'me']);
-            Route::post('logout', [AuthController::class, 'logout']);
-            Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);
-            Route::middleware('member.verified')->group(function (): void {
-                Route::get('bookmarks', [BookmarkController::class, 'index']);
-                Route::post('bookmarks', [BookmarkController::class, 'store']);
-                Route::delete('bookmarks/{bookmark}', [BookmarkController::class, 'destroy']);
-            });
+    Route::prefix('member')->middleware(['auth:member', 'throttle:120,1', 'extension.active:member'])->group(function (): void {
+        Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);
+        Route::middleware('member.verified')->group(function (): void {
+            Route::get('bookmarks', [BookmarkController::class, 'index']);
+            Route::post('bookmarks', [BookmarkController::class, 'store']);
+            Route::delete('bookmarks/{bookmark}', [BookmarkController::class, 'destroy']);
         });
+    });
 
-        Route::prefix('manage/members')->middleware(['auth:sanctum', 'extension.active:member'])->group(function (): void {
-            Route::get('/', [MemberDirectoryController::class, 'index'])
-                ->middleware('permission:view members');
-        });
+    Route::prefix('manage/members')->middleware(['auth:sanctum', 'extension.active:member'])->group(function (): void {
+        Route::get('/', [MemberDirectoryController::class, 'index'])
+            ->middleware('permission:view members');
+    });
 });
