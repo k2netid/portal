@@ -778,7 +778,9 @@
         "page_contact": "Contact",
         "page_contact_desc": "Form, email, phone, and map",
         "page_pricing": "Pricing",
-        "page_pricing_desc": "Pricing page titles and CTA labels"
+        "page_pricing_desc": "Pricing page titles and CTA labels",
+        "page_search": "Search",
+        "page_search_desc": "Search results page titles and empty state"
       }
     },
     "editor": {

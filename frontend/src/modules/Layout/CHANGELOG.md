@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Janari Customizer v6: Search page chrome; News list headings/empty; Achievements filter labels.
 - Janari Customizer v5: Pricing page chrome; News/Careers/Achievements titles + locale variants; Career sidebar + Achievement CTA editable.
 - Janari Customizer v4: Partners + CTA sidebar entries; CTA secondary label + button URLs editable; logos still via bindings.
 - Janari Customizer v3: Home Testimonials badge/title + Updates section titles/view-all editable via schema (item cards remain data bindings).

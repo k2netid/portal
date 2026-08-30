@@ -166,11 +166,11 @@ onMounted(() => {
 const activeCategory = ref('all');
 
 const categoryOptions = computed(() => [
-  { slug: 'all', label: t('theme.janari.pages.achievement.categoryAll') },
-  { slug: 'platform', label: t('theme.janari.pages.achievement.categoryPlatform') },
-  { slug: 'publishing', label: t('theme.janari.pages.achievement.categoryPublishing') },
-  { slug: 'intelligence', label: t('theme.janari.pages.achievement.categoryIntelligence') },
-  { slug: 'partnership', label: t('theme.janari.pages.achievement.categoryPartnership') },
+  { slug: 'all', label: localizedString('page_achievement_cat_all') || t('theme.janari.pages.achievement.categoryAll') },
+  { slug: 'platform', label: localizedString('page_achievement_cat_platform') || t('theme.janari.pages.achievement.categoryPlatform') },
+  { slug: 'publishing', label: localizedString('page_achievement_cat_publishing') || t('theme.janari.pages.achievement.categoryPublishing') },
+  { slug: 'intelligence', label: localizedString('page_achievement_cat_intelligence') || t('theme.janari.pages.achievement.categoryIntelligence') },
+  { slug: 'partnership', label: localizedString('page_achievement_cat_partnership') || t('theme.janari.pages.achievement.categoryPartnership') },
 ]);
 
 // Theme data bindings for achievements list

@@ -99,7 +99,7 @@
               <div class="lg:col-span-9 articles-scroll-anchor-off">
                 <div class="flex items-center justify-between mb-6">
                   <h2 class="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                    {{ isSearchMode ? t('theme.janari.pages.blog.searchResultsHeading') : t('theme.janari.pages.blog.latestArticlesHeading') }}
+                    {{ listHeading }}
                   </h2>
                   <!-- Subtle Search Indicator -->
                   <div v-if="searching || loading" class="flex items-center gap-2 text-primary">
@@ -218,7 +218,7 @@
                   v-else-if="displayArticles.length === 0 && !loading && !searching"
                   class="bg-muted/30 rounded-2xl p-12 text-center"
                 >
-                  <p class="text-muted-foreground italic">{{ t('theme.janari.pages.blog.emptyResults') }}</p>
+                  <p class="text-muted-foreground italic">{{ emptyResultsText }}</p>
                   <div
                     v-if="searchSuggestions.length > 0"
                     class="mt-4 text-xs text-muted-foreground"
@@ -288,6 +288,8 @@ const isEnabled = computed(() => getSetting('enable_blog', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
 const pageTitle = computed(() => localizedString('page_blog_title') || t('theme.janari.pages.blog.title'))
 const pageSubtitle = computed(() => localizedString('page_blog_subtitle') || t('theme.janari.pages.blog.subtitle'))
+const emptyResultsText = computed(() => localizedString('page_blog_empty') || t('theme.janari.pages.blog.emptyResults'))
+const viewAllArticlesText = computed(() => localizedString('page_blog_view_all') || t('theme.janari.pages.blog.viewAllArticles'))
 
 const pageData = ref<Content | null>(null)
 const articles = ref<Article[]>([])
@@ -300,6 +302,11 @@ const isAnimated = ref(false)
 const currentPage = ref(1)
 const lastPage = ref(1)
 const isSearchMode = computed(() => Boolean((route.query.q as string || '').trim()))
+const listHeading = computed(() =>
+  isSearchMode.value
+    ? (localizedString('page_blog_search_heading') || t('theme.janari.pages.blog.searchResultsHeading'))
+    : (localizedString('page_blog_latest_heading') || t('theme.janari.pages.blog.latestArticlesHeading')),
+)
 const hasMore = computed(() => !isSearchMode.value && currentPage.value < lastPage.value)
 const searchSuggestions = ref<Array<{ text: string; type: string }>>([])
 

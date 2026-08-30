@@ -778,7 +778,9 @@
         "page_contact": "Kontak",
         "page_contact_desc": "Formulir, email, telepon, dan peta",
         "page_pricing": "Harga",
-        "page_pricing_desc": "Judul halaman harga dan label CTA"
+        "page_pricing_desc": "Judul halaman harga dan label CTA",
+        "page_search": "Pencarian",
+        "page_search_desc": "Judul hasil pencarian dan pesan kosong"
       }
     },
     "editor": {

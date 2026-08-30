@@ -3,17 +3,17 @@
     <div class="py-12 bg-background flex-1">
       <div class="container mx-auto px-4">
         <h1 class="text-4xl font-bold text-center mb-4 text-foreground">
-          {{ t('publishing.frontend.search.title') }}
+          {{ pageTitle }}
         </h1>
         <p class="text-center text-lg text-muted-foreground mb-12">
-          {{ t('publishing.frontend.search.query') }} <strong class="text-foreground">{{ searchQuery }}</strong>
+          {{ queryLabel }} <strong class="text-foreground">{{ searchQuery }}</strong>
         </p>
             
         <div
           v-if="loading"
           class="text-center py-16 text-lg text-muted-foreground"
         >
-          {{ t('publishing.frontend.search.loading') }}
+          {{ loadingText }}
         </div>
         <div
           v-else-if="results.length > 0"
@@ -29,7 +29,7 @@
           v-else
           class="text-center py-16 text-lg text-muted-foreground"
         >
-          <p>{{ t('publishing.frontend.search.empty', { query: searchQuery }) }}</p>
+          <p>{{ emptyText }}</p>
         </div>
       </div>
     </div>
@@ -38,17 +38,19 @@
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, onMounted, watch, defineAsyncComponent } from 'vue'
+import { ref, computed, onMounted, watch, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import api from '@/engine/api/client'
 import { publishingPaths } from '@/engine/api/paths'
 const PostCard = defineAsyncComponent(() => import('../components/blog/PostCard.vue'))
 import { useAnalytics } from '@/shared/composables/useAnalytics'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 
 import type { Content } from '@/modules/Publishing/types/content'
 
 const { t } = useI18n()
+const { localizedString } = useLocalizedThemeSetting()
 const { trackSearch } = useAnalytics()
 
 const route = useRoute()
@@ -56,6 +58,14 @@ const searchQuery = ref('')
 const results = ref<Content[]>([])
 const loading = ref(false)
 const pageData = ref<Content | null>(null)
+
+const pageTitle = computed(() => localizedString('page_search_title') || t('publishing.frontend.search.title'))
+const queryLabel = computed(() => localizedString('page_search_query_label') || t('publishing.frontend.search.query'))
+const loadingText = computed(() => localizedString('page_search_loading') || t('publishing.frontend.search.loading'))
+const emptyText = computed(() => {
+  const tpl = localizedString('page_search_empty') || t('publishing.frontend.search.empty')
+  return String(tpl).replace(/\{query\}/g, searchQuery.value || '')
+})
 
 const fetchPageData = async () => {
     try {
@@ -76,7 +86,6 @@ const search = async () => {
     })
     results.value = response.data || []
     
-    // Track search analytics
     trackSearch(searchQuery.value, results.value.length)
   } catch (error) {
     logger.error('Search failed:', error)
@@ -96,6 +105,3 @@ onMounted(() => {
   if (searchQuery.value) search()
 })
 </script>
-
-
-

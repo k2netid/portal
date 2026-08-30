@@ -36,6 +36,13 @@
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_news_desc"
         },
         {
+            "id": "page-search",
+            "manifestCategories": ["Search Page"],
+            "icon": "sparkles",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_search",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_search_desc"
+        },
+        {
             "id": "page-contact",
             "manifestCategories": ["Contact Page"],
             "icon": "globe",

@@ -2355,5 +2355,279 @@
         "default": "/contact",
         "category": "Pricing Page",
         "scope": "theme"
+    },
+    "page_search_title": {
+        "label": "Search page title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_title_en": {
+        "label": "Search page title (English)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_title_id": {
+        "label": "Search page title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_query_label": {
+        "label": "Search query prefix (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_query_label_en": {
+        "label": "Search query prefix (English)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_query_label_id": {
+        "label": "Search query prefix (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_loading": {
+        "label": "Search loading text (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_loading_en": {
+        "label": "Search loading text (English)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_loading_id": {
+        "label": "Search loading text (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_empty": {
+        "label": "Search empty message (fallback)",
+        "type": "textarea",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme",
+        "description": "Use {query} for the search term."
+    },
+    "page_search_empty_en": {
+        "label": "Search empty message (English)",
+        "type": "textarea",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_search_empty_id": {
+        "label": "Search empty message (Indonesian)",
+        "type": "textarea",
+        "default": "",
+        "category": "Search Page",
+        "scope": "theme"
+    },
+    "page_blog_latest_heading": {
+        "label": "News latest articles heading (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_latest_heading_en": {
+        "label": "News latest articles heading (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_latest_heading_id": {
+        "label": "News latest articles heading (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_heading": {
+        "label": "News search results heading (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_heading_en": {
+        "label": "News search results heading (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_heading_id": {
+        "label": "News search results heading (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_empty": {
+        "label": "News empty results (fallback)",
+        "type": "textarea",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_empty_en": {
+        "label": "News empty results (English)",
+        "type": "textarea",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_empty_id": {
+        "label": "News empty results (Indonesian)",
+        "type": "textarea",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all": {
+        "label": "News view-all articles (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all_en": {
+        "label": "News view-all articles (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all_id": {
+        "label": "News view-all articles (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_all": {
+        "label": "Achievements filter: All (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_all_en": {
+        "label": "Achievements filter: All (English)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_all_id": {
+        "label": "Achievements filter: All (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_platform": {
+        "label": "Achievements filter: Platform (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_platform_en": {
+        "label": "Achievements filter: Platform (English)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_platform_id": {
+        "label": "Achievements filter: Platform (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_publishing": {
+        "label": "Achievements filter: Publishing (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_publishing_en": {
+        "label": "Achievements filter: Publishing (English)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_publishing_id": {
+        "label": "Achievements filter: Publishing (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_intelligence": {
+        "label": "Achievements filter: Intelligence (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_intelligence_en": {
+        "label": "Achievements filter: Intelligence (English)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_intelligence_id": {
+        "label": "Achievements filter: Intelligence (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_partnership": {
+        "label": "Achievements filter: Partnership (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_partnership_en": {
+        "label": "Achievements filter: Partnership (English)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
+    },
+    "page_achievement_cat_partnership_id": {
+        "label": "Achievements filter: Partnership (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Achievements Page",
+        "scope": "theme"
     }
 }
