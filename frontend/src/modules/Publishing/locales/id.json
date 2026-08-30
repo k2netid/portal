@@ -707,6 +707,8 @@
       "preview_dialog_title": "Pratinjau tema",
       "hide_controls": "Sembunyikan kontrol",
       "show_controls": "Tampilkan kontrol",
+      "hide_nav": "Sembunyikan nav",
+      "show_nav": "Tampilkan nav",
       "hints": {
         "design": "Warna, tipografi, dan tampilan bagian.",
         "bindings": "Hubungkan bagian ke konten Jejakawan.",

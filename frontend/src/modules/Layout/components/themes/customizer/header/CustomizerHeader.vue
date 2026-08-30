@@ -79,30 +79,55 @@
         </button>
       </div>
 
-      <!-- Collapse controls (WP-style: preview always on canvas) -->
-      <Button
-        variant="outline"
-        size="sm"
-        class="inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
-        :aria-pressed="settingsOpen"
-        @click="emit('toggle-settings')"
-      >
-        <PanelLeft
-          v-if="settingsOpen"
-          data-icon="inline-start"
-          class="w-3.5 h-3.5 shrink-0"
-        />
-        <PanelLeftOpen
-          v-else
-          data-icon="inline-start"
-          class="w-3.5 h-3.5 shrink-0"
-        />
-        {{
-          settingsOpen
-            ? t('publishing.theme_customizer.organization.hide_controls', 'Hide controls')
-            : t('publishing.theme_customizer.organization.show_controls', 'Show controls')
-        }}
-      </Button>
+      <!-- Pane toggles: nav + controls (preview always center) -->
+      <div class="flex items-center gap-1.5">
+        <Button
+          variant="outline"
+          size="sm"
+          class="inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
+          :aria-pressed="navOpen"
+          @click="emit('toggle-nav')"
+        >
+          <PanelLeft
+            v-if="navOpen"
+            data-icon="inline-start"
+            class="w-3.5 h-3.5 shrink-0"
+          />
+          <PanelLeftOpen
+            v-else
+            data-icon="inline-start"
+            class="w-3.5 h-3.5 shrink-0"
+          />
+          <span class="hidden xl:inline">{{
+            navOpen
+              ? t('publishing.theme_customizer.organization.hide_nav', 'Hide nav')
+              : t('publishing.theme_customizer.organization.show_nav', 'Show nav')
+          }}</span>
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          class="inline-flex h-9 items-center gap-1.5 rounded-xl font-medium text-xs"
+          :aria-pressed="controlsOpen"
+          @click="emit('toggle-controls')"
+        >
+          <PanelRight
+            v-if="controlsOpen"
+            data-icon="inline-start"
+            class="w-3.5 h-3.5 shrink-0"
+          />
+          <PanelRightOpen
+            v-else
+            data-icon="inline-start"
+            class="w-3.5 h-3.5 shrink-0"
+          />
+          <span class="hidden xl:inline">{{
+            controlsOpen
+              ? t('publishing.theme_customizer.organization.hide_controls', 'Hide controls')
+              : t('publishing.theme_customizer.organization.show_controls', 'Show controls')
+          }}</span>
+        </Button>
+      </div>
 
       <!-- Revert & Publish Controls -->
       <div class="flex items-center gap-2">
@@ -183,6 +208,8 @@ import {
   Loader2,
   PanelLeft,
   PanelLeftOpen,
+  PanelRight,
+  PanelRightOpen,
   Redo2,
   RotateCcw,
   Save,
@@ -197,7 +224,8 @@ defineProps<{
   canRedo: boolean;
   isDirty: boolean;
   saving: boolean;
-  settingsOpen?: boolean;
+  navOpen?: boolean;
+  controlsOpen?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -205,7 +233,8 @@ const emit = defineEmits<{
   (e: 'undo'): void;
   (e: 'redo'): void;
   (e: 'update:organizationMode', mode: 'design' | 'bindings' | 'advanced'): void;
-  (e: 'toggle-settings'): void;
+  (e: 'toggle-nav'): void;
+  (e: 'toggle-controls'): void;
   (e: 'reset-initial'): void;
   (e: 'reset-defaults'): void;
   (e: 'save'): void;

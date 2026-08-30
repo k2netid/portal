@@ -9,6 +9,57 @@ import {
 const ATTR_TARGET = 'data-ja-customizer-target';
 const ATTR_MODE = 'data-ja-customizer-mode';
 const ROOT_CLASS = 'ja-customizer-preview';
+const STYLE_ID = 'ja-customizer-preview-probe-styles';
+
+/** Inline so public shell always gets badges even if Vite CSS chunk is delayed. */
+const PREVIEW_PROBE_CSS = `
+html.ja-customizer-preview [data-ja-customizer-target] {
+  position: relative !important;
+  cursor: pointer !important;
+  outline: 2px dashed rgba(37, 99, 235, 0.55) !important;
+  outline-offset: 3px !important;
+  box-shadow: inset 0 0 0 9999px rgba(37, 99, 235, 0.04) !important;
+  transition: outline-color 0.15s ease, box-shadow 0.15s ease !important;
+  min-height: 2.5rem;
+}
+html.ja-customizer-preview [data-ja-customizer-target]:hover {
+  outline-color: rgba(37, 99, 235, 0.95) !important;
+  outline-style: solid !important;
+  box-shadow: inset 0 0 0 9999px rgba(37, 99, 235, 0.1) !important;
+}
+html.ja-customizer-preview [data-ja-customizer-target].is-selected {
+  outline: 3px solid #2563eb !important;
+  outline-offset: 2px !important;
+  box-shadow: inset 0 0 0 9999px rgba(37, 99, 235, 0.14) !important;
+}
+html.ja-customizer-preview [data-ja-customizer-target]::after {
+  content: "✎ " attr(data-ja-customizer-target) !important;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 2147483000 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 9px !important;
+  border-radius: 999px !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+  color: #fff !important;
+  background: #2563eb !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  white-space: nowrap !important;
+}
+html.ja-customizer-preview [data-ja-customizer-target].is-selected::after {
+  background: #1d4ed8 !important;
+  content: "✓ " attr(data-ja-customizer-target) !important;
+}
+`;
 
 /**
  * Public-site probe: when loaded inside Theme Customizer iframe, outline
@@ -22,18 +73,23 @@ export function useCustomizerPreviewProbe() {
 
   let lastTarget: string | null = null;
 
+  function ensureStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = PREVIEW_PROBE_CSS;
+    document.head.appendChild(style);
+  }
+
   function postSelect(target: string, mode?: CustomizerPreviewMode) {
     if (!window.parent || window.parent === window) return;
-    // Same-origin embed: always address parent by the iframe's own origin
-    // (query parent_origin can mismatch localhost vs 127.0.0.1).
-    const targetOrigin = window.location.origin;
     window.parent.postMessage(
       {
         type: MSG_SELECT_TARGET,
         target,
         ...(mode ? { mode } : {}),
       },
-      targetOrigin,
+      window.location.origin,
     );
   }
 
@@ -49,8 +105,6 @@ export function useCustomizerPreviewProbe() {
 
     const modeAttr = el.getAttribute(ATTR_MODE) as CustomizerPreviewMode | null;
     const mode = modeAttr === 'bindings' || modeAttr === 'design' ? modeAttr : undefined;
-
-    // Alt/Option → prefer Content bindings when host supports it
     const effectiveMode: CustomizerPreviewMode | undefined =
       event.altKey ? 'bindings' : mode;
 
@@ -73,6 +127,7 @@ export function useCustomizerPreviewProbe() {
 
   onMounted(() => {
     document.documentElement.classList.add(ROOT_CLASS);
+    ensureStyles();
     document.addEventListener('click', onClick, true);
     document.addEventListener('keydown', onKeydown);
 
@@ -83,6 +138,7 @@ export function useCustomizerPreviewProbe() {
 
   onUnmounted(() => {
     document.documentElement.classList.remove(ROOT_CLASS);
+    document.getElementById(STYLE_ID)?.remove();
     document.removeEventListener('click', onClick, true);
     document.removeEventListener('keydown', onKeydown);
   });

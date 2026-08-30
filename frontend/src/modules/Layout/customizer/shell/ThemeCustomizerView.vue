@@ -7,12 +7,14 @@
       :can-redo="canRedo"
       :is-dirty="isDirty"
       :saving="saving"
-      :settings-open="settingsOpen"
+      :nav-open="navOpen"
+      :controls-open="controlsOpen"
       @back="handleBack"
       @undo="undo"
       @redo="redo"
       @update:organization-mode="organizationMode = $event"
-      @toggle-settings="settingsOpen = !settingsOpen"
+      @toggle-nav="navOpen = !navOpen"
+      @toggle-controls="controlsOpen = !controlsOpen"
       @reset-initial="resetToInitial"
       @reset-defaults="resetToDefaults"
       @save="saveAll"
@@ -31,63 +33,38 @@
       </div>
     </div>
 
-    <!-- WordPress/Shopify-style: nav + controls (left) | live preview canvas (dominant) -->
+    <!-- WordPress/Shopify-style: nav | live preview | controls -->
     <div
       v-else
       class="flex-1 flex overflow-hidden min-h-0"
     >
-      <template v-if="settingsOpen">
-        <CustomizerSidebar
-          :groups="filteredGroups"
-          :flat-items="flatNavItems"
-          :active-item-id="activeItemId"
-          :collapsed-groups="collapsedGroups"
-          :search-query="searchQuery"
-          :sidebar-collapsed="sidebarCollapsed"
-          @select-item="selectItem"
-          @toggle-group="toggleGroup"
-          @update:search-query="searchQuery = $event"
-          @update:sidebar-collapsed="sidebarCollapsed = $event"
-        />
+      <!-- NAV (left) -->
+      <CustomizerSidebar
+        v-if="navOpen"
+        :groups="filteredGroups"
+        :flat-items="flatNavItems"
+        :active-item-id="activeItemId"
+        :collapsed-groups="collapsedGroups"
+        :search-query="searchQuery"
+        :sidebar-collapsed="sidebarCollapsed"
+        @select-item="selectItem"
+        @toggle-group="toggleGroup"
+        @update:search-query="searchQuery = $event"
+        @update:sidebar-collapsed="sidebarCollapsed = $event"
+      />
+      <button
+        v-else
+        type="button"
+        class="w-10 shrink-0 border-r border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-start justify-center pt-3"
+        :title="t('publishing.theme_customizer.organization.show_nav')"
+        :aria-label="t('publishing.theme_customizer.organization.show_nav')"
+        @click="navOpen = true"
+      >
+        <PanelLeftOpen class="w-4 h-4" />
+      </button>
 
-        <div class="w-[min(100%,22rem)] xl:w-[24rem] shrink-0 border-r border-border bg-background flex flex-col min-h-0 overflow-hidden">
-          <CustomizerEditorCanvas
-            v-model:custom-css="customCss"
-            panel-mode
-            :selected-item="selectedItem"
-            :active-group-label="activeGroupLabel"
-            :sidebar-collapsed="sidebarCollapsed"
-            :organization-mode="organizationMode"
-            :mode-hint-text="modeHintText"
-            :slug="slug"
-            :form-values="formValues"
-            :menu-sections="menuSections"
-            :get-visible-settings="getVisibleSettings"
-            :is-item-compatible-with-mode="isItemCompatibleWithMode"
-            :expanded-slots="expandedSlots"
-            :active-binding-component-id="activeBindingComponentId"
-            :categories="categories"
-            :pages="pages"
-            :preview-loading="previewLoading"
-            :preview-results="previewResults"
-            :get-slot-config="getSlotConfig"
-            :get-source-label="getSourceLabel"
-            :get-source-icon="getSourceIcon"
-            :update-binding="updateBinding"
-            :get-fields-for-source="getFieldsForSource"
-            :filter-preview-fields="filterPreviewFields"
-            :preview-slot-data="previewSlotData"
-            :save-history="saveHistory"
-            :toggle-slot="toggleSlot"
-            @record-setting-change="recordSettingChange"
-            @open-media-picker="openMediaPicker"
-            @clear-preview="(id) => delete previewResults[id]"
-            @open-nav-item="openNavItemById"
-          />
-        </div>
-      </template>
-
-      <section class="flex-1 min-w-0 min-h-0 flex flex-col bg-muted/30 border-l border-border/60">
+      <!-- PREVIEW (center canvas) -->
+      <section class="flex-1 min-w-0 min-h-0 flex flex-col bg-muted/30">
         <PreviewArea
           class="flex-1 min-h-0"
           :preview-theme="previewTheme"
@@ -96,6 +73,56 @@
           @select-target="handlePreviewSelectTarget"
         />
       </section>
+
+      <!-- CONTROLS (right) -->
+      <div
+        v-if="controlsOpen"
+        class="w-[min(100%,22rem)] xl:w-[24rem] shrink-0 border-l border-border bg-background flex flex-col min-h-0 overflow-hidden"
+      >
+        <CustomizerEditorCanvas
+          v-model:custom-css="customCss"
+          panel-mode
+          :selected-item="selectedItem"
+          :active-group-label="activeGroupLabel"
+          :sidebar-collapsed="sidebarCollapsed"
+          :organization-mode="organizationMode"
+          :mode-hint-text="modeHintText"
+          :slug="slug"
+          :form-values="formValues"
+          :menu-sections="menuSections"
+          :get-visible-settings="getVisibleSettings"
+          :is-item-compatible-with-mode="isItemCompatibleWithMode"
+          :expanded-slots="expandedSlots"
+          :active-binding-component-id="activeBindingComponentId"
+          :categories="categories"
+          :pages="pages"
+          :preview-loading="previewLoading"
+          :preview-results="previewResults"
+          :get-slot-config="getSlotConfig"
+          :get-source-label="getSourceLabel"
+          :get-source-icon="getSourceIcon"
+          :update-binding="updateBinding"
+          :get-fields-for-source="getFieldsForSource"
+          :filter-preview-fields="filterPreviewFields"
+          :preview-slot-data="previewSlotData"
+          :save-history="saveHistory"
+          :toggle-slot="toggleSlot"
+          @record-setting-change="recordSettingChange"
+          @open-media-picker="openMediaPicker"
+          @clear-preview="(id) => delete previewResults[id]"
+          @open-nav-item="openNavItemById"
+        />
+      </div>
+      <button
+        v-else
+        type="button"
+        class="w-10 shrink-0 border-l border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-start justify-center pt-3"
+        :title="t('publishing.theme_customizer.organization.show_controls')"
+        :aria-label="t('publishing.theme_customizer.organization.show_controls')"
+        @click="controlsOpen = true"
+      >
+        <PanelRightOpen class="w-4 h-4" />
+      </button>
     </div>
 
     <MediaPicker
@@ -120,6 +147,7 @@ import CustomizerSidebar from '@/modules/Layout/components/themes/customizer/sid
 import CustomizerEditorCanvas from '@/modules/Layout/components/themes/customizer/editor/CustomizerEditorCanvas.vue';
 import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue';
 import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
+import { PanelLeftOpen, PanelRightOpen } from 'lucide-vue-next';
 
 import { useThemeCustomizer } from '@/modules/Layout/composables/useThemeCustomizer';
 import { useCustomizerNavigation } from '@/modules/Layout/composables/useCustomizerNavigation';
@@ -205,8 +233,9 @@ const {
   expandedSlots,
 );
 
-/** Controls pane open (WP Customizer collapse). Live preview always stays on canvas. */
-const settingsOpen = ref(true);
+/** Independent panes: nav | preview | controls */
+const navOpen = ref(true);
+const controlsOpen = ref(true);
 
 const previewTheme = computed<Theme>(() => {
   const base = (theme.value || {}) as Theme;
@@ -235,7 +264,8 @@ function handleMediaSelect(m: { url: string }) {
 function openNavItemById(itemId: string) {
   const item = flatNavItems.value.find((nav) => nav.id === itemId);
   if (item) {
-    settingsOpen.value = true;
+    navOpen.value = true;
+    controlsOpen.value = true;
     selectItem(item);
   }
 }
@@ -277,7 +307,15 @@ const handleKey = (e: KeyboardEvent) => {
   }
   if ((e.ctrlKey || e.metaKey) && e.key === '\\') {
     e.preventDefault();
-    settingsOpen.value = !settingsOpen.value;
+    controlsOpen.value = !controlsOpen.value;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === '[') {
+    e.preventDefault();
+    navOpen.value = !navOpen.value;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === ']') {
+    e.preventDefault();
+    controlsOpen.value = !controlsOpen.value;
   }
 };
 
@@ -286,7 +324,8 @@ function applyPanelQuery(): void {
   if (!panel) return;
   const match = flatNavItems.value.find((item) => item.panel === panel);
   if (match) {
-    settingsOpen.value = true;
+    navOpen.value = true;
+    controlsOpen.value = true;
     selectItem(match);
   }
 }

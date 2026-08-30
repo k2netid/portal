@@ -707,6 +707,8 @@
       "preview_dialog_title": "Theme preview",
       "hide_controls": "Hide controls",
       "show_controls": "Show controls",
+      "hide_nav": "Hide nav",
+      "show_nav": "Show nav",
       "hints": {
         "design": "Colors, typography, and section visuals.",
         "bindings": "Connect sections to Jejakawan posts and media.",
