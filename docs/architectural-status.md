@@ -40,11 +40,13 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 
 | Item | Notes |
 | :--- | :--- |
-| ja-CE honesty pass (pre-P5) | Landed 2026-08-27 — [audit](architecture/ja-ce-comprehensive-audit-2026-08-27.md). P5 still deferred. |
-| P2 refine leftover (2, 7, 9–10, 12, 15–18) | Landed 2026-08-28. Public SPA defers Member/Analytics; Data Studio grandfathers reserved slugs; member verify gates bookmarks/comments; console Members list; pack tests; PHP 8.2 / Laravel 13 claims; SafeHtml `publishing`; Identity Media vs Media pack; SEO/Discussion tabs live on Publishing. |
-| P5 vertical product modules | Same Mail contract; catalog grows later — needs a named product |
+| Merge gate `integrate/cms` → `main` | Honesty + P2 refine landed (`3e343b1` / `3eefdc9`). Before merge: `npm run agent:verify`, close stale mail PRs on GitHub, prune W5 naming residue if touching public strings. |
+| W5 naming residue | Folder/API keys still use `Jejakawan` in places; theme-host-contract paths may lag. Do not rewrite customized console menus. See [audit](architecture/ja-ce-comprehensive-audit-2026-08-27.md). |
+| P5 vertical product modules | Deferred until merge + named product. Same Mail contract. |
 | GitHub Actions | Skipped until billing; local Playwright via Podman |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |
+
+**Branch hygiene (2026-08-30):** remote heads = `main` + `integrate/cms` only. `feat/mail-*` absorbed and deleted.
 
 ## Removed from repo (Aug 2026)
 

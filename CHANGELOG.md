@@ -10,6 +10,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 
 ## [Unreleased]
 
+### Changed
+- Docs: honesty pass marked landed on `integrate/cms`; merge-gate + W5 naming residual clarified; root `.env.example` notes Vite/Sanctum **5273**.
+
 ### Fixed
 - Visual builder: empty pages no longer auto-fill demo sections or mark unsaved demo as saved.
 - Visual builder keyboard (Delete, Esc, duplicate/copy/paste) matches Help; site editor waits for a page pick.

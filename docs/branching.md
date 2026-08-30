@@ -35,7 +35,7 @@ main
 - Setelah merge: hapus branch remote (+ lokal).
 - Jangan force-push `main`.
 - `integrate/*` boleh rebase ke `main` berkala (tim sepakat); feature di atasnya ikut rebase/merge.
-- Branch `feat/mail-*` lama: triage (cherry-pick/merge ke `integrate/cms` atau `main` bila masih relevan) lalu hapus.
+- Branch `feat/mail-*` lama: **sudah** terserap ke `integrate/cms` dan dihapus di remote (2026-08-30). Tutup PR mail terbuka di GitHub UI bila masih ada.
 
 ## Snapshot aktif (2026-08-30)
 

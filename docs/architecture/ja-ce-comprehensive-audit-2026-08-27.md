@@ -1,11 +1,21 @@
 # ja-CE comprehensive audit — 27 Aug 2026
 
-**Status:** discussion brief, bukan patch list  
-**Branch:** `fix/module-registry-p0-kernel-lock`  
-**Snapshot:** `2b0b8a7` `feat: pack settings, member verify-email, Data Studio CCK boundary`  
+**Status:** brief historis + peta residual (honesty pass kode sudah land)  
+**Branch saat audit:** `fix/module-registry-p0-kernel-lock` → kini **`integrate/cms`**  
+**Snapshot audit:** `2b0b8a7` · **Honesty land:** `3e343b1` (+ refine `3eefdc9`, builder `0a38d3a`)  
 **Intent:** selaraskan dokumen ↔ kode, temukan bug nyata, dan petakan area refine **sebelum** P5 verticals.
 
-P5 (modul produk vertikal bernama) **ditunda** sampai seluruh line ja-CE ini lengkap. Audit ini adalah peta kejujuran untuk sesi diskusi berikutnya — bukan undangan untuk mulai ngoding semua temuan sekaligus.
+P5 (modul produk vertikal bernama) **tetap ditunda**. Merge `integrate/cms` → `main` ditahan sampai quality gate lokal hijau dan residual di bawah (W5 naming + PR hygiene) selesai.
+
+### Resolution (2026-08-28 → 30)
+
+| Gelombang | Hasil |
+| :--- | :--- |
+| **W0** | Freeze tetap: jangan P5; merge `main` setelah gate |
+| **W1–W3** | Landed di `3e343b1` — Identity owns `general`; uninstall respects deactivate; Member gated; theme pages resolve active theme; layout public menus/themes gated; Mail/cron skip when off |
+| **W4** | Partial — docs/suite catch-up in same land + P2 refine; teruskan bila drift baru muncul |
+| **W5** | **Masih open** — identifier/docs path residue (`Jejakawan` sebagai folder module key, theme-host-contract path lama); string user-facing `JA-CMS` sudah jarang |
+| **W6** | Tertutup sampai W5 + gate |
 
 ---
 
