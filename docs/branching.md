@@ -42,7 +42,7 @@ main
 | Branch | Status |
 | :--- | :--- |
 | `main` | Kernel thin + deps |
-| `integrate/cms` | Line CMS packs (rename dari `fix/module-registry-p0-kernel-lock`) — ditahan merge sampai honesty pass |
-| `feat/mail-*` (beberapa) | Legacy; dijadwalkan triage + hapus |
+| `integrate/cms` | Line CMS packs — ditahan merge sampai honesty pass |
+| ~~`feat/mail-*`~~ | **Dihapus** — sudah terserap di `integrate/cms` (`ship JA-Mail P1–P2 stack with honesty hardening`) |
 
 Lihat juga: [architectural-status.md](architectural-status.md) · [AGENT_START_HERE.md](AGENT_START_HERE.md)
