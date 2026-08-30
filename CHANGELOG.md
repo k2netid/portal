@@ -15,6 +15,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - W5 naming: Media/Library defaults `publishing`; theme docs paths `Layout/*`; console title fallbacks drop `JA Jejakawan`; i18n checker maps `Member` pack namespace.
 - PHPStan baseline regenerated; Member model `@property` docs for Larastan.
 - **Site boot gate:** when pack `site` is product-active, apex `/` serves the public theme SPA; console stays on `/dash` + `/auth/console-*`; legacy `/site/*` 301 to apex.
+- Default public theme prefers **Janari** (CMS reference / builder contract); scaffolded themes get `parent_theme: janari` + `janari_canvas`.
 
 ### Fixed
 - Visual builder: empty pages no longer auto-fill demo sections or mark unsaved demo as saved.

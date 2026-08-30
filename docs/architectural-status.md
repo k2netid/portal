@@ -23,7 +23,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 | Pack | Role |
 | :--- | :--- |
-| publishing, library, media, layout | Editorial + theme builder |
+| publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference theme) |
 | forms, newsletter, analytics, search, cms-ai | Audience / insight |
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
 | **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |

@@ -38,8 +38,8 @@ const fileBaseFromThemeComponentsPath = (normalizedKey: string, slugLower: strin
   return file.slice(0, -4)
 }
 
-/** In-tree themes used when the API row has no slug or no active theme. */
-export const BUNDLED_FRONTEND_THEME_SLUGS = ['zenith', 'janari'] as const
+/** In-tree themes used when the API row has no slug or no active theme. Janari first = CMS reference. */
+export const BUNDLED_FRONTEND_THEME_SLUGS = ['janari', 'zenith'] as const
 
 export const withBundledThemeFallbacks = (slugs: string[]): string[] => {
   const seen = new Set<string>()

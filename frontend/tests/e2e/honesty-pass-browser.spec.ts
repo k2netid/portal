@@ -88,7 +88,7 @@ test.describe('honesty pass browser flows', () => {
         const originalTheme = await page.evaluate(async () => {
             const res = await fetch('/api/v1/public/layout/themes/active', { credentials: 'include' });
             const body = await res.json() as { data?: { slug?: string }; slug?: string };
-            return body.data?.slug ?? body.slug ?? 'zenith';
+            return body.data?.slug ?? body.slug ?? 'janari';
         });
 
         const janariCard = page.locator('.rounded-xl.border').filter({

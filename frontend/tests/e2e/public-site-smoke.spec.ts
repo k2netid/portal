@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('public apex theme runtime', () => {
-    test('home renders zenith shell without theme resolver crash', async ({ page }) => {
+    test('home renders public theme shell without theme resolver crash', async ({ page }) => {
         await page.goto('/');
 
         await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15000 });

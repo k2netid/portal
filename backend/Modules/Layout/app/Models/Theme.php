@@ -107,6 +107,11 @@ class Theme extends Model
     }
 
     /**
+     * Preferred slug when auto-activating a frontend theme (CMS reference theme).
+     */
+    public const DEFAULT_FRONTEND_SLUG = 'janari';
+
+    /**
      * Get active theme by type
      * Auto-activates default theme if no theme is active
      */
@@ -120,7 +125,8 @@ class Theme extends Model
 
         if (! $activeTheme) {
             $defaultTheme = null;
-            foreach (['zenith', 'janari', 'default'] as $slug) {
+            // Janari is the CMS reference theme (builder + fork contract); Zenith is optional alternate.
+            foreach ([self::DEFAULT_FRONTEND_SLUG, 'zenith', 'default'] as $slug) {
                 $defaultTheme = self::query()
                     ->where('type', $type)
                     ->where('slug', $slug)

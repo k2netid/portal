@@ -32,6 +32,25 @@ class ThemeService
     }
 
     /**
+     * Ensure a frontend theme is active. Prefers Janari (CMS reference / builder contract).
+     * Safe to call on layout/site pack activate — no-op if something is already active.
+     */
+    public function ensureDefaultFrontendTheme(): ?Theme
+    {
+        $active = Theme::query()
+            ->where('type', 'frontend')
+            ->where('is_active', true)
+            ->where('status', 'active')
+            ->first();
+
+        if ($active) {
+            return $active;
+        }
+
+        return Theme::getActiveTheme('frontend');
+    }
+
+    /**
      * Get validated menu locations from theme manifest
      *
      * @return list<string>

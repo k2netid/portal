@@ -61,10 +61,17 @@ class LayoutServiceProvider extends ServiceProvider
         $this->registerLayoutRegistryIntegrations();
 
         Hook::listen('extension_activated', function (Extension $extension): void {
-            if ($extension->slug !== 'layout') {
+            if ($extension->slug !== 'layout' && $extension->slug !== 'site') {
                 return;
             }
-            self::seedPermissions();
+            if ($extension->slug === 'layout') {
+                self::seedPermissions();
+            }
+            try {
+                app(ThemeService::class)->ensureDefaultFrontendTheme();
+            } catch (\Throwable) {
+                // Theme rows may not exist yet during first migrate.
+            }
         });
 
         $this->ensurePermissionsIfMissing();

@@ -209,19 +209,19 @@ export function useTheme() {
                 data = data.data;
             }
 
-            // Handle null response (no active theme)
+            // Handle null response (no active theme) — Janari is the CMS default reference theme
             if (!data) {
                  activeTheme.value = {
-                     name: 'Zenith',
-                     slug: 'zenith',
+                     name: 'Janari',
+                     slug: 'janari',
                      type: 'frontend',
                  };
                  return;
             }
             if (typeof (data as Theme).slug !== 'string' || (data as Theme).slug.trim() === '') {
-                (data as Theme).slug = 'zenith';
+                (data as Theme).slug = 'janari';
                 if (!(data as Theme).name) {
-                    (data as Theme).name = 'Zenith';
+                    (data as Theme).name = 'Janari';
                 }
                 if (!(data as Theme).type) {
                     (data as Theme).type = 'frontend';

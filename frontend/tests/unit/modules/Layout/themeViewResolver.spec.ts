@@ -14,14 +14,15 @@ const modules = {
 };
 
 describe('themeViewResolver', () => {
-    it('falls back to bundled zenith/janari when theme slug is missing', () => {
+    it('falls back to bundled janari/zenith when theme slug is missing', () => {
         expect(buildThemeViewResolveCandidates(null)).toEqual([...BUNDLED_FRONTEND_THEME_SLUGS]);
+        expect(BUNDLED_FRONTEND_THEME_SLUGS[0]).toBe('janari');
         expect(buildThemeViewResolveCandidates({ name: 'X', slug: '', type: 'frontend' })).toEqual([
             ...BUNDLED_FRONTEND_THEME_SLUGS,
         ]);
     });
 
-    it('resolves components/Header from zenith/components/layout/Header.vue', () => {
+    it('resolves components/Header from zenith when only zenith views exist', () => {
         const key = findThemeViewKey(modules, [], 'components/Header');
         expect(key).toContain('zenith/components/layout/Header.vue');
     });

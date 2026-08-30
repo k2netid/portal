@@ -184,13 +184,14 @@ cd frontend && npm run theme:schema:split  # re-classify from theme.json (rare)
 
 ## Adding a new theme
 
-1. Copy `views/themes/janari/` structure (without janari-specific composables).
+1. Copy `views/themes/janari/` structure (without janari-specific composables). **Janari is the CMS reference theme** — new themes should set `parent_theme: janari` and `supports.janari_canvas: true` unless they intentionally opt out.
 2. Add `views/themes/<slug>/theme.json` + `locales/`.
 3. Add `views/themes/<slug>/customizer/index.ts` implementing `ThemeCustomizerExtension`.
 4. Register locales in `engine/i18n/themeLocales.ts`.
 5. Register extension in `resolveThemeCustomizerExtension.ts` registry map.
 6. Do **not** edit host sidebar hardcoded lists; use `sidebar.navigation.json` + `sidebar.pages.json` on the theme extension.
 7. Validate host-only flow with `views/themes/hub-stub/` (empty theme schema + extension registered in `resolveThemeCustomizerExtension.ts`).
+8. On first CMS boot (layout/site activate), auto-active frontend theme prefers **janari** over zenith.
 
 ---
 
