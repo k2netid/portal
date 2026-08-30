@@ -390,7 +390,7 @@
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, inject, computed, watch } from 'vue';
+import { ref, inject, computed, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ImageIcon from 'lucide-vue-next/dist/esm/icons/image.js';
 import Search from 'lucide-vue-next/dist/esm/icons/search.js';
@@ -550,6 +550,41 @@ watch(() => content.value?.menu_item?.menu_id, (newVal) => {
     fetchMenuParentItems(newVal);
   }
 }, { immediate: true });
+
+/** Page meta edits must dirty the builder (v-model alone never called markAsDirty). */
+let settingsHydrated = false
+watch(
+  () => content.value?.id,
+  async () => {
+    settingsHydrated = false
+    await nextTick()
+    settingsHydrated = true
+  },
+  { immediate: true },
+)
+watch(
+  () => content.value && {
+    status: content.value.status,
+    slug: content.value.slug,
+    type: content.value.type,
+    title: content.value.title,
+    published_at: content.value.published_at,
+    is_featured: content.value.is_featured,
+    excerpt: content.value.excerpt,
+    featured_image: content.value.featured_image,
+    meta_title: content.value.meta_title,
+    meta_description: content.value.meta_description,
+    comment_status: content.value.comment_status,
+    menu_item: content.value.menu_item,
+    tags: content.value.tags,
+    category_id: content.value.category_id,
+  },
+  () => {
+    if (!settingsHydrated) return
+    builder?.markAsDirty?.()
+  },
+  { deep: true },
+)
 
 // Tag search logic
 const tagQuery = ref('');

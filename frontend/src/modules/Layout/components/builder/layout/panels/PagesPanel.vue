@@ -178,17 +178,27 @@ const filteredItems = computed<ContentItem[]>(() => {
 const selectItem = async (item: ContentItem) => {
   if (item.isThemeTemplate) {
     const themePage = item.themePage || `pages/${item.slug.charAt(0).toUpperCase()}${item.slug.slice(1)}`;
-    const existing = pages.value.find((p) => p.slug === item.slug && !p.isThemeTemplate);
+    const existing = pages.value.find((p) => {
+      const meta = (p as ContentItem & { meta?: Record<string, unknown> }).meta;
+      if (meta?.theme_page === themePage && p.id != null) return true;
+      return p.slug === item.slug && !p.isThemeTemplate && p.id != null;
+    });
 
-    // Prefer CMS document only when it already has builder blocks to edit.
-    if (existing?.id && builder?.setCurrentPage && builder?.loadContent) {
+    if (existing?.id && builder?.setCurrentPage) {
       await builder.setCurrentPage(existing.id);
       if ((builder.blocks.value?.length ?? 0) > 0) {
         return;
       }
+      // Empty CMS override: keep live theme preview but preserve document id.
+      builder.openThemePage?.({
+        slug: item.slug,
+        themePage,
+        title: item.title,
+        preserveDocumentId: existing.id,
+      });
+      return;
     }
 
-    // Otherwise show the live theme Vue page (do not create an empty draft).
     builder?.openThemePage?.({
       slug: item.slug,
       themePage,

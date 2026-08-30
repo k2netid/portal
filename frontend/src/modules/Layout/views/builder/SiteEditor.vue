@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, onUnmounted, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -57,27 +56,10 @@ const isFullscreen = ref(false);
 const builderRef = ref<{ builder?: BuilderInstance } | null>(null);
 const showConfirmDialog = ref(false);
 
-const handleSave = async (status: string | null) => {
+const handleSave = (status: string | null) => {
+    // Persistence is owned by Builder.handleSave (single PUT). Parent only notifies.
     if (!builderRef.value?.builder) return
-    
-    // In site mode, we might just use saveContent logic from builder
-    // Or we might need to handle status if it's draft/published.
-    if (status && builderRef.value.builder.content?.value) {
-        (builderRef.value.builder.content.value as any).status = status
-    }
-    
-    try {
-        const result = await builderRef.value.builder.saveContent()
-        if (result === false) {
-            toast.error(t('builder.toolbar.saveNeedsPage', 'Open or edit a page before saving.'))
-            return
-        }
-        builderRef.value.builder.markAsSaved()
-        toast.success(status === 'published' ? 'Site published successfully' : 'Site saved successfully')
-    } catch (err) {
-        toast.error('Failed to save site')
-        logger.error(err instanceof Error ? err.message : 'Failed to save site', { error: err })
-    }
+    toast.success(status === 'published' ? 'Site published successfully' : 'Site saved successfully')
 }
 
 const handleClose = () => {

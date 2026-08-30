@@ -368,6 +368,7 @@ const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
 };
 
 const handleBuilderSave = async (status?: string | null) => {
+  await nextTick();
   isVisualBuilderOpen.value = false;
   if (status && (status === 'draft' || status === 'published')) {
     form.value.status = status;

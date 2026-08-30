@@ -294,6 +294,8 @@ const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
 };
 
 const handleBuilderSave = async (status?: string | null) => {
+  // Wait for Builder flush emit('update') so builder_blocks is current (not stale debounce).
+  await nextTick();
   isVisualBuilderOpen.value = false;
   if (status && (status === 'draft' || status === 'published')) {
     form.value.status = status;

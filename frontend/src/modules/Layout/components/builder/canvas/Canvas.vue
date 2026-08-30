@@ -168,7 +168,11 @@ const activeTheme = computed(() => builder?.activeTheme.value || 'janari')
 const device = computed(() => builder?.device.value || 'desktop')
 
 const startThemePageEdit = async () => {
-  if (!builder?.beginThemePageEdit || themePageBusy.value) return
+  if (themePageBusy.value) return
+  if (!builder?.beginThemePageEdit) {
+    console.error('beginThemePageEdit missing — hard-refresh the console (Ctrl+Shift+R) and reopen Site Editor')
+    return
+  }
   themePageBusy.value = true
   try {
     await builder.beginThemePageEdit({
@@ -178,6 +182,11 @@ const startThemePageEdit = async () => {
     })
   } catch (error) {
     console.error('Failed to enable theme page editing:', error)
+    window.alert(
+      error instanceof Error
+        ? error.message
+        : 'Gagal aktifkan editing theme page. Cek permission Publishing / slug conflict.',
+    )
   } finally {
     themePageBusy.value = false
   }

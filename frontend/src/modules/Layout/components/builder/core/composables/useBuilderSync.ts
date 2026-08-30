@@ -37,22 +37,58 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         lastSavedVersion.value = dataVersion.value
     }
 
-    /** Preview a theme Vue page (live template) instead of creating an empty CMS draft. */
-    function openThemePage(opts: { slug: string; themePage: string; title: string }): void {
+    /** Preview a theme Vue page (live template). Preserves bound CMS id for the same slug. */
+    function openThemePage(opts: {
+        slug: string
+        themePage: string
+        title: string
+        preserveDocumentId?: string | number | null
+    }): void {
         activeThemePage.value = opts.themePage
-        currentPageId.value = null
         blocks.value = []
-        content.value = {
-            ...content.value,
-            id: null,
-            title: opts.title,
-            slug: opts.slug,
-            status: 'published',
-            type: 'page',
-            editor_type: 'builder',
-            body: '',
-            meta: {},
+
+        const existing = pages.value.find((p) => p.slug === opts.slug && p.id != null)
+        const metaMatch = pages.value.find((p) => {
+            const meta = (p as { meta?: Record<string, unknown> }).meta
+            return meta && meta.theme_page === opts.themePage && p.id != null
+        })
+        const keepId =
+            opts.preserveDocumentId
+            ?? (content.value.id && content.value.slug === opts.slug ? content.value.id : null)
+            ?? metaMatch?.id
+            ?? existing?.id
+            ?? null
+
+        if (keepId != null) {
+            currentPageId.value = keepId
+            content.value = {
+                ...content.value,
+                id: keepId,
+                title: opts.title || content.value.title || opts.slug,
+                slug: opts.slug,
+                status: content.value.status || 'draft',
+                type: 'page',
+                editor_type: 'builder',
+                meta: {
+                    ...((content.value.meta as Record<string, unknown>) || {}),
+                    theme_page: opts.themePage,
+                },
+            }
+        } else {
+            currentPageId.value = null
+            content.value = {
+                ...content.value,
+                id: null,
+                title: opts.title,
+                slug: opts.slug,
+                status: 'draft',
+                type: 'page',
+                editor_type: 'builder',
+                body: '',
+                meta: { theme_page: opts.themePage },
+            }
         }
+
         triggerRef(blocks)
         takeSnapshot({ immediate: true })
         markAsSaved()
@@ -60,6 +96,15 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
     function themePageCmsTitle(title: string): string {
         return title.replace(/\s*\([^)]*\)\s*$/, '').trim() || title
+    }
+
+    function findThemePageDocument(slug: string, themePage: string) {
+        const byMeta = pages.value.find((p) => {
+            const meta = (p as { meta?: Record<string, unknown> }).meta
+            return meta && meta.theme_page === themePage && p.id != null
+        })
+        if (byMeta) return byMeta
+        return pages.value.find((p) => p.slug === slug && (p.type === 'page' || !p.type) && p.id != null)
     }
 
     /**
@@ -76,11 +121,10 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         }
 
         await fetchPages()
-        const existing = pages.value.find((p) => p.slug === slug && p.id != null)
+        const existing = findThemePageDocument(slug, themePage)
 
         if (existing?.id != null) {
             await setCurrentPage(existing.id)
-            // Keep live theme chrome until the user adds builder blocks.
             if ((blocks.value?.length ?? 0) === 0) {
                 activeThemePage.value = themePage
             }
@@ -91,7 +135,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             title,
             slug,
             type: 'page',
-            status: 'published',
+            // Draft until user explicitly publishes — avoid empty public overrides.
+            status: 'draft',
             body: '',
             excerpt: '',
             category_id: null,
@@ -157,12 +202,20 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 params: { per_page: 100 }
             })
             const data = response.data?.data || response.data
-            pages.value = (data.data || data || []).map((p: { id: number | string | null, title: string, slug: string, status: string, type?: string }) => ({
+            pages.value = (data.data || data || []).map((p: {
+                id: number | string | null
+                title: string
+                slug: string
+                status: string
+                type?: string
+                meta?: Record<string, unknown>
+            }) => ({
                 id: p.id,
                 title: p.title,
                 slug: p.slug,
                 status: p.status,
-                type: p.type || 'page'
+                type: p.type || 'page',
+                meta: p.meta || {},
             }))
         } catch (error: unknown) {
             logger.error('Failed to fetch pages:', error instanceof Error ? error.message : String(error));
@@ -322,7 +375,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             await api.delete(`/manage/publishing/contents/${id}`)
             await fetchPages()
 
-            if (currentPageId.value === id) {
+            if (String(currentPageId.value) === String(id)) {
                 if (pages.value.length > 0) {
                     const firstPage = pages.value[0]
                     if (firstPage && firstPage.id !== null && firstPage.id !== undefined) {

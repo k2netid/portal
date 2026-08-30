@@ -65,6 +65,8 @@ const layoutRoutes: RouteRecordRaw[] = [
             extension: 'layout',
             title: 'Visual Site Editor',
             breadcrumb: 'layout.navigation.menu.siteEditor',
+            // Fresh mount each visit — avoids KeepAlive stale builder methods/locks/content.
+            noCache: true,
         },
     },
 ];

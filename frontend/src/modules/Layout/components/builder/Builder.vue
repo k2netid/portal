@@ -206,7 +206,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, provide, watch, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, computed, provide, watch, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
 
 
 // Layout Components
@@ -356,15 +356,30 @@ const showStructureTemplateModal = ref(false)
 const structureTemplateTargetId = ref<string | null>(null)
 const structureTemplateTargetType = ref<string | null>(null)
 
-const builder = {
-  ...(builderBase as unknown as BuilderInstance),
-  darkMode,
-  sidebarVisible,
-  activePanel,
-  globalAction,
-  insertTargetId,
-  insertTargetIndex
-} as BuilderInstance
+/** Stable provide target so children always see current useBuilder methods (HMR / re-bind). */
+const builder = Object.assign(
+  {} as BuilderInstance,
+  builderBase as unknown as BuilderInstance,
+  {
+    darkMode,
+    sidebarVisible,
+    activePanel,
+    globalAction,
+    insertTargetId,
+    insertTargetIndex,
+  },
+)
+
+function refreshBuilderProvide(): void {
+  Object.assign(builder, builderBase as unknown as BuilderInstance, {
+    darkMode,
+    sidebarVisible,
+    activePanel,
+    globalAction,
+    insertTargetId,
+    insertTargetIndex,
+  })
+}
 
 // Provide builder for child components
 provide('builder', builder)
@@ -684,19 +699,37 @@ const handleSave = async (status: string | null = null) => {
   if (status && builder.content?.value) {
     builder.content.value.status = status
   }
+
+  // Flush blocks to parent immediately (Create overlay had a 500ms debounce race).
+  const blocksSnapshot = [...(builder.blocks.value || [])] as BlockInstance[]
+  emit('update', { blocks: blocksSnapshot })
+  emit('update:modelValue', blocksSnapshot)
+
   const targetId = props.contentId || builder.content?.value?.id
-  if (targetId) {
+  const needsPersist = Boolean(targetId) || Boolean(builder.activeThemePage?.value)
+
+  if (needsPersist) {
     try {
-      if (builder.content?.value && !builder.content.value.id) {
+      if (builder.content?.value && !builder.content.value.id && targetId) {
         builder.content.value.id = String(targetId)
       }
-      await builder.saveContent()
+      const result = await builder.saveContent()
+      if (result === false) {
+        toast.error.default(t('builder.toolbar.saveNeedsPage', 'Open or edit a page before saving.'))
+        return
+      }
+      builder.markAsSaved()
+      emit('save', status)
     } catch (e) {
-      console.error('Failed to auto-save content from builder:', e)
+      console.error('Failed to save content from builder:', e)
+      toast.error.default(t('builder.toolbar.saveFailed', 'Failed to save. Changes kept as unsaved.'))
+      return
     }
+    return
   }
+
+  // Create overlay (no content id yet): parent form owns create/submit.
   emit('save', status)
-  builder.markAsSaved()
 }
 
 const canvasAreaRef = ref<HTMLElement | null>(null)
@@ -751,16 +784,34 @@ const stealLock = async () => {
   if (lock?.ok) {
     isReadOnly.value = false
     lockHolder.value = ''
-    lockTimer = window.setInterval(() => {
-      void builder.acquireLock?.()
-    }, 120000)
+    startLockHeartbeat()
     toast.success.default(t('builder.lock.taken', 'You now hold the edit lock.'))
   } else {
     toast.error.default(lock?.message || t('builder.lock.held', 'Still locked'))
   }
 }
 
+const stopLockHeartbeat = () => {
+  if (lockTimer) {
+    window.clearInterval(lockTimer)
+    lockTimer = undefined
+  }
+}
+
+const startLockHeartbeat = () => {
+  stopLockHeartbeat()
+  lockTimer = window.setInterval(() => {
+    void builder.acquireLock?.()
+  }, 120000)
+}
+
+const releaseEditorLock = () => {
+  stopLockHeartbeat()
+  void builder.releaseLock?.()
+}
+
 onMounted(async () => {
+    refreshBuilderProvide()
     window.addEventListener('keydown', handleKeydown)
     builder.loadTheme()
     builder.fetchMetadata()
@@ -796,9 +847,7 @@ onMounted(async () => {
           isReadOnly.value = true
           lockHolder.value = lock.message || t('builder.lock.held', 'This page is being edited by someone else.')
         } else {
-          lockTimer = window.setInterval(() => {
-            void builder.acquireLock?.()
-          }, 120000)
+          startLockHeartbeat()
         }
       } catch (err) {
         console.error(err)
@@ -807,15 +856,38 @@ onMounted(async () => {
     }
 })
 
+/** KeepAlive deactivate: release lock + listeners (noCache site editor still benefits). */
+onDeactivated(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  releaseEditorLock()
+})
+
+onActivated(() => {
+  refreshBuilderProvide()
+  window.addEventListener('keydown', handleKeydown)
+  const id = props.contentId || builder.content?.value?.id
+  if (id) {
+    void (async () => {
+      const lock = await builder.acquireLock?.()
+      if (lock && !lock.ok) {
+        isReadOnly.value = true
+        lockHolder.value = lock.message || t('builder.lock.held', 'This page is being edited by someone else.')
+      } else {
+        isReadOnly.value = false
+        lockHolder.value = ''
+        startLockHeartbeat()
+      }
+    })()
+  }
+})
+
 onUnmounted(() => {
     window.removeEventListener('keydown', handleKeydown)
     if (resizeObserver) {
         resizeObserver.disconnect()
+        resizeObserver = null
     }
-    if (lockTimer) {
-        window.clearInterval(lockTimer)
-    }
-    void builder.releaseLock?.()
+    releaseEditorLock()
 })
 
 // Context Menu Logic
