@@ -776,7 +776,9 @@
         "page_news": "Berita",
         "page_news_desc": "Artikel, pengumuman, sareng pembaruan",
         "page_contact": "Kontak",
-        "page_contact_desc": "Formulir, email, telepon, sareng peta"
+        "page_contact_desc": "Formulir, email, telepon, sareng peta",
+        "page_pricing": "Harga",
+        "page_pricing_desc": "Judul halaman harga jeung label CTA"
       }
     },
     "editor": {

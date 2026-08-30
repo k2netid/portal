@@ -1214,14 +1214,14 @@
             "scope": "theme"
         },
         "page_achievement_title": {
-            "label": "Achievements page title",
+            "label": "Achievements page title (fallback)",
             "type": "text",
             "default": "HIGHLIGHTS",
             "category": "Achievements Page",
             "scope": "theme"
         },
         "page_achievement_subtitle": {
-            "label": "Achievements page subtitle",
+            "label": "Achievements page subtitle (fallback)",
             "type": "textarea",
             "default": "Celebrating milestones, partnerships, and team achievements.",
             "category": "Achievements Page",
@@ -1234,14 +1234,14 @@
             "scope": "theme"
         },
         "page_career_title": {
-            "label": "Careers page title",
+            "label": "Careers page title (fallback)",
             "type": "text",
             "default": "CAREERS",
             "category": "Careers Page",
             "scope": "theme"
         },
         "page_career_subtitle": {
-            "label": "Careers page subtitle",
+            "label": "Careers page subtitle (fallback)",
             "type": "textarea",
             "default": "Connect with opportunities and grow with our team.",
             "category": "Careers Page",
@@ -1254,14 +1254,14 @@
             "scope": "theme"
         },
         "page_blog_title": {
-            "label": "News page title",
+            "label": "News page title (fallback)",
             "type": "text",
             "default": "NEWS & UPDATES",
             "category": "News Page",
             "scope": "theme"
         },
         "page_blog_subtitle": {
-            "label": "News page subtitle",
+            "label": "News page subtitle (fallback)",
             "type": "textarea",
             "default": "Latest announcements, stories, and official updates.",
             "category": "News Page",
@@ -2427,6 +2427,461 @@
             "default": "/blog",
             "category": "Updates Section",
             "description": "Shared link for all three View all buttons.",
+            "scope": "theme"
+        },
+        "page_blog_title_en": {
+            "label": "News page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_title_id": {
+            "label": "News page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_subtitle_en": {
+            "label": "News page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_subtitle_id": {
+            "label": "News page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_career_title_en": {
+            "label": "Careers page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_title_id": {
+            "label": "Careers page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_subtitle_en": {
+            "label": "Careers page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_subtitle_id": {
+            "label": "Careers page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs": {
+            "label": "Careers latest jobs heading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs_en": {
+            "label": "Careers latest jobs heading (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs_id": {
+            "label": "Careers latest jobs heading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title": {
+            "label": "Careers sidebar title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title_en": {
+            "label": "Careers sidebar title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title_id": {
+            "label": "Careers sidebar title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc": {
+            "label": "Careers sidebar body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc_en": {
+            "label": "Careers sidebar body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc_id": {
+            "label": "Careers sidebar body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing": {
+            "label": "Careers pricing button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing_en": {
+            "label": "Careers pricing button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing_id": {
+            "label": "Careers pricing button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact": {
+            "label": "Careers contact button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact_en": {
+            "label": "Careers contact button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact_id": {
+            "label": "Careers contact button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_pricing_url": {
+            "label": "Careers pricing URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_contact_url": {
+            "label": "Careers contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_achievement_title_en": {
+            "label": "Achievements page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_title_id": {
+            "label": "Achievements page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_subtitle_en": {
+            "label": "Achievements page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_subtitle_id": {
+            "label": "Achievements page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title": {
+            "label": "Achievements CTA title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title_en": {
+            "label": "Achievements CTA title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title_id": {
+            "label": "Achievements CTA title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body": {
+            "label": "Achievements CTA body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body_en": {
+            "label": "Achievements CTA body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body_id": {
+            "label": "Achievements CTA body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing": {
+            "label": "Achievements pricing button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing_en": {
+            "label": "Achievements pricing button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing_id": {
+            "label": "Achievements pricing button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact": {
+            "label": "Achievements contact button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact_en": {
+            "label": "Achievements contact button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact_id": {
+            "label": "Achievements contact button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_pricing_url": {
+            "label": "Achievements pricing URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_contact_url": {
+            "label": "Achievements contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label": {
+            "label": "Pricing section label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label_en": {
+            "label": "Pricing section label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label_id": {
+            "label": "Pricing section label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title": {
+            "label": "Pricing title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title_en": {
+            "label": "Pricing title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title_id": {
+            "label": "Pricing title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle": {
+            "label": "Pricing subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle_en": {
+            "label": "Pricing subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle_id": {
+            "label": "Pricing subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended": {
+            "label": "Pricing recommended badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended_en": {
+            "label": "Pricing recommended badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended_id": {
+            "label": "Pricing recommended badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan": {
+            "label": "Pricing choose-plan button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan_en": {
+            "label": "Pricing choose-plan button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan_id": {
+            "label": "Pricing choose-plan button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales": {
+            "label": "Pricing contact-sales button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales_en": {
+            "label": "Pricing contact-sales button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales_id": {
+            "label": "Pricing contact-sales button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote": {
+            "label": "Pricing footnote (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote_en": {
+            "label": "Pricing footnote (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote_id": {
+            "label": "Pricing footnote (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_url": {
+            "label": "Pricing contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Pricing Page",
             "scope": "theme"
         }
     },

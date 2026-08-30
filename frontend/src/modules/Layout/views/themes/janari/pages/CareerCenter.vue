@@ -8,10 +8,10 @@
           <div class="flex flex-col md:flex-row items-center justify-between gap-8">
             <div class="space-y-4 text-center md:text-left">
               <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
-                {{ pageTitle || t('theme.janari.pages.career.title') }}
+                {{ pageTitle }}
               </h1>
               <p class="text-primary-foreground/85 text-lg max-w-xl">
-                {{ pageSubtitle || t('theme.janari.pages.career.subtitle') }}
+                {{ pageSubtitle }}
               </p>
             </div>
             <div class="flex gap-4">
@@ -43,7 +43,7 @@
             <div class="flex items-center justify-between">
               <h2 class="text-2xl font-bold flex items-center gap-3">
                 <Briefcase class="w-6 h-6 text-primary" />
-                {{ t('theme.janari.pages.career.latestJobs') }}
+                {{ latestJobsText }}
               </h2>
               <button class="text-sm font-bold text-primary hover:underline">
                 {{ t('theme.janari.pages.career.viewAllShort') }}
@@ -99,16 +99,16 @@
                 <Users2 class="w-6 h-6" />
               </div>
               <h3 class="text-xl font-bold mb-3 text-foreground">
-                {{ t('theme.janari.pages.career.hubinTitle') }}
+                {{ hubinTitle }}
               </h3>
               <p class="text-muted-foreground text-sm leading-relaxed mb-6">
-                {{ t('theme.janari.pages.career.hubinDesc') }}
+                {{ hubinDesc }}
               </p>
-              <router-link to="/pricing" class="w-full py-3 mb-3 rounded-xl border border-white/30 text-primary-foreground font-bold text-sm hover:bg-white/10 transition-colors block text-center">
-                {{ t('theme.janari.pages.career.viewPricing') }}
+              <router-link :to="pricingUrl" class="w-full py-3 mb-3 rounded-xl border border-white/30 text-primary-foreground font-bold text-sm hover:bg-white/10 transition-colors block text-center">
+                {{ viewPricingText }}
               </router-link>
-              <router-link to="/contact" class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors block text-center">
-                {{ t('theme.janari.pages.career.partnershipContact') }}
+              <router-link :to="contactUrl" class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors block text-center">
+                {{ partnershipContactText }}
               </router-link>
             </div>
 
@@ -147,6 +147,7 @@ import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
 import PageDisabled from '../components/shared/PageDisabled.vue';
 import {
@@ -160,12 +161,26 @@ import {
 
 const { t } = useI18n()
 const { getSetting } = useTheme();
+const { localizedString } = useLocalizedThemeSetting()
 const router = useRouter();
 
 const isEnabled = computed(() => getSetting('enable_career', true));
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'));
-const pageTitle = computed(() => getSetting('page_career_title') as string);
-const pageSubtitle = computed(() => getSetting('page_career_subtitle') as string);
+const pageTitle = computed(() => localizedString('page_career_title') || t('theme.janari.pages.career.title'));
+const pageSubtitle = computed(() => localizedString('page_career_subtitle') || t('theme.janari.pages.career.subtitle'));
+const latestJobsText = computed(() => localizedString('page_career_latest_jobs') || t('theme.janari.pages.career.latestJobs'));
+const hubinTitle = computed(() => localizedString('page_career_hubin_title') || t('theme.janari.pages.career.hubinTitle'));
+const hubinDesc = computed(() => localizedString('page_career_hubin_desc') || t('theme.janari.pages.career.hubinDesc'));
+const viewPricingText = computed(() => localizedString('page_career_view_pricing') || t('theme.janari.pages.career.viewPricing'));
+const partnershipContactText = computed(() => localizedString('page_career_partnership_contact') || t('theme.janari.pages.career.partnershipContact'));
+const pricingUrl = computed(() => {
+  const raw = getSetting('page_career_pricing_url', '/pricing')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
+})
+const contactUrl = computed(() => {
+  const raw = getSetting('page_career_contact_url', '/contact')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact'
+})
 
 onMounted(() => {
     if (!isEnabled.value && behavior.value === 'redirect') {

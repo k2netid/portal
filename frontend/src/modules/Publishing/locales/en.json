@@ -776,7 +776,9 @@
         "page_news": "News",
         "page_news_desc": "Articles, announcements, and updates",
         "page_contact": "Contact",
-        "page_contact_desc": "Form, email, phone, and map"
+        "page_contact_desc": "Form, email, phone, and map",
+        "page_pricing": "Pricing",
+        "page_pricing_desc": "Pricing page titles and CTA labels"
       }
     },
     "editor": {

@@ -262,6 +262,7 @@ import { ref, onMounted, computed, nextTick, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import api from '@/engine/api/client'
 import { publishingPaths } from '@/engine/api/paths'
@@ -279,13 +280,14 @@ interface Article extends Omit<Partial<Content>, 'category'> {
 
 const { t } = useI18n()
 const { getSetting } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
 const router = useRouter()
 const route = useRoute()
 
 const isEnabled = computed(() => getSetting('enable_blog', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
-const pageTitle = computed(() => getSetting('page_blog_title') as string)
-const pageSubtitle = computed(() => getSetting('page_blog_subtitle') as string)
+const pageTitle = computed(() => localizedString('page_blog_title') || t('theme.janari.pages.blog.title'))
+const pageSubtitle = computed(() => localizedString('page_blog_subtitle') || t('theme.janari.pages.blog.subtitle'))
 
 const pageData = ref<Content | null>(null)
 const articles = ref<Article[]>([])

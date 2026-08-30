@@ -20,13 +20,13 @@
       <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
           <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">
-            {{ t('pages.pricing.sectionLabel') }}
+            {{ sectionLabel }}
           </span>
           <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
-            {{ t('pages.pricing.title') }}
+            {{ pageTitle }}
           </h1>
           <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {{ t('pages.pricing.subtitle') }}
+            {{ pageSubtitle }}
           </p>
         </div>
       </header>
@@ -59,7 +59,7 @@
                     v-if="isFeaturedPackage(pkg)"
                     class="text-[10px] font-black uppercase tracking-widest text-primary mb-3"
                   >
-                    {{ t('pages.pricing.recommended') }}
+                    {{ recommendedText }}
                   </span>
                   <h3 class="text-lg font-bold text-foreground mb-4">{{ pkg.name }}</h3>
                   <div class="mb-6">
@@ -84,7 +84,7 @@
                     class="block text-center py-3 text-xs font-bold uppercase tracking-widest rounded-lg transition-colors"
                     :class="isFeaturedPackage(pkg) ? 'bg-primary text-primary-foreground hover:opacity-90' : 'border border-border hover:bg-muted/50'"
                   >
-                    {{ t('pages.pricing.choosePlan') }}
+                    {{ choosePlanText }}
                   </a>
                 </article>
               </div>
@@ -105,17 +105,17 @@
                 {{ t(`pages.pricing.staticTiers.${tier.key}.description`) }}
               </p>
               <router-link
-                to="/contact"
+                :to="contactUrl"
                 class="block text-center py-3 text-xs font-bold uppercase tracking-widest rounded-lg"
                 :class="tier.featured ? 'bg-primary text-primary-foreground' : 'border border-border hover:bg-muted/50'"
               >
-                {{ t('pages.pricing.contactSales') }}
+                {{ contactSalesText }}
               </router-link>
             </article>
           </div>
 
           <p class="text-center text-xs text-muted-foreground mt-12">
-            {{ t('pages.pricing.footnote') }}
+            {{ footnoteText }}
           </p>
         </div>
       </section>
@@ -130,16 +130,32 @@ import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRen
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
+import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { usePlatformCatalog } from '@/modules/Layout/composables/usePlatformCatalog'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
 import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
 
 const { t } = useThemeI18n('janari')
 const { locale } = useI18n({ useScope: 'global' })
+const { getSetting } = useTheme()
+const { localizedString } = useLocalizedThemeSetting()
 const { live, products, loading } = usePlatformCatalog()
 
 const { pageData } = usePublicPageContent('pricing')
 const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+
+const sectionLabel = computed(() => localizedString('page_pricing_section_label') || t('pages.pricing.sectionLabel'))
+const pageTitle = computed(() => localizedString('page_pricing_title') || t('pages.pricing.title'))
+const pageSubtitle = computed(() => localizedString('page_pricing_subtitle') || t('pages.pricing.subtitle'))
+const recommendedText = computed(() => localizedString('page_pricing_recommended') || t('pages.pricing.recommended'))
+const choosePlanText = computed(() => localizedString('page_pricing_choose_plan') || t('pages.pricing.cta'))
+const contactSalesText = computed(() => localizedString('page_pricing_contact_sales') || t('pages.pricing.contactCta'))
+const footnoteText = computed(() => localizedString('page_pricing_footnote') || t('pages.pricing.footnote'))
+const contactUrl = computed(() => {
+  const raw = getSetting('page_pricing_contact_url', '/contact')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact'
+})
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined

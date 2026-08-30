@@ -10,10 +10,10 @@
             <div class="absolute inset-0 bg-amber-200 opacity-0 group-hover:opacity-40 transition-opacity" />
           </div>
           <h1 class="text-4xl md:text-6xl font-black mb-6">
-            {{ pageTitle || t('theme.janari.pages.achievement.title') }}
+            {{ pageTitle }}
           </h1>
           <p class="text-lg text-muted-foreground max-w-2xl mx-auto font-medium">
-            {{ pageSubtitle || t('theme.janari.pages.achievement.subtitle') }}
+            {{ pageSubtitle }}
           </p>
         </div>
       </section>
@@ -101,14 +101,14 @@
 
       <section class="py-20 border-t border-border bg-muted/20">
         <div class="container mx-auto px-4 text-center max-w-2xl space-y-6">
-          <h2 class="text-2xl font-bold text-foreground">{{ t('theme.janari.pages.achievement.ctaTitle') }}</h2>
-          <p class="text-muted-foreground">{{ t('theme.janari.pages.achievement.ctaBody') }}</p>
+          <h2 class="text-2xl font-bold text-foreground">{{ ctaTitle }}</h2>
+          <p class="text-muted-foreground">{{ ctaBody }}</p>
           <div class="flex flex-wrap justify-center gap-4">
-            <router-link to="/pricing" class="px-8 py-3 text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground rounded-lg">
-              {{ t('theme.janari.pages.achievement.ctaPricing') }}
+            <router-link :to="pricingUrl" class="px-8 py-3 text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground rounded-lg">
+              {{ ctaPricing }}
             </router-link>
-            <router-link to="/contact" class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50">
-              {{ t('theme.janari.pages.achievement.ctaContact') }}
+            <router-link :to="contactUrl" class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50">
+              {{ ctaContact }}
             </router-link>
           </div>
         </div>
@@ -130,18 +130,32 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import PageDisabled from '../components/shared/PageDisabled.vue';
 import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
 import { Trophy } from 'lucide-vue-next';
 
 const { t } = useI18n()
 const { getSetting } = useTheme();
+const { localizedString } = useLocalizedThemeSetting()
 const router = useRouter();
 
 const isEnabled = computed(() => getSetting('enable_achievement', true));
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'));
-const pageTitle = computed(() => getSetting('page_achievement_title') as string);
-const pageSubtitle = computed(() => getSetting('page_achievement_subtitle') as string);
+const pageTitle = computed(() => localizedString('page_achievement_title') || t('theme.janari.pages.achievement.title'));
+const pageSubtitle = computed(() => localizedString('page_achievement_subtitle') || t('theme.janari.pages.achievement.subtitle'));
+const ctaTitle = computed(() => localizedString('page_achievement_cta_title') || t('theme.janari.pages.achievement.ctaTitle'));
+const ctaBody = computed(() => localizedString('page_achievement_cta_body') || t('theme.janari.pages.achievement.ctaBody'));
+const ctaPricing = computed(() => localizedString('page_achievement_cta_pricing') || t('theme.janari.pages.achievement.ctaPricing'));
+const ctaContact = computed(() => localizedString('page_achievement_cta_contact') || t('theme.janari.pages.achievement.ctaContact'));
+const pricingUrl = computed(() => {
+  const raw = getSetting('page_achievement_pricing_url', '/pricing')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
+})
+const contactUrl = computed(() => {
+  const raw = getSetting('page_achievement_contact_url', '/contact')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact'
+})
 
 onMounted(() => {
     if (!isEnabled.value && behavior.value === 'redirect') {

@@ -43,6 +43,13 @@
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_contact_desc"
         },
         {
+            "id": "page-pricing",
+            "manifestCategories": ["Pricing Page"],
+            "icon": "sparkles",
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_pricing",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_pricing_desc"
+        },
+        {
             "id": "page-solusi",
             "manifestCategories": ["Solusi Page"],
             "icon": "layers",
