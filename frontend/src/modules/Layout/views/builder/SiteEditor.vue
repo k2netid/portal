@@ -67,7 +67,11 @@ const handleSave = async (status: string | null) => {
     }
     
     try {
-        await builderRef.value.builder.saveContent()
+        const result = await builderRef.value.builder.saveContent()
+        if (result === false) {
+            toast.error(t('builder.toolbar.saveNeedsPage', 'Open or edit a page before saving.'))
+            return
+        }
         builderRef.value.builder.markAsSaved()
         toast.success(status === 'published' ? 'Site published successfully' : 'Site saved successfully')
     } catch (err) {

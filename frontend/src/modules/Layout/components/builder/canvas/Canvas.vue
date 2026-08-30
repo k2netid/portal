@@ -27,26 +27,41 @@
           data-builder-theme-page="true"
         >
           <ThemePageResolver :page="activeThemePage" />
-          <div class="canvas-theme-page__bar sticky bottom-4 z-20 mx-auto mt-4 mb-6 w-[min(92%,36rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+          <div class="canvas-theme-page__bar sticky bottom-4 z-20 mx-auto mt-4 mb-6 w-[min(92%,40rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <p class="text-xs text-slate-600 dark:text-slate-300">
-              {{ t('builder.canvas.themePageHint', 'Live theme page. Add sections to customize with the visual builder.') }}
+              {{ themePageEditable
+                ? t('builder.canvas.themePageEditing', 'Editing enabled. Add sections, then Save/Publish to override this theme page.')
+                : t('builder.canvas.themePageHint', 'Live theme page (view only). Enable editing to customize with the visual builder.') }}
             </p>
             <div class="flex items-center gap-2">
               <button
+                v-if="!themePageEditable"
                 type="button"
-                class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5"
-                @click="addSection"
+                class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5 disabled:opacity-60"
+                :disabled="themePageBusy"
+                @click="startThemePageEdit"
               >
-                <Plus :size="14" />
-                {{ $t('builder.actions.addSection', 'Add Section') }}
+                {{ themePageBusy
+                  ? t('builder.common.saving', 'Working…')
+                  : t('builder.canvas.editThemePage', 'Edit with Builder') }}
               </button>
-              <button
-                type="button"
-                class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium"
-                @click="openTemplateModal"
-              >
-                {{ t('builder.canvas.templates', 'Templates') }}
-              </button>
+              <template v-else>
+                <button
+                  type="button"
+                  class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5"
+                  @click="addSection"
+                >
+                  <Plus :size="14" />
+                  {{ $t('builder.actions.addSection', 'Add Section') }}
+                </button>
+                <button
+                  type="button"
+                  class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium"
+                  @click="openTemplateModal"
+                >
+                  {{ t('builder.canvas.templates', 'Templates') }}
+                </button>
+              </template>
             </div>
           </div>
         </div>
@@ -118,7 +133,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, watch, onMounted } from 'vue'
+import { computed, inject, watch, onMounted, ref } from 'vue'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js'
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js'
 import { saasLandingPage, homePage, aboutPage, contactPage } from '@/modules/Layout/components/builder/templates/PageTemplates';
@@ -144,11 +159,29 @@ const blocks = computed<BlockInstance[]>({
 })
 const contentTitle = computed(() => builder?.content?.value?.title || '')
 const activeThemePage = computed(() => builder?.activeThemePage?.value || null)
+const themePageEditable = computed(() => !!builder?.content?.value?.id && !!activeThemePage.value)
+const themePageBusy = ref(false)
 const wireframeMode = computed(() => builder?.wireframeMode.value || false)
 const previewMode = computed(() => builder?.previewMode.value || false)
 const gridViewMode = computed(() => builder?.gridViewMode.value || false)
 const activeTheme = computed(() => builder?.activeTheme.value || 'janari')
 const device = computed(() => builder?.device.value || 'desktop')
+
+const startThemePageEdit = async () => {
+  if (!builder?.beginThemePageEdit || themePageBusy.value) return
+  themePageBusy.value = true
+  try {
+    await builder.beginThemePageEdit({
+      slug: builder.content?.value?.slug || '',
+      themePage: activeThemePage.value || '',
+      title: builder.content?.value?.title || '',
+    })
+  } catch (error) {
+    console.error('Failed to enable theme page editing:', error)
+  } finally {
+    themePageBusy.value = false
+  }
+}
 
 // Theme Style Injection
 const hexToHsl = (hex: string): string | null => {
@@ -280,20 +313,31 @@ const clearSelection = () => {
   builder?.clearSelection()
 }
 
-const addSection = () => {
+const addSection = async () => {
+  if (activeThemePage.value && !builder?.content?.value?.id) {
+    await startThemePageEdit()
+  } else if (activeThemePage.value && builder?.ensureThemePageDocument) {
+    await builder.ensureThemePageDocument()
+  }
   builder?.insertModule('section')
 }
 
-const openTemplateModal = () => {
+const openTemplateModal = async () => {
+  if (activeThemePage.value && !builder?.content?.value?.id) {
+    await startThemePageEdit()
+  }
   if (typeof (builder as any)?.openPageTemplateModal === 'function') {
     (builder as any).openPageTemplateModal()
   } else {
-    loadPreset('saas')
+    await loadPreset('saas')
   }
 }
 
-const loadPreset = (type: string) => {
+const loadPreset = async (type: string) => {
   if (!builder) return
+  if (activeThemePage.value && !builder.content?.value?.id) {
+    await startThemePageEdit()
+  }
   if (type === 'saas') {
     builder.blocks.value = saasLandingPage() as any
   } else if (type === 'company' || type === 'about') {

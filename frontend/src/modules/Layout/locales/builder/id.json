@@ -33,7 +33,9 @@
   "canvas": {
     "empty": "Mulai halaman Anda dengan menambahkan seksi baru.",
     "gridViewTitle": "Tampilan Kisi (Grid)",
-    "themePageHint": "Halaman tema live. Tambah seksi untuk mengkustomisasi dengan visual builder.",
+    "themePageHint": "Halaman tema live (hanya lihat). Aktifkan editing untuk mengkustomisasi dengan visual builder.",
+    "themePageEditing": "Editing aktif. Tambah seksi, lalu Save/Publish untuk override halaman tema ini.",
+    "editThemePage": "Edit dengan Builder",
     "templates": "Template"
   },
   "toolbar": {

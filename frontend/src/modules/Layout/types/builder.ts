@@ -354,6 +354,8 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     fetchPages: () => Promise<void>;
     setCurrentPage: (id: number | string) => void;
     openThemePage: (opts: { slug: string; themePage: string; title: string }) => void;
+    beginThemePageEdit: (opts?: { slug?: string; themePage?: string; title?: string }) => Promise<void>;
+    ensureThemePageDocument: () => Promise<boolean>;
     addPage: (title: string) => Promise<void>;
     deletePage: (id: number | string) => Promise<void>;
 }

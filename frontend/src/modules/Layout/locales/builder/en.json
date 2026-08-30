@@ -33,7 +33,9 @@
   "canvas": {
     "empty": "Start your page by adding a section.",
     "gridViewTitle": "Grid View",
-    "themePageHint": "Live theme page. Add sections to customize with the visual builder.",
+    "themePageHint": "Live theme page (view only). Enable editing to customize with the visual builder.",
+    "themePageEditing": "Editing enabled. Add sections, then Save/Publish to override this theme page.",
+    "editThemePage": "Edit with Builder",
     "templates": "Templates"
   },
   "toolbar": {

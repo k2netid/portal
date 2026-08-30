@@ -58,6 +58,79 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         markAsSaved()
     }
 
+    function themePageCmsTitle(title: string): string {
+        return title.replace(/\s*\([^)]*\)\s*$/, '').trim() || title
+    }
+
+    /**
+     * Bind (or create) a Publishing page with the theme route slug so builder edits
+     * persist as meta.builder_blocks and override the live theme template.
+     */
+    async function beginThemePageEdit(opts?: { slug?: string; themePage?: string; title?: string }): Promise<void> {
+        const slug = (opts?.slug || content.value.slug || '').trim()
+        const themePage = (opts?.themePage || activeThemePage.value || '').trim()
+        const title = themePageCmsTitle(opts?.title || content.value.title || slug || 'Page')
+
+        if (!slug || !themePage) {
+            throw new Error('Theme page slug/key missing')
+        }
+
+        await fetchPages()
+        const existing = pages.value.find((p) => p.slug === slug && p.id != null)
+
+        if (existing?.id != null) {
+            await setCurrentPage(existing.id)
+            // Keep live theme chrome until the user adds builder blocks.
+            if ((blocks.value?.length ?? 0) === 0) {
+                activeThemePage.value = themePage
+            }
+            return
+        }
+
+        const payload = {
+            title,
+            slug,
+            type: 'page',
+            status: 'published',
+            body: '',
+            excerpt: '',
+            category_id: null,
+            meta: {
+                builder_blocks: [],
+                builder_schema_version: BUILDER_SCHEMA_VERSION,
+                theme_page: themePage,
+            },
+        }
+
+        const response = await api.post('/manage/publishing/contents', payload)
+        const newPage = response.data?.data || response.data
+        if (!newPage?.id) {
+            throw new Error('Failed to create theme page document')
+        }
+
+        await fetchPages()
+        await setCurrentPage(newPage.id)
+        if ((blocks.value?.length ?? 0) === 0) {
+            activeThemePage.value = themePage
+        }
+    }
+
+    /** Ensure a saveable CMS document exists when customizing a theme route. */
+    async function ensureThemePageDocument(): Promise<boolean> {
+        if (content.value.id) {
+            return true
+        }
+        if (!activeThemePage.value || !content.value.slug) {
+            return false
+        }
+        await beginThemePageEdit({
+            slug: content.value.slug,
+            themePage: activeThemePage.value,
+            title: content.value.title || content.value.slug,
+        })
+        return !!content.value.id
+    }
+
     /** Resolve active theme UUID/slug for manage theme APIs. */
     function resolveThemeRouteKey(preferredSlug?: string): string {
         const slug = (preferredSlug || (typeof activeTheme.value === 'string' ? activeTheme.value : '') || '').trim()
@@ -296,7 +369,12 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
     }
 
     async function saveContent(): Promise<Record<string, unknown> | false> {
-        if (!content.value.id) return false
+        if (!content.value.id) {
+            const ready = await ensureThemePageDocument()
+            if (!ready || !content.value.id) {
+                return false
+            }
+        }
         try {
             const currentMeta = (content.value.meta as Record<string, any>) || {}
             const extractedHtml = extractHtmlFromBlocks(blocks.value)
@@ -310,6 +388,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                     ...currentMeta,
                     builder_blocks: blocks.value,
                     builder_schema_version: BUILDER_SCHEMA_VERSION,
+                    ...(activeThemePage.value ? { theme_page: activeThemePage.value } : {}),
                 },
                 global_variables: globalVariables.getVariables()
             }
@@ -565,6 +644,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         fetchPages,
         setCurrentPage,
         openThemePage,
+        beginThemePageEdit,
+        ensureThemePageDocument,
         addPage,
         deletePage,
         loadContent,
