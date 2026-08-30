@@ -234,19 +234,25 @@ class InstallController extends Controller
 
     protected function createSuperUser(): void
     {
-        // Assuming User model exists and uses Hash
         try {
-            $userClass = '\App\Models\User';
-            if (class_exists($userClass)) {
-                $userClass::updateOrCreate(
-                    ['username' => 'super'],
-                    [
-                        'name' => 'Super Administrator',
-                        'email' => 'super@jejakawan.com',
-                        'password' => \Hash::make('Senja@jejakawan'),
-                        'email_verified_at' => now(),
-                    ]
-                );
+            $emailRaw = config('app.super_admin_email');
+            $email = is_scalar($emailRaw) && (string) $emailRaw !== '' ? (string) $emailRaw : 'super@jejakawan.com';
+            $passwordRaw = config('app.super_admin_password');
+            $password = is_scalar($passwordRaw) && (string) $passwordRaw !== ''
+                ? (string) $passwordRaw
+                : 'password';
+
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                [
+                    'username' => 'super',
+                    'name' => 'Super Administrator',
+                    'password' => \Hash::make($password),
+                    'email_verified_at' => now(),
+                ]
+            );
+            if (method_exists($user, 'assignRole')) {
+                $user->assignRole('super');
             }
         } catch (\Exception $e) {
             \Log::error('Failed to create super user: '.$e->getMessage());

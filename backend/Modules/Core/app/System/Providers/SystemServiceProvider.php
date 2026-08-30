@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use Laravel\Sanctum\Console\Commands\PruneExpired;
+use Modules\Core\System\Console\Commands\ApplyInstallProfileCommand;
 use Modules\Core\System\Console\Commands\CleanupOldLogs;
 use Modules\Core\System\Console\Commands\DynamicOpenApiExport;
 use Modules\Core\System\Console\Commands\LicenseCheckCommand;
@@ -107,6 +108,7 @@ class SystemServiceProvider extends ServiceProvider
             SystemClearCache::class,
             SystemHealthCheck::class,
             LicenseCheckCommand::class,
+            ApplyInstallProfileCommand::class,
         ]);
     }
 

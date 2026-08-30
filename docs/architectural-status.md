@@ -30,6 +30,8 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail. **Boot gate:** Site pack off → `/` = console login; Site on → `/` = public web.
 
+**Install profiles (durable):** `INSTALL_PROFILE=core|cms|cms_site` applied by `DatabaseSeeder` / `ja:apply-install-profile` / `POST …/extensions/apply-install-profile`. Default when `Modules/Site` ships = **`cms_site`** (discover packs, activate CMS+Site, scan themes). Core-only SKUs set `INSTALL_PROFILE=core`. No tinker after `migrate:fresh --seed`.
+
 P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`. Identity **Media** tab is object storage (S3/FTP/disk); editorial library is the **media** pack. Core File Manager stays in Infra.
 
 P4: Data Studio (`sys_content_types`) is operational entities; Library `lib_fields` is CMS CCK. Reserved slugs block CMS collisions. See [data-studio-vs-cck.md](architecture/data-studio-vs-cck.md).

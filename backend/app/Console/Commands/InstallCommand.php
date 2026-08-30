@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
@@ -58,23 +59,33 @@ class InstallCommand extends Command
     {
         $this->comment('🏁 Finalizing installation...');
 
-        // 1. Create Default Super User
-        $this->comment('👤 Creating super administrator account...');
+        // 1. Create Default Super User (seed already creates one; heal if missing)
+        $this->comment('👤 Ensuring super administrator account...');
         try {
-            $userClass = '\App\Models\User';
-            if (class_exists($userClass)) {
-                $userClass::updateOrCreate(
-                    ['username' => 'super'],
-                    [
-                        'name' => 'Super Administrator',
-                        'email' => 'super@jejakawan.com',
-                        'password' => \Hash::make('Senja@jejakawan'),
-                        'email_verified_at' => now(),
-                    ]
-                );
+            $email = 'super@jejakawan.com';
+            $user = \Modules\Core\System\Models\User::updateOrCreate(
+                ['email' => $email],
+                [
+                    'username' => 'super',
+                    'name' => 'Super Administrator',
+                    'password' => \Hash::make('password'),
+                    'email_verified_at' => now(),
+                ]
+            );
+            if (method_exists($user, 'assignRole')) {
+                $user->assignRole('super');
             }
         } catch (\Exception $e) {
             $this->error('❌ Failed to create super user: '.$e->getMessage());
+        }
+
+        // 1b. Apply install profile (CMS + Site by default when Site module ships)
+        $this->comment('📦 Applying install profile…');
+        try {
+            Artisan::call('ja:apply-install-profile');
+            $this->line(Artisan::output());
+        } catch (\Exception $e) {
+            $this->warn('Install profile: '.$e->getMessage());
         }
 
         // 2. Create Lock File

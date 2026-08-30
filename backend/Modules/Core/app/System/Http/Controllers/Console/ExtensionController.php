@@ -279,6 +279,33 @@ class ExtensionController extends BaseApiController
     }
 
     /**
+     * Apply durable install profile (core | cms | cms_site) — discover + activate + theme baseline.
+     * For operators without CLI after a Core-only install who want a public website.
+     */
+    public function applyInstallProfile(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'profile' => 'nullable|string|in:core,cms,cms_site',
+        ]);
+
+        $profile = isset($validated['profile']) && is_string($validated['profile'])
+            ? $validated['profile']
+            : null;
+
+        $result = app(\Modules\Core\System\Services\InstallProfileApplicator::class)->apply($profile);
+
+        $status = $result['errors'] === [] ? 200 : 422;
+
+        return response()->json([
+            'success' => $result['errors'] === [],
+            'message' => $result['errors'] === []
+                ? 'Install profile applied'
+                : 'Install profile applied with errors',
+            'data' => $result,
+        ], $status);
+    }
+
+    /**
      * Update configuration settings for an extension.
      */
     public function updateSettings(Request $request, string $slug): JsonResponse
