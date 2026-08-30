@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Janari Customizer v9: Blog featured/read/sidebar; Career secondary labels + guide repeater; Pricing unit strings; Post author/not-found; Hero scroll/latest-news; About survey chrome.
 - Janari Customizer v8: Header chrome (official lines, login, news marquee); About stats/team CTA; Tim closing links; Contact map/form leftovers.
 - Janari Customizer v7: Footer brand blurb, column titles, newsletter copy, legal links, copyright override.
 - Janari Customizer v6: Search page chrome; News list headings/empty; Achievements filter labels.

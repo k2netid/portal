@@ -40,7 +40,7 @@
               class="mb-12"
             >
               <h2 class="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-6">
-                Featured Article
+                {{ featuredHeading }}
               </h2>
               <router-link
                 :to="featuredPost.link || '#'"
@@ -81,7 +81,7 @@
                       </div>
                       <div>
                         <p class="font-semibold text-foreground">
-                          {{ t('theme.janari.blog.editorialTeam') }}
+                          {{ editorialLabel }}
                         </p>
                         <p class="text-xs text-muted-foreground">
                           {{ featuredPost.readTime }}
@@ -193,7 +193,7 @@
                           </div>
                           
                           <div class="flex items-center gap-1 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                            BACA
+                            {{ readCta }}
                             <ArrowRight class="w-3 h-3" />
                           </div>
                         </div>
@@ -290,6 +290,9 @@ const pageTitle = computed(() => localizedString('page_blog_title') || t('theme.
 const pageSubtitle = computed(() => localizedString('page_blog_subtitle') || t('theme.janari.pages.blog.subtitle'))
 const emptyResultsText = computed(() => localizedString('page_blog_empty') || t('theme.janari.pages.blog.emptyResults'))
 const viewAllArticlesText = computed(() => localizedString('page_blog_view_all') || t('theme.janari.pages.blog.viewAllArticles'))
+const featuredHeading = computed(() => localizedString('page_blog_featured_heading') || 'Featured Article')
+const readCta = computed(() => localizedString('page_blog_read_cta') || 'BACA')
+const editorialLabel = computed(() => localizedString('page_blog_editorial_label') || t('theme.janari.blog.editorialTeam'))
 
 const pageData = ref<Content | null>(null)
 const articles = ref<Article[]>([])

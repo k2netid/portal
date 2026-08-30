@@ -4,7 +4,7 @@
     <div class="space-y-6">
       <h3 class="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
         <span class="w-1 h-4 bg-primary rounded-full" />
-        {{ t('theme.janari.pages.blog.categoriesLabel') }}
+        {{ categoriesLabel }}
       </h3>
       
       <div class="bg-card rounded-2xl p-6 border border-border shadow-sm space-y-6">
@@ -14,7 +14,7 @@
           <input 
             v-model="searchQuery"
             type="text" 
-            :placeholder="t('theme.janari.pages.blog.searchPlaceholder')" 
+            :placeholder="searchPlaceholder" 
             class="w-full bg-muted/50 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all"
             @keyup.enter="handleSearch"
             @input="onSearchInput"
@@ -59,7 +59,7 @@
                 class="text-sm font-medium transition-colors"
                 :class="!currentCategory ? 'text-primary' : 'text-muted-foreground group-hover:text-primary'"
               >
-                {{ t('theme.janari.pages.blog.categoryAll') }}
+                {{ categoryAllLabel }}
               </span>
             </div>
             <span 
@@ -146,7 +146,7 @@
     <div class="space-y-6">
       <h3 class="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
         <span class="w-1 h-4 bg-primary rounded-full" />
-        {{ t('theme.janari.pages.blog.professionalCalendar') }}
+        {{ calendarTitle }}
       </h3>
 
       <div class="bg-card rounded-2xl p-6 border border-border shadow-sm overflow-hidden relative">
@@ -183,7 +183,7 @@
           to="/agenda" 
           class="mt-8 w-full py-3 border border-dashed border-border rounded-xl text-xs font-bold text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group"
         >
-          {{ t('theme.janari.pages.blog.viewAllAgenda') }}
+          {{ viewAllAgenda }}
           <ArrowRight class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
         </router-link>
       </div>
@@ -197,6 +197,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import api from '@/engine/api/client'
 import { libraryPaths } from '@/engine/api/paths'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { logger } from '@/shared/utils/logger'
 import {
   Calendar,
@@ -207,6 +208,13 @@ import {
 } from 'lucide-vue-next'
 
 const { t } = useI18n()
+const { localizedString } = useLocalizedThemeSetting()
+
+const categoriesLabel = computed(() => localizedString('page_blog_categories_label') || t('theme.janari.pages.blog.categoriesLabel'))
+const searchPlaceholder = computed(() => localizedString('page_blog_search_placeholder') || t('theme.janari.pages.blog.searchPlaceholder'))
+const categoryAllLabel = computed(() => localizedString('page_blog_category_all') || t('theme.janari.pages.blog.categoryAll'))
+const calendarTitle = computed(() => localizedString('page_blog_calendar_title') || t('theme.janari.pages.blog.professionalCalendar'))
+const viewAllAgenda = computed(() => localizedString('page_blog_view_all_agenda') || t('theme.janari.pages.blog.viewAllAgenda'))
 
 interface Category {
   id: string;

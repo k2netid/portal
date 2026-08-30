@@ -3,13 +3,13 @@
     <div class="container mx-auto px-4">
       <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
         <span class="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-3 py-1 rounded-full inline-block">
-          Data Model Studio Live Showcase
+          {{ surveyBadge }}
         </span>
         <h2 class="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
-          Apa Kata Pengguna?
+          {{ surveyTitle }}
         </h2>
         <p class="text-muted-foreground text-sm md:text-base leading-relaxed">
-          Umpan balik nyata yang dikumpulkan dan disajikan secara dinamis langsung dari tabel <span class="font-mono text-primary font-semibold">user_survey</span> di Data Model Studio.
+          {{ surveySubtitle }}
         </p>
       </div>
 
@@ -17,7 +17,7 @@
       <div v-if="loading" class="flex items-center justify-center py-12">
         <div class="flex flex-col items-center gap-3 text-muted-foreground">
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-          <span class="text-xs font-medium">Memuat data survei dari Data Model Studio...</span>
+          <span class="text-xs font-medium">{{ surveyLoading }}</span>
         </div>
       </div>
 
@@ -85,7 +85,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+
+const { localizedString } = useLocalizedThemeSetting()
+
+const surveyBadge = computed(() => localizedString('page_about_survey_badge') || 'Data Model Studio Live Showcase')
+const surveyTitle = computed(() => localizedString('page_about_survey_title') || 'Apa Kata Pengguna?')
+const surveySubtitle = computed(() =>
+  localizedString('page_about_survey_subtitle')
+    || 'Umpan balik nyata yang dikumpulkan dan disajikan secara dinamis langsung dari tabel user_survey di Data Model Studio.',
+)
+const surveyLoading = computed(() =>
+  localizedString('page_about_survey_loading') || 'Memuat data survei dari Data Model Studio...',
+)
 
 interface SurveyItem {
   id: string

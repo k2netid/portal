@@ -51,7 +51,7 @@
                 {{ post.author?.name || authorFallback }}
               </p>
               <p class="text-xs text-muted-foreground uppercase tracking-wider">
-                Editor
+                {{ authorRole }}
               </p>
             </div>
           </div>
@@ -146,13 +146,13 @@
       class="text-center py-20"
     >
       <h1 class="text-2xl font-bold text-foreground">
-        {{ $t('publishing.frontend.post.notFound') }}
+        {{ notFoundText }}
       </h1>
       <router-link
         to="/blog"
         class="text-primary hover:text-primary/80 mt-4 inline-block"
       >
-        {{ $t('publishing.frontend.post.backToBlog') }}
+        {{ backToBlogText }}
       </router-link>
     </div>
   </div>
@@ -171,6 +171,7 @@ import { useI18n } from 'vue-i18n';
 import { normalizeLocaleCode } from '@/engine/i18n';
 import { PublishingService } from '@/modules/Publishing/services/publishingService';
 import { useJanariIdentity } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity';
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 
 import { useIconHydration } from '@/shared/composables/useIconHydration';
 import { Calendar, User } from 'lucide-vue-next';
@@ -178,14 +179,21 @@ import { Calendar, User } from 'lucide-vue-next';
 import type { Content } from '@/modules/Publishing/types/content'
 
 const route = useRoute();
-const { locale } = useI18n({ useScope: 'global' });
+const { locale, t } = useI18n({ useScope: 'global' });
+const { localizedString } = useLocalizedThemeSetting();
 const { hydrateIcons } = useIconHydration();
 
 const post = ref<Content | null>(null);
 const loading = ref(true);
 const contentRef = ref<{ $el: HTMLElement } | null>(null);
 const { displaySiteName } = useJanariIdentity();
-const authorFallback = computed(() => `${displaySiteName.value} Editorial`);
+const authorFallback = computed(() => {
+  const tpl = localizedString('page_post_author_fallback') || '{site} Editorial'
+  return tpl.replace(/\{site\}/g, displaySiteName.value || 'Jejakawan')
+});
+const authorRole = computed(() => localizedString('page_post_author_role') || 'Editor');
+const notFoundText = computed(() => localizedString('page_post_not_found') || t('publishing.frontend.post.notFound'));
+const backToBlogText = computed(() => localizedString('page_post_back_to_blog') || t('publishing.frontend.post.backToBlog'));
 
 const builderBlocks = computed(() => (post.value?.meta?.builder_blocks as any[]) || []);
 const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);

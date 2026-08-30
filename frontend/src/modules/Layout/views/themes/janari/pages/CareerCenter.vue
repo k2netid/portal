@@ -20,7 +20,7 @@
                   6
                 </div>
                 <div class="text-[10px] font-bold uppercase tracking-wider opacity-80 mt-1">
-                  {{ t('theme.janari.pages.career.activePartners') }}
+                  {{ partnersStatLabel }}
                 </div>
               </div>
               <div class="p-6 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 text-center min-w-[30px]">
@@ -28,7 +28,7 @@
                   {{ jobsCount }}
                 </div>
                 <div class="text-[10px] font-bold uppercase tracking-wider opacity-80 mt-1">
-                  {{ t('theme.janari.pages.career.newJobsStat') }}
+                  {{ jobsStatLabel }}
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
                 {{ latestJobsText }}
               </h2>
               <button class="text-sm font-bold text-primary hover:underline">
-                {{ t('theme.janari.pages.career.viewAllShort') }}
+                {{ viewAllJobsText }}
               </button>
             </div>
 
@@ -69,7 +69,7 @@
                       <span
                         v-if="job.isNew"
                         class="px-2 py-0.5 rounded-full bg-primary/3 text-primary text-[10px] font-bold uppercase"
-                      >{{ t('theme.janari.pages.career.newBadge') }}</span>
+                      >{{ newBadgeText }}</span>
                     </div>
                     <p class="text-primary font-semibold text-sm">
                       {{ job.company }}
@@ -84,7 +84,7 @@
                     </div>
                   </div>
                   <router-link :to="job.url || '/contact'" class="px-6 py-2.5 rounded-xl bg-primary inline-flex items-center justify-center text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-colors">
-                    {{ t('theme.janari.pages.career.detail') }}
+                    {{ detailButtonText }}
                   </router-link>
                 </div>
               </div>
@@ -115,7 +115,7 @@
             <!-- Resources -->
             <div class="p-8 rounded-[2.5rem] bg-card border border-border">
               <h3 class="font-bold text-lg mb-6">
-                {{ t('theme.janari.pages.career.careerGuideTitle') }}
+                {{ guideTitle }}
               </h3>
               <ul class="space-y-4">
                 <li
@@ -173,6 +173,12 @@ const hubinTitle = computed(() => localizedString('page_career_hubin_title') || 
 const hubinDesc = computed(() => localizedString('page_career_hubin_desc') || t('theme.janari.pages.career.hubinDesc'));
 const viewPricingText = computed(() => localizedString('page_career_view_pricing') || t('theme.janari.pages.career.viewPricing'));
 const partnershipContactText = computed(() => localizedString('page_career_partnership_contact') || t('theme.janari.pages.career.partnershipContact'));
+const partnersStatLabel = computed(() => localizedString('page_career_stat_partners') || t('theme.janari.pages.career.activePartners'));
+const jobsStatLabel = computed(() => localizedString('page_career_stat_jobs') || t('theme.janari.pages.career.newJobsStat'));
+const viewAllJobsText = computed(() => localizedString('page_career_view_all') || t('theme.janari.pages.career.viewAllShort'));
+const newBadgeText = computed(() => localizedString('page_career_new_badge') || t('theme.janari.pages.career.newBadge'));
+const detailButtonText = computed(() => localizedString('page_career_detail') || t('theme.janari.pages.career.detail'));
+const guideTitle = computed(() => localizedString('page_career_guide_title') || t('theme.janari.pages.career.careerGuideTitle'));
 const pricingUrl = computed(() => {
   const raw = getSetting('page_career_pricing_url', '/pricing')
   return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
@@ -188,9 +194,16 @@ onMounted(() => {
     }
 });
 
-const careerGuideLinks = computed(() =>
-    [0, 1, 2, 3].map((i) => t(`theme.janari.pages.career.guideLink${i}`)),
-);
+const careerGuideLinks = computed(() => {
+  const raw = getSetting('page_career_guide_links')
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map((row) => {
+      const item = (row && typeof row === 'object' ? row : {}) as Record<string, unknown>
+      return String(item.label || '').trim()
+    }).filter(Boolean)
+  }
+  return [0, 1, 2, 3].map((i) => t(`theme.janari.pages.career.guideLink${i}`))
+})
 
 const { data: dynamicJobs, hasBinding } = useThemeDataBindings('careers', 'jobs');
 

@@ -3353,5 +3353,672 @@
         "default": "",
         "category": "Contact Page",
         "scope": "theme"
+    },
+    "page_blog_featured_heading": {
+        "label": "News featured heading (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_featured_heading_en": {
+        "label": "News featured heading (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_featured_heading_id": {
+        "label": "News featured heading (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_read_cta": {
+        "label": "News read CTA (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_read_cta_en": {
+        "label": "News read CTA (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_read_cta_id": {
+        "label": "News read CTA (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_editorial_label": {
+        "label": "News editorial label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_editorial_label_en": {
+        "label": "News editorial label (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_editorial_label_id": {
+        "label": "News editorial label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_categories_label": {
+        "label": "News categories label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_categories_label_en": {
+        "label": "News categories label (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_categories_label_id": {
+        "label": "News categories label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_placeholder": {
+        "label": "News search placeholder (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_placeholder_en": {
+        "label": "News search placeholder (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_search_placeholder_id": {
+        "label": "News search placeholder (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_category_all": {
+        "label": "News category all (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_category_all_en": {
+        "label": "News category all (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_category_all_id": {
+        "label": "News category all (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_calendar_title": {
+        "label": "News calendar title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_calendar_title_en": {
+        "label": "News calendar title (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_calendar_title_id": {
+        "label": "News calendar title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all_agenda": {
+        "label": "News view-all agenda (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all_agenda_en": {
+        "label": "News view-all agenda (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_blog_view_all_agenda_id": {
+        "label": "News view-all agenda (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_career_stat_partners": {
+        "label": "Careers partners stat label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_stat_partners_en": {
+        "label": "Careers partners stat label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_stat_partners_id": {
+        "label": "Careers partners stat label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_stat_jobs": {
+        "label": "Careers jobs stat label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_stat_jobs_en": {
+        "label": "Careers jobs stat label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_stat_jobs_id": {
+        "label": "Careers jobs stat label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_view_all": {
+        "label": "Careers view-all jobs (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_view_all_en": {
+        "label": "Careers view-all jobs (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_view_all_id": {
+        "label": "Careers view-all jobs (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_new_badge": {
+        "label": "Careers new badge (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_new_badge_en": {
+        "label": "Careers new badge (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_new_badge_id": {
+        "label": "Careers new badge (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_detail": {
+        "label": "Careers detail button (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_detail_en": {
+        "label": "Careers detail button (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_detail_id": {
+        "label": "Careers detail button (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_guide_title": {
+        "label": "Careers guide title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_guide_title_en": {
+        "label": "Careers guide title (English)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_guide_title_id": {
+        "label": "Careers guide title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Careers Page",
+        "scope": "theme"
+    },
+    "page_career_guide_links": {
+        "label": "Careers guide links",
+        "type": "repeater",
+        "category": "Careers Page",
+        "description": "Empty = locale defaults. One label per row.",
+        "fields": [
+            {
+                "name": "label",
+                "label": "Label",
+                "type": "text"
+            }
+        ],
+        "default": [],
+        "scope": "theme"
+    },
+    "page_pricing_per_month": {
+        "label": "Pricing per-month label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_per_month_en": {
+        "label": "Pricing per-month label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_per_month_id": {
+        "label": "Pricing per-month label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_custom": {
+        "label": "Pricing custom/enterprise label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_custom_en": {
+        "label": "Pricing custom/enterprise label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_custom_id": {
+        "label": "Pricing custom/enterprise label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_members": {
+        "label": "Pricing members label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_members_en": {
+        "label": "Pricing members label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_members_id": {
+        "label": "Pricing members label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_storage": {
+        "label": "Pricing storage label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_storage_en": {
+        "label": "Pricing storage label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_storage_id": {
+        "label": "Pricing storage label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_unlimited": {
+        "label": "Pricing unlimited label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_unlimited_en": {
+        "label": "Pricing unlimited label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_unlimited_id": {
+        "label": "Pricing unlimited label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_platform_label": {
+        "label": "Pricing platform product label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_platform_label_en": {
+        "label": "Pricing platform product label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_platform_label_id": {
+        "label": "Pricing platform product label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_hub_label": {
+        "label": "Pricing hub product label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_hub_label_en": {
+        "label": "Pricing hub product label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_pricing_hub_label_id": {
+        "label": "Pricing hub product label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Pricing Page",
+        "scope": "theme"
+    },
+    "page_post_author_role": {
+        "label": "Post author role (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_author_role_en": {
+        "label": "Post author role (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_author_role_id": {
+        "label": "Post author role (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_author_fallback": {
+        "label": "Post author fallback (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme",
+        "description": "Use {site} for site name."
+    },
+    "page_post_author_fallback_en": {
+        "label": "Post author fallback (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_author_fallback_id": {
+        "label": "Post author fallback (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_not_found": {
+        "label": "Post not found message (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_not_found_en": {
+        "label": "Post not found message (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_not_found_id": {
+        "label": "Post not found message (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_back_to_blog": {
+        "label": "Post back-to-blog label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_back_to_blog_en": {
+        "label": "Post back-to-blog label (English)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "page_post_back_to_blog_id": {
+        "label": "Post back-to-blog label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "News Page",
+        "scope": "theme"
+    },
+    "hero_scroll_label": {
+        "label": "Hero scroll label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "hero_scroll_label_en": {
+        "label": "Hero scroll label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "hero_scroll_label_id": {
+        "label": "Hero scroll label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "hero_latest_news_label": {
+        "label": "Hero latest-news label (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "hero_latest_news_label_en": {
+        "label": "Hero latest-news label (English)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "hero_latest_news_label_id": {
+        "label": "Hero latest-news label (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "Hero Section",
+        "scope": "theme"
+    },
+    "page_about_survey_badge": {
+        "label": "About survey badge (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_badge_en": {
+        "label": "About survey badge (English)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_badge_id": {
+        "label": "About survey badge (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_title": {
+        "label": "About survey title (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_title_en": {
+        "label": "About survey title (English)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_title_id": {
+        "label": "About survey title (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_subtitle": {
+        "label": "About survey subtitle (fallback)",
+        "type": "textarea",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_subtitle_en": {
+        "label": "About survey subtitle (English)",
+        "type": "textarea",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_subtitle_id": {
+        "label": "About survey subtitle (Indonesian)",
+        "type": "textarea",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_loading": {
+        "label": "About survey loading (fallback)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_loading_en": {
+        "label": "About survey loading (English)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
+    },
+    "page_about_survey_loading_id": {
+        "label": "About survey loading (Indonesian)",
+        "type": "text",
+        "default": "",
+        "category": "About Page",
+        "scope": "theme"
     }
 }

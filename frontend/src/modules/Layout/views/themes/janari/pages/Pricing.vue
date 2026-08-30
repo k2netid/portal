@@ -65,18 +65,18 @@
                   <div class="mb-6">
                     <template v-if="pkg.price_monthly > 0">
                       <div class="text-3xl font-black text-primary">{{ formatIdr(pkg.price_monthly) }}</div>
-                      <span class="text-xs text-muted-foreground">{{ t('pages.pricing.perMonth') }}</span>
+                      <span class="text-xs text-muted-foreground">{{ perMonthLabel }}</span>
                     </template>
-                    <span v-else class="text-2xl font-black text-foreground">{{ t('pages.pricing.customEnterprise') }}</span>
+                    <span v-else class="text-2xl font-black text-foreground">{{ customEnterpriseLabel }}</span>
                   </div>
                   <ul class="space-y-3 mb-8 text-sm flex-1">
                     <li class="flex items-center gap-2 text-muted-foreground">
                       <span class="text-primary font-bold">✓</span>
-                      {{ formatLimit(pkg.user_limit) }} {{ t('pages.pricing.members') }}
+                      {{ formatLimit(pkg.user_limit) }} {{ membersLabel }}
                     </li>
                     <li class="flex items-center gap-2 text-muted-foreground">
                       <span class="text-primary font-bold">✓</span>
-                      {{ formatStorage(pkg.storage_limit_mb) }} {{ t('pages.pricing.storage') }}
+                      {{ formatStorage(pkg.storage_limit_mb) }} {{ storageLabel }}
                     </li>
                   </ul>
                   <a
@@ -152,6 +152,11 @@ const recommendedText = computed(() => localizedString('page_pricing_recommended
 const choosePlanText = computed(() => localizedString('page_pricing_choose_plan') || t('pages.pricing.cta'))
 const contactSalesText = computed(() => localizedString('page_pricing_contact_sales') || t('pages.pricing.contactCta'))
 const footnoteText = computed(() => localizedString('page_pricing_footnote') || t('pages.pricing.footnote'))
+const perMonthLabel = computed(() => localizedString('page_pricing_per_month') || t('pages.pricing.perMonth'))
+const customEnterpriseLabel = computed(() => localizedString('page_pricing_custom') || t('pages.pricing.contactForPrice'))
+const membersLabel = computed(() => localizedString('page_pricing_members') || 'members')
+const storageLabel = computed(() => localizedString('page_pricing_storage') || 'storage')
+const unlimitedLabel = computed(() => localizedString('page_pricing_unlimited') || t('pages.pricing.unlimited'))
 const contactUrl = computed(() => {
   const raw = getSetting('page_pricing_contact_url', '/contact')
   return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact'
@@ -172,9 +177,9 @@ const FEATURED_PACKAGE_ID = 'hub-growth'
 const isFeaturedPackage = (pkg: { id: string }): boolean => pkg.id === FEATURED_PACKAGE_ID
 
 const productSectionLabel = (productId: string): string => {
-  if (productId === 'platform') return t('pages.pricing.platformLabel')
-  if (productId === 'hub') return t('pages.pricing.hubLabel')
-  return t('pages.pricing.sectionLabel')
+  if (productId === 'platform') return localizedString('page_pricing_platform_label') || t('pages.pricing.platformLabel')
+  if (productId === 'hub') return localizedString('page_pricing_hub_label') || t('pages.pricing.hubLabel')
+  return sectionLabel.value
 }
 
 const staticTiers = [
@@ -187,6 +192,6 @@ const formatIdr = (amount: number): string => {
   if (!Number.isFinite(amount) || amount <= 0) return '—'
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(amount)
 }
-const formatLimit = (n: number): string => (n >= 999999 ? t('pages.pricing.unlimited') : String(n))
+const formatLimit = (n: number): string => (n >= 999999 ? unlimitedLabel.value : String(n))
 const formatStorage = (mb: number): string => (mb >= 1024 ? `${Math.round(mb / 1024)} GB` : `${mb} MB`)
 </script>

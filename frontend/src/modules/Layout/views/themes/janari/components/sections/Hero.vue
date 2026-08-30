@@ -120,7 +120,7 @@
       class="absolute bottom-40 left-1/2 -translate-x-1/2 z-20 hidden lg:block opacity-50 hover:opacity-100 transition-opacity"
     >
       <div class="flex flex-col items-center gap-2">
-        <span class="text-[9px] font-bold tracking-[0.4em] uppercase text-white/40">{{ t('theme.janari.common.scroll') }}</span>
+        <span class="text-[9px] font-bold tracking-[0.4em] uppercase text-white/40">{{ scrollLabel }}</span>
         <div class="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent relative overflow-hidden">
           <div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-scroll-line" />
         </div>
@@ -135,7 +135,7 @@
         class="w-1/3 flex border-r border-white/5 group relative overflow-hidden bg-white/[0.01] hover:bg-white/[0.04] transition-colors cursor-pointer shrink-0"
       >
         <div class="w-12 lg:w-16 bg-black flex items-center justify-center shrink-0 border-r border-white/10 group-hover:bg-primary transition-colors duration-500 relative z-10 box-border">
-          <span class="rotate-[-90deg] origin-center whitespace-nowrap text-[9px] font-black tracking-[0.4em] uppercase text-white/85 group-hover:opacity-0 transition-opacity duration-300 absolute">{{ t('theme.janari.common.latestNews') }}</span>
+          <span class="rotate-[-90deg] origin-center whitespace-nowrap text-[9px] font-black tracking-[0.4em] uppercase text-white/85 group-hover:opacity-0 transition-opacity duration-300 absolute">{{ latestNewsLabel }}</span>
         </div>
         <div class="flex-1 flex flex-col justify-center px-6 lg:px-10 relative overflow-hidden h-full">
           <div class="flex flex-col justify-center w-full gap-3">
@@ -273,7 +273,7 @@
     <!-- Mobile News -->
     <div class="md:hidden flex flex-col justify-center px-4 py-8 border-b border-white/10 bg-black/80 backdrop-blur-lg w-full z-40">
       <div class="flex items-center justify-between mb-4">
-        <span class="text-[9px] font-black tracking-widest text-primary uppercase">{{ t('theme.janari.common.latestNews') }}</span>
+        <span class="text-[9px] font-black tracking-widest text-primary uppercase">{{ latestNewsLabel }}</span>
         <div class="flex gap-3">
           <button
             class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/70"
@@ -367,6 +367,8 @@ const heroCtaPrimaryText = computed(
 const heroCtaConsoleText = computed(
     () => localizedString('hero_cta_console') || t('theme.janari.hero.ctaSecondary'),
 );
+const scrollLabel = computed(() => localizedString('hero_scroll_label') || t('theme.janari.common.scroll'))
+const latestNewsLabel = computed(() => localizedString('hero_latest_news_label') || t('theme.janari.common.latestNews'))
 const heroCtaPrimaryUrl = computed(() => {
     const raw = getSetting('hero_cta_primary_url', '/solusi')
     return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solusi'
