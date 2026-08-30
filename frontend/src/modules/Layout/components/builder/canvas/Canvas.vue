@@ -35,8 +35,8 @@
           class="canvas-theme-page flex-1 w-full relative"
           data-builder-theme-page="true"
         >
-          <ThemePageResolver :page="activeThemePage" />
-          <div class="canvas-theme-page__bar sticky bottom-4 z-20 mx-auto mt-4 mb-6 w-[min(92%,40rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+          <!-- Sticky top of canvas scroll — long theme pages used to bury this CTA -->
+          <div class="canvas-theme-page__bar sticky top-3 z-30 mx-auto mb-3 w-[min(92%,40rem)] rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-lg px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <p class="text-xs text-slate-600 dark:text-slate-300">
               {{ themePageEditable
                 ? t('builder.canvas.themePageEditing', 'Editing enabled. Add sections, then Save/Publish to override this theme page.')
@@ -73,6 +73,7 @@
               </template>
             </div>
           </div>
+          <ThemePageResolver :page="activeThemePage" />
         </div>
 
         <!-- Empty State (true blank CMS page) -->
