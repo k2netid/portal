@@ -62,10 +62,14 @@ export const handleBeforeEachGuard = async (
     // Guest hardening on console host: sinkhole probes + hide /dash before any login redirect.
     // `/:dashboard_slug?` matches almost every first segment with meta.auth — checking
     // requiresAuth first would leak the login URL for /AdMiN, /dash, scanners, etc.
+    // If a remembered user exists, do not 404 console deep-links (Site Editor) after a refresh race.
+    const restoringRememberedUser = typeof localStorage !== 'undefined'
+        && Boolean(localStorage.getItem('user'));
     if (
         !onPublicSite
         && authStore.authBootstrapComplete
         && !authStore.isAuthenticated
+        && !restoringRememberedUser
         && shouldGuestReceiveSecurityNotFound(to.path)
     ) {
         rememberRouteBeforeError(from.fullPath, returnShell, authStore.isAuthenticated);

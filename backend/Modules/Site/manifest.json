@@ -1,0 +1,29 @@
+{
+  "name": "Site",
+  "slug": "site",
+  "version": "1.0.0",
+  "description": "Public-web pack: when active, apex / serves the theme runtime. Console stays at /dash and /auth/console-*.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "audience",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "dependencies": {
+    "layout": ">=1.0.0",
+    "publishing": ">=1.0.0"
+  },
+  "suggests": {
+    "media": ">=1.0.0",
+    "search": ">=1.0.0",
+    "forms": ">=1.0.0",
+    "analytics": ">=1.0.0",
+    "member": ">=1.0.0"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "site"
+}

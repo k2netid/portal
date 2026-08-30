@@ -23,7 +23,7 @@
           @click="$emit('reply', message)"
         >
           <Reply class="w-3.5 h-3.5" />
-          <span>{{ $t('system.mail.reply') }}</span>
+          <span>{{ $t('mail.reply') }}</span>
         </Button>
 
         <Button
@@ -33,7 +33,7 @@
           @click="$emit('forward', message)"
         >
           <Forward class="w-3.5 h-3.5" />
-          <span>{{ $t('system.mail.forward') }}</span>
+          <span>{{ $t('mail.forward') }}</span>
         </Button>
 
         <Button
@@ -41,11 +41,11 @@
           variant="outline"
           size="sm"
           class="h-7 gap-1.5 text-xs px-2.5 shadow-xs text-amber-700 dark:text-amber-400 border-amber-500/30"
-          :title="$t('system.mail.cancel_schedule')"
+          :title="$t('mail.cancel_schedule')"
           @click="$emit('cancel-schedule', message.id)"
         >
           <Clock class="w-3.5 h-3.5" />
-          <span>{{ $t('system.mail.cancel_schedule') }}</span>
+          <span>{{ $t('mail.cancel_schedule') }}</span>
         </Button>
 
         <!-- Move To Folder Dropdown -->
@@ -55,10 +55,10 @@
               variant="outline"
               size="sm"
               class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
-              :title="$t('system.mail.move')"
+              :title="$t('mail.move')"
             >
               <FolderInput class="w-3.5 h-3.5" />
-              <span class="hidden xl:inline">{{ $t('system.mail.move') }}</span>
+              <span class="hidden xl:inline">{{ $t('mail.move') }}</span>
               <ChevronDown class="w-3 h-3 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
@@ -71,7 +71,7 @@
               @click="$emit('move-to-folder', message.id, target)"
             >
               <Folder class="w-3.5 h-3.5 text-muted-foreground" />
-              <span>{{ $t(`system.mail.folder_${target}`) }}</span>
+              <span>{{ $t(`mail.folder_${target}`) }}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -83,10 +83,10 @@
               variant="outline"
               size="sm"
               class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
-              :title="$t('system.mail.labels')"
+              :title="$t('mail.labels')"
             >
               <Tag class="w-3.5 h-3.5" />
-              <span class="hidden xl:inline">{{ $t('system.mail.labels') }}</span>
+              <span class="hidden xl:inline">{{ $t('mail.labels') }}</span>
               <ChevronDown class="w-3 h-3 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
@@ -113,28 +113,28 @@
               variant="outline"
               size="sm"
               class="h-7 gap-1 text-xs px-2 text-muted-foreground hover:text-foreground shadow-xs"
-              :title="$t('system.mail.snooze')"
+              :title="$t('mail.snooze')"
             >
               <Clock class="w-3.5 h-3.5 text-amber-500" />
-              <span class="hidden xl:inline">{{ $t('system.mail.snooze') }}</span>
+              <span class="hidden xl:inline">{{ $t('mail.snooze') }}</span>
               <ChevronDown class="w-3 h-3 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" class="w-56 text-xs p-1.5 shadow-2xl">
             <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-              {{ $t('system.mail.snooze') }}
+              {{ $t('mail.snooze') }}
             </div>
             <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('later_today')">
               <Clock class="w-3.5 h-3.5 text-muted-foreground" />
-              <span>{{ $t('system.mail.snooze_later_today') }}</span>
+              <span>{{ $t('mail.snooze_later_today') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('tomorrow')">
               <Clock class="w-3.5 h-3.5 text-muted-foreground" />
-              <span>{{ $t('system.mail.snooze_tomorrow') }}</span>
+              <span>{{ $t('mail.snooze_tomorrow') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem class="gap-2 cursor-pointer text-xs" @click="handleSnooze('next_week')">
               <Clock class="w-3.5 h-3.5 text-muted-foreground" />
-              <span>{{ $t('system.mail.snooze_next_week') }}</span>
+              <span>{{ $t('mail.snooze_next_week') }}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -145,7 +145,7 @@
           variant="ghost"
           size="icon"
           class="h-7 w-7 text-muted-foreground hover:text-destructive transition-colors rounded-lg"
-          :title="$t('system.mail.trash')"
+          :title="$t('mail.trash')"
           @click="$emit('move-to-trash', message.id)"
         >
           <Trash2 class="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@
             @click="$emit('restore-from-trash', message.id)"
           >
             <RotateCcw class="w-3.5 h-3.5" />
-            <span>{{ $t('system.mail.restore') }}</span>
+            <span>{{ $t('mail.restore') }}</span>
           </Button>
 
           <Button
@@ -169,7 +169,7 @@
             @click="$emit('delete-permanently', message.id)"
           >
             <Trash2 class="w-3.5 h-3.5" />
-            <span>{{ $t('system.mail.delete_permanently') }}</span>
+            <span>{{ $t('mail.delete_permanently') }}</span>
           </Button>
         </template>
       </div>
@@ -184,7 +184,7 @@
             class="h-7 text-[10px] text-muted-foreground hover:text-foreground px-2"
             @click="toggleAllThreadCards"
           >
-            {{ areAllExpanded ? $t('system.mail.collapse_all') : $t('system.mail.expand_all') }}
+            {{ areAllExpanded ? $t('mail.collapse_all') : $t('mail.expand_all') }}
           </Button>
         </template>
 
@@ -205,7 +205,7 @@
           variant="ghost"
           size="icon"
           class="h-7 w-7 text-muted-foreground hover:text-foreground rounded-lg"
-          :title="$t('system.mail.print')"
+          :title="$t('mail.print')"
           @click="printEmail"
         >
           <Printer class="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@
             v-if="allThreadMessages.length > 1"
             class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
           >
-            {{ $t('system.mail.thread_messages', { count: allThreadMessages.length }) }}
+            {{ $t('mail.thread_messages', { count: allThreadMessages.length }) }}
           </span>
         </div>
 
@@ -305,7 +305,7 @@
                 @click="isUnsubscribeModalOpen = true"
               >
                 <ExternalLink class="w-2.5 h-2.5" />
-                <span>{{ $t('system.mail.unsubscribe') }}</span>
+                <span>{{ $t('mail.unsubscribe') }}</span>
               </Button>
             </div>
             <p class="text-[11px] text-muted-foreground mt-0.5">
@@ -356,7 +356,7 @@
       >
         <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
           <Paperclip class="w-3 h-3 text-primary" />
-          {{ $t('system.mail.attachments') }} ({{ message.attachments.length }})
+          {{ $t('mail.attachments') }} ({{ message.attachments.length }})
         </h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           <div
@@ -375,7 +375,7 @@
               variant="ghost"
               size="icon"
               class="h-6 w-6 text-muted-foreground hover:text-foreground"
-              :title="att.url ? $t('system.mail.download') : 'Download not available for local-only attachments'"
+              :title="att.url ? $t('mail.download') : 'Download not available for local-only attachments'"
               :disabled="!att.url"
               @click="downloadAttachment(att)"
             >
@@ -397,7 +397,7 @@
         <div class="flex items-center justify-between">
           <h4 class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
             <Reply class="w-3 h-3 text-primary" />
-            {{ $t('system.mail.quick_reply') }}
+            {{ $t('mail.quick_reply') }}
             <span class="text-[9px] font-normal normal-case text-muted-foreground">(opens composer)</span>
           </h4>
           <Button
@@ -415,7 +415,7 @@
           <Textarea
             v-model="quickReplyText"
             :rows="2"
-            :placeholder="$t('system.mail.quick_reply_placeholder', { name: message.sender.name })"
+            :placeholder="$t('mail.quick_reply_placeholder', { name: message.sender.name })"
             class="w-full text-xs rounded-xl bg-muted/20 border-border/60 focus-visible:bg-background"
           />
           <div class="flex justify-end gap-2">
@@ -442,9 +442,9 @@
         <Mail class="w-6 h-6 text-muted-foreground/60 stroke-[1.5]" />
       </div>
       <div>
-        <h3 class="text-sm font-bold text-foreground">{{ $t('system.mail.select_message') }}</h3>
+        <h3 class="text-sm font-bold text-foreground">{{ $t('mail.select_message') }}</h3>
         <p class="text-xs text-muted-foreground/70 max-w-sm mt-1">
-          {{ $t('system.mail.select_message_desc') }}
+          {{ $t('mail.select_message_desc') }}
         </p>
       </div>
     </div>
@@ -461,10 +461,10 @@
       <DialogContent class="!p-5 !gap-4 max-w-md bg-card border border-border/80 shadow-2xl rounded-2xl z-[1200] [&>button[aria-label=Close]]:hidden">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
           <AlertTriangle class="w-4 h-4 text-amber-500" />
-          <span>{{ $t('system.mail.unsubscribe_confirm_title') }}</span>
+          <span>{{ $t('mail.unsubscribe_confirm_title') }}</span>
         </DialogTitle>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          {{ $t('system.mail.unsubscribe_confirm_desc') }}
+          {{ $t('mail.unsubscribe_confirm_desc') }}
         </p>
         <div class="flex items-center justify-end gap-2 pt-2">
           <Button
@@ -481,7 +481,7 @@
             class="h-8 text-xs font-semibold"
             @click="confirmUnsubscribe"
           >
-            {{ $t('system.mail.unsubscribe') }}
+            {{ $t('mail.unsubscribe') }}
           </Button>
         </div>
       </DialogContent>

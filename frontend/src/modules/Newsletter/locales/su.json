@@ -1,0 +1,98 @@
+{
+  "navigation": {
+    "menu": {
+      "audience": "Audiens",
+      "newsletter": "Buletin",
+      "emailTemplates": "Template Email"
+    }
+  },
+  "actions": {
+    "delete": "Hapus",
+    "export": "Ekspor CSV"
+  },
+  "confirm": {
+    "delete": "Naha salira yakin hoyong ngahapus {email}?",
+    "forceDelete": "Naha salira yakin hoyong ngahapus {email} secara PERMANEN?",
+    "bulkForceDelete": "Naha salira yakin hoyong ngahapus {count} pelanggan secara PERMANEN?",
+    "restore": "Pulihkan {email}?"
+  },
+  "filters": {
+    "allStatus": "Sadaya Status",
+    "search": "Pilari email atawa nami...",
+    "subscribed": "Berlangganan",
+    "unsubscribed": "Berhenti Langganan"
+  },
+  "messages": {
+    "delete_failed": "Gagal ngahapus pelanggan",
+    "delete_success": "Pelanggan hasil dihapus",
+    "empty": "Teu aya pelanggan kapendak",
+    "export_failed": "Gagal mengekspor pelanggan",
+    "loading": "Nuju ngamuat pelanggan...",
+    "noName": "Tanpa Nami",
+    "selected": "{count} terpilih"
+  },
+  "subtitle": "Ngokolakeun pelanggan buletin salira",
+  "table": {
+    "actions": "Aksi",
+    "joinedAt": "Bergabung Dina",
+    "source": "Sumber",
+    "status": "Status",
+    "subscriber": "Pelanggan"
+  },
+  "title": "Pelanggan Buletin",
+  "title_singular": "Pelanggan",
+  "email_templates": {
+    "form": {
+      "availableVariables": "Variabel Tersedia",
+      "body": "Isi Email",
+      "bodyPlaceholder": "Lebetkeun isi email (mendukung HTML)...",
+      "content": "Kusi",
+      "createTitle": "Jieun Template Email",
+      "details": "Detail Template",
+      "hideVariables": "Sumputkeun Variabel",
+      "name": "Nami Template",
+      "namePlaceholder": "contoh: Email Wilujeng sumping",
+      "previewFailed": "Gagal melihat pratinjau",
+      "showVariables": "Tembongkeun Variabel",
+      "subject": "Subjek",
+      "subjectPlaceholder": "Lebetkeun subjek email...",
+      "type": "Tipe",
+      "editTitle": "Edit Template Email",
+      "sendTest": "Tes Kirim",
+      "testFailed": "Gagal mengirim email uji",
+      "createSubtitle": "Tentukan subjek, isi, sareng variabel pikeun email kaluar.",
+      "editSubtitle": "Aropéa isi template sareng uji sateuacan mengirim kampanye.",
+      "category": "Category"
+    },
+    "types": {
+      "custom": "Kustom",
+      "notification": "Notifikasi",
+      "transactional": "Transaksional"
+    },
+    "list": {
+      "create": "Template Anyar",
+      "empty": "Teu aya template kapendak",
+      "search": "Pilari template...",
+      "title": "Template Email",
+      "subtitle": "Template pikeun kampanye sareng email transaksional."
+    },
+    "table": {
+      "actions": "Aksi",
+      "name": "Nami",
+      "subject": "Subjek",
+      "type": "Tipe",
+      "updated": "Diropéa"
+    },
+    "actions": {
+      "test": "Tes Kirim"
+    },
+    "confirm_delete": "Naha salira yakin hoyong ngahapus template \"{name}\"?",
+    "messages": {
+      "delete_failed": "Gagal ngahapus template",
+      "delete_success": "Template hasil dihapus",
+      "preview_failed": "Gagal melihat pratinjau template",
+      "send_test_failed": "Gagal mengirim email tes",
+      "send_test_success": "Email tes hasil dikirim"
+    }
+  }
+}

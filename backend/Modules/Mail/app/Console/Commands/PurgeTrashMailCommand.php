@@ -6,12 +6,15 @@ namespace Modules\Mail\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Core\System\Models\Setting;
 use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Services\MailAttachmentStore;
 
 class PurgeTrashMailCommand extends Command
 {
+    use SkipsWhenProductInactive;
+
     protected $signature = 'mail:purge-trash
                             {--days= : Override retention days from settings}
                             {--dry-run : Show what would be deleted without deleting}';
@@ -26,6 +29,10 @@ class PurgeTrashMailCommand extends Command
 
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('mail')) {
+            return self::SUCCESS;
+        }
+
         $retentionRaw = $this->option('days') ?? Setting::get('mail_client_trash_retention_days', 30);
         $retentionDays = is_numeric($retentionRaw) ? (int) $retentionRaw : 30;
 

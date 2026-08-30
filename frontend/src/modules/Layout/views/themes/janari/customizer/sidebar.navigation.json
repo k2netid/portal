@@ -1,0 +1,32 @@
+{
+    "reservedManifestCategories": [
+        "General",
+        "Site Info",
+        "Organization Info",
+        "Social Media",
+        "Appearance",
+        "Buttons",
+        "Colors",
+        "Typography",
+        "Fonts",
+        "Layout",
+        "Animations",
+        "Footer",
+        "Public Pages",
+        "CMS Page",
+        "About Page",
+        "Achievements Page",
+        "Careers Page",
+        "News Page",
+        "Contact Page",
+        "Pricing Page",
+        "Search Page",
+        "Products Section",
+        "Partners Section",
+        "CTA Section",
+        "Testimonials Section",
+        "Updates Section",
+        "Solusi Page",
+        "Tim Page"
+    ]
+}

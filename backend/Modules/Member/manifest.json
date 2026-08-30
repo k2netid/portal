@@ -1,0 +1,30 @@
+{
+  "name": "Member",
+  "slug": "member",
+  "version": "1.0.0",
+  "description": "Public reader accounts — register/login/dashboard. Not console users. Publishing comments and bookmarks use MemberIdentityPort.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "audience",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "members.index",
+  "permissions": [
+    "view members",
+    "manage members"
+  ],
+  "features": [
+    {
+      "slug": "member-auth",
+      "name": "Member auth",
+      "description": "Register, login, and token identity for readers",
+      "category": "audience"
+    }
+  ]
+}

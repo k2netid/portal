@@ -1,0 +1,366 @@
+{
+  "navigation": {
+    "menu": {
+      "design": "Téma & Desain",
+      "siteEditor": "Éditor Loka",
+      "menus": "Menu",
+      "widgets": "Widget",
+      "redirects": "Pangalihan"
+    }
+  },
+  "menus": {
+    "actions": {
+      "addAll": "Tambah Sadaya",
+      "addToMenu": "Tambahkeun ka Menu",
+      "backToList": "Balik ka Daptar",
+      "builderView": "Tampilan Builder",
+      "cancel": "Batal",
+      "create": "Menu Anyar",
+      "createAction": "Jieun",
+      "createFirst": "Jieun menu munggaran salira",
+      "createItem": "Tambah Item",
+      "creating": "Nuju ngadamel...",
+      "delete": "Hapus",
+      "deleteItem": "Hapus Item",
+      "edit": "Edit",
+      "listView": "Tampilan Daptar",
+      "or": "atanapi",
+      "preview": "Pratinjau",
+      "save": "Simpen Menu",
+      "saved": "Menu parantos hasil disimpen",
+      "saving": "Nuju nyimpen...",
+      "selectMenu": "Pilih menu pikeun diédit",
+      "update": "Diropéa"
+    },
+    "form": {
+      "addColumnGroup": "Tambah Grup Kolom",
+      "addItems": "Tambah Item Menu",
+      "badgeColor": "Warna Badge",
+      "badgeText": "Téks Badge",
+      "category": "Kategori",
+      "columnHeading": "Judul Kolom",
+      "columnNumber": "Nomer Kolom",
+      "content": "Kusi",
+      "createItemTitle": "Tambah Item Menu",
+      "createTitle": "Jieun Menu",
+      "cssClasses": "Kelas CSS",
+      "customLink": "Tautan Kustom",
+      "dragHelp": "Tarik item pikeun ngatur ulang atanapi nyieun sub-menu",
+      "dragStart": "Tarik item dina sidebar kénca pikeun mimitian nyieun menu salira",
+      "editItemTitle": "Ubah Item Menu",
+      "editTitle": "Ubah Menu",
+      "groups": {
+        "localization": "Lokalisasi",
+        "visibility": "Visibilitas"
+      },
+      "heading": "Judul",
+      "hideLabel": "Sumputkeun Label",
+      "icon": "Ikon",
+      "image": "Gambar",
+      "imageSize": "Ukuran Gambar",
+      "items": "Item Menu",
+      "label": "Label",
+      "labelPlaceholder": "Label pikeun item menu",
+      "linkText": "Téks Tautan",
+      "location": "Lokasi",
+      "megaMenuLayout": "Tata Letak Mega Menu",
+      "menuStructure": "Struktur Menu",
+      "name": "Nami",
+      "namePlaceholder": "Lebetkeun nami menu",
+      "newColumnGroup": "Grup Kolom Anyar",
+      "newLink": "Tautan Anyar",
+      "noCategories": "Teu aya kategori kapendak",
+      "noPages": "Teu aya kaca kapendak",
+      "noPosts": "Teu aya tulisan kapendak",
+      "openInNewTab": "Buka di tab anyar",
+      "options": {
+        "auto169": "Auto (16:9)",
+        "blue": "Biru",
+        "danger": "Bahaya",
+        "default": "Default (Dropdown)",
+        "emerald": "Zamrud",
+        "full": "Lebar Penuh (4 Kolom)",
+        "full169": "Lebar Penuh (16:9)",
+        "grid2": "Grid (2 Kolom)",
+        "grid3": "Grid (3 Kolom)",
+        "landscape_lg": "Lanskap Ageung",
+        "landscape_md": "Lanskap Sedeng",
+        "landscape_sm": "Lanskap Alit",
+        "mega": "Mega Menu",
+        "none": "Teu Aya",
+        "orange": "Oranyeu",
+        "portrait_md": "Potrét Sedeng",
+        "portrait_sm": "Potrét Alit",
+        "primary": "Utama",
+        "purple": "Ungu",
+        "secondary": "Sekunder",
+        "success": "Hasil",
+        "warning": "Pangeling"
+      },
+      "page": "Kaca",
+      "parentItem": "Item Induk",
+      "placeholders": {
+        "cssClasses": "contoh: mb-4",
+        "location": "header, footer, jst.",
+        "name": "Nami menu",
+        "none": "- Teu aya -",
+        "selectCategory": "Pilih kategori...",
+        "selectContent": "Pilih eusi/kusi...",
+        "selectLocation": "Pilih lokasi",
+        "selectPage": "Pilih kaca...",
+        "selectParent": "Pilih menu induk"
+      },
+      "promotionDescription": "Déskripsi Promosi (Quote)",
+      "rootItem": "Item Utama",
+      "selectCategory": "Pilih Kategori",
+      "selectMenu": "Pilih Menu",
+      "selectPage": "Pilih Kaca",
+      "selectPost": "Pilih Tulisan",
+      "settings": "Setélan Menu",
+      "showDividers": "Tembongkeun Pembatas Kolom",
+      "showHeadingLine": "Tembongkeun Garis Judul",
+      "structure": "Struktur Menu",
+      "type": "Tipe",
+      "types": {
+        "category": "Kategori",
+        "column_group": "Grup Kolom",
+        "content": "Eusi/Kusi",
+        "custom": "Tautan Kustom",
+        "link": "Tautan",
+        "page": "Kaca",
+        "post": "Tulisan"
+      },
+      "url": "URL",
+      "requiredPermission": "Widi diperyogikeun",
+      "permissionPlaceholder": "mis. view Dasbor",
+      "titleEnPlaceholder": "mis. Home",
+      "titleIdPlaceholder": "mis. Beranda",
+      "requiresAuth": "Peryogi autentikasi",
+      "guestOnly": "Mung tamu (teu acan lebet)",
+      "titleEn": "Judul (Inggris)",
+      "titleId": "Judul (Indonesia)"
+    },
+    "headers": {
+      "actions": "Aksi",
+      "activeLocations": "Lokasi Aktip",
+      "items": "Item",
+      "itemsCount": "{count} item",
+      "location": "Lokasi",
+      "name": "Nami",
+      "totalMenus": "Total Menu"
+    },
+    "messages": {
+      "createFailed": "Gagal nyieun menu",
+      "customLinkAdded": "Tautan kustom parantos ditambihkeun",
+      "deleteConfirm": "Naha salira yakin hoyong ngahapus menu \"{name}\"?",
+      "deleteFailed": "Gagal ngahapus menu",
+      "deleteItemConfirm": "Naha salira yakin hoyong ngahapus \"{title}\"?",
+      "deleteItemFailed": "Gagal ngahapus item menu",
+      "forceDeleteConfirm": "Naha salira yakin hoyong ngahapus PERMANÉN menu \"{name}\"? Tindakan ieu teu tiasa dibolaykeun.",
+      "restoreConfirm": "Pulihkeun menu \"{name}\"?",
+      "dragHelp": "Tarik item pikeun ngatur ulang atanapi nyieun sub-menu",
+      "empty": "Teu aya menu kapendak",
+      "emptyDescription": "Jieun menu munggaran salira pikeun mimitian ngatur navigasi situs.",
+      "emptyHint": "Tarik item dina sidebar kénca pikeun mimitian ngawangun menu salira.",
+      "emptyItems": "Teu aya item menu. Klik \"Tambah Item\" pikeun ngamimitian.",
+      "enterUrlLabel": "Mangga lebetkeun label sareng URL",
+      "itemDeleted": "Item menu parantos dihapus",
+      "loading": "Nuju ngamuat...",
+      "noMenuSelected": "Teu Aya Menu nu Dipilih",
+      "previewDescription": "Pratinjau tampilan menu di frontend",
+      "saveFailed": "Gagal nyimpen menu",
+      "saveItemFailed": "Gagal nyimpen item menu",
+      "selectItemToEdit": "Mimitian ku milih item pikeun diédit propertina",
+      "loadingFailed": "Gagal ngamuat menu"
+    },
+    "subtitle": "Ngokolakeun menu sareng lokasina.",
+    "title": "Menu",
+    "usage": {
+      "notInUse": "Menu ieu teu ditetepkeun ka slot téma mana waé sareng sanés menu aktip anu dilayanan di situs publik.",
+      "inUseLocations": "Nuju dianggo di:",
+      "themeAssignment": "Theme Customizer — {theme}, slot: {location}",
+      "publicLocation": "Situs publik (menu aktip pikeun lokasi): {location}",
+      "activeTheme": "téma aktip",
+      "inactiveTheme": "téma nonaktip",
+      "softDeleteInUse": "Menu \"{name}\" nuju dianggo. Menu bakal dipindahkeun ka tempat sampah sareng moal dilayanan deui di situs publik. Penugasan di téma panginten masih ngaréferénsi ka menu ieu dugi ka salira ngarobahna di Theme Customizer.",
+      "forceDeleteBlockedTitle": "Teu tiasa hapus permanén",
+      "forceDeleteBlocked": "Menu \"{name}\" masih dianggo sareng teu tiasa dihapus permanén. Hapus heula penugasan di Theme Customizer.",
+      "dismiss": "Ngartos",
+      "deleteTitleInUse": "Hapus menu \"{name}\" (nuju dianggo)",
+      "checkFailed": "Teu tiasa mariksa pamakéan menu. Salira tetep tiasa neruskeun, tapi mangga pariksa heula Theme Customizer sateuacan ngahapus."
+    },
+    "filters": {
+      "notTrashed": "Teu di tempat sampah",
+      "trashedOnly": "Ngan di tempat sampah"
+    }
+  },
+  "widgets": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Ubah"
+    },
+    "empty": "Teu aya widget kapendak",
+    "loading": "Nuju ngamuat...",
+    "messages": {
+      "deleteConfirm": "Naha salira yakin hoyong ngahapus widget \"{title}\"?",
+      "deleteFailed": "Gagal ngahapus widget",
+      "saveFailed": "Gagal nyimpen widget"
+    },
+    "modals": {
+      "widget": {
+        "active": "Aktip",
+        "content": "Eusi/Kusi",
+        "location": "Lokasi",
+        "positionPlaceholder": "sidebar, footer, jst.",
+        "saving": "Nuju nyimpen...",
+        "title": "Judul",
+        "titleCreate": "Jieun Widget",
+        "titleEdit": "Ubah Widget",
+        "type": "Tipe"
+      }
+    },
+    "new": "Widget Anyar",
+    "table": {
+      "actions": "Aksi",
+      "location": "Lokasi",
+      "status": {
+        "inactive": "Teu Aktip"
+      },
+      "title": "Judul",
+      "type": "Tipe"
+    },
+    "types": {
+      "categories": "Kategori",
+      "custom": "Kustom",
+      "html": "HTML",
+      "recent_posts": "Tulisan Panganyarna",
+      "text": "Téks"
+    },
+    "title": "Widget",
+    "subtitle": "Ngokolakeun widget sidebar sareng footer pikeun situs publik.",
+    "statistics": {
+      "total": "Total widget",
+      "active": "Aktip",
+      "inactive": "Teu Aktip"
+    },
+    "search": "Pilari widget…",
+    "filters": {
+      "all": "Sadaya",
+      "active": "Ngan nu Aktip",
+      "inactive": "Ngan nu Teu Aktip"
+    }
+  },
+  "redirects": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Ubah"
+    },
+    "empty": "Teu aya pangalihan kapendak",
+    "loading": "Nuju ngamuat...",
+    "messages": {
+      "deleteConfirm": "Naha salira yakin hoyong ngahapus pangalihan dina \"{from}\"?",
+      "deleteFailed": "Gagal ngahapus pangalihan",
+      "saveFailed": "Gagal nyimpen pangalihan"
+    },
+    "modals": {
+      "redirect": {
+        "active": "Aktip",
+        "code": "Kode Status",
+        "codes": {
+          "p301": "301 - Pangalihan Permanén",
+          "p308": "308 - Pangalihan Permanén (Pertahankeun Metode)",
+          "t302": "302 - Pangalihan Samentara",
+          "t307": "307 - Pangalihan Samentara (Pertahankeun Metode)"
+        },
+        "from": "URL Asal",
+        "fromHint": "Jalur URL sumber (misal, /kaca-lami)",
+        "fromPlaceholder": "/jalur-lami",
+        "saving": "Nuju nyimpen...",
+        "titleCreate": "Jieun Pangalihan",
+        "titleEdit": "Ubah Pangalihan",
+        "to": "URL Tujuan",
+        "toHint": "Jalur URL tujuan atanapi URL lengkep",
+        "toPlaceholder": "/jalur-anyar"
+      }
+    },
+    "new": "Pangalihan Anyar",
+    "search": "Pilari pangalihan...",
+    "statistics": {
+      "active": "Pangalihan Aktip",
+      "hits": "Total Klik",
+      "total": "Total Pangalihan"
+    },
+    "status": {
+      "active": "Aktip",
+      "inactive": "Teu Aktip"
+    },
+    "table": {
+      "actions": "Aksi",
+      "code": "Kode Status",
+      "from": "URL Asal",
+      "hits": "Klik",
+      "status": "Status",
+      "to": "URL Tujuan"
+    },
+    "title": "Pangalihan",
+    "subtitle": "Atur redirect URL sareng pantau aturan lalu lintas."
+  },
+  "themes": {
+    "loadFailed": "Gagal ngamuat téma",
+    "defaultName": "Default",
+    "actions": {
+      "upload": "Unggah téma (ZIP)",
+      "activate": "Aktipkeun",
+      "customizer": "Customizer Téma",
+      "customize": "Saluyukeun",
+      "openCustomizer": "Buka Customizer",
+      "preview": "Pratinjau",
+      "settings": "Setélan",
+      "validate": "Validasi"
+    },
+    "uploading": "Nuju ngunggah…",
+    "source": {
+      "uploaded": "Diunggah",
+      "bundled": "Bundled"
+    },
+    "messages": {
+      "uploadSuccess": "Paket téma parantos hasil diunggah.",
+      "uploadFailed": "Gagal ngunggah téma.",
+      "uploadDisabled": "Unggahan téma dinonaktipkeun di server ieu.",
+      "activateConfirm": "Naha salira yakin hoyong ngaktipkeun téma \"{name}\"?",
+      "activateFailed": "Gagal ngaktipkeun téma",
+      "activateSuccess": "Téma parantos hasil diaktipkeun",
+      "scanFailed": "Gagal mindai téma",
+      "scanSuccess": "Mindai parantos réngsé! Mendakan {count} téma.",
+      "validateError": "Gagal memvalidasi téma",
+      "validateFailed": "Validasi téma gagal:",
+      "validateSuccess": "Téma valid!"
+    },
+    "list": {
+      "by": "ku {author}",
+      "child": "Anak",
+      "empty": "Teu aya téma kapendak",
+      "emptySubtitle": "Mimitian ku nyieun téma anyar.",
+      "version": "v{version}"
+    },
+    "modals": {
+      "previewTitle": "Pratinjau Téma: {name}"
+    },
+    "scan": "Pindai Téma",
+    "scanning": "Nuju mindai...",
+    "status": {
+      "active": "Aktip",
+      "broken": "Ruksak",
+      "inactive": "Teu Aktip",
+      "pending": "Antosan"
+    },
+    "subtitle": "Ngokolakeun sareng nyaluyukeun téma salira",
+    "title": "Manajemén Téma",
+    "types": {
+      "admin": "Admin",
+      "all": "Sadaya Tipe",
+      "email": "Email",
+      "frontend": "Frontend"
+    }
+  }
+}

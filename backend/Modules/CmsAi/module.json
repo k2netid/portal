@@ -1,0 +1,11 @@
+{
+  "name": "CmsAi",
+  "alias": "cms-ai",
+  "description": "CMS publishing AI assist, usage metering, and taxonomy batch jobs",
+  "keywords": ["ai", "cms-ai", "publishing", "taxonomy"],
+  "priority": 33,
+  "providers": [
+    "Modules\\CmsAi\\Providers\\CmsAiServiceProvider"
+  ],
+  "files": []
+}

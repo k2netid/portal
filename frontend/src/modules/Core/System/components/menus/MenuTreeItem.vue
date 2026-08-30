@@ -59,6 +59,12 @@
             >
               ext: {{ menu.extension_slug }}
             </span>
+            <span
+              v-if="isModuleInactive"
+              class="px-1.5 py-0.2 rounded bg-amber-500/15 text-[9px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 border border-amber-500/30"
+            >
+              inactive module
+            </span>
           </div>
 
           <div class="flex items-center gap-2 text-[10px] text-muted-foreground mt-0.5 flex-wrap">
@@ -122,6 +128,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import {
   GripVertical,
   ChevronRight,
@@ -146,6 +153,15 @@ const emit = defineEmits<{
 
 const isExpanded = ref(true);
 const isDropTarget = ref(false);
+const systemStore = useSystemStore();
+
+const isModuleInactive = computed(() => {
+    const slug = props.menu.extension_slug;
+    if (!slug) {
+        return false;
+    }
+    return !systemStore.activeExtensions.includes(slug);
+});
 
 const hasChildren = computed(() => {
     return Array.isArray(props.menu.children) && props.menu.children.length > 0;

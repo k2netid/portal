@@ -20,5 +20,6 @@ trait ActivatesMailExtension
                 'license' => 'Proprietary',
             ],
         );
+        Extension::flushProductActiveMemo();
     }
 }

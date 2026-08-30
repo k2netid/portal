@@ -1,0 +1,98 @@
+{
+  "navigation": {
+    "menu": {
+      "audience": "Audience",
+      "newsletter": "Newsletter",
+      "emailTemplates": "Email Templates"
+    }
+  },
+  "actions": {
+    "delete": "Delete",
+    "export": "Export CSV"
+  },
+  "confirm": {
+    "delete": "Are you sure you want to delete {email}?",
+    "forceDelete": "Are you sure you want to PERMANENTLY delete {email}?",
+    "bulkForceDelete": "Are you sure you want to PERMANENTLY delete {count} subscribers?",
+    "restore": "Restore {email}?"
+  },
+  "filters": {
+    "allStatus": "All Status",
+    "search": "Search email or name...",
+    "subscribed": "Subscribed",
+    "unsubscribed": "Unsubscribed"
+  },
+  "messages": {
+    "delete_failed": "Failed to delete subscriber",
+    "delete_success": "Subscriber deleted successfully",
+    "empty": "No subscribers found",
+    "export_failed": "Failed to export subscribers",
+    "loading": "Loading subscribers...",
+    "noName": "No Name",
+    "selected": "{count} selected"
+  },
+  "subtitle": "Manage your newsletter subscribers",
+  "table": {
+    "actions": "Actions",
+    "joinedAt": "Joined At",
+    "source": "Source",
+    "status": "Status",
+    "subscriber": "Subscriber"
+  },
+  "title": "Newsletter Subscribers",
+  "title_singular": "Subscriber",
+  "email_templates": {
+    "form": {
+      "availableVariables": "Available Variables",
+      "body": "Body",
+      "bodyPlaceholder": "Enter email body (HTML supported)...",
+      "content": "Content",
+      "createTitle": "Create Email Template",
+      "details": "Template Details",
+      "hideVariables": "Hide Variables",
+      "name": "Template Name",
+      "namePlaceholder": "e.g., Welcome Email",
+      "previewFailed": "Failed to preview template",
+      "showVariables": "Show Variables",
+      "subject": "Subject",
+      "subjectPlaceholder": "Enter email subject...",
+      "type": "Type",
+      "editTitle": "Edit Email Template",
+      "sendTest": "Send Test",
+      "testFailed": "Failed to send test email",
+      "createSubtitle": "Define subject, body, and variables for outbound email.",
+      "editSubtitle": "Update template content and test before sending campaigns.",
+      "category": "Category"
+    },
+    "types": {
+      "custom": "Custom",
+      "notification": "Notification",
+      "transactional": "Transactional"
+    },
+    "list": {
+      "create": "New Template",
+      "empty": "No templates found",
+      "search": "Search templates...",
+      "title": "Email Templates",
+      "subtitle": "Reusable templates for campaigns and transactional email."
+    },
+    "table": {
+      "actions": "Actions",
+      "name": "Name",
+      "subject": "Subject",
+      "type": "Type",
+      "updated": "Updated"
+    },
+    "actions": {
+      "test": "Test Send"
+    },
+    "confirm_delete": "Are you sure you want to delete template \"{name}\"?",
+    "messages": {
+      "delete_failed": "Failed to delete template",
+      "delete_success": "Template deleted successfully",
+      "preview_failed": "Failed to preview template",
+      "send_test_failed": "Failed to send test email",
+      "send_test_success": "Test email sent successfully"
+    }
+  }
+}

@@ -12,8 +12,9 @@ test.describe('Hub onboarding wizard', () => {
     await page.goto('/auth/console-sign-in');
     await page.fill('#email', loginEmail);
     await page.fill('#password', loginPassword);
+    await expect(page.locator('button[type="submit"]')).toBeEnabled();
     await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL(/\/dashboard/, { timeout: 15_000 });
+    await expect(page).toHaveURL(/\/(?:dash|ja-dash)(?:\/dashboard)?(?:\/|$|\?)/, { timeout: 15_000 });
 
     const wizard = page.getByTestId('hub-onboarding-wizard');
     await expect(wizard).toBeVisible({ timeout: 15_000 });

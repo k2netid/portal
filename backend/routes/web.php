@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SpaController::class, 'index']);
 
+// Legacy public prefix — redirect to apex when Site pack is product-active.
+Route::get('/site/{any?}', [SpaController::class, 'legacySiteRedirect'])->where('any', '.*');
+
 Route::any('/cdn-cgi/{path?}', [SpaController::class, 'cdnCgi'])->where('path', '.*');
 
 $probePaths = [

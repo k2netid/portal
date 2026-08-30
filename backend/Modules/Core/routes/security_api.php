@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Analytics\Http\Controllers\SlowQueryController;
 use Modules\Core\Security\Http\Controllers\AbacPolicyController;
 use Modules\Core\Security\Http\Controllers\CspReportController;
 use Modules\Core\Security\Http\Controllers\SecurityController;
 use Modules\Core\Security\Http\Controllers\SiemExportController;
 use Modules\Core\System\Http\Controllers\Console\DependencyPackageController;
 use Modules\Core\System\Http\Controllers\Console\DependencyVulnerabilityController;
-use Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController;
 
 Route::prefix('v1')->group(function (): void {
     // Security Public (Infrastructure Layer)
@@ -36,7 +36,7 @@ Route::prefix('v1')->group(function (): void {
             Route::get('csp-reports/statistics', [CspReportController::class, 'statistics']);
             Route::post('csp-reports/bulk-action', [CspReportController::class, 'bulkAction']);
 
-            if (class_exists('Modules\Intelligence\Analytics\Http\Controllers\SlowQueryController')) {
+            if (class_exists('Modules\Analytics\Http\Controllers\SlowQueryController')) {
                 Route::get('slow-queries', [SlowQueryController::class, 'index']);
                 Route::get('slow-queries/statistics', [SlowQueryController::class, 'statistics']);
             }

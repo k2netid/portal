@@ -24,4 +24,4 @@ Do not add `modules/` or `features/` folders here; those were removed after the 
 
 Register new modules in `src/engine/i18n/moduleLocales.ts`.
 
-**Public themes** (Janari, future extensions): co-located under `src/modules/Content/Layout/views/themes/<slug>/locales/` → namespace `theme.<slug>.*`. See `views/themes/readme.md` and `src/engine/i18n/themeLocales.ts`.
+**Public themes** (Janari, future extensions): co-located under `src/modules/Layout/views/themes/<slug>/locales/` → namespace `theme.<slug>.*`. See `views/themes/readme.md` and `src/engine/i18n/themeLocales.ts`.

@@ -37,14 +37,14 @@
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
         "league/commonmark": "^2.8.2",
-        "maatwebsite/excel": "^3.1.70",
+        "maatwebsite/excel": "^4.0",
         "mpdf/mpdf": "^8.2",
         "nwidart/laravel-modules": "^12.0",
+        "phpoffice/phpspreadsheet": "^5.3",
         "pragmarx/google2fa-laravel": "^3.0",
         "spatie/laravel-activitylog": "^4.12",
         "spatie/laravel-medialibrary": "^11.21",
-        "spatie/laravel-permission": "^7.2",
-        "phpoffice/phpspreadsheet": "^1.30.6"
+        "spatie/laravel-permission": "^7.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -69,6 +69,18 @@
             "Modules\\Core\\Infra\\Database\\Factories\\": "Modules/Core/database/factories/Infra/",
             "Modules\\Core\\Infra\\Database\\Seeders\\": "Modules/Core/database/seeders/Infra/",
             "Modules\\Mail\\": "Modules/Mail/app/",
+            "Modules\\Library\\": "Modules/Library/app/",
+            "Modules\\Publishing\\": "Modules/Publishing/app/",
+            "Modules\\Media\\": "Modules/Media/app/",
+            "Modules\\Layout\\": "Modules/Layout/app/",
+            "Modules\\Forms\\": "Modules/Forms/app/",
+            "Modules\\Newsletter\\": "Modules/Newsletter/app/",
+            "Modules\\Analytics\\": "Modules/Analytics/app/",
+            "Modules\\Analytics\\Database\\Factories\\": "Modules/Analytics/database/factories/",
+            "Modules\\Search\\": "Modules/Search/app/",
+            "Modules\\CmsAi\\": "Modules/CmsAi/app/",
+            "Modules\\Member\\": "Modules/Member/app/",
+            "Modules\\Site\\": "Modules/Site/app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -76,7 +88,18 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Modules\\Mail\\Tests\\": "Modules/Mail/tests/"
+            "Modules\\Mail\\Tests\\": "Modules/Mail/tests/",
+            "Modules\\Library\\Tests\\": "Modules/Library/tests/",
+            "Modules\\Publishing\\Tests\\": "Modules/Publishing/tests/",
+            "Modules\\Media\\Tests\\": "Modules/Media/tests/",
+            "Modules\\Layout\\Tests\\": "Modules/Layout/tests/",
+            "Modules\\Forms\\Tests\\": "Modules/Forms/tests/",
+            "Modules\\Newsletter\\Tests\\": "Modules/Newsletter/tests/",
+            "Modules\\Analytics\\Tests\\": "Modules/Analytics/tests/",
+            "Modules\\Search\\Tests\\": "Modules/Search/tests/",
+            "Modules\\CmsAi\\Tests\\": "Modules/CmsAi/tests/",
+            "Modules\\Member\\Tests\\": "Modules/Member/tests/",
+            "Modules\\Site\\Tests\\": "Modules/Site/tests/"
         }
     },
     "scripts": {

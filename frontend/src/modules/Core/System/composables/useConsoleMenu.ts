@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, unref, type MaybeRef } from 'vue';
 import api from '@/engine/api/client';
 import { useToast } from '@/shared/composables/useToast';
 import { useNavigationStore } from '@/shared/stores/navigation';
@@ -31,19 +31,86 @@ export function useConsoleMenu() {
     const saving = ref(false);
     const selectedGroup = ref<string>('all');
 
-    const availableGroups = [
+    const catalogGroups = ref<Array<{ slug: string; name: string; icon: string }>>([
         { slug: 'all', name: 'All Groups', icon: 'layers' },
-        { slug: 'studio', name: 'Data Studio', icon: 'layers' },
+        { slug: 'studio', name: 'Data Model Studio', icon: 'layers' },
+        { slug: 'editorial', name: 'Editorial', icon: 'file-text' },
+        { slug: 'insight', name: 'Insight', icon: 'bar-chart' },
+        { slug: 'library', name: 'Library', icon: 'bookmark' },
+        { slug: 'audience', name: 'Audience', icon: 'users' },
         { slug: 'identity', name: 'Users & Access', icon: 'users' },
         { slug: 'communications', name: 'Communications', icon: 'mail' },
         { slug: 'observability', name: 'Journals', icon: 'book-open' },
         { slug: 'system_config', name: 'Configuration', icon: 'sliders' },
         { slug: 'infrastructure', name: 'Infrastructure', icon: 'cpu' },
         { slug: 'integrations_dev', name: 'Identity & Integrations', icon: 'code' },
-    ];
+    ]);
+
+    const extractGroupList = (payload: unknown): unknown[] => {
+        if (Array.isArray(payload)) {
+            return payload;
+        }
+        if (payload && typeof payload === 'object') {
+            const inner = (payload as { data?: unknown }).data;
+            if (Array.isArray(inner)) {
+                return inner;
+            }
+            return Object.values(payload as Record<string, unknown>);
+        }
+        return [];
+    };
+
+    const normalizeGroups = (payload: unknown): Array<{ slug: string; name: string; icon: string }> => {
+        return extractGroupList(payload).flatMap((entry) => {
+            if (!entry || typeof entry !== 'object') {
+                return [];
+            }
+            const row = entry as { slug?: unknown; name?: unknown; icon?: unknown };
+            if (typeof row.slug !== 'string' || row.slug === '') {
+                return [];
+            }
+            return [{
+                slug: row.slug,
+                name: typeof row.name === 'string' && row.name !== '' ? row.name : row.slug,
+                icon: typeof row.icon === 'string' && row.icon !== '' ? row.icon : 'folder',
+            }];
+        });
+    };
+
+    /** Plain ref (not computed-of-ref) so v-for never iterates a ComputedRef object. */
+    const availableGroups = catalogGroups;
+
+    const filterGroups = (source: MaybeRef<Array<{ slug: string; name: string; icon: string }>>, query: string) => {
+        const raw = unref(source);
+        const asList = Array.isArray(raw)
+            ? raw
+            : (raw && typeof raw === 'object' ? Object.values(raw as Record<string, { slug: string; name: string; icon: string }>) : []);
+        const list = asList.filter((g) => g && typeof g.slug === 'string');
+        const needle = query.trim().toLowerCase();
+        if (!needle) {
+            return list;
+        }
+        return list.filter((g) => (
+            g.slug.toLowerCase().includes(needle)
+            || (g.name || '').toLowerCase().includes(needle)
+        ));
+    };
+
+    const fetchGroups = async () => {
+        try {
+            const res = await api.get('/manage/console-menus/groups');
+            const normalized = normalizeGroups(res.data?.data ?? res.data);
+            if (normalized.length > 0) {
+                catalogGroups.value = normalized;
+            }
+        } catch {
+            /* keep catalog fallback */
+        }
+    };
 
     const fetchMenus = async (group?: string) => {
         loading.value = true;
+        await fetchGroups();
         try {
             const params: Record<string, string> = {};
             if (group && group !== 'all') {
@@ -146,6 +213,8 @@ export function useConsoleMenu() {
         saving,
         selectedGroup,
         availableGroups,
+        filterGroups,
+        fetchGroups,
         fetchMenus,
         saveMenu,
         deleteMenu,

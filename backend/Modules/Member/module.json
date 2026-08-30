@@ -1,0 +1,11 @@
+{
+  "name": "Member",
+  "alias": "member",
+  "description": "Public reader identity — separate from console IAM",
+  "keywords": ["member", "audience", "identity"],
+  "priority": 45,
+  "providers": [
+    "Modules\\Member\\Providers\\MemberServiceProvider"
+  ],
+  "files": []
+}

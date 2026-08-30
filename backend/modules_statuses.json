@@ -1,4 +1,15 @@
 {
     "Core": true,
-    "Mail": true
+    "Mail": true,
+    "Library": true,
+    "Publishing": true,
+    "Media": true,
+    "Layout": true,
+    "Forms": true,
+    "Newsletter": true,
+    "Analytics": true,
+    "Search": true,
+    "CmsAi": true,
+    "Member": true,
+    "Site": true
 }

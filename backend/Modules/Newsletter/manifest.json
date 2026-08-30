@@ -1,0 +1,39 @@
+{
+  "name": "Newsletter",
+  "slug": "newsletter",
+  "version": "1.0.0",
+  "description": "Subscriber list, public subscribe/unsubscribe API, welcome email, and console shortcuts to Core email templates.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "cms",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "newsletter",
+  "suggests": {
+    "publishing": ">=1.0.0"
+  },
+  "features": [
+    {
+      "slug": "subscribers",
+      "name": "Subscribers",
+      "description": "Manage newsletter subscriber list and exports",
+      "category": "marketing"
+    },
+    {
+      "slug": "public-subscribe",
+      "name": "Public Subscribe",
+      "description": "Embed subscribe API for themes and builder blocks",
+      "category": "utility"
+    }
+  ],
+  "permissions": [
+    "view newsletter",
+    "manage newsletter"
+  ]
+}

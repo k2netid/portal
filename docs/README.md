@@ -11,9 +11,12 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | Dokumen | Deskripsi |
 | :--- | :--- |
 | [**AGENT_START_HERE**](AGENT_START_HERE.md) | Cerita fork, branch strategy, aturan agent |
-| [**Architectural status**](architectural-status.md) | Apa yang live di `main` vs legacy CMS/CP |
+| [**Branching**](branching.md) | `main` + `integrate/*` + `feat`/`fix` |
+| [**Architectural status**](architectural-status.md) | Kernel `main` + CMS packs / `/site` di `integrate/cms` |
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
+| [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |
+| [**External module packaging**](extensions/external-module-packaging.md) | P2: path/VCS/in-tree packs tanpa fork kernel; CMS extract order |
 
 ---
 
@@ -22,6 +25,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | Dokumen | Deskripsi |
 | :--- | :--- |
 | [**01. Overview & Architecture**](architecture/01-overview-and-tier-design.md) | Modular monolith, tier System / Infra / Security |
+| [**ja-CE comprehensive audit (2026-08-27)**](architecture/ja-ce-comprehensive-audit-2026-08-27.md) | Honesty map — W1–W4 landed; W5 naming + merge gate residual |
 | [**02. Backend Standards**](architecture/02-backend-standards.md) | Laravel patterns, FormRequest, services, tests |
 | [**03. Frontend Standards**](architecture/03-frontend-standards.md) | Vue 3 SPA, Pinia, engine layout |
 | [**05. i18n Guidelines**](architecture/05-i18n-guidelines.md) | Paritas `id` / `en` / `su` |

@@ -1,0 +1,62 @@
+{
+  "name": "Publishing",
+  "slug": "publishing",
+  "version": "1.0.0",
+  "description": "Console content publishing \u2014 articles, pages, revisions, comments, and SEO tools. Depends on Library.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "cms",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "publishing-settings",
+  "dependencies": {
+    "library": ">=1.0.0"
+  },
+  "suggests": {
+    "media": ">=1.0.0",
+    "layout": ">=1.1.0"
+  },
+  "features": [
+    {
+      "slug": "contents",
+      "name": "Contents",
+      "description": "Articles and pages with editorial workflow",
+      "category": "marketing"
+    },
+    {
+      "slug": "comments",
+      "name": "Comments",
+      "description": "Comment moderation",
+      "category": "marketing"
+    },
+    {
+      "slug": "seo",
+      "name": "SEO tools",
+      "description": "Per-content SEO analysis helpers",
+      "category": "marketing"
+    }
+  ],
+  "permissions": [
+    "view content",
+    "create content",
+    "edit content",
+    "delete content",
+    "approve content",
+    "publish content",
+    "manage content",
+    "view comments",
+    "manage comments",
+    "view seo",
+    "manage seo",
+    "view content templates",
+    "manage content templates",
+    "edit content templates",
+    "delete content templates"
+  ]
+}

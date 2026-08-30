@@ -1,0 +1,11 @@
+{
+  "name": "Site",
+  "alias": "site",
+  "description": "Public theme runtime — not a second CMS",
+  "keywords": ["public", "theme", "site"],
+  "priority": 50,
+  "providers": [
+    "Modules\\Site\\Providers\\SiteServiceProvider"
+  ],
+  "files": []
+}

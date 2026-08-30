@@ -13,16 +13,21 @@ Repo ini **bukan** `ja-control-plane`. Control plane (`ja-control-plane`) tetap 
 
 | Branch | Peran |
 | :--- | :--- |
-| **`main`** | Kernel canonical: `Modules/Core` (`System`, `Infra`, `Security`) + unified console SPA |
+| **`main`** | Trunk — kernel canonical (`Modules/Core` + unified console). Pack yang sudah merge ikut di sini. |
+| **`integrate/<domain>`** | Sementara — gelombang besar (saat ini **`integrate/cms`**). Merge ke `main` lalu hapus. |
+| **`feat/…` / `fix/…`** | Pendek — PR ke `main` atau ke integrate aktif; hapus setelah merge. |
 
-Branch **`develop`** (line CMS) **dihapus Aug 2026**. Content/themes/member = downstream repo forked from `main`.
+Kebijakan penuh: [branching.md](branching.md).  
+Branch **`develop`** dihapus Aug 2026. Snapshot status: [architectural-status.md](architectural-status.md).
 
 ## Struktur wajib dibaca
 
 1. [docs/architectural-status.md](architectural-status.md) — apa yang live vs legacy
-2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md)
+2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md) · [Data Studio vs CCK](architecture/data-studio-vs-cck.md) · [ja-CE audit 2026-08-27](architecture/ja-ce-comprehensive-audit-2026-08-27.md)
 3. [docs/product/downstream-apps-and-licensing.md](product/downstream-apps-and-licensing.md)
-4. [AGENTS.md](../AGENTS.md)
+4. [docs/extensions/module-contract.md](extensions/module-contract.md) — kontrak modul optional (Mail = golden sample)
+5. [docs/extensions/external-module-packaging.md](extensions/external-module-packaging.md) — packaging pack eksternal / CMS extract
+6. [AGENTS.md](../AGENTS.md)
 
 ## Quality gate sebelum selesai
 

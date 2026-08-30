@@ -9,7 +9,7 @@
           variant="ghost"
           size="icon"
           class="lg:hidden h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg -ml-1 shrink-0"
-          :title="$t('system.mail.folders')"
+          :title="$t('mail.folders')"
           @click="isMobileSidebarOpen = true"
         >
           <Menu class="w-4 h-4" />
@@ -20,7 +20,7 @@
             <Mail class="w-3.5 h-3.5" />
           </div>
           <h1 class="text-xs font-bold tracking-tight text-foreground">
-            {{ $t('system.navigation.menu.mail') }}
+            {{ $t('mail.navigationMenuMail') }}
           </h1>
         </div>
 
@@ -33,7 +33,7 @@
           @click="openComposer()"
         >
           <Edit3 class="w-3.5 h-3.5" />
-          <span class="hidden sm:inline">{{ $t('system.mail.compose') }}</span>
+          <span class="hidden sm:inline">{{ $t('mail.compose') }}</span>
         </Button>
       </div>
 
@@ -48,7 +48,7 @@
           @click="syncMailbox"
         >
           <RefreshCw :class="['w-3.5 h-3.5', syncing ? 'animate-spin text-primary' : '']" />
-          <span class="hidden md:inline">{{ $t('system.mail.sync') }}</span>
+          <span class="hidden md:inline">{{ $t('mail.sync') }}</span>
         </Button>
 
         <!-- Empty Trash (Conditional) -->
@@ -60,7 +60,7 @@
           @click="emptyTrash"
         >
           <Trash2 class="w-3.5 h-3.5" />
-          <span class="hidden md:inline">{{ $t('system.mail.empty_trash') }}</span>
+          <span class="hidden md:inline">{{ $t('mail.empty_trash') }}</span>
         </Button>
 
         <!-- Keyboard Shortcuts Help Button (Desktop Only) -->
@@ -79,7 +79,7 @@
           variant="ghost"
           size="icon"
           class="hidden sm:flex h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
-          :title="$t('system.mail.manage_labels')"
+          :title="$t('mail.manage_labels')"
           @click="isLabelsModalOpen = true"
         >
           <Tag class="w-4 h-4" />
@@ -90,7 +90,7 @@
           variant="ghost"
           size="icon"
           class="h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
-          :title="$t('system.mail.settings_title')"
+          :title="$t('mail.settings_title')"
           @click="isSettingsOpen = true"
         >
           <Settings class="w-4 h-4" />
@@ -116,7 +116,7 @@
           </PopoverTrigger>
           <PopoverContent class="w-60 p-1.5 z-[1200] text-xs space-y-1 bg-card border border-border/80 shadow-xl rounded-xl" align="end">
             <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-              {{ $t('system.mail.accounts.connectedAccounts') }}
+              {{ $t('mail.accounts.connectedAccounts') }}
             </div>
             <button
               v-for="acc in accounts"
@@ -141,7 +141,7 @@
               @click="openSettingsWithTab('accounts'); isAccountSwitcherOpen = false"
             >
               <Settings class="w-3.5 h-3.5 text-primary" />
-              <span>{{ $t('system.mail.accounts.title') }}</span>
+              <span>{{ $t('mail.accounts.title') }}</span>
             </button>
           </PopoverContent>
         </Popover>
@@ -271,7 +271,7 @@
             class="h-7 text-xs px-2.5 font-bold shadow-xs bg-primary text-primary-foreground hover:bg-primary/90"
             @click="undoSend"
           >
-            {{ $t('system.mail.undo') }}
+            {{ $t('mail.undo') }}
           </Button>
           <Button
             variant="ghost"
@@ -279,7 +279,7 @@
             class="h-7 text-xs px-2 text-muted-foreground hover:text-foreground"
             @click="sendNow"
           >
-            {{ $t('system.mail.send_now') }}
+            {{ $t('mail.send_now') }}
           </Button>
         </div>
       </div>
@@ -304,7 +304,7 @@
               <div class="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                 <Mail class="w-3.5 h-3.5" />
               </div>
-              <span class="text-xs font-bold text-foreground">{{ $t('system.mail.folders') }}</span>
+              <span class="text-xs font-bold text-foreground">{{ $t('mail.folders') }}</span>
             </div>
             <Button
               variant="ghost"

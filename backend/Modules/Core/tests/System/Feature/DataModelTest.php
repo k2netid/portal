@@ -302,4 +302,97 @@ class DataModelTest extends TestCase
         $listBooksRes->assertStatus(200);
         $listBooksRes->assertJsonPath('data.data.0._relations.author_id.data.name', 'Pramoedya Ananta Toer');
     }
+
+    public function test_data_studio_rejects_cms_reserved_slugs(): void
+    {
+        $payload = [
+            'name' => 'Fake Posts',
+            'slug' => 'posts',
+            'description' => 'Must not collide with Publishing',
+            'fields' => [
+                [
+                    'name' => 'Title',
+                    'slug' => 'title',
+                    'type' => 'text',
+                    'is_required' => true,
+                ],
+            ],
+        ];
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/models/types', $payload)
+            ->assertStatus(422)
+            ->assertJsonPath('error_code', 'DATA_MODEL_SLUG_RESERVED');
+
+        $this->assertDatabaseMissing('sys_content_types', ['slug' => 'posts']);
+    }
+
+    public function test_data_studio_rejects_reserved_slug_on_update(): void
+    {
+        $type = ContentType::query()->create([
+            'name' => 'Inventory',
+            'slug' => 'inventory_items',
+            'is_active' => true,
+            'fields' => [
+                [
+                    'name' => 'SKU',
+                    'slug' => 'sku',
+                    'type' => 'text',
+                    'is_required' => true,
+                ],
+            ],
+        ]);
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->putJson('/api/v1/manage/infra/models/types/'.$type->id, [
+                'name' => 'Inventory',
+                'slug' => 'pages',
+                'fields' => [
+                    [
+                        'name' => 'SKU',
+                        'slug' => 'sku',
+                        'type' => 'text',
+                        'is_required' => true,
+                    ],
+                ],
+            ])
+            ->assertStatus(422)
+            ->assertJsonPath('error_code', 'DATA_MODEL_SLUG_RESERVED');
+
+        $this->assertDatabaseHas('sys_content_types', [
+            'id' => $type->id,
+            'slug' => 'inventory_items',
+        ]);
+    }
+
+    public function test_grandfather_renames_existing_reserved_slugs(): void
+    {
+        ContentType::query()->create([
+            'name' => 'Taken Studio',
+            'slug' => 'posts_studio',
+            'description' => 'Collision',
+            'is_active' => true,
+            'fields' => [],
+        ]);
+        $legacy = ContentType::query()->create([
+            'name' => 'Legacy Posts',
+            'slug' => 'posts',
+            'description' => 'Old Data Studio row',
+            'is_active' => true,
+            'fields' => [],
+        ]);
+
+        $renamed = ContentType::grandfatherReservedSlugs();
+
+        $this->assertSame(1, $renamed);
+        $this->assertDatabaseHas('sys_content_types', [
+            'id' => $legacy->id,
+            'slug' => 'posts_studio_2',
+        ]);
+        $this->assertStringContainsString(
+            'posts',
+            (string) $legacy->fresh()?->description,
+        );
+        $this->assertDatabaseMissing('sys_content_types', ['slug' => 'posts']);
+    }
 }

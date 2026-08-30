@@ -13,4 +13,5 @@
 1. Backend: **Modular Monolith** di `backend/Modules/Core` (`System`, `Security`, `Infra`).
 2. Frontend: **Engine Architecture** di `frontend/src/` (`engine/`, `modules/Core/`, `shared/`).
 3. Jangan sebut produk ini `ja-cms`. JA-CP = hub lisensi eksternal, bukan identitas repo ini.
-4. Jalankan `npm run agent:verify` sebelum menyelesaikan perubahan.
+4. Branch: baca [docs/branching.md](docs/branching.md) — `main` + `integrate/*` sementara + `feat`/`fix` pendek. Jangan buat trunk domain (`mail`, `develop`, …).
+5. Jalankan `npm run agent:verify` sebelum menyelesaikan perubahan.

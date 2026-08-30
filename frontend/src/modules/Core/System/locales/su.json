@@ -112,7 +112,7 @@
       "languages": "Basa",
       "webhooks": "Webhooks",
       "plugins": "Plugin",
-      "extensions": "Éksténsi & App Store",
+      "extensions": "Module Registry & App Store",
       "pulse": "Pulse",
       "consoleAppearance": "Tampilan konsol",
       "oauthClients": "Klién OAuth",
@@ -134,7 +134,27 @@
       "navigationTree": "Tangkal Navigasi",
       "dragInstructions": "Sered item pikeun ngatur runtuyan atawa ngagolongkeunana di jero grup induk",
       "noMenus": "Teu aya item menu kapendak",
-      "noMenusDesc": "Klik Tambih Item Menu atawa Reset ka Standar pikeun ngeusian tangkal navigasi."
+      "noMenusDesc": "Klik Tambih Item Menu atawa Reset ka Standar pikeun ngeusian tangkal navigasi.",
+      "groupsTitle": "Grup Menu",
+      "groupsCount": "{count} Grup",
+      "searchGroups": "Pilari grup...",
+      "liveSyncTitle": "Sinkron Langsung Aktif",
+      "liveSyncBody": "Parobahan dina tangkal ieu otomatis nyinkronkeun jeung sidebar konsol.",
+      "itemCount": "{count} item"
+    },
+    "menuGroups": {
+      "all": "Sadaya Grup",
+      "studio": "Studio Modél Data",
+      "editorial": "Éditorial",
+      "insight": "Insight",
+      "library": "Pustaka",
+      "audience": "Audiens",
+      "identity": "Pamaké & Aksés",
+      "communications": "Komunikasi",
+      "observability": "Jurnal",
+      "system_config": "Konfigurasi",
+      "infrastructure": "Infrastruktur",
+      "integrations_dev": "Idéntitas & Integrasi"
     }
   },
   "auth": {
@@ -535,19 +555,34 @@
     "subtitle": "Kotak masup notifikasi sistem sareng akun."
   },
   "appStore": {
-    "title": "Ekstensi & Galeri Aplikasi",
-    "subtitle": "Ngokolakeun modul dinamis sareng plugin plug-and-play secara aman jeung gerbang sandbox.",
+    "title": "Module Registry & App Store",
+    "subtitle": "Kernel platform, modul first-party, sareng plugin — aktipkeun nurutkeun kabutuhan jeung gerbang sandbox.",
     "searchPlaceholder": "Pilari dumasar kana nami, slug, atawa pembuat...",
     "scaffolderBtn": "Scaffolder",
     "gitBtn": "Integrasi Git",
     "uploadBtn": "Unggah ZIP",
     "all": "Sadaya",
+    "platform": "Platform",
     "modules": "Modul",
     "plugins": "Plugin",
+    "familyCms": "Content Management System",
+    "familyCommunications": "Komunikasi",
+    "bulkActivateCms": "Aktifkeun paket CMS",
+    "table": {
+      "name": "Modul",
+      "status": "Status",
+      "requires": "Wajib",
+      "health": "Kaséhatan",
+      "license": "Lisénsi",
+      "actions": "Aksi"
+    },
+    "healthOk": "Séhat",
+    "healthWarning": "Peringatan",
+    "healthError": "Diblokir",
     "author": "Pembuat",
     "license": "Lisensi",
-    "core": "Core Sistem",
-    "locked": "Core Terkunci",
+    "core": "Kernel Platform",
+    "locked": "Salawasna Aktip",
     "activate": "Aktifkan",
     "deactivate": "Nonaktifkan",
     "uninstall": "Copot Pemasangan",
@@ -565,6 +600,7 @@
       "licenseMit": "MIT",
       "licenseCommercialPro": "Commercial PRO",
       "licenseEnterprise": "Enterprise Proprietary",
+      "licensePlatform": "Kernel Platform",
       "coreInfrastructure": "Infrastruktur Core Base",
       "mandatoryService": "Layanan Wajib",
       "featureActive": "Aktif",
@@ -618,6 +654,20 @@
       "toggleConfirmTitleDeactivate": "Nonaktifkan {name}?",
       "toggleConfirmMessageActivate": "Naha salira yakin hoyong mengaktifkan {name}? Ieu bakal menjalankan sadaya migrasi skema database secara dinamis.",
       "toggleConfirmMessageDeactivate": "Naha salira yakin hoyong menonaktifkan {name}? Fitur bakal segera teu tersedia.",
+      "lifecycleRequiresMissing": "Kudu diaktifkeun heula: {list}",
+      "lifecycleCascade": "Bakal diaktifkeun oge, berurutan: {list}",
+      "lifecycleSuggests": "Disarankeun (opsional): {list}",
+      "lifecycleDependents": "Masih dipake ku: {list}. Nonaktifkeun eta heula.",
+      "lifecycleSidebarActivate": "Item sidebar nu patali bakal muncul sanggeus aktivasi.",
+      "lifecycleSidebarDeactivate": "Item sidebar nu patali bakal disumputkeun sanggeus dinonaktifkeun.",
+      "lifecycleBlocked": "Teu tiasa diteruskeun: {detail}",
+      "lifecycleRuntime": "Sarat kernel/runtime teu kacukupan: {list}",
+      "lifecycleLicense": "{detail}",
+      "bulkActivateCmsTitle": "Aktifkeun sadaya modul CMS?",
+      "bulkActivateCmsMessage": "Modul CMS nu nonaktif bakal diaktifkeun nurutkeun urutan dependensi: {list}",
+      "bulkActivateCmsSuccess": "{count} modul diaktifkeun: {list}",
+      "bulkActivateCmsEmpty": "Sadaya modul CMS geus aktif.",
+      "bulkActivateCmsFailed": "Gagal ngaktifkeun paket CMS.",
       "toggleSuccessActivated": "{name} hasil diaktifkan!",
       "toggleSuccessDeactivated": "{name} hasil dinonaktifkan!",
       "toggleFailed": "Gagal {action} ekstensi.",
@@ -651,7 +701,7 @@
         "version": "1.0.0",
         "description": "Plugin boilerplate kustom anu dihasilkan otomatis.",
         "routeUri": "/api/v1/my-endpoint",
-        "routeAction": "MyController@index",
+        "routeAction": "MyController{'@'}index",
         "menuTitle": "Judul Menu",
         "menuRoute": "/dash/my-route",
         "icon": "ikon"
@@ -671,7 +721,8 @@
         "empty": "Acan aya menu Dasbor terdaftar.",
         "groups": {
           "academic": "Academic",
-          "Jejakawan": "Jejakawan",
+          "publishing": "Publishing",
+          "Jejakawan": "Publishing",
           "system": "System"
         }
       },
@@ -683,6 +734,8 @@
       "downloadSuccess": "ZIP boilerplate hasil dijieun sareng diunduh!"
     },
     "descriptions": {
+      "core": "Kernel platform — identitas & aksés, settings, lisensi, security console, Data Studio, backup, file, webhook, sareng host module registry. Salawasna aktip; teu bisa dinonaktifkeun.",
+      "mail": "Webmail konsol — compose/kirim via SMTP, multi-akun, template, sareng jadwal kirim. Modul first-party anu bisa diaktipkeun/dinonaktifkeun.",
       "system": "Petélan core sistem, perizinan pamaké (RBAC), log aktivitas pulse, sareng lokalisasi terjemahan.",
       "security": "Perisai keamanan enterprise kokoh, dilengkapi Otentikasi 2FA, rate limit firewall, honeypot, sareng pengecekan integritas file.",
       "analytics": "Audit teras lintas pengunjung berkinerja tinggi, dasbor statistik, sareng pelacak event interaksi.",
@@ -1349,6 +1402,10 @@
       "upload": {
         "title": "Petélan Unggahan",
         "description": "Batas unggahan file sareng tipe file anu diizinkan"
+      },
+      "mediaSplit": {
+        "title": "Panyimpenan objék, sanés pustaka média",
+        "description": "Tab Identity ieu ngatur disk (lokal, S3, FTP). File éditorial sareng picker aya di pack Media sanggeus pack éta aktif. File Manager kernel tetep di dieu."
       },
       "imageProcessing": {
         "title": "Pemrosesan Gambar",

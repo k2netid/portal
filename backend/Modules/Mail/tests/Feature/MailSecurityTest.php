@@ -47,7 +47,8 @@ class MailSecurityTest extends TestCase
 
     public function test_inactive_mail_extension_returns_forbidden(): void
     {
-        Extension::query()->where('slug', 'mail')->update(['status' => 'inactive']);
+        $mail = Extension::query()->where('slug', 'mail')->first();
+        $mail?->update(['status' => 'inactive']);
 
         $this->actingAs($this->admin, 'sanctum')
             ->getJson('/api/v1/manage/mail/messages')

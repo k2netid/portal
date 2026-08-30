@@ -1,0 +1,82 @@
+{
+    "targets": {
+        "header": {
+            "navItemId": "design-branding",
+            "mode": "design"
+        },
+        "nav": {
+            "navItemId": "identity-menus",
+            "mode": "design"
+        },
+        "footer": {
+            "navItemId": "ux-footer",
+            "mode": "design"
+        },
+        "hero": {
+            "navItemId": "comp-hero",
+            "mode": "bindings",
+            "bindingsId": "hero"
+        },
+        "products": {
+            "navItemId": "page-products",
+            "mode": "design"
+        },
+        "updates": {
+            "navItemId": "page-updates",
+            "mode": "design"
+        },
+        "partners": {
+            "navItemId": "page-partners",
+            "mode": "design",
+            "bindingsId": "partners"
+        },
+        "testimonials": {
+            "navItemId": "page-testimonials",
+            "mode": "design",
+            "bindingsId": "testimonials"
+        },
+        "cta": {
+            "navItemId": "page-cta",
+            "mode": "design",
+            "bindingsId": "cta"
+        },
+        "about": {
+            "navItemId": "page-about",
+            "mode": "design"
+        },
+        "solusi": {
+            "navItemId": "page-solusi",
+            "mode": "design"
+        },
+        "tim": {
+            "navItemId": "page-tim",
+            "mode": "design"
+        },
+        "pricing": {
+            "navItemId": "page-pricing",
+            "mode": "design"
+        },
+        "news": {
+            "navItemId": "page-news",
+            "mode": "design"
+        },
+        "careers": {
+            "navItemId": "page-careers",
+            "mode": "design",
+            "bindingsId": "careers"
+        },
+        "achievements": {
+            "navItemId": "page-achievements",
+            "mode": "design",
+            "bindingsId": "achievements"
+        },
+        "search": {
+            "navItemId": "page-search",
+            "mode": "design"
+        },
+        "contact": {
+            "navItemId": "page-contact",
+            "mode": "design"
+        }
+    }
+}

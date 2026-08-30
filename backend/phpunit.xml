@@ -20,6 +20,17 @@
         <testsuite name="Modules">
             <directory>Modules/Core/tests</directory>
             <directory>Modules/Mail/tests</directory>
+            <directory>Modules/Member/tests</directory>
+            <directory>Modules/Site/tests</directory>
+            <directory>Modules/Forms/tests</directory>
+            <directory>Modules/Publishing/tests</directory>
+            <directory>Modules/Layout/tests</directory>
+            <directory>Modules/Media/tests</directory>
+            <directory>Modules/Library/tests</directory>
+            <directory>Modules/Newsletter/tests</directory>
+            <directory>Modules/Analytics/tests</directory>
+            <directory>Modules/Search/tests</directory>
+            <directory>Modules/CmsAi/tests</directory>
         </testsuite>
     </testsuites>
     <php>

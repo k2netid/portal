@@ -42,10 +42,10 @@
           <div class="flex items-center justify-between px-1">
             <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
               <Layers class="w-3.5 h-3.5 text-primary" />
-              <span>Menu Groups</span>
+              <span>{{ $t('system.navigation.menuEditor.groupsTitle') }}</span>
             </h3>
             <span class="text-[10px] font-semibold text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-              {{ availableGroups.length - 1 }} Groups
+              {{ $t('system.navigation.menuEditor.groupsCount', { count: Math.max(filteredAvailableGroups.length - (filteredAvailableGroups.some((g) => g?.slug === 'all') ? 1 : 0), 0) }) }}
             </span>
           </div>
 
@@ -55,16 +55,16 @@
             <Input
               v-model="groupSearchQuery"
               type="text"
-              placeholder="Search groups..."
+              :placeholder="$t('system.navigation.menuEditor.searchGroups')"
               class="pl-8 h-8 text-xs bg-muted/30 border-border/60 rounded-xl focus-visible:bg-background transition-colors"
             />
           </div>
 
           <!-- Vertical Groups List -->
           <div class="space-y-1 max-h-[calc(100vh-22rem)] overflow-y-auto custom-scrollbar pr-0.5">
+            <template v-for="(grp, grpIdx) in filteredAvailableGroups" :key="grp?.slug || ('grp-' + grpIdx)">
             <button
-              v-for="grp in filteredAvailableGroups"
-              :key="grp.slug"
+              v-if="grp && grp.slug"
               :class="[
                 'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left group cursor-pointer',
                 selectedGroup === grp.slug
@@ -81,7 +81,7 @@
                     selectedGroup === grp.slug ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
                   ]"
                 />
-                <span class="truncate">{{ grp.name }}</span>
+                <span class="truncate">{{ groupLabel(grp) }}</span>
               </div>
               <div class="flex items-center gap-1 shrink-0 ml-2">
                 <span
@@ -103,6 +103,7 @@
                 />
               </div>
             </button>
+            </template>
           </div>
         </div>
 
@@ -110,10 +111,10 @@
         <div class="p-3.5 rounded-2xl bg-muted/20 border border-border/40 text-xs space-y-1 text-muted-foreground hidden lg:block">
           <p class="font-semibold text-foreground flex items-center gap-1.5">
             <Sparkles class="w-3.5 h-3.5 text-primary" />
-            <span>Live Sync Active</span>
+            <span>{{ $t('system.navigation.menuEditor.liveSyncTitle') }}</span>
           </p>
           <p class="text-[11px] leading-relaxed text-muted-foreground/80">
-            Changes made in this tree automatically synchronize with the live console sidebar in real time.
+            {{ $t('system.navigation.menuEditor.liveSyncBody') }}
           </p>
         </div>
       </div>
@@ -126,10 +127,10 @@
               <div class="flex items-center gap-2">
                 <h3 class="text-sm font-bold text-foreground flex items-center gap-2">
                   <LucideIcon :name="activeGroupMeta?.icon || 'menu'" class="w-4 h-4 text-primary" />
-                  <span>{{ activeGroupMeta?.name || 'All Groups' }}</span>
+                  <span>{{ activeGroupMeta ? groupLabel(activeGroupMeta) : $t('system.navigation.menuGroups.all') }}</span>
                 </h3>
                 <span class="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-md font-medium">
-                  {{ filteredMenus.length }} items
+                  {{ $t('system.navigation.menuEditor.itemCount', { count: filteredMenus.length }) }}
                 </span>
               </div>
               <p class="text-xs text-muted-foreground mt-0.5">
@@ -189,6 +190,7 @@
       :is-open="isEditModalOpen"
       :menu="editingMenu"
       :root-menus="menus"
+      :groups="availableGroups"
       :saving="saving"
       @close="isEditModalOpen = false"
       @save="handleSave"
@@ -198,6 +200,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { PageHeader } from '@/shared/components/shell';
 import {
   Menu,
@@ -221,6 +224,7 @@ const {
     saving,
     selectedGroup,
     availableGroups,
+    filterGroups,
     fetchMenus,
     saveMenu,
     deleteMenu,
@@ -228,20 +232,24 @@ const {
     resetDefaults,
 } = useConsoleMenu();
 
+const { t, te } = useI18n();
+
 const isEditModalOpen = ref(false);
 const editingMenu = ref<ConsoleMenuItem | null>(null);
 const draggedId = ref<string | null>(null);
 const isRootDropHover = ref(false);
 const groupSearchQuery = ref('');
 
-const filteredAvailableGroups = computed(() => {
-    if (!groupSearchQuery.value.trim()) return availableGroups;
-    const query = groupSearchQuery.value.toLowerCase();
-    return availableGroups.filter(g => g.name.toLowerCase().includes(query) || g.slug.toLowerCase().includes(query));
-});
+const filteredAvailableGroups = computed(() => filterGroups(availableGroups, groupSearchQuery.value));
+
+const groupLabel = (grp: { slug: string; name: string }): string => {
+    const key = `system.navigation.menuGroups.${grp.slug}`;
+    return te(key) ? t(key) : grp.name;
+};
 
 const activeGroupMeta = computed(() => {
-    return availableGroups.find(g => g.slug === selectedGroup.value) || availableGroups[0];
+    const groups = filteredAvailableGroups.value;
+    return groups.find((g) => g.slug === selectedGroup.value) || groups[0];
 });
 
 onMounted(() => {

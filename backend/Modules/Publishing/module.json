@@ -1,0 +1,11 @@
+{
+  "name": "Publishing",
+  "alias": "publishing",
+  "description": "Content publishing — articles, pages, comments, SEO",
+  "keywords": ["publishing", "cms", "content"],
+  "priority": 30,
+  "providers": [
+    "Modules\\Publishing\\Providers\\PublishingServiceProvider"
+  ],
+  "files": []
+}

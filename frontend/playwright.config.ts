@@ -16,13 +16,18 @@ export default defineConfig({
     testDir: './tests/e2e',
     timeout: 30_000,
     fullyParallel: true,
-    workers: procEnv?.CI ? Number(procEnv.PLAYWRIGHT_WORKERS || 2) : undefined,
+    workers: procEnv?.PLAYWRIGHT_WORKERS
+        ? Number(procEnv.PLAYWRIGHT_WORKERS)
+        : (procEnv?.CI ? 2 : undefined),
     expect: {
         timeout: 10_000,
     },
     use: {
         baseURL,
         trace: 'on-first-retry',
+        extraHTTPHeaders: {
+            'X-E2E-Captcha-Bypass': procEnv?.E2E_CAPTCHA_BYPASS_TOKEN || 'local-e2e',
+        },
     },
     reporter: [['list']],
     ...(enableWebServer

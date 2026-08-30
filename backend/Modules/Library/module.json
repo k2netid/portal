@@ -1,0 +1,11 @@
+{
+  "name": "Library",
+  "alias": "library",
+  "description": "Taxonomy library — categories, tags, custom fields",
+  "keywords": ["library", "taxonomy", "cms"],
+  "priority": 20,
+  "providers": [
+    "Modules\\Library\\Providers\\LibraryServiceProvider"
+  ],
+  "files": []
+}

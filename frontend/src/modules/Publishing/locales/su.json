@@ -1,0 +1,1268 @@
+{
+  "navigation": {
+    "menu": {
+      "editorial": "Editorial",
+      "studio": "Kusi",
+      "comments": "Komentar",
+      "themes": "Tema",
+      "publishingSettings": "Petélan Publikasi",
+      "seo": "SEO",
+      "seoTools": "Alat SEO",
+      "categories": "Kategori",
+      "analytics": "Analitik"
+    }
+  },
+  "settings": {
+    "title": "Setélan publikasi",
+    "subtitle": "Default SEO jeung diskusi pikeun situs publik.",
+    "loading": "Ngamuat setélan…",
+    "save": "Simpen",
+    "saving": "Nyimpen…",
+    "tabs": {
+      "seo": "SEO",
+      "discussion": "Diskusi"
+    }
+  },
+  "content": {
+    "title": "Studio Kusi",
+    "description": "Ngokolakeun kusi, media, sareng taksonomi salira",
+    "actions": {
+      "approve": "Setujui",
+      "duplicate": "Duplikat",
+      "emptyTrash": "Kosongkan Sampah",
+      "moveToTrash": "Pindahkan ka Sampah",
+      "publishNow": "Terbitkan Ayeuna",
+      "reject": "Tolak",
+      "restore": "Pulihkan",
+      "saveDraft": "Simpen Draf",
+      "schedule": "Jadwalkan",
+      "unpublish": "Batalkan Terbit"
+    },
+    "form": {
+      "template": "Template Kaca",
+      "addTags": "Tambah Tag",
+      "allowComments": "Izinkan Komentar",
+      "allowCommentsDesc": "Aktifkan atawa nonaktifkan komentar pikeun item kusi ieu.",
+      "back": "Balik ka Kusi",
+      "body": "Isi Kusi",
+      "cancel": "Batal",
+      "category": "Kategori",
+      "chooseEditorDesc": "Pilih antara editor teks standar atawa desain visual drag-and-drop urang.",
+      "create": "Jieun Kusi",
+      "createAndEdit": "Jieun & Buka Builder",
+      "creating": "Nyieun...",
+      "details": "Detail Kusi",
+      "discussion": "Diskusi",
+      "editTitle": "Édit Kusi",
+      "excerpt": "Kutipan",
+      "excerptPlaceholder": "Ringkasan singkat kusi...",
+      "intro": "Intro",
+      "introPlaceholder": "Paragraf pembuka di handap judul kaca (mendukung bold, italic, link)",
+      "featured": "Kusi Unggulan",
+      "featuredDesc": "Sematkan kusi ieu di bagian luhur",
+      "featuredImage": "Gambar Unggulan",
+      "keywordsPlaceholder": "Lebetkeun kata kunci meta dipisahkan jeung koma",
+      "loading": "Nuju ngamuat kusi...",
+      "locked": "Terkunci",
+      "lockedBy": "ku {name}",
+      "maxSizeHint": "Ukuran Maks: {size}MB | {extensions}",
+      "metaDescription": "Deskripsi Meta",
+      "metaKeywords": "Kata Kunci Meta",
+      "metaTitle": "Judul Meta",
+      "minHint": "(Min: {dimensions})",
+      "ogImage": "Gambar Open Graph",
+      "preview": "Pratinjau",
+      "publishDate": "Tanggal Terbit",
+      "publishImmediatelyHelp": "Biarkan kosong pikeun terbit segera",
+      "publishing": "Publikasi",
+      "recommendedHint": "Rekomendasi: {dimensions}",
+      "remove": "Hapus",
+      "removeImage": "Hapus Gambar",
+      "selectCategory": "Pilih Kategori",
+      "selectImage": "Pilih Gambar",
+      "selectOgImage": "Pilih Gambar OG",
+      "selectTag": "Pilih tag...",
+      "seoSettings": "Petélan SEO",
+      "sidebar": {
+        "addToMenu": "Tambahkan ka Menu",
+        "addToMenuDesc": "Tambahkan kusi ieu ka menu",
+        "comments": "Komentar"
+      },
+      "slug": "Slug",
+      "slugPlaceholder": "dijieun-otomatis-dina-judul",
+      "status": "Status",
+      "switchModeDescription": "salira bakal beralih ka mode editor anu berbeda. Kusi disimpen terpisah pikeun setiap mode.",
+      "switchModeTitle": "Ganti Mode Editor",
+      "switchToBuilderWarning": "Kusi editor klasik salira bakal tetap tersimpan, tetapi teu bakal terlihat di builder. Builder bakal mimitian kosong kecuali salira parantos nambahkeun blok sebelumnya.",
+      "switchToClassicWarning": "Blok builder salira bakal tetap tersimpan, tetapi teu bakal terlihat di editor klasik. Editor klasik bakal menampilkan kusi anu tersimpan sebelumnya atawa kosong.",
+      "tagInputHint": "Tekan Enter pikeun menambah tag anyar, atawa klik saran",
+      "tagInputPlaceholder": "Ketik pikeun menambah atawa pilari tag...",
+      "tags": "Tag",
+      "taxonomy": "Taksonomi",
+      "title": "Judul Kusi",
+      "titlePlaceholder": "Lebetkeun judul kusi",
+      "type": "Tipe",
+      "unlock": "Buka Kunci",
+      "unlocked": "Terbuka",
+      "update": "Aropéa Kusi",
+      "updating": "Nganyarkeun...",
+      "urlFriendlyHelp": "Versi ramah URL dina judul",
+      "useBuilder": "Gunakan JA-Builder",
+      "useDefault": "Gunakan Editor Klasik",
+      "welcomeToBuilder": "Bangun tata letak salira"
+    },
+    "list": {
+      "bulkActions": "Aksi Massal",
+      "createNew": "Jieun Kusi Anyar",
+      "description": "Ngokolakeun kusi, postingan blog, sareng kaca salira",
+      "filterByStatus": "Saring berdasarkan status",
+      "empty": "Teu aya kusi kapendak",
+      "revisions": "Revisi",
+      "selected": "{count} dipilih",
+      "subtitle": "Ngokolakeun perpustakaan kusi salira",
+      "templates": "Template",
+      "title": "Sadaya Kusi",
+      "calendar": "Kalender",
+      "calendarSubtitle": "Tingali jadwal terbit sareng kusi di kalender.",
+      "revisionsSubtitle": "Bandingkan sareng pulihkan versi kusi sebelumnya."
+    },
+    "messages": {
+      "approveFailed": "Gagal menyetujui kusi",
+      "approved": "Kusi hasil disatujuan",
+      "conflictResolveFailed": "Gagal ngahapus item anu berkonflik. Silakan édit nami kaca salira nalika ieu.",
+      "conflictResolved": "Konflik hasil diselesaikan: Item sebelumnya telah dihapus.",
+      "createFailed": "Gagal nyieun kusi",
+      "duplicateFailed": "Gagal menduplikasi kusi",
+      "loadFailed": "Gagal nuju ngamuat kusi",
+      "pendingNotice": "Kusi ieu suju manggo peninjauan sareng bakal diterbitkeun saatos disatujuan ku editor.",
+      "previewFailed": "Gagal mempratinjau kusi",
+      "publishFailed": "Gagal menerbitkan kusi",
+      "publishSuccess": "Kusi hasil diterbitkeun",
+      "rejectFailed": "Gagal menolak kusi",
+      "rejectReason": "Silakan berikan alasan penolakan",
+      "rejected": "Kusi hasil ditampik",
+      "rescheduleFailed": "Gagal menjadwalkan ulang kusi",
+      "restoreFailed": "Gagal memulihkan kusi",
+      "unlockFailed": "Gagal membuka kunci kusi",
+      "unsavedChanges": "salira memiliki perubahan anu acan disimpen. Naha salira yakin hoyong meninggalkan kaca ieu?",
+      "updateFailed": "Gagal nganyarkeun kusi"
+    },
+    "placeholders": {
+      "rejectionReason": "Lebetkeun alasan penolakan di sini..."
+    },
+    "seo": {
+      "metaDescription": "Deskripsi SEO",
+      "metaTitle": "Judul SEO",
+      "seoDescPlaceholder": "Deskripsi SEO (bawaan dina kutipan)",
+      "seoTitlePlaceholder": "Judul SEO (bawaan dina judul kusi)",
+      "charactersCount": "{current}/{max} karakter"
+    },
+    "featuredImage": {
+      "titleLabel": "Judul gambar",
+      "descriptionLabel": "Deskripsi gambar",
+      "titlePlaceholder": "Contoh: Kegiatan Sambutan Direktur",
+      "descriptionPlaceholder": "Tambahkan deskripsi singkat pikeun konteks visual gambar.",
+      "positionHero": "Hero"
+    },
+    "revisions": {
+      "actions": {
+        "restore": "Pulihkan",
+        "view": "Tingali"
+      },
+      "badge": {
+        "current": "Nalika Ieu"
+      },
+      "empty": {
+        "description": "Kusi ieu acan pernah diubah.",
+        "title": "Teu aya revisi kapendak"
+      },
+      "loading": "Nuju ngamuat revisi...",
+      "messages": {
+        "noChanges": "Teu aya ringkasan perubahan",
+        "restoreConfirm": "Naha salira yakin hoyong memulihkan revisi v{version}? Ieu bakal menggantikan kusi nalika ieu.",
+        "restoreTitle": "Pulihkan Revisi"
+      },
+      "modal": {
+        "close": "Tutup",
+        "fields": {
+          "body": "Isi Kusi",
+          "status": "Status",
+          "title": "Judul",
+          "type": "Tipe"
+        },
+        "restore": "Pulihkan Versi Ieu",
+        "title": "Revisi v{version}"
+      },
+      "table": {
+        "actions": "Aksi",
+        "author": "Penulis",
+        "changes": "Perubahan",
+        "date": "Tanggal",
+        "version": "Versi"
+      },
+      "pageSubtitle": "Riwayat versi pikeun artikel atawa kaca aktif."
+    },
+    "status": {
+      "archived": "Diarsipkeun",
+      "draft": "Draf",
+      "pending": "Manggo Tinjauan",
+      "published": "Diterbitkeun",
+      "scheduled": "Dijadwalkan",
+      "trashed": "Sampah"
+    },
+    "tabs": {
+      "content": "Kusi",
+      "seo": "SEO",
+      "settings": "Petélan",
+      "contents": "Kusi",
+      "categories": "Kategori",
+      "tags": "Tag"
+    },
+    "title_singular": "Kusi",
+    "title_plural": "Kusi",
+    "builder": {
+      "bannerTitle": "Visual Page & Block Builder",
+      "blocksCount": "{count} blok",
+      "hasBlocksDesc": "Kaca ieu dirancang nganggo blok visual builder interaktif.",
+      "noBlocksDesc": "Rancang kaca nganggo drag & drop block responsif (Grid, Hero, Forms, Carousel).",
+      "editVisual": "Buka di Visual Builder",
+      "launchVisual": "Rancang nganggo Visual Builder",
+      "fallbackContent": "Eusi Teks Fallback / SEO (Tiptap)",
+      "savedSuccess": "Blok visual builder parantos disingkronkeun kana kaca!"
+    },
+    "template": {
+      "default": "Standar Tata Letak Téma",
+      "defaultDesc": "Tata letak téma standar kalayan banner judul hero sareng footer.",
+      "fullWidth": "Lega Pinuh (Tanpa Wadah)",
+      "fullWidthDesc": "Méntangkeun bagian ti tungtung ka tungtung.",
+      "blankCanvas": "Blank Canvas (Kaca Funnel / Landing Page)",
+      "blankCanvasDesc": "Némbongkeun 100% blok Visual Builder tanpa header sareng footer téma."
+    },
+    "filters": {
+      "allStatus": "All statuses"
+    }
+  },
+  "content_templates": {
+    "title": "Template Kusi",
+    "title_singular": "Template Kusi",
+    "description": "Ngokolakeun tata letak sareng cuplikan kusi anu tiasa digunakan ulang",
+    "search": "Pilari template...",
+    "loading": "Nuju ngamuat template...",
+    "empty": "Teu aya template",
+    "create": "Jieun Template Anyar",
+    "form": {
+      "back": "Balik",
+      "body": "Isi",
+      "bodyPlaceholder": "Isi template…",
+      "cancel": "Batal",
+      "content": "Kusi",
+      "createTitle": "Jieun template",
+      "description": "Deskripsi",
+      "descriptionPlaceholder": "Deskripsi singkat…",
+      "details": "Detail",
+      "editTitle": "Édit template",
+      "excerpt": "Kutipan",
+      "excerptPlaceholder": "Kutipan opsional…",
+      "name": "Nami",
+      "namePlaceholder": "Nami template",
+      "save": "Simpen",
+      "saving": "Nyimpen…",
+      "slug": "Slug",
+      "slugHelp": "Identifier ramah URL",
+      "titleLabel": "Judul",
+      "titlePlaceholder": "Judul template",
+      "type": "Tipe",
+      "update": "Aropéa",
+      "updating": "Nganyarkeun…",
+      "createSubtitle": "Mimitian dina tata letak reusable pikeun artikel sareng kaca anyar.",
+      "editSubtitle": "Sesuaikan field sareng struktur template ieu."
+    },
+    "actions": {
+      "delete": "Hapus Template",
+      "createContent": "Jieun kusi dina template ieu",
+      "bulkDelete": "Hapus template terpilih"
+    },
+    "table": {
+      "name": "Nami Template",
+      "type": "Tipe",
+      "description": "Deskripsi",
+      "updated": "Terakhir Diropéa",
+      "actions": "Aksi",
+      "selected": "{count} template dipilih"
+    },
+    "types": {
+      "all": "Sadaya Tipe",
+      "post": "Posting",
+      "page": "Kaca",
+      "custom": "Kustom"
+    },
+    "messages": {
+      "deleteConfirm": "Yakin hoyong ngahapus template '{name}'?",
+      "forceDeleteConfirm": "Template '{name}' bakal dihapus permanen. Tindakan ieu teu tiasa dibatalkan.",
+      "restoreConfirm": "Yakin hoyong memulihkan template '{name}'?",
+      "createContentSuccess": "Kusi dijieun dina template"
+    }
+  },
+  "categories": {
+    "actions": {
+      "delete": "Hapus",
+      "edit": "Edit",
+      "move": "Pindah"
+    },
+    "createNew": "Kategori Anyar",
+    "description": "Ngokolakeun kategori kusi",
+    "empty": "Teu aya kategori kapendak",
+    "form": {
+      "active": "Aktif",
+      "cancel": "Batal",
+      "create": "Jieun",
+      "createDescription": "Tambahkan kategori anyar ka struktur kusi salira.",
+      "createTitle": "Jieun Kategori",
+      "description": "Deskripsi",
+      "descriptionPlaceholder": "Deskripsi kategori",
+      "details": "Detail Kategori",
+      "editDescription": "Aropéa informasi sareng petélan kategori.",
+      "editTitle": "Edit Kategori",
+      "image": "Gambar",
+      "name": "Nami",
+      "namePlaceholder": "Nami kategori",
+      "noParent": "Tanpa Induk (Kategori Root)",
+      "parent": "Kategori Induk",
+      "removeImage": "Hapus Gambar",
+      "saveError": "Gagal nyimpen kategori",
+      "saving": "Nyimpen...",
+      "selectImage": "Pilih Gambar",
+      "slug": "Slug",
+      "slugHelp": "Versi ramah URL",
+      "slugPlaceholder": "slug-kategori",
+      "sortOrder": "Urutan",
+      "sortOrderHelp": "Angka langkung kecil muncul langkung dulu",
+      "update": "Aropéa"
+    },
+    "loading": "Nuju ngamuat kategori...",
+    "messages": {
+      "deleteConfirm": "Naha salira yakin hoyong ngahapus \"{name}\" sareng sadaya subkategorinya?",
+      "deleteError": "Gagal ngahapus kategori",
+      "moveSuccess": "Kategori hasil dipindahkan"
+    },
+    "move": {
+      "cancel": "Batal",
+      "description": "Pindahkan \"{name}\" ka:",
+      "error": "Gagal memindahkan kategori",
+      "moving": "Memindahkan...",
+      "newParent": "Kategori Induk Anyar",
+      "submit": "Pindahkan Kategori",
+      "title": "Pindahkan Kategori"
+    },
+    "search": "Pilari kategori...",
+    "status": {
+      "active": "Aktif",
+      "inactive": "Teu Aktif"
+    },
+    "table": {
+      "actions": "Aksi",
+      "contents": "Kusi",
+      "name": "Nami",
+      "parent": "Induk",
+      "slug": "Slug",
+      "status": "Status"
+    },
+    "title": "Kategori",
+    "title_singular": "Kategori",
+    "viewMode": {
+      "list": "Tampilan Daftar",
+      "tree": "Tampilan Pohon"
+    },
+    "filters": {
+      "all": "All categories"
+    }
+  },
+  "comments": {
+    "actions": {
+      "approve": "Setujui",
+      "approveAll": "Setujui Sadaya",
+      "bulkAction": "Aksi Massal",
+      "delete": "Hapus",
+      "markSpam": "Tandai Spam",
+      "reject": "Tolak",
+      "rejectAll": "Tolak Sadaya",
+      "reply": "Balas"
+    },
+    "detail": {
+      "anonymous": "Anonim",
+      "author": "Penulis",
+      "email": "Email",
+      "no_email": "Teu aya email",
+      "postedOn": "Diposkeun dina",
+      "repliesCount": "{count} balasan",
+      "reply": "Balasan",
+      "replies": "Balasan"
+    },
+    "filter": {
+      "allStatus": "Sadaya Status",
+      "searchPlaceholder": "Pilari komentar..."
+    },
+    "list": {
+      "empty": "Teu aya komentar kapendak",
+      "on": "Dina",
+      "replyTo": "Balas ka",
+      "selected": "{count} dipilih",
+      "subtitle": "Ngokolakeun sareng moderasi komentar",
+      "title": "Sadaya Komentar"
+    },
+    "title_singular": "Komentar",
+    "messages": {
+      "approveFailed": "Gagal menyetujui komentar",
+      "bulkApproveConfirm": "Setujui {count} komentar?",
+      "bulkDeleteConfirm": "Hapus {count} komentar? Tindakan ieu teu tiasa dibatalkan.",
+      "bulkFailed": "Gagal melakukan aksi massal",
+      "bulkRejectConfirm": "Tolak {count} komentar?",
+      "bulkSpamConfirm": "Tandai {count} komentar salaku spam?",
+      "deleteConfirm": "Naha salira yakin hoyong ngahapus komentar ieu?",
+      "deleteFailed": "Gagal ngahapus komentar",
+      "rejectFailed": "Gagal menolak komentar",
+      "spamFailed": "Gagal menandai komentar salaku spam"
+    },
+    "stats": {
+      "approved": "Disatujuan",
+      "pending": "Tertunda",
+      "rejected": "Ditampik",
+      "spam": "Spam",
+      "total": "Total"
+    },
+    "status": {
+      "approved": "Disatujuan",
+      "pending": "Tertunda",
+      "rejected": "Ditampik",
+      "spam": "Spam"
+    },
+    "comment": "Komentar",
+    "email": "Email",
+    "empty": "Acan aya komentar",
+    "leaveComment": "Tulis komentar",
+    "loading": "Nuju ngamuat komentar…",
+    "name": "Nami",
+    "reply": "Balas",
+    "submit": "Kirim",
+    "submitting": "Mengirim…"
+  },
+  "seo": {
+    "analysis": {
+      "analyzing": "Menganalisis...",
+      "failed": "Gagal menjalankan analisis SEO",
+      "placeholder": "Pilih kusi...",
+      "results": "Hasil Analisis",
+      "run": "Jalankan Analisis",
+      "score": "Skor: {score}/100",
+      "selectContent": "Pilih Kusi pikeun Dianalisis",
+      "title": "Analisis SEO"
+    },
+    "robots": {
+      "contentLabel": "Kusi Robots.txt",
+      "placeholder": "User-agent: *\nDisallow: /admin\nAllow: /",
+      "reload": "Muat Ulang",
+      "save": "Simpen Robots.txt",
+      "saved": "Robots.txt hasil disimpen",
+      "saving": "Nyimpen...",
+      "title": "Editor Robots.txt"
+    },
+    "schema": {
+      "copy": "Salin ka Papan Klip",
+      "copySuccess": "JSON Skema disalin ka papan klip!",
+      "failed": "Gagal menghasilkan skema",
+      "generate": "Hasilkan Skema",
+      "generating": "Menghasilkan...",
+      "jsonTitle": "JSON Skema anu Dihasilkan",
+      "selectContent": "Pilih Kusi",
+      "title": "Generator Markup Skema"
+    },
+    "sitemap": {
+      "copySuccess": "URL Sitemap disalin ka papan klip!",
+      "copyUrl": "Salin URL",
+      "generate": "Hasilkan Sitemap",
+      "generated": "Sitemap hasil dihasilkan",
+      "generating": "Menghasilkan...",
+      "title": "Manajemen Sitemap",
+      "urlLabel": "URL Sitemap"
+    },
+    "tabs": {
+      "analysis": "Analisis SEO",
+      "robots": "Robots.txt",
+      "schema": "Generasi Skema",
+      "sitemap": "Sitemap"
+    },
+    "title": "Peralatan SEO",
+    "subtitle": "Sitemap, robots.txt, sareng analisis SEO kaca."
+  },
+  "editor": {
+    "actions": {
+      "cancel": "Batal",
+      "constrainProportions": "Kunci proporsi",
+      "fit": "Sesuaikan Kusi (Reset)",
+      "interact": "Interaksi jeung kusi",
+      "interactShort": "Interaksi",
+      "save": "Simpen Perubahan",
+      "stopInteraction": "Hentikan interaksi"
+    },
+    "embed": {
+      "configure": "Klik ganda pikeun konfigurasi",
+      "empty": "HTML Embed Kosong"
+    },
+    "fields": {
+      "size": "Ukuran",
+      "color": "Warna",
+      "backgroundColor": "Warna Latar",
+      "padding": "Padding",
+      "alignment": "Perataan",
+      "altText": "Teks Alt",
+      "autoplay": "Putar Otomatis",
+      "borderColor": "Warna Border",
+      "borderRadius": "Radius (px)",
+      "borderWidth": "Border (px)",
+      "controls": "Kontrol",
+      "displayMode": "Mode Tampilan",
+      "height": "Tinggi",
+      "loop": "Putar Berulang",
+      "margin": "Jarak Wrap (px)",
+      "source": "URL Sumber",
+      "width": "Lebar"
+    },
+    "placeholder": {
+      "text": "Mimitian menulis...",
+      "htmlCode": "<p>Kode HTML salira di sini...</p>"
+    },
+    "tableDialog": {
+      "title": "Sisipkan Tabel",
+      "rows": "Baris",
+      "columns": "Kolom",
+      "insert": "Sisipkan"
+    },
+    "bubbleMenu": {
+      "properties": "Properti"
+    },
+    "contextMenu": {
+      "properties": "Properti",
+      "delete": "Hapus",
+      "deleteTable": "Hapus Tabel",
+      "bold": "Tebal",
+      "italic": "Miring",
+      "cleanFormatting": "Hapus Format",
+      "undo": "Urungkan",
+      "redo": "Ulangi"
+    },
+    "markdown": {
+      "placeholder": "Tulis markdown di sini...",
+      "edit": "Edit",
+      "preview": "Pratinjau",
+      "toolbar": {
+        "bold": "Tebal",
+        "italic": "Miring",
+        "heading": "Judul",
+        "link": "Tautan",
+        "image": "Gambar",
+        "inlineCode": "Kode Inline",
+        "codeBlock": "Blok Kode",
+        "list": "Daftar",
+        "quote": "Kutipan"
+      }
+    },
+    "toolbar": {
+      "tabs": {
+        "home": "Beranda",
+        "insert": "Sisipkan",
+        "layout": "Tata Letak",
+        "table": "Alat tabel"
+      },
+      "undo": "Urungkan (Ctrl+Z)",
+      "redo": "Ulangi (Ctrl+Y)",
+      "viewHtml": "Tingali sumber HTML",
+      "fontGroup": "Font",
+      "styleGroup": "Gaya",
+      "paragraphGroup": "Paragraf",
+      "specialGroup": "Khusus",
+      "commonGroup": "Umum",
+      "embedsGroup": "Embed",
+      "newspaperStyle": "Gaya koran",
+      "gridSystem": "Sistem grid",
+      "structure": "Struktur",
+      "merge": "Gabung",
+      "danger": "Bahaya",
+      "placeholders": {
+        "paragraph": "Paragraf",
+        "font": "Font"
+      },
+      "headings": {
+        "h1": "Judul 1",
+        "h2": "Judul 2",
+        "h3": "Judul 3"
+      },
+      "textColor": "Warna teks",
+      "textColorTitle": "Warna Teks",
+      "bold": "Tebal",
+      "italic": "Miring",
+      "underline": "Garis handap",
+      "strikethrough": "Coret",
+      "code": "Kode",
+      "clearStyle": "Hapus gaya",
+      "alignLeft": "Kiri",
+      "alignCenter": "Tengah",
+      "alignRight": "Kanan",
+      "alignJustify": "Rata kanan-kiri",
+      "bullets": "Bullet",
+      "numbers": "Angka",
+      "blockquote": "Kutipan",
+      "dropcap": "Dropcap",
+      "image": "Gambar",
+      "table": "Tabel",
+      "embed": "Embed",
+      "line": "Garis",
+      "icon": "Ikon",
+      "columns2": "2 kolom",
+      "columns3": "3 kolom",
+      "grid2": "Grid 2",
+      "grid3": "Grid 3",
+      "flowLayout": "Alur tata letak",
+      "containers": "Kontainer",
+      "addCol": "Tambah kol",
+      "addRow": "Tambah baris",
+      "delCol": "Hapus kol",
+      "delRow": "Hapus baris",
+      "deleteTable": "Hapus",
+      "aiAssist": "AI Assist"
+    },
+    "placeholders": {
+      "alt": "Deskripsi...",
+      "auto": "otomatis",
+      "html": "Tempel kode HTML di sini...",
+      "imageUrl": "URL gambar...",
+      "none": "Teu aya",
+      "src": "https://...",
+      "urlEllipsis": "https://...",
+      "fontSizePx": "16",
+      "zeroPx": "0px",
+      "unitEm": "1em",
+      "zero": "0"
+    },
+    "properties": {
+      "appearance": "Tampilan",
+      "dimensions": "Dimensi",
+      "general": "Petélan Umum",
+      "html": "Kusi HTML",
+      "title": "Properti",
+      "video": "Pemutaran Video"
+    },
+    "values": {
+      "block": "Blok",
+      "center": "Tengah",
+      "floatLeft": "Rata Kiri (Wrap)",
+      "floatRight": "Rata Kanan (Wrap)",
+      "inline": "Inline",
+      "left": "Kiri",
+      "right": "Kanan"
+    }
+  },
+  "messages": {},
+  "labels": {
+    "contents": "Kusi",
+    "content": "Kusi",
+    "categories": "Kategori",
+    "category": "Kategori",
+    "tags": "Tag",
+    "comments": "Komentar",
+    "comment": "Komentar",
+    "posts": "Postingan",
+    "pages": "Kaca",
+    "page": "Kaca",
+    "themes": "Tema",
+    "theme": "Tema",
+    "menus": "Menu",
+    "widgets": "Widget",
+    "author": "Penulis"
+  },
+  "theme_customizer": {
+    "title": "Customizer tema",
+    "subtitle": "Atur branding hub, kaca landing, kusi bagian, sareng gaya pikeun tema publik aktif.",
+    "status": {
+      "initializing": "Nuju ngamuat customizer…",
+      "unsaved": "Acan disimpen",
+      "saving": "Nyimpen…",
+      "published": "Tersimpan",
+      "publish_failed": "Gagal nyimpen"
+    },
+    "actions": {
+      "publish": "Terbitkan Perubahan",
+      "revert": "Kembalikan",
+      "undo": "Batal (Ctrl+Z)",
+      "redo": "Ulang (Ctrl+Y)",
+      "back_tooltip": "Balik ka Daftar Tema",
+      "quick_settings": "Petélan Enggal"
+    },
+    "organization": {
+      "modes": {
+        "design": "Desain",
+        "bindings": "Kusi",
+        "advanced": "Lanjutan"
+      },
+      "preview": "Pratinjau",
+      "preview_dialog_title": "Pratinjau tema",
+      "hide_controls": "Sumputkeun kontrol",
+      "show_controls": "Témbongkeun kontrol",
+      "hide_nav": "Sumputkeun nav",
+      "show_nav": "Témbongkeun nav",
+      "controls_label": "Kontrol",
+      "hints": {
+        "design": "Warna, tipografi, sareng tampilan bagian.",
+        "bindings": "Hubungkan bagian ka kusi Jejakawan.",
+        "advanced": "CSS kustom sareng override teknis."
+      }
+    },
+    "sidebar": {
+      "search_placeholder": "Pilari petélan atawa fitur...",
+      "categories": {
+        "identity": "Brand & navigasi",
+        "design": "Desain visual",
+        "components": "Bagian kaca",
+        "interaction": "Layout & animasi",
+        "special_pages": "Kaca landing"
+      },
+      "items": {
+        "general": "Branding Inti",
+        "general_desc": "Logo dasar sareng nami situs.",
+        "site_profile": "Profil situs",
+        "site_profile_desc": "Kontak sareng data profil situs publik.",
+        "menus": {
+          "title": "Peta Navigasi",
+          "description": "Petakan menu ka lokasi spesifik."
+        },
+        "social": "Sosial Global",
+        "social_desc": "Hubungkan profil salira.",
+        "styles": "Gaya Brand",
+        "styles_desc": "Tampilan global sareng pembulatan.",
+        "palette": "Kontrol Palet",
+        "palette_desc": "Warna utama sareng tambahan.",
+        "typo": "Tipografi",
+        "typo_desc": "Font sareng keluarga antarmuka.",
+        "css": "CSS Kustom",
+        "css_desc": "Override CSS/SCSS langsung.",
+        "layout": "Layout Master",
+        "layout_desc": "Gaya kontainer sareng header.",
+        "motion": "Efek Gerak",
+        "motion_desc": "Parameter GSAP sareng transisi.",
+        "footer": "Arsitektur Footer",
+        "footer_desc": "Petélan dasar bagian kaki.",
+        "collapse": "Sumputkeun Sidebar",
+        "expand": "Tembongkeun Sidebar",
+        "custom_css": {
+          "title": "Custom CSS",
+          "placeholder": "/* Lebetkeun kode CSS khusus di sini... */"
+        },
+        "page_management": "Aktif/nonaktif kaca",
+        "page_management_desc": "Nyalakan atawa matikan kaca landing hub",
+        "page_cms": "Kaca CMS",
+        "page_cms_desc": "Chrome kosong/not-found pikeun kaca CMS generik",
+        "page_about": "Ngeunaan",
+        "page_about_desc": "Cerita, misi, sareng tim Jejakawan",
+        "page_solusi": "Solusi / Produk",
+        "page_solusi_desc": "Judul sareng CTA halaman solusi",
+        "page_tim": "Tim",
+        "page_tim_desc": "Judul sareng panutup halaman tim",
+        "page_products": "Produk (Home)",
+        "page_products_desc": "Section produk di Home / Solusi",
+        "page_partners": "Partner",
+        "page_partners_desc": "Judul strip partner jeung laju marquee",
+        "page_cta": "Call to action",
+        "page_cta_desc": "Téks CTA Home jeung tautan tombol",
+        "page_testimonials": "Testimoni",
+        "page_testimonials_desc": "Badge jeung judul section testimoni di Home",
+        "page_updates": "Update",
+        "page_updates_desc": "Judul kolom update jeung tombol tingali sadayana",
+        "page_achievements": "Pencapaian",
+        "page_achievements_desc": "Tonggak, penghargaan, sareng kisah sukses",
+        "page_careers": "Karier",
+        "page_careers_desc": "Lowongan sareng budaya kerja",
+        "page_news": "Berita",
+        "page_news_desc": "Artikel, pengumuman, sareng pembaruan",
+        "page_contact": "Kontak",
+        "page_contact_desc": "Formulir, email, telepon, sareng peta",
+        "page_pricing": "Harga",
+        "page_pricing_desc": "Judul halaman harga jeung label CTA",
+        "page_search": "Pamilarian",
+        "page_search_desc": "Judul hasil pamilarian jeung pesen kosong"
+      }
+    },
+    "editor": {
+      "preview": {
+        "devices": {
+          "desktop": "Tampilan Desktop",
+          "tablet": "Tampilan Tablet",
+          "mobile": "Tampilan Mobile"
+        },
+        "refresh": "Segarkan Pratinjau"
+      },
+      "sections": {
+        "visual": "Petélan visual",
+        "menus": "Lokasi menu",
+        "bindings": "Sumber kusi",
+        "preview": {
+          "devices": {
+            "desktop": "Tampilan Desktop",
+            "tablet": "Tampilan Tablet",
+            "mobile": "Tampilan Mobile"
+          },
+          "refresh": "Segarkan Pratinjau"
+        }
+      },
+      "css": {
+        "label": "CSS / SCSS",
+        "placeholder": "/* Tambahkan gaya kustom salira di sini... */"
+      },
+      "menus": {
+        "placeholder": "Pilih Menu...",
+        "indicator_active": "Aktif",
+        "indicator_none": "Teu Aya",
+        "description": "Pilih menu anu bakal ditampilkan dina lokasi {label}."
+      },
+      "bindings": {
+        "subtitle": "Petakan field Jejakawan ka prop komponen",
+        "source_label": "Sumber",
+        "source_title": "Sumber kusi",
+        "query_title": "Filter query",
+        "mapping_title": "Pemetaan field",
+        "field_placeholder": "Field Jejakawan…",
+        "probe_button": "Pratinjau feed",
+        "inspector_title": "Pratinjau live",
+        "items_found": "item",
+        "clear_buffer": "Hapus",
+        "object_data": "Item tanpa judul",
+        "sort_options": {
+          "published_at": "Tanggal terbit",
+          "title": "Judul (A–Z)",
+          "views": "Tayangan",
+          "latest": "Terbaru"
+        }
+      }
+    },
+    "bridge": {
+      "menus": {
+        "title": "Item menu aya di Menu Builder",
+        "body": "Di dieu anjeun ngan nangtukeun menu mana anu ngeusian unggal lokasi téma. Jieun, susun, jeung labélkeun tautan di Menu Builder.",
+        "cta": "Buka Menu Builder"
+      },
+      "footer": {
+        "title": "Tautan footer maké menu",
+        "body": "Blurb merek, judul kolom, jeung téks newsletter tetep di dieu. Daptar tautan kolom asalna ti Menu Builder; tetepkeun menu éta di Peta Navigasi.",
+        "cta_menus": "Buka Menu Builder",
+        "cta_map": "Tetepkeun lokasi menu"
+      },
+      "bindings": {
+        "title": "Kusi daptar dina mode Kusi",
+        "body": "Judul, badge, jeung tombol tetep di Desain. Kutipan, logo, lowongan, panghargaan, jeung daptar sarupa dihubungkeun ngaliwatan Kusi.",
+        "cta": "Edit kusi daptar"
+      },
+      "design": {
+        "title": "Chrome bagian dina mode Desain",
+        "body": "Judul, badge, jeung labél tombol bagian ieu diédit di Desain — lain di binding kusi.",
+        "cta": "Edit chrome bagian"
+      },
+      "preview_hint": "Outline biru putus-putus + badge ✎ nandaan section anu bisa diédit (Header, Hero, Products, Footer…). Klik pikeun muka setélanana. Tahan Alt pikeun binding Kusi upami aya.",
+      "preview_failed_title": "Pratinjau gagal dimuat",
+      "preview_failed_body": "Iframe situs publik gagal. Pastikeun extension Site aktip jeung server Vite/Laravel jalan, teras cobian buka tab publik.",
+      "preview_open_tab": "Buka situs publik"
+    },
+    "empty_state": {
+      "title": "Pilih bagian",
+      "description": "Pilih item di sidebar pikeun mengedit visual, kusi Jejakawan, menu, atawa kaca landing."
+    },
+    "revert": {
+      "session_start": "Batalkan perubahan sesi ieu",
+      "theme_defaults": "Reset ka default tema"
+    },
+    "messages": {
+      "confirm_exit": "Aya perubahan acan disimpen. Tetap kaluar?",
+      "factory_reset": "Petélan default tema dipulihkeun.",
+      "init_error": "Customizer gagal dimuat.",
+      "init_failed": "Customizer gagal dimulai.",
+      "error": "Galat",
+      "success": "Hasil",
+      "info": "Informasi",
+      "published": "Petélan tema disimpen.",
+      "publish_failed": "Gagal nyimpen petélan tema.",
+      "reset_done": "Petélan default tema dipulihkeun.",
+      "probe_failed": "Pratinjau gagal — periksa koneksi API."
+    },
+    "items": {
+      "site_title": "Judul Situs",
+      "site_title_hint": "Judul utama anu terlihat di tab browser sareng mesin pencari.",
+      "site_unit": "Unit / departemen",
+      "site_entity_status": "Jenis / status entitas",
+      "active_levels": "Unit Aktif",
+      "active_levels_hint": "Pilih unit atawa cabang anu aktif pikeun situs ieu.",
+      "theme_style": "Gaya Visual Tema",
+      "layout_style": "Gaya Tata Letak Global",
+      "container_max_width": "Lebar Maksimal Kontainer (px)",
+      "brand_logo": "Logo Instansi",
+      "brand_favicon": "Favicon Browser",
+      "site_tagline": "Slogan Situs",
+      "site_description": "Deskripsi Meta Situs",
+      "branding_display": "Tampilan Branding",
+      "color_primary": "Warna Utama Brand",
+      "color_background": "Warna Latar Global",
+      "font_heading": "Tipografi Judul",
+      "header_sticky": "Navigasi Header Lengket",
+      "header_style": "Gaya Estetika Header",
+      "header_cta_text": "Label CTA Header",
+      "header_cta_url": "Tujuan CTA Header",
+      "nav_style": "Gaya Interaksi Link Navigasi",
+      "breadcrumb_sticky": "Breadcrumb lengket",
+      "home_sections": "Bagian beranda",
+      "hero_title": "Judul hero (fallback)",
+      "hero_subtitle": "Subjudul hero (fallback)",
+      "hero_slide_count": "Jumlah slide hero",
+      "hero_slide_interval": "Durasi Slide Hero (Detik)",
+      "hero_overlay_opacity": "Opasitas Overlay Latar Hero (%)",
+      "hero_height": "Tinggi Bagian Hero",
+      "hero_alignment": "Perataan Kusi Hero",
+      "hero_transition": "Animasi Transisi Hero",
+      "hero_show_scroll": "Tembongkeun Indikator Scroll Hero",
+      "hero_bg": "Gradien Latar Hero Opsional",
+      "button_radius": "Radius Sudut Tombol",
+      "button_border_width": "Ketebalan Bingkai Tombol",
+      "button_shadow": "Bayangan Kedalaman Tombol",
+      "cta_badge": "Badge Panggilan Aksi (CTA)",
+      "cta_title": "Headline Utama CTA",
+      "cta_subtitle": "Teks Pendukung CTA",
+      "footer_text": "Teks Hak Cipta Footer",
+      "back_to_top": "Aktifkan Tombol Balik ka Luhur",
+      "social_links": "Profil Sosial Global",
+      "animation_enabled": "Aktifkan efek gerakan GSAP",
+      "animation_intensity": "Intensitas Gerakan Keseluruhan",
+      "parallax_enabled": "Aktifkan Efek Parallax Kedalaman",
+      "hero_section": "Hero landing",
+      "hero_section_desc": "Karusel luhur, judul, sareng ticker berita opsional.",
+      "testimonials": "Testimoni",
+      "testimonials_desc": "Kutipan dina klien, member, atawa mitra.",
+      "partners_section": "Logo mitra",
+      "partners_desc": "Strip logo mitra sareng klien anu berjalan.",
+      "partners_list": "Daftar logo",
+      "cta": "Ajakan bertindak",
+      "cta_desc": "Banner handap jeung judul sareng tombol utama.",
+      "news_overlay": "Slot ticker berita",
+      "news_title": "Headline Berita",
+      "badge": "Label badge",
+      "name": "Nami",
+      "message": "Pesan",
+      "testimonial_list": "Entri testimoni",
+      "careers_page": "Kaca Karier",
+      "careers_page_desc": "Daftar lowongan (post Jejakawan, slug kategori: careers).",
+      "career_list": "Slot lowongan",
+      "company": "Nami perusahaan",
+      "job_type": "Jenis pekerjaan",
+      "achievements_page": "Kaca Sorotan",
+      "achievements_page_desc": "Kartu pencapaian (post Jejakawan, slug kategori: highlights).",
+      "achievement_list": "Slot sorotan",
+      "role": "Peran/Profesi",
+      "quote": "Pernyataan/Kutipan",
+      "avatar": "Gambar Profil",
+      "logo": "Logo",
+      "active_content": "Kusi CTA Aktif",
+      "header": "Header Utama",
+      "detail": "Teks Sub-detail",
+      "cat": "Kategori",
+      "link": "Link/URL",
+      "title": "Judul Kusi",
+      "short_info": "Info Ringkas",
+      "thumbnail": "Gambar Mini/Thumbnail",
+      "date": "Tanggal Terbit",
+      "path": "Path/Tujuan Link",
+      "target_url": "URL Tujuan",
+      "manifest_categories": {
+        "general": "Umum",
+        "site_profile": "Profil situs",
+        "site_info": "Profil situs",
+        "organization_info": "Profil situs",
+        "appearance": "Tampilan & Gaya",
+        "buttons": "Tombol & Aksi",
+        "colors": "Skema Warna",
+        "typo": "Tipografi / Font",
+        "typography": "Tipografi / Font",
+        "layout": "Tata Letak",
+        "animations": "Efek Animasi",
+        "footer": "Bagian Footer",
+        "social": "Media Sosial",
+        "social_media": "Media Sosial",
+        "hero_section": "Hero landing",
+        "partners_section": "Logo mitra",
+        "menus": "Navigasi & Menu",
+        "cta_section": "Ajakan bertindak"
+      },
+      "menus": {
+        "locations": {
+          "header": "Header Utama",
+          "header_top": "Bar Header Luhur",
+          "footer": "Footer Utama",
+          "footer_col_1": "Kolom Footer 1",
+          "footer_col_2": "Kolom Footer 2",
+          "sidebar": "Sidebar Utama"
+        }
+      },
+      "common_options": {
+        "top": "Luhur",
+        "bottom": "Handap",
+        "left": "Kiri",
+        "right": "Kanan",
+        "center": "Tengah",
+        "sticky": "Lengket",
+        "simple": "Sederhana",
+        "glass": "Glassmorphism",
+        "gradient": "Gradien",
+        "solid": "Solid",
+        "small": "Kecil",
+        "medium": "Suju",
+        "large": "Besar",
+        "extra_large": "Ekstra Besar",
+        "sharp": "Tajam",
+        "rounded": "Membulat",
+        "none": "Tanpa Efek",
+        "subtle": "Halus",
+        "subtle_halus": "Halus",
+        "dramatic_dramatis": "Dramatis",
+        "normal": "Normal",
+        "italic": "Miring",
+        "bold": "Tebal",
+        "enabled": "Aktif",
+        "disabled": "Nonaktif",
+        "select_media": "Pilih Media",
+        "change_image": "Ganti Gambar",
+        "remove": "Hapus",
+        "gabungan_yayasan_multi_level": "Gabungan / perusahaan / Multi-Jenjang",
+        "negeri_public": "Negeri (Publik)",
+        "swasta_private": "Swasta (Privat)",
+        "clean_minimalist": "Bersih & Minimalis",
+        "flat_modern": "Flat Modern",
+        "soft_pastel": "Lembut & Pastel",
+        "glassmorphism_premium": "Glassmorphism Premium",
+        "logo_only": "Ukur logo",
+        "site_name_only": "Ukur nami situs",
+        "logo_site_name": "Logo + Nami situs",
+        "full_width_default": "Lebar Penuh (Default)",
+        "boxed_content_in_box": "Tata Letak Kotak (Boxed)",
+        "wide_wider_box": "Tata Letak Lebar",
+        "framed_floating_box": "Tata Letak Bingkai",
+        "hybrid_header_footer_full": "Tata Letak Hybrid",
+        "square_0px": "Kotak (0px)",
+        "slight_4px": "Tipis (4px)",
+        "standard_8px": "Standar (8px)",
+        "rounded_12px": "Membulat (12px)",
+        "pill_full": "Pil / Kapsul",
+        "solid_white": "Putih Solid",
+        "transparent": "Transparan",
+        "blue_purple": "Biru Ungu",
+        "midnight": "Midnight Gelap",
+        "sunset": "Sunset Oranye",
+        "glass_morph_blur_transparency": "✨ Glass Morph (Premium)",
+        "spotlight_focus_highlight": "🎯 Spotlight Effect",
+        "magnetic_hover_attraction": "🧲 Magnetic Hover",
+        "floating_3d_shadow": "💫 3D Floating",
+        "slide_text_reveal": "🌊 Slide Reveal",
+        "pill_modern_soft_fill": "💊 Modern Pill",
+        "underline_grow_expand": "📏 Underline Grow",
+        "neon_glow_cyberpunk": "🔥 Neon Glow",
+        "glow_primary": "Glow (Primer)",
+        "statistics": "Statistik & Capaian",
+        "industry_partners_mitra_du_di": "Mitra Industri",
+        "news_highlights": "Berita & Sorotan",
+        "call_to_action": "Panggilan Aksi (CTA)",
+        "hero_slide_count": "Jumlah Slide Hero",
+        "hero_slide_interval": "Interval Putar Otomatis (Detik)",
+        "hero_overlay_opacity": "Opasitas Overlay (%)",
+        "hero_height": "Tinggi Hero",
+        "hero_alignment": "Perataan Kusi",
+        "hero_transition": "Gaya Transisi",
+        "hero_show_scroll": "Tembongkeun Indikator Scroll",
+        "number_of_slides": "Jumlah Slide",
+        "slide_interval_seconds": "Interval Slide (Detik)",
+        "overlay_darkness": "Kegelapan Overlay",
+        "text_alignment": "Perataan Teks",
+        "transition_style": "Gaya Transisi",
+        "show_scroll_indicator": "Indikator Scroll",
+        "zoom_fade": "Zoom + Fade",
+        "crossfade": "Crossfade (Pudar)",
+        "compact_65vh": "Kompak (65vh)",
+        "tall_85vh": "Tinggi (85vh)",
+        "standard_75vh": "Standar (75vh)",
+        "full_screen_100vh": "Layar Penuh (100vh)",
+        "add_item": "Tambah Item Anyar",
+        "platform": "Platform",
+        "url": "URL / Tautan",
+        "question": "Pertanyaan",
+        "answer": "Jawaban",
+        "title": "Judul",
+        "desc": "Deskripsi Singkat",
+        "icon": "Ikon Visual"
+      },
+      "label": "Item",
+      "counter": "Jumlah posting"
+    },
+    "sources": {
+      "static": "Manual",
+      "api_posts": "Postingan",
+      "api_pages": "Kaca",
+      "api_categories": "Kategori"
+    }
+  },
+  "frontend": {
+    "routes": {
+      "home": "Beranda",
+      "homeDescription": "Jejakawan - Sistem Manajemen Kusi Modern",
+      "blog": "Blog",
+      "blogDescription": "Artikel sareng pembaruan terbaru",
+      "post": "Artikel",
+      "about": "Ngeunaan Urang",
+      "contact": "Kontak",
+      "search": "Pilari",
+      "terms": "Syarat Layanan",
+      "privacy": "Kebijakan Privasi",
+      "solutions": "Solusi",
+      "pricing": "Harga",
+      "team": "Tim Urang",
+      "careers": "Karier",
+      "highlights": "Sorotan"
+    },
+    "about": {
+      "placeholder": "Ieu nyaéta kaca placeholder. Kusi bakal segera hadir.",
+      "title": "Ngeunaan Urang",
+      "welcome": "Wilujeng sumping di JA-Edu - Sistem Manajemen Kusi Modern"
+    },
+    "blog": {
+      "empty": "Acan aya postingan anu tersedia.",
+      "pagination": {
+        "info": "Kaca {current} dina {total}",
+        "next": "Berikutnya",
+        "previous": "Sebelumnya"
+      },
+      "readMore": "Baca Selengkapnya",
+      "subtitle": "Artikel sareng pembaruan terbaru dina tim urang",
+      "title": "Blog"
+    },
+    "comments": {
+      "comment": "Komentar",
+      "email": "Email",
+      "empty": "Acan aya komentar. Jadilah anu pertama memberikan komentar!",
+      "error": "Gagal mengirim komentar",
+      "leaveComment": "Tinggalkan Komentar",
+      "loading": "Nuju ngamuat komentar...",
+      "name": "Nami",
+      "submit": "Kirim Komentar",
+      "submitting": "Mengirim...",
+      "success": "Komentar hasil dikirim",
+      "title": "Komentar"
+    },
+    "contact": {
+      "emailPlaceholder": "Lebetkeun email salira",
+      "error": "Gagal mengirim pesan. Silakan cobian deui.",
+      "message": "Pesan",
+      "messagePlaceholder": "Tulis pesan salira di sini...",
+      "namePlaceholder": "Lebetkeun nami salira",
+      "submit": "Kirim Pesan",
+      "subtitle": "Punya pertanyaan atawa masukan? Urang hoyong mendengar dina salira.",
+      "success": "Pesan terkirim! Urang bakal segera menghubungi salira.",
+      "title": "Hubungi Urang"
+    },
+    "footer": {
+      "about": {
+        "default": "Sistem manajemen kusi modern, bersih, sareng kuat anu dibangun pikeun web."
+      },
+      "copyright": "Hak cipta dilindungi undang-undang.",
+      "headings": {
+        "about": "Ngeunaan",
+        "categories": "Kategori",
+        "newsletter": "Newsletter",
+        "resources": "Sumber Daya"
+      },
+      "powered": "Ditenagai ku",
+      "privacy": "Kebijakan Privasi",
+      "resources": {
+        "blog": "Blog",
+        "documentation": "Dokumentasi",
+        "faq": "FAQ",
+        "support": "Dukungan"
+      },
+      "system": "Sistem Manajemen Kusi Modern",
+      "terms": "Ketentuan Layanan"
+    },
+    "home": {
+      "actions": {
+        "contactUs": "Hubungi Urang",
+        "dashboard": "Dasbor",
+        "explore": "Jelajahi Kusi",
+        "getStarted": "Mimitian Ayeuna",
+        "startReading": "Mimitian Membaca",
+        "viewAll": "Tingali Sadaya Postingan"
+      },
+      "sections": {
+        "cta": {
+          "text": "Bergabunglah jeung ribuan pengembang sareng kreator anu menggunakan JA-Edu pikeun membangun pengalaman web modern.",
+          "title": "Sayogi pikeun Memulai?"
+        },
+        "featured": "Kusi Unggulan",
+        "recent": "Postingan Terbaru",
+        "recentSubtitle": "Tetap update jeung artikel terbaru urang"
+      },
+      "stats": {
+        "categories": "Kategori",
+        "content": "Kusi Terbit",
+        "visitors": "Total Pengunjung"
+      },
+      "subtitle": "Sistem Manajemen Kusi Modern",
+      "title": "JA-Edu"
+    },
+    "nav": {
+      "about": "Ngeunaan",
+      "blog": "Blog",
+      "contact": "Kontak",
+      "dashboard": "Dasbor",
+      "getStarted": "Mimitian Ayeuna",
+      "home": "Beranda",
+      "login": "Masup",
+      "logout": "Kaluar",
+      "register": "Daftar",
+      "signIn": "Masup"
+    },
+    "newsletter": {
+      "button": "Berlangganan",
+      "description": "Pembaruan produk, berita hub, sareng pengumuman dina Jejakawan.",
+      "error": "Gagal berlangganan. Silakan cobian deui.",
+      "placeholder": "Alamat email",
+      "privacy": "Jeung berlangganan, salira menyetujui",
+      "privacyLink": "Kebijakan Privasi",
+      "processing": "Memproses...",
+      "success": "Hasil berlangganan!",
+      "title": "Tetap Update"
+    },
+    "post": {
+      "backToBlog": "Balik ka Blog",
+      "loading": "Nuju ngamuat...",
+      "notFound": "Postingan teu kapendak",
+      "tags": "Tag:",
+      "views": "tayangan"
+    },
+    "search": {
+      "empty": "Teu aya hasil pikeun \"{query}\"",
+      "loading": "Milari...",
+      "query": "Milari:",
+      "title": "Hasil Pilarian"
+    }
+  },
+  "dashboard": {
+    "viewer": {
+      "welcome": "Wilujeng sumping balik, {name}!",
+      "subtitle": "Jelajahi pembaruan kusi terbaru.",
+      "latestPublished": "Kusi Terbit Terbaru",
+      "empty": "Acan aya kusi anu diterbitkeun.",
+      "publishedOn": "Diterbitkeun {date}",
+      "quickResources": "Sumber daya enggal",
+      "visitPublicSite": "Kunjungi situs publik",
+      "viewLiveSite": "Tingali situs langsung"
+    }
+  }
+}

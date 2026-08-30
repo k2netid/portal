@@ -1,0 +1,54 @@
+{
+  "navigation": {
+    "menu": {
+      "insights": "Wawasan",
+      "analytics": "Analitik",
+      "search": "Pilarian"
+    }
+  },
+  "empty": "Teu aya hasil",
+  "filterBy": "Filter menurut tipe:",
+  "initial": "Lebetkeun kata kunci pikeun memulai",
+  "placeholder": "Pilari...",
+  "resultsFor": "Hasil pikeun:",
+  "searching": "Milari...",
+  "title": "Hasil Pilarian",
+  "types": {
+    "category": "Kategori",
+    "content": "Kusi",
+    "media": "Media",
+    "page": "Kaca",
+    "tag": "Tag",
+    "post": "Posting",
+    "user": "Pamaké"
+  },
+  "ops": {
+    "title": "Kesehatan indeks",
+    "subtitle": "Perkiraan lag vs kusi sareng taksonomi terbit (ports).",
+    "refresh": "Muat ulang",
+    "reindex": "Bangun ulang indeks",
+    "reindexing": "Mengindeks ulang…",
+    "loading": "Nuju ngamuat kesehatan indeks…",
+    "inSync": "Indeks sinkron",
+    "lagDetected": "Lag terdeteksi ({count} item)",
+    "checkedMeta": "Diperiksa {time} · {total} baris di indeks",
+    "table": {
+      "resource": "Sumber daya",
+      "source": "Sumber",
+      "indexed": "Terindeks",
+      "lag": "Lag"
+    },
+    "cliHint": "CLI: php artisan search:index-health · php artisan search:reindex",
+    "reindexDone": "Pembangunan ulang indeks pilarian sampurna.",
+    "loadFailed": "Gagal nuju ngamuat kesehatan indeks",
+    "reindexFailed": "Gagal mengindeks ulang"
+  },
+  "hub": {
+    "title": "Pilarian & indeks",
+    "subtitle": "Jelajahi pilarian terpadu atawa pantau kesehatan indeks.",
+    "tabs": {
+      "search": "Pilarian",
+      "ops": "Kesehatan indeks"
+    }
+  }
+}

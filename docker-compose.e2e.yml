@@ -1,0 +1,20 @@
+# Playwright E2E against host Vite + Laravel (PVE host browsers are unsupported).
+# Image pin must match frontend @playwright/test (currently 1.59.1).
+#
+#   docker compose -f docker-compose.e2e.yml run --rm playwright
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.59.1-noble
+    ipc: host
+    network_mode: host
+    working_dir: /work
+    volumes:
+      - ./frontend:/work
+    environment:
+      HOME: /tmp
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+      PLAYWRIGHT_BASE_URL: ${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5273}
+      E2E_LOGIN_EMAIL: ${E2E_LOGIN_EMAIL:-super@jejakawan.com}
+      E2E_LOGIN_PASSWORD: ${E2E_LOGIN_PASSWORD:-password}
+    command: ["npm", "run", "test:e2e:smoke"]

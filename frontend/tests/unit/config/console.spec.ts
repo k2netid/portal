@@ -38,7 +38,7 @@ describe('console dashboard slug', () => {
 
     it('resolves dashboard landing as slug path (no named route params)', () => {
         expect(resolveConsoleDashboardLocation('ja-dash')).toEqual({
-            path: '/ja-dash',
+            path: '/ja-dash/dashboard',
         });
     });
 });

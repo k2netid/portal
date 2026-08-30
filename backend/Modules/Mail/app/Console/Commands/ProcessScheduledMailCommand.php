@@ -7,11 +7,14 @@ namespace Modules\Mail\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Modules\Core\System\Console\Concerns\SkipsWhenProductInactive;
 use Modules\Mail\Models\MailMessage;
 use Modules\Mail\Services\MailDispatchService;
 
 class ProcessScheduledMailCommand extends Command
 {
+    use SkipsWhenProductInactive;
+
     protected $signature = 'mail:process-scheduled';
 
     protected $description = 'Process and dispatch scheduled emails that have reached their target dispatch time';
@@ -24,6 +27,10 @@ class ProcessScheduledMailCommand extends Command
 
     public function handle(): int
     {
+        if ($this->skipUnlessProductActive('mail')) {
+            return self::SUCCESS;
+        }
+
         $this->info('Checking for scheduled emails to dispatch...');
 
         $now = Carbon::now();

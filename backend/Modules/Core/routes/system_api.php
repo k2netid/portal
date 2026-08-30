@@ -10,7 +10,6 @@ use Modules\Core\System\Http\Controllers\Api\ScaffolderApiController;
 use Modules\Core\System\Http\Controllers\Api\ScimUserController;
 use Modules\Core\System\Http\Controllers\Console\ActivityLogController;
 use Modules\Core\System\Http\Controllers\Console\AiController;
-use Modules\Core\System\Http\Controllers\Console\AnalyticsController;
 use Modules\Core\System\Http\Controllers\Console\AuthController;
 use Modules\Core\System\Http\Controllers\Console\CaptchaController;
 use Modules\Core\System\Http\Controllers\Console\ConsoleMenuController;
@@ -203,6 +202,7 @@ Route::prefix('v1')->group(function (): void {
     // Console Menu Editor Management API
     Route::prefix('manage/console-menus')->middleware(['auth:sanctum'])->group(function (): void {
         Route::get('', [ConsoleMenuController::class, 'index']);
+        Route::get('groups', [ConsoleMenuController::class, 'groups']);
         Route::post('', [ConsoleMenuController::class, 'store']);
         Route::post('reorder', [ConsoleMenuController::class, 'reorder']);
         Route::post('reset', [ConsoleMenuController::class, 'resetDefaults']);
@@ -223,21 +223,6 @@ Route::prefix('v1')->group(function (): void {
         Route::post('system/revoke', [NotificationController::class, 'revokeSystem']);
         Route::post('system/bulk-revoke', [NotificationController::class, 'bulkRevokeSystem']);
         Route::post('broadcast', [NotificationController::class, 'broadcast']);
-    });
-
-    // Analytics Management API (Cleanup, purge, & reporting)
-    Route::prefix('manage/analytics')->middleware(['auth:sanctum'])->group(function (): void {
-        Route::post('cleanup', [AnalyticsController::class, 'cleanup']);
-        Route::post('purge-all', [AnalyticsController::class, 'purgeAll']);
-        Route::get('overview', [AnalyticsController::class, 'overview']);
-        Route::get('visits', [AnalyticsController::class, 'visits']);
-        Route::get('top-pages', [AnalyticsController::class, 'topPages']);
-        Route::get('devices', [AnalyticsController::class, 'devices']);
-        Route::get('browsers', [AnalyticsController::class, 'browsers']);
-        Route::get('countries', [AnalyticsController::class, 'countries']);
-        Route::get('referrers', [AnalyticsController::class, 'referrers']);
-        Route::get('realtime', [AnalyticsController::class, 'realtime']);
-        Route::get('export', [AnalyticsController::class, 'export']);
     });
 
     // System Journal routes for frontend compatibility (registered as api/v1/manage/system-journal)
@@ -289,6 +274,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('upload', [ExtensionController::class, 'upload']);
         Route::post('git-clone', [ExtensionController::class, 'gitClone']);
         Route::put('features/{slug}/toggle', [ExtensionController::class, 'toggleFeature']);
+        Route::get('activation-plan', [ExtensionController::class, 'activationPlan']);
+        Route::post('bulk-activate', [ExtensionController::class, 'bulkActivate']);
+        Route::get('{slug}/lifecycle-preview', [ExtensionController::class, 'lifecyclePreview']);
         Route::post('{slug}/activate', [ExtensionController::class, 'activate']);
         Route::post('{slug}/deactivate', [ExtensionController::class, 'deactivate']);
         Route::put('{slug}/settings', [ExtensionController::class, 'updateSettings']);

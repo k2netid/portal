@@ -13,9 +13,7 @@ import time from '@/locales/su/time.json';
 import errors from '@/locales/su/errors.json';
 import genders from '@/locales/su/genders.json';
 import auth from '@/locales/su/auth.json';
-import media from '@/locales/su/media.json';
 import editor from '@/locales/su/editor.json';
-import ai from '@/locales/su/ai.json';
 
 import { moduleLocaleBundles } from '@/engine/i18n/moduleLocales';
 
@@ -37,17 +35,6 @@ const common = {
 export default {
     common,
     shared: common,
-    media,
     editor,
-    ai,
-    publishing: {
-        editor,
-        content: {
-            form: {
-                maxSizeHint: 'Maks {size}MB',
-                minHint: 'Min {dimensions}'
-            }
-        }
-    },
     ...moduleLocaleBundles.su,
 };

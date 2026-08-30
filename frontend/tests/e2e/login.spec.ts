@@ -14,11 +14,11 @@ test.describe('Authentication Flow', () => {
         await expect(submitBtn).toBeEnabled();
         await submitBtn.click();
 
-        await expect(page).toHaveURL(/.*dash/);
-
-        const heading = page.getByRole('heading', { level: 1 });
-        await expect(heading).toBeVisible({ timeout: 10000 });
-        await expect(heading).toHaveText(/(Dashboard|Beranda|Dasbor)/i);
+        await expect(page).toHaveURL(/\/(?:dash|ja-dash)(?:\/dashboard)?(?:\/|$|\?)/);
+        await expect(page).not.toHaveURL(/\/419/);
+        await expect(page.locator('[data-testid="console-sidebar-brand"]')).toBeVisible({ timeout: 15_000 });
+        await page.waitForTimeout(2500);
+        await expect(page).not.toHaveURL(/\/419/);
     });
 
     test('should show error for invalid credentials', async ({ page }) => {

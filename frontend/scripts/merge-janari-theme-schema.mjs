@@ -9,9 +9,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const themeJsonPath = path.join(root, 'src/modules/Content/Layout/views/themes/janari/theme.json');
-const platformPath = path.join(root, 'src/modules/Content/Layout/customizer/platform/schema/global.settings.schema.json');
-const themeSchemaPath = path.join(root, 'src/modules/Content/Layout/views/themes/janari/customizer/schema.settings.json');
+const themeJsonPath = path.join(root, 'src/modules/Layout/views/themes/janari/theme.json');
+const platformPath = path.join(root, 'src/modules/Layout/customizer/platform/schema/global.settings.schema.json');
+const themeSchemaPath = path.join(root, 'src/modules/Layout/views/themes/janari/customizer/schema.settings.json');
 
 function omitMeta(schema) {
     const out = {};

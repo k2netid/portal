@@ -1,0 +1,91 @@
+{
+  "name": "Layout",
+  "slug": "layout",
+  "version": "1.1.0",
+  "description": "Site layout pack \u2014 menus, widgets, redirects, themes, visual builder, and block renderer for Publishing.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "cms",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "layout",
+  "dependencies": {
+    "publishing": ">=1.0.0"
+  },
+  "suggests": {
+    "media": ">=1.0.0",
+    "forms": ">=1.0.0"
+  },
+  "contribution_points": {
+    "widgets": [
+      { "type": "html", "name": "HTML", "areas": ["sidebar", "footer"] },
+      { "type": "text", "name": "Text", "areas": ["sidebar", "footer"] },
+      { "type": "content_list", "name": "Content list", "areas": ["sidebar", "footer"] },
+      { "type": "menu", "name": "Navigation menu", "areas": ["sidebar", "footer"] },
+      { "type": "form", "name": "Form", "areas": ["sidebar", "footer"] },
+      { "type": "recent_posts", "name": "Recent posts", "areas": ["sidebar"] },
+      { "type": "categories", "name": "Categories", "areas": ["sidebar"] },
+      { "type": "custom", "name": "Custom", "areas": ["sidebar", "footer"] }
+    ]
+  },
+  "features": [
+    {
+      "slug": "menus",
+      "name": "Menus",
+      "description": "Build nested site navigation menus",
+      "category": "marketing"
+    },
+    {
+      "slug": "widgets",
+      "name": "Widgets",
+      "description": "Manage sidebar and footer widgets",
+      "category": "marketing"
+    },
+    {
+      "slug": "redirects",
+      "name": "Redirects",
+      "description": "301/302 URL redirects and aliases",
+      "category": "utility"
+    },
+    {
+      "slug": "themes",
+      "name": "Themes",
+      "description": "Install, activate, and customize frontend themes",
+      "category": "marketing"
+    },
+    {
+      "slug": "visual-builder",
+      "name": "Visual Builder",
+      "description": "Drag-and-drop page and site block editor",
+      "category": "marketing"
+    }
+  ],
+  "permissions": [
+    "view menus",
+    "create menus",
+    "edit menus",
+    "delete menus",
+    "manage menus",
+    "view widgets",
+    "create widgets",
+    "edit widgets",
+    "delete widgets",
+    "manage widgets",
+    "view redirects",
+    "create redirects",
+    "edit redirects",
+    "delete redirects",
+    "manage redirects",
+    "view themes",
+    "upload themes",
+    "edit themes",
+    "delete themes",
+    "manage themes"
+  ]
+}

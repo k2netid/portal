@@ -3,6 +3,7 @@ import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useConsoleContextStore } from '../stores/consoleContext';
 import { registry } from '../registry';
 import { logger } from '@/shared/utils/logger';
+import { registerOptionalFirstPartyModules } from './deferredConsoleModules';
 
 export async function bootstrapConsoleApp() {
     logger.info('[Kernel] Initializing console kernel...');
@@ -30,13 +31,18 @@ export async function bootstrapConsoleApp() {
     }
 
     try {
+        const { useSystemStore } = await import('@/modules/Core/System/stores/system');
+        const systemStore = useSystemStore();
+        await systemStore.fetchPublicSettings();
+
         const { coreModules } = await import('@/modules/Core');
         coreModules.forEach((m) => registry.register(m));
         await registry.initializeModules(coreModules);
 
-        const { mailModules } = await import('@/modules/Mail');
-        mailModules.forEach((m) => registry.register(m));
-        await registry.initializeModules(mailModules);
+        const newly = await registerOptionalFirstPartyModules(systemStore.activeExtensions);
+        if (newly.length > 0) {
+            logger.info('[Kernel] Optional first-party modules registered', { newly });
+        }
     } catch (error) {
         logger.error('[Kernel] Failed to register core console modules during bootstrap', error);
     }

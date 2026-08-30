@@ -6,8 +6,8 @@ const mailRoutes: RouteRecordRaw[] = [
         name: 'mail',
         component: () => import('@/modules/Mail/views/mail/Index.vue'),
         meta: {
-            title: 'system.mail.title',
-            breadcrumb: 'system.navigation.menu.mail',
+            title: 'mail.title',
+            breadcrumb: 'mail.navigationMenuMail',
             permission: 'use mail',
             extension: 'mail',
         },

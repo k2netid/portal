@@ -74,7 +74,7 @@ export const resolveConsoleDashboardLocation = (slug?: string): RouteLocationRaw
     const dashboardSlug = slug ?? readSlugFromStorage() ?? DEFAULT_CONSOLE_DASHBOARD_SLUG;
 
     return {
-        path: '/' + dashboardSlug,
+        path: `/${dashboardSlug}/dashboard`,
     };
 };
 

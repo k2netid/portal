@@ -71,11 +71,7 @@ export function useErrorPageNavigation(options: ErrorPageNavigationOptions = {})
     };
 
     const goHome = async (): Promise<void> => {
-        if (shell.value === 'console') {
-            await router.push(homePath.value);
-            return;
-        }
-        window.location.assign('/');
+        await router.push(homePath.value);
     };
 
     const goBack = async (): Promise<void> => {

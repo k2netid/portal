@@ -17,10 +17,8 @@ class ConsoleMenuController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
-        // Auto-seed defaults if table is empty
-        if (ConsoleMenu::count() === 0) {
-            ConsoleMenu::seedDefaults();
-        }
+        // Auto-seed when empty; soft-sync new pack defaults (publishing/library) without wipe
+        ConsoleMenu::ensureMissingDefaults();
 
         $query = ConsoleMenu::with(['children' => function ($q) {
             $q->orderBy('order', 'asc');
@@ -36,6 +34,24 @@ class ConsoleMenuController extends BaseApiController
         $menus = $query->get();
 
         return $this->success($menus, 'Console menus retrieved successfully');
+    }
+
+    /**
+     * Groups for the menu editor (factory catalog + extra DB roots).
+     */
+    public function groups(): JsonResponse
+    {
+        $groups = array_values(array_merge(
+            [[
+                'slug' => 'all',
+                'name' => 'All Groups',
+                'icon' => 'layers',
+                'label_key' => 'system.navigation.menuGroups.all',
+            ]],
+            ConsoleMenu::groupsForEditor(),
+        ));
+
+        return $this->success($groups, 'Menu groups retrieved successfully');
     }
 
     /**
@@ -162,6 +178,7 @@ class ConsoleMenuController extends BaseApiController
     public function resetDefaults(): JsonResponse
     {
         ConsoleMenu::seedDefaults(true);
+        ConsoleMenu::applyActiveExtensionVisibility();
 
         $menus = ConsoleMenu::with(['children' => function ($q) {
             $q->orderBy('order', 'asc');

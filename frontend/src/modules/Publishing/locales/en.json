@@ -1,0 +1,1268 @@
+{
+  "navigation": {
+    "menu": {
+      "editorial": "Editorial",
+      "studio": "Content",
+      "comments": "Comments",
+      "themes": "Themes",
+      "publishingSettings": "Publishing Settings",
+      "seo": "SEO",
+      "seoTools": "SEO Tools",
+      "categories": "Categories",
+      "analytics": "Analytics"
+    }
+  },
+  "settings": {
+    "title": "Publishing settings",
+    "subtitle": "SEO and discussion defaults for the public site.",
+    "loading": "Loading settings…",
+    "save": "Save",
+    "saving": "Saving…",
+    "tabs": {
+      "seo": "SEO",
+      "discussion": "Discussion"
+    }
+  },
+  "content": {
+    "title": "Content Studio",
+    "description": "Manage your content, media, and taxonomy",
+    "actions": {
+      "approve": "Approve",
+      "duplicate": "Duplicate",
+      "emptyTrash": "Empty Trash",
+      "moveToTrash": "Move to Trash",
+      "publishNow": "Publish Now",
+      "reject": "Reject",
+      "restore": "Restore",
+      "saveDraft": "Save as Draft",
+      "schedule": "Schedule",
+      "unpublish": "Unpublish"
+    },
+    "title_singular": "Content",
+    "title_plural": "Contents",
+    "builder": {
+      "bannerTitle": "Visual Page & Block Builder",
+      "blocksCount": "{count} blocks",
+      "hasBlocksDesc": "This page is built with interactive visual builder blocks.",
+      "noBlocksDesc": "Design pages with responsive drag & drop blocks (Grid, Hero, Forms, Carousel).",
+      "editVisual": "Open in Visual Builder",
+      "launchVisual": "Design with Visual Builder",
+      "fallbackContent": "Fallback Text / SEO Content (Tiptap)",
+      "savedSuccess": "Visual builder blocks synced successfully!"
+    },
+    "template": {
+      "default": "Default Theme Layout",
+      "defaultDesc": "Standard theme layout with hero title banner and footer.",
+      "fullWidth": "Full Width (No Container)",
+      "fullWidthDesc": "Stretches sections from edge to edge.",
+      "blankCanvas": "Blank Canvas (Landing Page Funnel)",
+      "blankCanvasDesc": "Renders 100% Visual Builder blocks without theme header and footer banner."
+    },
+    "form": {
+      "template": "Page Template",
+      "addTags": "Add Tags",
+      "allowComments": "Allow Comments",
+      "allowCommentsDesc": "Enable or disable comments for this content item.",
+      "back": "Back to Contents",
+      "body": "Content Body",
+      "cancel": "Cancel",
+      "category": "Category",
+      "chooseEditorDesc": "Choose between the standard text editor or our visual drag-and-drop builder.",
+      "create": "Create Content",
+      "createAndEdit": "Create & Open Builder",
+      "creating": "Creating...",
+      "details": "Content Details",
+      "discussion": "Discussion",
+      "editTitle": "Edit Content",
+      "excerpt": "Excerpt",
+      "excerptPlaceholder": "Brief summary of the content",
+      "intro": "Intro",
+      "introPlaceholder": "Opening paragraph below page title (supports bold, italic, link)",
+      "featured": "Featured Content",
+      "featuredDesc": "Pin this content to the top",
+      "featuredImage": "Featured Image",
+      "keywordsPlaceholder": "Enter meta keywords separated by commas",
+      "loading": "Loading content...",
+      "locked": "Locked",
+      "lockedBy": "by {name}",
+      "maxSizeHint": "Max Size: {size}MB | {extensions}",
+      "metaDescription": "Meta Description",
+      "metaKeywords": "Meta Keywords",
+      "metaTitle": "Meta Title",
+      "minHint": "(Min: {dimensions})",
+      "ogImage": "Open Graph Image",
+      "preview": "Preview",
+      "publishDate": "Publish Date",
+      "publishImmediatelyHelp": "Leave empty to publish immediately",
+      "publishing": "Publishing",
+      "recommendedHint": "Recommended: {dimensions}",
+      "remove": "Remove",
+      "removeImage": "Remove Image",
+      "selectCategory": "Select Category",
+      "selectImage": "Select Image",
+      "selectOgImage": "Select OG Image",
+      "selectTag": "Select a tag...",
+      "seoSettings": "SEO Settings",
+      "sidebar": {
+        "addToMenu": "Add to Menu",
+        "addToMenuDesc": "Add this content to a menu",
+        "comments": "Comments"
+      },
+      "slug": "Slug",
+      "slugPlaceholder": "auto-generated-from-title",
+      "status": "Status",
+      "switchModeDescription": "You're about to switch to a different editor mode. Content is stored separately for each mode.",
+      "switchModeTitle": "Switch Editor Mode",
+      "switchToBuilderWarning": "Your classic editor content will remain saved, but won't be visible in the builder. The builder will start empty unless you've already added blocks.",
+      "switchToClassicWarning": "Your builder blocks will remain saved, but won't be visible in the classic editor. The classic editor will show previously saved content or be empty.",
+      "tagInputHint": "Press Enter to add a new tag, or click a suggestion",
+      "tagInputPlaceholder": "Type to add or search tags...",
+      "tags": "Tags",
+      "taxonomy": "Taxonomy",
+      "title": "Content Title",
+      "titlePlaceholder": "Enter content title",
+      "type": "Type",
+      "unlock": "Unlock",
+      "unlocked": "Unlocked",
+      "update": "Update Content",
+      "updating": "Updating...",
+      "urlFriendlyHelp": "URL-friendly version of the title",
+      "useBuilder": "Use JA-Builder",
+      "useDefault": "Use Classic Editor",
+      "welcomeToBuilder": "Build your layout"
+    },
+    "list": {
+      "bulkActions": "Bulk Actions",
+      "createNew": "Create New Content",
+      "description": "Manage your content, blog posts, and pages",
+      "filterByStatus": "Filter by status",
+      "empty": "No content found",
+      "revisions": "Revisions",
+      "selected": "{count} selected",
+      "subtitle": "Manage your content library",
+      "templates": "Templates",
+      "title": "All Contents",
+      "calendar": "Calendar",
+      "calendarSubtitle": "See scheduled and published posts on a calendar.",
+      "revisionsSubtitle": "Compare and restore previous versions of this content."
+    },
+    "messages": {
+      "approveFailed": "Failed to approve content",
+      "approved": "Content approved successfully",
+      "conflictResolveFailed": "Failed to remove conflicting item. Please rename your current page.",
+      "conflictResolved": "Conflict resolved: Previous item deleted.",
+      "createFailed": "Failed to create content",
+      "duplicateFailed": "Failed to duplicate content",
+      "loadFailed": "Failed to load content",
+      "pendingNotice": "This content is currently pending review and will be published once approved by an editor.",
+      "previewFailed": "Failed to preview content",
+      "publishFailed": "Failed to publish content",
+      "publishSuccess": "Content published successfully",
+      "rejectFailed": "Failed to reject content",
+      "rejectReason": "Please provide a reason for rejection",
+      "rejected": "Content rejected successfully",
+      "rescheduleFailed": "Failed to reschedule content",
+      "restoreFailed": "Failed to restore content",
+      "unlockFailed": "Failed to unlock content",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateFailed": "Failed to update content"
+    },
+    "placeholders": {
+      "rejectionReason": "Enter rejection reason here..."
+    },
+    "seo": {
+      "metaDescription": "SEO Description",
+      "metaTitle": "SEO Title",
+      "seoDescPlaceholder": "SEO description (defaults to excerpt)",
+      "seoTitlePlaceholder": "SEO title (defaults to content title)",
+      "charactersCount": "{current}/{max} characters"
+    },
+    "featuredImage": {
+      "titleLabel": "Image title",
+      "descriptionLabel": "Image description",
+      "titlePlaceholder": "e.g. Director welcome ceremony",
+      "descriptionPlaceholder": "Add a short description for visual context.",
+      "positionHero": "Hero"
+    },
+    "revisions": {
+      "actions": {
+        "restore": "Restore",
+        "view": "View"
+      },
+      "badge": {
+        "current": "Current"
+      },
+      "empty": {
+        "description": "This content hasn't been modified yet.",
+        "title": "No revisions found"
+      },
+      "loading": "Loading revisions...",
+      "messages": {
+        "noChanges": "No changes summary",
+        "restoreConfirm": "Are you sure you want to restore revision v{version}? This will replace the current content.",
+        "restoreTitle": "Restore Revision"
+      },
+      "modal": {
+        "close": "Close",
+        "fields": {
+          "body": "Body Content",
+          "status": "Status",
+          "title": "Title",
+          "type": "Tipe"
+        },
+        "restore": "Restore This Version",
+        "title": "Revision v{version}"
+      },
+      "table": {
+        "actions": "Actions",
+        "author": "Author",
+        "changes": "Changes",
+        "date": "Date",
+        "version": "Version"
+      },
+      "pageSubtitle": "Version history for the active article or page."
+    },
+    "status": {
+      "archived": "Archived",
+      "draft": "Draft",
+      "pending": "Pending Review",
+      "published": "Published",
+      "scheduled": "Scheduled",
+      "trashed": "Trashed"
+    },
+    "tabs": {
+      "content": "Content",
+      "seo": "SEO",
+      "settings": "Settings",
+      "contents": "Contents",
+      "categories": "Categories",
+      "tags": "Tags"
+    },
+    "filters": {
+      "allStatus": "All statuses"
+    }
+  },
+  "content_templates": {
+    "title": "Content Templates",
+    "title_singular": "Content Template",
+    "description": "Manage reusable content layouts and snippets",
+    "search": "Search templates...",
+    "loading": "Loading templates...",
+    "empty": "No templates found",
+    "create": "Create New Template",
+    "form": {
+      "back": "Back",
+      "body": "Body",
+      "bodyPlaceholder": "Enter template body…",
+      "cancel": "Cancel",
+      "content": "Content",
+      "createTitle": "Create template",
+      "description": "Description",
+      "descriptionPlaceholder": "Short description…",
+      "details": "Details",
+      "editTitle": "Edit template",
+      "excerpt": "Excerpt",
+      "excerptPlaceholder": "Optional excerpt…",
+      "name": "Name",
+      "namePlaceholder": "Template name",
+      "save": "Save",
+      "saving": "Saving…",
+      "slug": "Slug",
+      "slugHelp": "URL-friendly identifier",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Template title",
+      "type": "Type",
+      "update": "Update",
+      "updating": "Updating…",
+      "createSubtitle": "Start from a reusable layout for new posts and pages.",
+      "editSubtitle": "Adjust fields and structure for this template."
+    },
+    "actions": {
+      "delete": "Delete Template",
+      "createContent": "Create content from this template",
+      "bulkDelete": "Delete selected templates"
+    },
+    "table": {
+      "name": "Template Name",
+      "type": "Type",
+      "description": "Description",
+      "updated": "Last Updated",
+      "actions": "Actions",
+      "selected": "{count} templates selected"
+    },
+    "types": {
+      "all": "All Types",
+      "post": "Post",
+      "page": "Page",
+      "custom": "Custom"
+    },
+    "messages": {
+      "deleteConfirm": "Are you sure you want to delete template '{name}'?",
+      "forceDeleteConfirm": "This will permanently delete template '{name}'. This action cannot be undone.",
+      "restoreConfirm": "Are you sure you want to restore template '{name}'?",
+      "createContentSuccess": "Content created from template"
+    }
+  },
+  "categories": {
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "move": "Move"
+    },
+    "createNew": "New Category",
+    "description": "Manage content categories",
+    "empty": "No categories found",
+    "form": {
+      "active": "Active",
+      "cancel": "Cancel",
+      "create": "Create",
+      "createDescription": "Add a new category to your content structure.",
+      "createTitle": "Create Category",
+      "description": "Description",
+      "descriptionPlaceholder": "Category description",
+      "details": "Category Details",
+      "editDescription": "Update category information and settings.",
+      "editTitle": "Edit Category",
+      "image": "Image",
+      "name": "Name",
+      "namePlaceholder": "Category name",
+      "noParent": "No Parent (Root Category)",
+      "parent": "Parent Category",
+      "removeImage": "Remove Image",
+      "saveError": "Failed to save category",
+      "saving": "Saving...",
+      "selectImage": "Select Image",
+      "slug": "Slug",
+      "slugHelp": "URL-friendly version",
+      "slugPlaceholder": "category-slug",
+      "sortOrder": "Sort Order",
+      "sortOrderHelp": "Lower numbers appear first",
+      "update": "Update"
+    },
+    "loading": "Loading categories...",
+    "messages": {
+      "deleteConfirm": "Are you sure you want to delete \"{name}\" and all its subcategories?",
+      "deleteError": "Failed to delete category",
+      "moveSuccess": "Category moved successfully"
+    },
+    "move": {
+      "cancel": "Cancel",
+      "description": "Move \"{name}\" to:",
+      "error": "Failed to move category",
+      "moving": "Moving...",
+      "newParent": "New Parent Category",
+      "submit": "Move Category",
+      "title": "Move Category"
+    },
+    "search": "Search categories...",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "actions": "Actions",
+      "contents": "Contents",
+      "name": "Name",
+      "parent": "Parent",
+      "slug": "Slug",
+      "status": "Status"
+    },
+    "title": "Categories",
+    "title_singular": "Category",
+    "viewMode": {
+      "list": "List View",
+      "tree": "Tree View"
+    },
+    "filters": {
+      "all": "All categories"
+    }
+  },
+  "comments": {
+    "actions": {
+      "approve": "Approve",
+      "approveAll": "Approve All",
+      "bulkAction": "Bulk Action",
+      "delete": "Delete",
+      "markSpam": "Mark as Spam",
+      "reject": "Reject",
+      "rejectAll": "Reject All",
+      "reply": "Reply"
+    },
+    "detail": {
+      "anonymous": "Anonymous",
+      "author": "Author",
+      "email": "Email",
+      "no_email": "No email",
+      "postedOn": "Posted on",
+      "repliesCount": "{count} reply | {count} replies",
+      "reply": "Reply",
+      "replies": "Replies"
+    },
+    "filter": {
+      "allStatus": "All Status",
+      "searchPlaceholder": "Search comments..."
+    },
+    "list": {
+      "empty": "No comments found",
+      "on": "On",
+      "replyTo": "Reply to",
+      "selected": "{count} selected",
+      "subtitle": "Manage and moderate comments",
+      "title": "All Comments"
+    },
+    "title_singular": "Comment",
+    "messages": {
+      "approveFailed": "Failed to approve comment",
+      "bulkApproveConfirm": "Approve {count} comments?",
+      "bulkDeleteConfirm": "Delete {count} comments? This cannot be undone.",
+      "bulkFailed": "Failed to perform bulk action",
+      "bulkRejectConfirm": "Reject {count} comments?",
+      "bulkSpamConfirm": "Mark {count} comments as spam?",
+      "deleteConfirm": "Are you sure you want to delete this comment?",
+      "deleteFailed": "Failed to delete comment",
+      "rejectFailed": "Failed to reject comment",
+      "spamFailed": "Failed to mark comment as spam"
+    },
+    "stats": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "spam": "Spam",
+      "total": "Total"
+    },
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "spam": "Spam"
+    },
+    "comment": "Comment",
+    "email": "Email",
+    "empty": "No comments yet",
+    "leaveComment": "Leave a comment",
+    "loading": "Loading comments…",
+    "name": "Name",
+    "reply": "Reply",
+    "submit": "Submit",
+    "submitting": "Submitting…"
+  },
+  "seo": {
+    "analysis": {
+      "analyzing": "Analyzing...",
+      "failed": "Failed to run SEO analysis",
+      "placeholder": "Select content...",
+      "results": "Analysis Results",
+      "run": "Run Analysis",
+      "score": "Score: {score}/100",
+      "selectContent": "Select Content to Analyze",
+      "title": "SEO Analysis"
+    },
+    "robots": {
+      "contentLabel": "Robots.txt Content",
+      "placeholder": "User-agent: *\nDisallow: /admin\nAllow: /",
+      "reload": "Reload",
+      "save": "Save Robots.txt",
+      "saved": "Robots.txt saved successfully",
+      "saving": "Saving...",
+      "title": "Robots.txt Editor"
+    },
+    "schema": {
+      "copy": "Copy to Clipboard",
+      "copySuccess": "Schema JSON copied to clipboard!",
+      "failed": "Failed to generate schema",
+      "generate": "Generate Schema",
+      "generating": "Generating...",
+      "jsonTitle": "Generated Schema JSON",
+      "selectContent": "Select Content",
+      "title": "Schema Markup Generator"
+    },
+    "sitemap": {
+      "copySuccess": "Sitemap URL copied to clipboard!",
+      "copyUrl": "Copy URL",
+      "generate": "Generate Sitemap",
+      "generated": "Sitemap generated successfully",
+      "generating": "Generating...",
+      "title": "Sitemap Management",
+      "urlLabel": "Sitemap URL"
+    },
+    "tabs": {
+      "analysis": "SEO Analysis",
+      "robots": "Robots.txt",
+      "schema": "Schema Generation",
+      "sitemap": "Sitemap"
+    },
+    "title": "SEO Tools",
+    "subtitle": "Sitemap, robots.txt, and on-page SEO analysis."
+  },
+  "editor": {
+    "actions": {
+      "cancel": "Cancel",
+      "constrainProportions": "Constrain proportions",
+      "fit": "Fit to Content (Reset Size)",
+      "interact": "Interact with content",
+      "interactShort": "Interact",
+      "save": "Save changes",
+      "stopInteraction": "Stop interaction"
+    },
+    "embed": {
+      "configure": "Double click to configure",
+      "empty": "Empty HTML Embed"
+    },
+    "fields": {
+      "size": "Size",
+      "color": "Color",
+      "backgroundColor": "Background Color",
+      "padding": "Padding",
+      "alignment": "Alignment",
+      "altText": "Alt text",
+      "autoplay": "Autoplay",
+      "borderColor": "Border color",
+      "borderRadius": "Radius (px)",
+      "borderWidth": "Border (px)",
+      "controls": "Controls",
+      "displayMode": "Display mode",
+      "height": "Height",
+      "loop": "Loop",
+      "margin": "Wrap spacing (px)",
+      "source": "Source URL",
+      "width": "Width"
+    },
+    "placeholder": {
+      "text": "Start writing...",
+      "htmlCode": "<p>Your HTML code here...</p>"
+    },
+    "tableDialog": {
+      "title": "Insert Table",
+      "rows": "Rows",
+      "columns": "Columns",
+      "insert": "Insert"
+    },
+    "bubbleMenu": {
+      "properties": "Properties"
+    },
+    "contextMenu": {
+      "properties": "Properties",
+      "delete": "Delete",
+      "deleteTable": "Delete Table",
+      "bold": "Bold",
+      "italic": "Italic",
+      "cleanFormatting": "Clean Formatting",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "markdown": {
+      "placeholder": "Write your markdown here...",
+      "edit": "Edit",
+      "preview": "Preview",
+      "toolbar": {
+        "bold": "Bold",
+        "italic": "Italic",
+        "heading": "Heading",
+        "link": "Link",
+        "image": "Image",
+        "inlineCode": "Inline Code",
+        "codeBlock": "Code Block",
+        "list": "List",
+        "quote": "Quote"
+      }
+    },
+    "toolbar": {
+      "tabs": {
+        "home": "Home",
+        "insert": "Insert",
+        "layout": "Layout",
+        "table": "Table tools"
+      },
+      "undo": "Undo (Ctrl+Z)",
+      "redo": "Redo (Ctrl+Y)",
+      "viewHtml": "View HTML source",
+      "fontGroup": "Font",
+      "styleGroup": "Style",
+      "paragraphGroup": "Paragraph",
+      "specialGroup": "Special",
+      "commonGroup": "Common",
+      "embedsGroup": "Embeds",
+      "newspaperStyle": "Newspaper style",
+      "gridSystem": "Grid system",
+      "structure": "Structure",
+      "merge": "Merge",
+      "danger": "Danger",
+      "placeholders": {
+        "paragraph": "Paragraph",
+        "font": "Font"
+      },
+      "headings": {
+        "h1": "Heading 1",
+        "h2": "Heading 2",
+        "h3": "Heading 3"
+      },
+      "textColor": "Text color",
+      "textColorTitle": "Text Color",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strikethrough": "Strikethrough",
+      "code": "Code",
+      "clearStyle": "Clear style",
+      "alignLeft": "Left",
+      "alignCenter": "Center",
+      "alignRight": "Right",
+      "alignJustify": "Justify",
+      "bullets": "Bullets",
+      "numbers": "Numbers",
+      "blockquote": "Blockquote",
+      "dropcap": "Dropcap",
+      "image": "Image",
+      "table": "Table",
+      "embed": "Embed",
+      "line": "Line",
+      "icon": "Icon",
+      "columns2": "2 columns",
+      "columns3": "3 columns",
+      "grid2": "2 grid",
+      "grid3": "3 grid",
+      "flowLayout": "Flow layout",
+      "containers": "Containers",
+      "addCol": "Add col",
+      "addRow": "Add row",
+      "delCol": "Del col",
+      "delRow": "Del row",
+      "deleteTable": "Delete",
+      "aiAssist": "AI Assist"
+    },
+    "placeholders": {
+      "alt": "Description...",
+      "auto": "auto",
+      "html": "Paste your HTML code here...",
+      "imageUrl": "Image URL...",
+      "none": "None",
+      "src": "https://...",
+      "urlEllipsis": "https://...",
+      "fontSizePx": "16",
+      "zeroPx": "0px",
+      "unitEm": "1em",
+      "zero": "0"
+    },
+    "properties": {
+      "appearance": "Appearance",
+      "dimensions": "Dimensions",
+      "general": "General Settings",
+      "html": "HTML Content",
+      "title": "Properties",
+      "video": "Video Playback"
+    },
+    "values": {
+      "block": "Block",
+      "center": "Center",
+      "floatLeft": "Wrap Left",
+      "floatRight": "Wrap Right",
+      "inline": "Inline",
+      "left": "Left",
+      "right": "Right"
+    }
+  },
+  "messages": {},
+  "labels": {
+    "contents": "Contents",
+    "content": "Content",
+    "categories": "Categories",
+    "category": "Category",
+    "tags": "Tags",
+    "comments": "Comments",
+    "comment": "Comment",
+    "posts": "Posts",
+    "pages": "Pages",
+    "page": "Page",
+    "themes": "Themes",
+    "theme": "Theme",
+    "menus": "Menus",
+    "widgets": "Widgets",
+    "author": "Author"
+  },
+  "theme_customizer": {
+    "title": "Theme customizer",
+    "subtitle": "Edit hub branding, landing pages, section content, and styles for the active public theme.",
+    "status": {
+      "initializing": "Loading organization…",
+      "unsaved": "Unsaved changes",
+      "saving": "Saving…",
+      "published": "Saved",
+      "publish_failed": "Save failed"
+    },
+    "actions": {
+      "publish": "Publish Changes",
+      "revert": "Revert",
+      "undo": "Undo (Ctrl+Z)",
+      "redo": "Redo (Ctrl+Y)",
+      "back_tooltip": "Back to Themes List",
+      "quick_settings": "Quick Settings"
+    },
+    "organization": {
+      "modes": {
+        "design": "Design",
+        "bindings": "Content",
+        "advanced": "Advanced"
+      },
+      "preview": "Preview",
+      "preview_dialog_title": "Theme preview",
+      "hide_controls": "Hide controls",
+      "show_controls": "Show controls",
+      "hide_nav": "Hide nav",
+      "show_nav": "Show nav",
+      "controls_label": "Controls",
+      "hints": {
+        "design": "Colors, typography, and section visuals.",
+        "bindings": "Connect sections to Jejakawan posts and media.",
+        "advanced": "Custom CSS and technical overrides."
+      }
+    },
+    "sidebar": {
+      "search_placeholder": "Find setting or feature...",
+      "categories": {
+        "identity": "Brand & navigation",
+        "design": "Visual design",
+        "components": "Page sections",
+        "interaction": "Layout & motion",
+        "special_pages": "Landing pages"
+      },
+      "items": {
+        "general": "Core Branding",
+        "general_desc": "Foundation logos and site names.",
+        "site_profile": "Site profile",
+        "site_profile_desc": "Contact and public site profile data.",
+        "menus": {
+          "title": "Navigation Map",
+          "description": "Map menus to specific locations."
+        },
+        "social": "Global Socials",
+        "social_desc": "Connect your profiles.",
+        "styles": "Brand Styles",
+        "styles_desc": "Global appearance and rounding.",
+        "palette": "Palette Control",
+        "palette_desc": "Primary and auxiliary colors.",
+        "typo": "Typography",
+        "typo_desc": "Interface fonts and families.",
+        "css": "Custom CSS",
+        "css_desc": "Direct CSS/SCSS overrides.",
+        "layout": "Master Layout",
+        "layout_desc": "Container and header styles.",
+        "motion": "Motion Effects",
+        "motion_desc": "GSAP and transition parameters.",
+        "footer": "Footer Architecture",
+        "footer_desc": "Base footer settings.",
+        "collapse": "Collapse Sidebar",
+        "expand": "Expand Sidebar",
+        "custom_css": {
+          "title": "Custom CSS",
+          "placeholder": "/* Enter custom CSS here... */"
+        },
+        "page_management": "Page toggles",
+        "page_management_desc": "Turn hub landing pages on or off",
+        "page_cms": "CMS pages",
+        "page_cms_desc": "Generic published page empty/not-found chrome",
+        "page_about": "About",
+        "page_about_desc": "Company story, mission, and team",
+        "page_solusi": "Solusi / Products",
+        "page_solusi_desc": "Solutions page titles and CTAs",
+        "page_tim": "Team",
+        "page_tim_desc": "Team page titles and closing copy",
+        "page_products": "Home Products",
+        "page_products_desc": "Products section on Home / Solusi",
+        "page_partners": "Partners",
+        "page_partners_desc": "Partner strip title and marquee speed",
+        "page_cta": "Call to action",
+        "page_cta_desc": "Home CTA copy and button links",
+        "page_testimonials": "Testimonials",
+        "page_testimonials_desc": "Home testimonials badge and title",
+        "page_updates": "Updates",
+        "page_updates_desc": "Home updates section titles and view-all",
+        "page_achievements": "Achievements",
+        "page_achievements_desc": "Milestones, awards, and success stories",
+        "page_careers": "Careers",
+        "page_careers_desc": "Open roles and working at Jejakawan",
+        "page_news": "News",
+        "page_news_desc": "Articles, announcements, and updates",
+        "page_contact": "Contact",
+        "page_contact_desc": "Form, email, phone, and map",
+        "page_pricing": "Pricing",
+        "page_pricing_desc": "Pricing page titles and CTA labels",
+        "page_search": "Search",
+        "page_search_desc": "Search results page titles and empty state"
+      }
+    },
+    "editor": {
+      "preview": {
+        "devices": {
+          "desktop": "Desktop View",
+          "tablet": "Tablet View",
+          "mobile": "Mobile View"
+        },
+        "refresh": "Refresh Preview"
+      },
+      "sections": {
+        "visual": "Visual settings",
+        "menus": "Menu locations",
+        "bindings": "Content sources",
+        "preview": {
+          "devices": {
+            "desktop": "Desktop View",
+            "tablet": "Tablet View",
+            "mobile": "Mobile View"
+          },
+          "refresh": "Refresh Preview"
+        }
+      },
+      "css": {
+        "label": "CSS / SCSS",
+        "placeholder": "/* Add your custom styles here... */"
+      },
+      "menus": {
+        "placeholder": "Select a Menu...",
+        "indicator_active": "Active",
+        "indicator_none": "None",
+        "description": "Select the menu to be displayed at the {label} location."
+      },
+      "bindings": {
+        "subtitle": "Map Jejakawan fields to component props",
+        "source_label": "Source",
+        "source_title": "Content source",
+        "query_title": "Query filters",
+        "mapping_title": "Field mapping",
+        "field_placeholder": "Jejakawan field…",
+        "probe_button": "Preview feed",
+        "inspector_title": "Live preview",
+        "items_found": "items",
+        "clear_buffer": "Clear",
+        "sort_options": {
+          "published_at": "Publish date",
+          "title": "Title (A–Z)",
+          "views": "Views",
+          "latest": "Latest"
+        },
+        "object_data": "Untitled item"
+      }
+    },
+    "bridge": {
+      "menus": {
+        "title": "Menu items live in Menu Builder",
+        "body": "Here you only assign which menu fills each theme location. Create, reorder, and label links in Menu Builder.",
+        "cta": "Open Menu Builder"
+      },
+      "footer": {
+        "title": "Footer links use menus",
+        "body": "Brand blurb, column titles, and newsletter copy stay here. Column link lists come from Menu Builder; assign those menus under Navigation Map.",
+        "cta_menus": "Open Menu Builder",
+        "cta_map": "Assign menu locations"
+      },
+      "bindings": {
+        "title": "List content uses Content mode",
+        "body": "Titles, badges, and buttons stay in Design. Quotes, logos, jobs, awards, and similar lists are wired under Content.",
+        "cta": "Edit list content"
+      },
+      "design": {
+        "title": "Section chrome uses Design mode",
+        "body": "Titles, badges, and button labels for this section are edited under Design — not in content bindings.",
+        "cta": "Edit section chrome"
+      },
+      "preview_hint": "Blue dashed outlines + ✎ badges mark editable sections (Header, Hero, Products, Footer…). Click one to open its settings. Hold Alt for Content bindings when available.",
+      "preview_failed_title": "Preview could not load",
+      "preview_failed_body": "The live site iframe failed. Prefer opening the same-origin public home, or check that the Site extension is active and the Vite/Laravel server is running.",
+      "preview_open_tab": "Open public site"
+    },
+    "empty_state": {
+      "title": "Choose a section",
+      "description": "Pick an item in the sidebar to edit visuals, Jejakawan content, menus, or landing pages."
+    },
+    "revert": {
+      "session_start": "Undo changes this session",
+      "theme_defaults": "Reset to theme defaults"
+    },
+    "messages": {
+      "confirm_exit": "You have unsaved changes. Leave anyway?",
+      "factory_reset": "Restored theme default settings.",
+      "init_error": "Could not load the customizer.",
+      "init_failed": "Customizer failed to start.",
+      "error": "Error",
+      "success": "Success",
+      "info": "Information",
+      "published": "Theme settings saved.",
+      "publish_failed": "Could not save theme settings.",
+      "reset_done": "Restored theme default settings.",
+      "probe_failed": "Preview failed — check API connectivity."
+    },
+    "items": {
+      "site_title": "Site Title",
+      "site_title_hint": "Main title seen in browser tabs and search engines.",
+      "site_unit": "Unit / department",
+      "site_entity_status": "Entity type / status",
+      "active_levels": "Active Levels",
+      "active_levels_hint": "Select active units or branches for this site.",
+      "theme_style": "Theme Visual Style",
+      "layout_style": "Global Layout Style",
+      "container_max_width": "Container Max Width (px)",
+      "brand_logo": "Brand Logo",
+      "brand_favicon": "Browser Favicon",
+      "site_tagline": "Site Tagline",
+      "site_description": "Site Meta Description",
+      "branding_display": "Branding Visibility",
+      "color_primary": "Primary Brand Color",
+      "color_background": "Global Background Color",
+      "font_heading": "Heading Typography",
+      "header_sticky": "Sticky Header Navigation",
+      "header_style": "Header Aesthetic Style",
+      "header_cta_text": "Header CTA Label",
+      "header_cta_url": "Header CTA Destination",
+      "nav_style": "Navigation Interaction link Style",
+      "breadcrumb_sticky": "Sticky breadcrumbs",
+      "home_sections": "Homepage sections",
+      "hero_title": "Hero headline (fallback)",
+      "hero_subtitle": "Hero subheadline (fallback)",
+      "hero_slide_count": "Number of hero slides",
+      "hero_slide_interval": "Hero Slide Duration (Seconds)",
+      "hero_overlay_opacity": "Hero Background Overlay (%)",
+      "hero_height": "Hero Section Height",
+      "hero_alignment": "Hero Content Alignment",
+      "hero_transition": "Hero Transition Animation",
+      "hero_show_scroll": "Show Hero Scroll Indicator",
+      "hero_bg": "Hero Optional Background Gradient",
+      "button_radius": "Button Border Radius",
+      "button_border_width": "Button Border Weight",
+      "button_shadow": "Button Depth Shadow",
+      "cta_badge": "CTA Callout Badge",
+      "cta_title": "CTA Main Headline",
+      "cta_subtitle": "CTA Supporting Text",
+      "footer_text": "Footer Copyright Text",
+      "back_to_top": "Enable Back to Top Button",
+      "social_links": "Global Social Profiles",
+      "animation_enabled": "Enable GSAP motion effects",
+      "animation_intensity": "Overall Motion Intensity",
+      "parallax_enabled": "Enable Depth Parallax Effects",
+      "hero_section": "Landing hero",
+      "hero_section_desc": "Top carousel, headlines, and optional news ticker.",
+      "testimonials": "Testimonials",
+      "testimonials_desc": "Quotes from clients, members, or partners.",
+      "partners_section": "Partner logos",
+      "partners_desc": "Scrolling logo strip for partners and clients.",
+      "partners_list": "Logo entries",
+      "cta": "Call to action",
+      "cta_desc": "Bottom banner with headline and primary button.",
+      "news_overlay": "News ticker slot",
+      "news_title": "Story Headline",
+      "badge": "Badge label",
+      "name": "Name",
+      "message": "Message",
+      "testimonial_list": "Testimonial entries",
+      "careers_page": "Careers page",
+      "careers_page_desc": "Job listings (Jejakawan posts, category slug: careers).",
+      "career_list": "Job listings slot",
+      "company": "Company name",
+      "job_type": "Employment type",
+      "achievements_page": "Highlights page",
+      "achievements_page_desc": "Achievement cards (Jejakawan posts, category slug: highlights).",
+      "achievement_list": "Highlights slot",
+      "role": "Role/Profession",
+      "quote": "Statement/Quote",
+      "avatar": "Profile Image",
+      "logo": "Logo",
+      "active_content": "Active CTA Content",
+      "header": "Main Header",
+      "detail": "Sub-detail Text",
+      "cat": "Category",
+      "link": "Link/URL",
+      "title": "Content Title",
+      "short_info": "Short Info",
+      "thumbnail": "Thumbnail Image",
+      "date": "Publication Date",
+      "path": "Target Path/URL",
+      "target_url": "Target URL",
+      "manifest_categories": {
+        "general": "General",
+        "site_profile": "Site profile",
+        "site_info": "Site profile",
+        "organization_info": "Site profile",
+        "appearance": "Appearance & Style",
+        "buttons": "Buttons & Actions",
+        "colors": "Color Scheme",
+        "typo": "Typography / Fonts",
+        "typography": "Typography / Fonts",
+        "layout": "Layout",
+        "animations": "Animation Effects",
+        "footer": "Footer Section",
+        "social": "Social Media",
+        "social_media": "Social Media",
+        "hero_section": "Landing hero",
+        "partners_section": "Partner logos",
+        "menus": "Navigation & Menus",
+        "cta_section": "Call to action"
+      },
+      "menus": {
+        "locations": {
+          "header": "Main Header",
+          "header_top": "Top Header Bar",
+          "footer": "Main Footer",
+          "footer_col_1": "Footer Column 1",
+          "footer_col_2": "Footer Column 2",
+          "sidebar": "Main Sidebar"
+        }
+      },
+      "common_options": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right",
+        "center": "Center",
+        "sticky": "Sticky",
+        "simple": "Simple",
+        "glass": "Glassmorphism",
+        "gradient": "Gradient",
+        "solid": "Solid",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "extra_large": "Extra Large",
+        "sharp": "Sharp",
+        "rounded": "Rounded",
+        "none": "No Effects",
+        "subtle": "Subtle",
+        "subtle_halus": "Subtle",
+        "dramatic_dramatis": "Dramatic",
+        "normal": "Normal",
+        "italic": "Italic",
+        "bold": "Bold",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "select_media": "Select Media",
+        "change_image": "Change Image",
+        "remove": "Remove",
+        "gabungan_yayasan_multi_level": "Combined / Foundation",
+        "negeri_public": "Public (Negeri)",
+        "swasta_private": "Private (Swasta)",
+        "clean_minimalist": "Clean & Minimalist",
+        "flat_modern": "Flat Modern",
+        "soft_pastel": "Soft & Pastel",
+        "glassmorphism_premium": "Premium Glassmorphism",
+        "logo_only": "Logo only",
+        "site_name_only": "Site name only",
+        "logo_site_name": "Logo + Site name",
+        "full_width_default": "Full Width (Default)",
+        "boxed_content_in_box": "Boxed Layout",
+        "wide_wider_box": "Wide Layout",
+        "framed_floating_box": "Framed Layout",
+        "hybrid_header_footer_full": "Hybrid Layout",
+        "square_0px": "Square (0px)",
+        "slight_4px": "Slight (4px)",
+        "standard_8px": "Standard (8px)",
+        "rounded_12px": "Rounded (12px)",
+        "pill_full": "Pill / Capsule",
+        "solid_white": "Solid White",
+        "transparent": "Transparent",
+        "blue_purple": "Blue Purple",
+        "midnight": "Midnight Dark",
+        "sunset": "Sunset Orange",
+        "glass_morph_blur_transparency": "✨ Glass Morph (Premium)",
+        "spotlight_focus_highlight": "🎯 Spotlight Effect",
+        "magnetic_hover_attraction": "🧲 Magnetic Hover",
+        "floating_3d_shadow": "💫 3D Floating",
+        "slide_text_reveal": "🌊 Slide Reveal",
+        "pill_modern_soft_fill": "💊 Modern Pill",
+        "underline_grow_expand": "📏 Underline Grow",
+        "neon_glow_cyberpunk": "🔥 Neon Glow",
+        "glow_primary": "Glow (Primary)",
+        "statistics": "Statistics & Stats",
+        "industry_partners_mitra_du_di": "Industry Partners",
+        "news_highlights": "News & Highlights",
+        "call_to_action": "Call to Action (CTA)",
+        "hero_slide_count": "Hero Slide Count",
+        "hero_slide_interval": "Auto-play Interval (Seconds)",
+        "hero_overlay_opacity": "Overlay Opacity (%)",
+        "hero_height": "Hero Height",
+        "hero_alignment": "Content Alignment",
+        "hero_transition": "Transition Style",
+        "hero_show_scroll": "Show Scroll Indicator",
+        "number_of_slides": "Number of Slides",
+        "slide_interval_seconds": "Slide Interval (Seconds)",
+        "overlay_darkness": "Overlay Darkness",
+        "text_alignment": "Text Alignment",
+        "transition_style": "Transition Style",
+        "show_scroll_indicator": "Scroll Indicator",
+        "zoom_fade": "Zoom + Fade",
+        "crossfade": "Crossfade",
+        "compact_65vh": "Compact (65vh)",
+        "tall_85vh": "Tall (85vh)",
+        "standard_75vh": "Standard (75vh)",
+        "full_screen_100vh": "Full Screen (100vh)",
+        "add_item": "Add New Item",
+        "platform": "Platform",
+        "url": "URL",
+        "question": "Question",
+        "answer": "Answer",
+        "title": "Title",
+        "desc": "Description",
+        "icon": "Icon"
+      },
+      "label": "Items",
+      "counter": "Post count"
+    },
+    "sources": {
+      "static": "Manual",
+      "api_posts": "Posts",
+      "api_pages": "Pages",
+      "api_categories": "Categories"
+    }
+  },
+  "frontend": {
+    "routes": {
+      "home": "Home",
+      "homeDescription": "Jejakawan - Modern Content Management System",
+      "blog": "Blog",
+      "blogDescription": "Latest articles and updates",
+      "post": "Post",
+      "about": "About Us",
+      "contact": "Contact",
+      "search": "Search",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "solutions": "Solutions",
+      "pricing": "Pricing",
+      "team": "Our Team",
+      "careers": "Careers",
+      "highlights": "Highlights"
+    },
+    "about": {
+      "placeholder": "This is a placeholder page. Content coming soon.",
+      "title": "About Us",
+      "welcome": "Welcome to JA-Edu - Modern Content Management System"
+    },
+    "blog": {
+      "empty": "No posts available yet.",
+      "pagination": {
+        "info": "Page {current} of {total}",
+        "next": "Next",
+        "previous": "Previous"
+      },
+      "readMore": "Read More",
+      "subtitle": "Latest articles and updates from our team",
+      "title": "Blog"
+    },
+    "comments": {
+      "comment": "Comment",
+      "email": "Email",
+      "empty": "No comments yet. Be the first to comment!",
+      "error": "Failed to post comment",
+      "leaveComment": "Leave a Comment",
+      "loading": "Loading comments...",
+      "name": "Name",
+      "submit": "Post Comment",
+      "submitting": "Posting...",
+      "success": "Comment posted successfully",
+      "title": "Comments"
+    },
+    "contact": {
+      "emailPlaceholder": "Enter your email",
+      "error": "Failed to send message. Please try again.",
+      "message": "Message",
+      "messagePlaceholder": "Write your message here...",
+      "namePlaceholder": "Enter your name",
+      "submit": "Send Message",
+      "subtitle": "Have questions or feedback? We'd love to hear from you.",
+      "success": "Message sent! We will get back to you soon.",
+      "title": "Get in Touch"
+    },
+    "footer": {
+      "about": {
+        "default": "Modern, clean, and powerful content management system built for the web."
+      },
+      "copyright": "All rights reserved.",
+      "headings": {
+        "about": "About",
+        "categories": "Categories",
+        "newsletter": "Newsletter",
+        "resources": "Resources"
+      },
+      "powered": "Powered by",
+      "privacy": "Privacy Policy",
+      "resources": {
+        "blog": "Blog",
+        "documentation": "Documentation",
+        "faq": "FAQ",
+        "support": "Support"
+      },
+      "system": "Modern Content Management System",
+      "terms": "Terms of Service"
+    },
+    "home": {
+      "actions": {
+        "contactUs": "Contact Us",
+        "dashboard": "Dashboard",
+        "explore": "Explore Content",
+        "getStarted": "Get Started",
+        "startReading": "Start Reading",
+        "viewAll": "View All Posts"
+      },
+      "sections": {
+        "cta": {
+          "text": "Join thousands of developers and creators using JA-Edu to build modern web experiences.",
+          "title": "Ready to Start Building?"
+        },
+        "featured": "Featured Stories",
+        "recent": "Latest Updates",
+        "recentSubtitle": "Stay up to date with our newest articles"
+      },
+      "stats": {
+        "categories": "Categories",
+        "content": "Published Content",
+        "visitors": "Total Visitors"
+      },
+      "subtitle": "Modern Content Management System",
+      "title": "JA-Edu"
+    },
+    "nav": {
+      "about": "About",
+      "blog": "Blog",
+      "contact": "Contact",
+      "dashboard": "Dashboard",
+      "getStarted": "Get Started",
+      "home": "Home",
+      "login": "Login",
+      "logout": "Logout",
+      "register": "Register",
+      "signIn": "Sign In"
+    },
+    "newsletter": {
+      "button": "Subscribe",
+      "description": "Product updates, hub news, and announcements from Jejakawan.",
+      "error": "Subscription failed. Please try again.",
+      "placeholder": "Email address",
+      "privacy": "By subscribing, you agree to our",
+      "privacyLink": "Privacy Policy",
+      "processing": "Subscribing...",
+      "success": "Subscribed successfully!",
+      "title": "Stay Updated"
+    },
+    "post": {
+      "backToBlog": "Back to Blog",
+      "loading": "Loading...",
+      "notFound": "Post not found",
+      "tags": "Tags:",
+      "views": "views"
+    },
+    "search": {
+      "empty": "No results found for \"{query}\"",
+      "loading": "Searching...",
+      "query": "Searching for:",
+      "title": "Search Results"
+    }
+  },
+  "dashboard": {
+    "viewer": {
+      "welcome": "Welcome back, {name}!",
+      "subtitle": "Explore the latest content updates.",
+      "latestPublished": "Latest Published Content",
+      "empty": "No content published yet.",
+      "publishedOn": "Published {date}",
+      "quickResources": "Quick Resources",
+      "visitPublicSite": "Visit Public Site",
+      "viewLiveSite": "View the live website"
+    }
+  }
+}

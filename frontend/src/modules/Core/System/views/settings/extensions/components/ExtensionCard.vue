@@ -29,13 +29,13 @@
           </Badge>
           
           <span 
-            v-if="getExtensionLicenseTier(ext.slug) === 'free'"
+            v-if="getExtensionLicenseTier(ext) === 'free'"
             class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-500/10 text-slate-400 border border-slate-500/20"
           >
             {{ t('system.appStore.card.licenseCommunity') }}
           </span>
           <span 
-            v-else-if="getExtensionLicenseTier(ext.slug) === 'pro'"
+            v-else-if="getExtensionLicenseTier(ext) === 'pro'"
             class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30"
           >
             {{ t('system.appStore.card.licensePro') }}
@@ -63,7 +63,7 @@
         <div class="flex justify-between">
           <span class="text-muted-foreground">{{ t('system.appStore.license') }}:</span>
           <span class="font-mono text-foreground">
-            {{ licenseLabel(ext.slug) }}
+            {{ licenseLabel(ext) }}
           </span>
         </div>
         <div class="flex justify-between" v-if="ext.is_core">
@@ -177,7 +177,7 @@
       <div class="flex items-center gap-2">
         <!-- Uninstall Inactive Non-Core -->
         <Button
-          v-if="ext.status === 'inactive' && !ext.is_core"
+          v-if="ext.status === 'inactive' && !ext.is_core && ext.can_uninstall !== false"
           variant="destructive"
           size="sm"
           class="px-2 hover:bg-destructive/90"
@@ -245,7 +245,9 @@ interface ExtensionItem {
   version: string;
   status: 'active' | 'inactive';
   is_core: boolean;
+  can_uninstall?: boolean;
   author?: string;
+  description?: string;
   license?: string;
   settings?: Record<string, unknown>;
   features?: FeatureItem[];
@@ -276,7 +278,7 @@ const groupedFeatures = computed(() => {
   const operational: FeatureItem[] = [];
   
   props.ext.features.forEach(feat => {
-    const isCore = feat.category === 'core' || feat.category === 'auth' || feat.category === 'security' || props.ext.is_core || ['system', 'security', 'infra'].includes(props.ext.slug);
+    const isCore = feat.category === 'core' || feat.category === 'auth' || feat.category === 'security' || props.ext.is_core || ['core', 'system', 'security', 'infra'].includes(props.ext.slug);
     if (isCore) {
       core.push(feat);
     } else {
@@ -287,25 +289,39 @@ const groupedFeatures = computed(() => {
   return { core, operational };
 });
 
-// Dynamic license mapping for community vs commercial packages
-const getExtensionLicenseTier = (slug: string): 'free' | 'pro' | 'pro_plus' => {
+// License tiers: prefer settings.license_tier from manifest sync, then legacy slug map
+const getExtensionLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus' => {
+  const fromSettings = ext.settings?.license_tier;
+  if (fromSettings === 'free' || fromSettings === 'pro' || fromSettings === 'pro_plus') {
+    return fromSettings;
+  }
+
   const tierMap: Record<string, 'free' | 'pro' | 'pro_plus'> = {
+    core: 'free',
     system: 'free',
     search: 'free',
+    mail: 'pro',
     media: 'pro',
+    publishing: 'pro',
     Jejakawan: 'pro',
     forms: 'pro',
     newsletter: 'pro',
     library: 'pro',
     security: 'pro_plus',
     infra: 'pro_plus',
-    ai: 'pro_plus'
+    ai: 'pro_plus',
   };
-  return tierMap[slug] || 'pro';
+  return tierMap[ext.slug] || 'pro';
 };
 
-const licenseLabel = (slug: string) => {
-  const tier = getExtensionLicenseTier(slug);
+const licenseLabel = (ext: ExtensionItem) => {
+  if (ext.slug === 'core' || ext.is_core) {
+    return t('system.appStore.card.licensePlatform');
+  }
+  if (ext.license && ext.license.trim() !== '' && ext.license !== 'Proprietary') {
+    return ext.license;
+  }
+  const tier = getExtensionLicenseTier(ext);
   if (tier === 'free') return t('system.appStore.card.licenseMit');
   if (tier === 'pro') return t('system.appStore.card.licenseCommercialPro');
   return t('system.appStore.card.licenseEnterprise');

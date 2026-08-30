@@ -11,7 +11,7 @@ export const mailNavigation: NavItem[] = [
             {
                 name: 'mail',
                 label: 'JA-Mail',
-                labelKey: 'system.navigation.menu.mail',
+                labelKey: 'mail.navigationMenuMail',
                 permission: 'use mail',
                 priority: 100,
                 icon: 'mail',

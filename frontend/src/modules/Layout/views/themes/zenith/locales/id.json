@@ -1,0 +1,91 @@
+{
+  "header": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "services": "Layanan",
+    "solusi": "Solusi",
+    "blog": "Blog",
+    "pricing": "Harga",
+    "contact": "Kontak",
+    "career": "Karier",
+    "achievement": "Pencapaian",
+    "getStarted": "Mulai Sekarang"
+  },
+  "footer": {
+    "description": "Zenith — tema modern minimalis ultra-cepat untuk publikasi digital berperforma tinggi.",
+    "links": "Tautan Cepat",
+    "resources": "Sumber Daya",
+    "contact": "Hubungi Kami",
+    "copyright": "Hak cipta dilindungi undang-undang."
+  },
+  "common": {
+    "readMore": "Baca Selengkapnya",
+    "viewAll": "Lihat Semua",
+    "explore": "Jelajahi",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "back": "Kembali",
+    "search": "Cari artikel...",
+    "publishedOn": "Diterbitkan pada",
+    "by": "oleh"
+  },
+  "pages": {
+    "home": {
+      "heroBadge": "Edisi Zenith",
+      "heroTitle": "Pengalaman digital modern yang dibangun dengan presisi dan kecepatan.",
+      "heroSubtitle": "Tingkatkan kehadiran digital Anda dengan performa terdepan, estetika bersih, dan manajemen konten yang mudah.",
+      "heroCta": "Mulai Sekarang",
+      "featuresTitle": "Mengapa Memilih Zenith",
+      "featuresSubtitle": "Dirancang untuk kecepatan tinggi, dikurasi untuk keunggulan estetika.",
+      "latestPostsTitle": "Wawasan Terbaru",
+      "latestPostsSubtitle": "Perspektif segar seputar desain, teknologi, dan inovasi bisnis.",
+      "ctaTitle": "Siap meningkatkan kehadiran digital Anda?",
+      "ctaSubtitle": "Bergabunglah bersama ribuan kreator dan bisnis yang ditenagai oleh Jejakawan Core Engine.",
+      "ctaButton": "Mulai Hari Ini"
+    },
+    "about": {
+      "title": "Tentang Kami",
+      "subtitle": "Kami merancang pengalaman digital berdampak tinggi bagi tim yang berpikiran maju.",
+      "missionTitle": "Misi Kami",
+      "missionDesc": "Mendemokratisasi publikasi web berperforma tinggi dengan arsitektur yang elegan dan tangguh."
+    },
+    "blog": {
+      "title": "Editorial & Wawasan",
+      "subtitle": "Artikel, pemikiran, dan panduan teknis mendalam.",
+      "noPosts": "Belum ada artikel yang diterbitkan."
+    },
+    "post": {
+      "backToBlog": "Kembali ke Blog",
+      "share": "Bagikan Artikel"
+    },
+    "contact": {
+      "title": "Hubungi Kami",
+      "subtitle": "Kami siap membantu Anda. Sampaikan pertanyaan atau peluang kolaborasi.",
+      "nameLabel": "Nama Lengkap",
+      "emailLabel": "Alamat Email",
+      "messageLabel": "Pesan",
+      "submitButton": "Kirim Pesan"
+    },
+    "pricing": {
+      "title": "Paket Transparan",
+      "subtitle": "Pilih paket terbaik yang sesuai dengan alur kerja publikasi Anda.",
+      "monthly": "Bulanan",
+      "annual": "Tahunan (Hemat 20%)"
+    },
+    "solusi": {
+      "title": "Solusi Kami",
+      "subtitle": "Sistem terukur yang dirancang khusus untuk kebutuhan organisasi Anda."
+    },
+    "services": {
+      "title": "Layanan Profesional",
+      "subtitle": "Keahlian menyeluruh dalam desain digital, rekayasa web, dan strategi konten."
+    },
+    "career_center": {
+      "title": "Bergabung Bersama Kami",
+      "subtitle": "Bangun masa depan publikasi digital bersama tim inovatif kami."
+    },
+    "achievement": {
+      "title": "Tonggak Sejarah & Penghargaan",
+      "subtitle": "Merayakan pertumbuhan dan dampak positif yang diakui secara luas."
+    }
+  }
+}

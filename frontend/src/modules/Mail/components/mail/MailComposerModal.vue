@@ -17,7 +17,7 @@
         <div class="h-10 px-4 bg-muted/40 border-b border-border/40 flex items-center justify-between select-none shrink-0">
           <DialogTitle class="text-xs font-bold text-foreground flex items-center gap-2">
             <Edit3 class="w-3.5 h-3.5 text-primary" />
-            <span>{{ $t('system.mail.new_message') }}</span>
+            <span>{{ $t('mail.new_message') }}</span>
           </DialogTitle>
 
           <div class="flex items-center gap-1">
@@ -35,7 +35,7 @@
               variant="ghost"
               size="icon"
               class="h-7 w-7 text-muted-foreground hover:text-destructive rounded-lg"
-              :title="$t('system.mail.discard')"
+              :title="$t('mail.discard')"
               @click="handleCloseRequest"
             >
               <X class="w-4 h-4" />
@@ -48,7 +48,7 @@
           <!-- To field -->
           <div class="flex items-center border-b border-border/40 pb-1.5 gap-2 shrink-0">
             <label class="w-14 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              {{ $t('system.mail.to') }}:
+              {{ $t('mail.to') }}:
             </label>
             <Input
               :model-value="composerData.to"
@@ -108,12 +108,12 @@
           <!-- Subject Field -->
           <div class="flex items-center border-b border-border/40 pb-1.5 gap-2 shrink-0">
             <label class="w-14 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              {{ $t('system.mail.subject') }}:
+              {{ $t('mail.subject') }}:
             </label>
             <Input
               :model-value="composerData.subject"
               type="text"
-              :placeholder="$t('system.mail.subject_placeholder')"
+              :placeholder="$t('mail.subject_placeholder')"
               class="border-none shadow-none focus-visible:ring-0 h-7 text-xs p-0 bg-transparent flex-1 font-semibold text-foreground"
               @update:model-value="v => patchComposer({ subject: String(v || '') })"
             />
@@ -130,13 +130,13 @@
                   class="h-6 text-[10px] gap-1 px-2 border-border/60 text-muted-foreground hover:text-foreground shadow-xs"
                 >
                   <Bookmark class="w-3 h-3 text-primary" />
-                  <span>{{ $t('system.mail.templates_title') }}</span>
+                  <span>{{ $t('mail.templates_title') }}</span>
                   <ChevronDown class="w-2.5 h-2.5 opacity-60" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" class="!z-[1000] w-72 text-xs max-h-80 overflow-y-auto custom-scrollbar p-1.5 shadow-2xl">
                 <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  {{ $t('system.mail.templates_title') }}
+                  {{ $t('mail.templates_title') }}
                 </div>
                 <DropdownMenuItem
                   v-for="tpl in activeTemplates"
@@ -155,7 +155,7 @@
                   @click="$emit('manage-templates')"
                 >
                   <Settings class="w-3.5 h-3.5" />
-                  <span>{{ $t('system.mail.manage_labels') }} / Templates</span>
+                  <span>{{ $t('mail.manage_labels') }} / Templates</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -207,7 +207,7 @@
               :model-value="composerData.body"
               :compact="true"
               :resizable="false"
-              :placeholder="$t('system.mail.body_placeholder')"
+              :placeholder="$t('mail.body_placeholder')"
               class="flex-1 flex flex-col min-h-0 border-border/40 rounded-xl overflow-hidden shadow-none"
               @update:model-value="v => patchComposer({ body: String(v || '') })"
             />
@@ -251,7 +251,7 @@
               @click="triggerFileInput"
             >
               <Paperclip class="w-3.5 h-3.5" />
-              <span>{{ $t('system.mail.attach') }}</span>
+              <span>{{ $t('mail.attach') }}</span>
             </Button>
           </div>
 
@@ -263,7 +263,7 @@
               class="h-7 text-xs text-muted-foreground hover:text-destructive px-2.5"
               @click="handleCloseRequest"
             >
-              {{ $t('system.mail.discard') }}
+              {{ $t('mail.discard') }}
             </Button>
 
             <!-- Save as Draft Button -->
@@ -275,7 +275,7 @@
               @click="saveDraftAction"
             >
               <Save class="w-3 h-3" />
-              <span>{{ $t('system.mail.save_draft') }}</span>
+              <span>{{ $t('mail.save_draft') }}</span>
             </Button>
 
             <!-- Split Button: Send Email + Schedule Send Dropdown -->
@@ -287,7 +287,7 @@
                 @click="$emit('send')"
               >
                 <Send class="w-3 h-3" />
-                <span>{{ $t('system.mail.send') }}</span>
+                <span>{{ $t('mail.send') }}</span>
               </Button>
 
               <!-- Schedule Send Dropdown -->
@@ -305,25 +305,25 @@
                 <DropdownMenuContent align="end" class="!z-[1000] w-64 text-xs p-1.5 shadow-2xl">
                   <div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                     <Clock class="w-3 h-3 text-primary" />
-                    <span>{{ $t('system.mail.schedule_send') }}</span>
+                    <span>{{ $t('mail.schedule_send') }}</span>
                   </div>
                   <DropdownMenuItem
                     class="py-1.5 cursor-pointer text-xs"
                     @click="handleSchedule('tomorrow_morning')"
                   >
-                    {{ $t('system.mail.schedule_tomorrow_morning') }}
+                    {{ $t('mail.schedule_tomorrow_morning') }}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     class="py-1.5 cursor-pointer text-xs"
                     @click="handleSchedule('tomorrow_afternoon')"
                   >
-                    {{ $t('system.mail.schedule_tomorrow_afternoon') }}
+                    {{ $t('mail.schedule_tomorrow_afternoon') }}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     class="py-1.5 cursor-pointer text-xs"
                     @click="handleSchedule('monday_morning')"
                   >
-                    {{ $t('system.mail.schedule_monday_morning') }}
+                    {{ $t('mail.schedule_monday_morning') }}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -338,10 +338,10 @@
       <DialogContent class="!p-5 !gap-4 max-w-md bg-card border border-border/80 shadow-2xl rounded-2xl z-[1200] [&>button[aria-label=Close]]:hidden">
         <DialogTitle class="text-sm font-bold text-foreground flex items-center gap-2">
           <AlertCircle class="w-4 h-4 text-amber-500" />
-          <span>{{ $t('system.mail.unsaved_draft_title') }}</span>
+          <span>{{ $t('mail.unsaved_draft_title') }}</span>
         </DialogTitle>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          {{ $t('system.mail.unsaved_draft_desc') }}
+          {{ $t('mail.unsaved_draft_desc') }}
         </p>
         <div class="flex items-center justify-end gap-2 pt-2">
           <Button
@@ -350,7 +350,7 @@
             class="h-8 text-xs"
             @click="isUnsavedConfirmOpen = false"
           >
-            {{ $t('system.mail.keep_editing') }}
+            {{ $t('mail.keep_editing') }}
           </Button>
           <Button
             variant="destructive"
@@ -358,14 +358,14 @@
             class="h-8 text-xs"
             @click="discardDraftAction"
           >
-            {{ $t('system.mail.discard_draft') }}
+            {{ $t('mail.discard_draft') }}
           </Button>
           <Button
             size="sm"
             class="h-8 text-xs font-semibold"
             @click="saveDraftAction"
           >
-            {{ $t('system.mail.save_draft') }}
+            {{ $t('mail.save_draft') }}
           </Button>
         </div>
       </DialogContent>

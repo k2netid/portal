@@ -1,0 +1,11 @@
+{
+  "name": "Newsletter",
+  "alias": "newsletter",
+  "description": "Newsletter subscribers, public subscribe API, and email template console",
+  "keywords": ["newsletter", "subscribers", "email"],
+  "priority": 36,
+  "providers": [
+    "Modules\\Newsletter\\Providers\\NewsletterServiceProvider"
+  ],
+  "files": []
+}

@@ -88,6 +88,10 @@ export const shouldGuestReceiveSecurityNotFound = (path: string): boolean => (
 export const shouldBlockOnPublicSite = (path: string): boolean => {
     const normalized = normalizePath(path);
 
+    if (normalized === '/member' || normalized.startsWith('/member/')) {
+        return false;
+    }
+
     if (normalized.startsWith('/auth/')) {
         return true;
     }

@@ -1,0 +1,44 @@
+{
+  "name": "Library",
+  "slug": "library",
+  "version": "1.0.0",
+  "description": "Taxonomy library \u2014 categories, tags, custom fields, and field groups for content packs.",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "cms",
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "is_core": false,
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "settings_route": "library",
+  "features": [
+    {
+      "slug": "categories",
+      "name": "Categories",
+      "description": "Hierarchical content categories",
+      "category": "utility"
+    },
+    {
+      "slug": "tags",
+      "name": "Tags",
+      "description": "Content tagging",
+      "category": "utility"
+    },
+    {
+      "slug": "custom-fields",
+      "name": "Custom Fields",
+      "description": "Reusable field definitions and groups",
+      "category": "utility"
+    }
+  ],
+  "permissions": [
+    "view categories",
+    "manage categories",
+    "manage tags",
+    "manage content"
+  ]
+}

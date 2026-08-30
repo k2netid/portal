@@ -4,7 +4,7 @@
 **Jejakawan Core Engine (`ja-core_engine`)** adalah platform Headless Kernel dan Admin Console modern berbasis arsitektur **Modular Monolith** yang dirancang untuk performa tinggi, isolasi domain yang kokoh, serta keandalan tata kelola data & infrastruktur.
 
 Sistem ini menggabungkan:
-- **Backend**: Laravel 12/13 (PHP 8.3+) dengan arsitektur domain modular terenkapsulasi di bawah namespace `Modules\Core\`.
+- **Backend**: Laravel **13** (PHP 8.2+, tested on 8.3) with domain modules under `Modules\Core\` and optional packs under `Modules/*`.
 - **Frontend**: Vue 3.5 Single Unified Console SPA + TypeScript + Vite 8 + Tailwind CSS v4.
 - **Database**: PostgreSQL 16+ (atau SQLite untuk isolated automated testing) dengan skema terisolasi `core_engine` serta Redis untuk caching, session, dan queuing.
 
@@ -51,6 +51,7 @@ Mengelola utilitas komputasi, storage, automasi, dan schema modeling:
 1. **Data Model Studio**:
    - Desain data model dinamis (entities, custom fields, validation rules, OpenAPI schema generation).
    - Dynamic Record CRUD engine otomatis untuk model yang dibuat di runtime.
+   - **Not** CMS CCK. Editorial fields stay in pack Library. See [data-studio-vs-cck.md](data-studio-vs-cck.md).
 2. **Task Scheduler & Automation**:
    - Cron runner terpadu dengan reporting status eksekusi, preset runtime, dan scheduler logs.
 3. **Backup & Snapshot Manager**:

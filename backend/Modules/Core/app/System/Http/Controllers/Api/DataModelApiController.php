@@ -440,6 +440,11 @@ class DataModelApiController extends BaseApiController
 
         $payload = $validator->validated();
 
+        $reserved = $this->reservedSlugResponse((string) $payload['slug']);
+        if ($reserved instanceof JsonResponse) {
+            return $reserved;
+        }
+
         $type = ContentType::create([
             'name' => $payload['name'],
             'slug' => $payload['slug'],
@@ -572,6 +577,11 @@ class DataModelApiController extends BaseApiController
 
         $payload = $validator->validated();
 
+        $reserved = $this->reservedSlugResponse((string) $payload['slug']);
+        if ($reserved instanceof JsonResponse) {
+            return $reserved;
+        }
+
         $type->update([
             'name' => $payload['name'],
             'slug' => $payload['slug'],
@@ -598,5 +608,19 @@ class DataModelApiController extends BaseApiController
         $type->delete();
 
         return $this->success(null, 'Data model deleted successfully');
+    }
+
+    private function reservedSlugResponse(string $slug): ?JsonResponse
+    {
+        if (! ContentType::isReservedSlug($slug)) {
+            return null;
+        }
+
+        return $this->error(
+            'This slug is reserved for CMS packs or kernel entities. Data Studio is for operational records, not editorial content types.',
+            422,
+            ['slug' => ['This slug is reserved.']],
+            'DATA_MODEL_SLUG_RESERVED',
+        );
     }
 }

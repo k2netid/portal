@@ -112,7 +112,7 @@
       "languages": "Languages",
       "webhooks": "Webhooks",
       "plugins": "Plugins",
-      "extensions": "Extensions & App Store",
+      "extensions": "Module Registry & App Store",
       "pulse": "Pulse",
       "consoleAppearance": "Console appearance",
       "oauthClients": "OAuth Clients",
@@ -134,7 +134,27 @@
       "navigationTree": "Navigation Tree",
       "dragInstructions": "Drag items to reorder or nest them inside parent groups",
       "noMenus": "No menu items found",
-      "noMenusDesc": "Click Add Menu Item or Reset to Defaults to populate the navigation tree."
+      "noMenusDesc": "Click Add Menu Item or Reset to Defaults to populate the navigation tree.",
+      "groupsTitle": "Menu Groups",
+      "groupsCount": "{count} Groups",
+      "searchGroups": "Search groups...",
+      "liveSyncTitle": "Live Sync Active",
+      "liveSyncBody": "Changes in this tree automatically sync with the live console sidebar.",
+      "itemCount": "{count} items"
+    },
+    "menuGroups": {
+      "all": "All Groups",
+      "studio": "Data Model Studio",
+      "editorial": "Editorial",
+      "insight": "Insight",
+      "library": "Library",
+      "audience": "Audience",
+      "identity": "Users & Access",
+      "communications": "Communications",
+      "observability": "Journals",
+      "system_config": "Configuration",
+      "infrastructure": "Infrastructure",
+      "integrations_dev": "Identity & Integrations"
     }
   },
   "auth": {
@@ -535,19 +555,34 @@
     "subtitle": "Your inbox of system and account notifications."
   },
   "appStore": {
-    "title": "Extensions & App Store",
-    "subtitle": "Manage dynamic plug-and-play modules and plugins securely with sandbox gating.",
+    "title": "Module Registry & App Store",
+    "subtitle": "Platform kernel, first-party modules, and plugins — activate what you need with sandbox gating.",
     "searchPlaceholder": "Search by name, slug, or author...",
     "scaffolderBtn": "Scaffolder",
     "gitBtn": "Git Integration",
     "uploadBtn": "Upload ZIP",
     "all": "All",
+    "platform": "Platform",
     "modules": "Modules",
     "plugins": "Plugins",
+    "familyCms": "Content Management System",
+    "familyCommunications": "Communications",
+    "bulkActivateCms": "Activate CMS pack",
+    "table": {
+      "name": "Module",
+      "status": "Status",
+      "requires": "Requires",
+      "health": "Health",
+      "license": "License",
+      "actions": "Actions"
+    },
+    "healthOk": "Healthy",
+    "healthWarning": "Warning",
+    "healthError": "Blocked",
     "author": "Author",
     "license": "License",
-    "core": "System Core",
-    "locked": "Locked Core",
+    "core": "Platform Kernel",
+    "locked": "Always On",
     "activate": "Activate",
     "deactivate": "Deactivate",
     "uninstall": "Uninstall",
@@ -565,6 +600,7 @@
       "licenseMit": "MIT",
       "licenseCommercialPro": "Commercial PRO",
       "licenseEnterprise": "Enterprise Proprietary",
+      "licensePlatform": "Platform Kernel",
       "coreInfrastructure": "Core Base Infrastructure",
       "mandatoryService": "Mandatory Service",
       "featureActive": "Active",
@@ -618,12 +654,26 @@
       "toggleConfirmTitleDeactivate": "Deactivate {name}?",
       "toggleConfirmMessageActivate": "Are you sure you want to activate {name}? This will run all database schema migrations dynamically.",
       "toggleConfirmMessageDeactivate": "Are you sure you want to deactivate {name}? Features will immediately become unavailable.",
+      "lifecycleRequiresMissing": "Required first (activate these): {list}",
+      "lifecycleCascade": "Will also activate, in order: {list}",
+      "lifecycleSuggests": "Recommended (optional): {list}",
+      "lifecycleDependents": "Still required by: {list}. Deactivate those first.",
+      "lifecycleSidebarActivate": "Related sidebar items will appear after activation.",
+      "lifecycleSidebarDeactivate": "Related sidebar items will be hidden after deactivation.",
+      "lifecycleBlocked": "Cannot continue: {detail}",
+      "lifecycleRuntime": "Kernel/runtime requirements not met: {list}",
+      "lifecycleLicense": "{detail}",
+      "bulkActivateCmsTitle": "Activate all CMS modules?",
+      "bulkActivateCmsMessage": "Inactive CMS modules will be activated in dependency order: {list}",
+      "bulkActivateCmsSuccess": "Activated {count} modules: {list}",
+      "bulkActivateCmsEmpty": "All CMS modules are already active.",
+      "bulkActivateCmsFailed": "Failed to activate the CMS pack.",
       "toggleSuccessActivated": "{name} has been successfully activated!",
       "toggleSuccessDeactivated": "{name} has been successfully deactivated!",
       "toggleFailed": "Failed to {action} extension.",
       "toggleError": "Error performing action: {action}",
       "uninstallConfirmTitle": "Uninstall Extension?",
-      "uninstallConfirmMessage": "Are you sure you want to completely uninstall this extension? This will PERMANENTLY ERASE all custom code folders and file assets on the disk! This action is irreversible.",
+      "uninstallConfirmMessage": "Uninstall deletes plugin files from disk. First-party CMS packs cannot be uninstalled — deactivate them to hide routes and menus while keeping data. This cannot be undone.",
       "uninstallConfirmText": "Uninstall & Purge Files",
       "uninstallSuccess": "Extension purged and deleted successfully!",
       "uninstallFailed": "Failed to uninstall extension.",
@@ -651,7 +701,7 @@
         "version": "1.0.0",
         "description": "Custom plugin boilerplate generated automatically.",
         "routeUri": "/api/v1/my-endpoint",
-        "routeAction": "MyController@index",
+        "routeAction": "MyController{'@'}index",
         "menuTitle": "Menu Title",
         "menuRoute": "/dash/my-route",
         "icon": "icon"
@@ -671,7 +721,8 @@
         "empty": "No dashboard menus registered yet.",
         "groups": {
           "academic": "Academic",
-          "Jejakawan": "Jejakawan",
+          "publishing": "Publishing",
+          "Jejakawan": "Publishing",
           "system": "System"
         }
       },
@@ -683,6 +734,8 @@
       "downloadSuccess": "Boilerplate ZIP generated and downloaded successfully!"
     },
     "descriptions": {
+      "core": "Platform kernel — identity & access, settings, license, security console, Data Studio, backups, files, webhooks, and the module registry host. Always on; cannot be disabled.",
+      "mail": "Console webmail — compose/send via SMTP, multi-account credentials, templates, and scheduled dispatch. Toggleable first-party module.",
       "system": "Core system configurations, RBAC user/role permissions, pulse activity logs, settings, and dynamic localizations.",
       "security": "Robust enterprise shield, featuring Multi-Factor Authentication (2FA), firewall rate limit challenge, honeypots, and file integrity check.",
       "analytics": "High-performance visitor traffic auditing, dashboard stats trackers, and event lifecycle counters.",
@@ -1357,6 +1410,10 @@
       "upload": {
         "title": "Upload Settings",
         "description": "File upload limits and allowed file types"
+      },
+      "mediaSplit": {
+        "title": "Object storage, not the media library",
+        "description": "This Identity tab configures disks (local, S3, FTP). Editorial files and the picker live in the Media pack after that pack is active. Core File Manager stays here."
       },
       "imageProcessing": {
         "title": "Image Processing",

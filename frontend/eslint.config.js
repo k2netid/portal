@@ -45,6 +45,16 @@ export default tseslint.config(
         },
     },
     {
+        // Layout pack ported from ja-cms; strict typing cleanup tracked separately.
+        files: ['src/modules/Layout/**/*.{ts,vue,js}'],
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'off',
+            'vue/no-v-html': 'off',
+            'vue/no-template-shadow': 'off',
+            'vue/require-default-prop': 'off',
+        },
+    },
+    {
         // Vitest specs lean on loose doubles/mocks; keep production `src/` any-free.
         files: ['tests/**/*.{ts,tsx,vue,js}', '**/*.{spec,test}.{ts,tsx,vue,js}'],
         rules: {

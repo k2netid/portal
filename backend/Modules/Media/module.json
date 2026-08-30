@@ -1,0 +1,11 @@
+{
+  "name": "Media",
+  "alias": "media",
+  "description": "Media library — uploads, folders, picker, usage tracking",
+  "keywords": ["media", "library", "picker", "uploads"],
+  "priority": 25,
+  "providers": [
+    "Modules\\Media\\Providers\\MediaServiceProvider"
+  ],
+  "files": []
+}

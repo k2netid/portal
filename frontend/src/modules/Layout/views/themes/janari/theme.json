@@ -1,0 +1,4775 @@
+{
+    "name": "Janari",
+    "slug": "janari",
+    "version": "V.2.0",
+    "type": "frontend",
+    "description": "Janari — public marketing theme for the Jejakawan control plane (single hub, not per-customer Jejakawan).",
+    "author": "Jejakawan",
+    "supports": {
+        "janari_canvas": true
+    },
+    "settings_schema": {
+        "site_title": {
+            "label": "Site Title",
+            "type": "text",
+            "default": "Jejakawan",
+            "category": "General",
+            "scope": "platform"
+        },
+        "theme_style": {
+            "label": "Theme Visual Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Clean & Minimalist",
+                    "value": "clean"
+                },
+                {
+                    "label": "Flat Modern",
+                    "value": "flat"
+                },
+                {
+                    "label": "Soft & Pastel",
+                    "value": "soft"
+                },
+                {
+                    "label": "Glassmorphism (Premium)",
+                    "value": "glass"
+                }
+            ],
+            "default": "clean",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "brand_logo": {
+            "label": "Logo",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "brand_favicon": {
+            "label": "Favicon",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_tagline": {
+            "label": "Site Tagline",
+            "type": "text",
+            "default": "Modern & Elegant Jejakawan",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_description": {
+            "label": "Site Description",
+            "type": "textarea",
+            "default": "Modern Content Management System built with Laravel and Vue.js",
+            "category": "General",
+            "scope": "platform"
+        },
+        "branding_display": {
+            "label": "Branding Display",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Logo only",
+                    "value": "logo_only"
+                },
+                {
+                    "label": "Site name only",
+                    "value": "text_only"
+                },
+                {
+                    "label": "Logo + Site name",
+                    "value": "both"
+                }
+            ],
+            "default": "logo_only",
+            "category": "General",
+            "scope": "platform"
+        },
+        "font_heading": {
+            "label": "Heading Font",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Poppins",
+                    "value": "Poppins"
+                },
+                {
+                    "label": "Merriweather",
+                    "value": "Merriweather"
+                }
+            ],
+            "default": "Inter",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "breadcrumb_sticky": {
+            "label": "Sticky Breadcrumbs",
+            "type": "checkbox",
+            "default": false,
+            "category": "Layout",
+            "description": "Keep breadcrumbs visible while scrolling",
+            "scope": "platform"
+        },
+        "header_sticky": {
+            "label": "Sticky Header",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "layout_style": {
+            "label": "Layout Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Full Width (Default)",
+                    "value": "full"
+                },
+                {
+                    "label": "Boxed (Content in Box)",
+                    "value": "boxed"
+                },
+                {
+                    "label": "Wide (Wider Box)",
+                    "value": "wide"
+                },
+                {
+                    "label": "Framed (Floating Box)",
+                    "value": "framed"
+                },
+                {
+                    "label": "Hybrid (Header/Footer Full)",
+                    "value": "hybrid"
+                }
+            ],
+            "default": "full",
+            "category": "Layout",
+            "description": "Choose overall page layout style",
+            "scope": "platform"
+        },
+        "home_sections": {
+            "label": "Homepage sections",
+            "type": "checkbox_list",
+            "options": [
+                {
+                    "label": "Landing hero",
+                    "value": "hero"
+                },
+                {
+                    "label": "Partner logos",
+                    "value": "partners"
+                },
+                {
+                    "label": "Testimonials",
+                    "value": "testimonials"
+                },
+                {
+                    "label": "Call to action",
+                    "value": "cta"
+                }
+            ],
+            "default": [
+                "hero",
+                "partners",
+                "testimonials",
+                "cta"
+            ],
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "container_max_width": {
+            "label": "Container Max Width",
+            "type": "range",
+            "min": 1200,
+            "max": 1920,
+            "step": 40,
+            "default": 1400,
+            "category": "Layout",
+            "description": "Max width in pixels (for Boxed/Wide/Framed)",
+            "scope": "platform"
+        },
+        "boxed_bg_color": {
+            "label": "Page Background Color",
+            "type": "color",
+            "default": "#f1f5f9",
+            "category": "Layout",
+            "description": "Background visible outside boxed content",
+            "scope": "platform"
+        },
+        "boxed_shadow": {
+            "label": "Boxed Content Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "sm"
+                },
+                {
+                    "label": "Medium",
+                    "value": "md"
+                },
+                {
+                    "label": "Large",
+                    "value": "lg"
+                },
+                {
+                    "label": "Extra Large",
+                    "value": "xl"
+                }
+            ],
+            "default": "lg",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "framed_padding": {
+            "label": "Frame Padding",
+            "type": "range",
+            "min": 8,
+            "max": 48,
+            "step": 4,
+            "default": 16,
+            "category": "Layout",
+            "description": "Padding around framed layout (px)",
+            "scope": "platform"
+        },
+        "header_style": {
+            "label": "Header Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glassmorphism",
+                    "value": "glass"
+                },
+                {
+                    "label": "Solid White",
+                    "value": "solid"
+                },
+                {
+                    "label": "Transparent",
+                    "value": "transparent"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_text": {
+            "label": "Header CTA Button Text",
+            "type": "text",
+            "default": "Get Started",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_url": {
+            "label": "Header CTA Button URL",
+            "type": "text",
+            "default": "/auth/console-sign-up",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "nav_style": {
+            "label": "Navigation Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "✨ Glass Morph (Blur + Transparency)",
+                    "value": "glass"
+                },
+                {
+                    "label": "🎯 Spotlight (Focus Highlight)",
+                    "value": "spotlight"
+                },
+                {
+                    "label": "🧲 Magnetic (Hover Attraction)",
+                    "value": "magnetic"
+                },
+                {
+                    "label": "💫 Floating (3D Shadow)",
+                    "value": "floating"
+                },
+                {
+                    "label": "🌊 Slide (Text Reveal)",
+                    "value": "slide"
+                },
+                {
+                    "label": "💊 Pill Modern (Soft Fill)",
+                    "value": "pill"
+                },
+                {
+                    "label": "📏 Underline Grow (Expand)",
+                    "value": "underline"
+                },
+                {
+                    "label": "🔥 Neon Glow (Cyberpunk)",
+                    "value": "glow"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "button_radius": {
+            "label": "Button Roundedness",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Square (0px)",
+                    "value": "0px"
+                },
+                {
+                    "label": "Slight (4px)",
+                    "value": "4px"
+                },
+                {
+                    "label": "Standard (8px)",
+                    "value": "8px"
+                },
+                {
+                    "label": "Rounded (12px)",
+                    "value": "12px"
+                },
+                {
+                    "label": "Pill (Full)",
+                    "value": "9999px"
+                }
+            ],
+            "default": "8px",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_border_width": {
+            "label": "Button Border Width",
+            "type": "range",
+            "min": 0,
+            "max": 4,
+            "step": 1,
+            "default": 1,
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_shadow": {
+            "label": "Button Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+                },
+                {
+                    "label": "Medium",
+                    "value": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Strong",
+                    "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Glow (Primary)",
+                    "value": "0 0 15px var(--theme-primary-color)"
+                }
+            ],
+            "default": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "disabled_page_behavior": {
+            "label": "When a page is turned off",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Redirect to Home",
+                    "value": "redirect"
+                },
+                {
+                    "label": "Show Maintenance Message",
+                    "value": "message"
+                }
+            ],
+            "default": "message",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "disabled_page_message": {
+            "label": "Message shown to visitors",
+            "type": "textarea",
+            "default": "This page is temporarily unavailable while we improve the experience. Please check back soon.",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_about": {
+            "label": "Show About page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_achievement": {
+            "label": "Show Achievements page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_career": {
+            "label": "Show Careers page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_blog": {
+            "label": "Show News page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_contact": {
+            "label": "Show Contact page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "footer_text": {
+            "label": "Copyright Text",
+            "type": "text",
+            "default": "© 2026 Jejakawan. All rights reserved.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "back_to_top": {
+            "label": "Enable Back to Top",
+            "type": "checkbox",
+            "default": true,
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "social_links": {
+            "label": "Social Media Links",
+            "type": "repeater",
+            "category": "Social Media",
+            "fields": [
+                {
+                    "name": "icon",
+                    "label": "Platform",
+                    "type": "select",
+                    "options": "social_icons"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [
+                {
+                    "icon": "Twitter",
+                    "url": "https://twitter.com/jejakawan"
+                },
+                {
+                    "icon": "Instagram",
+                    "url": "https://instagram.com/jejakawan"
+                },
+                {
+                    "icon": "Github",
+                    "url": "https://github.com/jejakawan/k2net"
+                }
+            ],
+            "scope": "platform"
+        },
+        "animation_enabled": {
+            "label": "Enable GSAP Animations",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "animation_intensity": {
+            "label": "Animation Intensity",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Subtle (Halus)",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Normal",
+                    "value": "normal"
+                },
+                {
+                    "label": "Dramatic (Dramatis)",
+                    "value": "dramatic"
+                }
+            ],
+            "default": "normal",
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "parallax_enabled": {
+            "label": "Enable Parallax Effects",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "color_preset": {
+            "label": "Color Preset",
+            "type": "select",
+            "default": "custom",
+            "category": "Colors",
+            "description": "Quick apply curated color combinations. You can still tweak colors manually.",
+            "options": [
+                {
+                    "label": "Custom (Manual)",
+                    "value": "custom"
+                },
+                {
+                    "label": "Monochrome Clean",
+                    "value": "monochrome_clean"
+                },
+                {
+                    "label": "Oceanic Clean",
+                    "value": "oceanic_clean"
+                },
+                {
+                    "label": "Emerald Fresh",
+                    "value": "emerald_fresh"
+                },
+                {
+                    "label": "Royal Violet",
+                    "value": "royal_violet"
+                },
+                {
+                    "label": "Sunset Coral",
+                    "value": "sunset_coral"
+                },
+                {
+                    "label": "Midnight Cyan",
+                    "value": "midnight_cyan"
+                },
+                {
+                    "label": "Forest Earth",
+                    "value": "forest_earth"
+                },
+                {
+                    "label": "Ruby Night",
+                    "value": "ruby_night"
+                },
+                {
+                    "label": "Aurora Mint",
+                    "value": "aurora_mint"
+                },
+                {
+                    "label": "Slate Indigo",
+                    "value": "slate_indigo"
+                },
+                {
+                    "label": "Arctic Blue",
+                    "value": "arctic_blue"
+                },
+                {
+                    "label": "Sand Stone",
+                    "value": "sand_stone"
+                }
+            ],
+            "scope": "theme"
+        },
+        "color_intensity": {
+            "label": "Palette Intensity",
+            "type": "select",
+            "default": "balanced",
+            "category": "Colors",
+            "description": "Controls how strong the global color tint appears across cards, borders, accents, and surfaces.",
+            "options": [
+                {
+                    "label": "Soft",
+                    "value": "soft"
+                },
+                {
+                    "label": "Balanced",
+                    "value": "balanced"
+                },
+                {
+                    "label": "Vibrant",
+                    "value": "vibrant"
+                }
+            ],
+            "scope": "theme"
+        },
+        "monochrome_variant": {
+            "label": "Monochrome Base Variant",
+            "type": "select",
+            "default": "clean",
+            "category": "Colors",
+            "description": "Control black/white base depth for light/dark mode while accent color stays separate.",
+            "options": [
+                {
+                    "label": "Clean",
+                    "value": "clean"
+                },
+                {
+                    "label": "Soft Contrast",
+                    "value": "soft"
+                },
+                {
+                    "label": "Matte",
+                    "value": "matte"
+                },
+                {
+                    "label": "High Contrast",
+                    "value": "high_contrast"
+                }
+            ],
+            "scope": "theme"
+        },
+        "monochrome_texture": {
+            "label": "Surface Texture",
+            "type": "select",
+            "default": "clean",
+            "category": "Colors",
+            "description": "Add subtle texture pattern over page background. Works with all presets.",
+            "options": [
+                {
+                    "label": "Clean (No Texture)",
+                    "value": "clean"
+                },
+                {
+                    "label": "Dot Matrix",
+                    "value": "dots"
+                },
+                {
+                    "label": "Fine Grain",
+                    "value": "grain"
+                }
+            ],
+            "scope": "theme"
+        },
+        "monochrome_texture_strength": {
+            "label": "Texture Strength",
+            "type": "range",
+            "min": 0,
+            "max": 35,
+            "step": 1,
+            "default": 8,
+            "category": "Colors",
+            "description": "Lower for subtle premium effect, higher for visible texture.",
+            "scope": "theme"
+        },
+        "color_primary": {
+            "label": "Primary Color",
+            "type": "color",
+            "default": "#1e40af",
+            "category": "Colors",
+            "scope": "theme"
+        },
+        "color_background": {
+            "label": "Background Color (stored)",
+            "type": "color",
+            "default": "#f9fafb",
+            "category": "Colors",
+            "hidden": true,
+            "description": "Hidden; light/dark backgrounds use bg_light_color / bg_dark_color in the customizer.",
+            "scope": "theme"
+        },
+        "bg_light_color": {
+            "label": "Light Mode Background",
+            "type": "select",
+            "default": "white",
+            "category": "Colors",
+            "description": "Base background color for light mode.",
+            "options": [
+                {
+                    "label": "⬜ White (Default)",
+                    "value": "white"
+                },
+                {
+                    "label": "🟡 Cream / Ivory",
+                    "value": "cream"
+                },
+                {
+                    "label": "🔵 Cool Gray",
+                    "value": "cool_gray"
+                },
+                {
+                    "label": "🟠 Warm Gray",
+                    "value": "warm_gray"
+                },
+                {
+                    "label": "🟢 Mint",
+                    "value": "mint"
+                },
+                {
+                    "label": "🟣 Lavender",
+                    "value": "lavender"
+                },
+                {
+                    "label": "🔴 Blush / Rose",
+                    "value": "blush"
+                },
+                {
+                    "label": "🔵 Sky",
+                    "value": "sky"
+                },
+                {
+                    "label": "🟡 Sand",
+                    "value": "sand"
+                }
+            ],
+            "scope": "theme"
+        },
+        "bg_light_variant": {
+            "label": "Light Background Variant",
+            "type": "select",
+            "default": "clean",
+            "category": "Colors",
+            "description": "Fine-tune the light background tone.",
+            "options": [
+                {
+                    "label": "Clean (Pure)",
+                    "value": "clean"
+                },
+                {
+                    "label": "Soft",
+                    "value": "soft"
+                },
+                {
+                    "label": "Matte",
+                    "value": "matte"
+                },
+                {
+                    "label": "Warm",
+                    "value": "warm"
+                }
+            ],
+            "scope": "theme"
+        },
+        "bg_dark_color": {
+            "label": "Dark Mode Background",
+            "type": "select",
+            "default": "black",
+            "category": "Colors",
+            "description": "Base background color for dark mode.",
+            "options": [
+                {
+                    "label": "⬛ Black (Default)",
+                    "value": "black"
+                },
+                {
+                    "label": "🔘 Charcoal",
+                    "value": "charcoal"
+                },
+                {
+                    "label": "🔵 Navy",
+                    "value": "navy"
+                },
+                {
+                    "label": "🔘 Slate",
+                    "value": "slate"
+                },
+                {
+                    "label": "🟢 Forest",
+                    "value": "forest"
+                },
+                {
+                    "label": "🔴 Wine / Burgundy",
+                    "value": "wine"
+                },
+                {
+                    "label": "🔵 Midnight",
+                    "value": "midnight"
+                },
+                {
+                    "label": "🟣 Dark Plum",
+                    "value": "plum"
+                },
+                {
+                    "label": "🟠 Dark Earth",
+                    "value": "earth"
+                }
+            ],
+            "scope": "theme"
+        },
+        "bg_dark_variant": {
+            "label": "Dark Background Variant",
+            "type": "select",
+            "default": "clean",
+            "category": "Colors",
+            "description": "Fine-tune the dark background tone.",
+            "options": [
+                {
+                    "label": "Clean (Pure)",
+                    "value": "clean"
+                },
+                {
+                    "label": "Soft",
+                    "value": "soft"
+                },
+                {
+                    "label": "Matte",
+                    "value": "matte"
+                },
+                {
+                    "label": "Deep",
+                    "value": "deep"
+                }
+            ],
+            "scope": "theme"
+        },
+        "hero_title": {
+            "label": "Hero Title (fallback)",
+            "type": "text",
+            "default": "JEJAKAWAN ENTERPRISE",
+            "category": "Hero Section",
+            "description": "Used when locale-specific titles below are empty.",
+            "scope": "theme"
+        },
+        "hero_title_en": {
+            "label": "Hero Title (English)",
+            "type": "text",
+            "default": "JEJAKAWAN ENTERPRISE",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_title_id": {
+            "label": "Hero Title (Indonesian)",
+            "type": "text",
+            "default": "JEJAKAWAN ENTERPRISE",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_subtitle": {
+            "label": "Hero Subtitle (fallback)",
+            "type": "textarea",
+            "default": "Editorial Jejakawan and control plane for modern publishing",
+            "category": "Hero Section",
+            "description": "Used when locale-specific subtitles below are empty.",
+            "scope": "theme"
+        },
+        "hero_subtitle_en": {
+            "label": "Hero Subtitle (English)",
+            "type": "textarea",
+            "default": "Editorial Jejakawan and control plane for modern publishing",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_subtitle_id": {
+            "label": "Hero Subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "Jejakawan editorial dan control plane untuk publikasi modern",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slide_count": {
+            "label": "Number of Slides",
+            "type": "range",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "default": 3,
+            "category": "Hero Section",
+            "description": "How many background slides to show in the hero carousel",
+            "scope": "theme"
+        },
+        "hero_slide_interval": {
+            "label": "Slide Interval (seconds)",
+            "type": "range",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "default": 6,
+            "category": "Hero Section",
+            "description": "Auto-play interval between slides",
+            "scope": "theme"
+        },
+        "hero_slide_1": {
+            "label": "Slide 1 Image",
+            "type": "media",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slide_2": {
+            "label": "Slide 2 Image",
+            "type": "media",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slide_3": {
+            "label": "Slide 3 Image",
+            "type": "media",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slide_4": {
+            "label": "Slide 4 Image",
+            "type": "media",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slide_5": {
+            "label": "Slide 5 Image",
+            "type": "media",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_overlay_opacity": {
+            "label": "Overlay Darkness",
+            "type": "range",
+            "min": 10,
+            "max": 90,
+            "step": 5,
+            "default": 50,
+            "category": "Hero Section",
+            "description": "Darkness of the overlay on hero images (higher = darker)",
+            "scope": "theme"
+        },
+        "hero_height": {
+            "label": "Hero Height",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Compact (65vh)",
+                    "value": "65vh"
+                },
+                {
+                    "label": "Standard (75vh)",
+                    "value": "75vh"
+                },
+                {
+                    "label": "Tall (85vh)",
+                    "value": "85vh"
+                },
+                {
+                    "label": "Full Screen (100vh)",
+                    "value": "100vh"
+                }
+            ],
+            "default": "85vh",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_alignment": {
+            "label": "Text Alignment",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Center",
+                    "value": "items-center text-center"
+                },
+                {
+                    "label": "Left",
+                    "value": "items-start text-left"
+                }
+            ],
+            "default": "items-center text-center",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_transition": {
+            "label": "Transition Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Crossfade",
+                    "value": "fade"
+                },
+                {
+                    "label": "Zoom Fade",
+                    "value": "zoom"
+                }
+            ],
+            "default": "zoom",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_show_scroll": {
+            "label": "Show Scroll Indicator",
+            "type": "checkbox",
+            "default": true,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_news_category": {
+            "label": "Hero News Category Filter (Slug)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "description": "Enter category slug to filter news (e.g. pencapaian). Leave empty for all categories.",
+            "scope": "theme"
+        },
+        "hero_bg": {
+            "label": "Hero Background Gradient",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Blue Purple",
+                    "value": "bg-gradient-to-r from-blue-600 to-indigo-700"
+                },
+                {
+                    "label": "Midnight",
+                    "value": "bg-gradient-to-r from-gray-900 to-black"
+                },
+                {
+                    "label": "Sunset",
+                    "value": "bg-gradient-to-r from-orange-500 to-pink-500"
+                }
+            ],
+            "default": "bg-gradient-to-r from-blue-600 to-indigo-700",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "partners_title": {
+            "label": "Section Title (fallback)",
+            "type": "text",
+            "default": "LINK & MATCH INDUSTRI",
+            "category": "Partners Section",
+            "scope": "theme"
+        },
+        "partners_title_en": {
+            "label": "Section Title (English)",
+            "type": "text",
+            "default": "TRUSTED BY LEADING ENTERPRISES",
+            "category": "Partners Section",
+            "scope": "theme"
+        },
+        "partners_title_id": {
+            "label": "Section Title (Indonesian)",
+            "type": "text",
+            "default": "DIPERCAYA OLEH PERUSAHAAN TERKEMUKA",
+            "category": "Partners Section",
+            "scope": "theme"
+        },
+        "partners_marquee_speed": {
+            "label": "Marquee Speed",
+            "type": "range",
+            "min": 10,
+            "max": 60,
+            "step": 5,
+            "default": 25,
+            "category": "Partners Section",
+            "scope": "theme"
+        },
+        "cta_badge": {
+            "label": "CTA Badge (fallback)",
+            "type": "text",
+            "default": "THE NEXT CHAPTER STARTS NOW",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_badge_en": {
+            "label": "CTA Badge (English)",
+            "type": "text",
+            "default": "THE NEXT CHAPTER STARTS NOW",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_badge_id": {
+            "label": "CTA Badge (Indonesian)",
+            "type": "text",
+            "default": "BABAK BARU DIMULAI SEKARANG",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_title": {
+            "label": "CTA Title (fallback)",
+            "type": "textarea",
+            "default": "JADILAH BAGIAN DARI KAMI",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_title_en": {
+            "label": "CTA Title (English)",
+            "type": "textarea",
+            "default": "JOIN US",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_title_id": {
+            "label": "CTA Title (Indonesian)",
+            "type": "textarea",
+            "default": "JADILAH BAGIAN DARI KAMI",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_subtitle": {
+            "label": "CTA Subtitle (fallback)",
+            "type": "textarea",
+            "default": "Partner with us to deliver modern digital experiences for your team and audience.",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_subtitle_en": {
+            "label": "CTA Subtitle (English)",
+            "type": "textarea",
+            "default": "Partner with us to deliver modern digital experiences for your team and audience.",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_subtitle_id": {
+            "label": "CTA Subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "Bermitra dengan kami untuk menghadirkan pengalaman digital modern bagi tim dan audiens Anda.",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_button_text": {
+            "label": "CTA Button (fallback)",
+            "type": "text",
+            "default": "REGISTER NOW",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_button_text_en": {
+            "label": "CTA Button (English)",
+            "type": "text",
+            "default": "REGISTER NOW",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_button_text_id": {
+            "label": "CTA Button (Indonesian)",
+            "type": "text",
+            "default": "DAFTAR SEKARANG",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_secondary_text": {
+            "label": "CTA secondary button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_secondary_text_en": {
+            "label": "CTA secondary button (English)",
+            "type": "text",
+            "default": "",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_secondary_text_id": {
+            "label": "CTA secondary button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_button_url": {
+            "label": "CTA primary button URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "cta_secondary_url": {
+            "label": "CTA secondary button URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "CTA Section",
+            "scope": "theme"
+        },
+        "page_about_title": {
+            "label": "About page title",
+            "type": "text",
+            "default": "ABOUT US",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_subtitle": {
+            "label": "About page subtitle",
+            "type": "textarea",
+            "default": "Building a capable, innovative team ready for the future.",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_hero": {
+            "label": "About Hero Image",
+            "type": "media",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_image": {
+            "label": "About team photo",
+            "type": "media",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_achievement_title": {
+            "label": "Achievements page title (fallback)",
+            "type": "text",
+            "default": "HIGHLIGHTS",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_subtitle": {
+            "label": "Achievements page subtitle (fallback)",
+            "type": "textarea",
+            "default": "Celebrating milestones, partnerships, and team achievements.",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_hero": {
+            "label": "Achievements hero image",
+            "type": "media",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_career_title": {
+            "label": "Careers page title (fallback)",
+            "type": "text",
+            "default": "CAREERS",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_subtitle": {
+            "label": "Careers page subtitle (fallback)",
+            "type": "textarea",
+            "default": "Connect with opportunities and grow with our team.",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hero": {
+            "label": "Careers Hero Image",
+            "type": "media",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_blog_title": {
+            "label": "News page title (fallback)",
+            "type": "text",
+            "default": "NEWS & UPDATES",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_subtitle": {
+            "label": "News page subtitle (fallback)",
+            "type": "textarea",
+            "default": "Latest announcements, stories, and official updates.",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_hero": {
+            "label": "News hero image",
+            "type": "media",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_contact_title": {
+            "label": "Contact page title",
+            "type": "text",
+            "default": "HUBUNGI KAMI",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_subtitle": {
+            "label": "Contact page subtitle",
+            "type": "textarea",
+            "default": "Questions about our services, teams, or partnerships? We are here to help.",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_hero": {
+            "label": "Contact Hero Image",
+            "type": "media",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "contact_form_slug": {
+            "label": "Jejakawan contact form slug",
+            "type": "text",
+            "default": "contact",
+            "category": "Contact Page",
+            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+            "scope": "theme"
+        },
+        "contact_email": {
+            "label": "Contact email (theme override)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Optional. When set, overrides Identity / Public settings for this theme.",
+            "scope": "theme"
+        },
+        "contact_phone": {
+            "label": "Contact phone / WA display (theme override)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Optional. When set, overrides Identity / Public settings. Also used for WhatsApp CTA on the public site.",
+            "scope": "theme"
+        },
+        "contact_address": {
+            "label": "Contact address (theme override)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Optional. When set, overrides Identity / Public settings.",
+            "scope": "theme"
+        },
+        "contact_map_enabled": {
+            "label": "Enable map in contact address popover",
+            "type": "checkbox",
+            "default": true,
+            "category": "Contact Page",
+            "description": "Show interactive map popup when visitor clicks contact address.",
+            "scope": "theme"
+        },
+        "contact_map_source": {
+            "label": "Map source mode",
+            "type": "select",
+            "category": "Contact Page",
+            "default": "current_location",
+            "options": [
+                {
+                    "label": "Current Location",
+                    "value": "current_location"
+                },
+                {
+                    "label": "Paste Map Link",
+                    "value": "link"
+                }
+            ],
+            "description": "Choose current location or direct map link.",
+            "scope": "theme"
+        },
+        "contact_map_link": {
+            "label": "Direct map link (optional)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Paste Google Maps link (supports maps.app.goo.gl) for open/share/directions.",
+            "scope": "theme"
+        },
+        "contact_map_zoom": {
+            "label": "Map zoom level",
+            "type": "range",
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "default": 15,
+            "category": "Contact Page",
+            "description": "Zoom level used in map preview and map links.",
+            "scope": "theme"
+        },
+        "home_products_badge": {
+            "label": "Products badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_badge_en": {
+            "label": "Products badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_badge_id": {
+            "label": "Products badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_title": {
+            "label": "Products title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_title_en": {
+            "label": "Products title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_title_id": {
+            "label": "Products title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_subtitle": {
+            "label": "Products subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_subtitle_en": {
+            "label": "Products subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_subtitle_id": {
+            "label": "Products subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_view_all": {
+            "label": "Products CTA label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_view_all_en": {
+            "label": "Products CTA label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_view_all_id": {
+            "label": "Products CTA label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_view_all_url": {
+            "label": "Products CTA URL",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Products Section",
+            "scope": "theme"
+        },
+        "home_products_items": {
+            "label": "Product cards",
+            "type": "repeater",
+            "category": "Products Section",
+            "description": "Leave empty to use theme defaults. key maps to icon (publishing, reach, intelligence, platform, organization, member).",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key (icon id)",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                },
+                {
+                    "name": "link_label",
+                    "label": "Link label",
+                    "type": "text"
+                },
+                {
+                    "name": "url",
+                    "label": "URL / path",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_solusi_title": {
+            "label": "Solusi page title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_title_en": {
+            "label": "Solusi page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_title_id": {
+            "label": "Solusi page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_subtitle": {
+            "label": "Solusi page subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_subtitle_en": {
+            "label": "Solusi page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_subtitle_id": {
+            "label": "Solusi page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_section_label": {
+            "label": "Solusi section label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_section_label_en": {
+            "label": "Solusi section label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_section_label_id": {
+            "label": "Solusi section label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_title": {
+            "label": "Solusi CTA title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_title_en": {
+            "label": "Solusi CTA title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_title_id": {
+            "label": "Solusi CTA title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_body": {
+            "label": "Solusi CTA body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_body_en": {
+            "label": "Solusi CTA body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_body_id": {
+            "label": "Solusi CTA body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_contact": {
+            "label": "Solusi CTA contact button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_contact_en": {
+            "label": "Solusi CTA contact button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_contact_id": {
+            "label": "Solusi CTA contact button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_pricing": {
+            "label": "Solusi CTA pricing button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_pricing_en": {
+            "label": "Solusi CTA pricing button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_pricing_id": {
+            "label": "Solusi CTA pricing button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_member": {
+            "label": "Solusi CTA member button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_member_en": {
+            "label": "Solusi CTA member button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_cta_member_id": {
+            "label": "Solusi CTA member button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_about_title_en": {
+            "label": "About page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_title_id": {
+            "label": "About page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_subtitle_en": {
+            "label": "About page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_subtitle_id": {
+            "label": "About page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_title": {
+            "label": "About mission title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_title_en": {
+            "label": "About mission title (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_title_id": {
+            "label": "About mission title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p1": {
+            "label": "About mission paragraph 1 (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p1_en": {
+            "label": "About mission paragraph 1 (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p1_id": {
+            "label": "About mission paragraph 1 (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p2": {
+            "label": "About mission paragraph 2 (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p2_en": {
+            "label": "About mission paragraph 2 (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_mission_p2_id": {
+            "label": "About mission paragraph 2 (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_tim_title": {
+            "label": "Tim page title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_title_en": {
+            "label": "Tim page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_title_id": {
+            "label": "Tim page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_subtitle": {
+            "label": "Tim page subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_subtitle_en": {
+            "label": "Tim page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_subtitle_id": {
+            "label": "Tim page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_section_label": {
+            "label": "Tim section label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_section_label_en": {
+            "label": "Tim section label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_section_label_id": {
+            "label": "Tim section label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_closing": {
+            "label": "Tim closing text (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_closing_en": {
+            "label": "Tim closing text (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_closing_id": {
+            "label": "Tim closing text (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_areas_title": {
+            "label": "Tim areas title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_areas_title_en": {
+            "label": "Tim areas title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_areas_title_id": {
+            "label": "Tim areas title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_pillars_items": {
+            "label": "Tim pillars",
+            "type": "repeater",
+            "category": "Tim Page",
+            "description": "Empty = theme defaults. key: craft|trust|scale (icons).",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_tim_areas_items": {
+            "label": "Tim areas",
+            "type": "repeater",
+            "category": "Tim Page",
+            "description": "Empty = theme defaults. key: engineering|content|platform|success.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_about_offerings_title": {
+            "label": "About offerings title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_title_en": {
+            "label": "About offerings title (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_title_id": {
+            "label": "About offerings title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle": {
+            "label": "About offerings subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle_en": {
+            "label": "About offerings subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_subtitle_id": {
+            "label": "About offerings subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_offerings_items": {
+            "label": "About offerings cards",
+            "type": "repeater",
+            "category": "About Page",
+            "description": "Empty = defaults. key: hub|commercial|onprem|organization.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                },
+                {
+                    "name": "link_label",
+                    "label": "Link label",
+                    "type": "text"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_solusi_services_badge": {
+            "label": "Services badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_badge_en": {
+            "label": "Services badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_badge_id": {
+            "label": "Services badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title": {
+            "label": "Services title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title_en": {
+            "label": "Services title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_title_id": {
+            "label": "Services title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle": {
+            "label": "Services subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle_en": {
+            "label": "Services subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_subtitle_id": {
+            "label": "Services subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_services_items": {
+            "label": "Services cards",
+            "type": "repeater",
+            "category": "Solusi Page",
+            "description": "Empty = defaults. key: managed|forms|member|onprem. bullets = one per line.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Title",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "textarea"
+                },
+                {
+                    "name": "bullets",
+                    "label": "Bullets (one per line)",
+                    "type": "textarea"
+                },
+                {
+                    "name": "link_label",
+                    "label": "CTA label",
+                    "type": "text"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_solusi_stack_title": {
+            "label": "Hub stack title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_title_en": {
+            "label": "Hub stack title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_title_id": {
+            "label": "Hub stack title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle": {
+            "label": "Hub stack subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle_en": {
+            "label": "Hub stack subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_subtitle_id": {
+            "label": "Hub stack subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note": {
+            "label": "Hub workspace note (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note_en": {
+            "label": "Hub workspace note (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_workspace_note_id": {
+            "label": "Hub workspace note (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "page_solusi_stack_items": {
+            "label": "Hub stack modules",
+            "type": "repeater",
+            "category": "Solusi Page",
+            "description": "Empty = defaults. features = one per line.",
+            "fields": [
+                {
+                    "name": "key",
+                    "label": "Key",
+                    "type": "text"
+                },
+                {
+                    "name": "title",
+                    "label": "Name",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "label": "Summary",
+                    "type": "textarea"
+                },
+                {
+                    "name": "features",
+                    "label": "Features (one per line)",
+                    "type": "textarea"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "hero_cta_primary": {
+            "label": "Hero primary CTA (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_primary_en": {
+            "label": "Hero primary CTA (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_primary_id": {
+            "label": "Hero primary CTA (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console": {
+            "label": "Hero console link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console_en": {
+            "label": "Hero console link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_console_id": {
+            "label": "Hero console link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_cta_primary_url": {
+            "label": "Hero primary CTA URL",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "page_contact_label_email": {
+            "label": "Contact label: email",
+            "type": "text",
+            "default": "Email Resmi",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_label_phone": {
+            "label": "Contact label: phone",
+            "type": "text",
+            "default": "Telepon / WA",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_label_address": {
+            "label": "Contact label: address",
+            "type": "text",
+            "default": "Alamat",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_submit": {
+            "label": "Contact submit button",
+            "type": "text",
+            "default": "Kirim Pesan",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_map_open": {
+            "label": "Contact map: open",
+            "type": "text",
+            "default": "Buka Peta",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_map_directions": {
+            "label": "Contact map: directions",
+            "type": "text",
+            "default": "Petunjuk Arah",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "home_testimonials_badge": {
+            "label": "Testimonials badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_testimonials_badge_en": {
+            "label": "Testimonials badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_testimonials_badge_id": {
+            "label": "Testimonials badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_testimonials_title": {
+            "label": "Testimonials title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_testimonials_title_en": {
+            "label": "Testimonials title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_testimonials_title_id": {
+            "label": "Testimonials title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Testimonials Section",
+            "scope": "theme"
+        },
+        "home_updates_title": {
+            "label": "Updates section title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_title_en": {
+            "label": "Updates section title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_title_id": {
+            "label": "Updates section title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_announcements": {
+            "label": "Updates column: announcements (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_announcements_en": {
+            "label": "Updates column: announcements (English)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_announcements_id": {
+            "label": "Updates column: announcements (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_agenda": {
+            "label": "Updates column: agenda (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_agenda_en": {
+            "label": "Updates column: agenda (English)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_agenda_id": {
+            "label": "Updates column: agenda (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_holidays": {
+            "label": "Updates column: holidays (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_holidays_en": {
+            "label": "Updates column: holidays (English)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_col_holidays_id": {
+            "label": "Updates column: holidays (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_view_all": {
+            "label": "Updates view-all label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_view_all_en": {
+            "label": "Updates view-all label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_view_all_id": {
+            "label": "Updates view-all label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Updates Section",
+            "scope": "theme"
+        },
+        "home_updates_view_all_url": {
+            "label": "Updates view-all URL",
+            "type": "text",
+            "default": "/blog",
+            "category": "Updates Section",
+            "description": "Shared link for all three View all buttons.",
+            "scope": "theme"
+        },
+        "page_blog_title_en": {
+            "label": "News page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_title_id": {
+            "label": "News page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_subtitle_en": {
+            "label": "News page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_subtitle_id": {
+            "label": "News page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_career_title_en": {
+            "label": "Careers page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_title_id": {
+            "label": "Careers page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_subtitle_en": {
+            "label": "Careers page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_subtitle_id": {
+            "label": "Careers page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs": {
+            "label": "Careers latest jobs heading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs_en": {
+            "label": "Careers latest jobs heading (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_latest_jobs_id": {
+            "label": "Careers latest jobs heading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title": {
+            "label": "Careers sidebar title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title_en": {
+            "label": "Careers sidebar title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_title_id": {
+            "label": "Careers sidebar title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc": {
+            "label": "Careers sidebar body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc_en": {
+            "label": "Careers sidebar body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_hubin_desc_id": {
+            "label": "Careers sidebar body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing": {
+            "label": "Careers pricing button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing_en": {
+            "label": "Careers pricing button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_pricing_id": {
+            "label": "Careers pricing button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact": {
+            "label": "Careers contact button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact_en": {
+            "label": "Careers contact button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_partnership_contact_id": {
+            "label": "Careers contact button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_pricing_url": {
+            "label": "Careers pricing URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_contact_url": {
+            "label": "Careers contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_achievement_title_en": {
+            "label": "Achievements page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_title_id": {
+            "label": "Achievements page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_subtitle_en": {
+            "label": "Achievements page subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_subtitle_id": {
+            "label": "Achievements page subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title": {
+            "label": "Achievements CTA title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title_en": {
+            "label": "Achievements CTA title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_title_id": {
+            "label": "Achievements CTA title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body": {
+            "label": "Achievements CTA body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body_en": {
+            "label": "Achievements CTA body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_body_id": {
+            "label": "Achievements CTA body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing": {
+            "label": "Achievements pricing button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing_en": {
+            "label": "Achievements pricing button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_pricing_id": {
+            "label": "Achievements pricing button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact": {
+            "label": "Achievements contact button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact_en": {
+            "label": "Achievements contact button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cta_contact_id": {
+            "label": "Achievements contact button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_pricing_url": {
+            "label": "Achievements pricing URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_contact_url": {
+            "label": "Achievements contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label": {
+            "label": "Pricing section label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label_en": {
+            "label": "Pricing section label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_section_label_id": {
+            "label": "Pricing section label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title": {
+            "label": "Pricing title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title_en": {
+            "label": "Pricing title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_title_id": {
+            "label": "Pricing title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle": {
+            "label": "Pricing subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle_en": {
+            "label": "Pricing subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_subtitle_id": {
+            "label": "Pricing subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended": {
+            "label": "Pricing recommended badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended_en": {
+            "label": "Pricing recommended badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_recommended_id": {
+            "label": "Pricing recommended badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan": {
+            "label": "Pricing choose-plan button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan_en": {
+            "label": "Pricing choose-plan button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_choose_plan_id": {
+            "label": "Pricing choose-plan button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales": {
+            "label": "Pricing contact-sales button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales_en": {
+            "label": "Pricing contact-sales button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_sales_id": {
+            "label": "Pricing contact-sales button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote": {
+            "label": "Pricing footnote (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote_en": {
+            "label": "Pricing footnote (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_footnote_id": {
+            "label": "Pricing footnote (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_contact_url": {
+            "label": "Pricing contact URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_search_title": {
+            "label": "Search page title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_title_en": {
+            "label": "Search page title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_title_id": {
+            "label": "Search page title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_query_label": {
+            "label": "Search query prefix (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_query_label_en": {
+            "label": "Search query prefix (English)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_query_label_id": {
+            "label": "Search query prefix (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_loading": {
+            "label": "Search loading text (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_loading_en": {
+            "label": "Search loading text (English)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_loading_id": {
+            "label": "Search loading text (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_empty": {
+            "label": "Search empty message (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme",
+            "description": "Use {query} for the search term."
+        },
+        "page_search_empty_en": {
+            "label": "Search empty message (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_search_empty_id": {
+            "label": "Search empty message (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Search Page",
+            "scope": "theme"
+        },
+        "page_blog_latest_heading": {
+            "label": "News latest articles heading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_latest_heading_en": {
+            "label": "News latest articles heading (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_latest_heading_id": {
+            "label": "News latest articles heading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_heading": {
+            "label": "News search results heading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_heading_en": {
+            "label": "News search results heading (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_heading_id": {
+            "label": "News search results heading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_empty": {
+            "label": "News empty results (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_empty_en": {
+            "label": "News empty results (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_empty_id": {
+            "label": "News empty results (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all": {
+            "label": "News view-all articles (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all_en": {
+            "label": "News view-all articles (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all_id": {
+            "label": "News view-all articles (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_all": {
+            "label": "Achievements filter: All (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_all_en": {
+            "label": "Achievements filter: All (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_all_id": {
+            "label": "Achievements filter: All (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_platform": {
+            "label": "Achievements filter: Platform (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_platform_en": {
+            "label": "Achievements filter: Platform (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_platform_id": {
+            "label": "Achievements filter: Platform (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_publishing": {
+            "label": "Achievements filter: Publishing (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_publishing_en": {
+            "label": "Achievements filter: Publishing (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_publishing_id": {
+            "label": "Achievements filter: Publishing (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_intelligence": {
+            "label": "Achievements filter: Intelligence (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_intelligence_en": {
+            "label": "Achievements filter: Intelligence (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_intelligence_id": {
+            "label": "Achievements filter: Intelligence (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_partnership": {
+            "label": "Achievements filter: Partnership (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_partnership_en": {
+            "label": "Achievements filter: Partnership (English)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "page_achievement_cat_partnership_id": {
+            "label": "Achievements filter: Partnership (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Achievements Page",
+            "scope": "theme"
+        },
+        "footer_description": {
+            "label": "Footer brand description (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_description_en": {
+            "label": "Footer brand description (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_description_id": {
+            "label": "Footer brand description (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col1_title": {
+            "label": "Footer column 1 title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "Used when the linked menu has no name."
+        },
+        "footer_col1_title_en": {
+            "label": "Footer column 1 title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col1_title_id": {
+            "label": "Footer column 1 title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col2_title": {
+            "label": "Footer column 2 title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "Used when the linked menu has no name."
+        },
+        "footer_col2_title_en": {
+            "label": "Footer column 2 title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col2_title_id": {
+            "label": "Footer column 2 title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title": {
+            "label": "Footer newsletter title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title_en": {
+            "label": "Footer newsletter title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_title_id": {
+            "label": "Footer newsletter title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description": {
+            "label": "Footer newsletter description (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description_en": {
+            "label": "Footer newsletter description (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_description_id": {
+            "label": "Footer newsletter description (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder": {
+            "label": "Footer newsletter placeholder (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder_en": {
+            "label": "Footer newsletter placeholder (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_newsletter_placeholder_id": {
+            "label": "Footer newsletter placeholder (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by": {
+            "label": "Footer “built by” label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by_en": {
+            "label": "Footer “built by” label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_developed_by_id": {
+            "label": "Footer “built by” label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link": {
+            "label": "Footer brand link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link_en": {
+            "label": "Footer brand link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_link_id": {
+            "label": "Footer brand link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label": {
+            "label": "Footer privacy link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label_en": {
+            "label": "Footer privacy link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_label_id": {
+            "label": "Footer privacy link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label": {
+            "label": "Footer terms link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label_en": {
+            "label": "Footer terms link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_label_id": {
+            "label": "Footer terms link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_privacy_url": {
+            "label": "Footer privacy URL",
+            "type": "text",
+            "default": "/privacy",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_terms_url": {
+            "label": "Footer terms URL",
+            "type": "text",
+            "default": "/terms",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_brand_url": {
+            "label": "Footer brand link URL",
+            "type": "text",
+            "default": "https://jejakawan.com",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_copyright": {
+            "label": "Footer copyright line (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme",
+            "description": "If set, replaces the default dual credit line."
+        },
+        "footer_copyright_en": {
+            "label": "Footer copyright line (English)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_copyright_id": {
+            "label": "Footer copyright line (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "header_official_line1": {
+            "label": "Header official line 1 (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line1_en": {
+            "label": "Header official line 1 (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line1_id": {
+            "label": "Header official line 1 (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2": {
+            "label": "Header official line 2 (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2_en": {
+            "label": "Header official line 2 (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_official_line2_id": {
+            "label": "Header official line 2 (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label": {
+            "label": "Header login label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label_en": {
+            "label": "Header login label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_label_id": {
+            "label": "Header login label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge": {
+            "label": "Header news badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge_en": {
+            "label": "Header news badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_news_badge_id": {
+            "label": "Header news badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label": {
+            "label": "Header social label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label_en": {
+            "label": "Header social label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_social_label_id": {
+            "label": "Header social label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text": {
+            "label": "Header news marquee (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text_en": {
+            "label": "Header news marquee (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_marquee_text_id": {
+            "label": "Header news marquee (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_login_url": {
+            "label": "Header login URL",
+            "type": "text",
+            "default": "/member/login",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "page_about_team_cta": {
+            "label": "About team CTA (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_en": {
+            "label": "About team CTA (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_id": {
+            "label": "About team CTA (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint": {
+            "label": "About team CTA hint (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint_en": {
+            "label": "About team CTA hint (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_team_cta_hint_id": {
+            "label": "About team CTA hint (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value": {
+            "label": "About stat 1 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value_en": {
+            "label": "About stat 1 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_value_id": {
+            "label": "About stat 1 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label": {
+            "label": "About stat 1 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label_en": {
+            "label": "About stat 1 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat1_label_id": {
+            "label": "About stat 1 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value": {
+            "label": "About stat 2 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value_en": {
+            "label": "About stat 2 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_value_id": {
+            "label": "About stat 2 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label": {
+            "label": "About stat 2 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label_en": {
+            "label": "About stat 2 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat2_label_id": {
+            "label": "About stat 2 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value": {
+            "label": "About stat 3 value (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value_en": {
+            "label": "About stat 3 value (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_value_id": {
+            "label": "About stat 3 value (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label": {
+            "label": "About stat 3 label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label_en": {
+            "label": "About stat 3 label (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_stat3_label_id": {
+            "label": "About stat 3 label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about": {
+            "label": "Tim about link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about_en": {
+            "label": "Tim about link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_about_id": {
+            "label": "Tim about link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers": {
+            "label": "Tim careers link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers_en": {
+            "label": "Tim careers link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_careers_id": {
+            "label": "Tim careers link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact": {
+            "label": "Tim contact link label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact_en": {
+            "label": "Tim contact link label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_tim_link_contact_id": {
+            "label": "Tim contact link label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Tim Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address": {
+            "label": "Contact copy address (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address_en": {
+            "label": "Contact copy address (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_address_id": {
+            "label": "Contact copy address (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location": {
+            "label": "Contact share location (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location_en": {
+            "label": "Contact share location (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_share_location_id": {
+            "label": "Contact share location (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords": {
+            "label": "Contact copy coordinates (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords_en": {
+            "label": "Contact copy coordinates (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_copy_coords_id": {
+            "label": "Contact copy coordinates (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title": {
+            "label": "Contact form title fallback (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title_en": {
+            "label": "Contact form title fallback (English)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_title_id": {
+            "label": "Contact form title fallback (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description": {
+            "label": "Contact form description fallback (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description_en": {
+            "label": "Contact form description fallback (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_contact_form_description_id": {
+            "label": "Contact form description fallback (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "scope": "theme"
+        },
+        "page_blog_featured_heading": {
+            "label": "News featured heading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_featured_heading_en": {
+            "label": "News featured heading (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_featured_heading_id": {
+            "label": "News featured heading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_read_cta": {
+            "label": "News read CTA (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_read_cta_en": {
+            "label": "News read CTA (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_read_cta_id": {
+            "label": "News read CTA (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_editorial_label": {
+            "label": "News editorial label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_editorial_label_en": {
+            "label": "News editorial label (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_editorial_label_id": {
+            "label": "News editorial label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_categories_label": {
+            "label": "News categories label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_categories_label_en": {
+            "label": "News categories label (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_categories_label_id": {
+            "label": "News categories label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_placeholder": {
+            "label": "News search placeholder (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_placeholder_en": {
+            "label": "News search placeholder (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_search_placeholder_id": {
+            "label": "News search placeholder (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_category_all": {
+            "label": "News category all (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_category_all_en": {
+            "label": "News category all (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_category_all_id": {
+            "label": "News category all (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_calendar_title": {
+            "label": "News calendar title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_calendar_title_en": {
+            "label": "News calendar title (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_calendar_title_id": {
+            "label": "News calendar title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all_agenda": {
+            "label": "News view-all agenda (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all_agenda_en": {
+            "label": "News view-all agenda (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_blog_view_all_agenda_id": {
+            "label": "News view-all agenda (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_career_stat_partners": {
+            "label": "Careers partners stat label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_stat_partners_en": {
+            "label": "Careers partners stat label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_stat_partners_id": {
+            "label": "Careers partners stat label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_stat_jobs": {
+            "label": "Careers jobs stat label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_stat_jobs_en": {
+            "label": "Careers jobs stat label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_stat_jobs_id": {
+            "label": "Careers jobs stat label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_all": {
+            "label": "Careers view-all jobs (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_all_en": {
+            "label": "Careers view-all jobs (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_view_all_id": {
+            "label": "Careers view-all jobs (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_new_badge": {
+            "label": "Careers new badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_new_badge_en": {
+            "label": "Careers new badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_new_badge_id": {
+            "label": "Careers new badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_detail": {
+            "label": "Careers detail button (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_detail_en": {
+            "label": "Careers detail button (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_detail_id": {
+            "label": "Careers detail button (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_guide_title": {
+            "label": "Careers guide title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_guide_title_en": {
+            "label": "Careers guide title (English)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_guide_title_id": {
+            "label": "Careers guide title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Careers Page",
+            "scope": "theme"
+        },
+        "page_career_guide_links": {
+            "label": "Careers guide links",
+            "type": "repeater",
+            "category": "Careers Page",
+            "description": "Empty = locale defaults. One label per row.",
+            "fields": [
+                {
+                    "name": "label",
+                    "label": "Label",
+                    "type": "text"
+                }
+            ],
+            "default": [],
+            "scope": "theme"
+        },
+        "page_pricing_per_month": {
+            "label": "Pricing per-month label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_per_month_en": {
+            "label": "Pricing per-month label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_per_month_id": {
+            "label": "Pricing per-month label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_custom": {
+            "label": "Pricing custom/enterprise label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_custom_en": {
+            "label": "Pricing custom/enterprise label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_custom_id": {
+            "label": "Pricing custom/enterprise label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_members": {
+            "label": "Pricing members label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_members_en": {
+            "label": "Pricing members label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_members_id": {
+            "label": "Pricing members label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_storage": {
+            "label": "Pricing storage label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_storage_en": {
+            "label": "Pricing storage label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_storage_id": {
+            "label": "Pricing storage label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_unlimited": {
+            "label": "Pricing unlimited label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_unlimited_en": {
+            "label": "Pricing unlimited label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_unlimited_id": {
+            "label": "Pricing unlimited label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_platform_label": {
+            "label": "Pricing platform product label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_platform_label_en": {
+            "label": "Pricing platform product label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_platform_label_id": {
+            "label": "Pricing platform product label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_hub_label": {
+            "label": "Pricing hub product label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_hub_label_en": {
+            "label": "Pricing hub product label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_pricing_hub_label_id": {
+            "label": "Pricing hub product label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Pricing Page",
+            "scope": "theme"
+        },
+        "page_post_author_role": {
+            "label": "Post author role (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_author_role_en": {
+            "label": "Post author role (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_author_role_id": {
+            "label": "Post author role (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_author_fallback": {
+            "label": "Post author fallback (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme",
+            "description": "Use {site} for site name."
+        },
+        "page_post_author_fallback_en": {
+            "label": "Post author fallback (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_author_fallback_id": {
+            "label": "Post author fallback (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_not_found": {
+            "label": "Post not found message (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_not_found_en": {
+            "label": "Post not found message (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_not_found_id": {
+            "label": "Post not found message (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_back_to_blog": {
+            "label": "Post back-to-blog label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_back_to_blog_en": {
+            "label": "Post back-to-blog label (English)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "page_post_back_to_blog_id": {
+            "label": "Post back-to-blog label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "News Page",
+            "scope": "theme"
+        },
+        "hero_scroll_label": {
+            "label": "Hero scroll label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_scroll_label_en": {
+            "label": "Hero scroll label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_scroll_label_id": {
+            "label": "Hero scroll label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_latest_news_label": {
+            "label": "Hero latest-news label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_latest_news_label_en": {
+            "label": "Hero latest-news label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_latest_news_label_id": {
+            "label": "Hero latest-news label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "page_about_survey_badge": {
+            "label": "About survey badge (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_badge_en": {
+            "label": "About survey badge (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_badge_id": {
+            "label": "About survey badge (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_title": {
+            "label": "About survey title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_title_en": {
+            "label": "About survey title (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_title_id": {
+            "label": "About survey title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_subtitle": {
+            "label": "About survey subtitle (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_subtitle_en": {
+            "label": "About survey subtitle (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_subtitle_id": {
+            "label": "About survey subtitle (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_loading": {
+            "label": "About survey loading (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_loading_en": {
+            "label": "About survey loading (English)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_about_survey_loading_id": {
+            "label": "About survey loading (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "page_cms_empty": {
+            "label": "CMS page empty body (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_empty_en": {
+            "label": "CMS page empty body (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_empty_id": {
+            "label": "CMS page empty body (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_meta_label": {
+            "label": "CMS page meta label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_meta_label_en": {
+            "label": "CMS page meta label (English)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_meta_label_id": {
+            "label": "CMS page meta label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_type_label": {
+            "label": "CMS page type label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_type_label_en": {
+            "label": "CMS page type label (English)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_type_label_id": {
+            "label": "CMS page type label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_title": {
+            "label": "CMS page not-found title (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_title_en": {
+            "label": "CMS page not-found title (English)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_title_id": {
+            "label": "CMS page not-found title (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_description": {
+            "label": "CMS page not-found description (fallback)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_description_en": {
+            "label": "CMS page not-found description (English)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "page_cms_not_found_description_id": {
+            "label": "CMS page not-found description (Indonesian)",
+            "type": "textarea",
+            "default": "",
+            "category": "CMS Page",
+            "scope": "theme"
+        },
+        "header_profile_label": {
+            "label": "Header profile label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_profile_label_en": {
+            "label": "Header profile label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_profile_label_id": {
+            "label": "Header profile label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_logout_label": {
+            "label": "Header logout label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_logout_label_en": {
+            "label": "Header logout label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "header_logout_label_id": {
+            "label": "Header logout label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Appearance",
+            "scope": "theme"
+        },
+        "page_disabled_status": {
+            "label": "Disabled page status label (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_status_en": {
+            "label": "Disabled page status label (English)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_status_id": {
+            "label": "Disabled page status label (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_back_home": {
+            "label": "Disabled page back-home (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_back_home_en": {
+            "label": "Disabled page back-home (English)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_back_home_id": {
+            "label": "Disabled page back-home (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_contact": {
+            "label": "Disabled page contact link (fallback)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_contact_en": {
+            "label": "Disabled page contact link (English)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        },
+        "page_disabled_contact_id": {
+            "label": "Disabled page contact link (Indonesian)",
+            "type": "text",
+            "default": "",
+            "category": "Public Pages",
+            "scope": "theme"
+        }
+    },
+    "menus": {
+        "header": "Header Primary Navigation",
+        "header_top": "Header Top Utility",
+        "footer": "Footer Bottom Links",
+        "footer_col_1": "Footer Column 1",
+        "footer_col_2": "Footer Column 2",
+        "sidebar": "Sidebar Navigation"
+    },
+    "customizer": {
+        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
+        "themeSchema": "customizer/schema.settings.json"
+    }
+}

@@ -5,6 +5,7 @@ import { mailNavigation } from './navigation';
 export const MailModule: AppModule = {
     id: 'mail',
     name: 'JA-Mail',
+    extensionSlug: 'mail',
     routes: mailRoutes,
     navigation: mailNavigation,
 };

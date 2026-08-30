@@ -6,9 +6,12 @@ namespace Modules\Mail\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Http\Middleware\EnsureExtensionActive;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Prefer middleware('extension.active:mail'). Kept as alias for existing route groups.
+ */
 class EnsureMailExtensionActive
 {
     /**
@@ -16,19 +19,6 @@ class EnsureMailExtensionActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $active = Extension::query()
-            ->where('slug', 'mail')
-            ->where('status', 'active')
-            ->exists();
-
-        if (! $active) {
-            return response()->json([
-                'success' => false,
-                'message' => 'JA-Mail extension is not active. Enable it from App Store.',
-                'error_code' => 'MAIL_EXTENSION_INACTIVE',
-            ], 403);
-        }
-
-        return $next($request);
+        return app(EnsureExtensionActive::class)->handle($request, $next, 'mail');
     }
 }

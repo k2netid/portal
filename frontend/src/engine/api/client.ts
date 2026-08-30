@@ -12,6 +12,8 @@ export interface ApiRequestConfig extends AxiosRequestConfig {
 }
 import { logger } from '@/shared/utils/logger';
 import { getActivePinia } from 'pinia';
+import { isPublicShell } from '@/config/shell';
+import { MEMBER_TOKEN_KEY } from '@/modules/Member/constants';
 import { buildSessionExpiredHref } from '@/shared/utils/errorReturn';
 
 // --- SECURITY & STATE FLAGS ---
@@ -22,6 +24,7 @@ declare global {
     interface Window {
         __isSessionTerminated?: boolean;
         __factoryResetInProgress?: boolean;
+        __authHandshakeUntil?: number;
     }
 }
 
@@ -127,6 +130,15 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig & { _perf
         delete config.headers['Content-Type'];
     }
 
+    if (isPublicShell()) {
+        const memberToken = typeof localStorage !== 'undefined'
+            ? localStorage.getItem(MEMBER_TOKEN_KEY)
+            : null;
+        if (memberToken) {
+            config.headers.Authorization = `Bearer ${memberToken}`;
+        }
+    }
+
     return config;
 });
 
@@ -191,6 +203,10 @@ apiClient.interceptors.response.use(
 
         // 1. Session Expiry (401/419)
         if (status === 401 || status === 419) {
+            if (isPublicShell()) {
+                return Promise.reject(error);
+            }
+
             if (window.__factoryResetInProgress) {
                 return Promise.reject(error);
             }
@@ -212,6 +228,20 @@ apiClient.interceptors.response.use(
             );
 
             // Skip redirection for logout (intended), public endpoints, or user profile fetch (can be guest)
+            const handshakeUntil = Number(window.__authHandshakeUntil ?? 0);
+            const inAuthHandshake = handshakeUntil > Date.now();
+            const isHandshakeProbe = url.includes('onboarding-status')
+                || url.includes('post-reset-welcome');
+            let piniaSaysAuthenticated = false;
+            try {
+                const pinia = getActivePinia();
+                if (pinia) {
+                    const { useAuthStore } = await import('@/modules/Core/System/stores/auth');
+                    piniaSaysAuthenticated = useAuthStore(pinia).isAuthenticated;
+                }
+            } catch {
+                piniaSaysAuthenticated = false;
+            }
             if (
                 url.includes('logout')
                 || url.includes('auth/me')
@@ -219,6 +249,9 @@ apiClient.interceptors.response.use(
                 || url.includes('/public/')
                 || url.includes('factory-reset')
                 || url.includes('maintenance')
+                || isHandshakeProbe
+                || inAuthHandshake
+                || piniaSaysAuthenticated
             ) {
                 return Promise.reject(error);
             }

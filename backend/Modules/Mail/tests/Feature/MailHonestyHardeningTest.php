@@ -119,6 +119,27 @@ class MailHonestyHardeningTest extends TestCase
             ->assertJsonPath('error_code', 'MAIL_ATTACHMENT_BLOCKED');
     }
 
+    public function test_blocked_attachment_mime_rejected_even_when_extension_looks_safe(): void
+    {
+        Storage::fake('local');
+        Mail::fake();
+
+        $user = $this->createSuperAdminUser();
+        $file = UploadedFile::fake()->create('notes.txt', 12, 'application/x-msdownload');
+
+        $this->actingAs($user, 'sanctum')
+            ->post('/api/v1/manage/mail/send', [
+                'to' => 'ops@example.com',
+                'subject' => 'Blocked mime',
+                'body' => '<p>nope</p>',
+                'attachments' => [$file],
+            ], [
+                'Accept' => 'application/json',
+            ])
+            ->assertStatus(422)
+            ->assertJsonPath('error_code', 'MAIL_ATTACHMENT_BLOCKED');
+    }
+
     public function test_attachment_download_rejects_unowned_path(): void
     {
         $user = $this->createSuperAdminUser();

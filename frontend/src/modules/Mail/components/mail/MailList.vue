@@ -7,7 +7,7 @@
         <Input
           :model-value="searchQuery"
           type="text"
-          :placeholder="$t('system.mail.search_placeholder')"
+          :placeholder="$t('mail.search_placeholder')"
           class="pl-8 h-8 text-xs bg-muted/40 border-border/60 rounded-lg focus-visible:bg-background transition-colors"
           @update:model-value="$emit('update:search-query', String($event || ''))"
         />
@@ -17,7 +17,7 @@
         size="icon"
         class="h-8 w-8 text-muted-foreground hover:text-foreground shrink-0 rounded-lg"
         :disabled="loading"
-        :title="$t('system.mail.refresh')"
+        :title="$t('mail.refresh')"
         @click="$emit('refresh')"
       >
         <RefreshCw :class="['w-3.5 h-3.5', loading ? 'animate-spin text-primary' : '']" />
@@ -37,7 +37,7 @@
         ]"
         @click="$emit('update:filter-type', tab.id)"
       >
-        {{ $t(`system.mail.filter_${tab.id}`) }}
+        {{ $t(`mail.filter_${tab.id}`) }}
       </button>
     </div>
 
@@ -61,8 +61,8 @@
         class="h-64 flex flex-col items-center justify-center p-6 text-center text-muted-foreground space-y-2"
       >
         <Mail class="w-9 h-9 opacity-30 stroke-[1.5]" />
-        <p class="text-xs font-semibold">{{ $t('system.mail.no_messages') }}</p>
-        <p class="text-[11px] text-muted-foreground/70 max-w-xs">{{ $t('system.mail.no_messages_desc') }}</p>
+        <p class="text-xs font-semibold">{{ $t('mail.no_messages') }}</p>
+        <p class="text-[11px] text-muted-foreground/70 max-w-xs">{{ $t('mail.no_messages_desc') }}</p>
       </div>
 
       <!-- Message Items -->
@@ -97,7 +97,7 @@
             <span
               v-if="getThreadCount(msg) > 1"
               class="px-1.5 py-0.5 rounded bg-muted text-[9px] font-bold text-muted-foreground shrink-0"
-              :title="$t('system.mail.thread_messages', { count: getThreadCount(msg) })"
+              :title="$t('mail.thread_messages', { count: getThreadCount(msg) })"
             >
               {{ getThreadCount(msg) }}
             </span>

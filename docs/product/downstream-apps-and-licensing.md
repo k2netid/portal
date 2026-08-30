@@ -25,10 +25,12 @@ Core engine **bisa** bertindak sebagai **OAuth2 identity provider** untuk app do
 ## Pola membangun app baru
 
 1. Fork atau submodule `ja-core_engine` @ `main`
-2. Tambah modul Laravel di `backend/Modules/{YourProduct}/`
-3. Tambah views Vue di `frontend/src/modules/{YourProduct}/`
-4. Register routes + `modules_statuses.json`
+2. Tambah **optional packs** (Mail contract) — lihat [external-module-packaging.md](../extensions/external-module-packaging.md)
+3. Atau scaffold produk: `scripts/bootstrap-downstream-app.sh`
+4. Register `modules_statuses.json` + Module Registry activate
 5. (Opsional) Aktivasi lisensi via JA-CP untuk tier Pro/Enterprise
+
+CMS domains diekstrak dari `ja-cms` sebagai pack (`publishing`, `media`, `forms`, …) — bukan dimasukkan ke `Modules/Core`.
 
 ## Editions (konsep)
 

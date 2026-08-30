@@ -31,5 +31,17 @@ class ExtensionLog extends Model
         'status',
         'error_message',
         'performed_by',
+        'ip_address',
+        'meta',
     ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'meta' => 'array',
+        ];
+    }
 }

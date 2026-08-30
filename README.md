@@ -24,7 +24,7 @@
 | **Arsitektur** | Modular Monolith Kernel + Single Unified Console SPA |
 | **Versi** | `1.0.0-beta.1` |
 | **Database Engine** | PostgreSQL 16+ / 18.x (Schema terisolasi `core_engine`) |
-| **Runtime Backend** | PHP 8.3+ (Laravel 12/13 Modular Kernel) |
+| **Runtime Backend** | PHP 8.2+ (Laravel 13 Modular Kernel; tested on 8.3) |
 | **Runtime Frontend** | Node.js 20+ / 22+ (Vue 3.5, Vite 8, Tailwind CSS v4, TypeScript) |
 | **Cache & Queue** | Redis (Dedicated session & cache DB) |
 | **Lisensi** | MIT / Proprietary |
@@ -104,7 +104,7 @@ npm install
 npm run dev
 ```
 
-Akses browser: **`http://localhost:5173/`** atau **`http://192.168.88.66:5173/`**
+Akses browser: **`http://localhost:5273/`** atau **`http://192.168.88.66:5273/`**
 
 **Default Kredensial Super Admin:**
 - **Username / Email:** `super` / `super@jejakawan.com`
@@ -126,4 +126,9 @@ cd frontend && npm run test:unit
 
 # Production Build Test
 cd frontend && npm run build
+
+# E2E smoke — Playwright browsers are not supported on this PVE host.
+# Use the official image (same pin as CI: mcr.microsoft.com/playwright:v1.59.1-noble).
+# Requires Docker Engine + Vite :5273 + Laravel :8000.
+npm run test:e2e:smoke:docker
 ```

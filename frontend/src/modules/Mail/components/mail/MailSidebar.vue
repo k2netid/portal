@@ -22,7 +22,7 @@
                 !isFoldersOpen ? '-rotate-90' : ''
               ]"
             />
-            <span>{{ $t('system.mail.folders') }}</span>
+            <span>{{ $t('mail.folders') }}</span>
           </div>
           <span class="text-[9px] font-normal text-muted-foreground/60">
             {{ isFoldersOpen ? 'Collapse' : 'Expand' }}
@@ -41,7 +41,7 @@
                 ? 'bg-primary/10 text-primary font-semibold'
                 : 'text-muted-foreground hover:bg-accent/10 hover:text-foreground active:scale-[0.99]'
             ]"
-            :title="isMinimized ? $t(`system.mail.folder_${folder.id}`) : undefined"
+            :title="isMinimized ? $t(`mail.folder_${folder.id}`) : undefined"
             @click="selectFolder(folder.id)"
           >
             <div class="flex items-center gap-2.5">
@@ -49,7 +49,7 @@
                 :is="folder.icon"
                 class="w-4 h-4 shrink-0 opacity-80 group-hover:opacity-100"
               />
-              <span v-if="!isMinimized" class="truncate">{{ $t(`system.mail.folder_${folder.id}`) }}</span>
+              <span v-if="!isMinimized" class="truncate">{{ $t(`mail.folder_${folder.id}`) }}</span>
             </div>
 
             <!-- Badge Unread -->
@@ -97,7 +97,7 @@
                 !isLabelsOpen ? '-rotate-90' : ''
               ]"
             />
-            <span>{{ $t('system.mail.labels') }}</span>
+            <span>{{ $t('mail.labels') }}</span>
             <span v-if="labels.length > 0" class="text-[9px] font-normal text-muted-foreground/60">
               ({{ labels.length }})
             </span>
@@ -106,7 +106,7 @@
           <button
             type="button"
             class="text-muted-foreground hover:text-primary p-0.5 rounded transition-colors"
-            :title="$t('system.mail.manage_labels')"
+            :title="$t('mail.manage_labels')"
             @click.stop="$emit('manage-labels')"
           >
             <Plus class="w-3.5 h-3.5" />
@@ -117,7 +117,7 @@
           v-else
           type="button"
           class="w-full flex justify-center p-2 text-muted-foreground hover:text-primary"
-          :title="$t('system.mail.manage_labels')"
+          :title="$t('mail.manage_labels')"
           @click.stop="$emit('manage-labels')"
         >
           <Plus class="w-3.5 h-3.5" />
@@ -225,7 +225,7 @@
         <div class="flex items-center justify-between text-[11px] text-muted-foreground">
           <span class="flex items-center gap-1">
             <HardDrive class="w-3 h-3 text-primary" />
-            {{ $t('system.mail.storage') }}
+            {{ $t('mail.storage') }}
           </span>
           <span class="font-semibold text-foreground text-[10px]">
             {{ storageStats?.used_formatted || '0 B' }} / {{ storageStats?.quota_formatted || '...' }}
