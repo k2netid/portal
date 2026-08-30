@@ -8,11 +8,11 @@ Fresh `migrate:fresh --seed` must leave a **usable product** without tinker. Pac
 
 | Profile | Env | Apex `/` | What gets product-active |
 | :--- | :--- | :--- | :--- |
-| **core** | `INSTALL_PROFILE=core` | Console login | Kernel only |
-| **cms** | `INSTALL_PROFILE=cms` | Console login | CMS family (library→publishing→media→layout→…) |
-| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** | CMS family + **Site** |
+| **core** | `INSTALL_PROFILE=core` | Kernel **landing** (login tetap di `/auth/console-sign-in`) | Kernel only |
+| **cms** | `INSTALL_PROFILE=cms` | Kernel landing | CMS family (library→publishing→media→layout→…) |
+| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** (overrides landing) | CMS family + **Site** |
 
-Console always stays at `/auth/console-sign-in` and `/dash` when Site is on.
+Console always stays at `/auth/console-sign-in` and `/dash` — never the default face of apex `/`.
 
 ## Entry points (all call the same applicator)
 

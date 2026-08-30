@@ -6,18 +6,20 @@ Host contract for the public theme runtime at **apex `/`** when this pack is pro
 
 Laravel boot gate + Vite public SPA (`public.html`). Not a console module. Themes live in the Layout pack.
 
-## Boot gate
+## Boot gate (3 shells)
 
 | Site pack | `/` | `/dash`, `/auth/console-*` | Legacy `/site/*` |
 | :--- | :--- | :--- | :--- |
-| **inactive** | Console SPA → login | Console | 404 |
-| **active** | Public theme SPA | Console | 301 → apex path |
+| **inactive** | Kernel **landing** (`landing.html`) | Console | 404 |
+| **active** | Public **theme** SPA (overrides landing) | Console | 301 → apex path |
+
+Console login is **never** the default face of `/`. Operators use `/auth/console-sign-in`.
 
 ## Paths
 
 - Provider: `app/Providers/SiteServiceProvider.php`
 - Web: `backend/routes/web.php` + `SpaController`
-- FE router: `frontend/src/engine/router/public.ts` (`createWebHistory('/')`)
+- FE: `landing.html` (Site off) · `public.html` (Site on) · `index.html` (console reserved paths)
 - Pages resolve via `ThemePageResolver` / `PublicThemePage` from the **active** Layout theme
 
 ## Agent notes

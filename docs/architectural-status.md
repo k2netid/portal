@@ -28,9 +28,16 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 | **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
 | **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |
 
-Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail. **Boot gate:** Site pack off → `/` = console login; Site on → `/` = public web.
+Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail.
 
-**Install profiles (durable):** `INSTALL_PROFILE=core|cms|cms_site` applied by `DatabaseSeeder` / `ja:apply-install-profile` / `POST …/extensions/apply-install-profile`. Default when `Modules/Site` ships = **`cms_site`** (discover packs, activate CMS+Site, scan themes). Core-only SKUs set `INSTALL_PROFILE=core`. No tinker after `migrate:fresh --seed`.
+**Apex boot gate (3 shells):**
+
+| Site pack | Apex `/` | Console login |
+| :--- | :--- | :--- |
+| **off** | Kernel **landing** (`landing.html`) — not the login form | `/auth/console-sign-in` (tersembunyi dari apex) |
+| **on** | Active CMS **theme** overrides landing | `/auth/console-sign-in` + `/dash` tetap |
+
+**Install profiles (durable):** `INSTALL_PROFILE=core|cms|cms_site` applied by `DatabaseSeeder` / `ja:apply-install-profile` / `POST …/extensions/apply-install-profile`. Default when `Modules/Site` ships = **`cms_site`**. Core-only SKUs set `INSTALL_PROFILE=core`.
 
 P6: kernel Identity owns `general` (site name / tagline). Publishing settings own `seo` + `comments` only (`/dash/publishing/settings`). Analytics retention lives on the Analytics pack. Kernel API refuses `seo` / `comments` / `analytics`. Identity **Media** tab is object storage (S3/FTP/disk); editorial library is the **media** pack. Core File Manager stays in Infra.
 

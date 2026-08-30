@@ -8,18 +8,19 @@ use Tests\TestCase;
 
 class SiteModuleTest extends TestCase
 {
-    public function test_apex_serves_console_when_site_inactive(): void
+    public function test_apex_serves_landing_when_site_inactive(): void
     {
         $response = $this->get('/');
         $response->assertOk();
         $body = (string) $response->getContent();
-        $this->assertTrue(
-            str_contains($body, 'console')
-            || str_contains($body, 'Jejakawan Core Engine')
-            || str_contains((string) $response->headers->get('content-type', ''), 'html')
-            || str_contains((string) $response->headers->get('content-type', ''), 'json'),
-        );
         $this->assertFalse(str_contains($body, "window.__JA_SHELL__ = 'public'"));
+        $this->assertTrue(
+            str_contains($body, "window.__JA_SHELL__ = 'landing'")
+            || str_contains($body, "window.__JA_SHELL__='landing'")
+            || str_contains($body, 'Siap dijalankan')
+            || str_contains($body, '/auth/console-sign-in'),
+            'Apex without Site must serve kernel landing, not console login shell'
+        );
     }
 
     public function test_apex_serves_public_when_site_active(): void
@@ -35,6 +36,15 @@ class SiteModuleTest extends TestCase
             || str_contains((string) $response->headers->get('content-type', ''), 'html')
             || str_contains((string) $response->headers->get('content-type', ''), 'json'),
         );
+    }
+
+    public function test_console_login_path_stays_console_when_site_inactive(): void
+    {
+        $response = $this->get('/auth/console-sign-in');
+        $response->assertOk();
+        $body = (string) $response->getContent();
+        $this->assertFalse(str_contains($body, "window.__JA_SHELL__ = 'landing'"));
+        $this->assertFalse(str_contains($body, "window.__JA_SHELL__ = 'public'"));
     }
 
     public function test_legacy_site_prefix_redirects_when_active(): void

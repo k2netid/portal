@@ -38,8 +38,8 @@ class ApplyInstallProfileCommand extends Command
         $this->line('Themes scanned: '.$result['themes']['scanned'].'; active: '.($themeActive ?? '—'));
 
         $apex = $result['profile'] === InstallProfileApplicator::PROFILE_CMS_SITE
-            ? 'apex `/` → public theme (Site on)'
-            : 'apex `/` → console login (Site off)';
+            ? 'apex `/` → public theme (Site on; overrides landing)'
+            : 'apex `/` → kernel landing (Site off; console at /auth/console-sign-in)';
         $this->info($apex);
 
         return $result['errors'] === [] ? self::SUCCESS : self::FAILURE;

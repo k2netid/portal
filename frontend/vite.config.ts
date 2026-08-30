@@ -117,6 +117,9 @@ export default defineConfig({
           const siteOn = await fetchSiteActive()
           if (siteOn) {
             req.url = '/public.html'
+          } else {
+            // Kernel landing — console login is not apex when Site is off
+            req.url = '/landing.html'
           }
           next()
         })
@@ -142,6 +145,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'index.html'),
         public: resolve(__dirname, 'public.html'),
+        landing: resolve(__dirname, 'landing.html'),
       },
       output: {
         chunkFileNames: 'assets/[hash].js',

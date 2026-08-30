@@ -11,9 +11,9 @@ return [
     | Applied after migrate --seed / ja:install / InstallController.
     | Operators without code access should never need tinker to get a sane boot.
     |
-    | core      — kernel only; apex `/` = console login
-    | cms       — CMS editorial packs active; apex `/` still console (Site off)
-    | cms_site  — CMS + Site; apex `/` = public theme; console at /auth/console-* + /dash
+    | core      — kernel only; apex `/` = kernel landing (console login at /auth/console-*)
+    | cms       — CMS editorial packs active; apex `/` still landing (Site off)
+    | cms_site  — CMS + Site; apex `/` = public theme overrides landing; console at /auth/console-* + /dash
     |
     | Default: cms_site when Modules/Site exists (this product ships CMS packs),
     | otherwise core. Override with INSTALL_PROFILE=.

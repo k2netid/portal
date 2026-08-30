@@ -15,7 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 class SpaController extends Controller
 {
     /**
-     * Apex `/`: console login when Site pack is off; public web when Site is product-active.
+     * Apex `/`:
+     * - Site on  → public theme SPA (overrides kernel landing)
+     * - Site off → kernel landing (console login stays at /auth/console-*)
      */
     public function index(): Response
     {
@@ -23,7 +25,7 @@ class SpaController extends Controller
             return $this->servePublicSpa();
         }
 
-        return $this->serveConsoleSpa();
+        return $this->serveLandingSpa();
     }
 
     /**
@@ -90,7 +92,8 @@ class SpaController extends Controller
     }
 
     /**
-     * SPA Fallback: console prefixes stay on console; public owns the rest when Site is on.
+     * SPA Fallback: console prefixes stay on console; public owns the rest when Site is on;
+     * otherwise kernel landing (not console login).
      */
     public function fallback(Request $request): Response
     {
@@ -102,7 +105,7 @@ class SpaController extends Controller
             return $this->servePublicSpa();
         }
 
-        return $this->serveConsoleSpa();
+        return $this->serveLandingSpa();
     }
 
     protected function siteRuntimeActive(): bool
@@ -146,6 +149,39 @@ class SpaController extends Controller
             'shell' => 'console',
             'message' => 'Jejakawan Core Engine is running',
         ]);
+    }
+
+    /**
+     * Kernel welcome surface when no public CMS theme is product-active.
+     * Console login remains at /auth/console-sign-in (not apex).
+     */
+    protected function serveLandingSpa(): Response
+    {
+        foreach (['landing.html', 'landing/index.html'] as $file) {
+            $path = public_path($file);
+            if (is_file($path)) {
+                $content = file_get_contents($path);
+                if (is_string($content)) {
+                    return response($content)->header('Content-Type', 'text/html');
+                }
+            }
+        }
+
+        // Dev / pre-build fallback — still not the console login form.
+        return response(
+            '<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">'
+            .'<meta name="viewport" content="width=device-width,initial-scale=1">'
+            .'<title>Jejakawan</title>'
+            .'<script>window.__JA_SHELL__=\'landing\';</script>'
+            .'</head><body style="font-family:system-ui,sans-serif;max-width:40rem;margin:4rem auto;padding:0 1.25rem;line-height:1.5">'
+            .'<p style="letter-spacing:.04em;text-transform:uppercase;font-size:.75rem;color:#0f766e">Core Engine</p>'
+            .'<h1>Siap dijalankan.</h1>'
+            .'<p>Situs publik belum aktif. Aktifkan pack <strong>Site</strong> untuk menampilkan theme CMS di apex <code>/</code>.</p>'
+            .'<p><a href="/auth/console-sign-in">Buka console</a></p>'
+            .'</body></html>',
+            200,
+            ['Content-Type' => 'text/html; charset=UTF-8']
+        );
     }
 
     protected function servePublicSpa(): Response
