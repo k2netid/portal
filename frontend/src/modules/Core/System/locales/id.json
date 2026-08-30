@@ -569,6 +569,19 @@
     "familyCommunications": "Komunikasi",
     "bulkActivateCms": "Aktifkan paket CMS",
     "bulkDeactivateCms": "Nonaktifkan paket CMS",
+    "installProfileBtn": "Profil instalasi",
+    "installProfileMenuTitle": "Profil instalasi produk",
+    "installProfileCmsSite": "CMS + Site publik",
+    "installProfileCmsSiteHint": "Aktifkan paket CMS dan Site — apex menjadi theme publik.",
+    "installProfileCms": "Paket CMS saja",
+    "installProfileCmsHint": "Pertahankan CMS dan matikan Site — apex kembali ke landing kernel.",
+    "installProfileCore": "Core (discover + teardown pack)",
+    "installProfileCoreHint": "Pindai ulang modul dan nonaktifkan paket CMS + Site (landing kernel).",
+    "installProfileNames": {
+      "core": "Core",
+      "cms": "CMS",
+      "cms_site": "CMS + Site"
+    },
     "table": {
       "name": "Modul",
       "status": "Status",
@@ -674,6 +687,27 @@
       "bulkDeactivateCmsSuccess": "{count} modul dinonaktifkan: {list}",
       "bulkDeactivateCmsEmpty": "Tidak ada modul CMS aktif untuk dinonaktifkan.",
       "bulkDeactivateCmsFailed": "Gagal menonaktifkan paket CMS.",
+      "installProfileTitle": "Terapkan profil instalasi?",
+      "installProfileConfirm": {
+        "cms_site": "Ini mengaktifkan keluarga CMS plus Site, memindai theme, dan menyetel theme publik default. Apex / menjadi situs publik.",
+        "cms": "Ini mengaktifkan keluarga CMS dan mematikan Site agar apex / kembali ke landing kernel.",
+        "core": "Ini rediscover modul dan menonaktifkan paket CMS + Site (bentuk produk kernel saja)."
+      },
+      "installProfileWillActivate": "Akan diaktifkan: {list}",
+      "installProfileWillDeactivate": "Akan dinonaktifkan: {list}",
+      "installProfileEnforceNote": "Profil instalasi menegakkan bentuk produk yang dipilih (aktifkan yang kurang, nonaktifkan yang berlebih).",
+      "installProfileWarnings": {
+        "cms_will_disable_site": "Site sedang aktif dan akan dinonaktifkan.",
+        "core_will_disable_packs": "Paket CMS dan/atau Site yang aktif akan dinonaktifkan.",
+        "profile_already_satisfied": "Profil ini sudah terpenuhi.",
+        "license_skip_misconfigured": "Peringatan: skip lisensi aktif di luar local/testing — cek INSTALL_SKIP_LICENSE_CHECKS."
+      },
+      "installProfileNoop": "Profil ini sudah terpenuhi — tidak ada yang perlu diaktifkan.",
+      "installProfileBlocked": "Tidak bisa menerapkan profil: {detail}",
+      "lifecycleBusy": "Operasi ekstensi lain sedang berjalan. Tunggu lalu coba lagi.",
+      "installProfileSuccess": "Profil “{profile}” diterapkan ({count} diaktifkan). Memuat ulang…",
+      "installProfilePartial": "Profil diterapkan dengan error: {detail}",
+      "installProfileFailed": "Gagal menerapkan profil instalasi.",
       "toggleSuccessActivated": "{name} berhasil diaktifkan!",
       "toggleSuccessDeactivated": "{name} berhasil dinonaktifkan!",
       "toggleFailed": "Gagal {action} ekstensi.",

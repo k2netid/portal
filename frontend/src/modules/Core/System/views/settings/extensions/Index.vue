@@ -6,7 +6,44 @@
       borderless
     >
       <template #actions>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap justify-end">
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button
+                variant="outline"
+                class="flex items-center gap-2"
+                :disabled="lifecycleBusy"
+              >
+                <Package class="w-4 h-4" />
+                {{ t('system.appStore.installProfileBtn') }}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" class="w-64">
+              <DropdownMenuLabel>{{ t('system.appStore.installProfileMenuTitle') }}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                class="flex flex-col items-start gap-0.5 py-2"
+                @click="applyInstallProfile('cms_site')"
+              >
+                <span class="font-medium">{{ t('system.appStore.installProfileCmsSite') }}</span>
+                <span class="text-xs text-muted-foreground whitespace-normal">{{ t('system.appStore.installProfileCmsSiteHint') }}</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                class="flex flex-col items-start gap-0.5 py-2"
+                @click="applyInstallProfile('cms')"
+              >
+                <span class="font-medium">{{ t('system.appStore.installProfileCms') }}</span>
+                <span class="text-xs text-muted-foreground whitespace-normal">{{ t('system.appStore.installProfileCmsHint') }}</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                class="flex flex-col items-start gap-0.5 py-2"
+                @click="applyInstallProfile('core')"
+              >
+                <span class="font-medium">{{ t('system.appStore.installProfileCore') }}</span>
+                <span class="text-xs text-muted-foreground whitespace-normal">{{ t('system.appStore.installProfileCoreHint') }}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
                 <Button
                   class="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0"
                   @click="scaffolderModalOpen = true"
@@ -100,6 +137,7 @@
                 variant="secondary"
                 size="sm"
                 class="gap-1.5"
+                :disabled="lifecycleBusy"
                 @click="bulkActivateCms"
               >
                 <Layers class="h-3.5 w-3.5" />
@@ -110,6 +148,7 @@
                 variant="outline"
                 size="sm"
                 class="gap-1.5"
+                :disabled="lifecycleBusy"
                 @click="bulkDeactivateCms"
               >
                 <PowerOff class="h-3.5 w-3.5" />
@@ -244,7 +283,7 @@ import { useRouter, useRoute } from 'vue-router';
 import api from '@/engine/api/client';
 import toast from '@/shared/services/toastService';
 import { useConfirm } from '@/shared/composables/useConfirm';
-import { Badge, Button, Input, Pagination } from '@/shared/components/ui';
+import { Badge, Button, Input, Pagination, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/shared/components/ui';
 
 // Sub-components
 import UploadModal from './components/UploadModal.vue';
@@ -256,6 +295,7 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 import {
   GitBranch,
   Layers,
+  Package,
   PowerOff,
   Puzzle,
   SearchIcon,
@@ -764,8 +804,145 @@ const cmsSlugsToActivate = () => inactiveCms.value.map((ext) => ext.slug);
 
 const cmsSlugsToDeactivate = () => activeCms.value.map((ext) => ext.slug);
 
+type InstallProfile = 'core' | 'cms' | 'cms_site';
+
+interface InstallProfilePreview {
+    profile?: string;
+    will_activate?: Array<{ slug: string; name?: string }>;
+    will_deactivate?: Array<{ slug: string; name?: string }>;
+    warnings?: string[];
+    blockers?: string[];
+    can_apply?: boolean;
+    noop?: boolean;
+    site_active?: boolean;
+    cms_active_count?: number;
+}
+
+const lifecycleBusy = ref(false);
+
+const applyInstallProfile = async (profile: InstallProfile) => {
+    if (lifecycleBusy.value) {
+        toast.error(t('system.appStore.messages.lifecycleBusy'));
+        return;
+    }
+
+    lifecycleBusy.value = true;
+    let preview: InstallProfilePreview = {
+        profile,
+        will_activate: [],
+        warnings: [],
+        blockers: [],
+        can_apply: true,
+        noop: false,
+        site_active: false,
+        cms_active_count: 0,
+    };
+
+    try {
+        const previewResponse = await api.get('/manage/infra/extensions/install-profile-preview', {
+            params: { profile },
+        });
+        const raw = unwrapApiData<InstallProfilePreview>(previewResponse.data);
+        if (raw && typeof raw === 'object') {
+            preview = { ...preview, ...raw };
+        }
+    } catch {
+        lifecycleBusy.value = false;
+        toast.error(t('system.appStore.messages.installProfileFailed'));
+        return;
+    }
+
+    if (preview.blockers && preview.blockers.length > 0) {
+        lifecycleBusy.value = false;
+        toast.error(t('system.appStore.messages.installProfileBlocked', {
+            detail: preview.blockers.slice(0, 3).join('; '),
+        }));
+        return;
+    }
+
+    if (preview.noop && (preview.will_activate?.length ?? 0) === 0 && (preview.will_deactivate?.length ?? 0) === 0) {
+        lifecycleBusy.value = false;
+        toast.success(t('system.appStore.messages.installProfileNoop'));
+        return;
+    }
+
+    const warningLines = (preview.warnings || [])
+        .map((code) => {
+            const key = `system.appStore.messages.installProfileWarnings.${code}`;
+            return te(key) ? t(key) : code;
+        })
+        .filter(Boolean);
+
+    const activateList = (preview.will_activate || []).map((row) => row.name || row.slug).join(', ');
+    const deactivateList = (preview.will_deactivate || []).map((row) => row.name || row.slug).join(', ');
+    const messageParts = [
+        t(`system.appStore.messages.installProfileConfirm.${profile}`),
+        activateList
+            ? t('system.appStore.messages.installProfileWillActivate', { list: activateList })
+            : null,
+        deactivateList
+            ? t('system.appStore.messages.installProfileWillDeactivate', { list: deactivateList })
+            : null,
+        ...warningLines,
+        t('system.appStore.messages.installProfileEnforceNote'),
+    ].filter(Boolean);
+
+    const confirmed = await confirm({
+        title: t('system.appStore.messages.installProfileTitle'),
+        message: messageParts.join('\n\n'),
+        variant: warningLines.length > 0 ? 'danger' : 'warning',
+        confirmText: t('system.appStore.installProfileBtn'),
+    });
+    if (!confirmed) {
+        lifecycleBusy.value = false;
+        return;
+    }
+
+    try {
+        const response = await api.post('/manage/infra/extensions/apply-install-profile', { profile });
+        const payload = unwrapApiData<{
+            profile?: string;
+            activated?: string[];
+            errors?: string[];
+            themes?: { active?: string | null };
+            preview?: InstallProfilePreview;
+        }>(response.data);
+
+        const errors = payload?.errors || [];
+        if (errors.length > 0) {
+            toast.error(t('system.appStore.messages.installProfilePartial', {
+                detail: errors.slice(0, 3).join('; '),
+            }));
+        } else {
+            toast.success(t('system.appStore.messages.installProfileSuccess', {
+                profile: t(`system.appStore.installProfileNames.${profile}`),
+                count: payload?.activated?.length ?? 0,
+            }));
+        }
+
+        await fetchExtensions();
+        await systemStore.fetchPublicSettings({ force: true });
+        window.location.reload();
+    } catch (err: unknown) {
+        const status = (err as { response?: { status?: number } })?.response?.status;
+        const axiosMessage = (err as { response?: { data?: { message?: string; data?: { errors?: string[]; code?: string } } } })?.response?.data;
+        if (status === 423 || axiosMessage?.data?.code === 'lifecycle_busy') {
+            toast.error(t('system.appStore.messages.lifecycleBusy'));
+        } else {
+            const detail = axiosMessage?.data?.errors?.slice(0, 3).join('; ') || axiosMessage?.message;
+            toast.error(detail || t('system.appStore.messages.installProfileFailed'));
+        }
+        lifecycleBusy.value = false;
+    }
+};
+
 const bulkActivateCms = async () => {
+    if (lifecycleBusy.value) {
+        toast.error(t('system.appStore.messages.lifecycleBusy'));
+        return;
+    }
     const slugs = cmsSlugsToActivate();
+    lifecycleBusy.value = true;
     let plan: { will_activate?: Array<{ slug: string; name: string }>; can_cascade?: boolean } = {};
     try {
         const planResponse = await api.get('/manage/infra/extensions/activation-plan', {
@@ -778,11 +955,13 @@ const bulkActivateCms = async () => {
         }
     } catch {
         toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
+        lifecycleBusy.value = false;
         return;
     }
 
     const willActivate = plan.will_activate || [];
     if (willActivate.length === 0) {
+        lifecycleBusy.value = false;
         if (slugs.length > 0) {
             toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
             return;
@@ -792,6 +971,7 @@ const bulkActivateCms = async () => {
     }
 
     if (plan.can_cascade === false) {
+        lifecycleBusy.value = false;
         toast.error(t('system.appStore.messages.lifecycleBlocked', {
             detail: willActivate.map((row) => row.name).join(', '),
         }));
@@ -806,6 +986,7 @@ const bulkActivateCms = async () => {
         confirmText: t('system.appStore.bulkActivateCms'),
     });
     if (!confirmed) {
+        lifecycleBusy.value = false;
         return;
     }
 
@@ -815,6 +996,7 @@ const bulkActivateCms = async () => {
         const activated = payload?.activated || [];
         if (activated.length === 0) {
             toast.error(t('system.appStore.messages.bulkActivateCmsFailed'));
+            lifecycleBusy.value = false;
             return;
         }
 
@@ -832,13 +1014,24 @@ const bulkActivateCms = async () => {
         await systemStore.fetchPublicSettings({ force: true });
         window.location.reload();
     } catch (err: unknown) {
-        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
-        toast.error(axiosMessage || t('system.appStore.messages.bulkActivateCmsFailed'));
+        const status = (err as { response?: { status?: number } })?.response?.status;
+        const axiosMessage = (err as { response?: { data?: { message?: string; data?: { code?: string } } } })?.response?.data;
+        if (status === 423 || axiosMessage?.data?.code === 'lifecycle_busy') {
+            toast.error(t('system.appStore.messages.lifecycleBusy'));
+        } else {
+            toast.error(axiosMessage?.message || t('system.appStore.messages.bulkActivateCmsFailed'));
+        }
+        lifecycleBusy.value = false;
     }
 };
 
 const bulkDeactivateCms = async () => {
+    if (lifecycleBusy.value) {
+        toast.error(t('system.appStore.messages.lifecycleBusy'));
+        return;
+    }
     const slugs = cmsSlugsToDeactivate();
+    lifecycleBusy.value = true;
     let plan: { will_deactivate?: Array<{ slug: string; name: string }> } = {};
     try {
         const planResponse = await api.get('/manage/infra/extensions/deactivation-plan', {
@@ -851,11 +1044,13 @@ const bulkDeactivateCms = async () => {
         }
     } catch {
         toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
+        lifecycleBusy.value = false;
         return;
     }
 
     const willDeactivate = plan.will_deactivate || [];
     if (willDeactivate.length === 0) {
+        lifecycleBusy.value = false;
         if (slugs.length > 0) {
             toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
             return;
@@ -872,6 +1067,7 @@ const bulkDeactivateCms = async () => {
         confirmText: t('system.appStore.bulkDeactivateCms'),
     });
     if (!confirmed) {
+        lifecycleBusy.value = false;
         return;
     }
 
@@ -881,6 +1077,7 @@ const bulkDeactivateCms = async () => {
         const deactivated = payload?.deactivated || [];
         if (deactivated.length === 0) {
             toast.error(t('system.appStore.messages.bulkDeactivateCmsFailed'));
+            lifecycleBusy.value = false;
             return;
         }
 
@@ -898,8 +1095,14 @@ const bulkDeactivateCms = async () => {
         await systemStore.fetchPublicSettings({ force: true });
         window.location.reload();
     } catch (err: unknown) {
-        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
-        toast.error(axiosMessage || t('system.appStore.messages.bulkDeactivateCmsFailed'));
+        const status = (err as { response?: { status?: number } })?.response?.status;
+        const axiosMessage = (err as { response?: { data?: { message?: string; data?: { code?: string } } } })?.response?.data;
+        if (status === 423 || axiosMessage?.data?.code === 'lifecycle_busy') {
+            toast.error(t('system.appStore.messages.lifecycleBusy'));
+        } else {
+            toast.error(axiosMessage?.message || t('system.appStore.messages.bulkDeactivateCmsFailed'));
+        }
+        lifecycleBusy.value = false;
     }
 };
 

@@ -569,6 +569,19 @@
     "familyCommunications": "Communications",
     "bulkActivateCms": "Activate CMS pack",
     "bulkDeactivateCms": "Deactivate CMS pack",
+    "installProfileBtn": "Install profile",
+    "installProfileMenuTitle": "Product install profile",
+    "installProfileCmsSite": "CMS + public Site",
+    "installProfileCmsSiteHint": "Activate CMS packs and Site — apex becomes the public theme.",
+    "installProfileCms": "CMS packs only",
+    "installProfileCmsHint": "Keep CMS on and turn Site off — apex returns to kernel landing.",
+    "installProfileCore": "Core discover only",
+    "installProfileCoreHint": "Rescan modules and deactivate CMS + Site packs (kernel landing).",
+    "installProfileNames": {
+      "core": "Core",
+      "cms": "CMS",
+      "cms_site": "CMS + Site"
+    },
     "table": {
       "name": "Module",
       "status": "Status",
@@ -674,6 +687,27 @@
       "bulkDeactivateCmsSuccess": "Deactivated {count} modules: {list}",
       "bulkDeactivateCmsEmpty": "No active CMS modules to deactivate.",
       "bulkDeactivateCmsFailed": "Failed to deactivate the CMS pack.",
+      "installProfileTitle": "Apply install profile?",
+      "installProfileConfirm": {
+        "cms_site": "This activates the CMS family plus Site, scans themes, and sets a default public theme. Apex / becomes the public site.",
+        "cms": "This activates the CMS family and turns Site off so apex / returns to the kernel landing.",
+        "core": "This rediscovers modules and deactivates CMS + Site packs (kernel-only product shape)."
+      },
+      "installProfileWillActivate": "Will activate: {list}",
+      "installProfileWillDeactivate": "Will deactivate: {list}",
+      "installProfileEnforceNote": "Install profiles enforce the selected product shape (activate missing packs and deactivate extras).",
+      "installProfileWarnings": {
+        "cms_will_disable_site": "Site is currently active and will be deactivated.",
+        "core_will_disable_packs": "Active CMS and/or Site packs will be deactivated.",
+        "profile_already_satisfied": "This profile is already satisfied.",
+        "license_skip_misconfigured": "Warning: license skip is enabled outside local/testing — check INSTALL_SKIP_LICENSE_CHECKS."
+      },
+      "installProfileNoop": "This profile is already satisfied — nothing new to activate.",
+      "installProfileBlocked": "Cannot apply profile: {detail}",
+      "lifecycleBusy": "Another extension operation is in progress. Wait and try again.",
+      "installProfileSuccess": "Install profile “{profile}” applied ({count} activated). Reloading…",
+      "installProfilePartial": "Profile applied with errors: {detail}",
+      "installProfileFailed": "Failed to apply install profile.",
       "toggleSuccessActivated": "{name} has been successfully activated!",
       "toggleSuccessDeactivated": "{name} has been successfully deactivated!",
       "toggleFailed": "Failed to {action} extension.",

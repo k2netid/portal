@@ -276,6 +276,7 @@ Route::prefix('v1')->group(function (): void {
         Route::put('features/{slug}/toggle', [ExtensionController::class, 'toggleFeature']);
         Route::get('activation-plan', [ExtensionController::class, 'activationPlan']);
         Route::get('deactivation-plan', [ExtensionController::class, 'deactivationPlan']);
+        Route::get('install-profile-preview', [ExtensionController::class, 'installProfilePreview']);
         Route::post('bulk-activate', [ExtensionController::class, 'bulkActivate']);
         Route::post('bulk-deactivate', [ExtensionController::class, 'bulkDeactivate']);
         Route::post('apply-install-profile', [ExtensionController::class, 'applyInstallProfile']);

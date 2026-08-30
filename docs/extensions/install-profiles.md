@@ -4,13 +4,25 @@ Update: 2026-08-31
 
 Fresh `migrate:fresh --seed` must leave a **usable product** without tinker. Pack activation is product state (`sys_extensions.status`), not “folder exists”.
 
+## Contract (important)
+
+Install profiles **enforce** the selected product shape:
+
+| Profile | Activates | Deactivates (extras) |
+| :--- | :--- | :--- |
+| **cms_site** | CMS family + Site | — |
+| **cms** | CMS family | **Site** (and its reverse dependents) |
+| **core** | — (discover) | CMS family + Site |
+
+Bulk activate / deactivate remain available for fine-grained ops. All bulk + profile mutations share `ExtensionLifecycleLock` (HTTP `423` when busy).
+
 ## Profiles
 
-| Profile | Env | Apex `/` | What gets product-active |
+| Profile | Env | Apex `/` | Desired product-active set |
 | :--- | :--- | :--- | :--- |
-| **core** | `INSTALL_PROFILE=core` | Kernel **landing** (login tetap di `/auth/console-sign-in`) | Kernel only |
-| **cms** | `INSTALL_PROFILE=cms` | Kernel landing | CMS family (library→publishing→media→layout→…) |
-| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** (overrides landing) | CMS family + **Site** |
+| **core** | `INSTALL_PROFILE=core` | Kernel **landing** | Kernel only |
+| **cms** | `INSTALL_PROFILE=cms` | Kernel landing | CMS family (Site off) |
+| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** | CMS family + **Site** |
 
 Console always stays at `/auth/console-sign-in` and `/dash` — never the default face of apex `/`, and **not linked** from the kernel landing HTML (operators learn the path from README / this doc).
 
@@ -19,16 +31,18 @@ Console always stays at `/auth/console-sign-in` and `/dash` — never the defaul
 1. `DatabaseSeeder` after system seed  
 2. `php artisan ja:apply-install-profile [core|cms|cms_site]`  
 3. Web/CLI install (`migrate --seed` already runs seeder)  
-4. Console API: `POST /api/v1/manage/infra/extensions/apply-install-profile` `{ "profile": "cms_site" }`
+4. Console API:
+   - `GET …/extensions/install-profile-preview?profile=cms` → `will_activate` / `will_deactivate` / warnings
+   - `POST …/extensions/apply-install-profile` `{ "profile": "cms" }` → `423` if lifecycle busy
 
-Applicator steps: **discover** Modules → **activate** graph plan → **scan themes** + ensure Janari/Sarangenge default → clear theme caches.
+Applicator steps: **discover** → **preview gates** → **activate** missing → **deactivate** extras → theme baseline (when applicable).
 
 ## Operator without code
 
-- Re-run seed with the right profile, or  
-- App Store / Extensions → apply install profile API, or  
-- CLI: `php artisan ja:apply-install-profile cms_site`
+- App Store → **Install profile** → pick option (UI loads preview, shows activate/deactivate lists + warnings)
+- Or CLI: `php artisan ja:apply-install-profile cms`
+- Or re-run seed with the right `INSTALL_PROFILE`
 
 ## License note
 
-Site declares `license_tier: pro`. Local/testing sets `INSTALL_SKIP_LICENSE_CHECKS=true` by default so fresh installs work without JA-CP. Production enforces license.
+Site declares `license_tier: pro`. Local/testing sets `INSTALL_SKIP_LICENSE_CHECKS=true` by default so fresh installs work without JA-CP. Production always enforces license (skip is ignored outside `local`/`testing`).

@@ -20,6 +20,7 @@ use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\ExtensionContributionService;
 use Modules\Core\System\Services\ExtensionGraphService;
 use Modules\Core\System\Services\ExtensionHealthService;
+use Modules\Core\System\Services\ExtensionLifecycleLock;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
@@ -277,9 +278,17 @@ class ExtensionController extends BaseApiController
         }
 
         try {
-            $activated = $this->activatePlanWithRollback($plan['will_activate']);
+            $activated = ExtensionLifecycleLock::run(
+                fn () => $this->activatePlanWithRollback($plan['will_activate']),
+            );
 
             return $this->success(['activated' => $activated], 'Extensions activated successfully');
+        } catch (\RuntimeException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => ['code' => 'lifecycle_busy'],
+            ], 423);
         } catch (Exception $e) {
             $this->writeExtensionLog($targets[0], 'activate', 'failed', null, null, $e->getMessage(), [
                 'targets' => $targets,
@@ -307,9 +316,17 @@ class ExtensionController extends BaseApiController
         }
 
         try {
-            $deactivated = $this->deactivatePlanOrdered($plan['will_deactivate']);
+            $deactivated = ExtensionLifecycleLock::run(
+                fn () => $this->deactivatePlanOrdered($plan['will_deactivate']),
+            );
 
             return $this->success(['deactivated' => $deactivated], 'Extensions deactivated successfully');
+        } catch (\RuntimeException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => ['code' => 'lifecycle_busy'],
+            ], 423);
         } catch (Exception $e) {
             $this->writeExtensionLog($targets[0] ?? 'bulk', 'deactivate', 'failed', null, null, $e->getMessage(), [
                 'targets' => $targets,
@@ -320,8 +337,24 @@ class ExtensionController extends BaseApiController
     }
 
     /**
+     * Preview install profile impact (no mutation). Profiles are activate-only.
+     */
+    public function installProfilePreview(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'profile' => 'required|string|in:core,cms,cms_site',
+        ]);
+
+        $preview = app(\Modules\Core\System\Services\InstallProfileApplicator::class)
+            ->preview($validated['profile']);
+
+        return $this->success($preview, 'Install profile preview');
+    }
+
+    /**
      * Apply durable install profile (core | cms | cms_site) — discover + activate + theme baseline.
      * For operators without CLI after a Core-only install who want a public website.
+     * Activate-only: never deactivates packs (use bulk-deactivate). Serialized via lifecycle lock.
      */
     public function applyInstallProfile(Request $request): JsonResponse
     {
@@ -333,7 +366,15 @@ class ExtensionController extends BaseApiController
             ? $validated['profile']
             : null;
 
-        $result = app(\Modules\Core\System\Services\InstallProfileApplicator::class)->apply($profile);
+        try {
+            $result = app(\Modules\Core\System\Services\InstallProfileApplicator::class)->apply($profile);
+        } catch (\RuntimeException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => ['code' => 'lifecycle_busy'],
+            ], 423);
+        }
 
         $status = $result['errors'] === [] ? 200 : 422;
 

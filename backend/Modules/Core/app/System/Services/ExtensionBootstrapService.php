@@ -201,6 +201,74 @@ class ExtensionBootstrapService
     }
 
     /**
+     * Deactivate targets (and active reverse dependents) in reverse-dependency order.
+     *
+     * @param  list<string>  $targetSlugs
+     * @return array{deactivated: list<string>, skipped: list<string>, errors: list<string>}
+     */
+    public function deactivateTargets(array $targetSlugs): array
+    {
+        $targetSlugs = array_values(array_unique(array_filter($targetSlugs, static fn ($s) => is_string($s) && $s !== '')));
+        if ($targetSlugs === []) {
+            return ['deactivated' => [], 'skipped' => [], 'errors' => []];
+        }
+
+        $plan = $this->graph->deactivationPlan($targetSlugs);
+        $deactivated = [];
+        $skipped = [];
+        $errors = [];
+
+        foreach ($plan['already_inactive'] ?? [] as $row) {
+            $skipped[] = $row['slug'];
+        }
+
+        foreach ($plan['will_deactivate'] as $row) {
+            $slug = $row['slug'];
+            $extension = Extension::query()->where('slug', $slug)->first();
+            if ($extension === null) {
+                $errors[] = "Missing extension row: {$slug}";
+                continue;
+            }
+            if ($extension->status !== 'active') {
+                $skipped[] = $slug;
+                continue;
+            }
+            if ($extension->is_core || $this->isKernelSlug($slug)) {
+                $errors[] = "Cannot deactivate kernel: {$slug}";
+                continue;
+            }
+
+            try {
+                $this->graph->assertCanDeactivate($extension);
+                \Hook::action('extension_deactivated', $extension);
+                $extension->update(['status' => 'inactive']);
+                ConsoleMenu::syncVisibilityForExtension($extension->slug, false);
+                ExtensionLog::create([
+                    'extension_slug' => $extension->slug,
+                    'action' => 'deactivate',
+                    'version_before' => $extension->version,
+                    'version_after' => $extension->version,
+                    'status' => 'success',
+                    'performed_by' => null,
+                    'meta' => ['source' => 'install_profile', 'cascade' => array_column($plan['will_deactivate'], 'slug')],
+                ]);
+                $deactivated[] = $slug;
+            } catch (Throwable $e) {
+                $errors[] = "{$slug}: ".$e->getMessage();
+                Log::error('Install profile deactivation failed', [
+                    'slug' => $slug,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $this->graph->forgetLifecycleCaches();
+        ConsoleMenu::applyActiveExtensionVisibility();
+
+        return compact('deactivated', 'skipped', 'errors');
+    }
+
+    /**
      * @param  list<string>  $cascadeSlugs
      */
     public function performActivation(Extension $extension, array $cascadeSlugs = []): Extension

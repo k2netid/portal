@@ -569,6 +569,19 @@
     "familyCommunications": "Komunikasi",
     "bulkActivateCms": "Aktifkeun paket CMS",
     "bulkDeactivateCms": "Nonaktifkeun paket CMS",
+    "installProfileBtn": "Profil instalasi",
+    "installProfileMenuTitle": "Profil instalasi produk",
+    "installProfileCmsSite": "CMS + Site publik",
+    "installProfileCmsSiteHint": "Aktipkeun paket CMS jeung Site — apex jadi téma publik.",
+    "installProfileCms": "Paket CMS wungkul",
+    "installProfileCmsHint": "Jaga CMS sarta pareuman Site — apex balik ka landing kernel.",
+    "installProfileCore": "Core (discover + teardown pack)",
+    "installProfileCoreHint": "Pindai deui modul sarta nonaktifkeun paket CMS + Site (landing kernel).",
+    "installProfileNames": {
+      "core": "Core",
+      "cms": "CMS",
+      "cms_site": "CMS + Site"
+    },
     "table": {
       "name": "Modul",
       "status": "Status",
@@ -674,6 +687,27 @@
       "bulkDeactivateCmsSuccess": "{count} modul dinonaktifkeun: {list}",
       "bulkDeactivateCmsEmpty": "Teu aya modul CMS aktif pikeun dinonaktifkeun.",
       "bulkDeactivateCmsFailed": "Gagal nonaktifkeun paket CMS.",
+      "installProfileTitle": "Terapkeun profil instalasi?",
+      "installProfileConfirm": {
+        "cms_site": "Ieu ngaktipkeun kulawarga CMS plus Site, mindai téma, sarta nyetél téma publik default. Apex / jadi situs publik.",
+        "cms": "Ieu ngaktipkeun kulawarga CMS sarta mareuman Site sangkan apex / balik ka landing kernel.",
+        "core": "Ieu rediscover modul sarta nonaktifkeun paket CMS + Site (bentuk produk kernel wungkul)."
+      },
+      "installProfileWillActivate": "Bakal diaktipkeun: {list}",
+      "installProfileWillDeactivate": "Bakal dinonaktifkeun: {list}",
+      "installProfileEnforceNote": "Profil instalasi ngeukeuhan bentuk produk anu dipilih (aktipkeun anu kurang, nonaktifkeun anu kaleuleuwihi).",
+      "installProfileWarnings": {
+        "cms_will_disable_site": "Site keur aktip sarta bakal dinonaktifkeun.",
+        "core_will_disable_packs": "Paket CMS jeung/atawa Site anu aktip bakal dinonaktifkeun.",
+        "profile_already_satisfied": "Profil ieu geus kaeusi.",
+        "license_skip_misconfigured": "Awas: skip lisénsi aktip di luar local/testing — pariksa INSTALL_SKIP_LICENSE_CHECKS."
+      },
+      "installProfileNoop": "Profil ieu geus kaeusi — euweuh anu kudu diaktipkeun.",
+      "installProfileBlocked": "Teu bisa nerapkeun profil: {detail}",
+      "lifecycleBusy": "Operasi eksténsi séjén keur jalan. Antosan teras cobian deui.",
+      "installProfileSuccess": "Profil “{profile}” diterapkeun ({count} diaktipkeun). Ngeusian deui…",
+      "installProfilePartial": "Profil diterapkeun kalawan error: {detail}",
+      "installProfileFailed": "Gagal nerapkeun profil instalasi.",
       "toggleSuccessActivated": "{name} hasil diaktifkan!",
       "toggleSuccessDeactivated": "{name} hasil dinonaktifkan!",
       "toggleFailed": "Gagal {action} ekstensi.",
