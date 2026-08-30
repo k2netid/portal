@@ -166,13 +166,9 @@ const loadSettings = () => {
 
 const handleInput = (_key: string) => {
     isDirty.value = true;
-    // Live update builder theme settings for preview
+    // Live update builder theme settings for canvas preview only
     if (builder?.themeSettings) {
         builder.themeSettings.value = { ...formValues.value };
-        // Potentially call applyThemeStyles if useTheme is available in builder
-        if (builder.applyThemeStyles) {
-            builder.applyThemeStyles();
-        }
     }
 };
 

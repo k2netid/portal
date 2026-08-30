@@ -103,7 +103,11 @@ const selectTheme = (slug: string) => {
 const activateTheme = async () => {
     if (!selectedThemeSlug.value || !builder) return;
     try {
-        await builder.loadTheme(selectedThemeSlug.value);
+        if (builder.activateSiteTheme) {
+            await builder.activateSiteTheme(selectedThemeSlug.value);
+        } else {
+            await builder.loadTheme(selectedThemeSlug.value);
+        }
     } catch (error) {
         logger.error('Failed to activate theme:', error);
     }

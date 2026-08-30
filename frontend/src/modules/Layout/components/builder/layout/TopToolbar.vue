@@ -70,8 +70,8 @@
 
        <BaseDivider orientation="vertical" :margin="4" />
 
-       <!-- Theme Switcher -->
-       <BaseDropdown align="center" width="200px">
+       <!-- Theme Switcher (site mode only — page mode is content-only) -->
+       <BaseDropdown v-if="isSiteMode" align="center" width="200px">
          <template #trigger="{ open }">
            <button class="theme-switcher-btn" :class="{ 'theme-switcher-btn--active': open }" :title="t('builder.toolbar.theme')">
              <Palette :size="14" />
@@ -81,7 +81,7 @@
          </template>
          
          <template #default="{ close }">
-           <div class="dropdown-header">{{ t('builder.toolbar.switchTheme', 'Switch Theme') }}</div>
+           <div class="dropdown-header">{{ t('builder.toolbar.previewTheme', 'Preview theme in canvas') }}</div>
            <div v-if="loadingThemes" class="dropdown-loading">
              <Loader2 :size="16" class="animate-spin" />
            </div>
@@ -102,7 +102,7 @@
          </template>
        </BaseDropdown>
 
-       <BaseDivider orientation="vertical" :margin="4" />
+       <BaseDivider v-if="isSiteMode" orientation="vertical" :margin="4" />
 
       <!-- Device Modes (Desktop) -->
       <div class="device-modes desktop-only">
@@ -265,6 +265,7 @@ const icons: Record<string, Component> = { Monitor, Tablet, Smartphone, Wand2 }
 
 // Inject builder state
 const builder = inject<BuilderInstance>('builder')!
+const isSiteMode = computed(() => (builder?.mode?.value || 'site') === 'site')
 
 // Props & Emits
 const props = defineProps<{

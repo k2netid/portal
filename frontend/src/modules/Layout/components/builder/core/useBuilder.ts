@@ -2,7 +2,6 @@ import { logger } from '@/shared/utils/logger';
 import { computed, ref } from 'vue'
 import ModuleRegistry from './ModuleRegistry'
 import api from '@/engine/api/client'
-import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { applyMergedSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema'
 import { usePresets } from './usePresets'
 import { useGlobalVariables } from './useGlobalVariables'
@@ -12,6 +11,7 @@ import type {
     BuilderInstance,
     BlockDefinition
 } from '@/modules/Layout/types/builder'
+import type { ThemeData } from '@/modules/Layout/types/theme'
 
 // Sub-composables
 import { useBuilderState } from './composables/useBuilderState'
@@ -19,6 +19,19 @@ import { useBuilderHistory } from './composables/useBuilderHistory'
 import { useBuilderModules } from './composables/useBuilderModules'
 import { useBuilderSync } from './composables/useBuilderSync'
 import { useBuilderUI } from './composables/useBuilderUI'
+
+function unwrapThemePayload(raw: unknown): ThemeData | null {
+    if (!raw || typeof raw !== 'object') return null
+    const root = raw as Record<string, unknown>
+    const nested = root.data
+    if (nested && typeof nested === 'object' && !Array.isArray(nested) && 'slug' in (nested as object)) {
+        return nested as ThemeData
+    }
+    if ('slug' in root) {
+        return root as ThemeData
+    }
+    return null
+}
 
 export default function useBuilder(initialData = { blocks: [] as BlockInstance[] }, options: BuilderOptions = {}): BuilderInstance {
     // Initialize primary state
@@ -33,13 +46,6 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
         deletePreset
     } = usePresets()
 
-    const {
-        activeTheme: globalActiveTheme,
-        themeSettings: globalThemeSettings,
-        themeAssets: globalThemeAssets,
-        applyThemeStyles
-    } = useTheme()
-
     const globalVariables = useGlobalVariables()
 
     // Initialize sub-composables with dependencies
@@ -49,47 +55,61 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
     const uiManager = useBuilderUI(state, historyManager, moduleManager)
 
     // ============================================
-    // THEME LOADING (Specific to Builder Facade)
+    // THEME LOADING (builder-scoped — no public activate / global CSS)
     // ============================================
 
+    function applyThemeToBuilderState(data: ThemeData): void {
+        applyMergedSettingsSchema(data, data.slug || 'janari')
+        state.themeData.value = data
+        state.themeSettings.value = data.settings || {}
+        state.activeTheme.value = data.slug
+        state.selectedThemeSlug.value = data.slug
+
+        if (data.settings && typeof data.settings === 'object' && data.settings.global_variables) {
+            globalVariables.loadVariables(data.settings.global_variables as Parameters<typeof globalVariables.loadVariables>[0])
+        }
+    }
+
+    /**
+     * Load a theme into builder canvas state only.
+     * Does NOT POST /activate and does NOT write document :root CSS (Canvas owns scoped styles).
+     */
     async function loadTheme(slug: string | null = null): Promise<void> {
         try {
-            if (slug && slug !== state.activeTheme.value) {
-                const targetTheme = (state.availableThemes.value || []).find((t: any) => t.slug === slug)
-                const themeId = targetTheme?.id || slug
-                try {
-                    await api.post(`/manage/layout/themes/${themeId}/activate`)
-                } catch (e) {
-                    logger.error('Theme activation endpoint returned:', e instanceof Error ? e.message : String(e))
-                }
+            let data: ThemeData | null = null
+            if (slug) {
+                const response = await api.get(`/manage/layout/themes/${slug}`)
+                data = unwrapThemePayload(response.data)
+            } else {
+                const response = await api.get(`/public/layout/themes/active`)
+                data = unwrapThemePayload(response.data)
             }
 
-            const response = await api.get(`/public/layout/themes/active`)
-            const data = response.data?.data || response.data
-
             if (data) {
-                applyMergedSettingsSchema(data, data.slug || 'janari')
-                state.themeData.value = data
-                state.themeSettings.value = data.settings || {}
-                state.activeTheme.value = data.slug
-                state.selectedThemeSlug.value = data.slug
-
-                globalActiveTheme.value = data
-                globalThemeSettings.value = data.settings || {}
-                if (data.assets) {
-                    globalThemeAssets.value = data.assets
-                }
-
-                if (data.settings?.global_variables) {
-                    globalVariables.loadVariables(data.settings.global_variables)
-                }
-
-                applyThemeStyles()
+                applyThemeToBuilderState(data)
             }
         } catch (error: unknown) {
             logger.error('Failed to load theme for builder:', error instanceof Error ? error.message : String(error));
         }
     }
+
+    /**
+     * Explicitly activate theme for the public site, then load it into the builder.
+     */
+    async function activateSiteTheme(slug: string): Promise<void> {
+        const targetTheme = (state.availableThemes.value || []).find((t) => t.slug === slug)
+        const themeId = targetTheme?.id || slug
+        try {
+            await api.post(`/manage/layout/themes/${themeId}/activate`)
+        } catch (e) {
+            logger.error('Theme activation endpoint returned:', e instanceof Error ? e.message : String(e))
+            throw e
+        }
+        await loadTheme(slug)
+    }
+
+    /** No-op: canvas injectThemeStyles applies scoped CSS; never touch #theme-variables. */
+    function applyThemeStyles(): void {}
 
     // ============================================
     // PRESET HANDLING (Integration between UI and Service)
@@ -162,6 +182,7 @@ export default function useBuilder(initialData = { blocks: [] as BlockInstance[]
         globalVariables,
         saveGlobalVariables: syncManager.saveGlobalVariables,
         loadTheme,
+        activateSiteTheme,
         handleSavePreset,
         updateThemeSettings: syncManager.updateThemeSettings,
         fetchTemplates: syncManager.fetchTemplates,

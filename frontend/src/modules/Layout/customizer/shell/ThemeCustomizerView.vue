@@ -100,7 +100,7 @@
           <div class="flex-1 min-h-0">
             <PreviewArea
               :preview-theme="previewTheme"
-              preview-url="/"
+              :preview-url="publicPreviewUrl"
             />
           </div>
         </div>
@@ -137,11 +137,13 @@ import MediaPicker from '@/modules/Media/components/picker/MediaPicker.vue';
 import { useThemeCustomizer } from '@/modules/Layout/composables/useThemeCustomizer';
 import { useCustomizerNavigation } from '@/modules/Layout/composables/useCustomizerNavigation';
 import { useCustomizerDataSources } from '@/modules/Layout/composables/useCustomizerDataSources';
+import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl';
 
 const { t, te } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const slug = route.params.slug as string;
+const publicPreviewUrl = resolvePublicSiteUrl('/');
 
 // Core Customizer State & Persistence
 const {

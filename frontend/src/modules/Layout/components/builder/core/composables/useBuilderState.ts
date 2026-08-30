@@ -161,12 +161,15 @@ export function useBuilderState(initialData: { blocks?: BlockInstance[], body?: 
         }
     })
 
-    // Preferences
-    const PREFS_STORAGE_KEY = 'ja-builder-preferences'
+    // Preferences (scoped per builder mode so site/page prefs do not bleed)
+    const PREFS_STORAGE_KEY = `ja-builder-preferences:${mode.value || 'site'}`
     const loadPreferences = () => {
         try {
             const stored = localStorage.getItem(PREFS_STORAGE_KEY)
-            return stored ? JSON.parse(stored) : {}
+            if (stored) return JSON.parse(stored)
+            // Migrate legacy unscoped key once
+            const legacy = localStorage.getItem('ja-builder-preferences')
+            return legacy ? JSON.parse(legacy) : {}
         } catch { return {} }
     }
     const storedPrefs = loadPreferences()

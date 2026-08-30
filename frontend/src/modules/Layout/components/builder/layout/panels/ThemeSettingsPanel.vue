@@ -165,11 +165,9 @@ const loadThemeSettings = () => {
 
 const handleInput = () => {
   isDirty.value = true;
+  // Live-update builder canvas only (scoped CSS via Canvas.injectThemeStyles) — no document :root.
   if (selectedThemeSlug.value === builder?.activeTheme?.value && builder?.themeSettings) {
     builder.themeSettings.value = { ...formValues.value };
-    if (builder.applyThemeStyles) {
-      builder.applyThemeStyles();
-    }
   }
 };
 

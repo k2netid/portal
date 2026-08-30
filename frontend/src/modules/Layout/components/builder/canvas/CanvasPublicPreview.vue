@@ -8,14 +8,18 @@
 </template>
 
 <script setup lang="ts">
-import { createApp, h, onBeforeUnmount, onMounted, ref, watch, type App } from 'vue';
+import { createApp, h, inject, onBeforeUnmount, onMounted, ref, watch, computed, type App } from 'vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
-import type { BlockInstance } from '@/modules/Layout/types/builder';
+import i18n from '@/engine/i18n';
+import { BUILDER_THEME_OVERRIDE_KEY } from '@/modules/Layout/composables/useTheme';
+import type { BuilderInstance, BlockInstance } from '@/modules/Layout/types/builder';
+import type { Theme } from '@/modules/Layout/types/theme';
 
 const props = defineProps<{
   blocks: BlockInstance[];
 }>();
 
+const builder = inject<BuilderInstance | null>('builder', null);
 const frameRef = ref<HTMLIFrameElement | null>(null);
 let previewApp: App | null = null;
 
@@ -52,6 +56,13 @@ const mountPreview = (): void => {
   previewApp = createApp({
     render: () => h(BlockRenderer, { blocks: props.blocks, mode: 'view' }),
   });
+  previewApp.use(i18n);
+  if (builder?.themeData && builder?.themeSettings) {
+    previewApp.provide(BUILDER_THEME_OVERRIDE_KEY, {
+      activeTheme: computed(() => (builder.themeData.value as Theme | null) || null),
+      themeSettings: builder.themeSettings,
+    });
+  }
   previewApp.mount(root);
 };
 

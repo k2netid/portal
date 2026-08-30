@@ -1,5 +1,5 @@
 import { logger } from '@/shared/utils/logger';
-import { ref, computed } from 'vue';
+import { ref, computed, inject, type InjectionKey, type Ref } from 'vue';
 import i18n from '@/engine/i18n';
 import api from '@/engine/api/client';
 import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/janariPresets';
@@ -55,6 +55,14 @@ export interface Theme {
     bundle_url?: string | null;
     [key: string]: unknown;
 }
+
+/** When provided under the Visual Builder, theme reads stay canvas-scoped (no public activate / :root CSS). */
+export type BuilderThemeOverride = {
+    activeTheme: Ref<Theme | null>;
+    themeSettings: Ref<Record<string, unknown>>;
+};
+
+export const BUILDER_THEME_OVERRIDE_KEY: InjectionKey<BuilderThemeOverride> = Symbol('builderThemeOverride');
 
 const SYSTEM_FONTS = new Set([
     'sans-serif', 'serif', 'monospace', 'system-ui', '-apple-system',
@@ -174,10 +182,16 @@ if (initialThemeSnapshot) {
  * Composable for theme management in frontend
  */
 export function useTheme() {
+    /** Builder canvas: read builder themeData/settings; never mutate public :root / activate. */
+    const builderOverride = inject(BUILDER_THEME_OVERRIDE_KEY, null);
+
     /**
      * Load active theme
      */
     const loadActiveTheme = async (type = 'frontend', options?: { force?: boolean }) => {
+        if (builderOverride) {
+            return;
+        }
         const force = options?.force === true;
         // Return existing promise if already loading
         if (activeLoadPromise && type === 'frontend') {
@@ -518,6 +532,36 @@ export function useTheme() {
     const isThemeLoaded = computed(() => activeTheme.value !== null);
     const themeName = computed(() => activeTheme.value?.name || i18n.global.t('layout.themes.defaultName'));
     const themeType = computed(() => activeTheme.value?.type || 'frontend');
+
+    if (builderOverride) {
+        const getOverrideSetting = (key: string, defaultValue: unknown = null) => {
+            if (builderOverride.themeSettings.value && builderOverride.themeSettings.value[key] !== undefined) {
+                return builderOverride.themeSettings.value[key];
+            }
+            const manifest = builderOverride.activeTheme.value?.manifest as ThemeManifest | undefined;
+            if (manifest?.settings_schema?.[key]) {
+                return manifest.settings_schema[key].default ?? defaultValue;
+            }
+            return defaultValue;
+        };
+
+        return {
+            activeTheme: builderOverride.activeTheme,
+            themeSettings: builderOverride.themeSettings,
+            themeAssets,
+            customCss,
+            cssVariables,
+            loading,
+            error,
+            isThemeLoaded: computed(() => builderOverride.activeTheme.value !== null),
+            themeName: computed(() => builderOverride.activeTheme.value?.name || i18n.global.t('layout.themes.defaultName')),
+            themeType: computed(() => builderOverride.activeTheme.value?.type || 'frontend'),
+            loadActiveTheme,
+            getSetting: getOverrideSetting,
+            // Canvas.injectThemeStyles owns scoped CSS — never write #theme-variables on document.
+            applyThemeStyles: () => {},
+        };
+    }
 
     return {
         activeTheme,

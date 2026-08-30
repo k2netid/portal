@@ -317,6 +317,7 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     darkMode: Ref<boolean>;
     globalAction: Ref<{ type: string; payload: unknown } | null>;
     loadTheme: (slug?: string | null) => Promise<void>;
+    activateSiteTheme: (slug: string) => Promise<void>;
     fetchPresets: () => Promise<void>;
     handleSavePreset: (name: string) => Promise<void>;
     confirm: (options: Partial<ConfirmModalState> & Record<string, unknown>) => Promise<boolean>;

@@ -13,16 +13,25 @@
     <CanvasGridView v-if="gridViewMode" />
 
     <template v-else>
-      <!-- Header Preview -->
-      <div class="canvas-header-preview w-full flex-none relative z-10">
+      <!-- Header Preview (site mode only — page mode is content-only) -->
+      <div v-if="showThemeChrome" class="canvas-header-preview w-full flex-none relative z-10">
         <ThemePageResolver page="components/Header" />
       </div>
 
       <!-- Main Content Area -->
       <main class="main-content flex-1 w-full flex flex-col">
+        <!-- Public block preview (Eye) — must win over empty/theme branches -->
+        <div
+          v-if="previewMode && blocks.length > 0"
+          class="canvas-public-preview flex-1 w-full"
+          data-builder-preview="public"
+        >
+          <CanvasPublicPreview :blocks="blocks" />
+        </div>
+
         <!-- Theme page live preview (Vue theme view, not empty CMS draft) -->
         <div
-          v-if="blocks.length === 0 && activeThemePage"
+          v-else-if="blocks.length === 0 && activeThemePage"
           class="canvas-theme-page flex-1 w-full relative"
           data-builder-theme-page="true"
         >
@@ -97,14 +106,6 @@
           </div>
         </div>
 
-        <div
-          v-else-if="previewMode"
-          class="canvas-public-preview flex-1 w-full"
-          data-builder-preview="public"
-        >
-          <CanvasPublicPreview :blocks="blocks" />
-        </div>
-
         <!-- Modules -->
         <draggable
           v-else
@@ -124,8 +125,8 @@
         </draggable>
       </main>
 
-      <!-- Footer Preview -->
-      <div class="mt-auto relative z-10">
+      <!-- Footer Preview (site mode only) -->
+      <div v-if="showThemeChrome" class="mt-auto relative z-10">
         <ThemePageResolver page="components/Footer" />
       </div>
     </template>
@@ -166,6 +167,7 @@ const previewMode = computed(() => builder?.previewMode.value || false)
 const gridViewMode = computed(() => builder?.gridViewMode.value || false)
 const activeTheme = computed(() => builder?.activeTheme.value || 'janari')
 const device = computed(() => builder?.device.value || 'desktop')
+const showThemeChrome = computed(() => (builder?.mode?.value || 'site') === 'site')
 
 const startThemePageEdit = async () => {
   if (themePageBusy.value) return

@@ -236,6 +236,8 @@ import ContextMenu from './ui/ContextMenu.vue'
 import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue'
 import { Dialog, DialogContent } from '@/shared/components/ui'
 import type { Theme } from '@/modules/Layout/types/theme'
+import { BUILDER_THEME_OVERRIDE_KEY } from '@/modules/Layout/composables/useTheme'
+import { resolvePublicSiteUrl } from '@/modules/Layout/utils/publicSiteUrl'
 
 // Core
 import { useBuilder } from './core'
@@ -328,13 +330,7 @@ const showLivePreview = ref(false)
 
 const livePreviewUrl = computed(() => {
   const slug = builderBase.content?.value?.slug
-  if (typeof slug === 'string') {
-    const clean = slug.replace(/^\/+/, '').trim()
-    if (clean && clean !== 'home' && clean !== 'index') {
-      return `/${clean}`
-    }
-  }
-  return '/'
+  return resolvePublicSiteUrl(typeof slug === 'string' ? slug : null)
 })
 
 const livePreviewTheme = computed<Theme>(() => {
@@ -384,6 +380,10 @@ function refreshBuilderProvide(): void {
 // Provide builder for child components
 provide('builder', builder)
 provide('builderDevice', builder.device)
+provide(BUILDER_THEME_OVERRIDE_KEY, {
+  activeTheme: computed(() => (builder.themeData?.value as Theme | null) || null),
+  themeSettings: builder.themeSettings,
+})
 
 watch(() => builder.isFullscreen.value, (val) => {
   emit('update:fullscreen', val)
