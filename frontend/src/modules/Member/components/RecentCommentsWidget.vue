@@ -1,5 +1,5 @@
 <template>
-  <section class="rounded-3xl border border-border/60 bg-card/70 p-6 space-y-4">
+  <section class="rounded-xl border border-border/70 bg-background/80 p-5 space-y-4">
     <div class="flex items-center justify-between gap-3">
       <h3 class="text-lg font-bold">
         {{ t('member.nav.comments', 'Comments') }}

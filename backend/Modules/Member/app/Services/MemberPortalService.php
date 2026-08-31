@@ -169,27 +169,49 @@ class MemberPortalService
     }
 
     /**
+     * Prefer on-disk Modules/{Slug}/manifest.json so member_area / lifecycle stay current
+     * even when sys_extensions.manifest was truncated by older discover().
+     *
      * @return array<string, mixed>
      */
     private function resolveManifest(Extension $extension): array
     {
+        $fromDisk = $this->manifestFromDisk((string) $extension->slug);
+        if ($fromDisk !== []) {
+            return $fromDisk;
+        }
+
         if (is_array($extension->manifest) && $extension->manifest !== []) {
             return $extension->manifest;
         }
 
-        $slug = (string) $extension->slug;
-        $candidates = [
+        return [];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function manifestFromDisk(string $slug): array
+    {
+        $slug = strtolower(trim($slug));
+        if ($slug === '') {
+            return [];
+        }
+
+        $studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
+        $candidates = array_values(array_unique([
+            base_path('Modules/'.$studly.'/manifest.json'),
             base_path('Modules/'.ucfirst($slug).'/manifest.json'),
-            base_path('Modules/'.strtoupper($slug).'/manifest.json'),
-        ];
+        ]));
 
         foreach ($candidates as $path) {
             if (! is_file($path)) {
                 continue;
             }
             $decoded = json_decode((string) file_get_contents($path), true);
-
-            return is_array($decoded) ? $decoded : [];
+            if (is_array($decoded) && $decoded !== []) {
+                return $decoded;
+            }
         }
 
         return [];

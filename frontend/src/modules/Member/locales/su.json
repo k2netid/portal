@@ -16,7 +16,17 @@
     },
     "dashboard": {
       "title": "Dasbor",
-      "subtitle": "Wilujeng sumping deui. Atur bookmark jeung setélan akun di dieu."
+      "subtitle": "Wilujeng sumping deui. Atur bookmark jeung setélan akun di dieu.",
+      "hello": "Wilujeng sumping deui, {name}.",
+      "activity": "Aktivitas anjeun",
+      "emptyTitle": "Can aya widget paket",
+      "emptyBody": "Nalika Publishing, Newsletter, atanapi Forms aktip, bookmark, koméntar, jeung kiriman form bakal muncul di dieu.",
+      "cardProfile": "Perbarui nami tampilan jeung status verifikasi.",
+      "cardSecurity": "Ganti sandi, email, atanapi hapus akun pamaca.",
+      "cardBookmarks": "Artikel anu anjeun simpen pikeun engke.",
+      "cardComments": "Koméntar anu anjeun kirim dina situs ieu.",
+      "cardNewsletter": "Atur pembaruan email pikeun akun ieu.",
+      "cardSubmissions": "Form anu anjeun kirimkeun nalika asup."
     },
     "profile": {
       "title": "Profil",

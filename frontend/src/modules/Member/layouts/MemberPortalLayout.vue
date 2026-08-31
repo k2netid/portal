@@ -1,53 +1,66 @@
 <template>
-  <div class="sarangenge-theme flex-1 flex flex-col py-10 md:py-14">
-    <div class="max-w-5xl mx-auto w-full px-4 space-y-8">
-      <header class="flex flex-wrap items-start justify-between gap-4">
-        <div class="space-y-1">
-          <h1 class="text-2xl md:text-3xl font-extrabold font-heading">
-            {{ t('member.portal.title', 'My account') }}
-          </h1>
-          <p
-            v-if="memberStore.member?.email"
-            class="text-sm text-muted-foreground"
-          >
-            {{ memberStore.member.email }}
-          </p>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          @click="logout"
-        >
-          {{ t('member.portal.logout', 'Sign out') }}
-        </Button>
-      </header>
-
-      <div class="flex flex-col md:flex-row gap-8">
-        <nav
-          class="md:w-52 shrink-0"
-          aria-label="Member portal"
-        >
-          <ul class="flex md:flex-col gap-1 overflow-x-auto pb-1 md:pb-0">
-            <li
-              v-for="item in navItems"
-              :key="item.slug"
+  <div class="member-portal flex-1 flex flex-col py-8 md:py-12">
+    <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl border border-border/70 bg-card/80 shadow-sm overflow-hidden">
+        <header class="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 px-5 py-4 sm:px-6">
+          <div class="flex items-center gap-3 min-w-0">
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground text-sm font-bold tracking-wide"
+              aria-hidden="true"
             >
-              <router-link
-                :to="{ name: item.routeName }"
-                class="block whitespace-nowrap rounded-xl px-3 py-2 text-sm font-medium transition-colors"
-                :class="route.name === item.routeName
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'"
+              {{ initials }}
+            </div>
+            <div class="min-w-0 space-y-0.5">
+              <h1 class="text-lg sm:text-xl font-bold truncate">
+                {{ t('member.portal.title', 'My account') }}
+              </h1>
+              <p
+                v-if="memberStore.member?.email"
+                class="text-xs sm:text-sm text-muted-foreground truncate"
               >
-                {{ t(item.labelKey) }}
-              </router-link>
-            </li>
-          </ul>
-        </nav>
+                {{ memberStore.member.name || memberStore.member.email }}
+                <span class="text-muted-foreground/70"> · {{ memberStore.member.email }}</span>
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            class="shrink-0"
+            @click="logout"
+          >
+            {{ t('member.portal.logout', 'Sign out') }}
+          </Button>
+        </header>
 
-        <main class="flex-1 min-w-0">
-          <router-view />
-        </main>
+        <div class="flex flex-col md:flex-row min-h-[28rem]">
+          <nav
+            class="md:w-56 lg:w-64 shrink-0 border-b md:border-b-0 md:border-r border-border/60 bg-muted/20"
+            aria-label="Member portal"
+          >
+            <ul class="flex md:flex-col gap-1 p-3 overflow-x-auto">
+              <li
+                v-for="item in navItems"
+                :key="item.slug"
+                class="shrink-0"
+              >
+                <router-link
+                  :to="{ name: item.routeName }"
+                  class="block whitespace-nowrap rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+                  :class="isActive(item.routeName)
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:bg-background hover:text-foreground'"
+                >
+                  {{ t(item.labelKey) }}
+                </router-link>
+              </li>
+            </ul>
+          </nav>
+
+          <main class="flex-1 min-w-0 p-5 sm:p-6 lg:p-8">
+            <router-view />
+          </main>
+        </div>
       </div>
     </div>
   </div>
@@ -92,6 +105,17 @@ const navItems = computed(() => {
         routeName: item.routeName,
     }));
 });
+
+const initials = computed(() => {
+    const name = memberStore.member?.name?.trim() || memberStore.member?.email || '?';
+    const parts = name.split(/[\s@._-]+/).filter(Boolean);
+    if (parts.length >= 2) {
+        return `${parts[0]![0] ?? ''}${parts[1]![0] ?? ''}`.toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+});
+
+const isActive = (routeName: string): boolean => route.name === routeName;
 
 const logout = async (): Promise<void> => {
     await memberStore.logout();

@@ -16,7 +16,17 @@
     },
     "dashboard": {
       "title": "Dashboard",
-      "subtitle": "Welcome back. Manage bookmarks and account settings from here."
+      "subtitle": "Welcome back. Manage bookmarks and account settings from here.",
+      "hello": "Welcome back, {name}.",
+      "activity": "Your activity",
+      "emptyTitle": "No pack widgets yet",
+      "emptyBody": "When Publishing, Newsletter, or Forms are active, bookmarks, comments, and submissions will show up here.",
+      "cardProfile": "Update your display name and review verification status.",
+      "cardSecurity": "Change password, email, or delete your reader account.",
+      "cardBookmarks": "Articles you saved for later.",
+      "cardComments": "Comments you posted on this site.",
+      "cardNewsletter": "Manage email updates for this account.",
+      "cardSubmissions": "Forms you submitted while signed in."
     },
     "profile": {
       "title": "Profile",

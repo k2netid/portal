@@ -53,6 +53,27 @@ class MemberPortalTest extends TestCase
         $this->assertContains('member.security', $routes);
     }
 
+    public function test_member_portal_reads_member_area_from_disk_when_db_manifest_truncated(): void
+    {
+        $this->activatePack('publishing', [
+            'manifest' => [
+                'settings_route' => 'publishing-settings',
+                'permissions' => ['view content'],
+            ],
+        ]);
+
+        $auth = $this->registerMember();
+        Member::query()->whereKey($auth['id'])->update(['email_verified_at' => now()]);
+
+        $response = $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/portal')
+            ->assertOk();
+
+        $routes = collect($response->json('data.navigation'))->pluck('route')->all();
+        $this->assertContains('member.bookmarks', $routes);
+        $this->assertContains('member.comments', $routes);
+    }
+
     public function test_member_portal_includes_publishing_capabilities_when_active(): void
     {
         $this->activatePack('publishing', [

@@ -16,7 +16,17 @@
     },
     "dashboard": {
       "title": "Dasbor",
-      "subtitle": "Selamat datang kembali. Kelola bookmark dan pengaturan akun di sini."
+      "subtitle": "Selamat datang kembali. Kelola bookmark dan pengaturan akun di sini.",
+      "hello": "Selamat datang kembali, {name}.",
+      "activity": "Aktivitas Anda",
+      "emptyTitle": "Belum ada widget paket",
+      "emptyBody": "Saat Publishing, Newsletter, atau Forms aktif, bookmark, komentar, dan pengiriman form akan muncul di sini.",
+      "cardProfile": "Perbarui nama tampilan dan status verifikasi.",
+      "cardSecurity": "Ubah kata sandi, email, atau hapus akun pembaca.",
+      "cardBookmarks": "Artikel yang Anda simpan untuk nanti.",
+      "cardComments": "Komentar yang Anda kirim di situs ini.",
+      "cardNewsletter": "Kelola pembaruan email untuk akun ini.",
+      "cardSubmissions": "Form yang Anda kirim saat masuk."
     },
     "profile": {
       "title": "Profil",

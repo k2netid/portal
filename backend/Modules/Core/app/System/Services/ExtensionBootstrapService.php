@@ -104,13 +104,15 @@ class ExtensionBootstrapService
                     'description' => $meta['description'],
                     'license' => $meta['license'] ?? ($isKernel ? 'Platform' : 'Proprietary'),
                     'requirements' => $meta['requirements'],
-                    'manifest' => [
+                    'manifest' => array_filter([
                         'settings_route' => $meta['settings_route'],
                         'license_tier' => $meta['license_tier'],
                         'suggests' => $meta['suggests'],
                         'requires' => $meta['runtime_requires'],
                         'permissions' => $meta['permissions'],
-                    ],
+                        'member_area' => $meta['member_area'],
+                        'lifecycle' => $meta['lifecycle'],
+                    ], static fn ($v) => $v !== null && $v !== '' && $v !== []),
                     'settings' => array_filter([
                         'settings_route' => $meta['settings_route'],
                         'license_tier' => $meta['license_tier'],
@@ -348,7 +350,9 @@ class ExtensionBootstrapService
      *   requirements: array<string, string>,
      *   suggests: array<string, string>,
      *   runtime_requires: array<string, string>,
-     *   permissions: list<string>
+     *   permissions: list<string>,
+     *   member_area: array<string, mixed>|null,
+     *   lifecycle: array<string, mixed>|null
      * }
      */
     private function extractMeta(array $manifest, string $slug, string $defaultType = 'module'): array
@@ -435,6 +439,8 @@ class ExtensionBootstrapService
             'suggests' => $suggests,
             'runtime_requires' => $runtimeRequires,
             'permissions' => array_values(array_unique($permissions)),
+            'member_area' => is_array($manifest['member_area'] ?? null) ? $manifest['member_area'] : null,
+            'lifecycle' => is_array($manifest['lifecycle'] ?? null) ? $manifest['lifecycle'] : null,
         ];
     }
 }
