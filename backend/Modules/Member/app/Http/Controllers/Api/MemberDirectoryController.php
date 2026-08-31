@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberAccountService;
+use Modules\Member\Services\MemberAvatarUploader;
 use Modules\Member\Support\MemberDirectorySupport;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -110,8 +111,18 @@ class MemberDirectoryController extends BaseApiController
         }
 
         $profileKeys = ['name', 'phone', 'avatar', 'bio', 'locale', 'timezone'];
+        $nextAvatar = null;
+        $avatarProvided = array_key_exists('avatar', $validated);
+        if ($avatarProvided) {
+            $rawAvatar = $validated['avatar'];
+            $nextAvatar = ($rawAvatar === null || (is_string($rawAvatar) && trim($rawAvatar) === ''))
+                ? null
+                : (is_string($rawAvatar) ? trim($rawAvatar) : null);
+            unset($validated['avatar']);
+        }
+
         foreach ($profileKeys as $key) {
-            if (! array_key_exists($key, $validated)) {
+            if ($key === 'avatar' || ! array_key_exists($key, $validated)) {
                 continue;
             }
             $value = $validated[$key];
@@ -142,6 +153,10 @@ class MemberDirectoryController extends BaseApiController
         }
 
         $record->save();
+
+        if ($avatarProvided) {
+            app(MemberAvatarUploader::class)->replaceUrl($record->fresh() ?? $record, $nextAvatar);
+        }
 
         if (($validated['status'] ?? null) === 'inactive' || $record->trashed()) {
             $record->tokens()->delete();

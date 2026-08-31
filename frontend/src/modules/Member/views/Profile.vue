@@ -61,9 +61,14 @@
                       variant="outline"
                       size="sm"
                       class="text-destructive border-destructive/40"
-                      @click="form.avatar = ''"
+                      :disabled="avatarRemoving"
+                      @click="removeAvatar"
                     >
-                      {{ t('member.form.removeAvatar', 'Remove avatar') }}
+                      {{
+                        avatarRemoving
+                          ? t('member.portal.profile.avatarRemoving', 'Removing…')
+                          : t('member.form.removeAvatar', 'Remove avatar')
+                      }}
                     </Button>
                   </div>
                 </div>
@@ -392,6 +397,7 @@ const avatarPickerOpen = ref(false);
 const avatarDraft = ref('');
 const avatarPreviewBroken = ref(false);
 const avatarUploading = ref(false);
+const avatarRemoving = ref(false);
 const avatarUploadError = ref('');
 const avatarFileInput = ref<HTMLInputElement | null>(null);
 const avatarLocalPreview = ref('');
@@ -416,6 +422,32 @@ const openAvatarModal = (): void => {
     avatarPreviewBroken.value = false;
     avatarUploadError.value = '';
     avatarPickerOpen.value = true;
+};
+
+const removeAvatar = async (): Promise<void> => {
+    if (avatarRemoving.value) {
+        return;
+    }
+    avatarRemoving.value = true;
+    error.value = '';
+    try {
+        await memberStore.updateProfile({
+            name: form.name.trim() || memberStore.member?.name || 'Reader',
+            phone: form.phone?.trim() || null,
+            avatar: null,
+            bio: form.bio?.trim() || null,
+            locale: form.locale?.trim() || null,
+            timezone: form.timezone?.trim() || null,
+        });
+        form.avatar = '';
+        saved.value = true;
+    } catch (err: unknown) {
+        error.value = isAxiosError(err)
+            ? String(err.response?.data?.message || t('member.portal.profile.avatarUploadFailed', 'Could not upload avatar.'))
+            : t('member.portal.profile.failed', 'Could not save profile.');
+    } finally {
+        avatarRemoving.value = false;
+    }
 };
 
 const onAvatarFileChange = async (event: Event): Promise<void> => {

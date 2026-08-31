@@ -54,6 +54,8 @@ class MemberAccountService
                 DB::table('mem_password_reset_tokens')->where('email', $member->email)->delete();
             }
 
+            app(MemberAvatarUploader::class)->purgeMemberStorage($member);
+
             $member->forceDelete();
         });
     }

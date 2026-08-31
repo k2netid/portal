@@ -1,7 +1,7 @@
 # Member Area — Adaptive Portal (RFC)
 
-**Status:** Implemented (P0–P3 live on main, 2026-08-31)  
-**Update:** 2026-08-31  
+**Status:** Implemented (P0–P3 live on main)  
+**Update:** 2026-09-01  
 **Audience:** agents and humans building public reader UX and pack contributions  
 **Depends on:** [module-contract.md](./module-contract.md), [lifecycle.md](./lifecycle.md), [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md)
 
@@ -44,7 +44,7 @@ Resolver basename match (`MemberHeader` / `MemberFooter`) + bundled fallbacks (j
 
 ---
 
-### Reader profile schema (2026-08-31)
+### Reader profile schema (2026-08-31 / avatar 2026-09-01)
 
 Standard fields on `mem_members` (reader self-service via `PATCH /member/profile`):
 
@@ -53,7 +53,7 @@ Standard fields on `mem_members` (reader self-service via `PATCH /member/profile
 | `name` | Yes | Display name |
 | `email` | Security flow | Signed confirm on new address |
 | `phone` | Yes | Optional, max 32 chars |
-| `avatar` | Yes | URL/path string, max 512. Upload: `POST /api/v1/member/profile/avatar` (`file`, image ≤2MB) → stored under `media/members/{id}/` |
+| `avatar` | Yes | URL/path string, max 512 |
 | `bio` | Yes | Optional, max 500 chars |
 | `locale` | Yes | BCP 47-ish (`en`, `id`, `su`) |
 | `timezone` | Yes | IANA (`Asia/Jakarta`, …) |
@@ -62,23 +62,34 @@ Standard fields on `mem_members` (reader self-service via `PATCH /member/profile
 | `last_login_at` | System | Updated on login |
 | `created_at` | Read-only | Member since |
 
+**Avatar:**
+
+| Action | API / UX |
+| :--- | :--- |
+| Upload | `POST /api/v1/member/profile/avatar` (`multipart`, field `file`, image ≤2MB) → `media/members/{id}/` |
+| Paste URL | Optional fallback in portal modal / console form (`https://…`) |
+| Clear / replace | Owned files under `media/members/{id}/` are deleted; external URLs are never deleted |
+| Account force-delete | Purges the member storage directory |
+| Resize / optimize | Server-side via Media pack (`MediaService` max-width + optional WebP). **No client crop UI.** |
+
 Serialization: `MemberPublicProfile::serialize()` — single source for `/member/me`, portal, auth responses.
 
 ---
 
-## 1. Problem
+## 1. Problem (historical — solved)
 
-Today the **Member** pack is a thin reader auth surface:
+When this RFC was written, Member was a thin auth surface without a portal shell. **That gap is closed.** Current reality:
 
-| Surface | Reality |
+| Surface | Status |
 | :--- | :--- |
-| Public routes | Hardcoded in `frontend/src/engine/router/public.ts` (`/member/login`, `/register`, `/account`, `/verified`) |
-| Portal shell | **None** — pages sit inside `FrontendLayout` with no dedicated nav |
-| Cross-pack features | Bookmarks + comments via `MemberIdentityPort` only |
-| Theme headers | Link to `/member/profile` but **no route exists** (tech debt) |
-| Adaptivity | Enabling Publishing / Newsletter / Forms does **not** add member pages |
+| Public auth routes | `/member/login`, register, forgot/reset, verified |
+| Portal shell | Quiet theme chrome + `MemberPortalLayout` (sidebar + top bar) |
+| Core pages | Dashboard, Profile, Security |
+| Adaptive packs | Bookmarks, Comments, Newsletter, Submissions via `MemberAreaRegistry` |
+| Theme headers | Link to `/member/profile` — route exists (`member.profile`) |
+| Console directory | Full CRUD under `/dash/members` + `/api/v1/manage/members` |
 
-Operators get a modular console (`AppModule` registry). Readers get four static pages. That asymmetry blocks an adaptive “my account” experience when CMS packs turn on/off.
+Operators keep modular console IAM; readers keep `mem_members` + `auth:member`.
 
 ---
 
@@ -98,6 +109,7 @@ Operators get a modular console (`AppModule` registry). Readers get four static 
 - Spatie roles on `mem_members`.
 - Unloading nwidart providers when Member or other packs deactivate.
 - Replacing theme marketing pages with a second public shell.
+- Client-side avatar cropper (server Media optimize is enough).
 
 ---
 
@@ -223,9 +235,9 @@ Register via `MemberModule` / public bootstrap the same way console uses `deferr
 | `/member/register` | `member.register` | `memberGuest` |
 | `/member/verified` | `member.verified` | public |
 | `/member` | `member.dashboard` | `requiresMember` |
-| `/member/profile` | `member.profile` | `requiresMember` — **fix existing header debt** |
-| `/member/account` | alias → profile or security | keep redirect for compatibility |
-| `/member/security` | `member.security` | password / sessions |
+| `/member/profile` | `member.profile` | `requiresMember` |
+| `/member/account` | redirect → profile | compatibility alias |
+| `/member/security` | `member.security` | password / email / delete |
 
 ### Pack examples (adaptive)
 
@@ -251,7 +263,7 @@ Do **not** put Spatie on `mem_members`.
 3. `email_verified_at` if `requires_verified`.
 4. Optional future: plan/entitlement from vertical billing (out of scope).
 
-### Storage options (decide at P1)
+### Storage options (capability overrides)
 
 | Option | Pros | Cons |
 | :--- | :--- | :--- |
@@ -259,7 +271,7 @@ Do **not** put Spatie on `mem_members`.
 | **B. `mem_member_capabilities` JSON** | Overrides / beta flags | Sync story on deactivate |
 | **C. Entitlement service port** | Ready for billing | Overkill until P5 vertical |
 
-**RFC default:** **Option A** until a product needs per-reader grants; keep a port interface so B/C can plug in.
+**Default:** **Option A** until a product needs per-reader grants; keep a port interface so B/C can plug in.
 
 ---
 
@@ -269,9 +281,11 @@ Keep existing:
 
 - `POST /api/v1/public/member/register|login`
 - `GET /api/v1/member/me`
+- `PATCH /api/v1/member/profile`
+- `POST /api/v1/member/profile/avatar`
 - Bookmarks under `/api/v1/member/bookmarks` (already gated)
 
-Add (phased):
+Live portal APIs:
 
 | Endpoint | Notes |
 | :--- | :--- |
@@ -335,9 +349,10 @@ Console UI: list (DataTable + bulk), create/edit forms, detail page with activit
 
 ## 12. Open questions
 
-1. Should `/member/account` remain canonical or redirect permanently to `/member/profile`?
-2. Guest bookmarks (cookie) vs require login — product call.
-3. Does `INSTALL_PROFILE=cms` (Site off) need a minimal member SPA, or is Site always required for portal?
+1. Guest bookmarks (cookie) vs require login — product call.
+2. Does `INSTALL_PROFILE=cms` (Site off) need a minimal member SPA, or is Site always required for portal?
+
+Resolved: `/member/account` redirects to `/member/profile` (compatibility alias only).
 
 ---
 

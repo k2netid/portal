@@ -31,9 +31,27 @@ class ProfileController extends BaseApiController
             return $this->validationError($e->errors());
         }
 
-        $member->update(MemberPublicProfile::profileFillAttributes($validated));
+        $fills = MemberPublicProfile::profileFillAttributes($validated);
+        $avatarProvided = array_key_exists('avatar', $fills);
+        $nextAvatar = $avatarProvided ? $fills['avatar'] : null;
+        if ($avatarProvided) {
+            unset($fills['avatar']);
+        }
 
-        return $this->success($member->fresh()?->toPublicProfile() ?? MemberPublicProfile::serialize($member), 'Profile updated');
+        if ($fills !== []) {
+            $member->update($fills);
+        }
+
+        if ($avatarProvided) {
+            app(MemberAvatarUploader::class)->replaceUrl(
+                $member->fresh() ?? $member,
+                is_string($nextAvatar) ? $nextAvatar : null,
+            );
+        }
+
+        $fresh = $member->fresh() ?? $member;
+
+        return $this->success($fresh->toPublicProfile(), 'Profile updated');
     }
 
     public function uploadAvatar(Request $request): JsonResponse

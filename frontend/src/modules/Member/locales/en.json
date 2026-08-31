@@ -72,6 +72,7 @@
       "avatarInvalidType": "Please choose an image file.",
       "avatarTooLarge": "Image must be 2 MB or smaller.",
       "avatarUploadFailed": "Could not upload avatar.",
+      "avatarRemoving": "Removing…",
       "applyAvatar": "Apply",
       "bio": "Bio",
       "bioHint": "A short note about you (optional).",
