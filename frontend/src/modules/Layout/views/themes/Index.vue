@@ -91,7 +91,8 @@
           >
           <ThemeCardLivePreview
             v-else-if="theme.is_active && (theme.type || 'frontend') === 'frontend'"
-            src="/"
+            :key="`live-preview-${theme.slug}-${previewRev}`"
+            :src="livePreviewSrc"
             :title="`${theme.name} live preview`"
           />
           <div
@@ -231,6 +232,17 @@
             >
               <CheckCircle class="w-4 h-4" />
             </Button>
+            <Button
+              v-if="hasSampleData(theme)"
+              variant="outline"
+              size="icon"
+              :disabled="installingSample === theme.slug"
+              :aria-label="$t('layout.themes.actions.installSample')"
+              :title="$t('layout.themes.actions.installSample')"
+              @click="installSampleData(theme)"
+            >
+              <Database class="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </div>
@@ -273,16 +285,22 @@ import { EmptyState } from '@/shared/components/feedback';
 import { PageHeader } from '@/shared/components/shell';
 
 import { logger } from '@/shared/utils/logger';
-import { ref, onMounted, toRaw } from 'vue';
+import { ref, onMounted, toRaw, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/engine/api/client';
 import toast from '@/shared/services/toastService';
 import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl';
+import {
+  buildThemeCardPreviewUrl,
+  clearFrontendThemeSnapshot,
+  notifyFrontendThemeActivated,
+} from '@/modules/Layout/utils/themeActivationSync';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 import {
   Check,
   CheckCircle,
+  Database,
   Eye,
   Image,
   Palette,
@@ -295,6 +313,10 @@ import { useI18n } from 'vue-i18n';
 import { Badge, Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui';
 
 const publicPreviewUrl = resolvePublicEmbedUrl('/');
+
+// Drop stale public snapshot before the card iframe mounts (same-origin sessionStorage).
+clearFrontendThemeSnapshot();
+
 const { t } = useI18n();
 const { confirm } = useConfirm();
 const router = useRouter();
@@ -318,18 +340,32 @@ interface Theme {
 const themes = ref<Theme[]>([]);
 const selectedType = ref('all');
 const scanning = ref(false);
+const installingSample = ref<string | null>(null);
 const uploading = ref(false);
 const uploadEnabled = ref(false);
 const zipInputRef = ref<HTMLInputElement | null>(null);
 const showPreviewModal = ref(false);
 const selectedTheme = ref<Theme | null>(null);
+/** Bust theme card iframe preview after activate / sample install. */
+const previewRev = ref(Date.now());
+
+const livePreviewSrc = computed(() => buildThemeCardPreviewUrl(previewRev.value));
+
+const bumpPreviewRev = () => {
+    previewRev.value = Date.now();
+};
 
 const fetchThemes = async () => {
     try {
         const params = selectedType.value ? { type: selectedType.value } : {};
         const response = await api.get('/manage/layout/themes', { params });
         const { data } = parseResponse(response);
-        themes.value = ensureArray(data);
+        const rows = ensureArray(data) as Theme[];
+        themes.value = rows.sort((a, b) => {
+            if (a.is_active && !b.is_active) return -1;
+            if (!a.is_active && b.is_active) return 1;
+            return (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' });
+        });
     } catch (error: unknown) {
         logger.error('Failed to fetch themes:', error);
         themes.value = [];
@@ -351,6 +387,48 @@ const scanThemes = async () => {
     }
 };
 
+const SAMPLE_DATA_SLUGS = new Set(['janari', 'sarangenge', 'layung']);
+
+const hasSampleData = (theme: Theme) =>
+  (theme.type || 'frontend') === 'frontend' && SAMPLE_DATA_SLUGS.has(theme.slug);
+
+const installSampleData = async (theme: Theme) => {
+  const confirmed = await confirm({
+    title: t('layout.themes.actions.installSample'),
+    message: t('layout.themes.messages.installSampleConfirm', { name: theme.name }),
+    variant: 'info',
+    confirmText: t('layout.themes.actions.installSample'),
+  });
+
+  if (!confirmed) return;
+
+  installingSample.value = theme.slug;
+  try {
+    const response = await api.post(`/manage/layout/themes/${theme.slug}/install-sample`, {
+      force: false,
+    });
+    const result = response.data?.data;
+    const menus = result?.menus_installed ?? 0;
+    const pages = result?.pages_installed ?? 0;
+    toast.success(
+      t('layout.themes.messages.installSampleSuccess', { menus, pages }),
+    );
+    if (theme.is_active) {
+      bumpPreviewRev();
+    }
+    if (Array.isArray(result?.warnings) && result.warnings.length > 0) {
+      logger.debug('Sample data install warnings', { warnings: result.warnings });
+    }
+  } catch (error: unknown) {
+    logger.error('Failed to install sample data:', error);
+    toast.error(
+      error instanceof Error ? error.message : t('layout.themes.messages.installSampleFailed'),
+    );
+  } finally {
+    installingSample.value = null;
+  }
+};
+
 const activateTheme = async (theme: Theme) => {
     const confirmed = await confirm({
         title: t('layout.themes.actions.activate'),
@@ -363,8 +441,9 @@ const activateTheme = async (theme: Theme) => {
 
     try {
         await api.post(`/manage/layout/themes/${theme.slug}/activate`);
-        const { notifyFrontendThemeActivated } = await import('@/modules/Layout/utils/themeActivationSync');
         notifyFrontendThemeActivated(theme.slug);
+        clearFrontendThemeSnapshot();
+        bumpPreviewRev();
         await fetchThemes();
         toast.success(t('layout.themes.messages.activateSuccess'));
     } catch (error: unknown) {

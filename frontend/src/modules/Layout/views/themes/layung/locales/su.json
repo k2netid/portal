@@ -19,7 +19,12 @@
     "signIn": "Portal Klién",
     "account": "Akun Pausahaan",
     "getStarted": "Pénta Panawaran",
-    "selectLanguage": "Pilih Basa:"
+    "selectLanguage": "Pilih Basa:",
+    "themeAriaLight": "Aktipkeun mode caang",
+    "themeAriaDark": "Aktipkeun mode poek"
+  },
+  "common": {
+    "breadcrumbAria": "Breadcrumb"
   },
   "footer": {
     "description": "Layung Network mangrupakeun panyadia infrastruktur serat optik gancang pisan, konéksi dedicated 1:1, sarta Managed IT Services kalayan jaminan SLA 99.999% pikeun korporasi sareng lembaga.",
@@ -111,11 +116,31 @@
     },
     "blog": {
       "title": "Warta Téknologi & Béwara Jaringan",
-      "subtitle": "Artikel ngeunaan trén cyber security, téknologi cloud, sarta jadwal pangropéa jaringan berkala."
+      "subtitle": "Artikel ngeunaan trén cyber security, téknologi cloud, sarta jadwal pangropéa jaringan berkala.",
+      "sectionBadge": "Warta Téknologi & Béwara Jaringan",
+      "allCategories": "Sadaya Warta",
+      "catInfra": "Infrastruktur Fiber",
+      "catSecurity": "Cyber Security",
+      "catCloud": "Cloud & SD-WAN",
+      "catMaintenance": "Béwara Pangropéa",
+      "noPosts": "Teu acan aya artikel pikeun kategori ieu.",
+      "noPostsHint": "Pilih kategori séjén atanapi antosan publikasi artikel anyar."
     },
     "search": {
       "title": "Paluruh Layanan & Dokuméntasi",
       "subtitle": "Panggihan inpormasi pakét, pituduh konfigurasi, sarta artikel téknis Layung kalayan gancang."
+    },
+    "disabled": {
+      "defaultTitle": "Kaca Teu Sadia",
+      "defaultMessage": "Kaca ieu teu tiasa diakses atanapi dinonaktifkeun ku administrator jaringan.",
+      "backHome": "Balik ka Tepas"
     }
+  },
+  "cta": {
+    "badge": "Konsultasi Arsitéktur Jaringan Gratis",
+    "title": "Siap Ngagancangkeun Bisnis Anjeun Tanpa Wates?",
+    "subtitle": "Hubungi tim Solution Architect sareng Network Engineer kami ayeuna pikeun survei lokasi, uji throughput, sareng panawaran khusus SLA Enterprise 2026.",
+    "primary": "Pénta Panawaran / Survei Gratis",
+    "whatsapp": "Chat WhatsApp NOC & Sales"
   }
 }

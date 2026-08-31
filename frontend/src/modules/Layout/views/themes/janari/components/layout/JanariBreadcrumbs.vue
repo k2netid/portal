@@ -2,7 +2,7 @@
   <nav
     v-if="crumbs.length > 0"
     class="janari-bc"
-    aria-label="Breadcrumb"
+    :aria-label="breadcrumbAria"
   >
     <template
       v-for="(crumb, index) in crumbs"
@@ -38,6 +38,7 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 
 const route = useRoute()
 const { t: tt } = useThemeI18n('janari')
+const breadcrumbAria = computed(() => tt('common.breadcrumbAria'))
 
 /** Public path → theme locale key (artist-bar crumbs). */
 const PUBLIC_CRUMB_KEYS: Record<string, string> = {

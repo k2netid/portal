@@ -12,6 +12,24 @@
       >
     </div>
 
+    <!-- Theme-bound page hint -->
+    <div
+      v-if="usesThemeTemplate"
+      class="flex gap-3 p-4 rounded-2xl border border-amber-500/30 bg-amber-500/5 text-sm"
+    >
+      <Info class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+      <div class="space-y-1">
+        <p class="font-semibold text-foreground">
+          {{ t('publishing.content.themeTemplate.title', 'Halaman terikat template tema') }}
+        </p>
+        <p class="text-muted-foreground text-xs leading-relaxed">
+          {{ isBuilderOverrideActive
+            ? t('publishing.content.themeTemplate.hasBlocks', 'Override builder aktif — situs publik merender blok Visual Builder, bukan layout Vue tema.')
+            : t('publishing.content.themeTemplate.description', 'Situs publik memakai layout tema Vue (aman, tidak pecah). Settings/menu/SEO bisa diubah; buka Visual Builder hanya jika ingin override penuh halaman.') }}
+        </p>
+      </div>
+    </div>
+
     <!-- Visual Builder Quick Banner -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl border border-border bg-muted/20 transition-all hover:border-primary/30">
       <div class="flex items-center gap-3">
@@ -70,7 +88,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
 import { Button, Badge } from '@/shared/components/ui';
-import { LayoutTemplate, Palette } from 'lucide-vue-next';
+import { LayoutTemplate, Palette, Info } from 'lucide-vue-next';
 import type { ContentForm } from '@/modules/Publishing/types/content';
 
 const props = defineProps<{
@@ -98,6 +116,15 @@ const hasBuilderBlocks = computed(() => {
 
 const builderBlocksCount = computed(() => {
   return Array.isArray(builderBlocks.value) ? builderBlocks.value.length : 0;
+});
+
+const usesThemeTemplate = computed(() => {
+  const meta = props.modelValue.meta;
+  return typeof meta?.theme_page === 'string' && meta.theme_page.trim() !== '';
+});
+
+const isBuilderOverrideActive = computed(() => {
+  return usesThemeTemplate.value && props.modelValue.meta?.builder_override === true && hasBuilderBlocks.value;
 });
 
 const updateField = (field: string, value: unknown) => {

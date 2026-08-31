@@ -235,6 +235,7 @@ import api from '@/engine/api/client';
 import { publishingPaths } from '@/engine/api/paths';
 import { normalizeLocaleCode } from '@/engine/i18n';
 import { resolveLocalizedContentField } from '@/modules/Layout/utils/resolveLocalizedContent';
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import { Archive } from 'lucide-vue-next';
 import {
     hasSubstantivePublicContent,
@@ -277,7 +278,7 @@ const builderBlocks = computed(() => {
     }
     return [];
 });
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value as Record<string, unknown> | null));
 const hasFeaturedImage = computed(() => Boolean(pageData.value?.featured_image));
 const pageTypeLabel = computed(() => (pageData.value?.type || 'page').toUpperCase());
 const featuredImagePosition = computed(() => {

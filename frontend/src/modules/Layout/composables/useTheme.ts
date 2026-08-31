@@ -17,6 +17,9 @@ import {
     FRONTEND_THEME_ACTIVATION_REV_KEY,
     FRONTEND_THEME_SNAPSHOT_KEY,
     clearFrontendThemeSnapshot,
+    isThemeCardEmbedPreview,
+    readFrontendThemeActivationRev,
+    snapshotMatchesActivationRev,
 } from '@/modules/Layout/utils/themeActivationSync';
 
 export interface ThemeManifest {
@@ -183,6 +186,8 @@ const writeThemeSnapshot = (): void => {
 };
 
 const initialThemeSnapshot = readThemeSnapshot();
+const initialEmbedPreview = typeof window !== 'undefined' && isThemeCardEmbedPreview();
+const initialActivationRev = readFrontendThemeActivationRev();
 if (typeof window !== 'undefined') {
     const search = window.location.search;
     const previewSlug = isCustomizerPreviewQuery(search) ? readThemeSlugFromQuery(search) : null;
@@ -191,7 +196,17 @@ if (typeof window !== 'undefined') {
             ? initialThemeSnapshot.activeTheme.slug.toLowerCase()
             : '';
 
-    if (previewSlug && snapSlug && snapSlug !== previewSlug) {
+    if (initialEmbedPreview) {
+        clearFrontendThemeSnapshot();
+        lastLoadedAt = 0;
+    } else if (
+        initialThemeSnapshot
+        && initialActivationRev?.slug
+        && !snapshotMatchesActivationRev(initialThemeSnapshot.activeTheme?.slug)
+    ) {
+        clearFrontendThemeSnapshot();
+        lastLoadedAt = 0;
+    } else if (previewSlug && snapSlug && snapSlug !== previewSlug) {
         // Customizer iframe: never first-paint the wrong package (kills click-highlight targets).
         activeTheme.value = {
             name: previewSlug,
@@ -199,7 +214,7 @@ if (typeof window !== 'undefined') {
             type: 'frontend',
         };
         lastLoadedAt = 0;
-    } else if (initialThemeSnapshot) {
+    } else if (initialThemeSnapshot && snapshotMatchesActivationRev(initialThemeSnapshot.activeTheme?.slug)) {
         activeTheme.value = initialThemeSnapshot.activeTheme;
         themeSettings.value = initialThemeSnapshot.themeSettings;
         themeAssets.value = initialThemeSnapshot.themeAssets;
@@ -235,9 +250,10 @@ export function useTheme() {
             return;
         }
         const force = options?.force === true;
+        const embedPreview = typeof window !== 'undefined' && isThemeCardEmbedPreview();
 
         // Drop stale public snapshot before a forced reconcile (not in customizer iframe).
-        if (force && type === 'frontend' && typeof window !== 'undefined') {
+        if ((force || embedPreview) && type === 'frontend' && typeof window !== 'undefined') {
             const search = window.location.search;
             if (!isCustomizerPreviewQuery(search)) {
                 clearFrontendThemeSnapshot();
@@ -252,7 +268,7 @@ export function useTheme() {
 
         const cacheIsFresh = Date.now() - lastLoadedAt < THEME_CACHE_TTL_MS;
         // Return immediately if cached theme is still fresh
-        if (activeTheme.value && type === 'frontend' && !loading.value && !force && cacheIsFresh) {
+        if (activeTheme.value && type === 'frontend' && !loading.value && !force && !embedPreview && cacheIsFresh) {
             return;
         }
 
@@ -466,8 +482,8 @@ export function useTheme() {
 
             lastLoadedAt = Date.now();
             error.value = null;
-            // Preview drafts must not poison public sessionStorage (same-origin as console).
-            if (!previewMode) {
+            // Preview drafts + theme-card embed must not poison public sessionStorage.
+            if (!previewMode && !embedPreview) {
                 writeThemeSnapshot();
             }
 

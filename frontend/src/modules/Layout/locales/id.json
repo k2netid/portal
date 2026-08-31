@@ -316,7 +316,8 @@
       "openCustomizer": "Buka Customizer",
       "preview": "Pratinjau",
       "settings": "Pengaturan",
-      "validate": "Validasi"
+      "validate": "Validasi",
+      "installSample": "Pasang Sample Data"
     },
     "uploading": "Mengunggah…",
     "source": {
@@ -334,7 +335,10 @@
       "scanSuccess": "Pemindaian selesai! Menemukan {count} tema.",
       "validateError": "Gagal memvalidasi tema",
       "validateFailed": "Validasi tema gagal:",
-      "validateSuccess": "Tema valid!"
+      "validateSuccess": "Tema valid!",
+      "installSampleConfirm": "Pasang sample data untuk \"{name}\"? Menu + pengaturan tema + shell halaman CMS akan diisi. Situs publik tetap memakai layout Vue tema (tidak diganti builder blocks). Edit copy lewat Customizer/Menus; Visual Builder hanya untuk override penuh.",
+      "installSampleFailed": "Gagal memasang sample data",
+      "installSampleSuccess": "Sample data terpasang: {menus} menu, {pages} shell halaman CMS. Layout Vue tema tetap utuh."
     },
     "list": {
       "by": "oleh {author}",
@@ -362,5 +366,8 @@
       "email": "Email",
       "frontend": "Frontend"
     }
+  },
+  "frontend": {
+    "backToTop": "Kembali ke atas"
   }
 }

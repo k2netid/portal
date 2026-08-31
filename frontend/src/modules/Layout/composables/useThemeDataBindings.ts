@@ -55,12 +55,13 @@ async function resolveSlotData(binding: SlotBinding): Promise<unknown[]> {
 
     try {
         if (binding.sourceType === 'api_posts') {
+            const orderBy = binding.orderBy || 'published_at'
+            const orderDir = binding.orderDir === 'asc' ? '' : '-'
             const params: Record<string, unknown> = {
                 type: 'post',
                 status: 'published',
                 per_page: binding.limit || 5,
-                sort_by: binding.orderBy || 'published_at',
-                sort_dir: binding.orderDir || 'desc',
+                sort: `${orderDir}${orderBy}`,
             }
             if (binding.categoryFilter && binding.categoryFilter !== 'all') {
                 params.category = binding.categoryFilter

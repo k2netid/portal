@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
 use Modules\Layout\Models\Theme;
+use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
+use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
+use Modules\Layout\SampleData\ThemeSampleDataReader;
 use Modules\Layout\Services\ThemePackageInstallService;
 use Modules\Layout\Services\ThemeService;
 
@@ -30,7 +33,8 @@ class ThemeController extends BaseApiController
 
         $themes = Theme::query()
             ->ofType($type)
-            ->latest()
+            ->orderByDesc('is_active')
+            ->orderBy('name')
             ->get();
 
         // Attach manifest to each theme
@@ -453,5 +457,57 @@ class ThemeController extends BaseApiController
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), 500);
         }
+    }
+
+    public function installSample(
+        Request $request,
+        Theme $theme,
+        ThemeSampleDataReader $reader,
+        ThemeSampleDataOrchestrator $orchestrator,
+    ): JsonResponse {
+        if (($theme->type ?? 'frontend') !== 'frontend') {
+            return $this->validationError(
+                ['theme' => ['Sample data is only available for frontend themes.']],
+                'Invalid theme type'
+            );
+        }
+
+        if (! $reader->hasBundle((string) $theme->slug)) {
+            return $this->validationError(
+                ['theme' => ['This theme has no sample-data bundle.']],
+                'Sample data not available'
+            );
+        }
+
+        $validated = $request->validate([
+            'force' => 'sometimes|boolean',
+            'only' => 'sometimes|string|max:120',
+        ]);
+
+        $onlyRaw = $validated['only'] ?? null;
+        $onlyParts = is_string($onlyRaw) && trim($onlyRaw) !== ''
+            ? array_map('trim', explode(',', strtolower($onlyRaw)))
+            : null;
+
+        $options = new ThemeSampleDataInstallOptions(
+            force: (bool) ($validated['force'] ?? false),
+            menus: $onlyParts === null || in_array('menus', $onlyParts, true),
+            settings: $onlyParts === null || in_array('settings', $onlyParts, true),
+            pages: $onlyParts === null || in_array('pages', $onlyParts, true),
+            forms: $onlyParts === null || in_array('forms', $onlyParts, true),
+        );
+
+        try {
+            $result = $orchestrator->install($theme->fresh() ?? $theme, $options);
+        } catch (\Throwable $e) {
+            Log::error('Theme sample data install failed', [
+                'theme_slug' => $theme->slug,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->error($e->getMessage(), 422);
+        }
+
+        return $this->success($result->toArray(), 'Theme sample data installed successfully');
     }
 }

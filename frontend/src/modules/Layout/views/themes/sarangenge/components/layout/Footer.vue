@@ -3,8 +3,8 @@
     data-ja-customizer-target="footer"
     class="border-t border-border/80 bg-card/95 backdrop-blur-md text-foreground transition-colors relative z-10"
   >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
         <!-- Col 1: School Identity -->
         <div class="lg:col-span-2 space-y-4">
           <div class="flex items-center gap-3.5">

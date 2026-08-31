@@ -23,7 +23,7 @@
     >
       <!-- Header -->
       <!-- Header -->
-      <header class="relative py-12 md:py-32 mb-8 md:mb-12 overflow-hidden border-b border-border/40">
+      <header class="relative py-10 md:py-14 mb-6 md:mb-8 overflow-hidden border-b border-border/40">
         <div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-background z-0" />
         <div class="container mx-auto px-4 text-center max-w-4xl relative z-10">
           <div class="flex items-center justify-center gap-3 mb-6 md:mb-8">
@@ -172,6 +172,7 @@ import { normalizeLocaleCode } from '@/engine/i18n';
 import { PublishingService } from '@/modules/Publishing/services/publishingService';
 import { useJanariIdentity } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride';
 
 import { useIconHydration } from '@/shared/composables/useIconHydration';
 import { Calendar, User } from 'lucide-vue-next';
@@ -191,12 +192,12 @@ const authorFallback = computed(() => {
   const tpl = localizedString('page_post_author_fallback') || '{site} Editorial'
   return tpl.replace(/\{site\}/g, displaySiteName.value || 'Jejakawan')
 });
-const authorRole = computed(() => localizedString('page_post_author_role') || 'Editor');
+const authorRole = computed(() => localizedString('page_post_author_role') || t('theme.janari.pages.post.authorRole'));
 const notFoundText = computed(() => localizedString('page_post_not_found') || t('publishing.frontend.post.notFound'));
 const backToBlogText = computed(() => localizedString('page_post_back_to_blog') || t('publishing.frontend.post.backToBlog'));
 
 const builderBlocks = computed(() => (post.value?.meta?.builder_blocks as any[]) || []);
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0);
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(post.value as Record<string, unknown> | null));
 
 watch(() => post.value, () => {
     nextTick(() => {

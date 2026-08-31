@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="news"
-    class="layung-theme flex-1 flex flex-col py-10 sm:py-16"
+    class="layung-theme flex-1 flex flex-col py-10 md:py-12"
   >
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -9,22 +9,21 @@
       :context="{ post: pageData, site: { name: displayCompanyName } }"
     />
 
-    <ThemeSafeHtml
-      v-else-if="cmsBody"
-      class="container mx-auto px-4 py-16"
-      :html="cmsBody"
-      mode="publishing"
-    />
-
     <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 w-full">
-        <!-- Breadcrumb & Header -->
+      <ThemeSafeHtml
+        v-if="cmsBody"
+        class="sr-only"
+        :html="cmsBody"
+        mode="publishing"
+      />
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
         <div class="space-y-4">
           <Breadcrumb :items="[{ name: t('pages.blog.title', 'Warta & Berita Jaringan') }]" />
           <div class="max-w-3xl space-y-3">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-500 font-mono">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 dark:text-orange-400 font-mono">
               <Newspaper class="w-3.5 h-3.5" />
-              Warta Teknologi & Notifikasi Jaringan
+              {{ t('pages.blog.sectionBadge', 'Warta Teknologi & Notifikasi Jaringan') }}
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
               {{ t('pages.blog.title', 'Warta Teknologi & Notifikasi Jaringan') }}
@@ -35,21 +34,19 @@
           </div>
         </div>
 
-        <!-- Category Filters -->
         <div class="flex flex-wrap gap-2 text-xs font-mono">
           <button
             v-for="cat in categories"
             :key="cat.slug"
             type="button"
             class="px-3.5 py-1.5 rounded-full border transition-all"
-            :class="selectedCategory === cat.slug ? 'bg-orange-500 text-white font-bold border-orange-500 shadow-sm' : 'border-border text-muted-foreground hover:bg-muted/80'"
+            :class="selectedCategory === cat.slug ? 'bg-orange-500 text-white font-bold border-orange-500 shadow-sm' : 'border-border text-muted-foreground hover:bg-muted/80 hover:text-foreground'"
             @click="selectedCategory = cat.slug"
           >
             {{ cat.name }}
           </button>
         </div>
 
-        <!-- Posts Grid -->
         <div
           v-if="loading"
           class="min-h-[300px] flex items-center justify-center font-mono text-xs text-muted-foreground"
@@ -59,7 +56,7 @@
 
         <div
           v-else-if="filteredPosts.length > 0"
-          class="grid grid-cols-1 md:grid-cols-3 gap-8"
+          class="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           <PostCard
             v-for="post in filteredPosts"
@@ -70,11 +67,14 @@
 
         <div
           v-else
-          class="py-16 text-center text-muted-foreground border-2 border-dashed border-border rounded-2xl"
+          class="py-12 text-center text-muted-foreground border-2 border-dashed border-border rounded-2xl space-y-2"
         >
-          <Newspaper class="w-12 h-12 mx-auto mb-3 opacity-40" />
-          <p class="text-sm">
-            Belum ada artikel untuk kategori ini.
+          <Newspaper class="w-12 h-12 mx-auto opacity-70" />
+          <p class="text-sm font-semibold text-foreground">
+            {{ t('pages.blog.noPosts', 'Belum ada artikel untuk kategori ini.') }}
+          </p>
+          <p class="text-xs text-muted-foreground">
+            {{ t('pages.blog.noPostsHint', 'Pilih kategori lain atau tunggu publikasi artikel baru.') }}
           </p>
         </div>
       </div>
@@ -93,6 +93,7 @@ import Breadcrumb from '@/modules/Layout/views/themes/layung/components/shared/B
 import PostCard from '@/modules/Layout/views/themes/layung/components/blog/PostCard.vue';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import apiClient from '@/engine/api/client';
+import { publishingPaths } from '@/engine/api/paths';
 
 const { t } = useThemeI18n('layung');
 const { displayCompanyName } = useLayungIdentity();
@@ -102,13 +103,13 @@ const posts = ref<any[]>([]);
 const loading = ref(true);
 const selectedCategory = ref('');
 
-const categories = [
-  { name: 'Semua Warta', slug: '' },
-  { name: 'Infrastruktur Fiber', slug: 'infrastruktur' },
-  { name: 'Cyber Security', slug: 'security' },
-  { name: 'Cloud & SD-WAN', slug: 'cloud' },
-  { name: 'Notifikasi Maintenance', slug: 'maintenance' },
-];
+const categories = computed(() => [
+  { name: t('pages.blog.allCategories', 'Semua Warta'), slug: '' },
+  { name: t('pages.blog.catInfra', 'Infrastruktur Fiber'), slug: 'infrastruktur' },
+  { name: t('pages.blog.catSecurity', 'Cyber Security'), slug: 'security' },
+  { name: t('pages.blog.catCloud', 'Cloud & SD-WAN'), slug: 'cloud' },
+  { name: t('pages.blog.catMaintenance', 'Notifikasi Maintenance'), slug: 'maintenance' },
+]);
 
 const filteredPosts = computed(() => {
   if (!selectedCategory.value) return posts.value;
@@ -121,46 +122,15 @@ const filteredPosts = computed(() => {
 });
 
 onMounted(async () => {
+  loading.value = true;
   try {
-    const res = await apiClient.get('/public/publishing/contents', {
-      params: { type: 'post', limit: 12 }
+    const res = await apiClient.get(publishingPaths.publicContents, {
+      params: { type: 'post', per_page: 12, status: 'published', sort: '-published_at' },
     });
-    if (res.data?.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
-      posts.value = res.data.data;
-    } else {
-      throw new Error('No posts');
-    }
+    const data = res.data;
+    posts.value = Array.isArray(data) ? data : data?.data || [];
   } catch {
-    // Fallback static sample posts
-    posts.value = [
-      {
-        id: '1',
-        title: 'Upgrade Kapasitas Peering IIX APJII Menjadi 100 Gbps untuk Akselerasi CDN',
-        slug: 'upgrade-peering-iix-100gbps',
-        excerpt: 'Layung Network resmi mengaktifkan interkoneksi 100G ke gedung Cyber untuk mengantisipasi lonjakan trafik video streaming dan cloud gaming.',
-        published_at: '2026-08-15',
-        read_time: 4,
-        category: { name: 'Infrastruktur Fiber', slug: 'infrastruktur' },
-      },
-      {
-        id: '2',
-        title: 'Mitigasi Serangan DDoS Multi-Vektor: Panduan Arsitektur SOC Korporat',
-        slug: 'mitigasi-ddos-multi-vektor',
-        excerpt: 'Pelajari bagaimana integrasi BGP Anycast dan scrub center lokal mampu menyaring serangan volume tinggi tanpa mengganggu operasional aplikasi.',
-        published_at: '2026-08-20',
-        read_time: 6,
-        category: { name: 'Cyber Security', slug: 'security' },
-      },
-      {
-        id: '3',
-        title: 'Jadwal Pemeliharaan Berkala Kabel Bawah Laut Jalur Batam - Singapura',
-        slug: 'pemeliharaan-kabel-batam-singapura',
-        excerpt: 'Pemberitahuan resmi mengenai pemeliharaan preventif segmen kabel bawah laut internasional dengan pengalihan rute redundan otomatis.',
-        published_at: '2026-08-28',
-        read_time: 3,
-        category: { name: 'Notifikasi Maintenance', slug: 'maintenance' },
-      },
-    ];
+    posts.value = [];
   } finally {
     loading.value = false;
   }

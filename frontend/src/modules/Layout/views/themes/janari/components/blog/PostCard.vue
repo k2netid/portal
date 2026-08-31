@@ -42,7 +42,7 @@
           <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
             {{ post.author?.name ? post.author.name[0] : 'A' }}
           </div>
-          <span>{{ post.author?.name || 'Author' }}</span>
+          <span>{{ post.author?.name || authorFallback }}</span>
         </div>
         <span class="flex items-center gap-1">
           <Calendar class="w-4 h-4" />
@@ -65,7 +65,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { locale } = useI18n()
+const { t, locale } = useI18n({ useScope: 'global' })
+const authorFallback = computed(() => t('theme.janari.common.author'))
 const router = useRouter()
 
 const excerpt = computed(() => {

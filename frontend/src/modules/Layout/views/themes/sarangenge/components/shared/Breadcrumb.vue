@@ -1,7 +1,7 @@
 <template>
   <nav
     class="flex items-center gap-2 text-xs text-muted-foreground py-3"
-    aria-label="Breadcrumb"
+    :aria-label="t('common.breadcrumbAria', 'Breadcrumb')"
   >
     <router-link
       to="/"

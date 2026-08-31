@@ -16,7 +16,9 @@
         "viewAll": "Lihat semua",
         "dateUpdate": "{date} update",
         "dateDayOff": "{date} libur",
-        "readTimeMinutes": "{n} menit"
+        "readTimeMinutes": "{n} menit",
+        "author": "Penulis",
+        "breadcrumbAria": "Breadcrumb"
     },
     "header": {
         "officialLine1": "JEJAKAWAN",
@@ -39,7 +41,11 @@
         "navPricing": "Harga",
         "navNews": "Berita",
         "navContact": "Kontak",
-        "navSearch": "Cari"
+        "navSearch": "Cari",
+        "profile": "Akun saya",
+        "logout": "Keluar",
+        "marqueeDefault": "Pembaruan terbaru dari Jejakawan",
+        "memberFallback": "Anggota"
     },
     "hero": {
         "badgeDefault": "PLATFORM JEJAKAWAN",
@@ -51,7 +57,8 @@
         "ctaPricing": "Lihat harga"
     },
     "partners": {
-        "titleDefault": "DIPERCAYA OLEH PERUSAHAAN TERKEMUKA"
+        "titleDefault": "DIPERCAYA OLEH PERUSAHAAN TERKEMUKA",
+        "empty": "Belum ada partner. Hubungkan data binding Partners di Theme Customizer."
     },
     "cta": {
         "badgeDefault": "SIAP JALANKAN DI SATU HUB",
@@ -120,7 +127,13 @@
                     "description": "Roadmap terpisah.",
                     "link": "Detail"
                 }
-            }
+            },
+            "surveyBadge": "Suara pengguna",
+            "surveyTitle": "Apa kata pengguna?",
+            "surveySubtitle": "Umpan balik yang dikumpulkan dan ditampilkan secara dinamis dari survei situs.",
+            "surveyLoading": "Memuat data survei…",
+            "surveyUser": "Pengguna",
+            "surveyRole": "Anggota"
         },
         "pricing": {
             "sectionLabel": "Paket & harga",
@@ -129,7 +142,7 @@
             "perMonth": "per bulan",
             "yearly": "atau {price} / tahun",
             "users": "Hingga {n} pengguna",
-            "storage": "{n} penyimpanan",
+            "storage": "penyimpanan",
             "unlimited": "Tak terbatas",
             "cta": "Hubungi sales",
             "unavailable": "Katalog harga sedang disiapkan. Hubungi kami untuk penawaran khusus.",
@@ -168,7 +181,8 @@
                 }
             },
             "yearlyOnly": "per tahun (lisensi)",
-            "contactForPrice": "Hubungi sales"
+            "contactForPrice": "Hubungi sales",
+            "members": "anggota"
         },
         "solusi": {
             "sectionLabel": "Produk & solusi",
@@ -296,7 +310,9 @@
             "contentTypeDefault": "Konten",
             "searchResultsHeading": "Hasil pencarian",
             "latestArticlesHeading": "Artikel terbaru",
-            "searching": "Mencari…"
+            "searching": "Mencari…",
+            "featuredHeading": "Artikel unggulan",
+            "readCta": "BACA"
         },
         "contact": {
             "title": "Hubungi Kami",
@@ -322,7 +338,19 @@
             "formLoading": "Memuat formulir…",
             "formUnavailableTitle": "Formulir tidak tersedia",
             "formNotConfiguredTitle": "Formulir belum dikonfigurasi",
-            "formNoValidFields": "Formulir aktif tetapi tidak memiliki kolom yang valid untuk pengiriman publik."
+            "formNoValidFields": "Formulir aktif tetapi tidak memiliki kolom yang valid untuk pengiriman publik.",
+            "labelEmail": "Email resmi",
+            "labelPhone": "Telepon / WA",
+            "labelAddress": "Alamat",
+            "submit": "Kirim pesan",
+            "mapOpen": "Buka peta",
+            "mapDirections": "Petunjuk arah",
+            "copyAddress": "Salin alamat",
+            "shareLocation": "Bagikan lokasi",
+            "mapTitle": "Peta lokasi kontak",
+            "heroAlt": "Hero kontak",
+            "loadingPage": "Memuat halaman kontak…",
+            "setupHint": "Atur di Pengaturan → Identitas atau di Theme Customizer (bagian Contact)."
         },
         "career": {
             "title": "Karier di Jejakawan",
@@ -426,6 +454,9 @@
                     "cta": "Sales"
                 }
             }
+        },
+        "post": {
+            "authorRole": "Editor"
         }
     },
     "widgets": {
@@ -556,11 +587,13 @@
         "sectionTitle": "Pembaruan produk",
         "columnAnnouncements": "PENGUMUMAN",
         "columnAgenda": "AGENDA",
-        "columnHolidays": "JENDELA DUKUNGAN"
+        "columnHolidays": "JENDELA DUKUNGAN",
+        "empty": "Belum ada pembaruan. Publikasikan berita di Publishing."
     },
     "testimonials": {
         "badge": "SUARA PELANGGAN",
-        "title": "Tim yang mengirim di Jejakawan"
+        "title": "Tim yang mengirim di Jejakawan",
+        "empty": "Belum ada testimoni. Hubungkan data binding Testimonials di Theme Customizer."
     },
     "products": {
         "badge": "STACK PRODUK",

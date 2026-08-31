@@ -17,7 +17,7 @@
 
     <!-- Default Theme Template -->
     <template v-else>
-      <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
+      <header class="py-10 md:py-12 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
           <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">
             {{ sectionLabel }}
@@ -134,7 +134,8 @@ import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { usePlatformCatalog } from '@/modules/Layout/composables/usePlatformCatalog'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 
 const { t } = useThemeI18n('janari')
 const { locale } = useI18n({ useScope: 'global' })
@@ -143,7 +144,7 @@ const { localizedString } = useLocalizedThemeSetting()
 const { live, products, loading } = usePlatformCatalog()
 
 const { pageData } = usePublicPageContent('pricing')
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
 
 const sectionLabel = computed(() => localizedString('page_pricing_section_label') || t('pages.pricing.sectionLabel'))
 const pageTitle = computed(() => localizedString('page_pricing_title') || t('pages.pricing.title'))
@@ -154,8 +155,8 @@ const contactSalesText = computed(() => localizedString('page_pricing_contact_sa
 const footnoteText = computed(() => localizedString('page_pricing_footnote') || t('pages.pricing.footnote'))
 const perMonthLabel = computed(() => localizedString('page_pricing_per_month') || t('pages.pricing.perMonth'))
 const customEnterpriseLabel = computed(() => localizedString('page_pricing_custom') || t('pages.pricing.contactForPrice'))
-const membersLabel = computed(() => localizedString('page_pricing_members') || 'members')
-const storageLabel = computed(() => localizedString('page_pricing_storage') || 'storage')
+const membersLabel = computed(() => localizedString('page_pricing_members') || t('pages.pricing.members'))
+const storageLabel = computed(() => localizedString('page_pricing_storage') || t('pages.pricing.storage'))
 const unlimitedLabel = computed(() => localizedString('page_pricing_unlimited') || t('pages.pricing.unlimited'))
 const contactUrl = computed(() => {
   const raw = getSetting('page_pricing_contact_url', '/contact')
@@ -170,7 +171,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 
 const FEATURED_PACKAGE_ID = 'hub-growth'
 

@@ -14,7 +14,9 @@
     "account": "Account",
     "signIn": "Portal Sign In",
     "getStarted": "Admissions Info",
-    "selectLanguage": "Language"
+    "selectLanguage": "Language",
+    "themeAriaLight": "Enable light mode",
+    "themeAriaDark": "Enable dark mode"
   },
   "footer": {
     "description": "Sarangenge is inspired by the sunflower and the gentle morning dawn that nurtures noble character, academic mastery, and future-ready innovation.",
@@ -32,7 +34,8 @@
     "search": "Search News & Calendar",
     "searchPlaceholder": "Type keywords...",
     "publishedOn": "Published on",
-    "by": "by"
+    "by": "by",
+    "breadcrumbAria": "Breadcrumb"
   },
   "pages": {
     "home": {
@@ -67,7 +70,14 @@
       "title": "School News & Updates",
       "subtitle": "Official announcements, achievements, academic circulars, and student activity highlights.",
       "categories": "News Categories",
-      "noPosts": "No news articles found in this category."
+      "sectionBadge": "Academic Community News",
+      "allCategories": "All News",
+      "catPpdb": "Admissions & PPDB",
+      "catPrestasi": "Student Achievements",
+      "catKegiatan": "Student Activities",
+      "catAkademik": "Academics & Curriculum",
+      "noPosts": "No news articles found in this category.",
+      "noPostsHint": "Try another category or use search."
     },
     "post": {
       "title": "Article Detail",
@@ -131,6 +141,13 @@
       "empty": "No results found for that keyword.",
       "unavailable": "Search service is currently unavailable."
     }
+  },
+  "cta": {
+    "badge": "Blooming with the Morning Dawn",
+    "title": "Ready to Join the Sarangenge Family?",
+    "subtitle": "Get full details on enrollment quotas, selection schedules, scholarships, and curriculum consultation with our counselors.",
+    "primary": "Apply PPDB / Consultation",
+    "whatsapp": "Chat WhatsApp Hotline"
   },
   "customizer": {
     "sidebar": {

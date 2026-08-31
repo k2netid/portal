@@ -13,7 +13,8 @@
         'absolute z-50 w-9 h-9 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-transform hover:scale-110 flex items-center justify-center group',
         positionClass
       ]"
-      title="Back to Top"
+      :title="backToTopLabel"
+      :aria-label="backToTopLabel"
       @click="$emit('click')"
     >
       <svg
@@ -35,7 +36,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { HTMLAttributes } from 'vue';
+
+const { t } = useI18n({ useScope: 'global' })
+const backToTopLabel = computed(() => t('layout.frontend.backToTop'))
 
 withDefaults(defineProps<{
     show: boolean;

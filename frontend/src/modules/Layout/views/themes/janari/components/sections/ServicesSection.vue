@@ -1,7 +1,7 @@
 <template>
-  <section class="py-24 bg-muted/20 border-y border-border/50">
+  <section class="py-14 md:py-16 bg-muted/20 border-y border-border/50">
     <div class="container mx-auto px-6">
-      <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="text-center max-w-3xl mx-auto mb-8 md:mb-10">
         <span class="text-[9px] font-black tracking-[0.4em] uppercase text-primary mb-4 block">
           {{ badgeText }}
         </span>

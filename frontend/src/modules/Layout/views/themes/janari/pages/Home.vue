@@ -8,6 +8,13 @@
         :context="{ post: pageData, site: { name: 'Jejakawan' } }"
       />
 
+      <div
+        v-else-if="cmsLoading"
+        class="flex-1 flex items-center justify-center py-24 text-sm text-muted-foreground"
+      >
+        {{ t('theme.janari.common.loading') }}
+      </div>
+
       <!-- Dynamic Content if exists (e.g. from classic editor) -->
       <SafeHtml 
         v-else-if="cmsHtml" 
@@ -99,15 +106,16 @@ import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue'
 import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
 
 // Above-the-fold (LCP): static import
 import Hero from '../components/sections/Hero.vue'
 
 // Removed organization components
 const { t, locale } = useI18n({ useScope: 'global' })
-const { pageData } = usePublicPageContent('home')
-const cmsHtml = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const { pageData, loading: cmsLoading } = usePublicPageContent('home')
+const cmsHtml = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -117,7 +125,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 const ProductsSection = defineAsyncComponent(() => import('../components/sections/ProductsSection.vue'))
 const UpdateInformation = defineAsyncComponent(() => import('../components/sections/UpdateInformation.vue'))
 const Testimonials = defineAsyncComponent(() => import('../components/sections/Testimonials.vue'))
@@ -144,7 +152,15 @@ let sectionObserver: IntersectionObserver | null = null;
 
 const { data: dynamicTestimonials } = useThemeDataBindings('testimonials', 'items')
 
-const activeSections = computed(() => (getSetting('home_sections') as string[]) || ['hero', 'products', 'updates', 'partners', 'testimonials', 'cta']);
+const DEFAULT_HOME_SECTIONS = ['hero', 'products', 'updates', 'partners', 'testimonials', 'cta'] as const
+
+const activeSections = computed(() => {
+  const raw = getSetting('home_sections', DEFAULT_HOME_SECTIONS)
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map(String)
+  }
+  return [...DEFAULT_HOME_SECTIONS]
+});
 const isSectionActive = (section: string) => activeSections.value.includes(section);
 
 const testimonialData = computed<Testimonial[]>(() => dynamicTestimonials.value.map((item: any) => ({ 
@@ -169,40 +185,15 @@ const mountedSections = ref<Record<string, boolean>>({
 });
 
 const observeSectionMount = () => {
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-        mountedSections.value = {
-            products: true,
-            updates: true,
-            partners: true,
-            testimonials: true,
-            cta: true,
-        };
-        return;
-    }
-
-    const map: Array<{ key: keyof typeof mountedSections.value; el: HTMLElement | null }> = [
-        { key: 'products', el: productsRef.value },
-        { key: 'updates', el: updatesRef.value },
-        { key: 'partners', el: partnersRef.value },
-        { key: 'testimonials', el: testimonialsRef.value },
-        { key: 'cta', el: ctaRef.value },
-    ];
-
-    sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const key = (entry.target as HTMLElement).dataset.sectionKey as keyof typeof mountedSections.value | undefined;
-            if (!key) return;
-            mountedSections.value[key] = true;
-            sectionObserver?.unobserve(entry.target);
-        });
-    }, { rootMargin: '300px 0px' });
-
-    map.forEach(({ key, el }) => {
-        if (!el || mountedSections.value[key]) return;
-        el.dataset.sectionKey = key;
-        sectionObserver?.observe(el);
-    });
+    // Mount below-fold sections immediately so homepage never looks "cut off"
+    // after the hero (IntersectionObserver alone left empty placeholders).
+    mountedSections.value = {
+        products: true,
+        updates: true,
+        partners: true,
+        testimonials: true,
+        cta: true,
+    };
 };
 
 onMounted(() => {

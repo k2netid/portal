@@ -16,7 +16,9 @@
         "viewAll": "View All",
         "dateUpdate": "{date} update",
         "dateDayOff": "{date} day off",
-        "readTimeMinutes": "{n} min"
+        "readTimeMinutes": "{n} min",
+        "author": "Author",
+        "breadcrumbAria": "Breadcrumb"
     },
     "header": {
         "officialLine1": "JEJAKAWAN",
@@ -39,7 +41,11 @@
         "navPricing": "Pricing",
         "navNews": "News",
         "navContact": "Contact",
-        "navSearch": "Search"
+        "navSearch": "Search",
+        "profile": "My account",
+        "logout": "Log out",
+        "marqueeDefault": "Latest updates from Jejakawan",
+        "memberFallback": "Member"
     },
     "hero": {
         "badgeDefault": "JEJAKAWAN PLATFORM",
@@ -51,7 +57,8 @@
         "ctaPricing": "View pricing"
     },
     "partners": {
-        "titleDefault": "TRUSTED BY LEADING ENTERPRISES"
+        "titleDefault": "TRUSTED BY LEADING ENTERPRISES",
+        "empty": "No partners yet. Connect the Partners data binding in Theme Customizer."
     },
     "cta": {
         "badgeDefault": "READY TO SHIP ON ONE HUB",
@@ -120,7 +127,13 @@
                     "description": "Roadmap terpisah.",
                     "link": "Detail"
                 }
-            }
+            },
+            "surveyBadge": "User voices",
+            "surveyTitle": "What users say",
+            "surveySubtitle": "Feedback collected and shown dynamically from site surveys.",
+            "surveyLoading": "Loading survey data…",
+            "surveyUser": "User",
+            "surveyRole": "Member"
         },
         "pricing": {
             "sectionLabel": "Plans & pricing",
@@ -129,7 +142,7 @@
             "perMonth": "per month",
             "yearly": "or {price} / year",
             "users": "Up to {n} users",
-            "storage": "{n} storage",
+            "storage": "storage",
             "unlimited": "Unlimited",
             "cta": "Contact sales",
             "unavailable": "Pricing catalog is being prepared. Contact us for a custom quote.",
@@ -168,7 +181,8 @@
                 }
             },
             "yearlyOnly": "per year (license)",
-            "contactForPrice": "Contact sales"
+            "contactForPrice": "Contact sales",
+            "members": "members"
         },
         "solusi": {
             "sectionLabel": "Products & solutions",
@@ -296,7 +310,9 @@
             "contentTypeDefault": "Content",
             "searchResultsHeading": "Search results",
             "latestArticlesHeading": "Latest articles",
-            "searching": "Searching…"
+            "searching": "Searching…",
+            "featuredHeading": "Featured article",
+            "readCta": "READ"
         },
         "contact": {
             "title": "Contact Us",
@@ -322,7 +338,19 @@
             "formLoading": "Loading form…",
             "formUnavailableTitle": "Form unavailable",
             "formNotConfiguredTitle": "Form not configured",
-            "formNoValidFields": "The form is active but has no valid fields for public submission."
+            "formNoValidFields": "The form is active but has no valid fields for public submission.",
+            "labelEmail": "Official email",
+            "labelPhone": "Phone / WhatsApp",
+            "labelAddress": "Address",
+            "submit": "Send message",
+            "mapOpen": "Open map",
+            "mapDirections": "Get directions",
+            "copyAddress": "Copy address",
+            "shareLocation": "Share location",
+            "mapTitle": "Contact location map",
+            "heroAlt": "Contact hero",
+            "loadingPage": "Loading contact page…",
+            "setupHint": "Set this in Settings → Identity or Theme Customizer (Contact)."
         },
         "career": {
             "title": "Careers at Jejakawan",
@@ -426,6 +454,9 @@
                     "cta": "Sales"
                 }
             }
+        },
+        "post": {
+            "authorRole": "Editor"
         }
     },
     "widgets": {
@@ -556,11 +587,13 @@
         "sectionTitle": "Product updates",
         "columnAnnouncements": "ANNOUNCEMENTS",
         "columnAgenda": "AGENDA",
-        "columnHolidays": "SUPPORT WINDOWS"
+        "columnHolidays": "SUPPORT WINDOWS",
+        "empty": "No updates yet. Publish news in Publishing."
     },
     "testimonials": {
         "badge": "CUSTOMER VOICES",
-        "title": "Teams shipping on Jejakawan"
+        "title": "Teams shipping on Jejakawan",
+        "empty": "No testimonials yet. Connect the Testimonials data binding in Theme Customizer."
     },
     "products": {
         "badge": "PRODUCT STACK",

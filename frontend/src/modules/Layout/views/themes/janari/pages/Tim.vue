@@ -14,7 +14,7 @@
     />
 
     <template v-else>
-      <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
+      <header class="py-10 md:py-12 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
           <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ sectionLabel }}</span>
           <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
@@ -26,7 +26,7 @@
         </div>
       </header>
 
-      <section class="py-20">
+      <section class="py-14 md:py-16">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div
@@ -46,9 +46,9 @@
         </div>
       </section>
 
-      <section class="py-16 border-t border-border">
+      <section class="py-12 md:py-14 border-t border-border">
         <div class="container mx-auto px-4">
-          <h2 class="text-2xl font-bold text-center text-foreground mb-12">
+          <h2 class="text-2xl font-bold text-center text-foreground mb-8 md:mb-10">
             {{ areasTitle }}
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -101,7 +101,8 @@ import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 
 const { t } = useThemeI18n('janari')
 const { locale } = useI18n({ useScope: 'global' })
@@ -109,7 +110,7 @@ const { getSetting } = useTheme()
 const { localizedString } = useLocalizedThemeSetting()
 
 const { pageData } = usePublicPageContent('tim')
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -119,7 +120,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 
 const pageTitle = computed(() => localizedString('page_tim_title') || t('pages.team.title'))
 const pageSubtitle = computed(() => localizedString('page_tim_subtitle') || t('pages.team.subtitle'))

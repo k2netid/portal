@@ -364,7 +364,14 @@ const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
   if (!form.value.meta) {
     form.value.meta = {};
   }
-  form.value.meta.builder_blocks = payload.blocks;
+  const blocks = payload.blocks || [];
+  const themePage = typeof form.value.meta.theme_page === 'string' ? form.value.meta.theme_page.trim() : '';
+  form.value.meta.builder_blocks = blocks;
+  if (themePage) {
+    const enableOverride = blocks.length > 0;
+    form.value.meta.builder_override = enableOverride;
+    form.value.meta.use_theme_template = !enableOverride;
+  }
 };
 
 const handleBuilderSave = async (status?: string | null) => {

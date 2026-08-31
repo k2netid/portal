@@ -21,8 +21,11 @@ use Modules\Layout\Console\Commands\ThemePackageCommand;
 use Modules\Layout\Console\Commands\ThemePathsCommand;
 use Modules\Layout\Console\Commands\ThemeScanRegisterCommand;
 use Modules\Layout\Console\Commands\ThemeStagingUploadedCommand;
+use Modules\Layout\Console\Commands\ThemeInstallSampleCommand;
 use Modules\Layout\Console\Commands\ThemeValidateCommand;
 use Modules\Layout\Database\Seeders\LayoutPermissionSeeder;
+use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
+use Modules\Layout\SampleData\ThemeSampleDataReader;
 use Modules\Layout\Services\ThemeService;
 
 class LayoutServiceProvider extends ServiceProvider
@@ -30,6 +33,8 @@ class LayoutServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(ThemeService::class, ThemeService::class);
+        $this->app->singleton(ThemeSampleDataReader::class, ThemeSampleDataReader::class);
+        $this->app->singleton(ThemeSampleDataOrchestrator::class, ThemeSampleDataOrchestrator::class);
     }
 
     public function boot(): void
@@ -55,6 +60,7 @@ class LayoutServiceProvider extends ServiceProvider
                 ThemeBackfillSourceCommand::class,
                 ThemeBuildCommand::class,
                 ThemeChecksumCommand::class,
+                ThemeInstallSampleCommand::class,
             ]);
         }
 

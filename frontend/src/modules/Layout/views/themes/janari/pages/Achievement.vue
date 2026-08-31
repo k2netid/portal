@@ -1,18 +1,24 @@
 <template>
   <div class="min-h-screen bg-background" data-ja-customizer-target="achievements">
+    <BlockRenderer
+      v-if="hasBuilderBlocks"
+      :blocks="builderBlocks"
+      :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+    />
+
     <!-- If Enabled -->
-    <template v-if="isEnabled">
+    <template v-else-if="isEnabled">
       <!-- Hero / Title -->
-      <section class="py-24 text-center">
+      <section class="py-10 md:py-12 text-center">
         <div class="container mx-auto px-4">
-          <div class="inline-flex items-center justify-center p-4 bg-amber-100 rounded-3xl mb-8 group overflow-hidden relative">
-            <Trophy class="w-8 h-8 text-amber-600 relative z-10 group-hover:scale-125 transition-transform duration-500" />
-            <div class="absolute inset-0 bg-amber-200 opacity-0 group-hover:opacity-40 transition-opacity" />
+          <div class="inline-flex items-center justify-center p-4 bg-amber-100 dark:bg-amber-500/20 rounded-3xl mb-6 group overflow-hidden relative">
+            <Trophy class="w-8 h-8 text-amber-600 dark:text-amber-400 relative z-10 group-hover:scale-125 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-amber-200 dark:bg-amber-400/20 opacity-0 group-hover:opacity-40 transition-opacity" />
           </div>
-          <h1 class="text-4xl md:text-6xl font-black mb-6">
+          <h1 class="text-3xl md:text-5xl font-black mb-4 text-foreground">
             {{ pageTitle }}
           </h1>
-          <p class="text-lg text-muted-foreground max-w-2xl mx-auto font-medium">
+          <p class="text-base text-muted-foreground max-w-2xl mx-auto font-medium">
             {{ pageSubtitle }}
           </p>
         </div>
@@ -21,10 +27,10 @@
       <PluginSlot name="after_hero" class="w-full" />
 
       <!-- Achievement Grid -->
-      <section class="py-12">
+      <section class="py-8 md:py-10">
         <div class="container mx-auto px-4">
           <!-- Categories Filter -->
-          <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+          <div class="flex flex-wrap items-center justify-center gap-3 mb-8 md:mb-10">
             <button 
               v-for="cat in categoryOptions" 
               :key="cat.slug"
@@ -41,7 +47,16 @@
           </div>
 
           <!-- Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div
+            v-if="filteredAchievements.length === 0"
+            class="text-center py-12 text-sm text-muted-foreground border border-dashed border-border rounded-2xl"
+          >
+            {{ pageSubtitle }}
+          </div>
+          <div
+            v-else
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             <div 
               v-for="item in filteredAchievements" 
               :key="item.id"
@@ -99,7 +114,7 @@
         </div>
       </section>
 
-      <section class="py-20 border-t border-border bg-muted/20">
+      <section class="py-12 md:py-14 border-t border-border bg-muted/20">
         <div class="container mx-auto px-4 text-center max-w-2xl space-y-6">
           <h2 class="text-2xl font-bold text-foreground">{{ ctaTitle }}</h2>
           <p class="text-muted-foreground">{{ ctaBody }}</p>
@@ -118,7 +133,7 @@
     <!-- If Disabled -->
     <PageDisabled 
       v-else 
-      :title="(pageTitle as string) || 'pencapaian'" 
+      :title="(pageTitle as string) || t('theme.janari.pages.achievement.title')" 
       :message="(getSetting('disabled_page_message') as string)" 
     />
   </div>
@@ -131,6 +146,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
+import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
+import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import PageDisabled from '../components/shared/PageDisabled.vue';
 import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
 import { Trophy } from 'lucide-vue-next';
@@ -138,6 +155,7 @@ import { Trophy } from 'lucide-vue-next';
 const { t } = useI18n()
 const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting()
+const { pageData, builderBlocks, hasBuilderBlocks } = useThemePageOverride('achievement')
 const router = useRouter();
 
 const isEnabled = computed(() => getSetting('enable_achievement', true));
@@ -183,23 +201,18 @@ const normalizeCatSlug = (raw: string | undefined): string => {
   return 'platform';
 };
 
-const demoAchievements = computed(() =>
-  [0, 1, 2, 3].map((i) => {
-    const prefix = `theme.janari.demo.achievement${i}`;
-    return {
-      id: String(i + 1),
-      catSlug: ['platform', 'publishing', 'platform', 'publishing'][i],
-      level: t('theme.janari.pages.achievement.levelDefault'),
-      year: i === 0 ? '2025' : '2024',
-      title: t(`${prefix}.title`),
-      description: t(`${prefix}.description`),
-      winner: t(`${prefix}.winner`),
-      role: t(`${prefix}.role`),
-      imagePlaceholder: t(`${prefix}.imagePlaceholder`),
-      image: '' as string,
-    };
-  }),
-);
+const demoAchievements = computed(() => [] as Array<{
+  id: string;
+  catSlug: string;
+  level: string;
+  year: string | number;
+  title: string;
+  description: string;
+  winner: string;
+  role: string;
+  imagePlaceholder: string;
+  image: string;
+}>);
 
 const achievements = computed(() => {
   if (hasBinding.value && dynamicAchievements.value.length > 0) {
@@ -219,7 +232,7 @@ const achievements = computed(() => {
       };
     });
   }
-  return demoAchievements.value;
+  return [];
 });
 
 const filteredAchievements = computed(() => {

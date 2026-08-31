@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "settings": {
+    "site_title": "Jejakawan",
+    "site_tagline": "Modern Content Management System built with Laravel and Vue.js",
+    "site_tagline_en": "Modern Content Management System built with Laravel and Vue.js",
+    "hero_title": "Control plane untuk publikasi modern",
+    "hero_title_en": "Control plane for modern publishing",
+    "hero_title_id": "Control plane untuk publikasi modern",
+    "hero_title_su": "Control plane pikeun publikasi modern",
+    "hero_subtitle": "Kelola konten, tema, dan distribusi multi-channel dari satu tempat.",
+    "hero_subtitle_en": "Manage content, themes, and multi-channel distribution in one place.",
+    "hero_subtitle_id": "Kelola konten, tema, dan distribusi multi-channel dari satu tempat.",
+    "hero_subtitle_su": "Atur konten, tema, sareng distribusi multi-channel ti hiji tempat.",
+    "theme_data_bindings": {
+      "hero": {
+        "slots": {
+          "news": {
+            "sourceType": "api_posts",
+            "categoryFilter": "all",
+            "tagFilter": "all",
+            "limit": 6,
+            "orderBy": "published_at",
+            "orderDir": "desc",
+            "propMapping": []
+          }
+        }
+      }
+    },
+    "cta_primary_label": "Jelajahi produk",
+    "cta_primary_url": "/solusi",
+    "cta_secondary_label": "Hubungi kami",
+    "cta_secondary_url": "/contact",
+    "home_sections": ["hero", "products", "updates", "partners", "testimonials", "cta"],
+    "contact_email": "hello@jejakawan.id",
+    "contact_phone": "+62 812-3456-7890",
+    "contact_address": "Jl. Asia Afrika No. 8, Bandung, Jawa Barat 40111",
+    "contact_map_enabled": true,
+    "contact_map_source": "address",
+    "partners_title": "Trusted by leading enterprises",
+    "partners_title_en": "Trusted by leading enterprises",
+    "home_testimonials_badge": "Customer voices",
+    "home_testimonials_title": "Teams shipping on Jejakawan",
+    "home_testimonials_badge_en": "Customer voices",
+    "home_testimonials_title_en": "Teams shipping on Jejakawan"
+  },
+  "menus": {
+    "header": {
+      "name": "Janari Header Navigation",
+      "items": [
+        { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
+        { "title": "Tentang", "title_en": "About", "url": "/about", "type": "custom", "sort_order": 1 },
+        { "title": "Produk", "title_en": "Products", "url": "/solusi", "type": "custom", "sort_order": 2 },
+        { "title": "Tim", "title_en": "Team", "url": "/tim", "type": "custom", "sort_order": 3 },
+        { "title": "Harga", "title_en": "Pricing", "url": "/pricing", "type": "custom", "sort_order": 4 },
+        { "title": "Berita", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 5 },
+        { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 6 }
+      ]
+    },
+    "footer_col_1": {
+      "name": "Janari Footer Explore",
+      "items": [
+        { "title": "Tentang Kami", "url": "/about", "type": "custom", "sort_order": 0 },
+        { "title": "Berita", "url": "/blog", "type": "custom", "sort_order": 1 },
+        { "title": "Kontak", "url": "/contact", "type": "custom", "sort_order": 2 }
+      ]
+    },
+    "footer_col_2": {
+      "name": "Janari Footer Company",
+      "items": [
+        { "title": "Prestasi", "url": "/achievement", "type": "custom", "sort_order": 0 },
+        { "title": "Karier", "url": "/career", "type": "custom", "sort_order": 1 }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Beranda",
+      "title_en": "Home",
+      "theme_page": "pages/Home",
+      "status": "published",
+      "excerpt": "Halaman utama Jejakawan — platform publikasi modern.",
+      "body": "<p>Halaman beranda Jejakawan memakai template tema <strong>Janari</strong>. Hero, produk unggulan, testimonial, dan CTA di situs publik dirender dari komponen tema.</p><p>Gunakan editor ini untuk teks SEO, ringkasan editorial, atau catatan internal. Untuk mengubah tampilan visual halaman, buka <strong>Visual Builder</strong> atau edit pengaturan tema.</p>",
+      "body_en": "<p>The Jejakawan home page uses the <strong>Janari</strong> theme template. Hero, featured products, testimonials, and CTAs on the public site are rendered from theme components.</p><p>Use this editor for SEO copy, editorial summaries, or internal notes. To change the visual layout, open the <strong>Visual Builder</strong> or edit theme settings.</p>"
+    },
+    {
+      "slug": "about",
+      "title": "Tentang Kami",
+      "title_en": "About Us",
+      "theme_page": "pages/About",
+      "status": "published",
+      "excerpt": "Profil Jejakawan dan visi platform.",
+      "body": "<p>Halaman tentang Jejakawan — platform CMS modern berbasis Laravel dan Vue.js untuk editorial, distribusi multi-channel, dan manajemen tema.</p><p>Layout publik (timeline, nilai perusahaan, statistik) berasal dari template Janari. Konten di editor ini tidak menggantikan section tema kecuali Anda menambahkan blok Visual Builder.</p>",
+      "body_en": "<p>About Jejakawan — a modern CMS built on Laravel and Vue.js for editorial workflows, multi-channel distribution, and theme management.</p><p>The public layout (timeline, values, stats) comes from the Janari template. Editor content does not replace theme sections unless you add Visual Builder blocks.</p>"
+    },
+    {
+      "slug": "solusi",
+      "title": "Produk & Solusi",
+      "title_en": "Products & Solutions",
+      "theme_page": "pages/Solusi",
+      "status": "published",
+      "excerpt": "Modul CMS, tema, dan integrasi Jejakawan.",
+      "body": "<p>Ringkasan modul Jejakawan: Publishing, Layout &amp; Themes, Identity, Analytics, dan integrasi API.</p><p>Grid produk dan ikon di halaman publik diatur oleh komponen tema Janari. Edit teks di sini untuk SEO atau dokumentasi internal.</p>",
+      "body_en": "<p>Overview of Jejakawan modules: Publishing, Layout &amp; Themes, Identity, Analytics, and API integrations.</p><p>Product grids and icons on the public page are controlled by Janari theme components. Edit text here for SEO or internal documentation.</p>"
+    },
+    {
+      "slug": "tim",
+      "title": "Tim Kami",
+      "title_en": "Our Team",
+      "theme_page": "pages/Tim",
+      "status": "published",
+      "excerpt": "Tim di balik Jejakawan.",
+      "body": "<p>Direktori tim Jejakawan — engineering, product, dan customer success.</p><p>Kartu anggota tim di situs publik dapat diisi lewat data binding tema atau diganti sepenuhnya dengan Visual Builder.</p>",
+      "body_en": "<p>Jejakawan team directory — engineering, product, and customer success.</p><p>Team member cards on the public site can be filled via theme data bindings or fully replaced with the Visual Builder.</p>"
+    },
+    {
+      "slug": "pricing",
+      "title": "Harga & Paket",
+      "title_en": "Pricing & Plans",
+      "theme_page": "pages/Pricing",
+      "status": "published",
+      "excerpt": "Paket lisensi dan layanan Jejakawan.",
+      "body": "<p>Informasi paket lisensi Jejakawan: Starter, Professional, dan Enterprise dengan SLA dukungan berbeda.</p><p>Tabel harga interaktif di halaman publik berasal dari template tema. Sesuaikan angka dan fitur lewat pengaturan tema atau builder.</p>",
+      "body_en": "<p>Jejakawan licensing tiers: Starter, Professional, and Enterprise with different support SLAs.</p><p>The interactive pricing table on the public page comes from the theme template. Adjust figures and features via theme settings or the builder.</p>"
+    },
+    {
+      "slug": "blog",
+      "title": "Berita",
+      "title_en": "News",
+      "theme_page": "pages/Blog",
+      "status": "published",
+      "excerpt": "Arsip berita dan changelog platform.",
+      "body": "<p>Arsip berita, changelog, dan pengumuman rilis Jejakawan.</p><p>Daftar artikel di halaman publik diambil dari modul Publishing. Halaman ini mengatur judul, excerpt, dan teks pendukung SEO.</p>",
+      "body_en": "<p>News archive, changelog, and Jejakawan release announcements.</p><p>The article list on the public page is pulled from the Publishing module. This page controls the title, excerpt, and supporting SEO copy.</p>"
+    },
+    {
+      "slug": "contact",
+      "title": "Hubungi Kami",
+      "title_en": "Contact Us",
+      "theme_page": "pages/Contact",
+      "status": "published",
+      "excerpt": "Formulir kontak dan informasi perusahaan.",
+      "body": "<p>Hubungi tim Jejakawan untuk demo, dukungan teknis, atau kemitraan.</p><p>Formulir kontak dan peta di halaman publik dirender oleh tema Janari. Teks di editor berguna untuk instruksi, jam operasional, atau kebijakan privasi singkat.</p>",
+      "body_en": "<p>Contact the Jejakawan team for demos, technical support, or partnerships.</p><p>The contact form and map on the public page are rendered by the Janari theme. Editor text is useful for instructions, business hours, or a short privacy note.</p>"
+    },
+    {
+      "slug": "achievement",
+      "title": "Prestasi",
+      "title_en": "Achievements",
+      "theme_page": "pages/Achievement",
+      "status": "published",
+      "excerpt": "Sorotan dan pencapaian Jejakawan.",
+      "body": "<p>Sorotan pencapaian Jejakawan: sertifikasi, klien enterprise, dan milestone produk.</p><p>Galeri prestasi visual di situs publik berasal dari komponen tema.</p>",
+      "body_en": "<p>Jejakawan highlights: certifications, enterprise clients, and product milestones.</p><p>The visual achievements gallery on the public site comes from theme components.</p>"
+    },
+    {
+      "slug": "career",
+      "title": "Karier",
+      "title_en": "Careers",
+      "theme_page": "pages/CareerCenter",
+      "status": "published",
+      "excerpt": "Lowongan dan peluang bergabung dengan Jejakawan.",
+      "body": "<p>Peluang karier di Jejakawan — remote-friendly, fokus open source, dan engineering culture.</p><p>Daftar lowongan di halaman publik dapat dihubungkan ke modul Career atau diisi manual lewat builder.</p>",
+      "body_en": "<p>Career opportunities at Jejakawan — remote-friendly, open-source focused engineering culture.</p><p>Job listings on the public page can connect to the Career module or be filled manually via the builder.</p>"
+    }
+  ],
+  "posts": [
+    {
+      "slug": "janari-sample-platform-launch",
+      "title": "Jejakawan 2026: control plane untuk newsroom modern",
+      "title_en": "Jejakawan 2026: control plane for modern newsrooms",
+      "status": "published",
+      "excerpt": "Rilis sample untuk demo tema Janari — editorial workflow, multi-locale, dan tema Vue-first.",
+      "excerpt_en": "Sample release for the Janari theme demo — editorial workflow, multi-locale, and Vue-first themes.",
+      "body": "<p>Tim editorial kini bisa mengelola draft, review, dan publish dari satu control plane tanpa menunggu sprint engineering.</p><p>Tema Janari menjaga layout Vue sebagai shell default; Visual Builder tetap opsional per halaman.</p>",
+      "body_en": "<p>Editorial teams can manage draft, review, and publish from one control plane without waiting on engineering sprints.</p><p>The Janari theme keeps the Vue layout as the default shell; Visual Builder stays opt-in per page.</p>"
+    },
+    {
+      "slug": "janari-sample-multi-channel",
+      "title": "Distribusi multi-channel: web, newsletter, dan sosial",
+      "title_en": "Multi-channel distribution: web, newsletter, and social",
+      "status": "published",
+      "excerpt": "Satu sumber konten, banyak kanal — sample berita untuk carousel hero.",
+      "excerpt_en": "One content source, many channels — sample news for the hero carousel.",
+      "body": "<p>Artikel ini adalah data sample agar strip Latest News di hero terisi konten published asli dari CMS.</p>",
+      "body_en": "<p>This article is sample data so the Latest News strip in the hero shows real published CMS content.</p>"
+    },
+    {
+      "slug": "janari-sample-theme-shells",
+      "title": "Theme shells: menus, settings, dan identity",
+      "title_en": "Theme shells: menus, settings, and identity",
+      "status": "published",
+      "excerpt": "Sample install mengisi menu, pengaturan, dan kontak tanpa menimpa layout Vue.",
+      "excerpt_en": "Sample install fills menus, settings, and contact without replacing the Vue layout.",
+      "body": "<p>Email, WhatsApp, dan alamat di halaman kontak dibaca dari Theme Customizer / Identity agar aksi mailto, wa.me, dan Maps langsung aktif.</p>",
+      "body_en": "<p>Email, WhatsApp, and address on the contact page are read from Theme Customizer / Identity so mailto, wa.me, and Maps actions work immediately.</p>"
+    },
+    {
+      "slug": "janari-sample-latest-update",
+      "title": "Latest update: Arena Tour 2026 Underground",
+      "title_en": "Latest update: Arena Tour 2026 Underground",
+      "status": "published",
+      "excerpt": "Update singkat untuk ticker dan hero news — konten demo saja.",
+      "excerpt_en": "Short update for the ticker and hero news — demo content only.",
+      "body": "<p>Ini adalah berita sample untuk mendemokan ticker NEWS dan carousel di homepage Janari.</p>",
+      "body_en": "<p>This is sample news to demonstrate the NEWS ticker and homepage carousel on Janari.</p>"
+    }
+  ]
+}

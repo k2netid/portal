@@ -44,23 +44,22 @@
     
     <!-- Hero Content Overlay -->
     <div
-      class="relative z-20 flex flex-col pt-12 pb-44 px-6 lg:px-24"
+      class="relative z-20 flex flex-1 flex-col justify-center min-h-0 pt-6 md:pt-8 pb-[8.5rem] md:pb-[9.5rem] px-6 lg:px-24 overflow-hidden"
       :class="heroAlignment"
-      :style="{ minHeight: heroHeight }"
     >
       <!-- Badge -->
       <span
         ref="heroBadge"
-        class="inline-flex items-center px-4 py-2 rounded-full border border-primary/40 text-[9px] font-bold tracking-[0.5em] uppercase text-white mb-8 bg-primary/8 backdrop-blur-sm"
+        class="inline-flex items-center px-4 py-2 rounded-full border border-primary/40 text-[9px] font-bold tracking-[0.5em] uppercase text-white mb-4 md:mb-5 bg-primary/8 backdrop-blur-sm shrink-0"
       >
         <span class="w-1 h-1 bg-primary rounded-full mr-2" />
         {{ heroBadgeText }}
       </span>
 
-      <!-- Large Centered Title -->
+      <!-- Large Centered Title — capped size so CTAs stay visible above news strip -->
       <h1
         ref="heroTitleRef"
-        class="text-3xl sm:text-5xl md:text-8xl lg:text-[7rem] font-heading font-black tracking-tighter text-white mb-6 leading-[0.85] uppercase text-sharp"
+        class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-heading font-black tracking-tighter text-white mb-3 md:mb-4 leading-[1.05] uppercase text-sharp max-w-5xl line-clamp-4"
         :class="heroAlignment.includes('items-start') ? 'text-left' : 'text-center'"
       >
         <JanariSplitText :text="heroTitleText" />
@@ -68,29 +67,29 @@
 
       <!-- Subtitle -->
       <p
-        class="text-base md:text-lg text-white/60 max-w-2xl mb-10 font-medium leading-relaxed"
+        class="text-sm md:text-base text-white/85 max-w-2xl mb-6 font-medium leading-relaxed line-clamp-2 shrink-0"
         :class="heroAlignment.includes('items-start') ? 'text-left' : 'text-center'"
       >
         {{ heroSubtitleText }}
       </p>
 
       <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
+      <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto shrink-0 relative z-20">
         <router-link
           :to="heroCtaPrimaryUrl"
-          class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)"
+          class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
         >
           {{ heroCtaPrimaryText }}
         </router-link>
         <router-link
           :to="heroCtaPricingUrl"
-          class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase border border-white/40 text-white rounded-[6px] hover:border-white hover:bg-white/8 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 cubic-bezier(0.37, 0.01, 0, 0.98)"
+          class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase border border-white/40 text-white rounded-[6px] hover:border-white hover:bg-white/10 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
         >
           {{ heroCtaPricingText }}
         </router-link>
         <a
           href="/auth/console-sign-in"
-          class="w-full sm:w-auto px-6 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase text-white/70 hover:text-white transition-colors"
+          class="w-full sm:w-auto px-6 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase text-white/80 hover:text-white transition-colors"
         >
           {{ heroCtaConsoleText }}
         </a>
@@ -117,10 +116,10 @@
     <!-- Animated Scroll Indicator -->
     <div
       v-if="heroShowScroll"
-      class="absolute bottom-40 left-1/2 -translate-x-1/2 z-20 hidden lg:block opacity-50 hover:opacity-100 transition-opacity"
+      class="absolute bottom-[9.5rem] left-1/2 -translate-x-1/2 z-20 hidden lg:block opacity-50 hover:opacity-100 transition-opacity"
     >
       <div class="flex flex-col items-center gap-2">
-        <span class="text-[9px] font-bold tracking-[0.4em] uppercase text-white/40">{{ scrollLabel }}</span>
+        <span class="text-[9px] font-bold tracking-[0.4em] uppercase text-white/70">{{ scrollLabel }}</span>
         <div class="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent relative overflow-hidden">
           <div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-scroll-line" />
         </div>
@@ -128,23 +127,26 @@
     </div>
 
     <!-- ========== REFINED: HERO NEWS OVERLAY (3-Column Interactive Carousel) ========== -->
-    <div class="absolute bottom-0 left-0 w-full z-30 bg-black/60 backdrop-blur-md border-t border-white/5 hidden md:flex items-stretch h-[140px]">
+    <div
+      v-if="visibleNews.length > 0"
+      class="absolute bottom-0 left-0 w-full z-30 bg-zinc-950/90 backdrop-blur-md border-t border-white/10 hidden md:flex items-stretch h-[112px]"
+    >
       <!-- COL 1: LATEST NEWS -->
       <router-link
         :to="visibleNews[primaryIndex]?.url || '#'"
-        class="w-1/3 flex border-r border-white/5 group relative overflow-hidden bg-white/[0.01] hover:bg-white/[0.04] transition-colors cursor-pointer shrink-0"
+        class="w-1/3 flex border-r border-white/10 group relative overflow-hidden bg-transparent hover:bg-white/10 transition-colors cursor-pointer shrink-0"
       >
-        <div class="w-12 lg:w-16 bg-black flex items-center justify-center shrink-0 border-r border-white/10 group-hover:bg-primary transition-colors duration-500 relative z-10 box-border">
-          <span class="rotate-[-90deg] origin-center whitespace-nowrap text-[9px] font-black tracking-[0.4em] uppercase text-white/85 group-hover:opacity-0 transition-opacity duration-300 absolute">{{ latestNewsLabel }}</span>
+        <div class="w-12 lg:w-16 bg-zinc-950 flex items-center justify-center shrink-0 border-r border-white/15 group-hover:bg-primary transition-colors duration-300 relative z-10 box-border">
+          <span class="rotate-[-90deg] origin-center whitespace-nowrap text-[9px] font-black tracking-[0.4em] uppercase text-white group-hover:text-primary-foreground transition-colors duration-300 absolute">{{ latestNewsLabel }}</span>
         </div>
         <div class="flex-1 flex flex-col justify-center px-6 lg:px-10 relative overflow-hidden h-full">
-          <div class="flex flex-col justify-center w-full gap-3">
+          <div class="flex flex-col justify-center w-full gap-2">
             <div class="flex items-center gap-4">
-              <span class="w-2 h-px bg-white/20 group-hover:w-4 group-hover:bg-primary transition-all duration-500" />
-              <span class="text-[10px] font-black tracking-widest text-white/50 group-hover:text-primary transition-colors">{{ visibleNews[primaryIndex]?.date || '' }}</span>
-              <span class="text-[8px] px-2 py-1 border border-white/10 text-white/40 uppercase tracking-widest group-hover:border-primary group-hover:text-primary transition-colors">{{ visibleNews[primaryIndex]?.category || t('theme.janari.common.info') }}</span>
+              <span class="w-2 h-px bg-white/40 group-hover:w-4 group-hover:bg-primary transition-all duration-300" />
+              <span class="text-[10px] font-black tracking-widest text-white/80 group-hover:text-white transition-colors">{{ visibleNews[primaryIndex]?.date || '' }}</span>
+              <span class="text-[8px] px-2 py-1 border border-white/25 text-white/80 uppercase tracking-widest group-hover:border-primary group-hover:text-primary transition-colors">{{ visibleNews[primaryIndex]?.category || t('theme.janari.common.info') }}</span>
             </div>
-            <p class="text-sm md:text-base font-medium text-white/70 group-hover:text-white transition-colors line-clamp-2 pl-6 leading-relaxed">
+            <p class="text-sm md:text-base font-medium text-white group-hover:text-white transition-colors line-clamp-2 pl-6 leading-relaxed">
               {{ visibleNews[primaryIndex]?.title || t('theme.janari.common.loading') }}
             </p>
           </div>
@@ -152,10 +154,10 @@
       </router-link>
 
       <!-- COL 2 -->
-      <div class="w-1/3 flex group relative overflow-hidden bg-white/[0.02] hover:bg-white/[0.06] transition-colors shrink-0 items-center justify-center border-r border-white/5 z-0">
+      <div class="w-1/3 flex group relative overflow-hidden bg-transparent hover:bg-white/10 transition-colors shrink-0 items-center justify-center border-r border-white/10 z-0">
         <div class="absolute left-3 lg:left-5 top-1/2 -translate-y-1/2 z-20">
           <button
-            class="w-10 h-10 rounded-full bg-black/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/50 hover:text-primary hover:border-primary transition-all cursor-pointer"
+            class="w-10 h-10 rounded-full bg-zinc-950/90 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary transition-all cursor-pointer"
             :aria-label="t('theme.janari.common.newsPrevious')"
             @click.prevent="prevNews"
           >
@@ -195,14 +197,14 @@
                 v-else
                 class="w-full h-full flex items-center justify-center bg-primary/10 text-primary"
               >
-                <Newspaper class="w-6 h-6 opacity-30" />
+                <Newspaper class="w-6 h-6 opacity-70 text-primary" />
               </div>
             </div>
             <div class="flex-1 pr-6 flex flex-col justify-center">
               <p class="text-[8px] text-primary font-black uppercase tracking-[0.25em] mb-2">
                 {{ visibleNews[secondaryIndex]?.category || t('theme.janari.common.info') }}
               </p>
-              <p class="text-xs font-bold text-white group-hover:text-primary transition-colors line-clamp-2">
+              <p class="text-xs font-bold text-white group-hover:text-white transition-colors line-clamp-2">
                 {{ visibleNews[secondaryIndex]?.title || '' }}
               </p>
             </div>
@@ -211,7 +213,7 @@
       </div>
 
       <!-- COL 3 -->
-      <div class="w-1/3 flex group relative overflow-hidden bg-white/[0.02] hover:bg-white/[0.06] transition-colors shrink-0 items-center justify-center z-0">
+      <div class="w-1/3 flex group relative overflow-hidden bg-transparent hover:bg-white/10 transition-colors shrink-0 items-center justify-center z-0">
         <router-link
           :to="visibleNews[tertiaryIndex]?.url || '#'"
           class="w-full h-full cursor-pointer flex items-center"
@@ -235,14 +237,14 @@
                 v-else
                 class="w-full h-full flex items-center justify-center bg-primary/10 text-primary"
               >
-                <Newspaper class="w-6 h-6 opacity-30" />
+                <Newspaper class="w-6 h-6 opacity-70 text-primary" />
               </div>
             </div>
             <div class="flex-1 pr-14 lg:pr-16 flex flex-col justify-center">
               <p class="text-[8px] text-primary font-black uppercase tracking-[0.25em] mb-2">
                 {{ visibleNews[tertiaryIndex]?.category || t('theme.janari.common.info') }}
               </p>
-              <p class="text-xs font-bold text-white group-hover:text-primary transition-colors line-clamp-2">
+              <p class="text-xs font-bold text-white group-hover:text-white transition-colors line-clamp-2">
                 {{ visibleNews[tertiaryIndex]?.title || '' }}
               </p>
             </div>
@@ -250,7 +252,7 @@
         </router-link>
         <div class="absolute right-3 lg:right-5 top-1/2 -translate-y-1/2 z-20">
           <button
-            class="w-10 h-10 rounded-full bg-black/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/50 hover:text-primary hover:border-primary transition-all cursor-pointer"
+            class="w-10 h-10 rounded-full bg-zinc-950/90 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary transition-all cursor-pointer"
             :aria-label="t('theme.janari.common.newsNext')"
             @click.prevent="nextNews"
           >
@@ -309,7 +311,7 @@
       </div>
       <router-link :to="visibleNews[primaryIndex]?.url || '#'">
         <div class="space-y-2">
-          <span class="text-[8px] text-white/40 uppercase tracking-widest">{{ visibleNews[primaryIndex]?.date || '' }}</span>
+          <span class="text-[8px] text-white/70 uppercase tracking-widest">{{ visibleNews[primaryIndex]?.date || '' }}</span>
           <p class="text-sm font-bold text-white line-clamp-2">
             {{ visibleNews[primaryIndex]?.title || t('theme.janari.common.loading') }}
           </p>
@@ -426,38 +428,63 @@ const sanitizeImageUrl = (url: string | null | undefined) => {
     return url
 }
 
+const buildFallbackNews = () => [] as Array<{
+    id: string
+    title: string
+    category: string
+    date: string
+    url: string
+    image?: string
+}>
+
+const mapPostsToNews = (posts: any[]) =>
+    posts.map((item: any, idx: number) => ({
+        id: item.id || idx + 1,
+        image: sanitizeImageUrl(item.thumbnail || item.featured_image || item._raw?.thumbnail || item._raw?.featured_image),
+        title: item.title || t('theme.janari.common.defaultNewsTitle'),
+        category: item.category?.name || item._raw?.category?.name || t('theme.janari.common.defaultCategory'),
+        date: (item.published_at || item._raw?.published_at)
+            ? new Date(item.published_at || item._raw.published_at).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0],
+        url: `/blog/${item.slug || item._raw?.slug || idx}`,
+    }))
+
 const updateStableData = async () => {
-    // 1. Sync News Data
-    if (hasHeroNewsBinding.value && dynamicHeroNews.value && dynamicHeroNews.value.length > 0) {
-        unifiedNews.value = dynamicHeroNews.value.slice(0, 10).map((item: any, idx: number) => ({
-            id: item.id || idx + 1,
-            image: sanitizeImageUrl(item._raw?.thumbnail || item._raw?.featured_image),
-            title: item.title || t('theme.janari.common.defaultNewsTitle'),
-            category: 'NEWS',
-            date: item.published_at ? new Date(item.published_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-            url: `/blog/${item.slug || idx}`
-        }))
-    } else if (unifiedNews.value.length === 0) {
+    const bound = Array.isArray(dynamicHeroNews.value) ? dynamicHeroNews.value : []
+    // Only trust hero.news binding when it actually returns posts (misconfigured api_pages → blog page title "Berita")
+    const boundPosts = bound.filter((item: any) => {
+        const type = String(item?.type || item?._raw?.type || '').toLowerCase()
+        if (type === 'page') return false
+        if (type === 'post') return true
+        // Mapped binding items often omit type; keep rows that look like articles
+        return Boolean(item?.title || item?._raw?.title) && Boolean(item?.slug || item?._raw?.slug || item?.published_at || item?._raw?.published_at)
+    })
+
+    if (hasHeroNewsBinding.value && boundPosts.length > 0) {
+        unifiedNews.value = mapPostsToNews(boundPosts.slice(0, 10))
+    } else if (unifiedNews.value.length === 0 || bound.length > 0) {
         try {
-            const params: any = { type: 'post', status: 'published', per_page: 10 }
+            const params: any = { type: 'post', status: 'published', sort: '-published_at', per_page: 10 }
             if (heroNewsCategory.value) params.category = heroNewsCategory.value
             const res = await api.get(publishingPaths.publicContents, { params });
             const rawData = res.data || [];
             const posts = Array.isArray(rawData) ? rawData : (rawData?.data || []);
             if (posts.length > 0) {
-                unifiedNews.value = posts.map((item: any, idx: number) => ({
-                    id: item.id || idx + 1,
-                    image: sanitizeImageUrl(item.thumbnail || item.featured_image),
-                    title: item.title || t('theme.janari.common.defaultNewsTitle'),
-                    category: item.category?.name || t('theme.janari.common.defaultCategory'),
-                    date: item.published_at ? new Date(item.published_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-                    url: `/blog/${item.slug || idx}`
-                }))
+                unifiedNews.value = mapPostsToNews(posts)
+            } else {
+                unifiedNews.value = buildFallbackNews()
             }
         } catch (e: any) {
             if (e.name === 'CanceledError' || e.code === 'ERR_CANCELED' || e.message?.includes('aborted')) return;
             console.error('[Hero] News Fallback Error:', e);
+            if (unifiedNews.value.length === 0) {
+                unifiedNews.value = buildFallbackNews()
+            }
         }
+    }
+
+    if (unifiedNews.value.length === 0) {
+        unifiedNews.value = buildFallbackNews()
     }
 
     // 2. Sync Hero Slides

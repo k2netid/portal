@@ -20,8 +20,8 @@
       <main
         class="main-content flex-1 w-full relative z-0"
         :class="{
-          // Janari sticky = main nav + artist/breadcrumb bar (~7.5–9rem)
-          'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
+          // Match sticky Janari header: mobile nav only (~4rem); desktop nav + artist bar (~6.75rem)
+          'pt-16 md:pt-[6.75rem]': headerSticky && usesJanariCanvas,
           'pt-0': !usesJanariCanvas,
         }"
       >
@@ -64,7 +64,7 @@
       <main
         class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0"
         :class="{
-          'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
+          'pt-16 md:pt-[6.75rem]': headerSticky && usesJanariCanvas,
           'pt-0': !usesJanariCanvas,
         }"
       >
@@ -115,14 +115,14 @@
       </main>
     </div>
 
-    <!-- Floating Back to Top Button (Bottom Right) -->
+    <!-- Floating Back to Top — theme tokens (primary), not hardcoded amber/slate -->
     <button
       v-if="showBackToTop"
       type="button"
-      class="sarangenge-back-to-top fixed bottom-8 right-8 z-[9999] w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-900 text-amber-400 border border-slate-700 hover:bg-slate-800"
+      class="janari-back-to-top fixed bottom-8 right-8 z-[9999] w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-foreground text-background border border-border shadow-lg hover:bg-primary hover:text-primary-foreground hover:border-primary"
       style="position: fixed !important; bottom: 2rem !important; right: 2rem !important; left: auto !important; top: auto !important; z-index: 999999 !important;"
-      aria-label="Kembali ke Atas"
-      title="Kembali ke Atas"
+      :aria-label="backToTopLabel"
+      :title="backToTopLabel"
       @click="scrollToTop"
     >
       <ArrowUp class="w-5 h-5 stroke-[2.5]" />
@@ -132,6 +132,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, onUnmounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
 import { useCustomizerPreviewProbe } from '@/modules/Layout/customizer/preview/useCustomizerPreviewProbe'
@@ -139,14 +140,16 @@ import '@/modules/Layout/customizer/preview/customizer-preview.css'
 import { PluginSlot } from '@/shared/components'
 import {
   ArrowUp,
-} from 'lucide-vue-next';
-import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets';
-import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
+} from 'lucide-vue-next'
+import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets'
+import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest'
 import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { useRoute } from 'vue-router'
 
+const { t } = useI18n({ useScope: 'global' })
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 
+const backToTopLabel = computed(() => t('layout.frontend.backToTop'))
 const route = useRoute()
 useCustomizerPreviewProbe()
 const lastThemeRetryAt = ref(0)

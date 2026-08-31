@@ -1,33 +1,31 @@
 <template>
   <div class="min-h-screen bg-background" data-ja-customizer-target="careers">
+    <BlockRenderer
+      v-if="hasBuilderBlocks"
+      :blocks="builderBlocks"
+      :context="{ post: pageData, site: { name: 'Jejakawan' } }"
+    />
+
     <!-- If Enabled -->
-    <template v-if="isEnabled">
+    <template v-else-if="isEnabled">
       <!-- Header -->
-      <header class="py-16 bg-primary text-primary-foreground">
+      <header class="py-10 md:py-12 bg-primary text-primary-foreground">
         <div class="container mx-auto px-4">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="space-y-4 text-center md:text-left">
-              <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-3 text-center md:text-left">
+              <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
                 {{ pageTitle }}
               </h1>
-              <p class="text-primary-foreground/85 text-lg max-w-xl">
+              <p class="text-primary-foreground/90 text-base max-w-xl">
                 {{ pageSubtitle }}
               </p>
             </div>
             <div class="flex gap-4">
-              <div class="p-6 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 text-center min-w-[30px]">
-                <div class="text-3xl font-black">
-                  6
-                </div>
-                <div class="text-[10px] font-bold uppercase tracking-wider opacity-80 mt-1">
-                  {{ partnersStatLabel }}
-                </div>
-              </div>
-              <div class="p-6 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 text-center min-w-[30px]">
-                <div class="text-3xl font-black">
+              <div class="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 text-center min-w-[5rem]">
+                <div class="text-2xl font-black">
                   {{ jobsCount }}
                 </div>
-                <div class="text-[10px] font-bold uppercase tracking-wider opacity-80 mt-1">
+                <div class="text-[10px] font-bold uppercase tracking-wider opacity-90 mt-1">
                   {{ jobsStatLabel }}
                 </div>
               </div>
@@ -36,13 +34,13 @@
         </div>
       </header>
 
-      <div class="container mx-auto px-4 py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div class="container mx-auto px-4 py-10 md:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Main Content (Job List) -->
-          <div class="lg:col-span-2 space-y-8">
+          <div class="lg:col-span-2 space-y-6">
             <div class="flex items-center justify-between">
-              <h2 class="text-2xl font-bold flex items-center gap-3">
-                <Briefcase class="w-6 h-6 text-primary" />
+              <h2 class="text-xl font-bold flex items-center gap-3 text-foreground">
+                <Briefcase class="w-5 h-5 text-primary" />
                 {{ latestJobsText }}
               </h2>
               <button class="text-sm font-bold text-primary hover:underline">
@@ -51,7 +49,16 @@
             </div>
 
             <!-- Job Cards -->
-            <div class="space-y-4">
+            <div
+              v-if="jobs.length === 0"
+              class="text-center py-12 text-sm text-muted-foreground border border-dashed border-border rounded-2xl"
+            >
+              {{ pageSubtitle }}
+            </div>
+            <div
+              v-else
+              class="space-y-4"
+            >
               <div 
                 v-for="job in jobs" 
                 :key="job.id"
@@ -95,7 +102,7 @@
           <div class="space-y-8">
             <!-- Hubin Section -->
             <div class="p-8 rounded-[2.5rem] bg-muted/40 dark:bg-muted/20 border border-border">
-              <div class="w-3 h-3 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center mb-6 shadow-lg shadow-primary/25">
+              <div class="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center mb-6 shadow-lg shadow-primary/25">
                 <Users2 class="w-6 h-6" />
               </div>
               <h3 class="text-xl font-bold mb-3 text-foreground">
@@ -104,7 +111,7 @@
               <p class="text-muted-foreground text-sm leading-relaxed mb-6">
                 {{ hubinDesc }}
               </p>
-              <router-link :to="pricingUrl" class="w-full py-3 mb-3 rounded-xl border border-white/30 text-primary-foreground font-bold text-sm hover:bg-white/10 transition-colors block text-center">
+              <router-link :to="pricingUrl" class="w-full py-3 mb-3 rounded-xl border border-border text-foreground font-bold text-sm hover:bg-muted/60 transition-colors block text-center">
                 {{ viewPricingText }}
               </router-link>
               <router-link :to="contactUrl" class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors block text-center">
@@ -149,6 +156,8 @@ import { useRouter } from 'vue-router';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
+import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
+import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import PageDisabled from '../components/shared/PageDisabled.vue';
 import {
   Briefcase,
@@ -162,6 +171,7 @@ import {
 const { t } = useI18n()
 const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting()
+const { pageData, builderBlocks, hasBuilderBlocks } = useThemePageOverride('career')
 const router = useRouter();
 
 const isEnabled = computed(() => getSetting('enable_career', true));
@@ -207,18 +217,6 @@ const careerGuideLinks = computed(() => {
 
 const { data: dynamicJobs, hasBinding } = useThemeDataBindings('careers', 'jobs');
 
-const demoJobs = computed(() =>
-  [0, 1, 2].map((i) => ({
-    id: String(i + 1),
-    title: t(`theme.janari.demo.job${i}.title`),
-    company: t(`theme.janari.demo.job${i}.company`),
-    location: t(`theme.janari.demo.job${i}.location`),
-    type: t(`theme.janari.demo.job${i}.type`),
-    isNew: i < 2,
-    url: '/contact',
-  })),
-);
-
 const jobsCount = computed(() => String(jobs.value.length))
 
 const jobs = computed(() => {
@@ -237,6 +235,6 @@ const jobs = computed(() => {
       };
     });
   }
-  return demoJobs.value;
+  return [];
 });
 </script>

@@ -164,6 +164,13 @@ onBeforeUnmount(() => {
   currentResolveId++
 })
 
+if (typeof window !== 'undefined') {
+  window.addEventListener('ja-frontend-theme-activated', () => {
+    componentCache.clear()
+    void resolveView()
+  })
+}
+
 watch([themeResolveKey, () => props.page], () => {
   void resolveView()
 }, { immediate: true })

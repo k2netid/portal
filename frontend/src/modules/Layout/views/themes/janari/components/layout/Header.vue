@@ -183,7 +183,7 @@
                 class="inline-flex items-center gap-2 h-9 px-3 text-xs font-semibold text-foreground bg-primary/10 hover:bg-primary/20 rounded-lg transition-all focus:outline-none cursor-pointer"
               >
                 <UserIcon class="w-3.5 h-3.5 text-primary" />
-                <span class="max-w-[100px] truncate">{{ authStore.user?.name || 'Member' }}</span>
+                <span class="max-w-[100px] truncate">{{ authStore.user?.name || t('theme.janari.header.memberFallback') }}</span>
                 <ChevronDown class="w-3 h-3 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>
@@ -230,12 +230,12 @@
       </div>
     </div>
 
-    <!-- 2nd Header: Transparent Gradient Artist Bar (Desktop) -->
+    <!-- 2nd Header: Artist / ticker bar (always solid so light/dark stay consistent) -->
     <div
       v-if="isDesktop"
-      class="artist-bar relative z-0 overflow-hidden bg-transparent border-b border-primary/25"
+      class="artist-bar relative z-0 overflow-hidden bg-muted/70 dark:bg-muted/40 border-b border-border"
     >
-      <div class="absolute inset-0 bg-gradient-to-r from-primary/12 via-background/10 to-primary/12 dark:from-primary/45 dark:via-background/20 dark:to-primary/45 backdrop-blur-md pointer-events-none -z-10 border-t border-primary/20" />
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/8 via-transparent to-primary/8 pointer-events-none -z-10" />
       <div class="container mx-auto px-8 flex justify-between items-center py-2 relative z-10">
         <div class="flex-1 min-w-0 overflow-hidden flex items-center h-8">
           <div
@@ -245,17 +245,17 @@
             <span
               v-for="i in 5"
               :key="'m'+i"
-              class="text-[10px] font-bold tracking-normal text-foreground/70 flex items-center gap-6"
+              class="text-[10px] font-bold tracking-normal text-foreground/80 flex items-center gap-6"
             >
-              <span class="bg-foreground/10 px-2 py-0.5 text-primary text-[8px] font-black uppercase tracking-widest">{{ newsBadge }}</span>
+              <span class="bg-primary/10 px-2 py-0.5 text-primary text-[8px] font-black uppercase tracking-widest">{{ newsBadge }}</span>
               {{ latestNewsText }}
-              <span class="opacity-20 mx-2">|</span>
+              <span class="opacity-30 mx-2">|</span>
             </span>
           </div>
           <JanariBreadcrumbs v-else />
         </div>
         <!-- Social dock: expand/collapse via SOSIAL; no magnetic hover on icons -->
-        <div class="flex items-center gap-1 bg-background/60 backdrop-blur-sm border border-border/40 rounded-lg px-2 py-1 shadow-xs shrink-0 ml-4">
+        <div class="flex items-center gap-1 bg-background/80 dark:bg-background/50 backdrop-blur-sm border border-border/50 rounded-lg px-2 py-1 shadow-xs shrink-0 ml-4">
           <div
             ref="socialLinksWrap"
             class="flex items-center gap-0.5 overflow-hidden"
@@ -268,7 +268,7 @@
               :target="getSocialTarget(link)"
               :rel="getSocialRel(link)"
               :aria-label="getSocialAriaLabel(link)"
-              class="inline-flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-primary/5"
+              class="inline-flex items-center justify-center w-8 h-8 rounded-full text-foreground/70 hover:text-foreground hover:bg-primary/10"
             >
               <component
                 :is="getSocialIcon(link.icon)"
@@ -281,7 +281,7 @@
             />
           </div>
           <button
-            class="janari-social-toggle inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-muted-foreground bg-transparent border-0 hover:bg-muted/60 hover:text-foreground focus:outline-none focus-visible:bg-muted/60 focus-visible:ring-1 focus-visible:ring-border/60 focus-visible:ring-inset active:bg-muted/80 cursor-pointer transition-colors duration-150"
+            class="janari-social-toggle inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-foreground/70 bg-transparent border-0 hover:bg-muted hover:text-foreground focus:outline-none focus-visible:bg-muted focus-visible:ring-1 focus-visible:ring-border/60 focus-visible:ring-inset active:bg-muted cursor-pointer transition-colors duration-150"
             type="button"
             data-motion-interactive="off"
             :aria-expanded="socialExpanded"
@@ -290,7 +290,7 @@
           >
             <span class="text-[10px] font-bold uppercase tracking-wider">{{ socialLabel }}</span>
             <ChevronDown
-              class="w-3 h-3 opacity-50 transition-transform duration-300"
+              class="w-3 h-3 opacity-60 transition-transform duration-300"
               :class="{ 'rotate-180': socialExpanded }"
             />
           </button>
@@ -628,12 +628,12 @@ const loginUrl = computed(() => {
 const officialLine1 = computed(() => localizedString('header_official_line1') || t('theme.janari.header.officialLine1'))
 const officialLine2 = computed(() => localizedString('header_official_line2') || t('theme.janari.header.officialLine2'))
 const loginLabel = computed(() => localizedString('header_login_label') || t('theme.janari.header.login'))
-const profileLabel = computed(() => localizedString('header_profile_label') || t('common.labels.profile', 'Akun Saya'))
-const logoutLabel = computed(() => localizedString('header_logout_label') || t('common.actions.logout', 'Keluar'))
+const profileLabel = computed(() => localizedString('header_profile_label') || t('theme.janari.header.profile'))
+const logoutLabel = computed(() => localizedString('header_logout_label') || t('theme.janari.header.logout'))
 const newsBadge = computed(() => localizedString('header_news_badge') || t('theme.janari.header.newsBadge'))
 const latestNewsText = computed(() =>
   localizedString('header_marquee_text')
-    || 'Latest Updates: 35th L\'Anniversary Year - Arena Tour 2026 Underground Announced',
+    || t('theme.janari.header.marqueeDefault'),
 )
 const handleLogout = async () => {
     await authStore.logout();

@@ -19,7 +19,12 @@
     "signIn": "Portal Klien",
     "account": "Akun Perusahaan",
     "getStarted": "Minta Penawaran",
-    "selectLanguage": "Pilih Bahasa:"
+    "selectLanguage": "Pilih Bahasa:",
+    "themeAriaLight": "Aktifkan mode terang",
+    "themeAriaDark": "Aktifkan mode gelap"
+  },
+  "common": {
+    "breadcrumbAria": "Breadcrumb"
   },
   "footer": {
     "description": "Layung Network adalah penyedia infrastruktur serat optik berkecepatan tinggi, koneksi dedicated 1:1, dan Managed IT Services dengan jaminan SLA 99.999% bagi korporasi dan institusi.",
@@ -111,11 +116,31 @@
     },
     "blog": {
       "title": "Warta Teknologi & Notifikasi Jaringan",
-      "subtitle": "Artikel seputar tren cyber security, teknologi cloud, dan jadwal pemeliharaan jaringan berkala."
+      "subtitle": "Artikel seputar tren cyber security, teknologi cloud, dan jadwal pemeliharaan jaringan berkala.",
+      "sectionBadge": "Warta Teknologi & Notifikasi Jaringan",
+      "allCategories": "Semua Warta",
+      "catInfra": "Infrastruktur Fiber",
+      "catSecurity": "Cyber Security",
+      "catCloud": "Cloud & SD-WAN",
+      "catMaintenance": "Notifikasi Maintenance",
+      "noPosts": "Belum ada artikel untuk kategori ini.",
+      "noPostsHint": "Pilih kategori lain atau tunggu publikasi artikel baru."
     },
     "search": {
       "title": "Pencarian Layanan & Dokumentasi",
       "subtitle": "Temukan informasi paket, panduan konfigurasi, dan artikel teknis Layung dengan cepat."
+    },
+    "disabled": {
+      "defaultTitle": "Halaman Dinonaktifkan",
+      "defaultMessage": "Halaman ini sedang tidak dapat diakses atau dinonaktifkan oleh administrator jaringan.",
+      "backHome": "Kembali ke Beranda"
     }
+  },
+  "cta": {
+    "badge": "Konsultasi Arsitektur Jaringan Gratis",
+    "title": "Siap Mengakselerasi Kecepatan Bisnis Anda Tanpa Batas?",
+    "subtitle": "Hubungi tim Solution Architect dan Network Engineer kami sekarang untuk survei lokasi, pengujian throughput, dan penawaran khusus SLA Enterprise 2026.",
+    "primary": "Minta Penawaran / Survei Gratis",
+    "whatsapp": "Chat WhatsApp NOC & Sales"
   }
 }

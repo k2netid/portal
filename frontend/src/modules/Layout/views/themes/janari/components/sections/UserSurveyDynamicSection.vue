@@ -1,7 +1,7 @@
 <template>
-  <section class="py-24 border-t border-border bg-gradient-to-b from-background to-muted/20">
+  <section class="py-14 md:py-16 border-t border-border bg-gradient-to-b from-background to-muted/20">
     <div class="container mx-auto px-4">
-      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <div class="text-center max-w-2xl mx-auto mb-8 md:mb-10 space-y-3">
         <span class="text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 px-3 py-1 rounded-full inline-block">
           {{ surveyBadge }}
         </span>
@@ -87,17 +87,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 
 const { localizedString } = useLocalizedThemeSetting()
+const { t } = useThemeI18n('janari')
 
-const surveyBadge = computed(() => localizedString('page_about_survey_badge') || 'Data Model Studio Live Showcase')
-const surveyTitle = computed(() => localizedString('page_about_survey_title') || 'Apa Kata Pengguna?')
+const surveyBadge = computed(() => localizedString('page_about_survey_badge') || t('pages.about.surveyBadge'))
+const surveyTitle = computed(() => localizedString('page_about_survey_title') || t('pages.about.surveyTitle'))
 const surveySubtitle = computed(() =>
-  localizedString('page_about_survey_subtitle')
-    || 'Umpan balik nyata yang dikumpulkan dan disajikan secara dinamis langsung dari tabel user_survey di Data Model Studio.',
+  localizedString('page_about_survey_subtitle') || t('pages.about.surveySubtitle'),
 )
 const surveyLoading = computed(() =>
-  localizedString('page_about_survey_loading') || 'Memuat data survei dari Data Model Studio...',
+  localizedString('page_about_survey_loading') || t('pages.about.surveyLoading'),
 )
 
 interface SurveyItem {
@@ -172,9 +173,9 @@ onMounted(async () => {
       if (Array.isArray(rawData) && rawData.length > 0) {
         surveyRecords.value = rawData.map((r: any) => ({
           id: r.id,
-          respondent_name: r.data?.respondent_name || 'Pengguna',
+          respondent_name: r.data?.respondent_name || t('pages.about.surveyUser'),
           organization: r.data?.organization || '',
-          user_role: r.data?.user_role || 'User',
+          user_role: r.data?.user_role || t('pages.about.surveyRole'),
           satisfaction_score: Number(r.data?.satisfaction_score) || 10,
           favorite_feature: r.data?.favorite_feature || '',
           avatar: r.data?.avatar || '',

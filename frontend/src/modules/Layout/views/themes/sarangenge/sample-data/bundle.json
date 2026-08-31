@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "settings": {
+    "site_title": "Sarangenge",
+    "site_tagline": "Mekar Bersama Cahaya Pagi — Sekolah Cerdas & Berkarakter",
+    "site_tagline_en": "Blooming with Morning Light — A Smart & Character-Driven School",
+    "school_name": "SMP-SMA Sarangenge",
+    "hero_title": "Mekar Bersama Cahaya Pagi — Membentuk Generasi Cerdas & Berkarakter",
+    "hero_title_en": "Blooming with Morning Light — Shaping Smart & Noble Generations",
+    "hero_subtitle": "Portal resmi sekolah: kurikulum Merdeka berbasis riset, fasilitas smart class, dan jalur PPDB transparan.",
+    "hero_subtitle_en": "Official school portal: research-based Merdeka curriculum, smart class facilities, and transparent admissions.",
+    "ppdb_is_open": true,
+    "contact_whatsapp": "+6281234567890",
+    "cta_primary_label": "Info PPDB",
+    "cta_primary_url": "/contact#ppdb",
+    "cta_login_label": "Masuk Portal",
+    "cta_login_url": "/member/login"
+  },
+  "menus": {
+    "header": {
+      "name": "Sarangenge Header Navigation",
+      "items": [
+        { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
+        {
+          "title": "Tentang Kami",
+          "title_en": "About",
+          "url": "/about",
+          "type": "custom",
+          "sort_order": 1,
+          "children": [
+            { "title": "Profil Sekolah", "title_en": "School Profile", "url": "/about#profil", "type": "custom", "description": "Visi, misi, sejarah dan nilai luhur" },
+            { "title": "Guru & Staf", "title_en": "Teachers & Staff", "url": "/tim", "type": "custom", "description": "Direktori pendidik dan pimpinan sekolah" },
+            { "title": "Prestasi Siswa", "title_en": "Student Achievements", "url": "/achievement", "type": "custom", "description": "Galeri medali & kejuaraan" },
+            { "title": "Fasilitas Kampus", "title_en": "Campus Facilities", "url": "/services#smart-class", "type": "custom", "description": "Smart Class, Lab & Sport Arena" }
+          ]
+        },
+        {
+          "title": "Akademik",
+          "title_en": "Academics",
+          "url": "/solusi",
+          "type": "custom",
+          "sort_order": 2,
+          "children": [
+            { "title": "Program & Kurikulum", "title_en": "Programs & Curriculum", "url": "/solusi#programs", "type": "custom", "description": "Kurikulum Merdeka & Cambridge Track" },
+            { "title": "Jejaring Alumni", "title_en": "Alumni Network", "url": "/career", "type": "custom", "description": "Tracer study & bimbingan kampus" }
+          ]
+        },
+        {
+          "title": "PPDB & Biaya",
+          "title_en": "Admissions & Fees",
+          "url": "/pricing",
+          "type": "custom",
+          "sort_order": 3,
+          "children": [
+            { "title": "Informasi & Alur PPDB", "title_en": "Admissions Info", "url": "/contact#ppdb", "type": "custom", "description": "Jalur reguler, prestasi & beasiswa" },
+            { "title": "Biaya & Skema Beasiswa", "title_en": "Fees & Scholarships", "url": "/pricing#beasiswa", "type": "custom", "description": "Transparansi SPP & beasiswa" }
+          ]
+        },
+        { "title": "Warta", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
+        { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 5 }
+      ]
+    },
+    "footer_col_1": {
+      "name": "Sarangenge Footer Programs",
+      "items": [
+        { "title": "Program Unggulan", "url": "/solusi#programs", "type": "custom", "sort_order": 0 },
+        { "title": "Fasilitas Kampus", "url": "/services#smart-class", "type": "custom", "sort_order": 1 },
+        { "title": "Prestasi Siswa", "url": "/achievement", "type": "custom", "sort_order": 2 },
+        { "title": "Direktori Guru", "url": "/tim", "type": "custom", "sort_order": 3 }
+      ]
+    },
+    "footer_col_2": {
+      "name": "Sarangenge Footer Admissions",
+      "items": [
+        { "title": "Biaya & Beasiswa", "url": "/pricing#beasiswa", "type": "custom", "sort_order": 0 },
+        { "title": "Jejaring Alumni", "url": "/career", "type": "custom", "sort_order": 1 },
+        { "title": "Berita & Pengumuman", "url": "/blog", "type": "custom", "sort_order": 2 },
+        { "title": "Pendaftaran PPDB", "url": "/contact#ppdb", "type": "custom", "sort_order": 3 }
+      ]
+    }
+  },
+  "pages": [
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Sarangenge — PPDB, program unggulan, dan fasilitas kampus.", "body": "<p>Portal resmi Sarangenge — PPDB, program unggulan, dan fasilitas kampus.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official Sarangenge portal — admissions, flagship programs, and campus facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
+    { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, dan filosofi pendidikan Sarangenge.", "body": "<p>Visi, misi, dan filosofi pendidikan Sarangenge.</p>", "body_en": "<p>Sarangenge vision, mission, and educational philosophy.</p>" },
+    { "slug": "services", "title": "Fasilitas Kampus", "title_en": "Campus Facilities", "theme_page": "pages/Services", "status": "published", "excerpt": "Smart class, laboratorium, dan sport arena.", "body": "<p>Smart class, laboratorium sains, dan sport arena Sarangenge.</p>", "body_en": "<p>Sarangenge smart classrooms, science labs, and sports arena.</p>" },
+    { "slug": "solusi", "title": "Program & Kurikulum", "title_en": "Programs & Curriculum", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Kurikulum Merdeka, STEM, dan bilingual track.", "body": "<p>Kurikulum Merdeka, STEM, dan bilingual track Sarangenge.</p>", "body_en": "<p>Merdeka Curriculum, STEM, and bilingual track at Sarangenge.</p>" },
+    { "slug": "pricing", "title": "Biaya & Beasiswa", "title_en": "Fees & Scholarships", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Transparansi SPP dan skema beasiswa.", "body": "<p>Transparansi SPP dan skema beasiswa Sarangenge.</p>", "body_en": "<p>Transparent tuition fees and Sarangenge scholarship schemes.</p>" },
+    { "slug": "tim", "title": "Guru & Staf", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori pendidik dan pimpinan sekolah.", "body": "<p>Direktori guru, staf, dan pimpinan sekolah Sarangenge.</p>", "body_en": "<p>Directory of Sarangenge teachers, staff, and school leadership.</p>" },
+    { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita, agenda, dan pengumuman kampus.", "body": "<p>Berita sekolah, agenda kampus, dan pengumuman Sarangenge.</p>", "body_en": "<p>School news, campus events, and Sarangenge announcements.</p>" },
+    { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB dan formulir konsultasi.", "body": "<p>Hotline PPDB dan formulir konsultasi pendaftaran Sarangenge.</p>", "body_en": "<p>Admissions hotline and Sarangenge enrollment consultation form.</p>" },
+    { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali dan kejuaraan siswa.", "body": "<p>Galeri medali dan kejuaraan siswa Sarangenge.</p>", "body_en": "<p>Gallery of Sarangenge student medals and championships.</p>" },
+    { "slug": "career_center", "title": "Jejaring Alumni", "title_en": "Alumni Network", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Tracer study dan bimbingan kampus.", "body": "<p>Tracer study alumni dan bimbingan lanjut kampus Sarangenge.</p>", "body_en": "<p>Alumni tracer study and campus placement guidance at Sarangenge.</p>" }
+  ],
+  "posts": [
+    {
+      "slug": "sarangenge-sample-ppdb-2026",
+      "title": "Pembukaan PPDB 2026/2027 Gelombang 1",
+      "title_en": "Admissions Open for 2026/2027 — Wave 1",
+      "status": "published",
+      "excerpt": "Pendaftaran peserta didik baru resmi dibuka dengan jalur prestasi, reguler, dan beasiswa.",
+      "excerpt_en": "New student admissions are open via merit, regular, and scholarship tracks.",
+      "body": "<p>Informasi lengkap kuota, jadwal seleksi, dan persyaratan PPDB tersedia di halaman kontak sekolah.</p>",
+      "body_en": "<p>Full quota details, selection schedules, and PPDB requirements are available on the school contact page.</p>"
+    },
+    {
+      "slug": "sarangenge-sample-olimpiade-emas",
+      "title": "Siswa Sarangenge Raih Medali Emas Olimpiade Matematika 2026",
+      "title_en": "Sarangenge Student Wins Gold at 2026 Math Olympiad",
+      "status": "published",
+      "excerpt": "Prestasi membanggakan kembali ditorehkan dalam ajang olimpiade matematika tingkat internasional.",
+      "excerpt_en": "Another proud achievement at an international mathematics olympiad.",
+      "body": "<p>Artikel sample untuk mendemokan grid warta sekolah dari CMS published posts.</p>",
+      "body_en": "<p>Sample article to demonstrate the school news grid from published CMS posts.</p>"
+    },
+    {
+      "slug": "sarangenge-sample-gelar-karya",
+      "title": "Gelar Karya P5 & Pameran Robotika AI",
+      "title_en": "P5 Showcase & AI Robotics Exhibition",
+      "status": "published",
+      "excerpt": "Eksplorasi proyek riset sains dan demonstrasi robotika menyedot antusiasme orang tua dan tamu.",
+      "excerpt_en": "Science research projects and robotics demos drew strong interest from parents and guests.",
+      "body": "<p>Kegiatan kesiswaan sample untuk halaman blog Sarangenge.</p>",
+      "body_en": "<p>Sample student activity post for the Sarangenge blog page.</p>"
+    },
+    {
+      "slug": "sarangenge-sample-kurikulum-merdeka",
+      "title": "Sosialisasi Kurikulum Merdeka & Persiapan PTN",
+      "title_en": "Merdeka Curriculum Briefing & University Prep",
+      "status": "published",
+      "excerpt": "Pendampingan khusus persiapan SNBP dan UTBK SNBT bagi siswa kelas XI dan XII.",
+      "excerpt_en": "Dedicated SNBP and UTBK SNBT preparation support for grades XI and XII.",
+      "body": "<p>Edaran akademik sample untuk kategori kurikulum.</p>",
+      "body_en": "<p>Sample academic circular for the curriculum category.</p>"
+    }
+  ]
+}

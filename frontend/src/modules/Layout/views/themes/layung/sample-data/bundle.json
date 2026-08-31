@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "settings": {
+    "site_title": "Layung Network",
+    "site_tagline": "Infrastruktur Serat Optik & Managed Services 24/7",
+    "site_tagline_en": "Fiber Infrastructure & 24/7 Managed Services",
+    "hero_title": "Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global",
+    "hero_title_en": "Ultra-Fast Fiber Connectivity & Managed IT for Global-Scale Business",
+    "hero_subtitle": "Backbone internet berkecepatan cahaya, latensi super rendah, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.",
+    "hero_subtitle_en": "Light-speed internet backbone, ultra-low latency, multi-cloud interconnect, and 24/7 Cyber SOC protection.",
+    "cta_primary_label": "Minta Penawaran",
+    "cta_primary_url": "/contact",
+    "cta_login_label": "Portal Klien",
+    "cta_login_url": "/member/login",
+    "noc_status_text": "Semua Node Normal",
+    "noc_status_text_en": "All Nodes Normal",
+    "stat_latency": "< 2.4 ms",
+    "stat_uptime": "99.999% SLA Uptime",
+    "stat_backbone": "100 Gbps Redundant Ring",
+    "stat_asn": "AS139820 (BGP Multi-Homing Tier-1)"
+  },
+  "menus": {
+    "header": {
+      "name": "Layung Header Navigation",
+      "items": [
+        { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
+        {
+          "title": "Konektivitas Fiber",
+          "title_en": "Fiber Connectivity",
+          "url": "/services",
+          "type": "custom",
+          "sort_order": 1,
+          "children": [
+            { "title": "Dedicated Internet (DIA 1:1)", "title_en": "Dedicated Internet (DIA 1:1)", "url": "/services#dia", "type": "custom", "description": "Bandwidth simetris murni & IP Publik /29" },
+            { "title": "Dark Fiber & Metro Ethernet", "title_en": "Dark Fiber & Metro Ethernet", "url": "/services#dark-fiber", "type": "custom", "description": "Jalur serat optik privat antar gedung" },
+            { "title": "Colocation & Data Center", "title_en": "Colocation & Data Center", "url": "/about#colocation", "type": "custom", "description": "Tier-3 data center interconnect" }
+          ]
+        },
+        {
+          "title": "Managed IT & SOC",
+          "title_en": "Managed IT & SOC",
+          "url": "/solusi",
+          "type": "custom",
+          "sort_order": 2,
+          "children": [
+            { "title": "24/7 Cyber Security SOC", "title_en": "24/7 Cyber Security SOC", "url": "/solusi#soc", "type": "custom", "description": "Mitigasi DDoS & Next-Gen Firewall" },
+            { "title": "Managed SD-WAN & Multi-Cloud", "title_en": "Managed SD-WAN & Multi-Cloud", "url": "/solusi#sdwan", "type": "custom", "description": "Direct connect AWS, GCP, Azure" },
+            { "title": "Tim Engineer", "title_en": "Engineering Team", "url": "/tim", "type": "custom", "description": "Konsultasi arsitektur jaringan" }
+          ]
+        },
+        {
+          "title": "Paket & SLA",
+          "title_en": "Packages & SLA",
+          "url": "/pricing",
+          "type": "custom",
+          "sort_order": 3,
+          "children": [
+            { "title": "Paket Bandwidth & Harga", "title_en": "Bandwidth Packages & Pricing", "url": "/pricing#packages", "type": "custom", "description": "SME hingga Enterprise" },
+            { "title": "Jaminan SLA", "title_en": "SLA Guarantee", "url": "/achievement", "type": "custom", "description": "99.999% & ISO 27001" },
+            { "title": "Karir NOC", "title_en": "NOC Careers", "url": "/career", "type": "custom", "description": "Lowongan engineer & DevOps" }
+          ]
+        },
+        { "title": "Warta", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
+        { "title": "Kontak NOC", "title_en": "Contact NOC", "url": "/contact", "type": "custom", "sort_order": 5 }
+      ]
+    },
+    "footer_col_1": {
+      "name": "Layung Footer Services",
+      "items": [
+        { "title": "Dedicated Internet (DIA 1:1)", "url": "/services#dia", "type": "custom", "sort_order": 0 },
+        { "title": "Dark Fiber & Metro-E", "url": "/services#dark-fiber", "type": "custom", "sort_order": 1 },
+        { "title": "Data Center Colocation", "url": "/about#colocation", "type": "custom", "sort_order": 2 },
+        { "title": "Paket Bandwidth", "url": "/pricing#packages", "type": "custom", "sort_order": 3 }
+      ]
+    },
+    "footer_col_2": {
+      "name": "Layung Footer Managed",
+      "items": [
+        { "title": "24/7 Cyber Security SOC", "url": "/solusi#soc", "type": "custom", "sort_order": 0 },
+        { "title": "Managed SD-WAN Cloud", "url": "/solusi#sdwan", "type": "custom", "sort_order": 1 },
+        { "title": "Sertifikasi ISO 27001", "url": "/achievement", "type": "custom", "sort_order": 2 },
+        { "title": "Pusat Karir Engineer", "url": "/career", "type": "custom", "sort_order": 3 }
+      ]
+    }
+  },
+  "pages": [
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Layung Network — infrastruktur serat optik dan managed services.", "body": "<p>Portal resmi Layung Network — infrastruktur serat optik dan managed services 24/7.</p><p>Layout publik (hero NOC, stat backbone) dari template tema Layung. Konten editor untuk SEO.</p>", "body_en": "<p>Official Layung Network portal — fiber infrastructure and 24/7 managed services.</p><p>Public layout (NOC hero, backbone stats) comes from the Layung theme. Editor content is for SEO.</p>" },
+    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil Layung Network dan komitmen SLA enterprise.", "body": "<p>Profil Layung Network dan komitmen SLA enterprise 99.999%.</p>", "body_en": "<p>Layung Network profile and 99.999% enterprise SLA commitment.</p>" },
+    { "slug": "services", "title": "Konektivitas Fiber", "title_en": "Fiber Connectivity", "theme_page": "pages/Services", "status": "published", "excerpt": "DIA, dark fiber, dan colocation.", "body": "<p>Layanan DIA 1:1, dark fiber, metro ethernet, dan colocation Tier-3.</p>", "body_en": "<p>DIA 1:1, dark fiber, metro ethernet, and Tier-3 colocation services.</p>" },
+    { "slug": "solusi", "title": "Managed Services", "title_en": "Managed Services", "theme_page": "pages/Solusi", "status": "published", "excerpt": "SOC 24/7, SD-WAN, dan layanan IT terkelola.", "body": "<p>Managed SOC 24/7, SD-WAN multi-cloud, dan layanan IT terkelola.</p>", "body_en": "<p>24/7 managed SOC, multi-cloud SD-WAN, and managed IT services.</p>" },
+    { "slug": "pricing", "title": "Paket & Bandwidth", "title_en": "Packages & Bandwidth", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Paket dedicated internet untuk SME hingga enterprise.", "body": "<p>Paket bandwidth dedicated internet dari SME hingga enterprise.</p>", "body_en": "<p>Dedicated internet bandwidth packages from SME to enterprise.</p>" },
+    { "slug": "tim", "title": "Tim Engineer", "title_en": "Engineering Team", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori engineer dan konsultan jaringan.", "body": "<p>Direktori network engineer dan konsultan arsitektur jaringan Layung.</p>", "body_en": "<p>Directory of Layung network engineers and architecture consultants.</p>" },
+    { "slug": "blog", "title": "Warta & Berita", "title_en": "News & Updates", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita jaringan, maintenance, dan pengumuman NOC.", "body": "<p>Berita jaringan, jadwal maintenance, dan pengumuman NOC Layung.</p>", "body_en": "<p>Network news, maintenance schedules, and Layung NOC announcements.</p>" },
+    { "slug": "contact", "title": "Hubungi NOC", "title_en": "Contact NOC", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline 24/7 dan formulir konsultasi enterprise.", "body": "<p>Hotline NOC 24/7 dan formulir konsultasi enterprise.</p>", "body_en": "<p>24/7 NOC hotline and enterprise consultation form.</p>" },
+    { "slug": "achievement", "title": "SLA & Sertifikasi", "title_en": "SLA & Certifications", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Jaminan uptime dan sertifikasi keamanan.", "body": "<p>Jaminan uptime 99.999% dan sertifikasi ISO 27001.</p>", "body_en": "<p>99.999% uptime guarantee and ISO 27001 certification.</p>" },
+    { "slug": "careers", "title": "Karir NOC", "title_en": "NOC Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan network engineer dan DevOps.", "body": "<p>Lowongan network engineer, NOC analyst, dan DevOps di Layung Network.</p>", "body_en": "<p>Open roles for network engineers, NOC analysts, and DevOps at Layung Network.</p>" }
+  ],
+  "posts": [
+    {
+      "slug": "layung-sample-peering-iix",
+      "title": "Upgrade Peering IIX APJII Menjadi 100 Gbps",
+      "title_en": "IIX APJII Peering Upgraded to 100 Gbps",
+      "status": "published",
+      "excerpt": "Interkoneksi 100G ke gedung Cyber untuk mengantisipasi lonjakan trafik streaming dan cloud gaming.",
+      "excerpt_en": "100G interconnect to Cyber building to handle streaming and cloud gaming traffic spikes.",
+      "body": "<p>Artikel sample infrastruktur untuk grid warta Layung Network.</p>",
+      "body_en": "<p>Sample infrastructure article for the Layung Network news grid.</p>"
+    },
+    {
+      "slug": "layung-sample-mitigasi-ddos",
+      "title": "Mitigasi Serangan DDoS Multi-Vektor untuk Korporat",
+      "title_en": "Multi-Vector DDoS Mitigation for Enterprise",
+      "status": "published",
+      "excerpt": "Integrasi BGP Anycast dan scrub center lokal menyaring serangan volume tinggi tanpa mengganggu operasional.",
+      "excerpt_en": "BGP Anycast and local scrub center integration filters high-volume attacks without disrupting operations.",
+      "body": "<p>Panduan singkat arsitektur SOC untuk klien enterprise.</p>",
+      "body_en": "<p>Short SOC architecture guide for enterprise clients.</p>"
+    },
+    {
+      "slug": "layung-sample-maintenance-kabel",
+      "title": "Jadwal Pemeliharaan Kabel Bawah Laut Batam–Singapura",
+      "title_en": "Batam–Singapore Subsea Cable Maintenance Schedule",
+      "status": "published",
+      "excerpt": "Pemeliharaan preventif segmen kabel internasional dengan pengalihan rute redundan otomatis.",
+      "excerpt_en": "Preventive maintenance on international cable segment with automatic redundant route failover.",
+      "body": "<p>Notifikasi maintenance sample untuk halaman blog Layung.</p>",
+      "body_en": "<p>Sample maintenance notice for the Layung blog page.</p>"
+    },
+    {
+      "slug": "layung-sample-soc-expansion",
+      "title": "Perluasan Kapasitas Cyber SOC 24/7 Layung Network",
+      "title_en": "Layung Network Expands 24/7 Cyber SOC Capacity",
+      "status": "published",
+      "excerpt": "Penambahan analis keamanan siber dan sensor threat intelligence generasi terbaru.",
+      "excerpt_en": "Additional cyber analysts and next-gen threat intelligence sensors deployed.",
+      "body": "<p>Update layanan managed security sample untuk klien ISP/MSP.</p>",
+      "body_en": "<p>Sample managed security service update for ISP/MSP clients.</p>"
+    }
+  ]
+}

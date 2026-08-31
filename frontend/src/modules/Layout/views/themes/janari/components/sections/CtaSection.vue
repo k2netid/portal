@@ -1,37 +1,37 @@
 <template>
-  <section class="py-40 bg-muted/20 relative overflow-hidden">
+  <section class="py-14 md:py-16 bg-muted/20 relative overflow-hidden">
     <div class="container mx-auto px-6">
       <div
         ref="cardRef"
-        class="max-w-7xl mx-auto p-12 md:p-32 border border-border bg-card/50 backdrop-blur-3xl relative overflow-hidden"
+        class="max-w-7xl mx-auto px-6 py-10 md:px-12 md:py-14 border border-border bg-card/50 backdrop-blur-3xl relative overflow-hidden"
       >
         <div class="relative z-10 flex flex-col items-center text-center">
-          <span class="inline-flex items-center px-4 py-2 bg-background/80 backdrop-blur-md border border-primary/20 text-[9px] font-black tracking-[0.5em] uppercase text-primary mb-12 rounded-full">
+          <span class="inline-flex items-center px-4 py-1.5 bg-background/80 backdrop-blur-md border border-primary/20 text-[9px] font-black tracking-[0.5em] uppercase text-primary mb-5 rounded-full">
             <span class="w-1 h-1 bg-primary rounded-full mr-2" />
             {{ badgeText }}
           </span>
           <h2
             ref="titleRef"
-            class="text-5xl md:text-9xl font-heading font-black mb-16 leading-[0.85] uppercase tracking-tighter text-foreground"
+            class="text-4xl md:text-6xl lg:text-7xl font-heading font-black mb-5 leading-[0.95] uppercase tracking-tighter text-foreground"
           >
             <JanariSplitText :text="titleText" />
           </h2>
           <p
             v-if="subtitleText"
-            class="max-w-2xl text-foreground/60 mb-16 text-lg leading-relaxed"
+            class="max-w-2xl text-foreground/60 mb-7 text-base leading-relaxed"
           >
             {{ subtitleText }}
           </p>
-          <div class="flex flex-col sm:flex-row items-center gap-6">
+          <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
             <router-link
               :to="primaryUrl"
-              class="px-10 py-4 text-xs font-bold tracking-[0.5px] uppercase bg-primary text-primary-foreground rounded-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              class="px-8 py-3 text-xs font-bold tracking-[0.5px] uppercase bg-primary text-primary-foreground rounded-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
             >
               {{ buttonText }}
             </router-link>
             <router-link
               :to="secondaryUrl"
-              class="px-10 py-4 text-xs font-bold tracking-[0.5px] uppercase border border-border rounded-lg hover:bg-muted/50 transition-all"
+              class="px-8 py-3 text-xs font-bold tracking-[0.5px] uppercase border border-border rounded-lg hover:bg-muted/50 transition-all"
             >
               {{ secondaryButtonText }}
             </router-link>

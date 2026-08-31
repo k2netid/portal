@@ -7,13 +7,13 @@
     <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10" />
     <div class="absolute top-0 left-0 w-full h-[1px] bg-primary/10 blur-[2px] z-0" />
 
-    <div class="container mx-auto px-6 py-20">
+    <div class="container mx-auto px-6 py-10 md:py-12">
       <div
         ref="footerGridRef"
-        :class="['grid gap-16', gridClass]"
+        :class="['grid gap-8 md:gap-10', gridClass]"
       >
         <!-- Brand / Masthead -->
-        <div class="space-y-6">
+        <div class="space-y-4">
           <div class="flex items-center gap-4">
             <div 
               v-if="brandingDisplay !== 'text_only'"
@@ -58,7 +58,7 @@
           <!-- Social Links -->
           <div
             ref="socialLinksRef"
-            class="flex gap-6"
+            class="flex gap-4"
           >
             <a
               v-for="(link, idx) in socialLinks"
@@ -80,12 +80,12 @@
         <!-- Footer Column 1 -->
         <div
           v-if="(footerCol1Items?.length || 0) > 0"
-          class="space-y-10"
+          class="space-y-4"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.35em] text-foreground/75">
             {{ col1Title }}
           </h2>
-          <ul class="space-y-4">
+          <ul class="space-y-2">
             <li
               v-for="item in footerCol1Items"
               :key="String(item.id || item.title)"
@@ -104,12 +104,12 @@
         <!-- Footer Column 2 -->
         <div
           v-if="(footerCol2Items?.length || 0) > 0"
-          class="space-y-10"
+          class="space-y-4"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.35em] text-foreground/75">
             {{ col2Title }}
           </h2>
-          <ul class="space-y-4">
+          <ul class="space-y-2">
             <li
               v-for="item in footerCol2Items"
               :key="String(item.id || item.title)"
@@ -128,7 +128,7 @@
         <!-- Newsletter (High-end Contrast) -->
         <div
           v-if="newsletterEnabled"
-          class="space-y-8"
+          class="space-y-4"
         >
           <h2 class="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/90">
             {{ newsletterTitle }}
@@ -137,7 +137,7 @@
             {{ newsletterDescription }}
           </p>
           <form
-            class="flex flex-col gap-3"
+            class="flex flex-col gap-2"
             @submit.prevent="submitNewsletter"
           >
             <div class="flex gap-2">
@@ -145,7 +145,7 @@
                 v-model="email"
                 type="email" 
                 :placeholder="newsletterPlaceholder" 
-                class="flex-1 px-4 py-3 bg-muted/30 border border-border text-foreground placeholder-foreground/30 text-xs focus:border-primary/50 outline-none transition-colors"
+                class="flex-1 px-3 py-2.5 bg-muted/30 border border-border text-foreground placeholder-foreground/30 text-xs focus:border-primary/50 outline-none transition-colors"
               >
               <button 
                 type="submit" 
@@ -168,8 +168,8 @@
       </div>
 
       <!-- Bottom Bar -->
-      <div :class="['mt-24 pt-10 border-t border-border flex justify-between items-center gap-8', isDesktop ? 'flex-row' : 'flex-col']">
-        <p class="text-foreground/75 text-[9px] uppercase tracking-[0.2em] font-black flex flex-wrap gap-x-6 gap-y-2">
+      <div :class="['mt-8 md:mt-10 pt-6 border-t border-border flex justify-between items-center gap-4', isDesktop ? 'flex-row' : 'flex-col']">
+        <p class="text-foreground/75 text-[9px] uppercase tracking-[0.2em] font-black flex flex-wrap gap-x-4 gap-y-1">
           <span v-if="copyrightText">{{ copyrightText }}</span>
           <template v-else>
             <span>&copy; {{ new Date().getFullYear() }} <a
@@ -187,7 +187,7 @@
           </template>
         </p>
                 
-        <div class="flex gap-10">
+        <div class="flex gap-6">
           <router-link 
             v-for="item in footerItems" 
             :key="String(item.id || item.title)" 

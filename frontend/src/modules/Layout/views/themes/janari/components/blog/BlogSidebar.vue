@@ -155,15 +155,22 @@
         </div>
 
         <div class="space-y-6 relative z-10">
-          <div 
-            v-for="(event, idx) in upcomingEvents" 
-            :key="idx"
-            class="flex gap-4 group cursor-default"
+          <div
+            v-if="upcomingEvents.length === 0"
+            class="text-sm text-muted-foreground py-4"
+          >
+            {{ viewAllAgenda }}
+          </div>
+          <router-link
+            v-for="(event, idx) in upcomingEvents"
+            :key="event.id || idx"
+            :to="event.url || '/blog'"
+            class="flex gap-4 group"
           >
             <div class="flex flex-col items-center shrink-0">
               <div class="w-12 h-12 rounded-xl bg-primary/10 flex flex-col items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                <span class="text-xs font-bold leading-none">{{ event.day }}</span>
-                <span class="text-[10px] font-black uppercase leading-none mt-1">{{ event.month }}</span>
+                <span class="text-xs font-bold leading-none text-foreground group-hover:text-primary-foreground">{{ event.day }}</span>
+                <span class="text-[10px] font-black uppercase leading-none mt-1 text-foreground/80 group-hover:text-primary-foreground">{{ event.month }}</span>
               </div>
               <div v-if="idx < upcomingEvents.length - 1" class="w-px h-full bg-border my-2" />
             </div>
@@ -176,12 +183,12 @@
                 {{ event.time }}
               </p>
             </div>
-          </div>
+          </router-link>
         </div>
 
         <router-link 
-          to="/agenda" 
-          class="mt-8 w-full py-3 border border-dashed border-border rounded-xl text-xs font-bold text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group"
+          to="/blog" 
+          class="mt-6 w-full py-3 border border-dashed border-border rounded-xl text-xs font-bold text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group"
         >
           {{ viewAllAgenda }}
           <ArrowRight class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
@@ -196,7 +203,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import api from '@/engine/api/client'
-import { libraryPaths } from '@/engine/api/paths'
+import { libraryPaths, publishingPaths } from '@/engine/api/paths'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { logger } from '@/shared/utils/logger'
 import {
@@ -303,12 +310,31 @@ const toggleCategory = (id: string) => {
   }
 }
 
-const upcomingEvents = [0, 1, 2, 3].map((i) => ({
-  day: t(`theme.janari.demo.event${i}.day`),
-  month: t(`theme.janari.demo.event${i}.month`),
-  title: t(`theme.janari.demo.event${i}.title`),
-  time: t(`theme.janari.demo.event${i}.time`),
-}))
+const upcomingEvents = ref<Array<{ id: string; day: string; month: string; title: string; time: string; url: string }>>([])
+
+const fetchRecentPosts = async () => {
+  try {
+    const response = await api.get(publishingPaths.publicContents, {
+      params: { type: 'post', status: 'published', sort: '-published_at', per_page: 4 },
+    })
+    const rawData = response.data || []
+    const posts = Array.isArray(rawData) ? rawData : (rawData?.data || [])
+    upcomingEvents.value = posts.map((post: any) => {
+      const d = post.published_at ? new Date(post.published_at) : new Date()
+      return {
+        id: String(post.id || post.slug),
+        day: String(d.getDate()).padStart(2, '0'),
+        month: d.toLocaleString('en', { month: 'short' }),
+        title: post.title || '',
+        time: d.toLocaleDateString(),
+        url: `/blog/${post.slug || ''}`,
+      }
+    })
+  } catch (error) {
+    logger.error('Failed to fetch recent posts for sidebar:', error)
+    upcomingEvents.value = []
+  }
+}
 
 const fetchCategories = async () => {
   try {
@@ -411,6 +437,7 @@ const selectCategory = (slug: string) => {
 
 onMounted(() => {
   fetchCategories()
+  fetchRecentPosts()
 })
 </script>
 

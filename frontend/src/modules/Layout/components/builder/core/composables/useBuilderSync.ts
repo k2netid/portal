@@ -144,6 +144,8 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                 builder_blocks: [],
                 builder_schema_version: BUILDER_SCHEMA_VERSION,
                 theme_page: themePage,
+                builder_override: false,
+                use_theme_template: true,
             },
         }
 
@@ -467,6 +469,9 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         try {
             const currentMeta = (content.value.meta as Record<string, any>) || {}
             const extractedHtml = extractHtmlFromBlocks(blocks.value)
+            const blockCount = Array.isArray(blocks.value) ? blocks.value.length : 0
+            const isThemeBind = Boolean(activeThemePage.value || currentMeta.theme_page)
+            const enableOverride = isThemeBind && blockCount > 0
             const payload: Record<string, unknown> = {
                 ...content.value,
                 body: extractedHtml || content.value.body || '',
@@ -478,6 +483,12 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
                     builder_blocks: blocks.value,
                     builder_schema_version: BUILDER_SCHEMA_VERSION,
                     ...(activeThemePage.value ? { theme_page: activeThemePage.value } : {}),
+                    ...(isThemeBind
+                        ? {
+                            builder_override: enableOverride,
+                            use_theme_template: !enableOverride,
+                        }
+                        : {}),
                 },
                 global_variables: globalVariables.getVariables()
             }

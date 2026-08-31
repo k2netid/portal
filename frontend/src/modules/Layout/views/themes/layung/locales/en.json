@@ -19,7 +19,12 @@
     "signIn": "Client Portal",
     "account": "Enterprise Account",
     "getStarted": "Request Quote",
-    "selectLanguage": "Language:"
+    "selectLanguage": "Language:",
+    "themeAriaLight": "Enable light mode",
+    "themeAriaDark": "Enable dark mode"
+  },
+  "common": {
+    "breadcrumbAria": "Breadcrumb"
   },
   "footer": {
     "description": "Layung Network provides ultra-high-speed fiber optic infrastructure, 1:1 dedicated internet access, and managed IT services with 99.999% SLA uptime for modern global enterprises.",
@@ -111,11 +116,31 @@
     },
     "blog": {
       "title": "Technology Insights & Network Advisories",
-      "subtitle": "In-depth articles covering cyber security trends, cloud architecture, and scheduled maintenance bulletins."
+      "subtitle": "In-depth articles covering cyber security trends, cloud architecture, and scheduled maintenance bulletins.",
+      "sectionBadge": "Technology & Network Advisories",
+      "allCategories": "All News",
+      "catInfra": "Fiber Infrastructure",
+      "catSecurity": "Cyber Security",
+      "catCloud": "Cloud & SD-WAN",
+      "catMaintenance": "Maintenance Notices",
+      "noPosts": "No articles found in this category.",
+      "noPostsHint": "Try another category or check back for new publications."
     },
     "search": {
       "title": "Search Services & Technical Documentation",
       "subtitle": "Quickly find plan details, configuration guidelines, and Layung engineering documentation."
+    },
+    "disabled": {
+      "defaultTitle": "Page Unavailable",
+      "defaultMessage": "This page is currently unavailable or has been disabled by the network administrator.",
+      "backHome": "Back to Home"
     }
+  },
+  "cta": {
+    "badge": "Free Network Architecture Consultation",
+    "title": "Ready to Accelerate Your Business Without Limits?",
+    "subtitle": "Contact our Solution Architects and Network Engineers for site surveys, throughput testing, and exclusive 2026 Enterprise SLA offers.",
+    "primary": "Request Quote / Free Survey",
+    "whatsapp": "Chat WhatsApp NOC & Sales"
   }
 }

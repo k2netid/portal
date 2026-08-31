@@ -1,26 +1,32 @@
 <template>
   <section
-    class="py-24 bg-background border-b border-border overflow-hidden"
+    class="py-14 md:py-16 bg-background border-b border-border overflow-hidden"
   >
     <div class="container mx-auto px-6 text-center">
-      <h2 class="text-4xl font-heading font-black text-foreground uppercase tracking-tighter mb-20">
+      <h2 class="text-2xl md:text-3xl font-heading font-black text-foreground uppercase tracking-tighter mb-8 md:mb-10">
         {{ titleText }}
       </h2>
       <div
-        ref="marqueeRef"
-        class="flex items-center gap-24 whitespace-nowrap opacity-40 hover:opacity-100 transition-opacity duration-700 cubic-bezier(0.37, 0.01, 0, 0.98)"
+        v-if="items.length === 0"
+        class="text-sm text-muted-foreground py-6 border border-dashed border-border rounded-xl"
       >
-        <!-- Duplicate items natively for seamless marquee loop -->
+        {{ emptyText }}
+      </div>
+      <div
+        v-else
+        ref="marqueeRef"
+        class="flex items-center gap-12 md:gap-16 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity duration-700"
+      >
         <div
           v-for="(partner, idx) in [...items, ...items]"
           :key="partner.name + idx"
-          class="grayscale hover:grayscale-0 transition-all duration-500 cubic-bezier(0.37, 0.01, 0, 0.98) cursor-pointer transform hover:scale-110"
+          class="grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer transform hover:scale-110"
         >
           <img
             v-if="partner.image"
             :src="partner.image"
             :alt="partner.name"
-            class="h-12 object-contain"
+            class="h-10 md:h-12 object-contain"
             width="192"
             height="48"
             loading="lazy"
@@ -29,7 +35,7 @@
           >
           <span
             v-else
-            class="text-2xl font-black text-foreground/40"
+            class="text-xl md:text-2xl font-black text-foreground/70 tracking-tight"
           >{{ partner.name }}</span>
         </div>
       </div>
@@ -54,14 +60,21 @@ const marqueeRef = ref<HTMLElement>()
 const { data: dynamicItems } = useThemeDataBindings('partners', 'partners')
 
 const titleText = computed(() => localizedString('partners_title') || t('theme.janari.partners.titleDefault'))
+const emptyText = computed(() => localizedString('partners_empty') || t('theme.janari.partners.empty'))
 const marqueeSpeed = computed(() => parseInt(String(getSetting('partners_marquee_speed', 25)), 10))
 
-const items = computed(() => dynamicItems.value.map((item: any) => ({ 
-    name: item.title, 
-    image: item._raw?.featured_image || item._raw?.thumbnail 
-})))
+const items = computed(() =>
+  dynamicItems.value
+    .map((item: any) => ({
+      name: item.title,
+      image: item._raw?.featured_image || item._raw?.thumbnail,
+    }))
+    .filter((p: { name?: string }) => Boolean(p.name)),
+)
 
 onMounted(() => {
-    if (marqueeRef.value) marquee(marqueeRef.value, { speed: marqueeSpeed.value })
+  if (marqueeRef.value && items.value.length > 0) {
+    marquee(marqueeRef.value, { speed: marqueeSpeed.value })
+  }
 })
 </script>

@@ -42,7 +42,7 @@
           <!-- Header -->
           <section
             ref="headerSection"
-            class="py-24 bg-gradient-to-b from-primary/10 to-background border-b border-border/50"
+            class="py-10 md:py-12 bg-gradient-to-b from-primary/10 to-background border-b border-border/50"
           >
             <div class="container mx-auto px-4 text-center">
               <span class="motion-fade text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ pageTitle || t('theme.janari.pages.about.sectionLabel') }}</span>
@@ -59,12 +59,12 @@
           </section>
 
         <!-- Mission/Content -->
-        <section class="py-20 bg-background">
+        <section class="py-14 md:py-16 bg-background">
           <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
               <div
                 ref="contentLeft"
-                class="space-y-8"
+                class="space-y-6"
               >
                 <div class="motion-fade space-y-4">
                   <h2 class="text-3xl font-bold text-foreground">
@@ -177,11 +177,12 @@ import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocali
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 const { pageData, loading } = usePublicPageContent('about')
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -191,7 +192,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 const { getSetting } = useTheme()
 const { localizedString } = useLocalizedThemeSetting()
 const router = useRouter()

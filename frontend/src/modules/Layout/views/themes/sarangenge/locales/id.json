@@ -14,7 +14,9 @@
     "account": "Akun",
     "signIn": "Masuk Portal",
     "getStarted": "Info PPDB",
-    "selectLanguage": "Bahasa"
+    "selectLanguage": "Bahasa",
+    "themeAriaLight": "Aktifkan mode terang",
+    "themeAriaDark": "Aktifkan mode gelap"
   },
   "footer": {
     "description": "Sarangenge terinspirasi dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi yang menumbuhkan kebaikan budi, kecerdasan sains, dan integritas luhur.",
@@ -32,7 +34,8 @@
     "search": "Cari Berita & Agenda",
     "searchPlaceholder": "Ketik kata kunci...",
     "publishedOn": "Diterbitkan pada",
-    "by": "oleh"
+    "by": "oleh",
+    "breadcrumbAria": "Breadcrumb"
   },
   "pages": {
     "home": {
@@ -67,7 +70,14 @@
       "title": "Warta & Berita Sekolah",
       "subtitle": "Informasi resmi, liputan prestasi, edaran akademik, dan agenda kegiatan kesiswaan.",
       "categories": "Kategori Berita",
-      "noPosts": "Belum ada warta untuk kategori ini."
+      "sectionBadge": "Warta Sivitas Akademika",
+      "allCategories": "Semua Warta",
+      "catPpdb": "Pengumuman & PPDB",
+      "catPrestasi": "Prestasi Siswa",
+      "catKegiatan": "Kegiatan Kesiswaan",
+      "catAkademik": "Akademik & Kurikulum",
+      "noPosts": "Belum ada warta untuk kategori ini.",
+      "noPostsHint": "Silakan pilih kategori lain atau gunakan kolom pencarian."
     },
     "post": {
       "title": "Detail Warta",
@@ -131,6 +141,13 @@
       "empty": "Tidak ada hasil untuk kata kunci tersebut.",
       "unavailable": "Layanan pencarian sedang tidak tersedia."
     }
+  },
+  "cta": {
+    "badge": "Mekar Bersama Cahaya Pagi",
+    "title": "Siap Bergabung dengan Keluarga Besar Sarangenge?",
+    "subtitle": "Dapatkan informasi lengkap mengenai kuota pendaftaran, jadwal seleksi, beasiswa, dan konsultasi kurikulum bersama tim konselor kami.",
+    "primary": "Daftar PPDB / Konsultasi",
+    "whatsapp": "Chat WhatsApp Hotline"
   },
   "customizer": {
     "sidebar": {

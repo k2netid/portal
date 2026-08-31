@@ -316,7 +316,8 @@
       "openCustomizer": "Buka Customizer",
       "preview": "Pratinjau",
       "settings": "Setélan",
-      "validate": "Validasi"
+      "validate": "Validasi",
+      "installSample": "Pasang Sample Data"
     },
     "uploading": "Nuju ngunggah…",
     "source": {
@@ -334,7 +335,10 @@
       "scanSuccess": "Mindai parantos réngsé! Mendakan {count} téma.",
       "validateError": "Gagal memvalidasi téma",
       "validateFailed": "Validasi téma gagal:",
-      "validateSuccess": "Téma valid!"
+      "validateSuccess": "Téma valid!",
+      "installSampleConfirm": "Pasang sample data pikeun \"{name}\"? Menu + setélan téma + shell kaca CMS bakal dieusi. Situs publik tetep make layout Vue téma (henteu diganti builder blocks). Edit copy ngaliwatan Customizer/Menus; Visual Builder ngan pikeun override pinuh.",
+      "installSampleFailed": "Gagal pasang sample data",
+      "installSampleSuccess": "Sample data kapasang: {menus} menu, {pages} shell kaca CMS. Layout Vue téma tetep utuh."
     },
     "list": {
       "by": "ku {author}",
@@ -362,5 +366,8 @@
       "email": "Email",
       "frontend": "Frontend"
     }
+  },
+  "frontend": {
+    "backToTop": "Balik ka luhur"
   }
 }

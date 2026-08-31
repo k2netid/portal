@@ -17,7 +17,7 @@
 
     <!-- Default Theme Template -->
     <template v-else>
-      <header class="py-20 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
+      <header class="py-10 md:py-12 bg-gradient-to-b from-primary/10 to-background border-b border-border/50">
         <div class="container mx-auto px-4 text-center">
           <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ sectionLabel }}</span>
           <h1 class="text-4xl md:text-6xl font-extrabold text-foreground mb-6">
@@ -81,7 +81,8 @@ import { PluginSlot } from '@/shared/components'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useThemeI18n('janari')
@@ -89,7 +90,7 @@ const { locale } = useI18n({ useScope: 'global' })
 const { localizedString } = useLocalizedThemeSetting()
 
 const { pageData } = usePublicPageContent('solusi')
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -99,7 +100,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 
 const pageTitle = computed(() => localizedString('page_solusi_title') || t('pages.solusi.title'))
 const pageSubtitle = computed(() => localizedString('page_solusi_subtitle') || t('pages.solusi.subtitle'))

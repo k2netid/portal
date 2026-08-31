@@ -20,7 +20,7 @@
     >
       <Loader2 class="w-10 h-10 animate-spin text-primary/50" />
       <p class="text-sm font-medium text-muted-foreground animate-pulse">
-        Loading Contact Page...
+        {{ t('theme.janari.pages.contact.loadingPage') }}
       </p>
     </div>
 
@@ -33,7 +33,10 @@
       />
 
       <div v-else class="space-y-0">
-        <section class="relative overflow-hidden border-y border-border/50 aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1] min-h-[300px]">
+        <section
+          class="relative overflow-hidden border-b border-border/50 bg-muted/20"
+          :class="contactHeroImage ? 'aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1] min-h-[220px]' : ''"
+        >
           <img
             v-if="contactHeroImage"
             :src="contactHeroImage"
@@ -41,15 +44,21 @@
             fetchpriority="high"
             loading="eager"
             decoding="sync"
-            alt="Contact Hero"
+            :alt="t('theme.janari.pages.contact.heroAlt')"
           />
-          <div class="absolute inset-0 bg-background/70 dark:bg-background/75 backdrop-blur-[1px]" />
-          <div class="container mx-auto px-6 py-16 md:py-20 relative z-10">
-            <span class="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">{{ pageTitle || t('theme.janari.pages.contact.sectionLabel') }}</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          <div
+            v-if="contactHeroImage"
+            class="absolute inset-0 bg-background/70 dark:bg-background/75 backdrop-blur-[1px]"
+          />
+          <div
+            class="container mx-auto px-6 relative z-10"
+            :class="contactHeroImage ? 'py-16 md:py-20' : 'py-8 md:py-10'"
+          >
+            <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">{{ pageTitle || t('theme.janari.pages.contact.sectionLabel') }}</span>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
               {{ pageTitle ? pageTitle : t('theme.janari.pages.contact.title') }}
             </h1>
-            <p class="text-lg text-muted-foreground leading-relaxed max-w-3xl">
+            <p class="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
               {{ pageSubtitle }}
             </p>
           </div>
@@ -57,24 +66,24 @@
 
         <PluginSlot name="after_hero" class="w-full" />
 
-        <main class="container mx-auto px-6 py-20">
+        <main class="container mx-auto px-6 py-10 md:py-12">
           <!-- Page Body Content if available -->
           <SafeHtml
             v-if="cmsBody"
-            class="mb-16 Jejakawan-content max-w-4xl"
+            class="mb-8 Jejakawan-content max-w-4xl"
             :html="cmsBody"
             mode="publishing"
           />
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-start">
             <!-- Info Column -->
             <div
               ref="infoCol"
-              class="lg:col-span-5 space-y-10"
+              class="lg:col-span-5 space-y-8"
             >
               <Card
                 ref="contactCard"
-                class="p-8 space-y-8 bg-card/50 backdrop-blur-sm border-border/60"
+                class="p-6 md:p-8 space-y-6 bg-card/50 backdrop-blur-sm border-border/60"
               >
                 <div
                   class="contact-info-item flex items-start gap-6 p-4 -m-4 rounded-xl border border-transparent transition-all duration-500 hover:border-primary/60 hover:bg-primary/5 hover:shadow-[0_0_24px_hsl(var(--primary)/0.15)]"
@@ -114,8 +123,10 @@
                       {{ labelPhone }}
                     </h3>
                     <a
-                      v-if="phoneDialHref"
-                      :href="phoneDialHref"
+                      v-if="phoneActionHref"
+                      :href="phoneActionHref"
+                      :target="phoneActionIsExternal ? '_blank' : undefined"
+                      :rel="phoneActionIsExternal ? 'noopener noreferrer' : undefined"
                       class="text-lg font-bold hover:text-primary transition-colors"
                     >
                       {{ displayPhone }}
@@ -130,7 +141,7 @@
                       v-else
                       class="text-sm text-muted-foreground"
                     >
-                      Atur di Pengaturan → Identitas atau di Theme Customizer (bagian Contact).
+                      {{ contactSetupHint }}
                     </p>
                   </div>
                 </div>
@@ -175,7 +186,7 @@
                             class="w-full h-56"
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
-                            title="Contact location map"
+                            :title="t('theme.janari.pages.contact.mapTitle')"
                           />
                         </div>
                         <p class="text-xs text-muted-foreground leading-relaxed">
@@ -220,17 +231,20 @@
                         </div>
                       </PopoverContent>
                     </Popover>
-                    <p
+                    <a
                       v-else-if="displayAddress"
-                      class="text-base font-bold leading-relaxed text-balance"
+                      :href="mapExternalUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-base font-bold leading-relaxed text-balance hover:text-primary transition-colors"
                     >
                       {{ displayAddress }}
-                    </p>
+                    </a>
                     <p
                       v-else
                       class="text-sm text-muted-foreground"
                     >
-                      Atur di Pengaturan → Identitas atau di Theme Customizer (bagian Contact).
+                      {{ contactSetupHint }}
                     </p>
                   </div>
                 </div>
@@ -567,7 +581,8 @@ import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, computed, nextTick, defineAsyncComponent, watchEffect, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { normalizeLocaleCode } from '@/engine/i18n'
-import { resolveLocalizedPageHtml } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
+import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
 import { useHead } from '@unhead/vue'
 import axios from 'axios'
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue'
@@ -652,23 +667,27 @@ const mapPopoverOpen = ref(false)
 const mapIframeVisible = ref(false)
 const { getSetting } = useTheme()
 const { localizedString } = useLocalizedThemeSetting()
-const labelEmail = computed(() => localizedString('page_contact_label_email') || 'Email Resmi')
-const labelPhone = computed(() => localizedString('page_contact_label_phone') || 'Telepon / WA')
-const labelAddress = computed(() => localizedString('page_contact_label_address') || 'Alamat')
-const labelSubmit = computed(() => localizedString('page_contact_submit') || 'Kirim Pesan')
-const labelMapOpen = computed(() => localizedString('page_contact_map_open') || 'Buka Peta')
-const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || 'Petunjuk Arah')
-const labelCopyAddress = computed(() => localizedString('page_contact_copy_address') || 'Copy Alamat')
-const labelShareLocation = computed(() => localizedString('page_contact_share_location') || 'Share Lokasi')
+const { t, locale } = useI18n({ useScope: 'global' })
+const labelEmail = computed(() => localizedString('page_contact_label_email') || t('theme.janari.pages.contact.labelEmail'))
+const labelPhone = computed(() => localizedString('page_contact_label_phone') || t('theme.janari.pages.contact.labelPhone'))
+const labelAddress = computed(() => localizedString('page_contact_label_address') || t('theme.janari.pages.contact.labelAddress'))
+const labelSubmit = computed(() => localizedString('page_contact_submit') || t('theme.janari.pages.contact.submit'))
+const labelMapOpen = computed(() => localizedString('page_contact_map_open') || t('theme.janari.pages.contact.mapOpen'))
+const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || t('theme.janari.pages.contact.mapDirections'))
+const labelCopyAddress = computed(() => localizedString('page_contact_copy_address') || t('theme.janari.pages.contact.copyAddress'))
+const labelShareLocation = computed(() => localizedString('page_contact_share_location') || t('theme.janari.pages.contact.shareLocation'))
 const labelCopyCoords = computed(() => localizedString('page_contact_copy_coords') || t('theme.janari.pages.contact.copyCoords'))
 const formTitleFallback = computed(() => localizedString('page_contact_form_title') || t('theme.janari.pages.contact.formTitle'))
 const formDescriptionFallback = computed(() => localizedString('page_contact_form_description') || t('theme.janari.pages.contact.formDescription'))
+const contactSetupHint = computed(() => t('theme.janari.pages.contact.setupHint'))
 const router = useRouter()
 const publishingStore = usePublishingStore()
 const toast = useToast()
-const { displayEmail, displayPhone, displayAddress, phoneDialHref } = useJanariIdentity()
-const { t, locale } = useI18n({ useScope: 'global' })
-const cmsBody = computed(() => resolveLocalizedPageHtml(pageData.value, locale.value))
+const { displayEmail, displayPhone, displayAddress, phoneDialHref, whatsAppAdminUrl } = useJanariIdentity()
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
+
+const phoneActionHref = computed(() => whatsAppAdminUrl.value || phoneDialHref.value || '')
+const phoneActionIsExternal = computed(() => phoneActionHref.value.startsWith('http'))
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -678,7 +697,7 @@ const builderBlocks = computed<BlockInstance[]>(() => {
   }
   return []
 })
-const hasBuilderBlocks = computed(() => builderBlocks.value.length > 0)
+const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value as Record<string, unknown> | null))
 
 const loadContactCms = async () => {
     try {
@@ -698,9 +717,9 @@ function animateTo(target: HTMLElement, vars: Record<string, unknown>): void {
 
 const isEnabled = computed(() => getSetting('enable_contact', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
-const pageTitle = computed(() => getSetting('page_contact_title') as string)
+const pageTitle = computed(() => localizedString('page_contact_title') || t('theme.janari.pages.contact.title'))
 const pageSubtitle = computed(() =>
-    (getSetting('page_contact_subtitle') as string) ||
+    localizedString('page_contact_subtitle') ||
     t('theme.janari.pages.contact.introQuestion')
 )
 const contactHeroImage = computed(() => {
@@ -889,7 +908,7 @@ async function copyLocationCoordinates(): Promise<void> {
 }
 
 async function shareLocation(): Promise<void> {
-    const title = String(pageTitle.value || 'Lokasi')
+    const title = String(pageTitle.value || t('theme.janari.pages.contact.location'))
     const text = String(displayAddress.value || t('theme.janari.pages.contact.siteLocationDefault'))
     const url = mapExternalUrl.value
     if ((navigator as Navigator & { share?: (data: { title?: string; text?: string; url?: string }) => Promise<void> }).share) {

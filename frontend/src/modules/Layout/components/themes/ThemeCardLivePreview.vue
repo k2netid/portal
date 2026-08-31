@@ -12,8 +12,9 @@
         :title="title"
         class="pointer-events-none block border-0"
         :style="iframeStyle"
-        loading="lazy"
+        loading="eager"
         tabindex="-1"
+        referrerpolicy="no-referrer"
       />
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="block-renderer w-full space-y-8">
+  <div class="block-renderer w-full space-y-0">
     <template v-for="(block, index) in internalBlocks" :key="block.id || index">
       <!-- 1. SECTION BLOCK -->
       <section
@@ -62,7 +62,7 @@
       <div
         v-else-if="block.type === 'hero' || block.type === 'fullwidth_header'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-hero-block relative overflow-hidden rounded-3xl p-8 md:p-16 lg:p-20 text-center flex flex-col items-center justify-center border border-border shadow-lg"
+        class="builder-hero-block relative overflow-hidden w-full py-20 md:py-28 px-6 md:px-16 text-center flex flex-col items-center justify-center border-b border-border bg-gradient-to-b from-primary/10 via-background to-background"
         :class="getSettingStr(block, 'css_class')"
         :style="[
           resolveBlockStyles(block),
@@ -71,10 +71,13 @@
       >
         <div v-if="getSettingStr(block, 'image')" class="absolute inset-0 bg-background/85 backdrop-blur-[2px] z-0" />
         
-        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
-          <div v-if="getSettingStr(block, 'badge')" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider">
+        <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+          <div
+            v-if="getSettingStr(block, 'badge') || getSettingStr(block, 'eyebrow')"
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider"
+          >
             <Sparkles class="w-3.5 h-3.5" />
-            <span>{{ getSettingStr(block, 'badge') }}</span>
+            <span>{{ getSettingStr(block, 'badge') || getSettingStr(block, 'eyebrow') }}</span>
           </div>
 
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.15]">
@@ -87,24 +90,89 @@
 
           <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
             <a
-              v-if="getSettingStr(block, 'button_text', 'Mulai Sekarang')"
-              :href="getSettingStr(block, 'button_url', '#')"
+              v-if="heroPrimaryLabel(block)"
+              :href="heroPrimaryUrl(block)"
               class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow-md hover:shadow-lg hover:scale-105 transition-all"
             >
-              <span>{{ getSettingStr(block, 'button_text', 'Mulai Sekarang') }}</span>
+              <span>{{ heroPrimaryLabel(block) }}</span>
               <ArrowRight class="w-4 h-4" />
             </a>
 
             <a
-              v-if="getSettingStr(block, 'secondary_button_text')"
-              :href="getSettingStr(block, 'secondary_button_url', '#')"
+              v-if="heroSecondaryLabel(block)"
+              :href="heroSecondaryUrl(block)"
               class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl border-2 border-border bg-background/80 hover:bg-muted font-bold text-sm text-foreground transition-all"
             >
-              <span>{{ getSettingStr(block, 'secondary_button_text') }}</span>
+              <span>{{ heroSecondaryLabel(block) }}</span>
             </a>
           </div>
         </div>
       </div>
+
+      <!-- 4B. BLURB / FEATURE CARD -->
+      <div
+        v-else-if="block.type === 'blurb' || block.type === 'feature'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-blurb-block group p-6 md:p-8 rounded-2xl border border-border bg-card/60 hover:border-primary/40 hover:shadow-lg transition-all h-full flex flex-col"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div class="p-3 rounded-xl bg-primary/10 text-primary mb-4 w-fit">
+          <Sparkles class="w-6 h-6" />
+        </div>
+        <h3 class="text-lg font-bold text-foreground mb-2">
+          {{ getSettingStr(block, 'title', 'Fitur') }}
+        </h3>
+        <p class="text-sm text-muted-foreground leading-relaxed flex-1">
+          {{ getSettingStr(block, 'content') || getSettingStr(block, 'description') }}
+        </p>
+      </div>
+
+      <!-- 4C. TEAM MEMBER CARD -->
+      <div
+        v-else-if="block.type === 'teammember' || block.type === 'person'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-team-block text-center p-6 rounded-2xl border border-border bg-card/60 h-full"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/15 text-primary font-black text-2xl flex items-center justify-center overflow-hidden">
+          <img
+            v-if="getSettingStr(block, 'image')"
+            :src="getSettingStr(block, 'image')"
+            :alt="getSettingStr(block, 'name')"
+            class="w-full h-full object-cover"
+          >
+          <span v-else>{{ teamInitials(block) }}</span>
+        </div>
+        <h3 class="text-base font-bold text-foreground">{{ getSettingStr(block, 'name', 'Anggota Tim') }}</h3>
+        <p class="text-xs text-primary font-semibold mt-1 uppercase tracking-wide">
+          {{ getSettingStr(block, 'position') || getSettingStr(block, 'role') }}
+        </p>
+        <p v-if="getSettingStr(block, 'bio')" class="text-sm text-muted-foreground mt-3 leading-relaxed">
+          {{ getSettingStr(block, 'bio') }}
+        </p>
+      </div>
+
+      <!-- 4D. ICON LIST -->
+      <ul
+        v-else-if="block.type === 'iconlist'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-iconlist-block space-y-3 py-2"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <li
+          v-for="(item, iIdx) in resolveIconListItems(block)"
+          :key="iIdx"
+          class="flex items-center gap-3 text-sm text-foreground"
+        >
+          <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+            <Sparkles class="w-4 h-4" />
+          </span>
+          <span>{{ item.text }}</span>
+        </li>
+      </ul>
 
       <!-- 5. FEATURES GRID / ICON LIST BLOCK -->
       <div
@@ -120,7 +188,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <template v-for="(feat, fIdx) in getSampleFeatures(getSettingNum(block, 'count', 3))" :key="fIdx">
+          <template v-for="(feat, fIdx) in resolveFeatureItems(block)" :key="fIdx">
             <div class="group p-6 rounded-2xl border border-border/80 bg-card/60 hover:bg-card hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col items-start">
               <div class="p-3 rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                 <Sparkles class="w-6 h-6" />
@@ -136,7 +204,7 @@
       <div
         v-else-if="block.type === 'cta' || block.type === 'call_to_action'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-cta-block w-full rounded-3xl bg-gradient-to-r from-primary/15 via-primary/5 to-background border border-primary/20 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md"
+        class="builder-cta-block w-full rounded-3xl bg-gradient-to-r from-primary/15 via-primary/5 to-background border border-primary/20 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md my-8"
         :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
@@ -145,14 +213,14 @@
             {{ getSettingStr(block, 'title', 'Siap Meningkatkan Performa Website Anda?') }}
           </h3>
           <p class="text-sm text-muted-foreground leading-relaxed">
-            {{ getSettingStr(block, 'description', 'Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi terbaik.') }}
+            {{ getSettingStr(block, 'content') || getSettingStr(block, 'description', 'Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi terbaik.') }}
           </p>
         </div>
         <a
-          :href="getSettingStr(block, 'button_url', '#')"
+          :href="getSettingStr(block, 'buttonUrl') || getSettingStr(block, 'button_url', '#')"
           class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow hover:shadow-lg hover:scale-105 transition-all shrink-0"
         >
-          <span>{{ getSettingStr(block, 'button_text', 'Hubungi Kami') }}</span>
+          <span>{{ getSettingStr(block, 'buttonText') || getSettingStr(block, 'button_text', 'Hubungi Kami') }}</span>
           <ArrowRight class="w-4 h-4" />
         </a>
       </div>
@@ -161,7 +229,7 @@
       <div
         v-else-if="block.type === 'faq' || block.type === 'accordion' || block.type === 'toggle'"
         :id="getSettingStr(block, 'html_id') || undefined"
-        class="builder-faq-block w-full max-w-3xl mx-auto py-4 space-y-4"
+        class="builder-faq-block w-full max-w-3xl mx-auto py-8 space-y-4"
         :class="getSettingStr(block, 'css_class')"
         :style="resolveBlockStyles(block)"
       >
@@ -171,7 +239,7 @@
         </div>
 
         <div class="space-y-3">
-          <template v-for="(item, qIdx) in getSampleFaqs(getSettingNum(block, 'count', 4))" :key="qIdx">
+          <template v-for="(item, qIdx) in resolveFaqItems(block)" :key="qIdx">
             <div class="border border-border rounded-2xl bg-card overflow-hidden transition-all shadow-sm">
               <button
                 type="button"
@@ -205,8 +273,11 @@
           <p v-if="getSettingStr(block, 'subtitle')" class="text-sm text-muted-foreground">{{ getSettingStr(block, 'subtitle') }}</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <template v-for="(testi, tIdx) in getSampleTestimonials(getSettingNum(block, 'count', 3))" :key="tIdx">
+        <div
+          class="grid gap-6"
+          :class="resolveTestimonialItems(block).length === 1 ? 'grid-cols-1 max-w-xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'"
+        >
+          <template v-for="(testi, tIdx) in resolveTestimonialItems(block)" :key="tIdx">
             <div class="p-6 rounded-2xl border border-border bg-card/70 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
               <div class="space-y-3 mb-6">
                 <div class="flex items-center gap-1 text-amber-500">
@@ -230,7 +301,7 @@
 
       <!-- 9. PRICING TABLE BLOCK -->
       <div
-        v-else-if="block.type === 'pricing' || block.type === 'pricing_table'"
+        v-else-if="block.type === 'pricing' || block.type === 'pricing_table' || block.type === 'pricingtable'"
         :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-pricing-block w-full py-4"
         :class="getSettingStr(block, 'css_class')"
@@ -242,7 +313,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <template v-for="(plan, plIdx) in getSamplePricing()" :key="plIdx">
+          <template v-for="(plan, plIdx) in resolvePricingItems(block)" :key="plIdx">
             <div
               class="relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between border transition-all duration-300"
               :class="plan.popular ? 'border-primary bg-card shadow-xl scale-105 z-10' : 'border-border bg-card/60 shadow-sm'"
@@ -253,10 +324,11 @@
               <div class="space-y-4 mb-6">
                 <div>
                   <h3 class="text-xl font-bold text-foreground">{{ plan.name }}</h3>
-                  <p class="text-xs text-muted-foreground mt-1">{{ plan.desc }}</p>
+                  <p v-if="plan.desc" class="text-xs text-muted-foreground mt-1">{{ plan.desc }}</p>
                 </div>
                 <div class="text-3xl font-black text-foreground">
-                  {{ plan.price }} <span class="text-xs font-normal text-muted-foreground">/bulan</span>
+                  <span v-if="plan.currency" class="text-base font-semibold mr-1">{{ plan.currency }}</span>{{ plan.price }}
+                  <span v-if="plan.period" class="text-xs font-normal text-muted-foreground">{{ plan.period }}</span>
                 </div>
                 <ul class="space-y-2.5 pt-4 border-t border-border/50 text-xs text-foreground/80">
                   <li v-for="(feature, fIdx) in plan.features" :key="fIdx" class="flex items-center gap-2">
@@ -337,7 +409,7 @@
 
       <!-- 12. SOCIAL LINKS / SHARE BUTTONS -->
       <div
-        v-else-if="block.type === 'social_links' || block.type === 'share_buttons'"
+        v-else-if="block.type === 'social_links' || block.type === 'sociallinks' || block.type === 'share_buttons'"
         :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-social-block w-full flex flex-wrap items-center gap-2.5 py-2"
         :class="[getTextAlignClass(getSettingStr(block, 'alignment')), getSettingStr(block, 'css_class')]"
@@ -548,7 +620,7 @@
 
       <!-- 19. FORM PICKER / CONTACT FORM BLOCK -->
       <div
-        v-else-if="block.type === 'form_picker' || block.type === 'contact_form'"
+        v-else-if="block.type === 'form_picker' || block.type === 'contact_form' || block.type === 'contactform'"
         :id="getSettingStr(block, 'html_id') || undefined"
         class="builder-form-block w-full max-w-2xl mx-auto rounded-3xl border border-border bg-card p-6 md:p-8 shadow-sm"
         :class="getSettingStr(block, 'css_class')"
@@ -763,7 +835,7 @@ const internalBlocks = computed<BlockInstance[]>(() => {
 
 const getSettingStr = (block: BlockInstance, key: string, fallback = ''): string => {
   const val = block.settings?.[key];
-  if (typeof val === 'string') return val;
+  if (typeof val === 'string' && val.trim() !== '') return val;
   if (typeof val === 'number') return String(val);
   return fallback;
 };
@@ -779,6 +851,132 @@ const getSettingNum = (block: BlockInstance, key: string, fallback = 0): number 
   if (typeof val === 'number') return val;
   if (typeof val === 'string' && !isNaN(Number(val))) return Number(val);
   return fallback;
+};
+
+const heroPrimaryLabel = (block: BlockInstance): string => {
+  if (getSettingBool(block, 'showButton1', true) === false) return '';
+  return getSettingStr(block, 'buttonText') || getSettingStr(block, 'button_text', 'Mulai Sekarang');
+};
+
+const heroPrimaryUrl = (block: BlockInstance): string =>
+  getSettingStr(block, 'buttonUrl') || getSettingStr(block, 'button_url', '#');
+
+const heroSecondaryLabel = (block: BlockInstance): string => {
+  if (getSettingBool(block, 'showButton2', true) === false) return '';
+  return getSettingStr(block, 'button2Text') || getSettingStr(block, 'secondary_button_text');
+};
+
+const heroSecondaryUrl = (block: BlockInstance): string =>
+  getSettingStr(block, 'button2Url') || getSettingStr(block, 'secondary_button_url', '#');
+
+const teamInitials = (block: BlockInstance): string => {
+  const name = getSettingStr(block, 'name', 'T');
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('') || 'T';
+};
+
+const resolveFeatureItems = (block: BlockInstance): Array<{ title: string; desc: string }> => {
+  const raw = block.settings?.items;
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map((item) => {
+      const row = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>;
+      return {
+        title: String(row.title || row.name || 'Fitur'),
+        desc: String(row.desc || row.description || row.content || ''),
+      };
+    });
+  }
+  return getSampleFeatures(getSettingNum(block, 'count', 3));
+};
+
+const resolveIconListItems = (block: BlockInstance): Array<{ text: string }> => {
+  const raw = block.settings?.items;
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map((item) => {
+      const row = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>;
+      return { text: String(row.text || row.label || row.title || '') };
+    }).filter((item) => item.text !== '');
+  }
+  return [
+    { text: 'hello@jejakawan.com' },
+    { text: '+62 21 0000 0000' },
+    { text: 'Jakarta, Indonesia' },
+  ];
+};
+
+const resolveFaqItems = (block: BlockInstance): Array<{ q: string; a: string }> => {
+  const raw = block.settings?.items;
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map((item) => {
+      const row = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>;
+      return {
+        q: String(row.question || row.q || row.title || ''),
+        a: String(row.answer || row.a || row.content || ''),
+      };
+    });
+  }
+  return getSampleFaqs(getSettingNum(block, 'count', 4));
+};
+
+const resolveTestimonialItems = (
+  block: BlockInstance,
+): Array<{ author: string; role: string; quote: string }> => {
+  const rawItems = block.settings?.items;
+  if (Array.isArray(rawItems) && rawItems.length > 0) {
+    return rawItems.map((item) => {
+      const row = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>;
+      return {
+        quote: String(row.quote || row.content || ''),
+        author: String(row.author || row.authorName || row.name || 'Anonim'),
+        role: String(row.role || row.authorTitle || row.position || ''),
+      };
+    });
+  }
+
+  const singleQuote = getSettingStr(block, 'content') || getSettingStr(block, 'quote');
+  if (singleQuote) {
+    return [{
+      quote: singleQuote.replace(/^"+|"+$/g, ''),
+      author: getSettingStr(block, 'authorName') || getSettingStr(block, 'author', 'Anonim'),
+      role: getSettingStr(block, 'authorTitle') || getSettingStr(block, 'role'),
+    }];
+  }
+
+  return getSampleTestimonials(getSettingNum(block, 'count', 3));
+};
+
+const resolvePricingItems = (
+  block: BlockInstance,
+): Array<{ name: string; price: string; desc: string; popular: boolean; btnText: string; url?: string; features: string[]; currency?: string; period?: string }> => {
+  const raw = block.settings?.items;
+  if (Array.isArray(raw) && raw.length > 0) {
+    return raw.map((item) => {
+      const row = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>;
+      const featuresRaw = row.features;
+      let features: string[] = [];
+      if (Array.isArray(featuresRaw)) {
+        features = featuresRaw.map((f) => String(f));
+      } else if (typeof featuresRaw === 'string') {
+        features = featuresRaw.split(/\n+/).map((f) => f.trim()).filter(Boolean);
+      }
+      return {
+        name: String(row.title || row.name || 'Paket'),
+        price: String(row.price || ''),
+        currency: typeof row.currency === 'string' ? row.currency : undefined,
+        period: typeof row.period === 'string' ? row.period : undefined,
+        desc: String(row.desc || row.description || ''),
+        popular: Boolean(row.isFeatured || row.popular),
+        btnText: String(row.buttonText || row.btnText || 'Pilih'),
+        url: String(row.buttonUrl || row.url || '#'),
+        features,
+      };
+    });
+  }
+  return getSamplePricing();
 };
 
 const resolveDynamicText = (text: string): string => {

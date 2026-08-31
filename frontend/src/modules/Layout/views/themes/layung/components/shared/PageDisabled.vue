@@ -4,10 +4,10 @@
       <AlertTriangle class="w-8 h-8" />
     </div>
     <h2 class="text-2xl font-bold font-heading text-foreground">
-      {{ title || 'Halaman Dinonaktifkan' }}
+      {{ title || t('pages.disabled.defaultTitle', 'Halaman Dinonaktifkan') }}
     </h2>
     <p class="text-sm text-muted-foreground max-w-md">
-      {{ message || 'Halaman ini sedang tidak dapat diakses atau dinonaktifkan oleh administrator jaringan.' }}
+      {{ message || t('pages.disabled.defaultMessage', 'Halaman ini sedang tidak dapat diakses atau dinonaktifkan oleh administrator jaringan.') }}
     </p>
     <Button
       as="router-link"
@@ -15,7 +15,7 @@
       variant="outline"
       size="sm"
     >
-      Kembali ke Beranda
+      {{ t('pages.disabled.backHome', 'Kembali ke Beranda') }}
     </Button>
   </div>
 </template>
@@ -23,9 +23,12 @@
 <script setup lang="ts">
 import { AlertTriangle } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/layung/ui';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 
 defineProps<{
   title?: string;
   message?: string;
 }>();
+
+const { t } = useThemeI18n('layung');
 </script>

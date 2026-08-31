@@ -14,7 +14,9 @@
     "account": "Akun",
     "signIn": "Lebet Portal",
     "getStarted": "Info PPDB",
-    "selectLanguage": "Basa"
+    "selectLanguage": "Basa",
+    "themeAriaLight": "Aktipkeun mode caang",
+    "themeAriaDark": "Aktipkeun mode poek"
   },
   "footer": {
     "description": "Sarangenge kainspirasi ku kembang sarangenge (bunga matahari) sarta haneutna panonpoé isuk anu numuwuhkeun budi pekerti luhur, sains, sarta integritas.",
@@ -32,7 +34,8 @@
     "search": "Paluruh Warta & Agenda",
     "searchPlaceholder": "Ketik kecap konci...",
     "publishedOn": "Dipedalkeun dina",
-    "by": "ku"
+    "by": "ku",
+    "breadcrumbAria": "Breadcrumb"
   },
   "pages": {
     "home": {
@@ -67,7 +70,14 @@
       "title": "Warta & Berita Sakola",
       "subtitle": "Émbaran resmi, liputan préstasi, béwara akademik, sareng agenda kagiatan siswa.",
       "categories": "Kategori Warta",
-      "noPosts": "Teu acan aya warta dina kategori ieu."
+      "sectionBadge": "Warta Sivitas Akademik",
+      "allCategories": "Sadaya Warta",
+      "catPpdb": "Pengumuman & PPDB",
+      "catPrestasi": "Préstasi Siswa",
+      "catKegiatan": "Kagiatan Siswa",
+      "catAkademik": "Akademik & Kurikulum",
+      "noPosts": "Teu acan aya warta dina kategori ieu.",
+      "noPostsHint": "Pilih kategori séjén atawa paké kolom pilarian."
     },
     "post": {
       "title": "Rincian Warta",
@@ -131,6 +141,13 @@
       "empty": "Teu aya hasil pikeun kecap konci kasebat.",
       "unavailable": "Layanan paluruhan nuju teu tiasa diaksés."
     }
+  },
+  "cta": {
+    "badge": "Mekar Bareng Cahaya Isuk",
+    "title": "Siap Gabung jeung Kulawarga Sarangenge?",
+    "subtitle": "Meunangkeun émbaran lengkep ngeunaan kuota pendaptaran, jadwal seleksi, beasiswa, sareng konsultasi kurikulum sareng tim konselor kami.",
+    "primary": "Daftar PPDB / Konsultasi",
+    "whatsapp": "Chat WhatsApp Hotline"
   },
   "customizer": {
     "sidebar": {

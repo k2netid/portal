@@ -9,6 +9,7 @@
       props.class,
     )"
     :aria-label="isDark ? t('theme.janari.header.themeAriaLight') : t('theme.janari.header.themeAriaDark')"
+    :title="isDark ? t('theme.janari.header.themeAriaLight') : t('theme.janari.header.themeAriaDark')"
     @click="toggleMode"
   >
     <Sun

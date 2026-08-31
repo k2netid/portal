@@ -316,7 +316,8 @@
       "openCustomizer": "Open Customizer",
       "preview": "Preview",
       "settings": "Settings",
-      "validate": "Validate"
+      "validate": "Validate",
+      "installSample": "Install Sample Data"
     },
     "uploading": "Uploading…",
     "source": {
@@ -334,7 +335,10 @@
       "scanSuccess": "Scan completed! Found {count} theme(s).",
       "validateError": "Failed to validate theme",
       "validateFailed": "Theme validation failed:",
-      "validateSuccess": "Theme is valid!"
+      "validateSuccess": "Theme is valid!",
+      "installSampleConfirm": "Install sample data for \"{name}\"? Menus + theme settings + CMS page shells will be filled. The public site keeps the Vue theme layout (not replaced by builder blocks). Edit copy via Customizer/Menus; use Visual Builder only for full-page override.",
+      "installSampleFailed": "Failed to install sample data",
+      "installSampleSuccess": "Sample data installed: {menus} menu slot(s), {pages} CMS page shell(s). Vue theme layout preserved."
     },
     "list": {
       "by": "by {author}",
@@ -362,5 +366,8 @@
       "email": "Email",
       "frontend": "Frontend"
     }
+  },
+  "frontend": {
+    "backToTop": "Back to top"
   }
 }

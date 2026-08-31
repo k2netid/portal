@@ -167,6 +167,14 @@
                     "value": "hero"
                 },
                 {
+                    "label": "Products",
+                    "value": "products"
+                },
+                {
+                    "label": "Updates / news strip",
+                    "value": "updates"
+                },
+                {
                     "label": "Partner logos",
                     "value": "partners"
                 },
@@ -181,6 +189,8 @@
             ],
             "default": [
                 "hero",
+                "products",
+                "updates",
                 "partners",
                 "testimonials",
                 "cta"
