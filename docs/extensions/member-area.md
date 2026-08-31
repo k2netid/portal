@@ -53,7 +53,7 @@ Standard fields on `mem_members` (reader self-service via `PATCH /member/profile
 | `name` | Yes | Display name |
 | `email` | Security flow | Signed confirm on new address |
 | `phone` | Yes | Optional, max 32 chars |
-| `avatar` | Yes | URL/path string, max 512 |
+| `avatar` | Yes | URL/path string, max 512. Upload: `POST /api/v1/member/profile/avatar` (`file`, image ≤2MB) → stored under `media/members/{id}/` |
 | `bio` | Yes | Optional, max 500 chars |
 | `locale` | Yes | BCP 47-ish (`en`, `id`, `su`) |
 | `timezone` | Yes | IANA (`Asia/Jakarta`, …) |

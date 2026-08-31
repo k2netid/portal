@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberAccountService;
+use Modules\Member\Services\MemberAvatarUploader;
 use Modules\Member\Services\MemberEmailChange;
 use Modules\Member\Support\MemberPublicProfile;
 
@@ -33,6 +34,40 @@ class ProfileController extends BaseApiController
         $member->update(MemberPublicProfile::profileFillAttributes($validated));
 
         return $this->success($member->fresh()?->toPublicProfile() ?? MemberPublicProfile::serialize($member), 'Profile updated');
+    }
+
+    public function uploadAvatar(Request $request): JsonResponse
+    {
+        $member = $request->user('member');
+        if (! $member instanceof Member) {
+            return $this->error('Unauthenticated', 401);
+        }
+
+        try {
+            $validated = $request->validate([
+                'file' => 'required|file|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
+            ]);
+        } catch (ValidationException $e) {
+            return $this->validationError($e->errors());
+        }
+
+        /** @var \Illuminate\Http\UploadedFile $file */
+        $file = $validated['file'];
+
+        try {
+            app(MemberAvatarUploader::class)->upload($member, $file);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return $this->error('Could not upload avatar', 503);
+        }
+
+        $fresh = $member->fresh();
+
+        return $this->success(
+            $fresh?->toPublicProfile() ?? MemberPublicProfile::serialize($member),
+            'Avatar updated',
+        );
     }
 
     public function updatePassword(Request $request): JsonResponse

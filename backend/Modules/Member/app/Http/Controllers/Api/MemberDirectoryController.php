@@ -62,6 +62,18 @@ class MemberDirectoryController extends BaseApiController
             'phone' => isset($validated['phone']) && is_string($validated['phone']) && trim($validated['phone']) !== ''
                 ? trim($validated['phone'])
                 : null,
+            'avatar' => isset($validated['avatar']) && is_string($validated['avatar']) && trim($validated['avatar']) !== ''
+                ? trim($validated['avatar'])
+                : null,
+            'bio' => isset($validated['bio']) && is_string($validated['bio']) && trim($validated['bio']) !== ''
+                ? trim($validated['bio'])
+                : null,
+            'locale' => isset($validated['locale']) && is_string($validated['locale']) && trim($validated['locale']) !== ''
+                ? trim($validated['locale'])
+                : null,
+            'timezone' => isset($validated['timezone']) && is_string($validated['timezone']) && trim($validated['timezone']) !== ''
+                ? trim($validated['timezone'])
+                : null,
             'status' => (string) ($validated['status'] ?? 'active'),
             'email_verified_at' => ($validated['verify_email'] ?? false) === true ? now() : null,
         ]);

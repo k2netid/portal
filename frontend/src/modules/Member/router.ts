@@ -21,6 +21,7 @@ const memberRoutes: RouteRecordRaw[] = [
             extension: 'member',
             title: 'member.form.createTitle',
             breadcrumb: 'member.form.createTitle',
+            noCache: true,
         },
     },
     {
@@ -32,6 +33,7 @@ const memberRoutes: RouteRecordRaw[] = [
             extension: 'member',
             title: 'member.form.editTitle',
             breadcrumb: 'member.form.editTitle',
+            noCache: true,
         },
     },
     {

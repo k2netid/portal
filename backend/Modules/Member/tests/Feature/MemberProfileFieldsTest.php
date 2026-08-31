@@ -94,6 +94,30 @@ class MemberProfileFieldsTest extends TestCase
         ]);
     }
 
+    public function test_member_can_upload_avatar_image(): void
+    {
+        $auth = $this->registerMember();
+        $file = \Illuminate\Http\UploadedFile::fake()->image('avatar.jpg', 120, 120);
+
+        $response = $this->withToken($auth['token'])
+            ->post('/api/v1/member/profile/avatar', [
+                'file' => $file,
+            ], [
+                'Accept' => 'application/json',
+            ]);
+
+        $response->assertOk();
+        $avatar = $response->json('data.avatar');
+        $this->assertIsString($avatar);
+        $this->assertNotSame('', $avatar);
+        $this->assertStringContainsString('/storage/', $avatar);
+
+        $this->assertDatabaseHas('mem_members', [
+            'id' => $auth['id'],
+            'avatar' => $avatar,
+        ]);
+    }
+
     public function test_login_updates_last_login_at(): void
     {
         $auth = $this->registerMember();

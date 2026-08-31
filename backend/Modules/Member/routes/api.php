@@ -31,6 +31,8 @@ Route::prefix('v1')->group(function (): void {
         Route::get('portal', [PortalController::class, 'show']);
         Route::get('me', [AuthController::class, 'me']);
         Route::patch('profile', [ProfileController::class, 'update']);
+        Route::post('profile/avatar', [ProfileController::class, 'uploadAvatar'])
+            ->middleware('throttle:20,1');
         Route::put('password', [ProfileController::class, 'updatePassword']);
         Route::put('email', [ProfileController::class, 'requestEmailChange']);
         Route::delete('account', [ProfileController::class, 'destroy']);

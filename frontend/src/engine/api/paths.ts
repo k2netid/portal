@@ -43,6 +43,8 @@ export const memberPaths = {
     publicRegister: '/public/member/register',
     publicLogin: '/public/member/login',
     me: '/member/me',
+    profile: '/member/profile',
+    profileAvatar: '/member/profile/avatar',
     bookmarks: '/member/bookmarks',
 } as const;
 

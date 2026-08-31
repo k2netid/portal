@@ -24,8 +24,11 @@
         <div class="xl:col-span-7 space-y-6">
           <ConsoleFormCard :title="t('member.portal.profile.sections.identity', 'Identity')">
             <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-              <div
-                class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-border/60 bg-muted/40 overflow-hidden mx-auto sm:mx-0"
+              <button
+                type="button"
+                class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-border/60 bg-muted/40 overflow-hidden mx-auto sm:mx-0 ring-offset-background transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                :aria-label="t('member.form.selectAvatar', 'Select avatar')"
+                @click="openAvatarModal"
               >
                 <img
                   v-if="form.avatar"
@@ -39,19 +42,31 @@
                 >
                   {{ initials }}
                 </span>
-              </div>
+              </button>
               <div class="flex-1 min-w-0 space-y-4 w-full">
-                <label class="block space-y-1.5 text-sm">
-                  <span class="font-medium">{{ t('member.portal.profile.avatar', 'Avatar URL') }}</span>
-                  <input
-                    v-model="form.avatar"
-                    type="url"
-                    inputmode="url"
-                    maxlength="512"
-                    :placeholder="t('member.portal.profile.avatarHint', 'https://…')"
-                    class="w-full h-10 rounded-lg border border-border bg-background px-3"
-                  >
-                </label>
+                <div class="space-y-2">
+                  <span class="block text-sm font-medium">{{ t('member.portal.profile.avatar', 'Avatar') }}</span>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      @click="openAvatarModal"
+                    >
+                      {{ t('member.form.selectAvatar', 'Select avatar') }}
+                    </Button>
+                    <Button
+                      v-if="form.avatar"
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      class="text-destructive border-destructive/40"
+                      @click="form.avatar = ''"
+                    >
+                      {{ t('member.form.removeAvatar', 'Remove avatar') }}
+                    </Button>
+                  </div>
+                </div>
                 <label class="block space-y-1.5 text-sm">
                   <span class="font-medium">{{ t('member.portal.profile.name', 'Display name') }}</span>
                   <input
@@ -221,11 +236,121 @@
         {{ resendLabel }}
       </button>
     </p>
+
+    <Dialog v-model:open="avatarPickerOpen">
+      <DialogContent class="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>
+            {{ t('member.portal.profile.avatarModalTitle', 'Update avatar') }}
+          </DialogTitle>
+          <DialogDescription>
+            {{ t('member.portal.profile.avatarModalHint', 'Upload a photo or paste an image URL.') }}
+          </DialogDescription>
+        </DialogHeader>
+        <div class="space-y-4 py-1">
+          <div class="flex justify-center">
+            <div class="flex h-24 w-24 items-center justify-center rounded-full border border-border/60 bg-muted/40 overflow-hidden">
+              <img
+                v-if="avatarPreviewSrc"
+                :src="avatarPreviewSrc"
+                alt=""
+                class="h-full w-full object-cover"
+                @error="avatarPreviewBroken = true"
+                @load="avatarPreviewBroken = false"
+              >
+              <span
+                v-else
+                class="text-2xl font-bold text-primary"
+              >
+                {{ initials }}
+              </span>
+            </div>
+          </div>
+          <p
+            v-if="avatarPreviewBroken && avatarPreviewSrc"
+            class="text-xs text-center text-destructive"
+          >
+            {{ t('member.portal.profile.avatarPreviewFailed', 'Could not load that image.') }}
+          </p>
+          <p
+            v-if="avatarUploadError"
+            class="text-xs text-center text-destructive"
+          >
+            {{ avatarUploadError }}
+          </p>
+
+          <div class="space-y-2">
+            <input
+              ref="avatarFileInput"
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              class="sr-only"
+              @change="onAvatarFileChange"
+            >
+            <Button
+              type="button"
+              variant="outline"
+              class="w-full"
+              :disabled="avatarUploading"
+              @click="avatarFileInput?.click()"
+            >
+              {{
+                avatarUploading
+                  ? t('member.portal.profile.avatarUploading', 'Uploading…')
+                  : t('member.portal.profile.avatarUpload', 'Upload photo')
+              }}
+            </Button>
+            <p class="text-xs text-muted-foreground text-center">
+              {{ t('member.portal.profile.avatarUploadHint', 'JPG, PNG, GIF, or WebP · max 2 MB') }}
+            </p>
+          </div>
+
+          <div class="relative flex items-center gap-3 py-1">
+            <div class="h-px flex-1 bg-border/60" />
+            <span class="text-xs text-muted-foreground uppercase tracking-wide">
+              {{ t('member.portal.profile.avatarOrUrl', 'or URL') }}
+            </span>
+            <div class="h-px flex-1 bg-border/60" />
+          </div>
+
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.profile.avatarUrl', 'Avatar URL') }}</span>
+            <input
+              v-model="avatarDraft"
+              type="url"
+              inputmode="url"
+              maxlength="512"
+              :placeholder="t('member.portal.profile.avatarHint', 'https://…')"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+              :disabled="avatarUploading"
+              @keydown.enter.prevent="applyAvatar"
+            >
+          </label>
+        </div>
+        <DialogFooter class="gap-2 sm:gap-0">
+          <Button
+            type="button"
+            variant="outline"
+            :disabled="avatarUploading"
+            @click="avatarPickerOpen = false"
+          >
+            {{ t('common.actions.cancel', 'Cancel') }}
+          </Button>
+          <Button
+            type="button"
+            :disabled="avatarUploading"
+            @click="applyAvatar"
+          >
+            {{ t('member.portal.profile.applyAvatar', 'Apply') }}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </MemberPage>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
@@ -235,6 +360,14 @@ import { useMemberStore } from '@/modules/Member/stores/member';
 import type { MemberProfileInput } from '@/modules/Member/types/profile';
 import { MEMBER_TIMEZONE_OPTIONS } from '@/modules/Member/types/profile';
 import { ConsoleFormCard } from '@/shared/components/shell';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/shared/components/ui';
 
 const { t, locale } = useI18n();
 const memberStore = useMemberStore();
@@ -255,6 +388,96 @@ const error = ref('');
 const saved = ref(false);
 const resending = ref(false);
 const resent = ref(false);
+const avatarPickerOpen = ref(false);
+const avatarDraft = ref('');
+const avatarPreviewBroken = ref(false);
+const avatarUploading = ref(false);
+const avatarUploadError = ref('');
+const avatarFileInput = ref<HTMLInputElement | null>(null);
+const avatarLocalPreview = ref('');
+
+const avatarPreviewSrc = computed(() => {
+    if (avatarLocalPreview.value) {
+        return avatarLocalPreview.value;
+    }
+    return avatarDraft.value.trim();
+});
+
+const clearLocalPreview = (): void => {
+    if (avatarLocalPreview.value) {
+        URL.revokeObjectURL(avatarLocalPreview.value);
+        avatarLocalPreview.value = '';
+    }
+};
+
+const openAvatarModal = (): void => {
+    clearLocalPreview();
+    avatarDraft.value = form.avatar ?? '';
+    avatarPreviewBroken.value = false;
+    avatarUploadError.value = '';
+    avatarPickerOpen.value = true;
+};
+
+const onAvatarFileChange = async (event: Event): Promise<void> => {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) {
+        return;
+    }
+
+    avatarUploadError.value = '';
+    if (!file.type.startsWith('image/')) {
+        avatarUploadError.value = t('member.portal.profile.avatarInvalidType', 'Please choose an image file.');
+        return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+        avatarUploadError.value = t('member.portal.profile.avatarTooLarge', 'Image must be 2 MB or smaller.');
+        return;
+    }
+
+    clearLocalPreview();
+    avatarLocalPreview.value = URL.createObjectURL(file);
+    avatarDraft.value = '';
+    avatarPreviewBroken.value = false;
+
+    avatarUploading.value = true;
+    try {
+        const member = await memberStore.uploadAvatar(file);
+        form.avatar = member.avatar ?? '';
+        clearLocalPreview();
+        avatarPickerOpen.value = false;
+        saved.value = true;
+        error.value = '';
+    } catch (err: unknown) {
+        clearLocalPreview();
+        avatarUploadError.value = isAxiosError(err)
+            ? String(err.response?.data?.message || t('member.portal.profile.avatarUploadFailed', 'Could not upload avatar.'))
+            : t('member.portal.profile.avatarUploadFailed', 'Could not upload avatar.');
+    } finally {
+        avatarUploading.value = false;
+    }
+};
+
+const applyAvatar = (): void => {
+    if (avatarUploading.value) {
+        return;
+    }
+    form.avatar = avatarDraft.value.trim();
+    clearLocalPreview();
+    avatarPickerOpen.value = false;
+};
+
+watch(avatarPickerOpen, (open) => {
+    if (!open) {
+        clearLocalPreview();
+        avatarUploadError.value = '';
+    }
+});
+
+onBeforeUnmount(() => {
+    clearLocalPreview();
+});
 
 const bioLength = computed(() => form.bio?.length ?? 0);
 

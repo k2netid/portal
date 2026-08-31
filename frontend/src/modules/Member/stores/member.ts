@@ -160,6 +160,20 @@ export const useMemberStore = defineStore('member', {
             }
         },
 
+        async uploadAvatar(file: File): Promise<PublicMember> {
+            const body = new FormData();
+            body.append('file', file);
+            const response = await api.post('/member/profile/avatar', body, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            const member = unwrapPayload<PublicMember>(response);
+            this.member = member;
+            if (this.portal) {
+                this.portal = { ...this.portal, member };
+            }
+            return member;
+        },
+
         async updatePassword(input: {
             current_password: string;
             password: string;

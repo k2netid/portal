@@ -136,6 +136,10 @@ final class MemberDirectorySupport
             'email' => 'required|email|max:255|unique:mem_members,email',
             'password' => 'required|string|min:8',
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],
+            'avatar' => 'nullable|string|max:512',
+            'bio' => 'nullable|string|max:500',
+            'locale' => ['nullable', 'string', 'max:10', 'regex:/^[a-z]{2}([_-][A-Za-z]{2})?$/'],
+            'timezone' => 'nullable|string|max:64|timezone:all',
             'status' => 'sometimes|in:active,inactive',
             'verify_email' => 'sometimes|boolean',
         ];
