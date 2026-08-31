@@ -47,6 +47,10 @@ export function useLayungIdentity() {
   });
 
   const displayAddress = computed(() => {
+    const fromContact = getSetting('contact_address', '');
+    if (fromContact && typeof fromContact === 'string' && fromContact.trim() !== '') {
+      return fromContact.trim();
+    }
     const custom = getSetting('isp_address', '');
     if (custom && typeof custom === 'string' && custom.trim() !== '') return custom.trim();
     return 'Cyber Tower Lt. 18, Jl. Rasuna Said Kav. X-2, Jakarta Selatan, 12950';

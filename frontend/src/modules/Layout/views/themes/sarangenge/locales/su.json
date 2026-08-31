@@ -16,14 +16,19 @@
     "getStarted": "Info PPDB",
     "selectLanguage": "Basa",
     "themeAriaLight": "Aktipkeun mode caang",
-    "themeAriaDark": "Aktipkeun mode poek"
+    "themeAriaDark": "Aktipkeun mode poek",
+    "navAria": "Navigasi utama",
+    "openMenuAria": "Buka menu",
+    "closeMenuAria": "Tutup menu"
   },
   "footer": {
     "description": "Sarangenge kainspirasi ku kembang sarangenge (bunga matahari) sarta haneutna panonpoé isuk anu numuwuhkeun budi pekerti luhur, sains, sarta integritas.",
     "programs": "Program & Kurikulum",
     "admissions": "Émbaran PPDB",
     "contact": "Kontak & Hotline",
-    "copyright": "Sadaya hak ditangtayungan undang-undang."
+    "copyright": "Sadaya hak ditangtayungan undang-undang.",
+    "badgeCurriculum": "Kurikulum Merdeka & Bilingual",
+    "badgeChildFriendly": "Sakola Ramah Anak 2026"
   },
   "common": {
     "readMore": "Maca Salengkepna",
@@ -95,10 +100,36 @@
     "contact": {
       "title": "Kontak & Pendaptaran PPDB",
       "subtitle": "Tim konselor sareng sekretariat PPDB sayaga ngabantosan patarosan anjeun ngeunaan kurikulum, waragad, sareng pendaptaran.",
+      "badge": "Layanan Émbaran & Konsultasi",
+      "infoTitle": "Sekretariat & Émbaran",
+      "labelAddress": "Alamat Kampus:",
+      "labelPhone": "Telepon Kantor:",
+      "labelEmail": "Email Resmi:",
+      "labelHours": "Jam Operasional:",
+      "openMap": "Buka di Google Maps",
+      "getDirections": "Petunjuk arah",
+      "whatsappCta": "Chat WhatsApp Hotline PPDB",
+      "accreditationNote": "Bersertifikasi BAN-S/M kalayan {npsn}. Lingkungan belajar aman, ramah anak, sareng bebas bullying.",
+      "formTitle": "Formulir Konsultasi & PPDB",
+      "formIntro": "Eusi formulir di handap, tim admin PPDB bakal ngahubungi anjeun via WhatsApp / Email.",
       "nameLabel": "Nami Lengkep Sepuh / Siswa",
-      "emailLabel": "Alamat Email",
+      "namePlaceholder": "Contoh: Budi Santoso",
+      "phoneLabel": "Nomer WhatsApp",
+      "phonePlaceholder": "0812xxxxxxxx",
+      "emailLabel": "Email",
+      "emailPlaceholder": "budi@example.com",
+      "programLabel": "Jalur Peminatan / Jenjang",
+      "programReguler": "PPDB Reguler 2026/2027",
+      "programPrestasi": "Jalur Prestasi & Olimpiade",
+      "programTahfidz": "Jalur Beasiswa Tahfidz",
+      "programCambridge": "Bilingual & Cambridge Track",
+      "programTour": "Pamundut Kunjungan (School Tour)",
       "messageLabel": "Pesen / Patarosan",
-      "submitButton": "Kintun Pesen / Pamundut"
+      "messagePlaceholder": "Tulis patarosan ngeunaan waragad, kurikulum, atanapi jadwal tes asup...",
+      "submitButton": "Kintun Pesen / Pamundut",
+      "submitting": "Ngirim...",
+      "submitSuccess": "Hatur nuhun! Pesen anjeun parantos dikirim. Tim kami bakal ngahubungi anjeun.",
+      "defaultHours": "Senin – Jumat: 07.30 – 15.30 WIB"
     },
     "pricing": {
       "title": "Émbaran Waragad Atikan & Beasiswa",
@@ -141,6 +172,19 @@
       "empty": "Teu aya hasil pikeun kecap konci kasebat.",
       "unavailable": "Layanan paluruhan nuju teu tiasa diaksés."
     }
+  },
+  "faq": {
+    "badge": "Tanya Jawab",
+    "title": "Patarosan ngeunaan PPDB & Sakola",
+    "subtitle": "Waleran kana hal anu sering ditaroskeun ku calon siswa sareng kolot.",
+    "q1": "Iraha gelombang pendaptaran PPDB 2026/2027 dibuka?",
+    "a1": "Gelombang 1 (Jalur Prestasi & Early Bird) dibuka ti 15 Oktober 2026. Gelombang 2 (Jalur Reguler) dibuka ti 15 Januari 2027. Pendaptaran tiasa dilakukeun online atanapi langsung di sekretariat sakola.",
+    "q2": "Dupi aya skema beasiswa pikeun siswa berprestasi?",
+    "a2": "Enya, kami nyayogikeun Beasiswa Prestasi Akademik & Non-Akademik (potongan SPP 50%–100%) pikeun juara olimpiade sains, tahfidz Al-Quran minimal 3 juz, atanapi juara olahraga/seni tingkat kota/provinsi.",
+    "q3": "Kumaha kurikulum sareng metode pembelajaran anu diterapkeun?",
+    "a3": "Kami ngeimplementasikeun Kurikulum Merdeka anu diperkaya muatan internasional Cambridge, pembelajaran berbasis riset (P5), sareng integrasi AI, robotika, sareng pembinaan karakter.",
+    "q4": "Depi kolot tiasa ngajadikeun School Tour / Kunjungan Kampus?",
+    "a4": "Mangga wae. Kami nampi kunjungan kolot sareng calon siswa unggal dinten kerja (Senin–Jumat 08.00–14.00 WIB) atanapi Sabtu kalayan janji temu via WhatsApp hotline."
   },
   "cta": {
     "badge": "Mekar Bareng Cahaya Isuk",

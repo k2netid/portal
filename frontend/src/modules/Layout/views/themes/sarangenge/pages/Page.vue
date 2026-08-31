@@ -1,5 +1,5 @@
 <template>
-  <div class="sarangenge-theme flex-1 flex flex-col py-10 sm:py-16">
+  <div class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 w-full">
       <Breadcrumb
         v-if="pageTitle"

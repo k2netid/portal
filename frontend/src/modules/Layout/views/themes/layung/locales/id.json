@@ -21,7 +21,10 @@
     "getStarted": "Minta Penawaran",
     "selectLanguage": "Pilih Bahasa:",
     "themeAriaLight": "Aktifkan mode terang",
-    "themeAriaDark": "Aktifkan mode gelap"
+    "themeAriaDark": "Aktifkan mode gelap",
+    "navAria": "Navigasi utama",
+    "openMenuAria": "Buka menu",
+    "closeMenuAria": "Tutup menu"
   },
   "common": {
     "breadcrumbAria": "Breadcrumb"
@@ -33,7 +36,9 @@
     "contact": "Pusat Bantuan 24/7",
     "copyright": "Hak cipta dilindungi undang-undang.",
     "asn": "BGP Routing & Peering ASN:",
-    "slaPromise": "Jaminan Respon Cepat 15 Menit MTTR"
+    "slaPromise": "Jaminan Respon Cepat 15 Menit MTTR",
+    "badgeSla": "Jaminan Uptime SLA 99.999%",
+    "badgeDatacenter": "Interkoneksi Data Center Tier-3"
   },
   "hero": {
     "badge": "Infrastruktur Serat Optik & Managed Services 2026",
@@ -81,6 +86,7 @@
   "pages": {
     "about": {
       "title": "Profil Perusahaan & Infrastruktur",
+      "badge": "Profil Perusahaan & Infrastruktur",
       "subtitle": "Mengenal Layung Network: Penyedia konektivitas serat optik berstandar global dengan komitmen transparansi dan keandalan tinggi.",
       "storyTitle": "Dedikasi Menghubungkan Indonesia dengan Kecepatan Cahaya",
       "storyText": "Berakar dari filosofi cahaya Layung yang menyinari langit dengan keindahan dan kehangatan fajar hingga senja, kami membangun jaringan serat optik mandiri yang menjangkau pusat-pusat bisnis terpenting.",
@@ -112,7 +118,36 @@
     },
     "contact": {
       "title": "Hubungi NOC & Cek Area Jangkauan Fiber",
-      "subtitle": "Butuh bantuan teknis darurat atau ingin berlangganan internet kantor baru? Tim konsultan kami siap merespon dalam hitungan menit."
+      "subtitle": "Butuh bantuan teknis darurat atau ingin berlangganan internet kantor baru? Tim konsultan kami siap merespon dalam hitungan menit.",
+      "badge": "Pusat Operasional & Konsultasi",
+      "nocTitle": "NOC 24/7/365 Command Center",
+      "labelAddress": "Headquarter & Data Center",
+      "labelPhone": "Hotline Darurat NOC",
+      "labelEmail": "Email Dispatch",
+      "openMap": "Buka di Google Maps",
+      "getDirections": "Petunjuk arah",
+      "whatsappCta": "WhatsApp Response Cepat",
+      "formTitle": "Formulir Permintaan Penawaran & Survei Fiber",
+      "nameLabel": "Nama Lengkap PIC",
+      "namePlaceholder": "Contoh: Budi Santoso",
+      "companyLabel": "Nama Perusahaan / Organisasi",
+      "companyPlaceholder": "PT Inovasi Digital",
+      "emailLabel": "Email Perusahaan",
+      "emailPlaceholder": "budi@perusahaan.com",
+      "phoneLabel": "Nomor Telepon / WhatsApp",
+      "phonePlaceholder": "08123456789",
+      "serviceLabel": "Kategori Layanan yang Diminati",
+      "serviceDia": "Dedicated Internet 1:1 (DIA)",
+      "serviceBroadband": "Business Broadband",
+      "serviceSdwan": "Managed SD-WAN & Cloud",
+      "serviceSoc": "24/7 Cyber Security SOC",
+      "serviceDarkfiber": "Dark Fiber & Metro-E",
+      "capacityLabel": "Estimasi Kebutuhan Kapasitas",
+      "capacityEnterprise": "1 Gbps - 10 Gbps (Enterprise)",
+      "addressLabel": "Alamat Lengkap Pemasangan / Gedung",
+      "addressPlaceholder": "Sebutkan nama gedung, lantai, jalan dan kota untuk pengecekan jarak ke ODP terdekat...",
+      "submitButton": "Kirim Permintaan Survei & Penawaran",
+      "submitSuccess": "Terima kasih! Tim Solution Architect Layung akan menghubungi Anda dalam waktu maksimal 15 menit."
     },
     "blog": {
       "title": "Warta Teknologi & Notifikasi Jaringan",
@@ -135,6 +170,19 @@
       "defaultMessage": "Halaman ini sedang tidak dapat diakses atau dinonaktifkan oleh administrator jaringan.",
       "backHome": "Kembali ke Beranda"
     }
+  },
+  "faq": {
+    "badge": "Tanya Jawab Teknis & Layanan",
+    "title": "Pertanyaan Umum Seputar Penyediaan & Migrasi Jaringan",
+    "subtitle": "Jawaban lengkap mengenai proses aktivasi, alokasi IP publik, jaminan SLA, dan prosedur eskalasi tiket darurat.",
+    "q1": "Berapa lama estimasi proses penarikan kabel dan instalasi Dedicated Internet (DIA)?",
+    "a1": "Untuk area on-net (gedung atau kawasan yang sudah terpasang Fiber Termination Layung), instalasi selesai dalam 1–3 hari kerja. Untuk area off-net yang memerlukan penarikan last-mile baru, waktu pengerjaan berkisar 7–14 hari kerja termasuk uji tes OTDR.",
+    "q2": "Apakah paket Dedicated Internet mendapatkan alokasi IP Publik Statis?",
+    "a2": "Ya, seluruh paket Dedicated Internet mendapatkan alokasi blok IP Publik Statis (/29 atau 5 IP usable) secara gratis, dan dapat ditambah sesuai kebutuhan server atau router BGP enterprise Anda.",
+    "q3": "Bagaimana prosedur klaim penalti kompensasi jika SLA tidak terpenuhi?",
+    "a3": "Setiap gangguan otomatis dicatat oleh sistem ticketing NOC kami. Jika ketersediaan bulanan berada di bawah batas kontrak SLA (misal < 99.999%), sistem billing kami secara otomatis mengkreditkan potongan tagihan pada invoice bulan berikutnya tanpa proses birokrasi berbelit.",
+    "q4": "Apakah tersedia opsi koneksi redundan (Backup Link) dengan media berbeda?",
+    "a4": "Tersedia. Kami menyediakan dual-homing dengan rute fisik kabel serat optik terpisah (diverse path) serta opsi backup nirkabel berlisensi (Wireless Microwave 5.8GHz/E-Band) untuk memastikan nol downtime."
   },
   "cta": {
     "badge": "Konsultasi Arsitektur Jaringan Gratis",

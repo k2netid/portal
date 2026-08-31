@@ -75,7 +75,7 @@
           v-if="isDesktop"
           data-ja-customizer-target="nav"
           class="hidden lg:flex items-center gap-1 overflow-visible relative z-[105]"
-          aria-label="Main Navigation"
+          :aria-label="tt('header.navAria', 'Navigasi utama')"
         >
           <template
             v-for="(item, idx) in navItems"
@@ -260,7 +260,7 @@
             type="button"
             class="lg:hidden p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus:outline-none"
             :aria-expanded="mobileMenuOpen"
-            aria-label="Buka Menu"
+            :aria-label="tt('header.openMenuAria', 'Buka menu')"
             @click="mobileMenuOpen = !mobileMenuOpen"
           >
             <Menu
@@ -290,7 +290,7 @@
             <button
               type="button"
               class="p-2 rounded-xl text-slate-300 hover:bg-slate-800"
-              aria-label="Tutup Menu"
+              :aria-label="tt('header.closeMenuAria', 'Tutup menu')"
               @click="mobileMenuOpen = false"
             >
               <X class="w-6 h-6" />

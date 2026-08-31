@@ -60,11 +60,11 @@
           <div class="flex flex-wrap gap-2 pt-1">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
               <GraduationCap class="w-3.5 h-3.5" />
-              Kurikulum Merdeka & Bilingual
+              {{ tt('footer.badgeCurriculum', 'Kurikulum Merdeka & Bilingual') }}
             </span>
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30">
               <Award class="w-3.5 h-3.5" />
-              Sekolah Ramah Anak 2026
+              {{ tt('footer.badgeChildFriendly', 'Sekolah Ramah Anak 2026') }}
             </span>
           </div>
         </div>

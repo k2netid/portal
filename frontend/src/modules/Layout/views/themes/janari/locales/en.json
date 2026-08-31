@@ -132,6 +132,8 @@
             "surveyTitle": "What users say",
             "surveySubtitle": "Feedback collected and shown dynamically from site surveys.",
             "surveyLoading": "Loading survey data…",
+            "surveyEmpty": "No survey responses yet.",
+            "surveyEmptyHint": "User feedback will appear here once collected from the live API.",
             "surveyUser": "User",
             "surveyRole": "Member"
         },

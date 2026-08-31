@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 sm:py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+  <div class="py-10 md:py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
     <Breadcrumb
       :items="[
         { name: t('pages.blog.title', 'Warta'), path: '/blog' },

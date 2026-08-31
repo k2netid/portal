@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 sm:py-24 bg-muted/20 border-t border-border/60">
+  <section class="py-12 sm:py-14 bg-muted/20 border-t border-border/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--sarangenge-sun,#e8a317)]/15 text-amber-800 dark:text-amber-200 border border-[var(--sarangenge-sun)]/30">

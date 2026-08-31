@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="search"
-    class="sarangenge-theme flex-1 flex flex-col py-10 sm:py-16"
+    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
   >
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
       <!-- Breadcrumb & Header -->

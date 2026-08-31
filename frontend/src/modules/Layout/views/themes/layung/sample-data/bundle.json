@@ -17,7 +17,12 @@
     "stat_latency": "< 2.4 ms",
     "stat_uptime": "99.999% SLA Uptime",
     "stat_backbone": "100 Gbps Redundant Ring",
-    "stat_asn": "AS139820 (BGP Multi-Homing Tier-1)"
+    "stat_asn": "AS139820 (BGP Multi-Homing Tier-1)",
+    "isp_address": "Cyber Tower Lt. 18, Jl. Rasuna Said Kav. X-2, Jakarta Selatan, 12950",
+    "isp_email": "noc@layung.net.id",
+    "isp_noc_phone": "+62 21 5088 9988",
+    "isp_whatsapp": "+6281198882026",
+    "contact_map_enabled": true
   },
   "menus": {
     "header": {

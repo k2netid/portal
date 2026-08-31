@@ -16,14 +16,19 @@
     "getStarted": "Info PPDB",
     "selectLanguage": "Bahasa",
     "themeAriaLight": "Aktifkan mode terang",
-    "themeAriaDark": "Aktifkan mode gelap"
+    "themeAriaDark": "Aktifkan mode gelap",
+    "navAria": "Navigasi utama",
+    "openMenuAria": "Buka menu",
+    "closeMenuAria": "Tutup menu"
   },
   "footer": {
     "description": "Sarangenge terinspirasi dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi yang menumbuhkan kebaikan budi, kecerdasan sains, dan integritas luhur.",
     "programs": "Program & Kurikulum",
     "admissions": "Informasi PPDB",
     "contact": "Kontak & Hotline",
-    "copyright": "Hak cipta dilindungi undang-undang."
+    "copyright": "Hak cipta dilindungi undang-undang.",
+    "badgeCurriculum": "Kurikulum Merdeka & Bilingual",
+    "badgeChildFriendly": "Sekolah Ramah Anak 2026"
   },
   "common": {
     "readMore": "Baca Selengkapnya",
@@ -95,10 +100,36 @@
     "contact": {
       "title": "Kontak & Pendaftaran PPDB",
       "subtitle": "Tim konselor dan sekretariat PPDB siap membantu menjawab pertanyaan Anda seputar kurikulum, biaya, dan pendaftaran.",
+      "badge": "Layanan Informasi & Konsultasi",
+      "infoTitle": "Sekretariat & Informasi",
+      "labelAddress": "Alamat Kampus:",
+      "labelPhone": "Telepon Kantor:",
+      "labelEmail": "Email Resmi:",
+      "labelHours": "Jam Operasional:",
+      "openMap": "Buka di Google Maps",
+      "getDirections": "Petunjuk arah",
+      "whatsappCta": "Chat WhatsApp Hotline PPDB",
+      "accreditationNote": "Tersertifikasi BAN-S/M dengan {npsn}. Lingkungan belajar aman, ramah anak, dan bebas bullying.",
+      "formTitle": "Formulir Konsultasi & PPDB",
+      "formIntro": "Isi formulir di bawah ini, tim admin PPDB kami akan segera menghubungi Anda melalui WhatsApp / Email.",
       "nameLabel": "Nama Lengkap Orang Tua / Siswa",
-      "emailLabel": "Alamat Email",
+      "namePlaceholder": "Contoh: Budi Santoso",
+      "phoneLabel": "Nomor WhatsApp",
+      "phonePlaceholder": "0812xxxxxxxx",
+      "emailLabel": "Email",
+      "emailPlaceholder": "budi@example.com",
+      "programLabel": "Jalur Peminatan / Jenjang",
+      "programReguler": "PPDB Reguler 2026/2027",
+      "programPrestasi": "Jalur Prestasi & Olimpiade",
+      "programTahfidz": "Jalur Beasiswa Tahfidz",
+      "programCambridge": "Bilingual & Cambridge Track",
+      "programTour": "Permintaan Kunjungan (School Tour)",
       "messageLabel": "Pesan / Pertanyaan",
-      "submitButton": "Kirim Pesan / Permintaan"
+      "messagePlaceholder": "Tuliskan pertanyaan seputar biaya, kurikulum, atau jadwal tes masuk...",
+      "submitButton": "Kirim Pesan / Permintaan",
+      "submitting": "Mengirim...",
+      "submitSuccess": "Terima kasih! Pesan Anda telah terkirim. Tim kami akan segera menghubungi Anda.",
+      "defaultHours": "Senin – Jumat: 07.30 – 15.30 WIB"
     },
     "pricing": {
       "title": "Informasi Biaya Pendidikan & Beasiswa",
@@ -141,6 +172,19 @@
       "empty": "Tidak ada hasil untuk kata kunci tersebut.",
       "unavailable": "Layanan pencarian sedang tidak tersedia."
     }
+  },
+  "faq": {
+    "badge": "Tanya Jawab",
+    "title": "Pertanyaan Seputar PPDB & Sekolah",
+    "subtitle": "Jawaban atas hal-hal yang sering ditanyakan oleh calon siswa dan orang tua.",
+    "q1": "Kapan gelombang pendaftaran PPDB 2026/2027 dibuka?",
+    "a1": "Gelombang 1 (Jalur Prestasi & Early Bird) dibuka mulai 15 Oktober 2026. Gelombang 2 (Jalur Reguler) dibuka mulai 15 Januari 2027. Pendaftaran dapat dilakukan secara online melalui website ini atau langsung di sekretariat sekolah.",
+    "q2": "Apakah tersedia skema beasiswa bagi siswa berprestasi?",
+    "a2": "Ya, kami menyediakan Beasiswa Prestasi Akademik & Non-Akademik (potongan SPP 50%–100%) bagi peraih juara olimpiade sains, tahfidz Quran minimal 3 juz, atau juara kejuaraan olahraga/seni minimal tingkat kota/provinsi.",
+    "q3": "Bagaimana kurikulum dan metode pembelajaran yang diterapkan?",
+    "a3": "Kami mengimplementasikan Kurikulum Merdeka yang diperkaya dengan muatan internasional Cambridge, pembelajaran berbasis riset (P5), serta integrasi teknologi AI, robotika, dan pembinaan karakter akhlakul karimah.",
+    "q4": "Apakah orang tua bisa melakukan School Tour / Kunjungan Kampus?",
+    "a4": "Tentu saja. Kami menyambut kunjungan orang tua dan calon siswa setiap hari kerja (Senin–Jumat pukul 08.00–14.00 WIB) atau pada hari Sabtu dengan membuat janji temu melalui WhatsApp hotline kami."
   },
   "cta": {
     "badge": "Mekar Bersama Cahaya Pagi",

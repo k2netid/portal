@@ -21,7 +21,10 @@
     "getStarted": "Request Quote",
     "selectLanguage": "Language:",
     "themeAriaLight": "Enable light mode",
-    "themeAriaDark": "Enable dark mode"
+    "themeAriaDark": "Enable dark mode",
+    "navAria": "Main navigation",
+    "openMenuAria": "Open menu",
+    "closeMenuAria": "Close menu"
   },
   "common": {
     "breadcrumbAria": "Breadcrumb"
@@ -33,7 +36,9 @@
     "contact": "24/7 Support Center",
     "copyright": "All rights reserved.",
     "asn": "BGP Routing & Peering ASN:",
-    "slaPromise": "15-Minute MTTR Guaranteed Response"
+    "slaPromise": "15-Minute MTTR Guaranteed Response",
+    "badgeSla": "99.999% SLA Uptime Guarantee",
+    "badgeDatacenter": "Tier-3 Data Center Interconnect"
   },
   "hero": {
     "badge": "Fiber Optic Infrastructure & Managed Services 2026",
@@ -81,6 +86,7 @@
   "pages": {
     "about": {
       "title": "Company Profile & Infrastructure",
+      "badge": "Company Profile & Infrastructure",
       "subtitle": "Discover Layung Network: Global-standard fiber optic connectivity built on transparency, speed, and high availability.",
       "storyTitle": "Dedicated to Powering Modern Connectivity at the Speed of Light",
       "storyText": "Inspired by the radiant Layung twilight sky that illuminates the horizon, we engineered an independent fiber optic backbone reaching major business hubs.",
@@ -112,7 +118,36 @@
     },
     "contact": {
       "title": "Contact NOC & Verify Fiber Coverage Area",
-      "subtitle": "Need emergency network support or deploying high-speed enterprise internet? Our technical consultants respond in minutes."
+      "subtitle": "Need emergency network support or deploying high-speed enterprise internet? Our technical consultants respond in minutes.",
+      "badge": "Operations & Consultation Center",
+      "nocTitle": "NOC 24/7/365 Command Center",
+      "labelAddress": "Headquarter & Data Center",
+      "labelPhone": "NOC Emergency Hotline",
+      "labelEmail": "Email Dispatch",
+      "openMap": "Open in Google Maps",
+      "getDirections": "Get directions",
+      "whatsappCta": "Fast WhatsApp Response",
+      "formTitle": "Quote & Fiber Survey Request Form",
+      "nameLabel": "PIC Full Name",
+      "namePlaceholder": "e.g. Budi Santoso",
+      "companyLabel": "Company / Organization",
+      "companyPlaceholder": "PT Digital Innovation",
+      "emailLabel": "Company Email",
+      "emailPlaceholder": "budi@company.com",
+      "phoneLabel": "Phone / WhatsApp",
+      "phonePlaceholder": "08123456789",
+      "serviceLabel": "Service Category",
+      "serviceDia": "Dedicated Internet 1:1 (DIA)",
+      "serviceBroadband": "Business Broadband",
+      "serviceSdwan": "Managed SD-WAN & Cloud",
+      "serviceSoc": "24/7 Cyber Security SOC",
+      "serviceDarkfiber": "Dark Fiber & Metro-E",
+      "capacityLabel": "Estimated Capacity",
+      "capacityEnterprise": "1 Gbps - 10 Gbps (Enterprise)",
+      "addressLabel": "Installation / Building Address",
+      "addressPlaceholder": "Building name, floor, street and city for nearest ODP distance check...",
+      "submitButton": "Submit Survey & Quote Request",
+      "submitSuccess": "Thank you! A Layung Solution Architect will contact you within 15 minutes."
     },
     "blog": {
       "title": "Technology Insights & Network Advisories",
@@ -135,6 +170,19 @@
       "defaultMessage": "This page is currently unavailable or has been disabled by the network administrator.",
       "backHome": "Back to Home"
     }
+  },
+  "faq": {
+    "badge": "Technical & Service FAQ",
+    "title": "Common Questions About Provisioning & Network Migration",
+    "subtitle": "Complete answers on activation, public IP allocation, SLA guarantees, and emergency ticket escalation.",
+    "q1": "How long does Dedicated Internet (DIA) fiber installation take?",
+    "a1": "For on-net areas (buildings with existing Layung fiber termination), installation completes in 1–3 business days. Off-net last-mile builds typically take 7–14 business days including OTDR testing.",
+    "q2": "Do Dedicated Internet packages include static public IPs?",
+    "a2": "Yes. All DIA packages include a free /29 static public IP block (5 usable IPs), with additional allocation available for servers or enterprise BGP routers.",
+    "q3": "How do we claim SLA penalty compensation?",
+    "a3": "Every outage is logged by our NOC ticketing system. If monthly availability falls below contract SLA (e.g. < 99.999%), billing automatically credits the next invoice without bureaucratic claims.",
+    "q4": "Are redundant backup links with different media available?",
+    "a4": "Yes. We offer dual-homing with diverse fiber paths plus licensed wireless backup (5.8GHz/E-Band Microwave) for zero-downtime requirements."
   },
   "cta": {
     "badge": "Free Network Architecture Consultation",

@@ -16,14 +16,19 @@
     "getStarted": "Admissions Info",
     "selectLanguage": "Language",
     "themeAriaLight": "Enable light mode",
-    "themeAriaDark": "Enable dark mode"
+    "themeAriaDark": "Enable dark mode",
+    "navAria": "Main navigation",
+    "openMenuAria": "Open menu",
+    "closeMenuAria": "Close menu"
   },
   "footer": {
     "description": "Sarangenge is inspired by the sunflower and the gentle morning dawn that nurtures noble character, academic mastery, and future-ready innovation.",
     "programs": "Programs & Curriculum",
     "admissions": "Admissions Info",
     "contact": "Contact & Hotline",
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "badgeCurriculum": "Merdeka Curriculum & Bilingual",
+    "badgeChildFriendly": "Child-Friendly School 2026"
   },
   "common": {
     "readMore": "Read More",
@@ -95,10 +100,36 @@
     "contact": {
       "title": "Contact & Admissions Inquiry",
       "subtitle": "Our counseling and admissions team is ready to assist you with curriculum details, fees, and enrollment steps.",
+      "badge": "Information & Consultation",
+      "infoTitle": "Secretariat & Information",
+      "labelAddress": "Campus Address:",
+      "labelPhone": "Office Phone:",
+      "labelEmail": "Official Email:",
+      "labelHours": "Operating Hours:",
+      "openMap": "Open in Google Maps",
+      "getDirections": "Get directions",
+      "whatsappCta": "Chat WhatsApp Admissions Hotline",
+      "accreditationNote": "BAN-S/M accredited with {npsn}. A safe, child-friendly, bullying-free learning environment.",
+      "formTitle": "Consultation & Admissions Form",
+      "formIntro": "Fill out the form below and our PPDB admin team will contact you via WhatsApp or email shortly.",
       "nameLabel": "Full Name (Parent / Student)",
+      "namePlaceholder": "e.g. Budi Santoso",
+      "phoneLabel": "WhatsApp Number",
+      "phonePlaceholder": "0812xxxxxxxx",
       "emailLabel": "Email Address",
+      "emailPlaceholder": "budi@example.com",
+      "programLabel": "Track / Grade Level",
+      "programReguler": "Regular Admissions 2026/2027",
+      "programPrestasi": "Merit & Olympiad Track",
+      "programTahfidz": "Tahfidz Scholarship Track",
+      "programCambridge": "Bilingual & Cambridge Track",
+      "programTour": "Campus Visit Request (School Tour)",
       "messageLabel": "Message / Question",
-      "submitButton": "Send Message / Inquiry"
+      "messagePlaceholder": "Ask about fees, curriculum, or entrance exam schedule...",
+      "submitButton": "Send Message / Inquiry",
+      "submitting": "Sending...",
+      "submitSuccess": "Thank you! Your message has been sent. Our team will contact you shortly.",
+      "defaultHours": "Mon – Fri: 07:30 – 15:30 WIB"
     },
     "pricing": {
       "title": "Education Fees & Scholarship Info",
@@ -141,6 +172,19 @@
       "empty": "No results found for that keyword.",
       "unavailable": "Search service is currently unavailable."
     }
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Questions About Admissions & School Life",
+    "subtitle": "Answers to common questions from prospective students and parents.",
+    "q1": "When does PPDB 2026/2027 open?",
+    "a1": "Wave 1 (Merit & Early Bird) opens 15 October 2026. Wave 2 (Regular) opens 15 January 2027. Apply online on this site or at the school secretariat.",
+    "q2": "Are scholarships available for high-achieving students?",
+    "a2": "Yes. Merit scholarships (50%–100% tuition reduction) are available for science olympiad winners, Quran memorization (min. 3 juz), or city/province-level sports and arts champions.",
+    "q3": "What curriculum and learning approach do you use?",
+    "a3": "We implement Kurikulum Merdeka enriched with Cambridge international content, research-based P5 projects, AI and robotics integration, and character education.",
+    "q4": "Can parents schedule a campus tour?",
+    "a4": "Yes. Visit on weekdays (Mon–Fri 08:00–14:00 WIB) or Saturday by appointment via our WhatsApp hotline."
   },
   "cta": {
     "badge": "Blooming with the Morning Dawn",

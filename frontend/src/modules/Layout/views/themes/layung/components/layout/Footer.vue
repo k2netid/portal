@@ -60,11 +60,11 @@
           <div class="flex flex-wrap gap-2 pt-1 font-mono">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
               <ShieldCheck class="w-3.5 h-3.5" />
-              99.999% SLA Uptime Guarantee
+              {{ tt('footer.badgeSla', '99.999% SLA Uptime Guarantee') }}
             </span>
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
               <Server class="w-3.5 h-3.5" />
-              Tier-3 Data Center Interconnect
+              {{ tt('footer.badgeDatacenter', 'Tier-3 Data Center Interconnect') }}
             </span>
           </div>
         </div>

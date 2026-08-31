@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="about"
-    class="sarangenge-theme flex-1 flex flex-col py-10 sm:py-16"
+    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
   >
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -11,13 +11,13 @@
 
     <ThemeSafeHtml
       v-else-if="cmsBody"
-      class="container mx-auto px-4 py-16"
+      class="container mx-auto px-4 py-10 md:py-12"
       :html="cmsBody"
       mode="publishing"
     />
 
     <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
         <!-- Breadcrumb & Header -->
         <div
           id="profil"

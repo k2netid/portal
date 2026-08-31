@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="tim"
-    class="sarangenge-theme flex-1 flex flex-col py-10 sm:py-16"
+    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
   >
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -17,7 +17,7 @@
     />
 
     <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
         <!-- Breadcrumb & Header -->
         <div class="space-y-4">
           <Breadcrumb :items="[{ name: t('pages.tim.title', 'Guru & Staf') }]" />

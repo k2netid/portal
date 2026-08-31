@@ -1,7 +1,7 @@
 <template>
   <section
     data-ja-customizer-target="programs"
-    class="py-16 sm:py-24 bg-muted/30 border-y border-border/60"
+    class="py-12 sm:py-14 bg-muted/30 border-y border-border/60"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->

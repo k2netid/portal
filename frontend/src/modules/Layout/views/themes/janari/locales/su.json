@@ -132,6 +132,8 @@
             "surveyTitle": "Naon ceuk pangguna?",
             "surveySubtitle": "Eupan balik anu dikumpulkeun sareng dipidangkeun sacara dinamis tina survei situs.",
             "surveyLoading": "Ngamuat data survei…",
+            "surveyEmpty": "Teu acan aya tanggapan survei.",
+            "surveyEmptyHint": "Eupan balik pangguna bakal muncul di dieu sanggeus dikumpulkeun tina API.",
             "surveyUser": "Pangguna",
             "surveyRole": "Anggota"
         },

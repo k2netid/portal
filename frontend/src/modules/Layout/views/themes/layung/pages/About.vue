@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+  <div class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
     <Breadcrumb :items="[{ name: t('pages.about.title', 'Tentang Kami') }]" />
 
     <template v-if="hasBuilderBlocks">
@@ -22,7 +22,7 @@
         class="scroll-mt-28 space-y-4 max-w-3xl"
       >
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-mono uppercase">
-          Profil Perusahaan & Infrastruktur
+          {{ t('pages.about.badge', 'Profil Perusahaan & Infrastruktur') }}
         </span>
         <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
           {{ t('pages.about.storyTitle', 'Dedikasi Menghubungkan Indonesia dengan Kecepatan Cahaya') }}
@@ -33,7 +33,7 @@
       </div>
 
       <!-- Philosophy & Core Values -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <div class="space-y-6 text-sm text-muted-foreground leading-relaxed">
           <p>
             {{ t('pages.about.storyText', 'Berakar dari filosofi cahaya Layung yang menyinari langit dengan keindahan dan kehangatan fajar hingga senja, kami membangun jaringan serat optik mandiri yang menjangkau pusat-pusat bisnis terpenting.') }}

@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="contact"
-    class="sarangenge-theme flex-1 flex flex-col py-10 sm:py-16"
+    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
   >
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -9,22 +9,21 @@
       :context="{ post: pageData, site: { name: displaySchoolName } }"
     />
 
-    <ThemeSafeHtml
-      v-else-if="cmsBody"
-      class="container mx-auto px-4 py-16"
-      :html="cmsBody"
-      mode="publishing"
-    />
-
     <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 w-full">
-        <!-- Breadcrumb & Header -->
+      <ThemeSafeHtml
+        v-if="cmsBody"
+        class="sr-only"
+        :html="cmsBody"
+        mode="publishing"
+      />
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
         <div class="space-y-4">
           <Breadcrumb :items="[{ name: t('pages.contact.title', 'Kontak & PPDB') }]" />
           <div class="max-w-3xl space-y-3">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--sarangenge-teal,#0f766e)]/10 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-200">
               <PhoneCall class="w-3.5 h-3.5" />
-              Layanan Informasi & Konsultasi
+              {{ t('pages.contact.badge', 'Layanan Informasi & Konsultasi') }}
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
               {{ t('pages.contact.title', 'Hubungi Kami & Pendaftaran PPDB') }}
@@ -37,13 +36,12 @@
 
         <div
           id="ppdb"
-          class="scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+          class="scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
         >
-          <!-- Col 1: Contact Info & Hotline -->
           <div class="lg:col-span-5 space-y-6">
-            <div class="sarangenge-panel p-8 space-y-6">
+            <div class="sarangenge-panel p-6 sm:p-8 space-y-6">
               <h3 class="text-xl font-bold text-foreground font-heading">
-                Sekretariat & Informasi
+                {{ t('pages.contact.infoTitle', 'Sekretariat & Informasi') }}
               </h3>
 
               <div class="space-y-4 text-sm text-muted-foreground">
@@ -52,8 +50,38 @@
                     <MapPin class="w-5 h-5" />
                   </div>
                   <div>
-                    <strong class="text-foreground block text-sm">Alamat Kampus:</strong>
-                    <span class="leading-relaxed">{{ displayAddress }}</span>
+                    <strong class="text-foreground block text-sm">{{ t('pages.contact.labelAddress', 'Alamat Kampus:') }}</strong>
+                    <button
+                      v-if="displayAddress && mapEnabled"
+                      type="button"
+                      class="text-left leading-relaxed hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold transition-colors"
+                      @click="openMapExternal"
+                    >
+                      {{ displayAddress }}
+                    </button>
+                    <span
+                      v-else
+                      class="leading-relaxed"
+                    >{{ displayAddress }}</span>
+                    <div
+                      v-if="displayAddress && mapEnabled"
+                      class="flex flex-wrap gap-2 pt-2"
+                    >
+                      <button
+                        type="button"
+                        class="text-xs font-bold text-[var(--sarangenge-teal,#0f766e)] hover:underline"
+                        @click="openMapExternal"
+                      >
+                        {{ t('pages.contact.openMap', 'Buka di Google Maps') }}
+                      </button>
+                      <button
+                        type="button"
+                        class="text-xs font-bold text-muted-foreground hover:text-foreground hover:underline"
+                        @click="openMapDirections"
+                      >
+                        {{ t('pages.contact.getDirections', 'Petunjuk arah') }}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -62,7 +90,7 @@
                     <Phone class="w-5 h-5" />
                   </div>
                   <div>
-                    <strong class="text-foreground block text-sm">Telepon Kantor:</strong>
+                    <strong class="text-foreground block text-sm">{{ t('pages.contact.labelPhone', 'Telepon Kantor:') }}</strong>
                     <a
                       :href="phoneDialHref"
                       class="hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold"
@@ -75,10 +103,10 @@
                     <Mail class="w-5 h-5" />
                   </div>
                   <div>
-                    <strong class="text-foreground block text-sm">Email Resmi:</strong>
+                    <strong class="text-foreground block text-sm">{{ t('pages.contact.labelEmail', 'Email Resmi:') }}</strong>
                     <a
                       :href="`mailto:${displayEmail}`"
-                      class="hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold"
+                      class="hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold break-all"
                     >{{ displayEmail }}</a>
                   </div>
                 </div>
@@ -88,13 +116,12 @@
                     <Clock class="w-5 h-5" />
                   </div>
                   <div>
-                    <strong class="text-foreground block text-sm">Jam Operasional:</strong>
+                    <strong class="text-foreground block text-sm">{{ t('pages.contact.labelHours', 'Jam Operasional:') }}</strong>
                     <span>{{ operatingHours }}</span>
                   </div>
                 </div>
               </div>
 
-              <!-- WhatsApp Hotline Box -->
               <div
                 v-if="whatsAppUrl"
                 class="pt-4 border-t border-border/60"
@@ -106,32 +133,30 @@
                   class="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[var(--sarangenge-radius-sm)] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-colors"
                 >
                   <MessageCircle class="w-5 h-5" />
-                  Chat WhatsApp Hotline PPDB
+                  {{ t('pages.contact.whatsappCta', 'Chat WhatsApp Hotline PPDB') }}
                 </a>
               </div>
             </div>
 
-            <!-- Accreditation Card -->
             <div class="sarangenge-bento__cell sarangenge-bento__cell--gold !p-6 space-y-2">
               <div class="flex items-center gap-2 text-amber-900 dark:text-amber-200 font-bold text-sm font-heading">
                 <ShieldCheck class="w-5 h-5" />
                 <span>{{ displayAccreditation }}</span>
               </div>
               <p class="text-xs text-muted-foreground leading-relaxed">
-                Tersertifikasi BAN-S/M dengan {{ displayNpsn }}. Lingkungan belajar aman, ramah anak, dan bebas bullying.
+                {{ t('pages.contact.accreditationNote', { npsn: displayNpsn }) }}
               </p>
             </div>
           </div>
 
-          <!-- Col 2: Consultation & Admission Form -->
           <div class="lg:col-span-7">
-            <div class="sarangenge-panel p-8 sm:p-10 space-y-6">
+            <div class="sarangenge-panel p-6 sm:p-8 space-y-6">
               <div class="space-y-2">
                 <h3 class="text-2xl font-bold text-foreground font-heading">
-                  Formulir Konsultasi & PPDB
+                  {{ t('pages.contact.formTitle', 'Formulir Konsultasi & PPDB') }}
                 </h3>
                 <p class="text-xs sm:text-sm text-muted-foreground">
-                  Isi formulir di bawah ini, tim admin PPDB kami akan segera menghubungi Anda melalui WhatsApp / Email.
+                  {{ t('pages.contact.formIntro', 'Isi formulir di bawah ini, tim admin PPDB kami akan segera menghubungi Anda melalui WhatsApp / Email.') }}
                 </p>
               </div>
 
@@ -140,7 +165,7 @@
                 class="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200 text-sm font-semibold flex items-center gap-3 animate-in fade-in-50"
               >
                 <CheckCircle2 class="w-5 h-5 shrink-0" />
-                <span>Terima kasih! Pesan Anda telah terkirim. Tim kami akan segera menghubungi Anda.</span>
+                <span>{{ t('pages.contact.submitSuccess', 'Terima kasih! Pesan Anda telah terkirim. Tim kami akan segera menghubungi Anda.') }}</span>
               </div>
 
               <form
@@ -154,17 +179,17 @@
                     <Input
                       v-model="form.name"
                       required
-                      placeholder="Contoh: Budi Santoso"
+                      :placeholder="t('pages.contact.namePlaceholder', 'Contoh: Budi Santoso')"
                     />
                   </div>
 
                   <div class="space-y-1.5">
-                    <Label>Nomor WhatsApp *</Label>
+                    <Label>{{ t('pages.contact.phoneLabel', 'Nomor WhatsApp') }} *</Label>
                     <Input
                       v-model="form.phone"
                       type="tel"
                       required
-                      placeholder="0812xxxxxxxx"
+                      :placeholder="t('pages.contact.phonePlaceholder', '0812xxxxxxxx')"
                     />
                   </div>
                 </div>
@@ -175,28 +200,18 @@
                     <Input
                       v-model="form.email"
                       type="email"
-                      placeholder="budi@example.com"
+                      :placeholder="t('pages.contact.emailPlaceholder', 'budi@example.com')"
                     />
                   </div>
 
                   <div class="space-y-1.5">
-                    <Label>Jalur Peminatan / Jenjang</Label>
+                    <Label>{{ t('pages.contact.programLabel', 'Jalur Peminatan / Jenjang') }}</Label>
                     <Select v-model="form.program">
-                      <option value="ppdb_reguler">
-                        PPDB Reguler 2026/2027
-                      </option>
-                      <option value="ppdb_prestasi">
-                        Jalur Prestasi & Olimpiade
-                      </option>
-                      <option value="ppdb_tahfidz">
-                        Jalur Beasiswa Tahfidz
-                      </option>
-                      <option value="ppdb_cambridge">
-                        Bilingual & Cambridge Track
-                      </option>
-                      <option value="school_tour">
-                        Permintaan Kunjungan (School Tour)
-                      </option>
+                      <option value="ppdb_reguler">{{ t('pages.contact.programReguler', 'PPDB Reguler 2026/2027') }}</option>
+                      <option value="ppdb_prestasi">{{ t('pages.contact.programPrestasi', 'Jalur Prestasi & Olimpiade') }}</option>
+                      <option value="ppdb_tahfidz">{{ t('pages.contact.programTahfidz', 'Jalur Beasiswa Tahfidz') }}</option>
+                      <option value="ppdb_cambridge">{{ t('pages.contact.programCambridge', 'Bilingual & Cambridge Track') }}</option>
+                      <option value="school_tour">{{ t('pages.contact.programTour', 'Permintaan Kunjungan (School Tour)') }}</option>
                     </Select>
                   </div>
                 </div>
@@ -207,7 +222,7 @@
                     v-model="form.message"
                     required
                     :rows="4"
-                    placeholder="Tuliskan pertanyaan seputar biaya, kurikulum, atau jadwal tes masuk..."
+                    :placeholder="t('pages.contact.messagePlaceholder', 'Tuliskan pertanyaan seputar biaya, kurikulum, atau jadwal tes masuk...')"
                   />
                 </div>
 
@@ -219,7 +234,7 @@
                   :disabled="submitting"
                 >
                   <Send class="w-4 h-4 mr-1" />
-                  {{ submitting ? 'Mengirim...' : t('pages.contact.submitButton', 'Kirim Pesan / Permintaan') }}
+                  {{ submitting ? t('pages.contact.submitting', 'Mengirim...') : t('pages.contact.submitButton', 'Kirim Pesan / Permintaan') }}
                 </Button>
               </form>
             </div>
@@ -235,6 +250,7 @@ import { ref, computed } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
+import { useThemeContactMap } from '@/modules/Layout/composables/useThemeContactMap';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
@@ -257,12 +273,13 @@ const {
   whatsAppUrl,
 } = useSarangengeIdentity();
 
+const { mapEnabled, openMapExternal, openMapDirections } = useThemeContactMap(displayAddress);
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('contact');
 
 useThemeHashScroll(128);
 
 const operatingHours = computed(() => {
-  return (getSetting('contact_operating_hours', '') as string) || 'Senin – Jumat: 07.30 – 15.30 WIB';
+  return (getSetting('contact_operating_hours', '') as string) || t('pages.contact.defaultHours', 'Senin – Jumat: 07.30 – 15.30 WIB');
 });
 
 const form = ref({
@@ -279,7 +296,6 @@ const submitSuccess = ref(false);
 const handleSubmit = async () => {
   submitting.value = true;
   try {
-    // Attempt sending to Forms pack endpoint
     await api.post('/public/forms/submissions/contact', {
       data: {
         name: form.value.name,
@@ -287,11 +303,10 @@ const handleSubmit = async () => {
         email: form.value.email,
         program: form.value.program,
         message: form.value.message,
-      }
+      },
     });
     submitSuccess.value = true;
   } catch {
-    // Graceful client confirmation
     submitSuccess.value = true;
   } finally {
     submitting.value = false;

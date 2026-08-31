@@ -132,6 +132,8 @@
             "surveyTitle": "Apa kata pengguna?",
             "surveySubtitle": "Umpan balik yang dikumpulkan dan ditampilkan secara dinamis dari survei situs.",
             "surveyLoading": "Memuat data survei…",
+            "surveyEmpty": "Belum ada tanggapan survei.",
+            "surveyEmptyHint": "Umpan balik pengguna akan tampil di sini setelah dikumpulkan dari API.",
             "surveyUser": "Pengguna",
             "surveyRole": "Anggota"
         },

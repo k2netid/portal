@@ -1,7 +1,7 @@
 <template>
   <section
     data-ja-customizer-target="testimonials"
-    class="py-16 sm:py-24"
+    class="py-12 sm:py-14"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">

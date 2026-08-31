@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+  <section class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
     <div class="layung-panel p-8 sm:p-12 border-2 border-emerald-500/40 bg-gradient-to-br from-card via-card to-emerald-500/5 shadow-2xl relative overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-8 space-y-4">

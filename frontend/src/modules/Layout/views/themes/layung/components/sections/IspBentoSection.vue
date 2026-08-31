@@ -1,7 +1,7 @@
 <template>
   <section
     data-ja-customizer-target="bento"
-    class="py-20 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
+    class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
   >
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto space-y-4">
