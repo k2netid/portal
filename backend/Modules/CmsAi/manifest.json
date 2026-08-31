@@ -2,7 +2,7 @@
   "name": "CMS AI",
   "slug": "cms-ai",
   "version": "1.0.0",
-  "description": "Publishing draft and taxonomy assist, usage logs, and batch taxonomy jobs. Kernel Settings → AI governs provider keys and global enable.",
+  "description": "Publishing draft and taxonomy assist, usage logs, and batch taxonomy jobs. Kernel Settings → AI governs provider keys and global enable. No Spatie permissions — access is gated by kernel AI settings and pack activation.",
   "author": "Jejakawan Team",
   "type": "module",
   "family": "cms",

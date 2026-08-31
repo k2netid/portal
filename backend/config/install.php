@@ -32,4 +32,9 @@ return [
         'INSTALL_SKIP_LICENSE_CHECKS',
         in_array(env('APP_ENV', 'production'), ['local', 'testing'], true)
     ),
+
+    /*
+    | Opt-in demo domain rows (e.g. Publishing welcome post). Never forced on production cms_site.
+    */
+    'seed_demo' => filter_var(env('INSTALL_SEED_DEMO', false), FILTER_VALIDATE_BOOL),
 ];

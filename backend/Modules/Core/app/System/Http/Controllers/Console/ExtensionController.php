@@ -181,6 +181,7 @@ class ExtensionController extends BaseApiController
 
             // 1. Trigger onDeactivate lifecycle event/hook
             \Hook::action('extension_deactivated', $extension);
+            app(ExtensionLifecycleOrchestrator::class)->runDeactivateSeeders($extension);
 
             // 2. Update status
             $extension->update(['status' => 'inactive']);
@@ -1272,6 +1273,7 @@ class ExtensionController extends BaseApiController
             $graph->assertCanDeactivate($step);
 
             \Hook::action('extension_deactivated', $step);
+            app(ExtensionLifecycleOrchestrator::class)->runDeactivateSeeders($step);
             $step->update(['status' => 'inactive']);
             ConsoleMenu::syncVisibilityForExtension($step->slug, false);
             $this->writeExtensionLog(

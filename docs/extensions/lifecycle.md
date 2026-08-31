@@ -34,8 +34,8 @@ Manifests may declare `contribution_points` in addition to `permissions` and `fe
 - `permissions` — seeded on activate, never deleted on deactivate
 - `widgets` — types a pack contributes to Layout widget areas (`html`, `text`, `recent_posts`, …)
 - menus — still merged via `ConsoleMenu::ensureMissingDefaults()` on activate
-- **Planned:** `member_area` — reader portal nav/routes/widgets (see [member-area.md](./member-area.md))
-- **Planned:** `lifecycle.seeders_on_activate` — idempotent domain seeders (see [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md))
+- **Live:** `member_area` — reader portal nav/routes/widgets (see [member-area.md](./member-area.md))
+- **Live:** `lifecycle.seeders_on_activate` / `seeders_on_deactivate` — idempotent domain seeders via `ExtensionLifecycleOrchestrator` ([rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md))
 
 Public theme (apex `/` when Site is active) reads `GET /api/v1/public/layout/widgets/location/{sidebar|footer_bottom}`. Empty while pack `layout` is inactive. `recent_posts` / `categories` items hydrate from Publishing / Library only when those packs are product-active.
 
@@ -45,7 +45,7 @@ Public theme (apex `/` when Site is active) reads `GET /api/v1/public/layout/wid
 | :--- | :--- |
 | Flip `status`, hide menus, 403 gated APIs | Migration rollback |
 | Soft flags / cache invalidation via `extension_deactivated` | Truncate pack tables |
-| Keep Spatie permission rows | Silent delete of operator role grants (default) |
+| `ExtensionLifecycleOrchestrator::runDeactivateSeeders` (manifest `seeders_on_deactivate`, default empty) | Silent delete of operator role grants (default) |
 
 Destructive cleanup = plugin uninstall or explicit future purge CLI — never App Store “Deactivate”.
 
@@ -67,7 +67,7 @@ Register still issues a Sanctum token so the reader can call member APIs. `email
 | Newsletter footer | `POST /api/v1/public/newsletter/subscribe` |
 | Pageviews | `POST /api/v1/public/analytics/track-visit` |
 | Member verify-email | Signed verify → `/member/verified` |
-| Member portal (planned adaptive shell) | [member-area.md](./member-area.md) |
+| Member portal (adaptive shell) | [member-area.md](./member-area.md) — P0–P3 live |
 | Publishing settings | SEO + discussion at `/dash/publishing/settings`; kernel settings API refuses those groups |
 
 Console remains `/dash`. Do not send public 404 Home to the console SPA.

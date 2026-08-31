@@ -42,7 +42,7 @@
       "category": "marketing"
     }
   ],
-  "permissions": [
+    "permissions": [
     "view content",
     "create content",
     "edit content",
@@ -59,6 +59,13 @@
     "edit content templates",
     "delete content templates"
   ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Publishing\\Database\\Seeders\\PublishingPermissionSeeder",
+      "Modules\\Publishing\\Database\\Seeders\\PublishingDemoContentSeeder"
+    ]
+  },
   "member_area": {
     "depends_on": ["member"],
     "capabilities": ["member.bookmarks", "member.comments"],

@@ -14,6 +14,11 @@ use Spatie\Permission\PermissionRegistrar;
  */
 class PublishingPermissionSeeder extends Seeder
 {
+    public static function ensure(): void
+    {
+        (new self)->run();
+    }
+
     public function run(): void
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();

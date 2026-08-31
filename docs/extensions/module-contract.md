@@ -73,14 +73,14 @@ discover (disk → sys_extensions)
 
 Details: [lifecycle.md](./lifecycle.md). RBAC + seeder policy: [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md).
 
-### Planned: `lifecycle` + `member_area` (RFC)
+### Live: `lifecycle` + `member_area`
 
-Not required for Mail-parity packs yet; reserved for adaptive Member portal and orchestrated seeders. Specs:
+Implemented on main (2026-08-31). Adaptive Member portal and orchestrated seeders:
 
-- [member-area.md](./member-area.md) — public reader portal contributions
+- [member-area.md](./member-area.md) — public reader portal contributions (P0–P3)
 - [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md) — seed on activate, **never truncate on deactivate**
 
-Sketch (future schema):
+Example manifest shape:
 
 ```json
 {

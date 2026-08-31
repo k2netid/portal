@@ -56,7 +56,7 @@
     "lifecycle": {
       "type": "object",
       "additionalProperties": true,
-      "description": "Planned — see docs/extensions/rbac-and-lifecycle-seeders.md",
+      "description": "Idempotent activate/deactivate seeders — see docs/extensions/rbac-and-lifecycle-seeders.md",
       "properties": {
         "preserve_data_on_deactivate": { "type": "boolean", "default": true },
         "seeders_on_activate": {
@@ -72,7 +72,7 @@
     "member_area": {
       "type": "object",
       "additionalProperties": true,
-      "description": "Planned — reader portal contributions; see docs/extensions/member-area.md",
+      "description": "Reader portal contributions when member + pack are product-active — see docs/extensions/member-area.md",
       "properties": {
         "depends_on": {
           "type": "array",

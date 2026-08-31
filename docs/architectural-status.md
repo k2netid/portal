@@ -30,7 +30,7 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 
 Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail.
 
-**Planning (2026-08-31):** adaptive Member Area **implemented** (P0–P3) — [member-area.md](extensions/member-area.md). RBAC/lifecycle: `CmsRolesSeeder` live; `ExtensionLifecycleOrchestrator` runs manifest `lifecycle.seeders_on_activate`.
+**Planning (2026-08-31):** adaptive Member Area **implemented** (P0–P3) — [member-area.md](extensions/member-area.md). RBAC/lifecycle: `CmsRolesSeeder` live; `ExtensionLifecycleOrchestrator` runs manifest `lifecycle.seeders_on_activate` / `seeders_on_deactivate`; optional `INSTALL_SEED_DEMO` → `PublishingDemoContentSeeder`.
 
 **Apex boot gate (3 shells):**
 

@@ -1,6 +1,6 @@
 # Member Area — Adaptive Portal (RFC)
 
-**Status:** Draft RFC — planning only (no implementation yet)  
+**Status:** Implemented (P0–P3 live on main, 2026-08-31)  
 **Update:** 2026-08-31  
 **Audience:** agents and humans building public reader UX and pack contributions  
 **Depends on:** [module-contract.md](./module-contract.md), [lifecycle.md](./lifecycle.md), [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md)

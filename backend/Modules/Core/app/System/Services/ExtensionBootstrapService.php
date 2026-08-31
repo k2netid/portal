@@ -241,6 +241,7 @@ class ExtensionBootstrapService
             try {
                 $this->graph->assertCanDeactivate($extension);
                 \Hook::action('extension_deactivated', $extension);
+                app(ExtensionLifecycleOrchestrator::class)->runDeactivateSeeders($extension);
                 $extension->update(['status' => 'inactive']);
                 ConsoleMenu::syncVisibilityForExtension($extension->slug, false);
                 ExtensionLog::create([

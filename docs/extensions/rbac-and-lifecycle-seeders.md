@@ -1,6 +1,6 @@
 # RBAC, Enable/Disable Strategy & Module Seeders (RFC)
 
-**Status:** Draft RFC — planning only (no implementation yet)  
+**Status:** Implemented (orchestrator + CMS roles + pack seeders live, 2026-08-31)  
 **Update:** 2026-08-31  
 **Audience:** agents and humans touching App Store, Spatie roles, or pack activate hooks  
 **Depends on:** [module-contract.md](./module-contract.md), [lifecycle.md](./lifecycle.md), [install-profiles.md](./install-profiles.md)  
@@ -235,26 +235,26 @@ Profile apply should call the same activate path (migrate + seeders), not only f
 
 ### P0 — RBAC foundation
 
-- [ ] `CmsRolesSeeder` (+ call from Foundation or install profile applicator)
-- [ ] Tests: fresh `cms_site` seed → `admin`/`editor`/`author` exist; Publishing perms attached
-- [ ] Docs note: Spatie `member` ≠ `mem_members`
+- [x] `CmsRolesSeeder` (+ call from Foundation or install profile applicator)
+- [x] Tests: fresh `cms_site` seed → `admin`/`editor`/`author` exist; Publishing perms attached
+- [x] Docs note: Spatie `member` ≠ `mem_members` (see [lifecycle.md](./lifecycle.md))
 
 ### P1 — Lifecycle contract
 
-- [ ] Manifest schema: `lifecycle` + optional `member_area` ([member-area.md](./member-area.md))
-- [ ] `ExtensionLifecycleOrchestrator` or extend `ExtensionController::performActivation`
-- [ ] Document `extension_deactivated` soft-only policy in [lifecycle.md](./lifecycle.md)
+- [x] Manifest schema: `lifecycle` + optional `member_area` ([member-area.md](./member-area.md))
+- [x] `ExtensionLifecycleOrchestrator` wired on activate/deactivate
+- [x] Document `extension_deactivated` soft-only policy in [lifecycle.md](./lifecycle.md)
 
 ### P2 — Pack seeder parity
 
-- [ ] Member: `MemberPermissionSeeder` assigning directory perms to `admin`
-- [ ] Newsletter list default seeder
-- [ ] Optional demo content flag for Publishing
-- [ ] CmsAi: declare permissions or document as feature-flag only
+- [x] Member: `MemberPermissionSeeder` assigning directory perms to `admin`
+- [x] Newsletter list default seeder (`NewsletterDefaultsSeeder` → `default_list_name`)
+- [x] Optional demo content flag for Publishing (`INSTALL_SEED_DEMO` → `PublishingDemoContentSeeder`)
+- [x] CmsAi: feature-flag only (kernel AI settings; no Spatie permissions in manifest)
 
 ### P3 — Member portal adaptive gates
 
-- [ ] Implement capabilities + portal registry per [member-area.md](./member-area.md)
+- [x] Implement capabilities + portal registry per [member-area.md](./member-area.md)
 
 ---
 
