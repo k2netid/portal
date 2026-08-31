@@ -49,7 +49,8 @@
       "empty": "Belum ada komentar."
     },
     "widgets": {
-      "viewAll": "Lihat semua"
+      "viewAll": "Lihat semua",
+      "manage": "Kelola"
     },
     "unavailable": {
       "title": "Fitur tidak tersedia",
@@ -140,7 +141,13 @@
     "member": "Anggota",
     "status": "Status",
     "verified": "Email",
-    "joinedAt": "Bergabung"
+    "joinedAt": "Bergabung",
+    "actions": "Aksi"
+  },
+  "actions": {
+    "activate": "Aktifkan",
+    "deactivate": "Nonaktifkan",
+    "updated": "Status anggota diperbarui"
   },
   "status": {
     "active": "Aktif",

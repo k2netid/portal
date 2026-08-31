@@ -54,6 +54,14 @@
         "order": 60,
         "capability": "member.newsletter"
       }
+    ],
+    "widgets": [
+      {
+        "slug": "newsletter-status",
+        "slot": "dashboard",
+        "order": 30,
+        "capability": "member.newsletter"
+      }
     ]
   }
 }

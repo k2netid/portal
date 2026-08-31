@@ -60,6 +60,14 @@
         "order": 70,
         "capability": "member.submissions"
       }
+    ],
+    "widgets": [
+      {
+        "slug": "recent-submissions",
+        "slot": "dashboard",
+        "order": 40,
+        "capability": "member.submissions"
+      }
     ]
   }
 }

@@ -24,28 +24,46 @@
       </button>
     </p>
 
-    <RecentBookmarksWidget
-      v-if="showBookmarksWidget"
-      :limit="5"
-    />
+    <div class="grid gap-6 lg:grid-cols-2">
+      <component
+        :is="widget.component"
+        v-for="widget in dashboardWidgets"
+        :key="`${widget.extensionSlug ?? 'core'}:${widget.slug}`"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import RecentBookmarksWidget from '@/modules/Member/components/RecentBookmarksWidget.vue';
+import { memberAreaRegistry } from '@/engine/memberArea/MemberAreaRegistry';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 
 const { t } = useI18n();
 const memberStore = useMemberStore();
+const systemStore = useSystemStore();
 
 const resending = ref(false);
 const resent = ref(false);
 
-const showBookmarksWidget = computed(() => (
-    memberStore.member?.email_verified === true
-    && memberStore.hasCapability('member.bookmarks')
+const portalContext = computed(() => ({
+    activeExtensions: memberStore.portal?.active_extensions
+        ?? systemStore.activeExtensions
+        ?? [],
+    emailVerified: memberStore.member?.email_verified === true,
+    capabilities: memberStore.portalCapabilities,
+}));
+
+const dashboardWidgets = computed(() => (
+    memberAreaRegistry.getDashboardWidgets(
+        portalContext.value,
+        memberStore.portal?.widgets,
+    ).map((widget) => ({
+        ...widget,
+        component: defineAsyncComponent(widget.component as () => Promise<{ default: unknown }>),
+    }))
 ));
 
 const resendLabel = computed(() => (

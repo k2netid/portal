@@ -44,4 +44,25 @@ class MemberDirectoryTest extends TestCase
             ->getJson('/api/v1/manage/members')
             ->assertForbidden();
     }
+
+    public function test_admin_can_update_member_status_with_manage_permission(): void
+    {
+        $admin = $this->createAdminUser();
+        $member = Member::query()->create([
+            'name' => 'Reader Toggle',
+            'email' => 'toggle@example.com',
+            'password' => 'password12',
+            'status' => 'active',
+        ]);
+
+        $this->actingAs($admin, 'sanctum')
+            ->patchJson('/api/v1/manage/members/'.$member->id, ['status' => 'inactive'])
+            ->assertOk()
+            ->assertJsonPath('data.status', 'inactive');
+
+        $this->assertDatabaseHas('mem_members', [
+            'id' => $member->id,
+            'status' => 'inactive',
+        ]);
+    }
 }

@@ -69,6 +69,7 @@ import { isAxiosError } from 'axios';
 import api from '@/engine/api/client';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { unwrapApiPayload } from '@/modules/Member/utils/memberApi';
 
 interface NewsletterStatus {
     subscribed?: boolean;
@@ -89,7 +90,7 @@ const load = async (): Promise<void> => {
     error.value = '';
     try {
         const response = await api.get('/member/newsletter');
-        const payload = response.data as NewsletterStatus;
+        const payload = unwrapApiPayload<NewsletterStatus>(response);
         subscribed.value = payload.subscribed === true;
     } catch {
         error.value = t('member.portal.newsletter.loadFailed', 'Could not load newsletter preferences.');
@@ -104,7 +105,7 @@ const toggle = async (): Promise<void> => {
     success.value = '';
     try {
         const response = await api.put('/member/newsletter', { subscribe: !subscribed.value });
-        const payload = response.data as NewsletterStatus;
+        const payload = unwrapApiPayload<NewsletterStatus>(response);
         subscribed.value = payload.subscribed === true;
         success.value = subscribed.value
             ? t('member.portal.newsletter.subscribedSuccess', 'You are subscribed.')

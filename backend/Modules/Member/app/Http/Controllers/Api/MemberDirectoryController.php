@@ -27,4 +27,27 @@ class MemberDirectoryController extends BaseApiController
 
         return $this->paginated($query->paginate($perPage), 'Members retrieved');
     }
+
+    public function update(Request $request, string $member): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'status' => 'required|in:active,inactive',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->validationError($e->errors());
+        }
+
+        $record = Member::query()->findOrFail($member);
+        $record->update(['status' => $validated['status']]);
+
+        return $this->success([
+            'id' => (string) $record->id,
+            'name' => (string) $record->name,
+            'email' => (string) $record->email,
+            'status' => (string) $record->status,
+            'email_verified_at' => $record->email_verified_at,
+            'created_at' => $record->created_at,
+        ], 'Member updated');
+    }
 }

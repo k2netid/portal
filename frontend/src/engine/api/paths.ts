@@ -31,6 +31,7 @@ export const libraryPaths = {
 
 export const memberPaths = {
     index: '/manage/members',
+    update: (id: string) => `/manage/members/${id}`,
     publicRegister: '/public/member/register',
     publicLogin: '/public/member/login',
     me: '/member/me',

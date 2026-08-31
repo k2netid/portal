@@ -49,7 +49,8 @@
       "empty": "Can aya koméntar."
     },
     "widgets": {
-      "viewAll": "Tingali sadayana"
+      "viewAll": "Tingali sadayana",
+      "manage": "Atur"
     },
     "unavailable": {
       "title": "Fitur teu sayogi",
@@ -140,7 +141,13 @@
     "member": "Anggota",
     "status": "Status",
     "verified": "Email",
-    "joinedAt": "Gabung"
+    "joinedAt": "Gabung",
+    "actions": "Aksi"
+  },
+  "actions": {
+    "activate": "Aktifkeun",
+    "deactivate": "Nonaktifkeun",
+    "updated": "Status anggota diperbarui"
   },
   "status": {
     "active": "Aktif",

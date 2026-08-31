@@ -77,6 +77,10 @@ class MemberPortalTest extends TestCase
         $routes = collect($response->json('data.navigation'))->pluck('route')->all();
         $this->assertContains('member.bookmarks', $routes);
         $this->assertContains('member.comments', $routes);
+
+        $widgetSlugs = collect($response->json('data.widgets'))->pluck('slug')->all();
+        $this->assertContains('recent-bookmarks', $widgetSlugs);
+        $this->assertContains('recent-comments', $widgetSlugs);
     }
 
     public function test_member_portal_omits_publishing_when_pack_inactive(): void

@@ -49,6 +49,24 @@ class MemberAreaRegistry {
         this.contributions.push(contribution);
     }
 
+    private widgetKey(extensionSlug: string, slug: string): string {
+        return `${extensionSlug}:${slug}`;
+    }
+
+    resolveWidget(extensionSlug: string, slug: string): MemberAreaWidget | undefined {
+        for (const contribution of this.contributions) {
+            if (contribution.extensionSlug !== extensionSlug) {
+                continue;
+            }
+            const match = (contribution.widgets ?? []).find((widget) => widget.slug === slug);
+            if (match) {
+                return match;
+            }
+        }
+
+        return undefined;
+    }
+
     getNavigation(ctx: MemberPortalContext): MemberAreaNavItem[] {
         const items: MemberAreaNavItem[] = [];
 
@@ -83,6 +101,56 @@ class MemberAreaRegistry {
         }
 
         return widgets.sort((a, b) => (a.order ?? 100) - (b.order ?? 100));
+    }
+
+    /**
+     * Resolve dashboard widgets from portal payload (server) with FE component registry fallback.
+     */
+    getDashboardWidgets(
+        ctx: MemberPortalContext,
+        portalWidgets: Array<{
+            slug: string;
+            slot?: string;
+            order?: number;
+            capability?: string | null;
+            extension_slug?: string;
+            requires_verified?: boolean;
+        }> | undefined,
+    ): MemberAreaWidget[] {
+        if (portalWidgets?.length) {
+            const resolved: MemberAreaWidget[] = [];
+
+            for (const item of portalWidgets) {
+                if ((item.slot ?? 'dashboard') !== 'dashboard') {
+                    continue;
+                }
+                const extensionSlug = item.extension_slug ?? '';
+                if (!extensionSlug) {
+                    continue;
+                }
+                const widget = this.resolveWidget(extensionSlug, item.slug);
+                if (!widget) {
+                    continue;
+                }
+                if (!passesCapabilityGate({
+                    capability: item.capability ?? widget.capability,
+                    requiresVerified: item.requires_verified ?? widget.requiresVerified,
+                }, ctx)) {
+                    continue;
+                }
+                resolved.push({
+                    ...widget,
+                    extensionSlug,
+                    order: item.order ?? widget.order,
+                });
+            }
+
+            if (resolved.length > 0) {
+                return resolved.sort((a, b) => (a.order ?? 100) - (b.order ?? 100));
+            }
+        }
+
+        return this.getWidgets(ctx);
     }
 
     getPackRoutes(activeExtensions: string[]): RouteRecordRaw[] {

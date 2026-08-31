@@ -54,6 +54,7 @@
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
+import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
 
 interface CommentRow {
     id: string;
@@ -70,10 +71,7 @@ const load = async (): Promise<void> => {
     loading.value = true;
     try {
         const response = await api.get('/member/comments', { params: { per_page: 50 } });
-        const payload = response.data as { data?: CommentRow[] } | CommentRow[];
-        comments.value = Array.isArray(payload)
-            ? payload
-            : (Array.isArray((payload as { data?: CommentRow[] }).data) ? (payload as { data: CommentRow[] }).data : []);
+        comments.value = extractPaginatedRows<CommentRow>(response);
     } catch {
         comments.value = [];
     } finally {

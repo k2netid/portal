@@ -50,6 +50,12 @@
               <th class="px-6 py-3 font-medium">
                 {{ t('member.table.joinedAt') }}
               </th>
+              <th
+                v-if="canManage"
+                class="px-6 py-3 font-medium text-right"
+              >
+                {{ t('member.table.actions') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -75,6 +81,23 @@
               <td class="px-6 py-3 text-muted-foreground">
                 {{ formatDate(row.created_at) }}
               </td>
+              <td
+                v-if="canManage"
+                class="px-6 py-3 text-right"
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  :disabled="updatingId === row.id"
+                  @click="toggleStatus(row)"
+                >
+                  {{
+                    row.status === 'active'
+                      ? t('member.actions.deactivate')
+                      : t('member.actions.activate')
+                  }}
+                </Button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -84,15 +107,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Search } from 'lucide-vue-next';
 import api from '@/engine/api/client';
 import { memberPaths } from '@/engine/api/paths';
 import { parseResponse } from '@/shared/utils/responseParser';
 import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
-import { Input } from '@/shared/components/ui';
+import { Button, Input } from '@/shared/components/ui';
 import { useToast } from '@/shared/composables/useToast';
+import { useAuthStore } from '@/modules/Core/System/stores/auth';
 
 interface MemberRow {
     id: string;
@@ -105,10 +129,14 @@ interface MemberRow {
 
 const { t } = useI18n();
 const toast = useToast();
+const authStore = useAuthStore();
 const loading = ref(true);
 const search = ref('');
 const members = ref<MemberRow[]>([]);
+const updatingId = ref<string | null>(null);
 let searchTimer: ReturnType<typeof setTimeout> | undefined;
+
+const canManage = computed(() => authStore.hasPermission('manage members'));
 
 const formatDate = (value: string): string => {
     if (!value) {
@@ -140,6 +168,20 @@ const debounceSearch = (): void => {
     searchTimer = setTimeout(() => {
         void fetchMembers();
     }, 300);
+};
+
+const toggleStatus = async (row: MemberRow): Promise<void> => {
+    updatingId.value = row.id;
+    const nextStatus = row.status === 'active' ? 'inactive' : 'active';
+    try {
+        await api.patch(memberPaths.update(row.id), { status: nextStatus });
+        row.status = nextStatus;
+        toast.success(t('member.actions.updated'));
+    } catch (error: unknown) {
+        toast.error.fromResponse(error);
+    } finally {
+        updatingId.value = null;
+    }
 };
 
 onMounted(() => {

@@ -48,5 +48,7 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('manage/members')->middleware(['auth:sanctum', 'extension.active:member'])->group(function (): void {
         Route::get('/', [MemberDirectoryController::class, 'index'])
             ->middleware('permission:view members');
+        Route::patch('{member}', [MemberDirectoryController::class, 'update'])
+            ->middleware('permission:manage members');
     });
 });

@@ -69,6 +69,7 @@
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
+import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
 
 interface SubmissionRow {
     id: string;
@@ -82,16 +83,9 @@ const { t } = useI18n();
 const submissions = ref<SubmissionRow[]>([]);
 const loading = ref(true);
 
-const extractRows = (payload: unknown): SubmissionRow[] => {
-    if (Array.isArray(payload)) {
-        return payload;
-    }
-    if (payload && typeof payload === 'object' && 'data' in payload) {
-        const inner = (payload as { data?: SubmissionRow[] }).data;
-        return Array.isArray(inner) ? inner : [];
-    }
-    return [];
-};
+const extractRows = (response: { data?: unknown }): SubmissionRow[] => (
+    extractPaginatedRows<SubmissionRow>(response)
+);
 
 const formatDate = (value?: string): string => {
     if (!value) {
@@ -115,7 +109,7 @@ const load = async (): Promise<void> => {
     loading.value = true;
     try {
         const response = await api.get('/member/submissions', { params: { per_page: 50 } });
-        submissions.value = extractRows(response.data);
+        submissions.value = extractRows(response);
     } catch {
         submissions.value = [];
     } finally {

@@ -10,6 +10,42 @@ const publishingRouteMeta = {
 export const publishingMemberAreaContribution: MemberAreaContribution = {
     extensionSlug: 'publishing',
     dependsOn: ['member'],
+    navigation: [
+        {
+            slug: 'bookmarks',
+            labelKey: 'member.nav.bookmarks',
+            routeName: 'member.bookmarks',
+            order: 40,
+            requiresVerified: true,
+            capability: 'member.bookmarks',
+        },
+        {
+            slug: 'comments',
+            labelKey: 'member.nav.comments',
+            routeName: 'member.comments',
+            order: 50,
+            requiresVerified: true,
+            capability: 'member.comments',
+        },
+    ],
+    widgets: [
+        {
+            slug: 'recent-bookmarks',
+            slot: 'dashboard',
+            order: 10,
+            requiresVerified: true,
+            capability: 'member.bookmarks',
+            component: () => import('@/modules/Member/components/RecentBookmarksWidget.vue'),
+        },
+        {
+            slug: 'recent-comments',
+            slot: 'dashboard',
+            order: 20,
+            requiresVerified: true,
+            capability: 'member.comments',
+            component: () => import('@/modules/Member/components/RecentCommentsWidget.vue'),
+        },
+    ],
     routes: [
         {
             path: 'bookmarks',

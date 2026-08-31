@@ -18,12 +18,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { useMemberStore } from '@/modules/Member/stores/member';
 
 const { t } = useI18n();
 const route = useRoute();
+const memberStore = useMemberStore();
 
 const status = computed(() => String(route.query.status || ''));
 
@@ -45,5 +47,11 @@ const body = computed(() => {
         return t('member.verified.alreadyBody', 'This address was already confirmed.');
     }
     return t('member.verified.invalidBody', 'Request a new verification email from your account.');
+});
+
+onMounted(() => {
+    if (status.value === 'ok' || status.value === 'already') {
+        void memberStore.hydrate();
+    }
 });
 </script>

@@ -94,6 +94,13 @@
         "order": 10,
         "requires_verified": true,
         "capability": "member.bookmarks"
+      },
+      {
+        "slug": "recent-comments",
+        "slot": "dashboard",
+        "order": 20,
+        "requires_verified": true,
+        "capability": "member.comments"
       }
     ]
   }

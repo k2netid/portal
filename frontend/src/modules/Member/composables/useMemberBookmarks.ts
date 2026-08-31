@@ -1,13 +1,10 @@
 import { ref, type Ref } from 'vue';
 import api from '@/engine/api/client';
+import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
 
 export interface MemberBookmarkRow {
     id: string;
     content?: { title?: string; slug?: string };
-}
-
-interface PaginatedBookmarks {
-    data?: MemberBookmarkRow[];
 }
 
 export function extractBookmarkRows(payload: unknown): MemberBookmarkRow[] {
@@ -15,9 +12,16 @@ export function extractBookmarkRows(payload: unknown): MemberBookmarkRow[] {
         return payload;
     }
     if (payload && typeof payload === 'object' && 'data' in payload) {
-        const inner = (payload as PaginatedBookmarks).data;
-        return Array.isArray(inner) ? inner : [];
+        const inner = (payload as { data?: unknown }).data;
+        if (Array.isArray(inner)) {
+            return inner;
+        }
+        if (inner && typeof inner === 'object' && 'data' in inner) {
+            const rows = (inner as { data?: MemberBookmarkRow[] }).data;
+            return Array.isArray(rows) ? rows : [];
+        }
     }
+
     return [];
 }
 
@@ -35,7 +39,7 @@ export function useMemberBookmarks(limit?: number): {
         try {
             const params = limit ? { per_page: limit } : undefined;
             const response = await api.get('/member/bookmarks', { params });
-            bookmarks.value = extractBookmarkRows(response.data);
+            bookmarks.value = extractPaginatedRows<MemberBookmarkRow>(response);
         } catch {
             bookmarks.value = [];
         } finally {

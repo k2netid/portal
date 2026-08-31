@@ -49,7 +49,8 @@
       "empty": "No comments yet."
     },
     "widgets": {
-      "viewAll": "View all"
+      "viewAll": "View all",
+      "manage": "Manage"
     },
     "unavailable": {
       "title": "Feature unavailable",
@@ -140,7 +141,13 @@
     "member": "Member",
     "status": "Status",
     "verified": "Email",
-    "joinedAt": "Joined"
+    "joinedAt": "Joined",
+    "actions": "Actions"
+  },
+  "actions": {
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "updated": "Member status updated"
   },
   "status": {
     "active": "Active",
