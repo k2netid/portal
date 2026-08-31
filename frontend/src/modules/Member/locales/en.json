@@ -32,7 +32,20 @@
     },
     "security": {
       "title": "Security",
-      "subtitle": "Update your reader account password.",
+      "subtitle": "Password, email, and account deletion for your reader identity.",
+      "passwordSection": "Change password",
+      "emailSection": "Change email",
+      "emailHint": "We send a confirmation link to the new address. You must sign in again after confirming.",
+      "pendingEmail": "Pending confirmation:",
+      "newEmail": "New email",
+      "emailSubmit": "Send confirmation",
+      "emailSent": "Confirmation email sent.",
+      "emailFailed": "Could not start email change.",
+      "deleteSection": "Delete account",
+      "deleteHint": "Permanently removes your reader account. Bookmarks are deleted; comments stay anonymous.",
+      "deleteConfirm": "Type DELETE to confirm",
+      "deleteSubmit": "Delete my account",
+      "deleteFailed": "Could not delete account.",
       "current": "Current password",
       "new": "New password",
       "confirm": "Confirm new password",
@@ -85,6 +98,30 @@
     "failed": "Invalid credentials",
     "noAccount": "No account?",
     "link": "Sign in"
+  },
+  "forgot": {
+    "title": "Forgot password",
+    "subtitle": "We will email a reset link for your reader account.",
+    "submit": "Send reset link",
+    "pending": "Sending…",
+    "sent": "If that email exists, a reset link is on the way.",
+    "failed": "Could not send reset link.",
+    "link": "Forgot password?"
+  },
+  "reset": {
+    "title": "Choose a new password",
+    "subtitle": "Enter a new password for your reader account.",
+    "confirm": "Confirm password",
+    "submit": "Reset password",
+    "pending": "Saving…",
+    "success": "Password updated. You can sign in now.",
+    "failed": "Could not reset password."
+  },
+  "emailChanged": {
+    "okTitle": "Email updated",
+    "okBody": "Sign in again with your new email address.",
+    "invalidTitle": "Link invalid or expired",
+    "invalidBody": "Request a new email change from Security settings."
   },
   "register": {
     "title": "Create a reader account",

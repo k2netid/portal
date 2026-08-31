@@ -143,7 +143,7 @@ class AuthController extends BaseApiController
     }
 
     /**
-     * @return array{id: string, name: string, email: string, status: string, email_verified: bool}
+     * @return array{id: string, name: string, email: string, status: string, email_verified: bool, pending_email: string|null}
      */
     private function publicMember(Member $member): array
     {
@@ -153,6 +153,7 @@ class AuthController extends BaseApiController
             'email' => (string) $member->email,
             'status' => (string) $member->status,
             'email_verified' => $member->email_verified_at !== null,
+            'pending_email' => is_string($member->pending_email) ? $member->pending_email : null,
         ];
     }
 }

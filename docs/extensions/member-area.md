@@ -7,6 +7,22 @@
 
 ---
 
+## Update: 2026-08-31 (account lifecycle)
+
+Reader account self-service beyond P1–P3:
+
+| Path / API | Purpose |
+| :--- | :--- |
+| `/member/forgot-password` + `POST /public/member/forgot-password` | Request reset link |
+| `/member/reset-password` + `POST /public/member/reset-password` | Set new password |
+| `PUT /member/email` + signed confirm | Change email (confirm on new address) |
+| `DELETE /member/account` | Delete reader account (`confirm=DELETE`) |
+| Demo reader | `INSTALL_SEED_DEMO=true` → `reader@example.com` / `password12` |
+
+Legacy `Account.vue` removed; `/member/account` redirects to profile.
+
+---
+
 ## 1. Problem
 
 Today the **Member** pack is a thin reader auth surface:

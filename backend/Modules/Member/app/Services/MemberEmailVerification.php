@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Member\Services;
 
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
-use Modules\Core\System\Contracts\OutboundMailPortInterface;
-use Modules\Core\System\Models\Extension;
 use Modules\Member\Models\Member;
 
 class MemberEmailVerification
 {
+    public function __construct(
+        private MemberMailer $mailer,
+    ) {}
+
     public function signedUrl(Member $member): string
     {
         return URL::temporarySignedRoute(
@@ -40,37 +41,11 @@ class MemberEmailVerification
         $subject = 'Verify your email';
         $html = '<p>Confirm your reader account email ('.e($member->email).').</p><p><a href="'.e($url).'">Verify email</a></p>';
 
-        if (Extension::isProductActive('mail') && app()->bound(OutboundMailPortInterface::class)) {
-            try {
-                app(OutboundMailPortInterface::class)->send(
-                    $member->email,
-                    $subject,
-                    $html,
-                    queue: false,
-                );
-
-                return;
-            } catch (\Throwable) {
-                // JA-Mail may be bound without a usable account; Laravel mailer is the fallback.
-            }
-        }
-
-        Mail::html($html, static function ($message) use ($member, $subject): void {
-            $message->to($member->email)->subject($subject);
-        });
+        $this->mailer->send($member->email, $subject, $html);
     }
 
     public function frontendResultUrl(string $status): string
     {
-        $base = config('app.frontend_url');
-        $root = is_string($base) && $base !== '' ? $base : (string) config('app.url');
-        $root = rtrim($root, '/');
-        // Strip legacy `/site` prefix — public SPA now lives at apex when Site is active.
-        if (str_ends_with($root, '/site')) {
-            $root = substr($root, 0, -strlen('/site'));
-            $root = rtrim($root, '/');
-        }
-
-        return $root.'/member/verified?status='.rawurlencode($status);
+        return $this->mailer->frontendUrl('/member/verified', ['status' => $status]);
     }
 }

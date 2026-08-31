@@ -32,7 +32,20 @@
     },
     "security": {
       "title": "Kaamanan",
-      "subtitle": "Perbarui sandi akun pamaca anjeun.",
+      "subtitle": "Sandi, email, jeung ngahapus akun pamaca anjeun.",
+      "passwordSection": "Ganti sandi",
+      "emailSection": "Ganti email",
+      "emailHint": "Kami kirim tautan konfirmasi ka alamat anyar. Anjeun kedah asup deui saatos ngonfirmasi.",
+      "pendingEmail": "Nungguan konfirmasi:",
+      "newEmail": "Email anyar",
+      "emailSubmit": "Kirim konfirmasi",
+      "emailSent": "Email konfirmasi dikirim.",
+      "emailFailed": "Gagal ngamimitian ganti email.",
+      "deleteSection": "Hapus akun",
+      "deleteHint": "Ngahapus akun pamaca sacara permanén. Bookmark dihapus; koméntar tetep anonim.",
+      "deleteConfirm": "Ketik DELETE pikeun konfirmasi",
+      "deleteSubmit": "Hapus akun kuring",
+      "deleteFailed": "Gagal ngahapus akun.",
       "current": "Sandi ayeuna",
       "new": "Sandi anyar",
       "confirm": "Konfirmasi sandi anyar",
@@ -85,6 +98,30 @@
     "failed": "Kredensial teu valid",
     "noAccount": "Can gaduh akun?",
     "link": "Asup"
+  },
+  "forgot": {
+    "title": "Poho sandi",
+    "subtitle": "Kami bakal ngirim tautan reset ka email akun pamaca anjeun.",
+    "submit": "Kirim tautan reset",
+    "pending": "Ngirim…",
+    "sent": "Upami email éta aya, tautan reset keur dikirim.",
+    "failed": "Gagal ngirim tautan reset.",
+    "link": "Poho sandi?"
+  },
+  "reset": {
+    "title": "Pilih sandi anyar",
+    "subtitle": "Asupkeun sandi anyar pikeun akun pamaca anjeun.",
+    "confirm": "Konfirmasi sandi",
+    "submit": "Atur ulang sandi",
+    "pending": "Nyimpen…",
+    "success": "Sandi diperbarui. Anjeun tiasa asup ayeuna.",
+    "failed": "Gagal ngatur ulang sandi."
+  },
+  "emailChanged": {
+    "okTitle": "Email diperbarui",
+    "okBody": "Asup deui nganggo alamat email anyar anjeun.",
+    "invalidTitle": "Tautan teu valid atanapi kadaluwarsa",
+    "invalidBody": "Ménta ganti email anyar ti setélan Kaamanan."
   },
   "register": {
     "title": "Jieun akun pamaca",

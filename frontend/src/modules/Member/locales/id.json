@@ -32,7 +32,20 @@
     },
     "security": {
       "title": "Keamanan",
-      "subtitle": "Perbarui kata sandi akun pembaca Anda.",
+      "subtitle": "Kata sandi, email, dan penghapusan akun pembaca Anda.",
+      "passwordSection": "Ubah kata sandi",
+      "emailSection": "Ubah email",
+      "emailHint": "Kami kirim tautan konfirmasi ke alamat baru. Anda harus masuk lagi setelah mengonfirmasi.",
+      "pendingEmail": "Menunggu konfirmasi:",
+      "newEmail": "Email baru",
+      "emailSubmit": "Kirim konfirmasi",
+      "emailSent": "Email konfirmasi terkirim.",
+      "emailFailed": "Gagal memulai perubahan email.",
+      "deleteSection": "Hapus akun",
+      "deleteHint": "Menghapus akun pembaca secara permanen. Bookmark dihapus; komentar tetap anonim.",
+      "deleteConfirm": "Ketik DELETE untuk konfirmasi",
+      "deleteSubmit": "Hapus akun saya",
+      "deleteFailed": "Gagal menghapus akun.",
       "current": "Kata sandi saat ini",
       "new": "Kata sandi baru",
       "confirm": "Konfirmasi kata sandi baru",
@@ -85,6 +98,30 @@
     "failed": "Kredensial tidak valid",
     "noAccount": "Belum punya akun?",
     "link": "Masuk"
+  },
+  "forgot": {
+    "title": "Lupa kata sandi",
+    "subtitle": "Kami akan mengirim tautan reset ke email akun pembaca Anda.",
+    "submit": "Kirim tautan reset",
+    "pending": "Mengirim…",
+    "sent": "Jika email itu terdaftar, tautan reset sedang dikirim.",
+    "failed": "Gagal mengirim tautan reset.",
+    "link": "Lupa kata sandi?"
+  },
+  "reset": {
+    "title": "Pilih kata sandi baru",
+    "subtitle": "Masukkan kata sandi baru untuk akun pembaca Anda.",
+    "confirm": "Konfirmasi kata sandi",
+    "submit": "Atur ulang kata sandi",
+    "pending": "Menyimpan…",
+    "success": "Kata sandi diperbarui. Anda bisa masuk sekarang.",
+    "failed": "Gagal mengatur ulang kata sandi."
+  },
+  "emailChanged": {
+    "okTitle": "Email diperbarui",
+    "okBody": "Masuk lagi dengan alamat email baru Anda.",
+    "invalidTitle": "Tautan tidak valid atau kedaluwarsa",
+    "invalidBody": "Minta perubahan email baru dari pengaturan Keamanan."
   },
   "register": {
     "title": "Buat akun pembaca",

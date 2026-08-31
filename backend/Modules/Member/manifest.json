@@ -22,7 +22,8 @@
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [
-      "Modules\\Member\\Database\\Seeders\\MemberPermissionSeeder"
+      "Modules\\Member\\Database\\Seeders\\MemberPermissionSeeder",
+      "Modules\\Member\\Database\\Seeders\\MemberDemoSeeder"
     ]
   },
   "features": [

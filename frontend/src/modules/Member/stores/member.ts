@@ -8,6 +8,7 @@ export interface PublicMember {
     email: string;
     status: string;
     email_verified?: boolean;
+    pending_email?: string | null;
 }
 
 export interface MemberPortalNavItem {
@@ -171,6 +172,42 @@ export const useMemberStore = defineStore('member', {
             password_confirmation: string;
         }): Promise<void> {
             await api.put('/member/password', input);
+        },
+
+        async forgotPassword(email: string): Promise<void> {
+            await api.post('/public/member/forgot-password', { email });
+        },
+
+        async resetPassword(input: {
+            email: string;
+            token: string;
+            password: string;
+            password_confirmation: string;
+        }): Promise<void> {
+            await api.post('/public/member/reset-password', input);
+        },
+
+        async requestEmailChange(input: {
+            email: string;
+            current_password: string;
+        }): Promise<string> {
+            const response = await api.put('/member/email', input);
+            const payload = unwrapPayload<{ pending_email?: string }>(response);
+            if (this.member) {
+                this.member = {
+                    ...this.member,
+                    pending_email: payload.pending_email ?? input.email,
+                };
+            }
+            return payload.pending_email ?? input.email;
+        },
+
+        async deleteAccount(input: {
+            current_password: string;
+            confirm: 'DELETE';
+        }): Promise<void> {
+            await api.delete('/member/account', { data: input });
+            this.clear();
         },
 
         async resendVerification(): Promise<void> {

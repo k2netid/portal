@@ -3,10 +3,10 @@
     <div class="max-w-md mx-auto w-full px-4 space-y-8">
       <div class="space-y-2 text-center">
         <h1 class="text-3xl font-extrabold font-heading">
-          {{ t('member.login.title', 'Sign in') }}
+          {{ t('member.forgot.title', 'Forgot password') }}
         </h1>
         <p class="text-sm text-muted-foreground">
-          {{ t('member.login.subtitle', 'Reader account — not the operator console.') }}
+          {{ t('member.forgot.subtitle', 'We will email a reset link for your reader account.') }}
         </p>
       </div>
 
@@ -20,6 +20,12 @@
         >
           {{ error }}
         </p>
+        <p
+          v-if="sent"
+          class="text-sm text-emerald-600"
+        >
+          {{ t('member.forgot.sent', 'If that email exists, a reset link is on the way.') }}
+        </p>
         <label class="block space-y-1.5 text-sm">
           <span class="font-medium">{{ t('member.fields.email', 'Email') }}</span>
           <input
@@ -30,41 +36,22 @@
             class="w-full h-10 rounded-xl border border-border bg-background px-3"
           >
         </label>
-        <label class="block space-y-1.5 text-sm">
-          <span class="font-medium">{{ t('member.fields.password', 'Password') }}</span>
-          <input
-            v-model="password"
-            type="password"
-            required
-            autocomplete="current-password"
-            class="w-full h-10 rounded-xl border border-border bg-background px-3"
-          >
-        </label>
         <Button
           type="submit"
           variant="primary"
           class="w-full"
           :disabled="pending"
         >
-          {{ pending ? t('member.login.pending', 'Signing in…') : t('member.login.submit', 'Sign in') }}
+          {{ pending ? t('member.forgot.pending', 'Sending…') : t('member.forgot.submit', 'Send reset link') }}
         </Button>
-        <p class="text-center text-sm">
-          <router-link
-            to="/member/forgot-password"
-            class="text-primary font-semibold"
-          >
-            {{ t('member.forgot.link', 'Forgot password?') }}
-          </router-link>
-        </p>
       </form>
 
       <p class="text-center text-sm text-muted-foreground">
-        {{ t('member.login.noAccount', 'No account?') }}
         <router-link
-          to="/member/register"
+          to="/member/login"
           class="text-primary font-semibold"
         >
-          {{ t('member.register.link', 'Create one') }}
+          {{ t('member.login.link', 'Sign in') }}
         </router-link>
       </p>
     </div>
@@ -74,32 +61,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';
 
 const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
 const memberStore = useMemberStore();
 
 const email = ref('');
-const password = ref('');
 const pending = ref(false);
 const error = ref('');
+const sent = ref(false);
 
 const submit = async (): Promise<void> => {
     pending.value = true;
     error.value = '';
+    sent.value = false;
     try {
-        await memberStore.login(email.value, password.value);
-        const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/member';
-        await router.replace(redirect);
+        await memberStore.forgotPassword(email.value);
+        sent.value = true;
     } catch (err: unknown) {
         error.value = isAxiosError(err)
-            ? String(err.response?.data?.message || t('member.login.failed', 'Invalid credentials'))
-            : t('member.login.failed', 'Invalid credentials');
+            ? String(err.response?.data?.message || t('member.forgot.failed', 'Could not send reset link.'))
+            : t('member.forgot.failed', 'Could not send reset link.');
     } finally {
         pending.value = false;
     }

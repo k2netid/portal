@@ -3,10 +3,10 @@
     <div class="max-w-md mx-auto w-full px-4 space-y-8">
       <div class="space-y-2 text-center">
         <h1 class="text-3xl font-extrabold font-heading">
-          {{ t('member.login.title', 'Sign in') }}
+          {{ t('member.reset.title', 'Choose a new password') }}
         </h1>
         <p class="text-sm text-muted-foreground">
-          {{ t('member.login.subtitle', 'Reader account — not the operator console.') }}
+          {{ t('member.reset.subtitle', 'Enter a new password for your reader account.') }}
         </p>
       </div>
 
@@ -20,6 +20,13 @@
         >
           {{ error }}
         </p>
+        <p
+          v-if="done"
+          class="text-sm text-emerald-600"
+        >
+          {{ t('member.reset.success', 'Password updated. You can sign in now.') }}
+        </p>
+
         <label class="block space-y-1.5 text-sm">
           <span class="font-medium">{{ t('member.fields.email', 'Email') }}</span>
           <input
@@ -36,7 +43,19 @@
             v-model="password"
             type="password"
             required
-            autocomplete="current-password"
+            minlength="8"
+            autocomplete="new-password"
+            class="w-full h-10 rounded-xl border border-border bg-background px-3"
+          >
+        </label>
+        <label class="block space-y-1.5 text-sm">
+          <span class="font-medium">{{ t('member.reset.confirm', 'Confirm password') }}</span>
+          <input
+            v-model="passwordConfirmation"
+            type="password"
+            required
+            minlength="8"
+            autocomplete="new-password"
             class="w-full h-10 rounded-xl border border-border bg-background px-3"
           >
         </label>
@@ -44,27 +63,18 @@
           type="submit"
           variant="primary"
           class="w-full"
-          :disabled="pending"
+          :disabled="pending || !token"
         >
-          {{ pending ? t('member.login.pending', 'Signing in…') : t('member.login.submit', 'Sign in') }}
+          {{ pending ? t('member.reset.pending', 'Saving…') : t('member.reset.submit', 'Reset password') }}
         </Button>
-        <p class="text-center text-sm">
-          <router-link
-            to="/member/forgot-password"
-            class="text-primary font-semibold"
-          >
-            {{ t('member.forgot.link', 'Forgot password?') }}
-          </router-link>
-        </p>
       </form>
 
       <p class="text-center text-sm text-muted-foreground">
-        {{ t('member.login.noAccount', 'No account?') }}
         <router-link
-          to="/member/register"
+          to="/member/login"
           class="text-primary font-semibold"
         >
-          {{ t('member.register.link', 'Create one') }}
+          {{ t('member.login.link', 'Sign in') }}
         </router-link>
       </p>
     </div>
@@ -84,22 +94,31 @@ const route = useRoute();
 const router = useRouter();
 const memberStore = useMemberStore();
 
-const email = ref('');
+const email = ref(typeof route.query.email === 'string' ? route.query.email : '');
+const token = ref(typeof route.query.token === 'string' ? route.query.token : '');
 const password = ref('');
+const passwordConfirmation = ref('');
 const pending = ref(false);
 const error = ref('');
+const done = ref(false);
 
 const submit = async (): Promise<void> => {
     pending.value = true;
     error.value = '';
+    done.value = false;
     try {
-        await memberStore.login(email.value, password.value);
-        const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/member';
-        await router.replace(redirect);
+        await memberStore.resetPassword({
+            email: email.value,
+            token: token.value,
+            password: password.value,
+            password_confirmation: passwordConfirmation.value,
+        });
+        done.value = true;
+        await router.replace('/member/login');
     } catch (err: unknown) {
         error.value = isAxiosError(err)
-            ? String(err.response?.data?.message || t('member.login.failed', 'Invalid credentials'))
-            : t('member.login.failed', 'Invalid credentials');
+            ? String(err.response?.data?.message || t('member.reset.failed', 'Could not reset password.'))
+            : t('member.reset.failed', 'Could not reset password.');
     } finally {
         pending.value = false;
     }

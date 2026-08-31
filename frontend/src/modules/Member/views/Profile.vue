@@ -46,6 +46,13 @@
           class="w-full h-10 rounded-xl border border-border bg-muted/40 px-3 text-muted-foreground"
         />
       </label>
+      <p
+        v-if="memberStore.member?.pending_email"
+        class="text-sm rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2"
+      >
+        {{ t('member.portal.security.pendingEmail', 'Pending confirmation:') }}
+        <strong>{{ memberStore.member.pending_email }}</strong>
+      </p>
 
       <div class="grid gap-4 sm:grid-cols-2 text-sm pt-2">
         <div class="space-y-1">

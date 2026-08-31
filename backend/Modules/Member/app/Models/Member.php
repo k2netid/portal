@@ -14,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $id
  * @property string $name
  * @property string $email
+ * @property string|null $pending_email
  * @property string $password
  * @property string $status
  * @property Carbon|null $email_verified_at
@@ -36,8 +37,10 @@ class Member extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'pending_email',
         'password',
         'status',
+        'email_verified_at',
     ];
 
     protected $hidden = [

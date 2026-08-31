@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Member\Http\Controllers\Api\AuthController;
 use Modules\Member\Http\Controllers\Api\BookmarkController;
 use Modules\Member\Http\Controllers\Api\MemberDirectoryController;
+use Modules\Member\Http\Controllers\Api\PasswordResetController;
 use Modules\Member\Http\Controllers\Api\PortalController;
 use Modules\Member\Http\Controllers\Api\ProfileController;
 use Modules\Member\Http\Controllers\Api\ReaderCommentController;
@@ -16,9 +17,14 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('public/member')->middleware(['throttle:30,1', 'extension.active:member'])->group(function (): void {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
+        Route::post('forgot-password', [PasswordResetController::class, 'forgot']);
+        Route::post('reset-password', [PasswordResetController::class, 'reset']);
         Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
             ->middleware('signed')
             ->name('member.verify-email');
+        Route::get('confirm-email-change/{id}/{hash}', [ProfileController::class, 'confirmEmailChange'])
+            ->middleware('signed')
+            ->name('member.confirm-email-change');
     });
 
     Route::prefix('member')->middleware(['auth:member', 'throttle:120,1', 'extension.active:member'])->group(function (): void {
@@ -26,6 +32,8 @@ Route::prefix('v1')->group(function (): void {
         Route::get('me', [AuthController::class, 'me']);
         Route::patch('profile', [ProfileController::class, 'update']);
         Route::put('password', [ProfileController::class, 'updatePassword']);
+        Route::put('email', [ProfileController::class, 'requestEmailChange']);
+        Route::delete('account', [ProfileController::class, 'destroy']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);
         Route::middleware(['member.verified', 'extension.active:publishing'])->group(function (): void {

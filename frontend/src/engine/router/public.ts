@@ -94,6 +94,24 @@ export const publicRoutes: RouteRecordRaw[] = [
                 meta: { public: true, memberGuest: true },
             },
             {
+                path: 'member/forgot-password',
+                name: 'public-member-forgot-password',
+                component: () => import('@/modules/Member/views/ForgotPassword.vue'),
+                meta: { public: true, memberGuest: true },
+            },
+            {
+                path: 'member/reset-password',
+                name: 'public-member-reset-password',
+                component: () => import('@/modules/Member/views/ResetPassword.vue'),
+                meta: { public: true, memberGuest: true },
+            },
+            {
+                path: 'member/email-changed',
+                name: 'public-member-email-changed',
+                component: () => import('@/modules/Member/views/EmailChanged.vue'),
+                meta: { public: true },
+            },
+            {
                 path: 'member',
                 name: 'member-portal',
                 component: () => import('@/modules/Member/layouts/MemberPortalLayout.vue'),
