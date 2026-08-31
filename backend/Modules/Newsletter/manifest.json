@@ -36,6 +36,13 @@
     "view newsletter",
     "manage newsletter"
   ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Newsletter\\Database\\Seeders\\NewsletterPermissionSeeder",
+      "Modules\\Newsletter\\Database\\Seeders\\NewsletterDefaultsSeeder"
+    ]
+  },
   "member_area": {
     "depends_on": ["member"],
     "capabilities": ["member.newsletter"],

@@ -288,6 +288,7 @@ class ExtensionBootstrapService
 
         \Hook::action('extension_activated', $extension);
         $this->contributions->seedPermissions($extension);
+        app(ExtensionLifecycleOrchestrator::class)->runActivateSeeders($extension);
 
         $extension->update([
             'status' => 'active',

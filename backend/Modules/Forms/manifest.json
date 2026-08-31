@@ -42,6 +42,13 @@
     "delete forms",
     "manage forms"
   ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Forms\\Database\\Seeders\\FormsPermissionSeeder",
+      "Modules\\Forms\\Database\\Seeders\\ContactFormSeeder"
+    ]
+  },
   "member_area": {
     "depends_on": ["member"],
     "capabilities": ["member.submissions"],

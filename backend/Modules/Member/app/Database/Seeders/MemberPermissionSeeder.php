@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Modules\Forms\Database\Seeders;
+namespace Modules\Member\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-class FormsPermissionSeeder extends Seeder
+class MemberPermissionSeeder extends Seeder
 {
     public static function ensure(): void
     {
@@ -21,18 +21,15 @@ class FormsPermissionSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $perms = [
-            'view forms',
-            'create forms',
-            'edit forms',
-            'delete forms',
-            'manage forms',
+            'view members',
+            'manage members',
         ];
 
         foreach ($perms as $name) {
             Permission::findOrCreate($name, 'web');
         }
 
-        foreach (['super', 'admin', 'editor'] as $roleName) {
+        foreach (['super', 'admin'] as $roleName) {
             $role = Role::query()
                 ->where('name', $roleName)
                 ->where('guard_name', 'web')
@@ -40,18 +37,6 @@ class FormsPermissionSeeder extends Seeder
             if ($role) {
                 $role->givePermissionTo($perms);
             }
-        }
-
-        $author = Role::query()
-            ->where('name', 'author')
-            ->where('guard_name', 'web')
-            ->first();
-        if ($author) {
-            $author->givePermissionTo([
-                'view forms',
-                'create forms',
-                'edit forms',
-            ]);
         }
     }
 }

@@ -21,6 +21,7 @@ use Modules\Core\System\Services\ExtensionContributionService;
 use Modules\Core\System\Services\ExtensionGraphService;
 use Modules\Core\System\Services\ExtensionHealthService;
 use Modules\Core\System\Services\ExtensionLifecycleLock;
+use Modules\Core\System\Services\ExtensionLifecycleOrchestrator;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
@@ -1354,6 +1355,7 @@ class ExtensionController extends BaseApiController
 
         \Hook::action('extension_activated', $extension);
         app(ExtensionContributionService::class)->seedPermissions($extension);
+        app(ExtensionLifecycleOrchestrator::class)->runActivateSeeders($extension);
 
         $extension->update([
             'status' => 'active',

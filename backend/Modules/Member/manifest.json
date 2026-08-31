@@ -19,6 +19,12 @@
     "view members",
     "manage members"
   ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Member\\Database\\Seeders\\MemberPermissionSeeder"
+    ]
+  },
   "features": [
     {
       "slug": "member-auth",
