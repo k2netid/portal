@@ -13,6 +13,7 @@ use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberAccountService;
 use Modules\Member\Services\MemberEmailChange;
+use Modules\Member\Support\MemberPublicProfile;
 
 class ProfileController extends BaseApiController
 {
@@ -24,16 +25,14 @@ class ProfileController extends BaseApiController
         }
 
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $validated = $request->validate(MemberPublicProfile::profileValidationRules($member));
         } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
 
-        $member->update(['name' => $validated['name']]);
+        $member->update(MemberPublicProfile::profileFillAttributes($validated));
 
-        return $this->success($this->publicMember($member->fresh() ?? $member), 'Profile updated');
+        return $this->success($member->fresh()?->toPublicProfile() ?? MemberPublicProfile::serialize($member), 'Profile updated');
     }
 
     public function updatePassword(Request $request): JsonResponse
@@ -151,20 +150,5 @@ class ProfileController extends BaseApiController
         app(MemberAccountService::class)->delete($member);
 
         return $this->success(null, 'Account deleted');
-    }
-
-    /**
-     * @return array{id: string, name: string, email: string, status: string, email_verified: bool, pending_email: string|null}
-     */
-    private function publicMember(Member $member): array
-    {
-        return [
-            'id' => (string) $member->id,
-            'name' => (string) $member->name,
-            'email' => (string) $member->email,
-            'status' => (string) $member->status,
-            'email_verified' => $member->email_verified_at !== null,
-            'pending_email' => $member->pending_email,
-        ];
     }
 }

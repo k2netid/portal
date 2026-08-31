@@ -9,7 +9,7 @@
       </p>
     </div>
 
-    <section class="rounded-3xl border border-border/60 bg-card/70 p-6 space-y-4">
+    <section class="rounded-2xl border border-border/60 bg-background/60 p-5 sm:p-6 space-y-4">
       <p
         v-if="loading"
         class="text-sm text-muted-foreground"

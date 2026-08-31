@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberEmailVerification;
+use Modules\Member\Support\MemberPublicProfile;
 
 class AuthController extends BaseApiController
 {
@@ -43,7 +44,7 @@ class AuthController extends BaseApiController
         }
 
         return $this->success([
-            'member' => $this->publicMember($member),
+            'member' => $member->toPublicProfile(),
             'token' => $token,
         ], 'Member registered', 201);
     }
@@ -68,10 +69,12 @@ class AuthController extends BaseApiController
             return $this->error('Member account is not active', 403);
         }
 
+        $member->forceFill(['last_login_at' => now()])->save();
+
         $token = $member->createToken('member')->plainTextToken;
 
         return $this->success([
-            'member' => $this->publicMember($member),
+            'member' => $member->fresh()?->toPublicProfile() ?? MemberPublicProfile::serialize($member),
             'token' => $token,
         ], 'Member logged in');
     }
@@ -83,7 +86,7 @@ class AuthController extends BaseApiController
             return $this->error('Unauthenticated', 401);
         }
 
-        return $this->success($this->publicMember($member), 'Member profile');
+        return $this->success($member->toPublicProfile(), 'Member profile');
     }
 
     public function logout(Request $request): JsonResponse
@@ -140,20 +143,5 @@ class AuthController extends BaseApiController
         }
 
         return $this->success(null, 'Verification email sent');
-    }
-
-    /**
-     * @return array{id: string, name: string, email: string, status: string, email_verified: bool, pending_email: string|null}
-     */
-    private function publicMember(Member $member): array
-    {
-        return [
-            'id' => (string) $member->id,
-            'name' => (string) $member->name,
-            'email' => (string) $member->email,
-            'status' => (string) $member->status,
-            'email_verified' => $member->email_verified_at !== null,
-            'pending_email' => is_string($member->pending_email) ? $member->pending_email : null,
-        ];
     }
 }

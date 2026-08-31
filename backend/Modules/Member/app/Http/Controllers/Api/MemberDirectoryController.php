@@ -18,7 +18,8 @@ class MemberDirectoryController extends BaseApiController
         if ($search !== '') {
             $query->where(function ($inner) use ($search): void {
                 $inner->where('email', 'like', '%'.$search.'%')
-                    ->orWhere('name', 'like', '%'.$search.'%');
+                    ->orWhere('name', 'like', '%'.$search.'%')
+                    ->orWhere('phone', 'like', '%'.$search.'%');
             });
         }
 
@@ -45,8 +46,10 @@ class MemberDirectoryController extends BaseApiController
             'id' => (string) $record->id,
             'name' => (string) $record->name,
             'email' => (string) $record->email,
+            'phone' => $record->phone,
             'status' => (string) $record->status,
             'email_verified_at' => $record->email_verified_at,
+            'last_login_at' => $record->last_login_at,
             'created_at' => $record->created_at,
         ], 'Member updated');
     }

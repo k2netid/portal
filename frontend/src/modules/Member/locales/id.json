@@ -9,18 +9,38 @@
   "portal": {
     "title": "Akun saya",
     "logout": "Keluar",
+    "backToSite": "Kembali ke situs",
+    "menuLabel": "Akun",
+    "openMenu": "Menu akun",
+    "closeMenu": "Tutup menu",
+    "breadcrumb": {
+      "account": "Akun",
+      "aria": "Navigasi area member"
+    },
+    "sidebar": {
+      "expand": "Lebarkan sidebar",
+      "collapse": "Ciutkan sidebar",
+      "groups": {
+        "account": "Akun",
+        "activity": "Aktivitas",
+        "newsletter": "Newsletter",
+        "forms": "Formulir"
+      }
+    },
     "nav": {
-      "dashboard": "Dasbor",
+      "dashboard": "Ringkasan",
       "profile": "Profil",
       "security": "Keamanan"
     },
     "dashboard": {
-      "title": "Dasbor",
-      "subtitle": "Selamat datang kembali. Kelola bookmark dan pengaturan akun di sini.",
-      "hello": "Selamat datang kembali, {name}.",
+      "title": "Ringkasan",
+      "subtitle": "Kelola akun pembaca dan aktivitas Anda di bawah.",
+      "welcomePrefix": "Selamat datang kembali",
+      "hello": "Selamat datang kembali, {name}. Kelola akun pembaca dan aktivitas Anda di bawah.",
       "activity": "Aktivitas Anda",
-      "emptyTitle": "Belum ada widget paket",
-      "emptyBody": "Saat Publishing, Newsletter, atau Forms aktif, bookmark, komentar, dan pengiriman form akan muncul di sini.",
+      "emptyTitle": "Belum ada yang tersimpan",
+      "emptyBody": "Bookmark artikel, tulis komentar, atau kirim form saat menjelajahi situs — semuanya akan muncul di sini.",
+      "browseSite": "Jelajahi artikel",
       "cardProfile": "Perbarui nama tampilan dan status verifikasi.",
       "cardSecurity": "Ubah kata sandi, email, atau hapus akun pembaca.",
       "cardBookmarks": "Artikel yang Anda simpan untuk nanti.",
@@ -31,8 +51,27 @@
     "profile": {
       "title": "Profil",
       "subtitle": "Identitas pembaca Anda di situs ini.",
-      "name": "Nama",
+      "sections": {
+        "identity": "Identitas",
+        "contact": "Kontak",
+        "preferences": "Preferensi",
+        "account": "Akun"
+      },
+      "name": "Nama tampilan",
+      "avatar": "URL avatar",
+      "avatarHint": "https://…",
+      "bio": "Bio",
+      "bioHint": "Catatan singkat tentang Anda (opsional).",
       "email": "Email",
+      "emailHint": "Ubah email dari halaman Keamanan.",
+      "phone": "Telepon",
+      "phoneHint": "+62 …",
+      "locale": "Bahasa",
+      "localeDefault": "Ikuti default situs",
+      "timezone": "Zona waktu",
+      "timezoneDefault": "Ikuti browser",
+      "joinedAt": "Anggota sejak",
+      "lastLogin": "Masuk terakhir",
       "status": "Status",
       "verified": "Email terverifikasi",
       "save": "Simpan profil",

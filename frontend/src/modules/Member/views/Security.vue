@@ -1,22 +1,20 @@
 <template>
-  <div class="space-y-8">
-    <div class="space-y-1">
-      <h2 class="text-xl font-bold">
+  <div class="space-y-6">
+    <header class="space-y-1 border-b border-border/50 pb-5">
+      <h1 class="text-2xl font-bold tracking-tight">
         {{ t('member.portal.security.title', 'Security') }}
-      </h2>
-      <p class="text-sm text-muted-foreground">
+      </h1>
+      <p class="text-sm text-muted-foreground max-w-3xl">
         {{ t('member.portal.security.subtitle', 'Password, email, and account deletion for your reader identity.') }}
       </p>
-    </div>
+    </header>
 
-    <!-- Password -->
-    <form
-      class="rounded-3xl border border-border/60 bg-card/70 p-6 space-y-4 max-w-lg"
-      @submit.prevent="submitPassword"
-    >
-      <h3 class="font-semibold">
-        {{ t('member.portal.security.passwordSection', 'Change password') }}
-      </h3>
+    <div class="grid gap-6 xl:grid-cols-2">
+      <MemberSectionCard :title="t('member.portal.security.passwordSection', 'Change password')">
+        <form
+          class="space-y-4"
+          @submit.prevent="submitPassword"
+        >
       <p
         v-if="passwordError"
         class="text-sm text-destructive"
@@ -59,7 +57,7 @@
           required
           minlength="8"
           autocomplete="new-password"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
+          class="w-full h-10 rounded-lg border border-border bg-background px-3"
         >
       </label>
       <Button
@@ -68,16 +66,14 @@
       >
         {{ passwordPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.submit', 'Update password') }}
       </Button>
-    </form>
+        </form>
+      </MemberSectionCard>
 
-    <!-- Email change -->
-    <form
-      class="rounded-3xl border border-border/60 bg-card/70 p-6 space-y-4 max-w-lg"
-      @submit.prevent="submitEmail"
-    >
-      <h3 class="font-semibold">
-        {{ t('member.portal.security.emailSection', 'Change email') }}
-      </h3>
+      <MemberSectionCard :title="t('member.portal.security.emailSection', 'Change email')">
+        <form
+          class="space-y-4"
+          @submit.prevent="submitEmail"
+        >
       <p class="text-sm text-muted-foreground">
         {{ t('member.portal.security.emailHint', 'We send a confirmation link to the new address. You must sign in again after confirming.') }}
       </p>
@@ -126,16 +122,20 @@
       >
         {{ emailPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.emailSubmit', 'Send confirmation') }}
       </Button>
-    </form>
+        </form>
+      </MemberSectionCard>
+    </div>
 
-    <!-- Delete -->
-    <form
-      class="rounded-3xl border border-destructive/40 bg-destructive/5 p-6 space-y-4 max-w-lg"
-      @submit.prevent="submitDelete"
-    >
-      <h3 class="font-semibold text-destructive">
-        {{ t('member.portal.security.deleteSection', 'Delete account') }}
-      </h3>
+    <section class="rounded-xl border border-destructive/40 bg-destructive/5 shadow-sm">
+      <div class="border-b border-destructive/20 px-5 py-3.5 sm:px-6">
+        <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-destructive">
+          {{ t('member.portal.security.deleteSection', 'Delete account') }}
+        </h2>
+      </div>
+      <form
+        class="p-5 sm:p-6 space-y-4 max-w-xl"
+        @submit.prevent="submitDelete"
+      >
       <p class="text-sm text-muted-foreground">
         {{ t('member.portal.security.deleteHint', 'Permanently removes your reader account. Bookmarks are deleted; comments stay anonymous.') }}
       </p>
@@ -172,7 +172,8 @@
       >
         {{ deletePending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.deleteSubmit', 'Delete my account') }}
       </Button>
-    </form>
+      </form>
+    </section>
   </div>
 </template>
 
@@ -182,6 +183,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
+import MemberSectionCard from '@/modules/Member/components/MemberSectionCard.vue';
 import { useMemberStore } from '@/modules/Member/stores/member';
 
 const { t } = useI18n();

@@ -11,7 +11,7 @@
     <!-- For Full: Everything is here -->
     <template v-if="activeTheme && (layoutStyle === 'full' || layoutStyle === 'hybrid')">
       <div class="relative z-50 overflow-visible">
-        <ThemePageResolver page="components/Header" />
+        <ThemePageResolver :page="chromeHeaderPage" />
       </div>
       <PluginSlot name="after_header" />
       
@@ -19,11 +19,7 @@
       <!-- Hybrid: Main is boxed | Full: Main is full -->
       <main
         class="main-content flex-1 w-full relative z-0"
-        :class="{
-          // Match sticky Janari header: mobile nav only (~4rem); desktop nav + artist bar (~6.75rem)
-          'pt-16 md:pt-[6.75rem]': headerSticky && usesJanariCanvas,
-          'pt-0': !usesJanariCanvas,
-        }"
+        :class="mainChromePaddingClass"
       >
         <div
           :class="{
@@ -43,7 +39,7 @@
 
       <PluginSlot name="before_footer" />
       <div class="mt-auto relative z-10">
-        <ThemePageResolver page="components/Footer" />
+        <ThemePageResolver :page="chromeFooterPage" />
       </div>
     </template>
 
@@ -57,16 +53,13 @@
       :style="wrapperStyles"
     >
       <div class="relative z-50 overflow-visible">
-        <ThemePageResolver page="components/Header" />
+        <ThemePageResolver :page="chromeHeaderPage" />
       </div>
       <PluginSlot name="after_header" />
       
       <main
         class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0"
-        :class="{
-          'pt-16 md:pt-[6.75rem]': headerSticky && usesJanariCanvas,
-          'pt-0': !usesJanariCanvas,
-        }"
+        :class="mainChromePaddingClass"
       >
         <!-- Added padding here too -->
         <router-view v-slot="{ Component }">
@@ -78,7 +71,7 @@
 
       <PluginSlot name="before_footer" />
       <div class="mt-auto">
-        <ThemePageResolver page="components/Footer" />
+        <ThemePageResolver :page="chromeFooterPage" />
       </div>
     </div>
     
@@ -151,6 +144,18 @@ const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 
 const backToTopLabel = computed(() => t('layout.frontend.backToTop'))
 const route = useRoute()
+
+/** Authenticated /member/* portal uses quiet MemberHeader/MemberFooter instead of marketing chrome. */
+const useMemberShell = computed(() =>
+  route.matched.some((record) => record.meta.memberShell === true),
+)
+const chromeHeaderPage = computed(() =>
+  useMemberShell.value ? 'components/MemberHeader' : 'components/Header',
+)
+const chromeFooterPage = computed(() =>
+  useMemberShell.value ? 'components/MemberFooter' : 'components/Footer',
+)
+
 useCustomizerPreviewProbe()
 const lastThemeRetryAt = ref(0)
 const RETRY_INTERVAL_MS = 15000
@@ -354,6 +359,17 @@ const hybridContentStyles = computed(() => {
 
 const enableBackToTop = computed(() => getSetting('back_to_top', true) as boolean)
 const headerSticky = computed(() => getSetting('header_sticky', true) as boolean)
+
+/** Public Janari fixed header needs offset; quiet member shell is sticky (~3.5rem) and needs none. */
+const mainChromePaddingClass = computed(() => {
+  if (useMemberShell.value || !usesJanariCanvas.value) {
+    return 'pt-0'
+  }
+  if (headerSticky.value) {
+    return 'pt-16 md:pt-[6.75rem]'
+  }
+  return 'pt-0'
+})
 const showBackToTop = ref(false)
 const layoutRoot = ref<HTMLElement | null>(null)
 const showThemeServiceNotice = computed(() => !activeTheme.value && !loading.value && !!error.value)

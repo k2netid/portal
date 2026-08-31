@@ -23,6 +23,49 @@ Legacy `Account.vue` removed; `/member/account` redirects to profile.
 
 ---
 
+### Quiet member theme shell (2026-08-31)
+
+Authenticated `/member/*` (portal) does **not** use the marketing Header/Footer. `FrontendLayout` swaps chrome when `meta.memberShell` is set:
+
+| Surface | Chrome |
+| :--- | :--- |
+| Public pages | Theme `Header` + `Footer` (marketing) |
+| `/member/login`, register, forgot/reset | Same marketing chrome |
+| Authenticated portal (`memberShell`) | Theme `MemberHeader` + `MemberFooter` |
+
+**Theme contract (bundled themes):** each theme ships:
+
+- `components/layout/MemberHeader.vue` — logo, Back to site, account menu (Profile / Sign out); no marketing nav
+- `components/layout/MemberFooter.vue` — one-line copyright; no Explore/Company columns
+
+Resolver basename match (`MemberHeader` / `MemberFooter`) + bundled fallbacks (janari → sarangenge → layung). Uploaded themes without these files fall back to janari quiet chrome.
+
+**Portal body** (`MemberPortalLayout`): sidebar + main workspace (full remaining width, card shell). Shared `MemberPortalTopBar`.
+
+---
+
+### Reader profile schema (2026-08-31)
+
+Standard fields on `mem_members` (reader self-service via `PATCH /member/profile`):
+
+| Field | Editable | Notes |
+| :--- | :--- | :--- |
+| `name` | Yes | Display name |
+| `email` | Security flow | Signed confirm on new address |
+| `phone` | Yes | Optional, max 32 chars |
+| `avatar` | Yes | URL/path string, max 512 |
+| `bio` | Yes | Optional, max 500 chars |
+| `locale` | Yes | BCP 47-ish (`en`, `id`, `su`) |
+| `timezone` | Yes | IANA (`Asia/Jakarta`, …) |
+| `status` | Console only | `active` / `inactive` |
+| `email_verified` | Verify link | `email_verified_at` |
+| `last_login_at` | System | Updated on login |
+| `created_at` | Read-only | Member since |
+
+Serialization: `MemberPublicProfile::serialize()` — single source for `/member/me`, portal, auth responses.
+
+---
+
 ## 1. Problem
 
 Today the **Member** pack is a thin reader auth surface:
@@ -43,7 +86,7 @@ Operators get a modular console (`AppModule` registry). Readers get four static 
 
 ### Goals
 
-1. **Portal shell** for authenticated readers (`MemberPortalLayout`) with sidebar/top nav.
+1. **Portal shell** for authenticated readers (`MemberPortalLayout` + theme `MemberHeader`/`MemberFooter`) with sidebar nav + main content (not console chrome, not marketing nav).
 2. **Contribution registry** so product-active packs can inject member routes, nav items, and widgets.
 3. **Capability gates** that hide UI and reject APIs when the contributing pack is inactive.
 4. Keep **console IAM** (`srv_auth_users` + Spatie) completely separate from **reader identity** (`mem_members` + `auth:member`).

@@ -33,6 +33,10 @@ class MemberDemoSeeder extends Seeder
             ['email' => 'reader@example.com'],
             [
                 'name' => 'Demo Reader',
+                'phone' => '+62 812-3456-7890',
+                'bio' => 'Demo reader account for exploring the member portal.',
+                'locale' => 'id',
+                'timezone' => 'Asia/Jakarta',
                 'password' => 'password12',
                 'status' => 'active',
                 'email_verified_at' => now(),

@@ -1,15 +1,9 @@
 import { defineStore } from 'pinia';
 import api from '@/engine/api/client';
 import { MEMBER_TOKEN_KEY } from '@/modules/Member/constants';
+import type { MemberProfileInput, PublicMember } from '@/modules/Member/types/profile';
 
-export interface PublicMember {
-    id: string;
-    name: string;
-    email: string;
-    status: string;
-    email_verified?: boolean;
-    pending_email?: string | null;
-}
+export type { PublicMember, MemberProfileInput } from '@/modules/Member/types/profile';
 
 export interface MemberPortalNavItem {
     slug: string;
@@ -158,8 +152,8 @@ export const useMemberStore = defineStore('member', {
             await this.fetchPortal();
         },
 
-        async updateProfile(name: string): Promise<void> {
-            const response = await api.patch('/member/profile', { name });
+        async updateProfile(input: MemberProfileInput): Promise<void> {
+            const response = await api.patch('/member/profile', input);
             this.member = unwrapPayload<PublicMember>(response);
             if (this.portal) {
                 this.portal = { ...this.portal, member: this.member };

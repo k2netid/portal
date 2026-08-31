@@ -9,18 +9,38 @@
   "portal": {
     "title": "My account",
     "logout": "Sign out",
+    "backToSite": "Back to site",
+    "menuLabel": "Account",
+    "openMenu": "Account menu",
+    "closeMenu": "Close menu",
+    "breadcrumb": {
+      "account": "Account",
+      "aria": "Member area navigation"
+    },
+    "sidebar": {
+      "expand": "Expand sidebar",
+      "collapse": "Collapse sidebar",
+      "groups": {
+        "account": "Account",
+        "activity": "Activity",
+        "newsletter": "Newsletter",
+        "forms": "Forms"
+      }
+    },
     "nav": {
-      "dashboard": "Dashboard",
+      "dashboard": "Overview",
       "profile": "Profile",
       "security": "Security"
     },
     "dashboard": {
-      "title": "Dashboard",
-      "subtitle": "Welcome back. Manage bookmarks and account settings from here.",
-      "hello": "Welcome back, {name}.",
+      "title": "Overview",
+      "subtitle": "Manage your reader account and activity below.",
+      "welcomePrefix": "Welcome back",
+      "hello": "Welcome back, {name}. Manage your reader account and activity below.",
       "activity": "Your activity",
-      "emptyTitle": "No pack widgets yet",
-      "emptyBody": "When Publishing, Newsletter, or Forms are active, bookmarks, comments, and submissions will show up here.",
+      "emptyTitle": "Nothing saved yet",
+      "emptyBody": "Bookmark articles, leave comments, or submit forms while browsing the site — they will show up here.",
+      "browseSite": "Browse articles",
       "cardProfile": "Update your display name and review verification status.",
       "cardSecurity": "Change password, email, or delete your reader account.",
       "cardBookmarks": "Articles you saved for later.",
@@ -31,8 +51,27 @@
     "profile": {
       "title": "Profile",
       "subtitle": "Your reader identity on this site.",
-      "name": "Name",
+      "sections": {
+        "identity": "Identity",
+        "contact": "Contact",
+        "preferences": "Preferences",
+        "account": "Account"
+      },
+      "name": "Display name",
+      "avatar": "Avatar URL",
+      "avatarHint": "https://…",
+      "bio": "Bio",
+      "bioHint": "A short note about you (optional).",
       "email": "Email",
+      "emailHint": "Change email from Security settings.",
+      "phone": "Phone",
+      "phoneHint": "+62 …",
+      "locale": "Language",
+      "localeDefault": "Use site default",
+      "timezone": "Timezone",
+      "timezoneDefault": "Use browser default",
+      "joinedAt": "Member since",
+      "lastLogin": "Last sign-in",
       "status": "Status",
       "verified": "Email verified",
       "save": "Save profile",

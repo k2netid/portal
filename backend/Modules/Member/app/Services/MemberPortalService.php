@@ -96,7 +96,7 @@ class MemberPortalService
         usort($widgets, static fn (array $a, array $b): int => ((int) ($a['order'] ?? 100)) <=> ((int) ($b['order'] ?? 100)));
 
         return [
-            'member' => $this->publicMember($member),
+            'member' => $member->toPublicProfile(),
             'active_extensions' => $activeExtensions,
             'capabilities' => array_values(array_unique($capabilities)),
             'navigation' => $navigation,
@@ -298,20 +298,5 @@ class MemberPortalService
     private function isWidgetVisible(array $item, bool $verified, array $capabilities, array $activeExtensions): bool
     {
         return $this->isNavVisible($item, $verified, $capabilities, $activeExtensions);
-    }
-
-    /**
-     * @return array{id: string, name: string, email: string, status: string, email_verified: bool, pending_email: string|null}
-     */
-    private function publicMember(Member $member): array
-    {
-        return [
-            'id' => (string) $member->id,
-            'name' => (string) $member->name,
-            'email' => (string) $member->email,
-            'status' => (string) $member->status,
-            'email_verified' => $member->email_verified_at !== null,
-            'pending_email' => is_string($member->pending_email) ? $member->pending_email : null,
-        ];
     }
 }

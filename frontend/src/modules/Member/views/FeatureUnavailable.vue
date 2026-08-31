@@ -1,16 +1,16 @@
 <template>
-  <div class="space-y-4 rounded-3xl border border-border/60 bg-card/70 p-6 text-center">
-    <h2 class="text-xl font-bold">
+  <div class="space-y-4 rounded-2xl border border-border/60 px-5 py-8 text-center">
+    <h2 class="text-xl font-bold tracking-tight">
       {{ t('member.portal.unavailable.title', 'Feature unavailable') }}
     </h2>
-    <p class="text-sm text-muted-foreground">
+    <p class="text-sm text-muted-foreground max-w-md mx-auto">
       {{ t('member.portal.unavailable.body', 'This section is not available right now. The site module may be turned off or your account may need verification.') }}
     </p>
     <router-link
       :to="{ name: 'member.dashboard' }"
-      class="inline-flex text-sm font-semibold text-primary"
+      class="inline-flex text-sm font-semibold text-primary hover:underline underline-offset-4"
     >
-      {{ t('member.portal.unavailable.back', 'Back to dashboard') }}
+      {{ t('member.portal.unavailable.back', 'Back to overview') }}
     </router-link>
   </div>
 </template>

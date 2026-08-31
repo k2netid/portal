@@ -1,5 +1,5 @@
 <template>
-  <section class="rounded-xl border border-border/70 bg-background/80 p-5 space-y-4">
+  <section class="rounded-lg border border-border/60 bg-card shadow-sm p-5 space-y-4">
     <div class="flex items-center justify-between gap-3">
       <h3 class="text-lg font-bold">
         {{ t('member.account.bookmarks', 'Bookmarks') }}

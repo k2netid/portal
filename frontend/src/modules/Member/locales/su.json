@@ -9,18 +9,38 @@
   "portal": {
     "title": "Akun kuring",
     "logout": "Kaluar",
+    "backToSite": "Balik ka situs",
+    "menuLabel": "Akun",
+    "openMenu": "Menu akun",
+    "closeMenu": "Tutup menu",
+    "breadcrumb": {
+      "account": "Akun",
+      "aria": "Navigasi area member"
+    },
+    "sidebar": {
+      "expand": "Lébarkeun sidebar",
+      "collapse": "Ciutkeun sidebar",
+      "groups": {
+        "account": "Akun",
+        "activity": "Aktivitas",
+        "newsletter": "Newsletter",
+        "forms": "Formulir"
+      }
+    },
     "nav": {
-      "dashboard": "Dasbor",
+      "dashboard": "Ringkesan",
       "profile": "Profil",
       "security": "Kaamanan"
     },
     "dashboard": {
-      "title": "Dasbor",
-      "subtitle": "Wilujeng sumping deui. Atur bookmark jeung setélan akun di dieu.",
-      "hello": "Wilujeng sumping deui, {name}.",
+      "title": "Ringkesan",
+      "subtitle": "Atur akun pamaca jeung aktivitas anjeun di handap.",
+      "welcomePrefix": "Wilujeng sumping deui",
+      "hello": "Wilujeng sumping deui, {name}. Atur akun pamaca jeung aktivitas anjeun di handap.",
       "activity": "Aktivitas anjeun",
-      "emptyTitle": "Can aya widget paket",
-      "emptyBody": "Nalika Publishing, Newsletter, atanapi Forms aktip, bookmark, koméntar, jeung kiriman form bakal muncul di dieu.",
+      "emptyTitle": "Can aya anu disimpen",
+      "emptyBody": "Bookmark artikel, tulis koméntar, atanapi kirim form nalika ngjelajah situs — sadayana bakal muncul di dieu.",
+      "browseSite": "Jelajah artikel",
       "cardProfile": "Perbarui nami tampilan jeung status verifikasi.",
       "cardSecurity": "Ganti sandi, email, atanapi hapus akun pamaca.",
       "cardBookmarks": "Artikel anu anjeun simpen pikeun engke.",
@@ -31,8 +51,27 @@
     "profile": {
       "title": "Profil",
       "subtitle": "Identitas pamaca anjeun dina situs ieu.",
-      "name": "Ngaran",
+      "sections": {
+        "identity": "Identitas",
+        "contact": "Kontak",
+        "preferences": "Preferensi",
+        "account": "Akun"
+      },
+      "name": "Nami tampilan",
+      "avatar": "URL avatar",
+      "avatarHint": "https://…",
+      "bio": "Bio",
+      "bioHint": "Catetan pondok ngeunaan anjeun (opsional).",
       "email": "Email",
+      "emailHint": "Robah email ti halaman Kaamanan.",
+      "phone": "Telepon",
+      "phoneHint": "+62 …",
+      "locale": "Basa",
+      "localeDefault": "Tuturkeun default situs",
+      "timezone": "Zona waktu",
+      "timezoneDefault": "Tuturkeun browser",
+      "joinedAt": "Anggota saprak",
+      "lastLogin": "Asup terakhir",
       "status": "Status",
       "verified": "Email diverifikasi",
       "save": "Simpen profil",
