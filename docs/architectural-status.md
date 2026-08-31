@@ -1,6 +1,6 @@
 # Architectural Status — kernel + CMS line
 
-Update: 2026-08-30
+Update: 2026-08-31
 
 Canonical trunk: **`main`** (CMS packs, member, and `/site` landed via [PR #14](https://github.com/jejak-awan/ja-core_engine/pull/14), 2026-08-30).  
 `integrate/cms` merged and should be deleted. Branching model: [branching.md](branching.md).
@@ -25,10 +25,12 @@ Optional first-party modules, gated by `sys_extensions.status` (nwidart stays bo
 | :--- | :--- |
 | publishing, library, media, layout | Editorial + theme builder (**Janari** = default CMS reference; **Sarangenge** = school alternate, Sundanese midday sibling to Janari dawn). **Surfaces:** Site Editor = page/`builder_blocks` content + merged theme settings schema + live `/` preview; Theme Customizer = chrome/settings/CSS/bindings + menu slots; Menu Builder = menu trees + `location` (syncs theme `menu_location_*`). Deep-linked; content blocks still Janari-only. |
 | forms, newsletter, analytics, search, cms-ai | Audience / insight |
-| **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM |
+| **member** | Reader accounts (`mem_members`, `auth:member`) — not console IAM. **Adaptive portal shell = RFC** ([member-area.md](extensions/member-area.md)) — not built yet |
 | **site** | Public theme runtime at **apex `/`** when pack active (console stays **`/dash`** + `/auth/console-*`; legacy `/site/*` redirects) |
 
 Public surfaces landed: search, contact → Forms (`contact` slug), analytics pageviews, newsletter footer, widgets, marketing routes, public 404, member login/register/account, member verify-email via Mail.
+
+**Planning (2026-08-31):** adaptive Member Area + RBAC/seeder lifecycle — [member-area.md](extensions/member-area.md), [rbac-and-lifecycle-seeders.md](extensions/rbac-and-lifecycle-seeders.md). Known gap: CMS roles `admin`/`editor`/`author` not seeded in production `FoundationSeeder`.
 
 **Apex boot gate (3 shells):**
 
@@ -51,6 +53,9 @@ Mail SHOULD (archive folder, storage quota, attachment extension + MIME blocklis
 | :--- | :--- |
 | Merge gate `integrate/cms` → `main` | **Done** — PR #14 merged 2026-08-30 (`7b5180f`). |
 | W5 naming residue | Partial: Media/Library defaults + theme docs use `publishing` / `Layout/*`. Keep API alias `Jejakawan`→`publishing`; do not rewrite customized console menus or seed brand strings. |
+| Adaptive Member Area | **RFC drafted** — portal registry + pack contributions; implementation not started. |
+| CMS roles seed (`admin`/`editor`/`author`) | **Gap** — pack PermissionSeeders expect them; FoundationSeeder does not create them. Fix before portal scale. |
+| Lifecycle seeder orchestrator | **RFC** — Forms is golden sample; most packs lack domain seeders; no deactivate truncate (by design). |
 | P5 vertical product modules | Unblocked by merge; still needs a named product before build-out. Same Mail contract. |
 | GitHub Actions | Org spending limit — **do not treat GHA as the gate**. Quality gate = `npm run agent:verify` + local Playwright smoke (Podman/`scripts/e2e-docker.sh`). Re-enable GHA only after billing is fixed. |
 | Uninstall drop tables | First-party uninstall blocked; plugins only |

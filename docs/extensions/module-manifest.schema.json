@@ -47,6 +47,71 @@
           "category": { "type": "string" }
         }
       }
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Spatie permission names for console operators; seeded on activate, never deleted on deactivate"
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Planned — see docs/extensions/rbac-and-lifecycle-seeders.md",
+      "properties": {
+        "preserve_data_on_deactivate": { "type": "boolean", "default": true },
+        "seeders_on_activate": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "seeders_on_deactivate": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "member_area": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Planned — reader portal contributions; see docs/extensions/member-area.md",
+      "properties": {
+        "depends_on": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "nav": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["slug"],
+            "properties": {
+              "slug": { "type": "string", "minLength": 1 },
+              "route": { "type": "string" },
+              "capability": { "type": "string" },
+              "requires_verified": { "type": "boolean" },
+              "order": { "type": "integer" }
+            }
+          }
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["slug"],
+            "properties": {
+              "slug": { "type": "string", "minLength": 1 },
+              "slot": { "type": "string" },
+              "capability": { "type": "string" },
+              "order": { "type": "integer" }
+            }
+          }
+        }
+      }
     }
   }
 }

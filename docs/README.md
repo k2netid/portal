@@ -16,7 +16,10 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
 | [**Module contract**](extensions/module-contract.md) | Kontrak first-party optional (Mail golden sample) + JSON Schema |
+| [**Extension lifecycle**](extensions/lifecycle.md) | Dual boot, deactivate vs uninstall, public identity |
 | [**Install profiles**](extensions/install-profiles.md) | `core` / `cms` / `cms_site` — durable boot after migrate:fresh |
+| [**Member Area RFC**](extensions/member-area.md) | Portal pembaca adaptif terhadap pack aktif |
+| [**RBAC & seeders RFC**](extensions/rbac-and-lifecycle-seeders.md) | Strategi enable/disable, audit seeder, CMS roles gap |
 | [**External module packaging**](extensions/external-module-packaging.md) | P2: path/VCS/in-tree packs tanpa fork kernel; CMS extract order |
 
 ---

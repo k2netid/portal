@@ -71,10 +71,36 @@ discover (disk → sys_extensions)
   → uninstall (uploaded plugins only; first-party Modules/* and kernel blocked)
 ```
 
+Details: [lifecycle.md](./lifecycle.md). RBAC + seeder policy: [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md).
+
+### Planned: `lifecycle` + `member_area` (RFC)
+
+Not required for Mail-parity packs yet; reserved for adaptive Member portal and orchestrated seeders. Specs:
+
+- [member-area.md](./member-area.md) — public reader portal contributions
+- [rbac-and-lifecycle-seeders.md](./rbac-and-lifecycle-seeders.md) — seed on activate, **never truncate on deactivate**
+
+Sketch (future schema):
+
+```json
+{
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": ["Modules\\Forms\\Database\\Seeders\\ContactFormSeeder"]
+  },
+  "member_area": {
+    "depends_on": ["member"],
+    "capabilities": ["member.bookmarks"],
+    "nav": [{ "slug": "bookmarks", "route": "member.bookmarks", "capability": "member.bookmarks" }]
+  }
+}
+```
+
 ## Golden sample
 
 - Manifest: `backend/Modules/Mail/manifest.json`
 - Product doc: [`ja-mail.md`](./ja-mail.md)
 - FE module: `frontend/src/modules/Mail/module.ts`
+- Domain seed on activate (CMS): Forms `ContactFormSeeder` — preferred pattern until orchestrator lands
 
 Next modules (CMS packs, verticals) copy this contract; do not embed product features into `Modules/Core`.

@@ -46,6 +46,11 @@ Jejakawan Core Engine menerapkan prinsip *Defense in Depth* di seluruh tingkatan
 ### E. ABAC (Attribute-Based Access Control)
 - Melengkapi RBAC konvensional, modul keamanan memiliki mesin ABAC untuk menegakkan kebijakan berdasarkan konteks pengguna (misal: pembatasan aksi berdasarkan IP subnet, jam kerja, atau status KYC pengguna).
 
+### F. Module enable/disable & dual identity
+- Product packs gate APIs with `extension.active:<slug>`; deactivate does **not** truncate data or delete Spatie permissions.
+- Console operators (`srv_auth_users` + Spatie) ≠ public readers (`mem_members` + `auth:member`).
+- Full policy: [RBAC & seeders RFC](../extensions/rbac-and-lifecycle-seeders.md). Adaptive reader portal: [Member Area RFC](../extensions/member-area.md).
+
 ---
 
 ## 📊 3. Monitoring & Audit Keamanan

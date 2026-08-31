@@ -26,7 +26,10 @@ Branch **`develop`** dihapus Aug 2026. Snapshot status: [architectural-status.md
 2. [docs/architecture/01-overview-and-tier-design.md](architecture/01-overview-and-tier-design.md) · [Data Studio vs CCK](architecture/data-studio-vs-cck.md) · [ja-CE audit 2026-08-27](architecture/ja-ce-comprehensive-audit-2026-08-27.md)
 3. [docs/product/downstream-apps-and-licensing.md](product/downstream-apps-and-licensing.md)
 4. [docs/extensions/module-contract.md](extensions/module-contract.md) — kontrak modul optional (Mail = golden sample)
-5. [docs/extensions/external-module-packaging.md](extensions/external-module-packaging.md) — packaging pack eksternal / CMS extract
+5. [docs/extensions/lifecycle.md](extensions/lifecycle.md) — dual boot, deactivate vs uninstall
+6. [docs/extensions/member-area.md](extensions/member-area.md) — RFC portal pembaca adaptif
+7. [docs/extensions/rbac-and-lifecycle-seeders.md](extensions/rbac-and-lifecycle-seeders.md) — RBAC enable/disable + audit seeder
+8. [docs/extensions/external-module-packaging.md](extensions/external-module-packaging.md) — packaging pack eksternal / CMS extract
 6. [AGENTS.md](../AGENTS.md)
 
 ## Quality gate sebelum selesai
