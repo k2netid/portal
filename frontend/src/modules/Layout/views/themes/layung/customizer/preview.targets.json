@@ -1,0 +1,18 @@
+{
+    "targets": {
+        "header": { "navItemId": "item-header", "mode": "design" },
+        "hero": { "navItemId": "item-isp-hero", "mode": "design" },
+        "bento": { "navItemId": "item-isp-identity", "mode": "design" },
+        "calculator": { "navItemId": "item-isp-hero", "mode": "design" },
+        "packages": { "navItemId": "item-isp-identity", "mode": "design" },
+        "pricing": { "navItemId": "item-isp-identity", "mode": "design" },
+        "about": { "navItemId": "item-isp-identity", "mode": "design" },
+        "solusi": { "navItemId": "item-isp-identity", "mode": "design" },
+        "services": { "navItemId": "item-isp-identity", "mode": "design" },
+        "achievement": { "navItemId": "item-isp-identity", "mode": "design" },
+        "team": { "navItemId": "item-isp-identity", "mode": "design" },
+        "careers": { "navItemId": "item-isp-identity", "mode": "design" },
+        "contact": { "navItemId": "item-isp-identity", "mode": "design" },
+        "footer": { "navItemId": "item-isp-footer", "mode": "design" }
+    }
+}

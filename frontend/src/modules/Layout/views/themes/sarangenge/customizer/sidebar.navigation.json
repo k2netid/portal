@@ -1,0 +1,24 @@
+{
+    "reservedManifestCategories": [
+        "General",
+        "Site Info",
+        "School Info",
+        "Colors",
+        "Typography",
+        "Hero Section",
+        "Bento Campus Section",
+        "Programs Section",
+        "Achievements Page",
+        "Services Page",
+        "Tim Page",
+        "About Page",
+        "News Page",
+        "Contact Page",
+        "Pricing Page",
+        "Careers Page",
+        "Search Page",
+        "Testimonials Section",
+        "CTA Section",
+        "Footer"
+    ]
+}

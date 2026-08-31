@@ -582,6 +582,13 @@
       "cms": "CMS",
       "cms_site": "CMS + Site"
     },
+    "enablePublicSiteTitle": "Situs publik masih nonaktip",
+    "enablePublicSiteBody": "Pack Site nonaktip, jadi apex / némbongkeun landing kernel. Terapkeun CMS + Site publik pikeun ngaktipkeun runtime téma.",
+    "enablePublicSiteCta": "Aktipkeun situs publik",
+    "enablePublicSiteDismiss": "Tutup",
+    "activateCmsBannerTitle": "Paket CMS can aktip",
+    "activateCmsBannerBody": "Modul éditorial geus dipasang tapi can product-active. Terapkeun profil CMS pikeun ngaktipkeun tanpa ngahirupan Site publik heula.",
+    "activateCmsBannerCta": "Aktipkeun paket CMS",
     "table": {
       "name": "Modul",
       "status": "Status",

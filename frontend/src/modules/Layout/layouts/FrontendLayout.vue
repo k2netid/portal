@@ -10,17 +10,19 @@
     <!-- For Hybrid: Header/Footer are here (full), Main is constrained below -->
     <!-- For Full: Everything is here -->
     <template v-if="activeTheme && (layoutStyle === 'full' || layoutStyle === 'hybrid')">
-      <ThemePageResolver page="components/Header" />
+      <div class="relative z-50 overflow-visible">
+        <ThemePageResolver page="components/Header" />
+      </div>
       <PluginSlot name="after_header" />
       
       <!-- Main Content -->
       <!-- Hybrid: Main is boxed | Full: Main is full -->
       <main
-        class="main-content flex-1 w-full"
+        class="main-content flex-1 w-full relative z-0"
         :class="{
           // Janari sticky = main nav + artist/breadcrumb bar (~7.5–9rem)
           'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
-          'pt-24': headerSticky && !usesJanariCanvas,
+          'pt-0': !usesJanariCanvas,
         }"
       >
         <div
@@ -40,7 +42,7 @@
       </main>
 
       <PluginSlot name="before_footer" />
-      <div class="mt-auto">
+      <div class="mt-auto relative z-10">
         <ThemePageResolver page="components/Footer" />
       </div>
     </template>
@@ -50,18 +52,20 @@
     <!-- Everything wraps inside a container -->
     <div 
       v-else-if="activeTheme"
-      class="layout-wrapper mx-auto flex flex-col min-h-screen bg-background shadow-xl"
+      class="layout-wrapper mx-auto flex flex-col min-h-screen bg-background shadow-xl overflow-visible"
       :class="wrapperClasses"
       :style="wrapperStyles"
     >
-      <ThemePageResolver page="components/Header" />
+      <div class="relative z-50 overflow-visible">
+        <ThemePageResolver page="components/Header" />
+      </div>
       <PluginSlot name="after_header" />
       
       <main
-        class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8"
+        class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0"
         :class="{
           'pt-36 md:pt-40': headerSticky && usesJanariCanvas,
-          'pt-20': headerSticky && !usesJanariCanvas,
+          'pt-0': !usesJanariCanvas,
         }"
       >
         <!-- Added padding here too -->
@@ -77,17 +81,6 @@
         <ThemePageResolver page="components/Footer" />
       </div>
     </div>
-
-    <!-- Back to Top Button -->
-    <button
-      v-if="showBackToTop"
-      class="fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-      :class="layoutStyle === 'framed' ? 'bg-primary text-primary-foreground' : 'bg-primary/90 text-primary-foreground backdrop-blur-sm hover:bg-primary'"
-      title="Back to Top"
-      @click="scrollToTop"
-    >
-      <ArrowUp class="w-5 h-5" />
-    </button>
     
     <!-- Initial loading guard: avoid double-mounting route component -->
     <div
@@ -121,6 +114,19 @@
         </router-view>
       </main>
     </div>
+
+    <!-- Floating Back to Top Button (Bottom Right) -->
+    <button
+      v-if="showBackToTop"
+      type="button"
+      class="sarangenge-back-to-top fixed bottom-8 right-8 z-[9999] w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-900 text-amber-400 border border-slate-700 hover:bg-slate-800"
+      style="position: fixed !important; bottom: 2rem !important; right: 2rem !important; left: auto !important; top: auto !important; z-index: 999999 !important;"
+      aria-label="Kembali ke Atas"
+      title="Kembali ke Atas"
+      @click="scrollToTop"
+    >
+      <ArrowUp class="w-5 h-5 stroke-[2.5]" />
+    </button>
   </div>
 </template>
 
@@ -138,9 +144,9 @@ import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { useRoute } from 'vue-router'
-import '@/modules/Layout/views/themes/sarangenge/assets/styles/sarangenge.css'
 
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
+
 const route = useRoute()
 useCustomizerPreviewProbe()
 const lastThemeRetryAt = ref(0)
@@ -173,6 +179,10 @@ const activeThemeClass = computed(() => {
   // School theme tokens (Header/Footer sit outside page roots that also use this class).
   if (slug.toLowerCase() === 'sarangenge') {
     classes.push('sarangenge-theme')
+  }
+  // High-performance ISP theme tokens.
+  if (slug.toLowerCase() === 'layung') {
+    classes.push('layung-theme')
   }
   return classes
 })

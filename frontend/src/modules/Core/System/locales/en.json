@@ -582,6 +582,13 @@
       "cms": "CMS",
       "cms_site": "CMS + Site"
     },
+    "enablePublicSiteTitle": "Public website is off",
+    "enablePublicSiteBody": "The Site pack is inactive, so apex / shows the kernel landing. Apply CMS + public Site to publish the theme runtime.",
+    "enablePublicSiteCta": "Enable public website",
+    "enablePublicSiteDismiss": "Dismiss",
+    "activateCmsBannerTitle": "CMS packs are inactive",
+    "activateCmsBannerBody": "Editorial modules are installed but not product-active. Apply the CMS profile to turn them on without enabling the public Site yet.",
+    "activateCmsBannerCta": "Activate CMS packs",
     "table": {
       "name": "Module",
       "status": "Status",

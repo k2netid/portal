@@ -70,6 +70,89 @@
       </template>
     </PageHeader>
 
+    <div
+      v-if="!loading && showEnablePublicSiteBanner"
+      class="rounded-xl border border-primary/25 bg-primary/5 px-4 py-3 sm:px-5 sm:py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      role="status"
+    >
+      <div class="flex gap-3 min-w-0">
+        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <Globe class="h-4 w-4" />
+        </span>
+        <div class="min-w-0 space-y-1">
+          <p class="text-sm font-semibold text-foreground">
+            {{ t('system.appStore.enablePublicSiteTitle') }}
+          </p>
+          <p class="text-sm text-muted-foreground leading-relaxed">
+            {{ t('system.appStore.enablePublicSiteBody') }}
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0 sm:pl-4">
+        <Button
+          size="sm"
+          class="gap-1.5"
+          :disabled="lifecycleBusy"
+          @click="applyInstallProfile('cms_site')"
+        >
+          <Globe class="h-3.5 w-3.5" />
+          {{ t('system.appStore.enablePublicSiteCta') }}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          class="text-muted-foreground"
+          :disabled="lifecycleBusy"
+          :aria-label="t('system.appStore.enablePublicSiteDismiss')"
+          @click="dismissEnablePublicSiteBanner"
+        >
+          <X class="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+
+    <div
+      v-else-if="!loading && showActivateCmsBanner"
+      class="rounded-xl border border-border bg-muted/40 px-4 py-3 sm:px-5 sm:py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      role="status"
+    >
+      <div class="flex gap-3 min-w-0">
+        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground/80">
+          <Layers class="h-4 w-4" />
+        </span>
+        <div class="min-w-0 space-y-1">
+          <p class="text-sm font-semibold text-foreground">
+            {{ t('system.appStore.activateCmsBannerTitle') }}
+          </p>
+          <p class="text-sm text-muted-foreground leading-relaxed">
+            {{ t('system.appStore.activateCmsBannerBody') }}
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0 sm:pl-4">
+        <Button
+          variant="secondary"
+          size="sm"
+          class="gap-1.5"
+          :disabled="lifecycleBusy"
+          @click="applyInstallProfile('cms')"
+        >
+          <Layers class="h-3.5 w-3.5" />
+          {{ t('system.appStore.activateCmsBannerCta') }}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          class="text-muted-foreground"
+          :disabled="lifecycleBusy"
+          :aria-label="t('system.appStore.enablePublicSiteDismiss')"
+          @click="dismissActivateCmsBanner"
+        >
+          <X class="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+
     <ConsoleListCard>
       <template #toolbar>
         <div class="relative w-full sm:max-w-md">
@@ -294,6 +377,7 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 // Lucide icons
 import {
   GitBranch,
+  Globe,
   Layers,
   Package,
   PowerOff,
@@ -301,6 +385,7 @@ import {
   SearchIcon,
   UploadIcon,
   Wand,
+  X,
 } from 'lucide-vue-next';
 
 interface FeatureItem {
@@ -447,6 +532,56 @@ const inactiveCms = computed(() =>
 const activeCms = computed(() =>
     extensions.value.filter((ext) => resolveFamily(ext) === 'cms' && ext.status === 'active' && !ext.is_core),
 );
+
+const siteExtension = computed(() =>
+    extensions.value.find((ext) => ext.slug === 'site') ?? null,
+);
+
+const siteIsActive = computed(() => siteExtension.value?.status === 'active');
+
+const DISMISS_PUBLIC_SITE_KEY = 'ja:appstore:dismiss:enable-public-site';
+const DISMISS_ACTIVATE_CMS_KEY = 'ja:appstore:dismiss:activate-cms';
+
+const publicSiteBannerDismissed = ref(
+    typeof sessionStorage !== 'undefined' && sessionStorage.getItem(DISMISS_PUBLIC_SITE_KEY) === '1',
+);
+const activateCmsBannerDismissed = ref(
+    typeof sessionStorage !== 'undefined' && sessionStorage.getItem(DISMISS_ACTIVATE_CMS_KEY) === '1',
+);
+
+/** Site pack exists but is off → nudge toward cms_site (apex public theme). */
+const showEnablePublicSiteBanner = computed(() =>
+    !publicSiteBannerDismissed.value
+    && siteExtension.value !== null
+    && !siteIsActive.value,
+);
+
+/** No Site row (or already handled) but CMS packs are mostly inactive. */
+const showActivateCmsBanner = computed(() =>
+    !activateCmsBannerDismissed.value
+    && !showEnablePublicSiteBanner.value
+    && !siteIsActive.value
+    && inactiveCms.value.length > 0
+    && activeCms.value.length === 0,
+);
+
+const dismissEnablePublicSiteBanner = () => {
+    publicSiteBannerDismissed.value = true;
+    try {
+        sessionStorage.setItem(DISMISS_PUBLIC_SITE_KEY, '1');
+    } catch {
+        // ignore
+    }
+};
+
+const dismissActivateCmsBanner = () => {
+    activateCmsBannerDismissed.value = true;
+    try {
+        sessionStorage.setItem(DISMISS_ACTIVATE_CMS_KEY, '1');
+    } catch {
+        // ignore
+    }
+};
 
 // Pagination state
 const currentPage = ref(1);

@@ -1,0 +1,688 @@
+{
+    "name": "Layung",
+    "slug": "layung",
+    "version": "1.0.0",
+    "type": "frontend",
+    "description": "Layung — tema portal penyedia layanan internet (ISP) dan Managed Service Provider (MSP) terdepan. Arsitektur serat optik, jaminan SLA 99.999%, dan layanan NOC 24/7.",
+    "author": "Jejakawan Team",
+    "supports": {
+        "layung_canvas": true
+    },
+    "settings_schema": {
+        "site_title": {
+            "label": "Site Title",
+            "type": "text",
+            "default": "Jejakawan",
+            "category": "General",
+            "scope": "platform"
+        },
+        "theme_style": {
+            "label": "Theme Visual Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Clean & Minimalist",
+                    "value": "clean"
+                },
+                {
+                    "label": "Flat Modern",
+                    "value": "flat"
+                },
+                {
+                    "label": "Soft & Pastel",
+                    "value": "soft"
+                },
+                {
+                    "label": "Glassmorphism (Premium)",
+                    "value": "glass"
+                }
+            ],
+            "default": "clean",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "brand_logo": {
+            "label": "Logo",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "brand_favicon": {
+            "label": "Favicon",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_tagline": {
+            "label": "Site Tagline",
+            "type": "text",
+            "default": "Modern & Elegant Jejakawan",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_description": {
+            "label": "Site Description",
+            "type": "textarea",
+            "default": "Modern Content Management System built with Laravel and Vue.js",
+            "category": "General",
+            "scope": "platform"
+        },
+        "branding_display": {
+            "label": "Branding Display",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Logo only",
+                    "value": "logo_only"
+                },
+                {
+                    "label": "Site name only",
+                    "value": "text_only"
+                },
+                {
+                    "label": "Logo + Site name",
+                    "value": "both"
+                }
+            ],
+            "default": "logo_only",
+            "category": "General",
+            "scope": "platform"
+        },
+        "font_heading": {
+            "label": "Heading Font",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Poppins",
+                    "value": "Poppins"
+                },
+                {
+                    "label": "Merriweather",
+                    "value": "Merriweather"
+                }
+            ],
+            "default": "Inter",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "breadcrumb_sticky": {
+            "label": "Sticky Breadcrumbs",
+            "type": "checkbox",
+            "default": false,
+            "category": "Layout",
+            "description": "Keep breadcrumbs visible while scrolling",
+            "scope": "platform"
+        },
+        "header_sticky": {
+            "label": "Sticky Header",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "layout_style": {
+            "label": "Layout Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Full Width (Default)",
+                    "value": "full"
+                },
+                {
+                    "label": "Boxed (Content in Box)",
+                    "value": "boxed"
+                },
+                {
+                    "label": "Wide (Wider Box)",
+                    "value": "wide"
+                },
+                {
+                    "label": "Framed (Floating Box)",
+                    "value": "framed"
+                },
+                {
+                    "label": "Hybrid (Header/Footer Full)",
+                    "value": "hybrid"
+                }
+            ],
+            "default": "full",
+            "category": "Layout",
+            "description": "Choose overall page layout style",
+            "scope": "platform"
+        },
+        "home_sections": {
+            "label": "Homepage sections",
+            "type": "checkbox_list",
+            "options": [
+                {
+                    "label": "Landing hero",
+                    "value": "hero"
+                },
+                {
+                    "label": "Partner logos",
+                    "value": "partners"
+                },
+                {
+                    "label": "Testimonials",
+                    "value": "testimonials"
+                },
+                {
+                    "label": "Call to action",
+                    "value": "cta"
+                }
+            ],
+            "default": [
+                "hero",
+                "partners",
+                "testimonials",
+                "cta"
+            ],
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "container_max_width": {
+            "label": "Container Max Width",
+            "type": "range",
+            "min": 1200,
+            "max": 1920,
+            "step": 40,
+            "default": 1400,
+            "category": "Layout",
+            "description": "Max width in pixels (for Boxed/Wide/Framed)",
+            "scope": "platform"
+        },
+        "boxed_bg_color": {
+            "label": "Page Background Color",
+            "type": "color",
+            "default": "#f1f5f9",
+            "category": "Layout",
+            "description": "Background visible outside boxed content",
+            "scope": "platform"
+        },
+        "boxed_shadow": {
+            "label": "Boxed Content Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "sm"
+                },
+                {
+                    "label": "Medium",
+                    "value": "md"
+                },
+                {
+                    "label": "Large",
+                    "value": "lg"
+                },
+                {
+                    "label": "Extra Large",
+                    "value": "xl"
+                }
+            ],
+            "default": "lg",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "framed_padding": {
+            "label": "Frame Padding",
+            "type": "range",
+            "min": 8,
+            "max": 48,
+            "step": 4,
+            "default": 16,
+            "category": "Layout",
+            "description": "Padding around framed layout (px)",
+            "scope": "platform"
+        },
+        "header_style": {
+            "label": "Header Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glassmorphism",
+                    "value": "glass"
+                },
+                {
+                    "label": "Solid White",
+                    "value": "solid"
+                },
+                {
+                    "label": "Transparent",
+                    "value": "transparent"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_text": {
+            "label": "Header CTA Button Text",
+            "type": "text",
+            "default": "Minta Penawaran",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_url": {
+            "label": "Header CTA Button URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_login_url": {
+            "label": "Header Login URL",
+            "type": "text",
+            "default": "/member/login",
+            "category": "Layout",
+            "scope": "theme"
+        },
+        "header_login_label": {
+            "label": "Header Login Label",
+            "type": "text",
+            "default": "Portal Klien",
+            "category": "Layout",
+            "scope": "theme"
+        },
+        "nav_style": {
+            "label": "Navigation Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "✨ Glass Morph (Blur + Transparency)",
+                    "value": "glass"
+                },
+                {
+                    "label": "🎯 Spotlight (Focus Highlight)",
+                    "value": "spotlight"
+                },
+                {
+                    "label": "🧲 Magnetic (Hover Attraction)",
+                    "value": "magnetic"
+                },
+                {
+                    "label": "💫 Floating (3D Shadow)",
+                    "value": "floating"
+                },
+                {
+                    "label": "🌊 Slide (Text Reveal)",
+                    "value": "slide"
+                },
+                {
+                    "label": "💊 Pill Modern (Soft Fill)",
+                    "value": "pill"
+                },
+                {
+                    "label": "📏 Underline Grow (Expand)",
+                    "value": "underline"
+                },
+                {
+                    "label": "🔥 Neon Glow (Cyberpunk)",
+                    "value": "glow"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "button_radius": {
+            "label": "Button Roundedness",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Square (0px)",
+                    "value": "0px"
+                },
+                {
+                    "label": "Slight (4px)",
+                    "value": "4px"
+                },
+                {
+                    "label": "Standard (8px)",
+                    "value": "8px"
+                },
+                {
+                    "label": "Rounded (12px)",
+                    "value": "12px"
+                },
+                {
+                    "label": "Pill (Full)",
+                    "value": "9999px"
+                }
+            ],
+            "default": "8px",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_border_width": {
+            "label": "Button Border Width",
+            "type": "range",
+            "min": 0,
+            "max": 4,
+            "step": 1,
+            "default": 1,
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_shadow": {
+            "label": "Button Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+                },
+                {
+                    "label": "Medium",
+                    "value": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Strong",
+                    "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Glow (Primary)",
+                    "value": "0 0 15px var(--theme-primary-color)"
+                }
+            ],
+            "default": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "disabled_page_behavior": {
+            "label": "When a page is turned off",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Redirect to Home",
+                    "value": "redirect"
+                },
+                {
+                    "label": "Show Maintenance Message",
+                    "value": "message"
+                }
+            ],
+            "default": "message",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "disabled_page_message": {
+            "label": "Message shown to visitors",
+            "type": "textarea",
+            "default": "This page is temporarily unavailable while we improve the experience. Please check back soon.",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_about": {
+            "label": "Show About page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_achievement": {
+            "label": "Show Achievements page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_career": {
+            "label": "Show Careers page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_blog": {
+            "label": "Show News page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_contact": {
+            "label": "Show Contact page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "footer_text": {
+            "label": "Copyright Text",
+            "type": "text",
+            "default": "© 2026 Jejakawan. All rights reserved.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "back_to_top": {
+            "label": "Enable Back to Top",
+            "type": "checkbox",
+            "default": true,
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "social_links": {
+            "label": "Social Media Links",
+            "type": "repeater",
+            "category": "Social Media",
+            "fields": [
+                {
+                    "name": "icon",
+                    "label": "Platform",
+                    "type": "select",
+                    "options": "social_icons"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [
+                {
+                    "icon": "Twitter",
+                    "url": "https://twitter.com/jejakawan"
+                },
+                {
+                    "icon": "Instagram",
+                    "url": "https://instagram.com/jejakawan"
+                },
+                {
+                    "icon": "Github",
+                    "url": "https://github.com/jejakawan/k2net"
+                }
+            ],
+            "scope": "platform"
+        },
+        "animation_enabled": {
+            "label": "Enable GSAP Animations",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "animation_intensity": {
+            "label": "Animation Intensity",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Subtle (Halus)",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Normal",
+                    "value": "normal"
+                },
+                {
+                    "label": "Dramatic (Dramatis)",
+                    "value": "dramatic"
+                }
+            ],
+            "default": "normal",
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "parallax_enabled": {
+            "label": "Enable Parallax Effects",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "isp_asn_number": {
+            "label": "Nomor ASN & BGP Peering",
+            "type": "text",
+            "default": "AS139820 (BGP Multi-Homing Tier-1)",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_sla_guarantee": {
+            "label": "Jaminan Uptime SLA",
+            "type": "text",
+            "default": "99.999% SLA Uptime",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_noc_latency": {
+            "label": "Latensi Rata-rata Inti",
+            "type": "text",
+            "default": "< 2.4 ms",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_backbone_capacity": {
+            "label": "Kapasitas Backbone Jaringan",
+            "type": "text",
+            "default": "100 Gbps Redundant Ring",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_noc_phone": {
+            "label": "Nomor Hotline NOC 24/7",
+            "type": "text",
+            "default": "+62 21 5088 9988",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_sales_phone": {
+            "label": "Nomor Telepon Sales Enterprise",
+            "type": "text",
+            "default": "+62 811 9888 2026",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_whatsapp": {
+            "label": "Nomor WhatsApp NOC & Sales",
+            "type": "text",
+            "default": "6281198882026",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_email": {
+            "label": "Email Resmi NOC / Support",
+            "type": "text",
+            "default": "noc@layung.net.id",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "isp_address": {
+            "label": "Alamat Kantor & Data Center Utama",
+            "type": "textarea",
+            "default": "Cyber Tower Lt. 18, Jl. Rasuna Said Kav. X-2, Jakarta Selatan, 12950",
+            "category": "ISP Info",
+            "scope": "theme"
+        },
+        "hero_badge_text": {
+            "label": "Hero Eyebrow / Badge",
+            "type": "text",
+            "default": "Infrastruktur Serat Optik & Managed IT Services 2026",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_title": {
+            "label": "Judul Utama Hero",
+            "type": "text",
+            "default": "Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_subtitle": {
+            "label": "Subjudul Hero",
+            "type": "textarea",
+            "default": "Hadirkan backbone internet berkecepatan cahaya, latensi super rendah di bawah 3ms, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_primary_cta_text": {
+            "label": "Teks Tombol Utama Hero",
+            "type": "text",
+            "default": "Cek Area Jangkauan",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_secondary_cta_text": {
+            "label": "Teks Tombol Sekunder Hero",
+            "type": "text",
+            "default": "Konsultasi Enterprise",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "speed_calculator_enabled": {
+            "label": "Tampilkan Simulator Bandwidth",
+            "type": "boolean",
+            "default": true,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "coverage_check_enabled": {
+            "label": "Aktifkan Fitur Cek Jangkauan",
+            "type": "boolean",
+            "default": true,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "footer_about_text": {
+            "label": "Deskripsi Singkat Footer",
+            "type": "textarea",
+            "default": "Layung Network adalah penyedia infrastruktur serat optik berkecepatan tinggi, koneksi dedicated 1:1, dan Managed IT Services dengan jaminan SLA 99.999% bagi korporasi dan institusi.",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_copyright": {
+            "label": "Teks Hak Cipta Footer",
+            "type": "text",
+            "default": "© 2026 Layung Network. Hak cipta dilindungi undang-undang.",
+            "category": "Footer",
+            "scope": "theme"
+        }
+    },
+    "menus": {
+        "header": "Header Primary Navigation",
+        "header_top": "Header Top Utility",
+        "footer": "Footer Bottom Links",
+        "footer_col_1": "Footer Column 1",
+        "footer_col_2": "Footer Column 2",
+        "sidebar": "Sidebar Navigation"
+    },
+    "customizer": {
+        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
+        "themeSchema": "customizer/schema.settings.json"
+    }
+}

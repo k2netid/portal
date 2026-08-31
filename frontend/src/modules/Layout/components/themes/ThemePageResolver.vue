@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-page-resolver-wrapper w-full h-full flex-1 flex flex-col">
+  <div class="theme-page-resolver-wrapper w-full h-full flex-1 flex flex-col overflow-visible">
     <component
       :is="resolvedComponent"
       v-if="resolvedComponent"

@@ -1,161 +1,193 @@
 /* ==========================================================================
-   Sarangenge — school theme (Sundanese midday sun)
-   Sibling philosophy to Janari (dawn). Campus energy, clarity, accessibility.
-   2026 cues: bento hierarchy, purposeful motion, high-contrast education palette.
+   Sarangenge — Modern School Theme
+   Filosofi Basa Sunda: Kembang Sarangenge (Bunga Matahari) & Haneut Moyan
+   (Matahari pagi yang mulai terbit membawa kehangatan, harapan baru, dan mekar ilmu).
+   2026 Modern Education Web Standard: Interactive Bento Grid, Crisp Scholastic
+   Palette, Micro-interactions, Accessible Contrast & High-performance Typography.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --sarangenge-sun: #e8a317;
-  --sarangenge-sun-soft: #f6d58a;
-  --sarangenge-teal: #0f766e;
-  --sarangenge-teal-deep: #115e59;
-  --sarangenge-ink: #0f2926;
-  --sarangenge-sky: #e8f4f2;
-  --sarangenge-mist: #f3faf8;
-  --sarangenge-primary: var(--theme-color-primary, var(--sarangenge-teal));
-  --sarangenge-secondary: var(--theme-color-secondary, #0f4c48);
-  --sarangenge-font-heading: var(--theme-font-heading, 'Bricolage Grotesque', Georgia, serif);
+  /* Scholastic Dawn Palette (Navy, Morning Gold & Crisp Slate) */
+  --sarangenge-navy: #0f172a;
+  --sarangenge-navy-deep: #0a0f1d;
+  --sarangenge-blue: #1e3a8a;
+  --sarangenge-blue-accent: #2563eb;
+  --sarangenge-gold: #f59e0b;
+  --sarangenge-gold-hover: #d97706;
+  --sarangenge-gold-soft: #fef3c7;
+  --sarangenge-emerald: #059669;
+  --sarangenge-emerald-soft: #d1fae5;
+  
+  /* Primary & Secondary theme tokens */
+  --sarangenge-primary: var(--theme-color-primary, #1e3a8a);
+  --sarangenge-secondary: var(--theme-color-secondary, #f59e0b);
+  --sarangenge-accent: var(--theme-color-accent, #059669);
+  --sarangenge-font-heading: var(--theme-font-heading, 'Bricolage Grotesque', system-ui, sans-serif);
   --sarangenge-font-body: var(--theme-font-body, 'Figtree', system-ui, sans-serif);
-  --sarangenge-radius: 1.25rem;
-  --sarangenge-radius-sm: 0.85rem;
+  
+  --sarangenge-radius: 1rem;
+  --sarangenge-radius-sm: 0.65rem;
+  --sarangenge-radius-lg: 1.5rem;
 }
 
 .sarangenge-theme {
-  --primary: 173 80% 26%;
+  --primary: 221 83% 53%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 175 60% 18%;
-  --secondary-foreground: 0 0% 98%;
-  --accent: 41 84% 50%;
-  --accent-foreground: 175 60% 12%;
-  --background: 168 33% 97%;
-  --foreground: 175 45% 12%;
-  --muted: 168 25% 92%;
-  --muted-foreground: 175 18% 35%;
+  --secondary: 38 92% 50%;
+  --secondary-foreground: 222 47% 11%;
+  --accent: 160 84% 39%;
+  --accent-foreground: 0 0% 100%;
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  --muted: 214 32% 93%;
+  --muted-foreground: 215 19% 38%;
   --card: 0 0% 100%;
-  --card-foreground: 175 45% 12%;
-  --border: 168 20% 84%;
-  --ring: 173 80% 26%;
+  --card-foreground: 222 47% 11%;
+  --border: 214 32% 88%;
+  --ring: 221 83% 53%;
 
   font-family: var(--sarangenge-font-body);
   color: hsl(var(--foreground));
   background-color: hsl(var(--background));
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
+.dark .sarangenge-theme,
+.sarangenge-theme.dark {
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 38 92% 55%;
+  --secondary-foreground: 222 47% 11%;
+  --accent: 160 84% 45%;
+  --accent-foreground: 222 47% 11%;
+  --background: 222 47% 7%;
+  --foreground: 210 40% 98%;
+  --muted: 217 33% 14%;
+  --muted-foreground: 215 20% 65%;
+  --card: 222 47% 10%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 33% 18%;
+  --ring: 217 91% 60%;
+}
+
 .sarangenge-theme .font-heading,
 .sarangenge-heading {
   font-family: var(--sarangenge-font-heading);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
-/* Atmospheric sun wash (site-wide, subtle) */
+/* Subtle morning ambient light */
 .sarangenge-theme::before {
   content: '';
   position: fixed;
-  inset: auto -10% 55% 40%;
-  height: 48vh;
-  background:
-    radial-gradient(ellipse at center, color-mix(in oklab, var(--sarangenge-sun) 28%, transparent), transparent 68%),
-    radial-gradient(ellipse at 30% 40%, color-mix(in oklab, var(--sarangenge-teal) 12%, transparent), transparent 70%);
+  inset: -10% -10% auto auto;
+  width: 50vw;
+  height: 50vh;
+  background: radial-gradient(circle at 60% 40%, rgba(245, 158, 11, 0.07), rgba(37, 99, 235, 0.04) 55%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: sarangenge-sun-drift 18s ease-in-out infinite alternate;
+}
+
+.dark .sarangenge-theme::before {
+  background: radial-gradient(circle at 60% 40%, rgba(245, 158, 11, 0.05), rgba(37, 99, 235, 0.06) 55%, transparent 70%);
 }
 
 .sarangenge-theme .sarangenge-theme::before {
   display: none;
 }
 
-.sarangenge-theme > * {
+/*
+ * Do NOT assign z-index: 1 to every direct child of .sarangenge-theme.
+ * That flattened header + main into one stacking context so absolute nav
+ * dropdowns painted under <main> (looked like overflow clipping).
+ * Only lift main/footer above the decorative ::before.
+ */
+.sarangenge-theme > main,
+.sarangenge-theme > .mt-auto {
   position: relative;
   z-index: 1;
 }
 
-@keyframes sarangenge-sun-drift {
-  from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
-  to { transform: translate3d(-4%, 6%, 0) scale(1.08); opacity: 1; }
+.sarangenge-theme > .relative.z-50 {
+  position: relative;
+  z-index: 100;
+  isolation: isolate;
+}
+
+.sarangenge-back-to-top {
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 999999 !important;
+}
+
+/* Header dropdown panels must stay above page content */
+header[data-ja-customizer-target="header"] {
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+
+header[data-ja-customizer-target="header"] .sarangenge-panel {
+  z-index: 120 !important;
 }
 
 @keyframes sarangenge-rise {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes sarangenge-bento-in {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
 .sarangenge-rise {
-  animation: sarangenge-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: sarangenge-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .sarangenge-rise-delay-1 { animation-delay: 0.1s; }
 .sarangenge-rise-delay-2 { animation-delay: 0.2s; }
-.sarangenge-rise-delay-3 { animation-delay: 0.32s; }
+.sarangenge-rise-delay-3 { animation-delay: 0.3s; }
 
+/* 2026 Scholastic Morning Hero */
 .sarangenge-hero {
-  min-height: min(92vh, 860px);
+  min-height: min(85vh, 760px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   isolation: isolate;
   overflow: hidden;
+  position: relative;
   background:
-    linear-gradient(180deg, transparent 35%, hsl(var(--background)) 92%),
-    linear-gradient(120deg, color-mix(in oklab, var(--sarangenge-teal-deep) 88%, black) 0%, var(--sarangenge-teal) 48%, color-mix(in oklab, var(--sarangenge-sun) 55%, var(--sarangenge-teal)) 100%);
-  color: #f8fffd;
-}
-
-.sarangenge-hero__brand {
-  font-family: var(--sarangenge-font-heading);
-  font-size: clamp(2.75rem, 8vw, 5.5rem);
-  line-height: 0.95;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
+    radial-gradient(ellipse 80% 60% at 85% 20%, rgba(245, 158, 11, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(37, 99, 235, 0.2), transparent 65%),
+    linear-gradient(145deg, #0a1128 0%, #0f1e36 45%, #132742 100%);
+  color: #f8fafc;
 }
 
 .sarangenge-hero__media {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(circle at 78% 28%, color-mix(in oklab, var(--sarangenge-sun) 45%, transparent), transparent 42%),
-    radial-gradient(circle at 18% 70%, color-mix(in oklab, white 18%, transparent), transparent 38%),
-    linear-gradient(160deg, transparent 20%, color-mix(in oklab, black 35%, transparent) 100%);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
 }
 
-.sarangenge-hero__media::after {
-  content: '';
-  position: absolute;
-  inset: 12% 8% auto auto;
-  width: min(42vw, 420px);
-  aspect-ratio: 1;
-  border-radius: 40% 60% 55% 45%;
-  background:
-    radial-gradient(circle at 35% 35%, var(--sarangenge-sun-soft), var(--sarangenge-sun) 55%, transparent 72%);
-  filter: blur(2px);
-  opacity: 0.9;
-  animation: sarangenge-sun-drift 14s ease-in-out infinite alternate-reverse;
-}
-
+/* Bento campus quick access */
 .sarangenge-bento {
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
   .sarangenge-bento {
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(140px, auto);
+    grid-auto-rows: minmax(160px, auto);
   }
 
   .sarangenge-bento__wide {
@@ -168,87 +200,79 @@
 }
 
 .sarangenge-bento__cell {
-  border-radius: var(--sarangenge-radius);
-  border: 1px solid hsl(var(--border) / 0.9);
-  background: hsl(var(--card) / 0.92);
-  padding: 1.25rem 1.35rem;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.2s ease;
-  animation: sarangenge-bento-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-  text-decoration: none;
-  color: inherit;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--sarangenge-radius-lg);
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 140px;
+  border: 1px solid hsl(var(--border) / 0.8);
+  background: hsl(var(--card));
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
-
-.sarangenge-bento__cell:nth-child(1) { animation-delay: 0.05s; }
-.sarangenge-bento__cell:nth-child(2) { animation-delay: 0.12s; }
-.sarangenge-bento__cell:nth-child(3) { animation-delay: 0.18s; }
-.sarangenge-bento__cell:nth-child(4) { animation-delay: 0.24s; }
-.sarangenge-bento__cell:nth-child(5) { animation-delay: 0.3s; }
-.sarangenge-bento__cell:nth-child(6) { animation-delay: 0.36s; }
 
 .sarangenge-bento__cell:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in oklab, var(--sarangenge-primary) 35%, hsl(var(--border)));
-  box-shadow: 0 16px 36px -20px color-mix(in oklab, var(--sarangenge-teal) 45%, transparent);
+  box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.12);
+  border-color: rgba(37, 99, 235, 0.35);
 }
 
-.sarangenge-bento__cell--sun {
-  background: linear-gradient(145deg, color-mix(in oklab, var(--sarangenge-sun) 22%, white), hsl(var(--card)));
+.sarangenge-bento__cell--navy {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-.sarangenge-bento__cell--teal {
-  background: linear-gradient(160deg, color-mix(in oklab, var(--sarangenge-teal) 88%, black), var(--sarangenge-teal));
-  color: #f4fffc;
-  border-color: transparent;
+.sarangenge-bento__cell--navy:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.3);
 }
 
-.sarangenge-bento__cell--teal:hover {
-  box-shadow: 0 18px 40px -18px color-mix(in oklab, var(--sarangenge-teal) 70%, transparent);
+.sarangenge-bento__cell--gold {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #78350f;
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
+.dark .sarangenge-bento__cell--gold {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.08) 100%);
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* Panel component */
 .sarangenge-panel {
-  border-radius: var(--sarangenge-radius);
-  border: 1px solid hsl(var(--border) / 0.85);
-  background: hsl(var(--card) / 0.9);
-  box-shadow: 0 12px 40px -28px color-mix(in oklab, var(--sarangenge-ink) 35%, transparent);
+  border-radius: var(--sarangenge-radius-lg);
+  border: 1px solid hsl(var(--border) / 0.8);
+  background: hsl(var(--card));
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
 }
 
-.sarangenge-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--sarangenge-radius-sm);
-  background: color-mix(in oklab, var(--sarangenge-sun) 18%, white);
-  color: var(--sarangenge-teal-deep);
-  border: 1px solid color-mix(in oklab, var(--sarangenge-sun) 40%, transparent);
+.sarangenge-panel:hover {
+  border-color: hsl(var(--border));
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.06);
 }
 
-.sarangenge-btn-primary {
-  background: var(--sarangenge-primary);
-  color: #fff;
-  border-radius: var(--sarangenge-radius-sm);
-  font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-}
-
-.sarangenge-btn-primary:hover {
-  opacity: 0.94;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px -10px color-mix(in oklab, var(--sarangenge-primary) 55%, transparent);
+/* Print optimizations */
+@media print {
+  .sarangenge-theme::before,
+  .sarangenge-hero__media {
+    display: none !important;
+  }
+  .sarangenge-hero {
+    background: none !important;
+    color: black !important;
+    min-height: auto !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sarangenge-theme::before,
-  .sarangenge-hero__media::after,
   .sarangenge-rise,
-  .sarangenge-bento__cell {
+  .sarangenge-theme::before {
     animation: none !important;
+    transition: none !important;
   }
 }

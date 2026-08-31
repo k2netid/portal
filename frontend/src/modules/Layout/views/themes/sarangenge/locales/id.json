@@ -3,115 +3,189 @@
     "home": "Beranda",
     "about": "Profil",
     "services": "Fasilitas",
-    "solusi": "Program",
-    "blog": "Berita",
-    "pricing": "Biaya",
-    "contact": "Kontak",
+    "solusi": "Program & Kurikulum",
+    "blog": "Warta Sekolah",
+    "pricing": "Biaya & Beasiswa",
+    "contact": "Kontak & PPDB",
     "career": "Alumni",
     "achievement": "Prestasi",
-    "search": "Cari",
+    "tim": "Guru & Staf",
+    "search": "Pencarian",
     "account": "Akun",
-    "signIn": "Masuk",
-    "getStarted": "PPDB"
+    "signIn": "Masuk Portal",
+    "getStarted": "Info PPDB",
+    "selectLanguage": "Bahasa"
   },
   "footer": {
-    "description": "Sarangenge — tema situs sekolah (tengah hari dalam bahasa Sunda). Kanvas kampus yang hangat, jelas, dan mudah diakses.",
-    "links": "Jelajah Kampus",
-    "resources": "Layanan",
-    "newsletter": "Buletin sekolah",
-    "subscribe": "Langganan",
-    "subscribed": "Terdaftar",
-    "subscribeFailed": "Gagal",
-    "contact": "Hubungi sekolah",
+    "description": "Sarangenge terinspirasi dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi yang menumbuhkan kebaikan budi, kecerdasan sains, dan integritas luhur.",
+    "programs": "Program & Kurikulum",
+    "admissions": "Informasi PPDB",
+    "contact": "Kontak & Hotline",
     "copyright": "Hak cipta dilindungi undang-undang."
   },
   "common": {
-    "readMore": "Baca selengkapnya",
-    "viewAll": "Lihat semua",
+    "readMore": "Baca Selengkapnya",
+    "viewAll": "Lihat Semua",
     "explore": "Jelajahi",
-    "learnMore": "Pelajari lebih lanjut",
+    "learnMore": "Pelajari Selengkapnya",
     "back": "Kembali",
-    "search": "Cari berita atau halaman…",
-    "publishedOn": "Diterbitkan",
+    "search": "Cari Berita & Agenda",
+    "searchPlaceholder": "Ketik kata kunci...",
+    "publishedOn": "Diterbitkan pada",
     "by": "oleh"
   },
   "pages": {
     "home": {
-      "heroBadge": "Tema sekolah · Sarangenge",
-      "heroTitle": "Belajar di puncak siang — jelas, hangat, dan siap masa depan.",
-      "heroSubtitle": "Situs resmi sekolah: profil, program, prestasi, berita, dan jalur PPDB dalam satu kanvas yang mudah diakses.",
-      "heroCta": "Info PPDB",
-      "heroSecondary": "Lihat program",
-      "bentoTitle": "Akses cepat kampus",
-      "bentoSubtitle": "Informasi penting disusun ringkas — pola bento yang familiar di situs sekolah 2026.",
-      "tilePpdb": "PPDB & pendaftaran",
-      "tilePpdbDesc": "Jadwal, syarat, dan formulir masuk.",
-      "tileProgram": "Program unggulan",
-      "tileProgramDesc": "Kurikulum, ekstrakurikuler, dan jalur bakat.",
-      "tilePrestasi": "Prestasi",
-      "tilePrestasiDesc": "Capaian akademik dan non-akademik.",
-      "tileBerita": "Berita sekolah",
-      "tileBeritaDesc": "Pengumuman dan cerita kampus.",
-      "tileProfil": "Profil sekolah",
-      "tileProfilDesc": "Visi, misi, dan budaya belajar.",
-      "tileKontak": "Hubungi kami",
-      "tileKontakDesc": "Alamat, telepon, dan pesan.",
-      "featuresTitle": "Mengapa Sarangenge untuk sekolah",
-      "featuresSubtitle": "Dirancang untuk orang tua, siswa, dan staf — bukan untuk pitch deck SaaS.",
-      "feat1Title": "Hierarki jelas",
-      "feat1Desc": "PPDB, program, dan berita tidak saling berebut perhatian di viewport pertama.",
-      "feat2Title": "Kontras ramah akses",
-      "feat2Desc": "Palet teal + matahari siang dengan tipografi besar yang mudah dibaca di HP.",
-      "feat3Title": "Gerak bermakna",
-      "feat3Desc": "Animasi ringan memandu mata — bisa dimatikan lewat prefers-reduced-motion.",
-      "ctaTitle": "Siap mengenal sekolah kami lebih dekat?",
-      "ctaSubtitle": "Mulai dari profil, jelajahi program, atau hubungi panitia PPDB.",
-      "ctaButton": "Hubungi sekolah"
+      "heroBadge": "Penerimaan Peserta Didik Baru (PPDB) 2026/2027",
+      "heroTitle": "Mekar Bersama Cahaya Pagi — Membentuk Generasi Cerdas & Berkarakter.",
+      "heroSubtitle": "Situs resmi sekolah: terinspirasi kembang sarangenge nu nyanghareup kana cahaya panonpoé isuk, ngaping siswa mikacinta élmu sarta miboga ahlak luhung.",
+      "heroCta": "Daftar PPDB Online",
+      "heroSecondary": "Jelajahi Program",
+      "bentoTitle": "Akses Cepat Kampus",
+      "bentoSubtitle": "Navigasi penting untuk orang tua, calon siswa, dan peserta didik dalam satu kanvas modern.",
+      "tilePpdb": "Penerimaan Peserta Didik Baru",
+      "tilePpdbDesc": "Jalur Prestasi, Reguler, dan Afirmasi. Ketahui persyaratan, jadwal tes, dan formulir pendaftaran.",
+      "tileProgram": "Program Unggulan & Kurikulum",
+      "tileProgramDesc": "Kurikulum Merdeka berbasis riset, bilingual track, STEM & coding lab, serta program tahfidz & karakter mulia.",
+      "tilePrestasi": "Prestasi Siswa",
+      "tilePrestasiDesc": "Juara Olimpiade Sains, Robotika Nasional, Olahraga & Seni.",
+      "tileBerita": "Berita & Agenda",
+      "tileBeritaDesc": "Aktivitas resmi, kalender akademik, jadwal asesmen, dan siaran pers sekolah.",
+      "tileProfil": "Profil Sekolah",
+      "tileProfilDesc": "Visi, misi, sejarah, dan nilai luhur pendidikan Sarangenge.",
+      "tileKontak": "Kontak & Lokasi",
+      "tileKontakDesc": "Alamat kampus, jam operasional, dan saluran WhatsApp hotline PPDB."
     },
     "about": {
-      "title": "Profil sekolah",
-      "subtitle": "Identitas, budaya belajar, dan arah pendidikan kami.",
-      "missionTitle": "Misi",
-      "missionDesc": "Menumbuhkan pembelajar yang tangguh, berkarakter, dan siap berkolaborasi di dunia nyata."
+      "title": "Profil Sekolah",
+      "subtitle": "Mendedikasikan ekosistem pembelajaran holistik yang memadukan keunggulan sains, teknologi, dan keteguhan akhlak mulia.",
+      "visionTitle": "Visi Sekolah",
+      "missionTitle": "Misi Sekolah",
+      "missionDesc": "Menyelenggarakan proses pembelajaran interaktif berbasis riset, sains, dan teknologi masa depan."
     },
     "blog": {
-      "title": "Berita & pengumuman",
-      "subtitle": "Kabar kampus, agenda, dan cerita pembelajaran.",
-      "noPosts": "Belum ada berita yang diterbitkan."
+      "title": "Warta & Berita Sekolah",
+      "subtitle": "Informasi resmi, liputan prestasi, edaran akademik, dan agenda kegiatan kesiswaan.",
+      "categories": "Kategori Berita",
+      "noPosts": "Belum ada warta untuk kategori ini."
     },
     "post": {
-      "backToBlog": "Kembali ke berita",
-      "share": "Bagikan"
+      "title": "Detail Warta",
+      "backToBlog": "Kembali ke Warta Sekolah",
+      "share": "Bagikan",
+      "bookmark": "Simpan Warta",
+      "bookmarked": "Tersimpan",
+      "signInToEngage": "Masuk portal untuk menyimpan & berdiskusi",
+      "comments": "Tanggapan & Diskusi",
+      "commentPlaceholder": "Tuliskan tanggapan Anda...",
+      "postComment": "Kirim Tanggapan",
+      "reader": "Pembaca",
+      "noComments": "Belum ada tanggapan."
     },
     "contact": {
-      "title": "Hubungi sekolah",
-      "subtitle": "Tanyakan PPDB, akademik, atau kerja sama. Kami akan membalas secepatnya.",
-      "nameLabel": "Nama lengkap",
-      "emailLabel": "Email",
-      "messageLabel": "Pesan",
-      "submitButton": "Kirim pesan"
+      "title": "Kontak & Pendaftaran PPDB",
+      "subtitle": "Tim konselor dan sekretariat PPDB siap membantu menjawab pertanyaan Anda seputar kurikulum, biaya, dan pendaftaran.",
+      "nameLabel": "Nama Lengkap Orang Tua / Siswa",
+      "emailLabel": "Alamat Email",
+      "messageLabel": "Pesan / Pertanyaan",
+      "submitButton": "Kirim Pesan / Permintaan"
     },
     "pricing": {
-      "title": "Informasi biaya",
-      "subtitle": "Ringkasan komponen biaya pendidikan — hubungi administrasi untuk rincian resmi.",
-      "monthly": "Per semester",
-      "annual": "Per tahun"
+      "title": "Informasi Biaya Pendidikan & Beasiswa",
+      "subtitle": "Rincian biaya pendidikan yang transparan, lengkap dengan program beasiswa prestasi akademik, tahfidz, dan bantuan afirmasi.",
+      "monthly": "Per Bulan",
+      "annual": "Per Tahun"
     },
     "solusi": {
-      "title": "Program sekolah",
-      "subtitle": "Jalur pembelajaran dan pengembangan bakat yang kami tawarkan."
+      "title": "Program Pendidikan & Kurikulum Unggulan",
+      "subtitle": "Menyelenggarakan kurikulum adaptif yang memadukan kedalaman ilmu pengetahuan, kompetensi digital, dan pembinaan karakter kepemimpinan."
     },
     "services": {
-      "title": "Fasilitas & layanan",
-      "subtitle": "Ruang belajar, laboratorium, perpustakaan, dan dukungan siswa."
+      "title": "Fasilitas & Sarana Kampus Modern",
+      "subtitle": "Menyediakan lingkungan belajar yang aman, nyaman, higienis, dan terintegrasi dengan teknologi digital terkini."
     },
     "career_center": {
-      "title": "Alumni & karier",
-      "subtitle": "Jejak lulusan dan peluang magang atau beasiswa."
+      "title": "Jejaring Alumni & Bimbingan Studi",
+      "subtitle": "Menjaga ikatan kekeluargaan alumni Sarangenge di seluruh dunia serta memfasilitasi bimbingan karir dan beasiswa bagi siswa."
     },
     "achievement": {
-      "title": "Prestasi",
-      "subtitle": "Penghargaan, olimpiade, seni, olahraga, dan capaian bersama."
+      "title": "Prestasi & Penghargaan Sivitas Sarangenge",
+      "subtitle": "Rangkuman prestasi kejuaraan akademik, sains, teknologi, seni budaya, dan olahraga di kancah nasional maupun internasional."
+    },
+    "tim": {
+      "title": "Dewan Guru & Tenaga Kependidikan",
+      "subtitle": "Didukung oleh pendidik profesional berkualifikasi sarjana & magister dengan sertifikasi pendidik nasional serta pengajar bersertifikat Cambridge."
+    },
+    "disabled": {
+      "statusLabel": "Informasi Sekolah",
+      "defaultTitle": "Halaman Belum Tersedia",
+      "defaultMessage": "Layanan atau informasi ini sedang dalam proses pembaruan oleh pihak sekolah.",
+      "backHome": "Kembali ke Beranda",
+      "contactAdmin": "Hubungi Sekolah"
+    },
+    "search": {
+      "title": "Pencarian Warta & Konten Sekolah",
+      "subtitle": "Temukan artikel berita, panduan PPDB, program kurikulum, dan pengumuman sekolah.",
+      "placeholder": "Ketik kata kunci pencarian...",
+      "submit": "Cari",
+      "empty": "Tidak ada hasil untuk kata kunci tersebut.",
+      "unavailable": "Layanan pencarian sedang tidak tersedia."
+    }
+  },
+  "customizer": {
+    "sidebar": {
+      "page_about": "Halaman Profil",
+      "page_about_desc": "Kelola konten visi misi dan profil sekolah",
+      "page_programs": "Halaman Program",
+      "page_programs_desc": "Kelola kurikulum dan program unggulan",
+      "page_achievements": "Halaman Prestasi",
+      "page_achievements_desc": "Kelola galeri dan daftar prestasi siswa",
+      "page_facilities": "Halaman Fasilitas",
+      "page_facilities_desc": "Kelola sarana dan prasarana kampus",
+      "page_tim": "Halaman Guru & Staf",
+      "page_tim_desc": "Kelola direktori pendidik dan tenaga kependidikan",
+      "page_pricing": "Halaman Biaya & Beasiswa",
+      "page_pricing_desc": "Kelola informasi biaya pendidikan dan skema beasiswa",
+      "page_alumni": "Halaman Alumni",
+      "page_alumni_desc": "Kelola jejaring alumni dan kisah sukses",
+      "page_news": "Halaman Warta Sekolah",
+      "page_news_desc": "Kelola tampilan berita dan agenda",
+      "page_contact": "Halaman Kontak & PPDB",
+      "page_contact_desc": "Kelola kontak, hotline WhatsApp, dan informasi pendaftaran"
+    },
+    "items": {
+      "hero_section": "Bagian Hero Sekolah",
+      "hero_section_desc": "Konfigurasi tampilan utama hero banner sekolah",
+      "school_stats": "Statistik Sekolah",
+      "stat_value": "Nilai Angka",
+      "stat_label": "Keterangan Label",
+      "programs_section": "Bagian Program",
+      "programs_section_desc": "Konfigurasi daftar program unggulan",
+      "program_list": "Daftar Program",
+      "title": "Judul",
+      "badge": "Lencana Kategori",
+      "detail": "Keterangan Detail",
+      "thumbnail": "Foto / Gambar",
+      "target_url": "Tautan Tujuan",
+      "achievements_page": "Halaman Prestasi",
+      "achievements_page_desc": "Konfigurasi prestasi dan medali",
+      "achievement_list": "Daftar Prestasi",
+      "year": "Tahun",
+      "name": "Nama Siswa / Tim",
+      "level": "Tingkat Kejuaraan",
+      "facilities_page": "Halaman Fasilitas",
+      "facilities_page_desc": "Konfigurasi sarana dan fasilitas kampus",
+      "facility_list": "Daftar Fasilitas",
+      "testimonials": "Bagian Testimoni",
+      "testimonials_desc": "Testimoni siswa, orang tua, dan alumni",
+      "testimonial_list": "Daftar Testimoni",
+      "role": "Peran / Keterangan",
+      "quote": "Kutipan Testimoni",
+      "avatar": "Foto Profil",
+      "staff_page": "Halaman Dewan Guru",
+      "staff_page_desc": "Direktori pendidik dan staf pengajar",
+      "staff_list": "Daftar Guru & Staf",
+      "subject": "Mata Pelajaran / Bidang"
     }
   }
 }

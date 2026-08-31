@@ -10,10 +10,35 @@
     },
     "settings_schema": {
         "site_title": {
-            "label": "Nama Sekolah",
+            "label": "Site Title",
             "type": "text",
-            "default": "Sarangenge",
+            "default": "Jejakawan",
             "category": "General",
+            "scope": "platform"
+        },
+        "theme_style": {
+            "label": "Theme Visual Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Clean & Minimalist",
+                    "value": "clean"
+                },
+                {
+                    "label": "Flat Modern",
+                    "value": "flat"
+                },
+                {
+                    "label": "Soft & Pastel",
+                    "value": "soft"
+                },
+                {
+                    "label": "Glassmorphism (Premium)",
+                    "value": "glass"
+                }
+            ],
+            "default": "clean",
+            "category": "Appearance",
             "scope": "platform"
         },
         "brand_logo": {
@@ -28,65 +53,726 @@
             "category": "General",
             "scope": "platform"
         },
-        "color_primary": {
-            "label": "Primary (Teal kampus)",
-            "type": "color",
-            "default": "#0F766E",
-            "category": "Colors"
+        "site_tagline": {
+            "label": "Site Tagline",
+            "type": "text",
+            "default": "Modern & Elegant Jejakawan",
+            "category": "General",
+            "scope": "platform"
         },
-        "color_secondary": {
-            "label": "Secondary",
-            "type": "color",
-            "default": "#0F4C48",
-            "category": "Colors"
+        "site_description": {
+            "label": "Site Description",
+            "type": "textarea",
+            "default": "Modern Content Management System built with Laravel and Vue.js",
+            "category": "General",
+            "scope": "platform"
+        },
+        "branding_display": {
+            "label": "Branding Display",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Logo only",
+                    "value": "logo_only"
+                },
+                {
+                    "label": "Site name only",
+                    "value": "text_only"
+                },
+                {
+                    "label": "Logo + Site name",
+                    "value": "both"
+                }
+            ],
+            "default": "logo_only",
+            "category": "General",
+            "scope": "platform"
         },
         "font_heading": {
             "label": "Heading Font",
-            "type": "font",
-            "default": "Bricolage Grotesque",
-            "category": "Typography"
+            "type": "select",
+            "options": [
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Poppins",
+                    "value": "Poppins"
+                },
+                {
+                    "label": "Merriweather",
+                    "value": "Merriweather"
+                }
+            ],
+            "default": "Inter",
+            "category": "Typography",
+            "scope": "platform"
         },
-        "font_body": {
-            "label": "Body Font",
-            "type": "font",
-            "default": "Figtree",
-            "category": "Typography"
+        "breadcrumb_sticky": {
+            "label": "Sticky Breadcrumbs",
+            "type": "checkbox",
+            "default": false,
+            "category": "Layout",
+            "description": "Keep breadcrumbs visible while scrolling",
+            "scope": "platform"
+        },
+        "header_sticky": {
+            "label": "Sticky Header",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "layout_style": {
+            "label": "Layout Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Full Width (Default)",
+                    "value": "full"
+                },
+                {
+                    "label": "Boxed (Content in Box)",
+                    "value": "boxed"
+                },
+                {
+                    "label": "Wide (Wider Box)",
+                    "value": "wide"
+                },
+                {
+                    "label": "Framed (Floating Box)",
+                    "value": "framed"
+                },
+                {
+                    "label": "Hybrid (Header/Footer Full)",
+                    "value": "hybrid"
+                }
+            ],
+            "default": "full",
+            "category": "Layout",
+            "description": "Choose overall page layout style",
+            "scope": "platform"
+        },
+        "home_sections": {
+            "label": "Homepage sections",
+            "type": "checkbox_list",
+            "options": [
+                {
+                    "label": "Landing hero",
+                    "value": "hero"
+                },
+                {
+                    "label": "Partner logos",
+                    "value": "partners"
+                },
+                {
+                    "label": "Testimonials",
+                    "value": "testimonials"
+                },
+                {
+                    "label": "Call to action",
+                    "value": "cta"
+                }
+            ],
+            "default": [
+                "hero",
+                "partners",
+                "testimonials",
+                "cta"
+            ],
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "container_max_width": {
+            "label": "Container Max Width",
+            "type": "range",
+            "min": 1200,
+            "max": 1920,
+            "step": 40,
+            "default": 1400,
+            "category": "Layout",
+            "description": "Max width in pixels (for Boxed/Wide/Framed)",
+            "scope": "platform"
+        },
+        "boxed_bg_color": {
+            "label": "Page Background Color",
+            "type": "color",
+            "default": "#f1f5f9",
+            "category": "Layout",
+            "description": "Background visible outside boxed content",
+            "scope": "platform"
+        },
+        "boxed_shadow": {
+            "label": "Boxed Content Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "sm"
+                },
+                {
+                    "label": "Medium",
+                    "value": "md"
+                },
+                {
+                    "label": "Large",
+                    "value": "lg"
+                },
+                {
+                    "label": "Extra Large",
+                    "value": "xl"
+                }
+            ],
+            "default": "lg",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "framed_padding": {
+            "label": "Frame Padding",
+            "type": "range",
+            "min": 8,
+            "max": 48,
+            "step": 4,
+            "default": 16,
+            "category": "Layout",
+            "description": "Padding around framed layout (px)",
+            "scope": "platform"
+        },
+        "header_style": {
+            "label": "Header Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glassmorphism",
+                    "value": "glass"
+                },
+                {
+                    "label": "Solid White",
+                    "value": "solid"
+                },
+                {
+                    "label": "Transparent",
+                    "value": "transparent"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_text": {
+            "label": "Header CTA Button Text",
+            "type": "text",
+            "default": "Info PPDB",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_url": {
+            "label": "Header CTA Button URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_login_url": {
+            "label": "Header Login URL",
+            "type": "text",
+            "default": "/member/login",
+            "category": "Layout",
+            "scope": "theme"
+        },
+        "header_login_label": {
+            "label": "Header Login Label",
+            "type": "text",
+            "default": "Masuk Portal",
+            "category": "Layout",
+            "scope": "theme"
+        },
+        "nav_style": {
+            "label": "Navigation Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "✨ Glass Morph (Blur + Transparency)",
+                    "value": "glass"
+                },
+                {
+                    "label": "🎯 Spotlight (Focus Highlight)",
+                    "value": "spotlight"
+                },
+                {
+                    "label": "🧲 Magnetic (Hover Attraction)",
+                    "value": "magnetic"
+                },
+                {
+                    "label": "💫 Floating (3D Shadow)",
+                    "value": "floating"
+                },
+                {
+                    "label": "🌊 Slide (Text Reveal)",
+                    "value": "slide"
+                },
+                {
+                    "label": "💊 Pill Modern (Soft Fill)",
+                    "value": "pill"
+                },
+                {
+                    "label": "📏 Underline Grow (Expand)",
+                    "value": "underline"
+                },
+                {
+                    "label": "🔥 Neon Glow (Cyberpunk)",
+                    "value": "glow"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "button_radius": {
+            "label": "Button Roundedness",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Square (0px)",
+                    "value": "0px"
+                },
+                {
+                    "label": "Slight (4px)",
+                    "value": "4px"
+                },
+                {
+                    "label": "Standard (8px)",
+                    "value": "8px"
+                },
+                {
+                    "label": "Rounded (12px)",
+                    "value": "12px"
+                },
+                {
+                    "label": "Pill (Full)",
+                    "value": "9999px"
+                }
+            ],
+            "default": "8px",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_border_width": {
+            "label": "Button Border Width",
+            "type": "range",
+            "min": 0,
+            "max": 4,
+            "step": 1,
+            "default": 1,
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_shadow": {
+            "label": "Button Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle",
+                    "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+                },
+                {
+                    "label": "Medium",
+                    "value": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Strong",
+                    "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)"
+                },
+                {
+                    "label": "Glow (Primary)",
+                    "value": "0 0 15px var(--theme-primary-color)"
+                }
+            ],
+            "default": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "disabled_page_behavior": {
+            "label": "When a page is turned off",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Redirect to Home",
+                    "value": "redirect"
+                },
+                {
+                    "label": "Show Maintenance Message",
+                    "value": "message"
+                }
+            ],
+            "default": "message",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "disabled_page_message": {
+            "label": "Message shown to visitors",
+            "type": "textarea",
+            "default": "This page is temporarily unavailable while we improve the experience. Please check back soon.",
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_about": {
+            "label": "Show About page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_achievement": {
+            "label": "Show Achievements page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_career": {
+            "label": "Show Careers page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_blog": {
+            "label": "Show News page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "enable_contact": {
+            "label": "Show Contact page",
+            "type": "checkbox",
+            "default": true,
+            "category": "Public Pages",
+            "scope": "platform"
+        },
+        "footer_text": {
+            "label": "Copyright Text",
+            "type": "text",
+            "default": "© 2026 Jejakawan. All rights reserved.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "back_to_top": {
+            "label": "Enable Back to Top",
+            "type": "checkbox",
+            "default": true,
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "social_links": {
+            "label": "Social Media Links",
+            "type": "repeater",
+            "category": "Social Media",
+            "fields": [
+                {
+                    "name": "icon",
+                    "label": "Platform",
+                    "type": "select",
+                    "options": "social_icons"
+                },
+                {
+                    "name": "url",
+                    "label": "URL",
+                    "type": "text"
+                }
+            ],
+            "default": [
+                {
+                    "icon": "Twitter",
+                    "url": "https://twitter.com/jejakawan"
+                },
+                {
+                    "icon": "Instagram",
+                    "url": "https://instagram.com/jejakawan"
+                },
+                {
+                    "icon": "Github",
+                    "url": "https://github.com/jejakawan/k2net"
+                }
+            ],
+            "scope": "platform"
+        },
+        "animation_enabled": {
+            "label": "Enable GSAP Animations",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "animation_intensity": {
+            "label": "Animation Intensity",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Subtle (Halus)",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Normal",
+                    "value": "normal"
+                },
+                {
+                    "label": "Dramatic (Dramatis)",
+                    "value": "dramatic"
+                }
+            ],
+            "default": "normal",
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "parallax_enabled": {
+            "label": "Enable Parallax Effects",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations",
+            "scope": "platform"
+        },
+        "school_accreditation": {
+            "label": "Status Akreditasi",
+            "type": "text",
+            "default": "Akreditasi A (Unggul)",
+            "category": "School Info"
+        },
+        "school_npsn": {
+            "label": "Nomor Pokok Sekolah Nasional (NPSN)",
+            "type": "text",
+            "default": "NPSN: 20268899",
+            "category": "School Info"
+        },
+        "school_principal_name": {
+            "label": "Nama Kepala Sekolah",
+            "type": "text",
+            "default": "Drs. H. Rahmat Sudrajat, M.Pd.",
+            "category": "School Info"
+        },
+        "ppdb_is_open": {
+            "label": "Status Pendaftaran PPDB Buka",
+            "type": "boolean",
+            "default": true,
+            "category": "Hero Section"
+        },
+        "ppdb_year": {
+            "label": "Tahun Ajaran PPDB",
+            "type": "text",
+            "default": "2026/2027",
+            "category": "Hero Section"
         },
         "hero_badge_text": {
-            "label": "Hero eyebrow (opsional)",
+            "label": "Hero Eyebrow / Badge",
             "type": "text",
-            "default": "Tema sekolah · Sarangenge",
+            "default": "Penerimaan Peserta Didik Baru (PPDB) 2026/2027 Dibuka",
             "category": "Hero Section"
         },
         "hero_title": {
-            "label": "Hero Title",
+            "label": "Judul Utama Hero",
             "type": "text",
-            "default": "Belajar di puncak siang — jelas, hangat, dan siap masa depan.",
+            "default": "Membentuk Generasi Berkarakter, Cerdas & Siap Menghadapi Masa Depan.",
             "category": "Hero Section"
         },
         "hero_subtitle": {
-            "label": "Hero Subtitle",
+            "label": "Subjudul Hero",
             "type": "textarea",
-            "default": "Situs resmi sekolah: profil, program, prestasi, berita, dan jalur PPDB dalam satu kanvas yang mudah diakses.",
+            "default": "Situs resmi sekolah: ekosistem pembelajaran holistik dengan Kurikulum Merdeka, sains & teknologi terdepan, serta pembinaan akhlak mulia.",
             "category": "Hero Section"
         },
         "hero_primary_cta_text": {
-            "label": "Primary CTA Label",
+            "label": "Teks Tombol Utama Hero",
             "type": "text",
-            "default": "Info PPDB",
+            "default": "Daftar PPDB Online",
             "category": "Hero Section"
         },
         "hero_primary_cta_link": {
-            "label": "Primary CTA Link",
+            "label": "Tautan Tombol Utama Hero",
             "type": "text",
             "default": "/contact",
             "category": "Hero Section"
         },
-        "footer_copyright": {
-            "label": "Footer Copyright",
+        "hero_secondary_cta_text": {
+            "label": "Teks Tombol Sekunder Hero",
             "type": "text",
-            "default": "© 2026 Sarangenge. Hak cipta dilindungi.",
+            "default": "Jelajahi Program",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_link": {
+            "label": "Tautan Tombol Sekunder Hero",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Hero Section"
+        },
+        "hero_stat_1_val": {
+            "label": "Statistik 1 Nilai",
+            "type": "text",
+            "default": "100%",
+            "category": "Hero Section"
+        },
+        "hero_stat_1_label": {
+            "label": "Statistik 1 Label",
+            "type": "text",
+            "default": "Kelulusan & Lanjut Studi",
+            "category": "Hero Section"
+        },
+        "hero_stat_2_val": {
+            "label": "Statistik 2 Nilai",
+            "type": "text",
+            "default": "150+",
+            "category": "Hero Section"
+        },
+        "hero_stat_2_label": {
+            "label": "Statistik 2 Label",
+            "type": "text",
+            "default": "Prestasi Nasional & Dunia",
+            "category": "Hero Section"
+        },
+        "hero_stat_3_val": {
+            "label": "Statistik 3 Nilai",
+            "type": "text",
+            "default": "1:12",
+            "category": "Hero Section"
+        },
+        "hero_stat_3_label": {
+            "label": "Statistik 3 Label",
+            "type": "text",
+            "default": "Rasio Guru & Siswa",
+            "category": "Hero Section"
+        },
+        "bento_title": {
+            "label": "Judul Bento Grid Kampus",
+            "type": "text",
+            "default": "Akses Cepat Informasi Kampus",
+            "category": "Bento Campus Section"
+        },
+        "bento_subtitle": {
+            "label": "Subjudul Bento Grid",
+            "type": "text",
+            "default": "Navigasi penting untuk orang tua, calon siswa, dan peserta didik dalam satu kanvas modern.",
+            "category": "Bento Campus Section"
+        },
+        "programs_title": {
+            "label": "Judul Bagian Program",
+            "type": "text",
+            "default": "Program Unggulan & Kurikulum",
+            "category": "Programs Section"
+        },
+        "programs_subtitle": {
+            "label": "Subjudul Bagian Program",
+            "type": "text",
+            "default": "Pilihan jalur akademik, sains terapan, teknologi, bahasa internasional, dan penguatan karakter.",
+            "category": "Programs Section"
+        },
+        "achievements_title": {
+            "label": "Judul Halaman Prestasi",
+            "type": "text",
+            "default": "Prestasi & Penghargaan Siswa",
+            "category": "Achievements Page"
+        },
+        "achievements_subtitle": {
+            "label": "Subjudul Halaman Prestasi",
+            "type": "text",
+            "default": "Bukti dedikasi dan keunggulan akademik, sains, seni, dan olahraga di tingkat regional hingga internasional.",
+            "category": "Achievements Page"
+        },
+        "facilities_title": {
+            "label": "Judul Fasilitas Sekolah",
+            "type": "text",
+            "default": "Fasilitas & Sarana Kampus Modern",
+            "category": "Services Page"
+        },
+        "facilities_subtitle": {
+            "label": "Subjudul Fasilitas",
+            "type": "text",
+            "default": "Lingkungan belajar kondusif dengan teknologi cerdas dan laboratorium lengkap.",
+            "category": "Services Page"
+        },
+        "tim_title": {
+            "label": "Judul Halaman Pendidik & Staf",
+            "type": "text",
+            "default": "Dewan Guru & Tenaga Kependidikan",
+            "category": "Tim Page"
+        },
+        "tim_subtitle": {
+            "label": "Subjudul Halaman Pendidik",
+            "type": "text",
+            "default": "Didukung pendidik berpengalaman, berdedikasi tinggi, dan tersertifikasi profesional.",
+            "category": "Tim Page"
+        },
+        "pricing_title": {
+            "label": "Judul Informasi Biaya Pendidikan",
+            "type": "text",
+            "default": "Informasi Biaya Pendidikan & Beasiswa",
+            "category": "Pricing Page"
+        },
+        "pricing_subtitle": {
+            "label": "Subjudul Biaya Pendidikan",
+            "type": "text",
+            "default": "Transparansi investasi pendidikan masa depan anak Anda beserta skema beasiswa prestasi & afirmasi.",
+            "category": "Pricing Page"
+        },
+        "contact_whatsapp": {
+            "label": "Nomor WhatsApp Hotline PPDB",
+            "type": "text",
+            "default": "081234567890",
+            "category": "Contact Page"
+        },
+        "contact_admission_hotline": {
+            "label": "Hotline Informasi Pendaftaran",
+            "type": "text",
+            "default": "+62 22 8765 4321",
+            "category": "Contact Page"
+        },
+        "contact_operating_hours": {
+            "label": "Jam Pelayanan Sekolah",
+            "type": "text",
+            "default": "Senin – Jumat: 07.30 – 15.30 WIB",
+            "category": "Contact Page"
+        },
+        "contact_maps_embed_url": {
+            "label": "Google Maps Embed URL (Opsional)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page"
+        },
+        "footer_about_text": {
+            "label": "Teks Deskripsi Footer",
+            "type": "textarea",
+            "default": "Sarangenge adalah institusi pendidikan terdepan yang berfokus pada keunggulan akademik, integritas karakter, dan kesiapan teknologi masa depan.",
+            "category": "Footer"
+        },
+        "footer_copyright": {
+            "label": "Teks Hak Cipta Footer",
+            "type": "text",
+            "default": "© 2026 Sarangenge Academy. Hak cipta dilindungi undang-undang.",
             "category": "Footer"
         }
+    },
+    "menus": {
+        "header": "Header Primary Navigation",
+        "header_top": "Header Top Utility",
+        "footer": "Footer Bottom Links",
+        "footer_col_1": "Footer Column 1",
+        "footer_col_2": "Footer Column 2",
+        "sidebar": "Sidebar Navigation"
+    },
+    "customizer": {
+        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
+        "themeSchema": "customizer/schema.settings.json"
     }
 }

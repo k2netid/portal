@@ -1,0 +1,121 @@
+{
+  "name": "Layung",
+  "description": "Layung — téma portal panyadia layanan internét (ISP) sareng Managed Service Provider (MSP) punjul. Arsitektur serat optik, jaminan SLA 99.999%, sarta layanan NOC 24/7.",
+  "header": {
+    "home": "Tepas",
+    "about": "Ngeunaan Kami",
+    "solusi": "Managed Services",
+    "services": "Konektivitas Fiber",
+    "pricing": "Pakét & Bandwidth",
+    "achievement": "SLA & Sertifikasi",
+    "career": "Karir NOC",
+    "tim": "Tim Énginéér",
+    "blog": "Warta & Béja",
+    "contact": "Kontak NOC",
+    "search": "Paluruh",
+    "liveNoc": "Status NOC",
+    "nocOperational": "Sadaya Node Normal",
+    "coverageCheck": "Pariksa Jangkauan",
+    "signIn": "Portal Klién",
+    "account": "Akun Pausahaan",
+    "getStarted": "Pénta Panawaran",
+    "selectLanguage": "Pilih Basa:"
+  },
+  "footer": {
+    "description": "Layung Network mangrupakeun panyadia infrastruktur serat optik gancang pisan, konéksi dedicated 1:1, sarta Managed IT Services kalayan jaminan SLA 99.999% pikeun korporasi sareng lembaga.",
+    "services": "Layanan Fiber Optik",
+    "managed": "Managed IT & SOC",
+    "contact": "Puseur Bantosan 24/7",
+    "copyright": "Sadaya hak cipta ditangtayungan undang-undang.",
+    "asn": "BGP Routing & Peering ASN:",
+    "slaPromise": "Jaminan Waleran Gancang 15 Menit MTTR"
+  },
+  "hero": {
+    "badge": "Infrastruktur Serat Optik & Managed Services 2026",
+    "headline": "Konektivitas Fiber Gancang Pisan & Solusi IT Terkelola pikeun Bisnis Skala Global",
+    "subheadline": "Hadirkeun backbone internét gancang siga cahaya, laténsi super handap sahandapeun 3ms, multi-cloud interconnect, sarta panyalindungan Cyber SOC 24/7.",
+    "ctaPrimary": "Pariksa Wewengkon Jangkauan",
+    "ctaSecondary": "Konsultasi Énterprise",
+    "latency": "Laténsi Inti",
+    "uptime": "Jaminan Uptime SLA",
+    "backbone": "Kapasitas Backbone",
+    "support": "Tim NOC Bersertifikasi"
+  },
+  "calculator": {
+    "badge": "Simulator Bandwidth Interaktif",
+    "title": "Itung Pangabutuh Bandwidth & Solusi Idéal Kantor Anjeun",
+    "subtitle": "Saluyukeun jumlah parangkat aktif, tipeu operasional cloud, sarta kéngingkeun rékomendasi pakét dedicated internet panghadéna.",
+    "usersLabel": "Jumlah Pamaké / Parangkat:",
+    "cloudUsageLabel": "Aktivitas Bisnis:",
+    "recommendedPlan": "Rékomendasi Pakét:",
+    "getQuote": "Ajukeun Proposal Langsung"
+  },
+  "bento": {
+    "badge": "Pilar Kaunggulan Infrastruktur",
+    "title": "Solusi Lengkep Ékosistem Télékomunikasi & Kaamanan Digital",
+    "subtitle": "Dirancang ti hulu ka hilir pikeun mastikeun operasional bisnis anjeun tetep hurung tanpa kendat.",
+    "diaTitle": "Dedicated Internet 1:1",
+    "diaDesc": "Bandwidth simétris murni upload sareng download kalayan IP Publik Statis sarta SLA 99.999%.",
+    "sdwanTitle": "Managed SD-WAN & Multi-Cloud",
+    "sdwanDesc": "Integrasi langsung ka AWS, Google Cloud, sareng Azure kalayan routing pinter anti gangguan.",
+    "socTitle": "24/7 Cyber Security SOC",
+    "socDesc": "Mitigasi serangan DDoS kapasitas luhur, Next-Gen Firewall, sarta pamantauan ancaman siber proaktif.",
+    "colocationTitle": "Tier-3 Data Center Interconnect",
+    "colocationDesc": "Fasilitas colocation server bersertifikasi ISO 27001 kalayan multi-upstream redundan."
+  },
+  "packages": {
+    "badge": "Skéma Pakét & Kapasitas",
+    "title": "Pilihan Pakét Konektivitas Saluyu Pangabutuh Industri",
+    "subtitle": "Mimitian ti bisnis mekar dugi ka skala enterprise seueur cabang kalayan alokasi bandwidth kajamin.",
+    "homeTab": "Home & Small Office",
+    "bizTab": "Business Broadband",
+    "enterpriseTab": "Dedicated Internet (DIA)",
+    "managedTab": "Managed Cloud & SOC",
+    "selectPlan": "Pilih Layanan Ieu"
+  },
+  "pages": {
+    "about": {
+      "title": "Profil Pausahaan & Infrastruktur",
+      "subtitle": "Wanoh ka Layung Network: Panyadia konektivitas serat optik standar global kalayan komitmen transparansi sarta keandalan luhur.",
+      "storyTitle": "Dédikasi Nyambungkeun Indonésia kalayan Gancang Siga Cahaya",
+      "storyText": "Ngageuing tina filosofi cahaya Layung anu nyaangan langit kalayan kaéndahan sarta kahaneutan fajar dugi ka sareupna, kami ngawangun jaringan serat optik mandiri anu ngahontal puseur-puseur bisnis pangutamana.",
+      "datacenterTitle": "Data Center & Point of Presence (PoP)"
+    },
+    "solusi": {
+      "title": "Managed IT & Cyber Security Solutions",
+      "subtitle": "Transformasi digital aman kalayan pituduh pinuh ti tim Network Operations Center (NOC) sareng Security Operations Center (SOC) 24/7."
+    },
+    "services": {
+      "title": "Layanan Fiber Optik & Jaringan Terdedikasi",
+      "subtitle": "Konéksi internét tanpa kompromi: Dark Fiber, Metro Ethernet, sareng Dedicated Internet Access (DIA) simétris 1:1."
+    },
+    "pricing": {
+      "title": "Transparansi Waragad & Rincian Pakét Bandwidth",
+      "subtitle": "Invastasi konektivitas anu écés, tanpa waragad nyumput, dilengkepan jaminan Service Level Agreement (SLA)."
+    },
+    "achievements": {
+      "title": "Pencapaian SLA & Catetan Keandalan",
+      "subtitle": "Sertifikasi ISO 27001, ISO 9001, sarta rékor uptime 99.999% salami langkung ti 5 taun ngaruntuy."
+    },
+    "team": {
+      "title": "Diréktori Tim Énginéér & Arsitek Jaringan",
+      "subtitle": "Diaping ku profésional bersertifikasi CCIE, CCNP, CEH, sareng ITIL anu siap ngajaga jaringan anjeun saban detik."
+    },
+    "careers": {
+      "title": "Puseur Karir & Rékrutmen Talénta IT",
+      "subtitle": "Hayu ngagabung sareng kami ngawangun infrastruktur digital pikahareupeun Indonésia."
+    },
+    "contact": {
+      "title": "Kontak NOC & Pariksa Wewengkon Jangkauan Fiber",
+      "subtitle": "Peryogi bantosan téknis darurat atanapi badé langganan internét kantor anyar? Tim konsultan kami siap ngawaler dina sababaraha menit."
+    },
+    "blog": {
+      "title": "Warta Téknologi & Béwara Jaringan",
+      "subtitle": "Artikel ngeunaan trén cyber security, téknologi cloud, sarta jadwal pangropéa jaringan berkala."
+    },
+    "search": {
+      "title": "Paluruh Layanan & Dokuméntasi",
+      "subtitle": "Panggihan inpormasi pakét, pituduh konfigurasi, sarta artikel téknis Layung kalayan gancang."
+    }
+  }
+}

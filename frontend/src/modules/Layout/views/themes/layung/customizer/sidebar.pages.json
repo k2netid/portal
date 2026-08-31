@@ -1,0 +1,32 @@
+{
+    "specialPageItems": [
+        {
+            "id": "page-layung-about",
+            "manifestCategories": ["Public Pages"],
+            "icon": "building-2",
+            "labelKey": "theme.layung.customizer.sidebar.page_about",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_about_desc"
+        },
+        {
+            "id": "page-layung-services",
+            "manifestCategories": ["Public Pages"],
+            "icon": "network",
+            "labelKey": "theme.layung.customizer.sidebar.page_services",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_services_desc"
+        },
+        {
+            "id": "page-layung-pricing",
+            "manifestCategories": ["Public Pages"],
+            "icon": "zap",
+            "labelKey": "theme.layung.customizer.sidebar.page_pricing",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_pricing_desc"
+        },
+        {
+            "id": "page-layung-contact",
+            "manifestCategories": ["Public Pages"],
+            "icon": "headset",
+            "labelKey": "theme.layung.customizer.sidebar.page_contact",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_contact_desc"
+        }
+    ]
+}

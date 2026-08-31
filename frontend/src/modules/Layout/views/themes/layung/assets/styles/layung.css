@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Layung — High-Performance ISP & Managed Service Provider Theme
+   Filosofi Basa Sunda: Cahaya Layung (Cahaya beureum/jingga di langit pasosoré).
+   Merepresentasikan: Pancaran Serat Optik (Fiber Photon Beam), Konektivitas 24/7,
+   99.999% SLA Uptime, Network Operations Center (NOC) & Managed Cloud Solutions.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Cyber Twilight Palette (Photon Orange, Crimson Dusk & Cyber Obsidian) */
+  --layung-obsidian: #070a0f;
+  --layung-obsidian-surface: #0b111a;
+  --layung-obsidian-card: #0f1724;
+  --layung-orange: #f97316;
+  --layung-orange-glow: #ea580c;
+  --layung-crimson: #ef4444;
+  --layung-cyan: #06b6d4;
+  --layung-cyan-glow: #0891b2;
+  --layung-blue: #2563eb;
+  --layung-emerald: #10b981;
+  
+  /* Theme tokens */
+  --layung-primary: var(--theme-color-primary, #f97316);
+  --layung-secondary: var(--theme-color-secondary, #06b6d4);
+  --layung-accent: var(--theme-color-accent, #ef4444);
+  --layung-font-heading: var(--theme-font-heading, 'Space Grotesk', system-ui, sans-serif);
+  --layung-font-body: var(--theme-font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
+  --layung-font-mono: 'JetBrains Mono', monospace;
+  
+  --layung-radius: 0.85rem;
+  --layung-radius-sm: 0.5rem;
+  --layung-radius-lg: 1.25rem;
+}
+
+.layung-theme {
+  --primary: 24 95% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 189 94% 43%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 0 84% 60%;
+  --accent-foreground: 0 0% 100%;
+  --background: 220 33% 98%;
+  --foreground: 222 47% 11%;
+  --muted: 215 25% 92%;
+  --muted-foreground: 215 16% 47%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --border: 214 32% 88%;
+  --ring: 24 95% 53%;
+
+  font-family: var(--layung-font-body);
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.dark .layung-theme,
+.layung-theme.dark {
+  --primary: 24 95% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 189 94% 43%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 0 84% 60%;
+  --accent-foreground: 0 0% 100%;
+  --background: 222 47% 4%;
+  --foreground: 210 40% 98%;
+  --muted: 222 35% 10%;
+  --muted-foreground: 215 20% 65%;
+  --card: 222 40% 7%;
+  --card-foreground: 210 40% 98%;
+  --border: 222 30% 15%;
+  --ring: 24 95% 53%;
+}
+
+.layung-theme .font-heading,
+.layung-heading {
+  font-family: var(--layung-font-heading);
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.layung-theme .font-mono,
+.layung-mono {
+  font-family: var(--layung-font-mono);
+}
+
+/* Photon laser fiber optic background mesh */
+.layung-theme::before {
+  content: '';
+  position: fixed;
+  inset: -10% -10% auto auto;
+  width: 60vw;
+  height: 60vh;
+  background: radial-gradient(circle at 70% 30%, rgba(249, 115, 22, 0.08), rgba(6, 182, 212, 0.04) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .layung-theme::before {
+  background: radial-gradient(circle at 70% 30%, rgba(249, 115, 22, 0.09), rgba(6, 182, 212, 0.06) 50%, transparent 75%);
+}
+
+.layung-theme .layung-theme::before {
+  display: none;
+}
+
+/* Stacking safety */
+.layung-theme > main,
+.layung-theme > .mt-auto {
+  position: relative;
+  z-index: 1;
+}
+
+.layung-theme > .relative.z-50 {
+  position: relative;
+  z-index: 100;
+  isolation: isolate;
+}
+
+.layung-back-to-top {
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 999999 !important;
+}
+
+/* Header & Dropdown safety */
+header[data-ja-customizer-target="header"] {
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+
+header[data-ja-customizer-target="header"] .layung-panel {
+  z-index: 120 !important;
+}
+
+/* High-Tech ISP Hero */
+.layung-hero {
+  min-height: min(88vh, 820px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 50% at 85% 15%, rgba(249, 115, 22, 0.22), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(6, 182, 212, 0.18), transparent 65%),
+    linear-gradient(155deg, #05080e 0%, #0a111c 45%, #0e1726 100%);
+  color: #f8fafc;
+}
+
+.layung-hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+}
+
+/* Cyber Panel component */
+.layung-panel {
+  border-radius: var(--layung-radius-lg);
+  border: 1px solid hsl(var(--border) / 0.8);
+  background: hsl(var(--card));
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layung-panel:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.12);
+}
+
+/* Bento ISP Grid */
+.layung-bento {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .layung-bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .layung-bento__wide {
+    grid-column: span 2;
+  }
+}
+
+.layung-bento__cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--layung-radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid hsl(var(--border) / 0.8);
+  background: hsl(var(--card));
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.layung-bento__cell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.layung-bento__cell--cyber {
+  background: linear-gradient(145deg, #080d17 0%, #111a2e 100%);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.layung-bento__cell--cyber:hover {
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 24px 48px -12px rgba(6, 182, 212, 0.25);
+}
+
+.layung-bento__cell--orange {
+  background: linear-gradient(145deg, #1c0e05 0%, #2e1709 100%);
+  color: #f8fafc;
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.layung-bento__cell--orange:hover {
+  border-color: rgba(249, 115, 22, 0.7);
+  box-shadow: 0 24px 48px -12px rgba(249, 115, 22, 0.3);
+}
+
+/* Glowing Fiber Line Animation */
+@keyframes fiberPulse {
+  0%, 100% { opacity: 0.6; transform: scaleX(0.98); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+.layung-fiber-glow {
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.35);
+  animation: fiberPulse 3s ease-in-out infinite;
+}
+
+/* Status Pulse Badge */
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.layung-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #10b981;
+  animation: pulseDot 2s infinite;
+}

@@ -21,6 +21,9 @@ import sarangengeSu from '@/modules/Layout/views/themes/sarangenge/locales/su.js
 import janariEn from '@/modules/Layout/views/themes/janari/locales/en.json';
 import janariId from '@/modules/Layout/views/themes/janari/locales/id.json';
 import janariSu from '@/modules/Layout/views/themes/janari/locales/su.json';
+import layungEn from '@/modules/Layout/views/themes/layung/locales/en.json';
+import layungId from '@/modules/Layout/views/themes/layung/locales/id.json';
+import layungSu from '@/modules/Layout/views/themes/layung/locales/su.json';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -53,7 +56,7 @@ export const moduleLocaleBundles = {
         search: searchPack.en,
         ai: cmsAiPack.en,
         member: memberPack.en,
-        theme: { sarangenge: sarangengeEn, janari: janariEn },
+        theme: { sarangenge: sarangengeEn, janari: janariEn, layung: layungEn },
     },
     id: {
         system: system.id,
@@ -70,7 +73,7 @@ export const moduleLocaleBundles = {
         search: searchPack.id,
         ai: cmsAiPack.id,
         member: memberPack.id,
-        theme: { sarangenge: sarangengeId, janari: janariId },
+        theme: { sarangenge: sarangengeId, janari: janariId, layung: layungId },
     },
     su: {
         system: system.su,
@@ -87,6 +90,6 @@ export const moduleLocaleBundles = {
         search: searchPack.su,
         ai: cmsAiPack.su,
         member: memberPack.su,
-        theme: { sarangenge: sarangengeSu, janari: janariSu },
+        theme: { sarangenge: sarangengeSu, janari: janariSu, layung: layungSu },
     },
 } as const;

@@ -1,0 +1,115 @@
+{
+    "_meta": {
+        "scope": "theme",
+        "slug": "layung",
+        "description": "Layung high-performance ISP & MSP theme customizer settings schema."
+    },
+    "isp_asn_number": {
+        "label": "Nomor ASN & BGP Peering",
+        "type": "text",
+        "default": "AS139820 (BGP Multi-Homing Tier-1)",
+        "category": "ISP Info"
+    },
+    "isp_sla_guarantee": {
+        "label": "Jaminan Uptime SLA",
+        "type": "text",
+        "default": "99.999% SLA Uptime",
+        "category": "ISP Info"
+    },
+    "isp_noc_latency": {
+        "label": "Latensi Rata-rata Inti",
+        "type": "text",
+        "default": "< 2.4 ms",
+        "category": "ISP Info"
+    },
+    "isp_backbone_capacity": {
+        "label": "Kapasitas Backbone Jaringan",
+        "type": "text",
+        "default": "100 Gbps Redundant Ring",
+        "category": "ISP Info"
+    },
+    "isp_noc_phone": {
+        "label": "Nomor Hotline NOC 24/7",
+        "type": "text",
+        "default": "+62 21 5088 9988",
+        "category": "ISP Info"
+    },
+    "isp_sales_phone": {
+        "label": "Nomor Telepon Sales Enterprise",
+        "type": "text",
+        "default": "+62 811 9888 2026",
+        "category": "ISP Info"
+    },
+    "isp_whatsapp": {
+        "label": "Nomor WhatsApp NOC & Sales",
+        "type": "text",
+        "default": "6281198882026",
+        "category": "ISP Info"
+    },
+    "isp_email": {
+        "label": "Email Resmi NOC / Support",
+        "type": "text",
+        "default": "noc@layung.net.id",
+        "category": "ISP Info"
+    },
+    "isp_address": {
+        "label": "Alamat Kantor & Data Center Utama",
+        "type": "textarea",
+        "default": "Cyber Tower Lt. 18, Jl. Rasuna Said Kav. X-2, Jakarta Selatan, 12950",
+        "category": "ISP Info"
+    },
+    "hero_badge_text": {
+        "label": "Hero Eyebrow / Badge",
+        "type": "text",
+        "default": "Infrastruktur Serat Optik & Managed IT Services 2026",
+        "category": "Hero Section"
+    },
+    "hero_title": {
+        "label": "Judul Utama Hero",
+        "type": "text",
+        "default": "Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global",
+        "category": "Hero Section"
+    },
+    "hero_subtitle": {
+        "label": "Subjudul Hero",
+        "type": "textarea",
+        "default": "Hadirkan backbone internet berkecepatan cahaya, latensi super rendah di bawah 3ms, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_text": {
+        "label": "Teks Tombol Utama Hero",
+        "type": "text",
+        "default": "Cek Area Jangkauan",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_text": {
+        "label": "Teks Tombol Sekunder Hero",
+        "type": "text",
+        "default": "Konsultasi Enterprise",
+        "category": "Hero Section"
+    },
+    "speed_calculator_enabled": {
+        "label": "Tampilkan Simulator Bandwidth",
+        "type": "boolean",
+        "default": true,
+        "category": "Hero Section"
+    },
+    "coverage_check_enabled": {
+        "label": "Aktifkan Fitur Cek Jangkauan",
+        "type": "boolean",
+        "default": true,
+        "category": "Hero Section"
+    },
+    "footer_about_text": {
+        "label": "Deskripsi Singkat Footer",
+        "type": "textarea",
+        "default": "Layung Network adalah penyedia infrastruktur serat optik berkecepatan tinggi, koneksi dedicated 1:1, dan Managed IT Services dengan jaminan SLA 99.999% bagi korporasi dan institusi.",
+        "category": "Footer"
+    },
+    "footer_copyright": {
+        "label": "Teks Hak Cipta Footer",
+        "type": "text",
+        "default": "© 2026 Layung Network. Hak cipta dilindungi undang-undang.",
+        "category": "Footer"
+    }
+}

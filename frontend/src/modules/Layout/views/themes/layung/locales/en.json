@@ -1,0 +1,121 @@
+{
+  "name": "Layung",
+  "description": "Layung — premier high-speed Internet Service Provider (ISP) and Managed Service Provider (MSP) theme. Pure fiber optic architecture, 99.999% SLA uptime, and 24/7 certified NOC.",
+  "header": {
+    "home": "Home",
+    "about": "About Us",
+    "solusi": "Managed Services",
+    "services": "Fiber Connectivity",
+    "pricing": "Plans & Bandwidth",
+    "achievement": "SLA & Certifications",
+    "career": "NOC Careers",
+    "tim": "Engineering Team",
+    "blog": "News & Advisories",
+    "contact": "Contact NOC",
+    "search": "Search",
+    "liveNoc": "NOC Status",
+    "nocOperational": "All Nodes Operational",
+    "coverageCheck": "Check Coverage",
+    "signIn": "Client Portal",
+    "account": "Enterprise Account",
+    "getStarted": "Request Quote",
+    "selectLanguage": "Language:"
+  },
+  "footer": {
+    "description": "Layung Network provides ultra-high-speed fiber optic infrastructure, 1:1 dedicated internet access, and managed IT services with 99.999% SLA uptime for modern global enterprises.",
+    "services": "Fiber Optic Services",
+    "managed": "Managed IT & SOC",
+    "contact": "24/7 Support Center",
+    "copyright": "All rights reserved.",
+    "asn": "BGP Routing & Peering ASN:",
+    "slaPromise": "15-Minute MTTR Guaranteed Response"
+  },
+  "hero": {
+    "badge": "Fiber Optic Infrastructure & Managed Services 2026",
+    "headline": "Ultra-High Speed Fiber & Managed IT Solutions for Global Enterprises",
+    "subheadline": "Deploy light-speed internet backbone, sub-3ms ultra-low latency, direct multi-cloud interconnects, and 24/7 pro-active Cyber SOC defense.",
+    "ctaPrimary": "Check Coverage Area",
+    "ctaSecondary": "Enterprise Consultation",
+    "latency": "Core Latency",
+    "uptime": "SLA Uptime Guarantee",
+    "backbone": "Backbone Capacity",
+    "support": "Certified NOC Team"
+  },
+  "calculator": {
+    "badge": "Interactive Bandwidth Simulator",
+    "title": "Estimate Bandwidth Requirements for Your Office Infrastructure",
+    "subtitle": "Select active devices count, cloud workload profile, and receive instant tailored dedicated internet recommendations.",
+    "usersLabel": "Active Users / Devices:",
+    "cloudUsageLabel": "Business Workload:",
+    "recommendedPlan": "Recommended Tier:",
+    "getQuote": "Request Formal Proposal"
+  },
+  "bento": {
+    "badge": "Infrastructure Pillars",
+    "title": "Complete Telecom Ecosystem & Digital Security Solutions",
+    "subtitle": "Engineered from core to edge to ensure your business operations remain always connected and resilient.",
+    "diaTitle": "Dedicated Internet 1:1",
+    "diaDesc": "Pure symmetrical upload and download speeds with Static Public IPs and 99.999% SLA uptime.",
+    "sdwanTitle": "Managed SD-WAN & Multi-Cloud",
+    "sdwanDesc": "Direct low-latency interconnects to AWS, Google Cloud, and Azure with intelligent failover.",
+    "socTitle": "24/7 Cyber Security SOC",
+    "socDesc": "High-capacity DDoS mitigation, Next-Gen Firewall, and pro-active threat hunting.",
+    "colocationTitle": "Tier-3 Data Center Interconnect",
+    "colocationDesc": "ISO 27001 certified colocation server facilities with redundant multi-upstream carriers."
+  },
+  "packages": {
+    "badge": "Capacity & Service Plans",
+    "title": "Tailored Connectivity Packages for Every Industry Scale",
+    "subtitle": "From growing corporate offices to multi-branch enterprise networks with guaranteed throughput.",
+    "homeTab": "Home & Small Office",
+    "bizTab": "Business Broadband",
+    "enterpriseTab": "Dedicated Internet (DIA)",
+    "managedTab": "Managed Cloud & SOC",
+    "selectPlan": "Select This Plan"
+  },
+  "pages": {
+    "about": {
+      "title": "Company Profile & Infrastructure",
+      "subtitle": "Discover Layung Network: Global-standard fiber optic connectivity built on transparency, speed, and high availability.",
+      "storyTitle": "Dedicated to Powering Modern Connectivity at the Speed of Light",
+      "storyText": "Inspired by the radiant Layung twilight sky that illuminates the horizon, we engineered an independent fiber optic backbone reaching major business hubs.",
+      "datacenterTitle": "Data Centers & Points of Presence (PoP)"
+    },
+    "solusi": {
+      "title": "Managed IT & Cyber Security Solutions",
+      "subtitle": "Secure your digital transformation with round-the-clock support from our certified Network Operations Center (NOC) and SOC."
+    },
+    "services": {
+      "title": "Fiber Optic & Dedicated Network Services",
+      "subtitle": "Uncompromised connectivity: Dark Fiber leases, Metro Ethernet, and 1:1 symmetrical Dedicated Internet Access (DIA)."
+    },
+    "pricing": {
+      "title": "Transparent Bandwidth Pricing & Service Plans",
+      "subtitle": "Clear connectivity investment with zero hidden fees and enforceable Service Level Agreements (SLA)."
+    },
+    "achievements": {
+      "title": "SLA Achievements & Reliability Track Record",
+      "subtitle": "ISO 27001, ISO 9001 certified with continuous 99.999% verified uptime performance for over 5 consecutive years."
+    },
+    "team": {
+      "title": "Directory of Network Engineers & Solutions Architects",
+      "subtitle": "Backed by CCIE, CCNP, CEH, and ITIL certified specialists standing by to safeguard your infrastructure every second."
+    },
+    "careers": {
+      "title": "Career Center & Engineering Talent Recruitment",
+      "subtitle": "Join our world-class engineering team building the future of mission-critical internet infrastructure."
+    },
+    "contact": {
+      "title": "Contact NOC & Verify Fiber Coverage Area",
+      "subtitle": "Need emergency network support or deploying high-speed enterprise internet? Our technical consultants respond in minutes."
+    },
+    "blog": {
+      "title": "Technology Insights & Network Advisories",
+      "subtitle": "In-depth articles covering cyber security trends, cloud architecture, and scheduled maintenance bulletins."
+    },
+    "search": {
+      "title": "Search Services & Technical Documentation",
+      "subtitle": "Quickly find plan details, configuration guidelines, and Layung engineering documentation."
+    }
+  }
+}

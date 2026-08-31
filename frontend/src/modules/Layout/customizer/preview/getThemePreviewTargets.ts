@@ -1,8 +1,12 @@
 import type { CustomizerPreviewTargetConfig } from '@/modules/Layout/customizer/preview/protocol';
 import janariTargets from '@/modules/Layout/views/themes/janari/customizer/preview.targets.json';
+import sarangengeTargets from '@/modules/Layout/views/themes/sarangenge/customizer/preview.targets.json';
+import layungTargets from '@/modules/Layout/views/themes/layung/customizer/preview.targets.json';
 
 const bySlug: Record<string, Record<string, CustomizerPreviewTargetConfig>> = {
   janari: janariTargets.targets as Record<string, CustomizerPreviewTargetConfig>,
+  sarangenge: sarangengeTargets.targets as Record<string, CustomizerPreviewTargetConfig>,
+  layung: layungTargets.targets as Record<string, CustomizerPreviewTargetConfig>,
 };
 
 export function getThemePreviewTargets(slug: string): Record<string, CustomizerPreviewTargetConfig> {

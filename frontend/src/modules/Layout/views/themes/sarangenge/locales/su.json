@@ -3,115 +3,189 @@
     "home": "Tepas",
     "about": "Profil",
     "services": "Fasilitas",
-    "solusi": "Program",
-    "blog": "Warta",
-    "pricing": "Biaya",
-    "contact": "Kontak",
+    "solusi": "Program & Kurikulum",
+    "blog": "Warta Sakola",
+    "pricing": "Waragad & Beasiswa",
+    "contact": "Kontak & PPDB",
     "career": "Alumni",
-    "achievement": "Prestasi",
+    "achievement": "Préstasi",
+    "tim": "Guru & Staf",
     "search": "Paluruh",
     "account": "Akun",
-    "signIn": "Lebet",
-    "getStarted": "PPDB"
+    "signIn": "Lebet Portal",
+    "getStarted": "Info PPDB",
+    "selectLanguage": "Basa"
   },
   "footer": {
-    "description": "Sarangenge — téma situs sakola (tengah poé dina basa Sunda). Sadérék filosofis Janari (fajar). Kanvas kampus anu haneut sareng écés.",
-    "links": "Jelajah kampus",
-    "resources": "Layanan",
-    "newsletter": "Buletin sakola",
-    "subscribe": "Langganan",
-    "subscribed": "Kadaftar",
-    "subscribeFailed": "Gagal",
-    "contact": "Hubungi sakola",
-    "copyright": "Sadaya hak ditangtayungan."
+    "description": "Sarangenge kainspirasi ku kembang sarangenge (bunga matahari) sarta haneutna panonpoé isuk anu numuwuhkeun budi pekerti luhur, sains, sarta integritas.",
+    "programs": "Program & Kurikulum",
+    "admissions": "Émbaran PPDB",
+    "contact": "Kontak & Hotline",
+    "copyright": "Sadaya hak ditangtayungan undang-undang."
   },
   "common": {
-    "readMore": "Maca salengkepna",
-    "viewAll": "Tingali sadayana",
-    "explore": "Jelajah",
-    "learnMore": "Diajar langkung seueur",
+    "readMore": "Maca Salengkepna",
+    "viewAll": "Tingali Sadaya",
+    "explore": "Jajah",
+    "learnMore": "Pangajaran Salengkepna",
     "back": "Mulang",
-    "search": "Paluruh warta atawa kaca…",
-    "publishedOn": "Diterbitkeun",
+    "search": "Paluruh Warta & Agenda",
+    "searchPlaceholder": "Ketik kecap konci...",
+    "publishedOn": "Dipedalkeun dina",
     "by": "ku"
   },
   "pages": {
     "home": {
-      "heroBadge": "Téma sakola · Sarangenge",
-      "heroTitle": "Diajar dina tengah poé — écés, haneut, siap mangsa hareup.",
-      "heroSubtitle": "Situs resmi sakola: profil, program, prestasi, warta, sareng jalur PPDB dina hiji kanvas anu gampang diaksés.",
-      "heroCta": "Info PPDB",
-      "heroSecondary": "Tingali program",
-      "bentoTitle": "Aksés gancang kampus",
-      "bentoSubtitle": "Inpormasi penting disusun ringkes — pola bento anu biasa di situs sakola 2026.",
-      "tilePpdb": "PPDB & pendaptaran",
-      "tilePpdbDesc": "Jadwal, syarat, sareng formulir.",
-      "tileProgram": "Program unggulan",
-      "tileProgramDesc": "Kurikulum, ekstrakurikuler, jalur bakat.",
-      "tilePrestasi": "Prestasi",
-      "tilePrestasiDesc": "Capaian akademik sareng non-akademik.",
-      "tileBerita": "Warta sakola",
-      "tileBeritaDesc": "Pengumuman sareng carita kampus.",
-      "tileProfil": "Profil sakola",
-      "tileProfilDesc": "Visi, misi, budaya diajar.",
-      "tileKontak": "Hubungi kami",
-      "tileKontakDesc": "Alamat, telepon, sareng pesen.",
-      "featuresTitle": "Naha Sarangenge pikeun sakola",
-      "featuresSubtitle": "Dirancang pikeun kolot, murid, sareng staf — lain pitch deck SaaS.",
-      "feat1Title": "Hirarki écés",
-      "feat1Desc": "PPDB, program, sareng warta teu saling silih rebut dina viewport kahiji.",
-      "feat2Title": "Kontras ramah aksés",
-      "feat2Desc": "Palet teal + panonpoé siang kalayan tipografi ageung anu gampang dibaca di HP.",
-      "feat3Title": "Gerak bermakna",
-      "feat3Desc": "Animasi hampang nungtun panon — tiasa dipareuman ku prefers-reduced-motion.",
-      "ctaTitle": "Siap ngenal sakola kami langkung caket?",
-      "ctaSubtitle": "Mimitian ti profil, jelajah program, atawa hubungi panitia PPDB.",
-      "ctaButton": "Hubungi sakola"
+      "heroBadge": "Panarimaan Siswa Anyar (PPDB) 2026/2027 Dibuka",
+      "heroTitle": "Mekar Bareng Cahaya Isuk — Ngabina Generasi Pinter & Berkarakter.",
+      "heroSubtitle": "Ramatloka resmi sakola: kainspirasi ku kembang sarangenge nu nyanghareup kana panonpoé isuk, ngaping siswa mikacinta élmu sarta miboga ahlak luhung.",
+      "heroCta": "Daptar PPDB Online",
+      "heroSecondary": "Tilik Program",
+      "bentoTitle": "Aksés Gancang Kampus",
+      "bentoSubtitle": "Navigasi penting pikeun sepuh, calon murid, sareng para siswa dina hiji kanvas modern.",
+      "tilePpdb": "Panarimaan Siswa Anyar",
+      "tilePpdbDesc": "Jalur Préstasi, Régulér, sareng Afirmasi. Pancegkeun sarat, jadwal tés, sareng formulir pendaptaran.",
+      "tileProgram": "Program Punjul & Kurikulum",
+      "tileProgramDesc": "Kurikulum Merdéka dumasar risét, bilingual track, STEM & lab coding, sarta program tahfidz & karakter luhung.",
+      "tilePrestasi": "Préstasi Siswa",
+      "tilePrestasiDesc": "Pinunjul Olimpiade Sains, Robotika Nasional, Olahraga & Seni.",
+      "tileBerita": "Warta & Agenda",
+      "tileBeritaDesc": "Kagiatan resmi, kalénder akademik, jadwal asesmén, sareng siaran pérs sakola.",
+      "tileProfil": "Profil Sakola",
+      "tileProfilDesc": "Visi, misi, sajarah, sareng ajén-inajén atikan Sarangenge.",
+      "tileKontak": "Kontak & Lokasi",
+      "tileKontakDesc": "Alamat kampus, jam operasional, sareng saluran WhatsApp hotline PPDB."
     },
     "about": {
-      "title": "Profil sakola",
-      "subtitle": "Identitas, budaya diajar, sareng arah atikan kami.",
-      "missionTitle": "Misi",
-      "missionDesc": "Ngagedékeun pamejar anu tangguh, boga karakter, siap kolaborasi di dunya nyata."
+      "title": "Profil Sakola",
+      "subtitle": "Ngabaktikeun ékosistem atikan holistik anu ngagabungkeun kaunggulan sains, téknologi, sareng kateguhan ahlak mulya.",
+      "visionTitle": "Visi Sakola",
+      "missionTitle": "Misi Sakola",
+      "missionDesc": "Ngalaksanakeun prosés pangajaran interaktif dumasar kana risét, sains, sareng téknologi mangsa payun."
     },
     "blog": {
-      "title": "Warta & pengumuman",
-      "subtitle": "Kabar kampus, agenda, sareng carita pangajaran.",
-      "noPosts": "Teu acan aya warta anu diterbitkeun."
+      "title": "Warta & Berita Sakola",
+      "subtitle": "Émbaran resmi, liputan préstasi, béwara akademik, sareng agenda kagiatan siswa.",
+      "categories": "Kategori Warta",
+      "noPosts": "Teu acan aya warta dina kategori ieu."
     },
     "post": {
-      "backToBlog": "Mulang ka warta",
-      "share": "Bagikeun"
+      "title": "Rincian Warta",
+      "backToBlog": "Mulang ka Warta Sakola",
+      "share": "Bagikeun",
+      "bookmark": "Simpen Warta",
+      "bookmarked": "Kacimpen",
+      "signInToEngage": "Lebet portal kanggo nyimpen & sawala",
+      "comments": "Tanggapan & Sawala",
+      "commentPlaceholder": "Tuliskeun tanggapan anjeun...",
+      "postComment": "Kintun Tanggapan",
+      "reader": "Pamaca",
+      "noComments": "Teu acan aya tanggapan."
     },
     "contact": {
-      "title": "Hubungi sakola",
-      "subtitle": "Tanyakeun PPDB, akademik, atawa gawé bareng. Kami bakal ngawaler enggal.",
-      "nameLabel": "Nami lengkep",
-      "emailLabel": "Email",
-      "messageLabel": "Pesen",
-      "submitButton": "Kintun pesen"
+      "title": "Kontak & Pendaptaran PPDB",
+      "subtitle": "Tim konselor sareng sekretariat PPDB sayaga ngabantosan patarosan anjeun ngeunaan kurikulum, waragad, sareng pendaptaran.",
+      "nameLabel": "Nami Lengkep Sepuh / Siswa",
+      "emailLabel": "Alamat Email",
+      "messageLabel": "Pesen / Patarosan",
+      "submitButton": "Kintun Pesen / Pamundut"
     },
     "pricing": {
-      "title": "Inpormasi biaya",
-      "subtitle": "Ringkesan komponen biaya atikan — hubungi administrasi pikeun rincian resmi.",
-      "monthly": "Per semester",
-      "annual": "Per taun"
+      "title": "Émbaran Waragad Atikan & Beasiswa",
+      "subtitle": "Rincian waragad atikan anu transparan, lengkep sareng program beasiswa préstasi akademik, tahfidz, sareng bantuan afirmasi.",
+      "monthly": "Per Sasih",
+      "annual": "Per Taun"
     },
     "solusi": {
-      "title": "Program sakola",
-      "subtitle": "Jalur pangajaran sareng pamekaran bakat anu kami tawar."
+      "title": "Program Atikan & Kurikulum Punjul",
+      "subtitle": "Ngalaksanakeun kurikulum adaptif anu ngahijikeun jerona élmu pangaweruh, kamampuh digital, sareng atikan kapamimpinan."
     },
     "services": {
-      "title": "Fasilitas & layanan",
-      "subtitle": "Rohangan diajar, laboratorium, perpustakaan, sareng dukungan murid."
+      "title": "Fasilitas & Sarana Kampus Modern",
+      "subtitle": "Nyadiakeun lingkungan diajar anu aman, genah, higiénis, sareng kagabungkeun sareng téknologi digital mutahir."
     },
     "career_center": {
-      "title": "Alumni & kariér",
-      "subtitle": "Jejak lulusan sareng kasempetan magang atawa beasiswa."
+      "title": "Jaringan Alumni & Bimbingan Studi",
+      "subtitle": "Ngajaga beungkeutan kakulawargaan alumni Sarangenge di sakumna dunya sarta ngabimbing karir sareng beasiswa pikeun siswa."
     },
     "achievement": {
-      "title": "Prestasi",
-      "subtitle": "Penghargaan, olimpiade, seni, olahraga, sareng capaian babarengan."
+      "title": "Préstasi & Pangajén Sivitas Sarangenge",
+      "subtitle": "Rangkuman préstasi kajuaraan akademik, sains, téknologi, seni budaya, sareng olahraga di tingkat nasional dugi ka internasional."
+    },
+    "tim": {
+      "title": "Dewan Guru & Tenaga Kependidikan",
+      "subtitle": "Dirojong ku para pendidik profésional anu boga gelar sarjana & magister kalayan sertifikasi pendidik nasional sareng guru Cambridge."
+    },
+    "disabled": {
+      "statusLabel": "Émbaran Sakola",
+      "defaultTitle": "Kaca Teu Acan Sayaga",
+      "defaultMessage": "Layanan atanapi inpormasi ieu nuju dina prosés pamutahiran ku pihak sakola.",
+      "backHome": "Mulang ka Tepas",
+      "contactAdmin": "Kontak Sakola"
+    },
+    "search": {
+      "title": "Paluruh Warta & Eusi Sakola",
+      "subtitle": "Panggihan artikel warta, pituduh PPDB, program kurikulum, sareng béwara sakola.",
+      "placeholder": "Ketik kecap konci paluruhan...",
+      "submit": "Paluruh",
+      "empty": "Teu aya hasil pikeun kecap konci kasebat.",
+      "unavailable": "Layanan paluruhan nuju teu tiasa diaksés."
+    }
+  },
+  "customizer": {
+    "sidebar": {
+      "page_about": "Kaca Profil",
+      "page_about_desc": "Atur eusi visi misi sareng profil sakola",
+      "page_programs": "Kaca Program",
+      "page_programs_desc": "Atur kurikulum sareng program punjul",
+      "page_achievements": "Kaca Préstasi",
+      "page_achievements_desc": "Atur galeri sareng daptar préstasi siswa",
+      "page_facilities": "Kaca Fasilitas",
+      "page_facilities_desc": "Atur sarana sareng fasilitas kampus",
+      "page_tim": "Kaca Guru & Staf",
+      "page_tim_desc": "Atur diréktori pendidik sareng tenaga kependidikan",
+      "page_pricing": "Kaca Waragad & Beasiswa",
+      "page_pricing_desc": "Atur émbaran waragad atikan sareng skéma beasiswa",
+      "page_alumni": "Kaca Alumni",
+      "page_alumni_desc": "Atur jaringan alumni sareng carita suksés",
+      "page_news": "Kaca Warta Sakola",
+      "page_news_desc": "Atur pidangan warta sareng agenda",
+      "page_contact": "Kaca Kontak & PPDB",
+      "page_contact_desc": "Atur kontak, hotline WhatsApp, sareng pendaptaran"
+    },
+    "items": {
+      "hero_section": "Bagéan Hero Sakola",
+      "hero_section_desc": "Konfigurasi tampilan utama hero banner sakola",
+      "school_stats": "Statistik Sakola",
+      "stat_value": "Nilai Angka",
+      "stat_label": "Katerangan Label",
+      "programs_section": "Bagéan Program",
+      "programs_section_desc": "Konfigurasi daptar program punjul",
+      "program_list": "Daptar Program",
+      "title": "Judul",
+      "badge": "Lencana Kategori",
+      "detail": "Katerangan Rinci",
+      "thumbnail": "Poto / Gambar",
+      "target_url": "Tautan Tujuan",
+      "achievements_page": "Kaca Préstasi",
+      "achievements_page_desc": "Konfigurasi préstasi sareng medali",
+      "achievement_list": "Daptar Préstasi",
+      "year": "Taun",
+      "name": "Nami Siswa / Tim",
+      "level": "Tingkat Kajuaraan",
+      "facilities_page": "Kaca Fasilitas",
+      "facilities_page_desc": "Konfigurasi sarana sareng fasilitas kampus",
+      "facility_list": "Daptar Fasilitas",
+      "testimonials": "Bagéan Kasaksian",
+      "testimonials_desc": "Kasaksian siswa, sepuh, sareng alumni",
+      "testimonial_list": "Daptar Kasaksian",
+      "role": "Peran / Katerangan",
+      "quote": "Kutipan Kasaksian",
+      "avatar": "Poto Profil",
+      "staff_page": "Kaca Dewan Guru",
+      "staff_page_desc": "Diréktori pendidik sareng staf pangajar",
+      "staff_list": "Daptar Guru & Staf",
+      "subject": "Mata Pangajaran / Widang"
     }
   }
 }

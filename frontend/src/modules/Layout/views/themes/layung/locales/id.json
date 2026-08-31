@@ -1,0 +1,121 @@
+{
+  "name": "Layung",
+  "description": "Layung — tema portal penyedia layanan internet (ISP) dan Managed Service Provider (MSP) terdepan. Arsitektur serat optik, jaminan SLA 99.999%, dan layanan NOC 24/7.",
+  "header": {
+    "home": "Beranda",
+    "about": "Tentang Kami",
+    "solusi": "Managed Services",
+    "services": "Konektivitas Fiber",
+    "pricing": "Paket & Bandwidth",
+    "achievement": "SLA & Sertifikasi",
+    "career": "Karir NOC",
+    "tim": "Tim Engineer",
+    "blog": "Warta & Berita",
+    "contact": "Hubungi NOC",
+    "search": "Pencarian",
+    "liveNoc": "Status NOC",
+    "nocOperational": "Semua Node Normal",
+    "coverageCheck": "Cek Jangkauan",
+    "signIn": "Portal Klien",
+    "account": "Akun Perusahaan",
+    "getStarted": "Minta Penawaran",
+    "selectLanguage": "Pilih Bahasa:"
+  },
+  "footer": {
+    "description": "Layung Network adalah penyedia infrastruktur serat optik berkecepatan tinggi, koneksi dedicated 1:1, dan Managed IT Services dengan jaminan SLA 99.999% bagi korporasi dan institusi.",
+    "services": "Layanan Fiber Optik",
+    "managed": "Managed IT & SOC",
+    "contact": "Pusat Bantuan 24/7",
+    "copyright": "Hak cipta dilindungi undang-undang.",
+    "asn": "BGP Routing & Peering ASN:",
+    "slaPromise": "Jaminan Respon Cepat 15 Menit MTTR"
+  },
+  "hero": {
+    "badge": "Infrastruktur Serat Optik & Managed Services 2026",
+    "headline": "Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global",
+    "subheadline": "Hadirkan backbone internet berkecepatan cahaya, latensi super rendah di bawah 3ms, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.",
+    "ctaPrimary": "Cek Area Jangkauan",
+    "ctaSecondary": "Konsultasi Enterprise",
+    "latency": "Latensi Inti",
+    "uptime": "Jaminan Uptime SLA",
+    "backbone": "Kapasitas Backbone",
+    "support": "Tim NOC Bersertifikasi"
+  },
+  "calculator": {
+    "badge": "Simulator Bandwidth Interaktif",
+    "title": "Hitung Kebutuhan Bandwidth & Solusi Ideal Kantor Anda",
+    "subtitle": "Sesuaikan jumlah perangkat aktif, tipe operasional cloud, dan dapatkan rekomendasi paket dedicated internet terbaik.",
+    "usersLabel": "Jumlah Pengguna / Perangkat:",
+    "cloudUsageLabel": "Aktivitas Bisnis:",
+    "recommendedPlan": "Rekomendasi Paket:",
+    "getQuote": "Ajukan Proposal Langsung"
+  },
+  "bento": {
+    "badge": "Pilar Keunggulan Infrastruktur",
+    "title": "Solusi Lengkap Ekosistem Telekomunikasi & Keamanan Digital",
+    "subtitle": "Dirancang dari hulu ke hilir untuk memastikan operasional bisnis Anda tetap menyala tanpa henti.",
+    "diaTitle": "Dedicated Internet 1:1",
+    "diaDesc": "Bandwidth simetris murni upload dan download dengan IP Publik Statis dan SLA 99.999%.",
+    "sdwanTitle": "Managed SD-WAN & Multi-Cloud",
+    "sdwanDesc": "Integrasi langsung ke AWS, Google Cloud, dan Azure dengan routing cerdas anti-gangguan.",
+    "socTitle": "24/7 Cyber Security SOC",
+    "socDesc": "Mitigasi serangan DDoS kapasitas tinggi, Next-Gen Firewall, dan pemantauan ancaman siber proaktif.",
+    "colocationTitle": "Tier-3 Data Center Interconnect",
+    "colocationDesc": "Fasilitas colocation server bersertifikasi ISO 27001 dengan multi-upstream redundan."
+  },
+  "packages": {
+    "badge": "Skema Paket & Kapasitas",
+    "title": "Pilihan Paket Konektivitas Sesuai Kebutuhan Industri",
+    "subtitle": "Mulai dari bisnis berkembang hingga skala enterprise multi-cabang dengan alokasi bandwidth terjamin.",
+    "homeTab": "Home & Small Office",
+    "bizTab": "Business Broadband",
+    "enterpriseTab": "Dedicated Internet (DIA)",
+    "managedTab": "Managed Cloud & SOC",
+    "selectPlan": "Pilih Layanan Ini"
+  },
+  "pages": {
+    "about": {
+      "title": "Profil Perusahaan & Infrastruktur",
+      "subtitle": "Mengenal Layung Network: Penyedia konektivitas serat optik berstandar global dengan komitmen transparansi dan keandalan tinggi.",
+      "storyTitle": "Dedikasi Menghubungkan Indonesia dengan Kecepatan Cahaya",
+      "storyText": "Berakar dari filosofi cahaya Layung yang menyinari langit dengan keindahan dan kehangatan fajar hingga senja, kami membangun jaringan serat optik mandiri yang menjangkau pusat-pusat bisnis terpenting.",
+      "datacenterTitle": "Data Center & Point of Presence (PoP)"
+    },
+    "solusi": {
+      "title": "Managed IT & Cyber Security Solutions",
+      "subtitle": "Transformasi digital aman dengan pendampingan penuh dari tim Network Operations Center (NOC) dan Security Operations Center (SOC) 24/7."
+    },
+    "services": {
+      "title": "Layanan Fiber Optik & Jaringan Terdedikasi",
+      "subtitle": "Koneksi internet tanpa kompromi: Dark Fiber, Metro Ethernet, dan Dedicated Internet Access (DIA) simetris 1:1."
+    },
+    "pricing": {
+      "title": "Transparansi Biaya & Rincian Paket Bandwidth",
+      "subtitle": "Investasi konektivitas yang jelas, tanpa biaya tersembunyi, dilengkapi jaminan Service Level Agreement (SLA)."
+    },
+    "achievements": {
+      "title": "Pencapaian SLA & Rekam Jejak Keandalan",
+      "subtitle": "Sertifikasi ISO 27001, ISO 9001, dan rekor uptime 99.999% selama lebih dari 5 tahun berturut-turut."
+    },
+    "team": {
+      "title": "Direktori Tim Engineer & Arsitek Jaringan",
+      "subtitle": "Didukung oleh profesional bersertifikasi CCIE, CCNP, CEH, dan ITIL yang siaga menjaga jaringan Anda setiap detik."
+    },
+    "careers": {
+      "title": "Pusat Karir & Rekrutmen Talenta IT",
+      "subtitle": "Bergabunglah bersama kami membangun infrastruktur digital masa depan Indonesia."
+    },
+    "contact": {
+      "title": "Hubungi NOC & Cek Area Jangkauan Fiber",
+      "subtitle": "Butuh bantuan teknis darurat atau ingin berlangganan internet kantor baru? Tim konsultan kami siap merespon dalam hitungan menit."
+    },
+    "blog": {
+      "title": "Warta Teknologi & Notifikasi Jaringan",
+      "subtitle": "Artikel seputar tren cyber security, teknologi cloud, dan jadwal pemeliharaan jaringan berkala."
+    },
+    "search": {
+      "title": "Pencarian Layanan & Dokumentasi",
+      "subtitle": "Temukan informasi paket, panduan konfigurasi, dan artikel teknis Layung dengan cepat."
+    }
+  }
+}

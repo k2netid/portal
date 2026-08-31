@@ -1,0 +1,223 @@
+{
+    "_meta": {
+        "scope": "theme",
+        "slug": "sarangenge",
+        "description": "Sarangenge modern school theme customizer settings schema."
+    },
+    "school_accreditation": {
+        "label": "Status Akreditasi",
+        "type": "text",
+        "default": "Akreditasi A (Unggul)",
+        "category": "School Info"
+    },
+    "school_npsn": {
+        "label": "Nomor Pokok Sekolah Nasional (NPSN)",
+        "type": "text",
+        "default": "NPSN: 20268899",
+        "category": "School Info"
+    },
+    "school_principal_name": {
+        "label": "Nama Kepala Sekolah",
+        "type": "text",
+        "default": "Drs. H. Rahmat Sudrajat, M.Pd.",
+        "category": "School Info"
+    },
+    "ppdb_is_open": {
+        "label": "Status Pendaftaran PPDB Buka",
+        "type": "boolean",
+        "default": true,
+        "category": "Hero Section"
+    },
+    "ppdb_year": {
+        "label": "Tahun Ajaran PPDB",
+        "type": "text",
+        "default": "2026/2027",
+        "category": "Hero Section"
+    },
+    "hero_badge_text": {
+        "label": "Hero Eyebrow / Badge",
+        "type": "text",
+        "default": "Penerimaan Peserta Didik Baru (PPDB) 2026/2027 Dibuka",
+        "category": "Hero Section"
+    },
+    "hero_title": {
+        "label": "Judul Utama Hero",
+        "type": "text",
+        "default": "Membentuk Generasi Berkarakter, Cerdas & Siap Menghadapi Masa Depan.",
+        "category": "Hero Section"
+    },
+    "hero_subtitle": {
+        "label": "Subjudul Hero",
+        "type": "textarea",
+        "default": "Situs resmi sekolah: ekosistem pembelajaran holistik dengan Kurikulum Merdeka, sains & teknologi terdepan, serta pembinaan akhlak mulia.",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_text": {
+        "label": "Teks Tombol Utama Hero",
+        "type": "text",
+        "default": "Daftar PPDB Online",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_link": {
+        "label": "Tautan Tombol Utama Hero",
+        "type": "text",
+        "default": "/contact",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_text": {
+        "label": "Teks Tombol Sekunder Hero",
+        "type": "text",
+        "default": "Jelajahi Program",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_link": {
+        "label": "Tautan Tombol Sekunder Hero",
+        "type": "text",
+        "default": "/solusi",
+        "category": "Hero Section"
+    },
+    "hero_stat_1_val": {
+        "label": "Statistik 1 Nilai",
+        "type": "text",
+        "default": "100%",
+        "category": "Hero Section"
+    },
+    "hero_stat_1_label": {
+        "label": "Statistik 1 Label",
+        "type": "text",
+        "default": "Kelulusan & Lanjut Studi",
+        "category": "Hero Section"
+    },
+    "hero_stat_2_val": {
+        "label": "Statistik 2 Nilai",
+        "type": "text",
+        "default": "150+",
+        "category": "Hero Section"
+    },
+    "hero_stat_2_label": {
+        "label": "Statistik 2 Label",
+        "type": "text",
+        "default": "Prestasi Nasional & Dunia",
+        "category": "Hero Section"
+    },
+    "hero_stat_3_val": {
+        "label": "Statistik 3 Nilai",
+        "type": "text",
+        "default": "1:12",
+        "category": "Hero Section"
+    },
+    "hero_stat_3_label": {
+        "label": "Statistik 3 Label",
+        "type": "text",
+        "default": "Rasio Guru & Siswa",
+        "category": "Hero Section"
+    },
+    "bento_title": {
+        "label": "Judul Bento Grid Kampus",
+        "type": "text",
+        "default": "Akses Cepat Informasi Kampus",
+        "category": "Bento Campus Section"
+    },
+    "bento_subtitle": {
+        "label": "Subjudul Bento Grid",
+        "type": "text",
+        "default": "Navigasi penting untuk orang tua, calon siswa, dan peserta didik dalam satu kanvas modern.",
+        "category": "Bento Campus Section"
+    },
+    "programs_title": {
+        "label": "Judul Bagian Program",
+        "type": "text",
+        "default": "Program Unggulan & Kurikulum",
+        "category": "Programs Section"
+    },
+    "programs_subtitle": {
+        "label": "Subjudul Bagian Program",
+        "type": "text",
+        "default": "Pilihan jalur akademik, sains terapan, teknologi, bahasa internasional, dan penguatan karakter.",
+        "category": "Programs Section"
+    },
+    "achievements_title": {
+        "label": "Judul Halaman Prestasi",
+        "type": "text",
+        "default": "Prestasi & Penghargaan Siswa",
+        "category": "Achievements Page"
+    },
+    "achievements_subtitle": {
+        "label": "Subjudul Halaman Prestasi",
+        "type": "text",
+        "default": "Bukti dedikasi dan keunggulan akademik, sains, seni, dan olahraga di tingkat regional hingga internasional.",
+        "category": "Achievements Page"
+    },
+    "facilities_title": {
+        "label": "Judul Fasilitas Sekolah",
+        "type": "text",
+        "default": "Fasilitas & Sarana Kampus Modern",
+        "category": "Services Page"
+    },
+    "facilities_subtitle": {
+        "label": "Subjudul Fasilitas",
+        "type": "text",
+        "default": "Lingkungan belajar kondusif dengan teknologi cerdas dan laboratorium lengkap.",
+        "category": "Services Page"
+    },
+    "tim_title": {
+        "label": "Judul Halaman Pendidik & Staf",
+        "type": "text",
+        "default": "Dewan Guru & Tenaga Kependidikan",
+        "category": "Tim Page"
+    },
+    "tim_subtitle": {
+        "label": "Subjudul Halaman Pendidik",
+        "type": "text",
+        "default": "Didukung pendidik berpengalaman, berdedikasi tinggi, dan tersertifikasi profesional.",
+        "category": "Tim Page"
+    },
+    "pricing_title": {
+        "label": "Judul Informasi Biaya Pendidikan",
+        "type": "text",
+        "default": "Informasi Biaya Pendidikan & Beasiswa",
+        "category": "Pricing Page"
+    },
+    "pricing_subtitle": {
+        "label": "Subjudul Biaya Pendidikan",
+        "type": "text",
+        "default": "Transparansi investasi pendidikan masa depan anak Anda beserta skema beasiswa prestasi & afirmasi.",
+        "category": "Pricing Page"
+    },
+    "contact_whatsapp": {
+        "label": "Nomor WhatsApp Hotline PPDB",
+        "type": "text",
+        "default": "081234567890",
+        "category": "Contact Page"
+    },
+    "contact_admission_hotline": {
+        "label": "Hotline Informasi Pendaftaran",
+        "type": "text",
+        "default": "+62 22 8765 4321",
+        "category": "Contact Page"
+    },
+    "contact_operating_hours": {
+        "label": "Jam Pelayanan Sekolah",
+        "type": "text",
+        "default": "Senin – Jumat: 07.30 – 15.30 WIB",
+        "category": "Contact Page"
+    },
+    "contact_maps_embed_url": {
+        "label": "Google Maps Embed URL (Opsional)",
+        "type": "text",
+        "default": "",
+        "category": "Contact Page"
+    },
+    "footer_about_text": {
+        "label": "Teks Deskripsi Footer",
+        "type": "textarea",
+        "default": "Sarangenge adalah institusi pendidikan terdepan yang berfokus pada keunggulan akademik, integritas karakter, dan kesiapan teknologi masa depan.",
+        "category": "Footer"
+    },
+    "footer_copyright": {
+        "label": "Teks Hak Cipta Footer",
+        "type": "text",
+        "default": "© 2026 Sarangenge Academy. Hak cipta dilindungi undang-undang.",
+        "category": "Footer"
+    }
+}

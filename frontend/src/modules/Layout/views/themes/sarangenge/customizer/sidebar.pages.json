@@ -1,0 +1,67 @@
+{
+    "specialPageItems": [
+        {
+            "id": "page-school-about",
+            "manifestCategories": ["About Page"],
+            "icon": "building-2",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_about",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_about_desc"
+        },
+        {
+            "id": "page-school-programs",
+            "manifestCategories": ["Programs Section"],
+            "icon": "book-open",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_programs",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_programs_desc"
+        },
+        {
+            "id": "page-school-achievements",
+            "manifestCategories": ["Achievements Page"],
+            "icon": "award",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_achievements",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_achievements_desc"
+        },
+        {
+            "id": "page-school-facilities",
+            "manifestCategories": ["Services Page"],
+            "icon": "building",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_facilities",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_facilities_desc"
+        },
+        {
+            "id": "page-school-tim",
+            "manifestCategories": ["Tim Page"],
+            "icon": "users",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_tim",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_tim_desc"
+        },
+        {
+            "id": "page-school-pricing",
+            "manifestCategories": ["Pricing Page"],
+            "icon": "credit-card",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_pricing",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_pricing_desc"
+        },
+        {
+            "id": "page-school-alumni",
+            "manifestCategories": ["Careers Page"],
+            "icon": "graduation-cap",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_alumni",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_alumni_desc"
+        },
+        {
+            "id": "page-school-news",
+            "manifestCategories": ["News Page"],
+            "icon": "newspaper",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_news",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_news_desc"
+        },
+        {
+            "id": "page-school-contact",
+            "manifestCategories": ["Contact Page"],
+            "icon": "phone-call",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_contact",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_contact_desc"
+        }
+    ]
+}

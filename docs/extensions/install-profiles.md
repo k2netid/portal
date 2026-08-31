@@ -39,6 +39,7 @@ Applicator steps: **discover** → **preview gates** → **activate** missing �
 
 ## Operator without code
 
+- App Store shows a contextual banner when **Site is off** (“Enable public website” → `cms_site`) or when CMS packs are fully inactive
 - App Store → **Install profile** → pick option (UI loads preview, shows activate/deactivate lists + warnings)
 - Or CLI: `php artisan ja:apply-install-profile cms`
 - Or re-run seed with the right `INSTALL_PROFILE`

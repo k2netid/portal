@@ -1,0 +1,118 @@
+{
+    "components": [
+        {
+            "id": "hero",
+            "nameKey": "theme.sarangenge.customizer.items.hero_section",
+            "descriptionKey": "theme.sarangenge.customizer.items.hero_section_desc",
+            "icon": "hero",
+            "manifestCategory": "Hero Section",
+            "slots": [
+                {
+                    "id": "stats",
+                    "labelKey": "theme.sarangenge.customizer.items.school_stats",
+                    "props": [
+                        { "key": "value", "labelKey": "theme.sarangenge.customizer.items.stat_value" },
+                        { "key": "label", "labelKey": "theme.sarangenge.customizer.items.stat_label" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "programs",
+            "nameKey": "theme.sarangenge.customizer.items.programs_section",
+            "descriptionKey": "theme.sarangenge.customizer.items.programs_section_desc",
+            "icon": "book-open",
+            "manifestCategory": "Programs Section",
+            "slots": [
+                {
+                    "id": "items",
+                    "labelKey": "theme.sarangenge.customizer.items.program_list",
+                    "props": [
+                        { "key": "title", "labelKey": "theme.sarangenge.customizer.items.title" },
+                        { "key": "category", "labelKey": "theme.sarangenge.customizer.items.badge" },
+                        { "key": "description", "labelKey": "theme.sarangenge.customizer.items.detail" },
+                        { "key": "image", "labelKey": "theme.sarangenge.customizer.items.thumbnail" },
+                        { "key": "url", "labelKey": "theme.sarangenge.customizer.items.target_url" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "achievements",
+            "nameKey": "theme.sarangenge.customizer.items.achievements_page",
+            "descriptionKey": "theme.sarangenge.customizer.items.achievements_page_desc",
+            "icon": "award",
+            "manifestCategory": "Achievements Page",
+            "slots": [
+                {
+                    "id": "list",
+                    "labelKey": "theme.sarangenge.customizer.items.achievement_list",
+                    "props": [
+                        { "key": "year", "labelKey": "theme.sarangenge.customizer.items.year" },
+                        { "key": "title", "labelKey": "theme.sarangenge.customizer.items.title" },
+                        { "key": "student", "labelKey": "theme.sarangenge.customizer.items.name" },
+                        { "key": "level", "labelKey": "theme.sarangenge.customizer.items.level" },
+                        { "key": "description", "labelKey": "theme.sarangenge.customizer.items.detail" },
+                        { "key": "image", "labelKey": "theme.sarangenge.customizer.items.thumbnail" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "facilities",
+            "nameKey": "theme.sarangenge.customizer.items.facilities_page",
+            "descriptionKey": "theme.sarangenge.customizer.items.facilities_page_desc",
+            "icon": "building",
+            "manifestCategory": "Services Page",
+            "slots": [
+                {
+                    "id": "items",
+                    "labelKey": "theme.sarangenge.customizer.items.facility_list",
+                    "props": [
+                        { "key": "title", "labelKey": "theme.sarangenge.customizer.items.title" },
+                        { "key": "description", "labelKey": "theme.sarangenge.customizer.items.detail" },
+                        { "key": "image", "labelKey": "theme.sarangenge.customizer.items.thumbnail" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "testimonials",
+            "nameKey": "theme.sarangenge.customizer.items.testimonials",
+            "descriptionKey": "theme.sarangenge.customizer.items.testimonials_desc",
+            "icon": "message-square",
+            "manifestCategory": "Testimonials Section",
+            "slots": [
+                {
+                    "id": "items",
+                    "labelKey": "theme.sarangenge.customizer.items.testimonial_list",
+                    "props": [
+                        { "key": "name", "labelKey": "theme.sarangenge.customizer.items.name" },
+                        { "key": "role", "labelKey": "theme.sarangenge.customizer.items.role" },
+                        { "key": "content", "labelKey": "theme.sarangenge.customizer.items.quote" },
+                        { "key": "image", "labelKey": "theme.sarangenge.customizer.items.avatar" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "staff",
+            "nameKey": "theme.sarangenge.customizer.items.staff_page",
+            "descriptionKey": "theme.sarangenge.customizer.items.staff_page_desc",
+            "icon": "users",
+            "manifestCategory": "Tim Page",
+            "slots": [
+                {
+                    "id": "teachers",
+                    "labelKey": "theme.sarangenge.customizer.items.staff_list",
+                    "props": [
+                        { "key": "name", "labelKey": "theme.sarangenge.customizer.items.name" },
+                        { "key": "role", "labelKey": "theme.sarangenge.customizer.items.role" },
+                        { "key": "subject", "labelKey": "theme.sarangenge.customizer.items.subject" },
+                        { "key": "image", "labelKey": "theme.sarangenge.customizer.items.avatar" }
+                    ]
+                }
+            ]
+        }
+    ]
+}

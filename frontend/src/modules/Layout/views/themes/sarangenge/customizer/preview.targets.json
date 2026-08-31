@@ -1,0 +1,74 @@
+{
+    "targets": {
+        "header": {
+            "navItemId": "design-branding",
+            "mode": "design"
+        },
+        "nav": {
+            "navItemId": "identity-menus",
+            "mode": "design"
+        },
+        "footer": {
+            "navItemId": "ux-footer",
+            "mode": "design"
+        },
+        "hero": {
+            "navItemId": "comp-hero",
+            "mode": "bindings",
+            "bindingsId": "hero"
+        },
+        "bento": {
+            "navItemId": "comp-bento",
+            "mode": "design"
+        },
+        "programs": {
+            "navItemId": "page-school-programs",
+            "mode": "bindings",
+            "bindingsId": "programs"
+        },
+        "achievements": {
+            "navItemId": "page-school-achievements",
+            "mode": "bindings",
+            "bindingsId": "achievements"
+        },
+        "facilities": {
+            "navItemId": "page-school-facilities",
+            "mode": "bindings",
+            "bindingsId": "facilities"
+        },
+        "tim": {
+            "navItemId": "page-school-tim",
+            "mode": "bindings",
+            "bindingsId": "staff"
+        },
+        "testimonials": {
+            "navItemId": "page-testimonials",
+            "mode": "bindings",
+            "bindingsId": "testimonials"
+        },
+        "cta": {
+            "navItemId": "page-cta",
+            "mode": "design"
+        },
+        "about": {
+            "navItemId": "page-school-about",
+            "mode": "design"
+        },
+        "news": {
+            "navItemId": "page-school-news",
+            "mode": "design"
+        },
+        "contact": {
+            "navItemId": "page-school-contact",
+            "mode": "design"
+        },
+        "pricing": {
+            "navItemId": "page-school-pricing",
+            "mode": "design"
+        },
+        "alumni": {
+            "navItemId": "page-school-alumni",
+            "mode": "design"
+        }
+    }
+}

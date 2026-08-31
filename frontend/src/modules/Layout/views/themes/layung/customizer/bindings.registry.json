@@ -1,0 +1,36 @@
+{
+    "components": [
+        {
+            "id": "hero",
+            "nameKey": "theme.layung.customizer.items.hero_section",
+            "descriptionKey": "theme.layung.customizer.items.hero_section_desc",
+            "icon": "hero",
+            "manifestCategory": "Hero Section",
+            "slots": []
+        },
+        {
+            "id": "isp-bento",
+            "nameKey": "theme.layung.customizer.items.isp_bento",
+            "descriptionKey": "theme.layung.customizer.items.isp_bento_desc",
+            "icon": "network",
+            "manifestCategory": "Hero Section",
+            "slots": []
+        },
+        {
+            "id": "packages",
+            "nameKey": "theme.layung.customizer.items.packages_section",
+            "descriptionKey": "theme.layung.customizer.items.packages_section_desc",
+            "icon": "zap",
+            "manifestCategory": "Hero Section",
+            "slots": []
+        },
+        {
+            "id": "footer",
+            "nameKey": "theme.layung.customizer.items.footer_section",
+            "descriptionKey": "theme.layung.customizer.items.footer_section_desc",
+            "icon": "footer",
+            "manifestCategory": "Footer",
+            "slots": []
+        }
+    ]
+}
