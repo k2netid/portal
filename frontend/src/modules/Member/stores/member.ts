@@ -10,6 +10,30 @@ export interface PublicMember {
     email_verified?: boolean;
 }
 
+export interface MemberPortalNavItem {
+    slug: string;
+    label_key: string;
+    route: string;
+    order?: number;
+    requires_verified?: boolean;
+    capability?: string | null;
+    extension_slug?: string;
+}
+
+export interface MemberPortalPayload {
+    member: PublicMember;
+    active_extensions: string[];
+    capabilities: string[];
+    navigation: MemberPortalNavItem[];
+    widgets: Array<{
+        slug: string;
+        slot: string;
+        order?: number;
+        capability?: string | null;
+        extension_slug?: string;
+    }>;
+}
+
 interface MemberAuthPayload {
     member: PublicMember;
     token: string;
@@ -19,6 +43,7 @@ interface MemberState {
     member: PublicMember | null;
     token: string | null;
     hydrated: boolean;
+    portal: MemberPortalPayload | null;
 }
 
 const readStoredToken = (): string | null => {
@@ -39,15 +64,28 @@ const persistToken = (token: string | null): void => {
     }
 };
 
+const unwrapPayload = <T>(response: { data?: T | { data?: T } }): T => {
+    const root = response.data;
+    if (root && typeof root === 'object' && 'data' in root) {
+        return (root as { data: T }).data;
+    }
+    return root as T;
+};
+
 export const useMemberStore = defineStore('member', {
     state: (): MemberState => ({
         member: null,
         token: readStoredToken(),
         hydrated: false,
+        portal: null,
     }),
 
     getters: {
         isAuthenticated: (state): boolean => Boolean(state.token && state.member),
+        portalCapabilities: (state): string[] => state.portal?.capabilities ?? [],
+        hasCapability: (state) => (capability: string): boolean => (
+            state.portal?.capabilities?.includes(capability) ?? false
+        ),
     },
 
     actions: {
@@ -61,6 +99,7 @@ export const useMemberStore = defineStore('member', {
         clear(): void {
             this.member = null;
             this.token = null;
+            this.portal = null;
             persistToken(null);
             this.hydrated = true;
         },
@@ -78,16 +117,33 @@ export const useMemberStore = defineStore('member', {
             persistToken(token);
             try {
                 const response = await api.get('/member/me');
-                this.member = response.data as PublicMember;
+                this.member = unwrapPayload<PublicMember>(response);
                 this.hydrated = true;
+                await this.fetchPortal();
             } catch {
                 this.clear();
             }
         },
 
+        async fetchPortal(): Promise<void> {
+            if (!this.token) {
+                return;
+            }
+            try {
+                const response = await api.get('/member/portal');
+                this.portal = unwrapPayload<MemberPortalPayload>(response);
+                if (this.portal?.member) {
+                    this.member = this.portal.member;
+                }
+            } catch {
+                this.portal = null;
+            }
+        },
+
         async login(email: string, password: string): Promise<void> {
             const response = await api.post('/public/member/login', { email, password });
-            this.applyAuth(response.data as MemberAuthPayload);
+            this.applyAuth(unwrapPayload<MemberAuthPayload>(response));
+            await this.fetchPortal();
         },
 
         async register(input: {
@@ -97,7 +153,24 @@ export const useMemberStore = defineStore('member', {
             password_confirmation: string;
         }): Promise<void> {
             const response = await api.post('/public/member/register', input);
-            this.applyAuth(response.data as MemberAuthPayload);
+            this.applyAuth(unwrapPayload<MemberAuthPayload>(response));
+            await this.fetchPortal();
+        },
+
+        async updateProfile(name: string): Promise<void> {
+            const response = await api.patch('/member/profile', { name });
+            this.member = unwrapPayload<PublicMember>(response);
+            if (this.portal) {
+                this.portal = { ...this.portal, member: this.member };
+            }
+        },
+
+        async updatePassword(input: {
+            current_password: string;
+            password: string;
+            password_confirmation: string;
+        }): Promise<void> {
+            await api.put('/member/password', input);
         },
 
         async resendVerification(): Promise<void> {

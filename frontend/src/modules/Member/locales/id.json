@@ -6,6 +6,107 @@
   },
   "title": "Anggota",
   "subtitle": "Akun pembaca publik. Bukan operator konsol.",
+  "portal": {
+    "title": "Akun saya",
+    "logout": "Keluar",
+    "nav": {
+      "dashboard": "Dasbor",
+      "profile": "Profil",
+      "security": "Keamanan"
+    },
+    "dashboard": {
+      "title": "Dasbor",
+      "subtitle": "Selamat datang kembali. Kelola bookmark dan pengaturan akun di sini."
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Identitas pembaca Anda di situs ini.",
+      "name": "Nama",
+      "email": "Email",
+      "status": "Status",
+      "verified": "Email terverifikasi",
+      "save": "Simpan profil",
+      "pending": "Menyimpan…",
+      "saved": "Profil disimpan.",
+      "failed": "Gagal menyimpan profil."
+    },
+    "security": {
+      "title": "Keamanan",
+      "subtitle": "Perbarui kata sandi akun pembaca Anda.",
+      "current": "Kata sandi saat ini",
+      "new": "Kata sandi baru",
+      "confirm": "Konfirmasi kata sandi baru",
+      "submit": "Perbarui kata sandi",
+      "pending": "Menyimpan…",
+      "success": "Kata sandi diperbarui.",
+      "failed": "Gagal memperbarui kata sandi."
+    },
+    "bookmarks": {
+      "subtitle": "Artikel yang Anda simpan untuk dibaca nanti."
+    },
+    "comments": {
+      "subtitle": "Komentar yang Anda kirim di situs ini.",
+      "empty": "Belum ada komentar."
+    },
+    "widgets": {
+      "viewAll": "Lihat semua"
+    },
+    "unavailable": {
+      "title": "Fitur tidak tersedia",
+      "body": "Bagian ini tidak tersedia saat ini. Modul situs mungkin dimatikan atau akun perlu verifikasi.",
+      "back": "Kembali ke dasbor"
+    }
+  },
+  "login": {
+    "title": "Masuk",
+    "subtitle": "Akun pembaca — bukan konsol operator.",
+    "submit": "Masuk",
+    "pending": "Memproses…",
+    "failed": "Kredensial tidak valid",
+    "noAccount": "Belum punya akun?",
+    "link": "Masuk"
+  },
+  "register": {
+    "title": "Buat akun pembaca",
+    "subtitle": "Komentar dan bookmark memakai identitas ini, bukan IAM konsol. Kami kirim tautan konfirmasi ke email Anda.",
+    "submit": "Daftar",
+    "pending": "Membuat…",
+    "failed": "Pendaftaran gagal",
+    "hasAccount": "Sudah terdaftar?",
+    "link": "Buat akun"
+  },
+  "fields": {
+    "email": "Email",
+    "password": "Kata sandi",
+    "name": "Nama"
+  },
+  "account": {
+    "title": "Akun Anda",
+    "logout": "Keluar",
+    "verifyHint": "Konfirmasi email untuk menyelesaikan pengaturan akun pembaca.",
+    "bookmarks": "Bookmark",
+    "loading": "Memuat…",
+    "untitled": "Tanpa judul",
+    "remove": "Hapus",
+    "noBookmarks": "Belum ada bookmark.",
+    "resend": "Kirim ulang email",
+    "resent": "Terkirim"
+  },
+  "verified": {
+    "yes": "Terverifikasi",
+    "no": "Belum verifikasi",
+    "account": "Ke akun",
+    "okTitle": "Email terverifikasi",
+    "alreadyTitle": "Sudah terverifikasi",
+    "invalidTitle": "Tautan tidak valid atau kedaluwarsa",
+    "okBody": "Email pembaca Anda sudah dikonfirmasi.",
+    "alreadyBody": "Alamat ini sudah dikonfirmasi sebelumnya.",
+    "invalidBody": "Minta email verifikasi baru dari halaman akun Anda."
+  },
+  "nav": {
+    "bookmarks": "Bookmark",
+    "comments": "Komentar"
+  },
   "filters": {
     "search": "Cari nama atau email..."
   },
@@ -23,9 +124,5 @@
   "status": {
     "active": "Aktif",
     "inactive": "Nonaktif"
-  },
-  "verified": {
-    "yes": "Terverifikasi",
-    "no": "Belum verifikasi"
   }
 }

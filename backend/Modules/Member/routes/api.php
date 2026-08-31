@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Member\Http\Controllers\Api\AuthController;
 use Modules\Member\Http\Controllers\Api\BookmarkController;
 use Modules\Member\Http\Controllers\Api\MemberDirectoryController;
+use Modules\Member\Http\Controllers\Api\PortalController;
+use Modules\Member\Http\Controllers\Api\ProfileController;
+use Modules\Member\Http\Controllers\Api\ReaderCommentController;
 
 Route::prefix('v1')->group(function (): void {
     Route::prefix('public/member')->middleware(['throttle:30,1', 'extension.active:member'])->group(function (): void {
@@ -17,13 +20,17 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::prefix('member')->middleware(['auth:member', 'throttle:120,1', 'extension.active:member'])->group(function (): void {
+        Route::get('portal', [PortalController::class, 'show']);
         Route::get('me', [AuthController::class, 'me']);
+        Route::patch('profile', [ProfileController::class, 'update']);
+        Route::put('password', [ProfileController::class, 'updatePassword']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);
-        Route::middleware('member.verified')->group(function (): void {
+        Route::middleware(['member.verified', 'extension.active:publishing'])->group(function (): void {
             Route::get('bookmarks', [BookmarkController::class, 'index']);
             Route::post('bookmarks', [BookmarkController::class, 'store']);
             Route::delete('bookmarks/{bookmark}', [BookmarkController::class, 'destroy']);
+            Route::get('comments', [ReaderCommentController::class, 'index']);
         });
     });
 

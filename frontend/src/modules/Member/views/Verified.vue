@@ -8,7 +8,7 @@
         {{ body }}
       </p>
       <router-link
-        to="/member/account"
+        to="/member/profile"
         class="text-primary font-semibold"
       >
         {{ t('member.verified.account', 'Go to account') }}

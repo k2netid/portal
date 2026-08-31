@@ -6,6 +6,107 @@
   },
   "title": "Members",
   "subtitle": "Public reader accounts. Not console operators.",
+  "portal": {
+    "title": "My account",
+    "logout": "Sign out",
+    "nav": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "security": "Security"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Welcome back. Manage bookmarks and account settings from here."
+    },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Your reader identity on this site.",
+      "name": "Name",
+      "email": "Email",
+      "status": "Status",
+      "verified": "Email verified",
+      "save": "Save profile",
+      "pending": "Saving…",
+      "saved": "Profile saved.",
+      "failed": "Could not save profile."
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Update your reader account password.",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "submit": "Update password",
+      "pending": "Saving…",
+      "success": "Password updated.",
+      "failed": "Could not update password."
+    },
+    "bookmarks": {
+      "subtitle": "Articles you saved for later."
+    },
+    "comments": {
+      "subtitle": "Comments you posted on this site.",
+      "empty": "No comments yet."
+    },
+    "widgets": {
+      "viewAll": "View all"
+    },
+    "unavailable": {
+      "title": "Feature unavailable",
+      "body": "This section is not available right now. The site module may be turned off or your account may need verification.",
+      "back": "Back to dashboard"
+    }
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Reader account — not the operator console.",
+    "submit": "Sign in",
+    "pending": "Signing in…",
+    "failed": "Invalid credentials",
+    "noAccount": "No account?",
+    "link": "Sign in"
+  },
+  "register": {
+    "title": "Create a reader account",
+    "subtitle": "Comments and bookmarks use this identity, not console IAM. We send a confirmation link to your email.",
+    "submit": "Register",
+    "pending": "Creating…",
+    "failed": "Registration failed",
+    "hasAccount": "Already registered?",
+    "link": "Create one"
+  },
+  "fields": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name"
+  },
+  "account": {
+    "title": "Your account",
+    "logout": "Sign out",
+    "verifyHint": "Confirm your email to finish setting up this reader account.",
+    "bookmarks": "Bookmarks",
+    "loading": "Loading…",
+    "untitled": "Untitled",
+    "remove": "Remove",
+    "noBookmarks": "No bookmarks yet.",
+    "resend": "Resend email",
+    "resent": "Sent"
+  },
+  "verified": {
+    "yes": "Verified",
+    "no": "Unverified",
+    "account": "Go to account",
+    "okTitle": "Email verified",
+    "alreadyTitle": "Already verified",
+    "invalidTitle": "Link invalid or expired",
+    "okBody": "Your reader email is confirmed.",
+    "alreadyBody": "This address was already confirmed.",
+    "invalidBody": "Request a new verification email from your account."
+  },
+  "nav": {
+    "bookmarks": "Bookmarks",
+    "comments": "Comments"
+  },
   "filters": {
     "search": "Search name or email..."
   },
@@ -23,9 +124,5 @@
   "status": {
     "active": "Active",
     "inactive": "Inactive"
-  },
-  "verified": {
-    "yes": "Verified",
-    "no": "Unverified"
   }
 }

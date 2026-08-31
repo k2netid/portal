@@ -5,9 +5,110 @@
     }
   },
   "title": "Anggota",
-  "subtitle": "Akun pamiarsa publik. Sanés operator konsol.",
+  "subtitle": "Akun pamaca publik. Sanés operator konsol.",
+  "portal": {
+    "title": "Akun kuring",
+    "logout": "Kaluar",
+    "nav": {
+      "dashboard": "Dasbor",
+      "profile": "Profil",
+      "security": "Kaamanan"
+    },
+    "dashboard": {
+      "title": "Dasbor",
+      "subtitle": "Wilujeng sumping deui. Atur bookmark jeung setélan akun di dieu."
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Identitas pamaca anjeun dina situs ieu.",
+      "name": "Ngaran",
+      "email": "Email",
+      "status": "Status",
+      "verified": "Email diverifikasi",
+      "save": "Simpen profil",
+      "pending": "Nyimpen…",
+      "saved": "Profil disimpen.",
+      "failed": "Gagal nyimpen profil."
+    },
+    "security": {
+      "title": "Kaamanan",
+      "subtitle": "Perbarui sandi akun pamaca anjeun.",
+      "current": "Sandi ayeuna",
+      "new": "Sandi anyar",
+      "confirm": "Konfirmasi sandi anyar",
+      "submit": "Perbarui sandi",
+      "pending": "Nyimpen…",
+      "success": "Sandi diperbarui.",
+      "failed": "Gagal perbarui sandi."
+    },
+    "bookmarks": {
+      "subtitle": "Artikel anu anjeun simpen pikeun dibaca engke."
+    },
+    "comments": {
+      "subtitle": "Koméntar anu anjeun kirim dina situs ieu.",
+      "empty": "Can aya koméntar."
+    },
+    "widgets": {
+      "viewAll": "Tingali sadayana"
+    },
+    "unavailable": {
+      "title": "Fitur teu sayogi",
+      "body": "Bagian ieu teu sayogi ayeuna. Modul situs mungkin pareum atanapi akun perlu verifikasi.",
+      "back": "Balik deui ka dasbor"
+    }
+  },
+  "login": {
+    "title": "Asup",
+    "subtitle": "Akun pamaca — sanés konsol operator.",
+    "submit": "Asup",
+    "pending": "Ngamuat…",
+    "failed": "Kredensial teu valid",
+    "noAccount": "Can gaduh akun?",
+    "link": "Asup"
+  },
+  "register": {
+    "title": "Jieun akun pamaca",
+    "subtitle": "Koméntar jeung bookmark ngagunakeun identitas ieu, sanés IAM konsol. Kami kirim tautan konfirmasi ka email anjeun.",
+    "submit": "Daftar",
+    "pending": "Nyieun…",
+    "failed": "Pendaptaran gagal",
+    "hasAccount": "Parantos kadaptar?",
+    "link": "Jieun akun"
+  },
+  "fields": {
+    "email": "Email",
+    "password": "Sandi",
+    "name": "Ngaran"
+  },
+  "account": {
+    "title": "Akun anjeun",
+    "logout": "Kaluar",
+    "verifyHint": "Konfirmasi email pikeun ngarengsekeun setélan akun pamaca.",
+    "bookmarks": "Bookmark",
+    "loading": "Ngamuat…",
+    "untitled": "Tanpa judul",
+    "remove": "Hapus",
+    "noBookmarks": "Can aya bookmark.",
+    "resend": "Kirim deui email",
+    "resent": "Kakirim"
+  },
+  "verified": {
+    "yes": "Diverifikasi",
+    "no": "Can diverifikasi",
+    "account": "Ka akun",
+    "okTitle": "Email diverifikasi",
+    "alreadyTitle": "Parantos diverifikasi",
+    "invalidTitle": "Tautan teu valid atanapi kadaluarsa",
+    "okBody": "Email pamaca anjeun parantos dikonfirmasi.",
+    "alreadyBody": "Alamat ieu parantos dikonfirmasi.",
+    "invalidBody": "Menta email verifikasi anyar tina halaman akun anjeun."
+  },
+  "nav": {
+    "bookmarks": "Bookmark",
+    "comments": "Koméntar"
+  },
   "filters": {
-    "search": "Pilari nami atanapi email..."
+    "search": "Milarian ngaran atanapi email..."
   },
   "messages": {
     "loading": "Ngamuat anggota...",
@@ -18,14 +119,10 @@
     "member": "Anggota",
     "status": "Status",
     "verified": "Email",
-    "joinedAt": "Ngagabung"
+    "joinedAt": "Gabung"
   },
   "status": {
     "active": "Aktif",
     "inactive": "Nonaktif"
-  },
-  "verified": {
-    "yes": "Kavérifikasi",
-    "no": "Can vériifikasi"
   }
 }

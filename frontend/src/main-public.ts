@@ -43,6 +43,21 @@ async function bootstrap(): Promise<void> {
 
     const { createPublicRouter } = await import('@/engine/router/public');
     const router = createPublicRouter();
+
+    if (active.includes('member')) {
+        const { memberAreaRegistry, registerMemberAreaContributions, appendMemberPortalRoutes } = await import('@/engine/memberArea/MemberAreaRegistry');
+        const { coreMemberAreaContribution } = await import('@/modules/Member/memberArea');
+        const contributions = [coreMemberAreaContribution];
+
+        if (active.includes('publishing')) {
+            const { publishingMemberAreaContribution } = await import('@/modules/Publishing/memberArea');
+            contributions.push(publishingMemberAreaContribution);
+        }
+
+        registerMemberAreaContributions(contributions);
+        appendMemberPortalRoutes(router, active);
+    }
+
     app.use(router);
 
     if (active.includes('analytics')) {

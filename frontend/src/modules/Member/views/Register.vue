@@ -114,7 +114,7 @@ const submit = async (): Promise<void> => {
             password: password.value,
             password_confirmation: passwordConfirmation.value,
         });
-        await router.replace('/member/account');
+        await router.replace('/member');
     } catch (err: unknown) {
         error.value = isAxiosError(err)
             ? String(err.response?.data?.message || t('member.register.failed', 'Registration failed'))

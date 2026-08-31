@@ -58,5 +58,36 @@
     "manage content templates",
     "edit content templates",
     "delete content templates"
-  ]
+  ],
+  "member_area": {
+    "depends_on": ["member"],
+    "capabilities": ["member.bookmarks", "member.comments"],
+    "nav": [
+      {
+        "slug": "bookmarks",
+        "label_key": "member.nav.bookmarks",
+        "route": "member.bookmarks",
+        "order": 40,
+        "requires_verified": true,
+        "capability": "member.bookmarks"
+      },
+      {
+        "slug": "comments",
+        "label_key": "member.nav.comments",
+        "route": "member.comments",
+        "order": 50,
+        "requires_verified": true,
+        "capability": "member.comments"
+      }
+    ],
+    "widgets": [
+      {
+        "slug": "recent-bookmarks",
+        "slot": "dashboard",
+        "order": 10,
+        "requires_verified": true,
+        "capability": "member.bookmarks"
+      }
+    ]
+  }
 }

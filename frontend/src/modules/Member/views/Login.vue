@@ -86,7 +86,7 @@ const submit = async (): Promise<void> => {
     error.value = '';
     try {
         await memberStore.login(email.value, password.value);
-        const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/member/account';
+        const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/member';
         await router.replace(redirect);
     } catch (err: unknown) {
         error.value = isAxiosError(err)

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Core\System\Services;
 
 use Illuminate\Support\Facades\Log;
+use Modules\Core\System\Database\Seeders\CmsRolesSeeder;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Throwable;
@@ -231,6 +232,14 @@ class InstallProfileApplicator
             $themes = $errors === []
                 ? $this->ensureFrontendThemeBaseline($profile)
                 : ['scanned' => 0, 'active' => null];
+
+            if ($errors === [] && in_array($profile, [self::PROFILE_CMS, self::PROFILE_CMS_SITE], true)) {
+                try {
+                    (new CmsRolesSeeder)->run();
+                } catch (Throwable $e) {
+                    Log::warning('Install profile CMS roles seed failed', ['error' => $e->getMessage()]);
+                }
+            }
 
             Log::info('Install profile applied', [
                 'profile' => $profile,

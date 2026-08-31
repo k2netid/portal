@@ -94,10 +94,41 @@ export const publicRoutes: RouteRecordRaw[] = [
                 meta: { public: true, memberGuest: true },
             },
             {
-                path: 'member/account',
-                name: 'public-member-account',
-                component: () => import('@/modules/Member/views/Account.vue'),
+                path: 'member',
+                name: 'member-portal',
+                component: () => import('@/modules/Member/layouts/MemberPortalLayout.vue'),
                 meta: { public: true, requiresMember: true },
+                redirect: { name: 'member.dashboard' },
+                children: [
+                    {
+                        path: '',
+                        name: 'member.dashboard',
+                        component: () => import('@/modules/Member/views/Dashboard.vue'),
+                        meta: { public: true, requiresMember: true },
+                    },
+                    {
+                        path: 'profile',
+                        name: 'member.profile',
+                        component: () => import('@/modules/Member/views/Profile.vue'),
+                        meta: { public: true, requiresMember: true },
+                    },
+                    {
+                        path: 'security',
+                        name: 'member.security',
+                        component: () => import('@/modules/Member/views/Security.vue'),
+                        meta: { public: true, requiresMember: true },
+                    },
+                    {
+                        path: 'unavailable',
+                        name: 'member.feature-unavailable',
+                        component: () => import('@/modules/Member/views/FeatureUnavailable.vue'),
+                        meta: { public: true, requiresMember: true },
+                    },
+                ],
+            },
+            {
+                path: 'member/account',
+                redirect: { name: 'member.profile' },
             },
             {
                 path: 'member/verified',
@@ -156,7 +187,29 @@ export const createPublicRouter = () => {
         }
 
         if (to.matched.some((record) => record.meta.memberGuest) && memberStore.isAuthenticated) {
-            return { path: '/member/account' };
+            return { name: 'member.dashboard' };
+        }
+
+        const extensionSlug = to.matched.map((record) => record.meta.memberExtension).find(Boolean);
+        if (typeof extensionSlug === 'string' && !active.includes(extensionSlug)) {
+            return { name: 'member.feature-unavailable' };
+        }
+
+        const capability = to.matched.map((record) => record.meta.memberCapability).find(Boolean);
+        if (typeof capability === 'string') {
+            if (!memberStore.portal) {
+                await memberStore.fetchPortal();
+            }
+            if (!memberStore.hasCapability(capability)) {
+                return { name: 'member.feature-unavailable' };
+            }
+        }
+
+        if (
+            to.matched.some((record) => record.meta.requiresVerified)
+            && memberStore.member?.email_verified !== true
+        ) {
+            return { name: 'member.dashboard' };
         }
 
         return true;

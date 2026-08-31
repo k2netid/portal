@@ -147,6 +147,11 @@ class FoundationSeeder extends Seeder
         ]);
 
         $this->assignSecurityOfficerFromEnv($securityOfficer);
+
+        $profile = config('install.profile', 'core');
+        if (in_array($profile, ['cms', 'cms_site'], true)) {
+            $this->call(CmsRolesSeeder::class);
+        }
     }
 
     protected function assignSecurityOfficerFromEnv(Role $securityOfficer): void

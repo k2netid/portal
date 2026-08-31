@@ -26,5 +26,28 @@
       "description": "Register, login, and token identity for readers",
       "category": "audience"
     }
-  ]
+  ],
+  "member_area": {
+    "capabilities": ["member.portal"],
+    "nav": [
+      {
+        "slug": "dashboard",
+        "label_key": "member.portal.nav.dashboard",
+        "route": "member.dashboard",
+        "order": 10
+      },
+      {
+        "slug": "profile",
+        "label_key": "member.portal.nav.profile",
+        "route": "member.profile",
+        "order": 20
+      },
+      {
+        "slug": "security",
+        "label_key": "member.portal.nav.security",
+        "route": "member.security",
+        "order": 30
+      }
+    ]
+  }
 }

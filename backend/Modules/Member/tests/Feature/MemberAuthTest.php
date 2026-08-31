@@ -80,6 +80,7 @@ class MemberAuthTest extends TestCase
 
     public function test_member_bookmark_does_not_use_console_users(): void
     {
+        $this->activatePack('publishing');
         $this->seedPermissionsAndRoles();
         $admin = $this->createAdminUser();
         $content = Content::factory()->published()->create([
@@ -134,6 +135,7 @@ class MemberAuthTest extends TestCase
 
     public function test_unverified_member_cannot_bookmark_or_comment(): void
     {
+        $this->activatePack('publishing');
         $this->seedPermissionsAndRoles();
         $admin = $this->createAdminUser();
         $content = Content::factory()->published()->create([
