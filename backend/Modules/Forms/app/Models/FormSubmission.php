@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Modules\Core\System\Models\User;
 use Modules\Forms\Database\Factories\FormSubmissionFactory;
+use Modules\Member\Models\Member;
 
 /**
  * @property int $id
  * @property int $form_id
  * @property int|null $user_id
+ * @property string|null $member_id
  * @property array<string, mixed> $data
  * @property string|null $ip_address
  * @property string|null $user_agent
@@ -26,6 +28,7 @@ use Modules\Forms\Database\Factories\FormSubmissionFactory;
  * @property-read string|null $label
  * @property-read Form $form
  * @property-read User|null $user
+ * @property-read Member|null $member
  */
 class FormSubmission extends Model
 {
@@ -52,6 +55,7 @@ class FormSubmission extends Model
     protected $fillable = [
         'form_id',
         'user_id',
+        'member_id',
         'data',
         'ip_address',
         'user_agent',
@@ -76,6 +80,14 @@ class FormSubmission extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Member, $this>
+     */
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class, 'member_id');
     }
 
     public function markAsRead(): void

@@ -178,4 +178,86 @@ class MemberPortalTest extends TestCase
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['current_password']);
     }
+
+    public function test_member_portal_includes_newsletter_when_active(): void
+    {
+        $this->activatePack('newsletter', [
+            'manifest' => json_decode(
+                (string) file_get_contents(base_path('Modules/Newsletter/manifest.json')),
+                true,
+            ),
+        ]);
+
+        $auth = $this->registerMember();
+
+        $response = $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/portal')
+            ->assertOk();
+
+        $capabilities = $response->json('data.capabilities');
+        $this->assertContains('member.newsletter', $capabilities);
+
+        $routes = collect($response->json('data.navigation'))->pluck('route')->all();
+        $this->assertContains('member.newsletter', $routes);
+    }
+
+    public function test_member_can_manage_newsletter_preferences(): void
+    {
+        $this->activatePack('newsletter');
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/newsletter')
+            ->assertOk()
+            ->assertJsonPath('data.subscribed', false);
+
+        $this->withToken($auth['token'])
+            ->putJson('/api/v1/member/newsletter', ['subscribe' => true])
+            ->assertOk()
+            ->assertJsonPath('data.subscribed', true);
+
+        $this->withToken($auth['token'])
+            ->putJson('/api/v1/member/newsletter', ['subscribe' => false])
+            ->assertOk()
+            ->assertJsonPath('data.subscribed', false);
+    }
+
+    public function test_member_newsletter_forbidden_when_pack_inactive(): void
+    {
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/newsletter')
+            ->assertForbidden();
+    }
+
+    public function test_member_submissions_list_when_forms_active(): void
+    {
+        $this->activatePack('forms');
+        \Modules\Forms\Database\Seeders\ContactFormSeeder::ensure();
+
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->postJson('/api/v1/public/forms/contact/submit', [
+                'name' => 'Reader One',
+                'email' => 'reader@example.com',
+                'message' => 'Hello from member portal',
+            ])
+            ->assertCreated();
+
+        $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/submissions')
+            ->assertOk()
+            ->assertJsonPath('data.data.0.data.message', 'Hello from member portal');
+    }
+
+    public function test_member_submissions_forbidden_when_forms_inactive(): void
+    {
+        $auth = $this->registerMember();
+
+        $this->withToken($auth['token'])
+            ->getJson('/api/v1/member/submissions')
+            ->assertForbidden();
+    }
 }

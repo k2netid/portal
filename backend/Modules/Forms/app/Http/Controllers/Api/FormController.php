@@ -19,6 +19,7 @@ use Modules\Forms\Models\Form;
 use Modules\Forms\Models\FormField;
 use Modules\Forms\Models\FormSubmission;
 use Modules\Forms\Rules\FormRedirectUrl;
+use Modules\Publishing\Contracts\MemberIdentityPort;
 
 class FormController extends BaseApiController
 {
@@ -561,10 +562,12 @@ class FormController extends BaseApiController
 
         $user = $request->user();
         /** @var User|null $user */
+        $member = app(MemberIdentityPort::class)->current($request);
 
         // Create submission
         $submissionData = [
             'user_id' => $user?->id,
+            'member_id' => $member?->id,
             'data' => $submissionPayload,
             'ip_address' => IpHelper::getClientIp($request),
             'user_agent' => is_string($request->userAgent()) ? $request->userAgent() : '',

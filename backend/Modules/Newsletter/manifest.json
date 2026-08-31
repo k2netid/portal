@@ -35,5 +35,18 @@
   "permissions": [
     "view newsletter",
     "manage newsletter"
-  ]
+  ],
+  "member_area": {
+    "depends_on": ["member"],
+    "capabilities": ["member.newsletter"],
+    "nav": [
+      {
+        "slug": "newsletter",
+        "label_key": "member.nav.newsletter",
+        "route": "member.newsletter",
+        "order": 60,
+        "capability": "member.newsletter"
+      }
+    ]
+  }
 }

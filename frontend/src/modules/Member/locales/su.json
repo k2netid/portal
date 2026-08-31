@@ -55,6 +55,25 @@
       "title": "Fitur teu sayogi",
       "body": "Bagian ieu teu sayogi ayeuna. Modul situs mungkin pareum atanapi akun perlu verifikasi.",
       "back": "Balik deui ka dasbor"
+    },
+    "newsletter": {
+      "subtitle": "Atur pembaruan email pikeun akun pamaca anjeun.",
+      "email": "Email pangiriman",
+      "status": "Status",
+      "subscribed": "Langganan",
+      "notSubscribed": "Can langganan",
+      "subscribe": "Langganan",
+      "unsubscribe": "Eureun langganan",
+      "pending": "Nyimpen…",
+      "subscribedSuccess": "Anjeun parantos langganan.",
+      "unsubscribedSuccess": "Anjeun parantos eureun langganan.",
+      "loadFailed": "Gagal ngamuat preferensi newsletter.",
+      "failed": "Gagal ngapdet preferensi."
+    },
+    "submissions": {
+      "subtitle": "Form anu anjeun kirimkeun nalika asup.",
+      "empty": "Can aya kiriman.",
+      "untitledForm": "Form tanpa judul"
     }
   },
   "login": {
@@ -105,7 +124,9 @@
   },
   "nav": {
     "bookmarks": "Bookmark",
-    "comments": "Koméntar"
+    "comments": "Koméntar",
+    "newsletter": "Newsletter",
+    "submissions": "Kiriman kuring"
   },
   "filters": {
     "search": "Milarian ngaran atanapi email..."

@@ -9,6 +9,8 @@ use Modules\Member\Http\Controllers\Api\MemberDirectoryController;
 use Modules\Member\Http\Controllers\Api\PortalController;
 use Modules\Member\Http\Controllers\Api\ProfileController;
 use Modules\Member\Http\Controllers\Api\ReaderCommentController;
+use Modules\Member\Http\Controllers\Api\ReaderFormSubmissionController;
+use Modules\Member\Http\Controllers\Api\ReaderNewsletterController;
 
 Route::prefix('v1')->group(function (): void {
     Route::prefix('public/member')->middleware(['throttle:30,1', 'extension.active:member'])->group(function (): void {
@@ -31,6 +33,15 @@ Route::prefix('v1')->group(function (): void {
             Route::post('bookmarks', [BookmarkController::class, 'store']);
             Route::delete('bookmarks/{bookmark}', [BookmarkController::class, 'destroy']);
             Route::get('comments', [ReaderCommentController::class, 'index']);
+        });
+
+        Route::middleware('extension.active:newsletter')->group(function (): void {
+            Route::get('newsletter', [ReaderNewsletterController::class, 'show']);
+            Route::put('newsletter', [ReaderNewsletterController::class, 'update']);
+        });
+
+        Route::middleware('extension.active:forms')->group(function (): void {
+            Route::get('submissions', [ReaderFormSubmissionController::class, 'index']);
         });
     });
 

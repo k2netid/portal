@@ -54,6 +54,16 @@ async function bootstrap(): Promise<void> {
             contributions.push(publishingMemberAreaContribution);
         }
 
+        if (active.includes('newsletter')) {
+            const { newsletterMemberAreaContribution } = await import('@/modules/Newsletter/memberArea');
+            contributions.push(newsletterMemberAreaContribution);
+        }
+
+        if (active.includes('forms')) {
+            const { formsMemberAreaContribution } = await import('@/modules/Forms/memberArea');
+            contributions.push(formsMemberAreaContribution);
+        }
+
         registerMemberAreaContributions(contributions);
         appendMemberPortalRoutes(router, active);
     }

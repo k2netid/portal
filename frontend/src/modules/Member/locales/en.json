@@ -55,6 +55,25 @@
       "title": "Feature unavailable",
       "body": "This section is not available right now. The site module may be turned off or your account may need verification.",
       "back": "Back to dashboard"
+    },
+    "newsletter": {
+      "subtitle": "Manage email updates for your reader account.",
+      "email": "Delivery email",
+      "status": "Status",
+      "subscribed": "Subscribed",
+      "notSubscribed": "Not subscribed",
+      "subscribe": "Subscribe",
+      "unsubscribe": "Unsubscribe",
+      "pending": "Saving…",
+      "subscribedSuccess": "You are subscribed.",
+      "unsubscribedSuccess": "You are unsubscribed.",
+      "loadFailed": "Could not load newsletter preferences.",
+      "failed": "Could not update preferences."
+    },
+    "submissions": {
+      "subtitle": "Forms you submitted while signed in.",
+      "empty": "No submissions yet.",
+      "untitledForm": "Untitled form"
     }
   },
   "login": {
@@ -105,7 +124,9 @@
   },
   "nav": {
     "bookmarks": "Bookmarks",
-    "comments": "Comments"
+    "comments": "Comments",
+    "newsletter": "Newsletter",
+    "submissions": "My submissions"
   },
   "filters": {
     "search": "Search name or email..."

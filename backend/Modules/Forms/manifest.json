@@ -41,5 +41,18 @@
     "edit forms",
     "delete forms",
     "manage forms"
-  ]
+  ],
+  "member_area": {
+    "depends_on": ["member"],
+    "capabilities": ["member.submissions"],
+    "nav": [
+      {
+        "slug": "submissions",
+        "label_key": "member.nav.submissions",
+        "route": "member.submissions",
+        "order": 70,
+        "capability": "member.submissions"
+      }
+    ]
+  }
 }

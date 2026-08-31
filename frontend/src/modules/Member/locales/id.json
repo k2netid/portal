@@ -55,6 +55,25 @@
       "title": "Fitur tidak tersedia",
       "body": "Bagian ini tidak tersedia saat ini. Modul situs mungkin dimatikan atau akun perlu verifikasi.",
       "back": "Kembali ke dasbor"
+    },
+    "newsletter": {
+      "subtitle": "Kelola pembaruan email untuk akun pembaca Anda.",
+      "email": "Email pengiriman",
+      "status": "Status",
+      "subscribed": "Berlangganan",
+      "notSubscribed": "Belum berlangganan",
+      "subscribe": "Berlangganan",
+      "unsubscribe": "Berhenti berlangganan",
+      "pending": "Menyimpan…",
+      "subscribedSuccess": "Anda sudah berlangganan.",
+      "unsubscribedSuccess": "Anda sudah berhenti berlangganan.",
+      "loadFailed": "Gagal memuat preferensi newsletter.",
+      "failed": "Gagal memperbarui preferensi."
+    },
+    "submissions": {
+      "subtitle": "Form yang Anda kirim saat masuk.",
+      "empty": "Belum ada pengiriman.",
+      "untitledForm": "Form tanpa judul"
     }
   },
   "login": {
@@ -105,7 +124,9 @@
   },
   "nav": {
     "bookmarks": "Bookmark",
-    "comments": "Komentar"
+    "comments": "Komentar",
+    "newsletter": "Newsletter",
+    "submissions": "Pengiriman saya"
   },
   "filters": {
     "search": "Cari nama atau email..."
