@@ -45,7 +45,7 @@ async function bootstrap(): Promise<void> {
     const router = createPublicRouter();
 
     if (active.includes('member')) {
-        const { memberAreaRegistry, registerMemberAreaContributions, appendMemberPortalRoutes } = await import('@/engine/memberArea/MemberAreaRegistry');
+        const { registerMemberAreaContributions, appendMemberPortalRoutes } = await import('@/engine/memberArea/MemberAreaRegistry');
         const { coreMemberAreaContribution } = await import('@/modules/Member/memberArea');
         const contributions = [coreMemberAreaContribution];
 

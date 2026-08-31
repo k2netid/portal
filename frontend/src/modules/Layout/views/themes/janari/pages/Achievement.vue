@@ -201,19 +201,6 @@ const normalizeCatSlug = (raw: string | undefined): string => {
   return 'platform';
 };
 
-const demoAchievements = computed(() => [] as Array<{
-  id: string;
-  catSlug: string;
-  level: string;
-  year: string | number;
-  title: string;
-  description: string;
-  winner: string;
-  role: string;
-  imagePlaceholder: string;
-  image: string;
-}>);
-
 const achievements = computed(() => {
   if (hasBinding.value && dynamicAchievements.value.length > 0) {
     return dynamicAchievements.value.map((item: any, idx: number) => {

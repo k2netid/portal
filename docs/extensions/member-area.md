@@ -280,6 +280,25 @@ Add (phased):
 
 Console directory APIs stay under `/api/v1/manage/members` with Spatie `view members` / `manage members`.
 
+**Console directory (2026-08-31):**
+
+| Method | Path | Permission | Notes |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/manage/members/stats` | view | Stat cards |
+| `GET` | `/manage/members` | view | Search, filters, pagination |
+| `GET` | `/manage/members/export` | view | CSV export |
+| `POST` | `/manage/members` | manage | Create reader account |
+| `GET` | `/manage/members/{id}` | view | Detail + activity counts |
+| `PATCH` | `/manage/members/{id}` | manage | Profile, status, password, verify |
+| `DELETE` | `/manage/members/{id}` | manage | Soft delete |
+| `POST` | `/manage/members/{id}/restore` | manage | Restore from trash |
+| `DELETE` | `/manage/members/{id}/force` | manage | Permanent delete + relation cleanup |
+| `POST` | `/manage/members/bulk-action` | manage | activate, deactivate, verify, delete, restore, force_delete |
+
+Soft delete uses `deleted_at` on `mem_members`. Force delete removes bookmarks; comments/submissions are anonymized (`member_id` null). Newsletter stays linked by email.
+
+Console UI: list (DataTable + bulk), create/edit forms, detail page with activity stats — same patterns as Users / Newsletter subscribers.
+
 ---
 
 ## 9. Theme integration

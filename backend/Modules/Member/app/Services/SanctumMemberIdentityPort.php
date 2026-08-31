@@ -19,7 +19,7 @@ class SanctumMemberIdentityPort implements MemberIdentityPort
         }
 
         $user = $request->user('member');
-        if (! $user instanceof Member || $user->status !== 'active') {
+        if (! $user instanceof Member || $user->trashed() || $user->status !== 'active') {
             return null;
         }
 

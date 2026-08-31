@@ -1,6 +1,6 @@
 <template>
   <footer class="mt-auto border-t border-border/80 bg-muted/30 shrink-0">
-    <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-5 text-xs text-muted-foreground">
+    <div class="console-content-wrap px-4 sm:px-6 lg:px-8 py-5 text-xs text-muted-foreground">
       <p>{{ copyrightLine }}</p>
     </div>
   </footer>

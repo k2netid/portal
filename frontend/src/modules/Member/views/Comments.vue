@@ -1,29 +1,23 @@
 <template>
-  <div class="space-y-6">
-    <div class="space-y-1">
-      <h2 class="text-xl font-bold">
-        {{ t('member.nav.comments', 'Comments') }}
-      </h2>
-      <p class="text-sm text-muted-foreground">
-        {{ t('member.portal.comments.subtitle', 'Comments you posted on this site.') }}
-      </p>
-    </div>
-
-    <section class="rounded-2xl border border-border/60 bg-background/60 p-5 sm:p-6 space-y-4">
-      <p
+  <MemberPage
+    :title="t('member.nav.comments', 'Comments')"
+    :subtitle="t('member.portal.comments.subtitle', 'Comments you posted on this site.')"
+  >
+    <ConsoleListCard>
+      <div
         v-if="loading"
-        class="text-sm text-muted-foreground"
+        class="p-6 text-sm text-muted-foreground"
       >
         {{ t('member.account.loading', 'Loading…') }}
-      </p>
+      </div>
       <ul
         v-else-if="comments.length"
-        class="space-y-4"
+        class="divide-y divide-border/50"
       >
         <li
           v-for="item in comments"
           :key="item.id"
-          class="space-y-2 border-b border-border/40 pb-4 last:border-0 last:pb-0"
+          class="space-y-2 px-6 py-4"
         >
           <router-link
             v-if="item.content?.slug"
@@ -40,21 +34,23 @@
           </p>
         </li>
       </ul>
-      <p
+      <EmptyState
         v-else
-        class="text-sm text-muted-foreground"
-      >
-        {{ t('member.portal.comments.empty', 'No comments yet.') }}
-      </p>
-    </section>
-  </div>
+        :title="t('member.portal.comments.empty', 'No comments yet.')"
+        compact
+      />
+    </ConsoleListCard>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
+import { EmptyState } from '@/shared/components/feedback';
+import { ConsoleListCard } from '@/shared/components/shell';
 
 interface CommentRow {
     id: string;

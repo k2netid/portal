@@ -1,13 +1,8 @@
 <template>
-  <div class="space-y-6">
-    <header class="space-y-1 border-b border-border/50 pb-5">
-      <h1 class="text-2xl font-bold tracking-tight text-foreground">
-        {{ t('member.portal.dashboard.title', 'Overview') }}
-      </h1>
-      <p class="text-sm text-muted-foreground max-w-3xl">
-        {{ greeting }}
-      </p>
-    </header>
+  <MemberPage :title="t('member.portal.dashboard.title', 'Overview')">
+    <template #subtitle>
+      {{ greeting }}
+    </template>
 
     <p
       v-if="memberStore.member && memberStore.member.email_verified !== true"
@@ -24,48 +19,46 @@
       </button>
     </p>
 
-    <section
+    <div
       v-if="dashboardWidgets.length"
-      class="space-y-4"
+      class="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3"
     >
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-        {{ t('member.portal.dashboard.activity', 'Your activity') }}
-      </h2>
-      <div class="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
-        <component
-          :is="widget.component"
-          v-for="widget in dashboardWidgets"
-          :key="`${widget.extensionSlug ?? 'core'}:${widget.slug}`"
-        />
-      </div>
-    </section>
+      <component
+        :is="widget.component"
+        v-for="widget in dashboardWidgets"
+        :key="`${widget.extensionSlug ?? 'core'}:${widget.slug}`"
+      />
+    </div>
 
-    <section
-      v-else
-      class="rounded-lg border border-dashed border-border/70 bg-card px-5 py-10 text-center"
-    >
-      <p class="text-sm font-medium">
-        {{ t('member.portal.dashboard.emptyTitle', 'Nothing saved yet') }}
-      </p>
-      <p class="mt-1.5 text-sm text-muted-foreground max-w-md mx-auto">
-        {{ t('member.portal.dashboard.emptyBody', 'Bookmark articles, leave comments, or submit forms while browsing the site — they will show up here.') }}
-      </p>
-      <router-link
-        to="/blog"
-        class="inline-flex mt-4 text-sm font-semibold text-primary hover:underline underline-offset-4"
+    <ConsoleListCard v-else>
+      <EmptyState
+        :title="t('member.portal.dashboard.emptyTitle', 'Nothing saved yet')"
+        :description="t('member.portal.dashboard.emptyBody', 'Bookmark articles, leave comments, or submit forms while browsing the site — they will show up here.')"
+        :icon="Inbox"
       >
-        {{ t('member.portal.dashboard.browseSite', 'Browse articles') }}
-      </router-link>
-    </section>
-  </div>
+        <template #action>
+          <router-link
+            to="/blog"
+            class="inline-flex text-sm font-semibold text-primary hover:underline underline-offset-4"
+          >
+            {{ t('member.portal.dashboard.browseSite', 'Browse articles') }}
+          </router-link>
+        </template>
+      </EmptyState>
+    </ConsoleListCard>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Inbox } from 'lucide-vue-next';
 import { memberAreaRegistry } from '@/engine/memberArea/MemberAreaRegistry';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { useMemberStore } from '@/modules/Member/stores/member';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
+import { EmptyState } from '@/shared/components/feedback';
+import { ConsoleListCard } from '@/shared/components/shell';
 
 const { t } = useI18n();
 const memberStore = useMemberStore();

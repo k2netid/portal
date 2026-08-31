@@ -5,6 +5,7 @@
     }
   },
   "title": "Anggota",
+  "title_singular": "Anggota",
   "subtitle": "Akun pembaca publik. Bukan operator konsol.",
   "portal": {
     "title": "Akun saya",
@@ -215,24 +216,79 @@
     "newsletter": "Newsletter",
     "submissions": "Pengiriman saya"
   },
+  "form": {
+    "back": "Kembali ke daftar",
+    "createTitle": "Buat anggota",
+    "createSubtitle": "Tambah akun pembaca dari konsol.",
+    "editTitle": "Edit anggota",
+    "editSubtitle": "Perbarui profil dan pengaturan akun pembaca.",
+    "createSubmit": "Buat anggota",
+    "editSubmit": "Simpan perubahan",
+    "saving": "Menyimpan…",
+    "identity": "Identitas",
+    "account": "Akun",
+    "name": "Nama tampilan",
+    "email": "Email",
+    "password": "Kata sandi",
+    "passwordHint": "Kosongkan untuk mempertahankan kata sandi saat ini",
+    "phone": "Telepon",
+    "verifyEmail": "Tandai email terverifikasi"
+  },
   "filters": {
-    "search": "Cari nama atau email..."
+    "search": "Cari nama, email, atau telepon...",
+    "allStatus": "Semua status",
+    "allVerified": "Semua verifikasi"
+  },
+  "stats": {
+    "total": "Total anggota",
+    "verified": "Terverifikasi",
+    "unverified": "Belum verifikasi",
+    "recent": "Bergabung (7h)",
+    "active": "Aktif (30h)"
+  },
+  "detail": {
+    "title": "Detail anggota",
+    "back": "Kembali ke daftar",
+    "profile": "Profil",
+    "preferences": "Preferensi & aksi",
+    "pendingEmail": "Perubahan email tertunda",
+    "activity": {
+      "bookmarks": "Bookmark",
+      "comments": "Komentar",
+      "submissions": "Pengiriman formulir",
+      "newsletter": "Newsletter"
+    }
+  },
+  "confirm": {
+    "status": "Ubah status {email} menjadi {status}?",
+    "verify": "Tandai {email} sebagai terverifikasi?",
+    "delete": "Pindahkan {email} ke sampah? Bookmark tetap ada sampai penghapusan permanen.",
+    "restore": "Pulihkan {email}?",
+    "forceDelete": "Hapus permanen {email}? Bookmark dihapus; komentar dan pengiriman dianonimkan.",
+    "bulk": "Terapkan \"{action}\" ke {count} anggota terpilih?"
   },
   "messages": {
     "loading": "Memuat anggota...",
     "empty": "Tidak ada anggota",
-    "loadFailed": "Gagal memuat anggota"
+    "loadFailed": "Gagal memuat anggota",
+    "verified": "Email ditandai terverifikasi",
+    "bulkSuccess": "Aksi massal selesai"
   },
   "table": {
     "member": "Anggota",
+    "phone": "Telepon",
     "status": "Status",
     "verified": "Email",
+    "lastLogin": "Login terakhir",
     "joinedAt": "Bergabung",
     "actions": "Aksi"
   },
   "actions": {
     "activate": "Aktifkan",
     "deactivate": "Nonaktifkan",
+    "verify": "Verifikasi email",
+    "view": "Lihat detail",
+    "export": "Ekspor CSV",
     "updated": "Status anggota diperbarui"
   },
   "status": {

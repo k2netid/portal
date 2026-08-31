@@ -43,7 +43,6 @@
 
 
           <div
-            ref="productsRef"
             class="below-fold-section"
             data-ja-customizer-target="products"
           >
@@ -53,7 +52,6 @@
           </div>
 
           <div
-            ref="updatesRef"
             class="below-fold-section"
             data-ja-customizer-target="updates"
           >
@@ -63,7 +61,6 @@
           </div>
 
           <div
-            ref="partnersRef"
             class="below-fold-section"
             data-ja-customizer-target="partners"
           >
@@ -73,7 +70,6 @@
           </div>
 
           <div
-            ref="testimonialsRef"
             class="below-fold-section"
             data-ja-customizer-target="testimonials"
           >
@@ -84,7 +80,6 @@
           </div>
 
           <div
-            ref="ctaRef"
             class="below-fold-section"
             data-ja-customizer-target="cta"
           >
@@ -169,12 +164,6 @@ const testimonialData = computed<Testimonial[]>(() => dynamicTestimonials.value.
     content: item.body || item.content,
     avatar: item._raw?.featured_image || item._raw?.thumbnail || undefined
 })))
-
-const productsRef = ref<HTMLElement | null>(null);
-const updatesRef = ref<HTMLElement | null>(null);
-const partnersRef = ref<HTMLElement | null>(null);
-const testimonialsRef = ref<HTMLElement | null>(null);
-const ctaRef = ref<HTMLElement | null>(null);
 
 const mountedSections = ref<Record<string, boolean>>({
     products: false,

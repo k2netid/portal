@@ -183,7 +183,6 @@ const hubinTitle = computed(() => localizedString('page_career_hubin_title') || 
 const hubinDesc = computed(() => localizedString('page_career_hubin_desc') || t('theme.janari.pages.career.hubinDesc'));
 const viewPricingText = computed(() => localizedString('page_career_view_pricing') || t('theme.janari.pages.career.viewPricing'));
 const partnershipContactText = computed(() => localizedString('page_career_partnership_contact') || t('theme.janari.pages.career.partnershipContact'));
-const partnersStatLabel = computed(() => localizedString('page_career_stat_partners') || t('theme.janari.pages.career.activePartners'));
 const jobsStatLabel = computed(() => localizedString('page_career_stat_jobs') || t('theme.janari.pages.career.newJobsStat'));
 const viewAllJobsText = computed(() => localizedString('page_career_view_all') || t('theme.janari.pages.career.viewAllShort'));
 const newBadgeText = computed(() => localizedString('page_career_new_badge') || t('theme.janari.pages.career.newBadge'));

@@ -1,14 +1,8 @@
 <template>
-  <div class="space-y-6">
-    <header class="space-y-1 border-b border-border/50 pb-5">
-      <h1 class="text-2xl font-bold tracking-tight">
-        {{ t('member.portal.profile.title', 'Profile') }}
-      </h1>
-      <p class="text-sm text-muted-foreground max-w-3xl">
-        {{ t('member.portal.profile.subtitle', 'Your reader identity on this site.') }}
-      </p>
-    </header>
-
+  <MemberPage
+    :title="t('member.portal.profile.title', 'Profile')"
+    :subtitle="t('member.portal.profile.subtitle', 'Your reader identity on this site.')"
+  >
     <form
       class="space-y-6"
       @submit.prevent="submit"
@@ -27,9 +21,8 @@
       </p>
 
       <div class="grid gap-6 xl:grid-cols-12">
-        <!-- Left column -->
         <div class="xl:col-span-7 space-y-6">
-          <MemberSectionCard :title="t('member.portal.profile.sections.identity', 'Identity')">
+          <ConsoleFormCard :title="t('member.portal.profile.sections.identity', 'Identity')">
             <div class="flex flex-col sm:flex-row sm:items-start gap-4">
               <div
                 class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-border/60 bg-muted/40 overflow-hidden mx-auto sm:mx-0"
@@ -82,83 +75,86 @@
               />
               <span class="text-xs text-muted-foreground">{{ bioLength }}/500</span>
             </label>
-          </MemberSectionCard>
+          </ConsoleFormCard>
 
-          <MemberSectionCard :title="t('member.portal.profile.sections.contact', 'Contact')">
-            <label class="block space-y-1.5 text-sm">
-              <span class="font-medium">{{ t('member.portal.profile.email', 'Email') }}</span>
-              <input
-                :value="memberStore.member?.email || ''"
-                type="email"
-                disabled
-                class="w-full h-10 rounded-lg border border-border bg-muted/40 px-3 text-muted-foreground"
+          <ConsoleFormCard :title="t('member.portal.profile.sections.contact', 'Contact')">
+            <div class="space-y-4">
+              <label class="block space-y-1.5 text-sm">
+                <span class="font-medium">{{ t('member.portal.profile.email', 'Email') }}</span>
+                <input
+                  :value="memberStore.member?.email || ''"
+                  type="email"
+                  disabled
+                  class="w-full h-10 rounded-lg border border-border bg-muted/40 px-3 text-muted-foreground"
+                >
+                <span class="text-xs text-muted-foreground">
+                  {{ t('member.portal.profile.emailHint', 'Change email from Security settings.') }}
+                </span>
+              </label>
+              <p
+                v-if="memberStore.member?.pending_email"
+                class="text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2"
               >
-              <span class="text-xs text-muted-foreground">
-                {{ t('member.portal.profile.emailHint', 'Change email from Security settings.') }}
-              </span>
-            </label>
-            <p
-              v-if="memberStore.member?.pending_email"
-              class="text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2"
-            >
-              {{ t('member.portal.security.pendingEmail', 'Pending confirmation:') }}
-              <strong>{{ memberStore.member.pending_email }}</strong>
-            </p>
-            <label class="block space-y-1.5 text-sm">
-              <span class="font-medium">{{ t('member.portal.profile.phone', 'Phone') }}</span>
-              <input
-                v-model="form.phone"
-                type="tel"
-                maxlength="32"
-                :placeholder="t('member.portal.profile.phoneHint', '+62 …')"
-                class="w-full h-10 rounded-lg border border-border bg-background px-3"
-              >
-            </label>
-          </MemberSectionCard>
+                {{ t('member.portal.security.pendingEmail', 'Pending confirmation:') }}
+                <strong>{{ memberStore.member.pending_email }}</strong>
+              </p>
+              <label class="block space-y-1.5 text-sm">
+                <span class="font-medium">{{ t('member.portal.profile.phone', 'Phone') }}</span>
+                <input
+                  v-model="form.phone"
+                  type="tel"
+                  maxlength="32"
+                  :placeholder="t('member.portal.profile.phoneHint', '+62 …')"
+                  class="w-full h-10 rounded-lg border border-border bg-background px-3"
+                >
+              </label>
+            </div>
+          </ConsoleFormCard>
         </div>
 
-        <!-- Right column -->
         <div class="xl:col-span-5 space-y-6">
-          <MemberSectionCard :title="t('member.portal.profile.sections.preferences', 'Preferences')">
-            <label class="block space-y-1.5 text-sm">
-              <span class="font-medium">{{ t('member.portal.profile.locale', 'Language') }}</span>
-              <select
-                v-model="form.locale"
-                class="w-full h-10 rounded-lg border border-border bg-background px-3"
-              >
-                <option value="">
-                  {{ t('member.portal.profile.localeDefault', 'Use site default') }}
-                </option>
-                <option
-                  v-for="lang in languages"
-                  :key="lang.code"
-                  :value="lang.code"
+          <ConsoleFormCard :title="t('member.portal.profile.sections.preferences', 'Preferences')">
+            <div class="space-y-4">
+              <label class="block space-y-1.5 text-sm">
+                <span class="font-medium">{{ t('member.portal.profile.locale', 'Language') }}</span>
+                <select
+                  v-model="form.locale"
+                  class="w-full h-10 rounded-lg border border-border bg-background px-3"
                 >
-                  {{ lang.native_name || lang.name }} ({{ lang.code }})
-                </option>
-              </select>
-            </label>
-            <label class="block space-y-1.5 text-sm">
-              <span class="font-medium">{{ t('member.portal.profile.timezone', 'Timezone') }}</span>
-              <select
-                v-model="form.timezone"
-                class="w-full h-10 rounded-lg border border-border bg-background px-3"
-              >
-                <option value="">
-                  {{ t('member.portal.profile.timezoneDefault', 'Use browser default') }}
-                </option>
-                <option
-                  v-for="tz in timezoneOptions"
-                  :key="tz"
-                  :value="tz"
+                  <option value="">
+                    {{ t('member.portal.profile.localeDefault', 'Use site default') }}
+                  </option>
+                  <option
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    :value="lang.code"
+                  >
+                    {{ lang.native_name || lang.name }} ({{ lang.code }})
+                  </option>
+                </select>
+              </label>
+              <label class="block space-y-1.5 text-sm">
+                <span class="font-medium">{{ t('member.portal.profile.timezone', 'Timezone') }}</span>
+                <select
+                  v-model="form.timezone"
+                  class="w-full h-10 rounded-lg border border-border bg-background px-3"
                 >
-                  {{ tz }}
-                </option>
-              </select>
-            </label>
-          </MemberSectionCard>
+                  <option value="">
+                    {{ t('member.portal.profile.timezoneDefault', 'Use browser default') }}
+                  </option>
+                  <option
+                    v-for="tz in timezoneOptions"
+                    :key="tz"
+                    :value="tz"
+                  >
+                    {{ tz }}
+                  </option>
+                </select>
+              </label>
+            </div>
+          </ConsoleFormCard>
 
-          <MemberSectionCard :title="t('member.portal.profile.sections.account', 'Account')">
+          <ConsoleFormCard :title="t('member.portal.profile.sections.account', 'Account')">
             <dl class="grid gap-4 sm:grid-cols-2 text-sm">
               <div class="space-y-1">
                 <dt class="text-muted-foreground">
@@ -197,7 +193,7 @@
                 </dd>
               </div>
             </dl>
-          </MemberSectionCard>
+          </ConsoleFormCard>
         </div>
       </div>
 
@@ -225,7 +221,7 @@
         {{ resendLabel }}
       </button>
     </p>
-  </div>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
@@ -233,11 +229,12 @@ import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
-import MemberSectionCard from '@/modules/Member/components/MemberSectionCard.vue';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { useLanguage } from '@/shared/composables/useLanguage';
 import { useMemberStore } from '@/modules/Member/stores/member';
 import type { MemberProfileInput } from '@/modules/Member/types/profile';
 import { MEMBER_TIMEZONE_OPTIONS } from '@/modules/Member/types/profile';
+import { ConsoleFormCard } from '@/shared/components/shell';
 
 const { t, locale } = useI18n();
 const memberStore = useMemberStore();

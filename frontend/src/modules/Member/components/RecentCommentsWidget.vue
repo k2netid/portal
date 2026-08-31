@@ -1,51 +1,59 @@
 <template>
-  <section class="rounded-lg border border-border/60 bg-card shadow-sm p-5 space-y-4">
-    <div class="flex items-center justify-between gap-3">
-      <h3 class="text-lg font-bold">
-        {{ t('member.nav.comments', 'Comments') }}
-      </h3>
-      <router-link
-        v-if="showViewAll"
-        :to="{ name: 'member.comments' }"
-        class="text-sm font-semibold text-primary"
-      >
-        {{ t('member.portal.widgets.viewAll', 'View all') }}
-      </router-link>
-    </div>
-    <p
-      v-if="loading"
-      class="text-sm text-muted-foreground"
+  <ConsoleListCard>
+    <template
+      v-if="showHeader"
+      #toolbar
     >
-      {{ t('member.account.loading', 'Loading…') }}
-    </p>
-    <ul
-      v-else-if="comments.length"
-      class="space-y-3"
-    >
-      <li
-        v-for="item in comments"
-        :key="item.id"
-        class="space-y-1"
-      >
+      <div class="flex w-full items-center justify-between gap-3">
+        <h3 class="text-base font-semibold tracking-tight text-foreground">
+          {{ t('member.nav.comments', 'Comments') }}
+        </h3>
         <router-link
-          v-if="item.content?.slug"
-          :to="`/blog/${item.content.slug}`"
-          class="font-medium hover:text-primary"
+          v-if="showViewAll"
+          :to="{ name: 'member.comments' }"
+          class="text-sm font-semibold text-primary hover:underline underline-offset-4"
         >
-          {{ item.content?.title || t('member.account.untitled', 'Untitled') }}
+          {{ t('member.portal.widgets.viewAll', 'View all') }}
         </router-link>
-        <p class="text-sm text-muted-foreground line-clamp-2">
-          {{ item.body }}
-        </p>
-      </li>
-    </ul>
-    <p
-      v-else
-      class="text-sm text-muted-foreground"
-    >
-      {{ t('member.portal.comments.empty', 'No comments yet.') }}
-    </p>
-  </section>
+      </div>
+    </template>
+
+    <div class="p-5 sm:p-6 space-y-4">
+      <p
+        v-if="loading"
+        class="text-sm text-muted-foreground"
+      >
+        {{ t('member.account.loading', 'Loading…') }}
+      </p>
+      <ul
+        v-else-if="comments.length"
+        class="space-y-3"
+      >
+        <li
+          v-for="item in comments"
+          :key="item.id"
+          class="space-y-1"
+        >
+          <router-link
+            v-if="item.content?.slug"
+            :to="`/blog/${item.content.slug}`"
+            class="font-medium hover:text-primary"
+          >
+            {{ item.content?.title || t('member.account.untitled', 'Untitled') }}
+          </router-link>
+          <p class="text-sm text-muted-foreground line-clamp-2">
+            {{ item.body }}
+          </p>
+        </li>
+      </ul>
+      <p
+        v-else
+        class="text-sm text-muted-foreground"
+      >
+        {{ t('member.portal.comments.empty', 'No comments yet.') }}
+      </p>
+    </div>
+  </ConsoleListCard>
 </template>
 
 <script setup lang="ts">
@@ -53,6 +61,7 @@ import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
 import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
+import { ConsoleListCard } from '@/shared/components/shell';
 
 interface CommentRow {
     id: string;
@@ -62,9 +71,11 @@ interface CommentRow {
 
 const props = withDefaults(defineProps<{
     limit?: number;
+    showHeader?: boolean;
     showViewAll?: boolean;
 }>(), {
     limit: 3,
+    showHeader: true,
     showViewAll: true,
 });
 

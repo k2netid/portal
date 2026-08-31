@@ -54,9 +54,25 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::prefix('manage/members')->middleware(['auth:sanctum', 'extension.active:member'])->group(function (): void {
+        Route::get('stats', [MemberDirectoryController::class, 'stats'])
+            ->middleware('permission:view members');
+        Route::get('export', [MemberDirectoryController::class, 'export'])
+            ->middleware('permission:view members');
+        Route::post('bulk-action', [MemberDirectoryController::class, 'bulkAction'])
+            ->middleware('permission:manage members');
+        Route::post('/', [MemberDirectoryController::class, 'store'])
+            ->middleware('permission:manage members');
         Route::get('/', [MemberDirectoryController::class, 'index'])
             ->middleware('permission:view members');
+        Route::get('{member}', [MemberDirectoryController::class, 'show'])
+            ->middleware('permission:view members');
         Route::patch('{member}', [MemberDirectoryController::class, 'update'])
+            ->middleware('permission:manage members');
+        Route::delete('{member}', [MemberDirectoryController::class, 'destroy'])
+            ->middleware('permission:manage members');
+        Route::post('{member}/restore', [MemberDirectoryController::class, 'restore'])
+            ->middleware('permission:manage members');
+        Route::delete('{member}/force', [MemberDirectoryController::class, 'forceDelete'])
             ->middleware('permission:manage members');
     });
 });

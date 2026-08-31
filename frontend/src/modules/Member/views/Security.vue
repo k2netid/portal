@@ -1,180 +1,172 @@
 <template>
-  <div class="space-y-6">
-    <header class="space-y-1 border-b border-border/50 pb-5">
-      <h1 class="text-2xl font-bold tracking-tight">
-        {{ t('member.portal.security.title', 'Security') }}
-      </h1>
-      <p class="text-sm text-muted-foreground max-w-3xl">
-        {{ t('member.portal.security.subtitle', 'Password, email, and account deletion for your reader identity.') }}
-      </p>
-    </header>
-
+  <MemberPage
+    :title="t('member.portal.security.title', 'Security')"
+    :subtitle="t('member.portal.security.subtitle', 'Password, email, and account deletion for your reader identity.')"
+  >
     <div class="grid gap-6 xl:grid-cols-2">
-      <MemberSectionCard :title="t('member.portal.security.passwordSection', 'Change password')">
+      <ConsoleFormCard :title="t('member.portal.security.passwordSection', 'Change password')">
         <form
           class="space-y-4"
           @submit.prevent="submitPassword"
         >
-      <p
-        v-if="passwordError"
-        class="text-sm text-destructive"
-      >
-        {{ passwordError }}
-      </p>
-      <p
-        v-if="passwordSuccess"
-        class="text-sm text-emerald-600"
-      >
-        {{ t('member.portal.security.success', 'Password updated.') }}
-      </p>
+          <p
+            v-if="passwordError"
+            class="text-sm text-destructive"
+          >
+            {{ passwordError }}
+          </p>
+          <p
+            v-if="passwordSuccess"
+            class="text-sm text-emerald-600"
+          >
+            {{ t('member.portal.security.success', 'Password updated.') }}
+          </p>
 
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
-        <input
-          v-model="currentPassword"
-          type="password"
-          required
-          autocomplete="current-password"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
-        >
-      </label>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.new', 'New password') }}</span>
-        <input
-          v-model="password"
-          type="password"
-          required
-          minlength="8"
-          autocomplete="new-password"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
-        >
-      </label>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.confirm', 'Confirm new password') }}</span>
-        <input
-          v-model="passwordConfirmation"
-          type="password"
-          required
-          minlength="8"
-          autocomplete="new-password"
-          class="w-full h-10 rounded-lg border border-border bg-background px-3"
-        >
-      </label>
-      <Button
-        type="submit"
-        :disabled="passwordPending"
-      >
-        {{ passwordPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.submit', 'Update password') }}
-      </Button>
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
+            <input
+              v-model="currentPassword"
+              type="password"
+              required
+              autocomplete="current-password"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+            >
+          </label>
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.security.new', 'New password') }}</span>
+            <input
+              v-model="password"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+            >
+          </label>
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.security.confirm', 'Confirm new password') }}</span>
+            <input
+              v-model="passwordConfirmation"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+            >
+          </label>
+          <Button
+            type="submit"
+            :disabled="passwordPending"
+          >
+            {{ passwordPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.submit', 'Update password') }}
+          </Button>
         </form>
-      </MemberSectionCard>
+      </ConsoleFormCard>
 
-      <MemberSectionCard :title="t('member.portal.security.emailSection', 'Change email')">
+      <ConsoleFormCard :title="t('member.portal.security.emailSection', 'Change email')">
         <form
           class="space-y-4"
           @submit.prevent="submitEmail"
         >
-      <p class="text-sm text-muted-foreground">
-        {{ t('member.portal.security.emailHint', 'We send a confirmation link to the new address. You must sign in again after confirming.') }}
-      </p>
-      <p
-        v-if="memberStore.member?.pending_email"
-        class="text-sm rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2"
-      >
-        {{ t('member.portal.security.pendingEmail', 'Pending confirmation:') }}
-        <strong>{{ memberStore.member.pending_email }}</strong>
-      </p>
-      <p
-        v-if="emailError"
-        class="text-sm text-destructive"
-      >
-        {{ emailError }}
-      </p>
-      <p
-        v-if="emailSuccess"
-        class="text-sm text-emerald-600"
-      >
-        {{ t('member.portal.security.emailSent', 'Confirmation email sent.') }}
-      </p>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.newEmail', 'New email') }}</span>
-        <input
-          v-model="newEmail"
-          type="email"
-          required
-          autocomplete="email"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
-        >
-      </label>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
-        <input
-          v-model="emailPassword"
-          type="password"
-          required
-          autocomplete="current-password"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
-        >
-      </label>
-      <Button
-        type="submit"
-        :disabled="emailPending"
-      >
-        {{ emailPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.emailSubmit', 'Send confirmation') }}
-      </Button>
+          <p class="text-sm text-muted-foreground">
+            {{ t('member.portal.security.emailHint', 'We send a confirmation link to the new address. You must sign in again after confirming.') }}
+          </p>
+          <p
+            v-if="memberStore.member?.pending_email"
+            class="text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2"
+          >
+            {{ t('member.portal.security.pendingEmail', 'Pending confirmation:') }}
+            <strong>{{ memberStore.member.pending_email }}</strong>
+          </p>
+          <p
+            v-if="emailError"
+            class="text-sm text-destructive"
+          >
+            {{ emailError }}
+          </p>
+          <p
+            v-if="emailSuccess"
+            class="text-sm text-emerald-600"
+          >
+            {{ t('member.portal.security.emailSent', 'Confirmation email sent.') }}
+          </p>
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.security.newEmail', 'New email') }}</span>
+            <input
+              v-model="newEmail"
+              type="email"
+              required
+              autocomplete="email"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+            >
+          </label>
+          <label class="block space-y-1.5 text-sm">
+            <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
+            <input
+              v-model="emailPassword"
+              type="password"
+              required
+              autocomplete="current-password"
+              class="w-full h-10 rounded-lg border border-border bg-background px-3"
+            >
+          </label>
+          <Button
+            type="submit"
+            :disabled="emailPending"
+          >
+            {{ emailPending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.emailSubmit', 'Send confirmation') }}
+          </Button>
         </form>
-      </MemberSectionCard>
+      </ConsoleFormCard>
     </div>
 
-    <section class="rounded-xl border border-destructive/40 bg-destructive/5 shadow-sm">
-      <div class="border-b border-destructive/20 px-5 py-3.5 sm:px-6">
-        <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-destructive">
-          {{ t('member.portal.security.deleteSection', 'Delete account') }}
-        </h2>
-      </div>
+    <ConsoleFormCard
+      :title="t('member.portal.security.deleteSection', 'Delete account')"
+      class="border-destructive/40 bg-destructive/5 max-w-xl"
+    >
       <form
-        class="p-5 sm:p-6 space-y-4 max-w-xl"
+        class="space-y-4"
         @submit.prevent="submitDelete"
       >
-      <p class="text-sm text-muted-foreground">
-        {{ t('member.portal.security.deleteHint', 'Permanently removes your reader account. Bookmarks are deleted; comments stay anonymous.') }}
-      </p>
-      <p
-        v-if="deleteError"
-        class="text-sm text-destructive"
-      >
-        {{ deleteError }}
-      </p>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
-        <input
-          v-model="deletePassword"
-          type="password"
-          required
-          autocomplete="current-password"
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
+        <p class="text-sm text-muted-foreground">
+          {{ t('member.portal.security.deleteHint', 'Permanently removes your reader account. Bookmarks are deleted; comments stay anonymous.') }}
+        </p>
+        <p
+          v-if="deleteError"
+          class="text-sm text-destructive"
         >
-      </label>
-      <label class="block space-y-1.5 text-sm">
-        <span class="font-medium">{{ t('member.portal.security.deleteConfirm', 'Type DELETE to confirm') }}</span>
-        <input
-          v-model="deleteConfirm"
-          type="text"
-          required
-          class="w-full h-10 rounded-xl border border-border bg-background px-3"
+          {{ deleteError }}
+        </p>
+        <label class="block space-y-1.5 text-sm">
+          <span class="font-medium">{{ t('member.portal.security.current', 'Current password') }}</span>
+          <input
+            v-model="deletePassword"
+            type="password"
+            required
+            autocomplete="current-password"
+            class="w-full h-10 rounded-lg border border-border bg-background px-3"
+          >
+        </label>
+        <label class="block space-y-1.5 text-sm">
+          <span class="font-medium">{{ t('member.portal.security.deleteConfirm', 'Type DELETE to confirm') }}</span>
+          <input
+            v-model="deleteConfirm"
+            type="text"
+            required
+            class="w-full h-10 rounded-lg border border-border bg-background px-3"
+          >
+        </label>
+        <Button
+          type="submit"
+          variant="outline"
+          class="border-destructive text-destructive hover:bg-destructive/10"
+          :disabled="deletePending || deleteConfirm !== 'DELETE'"
         >
-      </label>
-      <Button
-        type="submit"
-        variant="outline"
-        class="border-destructive text-destructive hover:bg-destructive/10"
-        :disabled="deletePending || deleteConfirm !== 'DELETE'"
-      >
-        {{ deletePending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.deleteSubmit', 'Delete my account') }}
-      </Button>
+          {{ deletePending ? t('member.portal.security.pending', 'Saving…') : t('member.portal.security.deleteSubmit', 'Delete my account') }}
+        </Button>
       </form>
-    </section>
-  </div>
+    </ConsoleFormCard>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
@@ -183,8 +175,9 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
-import MemberSectionCard from '@/modules/Member/components/MemberSectionCard.vue';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { ConsoleFormCard } from '@/shared/components/shell';
 
 const { t } = useI18n();
 const router = useRouter();

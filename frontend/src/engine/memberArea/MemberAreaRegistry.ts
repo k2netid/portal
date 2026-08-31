@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw, Router } from 'vue-router';
 import type {
     MemberAreaContribution,
     MemberAreaNavItem,
@@ -47,10 +47,6 @@ class MemberAreaRegistry {
 
     register(contribution: MemberAreaContribution): void {
         this.contributions.push(contribution);
-    }
-
-    private widgetKey(extensionSlug: string, slug: string): string {
-        return `${extensionSlug}:${slug}`;
     }
 
     resolveWidget(extensionSlug: string, slug: string): MemberAreaWidget | undefined {
@@ -179,7 +175,7 @@ export function registerMemberAreaContributions(
 }
 
 export function appendMemberPortalRoutes(
-    router: { addRoute: (route: RouteRecordRaw) => void },
+    router: Router,
     activeExtensions: string[],
 ): void {
     for (const route of memberAreaRegistry.getPackRoutes(activeExtensions)) {

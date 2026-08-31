@@ -31,7 +31,15 @@ export const libraryPaths = {
 
 export const memberPaths = {
     index: '/manage/members',
+    create: '/manage/members',
+    stats: '/manage/members/stats',
+    export: '/manage/members/export',
+    bulkAction: '/manage/members/bulk-action',
+    show: (id: string) => `/manage/members/${id}`,
     update: (id: string) => `/manage/members/${id}`,
+    destroy: (id: string) => `/manage/members/${id}`,
+    restore: (id: string) => `/manage/members/${id}/restore`,
+    forceDelete: (id: string) => `/manage/members/${id}/force`,
     publicRegister: '/public/member/register',
     publicLogin: '/public/member/login',
     me: '/member/me',

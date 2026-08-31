@@ -1,65 +1,69 @@
 <template>
-  <div class="space-y-6">
-    <div class="space-y-1">
-      <h2 class="text-xl font-bold">
-        {{ t('member.nav.newsletter', 'Newsletter') }}
-      </h2>
-      <p class="text-sm text-muted-foreground">
-        {{ t('member.portal.newsletter.subtitle', 'Manage email updates for your reader account.') }}
-      </p>
-    </div>
+  <MemberPage
+    :title="t('member.nav.newsletter', 'Newsletter')"
+    :subtitle="t('member.portal.newsletter.subtitle', 'Manage email updates for your reader account.')"
+  >
+    <ConsoleFormCard class="max-w-lg">
+      <div class="space-y-4">
+        <p
+          v-if="loading"
+          class="text-sm text-muted-foreground"
+        >
+          {{ t('member.account.loading', 'Loading…') }}
+        </p>
+        <template v-else>
+          <p
+            v-if="error"
+            class="text-sm text-destructive"
+          >
+            {{ error }}
+          </p>
+          <p
+            v-if="success"
+            class="text-sm text-emerald-600"
+          >
+            {{ success }}
+          </p>
 
-    <section class="rounded-2xl border border-border/60 bg-background/60 p-5 sm:p-6 space-y-4 max-w-lg">
-      <p
-        v-if="error"
-        class="text-sm text-destructive"
-      >
-        {{ error }}
-      </p>
-      <p
-        v-if="success"
-        class="text-sm text-emerald-600"
-      >
-        {{ success }}
-      </p>
+          <dl class="grid gap-3 text-sm">
+            <div class="space-y-1">
+              <dt class="text-muted-foreground">
+                {{ t('member.portal.newsletter.email', 'Delivery email') }}
+              </dt>
+              <dd class="font-medium">
+                {{ memberStore.member?.email }}
+              </dd>
+            </div>
+            <div class="space-y-1">
+              <dt class="text-muted-foreground">
+                {{ t('member.portal.newsletter.status', 'Status') }}
+              </dt>
+              <dd class="font-medium">
+                {{
+                  subscribed
+                    ? t('member.portal.newsletter.subscribed', 'Subscribed')
+                    : t('member.portal.newsletter.notSubscribed', 'Not subscribed')
+                }}
+              </dd>
+            </div>
+          </dl>
 
-      <dl class="grid gap-3 text-sm">
-        <div class="space-y-1">
-          <dt class="text-muted-foreground">
-            {{ t('member.portal.newsletter.email', 'Delivery email') }}
-          </dt>
-          <dd class="font-medium">
-            {{ memberStore.member?.email }}
-          </dd>
-        </div>
-        <div class="space-y-1">
-          <dt class="text-muted-foreground">
-            {{ t('member.portal.newsletter.status', 'Status') }}
-          </dt>
-          <dd class="font-medium">
+          <Button
+            :disabled="pending"
+            @click="toggle"
+          >
             {{
-              subscribed
-                ? t('member.portal.newsletter.subscribed', 'Subscribed')
-                : t('member.portal.newsletter.notSubscribed', 'Not subscribed')
+              pending
+                ? t('member.portal.newsletter.pending', 'Saving…')
+                : subscribed
+                  ? t('member.portal.newsletter.unsubscribe', 'Unsubscribe')
+                  : t('member.portal.newsletter.subscribe', 'Subscribe')
             }}
-          </dd>
-        </div>
-      </dl>
-
-      <Button
-        :disabled="pending"
-        @click="toggle"
-      >
-        {{
-          pending
-            ? t('member.portal.newsletter.pending', 'Saving…')
-            : subscribed
-              ? t('member.portal.newsletter.unsubscribe', 'Unsubscribe')
-              : t('member.portal.newsletter.subscribe', 'Subscribe')
-        }}
-      </Button>
-    </section>
-  </div>
+          </Button>
+        </template>
+      </div>
+    </ConsoleFormCard>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
@@ -68,8 +72,10 @@ import { useI18n } from 'vue-i18n';
 import { isAxiosError } from 'axios';
 import api from '@/engine/api/client';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { useMemberStore } from '@/modules/Member/stores/member';
 import { unwrapApiPayload } from '@/modules/Member/utils/memberApi';
+import { ConsoleFormCard } from '@/shared/components/shell';
 
 interface NewsletterStatus {
     subscribed?: boolean;

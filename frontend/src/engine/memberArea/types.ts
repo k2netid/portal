@@ -14,6 +14,7 @@ export interface MemberAreaWidget {
     slug: string;
     slot: 'dashboard';
     order?: number;
+    requiresVerified?: boolean;
     capability?: string;
     extensionSlug?: string;
     component: () => Promise<unknown>;

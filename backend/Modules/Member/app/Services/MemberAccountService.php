@@ -10,7 +10,30 @@ use Modules\Member\Models\Member;
 
 class MemberAccountService
 {
+    /**
+     * Reader self-service permanent account removal.
+     */
     public function delete(Member $member): void
+    {
+        $this->forceDelete($member);
+    }
+
+    /**
+     * Console/admin soft delete — revokes sessions and hides the account.
+     */
+    public function softDelete(Member $member): void
+    {
+        DB::transaction(function () use ($member): void {
+            $member->tokens()->delete();
+            $member->update(['status' => 'inactive']);
+            $member->delete();
+        });
+    }
+
+    /**
+     * Console/admin permanent removal with related data cleanup.
+     */
+    public function forceDelete(Member $member): void
     {
         DB::transaction(function () use ($member): void {
             $member->tokens()->delete();
@@ -31,7 +54,7 @@ class MemberAccountService
                 DB::table('mem_password_reset_tokens')->where('email', $member->email)->delete();
             }
 
-            $member->delete();
+            $member->forceDelete();
         });
     }
 }

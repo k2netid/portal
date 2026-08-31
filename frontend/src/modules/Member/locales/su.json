@@ -5,6 +5,7 @@
     }
   },
   "title": "Anggota",
+  "title_singular": "Anggota",
   "subtitle": "Akun pamaca publik. Sanés operator konsol.",
   "portal": {
     "title": "Akun kuring",
@@ -215,24 +216,79 @@
     "newsletter": "Newsletter",
     "submissions": "Kiriman kuring"
   },
+  "form": {
+    "back": "Balik ka daptar",
+    "createTitle": "Jieun anggota",
+    "createSubtitle": "Tambahkeun akun pamaca tina konsol.",
+    "editTitle": "Édit anggota",
+    "editSubtitle": "Perbarui profil jeung setélan akun pamaca.",
+    "createSubmit": "Jieun anggota",
+    "editSubmit": "Simpen perobahan",
+    "saving": "Nyimpen…",
+    "identity": "Identitas",
+    "account": "Akun",
+    "name": "Ngaran tampilan",
+    "email": "Email",
+    "password": "Sandi",
+    "passwordHint": "Kosongkeun pikeun ngeunteung sandi ayeuna",
+    "phone": "Telepon",
+    "verifyEmail": "Tandai email diverifikasi"
+  },
   "filters": {
-    "search": "Milarian ngaran atanapi email..."
+    "search": "Milarian ngaran, email, atanapi telepon...",
+    "allStatus": "Sadaya status",
+    "allVerified": "Sadaya verifikasi"
+  },
+  "stats": {
+    "total": "Total anggota",
+    "verified": "Diverifikasi",
+    "unverified": "Can diverifikasi",
+    "recent": "Gabung (7d)",
+    "active": "Aktif (30d)"
+  },
+  "detail": {
+    "title": "Detil anggota",
+    "back": "Balik ka daptar",
+    "profile": "Profil",
+    "preferences": "Preferensi & aksi",
+    "pendingEmail": "Parobahan email pending",
+    "activity": {
+      "bookmarks": "Bookmark",
+      "comments": "Koméntar",
+      "submissions": "Kiriman formulir",
+      "newsletter": "Newsletter"
+    }
+  },
+  "confirm": {
+    "status": "Robah status {email} jadi {status}?",
+    "verify": "Tandai {email} salaku diverifikasi?",
+    "delete": "Pindahkeun {email} ka sampah? Bookmark tetep dugi ka hapus permanén.",
+    "restore": "Pulihkeun {email}?",
+    "forceDelete": "Hapus permanén {email}? Bookmark dihapus; koméntar jeung kiriman dianonimkeun.",
+    "bulk": "Larapkeun \"{action}\" ka {count} anggota anu dipilih?"
   },
   "messages": {
     "loading": "Ngamuat anggota...",
     "empty": "Teu aya anggota",
-    "loadFailed": "Gagal ngamuat anggota"
+    "loadFailed": "Gagal ngamuat anggota",
+    "verified": "Email ditandai diverifikasi",
+    "bulkSuccess": "Aksi bulk réngsé"
   },
   "table": {
     "member": "Anggota",
+    "phone": "Telepon",
     "status": "Status",
     "verified": "Email",
+    "lastLogin": "Login panungtung",
     "joinedAt": "Gabung",
     "actions": "Aksi"
   },
   "actions": {
     "activate": "Aktifkeun",
     "deactivate": "Nonaktifkeun",
+    "verify": "Verifikasi email",
+    "view": "Tingali detil",
+    "export": "Ékspor CSV",
     "updated": "Status anggota diperbarui"
   },
   "status": {

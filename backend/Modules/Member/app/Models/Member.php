@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Member\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -27,13 +28,14 @@ use Modules\Member\Support\MemberPublicProfile;
  * @property Carbon|null $last_login_at
  * @property string|null $remember_token
  * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  */
 class Member extends Authenticatable
 {
     use HasApiTokens;
     use HasUuids;
     use Notifiable;
+    use SoftDeletes;
 
     protected $table = 'mem_members';
 

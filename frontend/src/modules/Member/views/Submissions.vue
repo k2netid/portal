@@ -1,29 +1,23 @@
 <template>
-  <div class="space-y-6">
-    <div class="space-y-1">
-      <h2 class="text-xl font-bold">
-        {{ t('member.nav.submissions', 'My submissions') }}
-      </h2>
-      <p class="text-sm text-muted-foreground">
-        {{ t('member.portal.submissions.subtitle', 'Forms you submitted while signed in.') }}
-      </p>
-    </div>
-
-    <section class="rounded-2xl border border-border/60 bg-background/60 p-5 sm:p-6 space-y-4">
-      <p
+  <MemberPage
+    :title="t('member.nav.submissions', 'My submissions')"
+    :subtitle="t('member.portal.submissions.subtitle', 'Forms you submitted while signed in.')"
+  >
+    <ConsoleListCard>
+      <div
         v-if="loading"
-        class="text-sm text-muted-foreground"
+        class="p-6 text-sm text-muted-foreground"
       >
         {{ t('member.account.loading', 'Loading…') }}
-      </p>
+      </div>
       <ul
         v-else-if="submissions.length"
-        class="space-y-4"
+        class="divide-y divide-border/50"
       >
         <li
           v-for="item in submissions"
           :key="item.id"
-          class="space-y-2 border-b border-border/40 pb-4 last:border-0 last:pb-0"
+          class="space-y-2 px-6 py-4"
         >
           <div class="flex flex-wrap items-center justify-between gap-2">
             <p class="font-medium">
@@ -55,21 +49,23 @@
           </dl>
         </li>
       </ul>
-      <p
+      <EmptyState
         v-else
-        class="text-sm text-muted-foreground"
-      >
-        {{ t('member.portal.submissions.empty', 'No submissions yet.') }}
-      </p>
-    </section>
-  </div>
+        :title="t('member.portal.submissions.empty', 'No submissions yet.')"
+        compact
+      />
+    </ConsoleListCard>
+  </MemberPage>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import api from '@/engine/api/client';
+import MemberPage from '@/modules/Member/components/MemberPage.vue';
 import { extractPaginatedRows } from '@/modules/Member/utils/memberApi';
+import { EmptyState } from '@/shared/components/feedback';
+import { ConsoleListCard } from '@/shared/components/shell';
 
 interface SubmissionRow {
     id: string;
@@ -82,10 +78,6 @@ interface SubmissionRow {
 const { t } = useI18n();
 const submissions = ref<SubmissionRow[]>([]);
 const loading = ref(true);
-
-const extractRows = (response: { data?: unknown }): SubmissionRow[] => (
-    extractPaginatedRows<SubmissionRow>(response)
-);
 
 const formatDate = (value?: string): string => {
     if (!value) {
@@ -109,7 +101,7 @@ const load = async (): Promise<void> => {
     loading.value = true;
     try {
         const response = await api.get('/member/submissions', { params: { per_page: 50 } });
-        submissions.value = extractRows(response);
+        submissions.value = extractPaginatedRows<SubmissionRow>(response);
     } catch {
         submissions.value = [];
     } finally {

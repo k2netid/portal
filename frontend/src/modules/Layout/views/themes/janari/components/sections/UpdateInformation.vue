@@ -261,7 +261,10 @@ function takeSlice(items: UpdateItem[], start: number, count: number): UpdateIte
   if (!items.length) return []
   const out: UpdateItem[] = []
   for (let i = 0; i < count; i++) {
-    out.push(items[(start + i) % items.length])
+    const item = items[(start + i) % items.length]
+    if (item) {
+      out.push(item)
+    }
   }
   return out
 }

@@ -5,6 +5,7 @@
     }
   },
   "title": "Members",
+  "title_singular": "Member",
   "subtitle": "Public reader accounts. Not console operators.",
   "portal": {
     "title": "My account",
@@ -215,24 +216,79 @@
     "newsletter": "Newsletter",
     "submissions": "My submissions"
   },
+  "form": {
+    "back": "Back to list",
+    "createTitle": "Create member",
+    "createSubtitle": "Add a reader account from the console.",
+    "editTitle": "Edit member",
+    "editSubtitle": "Update reader profile and account settings.",
+    "createSubmit": "Create member",
+    "editSubmit": "Save changes",
+    "saving": "Saving…",
+    "identity": "Identity",
+    "account": "Account",
+    "name": "Display name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "Leave blank to keep current password",
+    "phone": "Phone",
+    "verifyEmail": "Mark email as verified"
+  },
   "filters": {
-    "search": "Search name or email..."
+    "search": "Search name, email, or phone...",
+    "allStatus": "All statuses",
+    "allVerified": "All verification"
+  },
+  "stats": {
+    "total": "Total members",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "recent": "Joined (7d)",
+    "active": "Active (30d)"
+  },
+  "detail": {
+    "title": "Member detail",
+    "back": "Back to list",
+    "profile": "Profile",
+    "preferences": "Preferences & actions",
+    "pendingEmail": "Pending email change",
+    "activity": {
+      "bookmarks": "Bookmarks",
+      "comments": "Comments",
+      "submissions": "Form submissions",
+      "newsletter": "Newsletter"
+    }
+  },
+  "confirm": {
+    "status": "Change status for {email} to {status}?",
+    "verify": "Mark {email} as verified?",
+    "delete": "Move {email} to trash? Bookmarks are kept until permanent deletion.",
+    "restore": "Restore {email}?",
+    "forceDelete": "Permanently delete {email}? Related bookmarks are removed; comments and submissions are anonymized.",
+    "bulk": "Apply \"{action}\" to {count} selected members?"
   },
   "messages": {
     "loading": "Loading members...",
     "empty": "No members found",
-    "loadFailed": "Failed to load members"
+    "loadFailed": "Failed to load members",
+    "verified": "Email marked as verified",
+    "bulkSuccess": "Bulk action completed"
   },
   "table": {
     "member": "Member",
+    "phone": "Phone",
     "status": "Status",
     "verified": "Email",
+    "lastLogin": "Last sign-in",
     "joinedAt": "Joined",
     "actions": "Actions"
   },
   "actions": {
     "activate": "Activate",
     "deactivate": "Deactivate",
+    "verify": "Verify email",
+    "view": "View detail",
+    "export": "Export CSV",
     "updated": "Member status updated"
   },
   "status": {
