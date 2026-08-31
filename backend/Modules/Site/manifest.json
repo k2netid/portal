@@ -25,5 +25,9 @@
   "is_core": false,
   "license": "Commercial PRO",
   "license_tier": "pro",
-  "settings_route": "site"
+  "settings_route": "site",
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": []
+  }
 }

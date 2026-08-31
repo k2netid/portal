@@ -566,6 +566,7 @@
     "modules": "Modules",
     "plugins": "Plugins",
     "familyCms": "Content Management System",
+    "familyAudience": "Audience",
     "familyCommunications": "Communications",
     "bulkActivateCms": "Activate CMS pack",
     "bulkDeactivateCms": "Deactivate CMS pack",

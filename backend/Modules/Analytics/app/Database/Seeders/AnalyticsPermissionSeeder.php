@@ -11,6 +11,11 @@ use Spatie\Permission\PermissionRegistrar;
 
 class AnalyticsPermissionSeeder extends Seeder
 {
+    public static function ensure(): void
+    {
+        (new self)->run();
+    }
+
     public function run(): void
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();

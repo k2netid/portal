@@ -27,6 +27,7 @@ class InstallProfileApplicatorTest extends TestCase
         $this->assertTrue(Extension::isProductActive('site'));
         $this->assertTrue(Extension::isProductActive('layout'));
         $this->assertTrue(Extension::isProductActive('publishing'));
+        $this->assertTrue(Extension::isProductActive('member'));
     }
 
     public function test_core_profile_leaves_site_inactive(): void

@@ -38,5 +38,11 @@
     "edit media",
     "delete media",
     "manage media"
-  ]
+  ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Media\\Database\\Seeders\\MediaPermissionSeeder"
+    ]
+  }
 }

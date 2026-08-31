@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Modules\Layout\Database\Seeders;
+namespace Modules\Library\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-class LayoutPermissionSeeder extends Seeder
+/**
+ * Taxonomy permissions for Library (also seeded by Publishing when both packs are active).
+ */
+class LibraryPermissionSeeder extends Seeder
 {
     public static function ensure(): void
     {
@@ -21,26 +24,10 @@ class LayoutPermissionSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $perms = [
-            'view menus',
-            'create menus',
-            'edit menus',
-            'delete menus',
-            'manage menus',
-            'view widgets',
-            'create widgets',
-            'edit widgets',
-            'delete widgets',
-            'manage widgets',
-            'view redirects',
-            'create redirects',
-            'edit redirects',
-            'delete redirects',
-            'manage redirects',
-            'view themes',
-            'upload themes',
-            'edit themes',
-            'delete themes',
-            'manage themes',
+            'view categories',
+            'manage categories',
+            'manage tags',
+            'manage content',
         ];
 
         foreach ($perms as $name) {
@@ -63,9 +50,8 @@ class LayoutPermissionSeeder extends Seeder
             ->first();
         if ($author) {
             $author->givePermissionTo([
-                'view menus',
-                'view widgets',
-                'view redirects',
+                'view categories',
+                'manage content',
             ]);
         }
     }

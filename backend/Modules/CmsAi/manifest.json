@@ -32,5 +32,9 @@
       "description": "Track AI feature usage and subscription token quotas",
       "category": "insight"
     }
-  ]
+  ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": []
+  }
 }

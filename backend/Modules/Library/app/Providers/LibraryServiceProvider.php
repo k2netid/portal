@@ -34,7 +34,7 @@ class LibraryServiceProvider extends ServiceProvider
         Tag::observe(TagSearchObserver::class);
 
         if ($this->app->runningInConsole()) {
-            // Permissions seeded from Publishing pack (shared CMS perms).
+            // Taxonomy permissions: manifest lifecycle + PublishingPermissionSeeder when Publishing is active.
         }
     }
 }

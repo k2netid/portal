@@ -447,6 +447,7 @@ const trans = computed(() => ({
     modules: t('system.appStore.modules'),
     plugins: t('system.appStore.plugins'),
     familyCms: t('system.appStore.familyCms'),
+    familyAudience: t('system.appStore.familyAudience'),
     familyCommunications: t('system.appStore.familyCommunications'),
     author: t('system.appStore.author'),
     license: t('system.appStore.license'),
@@ -500,6 +501,7 @@ const filterTabs = computed(() => [
     { label: trans.value.all, value: 'all' },
     { label: trans.value.platform, value: 'platform' },
     { label: trans.value.familyCms, value: 'cms' },
+    { label: trans.value.familyAudience, value: 'audience' },
     { label: trans.value.familyCommunications, value: 'communications' },
     { label: trans.value.plugins, value: 'plugin' },
 ]);
@@ -518,6 +520,7 @@ const familyLabel = (key: string): string => {
     const map: Record<string, string> = {
         platform: trans.value.platform,
         cms: trans.value.familyCms,
+        audience: trans.value.familyAudience,
         communications: trans.value.familyCommunications,
         plugin: trans.value.plugins,
         module: trans.value.modules,
@@ -669,7 +672,7 @@ const fetchExtensions = async () => {
     }
 };
 
-const FAMILY_ORDER = ['platform', 'cms', 'communications', 'module', 'plugin'] as const;
+const FAMILY_ORDER = ['platform', 'cms', 'audience', 'communications', 'module', 'plugin'] as const;
 
 const filteredExtensions = computed(() => {
     return extensions.value
@@ -684,7 +687,11 @@ const filteredExtensions = computed(() => {
 
             return matchesSearch && matchesTab;
         })
-        .sort((a, b) => FAMILY_ORDER.indexOf(resolveFamily(a) as typeof FAMILY_ORDER[number]) - FAMILY_ORDER.indexOf(resolveFamily(b) as typeof FAMILY_ORDER[number]));
+        .sort((a, b) => {
+            const ai = FAMILY_ORDER.indexOf(resolveFamily(a) as typeof FAMILY_ORDER[number]);
+            const bi = FAMILY_ORDER.indexOf(resolveFamily(b) as typeof FAMILY_ORDER[number]);
+            return (ai === -1 ? FAMILY_ORDER.length : ai) - (bi === -1 ? FAMILY_ORDER.length : bi);
+        });
 });
 
 const groupedExtensions = computed(() => {
@@ -696,13 +703,16 @@ const groupedExtensions = computed(() => {
         buckets.set(key, list);
     }
 
-    return FAMILY_ORDER
-        .filter((key) => buckets.has(key))
-        .map((key) => ({
-            key,
-            label: familyLabel(key),
-            items: buckets.get(key) ?? [],
-        }));
+    const orderedKeys = [
+        ...FAMILY_ORDER.filter((key) => buckets.has(key)),
+        ...[...buckets.keys()].filter((key) => !FAMILY_ORDER.includes(key as typeof FAMILY_ORDER[number])),
+    ];
+
+    return orderedKeys.map((key) => ({
+        key,
+        label: familyLabel(key),
+        items: buckets.get(key) ?? [],
+    }));
 });
 
 const requirementLabels = (ext: ExtensionItem): string => {

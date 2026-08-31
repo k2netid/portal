@@ -566,6 +566,7 @@
     "modules": "Modul",
     "plugins": "Plugin",
     "familyCms": "Content Management System",
+    "familyAudience": "Audiens",
     "familyCommunications": "Komunikasi",
     "bulkActivateCms": "Aktifkeun paket CMS",
     "bulkDeactivateCms": "Nonaktifkeun paket CMS",

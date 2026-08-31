@@ -10,9 +10,9 @@ Install profiles **enforce** the selected product shape:
 
 | Profile | Activates | Deactivates (extras) |
 | :--- | :--- | :--- |
-| **cms_site** | CMS family + Site | — |
+| **cms_site** | CMS family + Site + Member | — |
 | **cms** | CMS family | **Site** (and its reverse dependents) |
-| **core** | — (discover) | CMS family + Site |
+| **core** | — (discover) | CMS family + Site + Member |
 
 Bulk activate / deactivate remain available for fine-grained ops. All bulk + profile mutations share `ExtensionLifecycleLock` (HTTP `423` when busy).
 
@@ -22,7 +22,7 @@ Bulk activate / deactivate remain available for fine-grained ops. All bulk + pro
 | :--- | :--- | :--- | :--- |
 | **core** | `INSTALL_PROFILE=core` | Kernel **landing** | Kernel only |
 | **cms** | `INSTALL_PROFILE=cms` | Kernel landing | CMS family (Site off) |
-| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** | CMS family + **Site** |
+| **cms_site** | `INSTALL_PROFILE=cms_site` (default when `Modules/Site` exists) | **Public theme** | CMS family + **Site** + **Member** (login/register at `/member/*`) |
 
 Console always stays at `/auth/console-sign-in` and `/dash` — never the default face of apex `/`, and **not linked** from the kernel landing HTML (operators learn the path from README / this doc).
 

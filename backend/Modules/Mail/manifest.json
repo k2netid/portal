@@ -40,5 +40,14 @@
       "description": "Schedule outbound emails via mail:process-scheduled",
       "category": "business"
     }
-  ]
+  ],
+  "permissions": [
+    "use mail"
+  ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Mail\\Database\\Seeders\\MailPermissionSeeder"
+    ]
+  }
 }

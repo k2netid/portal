@@ -87,5 +87,11 @@
     "edit themes",
     "delete themes",
     "manage themes"
-  ]
+  ],
+  "lifecycle": {
+    "preserve_data_on_deactivate": true,
+    "seeders_on_activate": [
+      "Modules\\Layout\\Database\\Seeders\\LayoutPermissionSeeder"
+    ]
+  }
 }

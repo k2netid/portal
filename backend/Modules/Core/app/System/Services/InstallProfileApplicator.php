@@ -15,9 +15,9 @@ use Throwable;
  *
  * Profiles **enforce desired product shape** (activate missing + deactivate extras):
  *
- * core     → discover; deactivate CMS family + Site → apex kernel landing
+ * core     → discover; deactivate CMS family + Site + Member → apex kernel landing
  * cms      → activate CMS family; deactivate Site → apex kernel landing
- * cms_site → activate CMS + Site → apex public theme
+ * cms_site → activate CMS + Site + Member → apex public theme (reader portal eligible)
  */
 class InstallProfileApplicator
 {
@@ -271,9 +271,11 @@ class InstallProfileApplicator
     {
         return match ($profile) {
             self::PROFILE_CMS => ExtensionFamilyCatalog::slugsInFamily(ExtensionFamilyCatalog::CMS),
+            // Site ships header login → /member/login; without Member the public SPA hard-404s those routes.
             self::PROFILE_CMS_SITE => array_values(array_unique([
                 ...ExtensionFamilyCatalog::slugsInFamily(ExtensionFamilyCatalog::CMS),
                 'site',
+                'member',
             ])),
             default => [],
         };
@@ -291,6 +293,7 @@ class InstallProfileApplicator
             self::PROFILE_CORE => array_values(array_unique([
                 ...ExtensionFamilyCatalog::slugsInFamily(ExtensionFamilyCatalog::CMS),
                 'site',
+                'member',
             ])),
             default => [],
         };
