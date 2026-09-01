@@ -34,6 +34,37 @@ interface MemberAuthPayload {
     token: string;
 }
 
+export interface MemberLoginOptions {
+    captcha_token?: string;
+    captcha_answer?: string;
+    two_factor_code?: string;
+}
+
+export interface MemberLoginResult {
+    requires_two_factor?: boolean;
+    member?: PublicMember | { email?: string };
+    token?: string;
+    message?: string;
+}
+
+export interface MemberCaptchaFields {
+    captcha_token?: string;
+    captcha_answer?: string;
+}
+
+export interface MemberTwoFactorStatus {
+    globally_enabled: boolean;
+    enabled: boolean;
+    enabled_at?: string | null;
+    backup_codes_count?: number;
+}
+
+export interface MemberTwoFactorGenerateResult {
+    secret: string;
+    qr_code_url: string;
+    backup_codes: string[];
+}
+
 interface MemberState {
     member: PublicMember | null;
     token: string | null;
@@ -135,10 +166,38 @@ export const useMemberStore = defineStore('member', {
             }
         },
 
-        async login(email: string, password: string): Promise<void> {
-            const response = await api.post('/public/member/login', { email, password });
-            this.applyAuth(unwrapPayload<MemberAuthPayload>(response));
-            await this.fetchPortal();
+        async login(
+            email: string,
+            password: string,
+            options: MemberLoginOptions = {},
+        ): Promise<MemberLoginResult> {
+            const body: Record<string, string> = { email, password };
+            if (options.captcha_token) {
+                body.captcha_token = options.captcha_token;
+            }
+            if (options.captcha_answer) {
+                body.captcha_answer = options.captcha_answer;
+            }
+            if (options.two_factor_code) {
+                body.two_factor_code = options.two_factor_code;
+            }
+
+            const response = await api.post('/public/member/login', body);
+            const payload = unwrapPayload<MemberLoginResult & Partial<MemberAuthPayload>>(response);
+
+            if (payload.requires_two_factor) {
+                return payload;
+            }
+
+            if (payload.member && payload.token && typeof payload.member === 'object' && 'id' in payload.member) {
+                this.applyAuth({
+                    member: payload.member as PublicMember,
+                    token: payload.token,
+                });
+                await this.fetchPortal();
+            }
+
+            return payload;
         },
 
         async register(input: {
@@ -146,6 +205,8 @@ export const useMemberStore = defineStore('member', {
             email: string;
             password: string;
             password_confirmation: string;
+            captcha_token?: string;
+            captcha_answer?: string;
         }): Promise<void> {
             const response = await api.post('/public/member/register', input);
             this.applyAuth(unwrapPayload<MemberAuthPayload>(response));
@@ -182,8 +243,12 @@ export const useMemberStore = defineStore('member', {
             await api.put('/member/password', input);
         },
 
-        async forgotPassword(email: string): Promise<void> {
-            await api.post('/public/member/forgot-password', { email });
+        async forgotPassword(email: string, captcha?: MemberCaptchaFields): Promise<void> {
+            await api.post('/public/member/forgot-password', {
+                email,
+                ...(captcha?.captcha_token ? { captcha_token: captcha.captcha_token } : {}),
+                ...(captcha?.captcha_answer ? { captcha_answer: captcha.captcha_answer } : {}),
+            });
         },
 
         async resetPassword(input: {
@@ -223,6 +288,30 @@ export const useMemberStore = defineStore('member', {
             if (this.member) {
                 this.member = { ...this.member };
             }
+        },
+
+        async fetchTwoFactorStatus(): Promise<MemberTwoFactorStatus> {
+            const response = await api.get('/member/2fa/status');
+            return unwrapPayload<MemberTwoFactorStatus>(response);
+        },
+
+        async generateTwoFactor(): Promise<MemberTwoFactorGenerateResult> {
+            const response = await api.post('/member/2fa/generate');
+            return unwrapPayload<MemberTwoFactorGenerateResult>(response);
+        },
+
+        async verifyTwoFactor(code: string): Promise<MemberTwoFactorStatus> {
+            const response = await api.post('/member/2fa/verify', { code });
+            return unwrapPayload<MemberTwoFactorStatus>(response);
+        },
+
+        async disableTwoFactor(password: string): Promise<void> {
+            await api.post('/member/2fa/disable', { password });
+        },
+
+        async regenerateTwoFactorBackupCodes(password: string): Promise<{ backup_codes: string[]; backup_codes_count?: number }> {
+            const response = await api.post('/member/2fa/regenerate-backup-codes', { password });
+            return unwrapPayload<{ backup_codes: string[]; backup_codes_count?: number }>(response);
         },
 
         async logout(): Promise<void> {

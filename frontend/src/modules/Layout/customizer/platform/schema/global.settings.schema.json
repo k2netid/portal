@@ -272,7 +272,7 @@
     "header_cta_url": {
         "label": "Header CTA Button URL",
         "type": "text",
-        "default": "/auth/console-sign-up",
+        "default": "/contact",
         "category": "Layout",
         "scope": "platform"
     },

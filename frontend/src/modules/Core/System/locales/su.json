@@ -1429,11 +1429,11 @@
       },
       "authentication": {
         "title": "Autentikasi & 2FA",
-        "description": "Petélan pendaftaran pamaké sareng autentikasi dua faktor"
+        "description": "Pendaftaran operator konsol sareng pamaca, plus autentikasi dua faktor (pikeun konsol sareng pamaca)"
       },
       "password": {
         "title": "Kebijakan Kecap Sandi",
-        "description": "Persyaratan kekuatan sareng kompleksitas kecap sandi"
+        "description": "Aturan kakuatan sandi pikeun operator konsol sareng akun pamaca"
       },
       "session": {
         "title": "Manajemen Sesi",
@@ -1445,7 +1445,7 @@
       },
       "captcha": {
         "title": "Perlindungan Anti-Bot",
-        "description": "Verifikasi captcha pikeun mencegah serangan otomatis"
+        "description": "Verifikasi captcha pikeun alur autentikasi konsol sareng pamaca"
       },
       "upload": {
         "title": "Petélan Unggahan",
@@ -1784,7 +1784,8 @@
       "google_search_console": "Token Verifikasi Google Search Console",
       "enable_sitemap": "Aktifkan Peta Situs (Sitemap.xml)",
       "enable_robots_txt": "Aktifkan Editor Robots.txt",
-      "enable_registration": "Aktifkan Pendaftaran",
+      "enable_registration": "Aktipkeun pendaftaran konsol",
+      "enable_member_registration": "Aktipkeun pendaftaran pamaca",
       "require_email_verification": "Wajib Verifikasi Email",
       "password_min_length": "Panjang Minimal Kecap Sandi",
       "password_require_uppercase": "Wajib Huruf Besar",
@@ -1919,20 +1920,21 @@
       "google_search_console": "Token verifikasi HTML pikeun konsol kinerja pilarian Google",
       "enable_sitemap": "Hasilkan sitemap.xml secara dinamis pikeun memudahkan indeksasi",
       "enable_robots_txt": "Tembongkeun konfigurasi robots.txt secara dinamis",
-      "enable_registration": "Izinkan pamaké anyar pikeun nyieun akun di situs salira",
+      "enable_registration": "Idinan operator anyar ngadaptarkeun diri ka konsol (srv_auth_users). Teu mangaruhan aréa pamaca (member).",
+      "enable_member_registration": "Idinan pamaca anyar nyieun akun di /member/register (mem_members). Misah ti pendaftaran konsol.",
       "require_email_verification": "Pamaké anyar harus ngaverifikasi email sateuacan tiasa login",
-      "password_min_length": "Jumlah minimal karakter anu diperlukan pikeun kecap sandi",
-      "password_require_uppercase": "Kata sandi harus mengandung minimal satu huruf besar (A-Z)",
-      "password_require_lowercase": "Kata sandi harus mengandung minimal satu huruf kecil (a-z)",
-      "password_require_number": "Kata sandi harus mengandung minimal satu angka (0-9)",
-      "password_require_symbol": "Kata sandi harus mengandung minimal satu simbol (!{'@'}#$%^&*...)",
-      "enable_captcha": "Tembongkeun verifikasi captcha di form login sareng pendaftaran",
+      "password_min_length": "Panjang minimal sandi konsol jeung pamaca",
+      "password_require_uppercase": "Sandi kudu ngandung sahanteuna hiji hurup gede (A-Z) — konsol jeung pamaca",
+      "password_require_lowercase": "Sandi kudu ngandung sahanteuna hiji hurup leutik (a-z) — konsol jeung pamaca",
+      "password_require_number": "Sandi kudu ngandung sahanteuna hiji angka (0-9) — konsol jeung pamaca",
+      "password_require_symbol": "Sandi kudu ngandung sahanteuna hiji simbol (!{'@'}#$%^&*...) — konsol jeung pamaca",
+      "enable_captcha": "Tembongkeun captcha dina form login jeung pendaftaran (konsol jeung pamaca)",
       "captcha_method": "Pilih tipe tantangan captcha anu digunakan",
-      "captcha_on_login": "Wajib verifikasi captcha di form login",
-      "captcha_on_register": "Wajib verifikasi captcha di form pendaftaran",
-      "login_attempts_limit": "Jumlah percobaan login gagal anu diizinkan sateuacan penguncian sementara",
+      "captcha_on_login": "Wajib captcha dina form login konsol jeung pamaca",
+      "captcha_on_register": "Wajib captcha dina form pendaftaran konsol jeung pamaca",
+      "login_attempts_limit": "Jumlah percobaan login gagal sateuacan dikonci (konsol jeung pamaca)",
       "block_duration_minutes": "Berapa lami IP diblokir saatos melampaui batas login",
-      "enable_2fa": "Aktifkan atawa nonaktifkan autentikasi dua faktor secara sistem",
+      "enable_2fa": "Aktipkeun 2FA sistem-wide pikeun operator konsol jeung pamaca",
       "session_lifetime": "Berapa lami sesi pamaké berlangsung sateuacan kedaluwarsa sabab teu aktif",
       "single_session_enabled": "Upami aktif, login anyar bakal otomatis logout sesi sebelumnya (1 akun = 1 alat)",
       "max_concurrent_sessions": "Jumlah maksimal sesi aktif per pamaké. Atur 0 pikeun teu terbatas",

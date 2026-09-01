@@ -6,13 +6,17 @@ namespace Modules\Member\Tests\Feature;
 
 use Modules\Core\System\Models\Extension;
 use Modules\Member\Models\Member;
+use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
 use Tests\TestCase;
 
 class MemberDirectoryTest extends TestCase
 {
+    use SoftensPasswordPolicyForTests;
+
     protected function setUp(): void
     {
         parent::setUp();
+        $this->softenPasswordPolicyForTests();
         $this->seedPermissionsAndRoles();
         $this->activatePack('member');
     }

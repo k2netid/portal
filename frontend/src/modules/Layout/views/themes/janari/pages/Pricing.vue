@@ -79,13 +79,13 @@
                       {{ formatStorage(pkg.storage_limit_mb) }} {{ storageLabel }}
                     </li>
                   </ul>
-                  <a
-                    href="/auth/console-sign-up"
+                  <router-link
+                    :to="contactUrl"
                     class="block text-center py-3 text-xs font-bold uppercase tracking-widest rounded-lg transition-colors"
                     :class="isFeaturedPackage(pkg) ? 'bg-primary text-primary-foreground hover:opacity-90' : 'border border-border hover:bg-muted/50'"
                   >
                     {{ choosePlanText }}
-                  </a>
+                  </router-link>
                 </article>
               </div>
             </div>

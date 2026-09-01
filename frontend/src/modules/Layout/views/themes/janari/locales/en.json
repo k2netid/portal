@@ -52,7 +52,7 @@
         "subtitleDefault": "Editorial Jejakawan and control plane for modern publishing",
         "brandFallback": "JEJAKAWAN",
         "ctaPrimary": "Explore products",
-        "ctaSecondary": "Jejakawan",
+        "ctaSecondary": "View pricing",
         "slideJumpAria": "Go to slide {n}",
         "ctaPricing": "View pricing"
     },
@@ -193,7 +193,7 @@
             "ctaTitle": "Need a tailored package?",
             "ctaBody": "Contact us for managed Jejakawan access, on-prem licensing, or the separate organization product (roadmap).",
             "ctaContact": "Contact sales",
-            "ctaMember": "Open Jejakawan",
+            "ctaMember": "Create reader account",
             "stackTitle": "Modules on the control plane",
             "stackSubtitle": "Modules on jejakawan.com.",
             "ctaPricing": "View pricing",

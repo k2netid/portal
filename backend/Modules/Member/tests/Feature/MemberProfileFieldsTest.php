@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Modules\Member\Tests\Feature;
 
 use Modules\Member\Models\Member;
+use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
 use Tests\TestCase;
 
 class MemberProfileFieldsTest extends TestCase
 {
+    use SoftensPasswordPolicyForTests;
+
     protected function setUp(): void
     {
         parent::setUp();
+        $this->softenPasswordPolicyForTests();
         $this->activatePack('member');
     }
 

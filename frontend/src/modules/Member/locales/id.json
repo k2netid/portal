@@ -95,7 +95,7 @@
     },
     "security": {
       "title": "Keamanan",
-      "subtitle": "Kata sandi, email, dan penghapusan akun pembaca Anda.",
+      "subtitle": "Kata sandi, email, autentikasi dua faktor, dan penghapusan akun pembaca Anda.",
       "passwordSection": "Ubah kata sandi",
       "emailSection": "Ubah email",
       "emailHint": "Kami kirim tautan konfirmasi ke alamat baru. Anda harus masuk lagi setelah mengonfirmasi.",
@@ -115,7 +115,41 @@
       "submit": "Perbarui kata sandi",
       "pending": "Menyimpan…",
       "success": "Kata sandi diperbarui.",
-      "failed": "Gagal memperbarui kata sandi."
+      "failed": "Gagal memperbarui kata sandi.",
+      "twoFactor": {
+        "section": "Autentikasi dua faktor",
+        "globallyDisabled": "Autentikasi dua faktor belum tersedia di situs ini.",
+        "loading": "Memeriksa status…",
+        "setupDesc": "Tambahkan aplikasi autentikator untuk perlindungan ekstra saat masuk.",
+        "enable": "Aktifkan 2FA",
+        "generating": "Membuat…",
+        "manualSecret": "Atau masukkan rahasia ini secara manual:",
+        "backupCodes": "Kode cadangan",
+        "backupCodesHint": "Simpan di tempat aman. Setiap kode hanya bisa dipakai sekali jika autentikator hilang.",
+        "verifyLabel": "Masukkan kode 6 digit",
+        "verify": "Verifikasi & aktifkan",
+        "verifying": "Memverifikasi…",
+        "enabledDesc": "Akun pembaca Anda dilindungi autentikasi dua faktor.",
+        "enabledAt": "Diaktifkan:",
+        "enabledSuccess": "Autentikasi dua faktor sekarang aktif.",
+        "disable": "Nonaktifkan 2FA",
+        "disableConfirm": "Masukkan kata sandi untuk menonaktifkan autentikasi dua faktor.",
+        "disableConfirmSubmit": "Konfirmasi nonaktifkan",
+        "disabledSuccess": "Autentikasi dua faktor telah dinonaktifkan.",
+        "cancel": "Batal",
+        "generateFailed": "Gagal memulai pengaturan 2FA.",
+        "verifyFailed": "Kode verifikasi tidak valid.",
+        "disableFailed": "Gagal menonaktifkan 2FA.",
+        "codesRemaining": "tersisa",
+        "regenerate": "Buat ulang kode cadangan",
+        "regenerateConfirm": "Masukkan kata sandi untuk membuat kode cadangan baru. Kode lama tidak akan berlaku lagi.",
+        "regenerateSubmit": "Buat ulang kode",
+        "regenerating": "Membuat ulang…",
+        "regenerateFailed": "Gagal membuat ulang kode cadangan.",
+        "regeneratedSuccess": "Kode cadangan baru dibuat. Simpan sekarang.",
+        "saveWarning": "Simpan kode ini sekarang — tidak akan ditampilkan lagi.",
+        "done": "Selesai"
+      }
     },
     "bookmarks": {
       "subtitle": "Artikel yang Anda simpan untuk dibaca nanti."
@@ -160,7 +194,20 @@
     "pending": "Memproses…",
     "failed": "Kredensial tidak valid",
     "noAccount": "Belum punya akun?",
-    "link": "Masuk"
+    "link": "Masuk",
+    "captchaRequired": "Harap selesaikan captcha.",
+    "throttled": "Terlalu banyak percobaan. Coba lagi nanti.",
+    "throttledRetry": "Terlalu banyak percobaan. Coba lagi dalam {seconds}d.",
+    "twoFactor": {
+      "title": "Autentikasi dua faktor",
+      "subtitle": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+      "codeLabel": "Kode autentikasi",
+      "placeholder": "000000",
+      "verify": "Verifikasi",
+      "verifying": "Memverifikasi…",
+      "cancel": "Kembali",
+      "invalid": "Kode autentikasi tidak valid."
+    }
   },
   "forgot": {
     "title": "Lupa kata sandi",
@@ -169,7 +216,8 @@
     "pending": "Mengirim…",
     "sent": "Jika email itu terdaftar, tautan reset sedang dikirim.",
     "failed": "Gagal mengirim tautan reset.",
-    "link": "Lupa kata sandi?"
+    "link": "Lupa kata sandi?",
+    "captchaRequired": "Harap selesaikan captcha."
   },
   "reset": {
     "title": "Pilih kata sandi baru",
@@ -191,13 +239,24 @@
     "subtitle": "Komentar dan bookmark memakai identitas ini, bukan IAM konsol. Kami kirim tautan konfirmasi ke email Anda.",
     "submit": "Daftar",
     "pending": "Membuat…",
+    "checking": "Memeriksa pendaftaran…",
     "failed": "Pendaftaran gagal",
+    "disabled": "Pendaftaran pembaca sedang dinonaktifkan.",
     "hasAccount": "Sudah terdaftar?",
-    "link": "Buat akun"
+    "link": "Buat akun",
+    "captchaRequired": "Harap selesaikan captcha.",
+    "passwordPolicy": {
+      "minLength": "Minimal {length} karakter",
+      "uppercase": "satu huruf besar",
+      "lowercase": "satu huruf kecil",
+      "number": "satu angka",
+      "symbol": "satu simbol"
+    }
   },
   "fields": {
     "email": "Email",
     "password": "Kata sandi",
+    "confirmPassword": "Konfirmasi kata sandi",
     "name": "Nama"
   },
   "account": {
@@ -278,6 +337,8 @@
     "profile": "Profil",
     "preferences": "Preferensi & aksi",
     "pendingEmail": "Perubahan email tertunda",
+    "securityEvents": "Peristiwa keamanan terbaru",
+    "securityEventsEmpty": "Belum ada peristiwa keamanan untuk pembaca ini.",
     "activity": {
       "bookmarks": "Bookmark",
       "comments": "Komentar",

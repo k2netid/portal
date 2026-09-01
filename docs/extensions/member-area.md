@@ -19,6 +19,44 @@ Reader account self-service beyond P1–P3:
 | `DELETE /member/account` | Delete reader account (`confirm=DELETE`) |
 | Demo reader | `INSTALL_SEED_DEMO=true` → `reader@example.com` / `password12` |
 
+**Registration settings (Security tab):**
+
+| Setting key | Applies to | Default |
+| :--- | :--- | :--- |
+| `enable_registration` | Console operators only (`srv_auth_users` / `/auth/console-sign-up`) | off |
+| `enable_member_registration` | Public readers only (`mem_members` / `/member/register`) | on |
+
+These flags are independent. Disabling console registration does **not** close reader signup, and vice versa.
+
+### Security reuse + audit (2026-09-01)
+
+Readers reuse Core security controls (not a parallel stack):
+
+| Control | Setting / port | Surfaces |
+| :--- | :--- | :--- |
+| Password policy | `password_*` + `PasswordPolicyPortInterface` | Register, reset, portal change, console create/edit |
+| Captcha | `enable_captcha` + `captcha_on_*` + `MemberCaptchaGuard` | Login, register, forgot-password |
+| Login throttle | `login_attempts_limit` / `block_duration_minutes` + `LoginThrottlePortInterface` (`realm=member`) | Login (cache only — not shared IpList with console) |
+| 2FA | `enable_2fa` + `mem_member_two_factor` + `/member/2fa/*` | Portal Security + login step |
+
+**Monitoring:** `MemberSecurityAuditPortInterface` writes to Core `sec_logs` with `metadata.realm=member` and `member_id` / `member_email`. Never puts member UUIDs in `user_id` (console User FK).
+
+| Event types (examples) | When |
+| :--- | :--- |
+| `member_register`, `member_login_success` / `_failed` / `_throttled` | Auth |
+| `member_password_changed`, `member_password_reset(_requested)` | Password |
+| `member_email_change_requested`, `member_email_changed` | Email |
+| `member_2fa_enabled` / `_disabled` | 2FA |
+| `member_account_deleted` | Account delete |
+
+**Operator UX:** Security Journal filter **Realm: Readers**; member detail card **Recent security events** via `GET /api/v1/manage/members/{id}/security-events`.
+
+**Portal 2FA extras (2026-09-01):** `POST /api/v1/member/2fa/regenerate-backup-codes` (password required). Audit events: `member_logout`, `member_avatar_uploaded`, `member_2fa_backup_codes_regenerated`.
+
+E2E: `cd frontend && PLAYWRIGHT_BASE_URL=http://127.0.0.1:5273 npm run test:e2e:member` (captcha bypass header; use `Password12!` or set `E2E_MEMBER_PASSWORD`). On PVE hosts without browser libs, use `npm run test:e2e:smoke:docker`.
+
+API smoke: `bash scripts/member-security-qa.sh`
+
 Legacy `Account.vue` removed; `/member/account` redirects to profile.
 
 ---

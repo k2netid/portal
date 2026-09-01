@@ -6,6 +6,7 @@ namespace Modules\Member\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Core\Security\Models\SecurityLog;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberAccountService;
@@ -94,6 +95,32 @@ class MemberDirectoryController extends BaseApiController
             MemberDirectorySupport::serialize($record, detailed: true),
             'Member retrieved',
         );
+    }
+
+    public function securityEvents(Request $request, string $member): JsonResponse
+    {
+        Member::withTrashed()->findOrFail($member);
+
+        $limitRaw = $request->input('limit', 20);
+        $limit = min(max(is_numeric($limitRaw) ? (int) $limitRaw : 20, 1), 50);
+
+        $events = SecurityLog::query()
+            ->where('metadata->member_id', $member)
+            ->where('metadata->realm', 'member')
+            ->latest()
+            ->limit($limit)
+            ->get()
+            ->map(static fn (SecurityLog $log): array => [
+                'id' => $log->id,
+                'event_type' => $log->event_type,
+                'ip_address' => $log->ip_address,
+                'description' => $log->description,
+                'created_at' => $log->created_at?->toIso8601String(),
+            ])
+            ->values()
+            ->all();
+
+        return $this->success($events, 'Member security events retrieved');
     }
 
     public function update(Request $request, string $member): JsonResponse

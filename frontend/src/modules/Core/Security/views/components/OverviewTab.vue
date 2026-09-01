@@ -491,6 +491,22 @@
           </Button>
         </div>
         <div class="flex items-center space-x-2">
+          <Select v-model="realmFilter">
+            <SelectTrigger class="w-40" :aria-label="t('system.security.logs.realmFilterLabel')">
+              <SelectValue :placeholder="$t('system.security.logs.realmAll')" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">
+                {{ $t('system.security.logs.realmAll') }}
+              </SelectItem>
+              <SelectItem value="console">
+                {{ $t('system.security.logs.realmConsole') }}
+              </SelectItem>
+              <SelectItem value="member">
+                {{ $t('system.security.logs.realmMember') }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
           <Select v-model="logFilter">
             <SelectTrigger class="w-48" :aria-label="t('system.security.logs.filterLabel')">
               <SelectValue :placeholder="$t('system.security.logs.all')" />
@@ -501,6 +517,9 @@
               </SelectItem>
               <SelectItem value="login_failed">
                 {{ $t('system.security.logs.failedLogin') }}
+              </SelectItem>
+              <SelectItem value="member_login_failed">
+                {{ $t('system.security.logs.eventTypes.member_login_failed') }}
               </SelectItem>
               <SelectItem value="ip_blocked">
                 {{ $t('system.security.logs.blockedIp') }}
@@ -580,7 +599,9 @@ interface Log {
     ip_address: string;
     user_id?: string | null;
     user?: User | null;
-    details: string;
+    details?: string;
+    description?: string;
+    metadata?: Record<string, unknown> | null;
     created_at: string;
 }
 
@@ -650,6 +671,7 @@ const emit = defineEmits<{
     'activate-maintenance': [modules: string[], duration: number];
     'deactivate-maintenance': [];
     'test-notification': [];
+    'realm-change': [realm: string];
 }>();
 
 const { t } = useI18n();
@@ -659,6 +681,7 @@ const ipToBlock = ref('');
 const ipToCheck = ref('');
 const ipStatus = ref<IpStatus | null>(null);
 const logFilter = ref('all');
+const realmFilter = ref('all');
 const logSearch = ref('');
 const selectedLogIds = ref<string[]>([]);
 const currentPage = ref(1);
@@ -747,8 +770,12 @@ const chartData = computed(() => {
 });
 
 // Watch for filter changes to reset pagination
-watch([logFilter, logSearch], () => {
+watch([logFilter, logSearch, realmFilter], () => {
     currentPage.value = 1;
+});
+
+watch(realmFilter, (realm) => {
+    emit('realm-change', realm);
 });
 
 const handleBlockIP = () => {
@@ -768,6 +795,12 @@ const handleCheckIP = async () => {
 // Filtered logs
 const filteredLogs = computed(() => {
     let filtered = props.logs;
+
+    if (realmFilter.value === 'member') {
+        filtered = filtered.filter(log => log.metadata?.realm === 'member');
+    } else if (realmFilter.value === 'console') {
+        filtered = filtered.filter(log => log.metadata?.realm !== 'member');
+    }
     
     if (logFilter.value && logFilter.value !== 'all') {
         filtered = filtered.filter(log => log.event_type === logFilter.value);
@@ -778,6 +811,8 @@ const filteredLogs = computed(() => {
         filtered = filtered.filter(log => 
             log.ip_address?.toLowerCase().includes(searchLower) ||
             log.details?.toLowerCase().includes(searchLower) ||
+            log.description?.toLowerCase().includes(searchLower) ||
+            String(log.metadata?.member_email ?? '').toLowerCase().includes(searchLower) ||
             log.user?.name?.toLowerCase().includes(searchLower)
         );
     }
@@ -862,7 +897,10 @@ const columns = [
     }),
     columnHelper.accessor('details', {
         header: t('system.security.logs.table.details'),
-        cell: ({ row }) => h('span', { class: 'max-w-xs truncate text-muted-foreground text-sm', title: row.original.details }, row.original.details)
+        cell: ({ row }) => {
+            const text = row.original.description || row.original.details || '';
+            return h('span', { class: 'max-w-xs truncate text-muted-foreground text-sm', title: text }, text);
+        },
     }),
     columnHelper.accessor('created_at', {
         header: t('system.security.logs.table.date'),

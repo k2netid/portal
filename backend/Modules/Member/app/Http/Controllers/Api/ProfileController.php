@@ -9,7 +9,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Member\Contracts\MemberSecurityAuditPortInterface;
 use Modules\Member\Models\Member;
 use Modules\Member\Services\MemberAccountService;
 use Modules\Member\Services\MemberAvatarUploader;
@@ -80,6 +82,12 @@ class ProfileController extends BaseApiController
             return $this->error('Could not upload avatar', 503);
         }
 
+        app(MemberSecurityAuditPortInterface::class)->record(
+            'member_avatar_uploaded',
+            $member,
+            "Member avatar uploaded: {$member->email}",
+        );
+
         $fresh = $member->fresh();
 
         return $this->success(
@@ -98,7 +106,7 @@ class ProfileController extends BaseApiController
         try {
             $validated = $request->validate([
                 'current_password' => 'required|string',
-                'password' => 'required|string|min:8|confirmed',
+                'password' => ['required', 'string', 'confirmed', app(PasswordPolicyPortInterface::class)->rule()],
             ]);
         } catch (ValidationException $e) {
             return $this->validationError($e->errors());
@@ -111,6 +119,12 @@ class ProfileController extends BaseApiController
         }
 
         $member->update(['password' => $validated['password']]);
+
+        app(MemberSecurityAuditPortInterface::class)->record(
+            'member_password_changed',
+            $member,
+            "Member password changed: {$member->email}",
+        );
 
         return $this->success(null, 'Password updated');
     }
@@ -149,6 +163,13 @@ class ProfileController extends BaseApiController
             return $this->error('Could not send confirmation email', 503);
         }
 
+        app(MemberSecurityAuditPortInterface::class)->record(
+            'member_email_change_requested',
+            $member,
+            "Member email change requested: {$member->email} → {$validated['email']}",
+            ['pending_email' => $validated['email']],
+        );
+
         return $this->success([
             'pending_email' => $validated['email'],
         ], 'Confirmation email sent to the new address');
@@ -164,6 +185,13 @@ class ProfileController extends BaseApiController
             $status = $change->confirm($member, $hash);
             if ($status === 'mismatch') {
                 $status = 'invalid';
+            }
+            if ($status === 'ok') {
+                app(MemberSecurityAuditPortInterface::class)->record(
+                    'member_email_changed',
+                    $member->fresh() ?? $member,
+                    "Member email confirmed: {$member->email}",
+                );
             }
         }
 
@@ -199,6 +227,12 @@ class ProfileController extends BaseApiController
                 'current_password' => ['Current password is incorrect.'],
             ]);
         }
+
+        app(MemberSecurityAuditPortInterface::class)->record(
+            'member_account_deleted',
+            $member,
+            "Member account deleted: {$member->email}",
+        );
 
         app(MemberAccountService::class)->delete($member);
 

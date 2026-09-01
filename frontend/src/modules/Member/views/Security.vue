@@ -38,10 +38,11 @@
               v-model="password"
               type="password"
               required
-              minlength="8"
+              :minlength="passwordMinLength"
               autocomplete="new-password"
               class="w-full h-10 rounded-lg border border-border bg-background px-3"
             >
+            <span class="block text-xs text-muted-foreground">{{ passwordPolicyHint }}</span>
           </label>
           <label class="block space-y-1.5 text-sm">
             <span class="font-medium">{{ t('member.portal.security.confirm', 'Confirm new password') }}</span>
@@ -49,7 +50,7 @@
               v-model="passwordConfirmation"
               type="password"
               required
-              minlength="8"
+              :minlength="passwordMinLength"
               autocomplete="new-password"
               class="w-full h-10 rounded-lg border border-border bg-background px-3"
             >
@@ -120,6 +121,8 @@
       </ConsoleFormCard>
     </div>
 
+    <MemberTwoFactorCard class="max-w-3xl" />
+
     <ConsoleFormCard
       :title="t('member.portal.security.deleteSection', 'Delete account')"
       class="border-destructive/40 bg-destructive/5 max-w-xl"
@@ -170,18 +173,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import MemberPage from '@/modules/Member/components/MemberPage.vue';
+import MemberTwoFactorCard from '@/modules/Member/components/MemberTwoFactorCard.vue';
+import { usePasswordPolicy } from '@/modules/Member/composables/usePasswordPolicy';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { ConsoleFormCard } from '@/shared/components/shell';
 
 const { t } = useI18n();
 const router = useRouter();
 const memberStore = useMemberStore();
+const systemStore = useSystemStore();
+const { passwordMinLength, passwordPolicyHint } = usePasswordPolicy();
 
 const currentPassword = ref('');
 const password = ref('');
@@ -200,6 +208,10 @@ const deletePassword = ref('');
 const deleteConfirm = ref('');
 const deletePending = ref(false);
 const deleteError = ref('');
+
+onMounted(() => {
+    void systemStore.fetchPublicSettings();
+});
 
 const fieldError = (err: unknown, fallback: string): string => {
     if (isAxiosError(err) && err.response?.status === 422) {

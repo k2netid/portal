@@ -288,7 +288,7 @@
         "header_cta_url": {
             "label": "Header CTA Button URL",
             "type": "text",
-            "default": "/auth/console-sign-up",
+            "default": "/contact",
             "category": "Layout",
             "scope": "platform"
         },
@@ -2209,27 +2209,6 @@
         },
         "hero_cta_primary_id": {
             "label": "Hero primary CTA (Indonesian)",
-            "type": "text",
-            "default": "",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_cta_console": {
-            "label": "Hero console link (fallback)",
-            "type": "text",
-            "default": "",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_cta_console_en": {
-            "label": "Hero console link (English)",
-            "type": "text",
-            "default": "",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_cta_console_id": {
-            "label": "Hero console link (Indonesian)",
             "type": "text",
             "default": "",
             "category": "Hero Section",

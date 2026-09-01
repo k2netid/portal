@@ -10,15 +10,19 @@ use Modules\Core\System\Models\Extension;
 use Modules\Member\Models\Member;
 use Modules\Member\Models\MemberBookmark;
 use Modules\Member\Services\MemberEmailVerification;
+use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
 use Modules\Publishing\Models\Comment;
 use Modules\Publishing\Models\Content;
 use Tests\TestCase;
 
 class MemberAuthTest extends TestCase
 {
+    use SoftensPasswordPolicyForTests;
+
     protected function setUp(): void
     {
         parent::setUp();
+        $this->softenPasswordPolicyForTests();
         $this->activatePack('member');
     }
 
@@ -76,6 +80,35 @@ class MemberAuthTest extends TestCase
         $this->assertDatabaseHas('mem_members', [
             'email' => 'reader@example.com',
         ]);
+    }
+
+    public function test_member_registration_respects_enable_member_registration_setting(): void
+    {
+        \Modules\Core\System\Models\Setting::set('enable_member_registration', false, 'boolean', 'security');
+
+        $this->postJson('/api/v1/public/member/register', [
+            'name' => 'Blocked Reader',
+            'email' => 'blocked-reader@example.com',
+            'password' => 'password12',
+            'password_confirmation' => 'password12',
+        ])
+            ->assertForbidden()
+            ->assertJsonPath('error_code', 'MEMBER_REGISTRATION_DISABLED');
+
+        $this->assertDatabaseMissing('mem_members', [
+            'email' => 'blocked-reader@example.com',
+        ]);
+
+        // Console operator flag must not gate reader signup.
+        \Modules\Core\System\Models\Setting::set('enable_registration', false, 'boolean', 'security');
+        \Modules\Core\System\Models\Setting::set('enable_member_registration', true, 'boolean', 'security');
+
+        $this->postJson('/api/v1/public/member/register', [
+            'name' => 'Allowed Reader',
+            'email' => 'allowed-reader@example.com',
+            'password' => 'password12',
+            'password_confirmation' => 'password12',
+        ])->assertCreated();
     }
 
     public function test_member_bookmark_does_not_use_console_users(): void

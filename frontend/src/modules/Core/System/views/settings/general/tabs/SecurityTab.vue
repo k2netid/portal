@@ -96,12 +96,13 @@ const securitySettingsGrouped = computed(() => {
     
     const groups: SettingGroupData[] = [
         {
+            // Password / captcha / 2FA settings apply to console operators AND reader (member) accounts.
             id: 'authentication',
             title: t('system.settings.groups.authentication.title'),
             description: t('system.settings.groups.authentication.description'),
             icon: ShieldCheck,
             color: 'emerald',
-            keys: ['enable_registration', 'require_email_verification', 'enable_2fa', 'two_factor_method', 'two_factor_enforced_roles'],
+            keys: ['enable_registration', 'enable_member_registration', 'require_email_verification', 'enable_2fa', 'two_factor_method', 'two_factor_enforced_roles'],
             settings: [],
             defaultExpanded: true,
         },

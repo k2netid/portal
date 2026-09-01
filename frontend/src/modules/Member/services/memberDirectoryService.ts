@@ -72,6 +72,10 @@ export const MemberDirectoryService = {
         return api.delete(memberPaths.forceDelete(id));
     },
 
+    securityEvents(id: string, params: Record<string, unknown> = {}): Promise<AxiosResponse> {
+        return api.get(memberPaths.securityEvents(id), { params });
+    },
+
     bulkAction(payload: { ids: string[]; action: string }): Promise<AxiosResponse> {
         return api.post(memberPaths.bulkAction, payload);
     },

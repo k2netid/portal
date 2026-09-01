@@ -56,12 +56,12 @@
             >
               {{ ctaPricing }}
             </router-link>
-            <a
-              href="/auth/console-sign-up"
+            <router-link
+              to="/member/register"
               class="px-8 py-3 text-xs font-bold uppercase tracking-widest border border-border rounded-lg hover:bg-muted/50"
             >
               {{ ctaMember }}
-            </a>
+            </router-link>
           </div>
         </div>
       </section>

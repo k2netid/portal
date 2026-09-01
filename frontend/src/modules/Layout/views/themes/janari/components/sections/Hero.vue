@@ -87,12 +87,6 @@
         >
           {{ heroCtaPricingText }}
         </router-link>
-        <a
-          href="/auth/console-sign-in"
-          class="w-full sm:w-auto px-6 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase text-white/80 hover:text-white transition-colors"
-        >
-          {{ heroCtaConsoleText }}
-        </a>
       </div>
 
       <!-- Slide Indicators (Dynamic) -->
@@ -366,9 +360,6 @@ const heroCtaPricingText = computed(
 const heroCtaPrimaryText = computed(
     () => localizedString('hero_cta_primary') || t('theme.janari.hero.ctaPrimary'),
 )
-const heroCtaConsoleText = computed(
-    () => localizedString('hero_cta_console') || t('theme.janari.hero.ctaSecondary'),
-);
 const scrollLabel = computed(() => localizedString('hero_scroll_label') || t('theme.janari.common.scroll'))
 const latestNewsLabel = computed(() => localizedString('hero_latest_news_label') || t('theme.janari.common.latestNews'))
 const heroCtaPrimaryUrl = computed(() => {

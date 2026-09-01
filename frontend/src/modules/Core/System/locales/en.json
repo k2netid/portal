@@ -1437,11 +1437,11 @@
       },
       "authentication": {
         "title": "Authentication & 2FA",
-        "description": "User registration and two-factor authentication settings"
+        "description": "Console operator and reader registration, plus two-factor authentication (applies to console and readers)"
       },
       "password": {
         "title": "Password Policy",
-        "description": "Password strength and complexity requirements"
+        "description": "Password strength rules for console operators and reader accounts"
       },
       "session": {
         "title": "Session Management",
@@ -1453,7 +1453,7 @@
       },
       "captcha": {
         "title": "Anti-Bot Protection",
-        "description": "Captcha verification to prevent automated attacks"
+        "description": "Captcha verification for console and reader auth flows"
       },
       "upload": {
         "title": "Upload Settings",
@@ -1784,7 +1784,8 @@
       "google_search_console": "Google Search Console Verification Token",
       "enable_sitemap": "Enable Sitemap Generation",
       "enable_robots_txt": "Enable Robots.txt Editor",
-      "enable_registration": "Enable Registration",
+      "enable_registration": "Enable console registration",
+      "enable_member_registration": "Enable reader registration",
       "require_email_verification": "Require Email Verification",
       "password_min_length": "Minimum Password Length",
       "password_require_uppercase": "Require Uppercase Letter",
@@ -1921,22 +1922,23 @@
       "google_search_console": "HTML verification token for search performance console",
       "enable_sitemap": "Generate sitemap.xml dynamically to ease indexing",
       "enable_robots_txt": "Expose robots.txt configuration dynamically",
-      "enable_registration": "Allow new users to create accounts on your site",
+      "enable_registration": "Allow new operators to self-register for the console (srv_auth_users). Does not affect the public reader (member) area.",
+      "enable_member_registration": "Allow new readers to create accounts at /member/register (mem_members). Independent of console registration.",
       "require_email_verification": "New users must verify their email before they can log in",
-      "password_min_length": "The minimum number of characters required for passwords",
-      "password_require_uppercase": "Passwords must contain at least one uppercase letter (A-Z)",
-      "password_require_lowercase": "Passwords must contain at least one lowercase letter (a-z)",
-      "password_require_number": "Passwords must contain at least one digit (0-9)",
-      "password_require_symbol": "Passwords must contain at least one symbol (!{'@'}#$%^&*...)",
-      "enable_captcha": "Show captcha verification on login and registration forms",
+      "password_min_length": "Minimum length for console and reader passwords",
+      "password_require_uppercase": "Passwords must contain at least one uppercase letter (A-Z) — console and readers",
+      "password_require_lowercase": "Passwords must contain at least one lowercase letter (a-z) — console and readers",
+      "password_require_number": "Passwords must contain at least one digit (0-9) — console and readers",
+      "password_require_symbol": "Passwords must contain at least one symbol (!{'@'}#$%^&*...) — console and readers",
+      "enable_captcha": "Show captcha verification on login and registration forms (console and readers)",
       "captcha_method": "Choose the type of captcha challenge to use",
-      "captcha_on_login": "Require captcha verification on the login form",
-      "captcha_on_register": "Require captcha verification on the registration form",
-      "login_attempts_limit": "Number of failed logins allowed before temporary lockout",
+      "captcha_on_login": "Require captcha on console and reader login forms",
+      "captcha_on_register": "Require captcha on console and reader registration forms",
+      "login_attempts_limit": "Number of failed logins allowed before temporary lockout (console and readers)",
       "block_duration_minutes": "How long an IP is blocked after exceeding login limits",
-      "enable_2fa": "Enable or disable two-factor authentication system-wide",
+      "enable_2fa": "Enable two-factor authentication system-wide for console operators and readers",
       "two_factor_method": "Method used for 2FA verification",
-      "two_factor_enforced_roles": "Enforce 2FA for specific user roles",
+      "two_factor_enforced_roles": "Enforce 2FA for specific console user roles (readers opt in from portal Security)",
       "session_lifetime": "How long a user session lasts before expiring due to inactivity",
       "single_session_enabled": "When enabled, new login will automatically logout previous sessions (1 account = 1 device)",
       "max_concurrent_sessions": "Maximum number of active sessions per user. Set 0 for unlimited",

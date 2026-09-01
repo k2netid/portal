@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Member\Http\Controllers\Api\AuthController;
 use Modules\Member\Http\Controllers\Api\BookmarkController;
 use Modules\Member\Http\Controllers\Api\MemberDirectoryController;
+use Modules\Member\Http\Controllers\Api\MemberTwoFactorController;
 use Modules\Member\Http\Controllers\Api\PasswordResetController;
 use Modules\Member\Http\Controllers\Api\PortalController;
 use Modules\Member\Http\Controllers\Api\ProfileController;
@@ -38,6 +39,13 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('account', [ProfileController::class, 'destroy']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('email/verification-notification', [AuthController::class, 'resendVerification']);
+        Route::prefix('2fa')->group(function (): void {
+            Route::get('status', [MemberTwoFactorController::class, 'status']);
+            Route::post('generate', [MemberTwoFactorController::class, 'generate']);
+            Route::post('verify', [MemberTwoFactorController::class, 'verify']);
+            Route::post('disable', [MemberTwoFactorController::class, 'disable']);
+            Route::post('regenerate-backup-codes', [MemberTwoFactorController::class, 'regenerateBackupCodes']);
+        });
         Route::middleware(['member.verified', 'extension.active:publishing'])->group(function (): void {
             Route::get('bookmarks', [BookmarkController::class, 'index']);
             Route::post('bookmarks', [BookmarkController::class, 'store']);
@@ -67,6 +75,8 @@ Route::prefix('v1')->group(function (): void {
         Route::get('/', [MemberDirectoryController::class, 'index'])
             ->middleware('permission:view members');
         Route::get('{member}', [MemberDirectoryController::class, 'show'])
+            ->middleware('permission:view members');
+        Route::get('{member}/security-events', [MemberDirectoryController::class, 'securityEvents'])
             ->middleware('permission:view members');
         Route::patch('{member}', [MemberDirectoryController::class, 'update'])
             ->middleware('permission:manage members');

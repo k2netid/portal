@@ -95,7 +95,7 @@
     },
     "security": {
       "title": "Kaamanan",
-      "subtitle": "Sandi, email, jeung ngahapus akun pamaca anjeun.",
+      "subtitle": "Sandi, email, autentikasi dua faktor, jeung ngahapus akun pamaca anjeun.",
       "passwordSection": "Ganti sandi",
       "emailSection": "Ganti email",
       "emailHint": "Kami kirim tautan konfirmasi ka alamat anyar. Anjeun kedah asup deui saatos ngonfirmasi.",
@@ -115,7 +115,41 @@
       "submit": "Perbarui sandi",
       "pending": "Nyimpen…",
       "success": "Sandi diperbarui.",
-      "failed": "Gagal perbarui sandi."
+      "failed": "Gagal perbarui sandi.",
+      "twoFactor": {
+        "section": "Autentikasi dua faktor",
+        "globallyDisabled": "Autentikasi dua faktor teu acan sayaga di situs ieu.",
+        "loading": "Mariksa status…",
+        "setupDesc": "Tambahkeun aplikasi autentikator pikeun panyalindungan tambahan nalika asup.",
+        "enable": "Aktipkeun 2FA",
+        "generating": "Nyieun…",
+        "manualSecret": "Atawa asupkeun rahasia ieu sacara manual:",
+        "backupCodes": "Kode cadangan",
+        "backupCodesHint": "Simpen di tempat aman. Unggal kode ngan bisa dipaké sakali upami autentikator leungit.",
+        "verifyLabel": "Asupkeun kode 6 digit",
+        "verify": "Verifikasi & aktipkeun",
+        "verifying": "Ngeverifikasi…",
+        "enabledDesc": "Akun pamaca anjeun dilindungan ku autentikasi dua faktor.",
+        "enabledAt": "Diaktipkeun:",
+        "enabledSuccess": "Autentikasi dua faktor ayeuna aktip.",
+        "disable": "Nonaktipkeun 2FA",
+        "disableConfirm": "Asupkeun sandi pikeun nonaktipkeun autentikasi dua faktor.",
+        "disableConfirmSubmit": "Konfirmasi nonaktipkeun",
+        "disabledSuccess": "Autentikasi dua faktor parantos dinonaktipkeun.",
+        "cancel": "Batal",
+        "generateFailed": "Gagal ngamimitian setélan 2FA.",
+        "verifyFailed": "Kode verifikasi teu valid.",
+        "disableFailed": "Gagal nonaktipkeun 2FA.",
+        "codesRemaining": "sésa",
+        "regenerate": "Jieun deui kode cadangan",
+        "regenerateConfirm": "Asupkeun sandi pikeun ngahasilkeun kode cadangan anyar. Kode lami moal bisa dipaké deui.",
+        "regenerateSubmit": "Jieun deui kode",
+        "regenerating": "Ngieun deui…",
+        "regenerateFailed": "Gagal ngajieun deui kode cadangan.",
+        "regeneratedSuccess": "Kode cadangan anyar parantos dijieun. Simpen ayeuna.",
+        "saveWarning": "Simpen kode ieu ayeuna — moal ditingalikeun deui.",
+        "done": "Réngsé"
+      }
     },
     "bookmarks": {
       "subtitle": "Artikel anu anjeun simpen pikeun dibaca engke."
@@ -160,7 +194,20 @@
     "pending": "Ngamuat…",
     "failed": "Kredensial teu valid",
     "noAccount": "Can gaduh akun?",
-    "link": "Asup"
+    "link": "Asup",
+    "captchaRequired": "Mangga réngsékeun captcha.",
+    "throttled": "Loba teuing percobaan. Cobian deui engké.",
+    "throttledRetry": "Loba teuing percobaan. Cobian deui dina {seconds}d.",
+    "twoFactor": {
+      "title": "Autentikasi dua faktor",
+      "subtitle": "Asupkeun kode 6 digit ti aplikasi autentikator anjeun.",
+      "codeLabel": "Kode autentikasi",
+      "placeholder": "000000",
+      "verify": "Verifikasi",
+      "verifying": "Ngeverifikasi…",
+      "cancel": "Balik",
+      "invalid": "Kode autentikasi teu valid."
+    }
   },
   "forgot": {
     "title": "Poho sandi",
@@ -169,7 +216,8 @@
     "pending": "Ngirim…",
     "sent": "Upami email éta aya, tautan reset keur dikirim.",
     "failed": "Gagal ngirim tautan reset.",
-    "link": "Poho sandi?"
+    "link": "Poho sandi?",
+    "captchaRequired": "Mangga réngsékeun captcha."
   },
   "reset": {
     "title": "Pilih sandi anyar",
@@ -191,13 +239,24 @@
     "subtitle": "Koméntar jeung bookmark ngagunakeun identitas ieu, sanés IAM konsol. Kami kirim tautan konfirmasi ka email anjeun.",
     "submit": "Daftar",
     "pending": "Nyieun…",
+    "checking": "Mariksa pendaptaran…",
     "failed": "Pendaptaran gagal",
+    "disabled": "Pendaptaran pamaca ayeuna ditumpurkeun.",
     "hasAccount": "Parantos kadaptar?",
-    "link": "Jieun akun"
+    "link": "Jieun akun",
+    "captchaRequired": "Mangga réngsékeun captcha.",
+    "passwordPolicy": {
+      "minLength": "Sahenteuna {length} karakter",
+      "uppercase": "hiji hurup ageung",
+      "lowercase": "hiji hurup leutik",
+      "number": "hiji angka",
+      "symbol": "hiji simbol"
+    }
   },
   "fields": {
     "email": "Email",
     "password": "Sandi",
+    "confirmPassword": "Konfirmasi sandi",
     "name": "Ngaran"
   },
   "account": {
@@ -278,6 +337,8 @@
     "profile": "Profil",
     "preferences": "Preferensi & aksi",
     "pendingEmail": "Parobahan email pending",
+    "securityEvents": "Kajadian kaamanan panganyarna",
+    "securityEventsEmpty": "Teu acan aya kajadian kaamanan pikeun pamaca ieu.",
     "activity": {
       "bookmarks": "Bookmark",
       "comments": "Koméntar",

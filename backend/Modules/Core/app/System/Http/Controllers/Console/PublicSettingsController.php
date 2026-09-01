@@ -21,7 +21,10 @@ class PublicSettingsController extends BaseApiController
     {
         $payload = [
             'enable_registration' => (bool) Setting::get('enable_registration', true),
+            'enable_member_registration' => (bool) Setting::get('enable_member_registration', true),
             'require_email_verification' => (bool) Setting::get('require_email_verification', true),
+            'enable_2fa' => (bool) Setting::get('enable_2fa', false),
+            'password_policy' => app(\Modules\Core\System\Contracts\PasswordPolicyPortInterface::class)->requirements(),
             'site_name' => Setting::get('site_name', 'Jejakawan'),
             'site_description' => Setting::get('site_description', ''),
             'site_url' => Setting::get('site_url', config('app.url')),

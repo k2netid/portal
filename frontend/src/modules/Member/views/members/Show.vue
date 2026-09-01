@@ -177,6 +177,44 @@
           </div>
         </ConsoleFormCard>
       </div>
+
+      <ConsoleFormCard :title="t('member.detail.securityEvents')">
+        <div
+          v-if="eventsLoading"
+          class="text-sm text-muted-foreground"
+        >
+          {{ t('member.messages.loading') }}
+        </div>
+        <p
+          v-else-if="securityEvents.length === 0"
+          class="text-sm text-muted-foreground"
+        >
+          {{ t('member.detail.securityEventsEmpty') }}
+        </p>
+        <ul
+          v-else
+          class="divide-y divide-border/60"
+        >
+          <li
+            v-for="event in securityEvents"
+            :key="event.id"
+            class="py-3 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 text-sm"
+          >
+            <div class="min-w-0 space-y-0.5">
+              <p class="font-medium">
+                {{ formatSecurityEventLabel(t, event.event_type) }}
+              </p>
+              <p class="text-muted-foreground truncate">
+                {{ event.description || '—' }}
+              </p>
+            </div>
+            <div class="shrink-0 text-xs text-muted-foreground text-left sm:text-right space-y-0.5">
+              <p>{{ formatDate(event.created_at) }}</p>
+              <p v-if="event.ip_address">{{ event.ip_address }}</p>
+            </div>
+          </li>
+        </ul>
+      </ConsoleFormCard>
     </template>
   </div>
 </template>
@@ -186,13 +224,22 @@ import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { Bookmark, FileText, Mail, MessageSquare } from 'lucide-vue-next';
+import { formatSecurityEventLabel } from '@/modules/Core/Security/utils/securityEventLabel';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import MemberDirectoryService, { type MemberDirectoryDetail } from '@/modules/Member/services/memberDirectoryService';
 import { PageHeader, ConsoleStatCard, ConsoleFormCard } from '@/shared/components/shell';
 import { Button } from '@/shared/components/ui';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { useToast } from '@/shared/composables/useToast';
-import { parseSingleResponse } from '@/shared/utils/responseParser';
+import { parseSingleResponse, ensureArray } from '@/shared/utils/responseParser';
+
+interface MemberSecurityEvent {
+    id: string;
+    event_type: string;
+    ip_address?: string | null;
+    description?: string | null;
+    created_at?: string | null;
+}
 
 const { t } = useI18n();
 const route = useRoute();
@@ -202,7 +249,9 @@ const { confirm } = useConfirm();
 const authStore = useAuthStore();
 
 const loading = ref(true);
+const eventsLoading = ref(false);
 const member = ref<MemberDirectoryDetail | null>(null);
+const securityEvents = ref<MemberSecurityEvent[]>([]);
 
 const canManage = computed(() => authStore.hasPermission('manage members'));
 
@@ -224,15 +273,29 @@ const formatDate = (value?: string | null): string => {
     return new Date(value).toLocaleString();
 };
 
+const loadEvents = async (id: string): Promise<void> => {
+    eventsLoading.value = true;
+    try {
+        const response = await MemberDirectoryService.securityEvents(id, { limit: 20 });
+        securityEvents.value = ensureArray<MemberSecurityEvent>(parseSingleResponse(response));
+    } catch {
+        securityEvents.value = [];
+    } finally {
+        eventsLoading.value = false;
+    }
+};
+
 const load = async (): Promise<void> => {
     loading.value = true;
     try {
         const id = String(route.params.id);
         const response = await MemberDirectoryService.show(id);
         member.value = parseSingleResponse<MemberDirectoryDetail>(response);
+        void loadEvents(id);
     } catch (error: unknown) {
         toast.error.fromResponse(error);
         member.value = null;
+        securityEvents.value = [];
     } finally {
         loading.value = false;
     }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
+use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Support\SqlLikeEscape;
 use Modules\Member\Models\Member;
 
@@ -134,7 +135,7 @@ final class MemberDirectorySupport
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:mem_members,email',
-            'password' => 'required|string|min:8',
+            'password' => ['required', 'string', app(PasswordPolicyPortInterface::class)->rule()],
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],
             'avatar' => 'nullable|string|max:512',
             'bio' => 'nullable|string|max:500',
@@ -153,7 +154,7 @@ final class MemberDirectorySupport
         return [
             'name' => 'sometimes|string|max:255',
             'email' => ['sometimes', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member->id)],
-            'password' => 'sometimes|nullable|string|min:8',
+            'password' => ['sometimes', 'nullable', 'string', app(PasswordPolicyPortInterface::class)->rule()],
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],
             'avatar' => 'nullable|string|max:512',
             'bio' => 'nullable|string|max:500',

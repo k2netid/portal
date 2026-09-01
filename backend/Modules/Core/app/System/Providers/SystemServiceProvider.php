@@ -19,7 +19,9 @@ use Modules\Core\System\Console\Commands\SystemClearCache;
 use Modules\Core\System\Console\Commands\SystemHealthCheck;
 use Modules\Core\System\Contracts\EmailTemplateRendererPortInterface;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
+use Modules\Core\System\Contracts\LoginThrottlePortInterface;
 use Modules\Core\System\Contracts\OutboundWebhookPortInterface;
+use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Facades\Hook;
 use Modules\Core\System\Facades\SandboxStorage;
 use Modules\Core\System\Http\Controllers\Console\DashboardController;
@@ -28,8 +30,10 @@ use Modules\Core\System\Registries\DashboardRegistry;
 use Modules\Core\System\Registries\HookRegistry;
 use Modules\Core\System\Registries\LayoutRegistry;
 use Modules\Core\System\Services\EmailTemplateRenderer;
+use Modules\Core\System\Services\LoginThrottleService;
 use Modules\Core\System\Services\ModuleHealthProbe;
 use Modules\Core\System\Services\OutboundWebhookDispatcher;
+use Modules\Core\System\Services\PasswordPolicyService;
 use Modules\Core\System\Services\PermissionRegistry;
 use Modules\Core\System\Services\SandboxStorage as SandboxStorageService;
 
@@ -116,6 +120,8 @@ class SystemServiceProvider extends ServiceProvider
     {
         $this->app->singleton(OutboundWebhookPortInterface::class, OutboundWebhookDispatcher::class);
         $this->app->singleton(EmailTemplateRendererPortInterface::class, EmailTemplateRenderer::class);
+        $this->app->singleton(PasswordPolicyPortInterface::class, PasswordPolicyService::class);
+        $this->app->singleton(LoginThrottlePortInterface::class, LoginThrottleService::class);
         $this->app->singleton(PermissionRegistry::class);
         $this->app->singleton(ModuleHealthProbe::class);
         $this->app->singleton(DashboardRegistry::class);

@@ -133,7 +133,7 @@ export const useSystemStore = defineStore('system', {
                     const response = await api.get('/public/system/settings');
                     const data = response.data || {};
                     
-                    // Sync Site Settings
+                    // Sync Site Settings (including public security knobs used by console + member portal)
                     this.siteSettings = {
                         ...this.siteSettings,
                         site_name: data.site_name || this.siteSettings.site_name,
@@ -143,6 +143,11 @@ export const useSystemStore = defineStore('system', {
                         site_version: data.site_version || '',
                         site_logo: data.site_logo || '',
                         site_favicon: data.site_favicon || '/favicon.ico',
+                        enable_registration: data.enable_registration,
+                        enable_member_registration: data.enable_member_registration,
+                        require_email_verification: data.require_email_verification,
+                        enable_2fa: data.enable_2fa,
+                        password_policy: data.password_policy ?? this.siteSettings.password_policy,
                     };
 
                     // Sync App Identity (Branding)

@@ -52,7 +52,7 @@
         "subtitleDefault": "Jejakawan editorial sareng control plane pikeun publikasi modern",
         "brandFallback": "JEJAKAWAN",
         "ctaPrimary": "Jelajahi produk",
-        "ctaSecondary": "Jejakawan",
+        "ctaSecondary": "Tingali harga",
         "slideJumpAria": "Pindah ka slide {n}",
         "ctaPricing": "Tingali harga"
     },
@@ -193,7 +193,7 @@
             "ctaTitle": "Butuh paket khusus?",
             "ctaBody": "Hubungi urang pikeun akses hub terkelola, lisensi on-prem, atawa edisi organization (produk terpisah, roadmap).",
             "ctaContact": "Hubungi sales",
-            "ctaMember": "Buka Jejakawan",
+            "ctaMember": "Jieun akun pamaca",
             "stackTitle": "Modul di control plane",
             "stackSubtitle": "Modul di jejakawan.com.",
             "ctaPricing": "Tingali harga",

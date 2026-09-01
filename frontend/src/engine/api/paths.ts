@@ -40,6 +40,7 @@ export const memberPaths = {
     destroy: (id: string) => `/manage/members/${id}`,
     restore: (id: string) => `/manage/members/${id}/restore`,
     forceDelete: (id: string) => `/manage/members/${id}/force`,
+    securityEvents: (id: string) => `/manage/members/${id}/security-events`,
     publicRegister: '/public/member/register',
     publicLogin: '/public/member/login',
     me: '/member/me',

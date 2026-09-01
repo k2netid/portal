@@ -1429,11 +1429,11 @@
       },
       "authentication": {
         "title": "Autentikasi & 2FA",
-        "description": "Pengaturan pendaftaran pengguna dan autentikasi dua faktor"
+        "description": "Pendaftaran operator konsol dan pembaca, serta autentikasi dua faktor (berlaku untuk konsol dan pembaca)"
       },
       "password": {
         "title": "Kebijakan Kata Sandi",
-        "description": "Persyaratan kekuatan dan kompleksitas kata sandi"
+        "description": "Aturan kekuatan kata sandi untuk operator konsol dan akun pembaca"
       },
       "session": {
         "title": "Manajemen Sesi",
@@ -1445,7 +1445,7 @@
       },
       "captcha": {
         "title": "Perlindungan Anti-Bot",
-        "description": "Verifikasi captcha untuk mencegah serangan otomatis"
+        "description": "Verifikasi captcha untuk alur autentikasi konsol dan pembaca"
       },
       "upload": {
         "title": "Pengaturan Unggahan",
@@ -1784,7 +1784,8 @@
       "google_search_console": "Token Verifikasi Google Search Console",
       "enable_sitemap": "Aktifkan Peta Situs (Sitemap.xml)",
       "enable_robots_txt": "Aktifkan Editor Robots.txt",
-      "enable_registration": "Aktifkan Pendaftaran",
+      "enable_registration": "Aktifkan pendaftaran konsol",
+      "enable_member_registration": "Aktifkan pendaftaran pembaca",
       "require_email_verification": "Wajib Verifikasi Email",
       "password_min_length": "Panjang Minimal Kata Sandi",
       "password_require_uppercase": "Wajib Huruf Besar",
@@ -1919,20 +1920,21 @@
       "google_search_console": "Token verifikasi HTML untuk konsol kinerja pencarian Google",
       "enable_sitemap": "Hasilkan sitemap.xml secara dinamis untuk memudahkan indeksasi",
       "enable_robots_txt": "Tampilkan konfigurasi robots.txt secara dinamis",
-      "enable_registration": "Izinkan pengguna baru untuk membuat akun di situs Anda",
+      "enable_registration": "Izinkan operator baru mendaftar sendiri ke konsol (srv_auth_users). Tidak memengaruhi area pembaca (member).",
+      "enable_member_registration": "Izinkan pembaca baru membuat akun di /member/register (mem_members). Terpisah dari pendaftaran konsol.",
       "require_email_verification": "Pengguna baru harus memverifikasi email sebelum bisa login",
-      "password_min_length": "Jumlah minimal karakter yang diperlukan untuk kata sandi",
-      "password_require_uppercase": "Kata sandi harus mengandung minimal satu huruf besar (A-Z)",
-      "password_require_lowercase": "Kata sandi harus mengandung minimal satu huruf kecil (a-z)",
-      "password_require_number": "Kata sandi harus mengandung minimal satu angka (0-9)",
-      "password_require_symbol": "Kata sandi harus mengandung minimal satu simbol (!{'@'}#$%^&*...)",
-      "enable_captcha": "Tampilkan verifikasi captcha di form login dan pendaftaran",
+      "password_min_length": "Panjang minimal kata sandi konsol dan pembaca",
+      "password_require_uppercase": "Kata sandi harus mengandung minimal satu huruf besar (A-Z) — konsol dan pembaca",
+      "password_require_lowercase": "Kata sandi harus mengandung minimal satu huruf kecil (a-z) — konsol dan pembaca",
+      "password_require_number": "Kata sandi harus mengandung minimal satu angka (0-9) — konsol dan pembaca",
+      "password_require_symbol": "Kata sandi harus mengandung minimal satu simbol (!{'@'}#$%^&*...) — konsol dan pembaca",
+      "enable_captcha": "Tampilkan verifikasi captcha di form login dan pendaftaran (konsol dan pembaca)",
       "captcha_method": "Pilih tipe tantangan captcha yang digunakan",
-      "captcha_on_login": "Wajib verifikasi captcha di form login",
-      "captcha_on_register": "Wajib verifikasi captcha di form pendaftaran",
-      "login_attempts_limit": "Jumlah percobaan login gagal yang diizinkan sebelum penguncian sementara",
+      "captcha_on_login": "Wajib captcha di form login konsol dan pembaca",
+      "captcha_on_register": "Wajib captcha di form pendaftaran konsol dan pembaca",
+      "login_attempts_limit": "Jumlah percobaan login gagal sebelum penguncian sementara (konsol dan pembaca)",
       "block_duration_minutes": "Berapa lama IP diblokir setelah melampaui batas login",
-      "enable_2fa": "Aktifkan atau nonaktifkan autentikasi dua faktor secara sistem",
+      "enable_2fa": "Aktifkan autentikasi dua faktor sistem-wide untuk operator konsol dan pembaca",
       "session_lifetime": "Berapa lama sesi pengguna berlangsung sebelum kedaluwarsa karena tidak aktif",
       "single_session_enabled": "Jika aktif, login baru akan otomatis logout sesi sebelumnya (1 akun = 1 perangkat)",
       "max_concurrent_sessions": "Jumlah maksimal sesi aktif per pengguna. Atur 0 untuk tidak terbatas",

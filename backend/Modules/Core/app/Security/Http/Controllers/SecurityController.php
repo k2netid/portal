@@ -50,6 +50,23 @@ class SecurityController extends BaseApiController
             $query->where('user_id', $userId);
         }
 
+        if ($request->filled('member_id')) {
+            $memberId = (string) $request->input('member_id');
+            $query->where('metadata->member_id', $memberId);
+        }
+
+        if ($request->filled('realm')) {
+            $realm = strtolower(trim((string) $request->input('realm')));
+            if ($realm === 'member') {
+                $query->where('metadata->realm', 'member');
+            } elseif ($realm === 'console') {
+                $query->where(function ($q): void {
+                    $q->whereNull('metadata->realm')
+                        ->orWhere('metadata->realm', 'console');
+                });
+            }
+        }
+
         if ($request->has('date_from')) {
             $dateFromRaw = $request->input('date_from');
             $dateFrom = is_string($dateFromRaw) ? $dateFromRaw : null;

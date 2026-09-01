@@ -152,6 +152,7 @@ borderless
             @activate-maintenance="activateMaintenance"
             @deactivate-maintenance="deactivateMaintenance"
             @test-notification="testNotification"
+            @realm-change="onJournalRealmChange"
           />
         </TabsContent>
 
@@ -413,7 +414,9 @@ interface Log {
     ip_address: string;
     user_id?: string | null;
     user?: User | null;
-    details: string;
+    details?: string;
+    description?: string;
+    metadata?: Record<string, unknown> | null;
     created_at: string;
 }
 
@@ -638,7 +641,11 @@ const fetchShieldStats = async (): Promise<void> => {
 const fetchLogs = async (): Promise<void> => {
     loading.value = true;
     try {
-        const response = await api.get('/manage/security/journal', { params: { per_page: 100 } });
+        const params: Record<string, string | number> = { per_page: 100 };
+        if (journalRealm.value && journalRealm.value !== 'all') {
+            params.realm = journalRealm.value;
+        }
+        const response = await api.get('/manage/security/journal', { params });
         const { data } = parseResponse<Log[]>(response);
         logs.value = ensureArray(data);
     } catch (_error: unknown) {
@@ -646,6 +653,13 @@ const fetchLogs = async (): Promise<void> => {
     } finally {
         loading.value = false;
     }
+};
+
+const journalRealm = ref('all');
+
+const onJournalRealmChange = (realm: string): void => {
+    journalRealm.value = realm;
+    void fetchLogs();
 };
 
 const clearLogs = async (): Promise<void> => {

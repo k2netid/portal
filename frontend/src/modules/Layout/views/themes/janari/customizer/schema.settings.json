@@ -1676,27 +1676,6 @@
         "category": "Hero Section",
         "scope": "theme"
     },
-    "hero_cta_console": {
-        "label": "Hero console link (fallback)",
-        "type": "text",
-        "default": "",
-        "category": "Hero Section",
-        "scope": "theme"
-    },
-    "hero_cta_console_en": {
-        "label": "Hero console link (English)",
-        "type": "text",
-        "default": "",
-        "category": "Hero Section",
-        "scope": "theme"
-    },
-    "hero_cta_console_id": {
-        "label": "Hero console link (Indonesian)",
-        "type": "text",
-        "default": "",
-        "category": "Hero Section",
-        "scope": "theme"
-    },
     "hero_cta_primary_url": {
         "label": "Hero primary CTA URL",
         "type": "text",

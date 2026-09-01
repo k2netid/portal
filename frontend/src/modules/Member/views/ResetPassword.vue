@@ -43,10 +43,11 @@
             v-model="password"
             type="password"
             required
-            minlength="8"
+            :minlength="passwordMinLength"
             autocomplete="new-password"
             class="w-full h-10 rounded-xl border border-border bg-background px-3"
           >
+          <span class="block text-xs text-muted-foreground">{{ passwordPolicyHint }}</span>
         </label>
         <label class="block space-y-1.5 text-sm">
           <span class="font-medium">{{ t('member.reset.confirm', 'Confirm password') }}</span>
@@ -54,7 +55,7 @@
             v-model="passwordConfirmation"
             type="password"
             required
-            minlength="8"
+            :minlength="passwordMinLength"
             autocomplete="new-password"
             class="w-full h-10 rounded-xl border border-border bg-background px-3"
           >
@@ -82,17 +83,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { usePasswordPolicy } from '@/modules/Member/composables/usePasswordPolicy';
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const systemStore = useSystemStore();
 const memberStore = useMemberStore();
+const { passwordMinLength, passwordPolicyHint } = usePasswordPolicy();
 
 const email = ref(typeof route.query.email === 'string' ? route.query.email : '');
 const token = ref(typeof route.query.token === 'string' ? route.query.token : '');
@@ -101,6 +106,10 @@ const passwordConfirmation = ref('');
 const pending = ref(false);
 const error = ref('');
 const done = ref(false);
+
+onMounted(() => {
+    void systemStore.fetchPublicSettings();
+});
 
 const submit = async (): Promise<void> => {
     pending.value = true;

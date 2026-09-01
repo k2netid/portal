@@ -6,6 +6,7 @@ namespace Modules\Member\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -29,6 +30,7 @@ use Modules\Member\Support\MemberPublicProfile;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $deleted_at
+ * @property-read MemberTwoFactor|null $twoFactor
  */
 class Member extends Authenticatable
 {
@@ -76,10 +78,26 @@ class Member extends Authenticatable
     }
 
     /**
+     * @return HasOne<MemberTwoFactor, $this>
+     */
+    public function twoFactor(): HasOne
+    {
+        return $this->hasOne(MemberTwoFactor::class, 'member_id');
+    }
+
+    public function hasTwoFactorEnabled(): bool
+    {
+        return $this->twoFactor !== null && $this->twoFactor->enabled === true;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function toPublicProfile(): array
     {
-        return MemberPublicProfile::serialize($this);
+        $profile = MemberPublicProfile::serialize($this);
+        $profile['two_factor_enabled'] = $this->hasTwoFactorEnabled();
+
+        return $profile;
     }
 }

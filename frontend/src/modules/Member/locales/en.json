@@ -95,7 +95,7 @@
     },
     "security": {
       "title": "Security",
-      "subtitle": "Password, email, and account deletion for your reader identity.",
+      "subtitle": "Password, email, two-factor auth, and account deletion for your reader identity.",
       "passwordSection": "Change password",
       "emailSection": "Change email",
       "emailHint": "We send a confirmation link to the new address. You must sign in again after confirming.",
@@ -115,7 +115,41 @@
       "submit": "Update password",
       "pending": "Saving…",
       "success": "Password updated.",
-      "failed": "Could not update password."
+      "failed": "Could not update password.",
+      "twoFactor": {
+        "globallyDisabled": "Two-factor authentication is not available on this site right now.",
+        "section": "Two-factor authentication",
+        "loading": "Checking status…",
+        "setupDesc": "Add an authenticator app for an extra layer of protection when signing in.",
+        "enable": "Enable 2FA",
+        "generating": "Generating…",
+        "manualSecret": "Or enter this secret manually:",
+        "backupCodes": "Backup codes",
+        "backupCodesHint": "Store these somewhere safe. Each code can be used once if you lose your authenticator.",
+        "verifyLabel": "Enter 6-digit code",
+        "verify": "Verify & enable",
+        "verifying": "Verifying…",
+        "enabledDesc": "Your reader account is protected with two-factor authentication.",
+        "enabledAt": "Enabled:",
+        "enabledSuccess": "Two-factor authentication is now enabled.",
+        "disable": "Disable 2FA",
+        "disableConfirm": "Enter your password to disable two-factor authentication.",
+        "disableConfirmSubmit": "Confirm disable",
+        "disabledSuccess": "Two-factor authentication has been disabled.",
+        "cancel": "Cancel",
+        "generateFailed": "Could not start 2FA setup.",
+        "verifyFailed": "Invalid verification code.",
+        "disableFailed": "Could not disable 2FA.",
+        "codesRemaining": "remaining",
+        "regenerate": "Regenerate backup codes",
+        "regenerateConfirm": "Enter your password to generate new backup codes. Old codes will stop working.",
+        "regenerateSubmit": "Regenerate codes",
+        "regenerating": "Regenerating…",
+        "regenerateFailed": "Could not regenerate backup codes.",
+        "regeneratedSuccess": "New backup codes generated. Save them now.",
+        "saveWarning": "Save these codes now — they will not be shown again.",
+        "done": "Done"
+      }
     },
     "bookmarks": {
       "subtitle": "Articles you saved for later."
@@ -160,7 +194,20 @@
     "pending": "Signing in…",
     "failed": "Invalid credentials",
     "noAccount": "No account?",
-    "link": "Sign in"
+    "link": "Sign in",
+    "captchaRequired": "Please complete the captcha.",
+    "throttled": "Too many attempts. Please try again later.",
+    "throttledRetry": "Too many attempts. Try again in {seconds}s.",
+    "twoFactor": {
+      "title": "Two-factor authentication",
+      "subtitle": "Enter the 6-digit code from your authenticator app.",
+      "codeLabel": "Authentication code",
+      "placeholder": "000000",
+      "verify": "Verify",
+      "verifying": "Verifying…",
+      "cancel": "Back",
+      "invalid": "Invalid authentication code."
+    }
   },
   "forgot": {
     "title": "Forgot password",
@@ -169,7 +216,8 @@
     "pending": "Sending…",
     "sent": "If that email exists, a reset link is on the way.",
     "failed": "Could not send reset link.",
-    "link": "Forgot password?"
+    "link": "Forgot password?",
+    "captchaRequired": "Please complete the captcha."
   },
   "reset": {
     "title": "Choose a new password",
@@ -191,13 +239,24 @@
     "subtitle": "Comments and bookmarks use this identity, not console IAM. We send a confirmation link to your email.",
     "submit": "Register",
     "pending": "Creating…",
+    "checking": "Checking registration…",
     "failed": "Registration failed",
+    "disabled": "Reader registration is currently disabled.",
     "hasAccount": "Already registered?",
-    "link": "Create one"
+    "link": "Create one",
+    "captchaRequired": "Please complete the captcha.",
+    "passwordPolicy": {
+      "minLength": "At least {length} characters",
+      "uppercase": "one uppercase letter",
+      "lowercase": "one lowercase letter",
+      "number": "one number",
+      "symbol": "one symbol"
+    }
   },
   "fields": {
     "email": "Email",
     "password": "Password",
+    "confirmPassword": "Confirm password",
     "name": "Name"
   },
   "account": {
@@ -278,6 +337,8 @@
     "profile": "Profile",
     "preferences": "Preferences & actions",
     "pendingEmail": "Pending email change",
+    "securityEvents": "Recent security events",
+    "securityEventsEmpty": "No security events recorded for this reader yet.",
     "activity": {
       "bookmarks": "Bookmarks",
       "comments": "Comments",
