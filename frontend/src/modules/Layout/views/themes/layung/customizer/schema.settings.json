@@ -336,5 +336,12 @@
         "default": "contact",
         "category": "Contact Page",
         "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact."
+    },
+    "enable_about": {
+        "label": "Aktifkan halaman Tentang Kami",
+        "type": "boolean",
+        "default": true,
+        "category": "Public Pages",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung."
     }
 }

@@ -120,6 +120,7 @@ About.vue
 | `locales/id.json` | Tambah keys baru: `foundedHeading`, `timeline[1-3]Year/Text`, `vmBadge`, `vmHeading`, `networkHeading`, `complianceHeading` |
 | `locales/en.json` | Sama seperti id.json (English) |
 | `locales/su.json` | Sama seperti id.json (Sundanese) |
+| `customizer/schema.settings.json` | Tambah field setting `enable_about` (boolean, default true) di kategori Public Pages |
 
 ---
 
@@ -127,22 +128,25 @@ About.vue
 
 ### Positif
 - Halaman About konsisten dengan pola semua halaman Layung lainnya
-- CSS dapat di-override/dikustomisasi dari layung.css tanpa menyentuh Vue file
-- Site Builder dapat menggantikan seluruh konten melalui BlockRenderer
-- Plugin/addon dapat menyuntikkan konten melalui PluginSlot
-- Animasi GSAP menggunakan tokens yang sama dengan section homepage
+- CSS terpusat di `layung.css` tanpa hardcode `<style scoped>`, memudahkan customizer & override
+- Mendukung dynamic customization: Site Builder (BlockRenderer), CMS Body (ThemeSafeHtml), dan Customizer toggle (`enable_about`)
+- Plugin/addon dapat menyuntikkan konten melalui PluginSlot (`about-after-hero` dan `about-before-cta`)
+- Animasi GSAP menggunakan tokens yang sama dengan section homepage dan otomatis nonaktif bila page di-override atau motion dikurangi
 
-### Risiko / Perlu Diperhatikan
-- Setting `enable_about` belum ditambahkan ke `schema.settings.json` — halaman akan selalu enabled (default `true`). Dapat ditambahkan jika dibutuhkan.
-- CSS di `layung.css` tidak ter-scope — class `about-*` harus selalu menggunakan prefix yang unik untuk menghindari konflik global
+### Mitigasi dan Best Practice
+- **Customizer Toggle**: Field `enable_about` sudah resmi terdaftar di `schema.settings.json` sehingga admin dapat menonaktifkan atau mengarahkan ke `PageDisabled` sesuai setting.
+- **CSS Isolation**: Semua styling halaman Tentang Kami di `layung.css` menggunakan prefix `about-` (misalnya `.about-page`, `.about-hero-stat`, `.about-timeline`, `.about-net-card`, `.about-vm-card`, `.about-compliance-card`) untuk menjamin tidak ada class name collision dengan komponen tema lainnya.
 
 ---
 
 ## Referensi
 
-- [Contact.vue](../frontend/src/modules/Layout/views/themes/layung/pages/Contact.vue) — referensi pola isEnabled, PluginSlot, PageDisabled
-- [Services.vue](../frontend/src/modules/Layout/views/themes/layung/pages/Services.vue) — referensi pola 3-priority layer (builder/cms/default)
-- [layung.css](../frontend/src/modules/Layout/views/themes/layung/assets/styles/layung.css) — SoC untuk semua styling Layung theme
-- [useThemeMotion.ts](../frontend/src/modules/Layout/composables/useThemeMotion.ts) — GSAP wrapper yang respects animation settings
-- [preview.targets.json](../frontend/src/modules/Layout/views/themes/layung/customizer/preview.targets.json) — mapping halaman ke customizer nav item
-- Commit: `435e605` (first refactor), `<next-commit>` (SoC fix + integrations)
+- [About.vue](../../frontend/src/modules/Layout/views/themes/layung/pages/About.vue) — implementasi halaman Tentang Kami
+- [Contact.vue](../../frontend/src/modules/Layout/views/themes/layung/pages/Contact.vue) — referensi pola isEnabled, PluginSlot, PageDisabled
+- [Services.vue](../../frontend/src/modules/Layout/views/themes/layung/pages/Services.vue) — referensi pola 3-priority layer (builder/cms/default)
+- [layung.css](../../frontend/src/modules/Layout/views/themes/layung/assets/styles/layung.css) — SoC untuk semua styling Layung theme
+- [useThemeMotion.ts](../../frontend/src/modules/Layout/composables/useThemeMotion.ts) — GSAP wrapper yang respects animation settings
+- [preview.targets.json](../../frontend/src/modules/Layout/views/themes/layung/customizer/preview.targets.json) — mapping halaman ke customizer nav item
+- [schema.settings.json](../../frontend/src/modules/Layout/views/themes/layung/customizer/schema.settings.json) — customizer settings schema
+- Commits: `435e605` (initial refactor), `7b55b4b` (SoC & ADR)
+
