@@ -1,22 +1,30 @@
 <template>
   <aside
     v-if="socialLinks.length && isEnabled"
+    ref="dockRef"
     data-ja-customizer-target="social_links"
     class="layung-social-dock"
     :class="{ 'layung-social-dock--collapsed': isCollapsed }"
     aria-label="Tautan Media Sosial Melayang"
   >
     <!-- Collapsed Trigger Button -->
-    <button
+    <div
       v-if="isCollapsed"
-      type="button"
-      class="layung-social-dock__toggle-btn"
-      :title="tt('footer.socialExpand', 'Buka Media Sosial')"
-      :aria-label="tt('footer.socialExpand', 'Buka Media Sosial')"
-      @click="isCollapsed = false"
+      class="relative group"
     >
-      <Share2 class="w-4 h-4 text-primary" />
-    </button>
+      <button
+        ref="toggleBtnRef"
+        type="button"
+        class="layung-social-dock__toggle-btn"
+        :aria-label="tt('footer.socialExpand', 'Buka Media Sosial')"
+        @click="handleToggle(false)"
+      >
+        <Share2 class="w-4 h-4 transition-transform group-hover:scale-110" />
+      </button>
+      <span class="layung-social-dock__tooltip">
+        {{ tt('footer.socialMedia', 'Media Sosial') }}
+      </span>
+    </div>
 
     <!-- Expanded Dock Body -->
     <div
@@ -27,15 +35,17 @@
       <button
         type="button"
         class="layung-social-dock__collapse-btn"
-        :title="tt('footer.socialCollapse', 'Sembunyikan')"
         :aria-label="tt('footer.socialCollapse', 'Sembunyikan')"
-        @click="isCollapsed = true"
+        @click="handleToggle(true)"
       >
-        <ChevronRight class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-opacity" />
+        <ChevronRight class="w-3.5 h-3.5" />
       </button>
 
       <!-- Social Items List -->
-      <div class="layung-social-dock__list">
+      <div
+        ref="listRef"
+        class="layung-social-dock__list"
+      >
         <a
           v-for="(link, idx) in socialLinks"
           :key="idx"
@@ -61,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import {
   Share2,
   ChevronRight,
@@ -78,11 +88,55 @@ import {
 } from 'lucide-vue-next';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 
 const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
+const { motion, isAnimationEnabled } = useThemeMotion();
 
 const isCollapsed = ref(false);
+const dockRef = ref<HTMLElement | null>(null);
+const listRef = ref<HTMLElement | null>(null);
+const toggleBtnRef = ref<HTMLElement | null>(null);
+
+const handleToggle = async (collapsed: boolean) => {
+  isCollapsed.value = collapsed;
+  await nextTick();
+  if (!isAnimationEnabled()) return;
+
+  if (collapsed && toggleBtnRef.value) {
+    motion.from(toggleBtnRef.value, {
+      scale: 0.6,
+      opacity: 0,
+      duration: 0.35,
+      ease: 'back.out(2)',
+    });
+  } else if (!collapsed && listRef.value) {
+    const items = listRef.value.querySelectorAll('.layung-social-dock__item');
+    if (items.length) {
+      motion.from(items, {
+        scale: 0.6,
+        opacity: 0,
+        x: 18,
+        stagger: 0.04,
+        duration: 0.35,
+        ease: 'back.out(1.8)',
+      });
+    }
+  }
+};
+
+onMounted(() => {
+  if (dockRef.value && isAnimationEnabled()) {
+    motion.from(dockRef.value, {
+      x: 36,
+      opacity: 0,
+      duration: 0.55,
+      delay: 0.35,
+      ease: 'back.out(1.4)',
+    });
+  }
+});
 
 const isEnabled = computed(() => getSetting('enable_floating_social', true) !== false);
 
