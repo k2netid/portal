@@ -4,7 +4,13 @@
     ref="dockRef"
     data-ja-customizer-target="social_links"
     class="layung-social-dock"
-    :class="{ 'layung-social-dock--collapsed': isCollapsed }"
+    :class="[
+      `layung-social-dock--${dockPosition}`,
+      {
+        'layung-social-dock--collapsed': isCollapsed,
+        'layung-social-dock--show-mobile': showOnMobile,
+      }
+    ]"
     aria-label="Tautan Media Sosial Melayang"
   >
     <!-- Collapsed Trigger Button -->
@@ -39,7 +45,10 @@
         :aria-label="tt('footer.socialCollapse', 'Sembunyikan')"
         @click="handleToggle(true)"
       >
-        <ChevronRight class="w-3.5 h-3.5" />
+        <ChevronRight
+          class="w-3.5 h-3.5 transition-transform"
+          :class="chevronRotationClass"
+        />
       </button>
 
       <div class="layung-social-dock__divider" />
@@ -62,7 +71,7 @@
 
           <!-- Flyout Tooltip Label -->
           <span class="layung-social-dock__tooltip">
-            {{ getSocialPlatformName(link.icon) }}
+            {{ getSocialPlatformName(link) }}
           </span>
         </a>
       </div>
@@ -71,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import gsap from 'gsap';
 import {
   Share2,
@@ -95,7 +104,24 @@ const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
 const { isAnimationEnabled } = useThemeMotion();
 
-const isCollapsed = ref(false);
+const isEnabled = computed(() => getSetting('enable_floating_social', true) !== false);
+const dockPosition = computed(() => String(getSetting('floating_social_position', 'right') || 'right'));
+const defaultCollapsed = computed(() => Boolean(getSetting('floating_social_default_collapsed', false)));
+const showOnMobile = computed(() => Boolean(getSetting('floating_social_show_on_mobile', false)));
+
+const isCollapsed = ref(defaultCollapsed.value);
+
+watch(defaultCollapsed, (val) => {
+  isCollapsed.value = val;
+});
+
+const chevronRotationClass = computed(() => {
+  if (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') {
+    return 'rotate-180';
+  }
+  return '';
+});
+
 const dockRef = ref<HTMLElement | null>(null);
 const bodyRef = ref<HTMLElement | null>(null);
 const toggleBtnRef = ref<HTMLElement | null>(null);
@@ -112,9 +138,10 @@ const handleToggle = async (collapsed: boolean) => {
       { scale: 1, opacity: 1, rotation: 0, duration: 0.35, ease: 'back.out(1.8)', clearProps: 'all' }
     );
   } else if (!collapsed && bodyRef.value) {
+    const slideX = (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') ? -15 : 15;
     gsap.fromTo(
       bodyRef.value,
-      { scale: 0.8, opacity: 0, x: 15 },
+      { scale: 0.8, opacity: 0, x: slideX },
       { scale: 1, opacity: 1, x: 0, duration: 0.35, ease: 'back.out(1.5)', clearProps: 'all' }
     );
     const items = bodyRef.value.querySelectorAll('.layung-social-dock__item');
@@ -130,18 +157,17 @@ const handleToggle = async (collapsed: boolean) => {
 
 onMounted(() => {
   if (dockRef.value && isAnimationEnabled()) {
+    const enterX = (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') ? -36 : 36;
     gsap.fromTo(
       dockRef.value,
-      { x: 36, opacity: 0 },
+      { x: enterX, opacity: 0 },
       { x: 0, opacity: 1, duration: 0.55, delay: 0.3, ease: 'back.out(1.4)', clearProps: 'all' }
     );
   }
 });
 
-const isEnabled = computed(() => getSetting('enable_floating_social', true) !== false);
-
 const rawSocialLinks = computed(() => {
-  return (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || [];
+  return (getSetting('social_links') as Array<{ icon?: string; url?: string; label?: string }>) || [];
 });
 
 const defaultSocialLinks = [
@@ -192,8 +218,11 @@ const getSocialIcon = (key?: string) => {
   }
 };
 
-const getSocialPlatformName = (key?: string) => {
-  const clean = trimStr(key);
+const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
+  const customLabel = trimStr(link?.label);
+  if (customLabel) return customLabel;
+
+  const clean = trimStr(link?.icon);
   if (!clean) return 'Tautan';
   if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp CS';
   if (clean === 'Linkedin') return 'LinkedIn K2NET';
@@ -229,8 +258,9 @@ const getSocialTarget = (link: { icon?: string; url?: string }) => {
 const getSocialRel = (link: { icon?: string; url?: string }) =>
   (getSocialTarget(link) ? 'noopener noreferrer' : undefined);
 
-const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
-  const icon = trimStr(link?.icon) || 'social';
+const getSocialAriaLabel = (link: { icon?: string; url?: string; label?: string }) => {
+  const icon = trimStr(link?.label) || trimStr(link?.icon) || 'social';
   return `Kunjungi ${icon}`;
 };
 </script>
+

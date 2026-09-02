@@ -1099,6 +1099,59 @@ html.dark .layung-social-dock__tooltip,
   transform: translateY(-50%) translateX(0);
 }
 
+/* ── Position Variants ── */
+.layung-social-dock--right {
+  right: 1.25rem;
+  left: auto;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+
+.layung-social-dock--left {
+  left: 1.25rem;
+  right: auto;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+
+.layung-social-dock--bottom_right {
+  right: 1.25rem;
+  left: auto;
+  bottom: 2rem;
+  top: auto;
+  transform: none;
+}
+
+.layung-social-dock--bottom_left {
+  left: 1.25rem;
+  right: auto;
+  bottom: 2rem;
+  top: auto;
+  transform: none;
+}
+
+/* Tooltip alignment for left-docked positions */
+.layung-social-dock--left .layung-social-dock__tooltip,
+.layung-social-dock--bottom_left .layung-social-dock__tooltip {
+  right: auto;
+  left: calc(100% + 0.65rem);
+  transform: translateY(-50%) translateX(-6px);
+}
+
+.layung-social-dock--left .layung-social-dock__item:hover .layung-social-dock__tooltip,
+.layung-social-dock--left .group:hover .layung-social-dock__tooltip,
+.layung-social-dock--bottom_left .layung-social-dock__item:hover .layung-social-dock__tooltip,
+.layung-social-dock--bottom_left .group:hover .layung-social-dock__tooltip {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile visibility toggle */
+.layung-social-dock--show-mobile {
+  display: flex !important;
+}
+
 /* ── Reduced motion overrides ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .about-hero-stat,

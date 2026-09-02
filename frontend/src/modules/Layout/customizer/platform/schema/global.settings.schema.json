@@ -458,6 +458,40 @@
         "category": "Footer",
         "scope": "platform"
     },
+    "enable_floating_social": {
+        "label": "Tampilkan Floating Social Dock",
+        "type": "checkbox",
+        "default": true,
+        "category": "Social Media",
+        "scope": "platform"
+    },
+    "floating_social_position": {
+        "label": "Posisi Floating Dock",
+        "type": "select",
+        "options": [
+            { "label": "Kanan Tengah (Right Center)", "value": "right" },
+            { "label": "Kiri Tengah (Left Center)", "value": "left" },
+            { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
+            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" }
+        ],
+        "default": "right",
+        "category": "Social Media",
+        "scope": "platform"
+    },
+    "floating_social_default_collapsed": {
+        "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
+        "type": "checkbox",
+        "default": false,
+        "category": "Social Media",
+        "scope": "platform"
+    },
+    "floating_social_show_on_mobile": {
+        "label": "Tampilkan di Layar Mobile",
+        "type": "checkbox",
+        "default": false,
+        "category": "Social Media",
+        "scope": "platform"
+    },
     "social_links": {
         "label": "Social Media Links",
         "type": "repeater",
@@ -472,6 +506,11 @@
             {
                 "name": "url",
                 "label": "URL",
+                "type": "text"
+            },
+            {
+                "name": "label",
+                "label": "Label Tooltip Kustom (Opsional)",
                 "type": "text"
             }
         ],
