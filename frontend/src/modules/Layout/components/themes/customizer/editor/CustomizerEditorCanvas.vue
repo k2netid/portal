@@ -53,7 +53,7 @@
       </div>
 
       <!-- Settings Form Content -->
-      <div class="space-y-6 pb-12">
+      <div class="space-y-6 pb-36">
         <div
           v-if="!isItemCompatibleWithMode(selectedItem)"
           class="rounded-xl border border-dashed border-border bg-muted/20 p-5 text-sm text-muted-foreground"
