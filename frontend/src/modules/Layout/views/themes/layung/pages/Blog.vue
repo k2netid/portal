@@ -1,7 +1,7 @@
 <template>
   <div
     data-ja-customizer-target="news"
-    class="layung-theme flex-1 flex flex-col py-10 md:py-12"
+    class="layung-page flex-1 flex flex-col py-10 md:py-12"
   >
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -19,17 +19,17 @@
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
         <div class="space-y-4">
-          <Breadcrumb :items="[{ name: t('pages.blog.title', 'Warta & Berita Jaringan') }]" />
+          <Breadcrumb :items="[{ name: t('pages.blog.title', 'Berita') }]" />
           <div class="max-w-3xl space-y-3">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 dark:text-orange-400 font-mono">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 font-mono">
               <Newspaper class="w-3.5 h-3.5" />
-              {{ t('pages.blog.sectionBadge', 'Warta Teknologi & Notifikasi Jaringan') }}
+              {{ t('pages.blog.sectionBadge', 'Berita') }}
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
-              {{ t('pages.blog.title', 'Warta Teknologi & Notifikasi Jaringan') }}
+              {{ t('pages.blog.title', 'Berita') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {{ t('pages.blog.subtitle', 'Artikel seputar tren cyber security, teknologi cloud, dan jadwal pemeliharaan jaringan berkala.') }}
+              {{ t('pages.blog.subtitle', 'Pengumuman layanan, jangkauan, dan operasional K2NET.') }}
             </p>
           </div>
         </div>
@@ -40,7 +40,7 @@
             :key="cat.slug"
             type="button"
             class="px-3.5 py-1.5 rounded-full border transition-all"
-            :class="selectedCategory === cat.slug ? 'bg-orange-500 text-white font-bold border-orange-500 shadow-sm' : 'border-border text-muted-foreground hover:bg-muted/80 hover:text-foreground'"
+            :class="selectedCategory === cat.slug ? 'bg-sky-500 text-white font-bold border-sky-500 shadow-sm' : 'border-border text-muted-foreground hover:bg-muted/80 hover:text-foreground'"
             @click="selectedCategory = cat.slug"
           >
             {{ cat.name }}
@@ -51,7 +51,7 @@
           v-if="loading"
           class="min-h-[300px] flex items-center justify-center font-mono text-xs text-muted-foreground"
         >
-          <div class="w-8 h-8 rounded-full border-2 border-orange-500 border-t-transparent animate-spin" />
+          <div class="w-8 h-8 rounded-full border-2 border-sky-500 border-t-transparent animate-spin" />
         </div>
 
         <div
@@ -104,11 +104,11 @@ const loading = ref(true);
 const selectedCategory = ref('');
 
 const categories = computed(() => [
-  { name: t('pages.blog.allCategories', 'Semua Warta'), slug: '' },
-  { name: t('pages.blog.catInfra', 'Infrastruktur Fiber'), slug: 'infrastruktur' },
-  { name: t('pages.blog.catSecurity', 'Cyber Security'), slug: 'security' },
-  { name: t('pages.blog.catCloud', 'Cloud & SD-WAN'), slug: 'cloud' },
-  { name: t('pages.blog.catMaintenance', 'Notifikasi Maintenance'), slug: 'maintenance' },
+  { name: t('pages.blog.allCategories', 'Semua berita'), slug: '' },
+  { name: t('pages.blog.catInfra', 'Internet'), slug: 'infrastruktur' },
+  { name: t('pages.blog.catSecurity', 'Operasional'), slug: 'security' },
+  { name: t('pages.blog.catCloud', 'Managed Services'), slug: 'cloud' },
+  { name: t('pages.blog.catMaintenance', 'Pemeliharaan'), slug: 'maintenance' },
 ]);
 
 const filteredPosts = computed(() => {

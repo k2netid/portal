@@ -14,7 +14,7 @@
       <div class="space-y-4 text-center sm:text-left">
         <span
           v-if="post.category"
-          class="inline-block px-3 py-1 bg-orange-500/10 text-orange-500 text-xs font-bold rounded-full font-mono"
+          class="inline-block px-3 py-1 bg-sky-500/10 text-sky-500 text-xs font-bold rounded-full font-mono"
         >
           {{ post.category.name }}
         </span>
@@ -93,10 +93,10 @@ onMounted(async () => {
     }
   } catch {
     post.value = {
-      title: 'Upgrade Kapasitas Peering IIX APJII Menjadi 100 Gbps untuk Akselerasi CDN',
+      title: 'K2NET Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC',
       published_at: '2026-08-15',
-      excerpt: 'Layung Network resmi mengaktifkan interkoneksi 100G ke gedung Cyber untuk mengantisipasi lonjakan trafik video streaming dan cloud gaming.',
-      body: '<p>Dalam rangka mengantisipasi peningkatan volume lalu lintas data dan kebutuhan transmisi ultra-low latency, Layung Network mengumumkan penyelesaian upgrade kapasitas interkoneksi peering domestik pada simpul utama Indonesia Internet Exchange (IIX - APJII) dan OpenIXP di Cyber 1 Tower menjadi 100 Gbps berkecepatan penuh.</p><p>Langkah strategis ini memberikan efisiensi rute data sebesar 35% lebih cepat bagi para pelanggan Dedicated Internet (DIA) dan pengguna jaringan korporat multi-cabang di seluruh Indonesia.</p>',
+      excerpt: 'PT Kirana Karina Network mengumumkan operasional BGP mandiri AS153992 (IDNIC-K2NET-ID) untuk layanan ISP di Bandung.',
+      body: '<p>K2NET mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>',
       category: { name: 'Infrastruktur' },
       author: { name: 'NOC Engineering Team' },
     };

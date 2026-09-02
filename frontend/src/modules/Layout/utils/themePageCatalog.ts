@@ -16,6 +16,8 @@ const TITLE_BY_THEME_PAGE: Record<string, string> = {
   'pages/About': 'Tentang Kami (About)',
   'pages/Tim': 'Tim Kami (Team)',
   'pages/Pricing': 'Harga & Paket (Pricing)',
+  'pages/PricingIsp': 'Paket Internet ISP',
+  'pages/PricingMsp': 'Managed Services MSP',
   'pages/Solusi': 'Produk & Solusi',
   'pages/Services': 'Layanan (Services)',
   'pages/Contact': 'Hubungi Kami (Contact)',

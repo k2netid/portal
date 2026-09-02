@@ -3,7 +3,7 @@ import { persistConsoleDarkModeToStorage, readConsoleDarkModeFromStorage } from 
 import { logger } from '@/shared/utils/logger';
 import { defineStore } from 'pinia';
 import api, { type ApiRequestConfig } from '@/engine/api/client';
-import { applyFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
+import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
 
 
 export interface SiteSettings {
@@ -63,7 +63,7 @@ export const useSystemStore = defineStore('system', {
             admin_email: '',
             site_version: '',
             site_logo: '',
-            site_favicon: '/favicon.ico'
+            site_favicon: '',
         },
         maintenance: {
             mode: false,
@@ -142,7 +142,9 @@ export const useSystemStore = defineStore('system', {
                         admin_email: data.admin_email || '',
                         site_version: data.site_version || '',
                         site_logo: data.site_logo || '',
-                        site_favicon: data.site_favicon || '/favicon.ico',
+                        site_favicon: isGenericEngineFavicon(String(data.site_favicon || ''))
+                            ? ''
+                            : String(data.site_favicon || ''),
                         enable_registration: data.enable_registration,
                         enable_member_registration: data.enable_member_registration,
                         require_email_verification: data.require_email_verification,
@@ -156,7 +158,12 @@ export const useSystemStore = defineStore('system', {
                         ...this.appIdentity,
                         app_name: data.app_name || data.site_name || this.appIdentity.app_name || 'Jejakawan',
                         app_logo: data.app_logo || data.site_logo || this.appIdentity.app_logo || '',
-                        app_favicon: data.app_favicon || data.site_favicon || this.appIdentity.app_favicon || '',
+                        app_favicon: String(
+                            (!isGenericEngineFavicon(String(data.app_favicon || '')) && data.app_favicon)
+                            || (!isGenericEngineFavicon(String(data.site_favicon || '')) && data.site_favicon)
+                            || this.appIdentity.app_favicon
+                            || '',
+                        ),
                         app_license_tier: data.license_type || data.app_license_tier || this.appIdentity.app_license_tier || 'basic',
                         has_white_label: ['pro_plus', 'white_label'].includes(data.app_license_tier || this.appIdentity.app_license_tier),
                     };
@@ -208,7 +215,7 @@ export const useSystemStore = defineStore('system', {
                 applyFavicon(resolveFavicon([
                     this.appIdentity.app_favicon,
                     this.siteSettings.site_favicon,
-                ]));
+                ]), { allowGeneric: this.publicSettingsLoaded });
 
                 return this.appIdentity;
             } catch (error) {

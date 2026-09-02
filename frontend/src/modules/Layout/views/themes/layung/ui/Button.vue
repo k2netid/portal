@@ -4,7 +4,7 @@
     :type="as === 'button' ? type : undefined"
     :disabled="disabled || loading"
     :class="[
-      'inline-flex items-center justify-center font-bold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none rounded-[var(--layung-radius-sm)]',
+      'inline-flex items-center justify-center font-medium tracking-tight transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none rounded-[var(--layung-radius-sm)]',
       sizeClasses[size],
       variantClasses[variant],
       $attrs.class
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -49,7 +48,7 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  primary: 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-md shadow-orange-500/20 focus:ring-orange-500 active:scale-[0.98]',
+  primary: 'bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-600 hover:to-cyan-500 text-white shadow-md shadow-sky-500/25 focus:ring-sky-500 active:scale-[0.98]',
   secondary: 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-md shadow-cyan-600/20 focus:ring-cyan-500 active:scale-[0.98]',
   cyber: 'bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 shadow-lg shadow-cyan-900/20 focus:ring-cyan-400 active:scale-[0.98]',
   outline: 'border border-border/80 hover:bg-muted/70 text-foreground focus:ring-primary',

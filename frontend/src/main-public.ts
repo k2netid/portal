@@ -9,7 +9,7 @@ import {
 
 setAppShell('public');
 
-document.title = i18n.global.t('system.app.publicTitle', 'Jejakawan');
+document.title = i18n.global.t('system.app.publicTitle', 'K2NET');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('public'));

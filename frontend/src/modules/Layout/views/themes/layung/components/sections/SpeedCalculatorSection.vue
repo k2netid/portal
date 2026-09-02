@@ -23,7 +23,7 @@
           <div class="space-y-4">
             <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 font-mono">
               {{ t('calculator.usersLabel', 'Jumlah Pengguna / Perangkat:') }}
-              <strong class="text-orange-400 text-sm ml-2">{{ userCount }} Users</strong>
+              <strong class="text-sky-400 text-sm ml-2">{{ userCount }} Users</strong>
             </label>
             <input
               v-model.number="userCount"
@@ -31,7 +31,7 @@
               min="5"
               max="500"
               step="5"
-              class="w-full accent-orange-500 bg-slate-950 h-2 rounded-lg cursor-pointer"
+              class="w-full accent-sky-500 bg-slate-950 h-2 rounded-lg cursor-pointer"
             >
             <div class="flex justify-between text-[11px] text-slate-500 font-mono">
               <span>5 Users</span>
@@ -52,7 +52,7 @@
                 :key="w.id"
                 type="button"
                 class="p-2.5 rounded-xl border text-left font-medium transition-all"
-                :class="selectedWorkload === w.id ? 'bg-orange-500/20 border-orange-500 text-orange-300 font-bold' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'"
+                :class="selectedWorkload === w.id ? 'bg-sky-500/20 border-sky-500 text-sky-300 font-bold' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'"
                 @click="selectedWorkload = w.id"
               >
                 <div class="text-white">{{ w.label }}</div>
@@ -63,13 +63,13 @@
         </div>
 
         <!-- Calculated Output Banner -->
-        <div class="bg-gradient-to-r from-orange-950/60 to-slate-950 border border-orange-500/40 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="bg-gradient-to-r from-sky-950/60 to-slate-950 border border-sky-500/40 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div class="space-y-2 text-center sm:text-left">
             <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block">
               {{ t('calculator.recommendedPlan', 'Rekomendasi Paket:') }}
             </span>
             <div class="flex items-baseline gap-3 justify-center sm:justify-start">
-              <span class="text-3xl sm:text-4xl font-black text-orange-400 font-heading">
+              <span class="text-3xl sm:text-4xl font-black text-sky-400 font-heading">
                 {{ calculatedSpeed }}
               </span>
               <span class="text-sm font-mono text-emerald-400 font-bold">
@@ -77,7 +77,7 @@
               </span>
             </div>
             <p class="text-xs text-slate-400">
-              Termasuk IP Publik Statis /29, SLA 99.999%, dan pemantauan NOC 24/7.
+              Termasuk alokasi IP publik sesuai paket, SLA tertulis di kontrak, dan dukungan NOC.
             </p>
           </div>
 
@@ -86,7 +86,7 @@
             to="/contact"
             variant="primary"
             size="md"
-            class="font-bold shrink-0 shadow-lg shadow-orange-500/20"
+            class="font-bold shrink-0 shadow-lg shadow-sky-500/20"
           >
             {{ t('calculator.getQuote', 'Ajukan Proposal Langsung') }}
           </Button>

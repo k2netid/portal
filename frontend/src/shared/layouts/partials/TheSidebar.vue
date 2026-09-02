@@ -78,7 +78,7 @@
         </router-link>
 
         <!-- EXPANDED MODE: Flat & Parallel Accordion Groups -->
-        <template v-if="!sidebarMinimized">
+        <template v-if="!sidebarMinimized && navigationStore.menusReady">
           <template
             v-for="item in filteredNavigation"
             :key="navItemKey(item)"
@@ -170,7 +170,7 @@
         </template>
 
         <!-- MINIMIZED MODE: Icon List with Dropdown Popover -->
-        <template v-else>
+        <template v-else-if="sidebarMinimized && navigationStore.menusReady">
           <template
             v-for="item in filteredNavigation"
             :key="navItemKey(item)"
@@ -479,7 +479,7 @@ const prefetchNavTarget = (item: ResolvedNavItem | ResolvedNavChild) => {
     }
 };
 
-const navItemKey = (item: NavItem) => item.group || item.labelKey || item.name || item.label || '';
+const navItemKey = (item: NavItem) => item.id || `${item.group || ''}:${item.labelKey || ''}:${item.name || ''}:${item.label || ''}`;
 
 const resolveNavLabel = (item: NavItem) => {
     const lk = item.labelKey || '';

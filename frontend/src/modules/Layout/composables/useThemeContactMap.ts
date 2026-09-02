@@ -7,8 +7,12 @@ type AddressSource = Ref<string> | ComputedRef<string>
  * Shared Google Maps helpers for theme contact pages.
  * Reads `contact_map_*` settings (same keys as Janari theme customizer).
  */
-export function useThemeContactMap(displayAddress: AddressSource) {
+export function useThemeContactMap(
+  displayAddress: AddressSource,
+  options?: { useDirectLink?: boolean },
+) {
   const { getSetting } = useTheme()
+  const useDirectLink = options?.useDirectLink !== false
 
   const mapEnabled = computed(() => getSetting('contact_map_enabled', true) !== false)
 
@@ -29,7 +33,7 @@ export function useThemeContactMap(displayAddress: AddressSource) {
   })
 
   const mapQuery = computed(() => {
-    if (mapDirectLink.value) {
+    if (useDirectLink && mapDirectLink.value) {
       try {
         const url = new URL(mapDirectLink.value)
         const q =
@@ -52,13 +56,13 @@ export function useThemeContactMap(displayAddress: AddressSource) {
   })
 
   const mapExternalUrl = computed(() => {
-    if (mapDirectLink.value) return mapDirectLink.value
+    if (useDirectLink && mapDirectLink.value) return mapDirectLink.value
     const q = encodeURIComponent(mapQuery.value || String(displayAddress.value || ''))
     return `https://www.google.com/maps/search/?api=1&query=${q}`
   })
 
   const mapDirectionsUrl = computed(() => {
-    if (mapSource.value === 'link' && mapDirectLink.value) return mapDirectLink.value
+    if (useDirectLink && mapSource.value === 'link' && mapDirectLink.value) return mapDirectLink.value
     const destination = encodeURIComponent(mapQuery.value || String(displayAddress.value || ''))
     return `https://www.google.com/maps/dir/?api=1&destination=${destination}`
   })

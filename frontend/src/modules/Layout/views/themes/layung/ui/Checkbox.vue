@@ -4,7 +4,7 @@
       :checked="modelValue"
       type="checkbox"
       :disabled="disabled"
-      class="w-4 h-4 rounded text-orange-600 border-border/80 focus:ring-orange-500 transition-colors"
+      class="w-4 h-4 rounded text-sky-600 border-border/80 focus:ring-sky-500 transition-colors"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
     >
     <span class="text-foreground font-medium">

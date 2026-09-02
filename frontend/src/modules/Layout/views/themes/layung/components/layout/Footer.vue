@@ -1,34 +1,23 @@
 <template>
   <footer
     data-ja-customizer-target="footer"
-    class="border-t border-border/80 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
+    class="border-t-0 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
-        <div class="lg:col-span-2 space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8">
+        <div class="sm:col-span-2 lg:col-span-3 space-y-4">
           <div class="flex items-center gap-3.5">
-            <div
+            <BrandMark
               v-if="brandingDisplay !== 'text_only'"
-              class="w-11 h-11 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-orange-500/20 overflow-hidden"
-              aria-hidden="true"
-            >
-              <img
-                v-if="siteLogo"
-                :src="siteLogo"
-                :alt="displayCompanyName"
-                class="h-full w-full object-contain p-1"
-              >
-              <Activity
-                v-else
-                class="w-6 h-6"
-              />
-            </div>
+              :src="siteLogo"
+              :alt="displayCompanyName"
+            />
             <div v-if="brandingDisplay !== 'logo_only'">
               <span class="text-xl font-extrabold tracking-tight text-white font-heading block">
                 {{ displayCompanyName }}
               </span>
-              <span class="text-xs text-orange-400 font-bold font-mono">
-                {{ displayAsn }}
+              <span class="text-xs text-sky-400 font-medium">
+                {{ tt('footer.legalLine', 'PT Kirana Karina Network') }}
               </span>
             </div>
           </div>
@@ -47,7 +36,7 @@
               :href="resolveSocialHref(link)"
               :target="getSocialTarget(link)"
               :rel="getSocialRel(link)"
-              class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 text-slate-400 hover:text-orange-400 hover:border-orange-500/40 transition-colors"
+              class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 text-slate-400 hover:text-sky-400 hover:border-sky-500/40 transition-colors"
               :aria-label="getSocialAriaLabel(link)"
             >
               <component
@@ -56,24 +45,13 @@
               />
             </a>
           </div>
-
-          <div class="flex flex-wrap gap-2 pt-1 font-mono">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-              <ShieldCheck class="w-3.5 h-3.5" />
-              {{ tt('footer.badgeSla', '99.999% SLA Uptime Guarantee') }}
-            </span>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
-              <Server class="w-3.5 h-3.5" />
-              {{ tt('footer.badgeDatacenter', 'Tier-3 Data Center Interconnect') }}
-            </span>
-          </div>
         </div>
 
-        <div class="space-y-4">
-          <h4 class="text-sm font-bold uppercase tracking-wider text-white font-heading">
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
             {{ col1Title }}
           </h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-1.5 text-[13px] text-slate-400">
             <li
               v-for="item in footerCol1Items"
               :key="String(item.id || item.title)"
@@ -83,14 +61,14 @@
                 :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:text-orange-400 transition-colors"
+                class="hover:text-sky-400 transition-colors"
               >
                 {{ item.title }}
               </a>
               <router-link
                 v-else
-                :to="item.url || '/'"
-                class="hover:text-orange-400 transition-colors"
+                :to="resolvePublicMenuTo(item.url)"
+                class="hover:text-sky-400 transition-colors"
               >
                 {{ item.title }}
               </router-link>
@@ -98,11 +76,11 @@
           </ul>
         </div>
 
-        <div class="space-y-4">
-          <h4 class="text-sm font-bold uppercase tracking-wider text-white font-heading">
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
             {{ col2Title }}
           </h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-1.5 text-[13px] text-slate-400">
             <li
               v-for="item in footerCol2Items"
               :key="String(item.id || item.title)"
@@ -112,14 +90,14 @@
                 :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:text-orange-400 transition-colors"
+                class="hover:text-sky-400 transition-colors"
               >
                 {{ item.title }}
               </a>
               <router-link
                 v-else
-                :to="item.url || '/'"
-                class="hover:text-orange-400 transition-colors"
+                :to="resolvePublicMenuTo(item.url)"
+                class="hover:text-sky-400 transition-colors"
               >
                 {{ item.title }}
               </router-link>
@@ -127,42 +105,97 @@
           </ul>
         </div>
 
-        <div class="space-y-4">
-          <h4 class="text-sm font-bold uppercase tracking-wider text-white font-heading">
-            {{ tt('footer.contact', 'Pusat Bantuan 24/7') }}
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+            {{ col3Title }}
           </h4>
-          <div class="space-y-2 text-xs text-slate-400 leading-relaxed">
-            <p class="flex items-start gap-2">
-              <MapPin class="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
-              <span>{{ displayAddress }}</span>
-            </p>
-            <p class="flex items-center gap-2">
-              <Phone class="w-4 h-4 text-orange-400 shrink-0" />
-              <a
-                :href="nocDialHref"
-                class="hover:text-white font-semibold font-mono"
-              >{{ displayNocPhone }} (NOC 24/7)</a>
-            </p>
-            <p class="flex items-center gap-2">
-              <Mail class="w-4 h-4 text-orange-400 shrink-0" />
-              <a
-                :href="`mailto:${displayEmail}`"
-                class="hover:text-white"
-              >{{ displayEmail }}</a>
-            </p>
-            <p
-              v-if="nocWhatsAppUrl"
-              class="pt-1.5"
+          <ul class="space-y-1.5 text-[13px] text-slate-400">
+            <li
+              v-for="item in footerCol3Items"
+              :key="String(item.id || item.title)"
             >
               <a
-                :href="nocWhatsAppUrl"
+                v-if="isExternalLink(item.url)"
+                :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--layung-radius-sm)] bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors shadow-sm"
+                class="hover:text-sky-400 transition-colors"
               >
-                <MessageCircle class="w-3.5 h-3.5" />
-                WhatsApp NOC & Sales
+                {{ item.title }}
               </a>
+              <router-link
+                v-else
+                :to="resolvePublicMenuTo(item.url)"
+                class="hover:text-sky-400 transition-colors"
+              >
+                {{ item.title }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sm:col-span-2 lg:col-span-3 space-y-3">
+          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+            {{ tt('footer.contact', 'Hubungi Kami') }}
+          </h4>
+
+          <dl class="grid grid-cols-[auto_auto] gap-x-4 gap-y-2 text-[13px]">
+            <template
+              v-for="phone in footerPhones"
+              :key="phone.label"
+            >
+              <dt class="text-slate-500 text-[11px] font-mono uppercase tracking-wide whitespace-nowrap self-center">
+                {{ phone.label }}
+              </dt>
+              <dd>
+                <a
+                  v-if="phone.whatsappUrl"
+                  :href="phone.whatsappUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-colors"
+                  :aria-label="phone.ariaLabel"
+                >
+                  <MessageCircle class="w-4 h-4" />
+                </a>
+              </dd>
+            </template>
+          </dl>
+
+          <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[13px] pt-1 border-t border-slate-800/80">
+            <template
+              v-for="mail in footerEmails"
+              :key="mail.address"
+            >
+              <dt class="text-slate-500 text-[11px] font-mono uppercase tracking-wide whitespace-nowrap pt-0.5">
+                {{ mail.label }}
+              </dt>
+              <dd>
+                <a
+                  :href="`mailto:${mail.address}`"
+                  class="text-slate-400 hover:text-sky-400 text-xs break-all transition-colors"
+                >{{ mail.address }}</a>
+              </dd>
+            </template>
+          </dl>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-slate-800/80">
+        <h4 class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 font-mono mb-4">
+          {{ tt('footer.locations', 'Lokasi') }}
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div
+            v-for="location in footerLocations"
+            :key="location.label"
+            class="rounded-xl border border-slate-800/90 bg-slate-900/40 px-4 py-3 space-y-1.5"
+          >
+            <p class="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 font-mono">
+              {{ location.label }}
+            </p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              {{ location.address }}
             </p>
           </div>
         </div>
@@ -191,7 +224,7 @@
               </a>
               <router-link
                 v-else
-                :to="item.url || '/'"
+                :to="resolvePublicMenuTo(item.url)"
                 class="hover:text-slate-300 transition-colors"
               >
                 {{ item.title }}
@@ -203,14 +236,14 @@
               to="/about"
               class="hover:text-slate-300 transition-colors"
             >
-              {{ tt('header.about', 'Profil') }}
+              {{ tt('header.about', 'Tentang Kami') }}
             </router-link>
             <span>·</span>
             <router-link
               to="/contact"
               class="hover:text-slate-300 transition-colors"
             >
-              {{ tt('header.contact', 'Kontak NOC') }}
+              {{ tt('header.contact', 'Kontak') }}
             </router-link>
             <span>·</span>
             <router-link
@@ -229,44 +262,113 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import {
-  Activity, ShieldCheck, Server, MapPin, Phone, Mail, MessageCircle,
-  Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe,
+  MessageCircle,
+  Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe, Mail,
 } from 'lucide-vue-next';
+import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
-import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
+import { toWhatsAppDigits } from '@/modules/Layout/views/themes/layung/composables/resolveLayungLocalizedCopy';
+import {
+  LAYUNG_STORE_SHOPEE,
+  LAYUNG_STORE_SIPLAH_BLIBLI,
+  LAYUNG_STORE_SIPLAH_TOKOLADANG,
+  LAYUNG_STORE_TOKOPEDIA,
+} from '@/modules/Layout/views/themes/layung/composables/layungStoreUrls';
 import type { MenuItem } from '@/modules/Layout/types/menu';
+import { resolvePublicMenuTo } from '@/modules/Layout/utils/menuUrl';
 
 const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
-const systemStore = useSystemStore();
 const {
   displayCompanyName,
-  displayAsn,
+  displayBrandLogo,
   displayAddress,
+  displayGarutAddress,
+  displayStoreAddress,
+  displayCsPhone,
   displayNocPhone,
+  displaySalesPhone,
+  displayServiceDeskPhone,
   displayEmail,
-  nocDialHref,
-  nocWhatsAppUrl,
+  displayCsEmail,
+  displaySalesEmail,
+  displayBillingEmail,
 } = useLayungIdentity();
 
-const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
+const toWhatsAppUrl = (phone: string) => {
+  const digits = toWhatsAppDigits(phone);
+  return digits ? `https://wa.me/${digits}` : '';
+};
 
-const siteLogo = computed(() => {
-  const custom = getSetting('brand_logo', '');
-  if (custom && typeof custom === 'string') return custom;
-  return (systemStore.settings as { site_logo?: string } | undefined)?.site_logo || '';
-});
+const footerPhones = computed(() => [
+  {
+    label: tt('footer.phoneCs', 'CS'),
+    whatsappUrl: toWhatsAppUrl(displayCsPhone.value),
+    ariaLabel: `WhatsApp ${tt('footer.phoneCs', 'CS')}`,
+  },
+  {
+    label: tt('footer.phoneNoc', 'NOC'),
+    whatsappUrl: toWhatsAppUrl(displayNocPhone.value),
+    ariaLabel: `WhatsApp ${tt('footer.phoneNoc', 'NOC')}`,
+  },
+  {
+    label: tt('footer.phoneSales', 'Sales'),
+    whatsappUrl: toWhatsAppUrl(displaySalesPhone.value),
+    ariaLabel: `WhatsApp ${tt('footer.phoneSales', 'Sales')}`,
+  },
+  {
+    label: tt('footer.phoneServiceDesk', 'Service Desk'),
+    whatsappUrl: toWhatsAppUrl(displayServiceDeskPhone.value),
+    ariaLabel: `WhatsApp ${tt('footer.phoneServiceDesk', 'Service Desk')}`,
+  },
+]);
+
+const footerEmails = computed(() => [
+  { label: tt('footer.emailCs', 'CS'), address: displayCsEmail.value },
+  { label: tt('footer.emailInfo', 'Info'), address: displayEmail.value },
+  { label: tt('footer.emailSales', 'Sales'), address: displaySalesEmail.value },
+  { label: tt('footer.emailBilling', 'Billing'), address: displayBillingEmail.value },
+]);
+
+const footerLocations = computed(() => [
+  {
+    label: tt('pages.contact.labelAddressBandung', 'Kantor Bandung'),
+    address: displayAddress.value,
+  },
+  {
+    label: tt('pages.contact.labelAddressGarut', 'Kantor Garut'),
+    address: displayGarutAddress.value,
+  },
+  {
+    label: tt('pages.contact.labelStoreAddress', 'Toko offline'),
+    address: displayStoreAddress.value,
+  },
+]);
+
+const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));
+
+const siteLogo = displayBrandLogo;
 
 const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || []);
 
 const footerAboutText = computed(() => {
   const fromTheme = getSetting('footer_about_text', '');
-  if (fromTheme && typeof fromTheme === 'string') return fromTheme;
-  return tt('footer.description', 'Layung Network adalah penyedia infrastruktur serat optik berkecepatan tinggi, koneksi dedicated 1:1, dan Managed IT Services dengan jaminan SLA 99.999% bagi korporasi dan institusi.');
+  if (
+    fromTheme
+    && typeof fromTheme === 'string'
+    && fromTheme.trim()
+    && !/AS153992|165\.99\.252/.test(fromTheme)
+  ) {
+    return fromTheme.trim();
+  }
+  return tt(
+    'footer.description',
+    'K2NET (PT Kirana Karina Network) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.',
+  );
 });
 
 const footerCopyrightText = computed(() => {
@@ -278,13 +380,19 @@ const footerCopyrightText = computed(() => {
 const col1Title = computed(() => {
   const raw = getSetting('footer_col_1_title', '');
   if (typeof raw === 'string' && raw.trim()) return raw.trim();
-  return tt('footer.services', 'Layanan Fiber Optik');
+  return tt('footer.isp', 'ISP — Konektivitas');
 });
 
 const col2Title = computed(() => {
   const raw = getSetting('footer_col_2_title', '');
   if (typeof raw === 'string' && raw.trim()) return raw.trim();
-  return tt('footer.managed', 'Managed IT & SOC');
+  return tt('footer.msp', 'MSP — Layanan IT');
+});
+
+const col3Title = computed(() => {
+  const raw = getSetting('footer_col_3_title', '');
+  if (typeof raw === 'string' && raw.trim()) return raw.trim();
+  return tt('footer.products', 'Produk IT');
 });
 
 const normalizeMenuSetting = (value: unknown, fallback: string): string => {
@@ -365,34 +473,58 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
 };
 
 const defaultCol1Items = computed((): Partial<MenuItem>[] => [
-  { title: 'Dedicated Internet (DIA 1:1)', url: '/services#dia' },
-  { title: 'Dark Fiber & Metro-E', url: '/services#dark-fiber' },
-  { title: 'Data Center Colocation', url: '/about#colocation' },
-  { title: tt('header.pricing', 'Paket Bandwidth'), url: '/pricing#packages' },
+  { title: tt('header.services', 'Internet'), url: '/pricing/isp' },
+  { title: tt('header.pricingIsp', 'Paket Internet'), url: '/pricing/isp' },
+  { title: tt('header.about', 'Tentang Kami'), url: '/about' },
+  { title: tt('header.achievement', 'SLA'), url: '/achievement' },
 ]);
 
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
-  { title: '24/7 Cyber Security SOC', url: '/solusi#soc' },
-  { title: 'Managed SD-WAN Cloud', url: '/solusi#sdwan' },
-  { title: tt('header.achievement', 'Sertifikasi ISO 27001'), url: '/achievement' },
-  { title: tt('header.career', 'Pusat Karir Engineer'), url: '/career-center' },
+  { title: tt('header.solusi', 'Managed Services'), url: '/solusi' },
+  { title: tt('header.pricingMsp', 'Paket MSP'), url: '/pricing/msp' },
+  { title: tt('header.tim', 'Tim'), url: '/tim' },
+  { title: tt('header.career', 'Karir'), url: '/career' },
 ]);
 
-const footerCol1Items = computed(() => {
-  const menu = menus.value['footer_col_1'];
-  return (menu?.items && menu.items.length > 0) ? menu.items : defaultCol1Items.value;
-});
+const defaultCol3Items = computed((): Partial<MenuItem>[] => [
+  { title: tt('footer.storeOffline', 'Toko Offline'), url: '/contact' },
+  { title: 'Tokopedia K2NET', url: LAYUNG_STORE_TOKOPEDIA },
+  { title: 'Shopee K2NET', url: LAYUNG_STORE_SHOPEE },
+  { title: 'SIPLah Blibli', url: LAYUNG_STORE_SIPLAH_BLIBLI },
+  { title: 'SIPLah Toko Ladang', url: LAYUNG_STORE_SIPLAH_TOKOLADANG },
+]);
 
-const footerCol2Items = computed(() => {
-  const menu = menus.value['footer_col_2'];
-  return (menu?.items && menu.items.length > 0) ? menu.items : defaultCol2Items.value;
-});
+const contactPageEnabled = computed(() => getSetting('enable_contact', true) !== false);
 
-const footerItems = computed(() => (menus.value['footer']?.items || []) as MenuItem[]);
+const isContactMenuPath = (url?: string | null): boolean => {
+  if (!url) return false;
+  const path = resolvePublicMenuTo(url).split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+  return path === '/contact';
+};
+
+const filterFooterItems = (items: Partial<MenuItem>[]): Partial<MenuItem>[] => {
+  if (contactPageEnabled.value) return items;
+  return items.filter((item) => !isContactMenuPath(item.url));
+};
+
+const footerCol1Items = computed(() => filterFooterItems(
+  menus.value['footer_col_1']?.items?.length ? menus.value['footer_col_1'].items : defaultCol1Items.value,
+));
+
+const footerCol2Items = computed(() => filterFooterItems(
+  menus.value['footer_col_2']?.items?.length ? menus.value['footer_col_2'].items : defaultCol2Items.value,
+));
+
+const footerCol3Items = computed(() => filterFooterItems(
+  menus.value['footer_col_3']?.items?.length ? menus.value['footer_col_3'].items : defaultCol3Items.value,
+));
+
+const footerItems = computed(() => filterFooterItems((menus.value['footer']?.items || []) as MenuItem[]));
 
 onMounted(() => {
   fetchMenuByIdentifier(normalizeMenuSetting(getSetting('menu_location_footer_col_1', 'footer_col_1'), 'footer_col_1'), 'footer_col_1');
   fetchMenuByIdentifier(normalizeMenuSetting(getSetting('menu_location_footer_col_2', 'footer_col_2'), 'footer_col_2'), 'footer_col_2');
+  fetchMenuByIdentifier(normalizeMenuSetting(getSetting('menu_location_footer_col_3', 'footer_col_3'), 'footer_col_3'), 'footer_col_3');
   fetchMenuByIdentifier(normalizeMenuSetting(getSetting('menu_location_footer', 'footer'), 'footer'), 'footer');
 });
 </script>

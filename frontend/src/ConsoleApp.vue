@@ -95,15 +95,19 @@ onMounted(() => {
 onUnmounted(() => {
 });
 
-const faviconHref = computed(() => resolveFavicon([
-    systemStore.siteSettings?.site_favicon,
-    systemStore.appIdentity?.app_favicon,
-]));
+const faviconHref = computed(() => {
+    if (!systemStore.publicSettingsLoaded) return '';
+    return resolveFavicon([
+        systemStore.appIdentity?.app_favicon,
+        systemStore.siteSettings?.site_favicon,
+    ]);
+});
 
 watch(
     faviconHref,
     (href) => {
-        applyFavicon(href);
+        if (!href) return;
+        applyFavicon(href, { allowGeneric: true });
     },
     { immediate: true },
 );

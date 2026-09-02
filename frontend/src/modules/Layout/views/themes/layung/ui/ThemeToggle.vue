@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="p-2 rounded-[var(--layung-radius-sm)] text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+    class="p-1.5 rounded-[var(--layung-radius-sm)] text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500/50"
     :aria-label="themeLabel"
     :title="themeLabel"
     @click="toggleMode"

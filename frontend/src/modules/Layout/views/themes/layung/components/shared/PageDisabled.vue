@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center space-y-4">
-    <div class="w-16 h-16 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+    <div class="w-16 h-16 rounded-2xl bg-sky-500/10 text-sky-500 flex items-center justify-center">
       <AlertTriangle class="w-8 h-8" />
     </div>
     <h2 class="text-2xl font-bold font-heading text-foreground">

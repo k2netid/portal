@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Layung kontak: popup peta untuk semua alamat, ikon WhatsApp menggantikan nomor, email `mailto`, dan kolom wajib No. telp/WA pada formulir Reach.
 - Rename theme **Zenith → Sarangenge** (Sundanese midday sun; school-focused sibling to Janari dawn): folder/slug/locales/CSS, Member shell classes, bundled fallbacks, and campus UI (teal+sun, bento home, PPDB CTA).
 - Fix public site keeping the previous theme after activate: clear `frontend_theme_snapshot_v1`, broadcast activation to other tabs, drop API payload cache on activate/deactivate, force-reconcile on notification.
 - Fix ThemePageResolver remount loop: cache real SFCs (not async stubs keyed by stale resolveId); keep current view while theme revalidates.

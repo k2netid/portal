@@ -223,7 +223,85 @@ class MenuController extends BaseApiController
     {
         $items = $menu->items()->orderBy('sort_order')->get();
 
-        return $this->success($items, 'Menu items retrieved successfully');
+        return $this->success($items, 'Menu items retrieved successfully')
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate');
+    }
+
+    /**
+     * Persist the builder tree in one request (create/update/reorder/prune).
+     * Used by the menu builder save so title/url edits are not lost after a success toast.
+     */
+    public function syncItems(Request $request, Menu $menu): JsonResponse
+    {
+        $validated = $request->validate([
+            'items' => 'present|array',
+            'items.*.id' => 'nullable|string',
+            'items.*.client_id' => 'nullable|string',
+            'items.*.title' => 'required|string|max:255',
+            'items.*.url' => MenuItemUrlValidator::validationRules(),
+            'items.*.type' => 'nullable|string|max:64',
+            'items.*.target_id' => 'nullable',
+            'items.*.target_type' => 'nullable|string|max:128',
+            'items.*.parent_id' => 'nullable|string',
+            'items.*.icon' => 'nullable|string|max:128',
+            'items.*.css_class' => 'nullable|string|max:128',
+            'items.*.sort_order' => 'sometimes|integer',
+            'items.*.open_in_new_tab' => 'sometimes|boolean',
+            'items.*.metadata' => 'nullable|array',
+        ]);
+
+        /** @var list<array<string, mixed>> $rows */
+        $rows = $validated['items'];
+
+        DB::transaction(function () use ($rows, $menu): void {
+            /** @var array<string, string> $idMap */
+            $idMap = [];
+            $keptIds = [];
+
+            foreach ($rows as $index => $row) {
+                $clientId = $this->menuItemClientId($row);
+                $parentId = $this->resolveSyncedParentId($row['parent_id'] ?? null, $idMap, $menu);
+                $attrs = $this->syncedItemAttributes($row, $parentId, $index);
+
+                $existingId = $row['id'] ?? null;
+                $isPersistedId = is_string($existingId)
+                    && $existingId !== ''
+                    && ! str_starts_with($existingId, 'temp_');
+
+                $item = null;
+                if ($isPersistedId) {
+                    $item = MenuItem::query()
+                        ->where('menu_id', $menu->id)
+                        ->where('id', $existingId)
+                        ->first();
+                }
+
+                if ($item) {
+                    $item->update($attrs);
+                } else {
+                    $item = $menu->items()->create($attrs);
+                }
+
+                $keptIds[] = $item->id;
+                $idMap[$item->id] = $item->id;
+                if ($clientId !== '') {
+                    $idMap[$clientId] = $item->id;
+                }
+            }
+
+            $query = MenuItem::query()->where('menu_id', $menu->id);
+            if ($keptIds !== []) {
+                $query->whereNotIn('id', $keptIds);
+            }
+            $query->delete();
+        });
+
+        $this->forgetMenuLocationCache($menu);
+
+        $items = $menu->items()->orderBy('sort_order')->get();
+
+        return $this->success($items, 'Menu items saved successfully')
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate');
     }
 
     public function updateItem(Request $request, Menu $menu, MenuItem $item): JsonResponse
@@ -242,7 +320,7 @@ class MenuController extends BaseApiController
             'icon' => 'nullable|string|max:128',
             'css_class' => 'nullable|string|max:128',
             'sort_order' => 'sometimes|integer',
-            'open_in_new_tab' => 'boolean',
+            'open_in_new_tab' => 'sometimes|boolean',
             'metadata' => 'nullable|array',
         ]);
 
@@ -363,5 +441,66 @@ class MenuController extends BaseApiController
         if ($menu->location) {
             Cache::forget("menu_location_{$menu->location}");
         }
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function menuItemClientId(array $row): string
+    {
+        foreach (['client_id', 'id'] as $key) {
+            $value = $row[$key] ?? null;
+            if (is_string($value) && $value !== '') {
+                return $value;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * @param  array<string, string>  $idMap
+     */
+    private function resolveSyncedParentId(mixed $parentId, array $idMap, Menu $menu): ?string
+    {
+        if (! is_string($parentId) || $parentId === '' || $parentId === 'root') {
+            return null;
+        }
+
+        if (isset($idMap[$parentId])) {
+            return $idMap[$parentId];
+        }
+
+        if (str_starts_with($parentId, 'temp_')) {
+            return null;
+        }
+
+        $parent = MenuItem::query()
+            ->where('id', $parentId)
+            ->where('menu_id', $menu->id)
+            ->first();
+
+        return $parent?->id;
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     * @return array<string, mixed>
+     */
+    private function syncedItemAttributes(array $row, ?string $parentId, int $index): array
+    {
+        return [
+            'title' => $row['title'],
+            'url' => $row['url'] ?? null,
+            'type' => $row['type'] ?? 'custom',
+            'target_id' => $row['target_id'] ?? null,
+            'target_type' => $row['target_type'] ?? null,
+            'parent_id' => $parentId,
+            'icon' => $row['icon'] ?? null,
+            'css_class' => $row['css_class'] ?? null,
+            'sort_order' => (int) ($row['sort_order'] ?? $index),
+            'open_in_new_tab' => filter_var($row['open_in_new_tab'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            'metadata' => $row['metadata'] ?? null,
+        ];
     }
 }

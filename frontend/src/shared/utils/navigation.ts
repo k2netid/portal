@@ -5,6 +5,7 @@
 import type { RouteLocationRaw } from 'vue-router';
 
 export interface NavItem {
+    id?: string;
     name?: string;
     to?: string | RouteLocationRaw;
     label?: string;

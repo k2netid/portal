@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="selectedItem?.bindingComponent && organizationMode === 'bindings'"
+    v-if="selectedItem?.bindingComponent && organizationMode === 'bindings' && selectedItem.bindingComponent.slots.length > 0"
     class="space-y-4"
   >
     <div class="flex items-center justify-between gap-2 px-0.5 min-w-0">

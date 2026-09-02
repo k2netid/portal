@@ -31,7 +31,7 @@ class PublicSettingsController extends BaseApiController
             'admin_email' => Setting::get('admin_email', ''),
             'site_version' => config('app.version'),
             'site_logo' => Setting::get('site_logo', '/logo.png'),
-            'site_favicon' => Setting::get('site_favicon', '/favicon.ico'),
+            'site_favicon' => Setting::get('site_favicon', ''),
             Setting::KEY_CONSOLE_DASHBOARD_SLUG => Setting::resolveConsoleDashboardSlug(),
 
             // App Branding (Core)

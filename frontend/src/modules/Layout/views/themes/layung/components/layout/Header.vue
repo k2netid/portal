@@ -1,70 +1,32 @@
 <template>
   <header
+    ref="headerRef"
     data-ja-customizer-target="header"
     :class="[
-      headerSticky ? 'sticky top-0 z-[100]' : 'relative z-40',
+      'relative z-[100]',
       'w-full border-b border-border/80 transition-colors shadow-sm overflow-visible',
       headerStyleClasses,
     ]"
   >
-    <!-- Top NOC Status Ticker Bar -->
-    <div class="hidden md:block bg-slate-950 text-slate-300 text-[11px] py-1.5 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 font-mono">
-      <div class="max-w-7xl mx-auto flex items-center justify-between">
-        <div class="flex items-center gap-4">
-          <span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
-            <span class="layung-status-dot" />
-            {{ tt('header.nocOperational', 'Semua Node Normal') }}
-          </span>
-          <span class="text-slate-600">|</span>
-          <span>Latensi Inti: <strong class="text-white">{{ displayNocLatency }}</strong></span>
-          <span class="text-slate-600">|</span>
-          <span>Backbone: <strong class="text-white">{{ displayBackboneCapacity }}</strong></span>
-          <span class="text-slate-600">|</span>
-          <span class="text-slate-400">{{ displayAsn }}</span>
-        </div>
-        <div class="flex items-center gap-4 text-xs font-sans">
-          <a
-            :href="nocDialHref"
-            class="hover:text-orange-400 font-semibold transition-colors flex items-center gap-1"
-          >
-            <Headset class="w-3.5 h-3.5 text-orange-500" />
-            <span>NOC 24/7: {{ displayNocPhone }}</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
-      <div class="flex items-center justify-between h-20 overflow-visible">
+      <div class="flex items-center justify-between h-14 overflow-visible">
         <router-link
           to="/"
-          class="flex items-center gap-3.5 group focus:outline-none shrink-0"
+          class="flex items-center gap-2.5 group focus:outline-none shrink-0"
         >
-          <div
+          <BrandMark
             v-if="siteLogo && brandingDisplay !== 'text_only'"
-            class="h-10 w-auto flex items-center"
-          >
-            <img
-              :src="siteLogo"
-              :alt="brandingDisplay === 'logo_only' ? displayCompanyName : ''"
-              class="h-10 w-auto object-contain"
-            >
-          </div>
-          <div
-            v-else-if="brandingDisplay !== 'text_only'"
-            class="w-11 h-11 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform"
-            aria-hidden="true"
-          >
-            <Activity class="w-6 h-6" />
-          </div>
+            :src="siteLogo"
+            :alt="displayCompanyName"
+          />
           <div
             v-if="brandingDisplay !== 'logo_only'"
             class="flex flex-col"
           >
-            <span class="text-lg sm:text-xl font-extrabold tracking-tight text-foreground font-heading leading-tight group-hover:text-primary transition-colors">
+            <span class="text-[13px] font-medium tracking-tight text-foreground font-heading leading-none group-hover:text-primary transition-colors">
               {{ displayCompanyName }}
             </span>
-            <span class="text-[11px] text-muted-foreground font-semibold flex items-center gap-1.5 mt-0.5 font-mono">
+            <span class="text-[10px] text-muted-foreground font-medium flex items-center gap-1.5 mt-px leading-none font-mono">
               <span class="inline-block w-2 h-2 rounded-full bg-emerald-500" />
               {{ displaySla }}
             </span>
@@ -90,7 +52,7 @@
                 :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-3 py-2 rounded-xl text-sm font-semibold transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -98,8 +60,8 @@
               </a>
               <router-link
                 v-else-if="item.url"
-                :to="getInternalUrl(item.url)"
-                class="px-3 py-2 rounded-xl text-sm font-semibold transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                :to="resolvePublicMenuTo(item.url)"
+                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -108,7 +70,7 @@
               <button
                 v-else
                 type="button"
-                class="px-3 py-2 rounded-xl text-sm font-semibold transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -146,7 +108,7 @@
                     </a>
                     <router-link
                       v-else
-                      :to="getInternalUrl(child.url)"
+                      :to="resolvePublicMenuTo(child.url)"
                       active-class=""
                       exact-active-class=""
                       class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item focus:outline-none"
@@ -174,14 +136,14 @@
               :href="item.url || '#'"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-3 py-2 rounded-xl text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              class="px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
             >
               <span>{{ item.title }}</span>
             </a>
             <router-link
               v-else
-              :to="getInternalUrl(item.url)"
-              class="px-3 py-2 rounded-xl text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              :to="resolvePublicMenuTo(item.url)"
+              class="px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
               :class="isNavItemActive(item, route) ? '!text-primary !bg-primary/10 !font-bold' : ''"
             >
               <span>{{ item.title }}</span>
@@ -189,10 +151,10 @@
           </template>
         </nav>
 
-        <div class="flex items-center gap-2 sm:gap-3 overflow-visible relative z-[105]">
+        <div class="flex items-center gap-1.5 sm:gap-2 overflow-visible relative z-[105]">
           <DropdownMenu v-if="isDesktop">
             <DropdownMenuTrigger
-              class="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors inline-flex items-center gap-1.5 focus:outline-none font-mono"
+              class="px-2 py-1 rounded-lg text-xs font-medium border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors inline-flex items-center gap-1.5 focus:outline-none font-mono"
               :aria-label="tt('header.selectLanguage', 'Bahasa')"
             >
               <Globe class="w-3.5 h-3.5 text-primary" />
@@ -244,21 +206,10 @@
             {{ loginLabel }}
           </Button>
 
-          <Button
-            v-if="ctaUrl"
-            as="a"
-            :href="ctaUrl"
-            variant="primary"
-            size="sm"
-            class="hidden sm:inline-flex font-bold"
-          >
-            {{ ctaText }}
-          </Button>
-
           <button
             v-if="!isDesktop"
             type="button"
-            class="lg:hidden p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus:outline-none"
+            class="lg:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus:outline-none"
             :aria-expanded="mobileMenuOpen"
             :aria-label="tt('header.openMenuAria', 'Buka menu')"
             @click="mobileMenuOpen = !mobileMenuOpen"
@@ -338,7 +289,7 @@
                       </a>
                       <router-link
                         v-else
-                        :to="getInternalUrl(child.url)"
+                        :to="resolvePublicMenuTo(child.url)"
                         active-class=""
                         exact-active-class=""
                         class="block pl-3 pr-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted focus:outline-none"
@@ -363,7 +314,7 @@
                 </a>
                 <router-link
                   v-else
-                  :to="getInternalUrl(item.url)"
+                  :to="resolvePublicMenuTo(item.url)"
                   class="flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted"
                   :class="isNavItemActive(item, route) ? '!text-primary !bg-primary/10 font-bold' : ''"
                   @click="mobileMenuOpen = false"
@@ -391,18 +342,6 @@
               </div>
 
               <Button
-                v-if="ctaUrl"
-                as="a"
-                :href="ctaUrl"
-                variant="primary"
-                size="md"
-                class="w-full font-bold"
-                @click="mobileMenuOpen = false"
-              >
-                {{ ctaText }}
-              </Button>
-
-              <Button
                 v-if="memberEnabled && !memberStore.isAuthenticated"
                 as="a"
                 :href="loginUrl"
@@ -425,7 +364,8 @@
 import { ref, computed, watch, inject, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { Globe, Menu, X, ChevronDown, Check, Activity, Headset } from 'lucide-vue-next';
+import { Globe, Menu, X, ChevronDown, Check } from 'lucide-vue-next';
+import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
 import {
   Button,
   ThemeToggle,
@@ -435,18 +375,18 @@ import {
   DropdownMenuItem,
 } from '@/modules/Layout/views/themes/layung/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLanguage } from '@/shared/composables/useLanguage';
 import { useResponsiveDevice } from '@/shared/composables/useResponsiveDevice';
 import { useMemberStore } from '@/modules/Member/stores/member';
-import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import type { MenuItem } from '@/modules/Layout/types/menu';
 import {
   isExternalLink,
-  getInternalUrl,
+  resolvePublicMenuTo,
   isDropdownChildActive,
   isMenuItemActive as isNavItemActive,
 } from '@/modules/Layout/utils/menuUrl';
@@ -458,29 +398,24 @@ const route = useRoute();
 const { locale } = useI18n({ useScope: 'global' });
 const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
+const { motion } = useThemeMotion();
 const { menus, fetchMenuByIdentifier } = useMenu();
 const { setLanguage, initializeLanguage, currentLanguageCode, languages, getLanguageFlag } = useLanguage();
 const device = useResponsiveDevice();
 const memberStore = useMemberStore();
 const authStore = useAuthStore();
-const systemStore = useSystemStore();
 const {
   displayCompanyName,
-  displayAsn,
+  displayBrandLogo,
   displaySla,
-  displayNocLatency,
-  displayBackboneCapacity,
-  displayNocPhone,
-  nocDialHref,
 } = useLayungIdentity();
 
 const isDesktop = computed(() => device.value === 'desktop');
 const mobileMenuOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
-
-const headerSticky = computed(() => getSetting('header_sticky', true) !== false);
+const headerRef = ref<HTMLElement>();
 const headerStyle = computed(() => String(getSetting('header_style', 'glass') || 'glass'));
-const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
+const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));
 
 const headerStyleClasses = computed(() => {
   switch (headerStyle.value) {
@@ -493,13 +428,16 @@ const headerStyleClasses = computed(() => {
   }
 });
 
-const siteLogo = computed(() => {
-  const custom = getSetting('brand_logo', '');
-  if (custom && typeof custom === 'string') return custom;
-  return (systemStore.settings as { site_logo?: string } | undefined)?.site_logo || '';
-});
+const siteLogo = displayBrandLogo;
 
 const memberEnabled = computed(() => Boolean(getSetting('enable_members', true)));
+const contactPageEnabled = computed(() => getSetting('enable_contact', true) !== false);
+
+const isContactMenuPath = (url?: string | null): boolean => {
+  if (!url) return false;
+  const path = resolvePublicMenuTo(url).split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+  return path === '/contact';
+};
 
 const loginUrl = computed(() => {
   const raw = getSetting('header_login_url', '/member/login');
@@ -510,17 +448,6 @@ const loginLabel = computed(() => {
   const raw = getSetting('header_login_label', '');
   if (typeof raw === 'string' && raw.trim()) return raw.trim();
   return tt('header.signIn', 'Portal Klien');
-});
-
-const ctaText = computed(() => {
-  const raw = getSetting('header_cta_text', '');
-  if (typeof raw === 'string' && raw.trim()) return raw.trim();
-  return tt('header.getStarted', 'Minta Penawaran');
-});
-
-const ctaUrl = computed(() => {
-  const raw = getSetting('header_cta_url', '/contact');
-  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact';
 });
 
 const handleSelectLanguage = async (code: string) => {
@@ -556,6 +483,7 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
           return false;
         }
       }
+      if (!contactPageEnabled.value && isContactMenuPath(item.url)) return false;
       return true;
     })
     .map((item) => {
@@ -569,6 +497,9 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
       const mappedItem: MenuItem = { ...item, title };
       if (item.children && item.children.length > 0) {
         mappedItem.children = filterMenuItems(item.children);
+        if (mappedItem.children.length === 0) {
+          delete mappedItem.children;
+        }
       }
       return mappedItem;
     });
@@ -576,44 +507,32 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
 
 const defaultNavItems = computed((): MenuItem[] => [
   { id: 'ly-nav-home', title: tt('header.home', 'Beranda'), url: '/', type: 'custom', sort_order: 0 },
+  { id: 'ly-nav-about', title: tt('header.about', 'Tentang Kami'), url: '/about', type: 'custom', sort_order: 1 },
   {
-    id: 'ly-nav-services',
-    title: tt('header.services', 'Konektivitas Fiber'),
-    url: '/services',
-    type: 'custom',
-    sort_order: 1,
-    children: [
-      { id: 'ly-nav-dia', title: 'Dedicated Internet (DIA 1:1)', url: '/services#dia', type: 'custom', description: 'Bandwidth simetris murni & IP Publik /29' },
-      { id: 'ly-nav-dark', title: 'Dark Fiber & Metro Ethernet', url: '/services#dark-fiber', type: 'custom', description: 'Jalur serat optik privat antar gedung' },
-      { id: 'ly-nav-dc', title: 'Colocation & Data Center', url: '/about#colocation', type: 'custom', description: 'Tier-3 data center interconnect' },
-    ],
-  },
-  {
-    id: 'ly-nav-solusi',
-    title: tt('header.solusi', 'Managed IT & SOC'),
-    url: '/solusi',
+    id: 'ly-nav-layanan',
+    title: tt('header.layanan', 'Layanan'),
+    url: '/#isp',
     type: 'custom',
     sort_order: 2,
     children: [
-      { id: 'ly-nav-soc', title: '24/7 Cyber Security SOC', url: '/solusi#soc', type: 'custom', description: 'Mitigasi DDoS & Next-Gen Firewall' },
-      { id: 'ly-nav-sdwan', title: 'Managed SD-WAN & Multi-Cloud', url: '/solusi#sdwan', type: 'custom', description: 'Direct connect AWS, GCP, Azure' },
-      { id: 'ly-nav-tim', title: tt('header.tim', 'Tim Engineer'), url: '/tim', type: 'custom', description: 'Konsultasi arsitektur jaringan' },
+      { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/#isp', type: 'custom' },
+      { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/solusi', type: 'custom' },
+      { id: 'ly-nav-products', title: tt('header.products', 'Produk IT'), url: '/contact', type: 'custom' },
     ],
   },
   {
     id: 'ly-nav-pricing',
-    title: tt('header.pricing', 'Paket & SLA'),
+    title: tt('header.pricing', 'Paket & Harga'),
     url: '/pricing',
     type: 'custom',
     sort_order: 3,
     children: [
-      { id: 'ly-nav-bandwidth', title: 'Paket Bandwidth & Harga', url: '/pricing#packages', type: 'custom', description: 'SME hingga Enterprise' },
-      { id: 'ly-nav-sla', title: tt('header.achievement', 'Jaminan SLA'), url: '/achievement', type: 'custom', description: '99.999% & ISO 27001' },
-      { id: 'ly-nav-career', title: tt('header.career', 'Karir NOC'), url: '/career-center', type: 'custom', description: 'Lowongan engineer & DevOps' },
+      { id: 'ly-nav-pricing-isp', title: tt('header.pricingIsp', 'Paket Internet'), url: '/pricing/isp', type: 'custom' },
+      { id: 'ly-nav-pricing-msp', title: tt('header.pricingMsp', 'Paket MSP'), url: '/pricing/msp', type: 'custom' },
     ],
   },
-  { id: 'ly-nav-blog', title: tt('header.blog', 'Warta'), url: '/blog', type: 'custom', sort_order: 4 },
-  { id: 'ly-nav-contact', title: tt('header.contact', 'Kontak NOC'), url: '/contact', type: 'custom', sort_order: 5 },
+  { id: 'ly-nav-blog', title: tt('header.blog', 'Berita'), url: '/blog', type: 'custom', sort_order: 4 },
+  { id: 'ly-nav-contact', title: tt('header.contact', 'Kontak'), url: '/contact', type: 'custom', sort_order: 5 },
 ]);
 
 const navItems = computed<MenuItem[]>(() => {
@@ -653,7 +572,13 @@ watch(currentMenuLocation, async (newLoc) => {
   await fetchMenuByIdentifier(newLoc, 'header');
 }, { immediate: true });
 
-onMounted(() => initializeLanguage());
+onMounted(() => {
+  initializeLanguage();
+  if (headerRef.value) {
+    motion.set(headerRef.value, { y: -28, opacity: 0 });
+    motion.to(headerRef.value, { y: 0, opacity: 1, duration: 0.75, ease: 'expo.out', clearProps: 'all' });
+  }
+});
 
 onUnmounted(() => {
   document.body.style.overflow = '';

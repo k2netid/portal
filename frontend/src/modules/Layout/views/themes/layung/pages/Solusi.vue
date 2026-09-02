@@ -18,20 +18,20 @@
     <template v-else>
       <div class="space-y-4 max-w-3xl">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 font-mono uppercase">
-          Managed IT & Cyber SOC
+          {{ t('pages.solusi.badge', 'Managed Services') }}
         </span>
         <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-          {{ t('pages.solusi.title', 'Managed IT & Cyber Security Solutions') }}
+          {{ t('pages.solusi.title', 'Managed Services') }}
         </h1>
         <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          {{ t('pages.solusi.subtitle', 'Transformasi digital aman dengan pendampingan penuh dari tim Network Operations Center (NOC) dan Security Operations Center (SOC) 24/7.') }}
+          {{ t('pages.solusi.subtitle', 'Pendampingan IT operasional untuk sekolah dan institusi — jaringan, server, CCTV, dan dukungan harian.') }}
         </p>
       </div>
 
       <!-- Managed Services Grid -->
       <section
         id="soc"
-        class="scroll-mt-28"
+        class="scroll-mt-20"
       >
         <ManagedServicesSection />
       </section>
@@ -39,7 +39,7 @@
       <!-- SLA Assurance -->
       <section
         id="sdwan"
-        class="scroll-mt-28"
+        class="scroll-mt-20"
       >
         <SlaGuaranteeSection />
       </section>
@@ -66,5 +66,5 @@ const { t } = useThemeI18n('layung');
 const { displayCompanyName } = useLayungIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('solusi');
 
-useThemeHashScroll(128);
+useThemeHashScroll(72);
 </script>

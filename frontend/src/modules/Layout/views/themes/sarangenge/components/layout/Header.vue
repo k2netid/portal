@@ -2,7 +2,7 @@
   <header
     data-ja-customizer-target="header"
     :class="[
-      headerSticky ? 'sticky top-0 z-[100]' : 'relative z-40',
+      'relative z-[100]',
       'w-full border-b border-border/80 transition-colors shadow-sm overflow-visible',
       headerStyleClasses,
     ]"
@@ -447,7 +447,6 @@ const isDesktop = computed(() => device.value === 'desktop');
 const mobileMenuOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
 
-const headerSticky = computed(() => getSetting('header_sticky', true) !== false);
 const headerStyle = computed(() => String(getSetting('header_style', 'glass') || 'glass'));
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
 

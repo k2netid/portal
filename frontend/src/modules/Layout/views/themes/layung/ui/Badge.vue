@@ -30,7 +30,7 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  primary: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/30',
+  primary: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30',
   secondary: 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30',
   cyan: 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30',
   emerald: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30',

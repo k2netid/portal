@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import { handleBeforeEachGuard } from './guards';
+import { publicScrollBehavior } from './publicScrollBehavior';
 
 const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
@@ -50,6 +51,18 @@ export const publicRoutes: RouteRecordRaw[] = [
                 name: 'public-pricing',
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Pricing' },
+            },
+            {
+                path: 'pricing/isp',
+                name: 'public-pricing-isp',
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/PricingIsp' },
+            },
+            {
+                path: 'pricing/msp',
+                name: 'public-pricing-msp',
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/PricingMsp' },
             },
             {
                 path: 'career',
@@ -172,6 +185,7 @@ export const createPublicRouter = () => {
     const router = createRouter({
         history: createWebHistory('/'),
         routes: publicRoutes,
+        scrollBehavior: publicScrollBehavior,
     });
 
     router.beforeEach(async (to, from) => {

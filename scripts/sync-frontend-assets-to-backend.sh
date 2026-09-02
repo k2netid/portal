@@ -60,5 +60,17 @@ rsync -a --delete \
   "$SRC_DIST" "$DST_PUBLIC"
 
 echo "OK: synced $SRC_DIST → $DST_PUBLIC"
-echo "Tip: on the server, after pull: cd ja-core_engine && npm run deploy:assets:full"
-echo "Tip: optional Laravel: cd ja-core_engine/backend && php artisan optimize:clear && php artisan view:cache"
+
+# Runtime theme packages (theme.json + sample-data) so staging/prod www can scan-register
+# after frontend/ is stripped from the publish tree.
+THEMES_SRC="$ROOT/frontend/src/modules/Layout/views/themes"
+THEMES_DST="$ROOT/backend/resources/themes"
+if [ -d "$THEMES_SRC" ]; then
+  mkdir -p "$THEMES_DST"
+  for slug in janari layung sarangenge; do
+    if [ -d "$THEMES_SRC/$slug" ]; then
+      rsync -a --delete "$THEMES_SRC/$slug/" "$THEMES_DST/$slug/"
+    fi
+  done
+  echo "OK: synced theme packages → $THEMES_DST"
+fi

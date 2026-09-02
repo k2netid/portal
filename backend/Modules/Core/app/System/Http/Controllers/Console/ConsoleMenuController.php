@@ -19,6 +19,7 @@ class ConsoleMenuController extends BaseApiController
     {
         // Auto-seed when empty; soft-sync new pack defaults (publishing/library) without wipe
         ConsoleMenu::ensureMissingDefaults();
+        ConsoleMenu::deduplicateRootMenus();
 
         $query = ConsoleMenu::with(['children' => function ($q) {
             $q->orderBy('order', 'asc');

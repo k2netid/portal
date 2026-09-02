@@ -1,7 +1,7 @@
 <template>
   <section class="py-12 sm:py-14 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
     <div class="text-center space-y-3">
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 uppercase tracking-wider font-mono">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 uppercase tracking-wider font-mono">
         {{ t('faq.badge', 'Tanya Jawab Teknis & Layanan') }}
       </span>
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground font-heading tracking-tight">
@@ -25,7 +25,7 @@
         >
           <span class="text-base font-heading">{{ faq.q }}</span>
           <ChevronDown
-            class="w-5 h-5 text-orange-500 shrink-0 transition-transform duration-200"
+            class="w-5 h-5 text-sky-500 shrink-0 transition-transform duration-200"
             :class="{ 'rotate-180': openIndex === idx }"
           />
         </button>

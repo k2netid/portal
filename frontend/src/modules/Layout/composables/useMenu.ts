@@ -489,19 +489,13 @@ export function useMenu(menuId?: Ref<number | string | null>) {
             const menuResponse = await api.get(`/manage/layout/menus/${menuId?.value}`);
             menu.value = (parseSingleResponse(menuResponse) || {}) as Menu;
 
-            // Fetch menu items
-            const itemsResponse = await api.get(`/manage/layout/menus/${menuId?.value}/items`);
+            // Fetch menu items (cache-buster: GET /items must not reuse a stale 200)
+            const itemsResponse = await api.get(`/manage/layout/menus/${menuId?.value}/items`, {
+                params: { _: Date.now() },
+                headers: { 'Cache-Control': 'no-cache' },
+            });
             const { data } = parseResponse(itemsResponse);
-            const flatItems = ensureArray(data) as MenuItem[];
-            items.value = buildTree(flatItems);
-
-            // Mark initial state
-            markClean();
-
-            // Initialize history
-            history.value = [];
-            historyIndex.value = -1;
-            takeSnapshot();
+            applyFlatItems(ensureArray(data) as MenuItem[]);
 
         } catch (err) {
             logger.error('Failed to fetch menu:', err);
@@ -518,23 +512,30 @@ export function useMenu(menuId?: Ref<number | string | null>) {
         error.value = null;
 
         try {
-            // Update menu settings if provided
+            // Snapshot the tree before any network call so in-flight reloads cannot
+            // overwrite the payload the user just edited.
+            const snapshot = deepClone(items.value);
+            const syncRows = flattenForSync(snapshot);
+
+            // Only send menu columns — spreading menu.value used to POST parent_items
+            // and other GET leftovers that are ignored server-side but inflate the body.
             if (Object.keys(menuData).length > 0) {
-                await api.put(`/manage/layout/menus/${menuId?.value}`, {
-                    ...menu.value,
-                    ...menuData
+                const menuResponse = await api.put(`/manage/layout/menus/${menuId?.value}`, {
+                    name: menuData.name ?? menu.value?.name,
+                    location: menuData.location ?? menu.value?.location ?? null,
                 });
+                const savedMenu = parseSingleResponse(menuResponse) as Menu | null;
+                if (savedMenu) {
+                    menu.value = savedMenu;
+                }
             }
 
-            // Save new items first
-            await saveNewItems(items.value, null);
-
-            // Reorder all items
-            const flatItems = flattenTree(items.value);
-            await api.post(`/manage/layout/menus/${menuId?.value}/reorder`, { items: flatItems });
-
-            // Refresh to get updated IDs
-            await fetchMenu();
+            const syncResponse = await api.post(
+                `/manage/layout/menus/${menuId?.value}/items/sync`,
+                { items: syncRows },
+            );
+            const { data } = parseResponse(syncResponse);
+            applyFlatItems(ensureArray(data) as MenuItem[]);
 
             return true;
         } catch (err) {
@@ -546,50 +547,87 @@ export function useMenu(menuId?: Ref<number | string | null>) {
         }
     };
 
-    /**
-     * Recursively save new items (items without real IDs)
-     */
-    const saveNewItems = async (itemsList: MenuItem[], parentId: string | null) => {
-        for (let i = 0; i < itemsList.length; i++) {
-            const item = itemsList[i];
-            if (!item) continue;
+    const MENU_ITEM_COLUMNS = new Set([
+        'id',
+        'menu_id',
+        'parent_id',
+        'title',
+        'url',
+        'type',
+        'target_id',
+        'target_type',
+        'icon',
+        'css_class',
+        'sort_order',
+        'open_in_new_tab',
+        'metadata',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'children',
+        '_temp_id',
+        'add_to_menu',
+    ]);
 
-            if (!item.id || item.id.toString().startsWith('temp_')) {
-                const payload: MenuItemDTO = {
-                    menu_id: String(menuId?.value || ''),
-                    parent_id: parentId,
-                    title: item.title || '',
-                    type: item.type || 'custom',
-                    target_id: item.target_id,
-                    url: item.url || undefined,
-                    icon: item.icon || null,
-                    css_class: item.css_class || null,
-                    description: item.description || null,
-                    badge: item.badge || null,
-                    badge_color: item.badge_color || 'primary',
-                    open_in_new_tab: item.open_in_new_tab || false,
-                    is_active: item.is_active ? 1 : 0,
-                    image: item.image || null,
-                    image_size: item.image_size || 'auto',
-                    mega_menu_layout: item.mega_menu_layout || 'default',
-                    mega_menu_column: item.mega_menu_column || 0,
-                    mega_menu_show_dividers: item.mega_menu_show_dividers || false,
-                    hide_label: item.hide_label || false,
-                    heading: item.heading || null,
-                    show_heading_line: item.show_heading_line || false,
-                    sort_order: i,
-                };
+    const hydrateMenuItem = (item: MenuItem): MenuItem => {
+        const meta = item.metadata && typeof item.metadata === 'object' && !Array.isArray(item.metadata)
+            ? { ...(item.metadata as Record<string, unknown>) }
+            : {};
+        return {
+            ...meta,
+            ...item,
+            metadata: meta,
+        };
+    };
 
-                const response = await api.post(`/manage/layout/menus/${menuId?.value}/items`, payload);
-                const newItem = response.data;
-                item.id = newItem.id;
-                delete item._temp_id;
-            }
-
-            if (item.children && item.children.length > 0) {
-                await saveNewItems(item.children, item.id as string | null);
-            }
+    const toPersistedPayload = (item: MenuItem, parentId: string | null, sortOrder: number): Record<string, unknown> => {
+        const raw = toRaw(item);
+        const meta: Record<string, unknown> = {
+            ...(raw.metadata && typeof raw.metadata === 'object' && !Array.isArray(raw.metadata)
+                ? { ...(raw.metadata as Record<string, unknown>) }
+                : {}),
+        };
+        for (const [key, value] of Object.entries(raw)) {
+            if (MENU_ITEM_COLUMNS.has(key) || value === undefined) continue;
+            meta[key] = value;
         }
+        const persistedId = raw.id && !String(raw.id).startsWith('temp_') ? String(raw.id) : null;
+        const clientId = String(persistedId || raw._temp_id || generateId());
+        return JSON.parse(JSON.stringify({
+            id: persistedId,
+            client_id: clientId,
+            title: raw.title || '',
+            url: raw.url ?? null,
+            type: raw.type || 'custom',
+            target_id: raw.target_id ?? null,
+            target_type: raw.target_type ?? null,
+            parent_id: parentId,
+            icon: raw.icon ?? null,
+            css_class: raw.css_class ?? null,
+            sort_order: sortOrder,
+            open_in_new_tab: Boolean(raw.open_in_new_tab),
+            metadata: Object.keys(meta).length > 0 ? meta : null,
+        }));
+    };
+
+    const flattenForSync = (itemsList: MenuItem[], parentClientId: string | null = null): Record<string, unknown>[] => {
+        const rows: Record<string, unknown>[] = [];
+        itemsList.forEach((item, index) => {
+            const payload = toPersistedPayload(item, parentClientId, index);
+            rows.push(payload);
+            if (item.children && item.children.length > 0) {
+                rows.push(...flattenForSync(item.children, String(payload.client_id)));
+            }
+        });
+        return rows;
+    };
+
+    const applyFlatItems = (flatItems: MenuItem[]) => {
+        items.value = buildTree(flatItems.map(hydrateMenuItem));
+        markClean();
+        history.value = [];
+        historyIndex.value = -1;
+        takeSnapshot();
     };
 
     const deleteItem = async (id: string | number | null) => {

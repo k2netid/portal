@@ -31,6 +31,33 @@ class ContactFormSeederTest extends TestCase
         $this->assertSame(1, Form::query()->where('slug', 'contact')->count());
         $form = Form::query()->where('slug', 'contact')->first();
         $this->assertNotNull($form);
+        $this->assertSame(4, $form->fields()->count());
+        $this->assertTrue($form->fields()->where('name', 'phone')->where('is_required', true)->exists());
+    }
+
+    public function test_ensure_adds_required_phone_to_existing_contact_form(): void
+    {
+        Extension::query()->updateOrCreate(
+            ['slug' => 'forms'],
+            [
+                'type' => 'module',
+                'name' => 'Forms',
+                'version' => '1.0.0',
+                'database_version' => '1.0.0',
+                'status' => 'active',
+                'is_core' => false,
+            ]
+        );
+
+        ContactFormSeeder::ensure();
+        $form = Form::query()->where('slug', 'contact')->first();
+        $this->assertNotNull($form);
+        $form->fields()->where('name', 'phone')->delete();
         $this->assertSame(3, $form->fields()->count());
+
+        ContactFormSeeder::ensure();
+
+        $this->assertTrue($form->fields()->where('name', 'phone')->where('is_required', true)->exists());
+        $this->assertSame(4, $form->fields()->count());
     }
 }

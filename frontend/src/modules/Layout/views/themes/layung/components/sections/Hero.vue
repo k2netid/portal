@@ -1,99 +1,164 @@
 <template>
   <section
     data-ja-customizer-target="hero"
-    class="layung-hero px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative overflow-hidden"
+    class="layung-hero px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative overflow-hidden"
   >
     <div class="layung-hero__grid" />
-    
-    <div class="max-w-7xl mx-auto w-full relative z-10 space-y-12">
-      <!-- Top Badge -->
-      <div class="flex flex-wrap items-center gap-3">
-        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/40 shadow-inner">
+
+    <div class="max-w-7xl mx-auto w-full relative z-10 space-y-8">
+      <div
+        ref="heroBadgeRef"
+        class="flex flex-wrap items-center gap-3"
+      >
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-sky-500/15 text-sky-300 border border-sky-500/30">
           <span class="layung-status-dot" />
           {{ heroBadgeText }}
         </span>
-        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-          <Zap class="w-3.5 h-3.5 text-cyan-400" />
-          {{ displayAsn }}
-        </span>
       </div>
 
-      <!-- Main Headline & Subheadline -->
-      <div class="max-w-4xl space-y-6">
-        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white font-heading leading-[1.08]">
-          {{ heroTitle }}
+      <div class="max-w-3xl space-y-4">
+        <h1
+          ref="heroTitleRef"
+          class="text-[1.65rem] sm:text-[2.15rem] font-medium tracking-tight text-white font-heading leading-[1.15]"
+        >
+          <LayungSplitText :text="heroTitle" />
         </h1>
-        <p class="text-base sm:text-xl text-slate-300 max-w-3xl leading-relaxed">
+        <p
+          ref="heroSubtitleRef"
+          class="text-[13px] sm:text-sm text-slate-400 max-w-xl leading-relaxed font-normal"
+        >
           {{ heroSubtitle }}
         </p>
       </div>
 
-      <!-- Quick Coverage Search & CTA -->
-      <div class="max-w-2xl bg-slate-900/90 backdrop-blur-xl border border-slate-700/80 p-2 sm:p-2.5 rounded-2xl shadow-2xl shadow-black/60 flex flex-col sm:flex-row gap-2.5">
-        <div class="relative flex-1 flex items-center">
-          <MapPin class="w-5 h-5 text-orange-400 absolute left-3.5 pointer-events-none" />
-          <input
-            v-model="searchCity"
-            type="text"
-            placeholder="Ketik nama gedung / kota Anda (misal: Jakarta Selatan)..."
-            class="w-full bg-slate-950 border border-slate-800 text-white placeholder:text-slate-500 text-sm pl-11 pr-4 py-3 rounded-xl focus:outline-none focus:border-orange-500 transition-colors"
-            @keyup.enter="handleCoverageCheck"
-          >
-        </div>
+      <div
+        ref="heroCtaRef"
+        class="flex flex-col sm:flex-row gap-3"
+      >
         <Button
+          as="router-link"
+          :to="contactHref"
           variant="primary"
           size="md"
-          class="!py-3 !px-6 font-bold shrink-0"
-          @click="handleCoverageCheck"
+          class="!py-3 !px-6 font-semibold"
         >
-          <Search class="w-4 h-4 mr-1.5" />
-          {{ heroPrimaryCtaText }}
+          <Mail class="w-4 h-4 mr-1.5" />
+          {{ heroContactCtaText }}
+        </Button>
+        <Button
+          v-if="nocWhatsAppUrl"
+          as="a"
+          :href="nocWhatsAppUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="cyber"
+          size="md"
+          class="!py-3 !px-6 font-semibold"
+        >
+          <MessageCircle class="w-4 h-4 mr-1.5" />
+          {{ heroWhatsAppCtaText }}
         </Button>
       </div>
 
-      <!-- Coverage Result Notification -->
       <div
-        v-if="coverageResult"
-        class="max-w-2xl p-4 rounded-xl text-sm font-medium border flex items-center justify-between animate-in fade-in slide-in-from-top-2 duration-300"
-        :class="coverageResult.available ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40' : 'bg-amber-950/80 text-amber-300 border-amber-500/40'"
+        v-if="heroNewsEnabled && carouselItems.length > 0"
+        ref="heroNewsRef"
+        data-ja-customizer-target="hero-news"
+        data-ja-customizer-mode="bindings"
+        class="pt-6 border-t border-slate-800/80 space-y-4"
+        @mouseenter="stopAutoplay"
+        @mouseleave="startAutoplay"
       >
-        <div class="flex items-center gap-2.5">
-          <CheckCircle2
-            v-if="coverageResult.available"
-            class="w-5 h-5 text-emerald-400 shrink-0"
-          />
-          <AlertCircle
-            v-else
-            class="w-5 h-5 text-amber-400 shrink-0"
-          />
-          <span>{{ coverageResult.message }}</span>
+        <div class="flex items-center justify-between gap-3">
+          <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 font-mono">
+            {{ sectionLabel }}
+          </span>
+          <router-link
+            :to="viewAllHref"
+            class="text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors inline-flex items-center gap-1 font-mono"
+          >
+            {{ viewAllLabel }}
+            <ArrowUpRight class="w-3.5 h-3.5" />
+          </router-link>
         </div>
-        <button
-          type="button"
-          class="text-xs underline hover:opacity-80"
-          @click="coverageResult = null"
-        >
-          Tutup
-        </button>
-      </div>
 
-      <!-- Live SLA & Performance Bar -->
-      <div class="pt-6 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-slate-300 font-mono">
-        <div class="space-y-1">
-          <span class="text-xs text-slate-500 font-sans block">{{ t('hero.uptime', 'Jaminan Uptime SLA') }}</span>
-          <strong class="text-2xl font-black text-emerald-400 font-heading">99.999%</strong>
-        </div>
-        <div class="space-y-1">
-          <span class="text-xs text-slate-500 font-sans block">{{ t('hero.latency', 'Latensi Inti') }}</span>
-          <strong class="text-2xl font-black text-cyan-400 font-heading">{{ displayNocLatency }}</strong>
-        </div>
-        <div class="space-y-1">
-          <span class="text-xs text-slate-500 font-sans block">{{ t('hero.backbone', 'Kapasitas Backbone') }}</span>
-          <strong class="text-2xl font-black text-orange-400 font-heading">{{ displayBackboneCapacity }}</strong>
-        </div>
-        <div class="space-y-1">
-          <span class="text-xs text-slate-500 font-sans block">{{ t('hero.support', 'Dukungan NOC 24/7') }}</span>
-          <strong class="text-2xl font-black text-white font-heading">15 Mnt MTTR</strong>
+        <div class="flex items-stretch gap-3">
+          <div
+            v-if="canRotate"
+            class="flex items-center shrink-0"
+          >
+            <button
+              type="button"
+              class="w-10 h-10 rounded-full bg-slate-950/90 backdrop-blur-md border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:border-sky-500/50 transition-all cursor-pointer shrink-0"
+              :aria-label="t('hero.newsPrevious', 'Berita sebelumnya')"
+              @click.prevent="advanceNews(-1)"
+            >
+              <ChevronLeft class="w-4 h-4" />
+            </button>
+          </div>
+
+          <div class="flex-1 min-w-0 overflow-hidden">
+            <div
+              ref="heroNewsCardsRef"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-slate-300"
+            >
+              <router-link
+                v-for="item in carouselItems"
+                :key="`${carouselEpoch}-${item.id}`"
+                :to="item.url"
+                class="group flex items-stretch gap-3 overflow-hidden rounded-xl border border-slate-800/80 bg-slate-950/40 hover:bg-slate-900/70 hover:border-sky-500/30 p-3 sm:p-3.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/60"
+              >
+                <div class="w-[4.5rem] sm:w-20 h-[3.25rem] sm:h-[3.75rem] overflow-hidden shrink-0 rounded-lg border border-slate-800/80 bg-slate-900">
+                  <img
+                    v-if="item.image"
+                    :src="item.image"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                    referrerpolicy="no-referrer"
+                  >
+                  <div
+                    v-else
+                    class="w-full h-full flex items-center justify-center bg-slate-900/80 text-sky-500/40"
+                  >
+                    <Newspaper class="w-5 h-5" />
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 flex flex-col justify-center space-y-1.5 py-0.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 font-mono truncate">
+                      {{ item.category }}
+                    </span>
+                    <ArrowUpRight class="w-3.5 h-3.5 text-slate-600 group-hover:text-sky-400 shrink-0 transition-colors" />
+                  </div>
+                  <strong class="block text-sm font-semibold text-white font-heading leading-snug line-clamp-2 group-hover:text-sky-200 transition-colors">
+                    {{ item.title }}
+                  </strong>
+                  <span
+                    v-if="item.date"
+                    class="text-[10px] text-slate-500 font-mono block"
+                  >
+                    {{ item.date }}
+                  </span>
+                </div>
+              </router-link>
+            </div>
+          </div>
+
+          <div
+            v-if="canRotate"
+            class="flex items-center shrink-0"
+          >
+            <button
+              type="button"
+              class="w-10 h-10 rounded-full bg-slate-950/90 backdrop-blur-md border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:border-sky-500/50 transition-all cursor-pointer shrink-0"
+              :aria-label="t('hero.newsNext', 'Berita berikutnya')"
+              @click.prevent="advanceNews(1)"
+            >
+              <ChevronRight class="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -101,64 +166,206 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue';
+import { Mail, MessageCircle, ArrowUpRight, ChevronLeft, ChevronRight, Newspaper } from 'lucide-vue-next';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
-import { Zap, MapPin, Search, CheckCircle2, AlertCircle } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/layung/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
+import { useLayungHeroNews } from '@/modules/Layout/views/themes/layung/composables/useLayungHeroNews';
+import {
+  STALE_HERO_BADGES,
+  STALE_HERO_CTAS,
+  STALE_HERO_SUBTITLES,
+  STALE_HERO_TITLES,
+  resolveLayungLocalizedCopy,
+  resolveThemeHref,
+} from '@/modules/Layout/views/themes/layung/composables/resolveLayungLocalizedCopy';
+import LayungSplitText from '@/modules/Layout/views/themes/layung/components/shared/LayungSplitText.vue';
 
-const { t } = useThemeI18n('layung');
-const { getSetting } = useTheme();
+const carouselSlotCount = ref(4);
+const updateCarouselSlotCount = () => {
+  if (typeof window === 'undefined') return;
+  const width = window.innerWidth;
+  if (width < 640) carouselSlotCount.value = 1;
+  else if (width < 1024) carouselSlotCount.value = 2;
+  else carouselSlotCount.value = 4;
+};
+
 const {
-  displayAsn,
-  displayNocLatency,
-  displayBackboneCapacity,
-  coverageCities,
-} = useLayungIdentity();
+  heroNewsEnabled,
+  carouselItems,
+  canRotate,
+  heroNewsAutoplayMs,
+  nextIndex,
+  prevIndex,
+  viewAllHref,
+  viewAllLabel,
+  sectionLabel,
+} = useLayungHeroNews(carouselSlotCount);
 
-const searchCity = ref('');
-const coverageResult = ref<{ available: boolean; message: string } | null>(null);
+const { t, locale } = useThemeI18n('layung');
+const { getSetting } = useTheme();
+const { createTimeline, splitTextRevealSafe, staggerChildren, motion } = useThemeMotion();
+const { nocWhatsAppUrl } = useLayungIdentity();
 
-const heroBadgeText = computed(() => {
-  const custom = getSetting('hero_badge_text', '');
-  if (custom && typeof custom === 'string' && custom.trim() !== '') return custom;
-  return t('hero.badge', 'Infrastruktur Serat Optik & Managed Services 2026');
-});
+const heroBadgeRef = ref<HTMLElement>();
+const heroTitleRef = ref<HTMLElement>();
+const heroSubtitleRef = ref<HTMLElement>();
+const heroCtaRef = ref<HTMLElement>();
+const heroNewsRef = ref<HTMLElement>();
+const heroNewsCardsRef = ref<HTMLElement>();
 
-const heroTitle = computed(() => {
-  const custom = getSetting('hero_title', '');
-  if (custom && typeof custom === 'string' && custom.trim() !== '') return custom;
-  return t('hero.headline', 'Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global');
-});
+const carouselEpoch = ref(0);
+const isAnimating = ref(false);
+let newsTimer: ReturnType<typeof setInterval> | null = null;
 
-const heroSubtitle = computed(() => {
-  const custom = getSetting('hero_subtitle', '');
-  if (custom && typeof custom === 'string' && custom.trim() !== '') return custom;
-  return t('hero.subheadline', 'Hadirkan backbone internet berkecepatan cahaya, latensi super rendah di bawah 3ms, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.');
-});
+const copy = (key: string, fallback: string, stale: readonly string[] = []) =>
+  resolveLayungLocalizedCopy({
+    getSetting,
+    locale: String(locale.value),
+    key,
+    fallback,
+    stale,
+  });
 
-const heroPrimaryCtaText = computed(() => {
-  const custom = getSetting('hero_primary_cta_text', '');
-  if (custom && typeof custom === 'string' && custom.trim() !== '') return custom;
-  return t('hero.ctaPrimary', 'Cek Area Jangkauan');
-});
+const heroBadgeText = computed(() =>
+  copy('hero_badge_text', t('hero.badge', 'Provide different IT solution'), STALE_HERO_BADGES),
+);
 
-const handleCoverageCheck = () => {
-  const query = searchCity.value.trim().toLowerCase();
-  if (!query) return;
+const heroTitle = computed(() =>
+  copy(
+    'hero_title',
+    t('hero.headline', 'Internet Service Provider dan Managed Service Provider'),
+    STALE_HERO_TITLES,
+  ),
+);
 
-  const isCovered = coverageCities.value.some((c) => query.includes(c.toLowerCase()));
-  if (isCovered || query.length > 2) {
-    coverageResult.value = {
-      available: true,
-      message: `Jaringan Fiber Optik Layung TERSEDIA di area "${searchCity.value}". Tim sales siap melakukan survei lokasi & uji sinyal!`,
-    };
-  } else {
-    coverageResult.value = {
-      available: false,
-      message: `Area "${searchCity.value}" sedang dalam proses ekspansi jalur backbone. Hubungi sales untuk pemetaan fiber khusus.`,
-    };
+const heroSubtitle = computed(() =>
+  copy(
+    'hero_subtitle',
+    t(
+      'hero.subheadline',
+      'Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.',
+    ),
+    STALE_HERO_SUBTITLES,
+  ),
+);
+
+const heroContactCtaText = computed(() =>
+  copy('hero_primary_cta_text', t('hero.ctaPrimary', 'Hubungi Kami'), STALE_HERO_CTAS),
+);
+
+const heroWhatsAppCtaText = computed(() =>
+  copy('hero_secondary_cta_text', t('hero.ctaSecondary', 'Chat WhatsApp'), STALE_HERO_CTAS),
+);
+
+const contactHref = computed(() =>
+  resolveThemeHref(getSetting('hero_contact_url', ''), '/contact'),
+);
+
+const getNewsCards = () => heroNewsCardsRef.value?.querySelectorAll(':scope > a') ?? [];
+
+const runEnterAnimation = (direction: 1 | -1) => {
+  const cards = getNewsCards();
+  if (!cards.length) return;
+  motion.fromTo(
+    cards,
+    { opacity: 0, x: direction * 28, scale: 0.98 },
+    {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.45,
+      stagger: 0.06,
+      ease: 'power3.out',
+      clearProps: 'transform',
+    },
+  );
+};
+
+const bumpCarouselIndex = (direction: 1 | -1) => {
+  carouselEpoch.value += 1;
+  if (direction > 0) nextIndex();
+  else prevIndex();
+};
+
+const advanceNews = (direction: 1 | -1) => {
+  if (isAnimating.value) return;
+
+  const cards = getNewsCards();
+  if (!cards.length || !canRotate.value) {
+    bumpCarouselIndex(direction);
+    return;
+  }
+
+  isAnimating.value = true;
+  motion.killTweensOf(cards);
+  motion.to(cards, {
+    opacity: 0,
+    x: direction * -28,
+    scale: 0.98,
+    duration: 0.32,
+    stagger: 0.04,
+    ease: 'power2.in',
+    onComplete: () => {
+      bumpCarouselIndex(direction);
+      nextTick(() => {
+        isAnimating.value = false;
+        runEnterAnimation(direction);
+      });
+    },
+  });
+};
+
+const stopAutoplay = () => {
+  if (newsTimer) {
+    clearInterval(newsTimer);
+    newsTimer = null;
   }
 };
+
+const startAutoplay = () => {
+  stopAutoplay();
+  if (!canRotate.value) return;
+  newsTimer = window.setInterval(() => advanceNews(1), heroNewsAutoplayMs.value);
+};
+
+watch(canRotate, (rotate) => {
+  if (rotate) startAutoplay();
+  else stopAutoplay();
+});
+
+watch(heroNewsAutoplayMs, () => {
+  if (canRotate.value) startAutoplay();
+});
+
+onMounted(async () => {
+  updateCarouselSlotCount();
+  window.addEventListener('resize', updateCarouselSlotCount);
+
+  await nextTick();
+  const tl = createTimeline({ defaults: { ease: 'power3.out' } });
+  if (heroBadgeRef.value) tl.from(heroBadgeRef.value, { y: 18, opacity: 0, duration: 0.7 }, 0);
+  if (heroTitleRef.value) splitTextRevealSafe(heroTitleRef.value, { delay: 0.18, stagger: 0.045 });
+  if (heroSubtitleRef.value) tl.from(heroSubtitleRef.value, { y: 16, opacity: 0, duration: 0.65 }, 0.28);
+  if (heroCtaRef.value) tl.from(heroCtaRef.value, { y: 20, opacity: 0, duration: 0.7 }, 0.38);
+  if (heroNewsRef.value) {
+    staggerChildren(heroNewsRef.value, ':scope .grid > a', {
+      distance: 20,
+      stagger: 0.08,
+      delay: 0.2,
+      start: 'top 95%',
+    });
+  }
+
+  startAutoplay();
+});
+
+onBeforeUnmount(() => {
+  stopAutoplay();
+  window.removeEventListener('resize', updateCarouselSlotCount);
+  motion.killTweensOf(getNewsCards());
+});
 </script>

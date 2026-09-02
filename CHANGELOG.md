@@ -11,6 +11,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 ## [Unreleased]
 
 ### Changed
+- Layung public theme: contact page uses the published Reach form (same pattern as Janari) and hides `/contact` menu items when the contact page is disabled.
+- Layung public theme: menu list aligned to K2NET’s three business lines; mock/instructional copy removed from public pages.
 - Docs: honesty pass marked landed on `integrate/cms`; merge-gate + W5 naming residual clarified; root `.env.example` notes Vite/Sanctum **5273**.
 - W5 naming: Media/Library defaults `publishing`; theme docs paths `Layout/*`; console title fallbacks drop `JA Jejakawan`; i18n checker maps `Member` pack namespace.
 - PHPStan baseline regenerated; Member model `@property` docs for Larastan.

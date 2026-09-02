@@ -1,21 +1,39 @@
 <template>
-  <component
-    :is="as"
-    class="inline-block"
+  <span
+    class="layung-split-text inline-block"
+    :aria-label="text"
   >
-    <slot>{{ text }}</slot>
-  </component>
+    <span
+      v-for="(unit, idx) in units"
+      :key="idx"
+      class="motion-split-unit inline-block overflow-hidden"
+    >
+      <span
+        class="motion-split-inner inline-block"
+        :data-unit="unit"
+      >
+        {{ unit }}<span v-if="isWordMode && idx < units.length - 1">&nbsp;</span>
+      </span>
+    </span>
+  </span>
 </template>
 
 <script setup lang="ts">
-withDefaults(
+import { computed } from 'vue';
+
+const props = withDefaults(
   defineProps<{
-    as?: string;
-    text?: string;
+    text: string;
+    type?: 'words' | 'chars';
   }>(),
-  {
-    as: 'span',
-    text: '',
-  },
+  { type: 'words' },
 );
+
+const isWordMode = computed(() => props.type !== 'chars');
+
+const units = computed(() => {
+  if (!props.text) return [];
+  if (props.type === 'chars') return props.text.split('');
+  return props.text.trim().split(/\s+/).filter(Boolean);
+});
 </script>

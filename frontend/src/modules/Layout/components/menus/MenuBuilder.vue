@@ -530,7 +530,7 @@ const handleSave = async () => {
         toast.success.update(t('layout.menus.title'));
         emit('menu-updated');
     } else {
-        toast.error.action(t('layout.menus.messages.saveFailed'));
+        toast.error.fromResponse(menuState.error.value ?? t('layout.menus.messages.saveFailed'));
     }
 };
 

@@ -3,67 +3,66 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
       <div class="text-center max-w-3xl mx-auto space-y-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 uppercase tracking-wider font-mono">
-          Topologi & Peering Global
+          Routing &amp; Peering
         </span>
         <h2 class="text-3xl sm:text-4xl font-extrabold font-heading tracking-tight text-white">
-          Infrastruktur Backbone Redundan Tanpa Titik Lemah Tunggal
+          Identitas Jaringan K2NET
         </h2>
         <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-          Tersambung langsung ke Internet Exchange terkemuka di Indonesia dan hub global di Singapura dan Hong Kong.
+          PT Kirana Karina Network mengoperasikan AS153992 sebagai anggota korporat IDNIC, dengan prefix mandiri untuk layanan ISP dan managed network.
         </p>
       </div>
 
-      <!-- Infrastructure Route Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 font-mono">
         <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>IIX / APJII Jakarta</span>
-            <span class="text-emerald-400 font-bold">100 Gbps</span>
+            <span>IDNIC / APNIC</span>
+            <span class="text-emerald-400 font-bold">AS153992</span>
           </div>
           <div class="text-xl font-bold text-white font-heading">
-            Peering Domestik
+            BGP Mandiri
           </div>
           <p class="text-xs text-slate-400 font-sans">
-            Latensi < 2ms ke seluruh ISP lokal dan CDN nasional.
+            AS-Name IDNIC-K2NET-ID untuk routing dedicated internet.
           </p>
         </div>
 
         <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>OpenIXP Cyber Tower</span>
-            <span class="text-emerald-400 font-bold">100 Gbps</span>
+            <span>IPv4 Prefix</span>
+            <span class="text-emerald-400 font-bold">/24</span>
           </div>
           <div class="text-xl font-bold text-white font-heading">
-            Cyber 1 Interconnect
+            165.99.252.0/24
           </div>
           <p class="text-xs text-slate-400 font-sans">
-            Koneksi langsung ke server perbankan dan e-commerce.
+            Alokasi IP publik untuk layanan klien dedicated.
           </p>
         </div>
 
         <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>Equinix SG1 Singapore</span>
-            <span class="text-cyan-400 font-bold">40 Gbps</span>
+            <span>Upstream</span>
+            <span class="text-cyan-400 font-bold">AS55655</span>
           </div>
           <div class="text-xl font-bold text-white font-heading">
-            Global Gateway SG
+            Transit Partner
           </div>
           <p class="text-xs text-slate-400 font-sans">
-            Akses langsung ke AWS, Google, Cloudflare & Fastly.
+            Default transit ke Mitra Visioner Pratama.
           </p>
         </div>
 
         <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>Subsea Cable Ring</span>
-            <span class="text-orange-400 font-bold">Redundan</span>
+            <span>HQ Bandung</span>
+            <span class="text-sky-400 font-bold">40124</span>
           </div>
           <div class="text-xl font-bold text-white font-heading">
-            Kabel Bawah Laut
+            Cikutra NOC
           </div>
           <p class="text-xs text-slate-400 font-sans">
-            Multi-kabel bawah laut anti putus jalur internasional.
+            Kantor operasional di Cibeunying Kidul, Bandung.
           </p>
         </div>
       </div>
@@ -72,5 +71,5 @@
 </template>
 
 <script setup lang="ts">
-// Topologi Peering visual
+// Topologi peering K2NET (AS153992)
 </script>

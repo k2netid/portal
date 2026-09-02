@@ -6,7 +6,7 @@
     :disabled="disabled"
     :required="required"
     :class="[
-      'w-full px-4 py-2.5 rounded-[var(--layung-radius-sm)] bg-card border border-border/80 text-foreground placeholder:text-muted-foreground/60 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm',
+      'w-full px-4 py-2.5 rounded-[var(--layung-radius-sm)] bg-card border border-border/80 text-foreground placeholder:text-muted-foreground/60 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm',
       $attrs.class
     ]"
     v-bind="$attrs"

@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function (): void {
         Route::post('menus/{menu}/restore', [MenuController::class, 'restore']);
         Route::delete('menus/{menu}/force-delete', [MenuController::class, 'forceDestroy']);
         Route::get('menus/{menu}/items', [MenuController::class, 'listItems']);
+        Route::post('menus/{menu}/items/sync', [MenuController::class, 'syncItems']);
         Route::post('menus/{menu}/items', [MenuController::class, 'addItem']);
         Route::put('menus/{menu}/items/{item}', [MenuController::class, 'updateItem']);
         Route::delete('menus/{menu}/items/{item}', [MenuController::class, 'deleteItem']);

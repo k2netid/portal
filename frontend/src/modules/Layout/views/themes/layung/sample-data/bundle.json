@@ -1,145 +1,224 @@
 {
   "version": 1,
   "settings": {
-    "site_title": "Layung Network",
-    "site_tagline": "Infrastruktur Serat Optik & Managed Services 24/7",
-    "site_tagline_en": "Fiber Infrastructure & 24/7 Managed Services",
-    "hero_title": "Konektivitas Fiber Ultra Cepat & Solusi IT Terkelola untuk Bisnis Skala Global",
-    "hero_title_en": "Ultra-Fast Fiber Connectivity & Managed IT for Global-Scale Business",
-    "hero_subtitle": "Backbone internet berkecepatan cahaya, latensi super rendah, multi-cloud interconnect, dan perlindungan Cyber SOC 24/7.",
-    "hero_subtitle_en": "Light-speed internet backbone, ultra-low latency, multi-cloud interconnect, and 24/7 Cyber SOC protection.",
+    "site_title": "K2NET",
+    "brand_logo": "/logofull_k2net.png",
+    "branding_display": "logo_only",
+    "header_cta_url": "",
+    "site_tagline": "Internet Service Provider & Managed Service Provider",
+    "site_tagline_en": "Internet Service Provider & Managed Service Provider",
+    "hero_title": "Internet Service Provider dan Managed Service Provider",
+    "hero_title_id": "Internet Service Provider dan Managed Service Provider",
+    "hero_title_en": "Internet Service Provider and Managed Service Provider",
+    "hero_title_su": "Internet Service Provider sareng Managed Service Provider",
+    "hero_subtitle": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+    "hero_subtitle_id": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+    "hero_subtitle_en": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
+    "hero_subtitle_su": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
+    "hero_badge_text": "Provide different IT solution",
+    "hero_badge_text_id": "Provide different IT solution",
+    "hero_badge_text_en": "Provide different IT solution",
+    "hero_badge_text_su": "Provide different IT solution",
+    "hero_primary_cta_text": "Hubungi Kami",
+    "hero_primary_cta_text_en": "Contact Us",
+    "hero_secondary_cta_text": "Chat WhatsApp",
+    "hero_secondary_cta_text_en": "Chat on WhatsApp",
+    "hero_contact_url": "/contact",
+    "hero_news_enabled": true,
+    "hero_news_limit": 4,
+    "hero_news_autoplay_interval": 4,
+    "hero_news_section_label": "Warta & promo",
+    "hero_news_section_label_en": "News & promos",
+    "hero_news_view_all_text": "Semua warta",
+    "hero_news_view_all_text_en": "All news",
+    "hero_news_view_all_url": "/blog",
+    "theme_data_bindings": {
+      "hero": {
+        "slots": {
+          "news": {
+            "sourceType": "api_posts",
+            "categoryFilter": "all",
+            "tagFilter": "all",
+            "limit": 10,
+            "orderBy": "published_at",
+            "orderDir": "desc",
+            "propMapping": {}
+          }
+        }
+      }
+    },
     "cta_primary_label": "Minta Penawaran",
     "cta_primary_url": "/contact",
     "cta_login_label": "Portal Klien",
     "cta_login_url": "/member/login",
     "noc_status_text": "Semua Node Normal",
     "noc_status_text_en": "All Nodes Normal",
-    "stat_latency": "< 2.4 ms",
-    "stat_uptime": "99.999% SLA Uptime",
-    "stat_backbone": "100 Gbps Redundant Ring",
-    "stat_asn": "AS139820 (BGP Multi-Homing Tier-1)",
-    "isp_address": "Cyber Tower Lt. 18, Jl. Rasuna Said Kav. X-2, Jakarta Selatan, 12950",
-    "isp_email": "noc@layung.net.id",
-    "isp_noc_phone": "+62 21 5088 9988",
-    "isp_whatsapp": "+6281198882026",
+    "stat_latency": "Regional Jawa Barat",
+    "stat_uptime": "SLA berbasis kontrak",
+    "stat_backbone": "165.99.252.0/24",
+    "stat_asn": "AS153992 (IDNIC-K2NET-ID)",
+    "isp_asn_number": "AS153992",
+    "isp_sla_guarantee": "SLA berbasis kontrak",
+    "isp_noc_latency": "Regional Jawa Barat",
+    "isp_backbone_capacity": "165.99.252.0/24",
+    "isp_address": "Jl. Terusan Sukarajin 3 No.99, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124",
+    "isp_garut_address": "Jl. Brajasetra, Margahayu, Kec. Leuwigoong, Kabupaten Garut, Jawa Barat 44192",
+    "isp_store_address": "Bandung Trade Mall, Jl. Ibrahim Adjie No.47 Lantai 2 Blok EE No.1, Babakan Surabaya, Kec. Kiaracondong, Kota Bandung, Jawa Barat 40272",
+    "isp_email": "info@k2net.id",
+    "isp_cs_email": "cs@k2net.id",
+    "isp_sales_email": "sales@k2net.id",
+    "isp_billing_email": "billing@k2net.id",
+    "isp_cs_phone": "+62 851-3629-0851",
+    "isp_noc_phone": "+62 851-3629-0861",
+    "isp_sales_phone": "+62 851-3629-0871",
+    "isp_service_desk_phone": "+62 851-3629-0852",
+    "isp_whatsapp": "+6285136290851",
+    "footer_about_text": "K2NET (PT Kirana Karina Network) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.",
+    "footer_copyright": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
     "contact_map_enabled": true
   },
   "menus": {
     "header": {
-      "name": "Layung Header Navigation",
+      "name": "K2NET Header Navigation",
       "items": [
         { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
+        { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 1 },
         {
-          "title": "Konektivitas Fiber",
-          "title_en": "Fiber Connectivity",
-          "url": "/services",
-          "type": "custom",
-          "sort_order": 1,
-          "children": [
-            { "title": "Dedicated Internet (DIA 1:1)", "title_en": "Dedicated Internet (DIA 1:1)", "url": "/services#dia", "type": "custom", "description": "Bandwidth simetris murni & IP Publik /29" },
-            { "title": "Dark Fiber & Metro Ethernet", "title_en": "Dark Fiber & Metro Ethernet", "url": "/services#dark-fiber", "type": "custom", "description": "Jalur serat optik privat antar gedung" },
-            { "title": "Colocation & Data Center", "title_en": "Colocation & Data Center", "url": "/about#colocation", "type": "custom", "description": "Tier-3 data center interconnect" }
-          ]
-        },
-        {
-          "title": "Managed IT & SOC",
-          "title_en": "Managed IT & SOC",
-          "url": "/solusi",
+          "title": "Layanan",
+          "title_en": "Services",
+          "url": "/#isp",
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "24/7 Cyber Security SOC", "title_en": "24/7 Cyber Security SOC", "url": "/solusi#soc", "type": "custom", "description": "Mitigasi DDoS & Next-Gen Firewall" },
-            { "title": "Managed SD-WAN & Multi-Cloud", "title_en": "Managed SD-WAN & Multi-Cloud", "url": "/solusi#sdwan", "type": "custom", "description": "Direct connect AWS, GCP, Azure" },
-            { "title": "Tim Engineer", "title_en": "Engineering Team", "url": "/tim", "type": "custom", "description": "Konsultasi arsitektur jaringan" }
+            { "title": "Internet", "title_en": "Internet", "url": "/#isp", "type": "custom" },
+            { "title": "Managed Services", "title_en": "Managed Services", "url": "/solusi", "type": "custom" },
+            { "title": "Produk IT", "title_en": "IT Products", "url": "/contact", "type": "custom" }
           ]
         },
         {
-          "title": "Paket & SLA",
-          "title_en": "Packages & SLA",
+          "title": "Paket & Harga",
+          "title_en": "Plans & Pricing",
           "url": "/pricing",
           "type": "custom",
           "sort_order": 3,
           "children": [
-            { "title": "Paket Bandwidth & Harga", "title_en": "Bandwidth Packages & Pricing", "url": "/pricing#packages", "type": "custom", "description": "SME hingga Enterprise" },
-            { "title": "Jaminan SLA", "title_en": "SLA Guarantee", "url": "/achievement", "type": "custom", "description": "99.999% & ISO 27001" },
-            { "title": "Karir NOC", "title_en": "NOC Careers", "url": "/career", "type": "custom", "description": "Lowongan engineer & DevOps" }
+            { "title": "Paket Internet", "title_en": "Internet Plans", "url": "/pricing/isp", "type": "custom" },
+            { "title": "Paket MSP", "title_en": "MSP Plans", "url": "/pricing/msp", "type": "custom" }
           ]
         },
-        { "title": "Warta", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
-        { "title": "Kontak NOC", "title_en": "Contact NOC", "url": "/contact", "type": "custom", "sort_order": 5 }
+        { "title": "Berita", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
+        { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 5 }
       ]
     },
     "footer_col_1": {
-      "name": "Layung Footer Services",
+      "name": "K2NET Footer ISP",
       "items": [
-        { "title": "Dedicated Internet (DIA 1:1)", "url": "/services#dia", "type": "custom", "sort_order": 0 },
-        { "title": "Dark Fiber & Metro-E", "url": "/services#dark-fiber", "type": "custom", "sort_order": 1 },
-        { "title": "Data Center Colocation", "url": "/about#colocation", "type": "custom", "sort_order": 2 },
-        { "title": "Paket Bandwidth", "url": "/pricing#packages", "type": "custom", "sort_order": 3 }
+        { "title": "Internet", "title_en": "Internet", "url": "/pricing/isp", "type": "custom", "sort_order": 0 },
+        { "title": "Paket Internet", "title_en": "Internet Plans", "url": "/pricing/isp", "type": "custom", "sort_order": 1 },
+        { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 2 },
+        { "title": "SLA", "title_en": "SLA", "url": "/achievement", "type": "custom", "sort_order": 3 }
       ]
     },
     "footer_col_2": {
-      "name": "Layung Footer Managed",
+      "name": "K2NET Footer MSP",
       "items": [
-        { "title": "24/7 Cyber Security SOC", "url": "/solusi#soc", "type": "custom", "sort_order": 0 },
-        { "title": "Managed SD-WAN Cloud", "url": "/solusi#sdwan", "type": "custom", "sort_order": 1 },
-        { "title": "Sertifikasi ISO 27001", "url": "/achievement", "type": "custom", "sort_order": 2 },
-        { "title": "Pusat Karir Engineer", "url": "/career", "type": "custom", "sort_order": 3 }
+        { "title": "Managed Services", "title_en": "Managed Services", "url": "/solusi", "type": "custom", "sort_order": 0 },
+        { "title": "Paket MSP", "title_en": "MSP Plans", "url": "/pricing/msp", "type": "custom", "sort_order": 1 },
+        { "title": "Tim", "title_en": "Team", "url": "/tim", "type": "custom", "sort_order": 2 },
+        { "title": "Karir", "title_en": "Careers", "url": "/career", "type": "custom", "sort_order": 3 }
+      ]
+    },
+    "footer_col_3": {
+      "name": "K2NET Footer Produk IT",
+      "items": [
+        { "title": "Toko Offline", "url": "/contact", "type": "custom", "sort_order": 0 },
+        { "title": "Tokopedia K2NET", "url": "https://www.tokopedia.com/k2net-bandung", "type": "custom", "sort_order": 1 },
+        { "title": "Shopee K2NET", "url": "https://shopee.co.id/k2net?entryPoint=ShopByPDP", "type": "custom", "sort_order": 2 },
+        { "title": "SIPLah Blibli", "url": "https://siplah.blibli.com/merchant-detail/SPKK-1030", "type": "custom", "sort_order": 3 },
+        { "title": "SIPLah Toko Ladang", "url": "https://siplah.tokoladang.co.id/m/k2net.39644", "type": "custom", "sort_order": 4 }
       ]
     }
   },
   "pages": [
-    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Layung Network — infrastruktur serat optik dan managed services.", "body": "<p>Portal resmi Layung Network — infrastruktur serat optik dan managed services 24/7.</p><p>Layout publik (hero NOC, stat backbone) dari template tema Layung. Konten editor untuk SEO.</p>", "body_en": "<p>Official Layung Network portal — fiber infrastructure and 24/7 managed services.</p><p>Public layout (NOC hero, backbone stats) comes from the Layung theme. Editor content is for SEO.</p>" },
-    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil Layung Network dan komitmen SLA enterprise.", "body": "<p>Profil Layung Network dan komitmen SLA enterprise 99.999%.</p>", "body_en": "<p>Layung Network profile and 99.999% enterprise SLA commitment.</p>" },
-    { "slug": "services", "title": "Konektivitas Fiber", "title_en": "Fiber Connectivity", "theme_page": "pages/Services", "status": "published", "excerpt": "DIA, dark fiber, dan colocation.", "body": "<p>Layanan DIA 1:1, dark fiber, metro ethernet, dan colocation Tier-3.</p>", "body_en": "<p>DIA 1:1, dark fiber, metro ethernet, and Tier-3 colocation services.</p>" },
-    { "slug": "solusi", "title": "Managed Services", "title_en": "Managed Services", "theme_page": "pages/Solusi", "status": "published", "excerpt": "SOC 24/7, SD-WAN, dan layanan IT terkelola.", "body": "<p>Managed SOC 24/7, SD-WAN multi-cloud, dan layanan IT terkelola.</p>", "body_en": "<p>24/7 managed SOC, multi-cloud SD-WAN, and managed IT services.</p>" },
-    { "slug": "pricing", "title": "Paket & Bandwidth", "title_en": "Packages & Bandwidth", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Paket dedicated internet untuk SME hingga enterprise.", "body": "<p>Paket bandwidth dedicated internet dari SME hingga enterprise.</p>", "body_en": "<p>Dedicated internet bandwidth packages from SME to enterprise.</p>" },
-    { "slug": "tim", "title": "Tim Engineer", "title_en": "Engineering Team", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori engineer dan konsultan jaringan.", "body": "<p>Direktori network engineer dan konsultan arsitektur jaringan Layung.</p>", "body_en": "<p>Directory of Layung network engineers and architecture consultants.</p>" },
-    { "slug": "blog", "title": "Warta & Berita", "title_en": "News & Updates", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita jaringan, maintenance, dan pengumuman NOC.", "body": "<p>Berita jaringan, jadwal maintenance, dan pengumuman NOC Layung.</p>", "body_en": "<p>Network news, maintenance schedules, and Layung NOC announcements.</p>" },
-    { "slug": "contact", "title": "Hubungi NOC", "title_en": "Contact NOC", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline 24/7 dan formulir konsultasi enterprise.", "body": "<p>Hotline NOC 24/7 dan formulir konsultasi enterprise.</p>", "body_en": "<p>24/7 NOC hotline and enterprise consultation form.</p>" },
-    { "slug": "achievement", "title": "SLA & Sertifikasi", "title_en": "SLA & Certifications", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Jaminan uptime dan sertifikasi keamanan.", "body": "<p>Jaminan uptime 99.999% dan sertifikasi ISO 27001.</p>", "body_en": "<p>99.999% uptime guarantee and ISO 27001 certification.</p>" },
-    { "slug": "careers", "title": "Karir NOC", "title_en": "NOC Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan network engineer dan DevOps.", "body": "<p>Lowongan network engineer, NOC analyst, dan DevOps di Layung Network.</p>", "body_en": "<p>Open roles for network engineers, NOC analysts, and DevOps at Layung Network.</p>" }
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi K2NET — ISP dan Managed Service Provider.", "body": "<p>Portal resmi K2NET (PT Kirana Karina Network) — Internet Service Provider dan Managed Service Provider di Bandung.</p>", "body_en": "<p>Official K2NET (PT Kirana Karina Network) portal — Internet Service Provider and Managed Service Provider in Bandung.</p>" },
+    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil PT Kirana Karina Network (K2NET).", "body": "", "body_en": "" },
+    { "slug": "services", "title": "Internet", "title_en": "Internet", "theme_page": "pages/Services", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis, dan Retail Broadband.", "body": "<p>Layanan internet K2NET: Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung dan Jawa Barat.</p>", "body_en": "<p>K2NET internet services: Dedicated Internet, Business Broadband, and Retail Broadband in Bandung and West Java.</p>" },
+    { "slug": "solusi", "title": "Managed Services", "title_en": "Managed Services", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Pendampingan IT operasional untuk sekolah dan institusi.", "body": "<p>Managed services K2NET: jaringan, server, CCTV, dan dukungan IT harian untuk sekolah dan institusi.</p>", "body_en": "<p>K2NET managed services: network, servers, CCTV, and day-to-day IT support for schools and institutions.</p>" },
+    { "slug": "pricing", "title": "Paket & Harga", "title_en": "Plans & Pricing", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Pilih paket ISP atau MSP sesuai kebutuhan.", "body": "<p>Halaman induk paket layanan K2NET — konektivitas internet (ISP) dan managed services (MSP).</p>", "body_en": "<p>K2NET service plans hub — internet connectivity (ISP) and managed services (MSP).</p>" },
+    { "slug": "pricing-isp", "title": "Paket Internet (ISP)", "title_en": "Internet Plans (ISP)", "theme_page": "pages/PricingIsp", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.", "body": "<p>Paket konektivitas internet K2NET untuk dedicated, bisnis, dan retail.</p>", "body_en": "<p>K2NET internet connectivity plans for dedicated, business, and retail.</p>" },
+    { "slug": "pricing-msp", "title": "Managed Services (MSP)", "title_en": "Managed Services (MSP)", "theme_page": "pages/PricingMsp", "status": "published", "excerpt": "Paket Basic, Standard, dan Custom untuk sekolah dan institusi.", "body": "<p>Paket managed services K2NET untuk sekolah dan institusi pendidikan.</p>", "body_en": "<p>K2NET managed services plans for schools and educational institutions.</p>" },
+    { "slug": "tim", "title": "Tim", "title_en": "Team", "theme_page": "pages/Tim", "status": "published", "excerpt": "Tim operasional K2NET di Bandung.", "body": "<p>Tim operasional K2NET beroperasi dari Bandung untuk dukungan teknis dan sales.</p>", "body_en": "<p>The K2NET operations team works from Bandung for technical support and sales.</p>" },
+    { "slug": "blog", "title": "Berita", "title_en": "News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Pengumuman layanan dan operasional K2NET.", "body": "<p>Berita layanan, jangkauan, dan operasional K2NET.</p>", "body_en": "<p>K2NET service, coverage, and operations news.</p>" },
+    { "slug": "contact", "title": "Kontak", "title_en": "Contact", "theme_page": "pages/Contact", "status": "published", "excerpt": "Sales, CS, NOC, dan Service Desk.", "body": "<p>Hubungi tim K2NET untuk survei, penawaran, dan dukungan operasional.</p>", "body_en": "<p>Contact the K2NET team for surveys, quotations, and operational support.</p>" },
+    { "slug": "achievement", "title": "SLA", "title_en": "SLA", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Komitmen layanan sesuai kontrak.", "body": "<p>Komitmen SLA berbasis kontrak, anggota korporat IDNIC, dan operasional AS153992.</p>", "body_en": "<p>Contract-based SLA commitment, IDNIC corporate membership, and AS153992 operations.</p>" },
+    { "slug": "careers", "title": "Karir", "title_en": "Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan operasional K2NET di Bandung.", "body": "<p>Lowongan dibuka sesuai kebutuhan operasional K2NET di Bandung.</p>", "body_en": "<p>Roles open according to K2NET operational needs in Bandung.</p>" }
   ],
   "posts": [
     {
-      "slug": "layung-sample-peering-iix",
-      "title": "Upgrade Peering IIX APJII Menjadi 100 Gbps",
-      "title_en": "IIX APJII Peering Upgraded to 100 Gbps",
+      "slug": "k2net-asn-idnic",
+      "title": "K2NET Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC",
+      "title_en": "K2NET Operates AS153992 as an IDNIC Corporate Member",
       "status": "published",
-      "excerpt": "Interkoneksi 100G ke gedung Cyber untuk mengantisipasi lonjakan trafik streaming dan cloud gaming.",
-      "excerpt_en": "100G interconnect to Cyber building to handle streaming and cloud gaming traffic spikes.",
-      "body": "<p>Artikel sample infrastruktur untuk grid warta Layung Network.</p>",
-      "body_en": "<p>Sample infrastructure article for the Layung Network news grid.</p>"
+      "featured_image": "/logo-bw.png",
+      "excerpt": "PT Kirana Karina Network mengumumkan operasional BGP mandiri AS153992 (IDNIC-K2NET-ID) untuk layanan ISP di Bandung.",
+      "excerpt_en": "PT Kirana Karina Network announces independent BGP operations on AS153992 (IDNIC-K2NET-ID) for ISP services in Bandung.",
+      "body": "<p>K2NET mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>",
+      "body_en": "<p>K2NET originates 165.99.252.0/24 under AS153992 as an IDNIC corporate member. This strengthens independent routing identity for dedicated internet and managed network services.</p>"
     },
     {
-      "slug": "layung-sample-mitigasi-ddos",
-      "title": "Mitigasi Serangan DDoS Multi-Vektor untuk Korporat",
-      "title_en": "Multi-Vector DDoS Mitigation for Enterprise",
+      "slug": "k2net-msp-layanan-terkelola",
+      "title": "Layanan Managed IT & Network Operations dari K2NET",
+      "title_en": "Managed IT & Network Operations from K2NET",
       "status": "published",
-      "excerpt": "Integrasi BGP Anycast dan scrub center lokal menyaring serangan volume tinggi tanpa mengganggu operasional.",
-      "excerpt_en": "BGP Anycast and local scrub center integration filters high-volume attacks without disrupting operations.",
-      "body": "<p>Panduan singkat arsitektur SOC untuk klien enterprise.</p>",
-      "body_en": "<p>Short SOC architecture guide for enterprise clients.</p>"
+      "featured_image": "/logo.png",
+      "excerpt": "Selain konektivitas, K2NET mendampingi operasional IT harian: monitoring, firewall, dan dukungan NOC.",
+      "excerpt_en": "Beyond connectivity, K2NET supports day-to-day IT operations: monitoring, firewall, and NOC support.",
+      "body": "<p>Sebagai MSP, K2NET membantu klien merancang, mengoperasikan, dan menjaga jaringan kantor — dari dedicated internet hingga keamanan perimeter dan dukungan teknis.</p>",
+      "body_en": "<p>As an MSP, K2NET helps clients design, operate, and maintain office networks — from dedicated internet to perimeter security and technical support.</p>"
     },
     {
-      "slug": "layung-sample-maintenance-kabel",
-      "title": "Jadwal Pemeliharaan Kabel Bawah Laut Batam–Singapura",
-      "title_en": "Batam–Singapore Subsea Cable Maintenance Schedule",
+      "slug": "k2net-coverage-bandung",
+      "title": "Jangkauan Layanan K2NET di Bandung dan Jawa Barat",
+      "title_en": "K2NET Service Coverage in Bandung and West Java",
       "status": "published",
-      "excerpt": "Pemeliharaan preventif segmen kabel internasional dengan pengalihan rute redundan otomatis.",
-      "excerpt_en": "Preventive maintenance on international cable segment with automatic redundant route failover.",
-      "body": "<p>Notifikasi maintenance sample untuk halaman blog Layung.</p>",
-      "body_en": "<p>Sample maintenance notice for the Layung blog page.</p>"
+      "featured_image": "/logofull_k2net.png",
+      "excerpt": "Survei last-mile dan aktivasi dedicated internet untuk kawasan Bandung Raya dan kota-kota Jawa Barat.",
+      "excerpt_en": "Last-mile survey and dedicated internet activation for Greater Bandung and West Java cities.",
+      "body": "<p>Tim provision K2NET melakukan survei lokasi sebelum aktivasi. Hubungi NOC untuk cek jangkauan di Bandung, Cimahi, dan kawasan Jawa Barat lainnya.</p>",
+      "body_en": "<p>K2NET provisioning surveys the site before activation. Contact NOC to check coverage in Bandung, Cimahi, and other West Java areas.</p>"
     },
     {
-      "slug": "layung-sample-soc-expansion",
-      "title": "Perluasan Kapasitas Cyber SOC 24/7 Layung Network",
-      "title_en": "Layung Network Expands 24/7 Cyber SOC Capacity",
+      "slug": "k2net-noc-dukungan",
+      "title": "Dukungan NOC K2NET untuk Insiden Jaringan",
+      "title_en": "K2NET NOC Support for Network Incidents",
       "status": "published",
-      "excerpt": "Penambahan analis keamanan siber dan sensor threat intelligence generasi terbaru.",
-      "excerpt_en": "Additional cyber analysts and next-gen threat intelligence sensors deployed.",
-      "body": "<p>Update layanan managed security sample untuk klien ISP/MSP.</p>",
-      "body_en": "<p>Sample managed security service update for ISP/MSP clients.</p>"
+      "featured_image": "/logo-bw.png",
+      "excerpt": "Eskalasi gangguan, tiket, dan koordinasi recovery melalui hotline dan WhatsApp NOC.",
+      "excerpt_en": "Incident escalation, ticketing, and recovery coordination via NOC hotline and WhatsApp.",
+      "body": "<p>Klien dedicated dan managed services dapat menghubungi NOC K2NET di +62 851-3629-0861 atau info@k2net.id untuk eskalasi gangguan dan permintaan perubahan.</p>",
+      "body_en": "<p>Dedicated and managed-service clients can reach K2NET NOC at +62 851-3629-0861 or info@k2net.id for incident escalation and change requests.</p>"
+    },
+    {
+      "slug": "k2net-maintenance-window",
+      "title": "Jadwal Maintenance Backbone K2NET",
+      "title_en": "K2NET Backbone Maintenance Schedule",
+      "status": "published",
+      "featured_image": "/logo.png",
+      "excerpt": "Pemberitahuan jendela maintenance terjadwal untuk upgrade kapasitas backbone regional.",
+      "excerpt_en": "Scheduled maintenance window notice for regional backbone capacity upgrades.",
+      "body": "<p>NOC K2NET akan menginformasikan jadwal maintenance backbone melalui kanal resmi sebelum aktivitas upgrade dilakukan.</p>",
+      "body_en": "<p>K2NET NOC will announce backbone maintenance schedules through official channels before upgrade activities.</p>"
+    },
+    {
+      "slug": "k2net-promo-dedicated-internet",
+      "title": "Promo Dedicated Internet untuk UMKM Bandung",
+      "title_en": "Dedicated Internet Promo for Bandung SMEs",
+      "status": "published",
+      "featured_image": "/logofull_k2net.png",
+      "excerpt": "Paket dedicated internet dengan aktivasi survei gratis untuk UMKM di Bandung Raya.",
+      "excerpt_en": "Dedicated internet packages with free site survey for SMEs in Greater Bandung.",
+      "body": "<p>Hubungi tim sales K2NET untuk konsultasi paket dedicated internet yang sesuai kebutuhan operasional bisnis Anda.</p>",
+      "body_en": "<p>Contact the K2NET sales team for dedicated internet packages tailored to your business operations.</p>"
     }
   ]
 }

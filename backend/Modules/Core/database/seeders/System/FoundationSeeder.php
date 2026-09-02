@@ -205,19 +205,19 @@ class FoundationSeeder extends Seeder
     {
         $settings = [
             // System Settings
-            ['key' => 'app_name', 'value' => 'Jejakawan', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'app_name', 'value' => 'K2NET', 'group' => 'system', 'type' => 'string'],
             ['key' => 'license_type', 'value' => 'pro', 'group' => 'system', 'type' => 'string'],
             ['key' => 'maintenance_mode', 'value' => '0', 'group' => 'system', 'type' => 'boolean'],
             ['key' => 'timezone', 'value' => 'Asia/Jakarta', 'group' => 'general', 'type' => 'string'],
             ['key' => 'log_retention_days', 'value' => '90', 'group' => 'monitoring', 'type' => 'integer'],
 
             // General / Identity (Site Settings)
-            ['key' => 'site_name', 'value' => 'Jejakawan', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'site_name', 'value' => 'K2NET', 'group' => 'general', 'type' => 'string'],
             ['key' => 'site_logo', 'value' => '/logo.png', 'group' => 'general', 'type' => 'image'],
             ['key' => 'site_favicon', 'value' => '/favicon.ico', 'group' => 'general', 'type' => 'image'],
-            ['key' => 'site_description', 'value' => 'Jejakawan Modern Jejakawan', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'site_description', 'value' => 'Internet Service Provider & Managed Service Provider', 'group' => 'general', 'type' => 'string'],
             ['key' => 'site_url', 'value' => 'http://localhost', 'group' => 'general', 'type' => 'string'],
-            ['key' => 'admin_email', 'value' => 'admin@jejakawan.com', 'group' => 'brand', 'type' => 'string'],
+            ['key' => 'admin_email', 'value' => 'info@k2net.id', 'group' => 'brand', 'type' => 'string'],
             ['key' => 'brand_logo', 'value' => '', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'brand_favicon', 'value' => '', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
@@ -229,9 +229,9 @@ class FoundationSeeder extends Seeder
             ['key' => 'console_sidebar_accent', 'value' => '#0f172a', 'group' => 'console_branding', 'type' => 'string'],
 
             // SEO Settings
-            ['key' => 'meta_title', 'value' => 'Jejakawan', 'group' => 'seo', 'type' => 'string'],
-            ['key' => 'meta_description', 'value' => 'Modern Platform', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_keywords', 'value' => 'jejakawan, Jejakawan', 'group' => 'seo', 'type' => 'string'],
+            ['key' => 'meta_title', 'value' => 'K2NET', 'group' => 'seo', 'type' => 'string'],
+            ['key' => 'meta_description', 'value' => 'Internet Service Provider & Managed Service Provider — PT Kirana Karina Network', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_keywords', 'value' => 'k2net, isp, msp, internet, bandung', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_analytics_id', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_search_console', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'enable_sitemap', 'value' => '1', 'group' => 'seo', 'type' => 'boolean'],

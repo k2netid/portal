@@ -2,11 +2,13 @@ import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl';
 
 /** Customizer sidebar item id → public path for live preview iframe. */
 const PREVIEW_PATH_BY_ITEM: Record<string, string> = {
+  'page-hero': '/',
   'page-about': '/about',
   'page-achievements': '/achievement',
   'page-careers': '/career',
   'page-news': '/blog',
   'page-search': '/search',
+  'page-services': '/services',
   'page-contact': '/contact',
   'page-pricing': '/pricing',
   'page-solusi': '/solusi',
@@ -28,8 +30,12 @@ const PREVIEW_PATH_BY_ITEM: Record<string, string> = {
   'identity-general': '/',
   'identity-site-profile': '/',
   'identity-menus': '/',
+  'item-header': '/',
   'identity-social': '/',
   'comp-hero': '/',
+  'comp-isp-bento': '/',
+  'comp-packages': '/',
+  'comp-footer': '/',
   'comp-partners': '/',
   'comp-testimonials': '/',
   'comp-cta': '/',
@@ -39,6 +45,7 @@ const PREVIEW_PATH_BY_ITEM: Record<string, string> = {
 
 /** Section focus key for scroll/highlight inside preview (data-ja-customizer-target). */
 const PREVIEW_FOCUS_BY_ITEM: Record<string, string> = {
+  'page-hero': 'hero',
   'page-products': 'products',
   'page-partners': 'partners',
   'page-cta': 'cta',
@@ -48,8 +55,13 @@ const PREVIEW_FOCUS_BY_ITEM: Record<string, string> = {
   'identity-site-profile': 'header',
   'identity-general': 'header',
   'identity-menus': 'nav',
+  'item-header': 'header',
+  'ux-layout': 'header',
   'ux-footer': 'footer',
   'comp-hero': 'hero',
+  'comp-isp-bento': 'bento',
+  'comp-packages': 'packages',
+  'comp-footer': 'footer',
   'comp-partners': 'partners',
   'comp-testimonials': 'testimonials',
   'comp-cta': 'cta',
@@ -62,6 +74,7 @@ const PREVIEW_FOCUS_BY_ITEM: Record<string, string> = {
   'page-careers': 'careers',
   'page-achievements': 'achievements',
   'page-search': 'search',
+  'page-services': 'services',
 };
 
 export function resolveCustomizerPreviewPath(itemId: string | null | undefined): string {

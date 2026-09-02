@@ -193,7 +193,7 @@ import {
 } from '@/modules/Layout/customizer/preview/getThemePreviewTargets';
 import type { CustomizerPreviewMode } from '@/modules/Layout/customizer/preview/protocol';
 
-const { t, te } = useI18n();
+const { t, te } = useI18n({ useScope: 'global' });
 const route = useRoute();
 const router = useRouter();
 const slug = route.params.slug as string;
@@ -299,12 +299,12 @@ function handleMediaSelect(m: { url: string }) {
   showMediaPicker.value = false;
 }
 
-function openNavItemById(itemId: string) {
+function openNavItemById(itemId: string, preferredMode?: CustomizerPreviewMode) {
   const item = flatNavItems.value.find((nav) => nav.id === itemId);
   if (item) {
     navOpen.value = true;
     controlsOpen.value = true;
-    selectItem(item);
+    selectItem(item, preferredMode);
   }
 }
 
@@ -313,7 +313,7 @@ function handlePreviewSelectTarget(payload: { target: string; mode?: CustomizerP
   const targets = getThemePreviewTargets(slug);
   const navItemId = resolvePreviewNavItemId(targets, payload.target, payload.mode);
   if (!navItemId) return;
-  openNavItemById(navItemId);
+  openNavItemById(navItemId, payload.mode);
 }
 
 function handleBack() {

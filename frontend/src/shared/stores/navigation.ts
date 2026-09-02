@@ -34,7 +34,7 @@ function mergeChildren(existing: NavItem[] = [], incoming: NavItem[] = []): NavI
 }
 
 function findMergeParent(groupArr: NavItem[], item: NavItem): NavItem | undefined {
-    if (item.children && item.children.length > 0 && item.group && MERGE_BY_GROUP.has(item.group)) {
+    if (item.group && MERGE_BY_GROUP.has(item.group)) {
         return groupArr.find((g) => g.group === item.group);
     }
     if (item.children && item.children.length > 0 && item.labelKey) {
@@ -43,15 +43,69 @@ function findMergeParent(groupArr: NavItem[], item: NavItem): NavItem | undefine
     return undefined;
 }
 
+function mergeIntoParent(existingParent: NavItem, item: NavItem): void {
+    if (item.children && item.children.length > 0) {
+        existingParent.children = mergeChildren(existingParent.children, item.children);
+    } else if (item.name || item.to || item.label) {
+        existingParent.children = mergeChildren(existingParent.children, [item]);
+    }
+
+    const incomingPriority = item.priority || 0;
+    const existingPriority = existingParent.priority || 0;
+    if (incomingPriority >= existingPriority) {
+        existingParent.priority = incomingPriority;
+        if (item.icon) existingParent.icon = item.icon;
+        if (item.labelKey) existingParent.labelKey = item.labelKey;
+        if (item.label) existingParent.label = item.label;
+    }
+}
+
+function dedupeDatabaseMenus(items: NavItem[]): NavItem[] {
+    const byGroup = new Map<string, NavItem>();
+
+    for (const item of items) {
+        const key = item.group || item.labelKey || item.label || item.name || item.id || '';
+        if (!key) {
+            byGroup.set(`__orphan_${byGroup.size}`, item);
+            continue;
+        }
+
+        const existing = byGroup.get(key);
+        if (!existing) {
+            byGroup.set(key, {
+                ...item,
+                children: item.children ? [...item.children] : undefined,
+            });
+            continue;
+        }
+
+        existing.children = mergeChildren(existing.children, item.children);
+        if ((item.priority || 0) > (existing.priority || 0)) {
+            existing.priority = item.priority;
+            if (item.icon) existing.icon = item.icon;
+            if (item.labelKey) existing.labelKey = item.labelKey;
+            if (item.label) existing.label = item.label;
+        }
+    }
+
+    return Array.from(byGroup.values()).sort((a, b) => (b.priority || 0) - (a.priority || 0));
+}
+
 export const useNavigationStore = defineStore('navigation', () => {
     const registry = ref<Record<string, NavItem[]>>({});
     const dbMenuRegistry = ref<NavItem[] | null>(null);
+    const menusReady = ref(false);
 
     const registerModuleNavigation = (moduleId: string, items: NavItem[]) => {
         registry.value[moduleId] = items;
     };
 
+    const markMenusReady = () => {
+        menusReady.value = true;
+    };
+
     const setDatabaseMenus = (menus: Array<{
+        id?: string;
         is_visible?: boolean;
         route_name?: string;
         url?: string;
@@ -66,6 +120,7 @@ export const useNavigationStore = defineStore('navigation', () => {
         badge_text?: string;
         badge_variant?: string;
         children?: Array<{
+            id?: string;
             is_visible?: boolean;
             route_name?: string;
             url?: string;
@@ -82,6 +137,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     }>) => {
         if (!Array.isArray(menus) || menus.length === 0) {
             dbMenuRegistry.value = null;
+            menusReady.value = true;
             return;
         }
 
@@ -90,6 +146,7 @@ export const useNavigationStore = defineStore('navigation', () => {
             .map((m) => {
                 const isGroupHeader = Array.isArray(m.children) && m.children.length > 0;
                 return {
+                    id: m.id,
                     name: !isGroupHeader && m.route_name ? m.route_name : undefined,
                     to: !isGroupHeader && m.url ? m.url : (!isGroupHeader && m.route_name ? { name: m.route_name } : undefined),
                     label: m.name,
@@ -104,6 +161,7 @@ export const useNavigationStore = defineStore('navigation', () => {
                         ? m.children!
                               .filter((c) => c.is_visible !== false)
                               .map((c) => ({
+                                  id: c.id,
                                   name: c.route_name || undefined,
                                   to: c.url ? c.url : (c.route_name ? { name: c.route_name } : undefined),
                                   label: c.name,
@@ -120,7 +178,8 @@ export const useNavigationStore = defineStore('navigation', () => {
                 };
             });
 
-        dbMenuRegistry.value = items;
+        dbMenuRegistry.value = dedupeDatabaseMenus(items);
+        menusReady.value = true;
     };
 
     const navigationItems = computed<NavItem[]>(() => {
@@ -135,14 +194,7 @@ export const useNavigationStore = defineStore('navigation', () => {
             items.forEach((item) => {
                 const existingParent = findMergeParent(list, item);
                 if (existingParent) {
-                    existingParent.children = mergeChildren(existingParent.children, item.children);
-                    const incomingPriority = item.priority || 0;
-                    const existingPriority = existingParent.priority || 0;
-                    if (incomingPriority >= existingPriority) {
-                        existingParent.priority = incomingPriority;
-                        if (item.icon) existingParent.icon = item.icon;
-                        if (item.labelKey) existingParent.labelKey = item.labelKey;
-                    }
+                    mergeIntoParent(existingParent, item);
                     return;
                 }
 
@@ -180,14 +232,7 @@ export const useNavigationStore = defineStore('navigation', () => {
 
                 const existingParent = findMergeParent(groupArr, item);
                 if (existingParent) {
-                    existingParent.children = mergeChildren(existingParent.children, item.children);
-                    const incomingPriority = item.priority || 0;
-                    const existingPriority = existingParent.priority || 0;
-                    if (incomingPriority >= existingPriority) {
-                        existingParent.priority = incomingPriority;
-                        if (item.icon) existingParent.icon = item.icon;
-                        if (item.labelKey) existingParent.labelKey = item.labelKey;
-                    }
+                    mergeIntoParent(existingParent, item);
                     return;
                 }
 
@@ -216,8 +261,10 @@ export const useNavigationStore = defineStore('navigation', () => {
     return {
         registry,
         dbMenuRegistry,
+        menusReady,
         registerModuleNavigation,
         setDatabaseMenus,
+        markMenusReady,
         navigationItems,
         navigationGroups,
     };

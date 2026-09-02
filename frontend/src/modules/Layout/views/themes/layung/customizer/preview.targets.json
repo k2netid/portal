@@ -1,18 +1,22 @@
 {
     "targets": {
-        "header": { "navItemId": "item-header", "mode": "design" },
-        "hero": { "navItemId": "item-isp-hero", "mode": "design" },
-        "bento": { "navItemId": "item-isp-identity", "mode": "design" },
-        "calculator": { "navItemId": "item-isp-hero", "mode": "design" },
-        "packages": { "navItemId": "item-isp-identity", "mode": "design" },
-        "pricing": { "navItemId": "item-isp-identity", "mode": "design" },
-        "about": { "navItemId": "item-isp-identity", "mode": "design" },
-        "solusi": { "navItemId": "item-isp-identity", "mode": "design" },
-        "services": { "navItemId": "item-isp-identity", "mode": "design" },
-        "achievement": { "navItemId": "item-isp-identity", "mode": "design" },
-        "team": { "navItemId": "item-isp-identity", "mode": "design" },
-        "careers": { "navItemId": "item-isp-identity", "mode": "design" },
-        "contact": { "navItemId": "item-isp-identity", "mode": "design" },
-        "footer": { "navItemId": "item-isp-footer", "mode": "design" }
+        "header": { "navItemId": "identity-general", "mode": "design" },
+        "nav": { "navItemId": "identity-menus", "mode": "design" },
+        "hero": { "navItemId": "comp-hero", "mode": "design", "bindingsId": "hero" },
+        "hero-news": { "navItemId": "comp-hero", "mode": "bindings", "bindingsId": "hero" },
+        "bento": { "navItemId": "comp-hero", "mode": "design" },
+        "calculator": { "navItemId": "comp-hero", "mode": "design" },
+        "packages": { "navItemId": "comp-packages", "mode": "design" },
+        "pricing/isp": { "navItemId": "page-pricing", "mode": "design" },
+        "pricing/msp": { "navItemId": "page-pricing", "mode": "design" },
+        "about": { "navItemId": "page-about", "mode": "design" },
+        "solusi": { "navItemId": "page-solusi", "mode": "design" },
+        "services": { "navItemId": "page-services", "mode": "design" },
+        "achievement": { "navItemId": "page-achievements", "mode": "design" },
+        "team": { "navItemId": "page-tim", "mode": "design" },
+        "careers": { "navItemId": "page-careers", "mode": "design" },
+        "contact": { "navItemId": "page-contact", "mode": "design" },
+        "news": { "navItemId": "page-news", "mode": "design" },
+        "footer": { "navItemId": "ux-footer", "mode": "design" }
     }
 }

@@ -2,7 +2,7 @@ import { watchEffect, onScopeDispose } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConsoleTheme } from '@/modules/Core/System/composables/useConsoleTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { applyFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
+import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
 
 const THEME_FLAG = 'data-console-theme';
 const THEME_ATTRS = ['data-console-preset', 'data-console-surface', 'data-console-glass-gradient', 'data-console-theme-mode', 'data-console-button-style', 'data-console-card-style', 'data-console-dropdown-style', 'data-console-icon-weight'] as const;
@@ -64,11 +64,14 @@ export function useConsoleThemeDocumentSync() {
             }
         }
 
-        applyFavicon(resolveFavicon([
+        const href = resolveFavicon([
             settings.value.app_favicon,
             appIdentity.value.app_favicon,
             siteSettings.value.site_favicon,
-        ]));
+        ]);
+        if (!isGenericEngineFavicon(href) || systemStore.publicSettingsLoaded) {
+            applyFavicon(href, { allowGeneric: systemStore.publicSettingsLoaded });
+        }
 
         // Dynamically load Google Fonts if custom font is active
         const fontPrimary = settings.value.console_font_primary;

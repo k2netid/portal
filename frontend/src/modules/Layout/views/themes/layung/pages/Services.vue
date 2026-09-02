@@ -17,37 +17,29 @@
 
     <template v-else>
       <div class="space-y-4 max-w-3xl">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-mono uppercase">
-          Infrastruktur Serat Optik
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 font-mono uppercase">
+          {{ t('pages.services.badge', 'Internet') }}
         </span>
         <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-          {{ t('pages.services.title', 'Layanan Fiber Optik & Jaringan Terdedikasi') }}
+          {{ t('pages.services.title', 'Layanan Internet K2NET') }}
         </h1>
         <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          {{ t('pages.services.subtitle', 'Koneksi internet tanpa kompromi: Dark Fiber, Metro Ethernet, dan Dedicated Internet Access (DIA) simetris 1:1.') }}
+          {{ t('pages.services.subtitle', 'Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung & Jawa Barat.') }}
         </p>
       </div>
 
       <!-- Bento Grid -->
       <section
         id="dia"
-        class="scroll-mt-28"
+        class="scroll-mt-20"
       >
         <IspBentoSection />
-      </section>
-
-      <!-- Bandwidth Packages -->
-      <section
-        id="dark-fiber"
-        class="scroll-mt-28"
-      >
-        <PackagesSection />
       </section>
 
       <!-- Topology -->
       <section
         id="topology"
-        class="scroll-mt-28"
+        class="scroll-mt-20"
       >
         <NetworkTopologySection />
       </section>
@@ -65,7 +57,6 @@ import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRen
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
 import IspBentoSection from '../components/sections/IspBentoSection.vue';
-import PackagesSection from '../components/sections/PackagesSection.vue';
 import NetworkTopologySection from '../components/sections/NetworkTopologySection.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
 import { useLayungIdentity } from '../composables/useLayungIdentity';
@@ -75,5 +66,5 @@ const { t } = useThemeI18n('layung');
 const { displayCompanyName } = useLayungIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('services');
 
-useThemeHashScroll(128);
+useThemeHashScroll(72);
 </script>

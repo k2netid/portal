@@ -34,6 +34,14 @@ import {
 } from '@/modules/Layout/customizer/shell/buildPlatformSidebarNav';
 import { useThemeCustomizerLabels } from '@/modules/Layout/composables/useThemeCustomizerLabels';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
+import { translateCustomizerNavKey } from '@/modules/Layout/customizer/i18n/translateCustomizerNavKey';
+import { useI18n } from 'vue-i18n';
+import {
+  bindingComponentAllowsDesignMode,
+  componentManifestCategories,
+  resolveBindingComponentMode,
+} from '@/modules/Layout/customizer/shell/resolveBindingComponentMode';
+import type { CustomizerPreviewMode } from '@/modules/Layout/customizer/preview/protocol';
 
 export interface ComponentSchema {
   id: string;
@@ -42,6 +50,7 @@ export interface ComponentSchema {
   icon: any;
   slots: { id: string; label: string; props: { key: string; label: string }[] }[];
   manifestCategory?: string;
+  manifestCategories?: string[];
 }
 
 export interface NavItem extends CustomizerNavItem {
@@ -89,8 +98,13 @@ export function useCustomizerNavigation(
   expandedSlots: Ref<string[]>,
 ) {
   const { categoryLabel } = useThemeCustomizerLabels(slug);
+  const { locale } = useI18n({ useScope: 'global' });
   const themeCustomizerExtension = computed(() => resolveThemeCustomizerExtension(slug));
   const dedicatedManifestCategories = computed(() => getReservedManifestCategories(slug));
+
+  function translateNavKey(key: string): string {
+    return translateCustomizerNavKey(t, key, locale.value);
+  }
 
   const searchQuery = ref('');
   const activeItemId = ref('');
@@ -142,8 +156,8 @@ export function useCustomizerNavigation(
     const items = themeCustomizerExtension.value?.specialPageNavItems ?? [];
     return items.map((item) => ({
       id: item.id,
-      label: t(item.labelKey),
-      description: t(item.descriptionKey),
+      label: translateNavKey(item.labelKey),
+      description: translateNavKey(item.descriptionKey),
       icon: sidebarNavIconByKey[item.icon] ?? Globe,
       manifestSections: findSections(item.manifestCategories),
       hasBinding: false,
@@ -153,16 +167,17 @@ export function useCustomizerNavigation(
   const themeComponents = computed<ComponentSchema[]>(() =>
     getThemeBindingRegistry(slug).map((component) => ({
       id: component.id,
-      name: t(component.nameKey),
-      description: t(component.descriptionKey),
+      name: translateNavKey(component.nameKey),
+      description: translateNavKey(component.descriptionKey),
       icon: iconByRegistryKey[component.icon] || LayoutTemplate,
       manifestCategory: component.manifestCategory,
+      manifestCategories: componentManifestCategories(component),
       slots: component.slots.map((slot) => ({
         id: slot.id,
-        label: t(slot.labelKey),
+        label: translateNavKey(slot.labelKey),
         props: slot.props.map((prop) => ({
           key: prop.key,
-          label: t(prop.labelKey),
+          label: translateNavKey(prop.labelKey),
         })),
       })),
     })),
@@ -184,10 +199,12 @@ export function useCustomizerNavigation(
           description: comp.description,
           icon: comp.icon,
           bindingComponent: comp,
-          manifestSections:
-            comp.manifestCategory && !dedicatedManifestCategories.value.has(comp.manifestCategory)
-              ? findSections([comp.manifestCategory])
-              : [],
+          manifestSections: (() => {
+            const cats = componentManifestCategories(comp).filter(
+              (cat) => !dedicatedManifestCategories.value.has(cat),
+            );
+            return cats.length ? findSections(cats) : [];
+          })(),
           hasBinding: hasComponentBindings(comp.id),
         })),
       },
@@ -208,6 +225,7 @@ export function useCustomizerNavigation(
         items: group.items.filter((item) => {
           if (item.panel) return true;
           if (item.bindingComponent) return true;
+          if (group.id === 'special-pages') return true;
           if (item.manifestSections && item.manifestSections.length > 0) {
             return item.manifestSections.some((s) => s.settings && s.settings.length > 0);
           }
@@ -250,12 +268,12 @@ export function useCustomizerNavigation(
     return '';
   });
 
-  function selectItem(item: SidebarSelectPayload) {
+  function selectItem(item: SidebarSelectPayload, preferredMode?: CustomizerPreviewMode) {
     activeItemId.value = item.id;
     if (item.panel === 'css') {
       organizationMode.value = 'advanced';
     } else if (item.bindingComponent) {
-      organizationMode.value = 'bindings';
+      organizationMode.value = resolveBindingComponentMode(item.bindingComponent, preferredMode);
     } else {
       organizationMode.value = 'design';
     }
@@ -284,7 +302,13 @@ export function useCustomizerNavigation(
     if (!item) return true;
     if (item.panel === 'css') return organizationMode.value === 'advanced';
     if (item.panel === 'menus') return organizationMode.value === 'design';
-    if (item.bindingComponent) return organizationMode.value === 'bindings';
+    if (item.bindingComponent) {
+      if (organizationMode.value === 'bindings') return true;
+      if (organizationMode.value === 'design') {
+        return bindingComponentAllowsDesignMode(item);
+      }
+      return false;
+    }
     return organizationMode.value === 'design';
   }
 

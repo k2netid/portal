@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Support\SpaHtmlFavicon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -140,7 +141,8 @@ class SpaController extends Controller
         if (file_exists(public_path('index.html'))) {
             $content = file_get_contents(public_path('index.html'));
             if (is_string($content)) {
-                return response($content)->header('Content-Type', 'text/html');
+                return response(SpaHtmlFavicon::injectForShell($content, 'console'))
+                    ->header('Content-Type', 'text/html');
             }
         }
 
@@ -162,7 +164,8 @@ class SpaController extends Controller
             if (is_file($path)) {
                 $content = file_get_contents($path);
                 if (is_string($content)) {
-                    return response($content)->header('Content-Type', 'text/html');
+                    return response(SpaHtmlFavicon::injectForShell($content, 'landing'))
+                        ->header('Content-Type', 'text/html');
                 }
             }
         }
@@ -191,7 +194,8 @@ class SpaController extends Controller
             if (is_file($path)) {
                 $content = file_get_contents($path);
                 if (is_string($content)) {
-                    return response($content)->header('Content-Type', 'text/html');
+                    return response(SpaHtmlFavicon::injectForShell($content, 'public'))
+                        ->header('Content-Type', 'text/html');
                 }
             }
         }

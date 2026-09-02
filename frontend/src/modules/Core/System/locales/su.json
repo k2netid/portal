@@ -61,7 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "Konsol Jejakawan"
+    "consoleTitle": "Konsol K2NET",
+    "publicTitle": "K2NET"
   },
   "routes": {
     "maintenance": "Nuju Pangropéa",

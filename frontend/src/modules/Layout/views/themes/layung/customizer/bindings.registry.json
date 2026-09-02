@@ -6,14 +6,25 @@
             "descriptionKey": "theme.layung.customizer.items.hero_section_desc",
             "icon": "hero",
             "manifestCategory": "Hero Section",
-            "slots": []
+            "manifestCategories": ["Hero Section", "ISP Info"],
+            "slots": [
+                {
+                    "id": "news",
+                    "labelKey": "publishing.theme_customizer.items.news_overlay",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.news_title" },
+                        { "key": "category", "labelKey": "publishing.theme_customizer.items.badge" },
+                        { "key": "date", "labelKey": "publishing.theme_customizer.items.date" },
+                        { "key": "url", "labelKey": "publishing.theme_customizer.items.target_url" }
+                    ]
+                }
+            ]
         },
         {
             "id": "isp-bento",
             "nameKey": "theme.layung.customizer.items.isp_bento",
             "descriptionKey": "theme.layung.customizer.items.isp_bento_desc",
             "icon": "network",
-            "manifestCategory": "Hero Section",
             "slots": []
         },
         {
@@ -21,7 +32,6 @@
             "nameKey": "theme.layung.customizer.items.packages_section",
             "descriptionKey": "theme.layung.customizer.items.packages_section_desc",
             "icon": "zap",
-            "manifestCategory": "Hero Section",
             "slots": []
         },
         {

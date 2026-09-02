@@ -1,7 +1,29 @@
 (function () {
     try {
+        const cachedFavicon = localStorage.getItem('ja_favicon_href');
+        function isGenericFavicon(href) {
+            if (!href) return true;
+            try {
+                var path = new URL(href, window.location.origin).pathname.toLowerCase();
+                return path === '/favicon.ico' || path.endsWith('/favicon.ico');
+            } catch (e) {
+                return href === '/favicon.ico' || /\/favicon\.ico$/i.test(href);
+            }
+        }
+        var current = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+        var currentHref = current ? (current.getAttribute('href') || '') : '';
+        if (cachedFavicon && !isGenericFavicon(cachedFavicon) && isGenericFavicon(currentHref)) {
+            document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').forEach(function (el) {
+                el.parentNode && el.parentNode.removeChild(el);
+            });
+            var icon = document.createElement('link');
+            icon.rel = 'icon';
+            icon.href = cachedFavicon;
+            document.head.appendChild(icon);
+        }
+
         const path = window.location.pathname;
-        const isConsole = path.startsWith('/dash') || path.startsWith('/auth') || path.startsWith('/login') || path.startsWith('/setup');
+        const isConsole = path.startsWith('/dash') || path.startsWith('/ja-dash') || path.startsWith('/auth') || path.startsWith('/login') || path.startsWith('/setup');
         
         if (isConsole) {
             // Console Prepaint

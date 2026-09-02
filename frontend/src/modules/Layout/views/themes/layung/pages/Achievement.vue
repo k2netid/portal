@@ -18,30 +18,28 @@
     <template v-else>
       <div class="space-y-4 max-w-3xl">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono uppercase">
-          Bukti Keandalan & Standar Mutu
+          {{ t('sla.badge', 'SLA berbasis kontrak') }}
         </span>
         <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-          {{ t('pages.achievements.title', 'Pencapaian SLA & Rekam Jejak Keandalan') }}
+          {{ t('pages.achievements.title', 'SLA & Komitmen Layanan') }}
         </h1>
         <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          {{ t('pages.achievements.subtitle', 'Sertifikasi ISO 27001, ISO 9001, dan rekor uptime 99.999% selama lebih dari 5 tahun berturut-turut.') }}
+          {{ t('pages.achievements.subtitle', 'Anggota korporat IDNIC, operasional BGP mandiri AS153992, dan komitmen SLA sesuai kontrak layanan.') }}
         </p>
       </div>
 
-      <!-- SLA Guarantee Details -->
       <SlaGuaranteeSection />
 
-      <!-- ISO Certifications Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="layung-panel p-8 space-y-4 border border-border">
           <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
             <Award class="w-6 h-6" />
           </div>
           <h3 class="text-xl font-bold text-foreground font-heading">
-            ISO / IEC 27001:2022
+            IDNIC
           </h3>
           <p class="text-xs text-muted-foreground leading-relaxed">
-            Standar internasional Sistem Manajemen Keamanan Informasi (ISMS) yang memastikan data jaringan klien terproteksi ketat.
+            {{ t('pages.about.idnicText', 'Indonesia Network Information Center — sumber alokasi ASN dan prefix K2NET (AS-Name IDNIC-K2NET-ID).') }}
           </p>
         </div>
 
@@ -50,22 +48,22 @@
             <Award class="w-6 h-6" />
           </div>
           <h3 class="text-xl font-bold text-foreground font-heading">
-            ISO 9001:2015
+            APJII
           </h3>
           <p class="text-xs text-muted-foreground leading-relaxed">
-            Sistem Manajemen Mutu berstandar global dalam penyediaan instalasi fiber optik dan respon operasional tiket NOC.
+            {{ t('pages.about.apjiiText', 'Asosiasi Penyelenggara Jasa Internet Indonesia — wadah industri ISP nasional.') }}
           </p>
         </div>
 
         <div class="layung-panel p-8 space-y-4 border border-border">
-          <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center">
             <Award class="w-6 h-6" />
           </div>
           <h3 class="text-xl font-bold text-foreground font-heading">
-            APJII & BGP Certified
+            APNIC · AS153992
           </h3>
           <p class="text-xs text-muted-foreground leading-relaxed">
-            Anggota resmi Asosiasi Penyelenggara Jasa Internet Indonesia dengan otorisasi BGP routing mandiri.
+            {{ t('pages.about.apnicText', 'Alokasi routing K2NET tercatat melalui hirarki APNIC → IDNIC, dengan operasional BGP mandiri AS153992.') }}
           </p>
         </div>
       </div>

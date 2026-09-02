@@ -46,7 +46,7 @@ async function registerMember(
 }
 
 test.describe('Member security flows', () => {
-    test('registers and signs in without console IAM', async ({ page, request }) => {
+    test('registers and signs in without console IAM', async ({ page }) => {
         const email = `e2e-member-${Date.now()}@example.com`;
         const password = memberPassword();
 
@@ -78,7 +78,7 @@ test.describe('Member security flows', () => {
         await expect(page).toHaveURL(/\/member\/login/);
     });
 
-    test('completes login when two-factor is enabled', async ({ page, request }) => {
+    test('completes login when two-factor is enabled', async ({ page }) => {
         test.setTimeout(60_000);
 
         execSync(
@@ -118,7 +118,7 @@ test.describe('Member security flows', () => {
         await expect(page).toHaveURL(/\/member(?:\/dashboard)?/, { timeout: 20_000 });
     });
 
-    test('security page loads for authenticated member', async ({ page, request }) => {
+    test('security page loads for authenticated member', async ({ page }) => {
         const email = `e2e-security-${Date.now()}@example.com`;
         const token = await registerMember(request, email);
 

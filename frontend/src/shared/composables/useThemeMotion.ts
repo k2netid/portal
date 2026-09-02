@@ -1,5 +1,10 @@
 import { onUnmounted, ref } from 'vue';
 
+/**
+ * Unused by public themes. Real GSAP runtime lives in
+ * `@/modules/Layout/composables/useThemeMotion`.
+ */
+
 export interface AnimationOptions {
   delay?: number;
   duration?: number;

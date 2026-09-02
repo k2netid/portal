@@ -19,7 +19,7 @@
         v-if="post.category"
         class="absolute top-3 left-3"
       >
-        <span class="px-2.5 py-1 bg-slate-950/80 backdrop-blur-md text-orange-400 text-xs font-bold rounded-full shadow border border-orange-500/30 font-mono">
+        <span class="px-2.5 py-1 bg-slate-950/80 backdrop-blur-md text-sky-400 text-xs font-bold rounded-full shadow border border-sky-500/30 font-mono">
           {{ post.category.name }}
         </span>
       </div>

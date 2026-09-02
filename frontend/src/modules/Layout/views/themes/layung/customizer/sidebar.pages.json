@@ -1,30 +1,72 @@
 {
     "specialPageItems": [
         {
-            "id": "page-layung-about",
+            "id": "page-hero",
+            "manifestCategories": ["Hero Section", "ISP Info"],
+            "icon": "sparkles",
+            "labelKey": "theme.layung.customizer.sidebar.page_hero",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_hero_desc"
+        },
+        {
+            "id": "page-about",
             "manifestCategories": ["Public Pages"],
-            "icon": "building-2",
+            "icon": "user-circle",
             "labelKey": "theme.layung.customizer.sidebar.page_about",
             "descriptionKey": "theme.layung.customizer.sidebar.page_about_desc"
         },
         {
-            "id": "page-layung-services",
+            "id": "page-services",
             "manifestCategories": ["Public Pages"],
-            "icon": "network",
+            "icon": "globe",
             "labelKey": "theme.layung.customizer.sidebar.page_services",
             "descriptionKey": "theme.layung.customizer.sidebar.page_services_desc"
         },
         {
-            "id": "page-layung-pricing",
+            "id": "page-solusi",
             "manifestCategories": ["Public Pages"],
-            "icon": "zap",
+            "icon": "sparkles",
+            "labelKey": "theme.layung.customizer.sidebar.page_solusi",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_solusi_desc"
+        },
+        {
+            "id": "page-pricing",
+            "manifestCategories": ["Public Pages"],
+            "icon": "sparkles",
             "labelKey": "theme.layung.customizer.sidebar.page_pricing",
             "descriptionKey": "theme.layung.customizer.sidebar.page_pricing_desc"
         },
         {
-            "id": "page-layung-contact",
+            "id": "page-achievements",
             "manifestCategories": ["Public Pages"],
-            "icon": "headset",
+            "icon": "award",
+            "labelKey": "theme.layung.customizer.sidebar.page_achievement",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_achievement_desc"
+        },
+        {
+            "id": "page-tim",
+            "manifestCategories": ["Public Pages"],
+            "icon": "user-circle",
+            "labelKey": "theme.layung.customizer.sidebar.page_tim",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_tim_desc"
+        },
+        {
+            "id": "page-careers",
+            "manifestCategories": ["Public Pages"],
+            "icon": "briefcase",
+            "labelKey": "theme.layung.customizer.sidebar.page_careers",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_careers_desc"
+        },
+        {
+            "id": "page-news",
+            "manifestCategories": ["Public Pages"],
+            "icon": "newspaper",
+            "labelKey": "theme.layung.customizer.sidebar.page_news",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_news_desc"
+        },
+        {
+            "id": "page-contact",
+            "manifestCategories": ["Public Pages"],
+            "icon": "globe",
             "labelKey": "theme.layung.customizer.sidebar.page_contact",
             "descriptionKey": "theme.layung.customizer.sidebar.page_contact_desc"
         }

@@ -106,14 +106,6 @@ npm install
 npm run dev
 ```
 
-Akses browser: **`http://localhost:5273/`** atau **`http://192.168.88.66:5273/`**
-
-**Default Kredensial Super Admin:**
-- **Username / Email:** `super` / `super@jejakawan.com`
-- **Password:** `password`
-
----
-
 ## 🧪 Quality Gates & Pengujian
 
 ```bash

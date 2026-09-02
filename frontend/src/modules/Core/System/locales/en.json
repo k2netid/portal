@@ -61,7 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "Jejakawan Console"
+    "consoleTitle": "K2NET Console",
+    "publicTitle": "K2NET"
   },
   "routes": {
     "maintenance": "Under Maintenance",

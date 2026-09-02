@@ -226,6 +226,8 @@ export default defineConfig({
       'radix-vue',
       'axios',
       'zod',
+      'gsap',
+      'gsap/ScrollTrigger',
     ],
   },
   server: {

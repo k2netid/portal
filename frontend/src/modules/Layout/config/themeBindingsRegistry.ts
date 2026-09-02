@@ -19,8 +19,9 @@ export interface ThemeBindingRegistryComponent {
     id: string;
     nameKey: string;
     descriptionKey: string;
-    icon: 'hero' | 'news' | 'testimonials' | 'cta' | 'partners';
+    icon: string;
     manifestCategory?: string;
+    manifestCategories?: string[];
     slots: ThemeBindingRegistrySlot[];
 }
 

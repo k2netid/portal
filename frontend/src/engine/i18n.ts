@@ -47,7 +47,9 @@ const initialMessages = {
 
 const i18n = createI18n({
     ...config,
-    locale: detectedLocale,
+    // Always boot with the catalog that is already inlined. Setting `en`/`su`
+    // before their lazy packs load makes t() return raw keys (customizer sidebar).
+    locale: 'id',
     messages: initialMessages,
 });
 
@@ -65,7 +67,12 @@ export const loadLocaleMessages = async (locale: string): Promise<void> => {
 };
 
 if (detectedLocale !== 'id') {
-    void loadLocaleMessages(detectedLocale);
+    void loadLocaleMessages(detectedLocale).then(() => {
+        getComposer().locale.value = detectedLocale;
+        document.documentElement.lang = detectedLocale;
+    });
+} else {
+    document.documentElement.lang = 'id';
 }
 
 export default i18n;

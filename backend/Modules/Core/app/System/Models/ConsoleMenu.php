@@ -730,6 +730,42 @@ class ConsoleMenu extends Model
     }
 
     /**
+     * Remove duplicate root groups (same group_slug) — keep lowest order, re-parent children.
+     */
+    public static function deduplicateRootMenus(): void
+    {
+        $roots = self::query()
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->orderBy('created_at')
+            ->get();
+
+        /** @var array<string, self> $keepers */
+        $keepers = [];
+
+        foreach ($roots as $root) {
+            $slug = $root->group_slug !== '' ? $root->group_slug : $root->name;
+            if ($slug === '') {
+                continue;
+            }
+
+            if (! isset($keepers[$slug])) {
+                $keepers[$slug] = $root;
+
+                continue;
+            }
+
+            $keeper = $keepers[$slug];
+
+            self::query()
+                ->where('parent_id', $root->id)
+                ->update(['parent_id' => $keeper->id, 'group_slug' => $keeper->group_slug]);
+
+            $root->delete();
+        }
+    }
+
+    /**
      * @param  array<string, mixed>  $group
      */
     protected static function createGroupWithChildren(array $group, int $groupIndex): self

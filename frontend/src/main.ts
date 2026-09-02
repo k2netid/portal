@@ -8,7 +8,7 @@ import {
     useLoggerPlugin,
 } from './main-shared';
 
-document.title = i18n.global.t('system.app.consoleTitle', 'Jejakawan Console');
+document.title = i18n.global.t('system.app.consoleTitle', 'K2NET Console');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('console'));
@@ -37,17 +37,18 @@ async function bootstrap(): Promise<void> {
     });
 
     if (authStore.isAuthenticated) {
-        void apiClient
-            .get('/manage/console-menus')
-            .then((res) => {
-                const data = res.data?.data || res.data;
-                if (Array.isArray(data) && data.length > 0) {
-                    navStore.setDatabaseMenus(data);
-                }
-            })
-            .catch((error) => {
-                logger.warning('[App] Failed to load console database menus', error);
-            });
+        try {
+            const res = await apiClient.get('/manage/console-menus');
+            const data = res.data?.data || res.data;
+            if (Array.isArray(data) && data.length > 0) {
+                navStore.setDatabaseMenus(data);
+            } else {
+                navStore.markMenusReady();
+            }
+        } catch (error) {
+            logger.warning('[App] Failed to load console database menus', error);
+            navStore.markMenusReady();
+        }
 
         void apiClient
             .get('/manage/infra/extensions/navigation')
@@ -59,6 +60,8 @@ async function bootstrap(): Promise<void> {
             .catch((error) => {
                 logger.warning('[App] Failed to load dynamic plugin navigation', error);
             });
+    } else {
+        navStore.markMenusReady();
     }
 
     registry.getDashboards().forEach((db) => dbStore.registerDashboard(db));

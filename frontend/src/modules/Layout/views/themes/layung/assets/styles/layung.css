@@ -1,32 +1,34 @@
 /* ==========================================================================
    Layung — High-Performance ISP & Managed Service Provider Theme
    Filosofi Basa Sunda: Cahaya Layung (Cahaya beureum/jingga di langit pasosoré).
-   Merepresentasikan: Pancaran Serat Optik (Fiber Photon Beam), Konektivitas 24/7,
-   99.999% SLA Uptime, Network Operations Center (NOC) & Managed Cloud Solutions.
+   Merepresentasikan: Konektivitas ISP, managed services, dan operasional jaringan 24/7.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Cyber Twilight Palette (Photon Orange, Crimson Dusk & Cyber Obsidian) */
+  /* K2NET brand: cyan wordmark #00AEEF on charcoal/black */
   --layung-obsidian: #070a0f;
   --layung-obsidian-surface: #0b111a;
   --layung-obsidian-card: #0f1724;
-  --layung-orange: #f97316;
-  --layung-orange-glow: #ea580c;
+  --k2net-cyan: #00aeef;
+  --k2net-cyan-deep: #0094cc;
+  --k2net-ink: #1a1a1a;
+  --layung-orange: #00aeef;
+  --layung-orange-glow: #0094cc;
   --layung-crimson: #ef4444;
-  --layung-cyan: #06b6d4;
-  --layung-cyan-glow: #0891b2;
-  --layung-blue: #2563eb;
+  --layung-cyan: #00aeef;
+  --layung-cyan-glow: #38c6f4;
+  --layung-blue: #0077a8;
   --layung-emerald: #10b981;
   
   /* Theme tokens */
-  --layung-primary: var(--theme-color-primary, #f97316);
-  --layung-secondary: var(--theme-color-secondary, #06b6d4);
-  --layung-accent: var(--theme-color-accent, #ef4444);
-  --layung-font-heading: var(--theme-font-heading, 'Space Grotesk', system-ui, sans-serif);
-  --layung-font-body: var(--theme-font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
-  --layung-font-mono: 'JetBrains Mono', monospace;
+  --layung-primary: var(--theme-color-primary, #00aeef);
+  --layung-secondary: var(--theme-color-secondary, #0077a8);
+  --layung-accent: var(--theme-color-accent, #38c6f4);
+  --layung-font-heading: Geist, ui-sans-serif, system-ui, sans-serif;
+  --layung-font-body: Geist, ui-sans-serif, system-ui, sans-serif;
+  --layung-font-mono: 'Geist Mono', ui-monospace, monospace;
   
   --layung-radius: 0.85rem;
   --layung-radius-sm: 0.5rem;
@@ -34,12 +36,12 @@
 }
 
 .layung-theme {
-  --primary: 24 95% 53%;
+  --primary: 196 100% 47%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 189 94% 43%;
+  --secondary: 196 100% 33%;
   --secondary-foreground: 0 0% 100%;
-  --accent: 0 84% 60%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 196 89% 59%;
+  --accent-foreground: 210 40% 8%;
   --background: 220 33% 98%;
   --foreground: 222 47% 11%;
   --muted: 215 25% 92%;
@@ -47,23 +49,30 @@
   --card: 0 0% 100%;
   --card-foreground: 222 47% 11%;
   --border: 214 32% 88%;
-  --ring: 24 95% 53%;
+  --ring: 196 100% 47%;
 
   font-family: var(--layung-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.014em;
   color: hsl(var(--foreground));
   background-color: hsl(var(--background));
   display: flex;
   flex-direction: column;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .dark .layung-theme,
 .layung-theme.dark {
-  --primary: 24 95% 53%;
+  --primary: 196 100% 47%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 189 94% 43%;
-  --secondary-foreground: 0 0% 100%;
-  --accent: 0 84% 60%;
+  --secondary: 196 89% 59%;
+  --secondary-foreground: 210 40% 8%;
+  --accent: 196 100% 40%;
   --accent-foreground: 0 0% 100%;
   --background: 222 47% 4%;
   --foreground: 210 40% 98%;
@@ -72,14 +81,80 @@
   --card: 222 40% 7%;
   --card-foreground: 210 40% 98%;
   --border: 222 30% 15%;
-  --ring: 24 95% 53%;
+  --ring: 196 100% 47%;
+}
+
+.layung-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 2.25rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid rgb(15 23 42 / 0.08);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 6px 16px rgb(15 23 42 / 0.06);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.layung-brand-mark:hover {
+  border-color: rgb(0 174 239 / 0.35);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 8px 20px rgb(0 174 239 / 0.12);
+}
+
+.layung-brand-mark__img {
+  display: block;
+  height: 1.7rem;
+  width: auto;
+  max-width: 9.5rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.dark .layung-brand-mark,
+.layung-theme.dark .layung-brand-mark {
+  background: #fff;
+  border-color: rgb(0 174 239 / 0.22);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(0 174 239 / 0.12);
 }
 
 .layung-theme .font-heading,
 .layung-heading {
   font-family: var(--layung-font-heading);
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+
+.layung-theme .font-black,
+.layung-theme .font-extrabold,
+.layung-theme .font-bold,
+.layung-theme .font-semibold {
+  font-weight: 500 !important;
+}
+
+.layung-theme h1.font-heading {
+  font-size: clamp(1.5rem, 1.05rem + 1.6vw, 2.25rem) !important;
+  line-height: 1.15 !important;
+  font-weight: 500 !important;
+}
+
+.layung-theme h2.font-heading {
+  font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.4rem) !important;
+  line-height: 1.25 !important;
+  font-weight: 500 !important;
+}
+
+.layung-theme h3.font-heading,
+.layung-theme h4.font-heading {
+  font-weight: 500;
   letter-spacing: -0.03em;
-  font-weight: 700;
 }
 
 .layung-theme .font-mono,
@@ -94,13 +169,13 @@
   inset: -10% -10% auto auto;
   width: 60vw;
   height: 60vh;
-  background: radial-gradient(circle at 70% 30%, rgba(249, 115, 22, 0.08), rgba(6, 182, 212, 0.04) 50%, transparent 70%);
+  background: radial-gradient(circle at 70% 30%, rgba(0, 174, 239, 0.1), rgba(0, 119, 168, 0.05) 50%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
 .dark .layung-theme::before {
-  background: radial-gradient(circle at 70% 30%, rgba(249, 115, 22, 0.09), rgba(6, 182, 212, 0.06) 50%, transparent 75%);
+  background: radial-gradient(circle at 70% 30%, rgba(0, 174, 239, 0.12), rgba(0, 119, 168, 0.07) 50%, transparent 75%);
 }
 
 .layung-theme .layung-theme::before {
@@ -114,8 +189,8 @@
   z-index: 1;
 }
 
-.layung-theme > .relative.z-50 {
-  position: relative;
+.layung-theme > .relative.z-50,
+.layung-theme > .sticky {
   z-index: 100;
   isolation: isolate;
 }
@@ -141,7 +216,7 @@ header[data-ja-customizer-target="header"] .layung-panel {
 
 /* High-Tech ISP Hero */
 .layung-hero {
-  min-height: min(88vh, 820px);
+  min-height: min(64vh, 560px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,8 +224,8 @@ header[data-ja-customizer-target="header"] .layung-panel {
   overflow: hidden;
   position: relative;
   background:
-    radial-gradient(ellipse 80% 50% at 85% 15%, rgba(249, 115, 22, 0.22), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(6, 182, 212, 0.18), transparent 65%),
+    radial-gradient(ellipse 80% 50% at 85% 15%, rgba(0, 174, 239, 0.22), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(0, 80, 140, 0.2), transparent 65%),
     linear-gradient(155deg, #05080e 0%, #0a111c 45%, #0e1726 100%);
   color: #f8fafc;
 }
@@ -177,7 +252,7 @@ header[data-ja-customizer-target="header"] .layung-panel {
 }
 
 .layung-panel:hover {
-  border-color: rgba(249, 115, 22, 0.4);
+  border-color: rgba(0, 174, 239, 0.4);
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.12);
 }
 
@@ -188,6 +263,18 @@ header[data-ja-customizer-target="header"] .layung-panel {
   grid-template-columns: 1fr;
 }
 
+.layung-bento--pillars {
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.layung-bento--pillars .layung-bento__cell {
+  height: 100%;
+  min-height: 100%;
+  opacity: 1;
+  transform: none;
+}
+
 @media (min-width: 768px) {
   .layung-bento {
     grid-template-columns: repeat(3, 1fr);
@@ -195,6 +282,10 @@ header[data-ja-customizer-target="header"] .layung-panel {
 
   .layung-bento__wide {
     grid-column: span 2;
+  }
+
+  .layung-bento--pillars .layung-bento__wide {
+    grid-column: span 1;
   }
 }
 
@@ -215,7 +306,7 @@ header[data-ja-customizer-target="header"] .layung-panel {
 .layung-bento__cell:hover {
   transform: translateY(-3px);
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
-  border-color: rgba(249, 115, 22, 0.5);
+  border-color: rgba(0, 174, 239, 0.5);
 }
 
 .layung-bento__cell--cyber {
@@ -225,19 +316,19 @@ header[data-ja-customizer-target="header"] .layung-panel {
 }
 
 .layung-bento__cell--cyber:hover {
-  border-color: rgba(6, 182, 212, 0.6);
-  box-shadow: 0 24px 48px -12px rgba(6, 182, 212, 0.25);
+  border-color: rgba(0, 174, 239, 0.6);
+  box-shadow: 0 24px 48px -12px rgba(0, 174, 239, 0.25);
 }
 
 .layung-bento__cell--orange {
-  background: linear-gradient(145deg, #1c0e05 0%, #2e1709 100%);
+  background: linear-gradient(145deg, #041820 0%, #063040 100%);
   color: #f8fafc;
-  border-color: rgba(249, 115, 22, 0.3);
+  border-color: rgba(0, 174, 239, 0.28);
 }
 
 .layung-bento__cell--orange:hover {
-  border-color: rgba(249, 115, 22, 0.7);
-  box-shadow: 0 24px 48px -12px rgba(249, 115, 22, 0.3);
+  border-color: rgba(0, 174, 239, 0.7);
+  box-shadow: 0 24px 48px -12px rgba(0, 174, 239, 0.28);
 }
 
 /* Glowing Fiber Line Animation */
@@ -247,7 +338,7 @@ header[data-ja-customizer-target="header"] .layung-panel {
 }
 
 .layung-fiber-glow {
-  box-shadow: 0 0 25px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 0 25px rgba(0, 174, 239, 0.35);
   animation: fiberPulse 3s ease-in-out infinite;
 }
 
@@ -264,4 +355,174 @@ header[data-ja-customizer-target="header"] .layung-panel {
   border-radius: 9999px;
   background-color: #10b981;
   animation: pulseDot 2s infinite;
+}
+
+/* All public Layung pages: coastal canvas + footer wave — layout class `.layung-inner-canvas` (SoT). */
+.layung-theme .route-shell {
+  contain: none;
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.layung-theme.layung-inner-canvas .route-shell > * {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.layung-theme.layung-inner-canvas {
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse 90% 55% at 100% -8%, rgba(56, 198, 244, 0.2), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 0% 18%, rgba(186, 230, 253, 0.5), transparent 55%),
+    linear-gradient(180deg, #f3fbff 0%, #eaf5fb 48%, #e4eef6 100%);
+}
+
+.layung-theme main.main-content.layung-inner-canvas {
+  isolation: isolate;
+  background: transparent;
+}
+
+.layung-theme main.main-content.layung-inner-canvas::after {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  height: 4.75rem;
+  margin-top: auto;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 76' preserveAspectRatio='none'%3E%3Cpath fill='%23020617' d='M0 38c180 26 360-22 540-6s360 36 540 6 360-26 360-6v44H0z'/%3E%3C/svg%3E")
+      no-repeat bottom center / 100% 100%;
+}
+
+.dark .layung-theme.layung-inner-canvas,
+.layung-theme.dark.layung-inner-canvas {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 92% -10%, rgba(0, 174, 239, 0.16), transparent 56%),
+    radial-gradient(ellipse 55% 40% at 8% 20%, rgba(0, 80, 140, 0.18), transparent 58%),
+    linear-gradient(180deg, #0b1220 0%, #070b14 100%);
+}
+
+.layung-theme.layung-inner-canvas .layung-panel {
+  background: hsl(0 0% 100% / 0.82);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  box-shadow:
+    0 1px 0 hsl(0 0% 100% / 0.7) inset,
+    0 12px 40px -18px rgba(15, 23, 42, 0.16);
+}
+
+.dark .layung-theme.layung-inner-canvas .layung-panel,
+.layung-theme.dark.layung-inner-canvas .layung-panel {
+  background: hsl(222 40% 8% / 0.78);
+  box-shadow:
+    0 1px 0 hsl(210 40% 98% / 0.06) inset,
+    0 16px 40px -18px rgba(0, 0, 0, 0.45);
+}
+
+.layung-panel .layung-contact-card {
+  background: hsl(210 40% 99% / 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+.layung-contact-card--channel {
+  align-items: center;
+}
+
+.dark .layung-panel .layung-contact-card,
+.layung-theme.dark .layung-panel .layung-contact-card {
+  background: hsl(222 40% 12% / 0.82);
+}
+
+.layung-contact-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid hsl(199 80% 80% / 0.42);
+  background: hsl(0 0% 100% / 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 28px -18px rgba(15, 23, 42, 0.16);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.layung-contact-card:hover,
+.layung-contact-card:focus-visible {
+  border-color: rgba(0, 174, 239, 0.45);
+  background: hsl(0 0% 100% / 0.92);
+  box-shadow: 0 14px 32px -16px rgba(0, 174, 239, 0.22);
+  outline: none;
+}
+
+.layung-contact-card:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.layung-contact-card__icon {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.65rem;
+  background: hsl(199 90% 94% / 0.9);
+}
+
+.layung-contact-card__label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  font-family: var(--layung-font-mono);
+}
+
+.layung-contact-card__value {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: hsl(var(--foreground));
+}
+
+.dark .layung-contact-card,
+.layung-theme.dark .layung-contact-card {
+  border-color: hsl(199 40% 30% / 0.35);
+  background: hsl(222 40% 8% / 0.72);
+}
+
+.dark .layung-contact-card:hover,
+.dark .layung-contact-card:focus-visible,
+.layung-theme.dark .layung-contact-card:hover,
+.layung-theme.dark .layung-contact-card:focus-visible {
+  border-color: rgba(0, 174, 239, 0.45);
+  background: hsl(222 40% 10% / 0.88);
+}
+
+.layung-contact-card__icon--wa {
+  background: hsl(152 55% 92% / 0.95);
+  color: #059669;
+}
+
+.dark .layung-contact-card__icon,
+.layung-theme.dark .layung-contact-card__icon {
+  background: hsl(199 60% 18% / 0.55);
+}
+
+.dark .layung-contact-card__icon--wa,
+.layung-theme.dark .layung-contact-card__icon--wa {
+  background: hsl(152 40% 16% / 0.7);
+  color: #34d399;
 }

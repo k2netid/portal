@@ -396,20 +396,25 @@ const getMetadata = (key: string, fallback: any = null) => {
 };
 
 const updateMetadataField = (key: string, value: any) => {
-    if (!selectedItem.value) return;
-    const itemId = selectedItem.value.id || selectedItem.value._temp_id!;
-    const currentMeta = (selectedItem.value.metadata as Record<string, any>) || {};
+    const current = selectedItem.value;
+    if (!current) return;
+    const currentMeta = (current.metadata as Record<string, any>) || {};
     const newMeta = {
         ...currentMeta,
         [key]: value
     };
-    menuContext.updateItem(itemId, { metadata: newMeta });
+    Object.assign(current, { metadata: newMeta });
+    menuContext.takeSnapshot();
 };
 
 const updateField = (key: string, value: PropertyValue) => {
-    if (!selectedItem.value) return;
-    const itemId = selectedItem.value.id || selectedItem.value._temp_id!;
-    menuContext.updateItem(itemId, { [key]: value });
+    const current = selectedItem.value;
+    if (!current) return;
+    // Mutate the live tree node (selectedItem is findItemById, not a copy).
+    // A second lookup by id used to no-op when string/number ids diverged, so
+    // the input looked edited while save still posted the old title/url.
+    Object.assign(current, { [key]: value });
+    menuContext.takeSnapshot();
 };
 
 const handleDuplicate = () => {

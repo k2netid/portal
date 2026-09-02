@@ -2,7 +2,7 @@
   <div 
     ref="layoutRoot"
     class="frontend-layout min-h-screen flex flex-col bg-background text-foreground"
-    :class="[rootClasses, activeThemeClass]"
+    :class="[rootClasses, activeThemeClass, layungCanvasClass]"
     :style="[rootStyles, janariRootStyleVars]"
     v-bind="janariRootDataAttrs"
   >
@@ -10,7 +10,7 @@
     <!-- For Hybrid: Header/Footer are here (full), Main is constrained below -->
     <!-- For Full: Everything is here -->
     <template v-if="activeTheme && (layoutStyle === 'full' || layoutStyle === 'hybrid')">
-      <div class="relative z-50 overflow-visible">
+      <div :class="headerChromeClass">
         <ThemePageResolver :page="chromeHeaderPage" />
       </div>
       <PluginSlot name="after_header" />
@@ -18,19 +18,22 @@
       <!-- Main Content -->
       <!-- Hybrid: Main is boxed | Full: Main is full -->
       <main
-        class="main-content flex-1 w-full relative z-0"
-        :class="mainChromePaddingClass"
+        class="main-content flex-1 w-full relative z-0 flex flex-col min-h-0"
+        :class="[mainChromePaddingClass, layungCanvasClass]"
       >
         <div
+          class="flex-1 flex flex-col min-h-0"
           :class="{
-            'container mx-auto': layoutStyle === 'hybrid',
-            'px-6 md:px-12 lg:px-20': layoutStyle === 'hybrid', // Increased padding
+            'container mx-auto px-6 md:px-12 lg:px-20': layoutStyle === 'hybrid',
             'w-full': layoutStyle === 'full'
           }"
           :style="hybridContentStyles"
         >
           <router-view v-slot="{ Component }">
-            <div class="w-full h-full flex-1 flex flex-col page-enter route-shell">
+            <div
+              :key="route.path"
+              class="w-full h-full flex-1 flex flex-col page-enter route-shell"
+            >
               <component :is="Component" />
             </div>
           </router-view>
@@ -52,18 +55,21 @@
       :class="wrapperClasses"
       :style="wrapperStyles"
     >
-      <div class="relative z-50 overflow-visible">
+      <div :class="headerChromeClass">
         <ThemePageResolver :page="chromeHeaderPage" />
       </div>
       <PluginSlot name="after_header" />
       
       <main
-        class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0"
-        :class="mainChromePaddingClass"
+        class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0 flex flex-col min-h-0"
+        :class="[mainChromePaddingClass, layungCanvasClass]"
       >
         <!-- Added padding here too -->
         <router-view v-slot="{ Component }">
-          <div class="w-full h-full flex-1 flex flex-col page-enter route-shell">
+          <div
+            :key="route.path"
+            class="w-full h-full flex-1 flex flex-col page-enter route-shell"
+          >
             <component :is="Component" />
           </div>
         </router-view>
@@ -101,7 +107,10 @@
       </div>
       <main class="main-content flex-1 w-full">
         <router-view v-slot="{ Component }">
-          <div class="w-full h-full flex-1 flex flex-col page-enter route-shell">
+          <div
+            :key="route.path"
+            class="w-full h-full flex-1 flex flex-col page-enter route-shell"
+          >
             <component :is="Component" />
           </div>
         </router-view>
@@ -129,6 +138,7 @@ import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
 import { useCustomizerPreviewProbe } from '@/modules/Layout/customizer/preview/useCustomizerPreviewProbe'
+import { isCustomizerPreviewQuery } from '@/modules/Layout/customizer/preview/protocol'
 import '@/modules/Layout/customizer/preview/customizer-preview.css'
 import { PluginSlot } from '@/shared/components'
 import {
@@ -136,11 +146,15 @@ import {
 } from 'lucide-vue-next'
 import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets'
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest'
+import { headerChromeWrapClass, isHeaderStickySetting } from '@/modules/Layout/layouts/headerChromeWrap'
 import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { useRoute } from 'vue-router'
+import { useSystemStore } from '@/modules/Core/System/stores/system'
+import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon'
 
 const { t } = useI18n({ useScope: 'global' })
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
+const systemStore = useSystemStore()
 
 const backToTopLabel = computed(() => t('layout.frontend.backToTop'))
 const route = useRoute()
@@ -167,6 +181,8 @@ const CORE_PUBLIC_PATH_TO_PAGE: Record<string, string> = {
   '/tim': 'Tim',
   '/solusi': 'Solusi',
   '/pricing': 'Pricing',
+  '/pricing/isp': 'PricingIsp',
+  '/pricing/msp': 'PricingMsp',
   '/blog': 'Blog',
   '/contact': 'Contact',
 }
@@ -176,6 +192,13 @@ const activeThemeSlug = computed(
 )
 
 const usesJanariCanvas = computed(() => themeUsesJanariCanvas(activeTheme.value))
+
+/** Layung public pages share one coastal canvas + footer wave from this layout (SoT). */
+const layungCanvasClass = computed(() => {
+  if (activeThemeSlug.value.toLowerCase() !== 'layung') return ''
+  if (useMemberShell.value) return ''
+  return 'layung-inner-canvas'
+})
 
 const activeThemeClass = computed(() => {
   const slug = activeThemeSlug.value
@@ -358,7 +381,13 @@ const hybridContentStyles = computed(() => {
 })
 
 const enableBackToTop = computed(() => getSetting('back_to_top', true) as boolean)
-const headerSticky = computed(() => getSetting('header_sticky', true) as boolean)
+const headerSticky = computed(() => isHeaderStickySetting(getSetting('header_sticky', true)))
+const headerChromeClass = computed(() =>
+  headerChromeWrapClass({
+    sticky: headerSticky.value && !useMemberShell.value,
+    janariFixed: usesJanariCanvas.value,
+  }),
+)
 
 /** Public Janari fixed header needs offset; quiet member shell is sticky (~3.5rem) and needs none. */
 const mainChromePaddingClass = computed(() => {
@@ -492,8 +521,12 @@ const handleCustomizerSync = (event: MessageEvent) => {
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('message', handleCustomizerSync)
-  // Force reconcile with API — sessionStorage snapshot must not lock a stale Sarangenge shell.
-  await retryThemeLoadIfNeeded({ force: true })
+  // Public site: force reconcile so a stale session snapshot cannot lock the wrong shell.
+  // Customizer iframe: keep the draft from THEME_BOOT / sessionStorage — a force API reload
+  // would wipe live sticky/menu edits before they paint.
+  const inCustomizerPreview = typeof window !== 'undefined'
+    && isCustomizerPreviewQuery(window.location.search)
+  await retryThemeLoadIfNeeded({ force: !inCustomizerPreview })
   schedulePublicPrefetch()
 
   // Apply janari vars immediately on mount
@@ -520,6 +553,26 @@ watch(() => activeTheme.value?.slug, () => {
   prefetchedThemePages.clear()
   schedulePublicPrefetch()
 })
+
+const publicFaviconHref = computed(() => resolveFavicon([
+  getSetting('brand_favicon', ''),
+  systemStore.appIdentity?.app_favicon,
+  systemStore.siteSettings?.site_favicon,
+]))
+
+const publicFaviconReady = computed(() =>
+  activeTheme.value !== null || (!loading.value && !!error.value),
+)
+
+watch(
+  [publicFaviconHref, publicFaviconReady],
+  ([href, ready]) => {
+    if (!href) return
+    if (isGenericEngineFavicon(href) && !ready) return
+    applyFavicon(href, { allowGeneric: ready })
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>
@@ -539,7 +592,7 @@ watch(() => activeTheme.value?.slug, () => {
 }
 
 .route-shell {
-  contain: layout paint style;
+  contain: layout style;
 }
 
 @media (prefers-reduced-motion: reduce), (max-width: 1024px) {

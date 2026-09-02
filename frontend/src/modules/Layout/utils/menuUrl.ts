@@ -32,6 +32,26 @@ export function getInternalUrl(url?: string | null): string {
   return url;
 }
 
+/** Home-page hashes that used to mean "contact" (often landed on the footer). */
+const CONTACT_HOME_HASHES = new Set(['contact', 'contact-form', 'noc']);
+
+/**
+ * Public nav target. Hash-only contact links on `/` become `/contact`
+ * so menu items open the contact page instead of scrolling the homepage.
+ */
+export function resolvePublicMenuTo(url?: string | null): string {
+  const raw = (url || '').trim();
+  if (!raw) return '/';
+  if (isExternalLink(raw)) return raw;
+
+  const { path, hash } = splitMenuUrl(raw);
+  const hashId = hash.replace(/^#/, '');
+  if (path === '/' && CONTACT_HOME_HASHES.has(hashId)) {
+    return '/contact';
+  }
+  return getInternalUrl(raw);
+}
+
 export function isRoutePathMatch(targetPath: string, currentPath: string): boolean {
   if (!targetPath) return false;
   if (targetPath === '/') return currentPath === '/';
