@@ -2,26 +2,26 @@
   <section
     id="calculator"
     data-ja-customizer-target="calculator"
-    class="scroll-mt-24 my-6 w-full relative z-10"
+    class="scroll-mt-24 my-6 w-full max-w-full overflow-hidden relative z-10"
   >
     <span id="simulator" class="sr-only">Simulator</span>
 
     <!-- Single Unified Main Card (No double wrapper, 100% width matching top section) -->
-    <div class="relative overflow-hidden w-full bg-slate-950 text-white border border-slate-800 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-2xl space-y-8">
+    <div class="relative overflow-hidden w-full max-w-full bg-slate-950 text-white border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 shadow-2xl space-y-6 sm:space-y-8">
       <!-- Glow ambient background inside the card -->
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
       <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <!-- 1. Card Header: Title & Scientific Methodology Benchmark -->
       <div class="space-y-3 relative z-10">
-        <div class="flex flex-wrap items-center justify-between gap-2.5">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-mono uppercase tracking-wider">
-            <Sparkles class="w-3.5 h-3.5" />
-            {{ t('calculator.badge', 'Simulator Bandwidth K2NET') }}
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <span class="inline-flex items-center self-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-mono uppercase tracking-wider">
+            <Sparkles class="w-3.5 h-3.5 shrink-0" />
+            <span>{{ t('calculator.badge', 'Simulator Bandwidth K2NET') }}</span>
           </span>
-          <div class="inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-400 bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-800">
+          <div class="inline-flex items-center self-start sm:self-auto gap-1.5 text-[10px] sm:text-[11px] font-mono text-slate-400 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 max-w-full">
             <BarChart2 class="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span>Formula Konkurensi Cisco & Standar Ookla® Speedtest</span>
+            <span class="truncate">Standar Benchmark Ookla® & Cisco</span>
           </div>
         </div>
 
@@ -37,16 +37,16 @@
       <div class="space-y-6 relative z-10 pt-2 border-t border-slate-800/80">
         <!-- Step 1: Segment Filter -->
         <div class="space-y-2.5">
-          <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
             <span>1. Pilih Segmen Lingkungan:</span>
-            <span class="text-cyan-400 font-normal lowercase">{{ currentSegmentNote }}</span>
+            <span class="text-cyan-400 font-normal lowercase text-[11px] sm:text-xs">{{ currentSegmentNote }}</span>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button
               v-for="seg in segments"
               :key="seg.id"
               type="button"
-              class="px-3.5 py-2.5 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all"
+              class="px-3 py-2.5 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all"
               :class="activeSegment === seg.id
                 ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold shadow-sm shadow-cyan-500/20'
                 : 'bg-slate-900/70 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'"
@@ -56,19 +56,19 @@
                 :is="seg.icon"
                 class="w-4 h-4 shrink-0"
               />
-              <span>{{ seg.label }}</span>
+              <span class="truncate">{{ seg.label }}</span>
             </button>
           </div>
         </div>
 
         <!-- Step 2: Device Slider & Presets -->
         <div class="space-y-3 pt-2 border-t border-slate-800/60">
-          <div class="flex items-center justify-between">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
             <label class="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
               2. Estimasi Jumlah Perangkat Terhubung:
             </label>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono font-bold text-sm">
-              <Users class="w-4 h-4" />
+            <div class="inline-flex items-center self-start sm:self-auto gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono font-bold text-sm">
+              <Users class="w-4 h-4 shrink-0" />
               <span>{{ userCount }} Perangkat</span>
             </div>
           </div>
@@ -82,7 +82,7 @@
               :step="sliderStep"
               class="w-full accent-cyan-400 bg-slate-900 h-2.5 rounded-lg cursor-pointer transition-all"
             >
-            <div class="flex justify-between text-[11px] text-slate-500 font-mono">
+            <div class="flex justify-between text-[10px] sm:text-[11px] text-slate-500 font-mono">
               <span>Min: {{ sliderMin }} Unit</span>
               <span>Rata-rata: {{ Math.round((sliderMin + sliderMax) / 2) }}</span>
               <span>Max: {{ sliderMax }}+ Unit</span>
@@ -91,12 +91,12 @@
 
           <!-- Quick Presets -->
           <div class="flex flex-wrap items-center gap-1.5 pt-1">
-            <span class="text-[10px] text-slate-500 font-mono uppercase tracking-wider mr-1">Preset Cepat:</span>
+            <span class="text-[10px] text-slate-500 font-mono uppercase tracking-wider mr-1 shrink-0">Preset Cepat:</span>
             <button
               v-for="p in currentPresets"
               :key="p.count"
               type="button"
-              class="px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all"
+              class="px-2 py-1 rounded-md text-[10px] sm:text-[11px] font-mono border transition-all text-center"
               :class="userCount === p.count
                 ? 'bg-cyan-500 text-slate-950 font-bold border-cyan-400'
                 : 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300'"
@@ -109,11 +109,11 @@
 
         <!-- Step 3: Workload Profiling (Ookla Benchmarks) -->
         <div class="space-y-2.5 pt-2 border-t border-slate-800/60">
-          <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
             <span>3. Karakteristik Beban Aktivitas Utama:</span>
-            <span class="text-slate-500 font-normal">Standar Ookla: {{ currentWorkloadThroughput }}</span>
+            <span class="text-slate-400 font-normal text-[11px] sm:text-xs">Standar Ookla: {{ currentWorkloadThroughput }}</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
             <button
               v-for="w in workloads"
               :key="w.id"
@@ -138,30 +138,30 @@
       </div>
 
       <!-- 3. Scientific Calculation Summary Bar -->
-      <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono">
+      <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 sm:p-4 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-xs font-mono overflow-hidden">
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Beban per User (Ookla)</span>
-          <strong class="text-cyan-400 text-sm">{{ currentWorkloadRate }} Mbps</strong>
+          <span class="text-slate-500 block text-[10px] uppercase">Beban User (Ookla)</span>
+          <strong class="text-cyan-400 text-xs sm:text-sm">{{ currentWorkloadRate }} Mbps</strong>
         </div>
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Rasio Konkurensi (Cisco)</span>
-          <strong class="text-white text-sm">{{ (concurrencyRatio * 100).toFixed(0) }}% (~{{ activeConcurrentUsers }} user aktif)</strong>
+          <span class="text-slate-500 block text-[10px] uppercase">Konkurensi (Cisco)</span>
+          <strong class="text-white text-xs sm:text-sm">{{ (concurrencyRatio * 100).toFixed(0) }}% (~{{ activeConcurrentUsers }} user)</strong>
         </div>
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Safety Headroom</span>
-          <strong class="text-emerald-400 text-sm">+25% Buffer</strong>
+          <span class="text-slate-500 block text-[10px] uppercase">Headroom Buffer</span>
+          <strong class="text-emerald-400 text-xs sm:text-sm">+25% Margin</strong>
         </div>
         <div>
           <span class="text-slate-500 block text-[10px] uppercase">Kebutuhan Bandwidth</span>
-          <strong class="text-cyan-300 text-sm">{{ calculatedRequirementText }}</strong>
+          <strong class="text-cyan-300 text-xs sm:text-sm">{{ calculatedRequirementText }}</strong>
         </div>
       </div>
 
       <!-- 4. Real K2NET Calculated Recommendation Card -->
-      <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/80 border-2 border-cyan-500/50 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+      <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/80 border-2 border-cyan-500/50 rounded-2xl p-4 sm:p-6 lg:p-8 space-y-5 shadow-xl">
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-          <div class="space-y-3 flex-1">
-            <div class="flex flex-wrap items-center gap-2">
+          <div class="space-y-3 flex-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
               <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
                 {{ recommendedPlan.tierBadge }}
               </span>
@@ -171,13 +171,13 @@
               >
                 Pilihan Terpopuler
               </span>
-              <span class="text-xs text-slate-400 font-mono">
+              <span class="text-xs text-slate-400 font-mono block sm:inline">
                 Kapasitas Paket: <strong class="text-white">{{ recommendedPlan.speedLabel }}</strong>
               </span>
             </div>
 
             <div>
-              <h3 class="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight">
+              <h3 class="text-xl sm:text-2xl lg:text-3xl font-black text-white font-heading tracking-tight break-words">
                 {{ recommendedPlan.name }}
               </h3>
               <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
@@ -193,13 +193,13 @@
                 class="flex items-center gap-2"
               >
                 <CheckCircle2 class="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>{{ f }}</span>
+                <span class="break-words">{{ f }}</span>
               </li>
             </ul>
           </div>
 
           <!-- Price & Call to Action -->
-          <div class="shrink-0 flex flex-col items-center md:items-end justify-between space-y-4 pt-4 md:pt-0 border-t md:border-t-0 border-slate-800">
+          <div class="shrink-0 flex flex-col items-center md:items-end justify-between space-y-4 pt-4 md:pt-0 border-t md:border-t-0 border-slate-800 w-full md:w-auto">
             <div class="text-center md:text-right">
               <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 block">Biaya Langganan</span>
               <strong class="text-2xl sm:text-3xl font-black text-cyan-300 font-heading block">
@@ -214,7 +214,7 @@
                 :to="recommendedPlan.ctaUrl"
                 variant="primary"
                 size="md"
-                class="font-bold w-full sm:w-auto shadow-lg shadow-cyan-500/20 gap-2"
+                class="font-bold w-full sm:w-auto shadow-lg shadow-cyan-500/20 gap-2 justify-center"
               >
                 <span>{{ recommendedPlan.ctaLabel }}</span>
                 <ArrowRight class="w-4 h-4" />
@@ -222,7 +222,7 @@
               <a
                 v-if="hasPackagesSectionAbove"
                 href="#packages"
-                class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-700 bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+                class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-700 bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors w-full sm:w-auto text-center"
               >
                 Lihat Semua Paket
               </a>
