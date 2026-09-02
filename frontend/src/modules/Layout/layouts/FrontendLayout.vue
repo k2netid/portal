@@ -22,10 +22,9 @@
         :class="[mainChromePaddingClass, layungCanvasClass]"
       >
         <div
-          class="flex-1 flex flex-col min-h-0"
+          class="flex-1 flex flex-col min-h-0 w-full"
           :class="{
-            'container mx-auto px-6 md:px-12 lg:px-20': layoutStyle === 'hybrid',
-            'w-full': layoutStyle === 'full'
+            'mx-auto': layoutStyle === 'hybrid',
           }"
           :style="hybridContentStyles"
         >

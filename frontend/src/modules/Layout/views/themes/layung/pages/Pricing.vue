@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
+    class="py-8 sm:py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10 w-full max-w-full overflow-x-clip"
     data-ja-customizer-target="pricing"
   >
     <Breadcrumb :items="[{ name: t('pages.pricing.hubTitle', 'Paket & Harga') }]" />
