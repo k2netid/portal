@@ -4,9 +4,9 @@
     class="border-t-0 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8">
         <!-- Col 1: Brand & Bandung Office Address -->
-        <div class="sm:col-span-2 lg:col-span-4 space-y-4">
+        <div class="lg:col-span-4 space-y-4">
           <div class="flex items-center gap-3.5">
             <BrandMark
               v-if="brandingDisplay !== 'text_only'"
@@ -36,123 +36,126 @@
           </div>
         </div>
 
-        <!-- Col 2: ISP Services (Menu Col 1) -->
-        <div class="lg:col-span-2 space-y-3">
-          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
-            {{ col1Title }}
-          </h4>
-          <ul class="space-y-2 text-[13px] text-slate-400">
-            <li
-              v-for="item in footerCol1Items"
-              :key="String(item.id || item.title)"
+        <!-- Col 2-5: Navigation & Social Grid (2-column on mobile, 4-column on tablet/desktop) -->
+        <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 sm:gap-x-8 gap-y-8 items-start">
+          <!-- Col 2: ISP Services (Menu Col 1) -->
+          <div class="space-y-3">
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+              {{ col1Title }}
+            </h4>
+            <ul class="space-y-2 text-[13px] text-slate-400">
+              <li
+                v-for="item in footerCol1Items"
+                :key="String(item.id || item.title)"
+              >
+                <a
+                  v-if="isExternalLink(item.url)"
+                  :href="item.url || '#'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </a>
+                <router-link
+                  v-else
+                  :to="resolvePublicMenuTo(item.url)"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 3: MSP Solutions (Menu Col 2) -->
+          <div class="space-y-3">
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+              {{ col2Title }}
+            </h4>
+            <ul class="space-y-2 text-[13px] text-slate-400">
+              <li
+                v-for="item in footerCol2Items"
+                :key="String(item.id || item.title)"
+              >
+                <a
+                  v-if="isExternalLink(item.url)"
+                  :href="item.url || '#'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </a>
+                <router-link
+                  v-else
+                  :to="resolvePublicMenuTo(item.url)"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 4: IT Products (Menu Col 3) -->
+          <div class="space-y-3">
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+              {{ col3Title }}
+            </h4>
+            <ul class="space-y-2 text-[13px] text-slate-400">
+              <li
+                v-for="item in footerCol3Items"
+                :key="String(item.id || item.title)"
+              >
+                <a
+                  v-if="isExternalLink(item.url)"
+                  :href="item.url || '#'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </a>
+                <router-link
+                  v-else
+                  :to="resolvePublicMenuTo(item.url)"
+                  class="hover:text-sky-400 transition-colors break-words"
+                >
+                  {{ item.title }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 5: Social Media / Ikuti Kami -->
+          <div class="space-y-3">
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
+              {{ tt('footer.social', 'Media Sosial') }}
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              {{ tt('footer.socialDesc', 'Ikuti perkembangan jaringan, promo produk, dan kabar terbaru kami.') }}
+            </p>
+            <div
+              v-if="effectiveSocialLinks.length"
+              class="flex flex-wrap gap-2 pt-1"
             >
               <a
-                v-if="isExternalLink(item.url)"
-                :href="item.url || '#'"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-sky-400 transition-colors"
+                v-for="(link, idx) in effectiveSocialLinks"
+                :key="idx"
+                :href="resolveSocialHref(link)"
+                :target="getSocialTarget(link)"
+                :rel="getSocialRel(link)"
+                class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-sky-400 hover:border-sky-500/40 hover:bg-sky-500/10 transition-all shadow-sm"
+                :aria-label="getSocialAriaLabel(link)"
+                :title="link.label || link.icon"
               >
-                {{ item.title }}
+                <component
+                  :is="getSocialIcon(link.icon)"
+                  class="w-4 h-4"
+                />
               </a>
-              <router-link
-                v-else
-                :to="resolvePublicMenuTo(item.url)"
-                class="hover:text-sky-400 transition-colors"
-              >
-                {{ item.title }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Col 3: MSP Solutions (Menu Col 2) -->
-        <div class="lg:col-span-2 space-y-3">
-          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
-            {{ col2Title }}
-          </h4>
-          <ul class="space-y-2 text-[13px] text-slate-400">
-            <li
-              v-for="item in footerCol2Items"
-              :key="String(item.id || item.title)"
-            >
-              <a
-                v-if="isExternalLink(item.url)"
-                :href="item.url || '#'"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-sky-400 transition-colors"
-              >
-                {{ item.title }}
-              </a>
-              <router-link
-                v-else
-                :to="resolvePublicMenuTo(item.url)"
-                class="hover:text-sky-400 transition-colors"
-              >
-                {{ item.title }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Col 4: IT Products (Menu Col 3) -->
-        <div class="lg:col-span-2 space-y-3">
-          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
-            {{ col3Title }}
-          </h4>
-          <ul class="space-y-2 text-[13px] text-slate-400">
-            <li
-              v-for="item in footerCol3Items"
-              :key="String(item.id || item.title)"
-            >
-              <a
-                v-if="isExternalLink(item.url)"
-                :href="item.url || '#'"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-sky-400 transition-colors"
-              >
-                {{ item.title }}
-              </a>
-              <router-link
-                v-else
-                :to="resolvePublicMenuTo(item.url)"
-                class="hover:text-sky-400 transition-colors"
-              >
-                {{ item.title }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Col 5: Social Media / Ikuti Kami (Replacing former heavy contact section) -->
-        <div class="sm:col-span-2 lg:col-span-2 space-y-3">
-          <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
-            {{ tt('footer.social', 'Media Sosial') }}
-          </h4>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            {{ tt('footer.socialDesc', 'Ikuti perkembangan jaringan, promo produk, dan kabar terbaru kami.') }}
-          </p>
-          <div
-            v-if="effectiveSocialLinks.length"
-            class="flex flex-wrap gap-2.5 pt-1"
-          >
-            <a
-              v-for="(link, idx) in effectiveSocialLinks"
-              :key="idx"
-              :href="resolveSocialHref(link)"
-              :target="getSocialTarget(link)"
-              :rel="getSocialRel(link)"
-              class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-sky-400 hover:border-sky-500/40 hover:bg-sky-500/10 transition-all shadow-sm"
-              :aria-label="getSocialAriaLabel(link)"
-              :title="link.label || link.icon"
-            >
-              <component
-                :is="getSocialIcon(link.icon)"
-                class="w-4 h-4"
-              />
-            </a>
+            </div>
           </div>
         </div>
       </div>
