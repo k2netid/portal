@@ -45,90 +45,113 @@
           >
             <div
               v-if="item.children && item.children.length > 0"
-              class="relative overflow-visible group/nav"
+              class="relative overflow-visible"
+              @mouseenter="setDropdown(String(item.id || item.title || idx))"
+              @mouseleave="setDropdown(null)"
             >
               <a
                 v-if="isExternalLink(item.url)"
                 :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
-                :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+                class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0 cursor-pointer"
+                :class="isNavItemActive(item, route) || activeDesktopDropdown === String(item.id || item.title || idx) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
-                <ChevronDown class="w-3.5 h-3.5 opacity-60 transition-transform duration-200 group-hover/nav:rotate-180 group-hover/nav:text-primary" />
+                <ChevronDown
+                  class="w-3.5 h-3.5 opacity-60 transition-transform duration-200"
+                  :class="activeDesktopDropdown === String(item.id || item.title || idx) ? 'rotate-180 text-primary' : ''"
+                />
               </a>
               <router-link
                 v-else-if="item.url"
                 :to="resolvePublicMenuTo(item.url)"
                 class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
-                :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+                :class="isNavItemActive(item, route) || activeDesktopDropdown === String(item.id || item.title || idx) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
-                <ChevronDown class="w-3.5 h-3.5 opacity-60 transition-transform duration-200 group-hover/nav:rotate-180 group-hover/nav:text-primary" />
+                <ChevronDown
+                  class="w-3.5 h-3.5 opacity-60 transition-transform duration-200"
+                  :class="activeDesktopDropdown === String(item.id || item.title || idx) ? 'rotate-180 text-primary' : ''"
+                />
               </router-link>
               <button
                 v-else
                 type="button"
                 class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
-                :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+                :class="isNavItemActive(item, route) || activeDesktopDropdown === String(item.id || item.title || idx) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
-                <ChevronDown class="w-3.5 h-3.5 opacity-60 transition-transform duration-200 group-hover/nav:rotate-180 group-hover/nav:text-primary" />
+                <ChevronDown
+                  class="w-3.5 h-3.5 opacity-60 transition-transform duration-200"
+                  :class="activeDesktopDropdown === String(item.id || item.title || idx) ? 'rotate-180 text-primary' : ''"
+                />
               </button>
 
-              <div
-                class="absolute top-full pt-2 z-[120] opacity-0 invisible -translate-y-1 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:pointer-events-auto group-focus-within/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:pointer-events-auto transition-all duration-200"
-                :class="idx >= 3 ? 'right-0 origin-top-right' : 'left-0 origin-top-left'"
+              <transition
+                enter-active-class="transition duration-150 ease-out"
+                enter-from-class="opacity-0 -translate-y-1 scale-95"
+                enter-to-class="opacity-100 translate-y-0 scale-100"
+                leave-active-class="transition duration-100 ease-in"
+                leave-from-class="opacity-100 translate-y-0 scale-100"
+                leave-to-class="opacity-0 -translate-y-1 scale-95"
               >
-                <div class="absolute -top-3 inset-x-0 h-4 bg-transparent" />
-                <div class="layung-panel p-2 min-w-[280px] shadow-2xl border border-border/80 bg-card rounded-2xl space-y-1">
-                  <template
-                    v-for="child in item.children"
-                    :key="String(child.id || child.title || child.url)"
-                  >
-                    <a
-                      v-if="isExternalLink(child.url)"
-                      :href="child.url || '#'"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item"
+                <div
+                  v-if="activeDesktopDropdown === String(item.id || item.title || idx)"
+                  class="absolute top-full pt-2 z-[150]"
+                  :class="idx >= 3 ? 'right-0 origin-top-right' : 'left-0 origin-top-left'"
+                >
+                  <div class="absolute -top-3 inset-x-0 h-4 bg-transparent" />
+                  <div class="layung-panel p-2 min-w-[280px] shadow-2xl border border-border/90 bg-card rounded-2xl space-y-1">
+                    <template
+                      v-for="child in item.children"
+                      :key="String(child.id || child.title || child.url)"
                     >
-                      <div>
-                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors">
-                          {{ child.title }}
+                      <a
+                        v-if="isExternalLink(child.url)"
+                        :href="child.url || '#'"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item"
+                        @click="setDropdown(null)"
+                      >
+                        <div>
+                          <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors">
+                            {{ child.title }}
+                          </div>
+                          <div
+                            v-if="child.description"
+                            class="text-[11px] text-muted-foreground line-clamp-1"
+                          >
+                            {{ child.description }}
+                          </div>
                         </div>
-                        <div
-                          v-if="child.description"
-                          class="text-[11px] text-muted-foreground line-clamp-1"
-                        >
-                          {{ child.description }}
+                      </a>
+                      <router-link
+                        v-else
+                        :to="resolvePublicMenuTo(child.url)"
+                        class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item focus:outline-none"
+                        @click="setDropdown(null)"
+                      >
+                        <div>
+                          <div
+                            class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors"
+                            :class="isDropdownChildActive(child, item.children || [], route) ? '!text-primary font-black' : ''"
+                          >
+                            {{ child.title }}
+                          </div>
+                          <div
+                            v-if="child.description"
+                            class="text-[11px] text-muted-foreground line-clamp-1"
+                          >
+                            {{ child.description }}
+                          </div>
                         </div>
-                      </div>
-                    </a>
-                    <router-link
-                      v-else
-                      :to="resolvePublicMenuTo(child.url)"
-                      class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item focus:outline-none"
-                    >
-                      <div>
-                        <div
-                          class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors"
-                          :class="isDropdownChildActive(child, item.children || [], route) ? '!text-primary font-black' : ''"
-                        >
-                          {{ child.title }}
-                        </div>
-                        <div
-                          v-if="child.description"
-                          class="text-[11px] text-muted-foreground line-clamp-1"
-                        >
-                          {{ child.description }}
-                        </div>
-                      </div>
-                    </router-link>
-                  </template>
+                      </router-link>
+                    </template>
+                  </div>
                 </div>
-              </div>
+              </transition>
             </div>
 
             <a
@@ -192,7 +215,7 @@
               :href="headerCtaUrl"
               target="_blank"
               rel="noopener noreferrer"
-              variant="default"
+              variant="primary"
               size="sm"
               class="hidden sm:inline-flex font-semibold shadow-sm hover:shadow-md transition-all"
             >
@@ -202,7 +225,7 @@
               v-else
               as="router-link"
               :to="resolvePublicMenuTo(headerCtaUrl)"
-              variant="default"
+              variant="primary"
               size="sm"
               class="hidden sm:inline-flex font-semibold shadow-sm hover:shadow-md transition-all"
             >
@@ -373,7 +396,7 @@
                   :href="headerCtaUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="default"
+                  variant="primary"
                   size="md"
                   class="w-full font-semibold shadow-md"
                   @click="mobileMenuOpen = false"
@@ -384,7 +407,7 @@
                   v-else
                   as="router-link"
                   :to="resolvePublicMenuTo(headerCtaUrl)"
-                  variant="default"
+                  variant="primary"
                   size="md"
                   class="w-full font-semibold shadow-md"
                   @click="mobileMenuOpen = false"
@@ -465,6 +488,21 @@ const {
 const isDesktop = computed(() => device.value === 'desktop');
 const mobileMenuOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
+const activeDesktopDropdown = ref<string | null>(null);
+
+const setDropdown = (key: string | null) => {
+  activeDesktopDropdown.value = key;
+};
+
+// Auto close dropdown on route change
+watch(
+  () => route.path,
+  () => {
+    activeDesktopDropdown.value = null;
+    mobileMenuOpen.value = false;
+  },
+);
+
 const headerRef = ref<HTMLElement>();
 const headerStyle = computed(() => String(getSetting('header_style', 'glass') || 'glass'));
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));

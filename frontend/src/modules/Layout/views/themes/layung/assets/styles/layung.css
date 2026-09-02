@@ -925,13 +925,8 @@ header[data-ja-customizer-target="header"] .layung-panel {
 }
 
 /* 2. 🎯 Spotlight Effect (spotlight) */
-[data-theme-nav="spotlight"] nav:hover .layung-nav-link:not(:hover):not(.router-link-active) {
-  opacity: 0.45;
-  filter: blur(0.2px);
-}
 [data-theme-nav="spotlight"] .layung-nav-link:hover,
 [data-theme-nav="spotlight"] .layung-nav-link.router-link-active {
-  opacity: 1 !important;
   background: radial-gradient(circle at center, hsl(var(--primary) / 0.22) 0%, transparent 80%), hsl(var(--muted) / 0.7) !important;
   color: hsl(var(--primary)) !important;
   box-shadow: 0 0 16px -2px hsl(var(--primary) / 0.4) !important;
