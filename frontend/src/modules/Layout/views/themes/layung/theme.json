@@ -1044,6 +1044,91 @@
             "category": "Hero Section",
             "scope": "theme"
         },
+        "hero_animation_enabled": {
+            "label": "Aktifkan Animasi Hero",
+            "type": "checkbox",
+            "default": true,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_animation_type": {
+            "label": "Pilihan Animasi Hero",
+            "type": "select",
+            "default": "network",
+            "options": [
+                { "value": "network", "label": "Network Topology (Topologi Jaringan)" },
+                { "value": "datacenter", "label": "Data Center & Server Rack" },
+                { "value": "wireless", "label": "Enterprise Wireless AP (Wi-Fi 6/7)" },
+                { "value": "cyber_globe", "label": "Cyber Matrix & Digital Globe" }
+            ],
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_enabled": {
+            "label": "Aktifkan Slider Hero",
+            "type": "checkbox",
+            "default": false,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_autoplay": {
+            "label": "Autoplay Slider Hero",
+            "type": "checkbox",
+            "default": true,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_interval": {
+            "label": "Interval Slider Hero (detik)",
+            "type": "range",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "default": 5,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_bg_type": {
+            "label": "Tipe Background Hero",
+            "type": "select",
+            "default": "preset",
+            "options": [
+                { "value": "preset", "label": "Preset Tema (Gradien & Cyber Mesh)" },
+                { "value": "custom_image", "label": "Gambar Kustom (Upload Gambar)" }
+            ],
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_bg_preset": {
+            "label": "Preset Background Hero",
+            "type": "select",
+            "default": "coastal_cyber",
+            "options": [
+                { "value": "coastal_cyber", "label": "Coastal Cyber (Oceanic Deep Navy & Cyan)" },
+                { "value": "fiber_pulse", "label": "Fiber Pulse (Neon Emerald & Electric Blue)" },
+                { "value": "dark_datacenter", "label": "Dark Datacenter (Carbon Mesh & Blue Ambiance)" },
+                { "value": "minimal_midnight", "label": "Minimal Midnight (Deep Obsidian & Ambient Glow)" }
+            ],
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_bg_image": {
+            "label": "Gambar Background Hero",
+            "type": "media",
+            "default": "",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_bg_overlay_opacity": {
+            "label": "Kegelapan Overlay Background (%)",
+            "type": "range",
+            "min": 10,
+            "max": 95,
+            "step": 5,
+            "default": 65,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
         "speed_calculator_enabled": {
             "label": "Tampilkan Simulator Bandwidth",
             "type": "boolean",

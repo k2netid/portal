@@ -312,6 +312,91 @@
         "default": "/blog",
         "category": "Hero Section"
     },
+    "hero_animation_enabled": {
+        "label": "Aktifkan Animasi Hero",
+        "type": "checkbox",
+        "default": true,
+        "description": "Tampilkan visual interaktif teknologi di area kanan hero",
+        "category": "Hero Section"
+    },
+    "hero_animation_type": {
+        "label": "Pilihan Animasi Hero",
+        "type": "select",
+        "default": "network",
+        "options": [
+            { "value": "network", "label": "Network Topology (Topologi Jaringan)" },
+            { "value": "datacenter", "label": "Data Center & Server Rack" },
+            { "value": "wireless", "label": "Enterprise Wireless AP (Wi-Fi 6/7)" },
+            { "value": "cyber_globe", "label": "Cyber Matrix & Digital Globe" }
+        ],
+        "description": "Pilih animasi visual yang sesuai dengan identitas bisnis K2NET",
+        "category": "Hero Section"
+    },
+    "hero_slider_enabled": {
+        "label": "Aktifkan Slider Hero",
+        "type": "checkbox",
+        "default": false,
+        "description": "Tampilkan multi-slide hero dengan transisi interaktif dan indikator waktu",
+        "category": "Hero Section"
+    },
+    "hero_slider_autoplay": {
+        "label": "Autoplay Slider Hero",
+        "type": "checkbox",
+        "default": true,
+        "description": "Putar slide hero secara otomatis",
+        "category": "Hero Section"
+    },
+    "hero_slider_interval": {
+        "label": "Interval Slider Hero (detik)",
+        "type": "range",
+        "min": 3,
+        "max": 15,
+        "step": 1,
+        "default": 5,
+        "description": "Durasi tampilan setiap slide sebelum berganti otomatis",
+        "category": "Hero Section"
+    },
+    "hero_bg_type": {
+        "label": "Tipe Background Hero",
+        "type": "select",
+        "default": "preset",
+        "options": [
+            { "value": "preset", "label": "Preset Tema (Gradien & Cyber Mesh)" },
+            { "value": "custom_image", "label": "Gambar Kustom (Upload Gambar)" }
+        ],
+        "description": "Pilih gaya latar belakang area hero",
+        "category": "Hero Section"
+    },
+    "hero_bg_preset": {
+        "label": "Preset Background Hero",
+        "type": "select",
+        "default": "coastal_cyber",
+        "options": [
+            { "value": "coastal_cyber", "label": "Coastal Cyber (Oceanic Deep Navy & Cyan)" },
+            { "value": "fiber_pulse", "label": "Fiber Pulse (Neon Emerald & Electric Blue)" },
+            { "value": "dark_datacenter", "label": "Dark Datacenter (Carbon Mesh & Blue Ambiance)" },
+            { "value": "minimal_midnight", "label": "Minimal Midnight (Deep Obsidian & Ambient Glow)" }
+        ],
+        "description": "Pilihan palet visual latar belakang yang selaras dengan tema Layung",
+        "category": "Hero Section"
+    },
+    "hero_bg_image": {
+        "label": "Gambar Background Hero",
+        "type": "media",
+        "default": "",
+        "description": "Gambar latar belakang kustom untuk area hero",
+        "category": "Hero Section"
+    },
+    "hero_bg_overlay_opacity": {
+        "label": "Kegelapan Overlay Background (%)",
+        "type": "range",
+        "min": 10,
+        "max": 95,
+        "step": 5,
+        "default": 65,
+        "description": "Tingkat kegelapan lapisan overlay agar teks dan animasi tetap terbaca jelas",
+        "category": "Hero Section"
+    },
     "speed_calculator_enabled": {
         "label": "Tampilkan Simulator Bandwidth",
         "type": "boolean",

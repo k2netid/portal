@@ -1,65 +1,146 @@
 <template>
   <section
     data-ja-customizer-target="hero"
-    class="layung-hero px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative overflow-hidden"
+    class="layung-hero px-4 sm:px-6 lg:px-8 py-14 lg:py-18 relative overflow-hidden"
+    :class="heroBgClass"
+    :style="heroBgStyle"
   >
+    <!-- Background Texture & Grid Layer -->
+    <div
+      v-if="heroBgType === 'custom_image' && heroBgImage"
+      class="absolute inset-0 bg-slate-950 pointer-events-none transition-opacity duration-300"
+      :style="{ opacity: heroBgOverlayOpacity }"
+    />
     <div class="layung-hero__grid" />
 
-    <div class="max-w-7xl mx-auto w-full relative z-10 space-y-8">
-      <div
-        ref="heroBadgeRef"
-        class="flex flex-wrap items-center gap-3"
-      >
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-sky-500/15 text-sky-300 border border-sky-500/30">
-          <span class="layung-status-dot" />
-          {{ heroBadgeText }}
-        </span>
+    <div
+      class="max-w-7xl mx-auto w-full relative z-10 space-y-8 sm:space-y-10"
+      @mouseenter="stopSliderAutoplay"
+      @mouseleave="startSliderAutoplay"
+    >
+      <!-- Main Stage (2-Column Grid on Desktop) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Left Column: Copy & Actions -->
+        <div
+          class="space-y-6"
+          :class="heroAnimationEnabled ? 'lg:col-span-7' : 'lg:col-span-12 max-w-3xl'"
+        >
+          <!-- Badge -->
+          <div
+            ref="heroBadgeRef"
+            class="flex flex-wrap items-center gap-3"
+          >
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              <span class="layung-status-dot" />
+              {{ activeSlide.badge }}
+            </span>
+          </div>
+
+          <!-- Headline & Description with Smooth Transition -->
+          <div class="space-y-4">
+            <h1
+              ref="heroTitleRef"
+              class="text-[1.65rem] sm:text-[2.25rem] lg:text-[2.65rem] font-medium tracking-tight text-white font-heading leading-[1.14]"
+            >
+              <LayungSplitText :key="activeSlide.title" :text="activeSlide.title" />
+            </h1>
+            <p
+              ref="heroSubtitleRef"
+              class="text-[13px] sm:text-sm text-slate-300/90 max-w-xl leading-relaxed font-normal"
+            >
+              {{ activeSlide.subtitle }}
+            </p>
+          </div>
+
+          <!-- Call to Action Buttons -->
+          <div
+            ref="heroCtaRef"
+            class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1"
+          >
+            <Button
+              as="router-link"
+              :to="activeSlide.ctaUrl || contactHref"
+              variant="primary"
+              size="md"
+              class="!py-3 !px-6 font-semibold shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all"
+            >
+              <Mail class="w-4 h-4 mr-1.5" />
+              {{ activeSlide.ctaText || heroContactCtaText }}
+            </Button>
+            <Button
+              v-if="nocWhatsAppUrl"
+              as="a"
+              :href="nocWhatsAppUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="cyber"
+              size="md"
+              class="!py-3 !px-6 font-semibold"
+            >
+              <MessageCircle class="w-4 h-4 mr-1.5" />
+              {{ heroWhatsAppCtaText }}
+            </Button>
+          </div>
+
+          <!-- Slider Navigation Tabs (When Slider Enabled) -->
+          <div
+            v-if="heroSliderEnabled && activeSlides.length > 1"
+            class="pt-3 flex items-center gap-3 flex-wrap"
+          >
+            <div class="flex items-center gap-2 flex-wrap">
+              <button
+                v-for="(slide, sIdx) in activeSlides"
+                :key="slide.id"
+                type="button"
+                class="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-mono transition-all cursor-pointer"
+                :class="currentSlideIndex === sIdx
+                  ? 'bg-sky-500/15 border-sky-500/50 text-white shadow-sm shadow-sky-500/20'
+                  : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'"
+                @click="setSlide(sIdx)"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full"
+                  :class="currentSlideIndex === sIdx ? 'bg-sky-400 animate-pulse' : 'bg-slate-600'"
+                />
+                <span class="font-semibold">0{{ sIdx + 1 }}</span>
+                <span class="truncate max-w-[130px] sm:max-w-[180px]">{{ slide.badge }}</span>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1.5 ml-auto sm:ml-0">
+              <button
+                type="button"
+                class="w-7 h-7 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-sky-500/40 transition-colors"
+                :aria-label="t('hero.prevSlide', 'Slide sebelumnya')"
+                @click="prevSlide"
+              >
+                <ChevronLeft class="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                class="w-7 h-7 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-sky-500/40 transition-colors"
+                :aria-label="t('hero.nextSlide', 'Slide berikutnya')"
+                @click="nextSlide"
+              >
+                <ChevronRight class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Visual Animation Stage -->
+        <div
+          v-if="heroAnimationEnabled"
+          class="lg:col-span-5 w-full flex justify-center lg:justify-end"
+        >
+          <HeroVisualAnimation
+            :key="activeSlide.animation || heroAnimationType"
+            :type="activeSlide.animation || heroAnimationType"
+          />
+        </div>
       </div>
 
-      <div class="max-w-3xl space-y-4">
-        <h1
-          ref="heroTitleRef"
-          class="text-[1.65rem] sm:text-[2.15rem] font-medium tracking-tight text-white font-heading leading-[1.15]"
-        >
-          <LayungSplitText :text="heroTitle" />
-        </h1>
-        <p
-          ref="heroSubtitleRef"
-          class="text-[13px] sm:text-sm text-slate-400 max-w-xl leading-relaxed font-normal"
-        >
-          {{ heroSubtitle }}
-        </p>
-      </div>
-
-      <div
-        ref="heroCtaRef"
-        class="flex flex-col sm:flex-row gap-3"
-      >
-        <Button
-          as="router-link"
-          :to="contactHref"
-          variant="primary"
-          size="md"
-          class="!py-3 !px-6 font-semibold"
-        >
-          <Mail class="w-4 h-4 mr-1.5" />
-          {{ heroContactCtaText }}
-        </Button>
-        <Button
-          v-if="nocWhatsAppUrl"
-          as="a"
-          :href="nocWhatsAppUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="cyber"
-          size="md"
-          class="!py-3 !px-6 font-semibold"
-        >
-          <MessageCircle class="w-4 h-4 mr-1.5" />
-          {{ heroWhatsAppCtaText }}
-        </Button>
-      </div>
-
+      <!-- Bottom News & Promo Ticker -->
       <div
         v-if="heroNewsEnabled && carouselItems.length > 0"
         ref="heroNewsRef"
@@ -174,6 +255,8 @@ import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import { useLayungHeroNews } from '@/modules/Layout/views/themes/layung/composables/useLayungHeroNews';
+import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
+import HeroVisualAnimation from '@/modules/Layout/views/themes/layung/components/sections/HeroVisualAnimation.vue';
 import {
   STALE_HERO_BADGES,
   STALE_HERO_CTAS,
@@ -210,6 +293,41 @@ const { getSetting } = useTheme();
 const { createTimeline, splitTextRevealSafe, staggerChildren, motion } = useThemeMotion();
 const { nocWhatsAppUrl } = useLayungIdentity();
 
+// Hero Animation & Slider Settings
+const heroAnimationEnabled = computed(() => getSetting('hero_animation_enabled', true) !== false);
+const heroAnimationType = computed(() => String(getSetting('hero_animation_type', 'network') || 'network'));
+
+const heroSliderEnabled = computed(() => getSetting('hero_slider_enabled', false) === true);
+const heroSliderAutoplay = computed(() => getSetting('hero_slider_autoplay', true) !== false);
+const heroSliderIntervalMs = computed(() => Math.max(3000, Number(getSetting('hero_slider_interval', 5)) * 1000));
+
+// Background Customizer Settings
+const heroBgType = computed(() => String(getSetting('hero_bg_type', 'preset') || 'preset'));
+const heroBgPreset = computed(() => String(getSetting('hero_bg_preset', 'coastal_cyber') || 'coastal_cyber'));
+const heroBgImage = computed(() => String(getSetting('hero_bg_image', '') || ''));
+const heroBgOverlayOpacity = computed(() => Number(getSetting('hero_bg_overlay_opacity', 65)) / 100);
+
+const heroBgClass = computed(() => {
+  if (heroBgType.value === 'preset') {
+    return `layung-hero--${heroBgPreset.value}`;
+  }
+  return '';
+});
+
+const heroBgStyle = computed(() => {
+  if (heroBgType.value === 'custom_image' && heroBgImage.value) {
+    return {
+      backgroundImage: `url(${heroBgImage.value})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  return {};
+});
+
+// Dynamic CMS Data Binding for Slides
+const { data: dynamicHeroSlides, hasBinding: hasHeroSlidesBinding } = useThemeDataBindings('hero', 'slides');
+
 const heroBadgeRef = ref<HTMLElement>();
 const heroTitleRef = ref<HTMLElement>();
 const heroSubtitleRef = ref<HTMLElement>();
@@ -220,6 +338,7 @@ const heroNewsCardsRef = ref<HTMLElement>();
 const carouselEpoch = ref(0);
 const isAnimating = ref(false);
 let newsTimer: ReturnType<typeof setInterval> | number | null = null;
+let sliderAutoplayTimer: ReturnType<typeof setInterval> | number | null = null;
 
 const copy = (key: string, fallback: string, stale: readonly string[] = []) =>
   resolveLayungLocalizedCopy({
@@ -264,6 +383,112 @@ const heroWhatsAppCtaText = computed(() =>
 const contactHref = computed(() =>
   resolveThemeHref(getSetting('hero_contact_url', ''), '/contact'),
 );
+
+// Fallback manual slides for K2NET core business
+const defaultManualSlides = computed(() => [
+  {
+    id: 'isp',
+    badge: 'K2NET DEDICATED',
+    title: t('hero.slideIspTitle', 'Internet Service Provider Berbasis Fiber Optik'),
+    subtitle: t('hero.slideIspDesc', 'Konektivitas simetris 1:1 tanpa FUP dengan dukungan latensi rendah dan jaminan SLA 99.98%.'),
+    ctaText: t('hero.slideIspCta', 'Lihat Paket Internet'),
+    ctaUrl: '/pricing',
+    animation: 'network',
+  },
+  {
+    id: 'msp',
+    badge: 'MANAGED IT SERVICES',
+    title: t('hero.slideMspTitle', 'Solusi Pengelolaan Infrastruktur & Keamanan IT'),
+    subtitle: t('hero.slideMspDesc', 'Dari pengawasan jaringan 24/7 NOC, mitigasi serangan siber, hingga pemeliharaan sistem data center Anda.'),
+    ctaText: t('hero.slideMspCta', 'Konsultasi Layanan'),
+    ctaUrl: '/solusi',
+    animation: 'datacenter',
+  },
+  {
+    id: 'wireless',
+    badge: 'ENTERPRISE WI-FI 6/7',
+    title: t('hero.slideWifiTitle', 'Infrastruktur Nirkabel & Pengadaan Perangkat IT'),
+    subtitle: t('hero.slideWifiDesc', 'Desain jaringan wireless kantor berkapasitas tinggi, seamless roaming, dan pengadaan perangkat resmi bergaransi.'),
+    ctaText: t('hero.slideWifiCta', 'Hubungi Sales'),
+    ctaUrl: contactHref.value,
+    animation: 'wireless',
+  },
+]);
+
+const activeSlides = computed(() => {
+  if (hasHeroSlidesBinding.value && Array.isArray(dynamicHeroSlides.value) && dynamicHeroSlides.value.length > 0) {
+    return (dynamicHeroSlides.value as Record<string, unknown>[]).map((item, idx) => ({
+      id: String(item.id || idx),
+      badge: String(item.badge || item.category || 'K2NET SOLUTION'),
+      title: String(item.title || item.name || ''),
+      subtitle: String(item.description || item.excerpt || item.subtitle || ''),
+      ctaText: String(item.cta_text || item.button_text || heroContactCtaText.value),
+      ctaUrl: String(item.cta_url || item.url || contactHref.value),
+      animation: String(item.animation || (idx % 2 === 0 ? 'network' : 'datacenter')),
+    }));
+  }
+  return defaultManualSlides.value;
+});
+
+const currentSlideIndex = ref(0);
+const activeSlide = computed(() => {
+  if (!heroSliderEnabled.value) {
+    return {
+      badge: heroBadgeText.value,
+      title: heroTitle.value,
+      subtitle: heroSubtitle.value,
+      ctaText: heroContactCtaText.value,
+      ctaUrl: contactHref.value,
+      animation: heroAnimationType.value,
+    };
+  }
+  const slides = activeSlides.value;
+  return slides[currentSlideIndex.value] || slides[0] || {
+    badge: heroBadgeText.value,
+    title: heroTitle.value,
+    subtitle: heroSubtitle.value,
+    ctaText: heroContactCtaText.value,
+    ctaUrl: contactHref.value,
+    animation: heroAnimationType.value,
+  };
+});
+
+const setSlide = (idx: number) => {
+  const total = activeSlides.value.length;
+  if (total <= 0) return;
+  currentSlideIndex.value = (idx + total) % total;
+};
+
+const nextSlide = () => {
+  setSlide(currentSlideIndex.value + 1);
+};
+
+const prevSlide = () => {
+  setSlide(currentSlideIndex.value - 1);
+};
+
+const stopSliderAutoplay = () => {
+  if (sliderAutoplayTimer) {
+    clearInterval(sliderAutoplayTimer);
+    sliderAutoplayTimer = null;
+  }
+};
+
+const startSliderAutoplay = () => {
+  stopSliderAutoplay();
+  if (!heroSliderEnabled.value || !heroSliderAutoplay.value || activeSlides.value.length <= 1) return;
+  sliderAutoplayTimer = window.setInterval(() => {
+    nextSlide();
+  }, heroSliderIntervalMs.value);
+};
+
+watch([heroSliderEnabled, heroSliderAutoplay, heroSliderIntervalMs], () => {
+  if (heroSliderEnabled.value && heroSliderAutoplay.value) {
+    startSliderAutoplay();
+  } else {
+    stopSliderAutoplay();
+  }
+});
 
 const getNewsCards = () => heroNewsCardsRef.value?.querySelectorAll(':scope > a') ?? [];
 
@@ -361,10 +586,12 @@ onMounted(async () => {
   }
 
   startAutoplay();
+  startSliderAutoplay();
 });
 
 onBeforeUnmount(() => {
   stopAutoplay();
+  stopSliderAutoplay();
   window.removeEventListener('resize', updateCarouselSlotCount);
   motion.killTweensOf(getNewsCards());
 });

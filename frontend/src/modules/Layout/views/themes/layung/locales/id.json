@@ -75,7 +75,18 @@
     "newsDefaultTitle": "Pembaruan K2NET",
     "newsDefaultCategory": "Info",
     "newsPrevious": "Berita sebelumnya",
-    "newsNext": "Berita berikutnya"
+    "newsNext": "Berita berikutnya",
+    "prevSlide": "Slide sebelumnya",
+    "nextSlide": "Slide berikutnya",
+    "slideIspTitle": "Internet Service Provider Berbasis Fiber Optik",
+    "slideIspDesc": "Konektivitas simetris 1:1 tanpa FUP dengan dukungan latensi rendah dan jaminan SLA 99.98%.",
+    "slideIspCta": "Lihat Paket Internet",
+    "slideMspTitle": "Solusi Pengelolaan Infrastruktur & Keamanan IT",
+    "slideMspDesc": "Dari pengawasan jaringan 24/7 NOC, mitigasi serangan siber, hingga pemeliharaan sistem data center Anda.",
+    "slideMspCta": "Konsultasi Layanan",
+    "slideWifiTitle": "Infrastruktur Nirkabel & Pengadaan Perangkat IT",
+    "slideWifiDesc": "Desain jaringan wireless kantor berkapasitas tinggi, seamless roaming, dan pengadaan perangkat resmi bergaransi.",
+    "slideWifiCta": "Hubungi Sales"
   },
   "calculator": {
     "badge": "Perkiraan bandwidth",
@@ -499,7 +510,22 @@
       "footer_col_2_title": "Judul Kolom 2 Footer",
       "footer_col_2_title_hint": "Judul untuk kolom menu kedua di footer.",
       "footer_col_3_title": "Judul Kolom 3 Footer",
-      "footer_col_3_title_hint": "Judul untuk kolom menu ketiga di footer."
+      "footer_col_3_title_hint": "Judul untuk kolom menu ketiga di footer.",
+      "hero_slides_slot": "Slide Hero Dinamis",
+      "slide_title": "Judul Slide",
+      "slide_desc": "Deskripsi Slide",
+      "slide_badge": "Badge / Label Slide",
+      "slide_cta_text": "Teks Tombol CTA",
+      "slide_cta_url": "URL Tombol CTA",
+      "hero_animation_enabled": "Aktifkan Animasi Hero",
+      "hero_animation_type": "Pilihan Animasi Hero",
+      "hero_slider_enabled": "Aktifkan Slider Hero",
+      "hero_slider_autoplay": "Autoplay Slider Hero",
+      "hero_slider_interval": "Interval Slider Hero (detik)",
+      "hero_bg_type": "Tipe Background Hero",
+      "hero_bg_preset": "Preset Background Hero",
+      "hero_bg_image": "Gambar Background Hero",
+      "hero_bg_overlay_opacity": "Kegelapan Overlay Background (%)"
     },
     "manifest_categories": {
       "isp_info": "Info ISP",
@@ -529,7 +555,17 @@
       "clean": "Bersih & Minimalis",
       "flat": "Modern Datar",
       "soft": "Lembut & Pastel",
-      "glass": "Glassmorphism (Premium)"
+      "glass": "Glassmorphism (Premium)",
+      "network": "Topologi Jaringan",
+      "datacenter": "Data Center & Server",
+      "wireless": "Enterprise Wireless AP",
+      "cyber_globe": "Cyber Matrix & Globe",
+      "preset": "Preset Tema",
+      "custom_image": "Gambar Kustom",
+      "coastal_cyber": "Coastal Cyber",
+      "fiber_pulse": "Fiber Pulse",
+      "dark_datacenter": "Dark Datacenter",
+      "minimal_midnight": "Minimal Midnight"
     }
   }
 }

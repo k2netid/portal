@@ -17,6 +17,17 @@
                         { "key": "date", "labelKey": "publishing.theme_customizer.items.date" },
                         { "key": "url", "labelKey": "publishing.theme_customizer.items.target_url" }
                     ]
+                },
+                {
+                    "id": "slides",
+                    "labelKey": "theme.layung.customizer.items.hero_slides_slot",
+                    "props": [
+                        { "key": "title", "labelKey": "theme.layung.customizer.items.slide_title" },
+                        { "key": "description", "labelKey": "theme.layung.customizer.items.slide_desc" },
+                        { "key": "badge", "labelKey": "theme.layung.customizer.items.slide_badge" },
+                        { "key": "cta_text", "labelKey": "theme.layung.customizer.items.slide_cta_text" },
+                        { "key": "cta_url", "labelKey": "theme.layung.customizer.items.slide_cta_url" }
+                    ]
                 }
             ]
         },

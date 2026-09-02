@@ -75,7 +75,18 @@
     "newsDefaultTitle": "K2NET update",
     "newsDefaultCategory": "Info",
     "newsPrevious": "Previous article",
-    "newsNext": "Next article"
+    "newsNext": "Next article",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "slideIspTitle": "Fiber Optic Internet Service Provider",
+    "slideIspDesc": "1:1 symmetric connectivity with zero FUP, ultra-low latency, and 99.98% contract SLA.",
+    "slideIspCta": "View Internet Plans",
+    "slideMspTitle": "Managed IT Infrastructure & Cyber Security",
+    "slideMspDesc": "24/7 NOC network monitoring, cyber threat mitigation, through to enterprise data center systems maintenance.",
+    "slideMspCta": "Consult Managed IT",
+    "slideWifiTitle": "Enterprise Wireless & IT Hardware Solutions",
+    "slideWifiDesc": "High-density enterprise wireless design, seamless roaming, and authorized hardware procurement.",
+    "slideWifiCta": "Contact Sales"
   },
   "calculator": {
     "badge": "Bandwidth estimate",
@@ -499,7 +510,22 @@
       "footer_col_2_title": "Footer Column 2 Title",
       "footer_col_2_title_hint": "Heading for the second menu column in the footer.",
       "footer_col_3_title": "Footer Column 3 Title",
-      "footer_col_3_title_hint": "Heading for the third menu column in the footer."
+      "footer_col_3_title_hint": "Heading for the third menu column in the footer.",
+      "hero_slides_slot": "Dynamic Hero Slides",
+      "slide_title": "Slide Title",
+      "slide_desc": "Slide Description",
+      "slide_badge": "Slide Badge / Label",
+      "slide_cta_text": "CTA Button Text",
+      "slide_cta_url": "CTA Button URL",
+      "hero_animation_enabled": "Enable Hero Animation",
+      "hero_animation_type": "Hero Animation Theme",
+      "hero_slider_enabled": "Enable Hero Slider",
+      "hero_slider_autoplay": "Hero Slider Autoplay",
+      "hero_slider_interval": "Hero Slider Interval (seconds)",
+      "hero_bg_type": "Hero Background Type",
+      "hero_bg_preset": "Hero Background Preset",
+      "hero_bg_image": "Hero Background Image",
+      "hero_bg_overlay_opacity": "Background Overlay Opacity (%)"
     },
     "manifest_categories": {
       "isp_info": "ISP Info",
@@ -529,7 +555,17 @@
       "clean": "Clean & Minimalist",
       "flat": "Flat Modern",
       "soft": "Soft & Pastel",
-      "glass": "Glassmorphism (Premium)"
+      "glass": "Glassmorphism (Premium)",
+      "network": "Network Topology",
+      "datacenter": "Data Center & Server",
+      "wireless": "Enterprise Wireless AP",
+      "cyber_globe": "Cyber Matrix & Globe",
+      "preset": "Theme Preset",
+      "custom_image": "Custom Image",
+      "coastal_cyber": "Coastal Cyber",
+      "fiber_pulse": "Fiber Pulse",
+      "dark_datacenter": "Dark Datacenter",
+      "minimal_midnight": "Minimal Midnight"
     }
   }
 }
