@@ -1,15 +1,15 @@
 <template>
   <div class="flex-1 min-h-0 bg-muted/40 h-full overflow-hidden flex flex-col relative transition-colors">
     <!-- Device & Scale Toolbar -->
-    <div class="h-11 bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-between px-3.5 shadow-xs z-20 shrink-0 gap-3">
+    <div class="h-10 sm:h-11 bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-between px-2.5 sm:px-3.5 shadow-xs z-20 shrink-0 gap-1.5 sm:gap-2.5 overflow-x-auto custom-scrollbar">
       <!-- Left: Device Viewports -->
-      <div class="flex items-center gap-1 rounded-xl border border-border bg-muted/40 p-1">
+      <div class="flex items-center gap-0.5 sm:gap-1 rounded-xl border border-border bg-muted/40 p-0.5 sm:p-1 shrink-0">
         <button
           v-for="mode in deviceModes"
           :key="mode.id"
           type="button"
-          :class="activeDevice === mode.id ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
-          class="h-7 w-7 rounded-lg transition-all flex items-center justify-center"
+          :class="activeDevice === mode.id ? 'bg-background text-foreground shadow-2xs font-bold' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+          class="h-6 w-6 sm:h-7 sm:w-7 rounded-lg transition-all flex items-center justify-center"
           :title="$t('publishing.theme_customizer.editor.preview.devices.' + mode.id)"
           :aria-label="$t('publishing.theme_customizer.editor.preview.devices.' + mode.id)"
           @click="selectDevice(mode.id)"
@@ -22,11 +22,11 @@
       </div>
 
       <!-- Center: Scale / Zoom Slider & Presets -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
         <!-- Zoom Out Button -->
         <button
           type="button"
-          class="h-7 w-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-30"
+          class="h-6 w-6 sm:h-7 sm:w-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-30"
           :disabled="zoomLevel <= 50"
           title="Zoom Out (-10%)"
           aria-label="Zoom Out"
@@ -35,8 +35,8 @@
           <ZoomOut class="w-3.5 h-3.5" />
         </button>
 
-        <!-- Slider Range -->
-        <div class="flex items-center gap-1.5 w-24 sm:w-32">
+        <!-- Slider Range (Responsive width: hidden on extra small, compact on small, full on md+) -->
+        <div class="hidden sm:flex items-center gap-1 w-16 md:w-24 lg:w-28">
           <input
             v-model.number="zoomLevel"
             type="range"
@@ -52,7 +52,7 @@
         <!-- Zoom In Button -->
         <button
           type="button"
-          class="h-7 w-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-30"
+          class="h-6 w-6 sm:h-7 sm:w-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-30"
           :disabled="zoomLevel >= 150"
           title="Zoom In (+10%)"
           aria-label="Zoom In"
@@ -66,11 +66,12 @@
           <DropdownMenuTrigger as-child>
             <button
               type="button"
-              class="h-7 px-2 text-xs font-mono font-medium text-muted-foreground hover:text-foreground hover:bg-muted border border-border/70 rounded-lg flex items-center gap-1 transition-colors"
+              class="h-6 sm:h-7 px-1.5 sm:px-2 text-[11px] sm:text-xs font-mono font-medium text-muted-foreground hover:text-foreground hover:bg-muted border border-border/70 rounded-lg flex items-center gap-0.5 sm:gap-1 transition-colors"
               title="Pilihan Skala Layar"
+              aria-label="Pilihan Skala Layar"
             >
               <span>{{ zoomLevel }}%</span>
-              <ChevronDown class="w-3 h-3 opacity-60" />
+              <ChevronDown class="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-60" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -95,11 +96,11 @@
       </div>
 
       <!-- Right: Refresh Button -->
-      <div class="flex items-center gap-1.5">
+      <div class="flex items-center gap-1 shrink-0">
         <button
           type="button"
           :disabled="isRefreshing"
-          class="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all flex items-center justify-center bg-background border border-border shadow-xs hover:border-primary/40 disabled:opacity-50"
+          class="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all flex items-center justify-center bg-background border border-border shadow-xs hover:border-primary/40 disabled:opacity-50"
           :title="$t('publishing.theme_customizer.editor.preview.refresh')"
           :aria-label="$t('publishing.theme_customizer.editor.preview.refresh')"
           @click="refreshPreview"
