@@ -51,7 +51,7 @@
     <!-- Everything wraps inside a container -->
     <div 
       v-else-if="activeTheme"
-      class="layout-wrapper mx-auto flex flex-col min-h-screen bg-background shadow-xl overflow-visible"
+      class="layout-wrapper mx-auto flex flex-col min-h-screen bg-background shadow-2xl overflow-visible"
       :class="wrapperClasses"
       :style="wrapperStyles"
     >
@@ -61,10 +61,9 @@
       <PluginSlot name="after_header" />
       
       <main
-        class="main-content flex-1 px-6 md:px-12 lg:px-16 py-8 relative z-0 flex flex-col min-h-0"
+        class="main-content flex-1 w-full relative z-0 flex flex-col min-h-0"
         :class="[mainChromePaddingClass, layungCanvasClass]"
       >
-        <!-- Added padding here too -->
         <router-view v-slot="{ Component }">
           <div
             :key="route.path"
@@ -312,12 +311,18 @@ const themeRootDataAttrs = computed((): Record<string, string> => {
   const navRaw = String(getSetting('nav_style', 'glass') ?? 'glass')
   const btnRadiusRaw = String(getSetting('button_radius', '8px') ?? '8px')
   const btnShadowRaw = String(getSetting('button_shadow', 'subtle') ?? 'subtle')
+  const breadcrumbSticky = Boolean(getSetting('breadcrumb_sticky', false))
+  const headerStickyVal = isHeaderStickySetting(getSetting('header_sticky', true))
+  const layoutStyleVal = String(getSetting('layout_style', 'full') ?? 'full')
 
   const baseAttrs: Record<string, string> = {
     'data-theme-style': styleRaw,
     'data-theme-nav': navRaw,
     'data-button-radius': btnRadiusRaw,
     'data-button-shadow': btnShadowRaw,
+    'data-breadcrumb-sticky': String(breadcrumbSticky),
+    'data-header-sticky': String(headerStickyVal),
+    'data-layout-style': layoutStyleVal,
   }
 
   if (usesJanariCanvas.value) {
@@ -356,33 +361,45 @@ const janariRootStyleVars = computed((): Record<string, string> => {
 
 // Layout settings
 const layoutStyle = computed(() => getSetting('layout_style', 'full') as string)
-const containerMaxWidth = computed(() => getSetting('container_max_width', 1400) as number)
-const boxedBgColor = computed(() => getSetting('boxed_bg_color', '#f1f5f9') as string)
-const boxedShadow = computed(() => getSetting('boxed_shadow', 'lg') as string)
+const containerMaxWidth = computed(() => {
+  const style = layoutStyle.value
+  if (style === 'boxed') return 1200
+  if (style === 'wide') return 1480
+  if (style === 'framed') return 1380
+  return (getSetting('container_max_width', 1400) as number) || 1400
+})
+const boxedBgColor = computed(() => getSetting('boxed_bg_color', '') as string)
+const boxedShadow = computed(() => getSetting('boxed_shadow', 'xl') as string)
 
 // ROOT CLASSES (Outer most div)
 const rootClasses = computed(() => {
   const style = layoutStyle.value
   return {
-    'bg-page-background': style === 'boxed' || style === 'wide' || style === 'framed',
-    'p-4 md:p-8': style === 'framed', // Visible padding for framed
+    'bg-slate-200/70 dark:bg-slate-950/90': style === 'boxed' || style === 'wide' || style === 'framed',
+    'p-3 sm:p-6 lg:p-8 min-h-screen': style === 'framed',
+    'py-4 sm:py-6 px-2 sm:px-4 min-h-screen': style === 'boxed' || style === 'wide',
   }
 })
 
 const rootStyles = computed(() => {
   const style = layoutStyle.value
   if (style === 'boxed' || style === 'wide' || style === 'framed') {
-    return { backgroundColor: boxedBgColor.value }
+    if (boxedBgColor.value) {
+      return { backgroundColor: boxedBgColor.value }
+    }
   }
   return {}
 })
 
 // wrapper classes for Boxed/Wide/Framed
 const wrapperClasses = computed(() => {
+  const style = layoutStyle.value
   const shadow = boxedShadow.value
+  const shadowClass = shadow === 'none' ? 'shadow-none' : `shadow-${shadow}`
   return {
-    'rounded-xl': layoutStyle.value === 'framed',
-    [`shadow-${shadow}`]: shadow !== 'none'
+    'rounded-2xl border border-border/80 overflow-visible ring-1 ring-black/5 dark:ring-white/10': style === 'framed',
+    'rounded-xl border border-border/60 overflow-visible': style === 'boxed' || style === 'wide',
+    [shadowClass]: true,
   }
 })
 
@@ -390,7 +407,8 @@ const wrapperStyles = computed(() => {
   if (['boxed', 'wide', 'framed'].includes(layoutStyle.value)) {
     return { 
       maxWidth: `${containerMaxWidth.value}px`,
-      width: '100%' 
+      width: '100%',
+      margin: '0 auto',
     }
   }
   return {}
@@ -398,7 +416,7 @@ const wrapperStyles = computed(() => {
 
 const hybridContentStyles = computed(() => {
   if (layoutStyle.value === 'hybrid') {
-    return { maxWidth: `${containerMaxWidth.value}px` }
+    return { maxWidth: `${containerMaxWidth.value}px`, margin: '0 auto' }
   }
   return {}
 })

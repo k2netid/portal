@@ -206,22 +206,42 @@
                     "value": "hero"
                 },
                 {
-                    "label": "Partner logos",
-                    "value": "partners"
+                    "label": "Bento Infrastructure & Services",
+                    "value": "services"
                 },
                 {
-                    "label": "Testimonials",
+                    "label": "Bandwidth & Speed Calculator",
+                    "value": "calculator"
+                },
+                {
+                    "label": "SLA Performance Guarantee",
+                    "value": "sla"
+                },
+                {
+                    "label": "Managed IT & SOC Services",
+                    "value": "managed_services"
+                },
+                {
+                    "label": "Client Testimonials & Partners",
                     "value": "testimonials"
                 },
                 {
-                    "label": "Call to action",
+                    "label": "Technical & Provisioning FAQ",
+                    "value": "faq"
+                },
+                {
+                    "label": "Call to action (CTA)",
                     "value": "cta"
                 }
             ],
             "default": [
                 "hero",
-                "partners",
+                "services",
+                "calculator",
+                "sla",
+                "managed_services",
                 "testimonials",
+                "faq",
                 "cta"
             ],
             "category": "Layout",

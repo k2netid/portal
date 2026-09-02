@@ -1,28 +1,28 @@
 <template>
   <div class="layung-home-view flex-1 flex flex-col space-y-0">
     <!-- Hero Section with Laser Grid & Coverage Checker -->
-    <Hero />
+    <Hero v-if="isSectionVisible('hero')" />
 
     <!-- Bento Infrastructure Grid -->
-    <IspBentoSection />
+    <IspBentoSection v-if="isSectionVisible('services') || isSectionVisible('bento')" />
 
     <!-- Interactive Bandwidth Simulator -->
-    <SpeedCalculatorSection v-if="calculatorEnabled" />
+    <SpeedCalculatorSection v-if="calculatorEnabled && (isSectionVisible('calculator') || isSectionVisible('simulator'))" />
 
     <!-- SLA Guarantee -->
-    <SlaGuaranteeSection />
+    <SlaGuaranteeSection v-if="isSectionVisible('sla') || isSectionVisible('guarantee')" />
 
     <!-- Managed IT & SOC Services -->
-    <ManagedServicesSection />
+    <ManagedServicesSection v-if="isSectionVisible('managed_services') || isSectionVisible('msp')" />
 
     <!-- Enterprise Client Testimonials -->
-    <TestimonialsSection />
+    <TestimonialsSection v-if="isSectionVisible('testimonials') || isSectionVisible('partners')" />
 
     <!-- Technical & Provisioning FAQ -->
-    <FaqSection />
+    <FaqSection v-if="isSectionVisible('faq')" />
 
     <!-- Urgent NOC Hotline & Quotation CTA -->
-    <CtaSection />
+    <CtaSection v-if="isSectionVisible('cta')" />
 
     <PluginSlot
       name="home-bottom"
@@ -47,6 +47,32 @@ import FaqSection from '../components/sections/FaqSection.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
 
 const { getSetting } = useTheme();
+
+const DEFAULT_HOME_SECTIONS = [
+  'hero',
+  'services',
+  'calculator',
+  'sla',
+  'managed_services',
+  'testimonials',
+  'faq',
+  'cta',
+  'partners',
+  'bento',
+  'simulator',
+  'guarantee',
+  'msp',
+] as const;
+
+const activeSections = computed(() => {
+  const raw = getSetting('home_sections', DEFAULT_HOME_SECTIONS);
+  if (Array.isArray(raw)) return new Set(raw.map(String));
+  return new Set(DEFAULT_HOME_SECTIONS);
+});
+
+const isSectionVisible = (sectionName: string): boolean => {
+  return activeSections.value.has(sectionName);
+};
 
 const calculatorEnabled = computed(() => {
   return Boolean(getSetting('speed_calculator_enabled', true));
