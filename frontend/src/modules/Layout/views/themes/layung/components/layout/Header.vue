@@ -280,109 +280,236 @@
       to="body"
       :disabled="isBuilder"
     >
-      <transition name="layung-mobile-menu">
-        <div
-          v-if="mobileMenuOpen && !isDesktop"
-          class="fixed inset-0 z-[9999] flex flex-col bg-card"
+      <div
+        v-if="mobileMenuOpen && !isDesktop"
+        class="fixed inset-0 z-[9999] flex justify-end"
+      >
+        <!-- Frosted Dark Backdrop -->
+        <transition
+          enter-active-class="transition duration-300 ease-out"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="transition duration-200 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+          appear
         >
-          <div class="flex items-center justify-between h-16 px-4 border-b border-border/80 bg-slate-950 text-white">
-            <span class="font-heading font-bold">{{ displayCompanyName }}</span>
-            <button
-              type="button"
-              class="p-2 rounded-xl text-slate-300 hover:bg-slate-800"
-              :aria-label="tt('header.closeMenuAria', 'Tutup menu')"
-              @click="mobileMenuOpen = false"
-            >
-              <X class="w-6 h-6" />
-            </button>
-          </div>
+          <div
+            class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"
+            @click="mobileMenuOpen = false"
+          />
+        </transition>
 
-          <div class="flex-1 overflow-y-auto px-4 py-6 space-y-4">
-            <nav class="flex flex-col space-y-1">
-              <template
-                v-for="item in navItems"
-                :key="String(item.id || item.title || item.url)"
-              >
-                <div
-                  v-if="item.children && item.children.length > 0"
-                  class="space-y-1"
-                >
-                  <button
-                    type="button"
-                    class="w-full px-3 py-2.5 text-left text-sm font-bold text-foreground flex items-center justify-between rounded-xl hover:bg-muted"
-                    @click="toggleMobileSubmenu(item)"
-                  >
-                    <span>{{ item.title }}</span>
-                    <ChevronDown
-                      class="w-4 h-4 transition-transform"
-                      :class="{ 'rotate-180': isMobileSubmenuOpen(item) }"
-                    />
-                  </button>
-                  <div
-                    v-if="isMobileSubmenuOpen(item)"
-                    class="pl-3 space-y-0.5"
-                  >
-                    <template
-                      v-for="child in item.children"
-                      :key="String(child.id || child.title || child.url)"
-                    >
-                      <a
-                        v-if="isExternalLink(child.url)"
-                        :href="child.url || '#'"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="block pl-3 pr-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted"
-                        @click="mobileMenuOpen = false"
-                      >
-                        {{ child.title }}
-                      </a>
-                      <router-link
-                        v-else
-                        :to="resolvePublicMenuTo(child.url)"
-                        active-class=""
-                        exact-active-class=""
-                        class="block pl-3 pr-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted focus:outline-none"
-                        :class="isDropdownChildActive(child, item.children || [], route) ? '!text-primary !bg-primary/10 font-bold' : ''"
-                        @click="mobileMenuOpen = false"
-                      >
-                        {{ child.title }}
-                      </router-link>
-                    </template>
-                  </div>
+        <!-- Slide-out Cyberpunk Telecom Drawer -->
+        <transition
+          enter-active-class="transition duration-300 ease-out transform"
+          enter-from-class="translate-x-full"
+          enter-to-class="translate-x-0"
+          leave-active-class="transition duration-200 ease-in transform"
+          leave-from-class="translate-x-0"
+          leave-to-class="translate-x-full"
+          appear
+        >
+          <div
+            class="relative z-10 w-full max-w-sm sm:max-w-md bg-slate-950 text-slate-100 h-full flex flex-col shadow-2xl border-l border-slate-800/90 overflow-hidden"
+          >
+            <!-- Ambient Background Glows -->
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <!-- 1. Drawer Header -->
+            <div class="flex items-center justify-between h-16 px-5 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md relative z-10 shrink-0">
+              <div class="flex items-center gap-3">
+                <BrandMark
+                  v-if="siteLogo && brandingDisplay !== 'text_only'"
+                  :src="siteLogo"
+                  :alt="displayCompanyName"
+                  class="h-8 w-auto shrink-0"
+                />
+                <div class="flex flex-col">
+                  <span class="text-sm font-black font-heading tracking-tight text-white leading-none">
+                    {{ displayCompanyName }}
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5 mt-1 leading-none">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <span>AS153992 Peering</span>
+                  </span>
                 </div>
+              </div>
 
-                <a
-                  v-else-if="isExternalLink(item.url)"
-                  :href="item.url || '#'"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted"
-                  @click="mobileMenuOpen = false"
-                >
-                  {{ item.title }}
-                </a>
-                <router-link
-                  v-else
-                  :to="resolvePublicMenuTo(item.url)"
-                  class="flex items-center px-3 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted"
-                  :class="isNavItemActive(item, route) ? '!text-primary !bg-primary/10 font-bold' : ''"
-                  @click="mobileMenuOpen = false"
-                >
-                  {{ item.title }}
-                </router-link>
-              </template>
-            </nav>
+              <button
+                type="button"
+                class="p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
+                :aria-label="tt('header.closeMenuAria', 'Tutup menu')"
+                @click="mobileMenuOpen = false"
+              >
+                <X class="w-5 h-5" />
+              </button>
+            </div>
 
-            <div class="pt-4 border-t border-border/60 flex flex-col gap-3">
-              <div class="flex items-center justify-between px-1">
-                <span class="text-xs font-semibold text-muted-foreground">{{ tt('header.selectLanguage', 'Bahasa:') }}</span>
-                <div class="flex flex-wrap gap-1.5 justify-end font-mono">
+            <!-- 2. Interactive Feature Shortcut: Bandwidth Simulator -->
+            <div class="px-5 pt-4 shrink-0 relative z-10">
+              <router-link
+                to="/pricing/isp#calculator"
+                class="group block p-3 rounded-2xl bg-gradient-to-r from-cyan-500/15 via-sky-500/10 to-slate-900/80 border border-cyan-500/30 hover:border-cyan-400 transition-all shadow-sm"
+                @click="mobileMenuOpen = false"
+              >
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/40 shrink-0">
+                      <Sparkles class="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span class="text-xs font-bold text-white group-hover:text-cyan-300 transition-colors block font-heading">
+                        Simulator Bandwidth K2NET
+                      </span>
+                      <span class="text-[10px] text-slate-400 font-mono block">
+                        Hitung estimasi Mbps & paket ideal
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronRight class="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+                </div>
+              </router-link>
+            </div>
+
+            <!-- 3. Navigation Links List -->
+            <div class="flex-1 overflow-y-auto px-5 py-4 space-y-1.5 relative z-10">
+              <nav class="space-y-1.5 font-sans">
+                <template
+                  v-for="item in navItems"
+                  :key="String(item.id || item.title || item.url)"
+                >
+                  <!-- Item with Submenu (e.g. Layanan, Paket & Harga) -->
+                  <div
+                    v-if="item.children && item.children.length > 0"
+                    class="rounded-xl overflow-hidden transition-colors"
+                    :class="isMobileSubmenuOpen(item) ? 'bg-slate-900/70 border border-slate-800/80' : ''"
+                  >
+                    <button
+                      type="button"
+                      class="w-full px-3.5 py-2.5 text-left text-sm font-semibold flex items-center justify-between rounded-xl transition-all"
+                      :class="isMobileSubmenuOpen(item)
+                        ? 'text-cyan-300 font-bold'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-900/50'"
+                      @click="toggleMobileSubmenu(item)"
+                    >
+                      <div class="flex items-center gap-3">
+                        <component
+                          :is="getMenuItemIcon(item)"
+                          class="w-4 h-4 text-slate-400 shrink-0"
+                          :class="{ '!text-cyan-400': isMobileSubmenuOpen(item) }"
+                        />
+                        <span>{{ item.title }}</span>
+                      </div>
+                      <ChevronDown
+                        class="w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0"
+                        :class="{ 'rotate-180 text-cyan-400': isMobileSubmenuOpen(item) }"
+                      />
+                    </button>
+
+                    <!-- Submenu Children list -->
+                    <div
+                      v-if="isMobileSubmenuOpen(item)"
+                      class="px-2 pb-2 pt-1 space-y-1 border-t border-slate-800/60"
+                    >
+                      <template
+                        v-for="child in item.children"
+                        :key="String(child.id || child.title || child.url)"
+                      >
+                        <a
+                          v-if="isExternalLink(child.url)"
+                          :href="child.url || '#'"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors"
+                          @click="mobileMenuOpen = false"
+                        >
+                          <span>{{ child.title }}</span>
+                          <ExternalLink class="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        </a>
+                        <router-link
+                          v-else
+                          :to="resolvePublicMenuTo(child.url)"
+                          class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors"
+                          :class="isDropdownChildActive(child, item.children || [], route)
+                            ? 'bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30'
+                            : 'text-slate-300 hover:text-white hover:bg-slate-800/70'"
+                          @click="mobileMenuOpen = false"
+                        >
+                          <div>
+                            <span class="block">{{ child.title }}</span>
+                            <span
+                              v-if="child.description"
+                              class="text-[10px] text-slate-400 line-clamp-1 mt-0.5"
+                            >
+                              {{ child.description }}
+                            </span>
+                          </div>
+                          <ChevronRight class="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        </router-link>
+                      </template>
+                    </div>
+                  </div>
+
+                  <!-- Single Item without Submenu -->
+                  <a
+                    v-else-if="isExternalLink(item.url)"
+                    :href="item.url || '#'"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-900/70 transition-all border border-transparent hover:border-slate-800/60"
+                    @click="mobileMenuOpen = false"
+                  >
+                    <div class="flex items-center gap-3">
+                      <component
+                        :is="getMenuItemIcon(item)"
+                        class="w-4 h-4 text-slate-400 shrink-0"
+                      />
+                      <span>{{ item.title }}</span>
+                    </div>
+                    <ExternalLink class="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  </a>
+                  <router-link
+                    v-else
+                    :to="resolvePublicMenuTo(item.url)"
+                    class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                    :class="isNavItemActive(item, route)
+                      ? 'bg-cyan-500/15 text-cyan-300 font-bold border border-cyan-500/30 shadow-sm shadow-cyan-500/10'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-900/70 border border-transparent hover:border-slate-800/60'"
+                    @click="mobileMenuOpen = false"
+                  >
+                    <div class="flex items-center gap-3">
+                      <component
+                        :is="getMenuItemIcon(item)"
+                        class="w-4 h-4 text-slate-400 shrink-0"
+                        :class="{ '!text-cyan-400': isNavItemActive(item, route) }"
+                      />
+                      <span>{{ item.title }}</span>
+                    </div>
+                    <ChevronRight class="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  </router-link>
+                </template>
+              </nav>
+            </div>
+
+            <!-- 4. Drawer Footer / Actions Panel -->
+            <div class="p-5 border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-md relative z-10 shrink-0 space-y-3.5">
+              <!-- Language Selection (Segmented Pill) -->
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase text-slate-400 tracking-wider flex items-center gap-1.5">
+                  <Globe class="w-3.5 h-3.5 text-cyan-400" />
+                  <span>{{ tt('header.selectLanguage', 'Bahasa') }}</span>
+                </span>
+                <div class="inline-flex p-1 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs">
                   <button
                     v-for="lang in languages"
                     :key="lang.code"
                     type="button"
-                    class="px-2.5 py-1 text-xs rounded-md border font-semibold uppercase"
-                    :class="currentLanguageCode === lang.code ? 'bg-primary text-primary-foreground font-bold border-primary' : 'border-border text-muted-foreground'"
+                    class="px-2.5 py-1 rounded-lg font-bold uppercase transition-all"
+                    :class="currentLanguageCode === lang.code
+                      ? 'bg-cyan-500 text-slate-950 shadow-sm shadow-cyan-500/30'
+                      : 'text-slate-400 hover:text-white'"
                     @click="handleSelectLanguage(lang.code)"
                   >
                     {{ lang.code }}
@@ -390,48 +517,85 @@
                 </div>
               </div>
 
-              <template v-if="headerCtaText">
+              <!-- Buttons CTA & Login -->
+              <div class="space-y-2 pt-1">
+                <!-- Primary CTA (Hubungi Sales / Konsultasi) -->
+                <template v-if="headerCtaText">
+                  <Button
+                    v-if="isExternalLink(headerCtaUrl)"
+                    as="a"
+                    :href="headerCtaUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="primary"
+                    size="md"
+                    class="w-full font-bold shadow-lg shadow-cyan-500/20 justify-center gap-2"
+                    @click="mobileMenuOpen = false"
+                  >
+                    <span>{{ headerCtaText }}</span>
+                    <ArrowRight class="w-4 h-4" />
+                  </Button>
+                  <Button
+                    v-else
+                    as="router-link"
+                    :to="resolvePublicMenuTo(headerCtaUrl)"
+                    variant="primary"
+                    size="md"
+                    class="w-full font-bold shadow-lg shadow-cyan-500/20 justify-center gap-2"
+                    @click="mobileMenuOpen = false"
+                  >
+                    <span>{{ headerCtaText }}</span>
+                    <ArrowRight class="w-4 h-4" />
+                  </Button>
+                </template>
+
+                <!-- Member / Login Button -->
                 <Button
-                  v-if="isExternalLink(headerCtaUrl)"
+                  v-if="memberEnabled && memberStore.isAuthenticated"
+                  as="router-link"
+                  to="/member/profile"
+                  variant="outline"
+                  size="md"
+                  class="w-full font-semibold border-slate-800 bg-slate-900/80 text-slate-200 hover:bg-slate-800 justify-center gap-2"
+                  @click="mobileMenuOpen = false"
+                >
+                  <User class="w-4 h-4 text-cyan-400" />
+                  <span>{{ memberStore.member?.name || tt('header.account', 'Akun Klien') }}</span>
+                </Button>
+                <Button
+                  v-else-if="memberEnabled"
                   as="a"
-                  :href="headerCtaUrl"
+                  :href="loginUrl"
+                  variant="outline"
+                  size="md"
+                  class="w-full font-semibold border-slate-800 bg-slate-900/80 text-slate-200 hover:bg-slate-800 hover:text-white justify-center gap-2"
+                  @click="mobileMenuOpen = false"
+                >
+                  <LogIn class="w-4 h-4 text-cyan-400" />
+                  <span>{{ loginLabel }}</span>
+                </Button>
+              </div>
+
+              <!-- 24/7 Hotline Note -->
+              <div class="pt-2 border-t border-slate-900 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                  <span>NOC 24/7 Monitoring</span>
+                </span>
+                <a
+                  href="https://wa.me/6285136290851"
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="primary"
-                  size="md"
-                  class="w-full font-semibold shadow-md"
-                  @click="mobileMenuOpen = false"
+                  class="text-cyan-400 hover:underline flex items-center gap-1 font-semibold"
                 >
-                  {{ headerCtaText }}
-                </Button>
-                <Button
-                  v-else
-                  as="router-link"
-                  :to="resolvePublicMenuTo(headerCtaUrl)"
-                  variant="primary"
-                  size="md"
-                  class="w-full font-semibold shadow-md"
-                  @click="mobileMenuOpen = false"
-                >
-                  {{ headerCtaText }}
-                </Button>
-              </template>
-
-              <Button
-                v-if="memberEnabled && !memberStore.isAuthenticated"
-                as="a"
-                :href="loginUrl"
-                variant="outline"
-                size="md"
-                class="w-full"
-                @click="mobileMenuOpen = false"
-              >
-                {{ loginLabel }}
-              </Button>
+                  <MessageCircle class="w-3.5 h-3.5" />
+                  <span>0851-3629-0851</span>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </transition>
+        </transition>
+      </div>
     </teleport>
   </header>
 </template>
@@ -440,7 +604,11 @@
 import { ref, computed, watch, inject, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { Globe, Menu, X, ChevronDown, Check } from 'lucide-vue-next';
+import {
+  Globe, Menu, X, ChevronDown, ChevronRight, Check,
+  Sparkles, User, LogIn, ExternalLink, ArrowRight,
+  MessageCircle, Home, Layers, Package, Newspaper, PhoneCall, Info,
+} from 'lucide-vue-next';
 import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
 import {
   Button,
@@ -652,6 +820,19 @@ const toggleMobileSubmenu = (item: MenuItem) => {
   if (next.has(key)) next.delete(key);
   else next.add(key);
   mobileOpenSubmenus.value = next;
+};
+
+const getMenuItemIcon = (item: MenuItem) => {
+  const url = String(item.url || '').toLowerCase();
+  const title = String(item.title || '').toLowerCase();
+
+  if (url === '/' || title.includes('beranda') || title.includes('home')) return Home;
+  if (url.includes('about') || title.includes('tentang')) return Info;
+  if (url.includes('service') || title.includes('layanan')) return Layers;
+  if (url.includes('pricing') || title.includes('paket') || title.includes('harga')) return Package;
+  if (url.includes('blog') || title.includes('berita') || title.includes('warta')) return Newspaper;
+  if (url.includes('contact') || title.includes('kontak')) return PhoneCall;
+  return Globe;
 };
 
 watch(mobileMenuOpen, (open) => {
