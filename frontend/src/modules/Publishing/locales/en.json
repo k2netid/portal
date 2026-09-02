@@ -726,8 +726,8 @@
         "special_pages": "Landing pages"
       },
       "items": {
-        "general": "Core Branding",
-        "general_desc": "Foundation logos and site names.",
+        "general": "Site Branding",
+        "general_desc": "Public site logos and identity.",
         "site_profile": "Site profile",
         "site_profile_desc": "Contact and public site profile data.",
         "menus": {

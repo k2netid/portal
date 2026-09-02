@@ -246,7 +246,7 @@
           </div>
         </section>
 
-        <!-- SEO & Social Share Preview (Core Branding / Site Profile) -->
+        <!-- SEO & Social Share Preview (Site Branding / Site Profile) -->
         <section
           v-if="(selectedItem.id === 'brand_core' || selectedItem.id === 'site_profile' || selectedItem.id === 'identity-general') && organizationMode === 'design'"
           class="rounded-2xl border border-border bg-card shadow-sm space-y-4 min-w-0 overflow-hidden"

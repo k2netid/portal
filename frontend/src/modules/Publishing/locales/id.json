@@ -726,8 +726,8 @@
         "special_pages": "Halaman landing"
       },
       "items": {
-        "general": "Branding Inti",
-        "general_desc": "Logo dasar dan nama situs.",
+        "general": "Branding Situs",
+        "general_desc": "Logo dan identitas situs publik.",
         "site_profile": "Profil situs",
         "site_profile_desc": "Kontak dan data profil situs publik.",
         "menus": {
