@@ -139,20 +139,23 @@ function applyDropdownVars(
     isDark: boolean,
 ) {
     const style = normalizeConsoleDropdownStyle(dropdownStyle);
-    const baseOpacity = clampGlassIntensity(popperOpacityPct, 85) / 100;
+    const baseOpacity = clampGlassIntensity(popperOpacityPct, 98) / 100;
     let opacity = baseOpacity;
-    let blur = '16px';
+    let blur = '20px';
     if (style === 'minimal') {
-        opacity = Math.min(1, baseOpacity + 0.08);
+        opacity = 1;
         blur = '0px';
     } else if (style === 'glass') {
-        opacity = Math.max(0.55, baseOpacity - 0.12);
-        blur = '20px';
+        opacity = Math.max(0.94, baseOpacity - 0.04);
+        blur = '24px';
+    } else {
+        opacity = Math.max(0.97, baseOpacity);
+        blur = '16px';
     }
     vars['--console-popper-bg'] = isDark
-        ? `rgba(10, 10, 10, ${opacity})`
+        ? `rgba(15, 23, 42, ${opacity})`
         : `rgba(255, 255, 255, ${opacity})`;
-    vars['--console-popper-border'] = isDark ? 'rgba(255, 255, 255, 0.09)' : 'rgba(0, 0, 0, 0.09)';
+    vars['--console-popper-border'] = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)';
     vars['--console-popper-blur'] = blur;
 }
 

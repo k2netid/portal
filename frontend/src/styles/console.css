@@ -420,10 +420,26 @@
     html[data-console-theme] [data-radix-popper-content-wrapper] [data-radix-menu-content],
     html[data-console-theme] [data-radix-select-content],
     html[data-console-theme] [data-radix-popper-content-wrapper] > div:not([role="dialog"]) {
-        background-color: var(--console-popper-bg) !important;
-        border-color: var(--console-popper-border) !important;
-        backdrop-filter: blur(var(--console-popper-blur, 16px)) !important;
-        -webkit-backdrop-filter: blur(var(--console-popper-blur, 16px)) !important;
+        background-color: var(--console-popper-bg, #ffffff) !important;
+        border-color: var(--console-popper-border, rgba(0, 0, 0, 0.12)) !important;
+        backdrop-filter: blur(var(--console-popper-blur, 20px)) !important;
+        -webkit-backdrop-filter: blur(var(--console-popper-blur, 20px)) !important;
+        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    .dark html[data-console-theme] [data-radix-popper-content-wrapper] [role="menu"],
+    .dark html[data-console-theme] [data-radix-popper-content-wrapper] [data-radix-menu-content],
+    .dark html[data-console-theme] [data-radix-select-content],
+    .dark html[data-console-theme] [data-radix-popper-content-wrapper] > div:not([role="dialog"]),
+    html[data-console-theme].dark [data-radix-popper-content-wrapper] [role="menu"],
+    html[data-console-theme].dark [data-radix-popper-content-wrapper] [data-radix-menu-content],
+    html[data-console-theme].dark [data-radix-select-content],
+    html[data-console-theme].dark [data-radix-popper-content-wrapper] > div:not([role="dialog"]) {
+        background-color: var(--console-popper-bg, #0f172a) !important;
+        border-color: var(--console-popper-border, rgba(255, 255, 255, 0.12)) !important;
+        backdrop-filter: blur(var(--console-popper-blur, 20px)) !important;
+        -webkit-backdrop-filter: blur(var(--console-popper-blur, 20px)) !important;
+        box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
     }
 
     /* Modal dialog panel */
