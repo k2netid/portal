@@ -370,11 +370,14 @@ header[data-ja-customizer-target="header"] .layung-panel {
 }
 
 .layung-theme.layung-inner-canvas {
-  background-color: transparent;
+  background-color: hsl(var(--background));
   background-image:
-    radial-gradient(ellipse 90% 55% at 100% -8%, rgba(56, 198, 244, 0.2), transparent 58%),
-    radial-gradient(ellipse 70% 45% at 0% 18%, rgba(186, 230, 253, 0.5), transparent 55%),
-    linear-gradient(180deg, #f3fbff 0%, #eaf5fb 48%, #e4eef6 100%);
+    radial-gradient(ellipse 90% 55% at 100% 0%, rgba(56, 198, 244, 0.12), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 0% 10%, rgba(186, 230, 253, 0.35), transparent 70%),
+    linear-gradient(180deg, #f3fbff 0%, #f8fafc 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .layung-theme main.main-content.layung-inner-canvas {
@@ -397,10 +400,14 @@ header[data-ja-customizer-target="header"] .layung-panel {
 
 .dark .layung-theme.layung-inner-canvas,
 .layung-theme.dark.layung-inner-canvas {
+  background-color: hsl(var(--background));
   background-image:
-    radial-gradient(ellipse 80% 50% at 92% -10%, rgba(0, 174, 239, 0.16), transparent 56%),
-    radial-gradient(ellipse 55% 40% at 8% 20%, rgba(0, 80, 140, 0.18), transparent 58%),
+    radial-gradient(ellipse 80% 50% at 92% 0%, rgba(0, 174, 239, 0.1), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 8% 10%, rgba(0, 80, 140, 0.12), transparent 70%),
     linear-gradient(180deg, #0b1220 0%, #070b14 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .layung-theme.layung-inner-canvas .layung-panel {
