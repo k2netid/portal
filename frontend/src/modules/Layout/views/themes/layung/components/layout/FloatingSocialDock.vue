@@ -1,0 +1,182 @@
+<template>
+  <aside
+    v-if="socialLinks.length && isEnabled"
+    data-ja-customizer-target="social_links"
+    class="layung-social-dock"
+    :class="{ 'layung-social-dock--collapsed': isCollapsed }"
+    aria-label="Tautan Media Sosial Melayang"
+  >
+    <!-- Collapsed Trigger Button -->
+    <button
+      v-if="isCollapsed"
+      type="button"
+      class="layung-social-dock__toggle-btn"
+      :title="tt('footer.socialExpand', 'Buka Media Sosial')"
+      :aria-label="tt('footer.socialExpand', 'Buka Media Sosial')"
+      @click="isCollapsed = false"
+    >
+      <Share2 class="w-4 h-4 text-primary" />
+    </button>
+
+    <!-- Expanded Dock Body -->
+    <div
+      v-else
+      class="layung-social-dock__body"
+    >
+      <!-- Mini Header / Collapse Button -->
+      <button
+        type="button"
+        class="layung-social-dock__collapse-btn"
+        :title="tt('footer.socialCollapse', 'Sembunyikan')"
+        :aria-label="tt('footer.socialCollapse', 'Sembunyikan')"
+        @click="isCollapsed = true"
+      >
+        <ChevronRight class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-opacity" />
+      </button>
+
+      <!-- Social Items List -->
+      <div class="layung-social-dock__list">
+        <a
+          v-for="(link, idx) in socialLinks"
+          :key="idx"
+          :href="resolveSocialHref(link)"
+          :target="getSocialTarget(link)"
+          :rel="getSocialRel(link)"
+          class="layung-social-dock__item group"
+          :aria-label="getSocialAriaLabel(link)"
+        >
+          <component
+            :is="getSocialIcon(link.icon)"
+            class="w-4 h-4 transition-transform group-hover:scale-115 duration-200"
+          />
+
+          <!-- Flyout Tooltip Label -->
+          <span class="layung-social-dock__tooltip">
+            {{ getSocialPlatformName(link.icon) }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </aside>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import {
+  Share2,
+  ChevronRight,
+  Globe,
+  Instagram,
+  Facebook,
+  Twitter,
+  Youtube,
+  Linkedin,
+  Github,
+  MessageCircle,
+  Mail,
+  Music2,
+} from 'lucide-vue-next';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import { useTheme } from '@/modules/Layout/composables/useTheme';
+
+const { t: tt } = useThemeI18n('layung');
+const { getSetting } = useTheme();
+
+const isCollapsed = ref(false);
+
+const isEnabled = computed(() => getSetting('enable_floating_social', true) !== false);
+
+const rawSocialLinks = computed(() => {
+  return (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || [];
+});
+
+const defaultSocialLinks = [
+  { icon: 'WhatsApp', url: '6285136290851' },
+  { icon: 'Linkedin', url: 'https://linkedin.com/company/k2net' },
+  { icon: 'Instagram', url: 'https://instagram.com/k2net.id' },
+  { icon: 'Mail', url: 'info@k2net.id' },
+];
+
+const socialLinks = computed(() => {
+  if (rawSocialLinks.value.length > 0) {
+    return rawSocialLinks.value;
+  }
+  return defaultSocialLinks;
+});
+
+const trimStr = (v: unknown): string => {
+  if (v == null) return '';
+  if (typeof v !== 'string') return String(v).trim();
+  return v.trim();
+};
+
+const toWhatsAppDialDigits = (input: string): string => {
+  const d = input.replace(/\D/g, '');
+  if (!d) return '';
+  if (d.startsWith('62')) return d;
+  if (d.startsWith('0')) return `62${d.slice(1)}`;
+  if (d.startsWith('8')) return `62${d}`;
+  return d;
+};
+
+const getSocialIcon = (key?: string) => {
+  switch (key) {
+    case 'Twitter': return Twitter;
+    case 'Instagram': return Instagram;
+    case 'Facebook': return Facebook;
+    case 'Youtube': return Youtube;
+    case 'Linkedin': return Linkedin;
+    case 'Github': return Github;
+    case 'Music2': return Music2;
+    case 'MessageCircle':
+    case 'WhatsApp':
+      return MessageCircle;
+    case 'Mail':
+    case 'Email':
+      return Mail;
+    default: return Globe;
+  }
+};
+
+const getSocialPlatformName = (key?: string) => {
+  const clean = trimStr(key);
+  if (!clean) return 'Tautan';
+  if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp CS';
+  if (clean === 'Linkedin') return 'LinkedIn K2NET';
+  if (clean === 'Mail' || clean === 'Email') return 'Kirim Email';
+  return clean;
+};
+
+const resolveSocialHref = (link: { icon?: string; url?: string }) => {
+  const icon = trimStr(link?.icon);
+  const raw = trimStr(link?.url);
+  if (!raw) return '#';
+  if (icon === 'Mail' || icon === 'Email') {
+    if (raw.startsWith('mailto:')) return raw;
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) return `mailto:${raw}`;
+    return raw;
+  }
+  if (icon === 'MessageCircle' || icon === 'WhatsApp') {
+    if (raw.includes('wa.me/') || raw.includes('api.whatsapp.com/') || raw.includes('whatsapp.com/')) {
+      return raw.startsWith('http') ? raw : `https://${raw.replace(/^\/+/, '')}`;
+    }
+    const digits = toWhatsAppDialDigits(raw);
+    return digits ? `https://wa.me/${digits}` : '#';
+  }
+  return raw;
+};
+
+const getSocialTarget = (link: { icon?: string; url?: string }) => {
+  const href = resolveSocialHref(link);
+  if (href.startsWith('mailto:') || href.startsWith('tel:') || href === '#') return undefined;
+  return '_blank';
+};
+
+const getSocialRel = (link: { icon?: string; url?: string }) =>
+  (getSocialTarget(link) ? 'noopener noreferrer' : undefined);
+
+const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
+  const icon = trimStr(link?.icon) || 'social';
+  return `Kunjungi ${icon}`;
+};
+</script>
