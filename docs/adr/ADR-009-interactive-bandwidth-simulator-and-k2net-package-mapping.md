@@ -58,8 +58,20 @@ $$\text{Kebutuhan Bandwidth Puncak} = (\text{Jumlah User} \times \text{Faktor Ko
     - `@media (min-width: 640px)`: `.layung-breadcrumb-mobile { display: none !important; }`
   - Di perangkat smartphone, hanya tombol Back Pill yang ringkas dan aman yang tampil tanpa ada jejak breadcrumb panjang yang terpotong.
 - **Keselarasan Seluruh Sub-Halaman dengan Preset Master Layout**:
-  - Seluruh sub-halaman (`PricingIsp`, `PricingMsp`, `Pricing`, `Services`, `Solusi`, `Achievement`) kini menggunakan container terpadu yang diproteksi `w-full max-w-full overflow-x-clip`.
   - Di [FrontendLayout.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/layouts/FrontendLayout.vue), mode **Hybrid** dibebaskan dari penumpukan `container mx-auto px-6 md:px-12 lg:px-20` ganda dan kini dikontrol penuh oleh variabel dinamis `containerMaxWidth` (1200px / 1400px / 1480px) sesuai preset tata letak yang dipilih di Theme Customizer (*Full Width*, *Boxed*, *Wide*, *Framed*, *Hybrid*).
+
+### 6. Arsitektur Section Full-Width Terpadu & Eliminasi Double-Boxed Containers
+- **Akar Masalah "Tampil Mode Hybrid di Mode Lebar Penuh"**:
+  - Sebelumnya, halaman-halaman sub (`PricingIsp.vue`, `PricingMsp.vue`, `Pricing.vue`, `Services.vue`, `Solusi.vue`, `Achievement.vue`) membungkus seluruh body halaman ke dalam satu kotak utama `<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`.
+  - Sementara itu, komponen section di dalamnya (`IspBentoSection`, `ManagedServicesSection`, `SlaGuaranteeSection`, `PricingHubSection`, `FaqSection`, `CtaSection`) masing-masing juga memiliki wadah `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` sendiri.
+  - Akibatnya terjadi **Double-Boxed Container**: padding horizontal menumpuk menjadi dobel (64px di tiap sisi) dan lebar konten terkompresi menyempit ke ~1150px. Di layar lebar, halaman-halaman ini terlihat seperti mode kotak/hybrid dengan margin samping kosong yang lebar, padahal administrator memilih mode *Lebar Penuh*.
+  - Selain itu, komponen `FaqSection` sebelumnya di-hardcode ke `max-w-4xl` (896px), sehingga jauh lebih sempit dibanding section lain di atas dan di bawahnya.
+- **Restrukturisasi Menyeluruh**:
+  - Halaman-halaman sub kini mengadopsi arsitektur yang sama persis dengan `Home.vue` dan `About.vue`:
+    - Root halaman menggunakan kontainer full-width: `<div class="layung-page flex-1 flex flex-col w-full overflow-x-clip">`.
+    - Tiap section bertindak sebagai blok mandiri tingkat pertama dengan kontainer standar yang sejajar sempurna: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full`.
+  - `FaqSection.vue` distandarkan ke `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full` dengan daftar akordeon tetap terpusat di `max-w-4xl mx-auto`.
+  - Seluruh section di seluruh halaman kini memiliki lebar, margin, dan grid alignment yang 100% konsisten pada mode Lebar Penuh maupun mode layout lainnya.
 
 ---
 
