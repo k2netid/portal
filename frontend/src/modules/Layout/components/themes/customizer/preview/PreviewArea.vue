@@ -122,31 +122,44 @@
     <!-- Canvas Scrollable Stage -->
     <div
       class="flex-1 min-h-0 overflow-auto flex justify-center custom-scrollbar"
-      :class="activeDevice === 'desktop' && zoomLevel === 100 ? 'items-stretch p-0' : 'items-start p-4 md:p-6'"
+      :class="activeDevice === 'desktop' && zoomLevel === 100 ? 'items-stretch p-0' : 'items-start p-4 md:p-8'"
     >
       <div
         class="flex flex-col items-center justify-start shrink-0 transition-all duration-150"
         :style="stageWrapperStyle"
       >
+        <!-- DESKTOP BROWSER FRAME -->
         <div
+          v-if="activeDevice === 'desktop'"
           class="relative bg-background overflow-hidden flex flex-col min-h-0 origin-top transition-transform duration-150"
           :class="[
-            activeDevice === 'desktop' && zoomLevel === 100
+            zoomLevel === 100
               ? 'w-full h-full rounded-none border-0 shadow-none'
-              : 'shadow-2xl rounded-[2.5rem] border-[14px] border-slate-900 dark:border-slate-800 shrink-0',
+              : 'rounded-2xl border border-border/80 bg-card shadow-2xl ring-1 ring-black/5 dark:ring-white/10 shrink-0',
           ]"
           :style="previewStyles"
         >
+          <!-- macOS Studio Window Header (shown when scaled or in desktop frame mode) -->
           <div
-            v-if="activeDevice !== 'desktop'"
-            class="h-7 w-full shrink-0 z-20 flex items-center justify-between px-6 bg-slate-900 dark:bg-slate-800"
+            v-if="zoomLevel !== 100"
+            class="h-9 px-4 flex items-center justify-between border-b border-border/60 bg-muted/60 backdrop-blur-md shrink-0 select-none"
           >
-            <div class="text-[10px] font-medium text-slate-400">
-              9:41
+            <!-- Traffic Lights -->
+            <div class="flex items-center gap-1.5 w-16">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-black/10 shadow-xs" />
+              <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-black/10 shadow-xs" />
+              <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-black/10 shadow-xs" />
             </div>
-            <div class="flex gap-1.5">
-              <Wifi class="w-3 h-3 text-slate-400" />
-              <BatteryFull class="w-3 h-3 text-slate-400" />
+
+            <!-- Address Pill -->
+            <div class="px-3 py-0.5 rounded-lg bg-background/80 border border-border/60 text-[11px] font-mono text-muted-foreground flex items-center gap-1.5 shadow-2xs max-w-sm w-64 justify-center">
+              <Lock class="w-3 h-3 text-emerald-500 shrink-0" />
+              <span class="truncate">k2net.id{{ props.previewUrl || '/' }}</span>
+            </div>
+
+            <!-- Resolution tag -->
+            <div class="w-16 flex justify-end">
+              <span class="text-[10px] font-mono font-semibold text-muted-foreground/60">1280px</span>
             </div>
           </div>
 
@@ -160,6 +173,82 @@
             @select-target="(payload) => emit('select-target', payload)"
           />
         </div>
+
+        <!-- TABLET FRAME (iPad Pro Titanium Bezel) -->
+        <div
+          v-else-if="activeDevice === 'tablet'"
+          class="relative p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 rounded-[2.5rem] border border-slate-700/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/10 shrink-0 flex flex-col origin-top transition-transform duration-150"
+          :style="previewStyles"
+        >
+          <!-- Camera Dot -->
+          <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-slate-950 border border-slate-800 shadow-inner z-30 pointer-events-none" />
+
+          <!-- Inner Screen -->
+          <div class="rounded-[2rem] overflow-hidden bg-background flex flex-col flex-1 min-h-0 border border-slate-900/50 shadow-inner">
+            <!-- Status Bar -->
+            <div class="h-7 w-full shrink-0 z-20 flex items-center justify-between px-6 bg-slate-900/90 text-slate-300 text-[11px] font-medium border-b border-white/5 select-none">
+              <div>9:41</div>
+              <div class="flex items-center gap-2">
+                <Wifi class="w-3 h-3 text-slate-400" />
+                <BatteryFull class="w-3 h-3 text-slate-400" />
+              </div>
+            </div>
+
+            <ThemePreview
+              ref="themePreviewRef"
+              :theme="props.previewTheme"
+              :preview-url="props.previewUrl"
+              :enable-click-select="props.enableClickSelect"
+              :focus-target="props.focusTarget"
+              class="w-full flex-1 min-h-0 bg-background"
+              @select-target="(payload) => emit('select-target', payload)"
+            />
+
+            <!-- Bottom Home Indicator -->
+            <div class="h-4 w-full shrink-0 z-20 flex items-center justify-center bg-slate-900/90 select-none">
+              <div class="w-32 h-1 rounded-full bg-white/25" />
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE FRAME (iPhone 16 Pro Dynamic Island) -->
+        <div
+          v-else-if="activeDevice === 'mobile'"
+          class="relative p-2.5 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 rounded-[3rem] border border-slate-700/60 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.6)] ring-1 ring-white/10 shrink-0 flex flex-col origin-top transition-transform duration-150"
+          :style="previewStyles"
+        >
+          <!-- Dynamic Island -->
+          <div class="absolute top-3.5 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full bg-black z-30 flex items-center justify-end px-2.5 shadow-md pointer-events-none border border-white/10">
+            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800" />
+          </div>
+
+          <!-- Inner Screen -->
+          <div class="rounded-[2.4rem] overflow-hidden bg-background flex flex-col flex-1 min-h-0 border border-slate-900/50 shadow-inner">
+            <!-- Status Bar -->
+            <div class="h-8 pt-1.5 w-full shrink-0 z-20 flex items-center justify-between px-6 bg-slate-900/90 text-slate-300 text-[11px] font-medium border-b border-white/5 select-none">
+              <div>9:41</div>
+              <div class="flex items-center gap-1.5">
+                <Wifi class="w-3 h-3 text-slate-400" />
+                <BatteryFull class="w-3 h-3 text-slate-400" />
+              </div>
+            </div>
+
+            <ThemePreview
+              ref="themePreviewRef"
+              :theme="props.previewTheme"
+              :preview-url="props.previewUrl"
+              :enable-click-select="props.enableClickSelect"
+              :focus-target="props.focusTarget"
+              class="w-full flex-1 min-h-0 bg-background"
+              @select-target="(payload) => emit('select-target', payload)"
+            />
+
+            <!-- Bottom Home Indicator -->
+            <div class="h-4 w-full shrink-0 z-20 flex items-center justify-center bg-slate-900/90 select-none">
+              <div class="w-28 h-1 rounded-full bg-white/25" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -170,6 +259,7 @@ import { ref, computed } from 'vue';
 import {
   BatteryFull,
   ChevronDown,
+  Lock,
   MonitorIcon,
   RotateCcw,
   SmartphoneIcon,
