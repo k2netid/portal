@@ -29,6 +29,7 @@
     <!-- Expanded Dock Body -->
     <div
       v-else
+      ref="bodyRef"
       class="layung-social-dock__body"
     >
       <!-- Mini Header / Collapse Button -->
@@ -41,11 +42,10 @@
         <ChevronRight class="w-3.5 h-3.5" />
       </button>
 
+      <div class="layung-social-dock__divider" />
+
       <!-- Social Items List -->
-      <div
-        ref="listRef"
-        class="layung-social-dock__list"
-      >
+      <div class="layung-social-dock__list">
         <a
           v-for="(link, idx) in socialLinks"
           :key="idx"
@@ -72,6 +72,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue';
+import gsap from 'gsap';
 import {
   Share2,
   ChevronRight,
@@ -92,11 +93,11 @@ import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
 
 const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
-const { motion, isAnimationEnabled } = useThemeMotion();
+const { isAnimationEnabled } = useThemeMotion();
 
 const isCollapsed = ref(false);
 const dockRef = ref<HTMLElement | null>(null);
-const listRef = ref<HTMLElement | null>(null);
+const bodyRef = ref<HTMLElement | null>(null);
 const toggleBtnRef = ref<HTMLElement | null>(null);
 
 const handleToggle = async (collapsed: boolean) => {
@@ -105,36 +106,35 @@ const handleToggle = async (collapsed: boolean) => {
   if (!isAnimationEnabled()) return;
 
   if (collapsed && toggleBtnRef.value) {
-    motion.from(toggleBtnRef.value, {
-      scale: 0.6,
-      opacity: 0,
-      duration: 0.35,
-      ease: 'back.out(2)',
-    });
-  } else if (!collapsed && listRef.value) {
-    const items = listRef.value.querySelectorAll('.layung-social-dock__item');
+    gsap.fromTo(
+      toggleBtnRef.value,
+      { scale: 0.6, opacity: 0, rotation: -45 },
+      { scale: 1, opacity: 1, rotation: 0, duration: 0.35, ease: 'back.out(1.8)', clearProps: 'all' }
+    );
+  } else if (!collapsed && bodyRef.value) {
+    gsap.fromTo(
+      bodyRef.value,
+      { scale: 0.8, opacity: 0, x: 15 },
+      { scale: 1, opacity: 1, x: 0, duration: 0.35, ease: 'back.out(1.5)', clearProps: 'all' }
+    );
+    const items = bodyRef.value.querySelectorAll('.layung-social-dock__item');
     if (items.length) {
-      motion.from(items, {
-        scale: 0.6,
-        opacity: 0,
-        x: 18,
-        stagger: 0.04,
-        duration: 0.35,
-        ease: 'back.out(1.8)',
-      });
+      gsap.fromTo(
+        items,
+        { scale: 0.7, opacity: 0 },
+        { scale: 1, opacity: 1, stagger: 0.04, duration: 0.25, ease: 'power2.out', clearProps: 'all' }
+      );
     }
   }
 };
 
 onMounted(() => {
   if (dockRef.value && isAnimationEnabled()) {
-    motion.from(dockRef.value, {
-      x: 36,
-      opacity: 0,
-      duration: 0.55,
-      delay: 0.35,
-      ease: 'back.out(1.4)',
-    });
+    gsap.fromTo(
+      dockRef.value,
+      { x: 36, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.55, delay: 0.3, ease: 'back.out(1.4)', clearProps: 'all' }
+    );
   }
 });
 
