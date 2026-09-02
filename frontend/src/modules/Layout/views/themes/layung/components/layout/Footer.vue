@@ -1,7 +1,7 @@
 <template>
   <footer
     data-ja-customizer-target="footer"
-    class="border-t border-slate-800/80 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
+    class="border-t-0 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8">
