@@ -185,6 +185,31 @@
 
           <ThemeToggle />
 
+          <template v-if="headerCtaText">
+            <Button
+              v-if="isExternalLink(headerCtaUrl)"
+              as="a"
+              :href="headerCtaUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="default"
+              size="sm"
+              class="hidden sm:inline-flex font-semibold shadow-sm hover:shadow-md transition-all"
+            >
+              {{ headerCtaText }}
+            </Button>
+            <Button
+              v-else
+              as="router-link"
+              :to="resolvePublicMenuTo(headerCtaUrl)"
+              variant="default"
+              size="sm"
+              class="hidden sm:inline-flex font-semibold shadow-sm hover:shadow-md transition-all"
+            >
+              {{ headerCtaText }}
+            </Button>
+          </template>
+
           <Button
             v-if="memberEnabled && memberStore.isAuthenticated"
             as="router-link"
@@ -341,6 +366,33 @@
                 </div>
               </div>
 
+              <template v-if="headerCtaText">
+                <Button
+                  v-if="isExternalLink(headerCtaUrl)"
+                  as="a"
+                  :href="headerCtaUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="default"
+                  size="md"
+                  class="w-full font-semibold shadow-md"
+                  @click="mobileMenuOpen = false"
+                >
+                  {{ headerCtaText }}
+                </Button>
+                <Button
+                  v-else
+                  as="router-link"
+                  :to="resolvePublicMenuTo(headerCtaUrl)"
+                  variant="default"
+                  size="md"
+                  class="w-full font-semibold shadow-md"
+                  @click="mobileMenuOpen = false"
+                >
+                  {{ headerCtaText }}
+                </Button>
+              </template>
+
               <Button
                 v-if="memberEnabled && !memberStore.isAuthenticated"
                 as="a"
@@ -417,14 +469,24 @@ const headerRef = ref<HTMLElement>();
 const headerStyle = computed(() => String(getSetting('header_style', 'glass') || 'glass'));
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));
 
+const headerCtaText = computed(() => {
+  const raw = getSetting('header_cta_text', '');
+  return typeof raw === 'string' ? raw.trim() : '';
+});
+
+const headerCtaUrl = computed(() => {
+  const raw = getSetting('header_cta_url', '/contact');
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact';
+});
+
 const headerStyleClasses = computed(() => {
   switch (headerStyle.value) {
     case 'solid':
-      return 'bg-card border-border';
+      return 'bg-card border-border shadow-sm';
     case 'transparent':
       return 'bg-transparent border-transparent shadow-none';
     default:
-      return 'bg-card/95 backdrop-blur-md';
+      return 'bg-card/90 backdrop-blur-md border-border/80 shadow-sm';
   }
 });
 
