@@ -434,39 +434,60 @@
             "scope": "platform"
         },
         "enable_about": {
-            "label": "Show About page",
-            "type": "checkbox",
+            "label": "Aktifkan halaman Tentang Kami",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "About Page",
+            "scope": "theme"
+        },
+        "enable_services": {
+            "label": "Aktifkan halaman Layanan",
+            "type": "boolean",
+            "default": true,
+            "category": "Services Page",
+            "scope": "theme"
+        },
+        "enable_solusi": {
+            "label": "Aktifkan halaman Solusi",
+            "type": "boolean",
+            "default": true,
+            "category": "Solusi Page",
+            "scope": "theme"
+        },
+        "enable_pricing": {
+            "label": "Aktifkan halaman Paket & Harga",
+            "type": "boolean",
+            "default": true,
+            "category": "Pricing Page",
+            "scope": "theme"
         },
         "enable_achievement": {
-            "label": "Show Achievements page",
-            "type": "checkbox",
+            "label": "Aktifkan halaman SLA & Jaringan",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Achievements Page",
+            "scope": "theme"
         },
-        "enable_career": {
-            "label": "Show Careers page",
-            "type": "checkbox",
+        "enable_tim": {
+            "label": "Aktifkan halaman Tim",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Tim Page",
+            "scope": "theme"
         },
         "enable_blog": {
-            "label": "Show News page",
-            "type": "checkbox",
+            "label": "Aktifkan halaman Berita",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "News Page",
+            "scope": "theme"
         },
         "enable_contact": {
-            "label": "Show Contact page",
-            "type": "checkbox",
+            "label": "Aktifkan halaman Kontak",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Contact Page",
+            "scope": "theme"
         },
         "footer_text": {
             "label": "Copyright Text",

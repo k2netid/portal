@@ -1,5 +1,8 @@
 <template>
-  <div class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+  <div
+    class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
+    data-ja-customizer-target="pricing/isp"
+  >
     <Breadcrumb
       :items="[
         { name: t('pages.pricing.hubTitle', 'Paket & Harga'), path: '/pricing' },

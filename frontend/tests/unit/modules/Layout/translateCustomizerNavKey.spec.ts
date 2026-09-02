@@ -6,7 +6,7 @@ describe('lookupModuleLocale', () => {
     it('resolves Layung customizer item keys from theme locale JSON', () => {
         expect(lookupModuleLocale('id', 'theme.layung.customizer.items.hero_section')).toBe('Bagian Hero');
         expect(lookupModuleLocale('en', 'theme.layung.customizer.items.isp_bento')).toBe('Three Business Lines');
-        expect(lookupModuleLocale('id', 'theme.layung.customizer.sidebar.page_about')).toBe('Halaman Profil');
+        expect(lookupModuleLocale('id', 'theme.layung.customizer.sidebar.page_about')).toBe('Halaman Tentang Kami');
         expect(lookupModuleLocale('id', 'theme.layung.customizer.items.contact_form_slug')).toBe('Slug formulir kontak');
     });
 

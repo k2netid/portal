@@ -318,6 +318,69 @@
         "default": true,
         "category": "Hero Section"
     },
+    "enable_about": {
+        "label": "Aktifkan halaman Tentang Kami",
+        "type": "boolean",
+        "default": true,
+        "category": "About Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung."
+    },
+    "enable_services": {
+        "label": "Aktifkan halaman Layanan",
+        "type": "boolean",
+        "default": true,
+        "category": "Services Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /services dari pengunjung."
+    },
+    "enable_solusi": {
+        "label": "Aktifkan halaman Solusi",
+        "type": "boolean",
+        "default": true,
+        "category": "Solusi Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /solusi dari pengunjung."
+    },
+    "enable_pricing": {
+        "label": "Aktifkan halaman Paket & Harga",
+        "type": "boolean",
+        "default": true,
+        "category": "Pricing Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /pricing dari pengunjung."
+    },
+    "enable_achievement": {
+        "label": "Aktifkan halaman SLA & Jaringan",
+        "type": "boolean",
+        "default": true,
+        "category": "Achievements Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /achievement dari pengunjung."
+    },
+    "enable_tim": {
+        "label": "Aktifkan halaman Tim",
+        "type": "boolean",
+        "default": true,
+        "category": "Tim Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung."
+    },
+    "enable_blog": {
+        "label": "Aktifkan halaman Berita",
+        "type": "boolean",
+        "default": true,
+        "category": "News Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /blog dari pengunjung."
+    },
+    "enable_contact": {
+        "label": "Aktifkan halaman Kontak",
+        "type": "boolean",
+        "default": true,
+        "category": "Contact Page",
+        "description": "Nonaktifkan untuk menyembunyikan halaman /contact dari pengunjung."
+    },
+    "contact_form_slug": {
+        "label": "Slug formulir kontak",
+        "type": "text",
+        "default": "contact",
+        "category": "Contact Page",
+        "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact."
+    },
     "footer_about_text": {
         "label": "Deskripsi Singkat Footer",
         "type": "textarea",
@@ -329,19 +392,5 @@
         "type": "text",
         "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
         "category": "Footer"
-    },
-    "contact_form_slug": {
-        "label": "Slug formulir kontak",
-        "type": "text",
-        "default": "contact",
-        "category": "Contact Page",
-        "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact."
-    },
-    "enable_about": {
-        "label": "Aktifkan halaman Tentang Kami",
-        "type": "boolean",
-        "default": true,
-        "category": "Public Pages",
-        "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung."
     }
 }

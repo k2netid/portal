@@ -14,7 +14,6 @@
         "services": { "navItemId": "page-services", "mode": "design" },
         "achievement": { "navItemId": "page-achievements", "mode": "design" },
         "team": { "navItemId": "page-tim", "mode": "design" },
-        "careers": { "navItemId": "page-careers", "mode": "design" },
         "contact": { "navItemId": "page-contact", "mode": "design" },
         "news": { "navItemId": "page-news", "mode": "design" },
         "footer": { "navItemId": "ux-footer", "mode": "design" }
