@@ -50,6 +50,17 @@ $$\text{Kebutuhan Bandwidth Puncak} = (\text{Jumlah User} \times \text{Faktor Ko
 - **Kompaksi Padding Kartu Mobile**:
   - Padding kartu paket diubah dari `p-8` menjadi `p-6 sm:p-8`, mencegah overflow horizontal pada perangkat smartphone.
 
+### 5. Isolasi Strict Breadcrumb & Sinkronisasi 5 Preset Tata Letak Global Customizer
+- **Isolasi Strict CSS Breadcrumb Mobile**:
+  - Sebelumnya, class `.layung-breadcrumb` memiliki `display: inline-flex` tanpa media query sehingga mengabaikan utilitas `.hidden` Tailwind dan menyebabkan breadcrumb desktop dan mobile tampil bersamaan dan terpotong.
+  - Di `layung.css`, aturan kini diisolasi secara tegas:
+    - `@media (max-width: 639px)`: `.layung-breadcrumb { display: none !important; }`
+    - `@media (min-width: 640px)`: `.layung-breadcrumb-mobile { display: none !important; }`
+  - Di perangkat smartphone, hanya tombol Back Pill yang ringkas dan aman yang tampil tanpa ada jejak breadcrumb panjang yang terpotong.
+- **Keselarasan Seluruh Sub-Halaman dengan Preset Master Layout**:
+  - Seluruh sub-halaman (`PricingIsp`, `PricingMsp`, `Pricing`, `Services`, `Solusi`, `Achievement`) kini menggunakan container terpadu yang diproteksi `w-full max-w-full overflow-x-clip`.
+  - Di [FrontendLayout.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/layouts/FrontendLayout.vue), mode **Hybrid** dibebaskan dari penumpukan `container mx-auto px-6 md:px-12 lg:px-20` ganda dan kini dikontrol penuh oleh variabel dinamis `containerMaxWidth` (1200px / 1400px / 1480px) sesuai preset tata letak yang dipilih di Theme Customizer (*Full Width*, *Boxed*, *Wide*, *Framed*, *Hybrid*).
+
 ---
 
 ## File yang Diubah
