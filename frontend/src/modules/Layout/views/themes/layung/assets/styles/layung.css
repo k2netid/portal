@@ -239,10 +239,10 @@ header[data-ja-customizer-target="header"] .layung-panel {
 
 /* High-Tech ISP Hero */
 .layung-hero {
-  min-height: min(64vh, 560px);
+  min-height: max(660px, calc(100dvh - 4.5rem));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   isolation: isolate;
   overflow: hidden;
   position: relative;

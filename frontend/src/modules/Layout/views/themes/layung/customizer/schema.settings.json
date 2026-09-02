@@ -101,97 +101,25 @@
         "category": "ISP Info"
     },
     "hero_badge_text": {
-        "label": "Hero Badge / Slogan (fallback)",
-        "type": "text",
-        "default": "Provide different IT solution",
-        "category": "Hero Section"
-    },
-    "hero_badge_text_id": {
-        "label": "Hero Badge / Slogan (Indonesia)",
-        "type": "text",
-        "default": "Provide different IT solution",
-        "category": "Hero Section"
-    },
-    "hero_badge_text_en": {
-        "label": "Hero Badge / Slogan (English)",
-        "type": "text",
-        "default": "Provide different IT solution",
-        "category": "Hero Section"
-    },
-    "hero_badge_text_su": {
-        "label": "Hero Badge / Slogan (Sunda)",
+        "label": "Badge / Slogan Hero",
         "type": "text",
         "default": "Provide different IT solution",
         "category": "Hero Section"
     },
     "hero_title": {
-        "label": "Judul Utama Hero (fallback)",
+        "label": "Judul Utama Hero",
         "type": "text",
         "default": "Internet Service Provider dan Managed Service Provider",
-        "category": "Hero Section"
-    },
-    "hero_title_id": {
-        "label": "Judul Utama Hero (Indonesia)",
-        "type": "text",
-        "default": "Internet Service Provider dan Managed Service Provider",
-        "category": "Hero Section"
-    },
-    "hero_title_en": {
-        "label": "Judul Utama Hero (English)",
-        "type": "text",
-        "default": "Internet Service Provider and Managed Service Provider",
-        "category": "Hero Section"
-    },
-    "hero_title_su": {
-        "label": "Judul Utama Hero (Sunda)",
-        "type": "text",
-        "default": "Internet Service Provider sareng Managed Service Provider",
         "category": "Hero Section"
     },
     "hero_subtitle": {
-        "label": "Subjudul Hero (fallback)",
+        "label": "Subjudul Hero",
         "type": "textarea",
         "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-        "category": "Hero Section"
-    },
-    "hero_subtitle_id": {
-        "label": "Subjudul Hero (Indonesia)",
-        "type": "textarea",
-        "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-        "category": "Hero Section"
-    },
-    "hero_subtitle_en": {
-        "label": "Subjudul Hero (English)",
-        "type": "textarea",
-        "default": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
-        "category": "Hero Section"
-    },
-    "hero_subtitle_su": {
-        "label": "Subjudul Hero (Sunda)",
-        "type": "textarea",
-        "default": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
         "category": "Hero Section"
     },
     "hero_primary_cta_text": {
-        "label": "Teks Tombol Kontak (fallback)",
-        "type": "text",
-        "default": "Hubungi Kami",
-        "category": "Hero Section"
-    },
-    "hero_primary_cta_text_id": {
-        "label": "Teks Tombol Kontak (Indonesia)",
-        "type": "text",
-        "default": "Hubungi Kami",
-        "category": "Hero Section"
-    },
-    "hero_primary_cta_text_en": {
-        "label": "Teks Tombol Kontak (English)",
-        "type": "text",
-        "default": "Contact Us",
-        "category": "Hero Section"
-    },
-    "hero_primary_cta_text_su": {
-        "label": "Teks Tombol Kontak (Sunda)",
+        "label": "Teks Tombol Kontak",
         "type": "text",
         "default": "Hubungi Kami",
         "category": "Hero Section"
@@ -203,113 +131,9 @@
         "category": "Hero Section"
     },
     "hero_secondary_cta_text": {
-        "label": "Teks Tombol WhatsApp (fallback)",
+        "label": "Teks Tombol WhatsApp",
         "type": "text",
         "default": "Chat WhatsApp",
-        "category": "Hero Section"
-    },
-    "hero_secondary_cta_text_id": {
-        "label": "Teks Tombol WhatsApp (Indonesia)",
-        "type": "text",
-        "default": "Chat WhatsApp",
-        "category": "Hero Section"
-    },
-    "hero_secondary_cta_text_en": {
-        "label": "Teks Tombol WhatsApp (English)",
-        "type": "text",
-        "default": "Chat on WhatsApp",
-        "category": "Hero Section"
-    },
-    "hero_secondary_cta_text_su": {
-        "label": "Teks Tombol WhatsApp (Sunda)",
-        "type": "text",
-        "default": "Chat WhatsApp",
-        "category": "Hero Section"
-    },
-    "hero_news_enabled": {
-        "label": "Tampilkan strip berita/promo di hero",
-        "type": "boolean",
-        "default": true,
-        "category": "Hero Section"
-    },
-    "hero_news_category": {
-        "label": "Filter kategori berita (slug)",
-        "type": "text",
-        "default": "",
-        "description": "Slug kategori CMS (mis. promo, maintenance). Kosongkan untuk semua berita.",
-        "category": "Hero Section"
-    },
-    "hero_news_limit": {
-        "label": "Jumlah item berita di hero",
-        "type": "range",
-        "min": 2,
-        "max": 6,
-        "step": 1,
-        "default": 4,
-        "category": "Hero Section"
-    },
-    "hero_news_autoplay_interval": {
-        "label": "Interval autoplay strip berita (detik)",
-        "type": "range",
-        "min": 3,
-        "max": 15,
-        "step": 1,
-        "default": 4,
-        "description": "Interval putar otomatis antar berita di strip hero",
-        "category": "Hero Section"
-    },
-    "hero_news_section_label": {
-        "label": "Label strip berita (fallback)",
-        "type": "text",
-        "default": "Warta & promo",
-        "category": "Hero Section"
-    },
-    "hero_news_section_label_id": {
-        "label": "Label strip berita (Indonesia)",
-        "type": "text",
-        "default": "Warta & promo",
-        "category": "Hero Section"
-    },
-    "hero_news_section_label_en": {
-        "label": "Label strip berita (English)",
-        "type": "text",
-        "default": "News & promos",
-        "category": "Hero Section"
-    },
-    "hero_news_section_label_su": {
-        "label": "Label strip berita (Sunda)",
-        "type": "text",
-        "default": "Warta & promo",
-        "category": "Hero Section"
-    },
-    "hero_news_view_all_text": {
-        "label": "Teks tautan semua warta (fallback)",
-        "type": "text",
-        "default": "Semua warta",
-        "category": "Hero Section"
-    },
-    "hero_news_view_all_text_id": {
-        "label": "Teks tautan semua warta (Indonesia)",
-        "type": "text",
-        "default": "Semua warta",
-        "category": "Hero Section"
-    },
-    "hero_news_view_all_text_en": {
-        "label": "Teks tautan semua warta (English)",
-        "type": "text",
-        "default": "All news",
-        "category": "Hero Section"
-    },
-    "hero_news_view_all_text_su": {
-        "label": "Teks tautan semua warta (Sunda)",
-        "type": "text",
-        "default": "Sadaya warta",
-        "category": "Hero Section"
-    },
-    "hero_news_view_all_url": {
-        "label": "URL halaman semua warta",
-        "type": "text",
-        "default": "/blog",
         "category": "Hero Section"
     },
     "hero_animation_enabled": {
@@ -397,11 +221,61 @@
         "description": "Tingkat kegelapan lapisan overlay agar teks dan animasi tetap terbaca jelas",
         "category": "Hero Section"
     },
+    "hero_news_enabled": {
+        "label": "Tampilkan strip berita/promo di hero",
+        "type": "boolean",
+        "default": true,
+        "category": "Hero Section"
+    },
+    "hero_news_category": {
+        "label": "Filter kategori berita (slug)",
+        "type": "text",
+        "default": "",
+        "description": "Slug kategori CMS (mis. promo, maintenance). Kosongkan untuk semua berita.",
+        "category": "Hero Section"
+    },
+    "hero_news_limit": {
+        "label": "Jumlah item berita di hero",
+        "type": "range",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 4,
+        "category": "Hero Section"
+    },
+    "hero_news_autoplay_interval": {
+        "label": "Interval autoplay strip berita (detik)",
+        "type": "range",
+        "min": 3,
+        "max": 15,
+        "step": 1,
+        "default": 4,
+        "description": "Interval putar otomatis antar berita di strip hero",
+        "category": "Hero Section"
+    },
+    "hero_news_section_label": {
+        "label": "Label strip berita",
+        "type": "text",
+        "default": "Warta & promo",
+        "category": "Hero Section"
+    },
+    "hero_news_view_all_text": {
+        "label": "Teks tautan semua warta",
+        "type": "text",
+        "default": "Semua warta",
+        "category": "Hero Section"
+    },
+    "hero_news_view_all_url": {
+        "label": "URL halaman semua warta",
+        "type": "text",
+        "default": "/blog",
+        "category": "Hero Section"
+    },
     "speed_calculator_enabled": {
         "label": "Tampilkan Simulator Bandwidth",
         "type": "boolean",
         "default": true,
-        "category": "Hero Section"
+        "category": "Simulator Bandwidth"
     },
     "enable_about": {
         "label": "Aktifkan halaman Tentang Kami",

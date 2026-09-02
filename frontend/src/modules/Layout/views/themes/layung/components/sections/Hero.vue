@@ -1,7 +1,7 @@
 <template>
   <section
     data-ja-customizer-target="hero"
-    class="layung-hero px-4 sm:px-6 lg:px-8 py-14 lg:py-18 relative overflow-hidden"
+    class="layung-hero px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 min-h-[max(660px,calc(100dvh-4.5rem))] flex flex-col justify-between relative overflow-hidden"
     :class="heroBgClass"
     :style="heroBgStyle"
   >
@@ -14,12 +14,12 @@
     <div class="layung-hero__grid" />
 
     <div
-      class="max-w-7xl mx-auto w-full relative z-10 space-y-8 sm:space-y-10"
+      class="max-w-7xl mx-auto w-full relative z-10 flex-1 flex flex-col justify-between gap-6 lg:gap-8 my-auto"
       @mouseenter="stopSliderAutoplay"
       @mouseleave="startSliderAutoplay"
     >
       <!-- Main Stage (2-Column Grid on Desktop) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto py-2">
         <!-- Left Column: Copy & Actions -->
         <div
           class="space-y-6"
