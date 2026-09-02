@@ -1,37 +1,37 @@
 <template>
   <div class="flex-1 min-h-0 bg-muted/40 h-full overflow-hidden flex flex-col relative transition-colors">
     <!-- Device Toolbar -->
-    <div class="h-12 bg-background/90 backdrop-blur-sm border-b flex items-center justify-between px-4 shadow-sm z-20 shrink-0">
-      <div class="flex items-center gap-1.5">
+    <div class="h-11 bg-background/90 backdrop-blur-sm border-b border-border flex items-center justify-between px-3.5 shadow-xs z-20 shrink-0">
+      <div class="flex items-center gap-1 rounded-xl border border-border bg-muted/40 p-1">
         <button
           v-for="mode in deviceModes"
           :key="mode.id"
           type="button"
-          :class="activeDevice === mode.id ? 'bg-primary/10 text-primary ring-1 ring-primary/20' : 'text-muted-foreground hover:bg-muted'"
-          class="p-2 rounded-md transition-colors flex items-center gap-2"
+          :class="activeDevice === mode.id ? 'bg-background text-foreground shadow-xs' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+          class="h-7 w-7 rounded-lg transition-all flex items-center justify-center"
           :title="$t('publishing.theme_customizer.editor.preview.devices.' + mode.id)"
+          :aria-label="$t('publishing.theme_customizer.editor.preview.devices.' + mode.id)"
           @click="activeDevice = mode.id"
         >
           <component
             :is="mode.icon"
-            class="w-4 h-4"
+            class="w-3.5 h-3.5"
           />
-          <span class="text-xs font-medium hidden lg:block">{{ $t('publishing.theme_customizer.editor.preview.devices.' + mode.id) }}</span>
         </button>
       </div>
 
       <button
         type="button"
         :disabled="isRefreshing"
-        class="p-2 text-muted-foreground hover:text-primary hover:bg-muted rounded-md transition-colors flex items-center gap-2 bg-background border hover:border-primary/50"
+        class="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all flex items-center justify-center bg-background border border-border shadow-xs hover:border-primary/40 disabled:opacity-50"
         :title="$t('publishing.theme_customizer.editor.preview.refresh')"
+        :aria-label="$t('publishing.theme_customizer.editor.preview.refresh')"
         @click="refreshPreview"
       >
         <RotateCcw
-          class="w-4 h-4"
+          class="w-3.5 h-3.5"
           :class="{'animate-spin': isRefreshing}"
         />
-        <span class="text-xs font-medium hidden sm:block">{{ $t('publishing.theme_customizer.editor.preview.refresh') }}</span>
       </button>
     </div>
 

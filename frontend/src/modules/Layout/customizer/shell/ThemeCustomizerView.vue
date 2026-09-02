@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[calc(100vh-theme(spacing.36))] min-h-[640px] flex flex-col bg-card border border-border rounded-2xl shadow-sm overflow-hidden text-foreground select-none">
+  <div class="h-[calc(100vh-theme(spacing.28))] min-h-[640px] flex flex-col bg-card border border-border rounded-2xl shadow-sm overflow-hidden text-foreground select-none">
     <CustomizerHeader
       :theme="theme"
       :organization-mode="organizationMode"
@@ -7,14 +7,10 @@
       :can-redo="canRedo"
       :is-dirty="isDirty"
       :saving="saving"
-      :nav-open="navOpen"
-      :controls-open="controlsOpen"
       @back="handleBack"
       @undo="undo"
       @redo="redo"
       @update:organization-mode="organizationMode = $event"
-      @toggle-nav="navOpen = !navOpen"
-      @toggle-controls="controlsOpen = !controlsOpen"
       @reset-initial="resetToInitial"
       @reset-defaults="resetToDefaults"
       @save="saveAll"

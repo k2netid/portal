@@ -38,8 +38,14 @@
       />
 
       <!-- Page Content -->
-      <main class="p-6 lg:p-8 relative overflow-hidden">
-        <div class="console-content-wrap">
+      <main
+        class="relative overflow-hidden transition-all duration-200"
+        :class="route.meta?.fullWidth ? 'p-3.5 sm:p-4 lg:p-5' : 'p-6 lg:p-8'"
+      >
+        <div
+          class="w-full transition-all duration-200"
+          :class="route.meta?.fullWidth ? 'max-w-none' : 'console-content-wrap'"
+        >
         <router-view v-slot="{ Component, route: slotRoute }">
           <KeepAlive
             v-if="!slotRoute.meta?.noCache"

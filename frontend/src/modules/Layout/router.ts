@@ -54,6 +54,7 @@ const layoutRoutes: RouteRecordRaw[] = [
             extension: 'layout',
             title: 'publishing.theme_customizer.title',
             breadcrumb: 'publishing.theme_customizer.title',
+            fullWidth: true,
         },
     },
     {
