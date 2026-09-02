@@ -59,7 +59,9 @@
     "badgeSla": "SLA dumasar kontrak",
     "badgeDatacenter": "Profil pausahaan",
     "badgeMembership": "APJII · IDNIC · APNIC",
-    "legalLine": "PT Kirana Karina Network"
+    "legalLine": "PT Kirana Karina Network",
+    "social": "Média Sosial",
+    "socialDesc": "Follow warta jaringan, promo produk, sareng inpormasi panganyarna."
   },
   "hero": {
     "badge": "Provide different IT solution",

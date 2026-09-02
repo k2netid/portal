@@ -1,11 +1,12 @@
 <template>
   <footer
     data-ja-customizer-target="footer"
-    class="border-t-0 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
+    class="border-t border-slate-800/80 bg-slate-950 text-slate-300 transition-colors relative z-10 font-sans"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8">
-        <div class="sm:col-span-2 lg:col-span-3 space-y-4">
+        <!-- Col 1: Brand & Bandung Office Address -->
+        <div class="sm:col-span-2 lg:col-span-4 space-y-4">
           <div class="flex items-center gap-3.5">
             <BrandMark
               v-if="brandingDisplay !== 'text_only'"
@@ -22,36 +23,25 @@
             </div>
           </div>
 
-          <p class="text-sm text-slate-400 leading-relaxed max-w-md">
+          <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
             {{ footerAboutText }}
           </p>
 
           <div
-            v-if="socialLinks.length"
-            class="flex flex-wrap gap-3 pt-1"
+            v-if="displayAddress"
+            class="pt-1 text-xs text-slate-500 leading-relaxed max-w-sm flex items-start gap-2 border-t border-slate-900 pt-3"
           >
-            <a
-              v-for="(link, idx) in socialLinks"
-              :key="idx"
-              :href="resolveSocialHref(link)"
-              :target="getSocialTarget(link)"
-              :rel="getSocialRel(link)"
-              class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 text-slate-400 hover:text-sky-400 hover:border-sky-500/40 transition-colors"
-              :aria-label="getSocialAriaLabel(link)"
-            >
-              <component
-                :is="getSocialIcon(link.icon)"
-                class="w-4 h-4"
-              />
-            </a>
+            <MapPin class="w-4 h-4 text-sky-400/90 shrink-0 mt-0.5" />
+            <span>{{ displayAddress }}</span>
           </div>
         </div>
 
+        <!-- Col 2: ISP Services (Menu Col 1) -->
         <div class="lg:col-span-2 space-y-3">
           <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
             {{ col1Title }}
           </h4>
-          <ul class="space-y-1.5 text-[13px] text-slate-400">
+          <ul class="space-y-2 text-[13px] text-slate-400">
             <li
               v-for="item in footerCol1Items"
               :key="String(item.id || item.title)"
@@ -76,11 +66,12 @@
           </ul>
         </div>
 
+        <!-- Col 3: MSP Solutions (Menu Col 2) -->
         <div class="lg:col-span-2 space-y-3">
           <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
             {{ col2Title }}
           </h4>
-          <ul class="space-y-1.5 text-[13px] text-slate-400">
+          <ul class="space-y-2 text-[13px] text-slate-400">
             <li
               v-for="item in footerCol2Items"
               :key="String(item.id || item.title)"
@@ -105,11 +96,12 @@
           </ul>
         </div>
 
+        <!-- Col 4: IT Products (Menu Col 3) -->
         <div class="lg:col-span-2 space-y-3">
           <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
             {{ col3Title }}
           </h4>
-          <ul class="space-y-1.5 text-[13px] text-slate-400">
+          <ul class="space-y-2 text-[13px] text-slate-400">
             <li
               v-for="item in footerCol3Items"
               :key="String(item.id || item.title)"
@@ -134,74 +126,39 @@
           </ul>
         </div>
 
-        <div class="sm:col-span-2 lg:col-span-3 space-y-3">
+        <!-- Col 5: Social Media / Ikuti Kami (Replacing former heavy contact section) -->
+        <div class="sm:col-span-2 lg:col-span-2 space-y-3">
           <h4 class="text-[11px] font-bold uppercase tracking-[0.12em] text-white font-heading">
-            {{ tt('footer.contact', 'Hubungi Kami') }}
+            {{ tt('footer.social', 'Media Sosial') }}
           </h4>
-
-          <dl class="grid grid-cols-[auto_auto] gap-x-4 gap-y-2 text-[13px]">
-            <template
-              v-for="phone in footerPhones"
-              :key="phone.label"
-            >
-              <dt class="text-slate-500 text-[11px] font-mono uppercase tracking-wide whitespace-nowrap self-center">
-                {{ phone.label }}
-              </dt>
-              <dd>
-                <a
-                  v-if="phone.whatsappUrl"
-                  :href="phone.whatsappUrl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-colors"
-                  :aria-label="phone.ariaLabel"
-                >
-                  <MessageCircle class="w-4 h-4" />
-                </a>
-              </dd>
-            </template>
-          </dl>
-
-          <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[13px] pt-1 border-t border-slate-800/80">
-            <template
-              v-for="mail in footerEmails"
-              :key="mail.address"
-            >
-              <dt class="text-slate-500 text-[11px] font-mono uppercase tracking-wide whitespace-nowrap pt-0.5">
-                {{ mail.label }}
-              </dt>
-              <dd>
-                <a
-                  :href="`mailto:${mail.address}`"
-                  class="text-slate-400 hover:text-sky-400 text-xs break-all transition-colors"
-                >{{ mail.address }}</a>
-              </dd>
-            </template>
-          </dl>
-        </div>
-      </div>
-
-      <div class="mt-8 pt-6 border-t border-slate-800/80">
-        <h4 class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 font-mono mb-4">
-          {{ tt('footer.locations', 'Lokasi') }}
-        </h4>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <p class="text-xs text-slate-400 leading-relaxed">
+            {{ tt('footer.socialDesc', 'Ikuti perkembangan jaringan, promo produk, dan kabar terbaru kami.') }}
+          </p>
           <div
-            v-for="location in footerLocations"
-            :key="location.label"
-            class="rounded-xl border border-slate-800/90 bg-slate-900/40 px-4 py-3 space-y-1.5"
+            v-if="effectiveSocialLinks.length"
+            class="flex flex-wrap gap-2.5 pt-1"
           >
-            <p class="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 font-mono">
-              {{ location.label }}
-            </p>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              {{ location.address }}
-            </p>
+            <a
+              v-for="(link, idx) in effectiveSocialLinks"
+              :key="idx"
+              :href="resolveSocialHref(link)"
+              :target="getSocialTarget(link)"
+              :rel="getSocialRel(link)"
+              class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-sky-400 hover:border-sky-500/40 hover:bg-sky-500/10 transition-all shadow-sm"
+              :aria-label="getSocialAriaLabel(link)"
+              :title="link.label || link.icon"
+            >
+              <component
+                :is="getSocialIcon(link.icon)"
+                class="w-4 h-4"
+              />
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <!-- Bottom Bar: Copyright & Quick Links -->
+      <div class="mt-10 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
         <p>{{ footerCopyrightText }}</p>
         <div class="flex items-center gap-4 flex-wrap justify-center">
           <template v-if="footerItems.length">
@@ -267,7 +224,7 @@ import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   MessageCircle,
-  Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe, Mail,
+  Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe, Mail, MapPin,
 } from 'lucide-vue-next';
 import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
 import FloatingSocialDock from '@/modules/Layout/views/themes/layung/components/layout/FloatingSocialDock.vue';
@@ -277,7 +234,6 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import {
   resolveLayungLocalizedCopy,
-  toWhatsAppDigits,
 } from '@/modules/Layout/views/themes/layung/composables/resolveLayungLocalizedCopy';
 import {
   LAYUNG_STORE_SHOPEE,
@@ -296,73 +252,21 @@ const {
   displayCompanyName,
   displayBrandLogo,
   displayAddress,
-  displayGarutAddress,
-  displayStoreAddress,
-  displayCsPhone,
-  displayNocPhone,
-  displaySalesPhone,
-  displayServiceDeskPhone,
-  displayEmail,
-  displayCsEmail,
-  displaySalesEmail,
-  displayBillingEmail,
 } = useLayungIdentity();
-
-const toWhatsAppUrl = (phone: string) => {
-  const digits = toWhatsAppDigits(phone);
-  return digits ? `https://wa.me/${digits}` : '';
-};
-
-const footerPhones = computed(() => [
-  {
-    label: tt('footer.phoneCs', 'CS'),
-    whatsappUrl: toWhatsAppUrl(displayCsPhone.value),
-    ariaLabel: `WhatsApp ${tt('footer.phoneCs', 'CS')}`,
-  },
-  {
-    label: tt('footer.phoneNoc', 'NOC'),
-    whatsappUrl: toWhatsAppUrl(displayNocPhone.value),
-    ariaLabel: `WhatsApp ${tt('footer.phoneNoc', 'NOC')}`,
-  },
-  {
-    label: tt('footer.phoneSales', 'Sales'),
-    whatsappUrl: toWhatsAppUrl(displaySalesPhone.value),
-    ariaLabel: `WhatsApp ${tt('footer.phoneSales', 'Sales')}`,
-  },
-  {
-    label: tt('footer.phoneServiceDesk', 'Service Desk'),
-    whatsappUrl: toWhatsAppUrl(displayServiceDeskPhone.value),
-    ariaLabel: `WhatsApp ${tt('footer.phoneServiceDesk', 'Service Desk')}`,
-  },
-]);
-
-const footerEmails = computed(() => [
-  { label: tt('footer.emailCs', 'CS'), address: displayCsEmail.value },
-  { label: tt('footer.emailInfo', 'Info'), address: displayEmail.value },
-  { label: tt('footer.emailSales', 'Sales'), address: displaySalesEmail.value },
-  { label: tt('footer.emailBilling', 'Billing'), address: displayBillingEmail.value },
-]);
-
-const footerLocations = computed(() => [
-  {
-    label: tt('pages.contact.labelAddressBandung', 'Kantor Bandung'),
-    address: displayAddress.value,
-  },
-  {
-    label: tt('pages.contact.labelAddressGarut', 'Kantor Garut'),
-    address: displayGarutAddress.value,
-  },
-  {
-    label: tt('pages.contact.labelStoreAddress', 'Toko offline'),
-    address: displayStoreAddress.value,
-  },
-]);
 
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));
 
 const siteLogo = displayBrandLogo;
 
-const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || []);
+const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string; label?: string }>) || []);
+
+const defaultSocialLinks = [
+  { icon: 'Instagram', url: 'https://instagram.com/jejakawan', label: 'Instagram' },
+  { icon: 'Github', url: 'https://github.com/jejakawan/k2net', label: 'GitHub' },
+  { icon: 'MessageCircle', url: 'https://wa.me/6285136290851', label: 'WhatsApp' },
+];
+
+const effectiveSocialLinks = computed(() => (socialLinks.value.length ? socialLinks.value : defaultSocialLinks));
 
 const footerAboutText = computed(() => {
   const custom = resolveLayungLocalizedCopy({
