@@ -101,25 +101,97 @@
         "category": "ISP Info"
     },
     "hero_badge_text": {
-        "label": "Badge / Slogan Hero",
+        "label": "Hero Badge / Slogan (fallback)",
+        "type": "text",
+        "default": "Provide different IT solution",
+        "category": "Hero Section"
+    },
+    "hero_badge_text_id": {
+        "label": "Hero Badge / Slogan (Indonesia)",
+        "type": "text",
+        "default": "Provide different IT solution",
+        "category": "Hero Section"
+    },
+    "hero_badge_text_en": {
+        "label": "Hero Badge / Slogan (English)",
+        "type": "text",
+        "default": "Provide different IT solution",
+        "category": "Hero Section"
+    },
+    "hero_badge_text_su": {
+        "label": "Hero Badge / Slogan (Sunda)",
         "type": "text",
         "default": "Provide different IT solution",
         "category": "Hero Section"
     },
     "hero_title": {
-        "label": "Judul Utama Hero",
+        "label": "Judul Utama Hero (fallback)",
         "type": "text",
         "default": "Internet Service Provider dan Managed Service Provider",
         "category": "Hero Section"
     },
+    "hero_title_id": {
+        "label": "Judul Utama Hero (Indonesia)",
+        "type": "text",
+        "default": "Internet Service Provider dan Managed Service Provider",
+        "category": "Hero Section"
+    },
+    "hero_title_en": {
+        "label": "Judul Utama Hero (English)",
+        "type": "text",
+        "default": "Internet Service Provider and Managed Service Provider",
+        "category": "Hero Section"
+    },
+    "hero_title_su": {
+        "label": "Judul Utama Hero (Sunda)",
+        "type": "text",
+        "default": "Internet Service Provider sareng Managed Service Provider",
+        "category": "Hero Section"
+    },
     "hero_subtitle": {
-        "label": "Subjudul Hero",
+        "label": "Subjudul Hero (fallback)",
         "type": "textarea",
         "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
         "category": "Hero Section"
     },
+    "hero_subtitle_id": {
+        "label": "Subjudul Hero (Indonesia)",
+        "type": "textarea",
+        "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+        "category": "Hero Section"
+    },
+    "hero_subtitle_en": {
+        "label": "Subjudul Hero (English)",
+        "type": "textarea",
+        "default": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
+        "category": "Hero Section"
+    },
+    "hero_subtitle_su": {
+        "label": "Subjudul Hero (Sunda)",
+        "type": "textarea",
+        "default": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
+        "category": "Hero Section"
+    },
     "hero_primary_cta_text": {
-        "label": "Teks Tombol Kontak",
+        "label": "Teks Tombol Kontak (fallback)",
+        "type": "text",
+        "default": "Hubungi Kami",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_text_id": {
+        "label": "Teks Tombol Kontak (Indonesia)",
+        "type": "text",
+        "default": "Hubungi Kami",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_text_en": {
+        "label": "Teks Tombol Kontak (English)",
+        "type": "text",
+        "default": "Contact Us",
+        "category": "Hero Section"
+    },
+    "hero_primary_cta_text_su": {
+        "label": "Teks Tombol Kontak (Sunda)",
         "type": "text",
         "default": "Hubungi Kami",
         "category": "Hero Section"
@@ -131,7 +203,25 @@
         "category": "Hero Section"
     },
     "hero_secondary_cta_text": {
-        "label": "Teks Tombol WhatsApp",
+        "label": "Teks Tombol WhatsApp (fallback)",
+        "type": "text",
+        "default": "Chat WhatsApp",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_text_id": {
+        "label": "Teks Tombol WhatsApp (Indonesia)",
+        "type": "text",
+        "default": "Chat WhatsApp",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_text_en": {
+        "label": "Teks Tombol WhatsApp (English)",
+        "type": "text",
+        "default": "Chat on WhatsApp",
+        "category": "Hero Section"
+    },
+    "hero_secondary_cta_text_su": {
+        "label": "Teks Tombol WhatsApp (Sunda)",
         "type": "text",
         "default": "Chat WhatsApp",
         "category": "Hero Section"
@@ -254,15 +344,51 @@
         "category": "Hero Section"
     },
     "hero_news_section_label": {
-        "label": "Label strip berita",
+        "label": "Label strip berita (fallback)",
+        "type": "text",
+        "default": "Warta & promo",
+        "category": "Hero Section"
+    },
+    "hero_news_section_label_id": {
+        "label": "Label strip berita (Indonesia)",
+        "type": "text",
+        "default": "Warta & promo",
+        "category": "Hero Section"
+    },
+    "hero_news_section_label_en": {
+        "label": "Label strip berita (English)",
+        "type": "text",
+        "default": "News & promos",
+        "category": "Hero Section"
+    },
+    "hero_news_section_label_su": {
+        "label": "Label strip berita (Sunda)",
         "type": "text",
         "default": "Warta & promo",
         "category": "Hero Section"
     },
     "hero_news_view_all_text": {
-        "label": "Teks tautan semua warta",
+        "label": "Teks tautan semua warta (fallback)",
         "type": "text",
         "default": "Semua warta",
+        "category": "Hero Section"
+    },
+    "hero_news_view_all_text_id": {
+        "label": "Teks tautan semua warta (Indonesia)",
+        "type": "text",
+        "default": "Semua warta",
+        "category": "Hero Section"
+    },
+    "hero_news_view_all_text_en": {
+        "label": "Teks tautan semua warta (English)",
+        "type": "text",
+        "default": "All news",
+        "category": "Hero Section"
+    },
+    "hero_news_view_all_text_su": {
+        "label": "Teks tautan semua warta (Sunda)",
+        "type": "text",
+        "default": "Sadaya warta",
         "category": "Hero Section"
     },
     "hero_news_view_all_url": {

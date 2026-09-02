@@ -6,7 +6,7 @@
             "descriptionKey": "theme.layung.customizer.items.hero_section_desc",
             "icon": "hero",
             "manifestCategory": "Hero Section",
-            "manifestCategories": ["Hero Section", "ISP Info"],
+            "manifestCategories": ["Hero Section"],
             "slots": [
                 {
                     "id": "news",
