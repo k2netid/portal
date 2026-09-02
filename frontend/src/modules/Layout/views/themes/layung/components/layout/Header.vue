@@ -27,8 +27,8 @@
               {{ displayCompanyName }}
             </span>
             <span class="text-[10px] text-muted-foreground font-medium flex items-center gap-1.5 mt-px leading-none font-mono">
-              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-              {{ displaySla }}
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+              <span class="truncate max-w-[220px] sm:max-w-xs">{{ displayTagline }}</span>
             </span>
           </div>
         </router-link>
@@ -482,7 +482,7 @@ const authStore = useAuthStore();
 const {
   displayCompanyName,
   displayBrandLogo,
-  displaySla,
+  displayTagline,
 } = useLayungIdentity();
 
 const isDesktop = computed(() => device.value === 'desktop');

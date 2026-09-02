@@ -18,7 +18,7 @@
                 {{ displayCompanyName }}
               </span>
               <span class="text-xs text-sky-400 font-medium">
-                {{ tt('footer.legalLine', 'PT Kirana Karina Network') }}
+                {{ displayTagline }}
               </span>
             </div>
           </div>
@@ -252,6 +252,7 @@ const {
   displayCompanyName,
   displayBrandLogo,
   displayAddress,
+  displayTagline,
 } = useLayungIdentity();
 
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));

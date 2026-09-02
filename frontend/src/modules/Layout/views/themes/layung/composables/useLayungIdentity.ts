@@ -86,6 +86,11 @@ export function useLayungIdentity() {
   const displayTagline = computed(() => {
     const fromTheme = getSetting('site_tagline', '') || getSetting('brand_tagline', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim() !== '') return fromTheme.trim();
+    const systemTagline = (systemStore.siteSettings as { site_tagline?: string; site_description?: string } | undefined)?.site_tagline
+      || (systemStore.siteSettings as { site_tagline?: string; site_description?: string } | undefined)?.site_description
+      || (systemStore.settings as { site_tagline?: string; site_description?: string } | undefined)?.site_tagline
+      || (systemStore.settings as { site_tagline?: string; site_description?: string } | undefined)?.site_description;
+    if (systemTagline && typeof systemTagline === 'string' && systemTagline.trim() !== '') return systemTagline.trim();
     return t('hero.headline', 'Internet Service Provider & Managed IT Services');
   });
 
