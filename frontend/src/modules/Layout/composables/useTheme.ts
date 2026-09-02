@@ -569,12 +569,17 @@ export function useTheme() {
                     if (hslValue) {
                         variables.push(`${cssKey}-hsl: ${hslValue};`);
                     }
-                } else if (setting.type === 'font' || setting.type === 'typography') {
+                } else if (setting.type === 'font' || setting.type === 'typography' || key.startsWith('font_')) {
                     // Inject dynamic Google Font and CSS custom property
                     const rawFont = String(value);
                     injectGoogleFont(rawFont);
                     const fontValue = rawFont.includes(' ') ? `"${rawFont}"` : rawFont;
                     variables.push(`${cssKey}: ${fontValue};`);
+                } else if (typeof value === 'string' || typeof value === 'number') {
+                    const strVal = String(value).trim();
+                    if (strVal) {
+                        variables.push(`${cssKey}: ${strVal};`);
+                    }
                 }
             });
         }

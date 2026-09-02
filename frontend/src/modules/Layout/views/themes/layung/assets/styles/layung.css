@@ -31,8 +31,30 @@
   --layung-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
   
   --layung-radius: var(--theme-button-radius, 0.85rem);
-  --layung-radius-sm: 0.5rem;
-  --layung-radius-lg: 1.25rem;
+  --layung-radius-sm: calc(var(--layung-radius) * 0.75);
+  --layung-radius-lg: calc(var(--layung-radius) * 1.35);
+  --radius: var(--theme-button-radius, 0.85rem);
+}
+
+/* Dynamic Button Depth Shadow */
+[data-button-shadow="none"] button:not(.layung-social-dock__toggle-btn),
+[data-button-shadow="none"] .layung-btn {
+  box-shadow: none !important;
+}
+
+[data-button-shadow="subtle"] button:not(.layung-social-dock__toggle-btn),
+[data-button-shadow="subtle"] .layung-btn {
+  box-shadow: 0 2px 6px -1px rgba(0, 174, 239, 0.25) !important;
+}
+
+[data-button-shadow="medium"] button:not(.layung-social-dock__toggle-btn),
+[data-button-shadow="medium"] .layung-btn {
+  box-shadow: 0 6px 16px -2px rgba(0, 174, 239, 0.4) !important;
+}
+
+[data-button-shadow="strong"] button:not(.layung-social-dock__toggle-btn),
+[data-button-shadow="strong"] .layung-btn {
+  box-shadow: 0 10px 25px -2px rgba(0, 174, 239, 0.6), 0 0 14px rgba(0, 174, 239, 0.35) !important;
 }
 
 .layung-theme {
