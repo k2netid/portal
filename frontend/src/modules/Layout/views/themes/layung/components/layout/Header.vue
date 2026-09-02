@@ -52,7 +52,7 @@
                 :href="item.url || '#'"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -61,7 +61,7 @@
               <router-link
                 v-else-if="item.url"
                 :to="resolvePublicMenuTo(item.url)"
-                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -70,7 +70,7 @@
               <button
                 v-else
                 type="button"
-                class="px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
+                class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
               >
                 <span>{{ item.title }}</span>
@@ -109,13 +109,13 @@
                     <router-link
                       v-else
                       :to="resolvePublicMenuTo(child.url)"
-                      active-class=""
-                      exact-active-class=""
                       class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item focus:outline-none"
-                      :class="isDropdownChildActive(child, item.children || [], route) ? '!bg-primary/10' : ''"
                     >
                       <div>
-                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors">
+                        <div
+                          class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors"
+                          :class="isDropdownChildActive(child, item.children || [], route) ? '!text-primary font-black' : ''"
+                        >
                           {{ child.title }}
                         </div>
                         <div
@@ -136,14 +136,14 @@
               :href="item.url || '#'"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
             >
               <span>{{ item.title }}</span>
             </a>
             <router-link
               v-else
               :to="resolvePublicMenuTo(item.url)"
-              class="px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
               :class="isNavItemActive(item, route) ? '!text-primary !bg-primary/10 !font-bold' : ''"
             >
               <span>{{ item.title }}</span>
