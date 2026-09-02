@@ -387,10 +387,22 @@
         "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
         "category": "Footer"
     },
-    "footer_copyright": {
-        "label": "Teks Hak Cipta Footer",
+    "footer_col_1_title": {
+        "label": "Judul Kolom 1 Footer",
         "type": "text",
-        "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
+        "default": "ISP — Konektivitas",
+        "category": "Footer"
+    },
+    "footer_col_2_title": {
+        "label": "Judul Kolom 2 Footer",
+        "type": "text",
+        "default": "MSP — Layanan IT",
+        "category": "Footer"
+    },
+    "footer_col_3_title": {
+        "label": "Judul Kolom 3 Footer",
+        "type": "text",
+        "default": "Produk IT",
         "category": "Footer"
     }
 }

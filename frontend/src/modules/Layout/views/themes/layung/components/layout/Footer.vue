@@ -264,6 +264,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import {
   MessageCircle,
   Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe, Mail,
@@ -274,7 +275,10 @@ import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
-import { toWhatsAppDigits } from '@/modules/Layout/views/themes/layung/composables/resolveLayungLocalizedCopy';
+import {
+  resolveLayungLocalizedCopy,
+  toWhatsAppDigits,
+} from '@/modules/Layout/views/themes/layung/composables/resolveLayungLocalizedCopy';
 import {
   LAYUNG_STORE_SHOPEE,
   LAYUNG_STORE_SIPLAH_BLIBLI,
@@ -284,6 +288,7 @@ import {
 import type { MenuItem } from '@/modules/Layout/types/menu';
 import { resolvePublicMenuTo } from '@/modules/Layout/utils/menuUrl';
 
+const { locale } = useI18n({ useScope: 'global' });
 const { t: tt } = useThemeI18n('layung');
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
@@ -360,14 +365,15 @@ const siteLogo = displayBrandLogo;
 const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || []);
 
 const footerAboutText = computed(() => {
-  const fromTheme = getSetting('footer_about_text', '');
-  if (
-    fromTheme
-    && typeof fromTheme === 'string'
-    && fromTheme.trim()
-    && !/AS153992|165\.99\.252/.test(fromTheme)
-  ) {
-    return fromTheme.trim();
+  const custom = resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_about_text',
+    fallback: '',
+  });
+
+  if (custom && custom.trim() && !/AS153992|165\.99\.252/.test(custom)) {
+    return custom.trim();
   }
   return tt(
     'footer.description',
@@ -376,26 +382,52 @@ const footerAboutText = computed(() => {
 });
 
 const footerCopyrightText = computed(() => {
-  const fromTheme = getSetting('footer_copyright', '');
-  if (fromTheme && typeof fromTheme === 'string') return fromTheme;
+  const custom = resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_text',
+    fallback: '',
+  }) || resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_copyright',
+    fallback: '',
+  });
+
+  if (custom && custom.trim()) return custom.trim();
   return `© ${new Date().getFullYear()} ${displayCompanyName.value}. ${tt('footer.copyright', 'Hak cipta dilindungi undang-undang.')}`;
 });
 
 const col1Title = computed(() => {
-  const raw = getSetting('footer_col_1_title', '');
-  if (typeof raw === 'string' && raw.trim()) return raw.trim();
+  const custom = resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_col_1_title',
+    fallback: '',
+  });
+  if (custom && custom.trim()) return custom.trim();
   return tt('footer.isp', 'ISP — Konektivitas');
 });
 
 const col2Title = computed(() => {
-  const raw = getSetting('footer_col_2_title', '');
-  if (typeof raw === 'string' && raw.trim()) return raw.trim();
+  const custom = resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_col_2_title',
+    fallback: '',
+  });
+  if (custom && custom.trim()) return custom.trim();
   return tt('footer.msp', 'MSP — Layanan IT');
 });
 
 const col3Title = computed(() => {
-  const raw = getSetting('footer_col_3_title', '');
-  if (typeof raw === 'string' && raw.trim()) return raw.trim();
+  const custom = resolveLayungLocalizedCopy({
+    getSetting,
+    locale: locale.value,
+    key: 'footer_col_3_title',
+    fallback: '',
+  });
+  if (custom && custom.trim()) return custom.trim();
   return tt('footer.products', 'Produk IT');
 });
 

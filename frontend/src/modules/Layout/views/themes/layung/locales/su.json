@@ -488,8 +488,16 @@
       "isp_store_address_hint": "Lokasi toko fisik alat di Bandung Trade Mall.",
       "footer_about_text": "Déskripsi Singget Footer",
       "footer_about_text_hint": "Ringkesan profil pausahaan dina footer.",
+      "footer_text": "Téks Hak Cipta Footer",
+      "footer_text_hint": "Pernyataan hak cipta dina jajar panghandapna.",
       "footer_copyright": "Téks Hak Cipta Footer",
-      "footer_copyright_hint": "Pernyataan hak cipta dina jajar panghandapna."
+      "footer_copyright_hint": "Pernyataan hak cipta dina jajar panghandapna.",
+      "footer_col_1_title": "Judul Kolom 1 Footer",
+      "footer_col_1_title_hint": "Judul pikeun kolom menu kahiji di footer.",
+      "footer_col_2_title": "Judul Kolom 2 Footer",
+      "footer_col_2_title_hint": "Judul pikeun kolom menu kadua di footer.",
+      "footer_col_3_title": "Judul Kolom 3 Footer",
+      "footer_col_3_title_hint": "Judul pikeun kolom menu katilu di footer."
     },
     "manifest_categories": {
       "isp_info": "Info ISP",

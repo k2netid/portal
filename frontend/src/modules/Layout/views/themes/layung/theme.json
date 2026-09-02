@@ -545,9 +545,30 @@
             "scope": "theme"
         },
         "footer_text": {
-            "label": "Copyright Text",
+            "label": "Teks Hak Cipta Footer (fallback)",
+            "type": "text",
+            "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "footer_text_id": {
+            "label": "Teks Hak Cipta Footer (Indonesia)",
+            "type": "text",
+            "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "footer_text_en": {
+            "label": "Teks Hak Cipta Footer (English)",
             "type": "text",
             "default": "© 2026 PT Kirana Karina Network (K2NET). All rights reserved.",
+            "category": "Footer",
+            "scope": "platform"
+        },
+        "footer_text_su": {
+            "label": "Teks Hak Cipta Footer (Sunda)",
+            "type": "text",
+            "default": "© 2026 PT Kirana Karina Network (K2NET). Sadaya hak cipta ditangtayungan undang-undang.",
             "category": "Footer",
             "scope": "platform"
         },
@@ -1031,16 +1052,51 @@
             "scope": "theme"
         },
         "footer_about_text": {
-            "label": "Deskripsi Singkat Footer",
+            "label": "Deskripsi Singkat Footer (fallback)",
             "type": "textarea",
             "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
             "category": "Footer",
             "scope": "theme"
         },
-        "footer_copyright": {
-            "label": "Teks Hak Cipta Footer",
+        "footer_about_text_id": {
+            "label": "Deskripsi Singkat Footer (Indonesia)",
+            "type": "textarea",
+            "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_about_text_en": {
+            "label": "Deskripsi Singkat Footer (English)",
+            "type": "textarea",
+            "default": "K2NET is a brand of PT Kirana Karina Network — ISP and managed services based in Bandung.",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_about_text_su": {
+            "label": "Deskripsi Singkat Footer (Sunda)",
+            "type": "textarea",
+            "default": "K2NET nyaeta merek PT Kirana Karina Network — ISP sareng managed services di Bandung.",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col_1_title": {
+            "label": "Judul Kolom 1 Footer",
             "type": "text",
-            "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
+            "default": "ISP — Konektivitas",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col_2_title": {
+            "label": "Judul Kolom 2 Footer",
+            "type": "text",
+            "default": "MSP — Layanan IT",
+            "category": "Footer",
+            "scope": "theme"
+        },
+        "footer_col_3_title": {
+            "label": "Judul Kolom 3 Footer",
+            "type": "text",
+            "default": "Produk IT",
             "category": "Footer",
             "scope": "theme"
         },
@@ -1059,6 +1115,7 @@
         "footer": "Footer Bottom Links",
         "footer_col_1": "Footer Column 1",
         "footer_col_2": "Footer Column 2",
+        "footer_col_3": "Footer Column 3",
         "sidebar": "Sidebar Navigation"
     },
     "customizer": {

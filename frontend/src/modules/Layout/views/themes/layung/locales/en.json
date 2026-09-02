@@ -488,8 +488,16 @@
       "isp_store_address_hint": "Physical hardware storefront in Bandung Trade Mall.",
       "footer_about_text": "Footer Summary Text",
       "footer_about_text_hint": "Company overview paragraph in the footer.",
+      "footer_text": "Footer Copyright Text",
+      "footer_text_hint": "Copyright notice on the bottom-most bar.",
       "footer_copyright": "Footer Copyright Text",
-      "footer_copyright_hint": "Copyright notice on the bottom-most bar."
+      "footer_copyright_hint": "Copyright notice on the bottom-most bar.",
+      "footer_col_1_title": "Footer Column 1 Title",
+      "footer_col_1_title_hint": "Heading for the first menu column in the footer.",
+      "footer_col_2_title": "Footer Column 2 Title",
+      "footer_col_2_title_hint": "Heading for the second menu column in the footer.",
+      "footer_col_3_title": "Footer Column 3 Title",
+      "footer_col_3_title_hint": "Heading for the third menu column in the footer."
     },
     "manifest_categories": {
       "isp_info": "ISP Info",
