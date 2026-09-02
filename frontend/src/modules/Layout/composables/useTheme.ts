@@ -425,9 +425,17 @@ export function useTheme() {
                 if (themeUpdateListener) {
                     window.removeEventListener('message', themeUpdateListener);
                 }
-                const allowedOrigin = window.location.origin;
                 themeUpdateListener = (event: MessageEvent) => {
-                    if (event.origin !== allowedOrigin) {
+                    const parentOrigin = (() => {
+                        try {
+                            const raw = new URLSearchParams(window.location.search).get('ja_parent_origin');
+                            return raw ? decodeURIComponent(raw) : null;
+                        } catch {
+                            return null;
+                        }
+                    })();
+                    const isAllowed = event.origin === window.location.origin || (parentOrigin && event.origin === parentOrigin);
+                    if (!isAllowed) {
                         return;
                     }
                     if (isCustomizerThemeBootMessage(event.data)) {
@@ -447,17 +455,27 @@ export function useTheme() {
                             if (themeUsesJanariCanvas(boot)) {
                                 syncJanariStyles(themeSettings.value);
                             }
-                            // Do not writeThemeSnapshot — preview draft must not overwrite public active cache.
                         }
                         return;
                     }
-                    if (event.data && event.data.type === 'THEME_UPDATE') {
-                        // Merge the new settings reactively
-                        if (event.data.settings) {
+                    if (event.data && (event.data.type === 'THEME_UPDATE' || event.data.type === 'JA_THEME_CUSTOMIZER_SYNC')) {
+                        const incomingSettings = (event.data.settings || event.data.theme?.settings) as Record<string, unknown> | undefined;
+                        if (incomingSettings) {
                             themeSettings.value = {
                                 ...themeSettings.value,
-                                ...event.data.settings
+                                ...incomingSettings
                             };
+                            if (activeTheme.value) {
+                                activeTheme.value = {
+                                    ...activeTheme.value,
+                                    settings: {
+                                        ...(activeTheme.value.settings || {}),
+                                        ...incomingSettings
+                                    }
+                                };
+                            }
+
+                            applyThemeStyles();
 
                             if (themeUsesJanariCanvas(activeTheme.value)) {
                                 requestAnimationFrame(() => {
@@ -470,9 +488,9 @@ export function useTheme() {
                             }));
                         }
 
-                        // Apply custom CSS updates natively
-                        if (event.data.custom_css !== undefined) {
-                            customCss.value = event.data.custom_css;
+                        const incomingCss = event.data.custom_css ?? event.data.theme?.custom_css;
+                        if (incomingCss !== undefined) {
+                            customCss.value = String(incomingCss);
                             applyCustomCss();
                         }
                     }
