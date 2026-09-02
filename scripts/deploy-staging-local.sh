@@ -16,10 +16,11 @@ echo "==> sync assets → backend/public"
 SYNC_ONLY=1 bash "$ROOT/scripts/sync-frontend-assets-to-backend.sh"
 
 echo "==> permissions"
-if command -v sudo >/dev/null 2>&1; then
-  echo "asdfasdf" | sudo -S bash /home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh "$BACKEND" 2>/dev/null || sudo -n bash /home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh "$BACKEND" 2>/dev/null || bash /home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh "$BACKEND"
+PERM_SCRIPT="/home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh"
+if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+  sudo -n bash "$PERM_SCRIPT" "$BACKEND"
 else
-  bash /home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh "$BACKEND"
+  bash "$PERM_SCRIPT" "$BACKEND" || echo "warning: could not apply www-data permissions (passwordless sudo not available). Run: bash $PERM_SCRIPT $BACKEND" >&2
 fi
 
 cd "$BACKEND"

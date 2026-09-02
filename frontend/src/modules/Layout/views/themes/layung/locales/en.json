@@ -91,9 +91,17 @@
   "calculator": {
     "badge": "Bandwidth estimate",
     "title": "Estimate office internet needs",
-    "subtitle": "Enter an approximate device count to see a matching plan range.",
+    "subtitle": "An internal K2NET estimate from device count, workload profile, concurrent-use ratio, and a 25% headroom. This is not a quotation and not a third-party benchmark.",
+    "methodology": "Internal K2NET estimate",
     "usersLabel": "Active Users / Devices:",
     "cloudUsageLabel": "Business Workload:",
+    "workloadHint": "Workload assumption",
+    "loadLabel": "Load per device",
+    "concurrencyLabel": "Concurrent ratio",
+    "headroomLabel": "Capacity headroom",
+    "needLabel": "Estimated need",
+    "priceCaption": "Indicative rate",
+    "disclaimer": "This is a starting estimate, not a formal offer. Price, availability, and capacity are confirmed after a site survey.",
     "recommendedPlan": "Recommended Tier:",
     "getQuote": "Request Formal Proposal"
   },
@@ -366,14 +374,17 @@
     "msp6Desc": "Extra scope under a Custom contract: multi-building, labs, or work outside Basic/Standard."
   },
   "clients": {
-    "badge": "Education partners",
-    "title": "Most of our partners are public junior high schools in Bandung",
-    "subtitle": "K2NET supports public junior high schools in Bandung with network, servers, and day-to-day IT operations.",
-    "countLabel": "schools in the list",
-    "search": "Search SMPN…",
-    "demoHint": "Public junior high schools in Bandung",
-    "prev": "Previous",
-    "next": "Next"
+    "badge": "Education institutions",
+    "title": "IT support for schools and institutions",
+    "subtitle": "K2NET provides network, servers, CCTV, and operational IT support for education institutions in Bandung and West Java. Named partners are published only with each institution’s consent.",
+    "focus1Title": "Campus and lab networks",
+    "focus1Body": "Installation, documentation, and care of school networks, including computer labs and Wi-Fi access.",
+    "focus2Title": "Servers, applications, and CCTV",
+    "focus2Body": "Managed-service scope can include servers, school applications, and cameras — as contracted.",
+    "focus3Title": "IT-backed school events",
+    "focus3Body": "Operational support during online exams or school events, with escalation through the Service Desk.",
+    "mspCta": "View managed-service plans",
+    "contactCta": "Discuss your institution’s needs"
   },
   "sla": {
     "badge": "Contract-based SLA",
@@ -457,6 +468,8 @@
       "enable_tim_hint": "Disable to hide the /tim page from visitors.",
       "enable_blog": "Enable News page",
       "enable_blog_hint": "Disable to hide the /blog page from visitors.",
+      "enable_career": "Enable Careers page",
+      "enable_career_hint": "Disable to hide the /career page from visitors.",
       "enable_contact": "Enable Contact page",
       "enable_contact_hint": "Disable to hide the /contact page from visitors.",
       "disabled_page_behavior": "When a page is turned off",

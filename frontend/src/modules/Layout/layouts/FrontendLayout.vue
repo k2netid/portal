@@ -136,7 +136,7 @@ import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
 import { useCustomizerPreviewProbe } from '@/modules/Layout/customizer/preview/useCustomizerPreviewProbe'
-import { isCustomizerPreviewQuery } from '@/modules/Layout/customizer/preview/protocol'
+import { isCustomizerPreviewQuery, resolveAllowedCustomizerOrigins } from '@/modules/Layout/customizer/preview/protocol'
 import '@/modules/Layout/customizer/preview/customizer-preview.css'
 import { PluginSlot } from '@/shared/components'
 import {
@@ -524,16 +524,7 @@ watch(janariRootStyleVars, (vars) => {
 }, { immediate: true, flush: 'post' })
 
 const handleCustomizerSync = (event: MessageEvent) => {
-  const allowed = new Set<string>([window.location.origin])
-  const parentOrigin = (() => {
-    try {
-      const raw = new URLSearchParams(window.location.search).get('ja_parent_origin')
-      return raw ? decodeURIComponent(raw) : null
-    } catch {
-      return null
-    }
-  })()
-  if (parentOrigin) allowed.add(parentOrigin)
+  const allowed = resolveAllowedCustomizerOrigins(window.location.search, window.location.origin)
   if (!allowed.has(event.origin)) return
 
   if (event.data?.type === 'JA_CUSTOMIZER_THEME_BOOT' && event.data?.theme) {

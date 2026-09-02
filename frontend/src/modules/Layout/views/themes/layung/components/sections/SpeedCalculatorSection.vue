@@ -12,7 +12,7 @@
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
       <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <!-- 1. Card Header: Title & Scientific Methodology Benchmark -->
+      <!-- 1. Card header -->
       <div class="space-y-3 relative z-10">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <span class="inline-flex items-center self-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-mono uppercase tracking-wider">
@@ -21,7 +21,7 @@
           </span>
           <div class="inline-flex items-center self-start sm:self-auto gap-1.5 text-[10px] sm:text-[11px] font-mono text-slate-400 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 max-w-full">
             <BarChart2 class="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span class="truncate">Standar Benchmark Ookla® & Cisco</span>
+            <span class="truncate">{{ t('calculator.methodology', 'Estimasi internal K2NET') }}</span>
           </div>
         </div>
 
@@ -29,7 +29,7 @@
           {{ t('calculator.title', 'Hitung Kebutuhan Bandwidth & Rekomendasi Paket') }}
         </h2>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-3xl">
-          Kalkulator bandwidth interaktif dengan algoritma perhitungan terstandar (estimasi aktivitas 2–10 Mbps/user, rasio konkurensi serentak 50–80%, serta 25% safety headroom) untuk menghasilkan rekomendasi paket internet K2NET yang paling efisien dan stabil.
+          {{ t('calculator.subtitle', 'Estimasi internal K2NET berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.') }}
         </p>
       </div>
 
@@ -107,11 +107,11 @@
           </div>
         </div>
 
-        <!-- Step 3: Workload Profiling (Ookla Benchmarks) -->
+        <!-- Step 3: Workload profile (internal assumptions) -->
         <div class="space-y-2.5 pt-2 border-t border-slate-800/60">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
             <span>3. Karakteristik Beban Aktivitas Utama:</span>
-            <span class="text-slate-400 font-normal text-[11px] sm:text-xs">Standar Ookla: {{ currentWorkloadThroughput }}</span>
+            <span class="text-slate-400 font-normal text-[11px] sm:text-xs">{{ t('calculator.workloadHint', 'Asumsi beban') }}: {{ currentWorkloadThroughput }}</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
             <button
@@ -137,27 +137,27 @@
         </div>
       </div>
 
-      <!-- 3. Scientific Calculation Summary Bar -->
+      <!-- 3. Estimate summary -->
       <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 sm:p-4 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-xs font-mono overflow-hidden">
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Beban User (Ookla)</span>
+          <span class="text-slate-500 block text-[10px] uppercase">{{ t('calculator.loadLabel', 'Beban per perangkat') }}</span>
           <strong class="text-cyan-400 text-xs sm:text-sm">{{ currentWorkloadRate }} Mbps</strong>
         </div>
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Konkurensi (Cisco)</span>
+          <span class="text-slate-500 block text-[10px] uppercase">{{ t('calculator.concurrencyLabel', 'Rasio bersamaan') }}</span>
           <strong class="text-white text-xs sm:text-sm">{{ (concurrencyRatio * 100).toFixed(0) }}% (~{{ activeConcurrentUsers }} user)</strong>
         </div>
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Headroom Buffer</span>
+          <span class="text-slate-500 block text-[10px] uppercase">{{ t('calculator.headroomLabel', 'Cadangan kapasitas') }}</span>
           <strong class="text-emerald-400 text-xs sm:text-sm">+25% Margin</strong>
         </div>
         <div>
-          <span class="text-slate-500 block text-[10px] uppercase">Kebutuhan Bandwidth</span>
+          <span class="text-slate-500 block text-[10px] uppercase">{{ t('calculator.needLabel', 'Perkiraan kebutuhan') }}</span>
           <strong class="text-cyan-300 text-xs sm:text-sm">{{ calculatedRequirementText }}</strong>
         </div>
       </div>
 
-      <!-- 4. Real K2NET Calculated Recommendation Card -->
+      <!-- 4. Suggested plan range -->
       <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/80 border-2 border-cyan-500/50 rounded-2xl p-4 sm:p-6 lg:p-8 space-y-5 shadow-xl">
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
           <div class="space-y-3 flex-1 min-w-0">
@@ -201,7 +201,7 @@
           <!-- Price & Call to Action -->
           <div class="shrink-0 flex flex-col items-center md:items-end justify-between space-y-4 pt-4 md:pt-0 border-t md:border-t-0 border-slate-800 w-full md:w-auto">
             <div class="text-center md:text-right">
-              <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 block">Biaya Langganan</span>
+              <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 block">{{ t('calculator.priceCaption', 'Indikasi tarif') }}</span>
               <strong class="text-2xl sm:text-3xl font-black text-cyan-300 font-heading block">
                 {{ recommendedPlan.price }}
               </strong>
@@ -229,6 +229,9 @@
             </div>
           </div>
         </div>
+        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed relative z-10">
+          {{ t('calculator.disclaimer', 'Ini perkiraan awal, bukan penawaran resmi. Harga, ketersediaan, dan kapasitas dikonfirmasi setelah survei.') }}
+        </p>
       </div>
     </div>
   </section>
@@ -243,12 +246,23 @@ import {
 } from 'lucide-vue-next';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { Button } from '@/modules/Layout/views/themes/layung/ui';
+import {
+  WORKLOAD_MBPS,
+  activeConcurrentUsers as countConcurrent,
+  concurrencyRatio as concurrencyFor,
+  diaSpeedLabel,
+  estimatePeakMbps,
+  recommendPlanId,
+  type BandwidthPlanId,
+  type BandwidthSegment,
+  type BandwidthWorkload,
+} from '@/modules/Layout/views/themes/layung/composables/layungBandwidthEstimate';
 
 const { t } = useThemeI18n('layung');
 const route = useRoute();
 
-type SegmentId = 'auto' | 'retail' | 'soho' | 'dia';
-type WorkloadId = 'standard' | 'video' | 'cloud' | 'heavy';
+type SegmentId = BandwidthSegment;
+type WorkloadId = BandwidthWorkload;
 
 const activeSegment = ref<SegmentId>('auto');
 const userCount = ref(15);
@@ -339,11 +353,11 @@ const currentPresets = computed(() => {
 });
 
 /**
- * Throughput benchmarks based on Ookla Speedtest Guidelines:
- * - 2 Mbps: Email, web browsing, basic chat, audio streaming
- * - 4-5 Mbps: HD video conferencing (Zoom HD 1080p, Teams), cloud sync
- * - 6-8 Mbps: Enterprise ERP, cloud database, simultaneous multi-device sync
- * - 10+ Mbps: High-concurrency computer labs, online exam proctoring, 4K streams
+ * Internal planning assumptions (not a third-party benchmark):
+ * - 2 Mbps: browsing, email, chat
+ * - 4.5 Mbps: HD calls, streaming, IP cameras
+ * - 6.5 Mbps: cloud ERP, POS, backups
+ * - 10 Mbps: labs, concurrent exams, 4K
  */
 const workloads = [
   {
@@ -351,28 +365,28 @@ const workloads = [
     label: 'Office & Browsing',
     sub: 'Web, Email, Chat, Media Sosial',
     icon: Globe,
-    mbpsPerUser: 2.0,
+    mbpsPerUser: WORKLOAD_MBPS.standard,
   },
   {
     id: 'video' as const,
     label: 'Video HD & CCTV',
     sub: 'Zoom/Teams HD, Streaming, IP Camera',
     icon: Video,
-    mbpsPerUser: 4.5,
+    mbpsPerUser: WORKLOAD_MBPS.video,
   },
   {
     id: 'cloud' as const,
     label: 'Cloud ERP & Server',
     sub: 'Database, POS Kasir, SAP, Cloud Backup',
     icon: Database,
-    mbpsPerUser: 6.5,
+    mbpsPerUser: WORKLOAD_MBPS.cloud,
   },
   {
     id: 'heavy' as const,
     label: 'High-Demand & Lab',
     sub: 'Ujian Daring, Lab Komputer, Server',
     icon: Zap,
-    mbpsPerUser: 10.0,
+    mbpsPerUser: WORKLOAD_MBPS.heavy,
   },
 ];
 
@@ -383,37 +397,11 @@ const currentWorkload = computed(() => {
 const currentWorkloadRate = computed(() => currentWorkload.value.mbpsPerUser.toFixed(1));
 const currentWorkloadThroughput = computed(() => `~${currentWorkloadRate.value} Mbps/user`);
 
-/**
- * Concurrency factor based on Cisco Enterprise Capacity Planning:
- * In networks with larger user pools, the probability of 100% simultaneous peak transfer drops.
- * - 2-10 users: 85% concurrent
- * - 11-30 users: 75% concurrent
- * - 31-70 users: 65% concurrent
- * - 71-150 users: 55% concurrent
- * - >150 users: 45% concurrent
- */
-const concurrencyRatio = computed(() => {
-  const n = userCount.value;
-  if (n <= 10) return 0.85;
-  if (n <= 30) return 0.75;
-  if (n <= 70) return 0.65;
-  if (n <= 150) return 0.55;
-  return 0.45;
-});
-
-const activeConcurrentUsers = computed(() => {
-  return Math.max(1, Math.round(userCount.value * concurrencyRatio.value));
-});
-
-/**
- * Scientific Formula:
- * Peak Bandwidth Required = (Active Concurrent Users * Workload Rate) * (1 + 25% Headroom Buffer)
- */
-const calculatedRequirementMbps = computed(() => {
-  const rawLoad = activeConcurrentUsers.value * currentWorkload.value.mbpsPerUser;
-  const withHeadroom = rawLoad * 1.25; // 25% safety margin
-  return Math.max(10, Math.round(withHeadroom));
-});
+const concurrencyRatio = computed(() => concurrencyFor(userCount.value));
+const activeConcurrentUsers = computed(() => countConcurrent(userCount.value));
+const calculatedRequirementMbps = computed(() =>
+  estimatePeakMbps(userCount.value, currentWorkload.value.mbpsPerUser),
+);
 
 const calculatedRequirementText = computed(() => {
   const mbps = calculatedRequirementMbps.value;
@@ -434,240 +422,117 @@ interface PlanRecommendation {
   ctaUrl: string;
 }
 
+const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
+  'retail-10': {
+    tierBadge: 'RETAIL BROADBAND',
+    name: 'Retail Broadband 10',
+    description: 'Paket internet rumah tangga dan ritel dengan kebutuhan browsing, streaming, dan belajar daring.',
+    speedLabel: '10 Mbps (Up to 15 Mbps)',
+    price: 'Rp 150.000',
+    priceNote: '+ PPN / bulan (indikasi)',
+    features: [
+      'Kapasitas 10 Mbps (up to 15 Mbps)',
+      'Ideal untuk 2–5 perangkat aktif',
+      'Instalasi standar coverage K2NET',
+      'Konfirmasi tarif saat survei',
+    ],
+    ctaLabel: 'Pilih Retail 10',
+    ctaUrl: '/contact?plan=retail-10',
+  },
+  'retail-15': {
+    tierBadge: 'RETAIL BROADBAND',
+    name: 'Retail Broadband 15',
+    description: 'Pilihan menengah untuk keluarga atau usaha rumahan dengan aktivitas daring lebih intens.',
+    speedLabel: '15 Mbps (Up to 20 Mbps)',
+    price: 'Rp 200.000',
+    priceNote: '+ PPN / bulan (indikasi)',
+    isPopular: true,
+    features: [
+      'Kapasitas 15 Mbps (up to 20 Mbps)',
+      'Ideal untuk 5–8 perangkat aktif',
+      'Video call & streaming HD lancar',
+      'Konfirmasi tarif saat survei',
+    ],
+    ctaLabel: 'Pilih Retail 15',
+    ctaUrl: '/contact?plan=retail-15',
+  },
+  'retail-20': {
+    tierBadge: 'RETAIL BROADBAND',
+    name: 'Retail Broadband 20',
+    description: 'Paket retail untuk kebutuhan multi-perangkat keluarga besar atau WFH intensif.',
+    speedLabel: '20 Mbps (Up to 25 Mbps)',
+    price: 'Rp 250.000',
+    priceNote: '+ PPN / bulan (indikasi)',
+    features: [
+      'Kapasitas 20 Mbps (up to 25 Mbps)',
+      'Ideal untuk 8–15 perangkat aktif',
+      'Kapasitas lega untuk streaming & kerja',
+      'Konfirmasi tarif saat survei',
+    ],
+    ctaLabel: 'Pilih Retail 20',
+    ctaUrl: '/contact?plan=retail-20',
+  },
+  'soho-50': {
+    tierBadge: 'BROADBAND BISNIS SOHO',
+    name: 'Broadband Bisnis 50 Mbps',
+    description: 'Internet untuk SOHO, ruko, dan usaha kecil dengan kebutuhan cloud dan operasional rutin.',
+    speedLabel: 'Up to 50 Mbps (Bisnis SOHO)',
+    price: 'Mulai Rp 1.200.000',
+    priceNote: '+ PPN / bulan (indikasi)',
+    features: [
+      'Up to 50 Mbps rasio bisnis',
+      '1 IP Publik Statis included',
+      'Cocok untuk 10–30 perangkat',
+      'Dukungan teknis jam operasional',
+    ],
+    ctaLabel: 'Pilih SOHO 50',
+    ctaUrl: '/contact?plan=soho-50',
+  },
+  'soho-100': {
+    tierBadge: 'BROADBAND BISNIS SOHO',
+    name: 'Broadband Bisnis 100 Mbps',
+    description: 'Kapasitas lebih besar untuk kantor menengah, co-working, dan ruko dengan traffic tinggi.',
+    speedLabel: 'Up to 100 Mbps (Bisnis SOHO)',
+    price: 'Mulai Rp 2.000.000',
+    priceNote: '+ PPN / bulan (indikasi)',
+    isPopular: true,
+    features: [
+      'Up to 100 Mbps prioritas bandwidth',
+      '1–2 IP Publik Statis included',
+      'Cocok untuk 30–60 perangkat',
+      'Tiket eskalasi prioritas NOC',
+    ],
+    ctaLabel: 'Pilih SOHO 100',
+    ctaUrl: '/contact?plan=soho-100',
+  },
+};
+
 const recommendedPlan = computed<PlanRecommendation>(() => {
-  const seg = activeSegment.value;
-  const count = userCount.value;
   const mbps = calculatedRequirementMbps.value;
+  const planId = recommendPlanId({
+    segment: activeSegment.value,
+    userCount: userCount.value,
+    mbps,
+    workload: selectedWorkload.value,
+  });
 
-  // 1. Forced Retail Segment
-  if (seg === 'retail') {
-    if (count <= 5 || mbps <= 14) {
-      return {
-        tierBadge: 'RETAIL BROADBAND',
-        name: 'Retail Broadband 10',
-        description: 'Paket internet rumah tangga dan ritel dengan kebutuhan browsing, streaming, dan belajar daring.',
-        speedLabel: '10 Mbps (Up to 15 Mbps)',
-        price: 'Rp 150.000',
-        priceNote: '+ PPN / bulan',
-        features: [
-          'Kapasitas 10 Mbps (up to 15 Mbps)',
-          'Ideal untuk 2–5 perangkat aktif',
-          'Instalasi standar coverage K2NET',
-          'Biaya bulanan hemat & transparan',
-        ],
-        ctaLabel: 'Pilih Retail 10',
-        ctaUrl: '/contact?plan=retail-10',
-      };
-    }
-    if (count <= 8 || mbps <= 22) {
-      return {
-        tierBadge: 'RETAIL BROADBAND',
-        name: 'Retail Broadband 15',
-        description: 'Pilihan menengah paling populer untuk keluarga atau usaha rumahan dengan aktivitas daring lebih intens.',
-        speedLabel: '15 Mbps (Up to 20 Mbps)',
-        price: 'Rp 200.000',
-        priceNote: '+ PPN / bulan',
-        isPopular: true,
-        features: [
-          'Kapasitas 15 Mbps (up to 20 Mbps)',
-          'Ideal untuk 5–8 perangkat aktif',
-          'Video call & streaming HD lancar',
-          'Instalasi standar coverage K2NET',
-        ],
-        ctaLabel: 'Pilih Retail 15',
-        ctaUrl: '/contact?plan=retail-15',
-      };
-    }
-    return {
-      tierBadge: 'RETAIL BROADBAND',
-      name: 'Retail Broadband 20',
-      description: 'Paket retail tertinggi untuk kebutuhan multi-perangkat keluarga besar atau WFH intensif.',
-      speedLabel: '20 Mbps (Up to 25 Mbps)',
-      price: 'Rp 250.000',
-      priceNote: '+ PPN / bulan',
-      features: [
-        'Kapasitas 20 Mbps (up to 25 Mbps)',
-        'Ideal untuk 8–15 perangkat aktif',
-        'Kapasitas lega untuk streaming & kerja',
-        'Instalasi standar coverage K2NET',
-      ],
-      ctaLabel: 'Pilih Retail 20',
-      ctaUrl: '/contact?plan=retail-20',
-    };
+  if (planId !== 'dia') {
+    return PLAN_COPY[planId];
   }
 
-  // 2. Forced SOHO Segment
-  if (seg === 'soho') {
-    if (count <= 35 && mbps <= 65) {
-      return {
-        tierBadge: 'BROADBAND BISNIS SOHO',
-        name: 'Broadband Bisnis 50 Mbps',
-        description: 'Internet stabil untuk SOHO, ruko, dan usaha kecil dengan kebutuhan cloud, POS kasir, dan operasional rutin.',
-        speedLabel: 'Up to 50 Mbps (Bisnis SOHO)',
-        price: 'Mulai Rp 1.200.000',
-        priceNote: '+ PPN / bulan',
-        features: [
-          'Up to 50 Mbps rasio bisnis',
-          '1 IP Publik Statis included',
-          'Cocok untuk 10–30 perangkat',
-          'Dukungan teknis jam operasional',
-        ],
-        ctaLabel: 'Pilih SOHO 50',
-        ctaUrl: '/contact?plan=soho-50',
-      };
-    }
-    return {
-      tierBadge: 'BROADBAND BISNIS SOHO',
-      name: 'Broadband Bisnis 100 Mbps',
-      description: 'Kapasitas bisnis lebih besar untuk kantor menengah, co-working space, dan ruko dengan traffic tinggi.',
-      speedLabel: 'Up to 100 Mbps (Bisnis SOHO)',
-      price: 'Mulai Rp 2.000.000',
-      priceNote: '+ PPN / bulan',
-      isPopular: true,
-      features: [
-        'Up to 100 Mbps prioritas bandwidth',
-        '1–2 IP Publik Statis included',
-        'Cocok untuk 30–60 perangkat',
-        'Tiket eskalasi prioritas NOC',
-      ],
-      ctaLabel: 'Pilih SOHO 100',
-      ctaUrl: '/contact?plan=soho-100',
-    };
-  }
-
-  // 3. Forced DIA Segment
-  if (seg === 'dia') {
-    const diaSpeed = mbps >= 1000 ? `${(mbps / 1000).toFixed(1)} Gbps` : `${Math.max(50, Math.ceil(mbps / 25) * 25)} Mbps`;
-    return {
-      tierBadge: 'DEDICATED 1:1 ENTERPRISE',
-      name: 'Dedicated Internet Access (DIA)',
-      description: 'Koneksi internet fiber dedicated murni dengan alokasi bandwidth simetris 1:1 untuk kantor pusat, kampus, dan institusi.',
-      speedLabel: `${diaSpeed} Simetris 1:1 Dedicated`,
-      price: 'Hubungi Sales',
-      priceNote: `Kapasitas ${diaSpeed} Simetris 1:1`,
-      features: [
-        `Bandwidth ${diaSpeed} simetris (upload = download 1:1)`,
-        'IP Publik Statis sesuai kebutuhan sistem',
-        'Jaminan Uptime tertulis di SLA Kontrak',
-        'Monitoring NOC 24/7 & Service Desk',
-      ],
-      ctaLabel: 'Ajukan Proposal DIA',
-      ctaUrl: '/contact?plan=dia',
-    };
-  }
-
-  // 4. Smart Auto Allocation ('auto')
-  if (count <= 5 && mbps <= 14) {
-    return {
-      tierBadge: 'RETAIL BROADBAND',
-      name: 'Retail Broadband 10',
-      description: 'Pilihan hemat untuk rumah tangga atau ruko kecil dengan 2–5 perangkat aktif.',
-      speedLabel: '10 Mbps (Up to 15 Mbps)',
-      price: 'Rp 150.000',
-      priceNote: '+ PPN / bulan',
-      features: [
-        'Kapasitas 10 Mbps (up to 15 Mbps)',
-        'Ideal untuk 2–5 perangkat aktif',
-        'Instalasi standar area K2NET',
-        'Dukungan customer care',
-      ],
-      ctaLabel: 'Pilih Retail 10',
-      ctaUrl: '/contact?plan=retail-10',
-    };
-  }
-
-  if (count <= 8 && mbps <= 22) {
-    return {
-      tierBadge: 'RETAIL BROADBAND',
-      name: 'Retail Broadband 15',
-      description: 'Paket terlaris untuk keluarga dan UMKM rumahan dengan aktivitas daring harian yang aktif.',
-      speedLabel: '15 Mbps (Up to 20 Mbps)',
-      price: 'Rp 200.000',
-      priceNote: '+ PPN / bulan',
-      isPopular: true,
-      features: [
-        'Kapasitas 15 Mbps (up to 20 Mbps)',
-        'Ideal untuk 5–8 perangkat aktif',
-        'Streaming HD & video call lancar',
-        'Instalasi standar area K2NET',
-      ],
-      ctaLabel: 'Pilih Retail 15',
-      ctaUrl: '/contact?plan=retail-15',
-    };
-  }
-
-  if (count <= 15 && mbps <= 35) {
-    return {
-      tierBadge: 'RETAIL BROADBAND',
-      name: 'Retail Broadband 20',
-      description: 'Paket retail dengan kapasitas paling lega untuk multi-perangkat dan bekerja dari rumah.',
-      speedLabel: '20 Mbps (Up to 25 Mbps)',
-      price: 'Rp 250.000',
-      priceNote: '+ PPN / bulan',
-      features: [
-        'Kapasitas 20 Mbps (up to 25 Mbps)',
-        'Ideal untuk 8–15 perangkat aktif',
-        'Kapasitas lega untuk streaming bersamaan',
-        'Instalasi standar area K2NET',
-      ],
-      ctaLabel: 'Pilih Retail 20',
-      ctaUrl: '/contact?plan=retail-20',
-    };
-  }
-
-  if (count <= 35 && mbps <= 70 && selectedWorkload.value !== 'heavy') {
-    return {
-      tierBadge: 'BROADBAND BISNIS SOHO',
-      name: 'Broadband Bisnis 50 Mbps',
-      description: 'Internet stabil untuk ruko, kantor kecil, dan operasional bisnis dengan IP publik statis.',
-      speedLabel: 'Up to 50 Mbps (Bisnis SOHO)',
-      price: 'Mulai Rp 1.200.000',
-      priceNote: '+ PPN / bulan',
-      features: [
-        'Up to 50 Mbps rasio bisnis SOHO',
-        '1 IP Publik Statis included',
-        'Cocok untuk 10–30 perangkat kantor',
-        'Dukungan teknis jam operasional',
-      ],
-      ctaLabel: 'Pilih SOHO 50',
-      ctaUrl: '/contact?plan=soho-50',
-    };
-  }
-
-  if (count <= 65 && mbps <= 120 && selectedWorkload.value !== 'heavy') {
-    return {
-      tierBadge: 'BROADBAND BISNIS SOHO',
-      name: 'Broadband Bisnis 100 Mbps',
-      description: 'Kapasitas bisnis lebih tangguh untuk kantor menengah, co-working, atau instansi pendidikan.',
-      speedLabel: 'Up to 100 Mbps (Bisnis SOHO)',
-      price: 'Mulai Rp 2.000.000',
-      priceNote: '+ PPN / bulan',
-      isPopular: true,
-      features: [
-        'Up to 100 Mbps prioritas jam kerja',
-        '1–2 IP Publik Statis included',
-        'Cocok untuk 30–60 perangkat aktif',
-        'Dukungan teknis & tiket insiden',
-      ],
-      ctaLabel: 'Pilih SOHO 100',
-      ctaUrl: '/contact?plan=soho-100',
-    };
-  }
-
-  // Large traffic or high count -> Dedicated Internet Access (DIA)
-  const diaSpeed = mbps >= 1000 ? `${(mbps / 1000).toFixed(1)} Gbps` : `${Math.max(50, Math.ceil(mbps / 25) * 25)} Mbps`;
+  const diaSpeed = diaSpeedLabel(mbps);
   return {
     tierBadge: 'DEDICATED 1:1 ENTERPRISE',
     name: 'Dedicated Internet Access (DIA)',
-    description: 'Koneksi internet dedicated murni tanpa pembagian bandwidth. Kapasitas simetris 1:1 dengan SLA resmi untuk kantor pusat, kampus, dan instansi.',
+    description: 'Koneksi dedicated simetris 1:1. Kapasitas dan tarif mengikuti survei dan kontrak.',
     speedLabel: `${diaSpeed} Simetris 1:1 Dedicated`,
     price: 'Hubungi Sales',
-    priceNote: `Rekomendasi Kapasitas ${diaSpeed} Simetris`,
+    priceNote: `Perkiraan kapasitas ${diaSpeed}`,
     features: [
-      `Bandwidth ${diaSpeed} dedicated 1:1 (upload = download)`,
-      'Alokasi IP Publik Statis sesuai kebutuhan',
-      'Jaminan Uptime SLA berbasis kontrak resmi',
-      'Monitoring NOC 24/7 & penanganan insiden',
+      `Bandwidth ${diaSpeed} simetris (upload = download 1:1)`,
+      'IP Publik Statis sesuai kebutuhan sistem',
+      'Target layanan mengikuti SLA kontrak',
+      'Monitoring NOC 24/7 & Service Desk',
     ],
     ctaLabel: 'Ajukan Proposal DIA',
     ctaUrl: '/contact?plan=dia',

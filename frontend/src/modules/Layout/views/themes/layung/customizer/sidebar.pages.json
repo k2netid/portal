@@ -50,6 +50,13 @@
             "descriptionKey": "theme.layung.customizer.sidebar.page_tim_desc"
         },
         {
+            "id": "page-careers",
+            "manifestCategories": ["Careers Page"],
+            "icon": "briefcase",
+            "labelKey": "theme.layung.customizer.sidebar.page_careers",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_careers_desc"
+        },
+        {
             "id": "page-news",
             "manifestCategories": ["News Page"],
             "icon": "newspaper",

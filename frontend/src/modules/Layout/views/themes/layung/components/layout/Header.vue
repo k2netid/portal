@@ -257,10 +257,14 @@
 
           <button
             v-if="!isDesktop"
+            ref="mobileMenuButtonRef"
             type="button"
             class="lg:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus:outline-none"
             :aria-expanded="mobileMenuOpen"
-            :aria-label="tt('header.openMenuAria', 'Buka menu')"
+            aria-controls="layung-mobile-drawer"
+            :aria-label="mobileMenuOpen
+              ? tt('header.closeMenuAria', 'Tutup menu')
+              : tt('header.openMenuAria', 'Buka menu')"
             @click="mobileMenuOpen = !mobileMenuOpen"
           >
             <Menu
@@ -296,7 +300,8 @@
         >
           <div
             class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"
-            @click="mobileMenuOpen = false"
+            aria-hidden="true"
+            @click="closeMobileMenu"
           />
         </transition>
 
@@ -311,7 +316,14 @@
           appear
         >
           <div
+            id="layung-mobile-drawer"
+            ref="mobileDrawerRef"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="layung-mobile-drawer-title"
             class="relative z-10 w-full max-w-sm sm:max-w-md bg-slate-950 text-slate-100 h-full flex flex-col shadow-2xl border-l border-slate-800/90 overflow-hidden"
+            tabindex="-1"
+            @keydown="onMobileDrawerKeydown"
           >
             <!-- Ambient Background Glows -->
             <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -327,7 +339,10 @@
                   class="h-8 w-auto shrink-0"
                 />
                 <div class="flex flex-col">
-                  <span class="text-sm font-black font-heading tracking-tight text-white leading-none">
+                  <span
+                    id="layung-mobile-drawer-title"
+                    class="text-sm font-black font-heading tracking-tight text-white leading-none"
+                  >
                     {{ displayCompanyName }}
                   </span>
                   <span class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5 mt-1 leading-none">
@@ -392,6 +407,7 @@
                       :class="isMobileSubmenuOpen(item)
                         ? 'text-cyan-300 font-bold'
                         : 'text-slate-300 hover:text-white hover:bg-slate-900/50'"
+                      :aria-expanded="isMobileSubmenuOpen(item)"
                       @click="toggleMobileSubmenu(item)"
                     >
                       <div class="flex items-center gap-3">
@@ -601,7 +617,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, inject, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, inject, onMounted, onUnmounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import {
@@ -657,6 +673,43 @@ const {
 const isDesktop = computed(() => device.value === 'desktop');
 const mobileMenuOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
+const mobileMenuButtonRef = ref<HTMLButtonElement | null>(null);
+const mobileDrawerRef = ref<HTMLElement | null>(null);
+
+const MOBILE_FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false;
+};
+
+const focusableInDrawer = (): HTMLElement[] => {
+  const root = mobileDrawerRef.value;
+  if (!root) return [];
+  return Array.from(root.querySelectorAll<HTMLElement>(MOBILE_FOCUSABLE)).filter(
+    (el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true',
+  );
+};
+
+const onMobileDrawerKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeMobileMenu();
+    return;
+  }
+  if (event.key !== 'Tab') return;
+  const nodes = focusableInDrawer();
+  if (nodes.length === 0) return;
+  const first = nodes[0]!;
+  const last = nodes[nodes.length - 1]!;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+};
 const activeDesktopDropdown = ref<string | null>(null);
 
 const setDropdown = (key: string | null) => {
@@ -835,11 +888,18 @@ const getMenuItemIcon = (item: MenuItem) => {
   return Globe;
 };
 
-watch(mobileMenuOpen, (open) => {
+watch(mobileMenuOpen, async (open) => {
   if (!isDesktop.value && !isBuilder.value) {
     document.body.style.overflow = open ? 'hidden' : '';
   } else {
     document.body.style.overflow = '';
+  }
+  if (open) {
+    await nextTick();
+    const nodes = focusableInDrawer();
+    (nodes[0] ?? mobileDrawerRef.value)?.focus();
+  } else {
+    mobileMenuButtonRef.value?.focus();
   }
 });
 

@@ -1,4 +1,8 @@
 <template>
+  <LayungPageGate
+    setting-key="enable_blog"
+    :title="t('pages.blog.title', 'Berita')"
+  >
   <div
     data-ja-customizer-target="news"
     class="layung-page flex-1 flex flex-col py-10 md:py-12"
@@ -80,6 +84,7 @@
       </div>
     </template>
   </div>
+  </LayungPageGate>
 </template>
 
 <script setup lang="ts">
@@ -90,6 +95,7 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/layung/components/shared/Breadcrumb.vue';
+import LayungPageGate from '@/modules/Layout/views/themes/layung/components/shared/LayungPageGate.vue';
 import PostCard from '@/modules/Layout/views/themes/layung/components/blog/PostCard.vue';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import apiClient from '@/engine/api/client';

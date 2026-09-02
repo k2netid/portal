@@ -91,9 +91,17 @@
   "calculator": {
     "badge": "Perkiraan bandwidth",
     "title": "Hitung kebutuhan internet kantor",
-    "subtitle": "Masukkan perkiraan jumlah perangkat untuk melihat rentang paket yang sesuai.",
+    "subtitle": "Estimasi internal K2NET berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.",
+    "methodology": "Estimasi internal K2NET",
     "usersLabel": "Jumlah Pengguna / Perangkat:",
     "cloudUsageLabel": "Aktivitas Bisnis:",
+    "workloadHint": "Asumsi beban",
+    "loadLabel": "Beban per perangkat",
+    "concurrencyLabel": "Rasio bersamaan",
+    "headroomLabel": "Cadangan kapasitas",
+    "needLabel": "Perkiraan kebutuhan",
+    "priceCaption": "Indikasi tarif",
+    "disclaimer": "Ini perkiraan awal, bukan penawaran resmi. Harga, ketersediaan, dan kapasitas dikonfirmasi setelah survei.",
     "recommendedPlan": "Rekomendasi Paket:",
     "getQuote": "Ajukan Proposal Langsung"
   },
@@ -366,14 +374,17 @@
     "msp6Desc": "Lingkup tambahan sesuai kontrak Custom: multi-gedung, lab, atau proyek di luar paket Basic/Standard."
   },
   "clients": {
-    "badge": "Mitra institusi pendidikan",
-    "title": "Mayoritas mitra kami adalah SMP Negeri di Kota Bandung",
-    "subtitle": "K2NET mendampingi SMP Negeri di Kota Bandung untuk jaringan, server, dan operasional IT harian.",
-    "countLabel": "sekolah dalam daftar",
-    "search": "Cari SMPN…",
-    "demoHint": "SMP Negeri Kota Bandung",
-    "prev": "Sebelumnya",
-    "next": "Berikutnya"
+    "badge": "Layanan institusi pendidikan",
+    "title": "Pendampingan IT untuk sekolah dan institusi",
+    "subtitle": "K2NET menyediakan jaringan, server, CCTV, dan dukungan operasional IT untuk institusi pendidikan di Bandung dan Jawa Barat. Daftar mitra resmi dipublikasikan setelah persetujuan masing-masing institusi.",
+    "focus1Title": "Jaringan kampus & lab",
+    "focus1Body": "Instalasi, dokumentasi, dan perawatan jaringan sekolah termasuk lab komputer dan akses Wi-Fi.",
+    "focus2Title": "Server, aplikasi, dan CCTV",
+    "focus2Body": "Lingkup managed services dapat mencakup server, aplikasi sekolah, dan kamera — sesuai kontrak.",
+    "focus3Title": "Pendampingan kegiatan berbasis IT",
+    "focus3Body": "Dukungan operasional saat ujian daring atau acara sekolah, dengan eskalasi lewat Service Desk.",
+    "mspCta": "Lihat paket managed services",
+    "contactCta": "Diskusikan kebutuhan institusi"
   },
   "sla": {
     "badge": "SLA berbasis kontrak",
@@ -457,6 +468,8 @@
       "enable_tim_hint": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung.",
       "enable_blog": "Aktifkan halaman Berita",
       "enable_blog_hint": "Nonaktifkan untuk menyembunyikan halaman /blog dari pengunjung.",
+      "enable_career": "Aktifkan halaman Karir",
+      "enable_career_hint": "Nonaktifkan untuk menyembunyikan halaman /career dari pengunjung.",
       "enable_contact": "Aktifkan halaman Kontak",
       "enable_contact_hint": "Nonaktifkan untuk menyembunyikan halaman /contact dari pengunjung.",
       "disabled_page_behavior": "Saat halaman dimatikan",

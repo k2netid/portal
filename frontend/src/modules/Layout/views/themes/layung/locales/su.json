@@ -91,9 +91,17 @@
   "calculator": {
     "badge": "Perkiraan bandwidth",
     "title": "Itung kabutuhan internét kantor",
-    "subtitle": "Asupkeun perkiraan jumlah parangkat pikeun ningali rentang pakét anu saluyu.",
+    "subtitle": "Éstimasi internal K2NET dumasar jumlah parangkat, profil beban, rasio pamakéan babarengan, sareng cadangan 25%. Ieu lain quotation sareng lain standar mérek pihak katilu.",
+    "methodology": "Éstimasi internal K2NET",
     "usersLabel": "Jumlah Pamaké / Parangkat:",
     "cloudUsageLabel": "Aktivitas Bisnis:",
+    "workloadHint": "Asumsi beban",
+    "loadLabel": "Beban per parangkat",
+    "concurrencyLabel": "Rasio babarengan",
+    "headroomLabel": "Cadangan kapasitas",
+    "needLabel": "Perkiraan kabutuhan",
+    "priceCaption": "Indikasi tarip",
+    "disclaimer": "Ieu perkiraan awal, lain tawaran resmi. Harga, kasediaan, sareng kapasitas dikonfirmasi sanggeus survei.",
     "recommendedPlan": "Rékomendasi Pakét:",
     "getQuote": "Ajukeun Proposal Langsung"
   },
@@ -366,14 +374,17 @@
     "msp6Desc": "Lingkup tambahan saluyu kontrak Custom: multi-gedong, lab, atawa proyék di luar pakét Basic/Standard."
   },
   "clients": {
-    "badge": "Mitra institusi pendidikan",
-    "title": "Mayoritas mitra kami nyaéta SMP Negeri di Kota Bandung",
-    "subtitle": "K2NET ngadampingan SMP Negeri di Kota Bandung pikeun jaringan, server, sareng operasional IT sapopoé.",
-    "countLabel": "sakola dina daptar",
-    "search": "Pilari SMPN…",
-    "demoHint": "SMP Negeri Kota Bandung",
-    "prev": "Saméméhna",
-    "next": "Salajengna"
+    "badge": "Layanan institusi pendidikan",
+    "title": "Pendampingan IT pikeun sakola sareng institusi",
+    "subtitle": "K2NET nyadiakeun jaringan, server, CCTV, sareng dukungan operasional IT pikeun institusi pendidikan di Bandung sareng Jawa Barat. Daptar mitra resmi dipedar sanggeus persetujuan unggal institusi.",
+    "focus1Title": "Jaringan kampus & lab",
+    "focus1Body": "Instalasi, dokumentasi, sareng perawatan jaringan sakola kaasup lab komputer sareng aksés Wi-Fi.",
+    "focus2Title": "Server, aplikasi, sareng CCTV",
+    "focus2Body": "Lingkup managed services tiasa ngawengku server, aplikasi sakola, sareng kaméra — saluyu kontrak.",
+    "focus3Title": "Pendampingan kagiatan berbasis IT",
+    "focus3Body": "Dukungan operasional nalika ujian daring atawa acara sakola, kalayan éskalasi ngaliwatan Service Desk.",
+    "mspCta": "Tingali pakét managed services",
+    "contactCta": "Diskusikeun kabutuhan institusi"
   },
   "sla": {
     "badge": "SLA dumasar kontrak",
@@ -457,6 +468,8 @@
       "enable_tim_hint": "Pareuman pikeun nyumputkeun kaca /tim ti nu ngadongdon.",
       "enable_blog": "Hurungkeun kaca Béja",
       "enable_blog_hint": "Pareuman pikeun nyumputkeun kaca /blog ti nu ngadongdon.",
+      "enable_career": "Hurungkeun kaca Karir",
+      "enable_career_hint": "Pareuman pikeun nyumputkeun kaca /career ti nu ngadongdon.",
       "enable_contact": "Hurungkeun kaca Kontak",
       "enable_contact_hint": "Pareuman pikeun nyumputkeun kaca /contact ti nu ngadongdon.",
       "disabled_page_behavior": "Nalika kaca dipareuman",

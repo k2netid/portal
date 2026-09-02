@@ -18,7 +18,7 @@ class ThemeInstallSampleCommand extends Command
                             {--force : Overwrite existing non-sample data}
                             {--only= : Comma-separated: menus,settings,pages,forms}';
 
-    protected $description = 'Install theme sample data (menus, settings, CMS page shells) from sample-data/bundle.json';
+    protected $description = 'Install theme sample data from sample-data/bundle.json. Prefer this over live SQL edits: php artisan theme:install-sample layung --only=menus';
 
     public function handle(
         ThemeSampleDataReader $reader,

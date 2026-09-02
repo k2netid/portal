@@ -1,91 +1,91 @@
-# ADR-009: Interactive Bandwidth Simulator Integration and Real K2NET Package Mapping
+# ADR-009: Simulator bandwidth internal dan pemetaan paket K2NET
 
-**Status:** Accepted  
+**Status:** Accepted (dikoreksi 2026-09-03)  
 **Tanggal:** 2026-09-03  
 **Author:** Jejakawan Engineering & K2NET Team  
-**Scope:** `frontend/src/modules/Layout/views/themes/layung/` (`pages/PricingIsp.vue`, `components/sections/SpeedCalculatorSection.vue`)
+**Scope:** `frontend/src/modules/Layout/views/themes/layung/` (`pages/PricingIsp.vue`, `components/sections/SpeedCalculatorSection.vue`, `composables/layungBandwidthEstimate.ts`)
 
 ---
 
 ## Konteks
 
-Halaman Paket Internet ([PricingIsp.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/pages/PricingIsp.vue)) sebelumnya hanya menampilkan daftar paket statis (Dedicated, SOHO, Retail) tanpa alat bantu bagi calon pelanggan untuk mengestimasi kapasitas bandwidth yang tepat sesuai jumlah perangkat dan profil aktivitas mereka.
-Selain itu, komponen [SpeedCalculatorSection.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/SpeedCalculatorSection.vue) sebelumnya hanya menghasilkan angka throughput generic (misal: "180 Mbps DIA") tanpa memetakan ke paket produk riil K2NET beserta spesifikasi harga resminya.
+Halaman Paket Internet (`PricingIsp.vue`) hanya menampilkan daftar paket statis (Dedicated, SOHO, Retail) tanpa alat bantu untuk memperkirakan kapasitas. Simulator sebelumnya mengeluarkan angka throughput generic tanpa memetakan ke rentang paket K2NET.
+
+Versi awal ADR ini mengklaim metodologi Ookla®, Cisco SBA, dan (di dokumen audit) ITU-T Y.1541. **Klaim itu tidak sesuai kode.** Koreksi ini menyatakan formula sebagai estimasi internal.
 
 ---
 
 ## Keputusan
 
-### 1. Desain Single Unified Main Card (Menghilangkan Double Box Wrapper)
-- Menghapus outer box ganda yang canggung. Sekarang seluruh simulator dibungkus dalam **1 Single Main Card** terpadu (`border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl`).
-- Judul, badge, dan deskripsi diletakkan rapi di bagian atas (header) di dalam kartu tersebut, langsung terhubung dengan kontrol segmen, slider, dan kartu rekomendasi di bawahnya.
+### 1. Satu kartu simulator
 
-### 2. Metodologi Perhitungan Ilmiah Berstandar Kredibel (Ookla® & Cisco Enterprise)
-Perhitungan tidak lagi menggunakan asumsi sembarangan, melainkan mengadopsi formula kapasitas terstandar industri:
+Seluruh kontrol dan hasil ada dalam satu kartu (`border border-slate-800 rounded-3xl`), tanpa wrapper luar ganda.
 
-$$\text{Kebutuhan Bandwidth Puncak} = (\text{Jumlah User} \times \text{Faktor Konkurensi} \times \text{Throughput per User}) \times (1 + \text{Headroom Buffer})$$
+### 2. Estimasi internal (bukan standar pihak ketiga)
 
-1. **Throughput per User (Standar Benchmark Ookla® Speedtest)**:
-   - **Office & Browsing**: `2.0 Mbps/user` (Standar Ookla untuk web browsing, email, chat, audio streaming).
-   - **Video HD & CCTV**: `4.5 Mbps/user` (Standar Ookla untuk Zoom HD 1080p, Teams video call, dan streaming).
-   - **Cloud ERP & Server**: `6.5 Mbps/user` (Standar sistem cloud enterprise, POS kasir, database, dan backup).
-   - **High-Demand & Lab**: `10.0 Mbps/user` (Standar lab komputer, ujian online serentak, dan video 4K).
-2. **Faktor Konkurensi Pengguna (Standar Perencanaan Kapasitas Cisco Enterprise)**:
-   - Pengguna 2–10 unit: Konkurensi serentak `85%`
-   - Pengguna 11–30 unit: Konkurensi serentak `75%`
-   - Pengguna 31–70 unit: Konkurensi serentak `65%`
-   - Pengguna 71–150 unit: Konkurensi serentak `55%`
-   - Pengguna >150 unit: Konkurensi serentak `45%`
-3. **Safety Headroom Buffer**: Ditambahkan margin `25%` (sesuai Cisco best practice) untuk meredam traffic spike dan menjaga latensi/jitter tetap stabil.
-4. **Indikator Metodologi Transparan**: Menampilkan bar kalkulasi ilmiah (Beban per User, Rasio Konkurensi Aktif, Headroom Buffer, dan Kebutuhan Bersih) secara transparan.
+Rumus di `layungBandwidthEstimate.ts`:
 
-### 4. Penyelarasan Lebar Section & Responsivitas Mobile
-- **Penyelarasan Lebar Container**: Menghapus pembatasan `max-w-5xl` dan padding ganda pada `SpeedCalculatorSection`. Komponen kini menggunakan `w-full` di dalam container `max-w-7xl`, sehingga tepi kiri dan kanannya sejajar 100% presisi dengan grid kartu paket internet di atasnya (`IspPackagesSection`).
-- **Refinement Breadcrumb di Mode Mobile**:
-  - Pada layar desktop (`sm:inline-flex`), breadcrumb tetap menampilkan rute lengkap.
-  - Pada layar mobile (`< sm`), alih-alih teks panjang berjenjang yang terpotong dan menabrak tata letak, breadcrumb beralih ke tombol navigasi balik pintar yang ringkas (*Smart Back Pill* e.g. `← Paket & Harga`).
-  - Menghapus efek sticky breadcrumb pada mobile (`< 640px`) agar tidak melayang menutupi kartu konten saat di-scroll.
-- **Relokasi Social Dock pada Mobile**:
-  - Pada viewport mobile (`< 768px`), floating dock diposisikan aman di sudut kanan bawah (`bottom: 5.5rem; right: 1rem`) sehingga tidak lagi menutupi judul teks kartu produk di sebelah kiri.
-- **Kompaksi Padding Kartu Mobile**:
-  - Padding kartu paket diubah dari `p-8` menjadi `p-6 sm:p-8`, mencegah overflow horizontal pada perangkat smartphone.
+```
+peak Mbps = max(10, round(concurrentUsers × MbpsPerDevice × 1.25))
+concurrentUsers = max(1, round(userCount × concurrencyRatio))
+```
 
-### 5. Isolasi Strict Breadcrumb & Sinkronisasi 5 Preset Tata Letak Global Customizer
-- **Isolasi Strict CSS Breadcrumb Mobile**:
-  - Sebelumnya, class `.layung-breadcrumb` memiliki `display: inline-flex` tanpa media query sehingga mengabaikan utilitas `.hidden` Tailwind dan menyebabkan breadcrumb desktop dan mobile tampil bersamaan dan terpotong.
-  - Di `layung.css`, aturan kini diisolasi secara tegas:
-    - `@media (max-width: 639px)`: `.layung-breadcrumb { display: none !important; }`
-    - `@media (min-width: 640px)`: `.layung-breadcrumb-mobile { display: none !important; }`
-  - Di perangkat smartphone, hanya tombol Back Pill yang ringkas dan aman yang tampil tanpa ada jejak breadcrumb panjang yang terpotong.
-- **Keselarasan Seluruh Sub-Halaman dengan Preset Master Layout**:
-  - Di [FrontendLayout.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/layouts/FrontendLayout.vue), mode **Hybrid** dibebaskan dari penumpukan `container mx-auto px-6 md:px-12 lg:px-20` ganda dan kini dikontrol penuh oleh variabel dinamis `containerMaxWidth` (1200px / 1400px / 1480px) sesuai preset tata letak yang dipilih di Theme Customizer (*Full Width*, *Boxed*, *Wide*, *Framed*, *Hybrid*).
+Asumsi beban (knob perencanaan, bukan benchmark merek):
 
-### 6. Arsitektur Section Full-Width Terpadu & Eliminasi Double-Boxed Containers
-- **Akar Masalah "Tampil Mode Hybrid di Mode Lebar Penuh"**:
-  - Sebelumnya, halaman-halaman sub (`PricingIsp.vue`, `PricingMsp.vue`, `Pricing.vue`, `Services.vue`, `Solusi.vue`, `Achievement.vue`) membungkus seluruh body halaman ke dalam satu kotak utama `<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`.
-  - Sementara itu, komponen section di dalamnya (`IspBentoSection`, `ManagedServicesSection`, `SlaGuaranteeSection`, `PricingHubSection`, `FaqSection`, `CtaSection`) masing-masing juga memiliki wadah `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` sendiri.
-  - Akibatnya terjadi **Double-Boxed Container**: padding horizontal menumpuk menjadi dobel (64px di tiap sisi) dan lebar konten terkompresi menyempit ke ~1150px. Di layar lebar, halaman-halaman ini terlihat seperti mode kotak/hybrid dengan margin samping kosong yang lebar, padahal administrator memilih mode *Lebar Penuh*.
-  - Selain itu, komponen `FaqSection` sebelumnya di-hardcode ke `max-w-4xl` (896px), sehingga jauh lebih sempit dibanding section lain di atas dan di bawahnya.
-- **Restrukturisasi Menyeluruh**:
-  - Halaman-halaman sub kini mengadopsi arsitektur yang sama persis dengan `Home.vue` dan `About.vue`:
-    - Root halaman menggunakan kontainer full-width: `<div class="layung-page flex-1 flex flex-col w-full overflow-x-clip">`.
-    - Tiap section bertindak sebagai blok mandiri tingkat pertama dengan kontainer standar yang sejajar sempurna: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full`.
-  - `FaqSection.vue` distandarkan ke `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full` dengan daftar akordeon tetap terpusat di `max-w-4xl mx-auto`.
-  - Seluruh section di seluruh halaman kini memiliki lebar, margin, dan grid alignment yang 100% konsisten pada mode Lebar Penuh maupun mode layout lainnya.
+- Office & browsing: `2.0 Mbps/perangkat`
+- Video HD & CCTV: `4.5 Mbps/perangkat`
+- Cloud ERP & server: `6.5 Mbps/perangkat`
+- High-demand & lab: `10.0 Mbps/perangkat`
+
+Rasio pemakaian bersamaan (knob internal):
+
+- 2–10: 85%
+- 11–30: 75%
+- 31–70: 65%
+- 71–150: 55%
+- >150: 45%
+
+UI wajib menyebut **estimasi internal**, menampilkan tarif sebagai **indikasi**, dan menyatakan hasil **bukan quotation**. Nama merek pihak ketiga tidak boleh dipakai di UI atau komentar seolah-olah lisensi/standar resmi.
+
+Pemetaan ke `retail-10/15/20`, `soho-50/100`, atau `dia` adalah heuristik produk, bukan jaminan ketersediaan atau harga.
+
+### 3. Lebar section, breadcrumb mobile, dock
+
+- Simulator memakai `w-full` di dalam `max-w-7xl` agar sejajar grid paket.
+- Breadcrumb mobile memakai back-pill; sticky breadcrumb dimatikan di `< 640px`.
+- Dock sosial di mobile diposisikan `bottom: 5.5rem; right: 1rem`.
+
+### 4. Isolasi CSS breadcrumb vs Tailwind
+
+Di `layung.css`:
+
+- `@media (max-width: 639px)`: `.layung-breadcrumb { display: none !important; }`
+- `@media (min-width: 640px)`: `.layung-breadcrumb-mobile { display: none !important; }`
+
+### 5. Subhalaman full-width (bukan double-box)
+
+Root subpage: `w-full overflow-x-clip`. Tiap section punya satu container `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`. `FaqSection` memakai lebar itu; akordeon dalam tetap `max-w-4xl`.
 
 ---
 
-## File yang Diubah
+## File yang diubah
 
 | File | Perubahan |
 |------|-----------|
-| `pages/PricingIsp.vue` | Mengimpor dan merender `SpeedCalculatorSection` di bawah grid paket internet |
-| `components/sections/SpeedCalculatorSection.vue` | Merombak algoritma simulator agar memetakan hasil ke portofolio produk dan harga resmi K2NET |
+| `pages/PricingIsp.vue` | Merender `SpeedCalculatorSection` di bawah grid paket |
+| `composables/layungBandwidthEstimate.ts` | Rumus + pemetaan plan id (sumber tes) |
+| `components/sections/SpeedCalculatorSection.vue` | UI, copy estimasi, indikasi tarif |
 
 ---
 
 ## Konsekuensi
 
 ### Positif
-- Pengunjung halaman paket internet mendapatkan pengalaman interaktif yang sangat membantu dalam memilih paket yang sesuai kebutuhan dan anggaran.
-- Rekomendasi simulator 100% akurat sesuai katalog produk dan pricing K2NET.
+
+- Pengunjung mendapat perkiraan rentang paket sebelum menghubungi sales.
+- Klaim ilmiah dan merek pihak ketiga tidak lagi menyesatkan.
+
+### Risiko
+
+- Angka tarif di UI masih hardcoded dan harus dikonfirmasi operasional.
+- Heuristik mapping bisa salah untuk profil beban nyata; CTA mengarah ke `/contact`.

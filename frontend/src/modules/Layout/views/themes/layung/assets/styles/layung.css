@@ -1470,4 +1470,12 @@ html.dark .layung-social-dock__tooltip,
     transition: none !important;
     transform: none !important;
   }
+
+  .layung-hero-visual .animate-pulse,
+  .layung-hero-visual .animate-ping,
+  .layung-hero-visual .animate-spin,
+  .layung-pulse-line,
+  .layung-rf-wave {
+    animation: none !important;
+  }
 }

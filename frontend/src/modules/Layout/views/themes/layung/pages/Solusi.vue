@@ -1,4 +1,8 @@
 <template>
+  <LayungPageGate
+    setting-key="enable_solusi"
+    :title="t('pages.solusi.title', 'Managed Services')"
+  >
   <div
     class="layung-page flex-1 flex flex-col space-y-8 sm:space-y-12 w-full py-8 sm:py-10 md:py-12 overflow-x-clip"
     data-ja-customizer-target="solusi"
@@ -39,6 +43,7 @@
       <ManagedServicesSection />
     </template>
   </div>
+  </LayungPageGate>
 </template>
 
 <script setup lang="ts">
@@ -47,6 +52,7 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
+import LayungPageGate from '../components/shared/LayungPageGate.vue';
 import ManagedServicesSection from '../components/sections/ManagedServicesSection.vue';
 import { useLayungIdentity } from '../composables/useLayungIdentity';
 import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScroll';

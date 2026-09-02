@@ -61,6 +61,35 @@ export function readParentOriginFromQuery(search: string): string | null {
   }
 }
 
+/**
+ * Parent origin from the query string is only trusted inside the customizer
+ * iframe (`ja_customizer_preview=1`) and only when the hostname matches the
+ * public page. Public visits with `?ja_parent_origin=` are ignored.
+ */
+export function isTrustedCustomizerParentOrigin(candidate: string, selfOrigin: string): boolean {
+  try {
+    const parent = new URL(candidate);
+    const self = new URL(selfOrigin);
+    if (parent.protocol !== 'http:' && parent.protocol !== 'https:') return false;
+    if (parent.username || parent.password) return false;
+    return parent.hostname === self.hostname;
+  } catch {
+    return false;
+  }
+}
+
+export function resolveAllowedCustomizerOrigins(search: string, selfOrigin: string): Set<string> {
+  const allowed = new Set<string>([selfOrigin]);
+  if (!isCustomizerPreviewQuery(search)) {
+    return allowed;
+  }
+  const fromQuery = readParentOriginFromQuery(search);
+  if (fromQuery && isTrustedCustomizerParentOrigin(fromQuery, selfOrigin)) {
+    allowed.add(fromQuery);
+  }
+  return allowed;
+}
+
 export function readThemeSlugFromQuery(search: string): string | null {
   try {
     const raw = new URLSearchParams(search).get(CUSTOMIZER_THEME_SLUG_QUERY);

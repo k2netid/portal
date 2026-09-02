@@ -1,4 +1,8 @@
 <template>
+  <LayungPageGate
+    setting-key="enable_achievement"
+    :title="t('pages.achievements.title', 'SLA & Sertifikasi')"
+  >
   <div
     class="layung-page flex-1 flex flex-col space-y-8 sm:space-y-12 w-full py-8 sm:py-10 md:py-12 overflow-x-clip"
     data-ja-customizer-target="achievement"
@@ -80,6 +84,7 @@
       </div>
     </template>
   </div>
+  </LayungPageGate>
 </template>
 
 <script setup lang="ts">
@@ -89,6 +94,7 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
+import LayungPageGate from '../components/shared/LayungPageGate.vue';
 import SlaGuaranteeSection from '../components/sections/SlaGuaranteeSection.vue';
 import { useLayungIdentity } from '../composables/useLayungIdentity';
 import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScroll';

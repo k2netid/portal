@@ -53,8 +53,17 @@ Ditemukan ketidakteraturan pada link navigasi header, target hash scroll di hala
 - Memastikan tagline perusahaan menampilkan `displayTagline` dinamis.
 - Mengganti tautan duplikat di kolom 1 footer menjadi tautan interaktif *Simulator Bandwidth* (`/#calculator`).
 
-### 5. Sinkronisasi Database Menu
-- Mengupdate data tabel `menu_items` pada database staging secara live untuk menu `layung-sample-header` dan `layung-sample-footer_col_1`, serta menyelaraskan file [bundle.json](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/sample-data/bundle.json).
+### 5. Sinkronisasi menu dari sample bundle (bukan SQL staging)
+
+Sumber kebenaran menu Layung adalah `frontend/src/modules/Layout/views/themes/layung/sample-data/bundle.json`.
+
+Pasang ulang ke database dengan:
+
+```
+php8.5 artisan theme:install-sample layung --only=menus
+```
+
+Jangan mengedit `lay_menu_items` langsung di staging. Tes `ThemeSampleDataInstallTest` mengunci URL hierarki header (`/pricing/isp`, `/solusi`, `/achievement`).
 
 ---
 

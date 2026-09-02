@@ -537,6 +537,13 @@
             "category": "News Page",
             "scope": "theme"
         },
+        "enable_career": {
+            "label": "Aktifkan halaman Karir",
+            "type": "boolean",
+            "default": true,
+            "category": "Careers Page",
+            "scope": "theme"
+        },
         "enable_contact": {
             "label": "Aktifkan halaman Kontak",
             "type": "boolean",

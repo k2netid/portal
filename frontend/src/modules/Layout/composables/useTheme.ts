@@ -11,6 +11,7 @@ import {
     isCustomizerThemeBootMessage,
     readStoredPreviewTheme,
     readThemeSlugFromQuery,
+    resolveAllowedCustomizerOrigins,
     storePreviewTheme,
 } from '@/modules/Layout/customizer/preview/protocol';
 import {
@@ -426,16 +427,11 @@ export function useTheme() {
                     window.removeEventListener('message', themeUpdateListener);
                 }
                 themeUpdateListener = (event: MessageEvent) => {
-                    const parentOrigin = (() => {
-                        try {
-                            const raw = new URLSearchParams(window.location.search).get('ja_parent_origin');
-                            return raw ? decodeURIComponent(raw) : null;
-                        } catch {
-                            return null;
-                        }
-                    })();
-                    const isAllowed = event.origin === window.location.origin || (parentOrigin && event.origin === parentOrigin);
-                    if (!isAllowed) {
+                    const allowed = resolveAllowedCustomizerOrigins(
+                        window.location.search,
+                        window.location.origin,
+                    );
+                    if (!allowed.has(event.origin)) {
                         return;
                     }
                     if (isCustomizerThemeBootMessage(event.data)) {

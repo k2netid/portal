@@ -1,5 +1,12 @@
 <template>
-  <div class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+  <LayungPageGate
+    setting-key="enable_career"
+    :title="t('pages.careers.title', 'Karir')"
+  >
+  <div
+    class="py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
+    data-ja-customizer-target="careers"
+  >
     <Breadcrumb :items="[{ name: t('pages.careers.title', 'Karir') }]" />
 
     <template v-if="hasBuilderBlocks">
@@ -46,6 +53,7 @@
       <CtaSection />
     </template>
   </div>
+  </LayungPageGate>
 </template>
 
 <script setup lang="ts">
@@ -54,6 +62,7 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
+import LayungPageGate from '../components/shared/LayungPageGate.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
 import { Button } from '@/modules/Layout/views/themes/layung/ui';
 import { useLayungIdentity } from '../composables/useLayungIdentity';

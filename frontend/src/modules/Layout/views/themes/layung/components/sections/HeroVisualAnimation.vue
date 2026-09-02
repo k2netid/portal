@@ -353,4 +353,11 @@ withDefaults(
 .duration-8000 {
   animation-duration: 8s;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .layung-pulse-line,
+  .layung-rf-wave {
+    animation: none !important;
+  }
+}
 </style>
