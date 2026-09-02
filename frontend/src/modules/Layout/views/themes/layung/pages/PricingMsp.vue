@@ -1,44 +1,48 @@
 <template>
   <div
-    class="py-8 sm:py-10 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10 w-full max-w-full overflow-x-clip"
+    class="layung-page flex-1 flex flex-col space-y-8 sm:space-y-12 w-full py-8 sm:py-10 md:py-12 overflow-x-clip"
     data-ja-customizer-target="pricing/msp"
   >
-    <Breadcrumb
-      :items="[
-        { name: t('pages.pricing.hubTitle', 'Paket & Harga'), path: '/pricing' },
-        { name: t('pages.pricingMsp.title', 'Managed Services (MSP)') },
-      ]"
-    />
-
-    <template v-if="hasBuilderBlocks">
-      <BlockRenderer
-        :blocks="builderBlocks"
-        :context="{ post: pageData, site: { name: displayCompanyName } }"
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+      <Breadcrumb
+        :items="[
+          { name: t('pages.pricing.hubTitle', 'Paket & Harga'), path: '/pricing' },
+          { name: t('pages.pricingMsp.title', 'Managed Services (MSP)') },
+        ]"
       />
-    </template>
 
-    <template v-else-if="cmsBody">
-      <div class="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-        <ThemeSafeHtml :html="cmsBody" />
-      </div>
-    </template>
+      <template v-if="hasBuilderBlocks">
+        <BlockRenderer
+          :blocks="builderBlocks"
+          :context="{ post: pageData, site: { name: displayCompanyName } }"
+        />
+      </template>
 
-    <template v-else>
-      <div class="space-y-4 max-w-3xl">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono uppercase">
-          {{ t('pages.pricingMsp.badge', 'Managed Services — MSP') }}
-        </span>
-        <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-          {{ t('pages.pricingMsp.title', 'Paket Managed Services K2NET') }}
-        </h1>
-        <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          {{ t('pages.pricingMsp.subtitle', 'Pendampingan IT operasional untuk sekolah dan institusi — dari instalasi jaringan hingga perawatan server, aplikasi, dan CCTV.') }}
-        </p>
-      </div>
+      <template v-else-if="cmsBody">
+        <div class="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+          <ThemeSafeHtml :html="cmsBody" />
+        </div>
+      </template>
 
+      <template v-else>
+        <div class="space-y-4 max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono uppercase">
+            {{ t('pages.pricingMsp.badge', 'Managed Services — MSP') }}
+          </span>
+          <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
+            {{ t('pages.pricingMsp.title', 'Paket Managed Services K2NET') }}
+          </h1>
+          <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            {{ t('pages.pricingMsp.subtitle', 'Pendampingan IT operasional untuk sekolah dan institusi — dari instalasi jaringan hingga perawatan server, aplikasi, dan CCTV.') }}
+          </p>
+        </div>
+      </template>
+    </div>
+
+    <template v-if="!hasBuilderBlocks && !cmsBody">
       <section
         id="packages"
-        class="scroll-mt-20"
+        class="scroll-mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
       >
         <MspPackagesSection />
       </section>
