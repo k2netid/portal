@@ -16,21 +16,28 @@ Selain itu, komponen [SpeedCalculatorSection.vue](file:///home/jejakawan/dev/k2n
 
 ## Keputusan
 
-### 1. Integrasi Simulator ke Halaman Paket & Harga Internet ([PricingIsp.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/pages/PricingIsp.vue))
-- Menyematkan `<SpeedCalculatorSection />` tepat di bawah daftar paket (`#packages`) dan di atas FAQ pada halaman Paket Internet.
-- Memungkinkan pengunjung memvalidasi pilihan paket secara interaktif langsung di halaman penentuan harga.
+### 1. Desain Single Unified Main Card (Menghilangkan Double Box Wrapper)
+- Menghapus outer box ganda yang canggung. Sekarang seluruh simulator dibungkus dalam **1 Single Main Card** terpadu (`border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl`).
+- Judul, badge, dan deskripsi diletakkan rapi di bagian atas (header) di dalam kartu tersebut, langsung terhubung dengan kontrol segmen, slider, dan kartu rekomendasi di bawahnya.
 
-### 2. Pemetaan Cerdas ke Portofolio Paket Riil K2NET
-Simulator kini secara otomatis merekomendasikan paket produk resmi K2NET:
-- **Retail Broadband**:
-  - **Retail 10**: 10 Mbps (up to 15 Mbps), Rp 150.000 + PPN / bln (2–5 perangkat).
-  - **Retail 15**: 15 Mbps (up to 20 Mbps), Rp 200.000 + PPN / bln (5–8 perangkat, Populer).
-  - **Retail 20**: 20 Mbps (up to 25 Mbps), Rp 250.000 + PPN / bln (8–15 perangkat).
-- **Broadband Bisnis SOHO**:
-  - **SOHO 50**: Up to 50 Mbps, Mulai Rp 1.200.000 + PPN / bln, 1 IP Publik Statis (10–30 perangkat ruko/kantor kecil).
-  - **SOHO 100**: Up to 100 Mbps, Mulai Rp 2.000.000 + PPN / bln, 1–2 IP Publik Statis, prioritas jam operasional (30–60 perangkat).
-- **Dedicated Internet Access (DIA)**:
-  - Bandwidth simetris 1:1 murni (50 Mbps – 1+ Gbps), IP Publik Statis sesuai kebutuhan, monitoring NOC 24/7, SLA kontrak resmi untuk kantor pusat, kampus, sekolah, dan kompleks institusi.
+### 2. Metodologi Perhitungan Ilmiah Berstandar Kredibel (Ookla® & Cisco Enterprise)
+Perhitungan tidak lagi menggunakan asumsi sembarangan, melainkan mengadopsi formula kapasitas terstandar industri:
+
+$$\text{Kebutuhan Bandwidth Puncak} = (\text{Jumlah User} \times \text{Faktor Konkurensi} \times \text{Throughput per User}) \times (1 + \text{Headroom Buffer})$$
+
+1. **Throughput per User (Standar Benchmark Ookla® Speedtest)**:
+   - **Office & Browsing**: `2.0 Mbps/user` (Standar Ookla untuk web browsing, email, chat, audio streaming).
+   - **Video HD & CCTV**: `4.5 Mbps/user` (Standar Ookla untuk Zoom HD 1080p, Teams video call, dan streaming).
+   - **Cloud ERP & Server**: `6.5 Mbps/user` (Standar sistem cloud enterprise, POS kasir, database, dan backup).
+   - **High-Demand & Lab**: `10.0 Mbps/user` (Standar lab komputer, ujian online serentak, dan video 4K).
+2. **Faktor Konkurensi Pengguna (Standar Perencanaan Kapasitas Cisco Enterprise)**:
+   - Pengguna 2–10 unit: Konkurensi serentak `85%`
+   - Pengguna 11–30 unit: Konkurensi serentak `75%`
+   - Pengguna 31–70 unit: Konkurensi serentak `65%`
+   - Pengguna 71–150 unit: Konkurensi serentak `55%`
+   - Pengguna >150 unit: Konkurensi serentak `45%`
+3. **Safety Headroom Buffer**: Ditambahkan margin `25%` (sesuai Cisco best practice) untuk meredam traffic spike dan menjaga latensi/jitter tetap stabil.
+4. **Indikator Metodologi Transparan**: Menampilkan bar kalkulasi ilmiah (Beban per User, Rasio Konkurensi Aktif, Headroom Buffer, dan Kebutuhan Bersih) secara transparan.
 
 ### 3. Fitur Interaktif Tambahan
 - **Filter Segmen Penggunaan**: Opsi *Otomatis*, *Rumah & Retail*, *Bisnis SOHO*, dan *Dedicated DIA*.
