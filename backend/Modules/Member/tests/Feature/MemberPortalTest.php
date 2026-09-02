@@ -271,6 +271,7 @@ class MemberPortalTest extends TestCase
             ->postJson('/api/v1/public/forms/contact/submit', [
                 'name' => 'Reader One',
                 'email' => 'reader@example.com',
+                'phone' => '08123456789',
                 'message' => 'Hello from member portal',
             ])
             ->assertCreated();
