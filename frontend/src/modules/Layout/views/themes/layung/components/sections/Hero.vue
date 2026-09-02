@@ -219,7 +219,7 @@ const heroNewsCardsRef = ref<HTMLElement>();
 
 const carouselEpoch = ref(0);
 const isAnimating = ref(false);
-let newsTimer: ReturnType<typeof setInterval> | null = null;
+let newsTimer: ReturnType<typeof setInterval> | number | null = null;
 
 const copy = (key: string, fallback: string, stale: readonly string[] = []) =>
   resolveLayungLocalizedCopy({

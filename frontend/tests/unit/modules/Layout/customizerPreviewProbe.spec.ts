@@ -6,7 +6,7 @@ import {
     shouldCaptureCustomizerClick,
 } from '@/modules/Layout/customizer/preview/customizerPreviewProbe';
 
-function clickOn(el: Element, extras: Partial<MouseEventInit> = {}): MouseEvent {
+function clickOn(_el: Element, extras: Partial<MouseEventInit> = {}): MouseEvent {
     return new MouseEvent('click', { bubbles: true, cancelable: true, ...extras });
 }
 

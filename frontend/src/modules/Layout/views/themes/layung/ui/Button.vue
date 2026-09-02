@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     as?: string | object;
     type?: 'button' | 'submit' | 'reset';

@@ -327,7 +327,7 @@ export function useThemeMotion() {
                     trigger: target,
                     start: String(opts.start || 'top bottom'),
                     end: String(opts.end || 'bottom top'),
-                    scrub: opts.scrub === undefined ? true : opts.scrub,
+                    scrub: typeof opts.scrub === 'number' || typeof opts.scrub === 'boolean' ? opts.scrub : true,
                 },
             }),
         );

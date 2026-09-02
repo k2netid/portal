@@ -498,7 +498,9 @@ const contactPageEnabled = computed(() => getSetting('enable_contact', true) !==
 
 const isContactMenuPath = (url?: string | null): boolean => {
   if (!url) return false;
-  const path = resolvePublicMenuTo(url).split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+  const target = resolvePublicMenuTo(url);
+  const withoutQuery = target.split('?')[0] ?? '';
+  const path = withoutQuery.split('#')[0]?.replace(/\/+$/, '') || '/';
   return path === '/contact';
 };
 

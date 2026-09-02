@@ -78,7 +78,7 @@ test.describe('Member security flows', () => {
         await expect(page).toHaveURL(/\/member\/login/);
     });
 
-    test('completes login when two-factor is enabled', async ({ page }) => {
+    test('completes login when two-factor is enabled', async ({ page, request }) => {
         test.setTimeout(60_000);
 
         execSync(
@@ -118,7 +118,7 @@ test.describe('Member security flows', () => {
         await expect(page).toHaveURL(/\/member(?:\/dashboard)?/, { timeout: 20_000 });
     });
 
-    test('security page loads for authenticated member', async ({ page }) => {
+    test('security page loads for authenticated member', async ({ page, request }) => {
         const email = `e2e-security-${Date.now()}@example.com`;
         const token = await registerMember(request, email);
 

@@ -4,8 +4,10 @@ import {
   componentManifestCategories,
   resolveBindingComponentMode,
 } from '@/modules/Layout/customizer/shell/resolveBindingComponentMode';
-import { resolvePreviewNavItemId } from '@/modules/Layout/customizer/preview/getThemePreviewTargets';
-import layungTargets from '@/modules/Layout/views/themes/layung/customizer/preview.targets.json';
+import {
+  getThemePreviewTargets,
+  resolvePreviewNavItemId,
+} from '@/modules/Layout/customizer/preview/getThemePreviewTargets';
 
 describe('resolveBindingComponentMode', () => {
   it('opens Design for Layung-style components with settings but no CMS slots', () => {
@@ -45,7 +47,7 @@ describe('componentManifestCategories', () => {
 
 describe('Layung preview click targets', () => {
   it('maps the HERO badge to the hero component nav item', () => {
-    const targets = layungTargets.targets;
+    const targets = getThemePreviewTargets('layung');
     expect(resolvePreviewNavItemId(targets, 'hero', 'design')).toBe('comp-hero');
     expect(resolvePreviewNavItemId(targets, 'footer', 'design')).toBe('ux-footer');
   });

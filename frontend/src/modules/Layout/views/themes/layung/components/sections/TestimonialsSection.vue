@@ -138,7 +138,7 @@ const visibleCount = computed(() => filteredSchools.value.length);
 const featuredNotes = computed(() =>
   LAYUNG_DEMO_SCHOOL_NOTES.map((note) => ({
     ...note,
-    school: schools.find((s) => s.id === note.schoolId) ?? schools[0],
+    school: schools.find((s) => s.id === note.schoolId) ?? schools[0]!,
   })),
 );
 
