@@ -19,9 +19,9 @@ Ditemukan ketidakteraturan pada link navigasi header, target hash scroll di hala
 
 ## Keputusan
 
-### 1. Isolasi Jangkar Section Beranda ([Home Sections](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/))
-- **[IspBentoSection.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/IspBentoSection.vue)**: Ditetapkan sebagai jangkar utama layanan beranda dengan atribut `id="layanan"` serta span pembantu `<span id="services">`, `<span id="isp">`, dan `<span id="bento">` dengan kelas `scroll-mt-24`.
-- **[ManagedServicesSection.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/ManagedServicesSection.vue)**: Dibersihkan secara total dari tag `id="isp"` dan `id="layanan"`. Ditetapkan khusus untuk Managed Services dengan `id="msp"` serta span `<span id="solusi">` dan `<span id="managed-services">`.
+### 1. Isolasi Jangkar Section Beranda ([Home Sections](../../frontend/src/modules/Layout/views/themes/layung/components/sections/))
+- **[IspBentoSection.vue](../../frontend/src/modules/Layout/views/themes/layung/components/sections/IspBentoSection.vue)**: Ditetapkan sebagai jangkar utama layanan beranda dengan atribut `id="layanan"` serta span pembantu `<span id="services">`, `<span id="isp">`, dan `<span id="bento">` dengan kelas `scroll-mt-24`.
+- **[ManagedServicesSection.vue](../../frontend/src/modules/Layout/views/themes/layung/components/sections/ManagedServicesSection.vue)**: Dibersihkan secara total dari tag `id="isp"` dan `id="layanan"`. Ditetapkan khusus untuk Managed Services dengan `id="msp"` serta span `<span id="solusi">` dan `<span id="managed-services">`.
 - **Section Lainnya**: Diberikan ID definitif dan jarak scroll seragam (`scroll-mt-24`):
   - `SpeedCalculatorSection`: `id="calculator"` dan `<span id="simulator">`
   - `SlaGuaranteeSection`: `id="sla"` dan `<span id="guarantee">`
@@ -29,7 +29,7 @@ Ditemukan ketidakteraturan pada link navigasi header, target hash scroll di hala
   - `FaqSection`: `id="faq"`
   - `CtaSection`: `id="cta"` dan `<span id="konsultasi">`
 
-### 2. Hierarki Navigasi Header yang Presisi ([Header.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/layout/Header.vue))
+### 2. Hierarki Navigasi Header yang Presisi ([Header.vue](../../frontend/src/modules/Layout/views/themes/layung/components/layout/Header.vue))
 - **Beranda** (`/`)
 - **Tentang Kami** (`/about`)
 - **Layanan** (Dropdown induk menuju `/services`):
@@ -43,10 +43,10 @@ Ditemukan ketidakteraturan pada link navigasi header, target hash scroll di hala
 - **Kontak** → `/contact`
 - Pada desktop, dropdown otomatis menutup saat tautan diklik atau saat rute berpindah (`watch route.fullPath`).
 
-### 3. Pemetaan Router `/services` ([public.ts](file:///home/jejakawan/dev/k2net-portal/frontend/src/engine/router/public.ts))
+### 3. Pemetaan Router `/services` ([public.ts](../../frontend/src/engine/router/public.ts))
 - Mengubah konfigurasi rute `services` agar memuat `pages/Services` secara tepat untuk tema Layung (`Services.vue` berisi detail konektivitas fiber, topologi jaringan, dan bento layanan).
 
-### 4. Penyederhanaan & Perapihan Footer ([Footer.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/layout/Footer.vue))
+### 4. Penyederhanaan & Perapihan Footer ([Footer.vue](../../frontend/src/modules/Layout/views/themes/layung/components/layout/Footer.vue))
 - Menggantikan blok *Hubungi Kami* di kolom 5 dengan dock ikon media sosial interaktif (`effectiveSocialLinks`).
 - Menghapus daftar kontak berulang, mempertahankan hanya alamat kantor Bandung dengan format ringkas.
 - Menghapus garis border visual di bawah SVG wave footer.

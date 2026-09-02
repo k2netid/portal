@@ -21,7 +21,7 @@ Sebelum refaktor ini, arsitektur Theme Customizer memiliki beberapa kelemahan st
 ## Keputusan
 
 ### 1. Isolasi Halaman Per Panel (Page Isolation)
-Setiap halaman publik di tema Layung didefinisikan secara modular di [sidebar.pages.json](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/customizer/platform/sidebar.pages.json) dengan `manifestCategories` masing-masing:
+Setiap halaman publik di tema Layung didefinisikan secara modular di [sidebar.pages.json](../../frontend/src/modules/Layout/customizer/platform/sidebar.pages.json) dengan `manifestCategories` masing-masing:
 - `About Page` → `identity-page-about`
 - `Services Page` → `identity-page-services`
 - `Solusi Page` → `identity-page-solusi`

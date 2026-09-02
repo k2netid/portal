@@ -18,7 +18,7 @@ Pada panel **Master Layout** Theme Customizer terdapat opsi tata letak (*Global 
 
 ## Keputusan
 
-### 1. 5 Paradigma Global Layout Style ([FrontendLayout.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/layouts/FrontendLayout.vue))
+### 1. 5 Paradigma Global Layout Style ([FrontendLayout.vue](../../frontend/src/modules/Layout/layouts/FrontendLayout.vue))
 - **Full Width (`full`)**: Default mode. Header, Main Content, dan Footer membentang 100% lebar layar.
 - **Boxed Layout (`boxed`)**: Seluruh situs dibungkus di dalam kontainer terpusat (`maxWidth: 1200px`) dengan latar luar kontras (`bg-slate-200/60` / dark `bg-slate-950/80`), sudut melengkung `rounded-xl`, border presisi, dan bayangan elegan.
 - **Wide Layout (`wide`)**: Serupa dengan Boxed namun dengan lebar pandang ekstra (`maxWidth: 1480px`).
@@ -28,7 +28,7 @@ Pada panel **Master Layout** Theme Customizer terdapat opsi tata letak (*Global 
 ### 2. Eliminasi Double-Padding pada Main Content
 - Di dalam mode *Boxed*, *Wide*, dan *Framed*, elemen `<main>` menggunakan `flex-1 w-full` tanpa padding berlebih, sehingga komponen section seperti Hero, Bento Grid, dan Footer mengisi lebar frame secara presisi sesuai desain aslinya.
 
-### 3. Reaktivitas Penuh Checklist `home_sections` ([Home.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/pages/Home.vue))
+### 3. Reaktivitas Penuh Checklist `home_sections` ([Home.vue](../../frontend/src/modules/Layout/views/themes/layung/pages/Home.vue))
 - `Home.vue` kini membaca `getSetting('home_sections')` dan menyediakan helper `isSectionVisible(key)` untuk mengontrol 8 section utama:
   1. `hero` (Landing Hero & Coverage Checker)
   2. `services` (Bento Infrastructure Grid & Three Business Lines)

@@ -147,10 +147,14 @@ import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest'
 import { headerChromeWrapClass, isHeaderStickySetting } from '@/modules/Layout/layouts/headerChromeWrap'
 import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { useRoute } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import { useSystemStore } from '@/modules/Core/System/stores/system'
 import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
+import { resolveLayungPublicSeo } from '@/modules/Layout/views/themes/layung/composables/layungPublicSeo'
 
 const { t } = useI18n({ useScope: 'global' })
+const { t: tLayung } = useThemeI18n('layung')
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 const systemStore = useSystemStore()
 
@@ -188,6 +192,31 @@ const CORE_PUBLIC_PATH_TO_PAGE: Record<string, string> = {
 const activeThemeSlug = computed(
   () => (activeTheme.value as { slug?: string } | null)?.slug ?? '',
 )
+
+useHead(computed(() => {
+  if (activeThemeSlug.value.toLowerCase() !== 'layung' || useMemberShell.value) {
+    return {}
+  }
+  const siteName = String(getSetting('site_name', '') || '').trim() || 'K2NET'
+  const seo = resolveLayungPublicSeo({
+    themePage: typeof route.meta.themePage === 'string' ? route.meta.themePage : undefined,
+    siteName,
+    t: tLayung,
+  })
+  const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  const path = route.path === '/' ? '/' : route.path
+  return {
+    title: seo.title,
+    meta: [
+      { name: 'description', content: seo.description },
+      { property: 'og:title', content: seo.title },
+      { property: 'og:description', content: seo.description },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary' },
+      ...(origin ? [{ property: 'og:url', content: `${origin}${path}` }] : []),
+    ],
+  }
+}))
 
 const usesJanariCanvas = computed(() => themeUsesJanariCanvas(activeTheme.value))
 

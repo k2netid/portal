@@ -43,12 +43,12 @@ Sebelumnya, area pratinjau (*Preview Area*) pada Theme Customizer memiliki beber
   - Chassis bergradasi titanium hardware dengan fitur **Dynamic Island** di bagian atas, status bar `9:41`, dan home indicator bar.
 
 ### 4. Toolbar Compact Icon-First & Peningkatan Responsif
-- **[CustomizerHeader.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/components/themes/customizer/header/CustomizerHeader.vue)**:
+- **[CustomizerHeader.vue](../../frontend/src/modules/Layout/components/themes/customizer/header/CustomizerHeader.vue)**:
   - Menghapus tombol toggle panel duplikasi.
   - Tombol *Kembalikan* (Revert) diubah menjadi icon-only button (`RotateCcw`) dengan tooltip deskriptif dan dropdown opsi.
   - Tombol *Terbitkan* (Publish) responsif (icon `Save`/spinner di mobile, label teks di desktop).
   - Mode Switcher menggunakan icon `Paintbrush`, `Database`, `Code` dengan tooltips.
-- **[PreviewArea.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/components/themes/customizer/preview/PreviewArea.vue)**:
+- **[PreviewArea.vue](../../frontend/src/modules/Layout/components/themes/customizer/preview/PreviewArea.vue)**:
   - Toolbar berukuran compact `h-10 sm:h-11` dengan scrollbar pelindung overflow.
   - Slider otomatis responsif di mobile (`w-16` hingga `w-28`) dengan tetap mempertahankan kontrol `[-]`, `[100% ▾]`, `[+]`.
 

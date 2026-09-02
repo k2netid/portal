@@ -19,7 +19,7 @@ Hero section merupakan pintu masuk utama pengunjung portal K2NET. Terdapat beber
 
 ## Keputusan
 
-### 1. Komponen Animasi Telemetri Berteknologi Tinggi ([HeroVisualAnimation.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/HeroVisualAnimation.vue))
+### 1. Komponen Animasi Telemetri Berteknologi Tinggi ([HeroVisualAnimation.vue](../../frontend/src/modules/Layout/views/themes/layung/components/sections/HeroVisualAnimation.vue))
 - Mengimplementasikan visual grafis berbasis SVG murni dan akselerasi hardware CSS dengan 4 preset sesuai lini bisnis K2NET:
   - **`network`**: Core BGP Peering Mesh dengan floating telemetry badge `AS153992 · BGP UP`, latensi `1.8ms`, dan `SLA 99.98%`.
   - **`datacenter`**: Tier-3 Server Rack dengan indikator status PSU, pendingin dinamis, dan barisan LED blinker aktif.
@@ -27,16 +27,16 @@ Hero section merupakan pintu masuk utama pengunjung portal K2NET. Terdapat beber
   - **`cyber_globe`**: Global IXP Peering Globe dengan lintasan orbit transmisi fiber optik.
 - Dikontrol melalui setting `hero_visual_animation_enabled` (boolean) dan `hero_visual_animation_type` (select preset).
 
-### 2. Multi-Slide Hero Carousel & Dynamic Backgrounds ([Hero.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/components/sections/Hero.vue))
+### 2. Multi-Slide Hero Carousel & Dynamic Backgrounds ([Hero.vue](../../frontend/src/modules/Layout/views/themes/layung/components/sections/Hero.vue))
 - **Fitur Slider**: Didukung setting `hero_slider_enabled` dengan rotasi slide manual atau integrasi artikel warta CMS, durasi interval otomatis (`hero_slider_interval`), serta indikator pagination titik.
 - **Preset Background**: Menyediakan 4 preset visual (`cyber_grid`, `mesh_glow`, `datacenter_dark`, `fiber_circuit`) dan dukungan gambar latar kustom (`hero_bg_image`) dengan overlay gradien adaptif.
 
-### 3. Isolasi Manifest Categories di Customizer ([bindings.registry.json](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/customizer/bindings.registry.json))
+### 3. Isolasi Manifest Categories di Customizer ([bindings.registry.json](../../frontend/src/modules/Layout/views/themes/layung/customizer/bindings.registry.json))
 - Mengubah `manifestCategories` komponen `hero` dari `["Hero Section", "ISP Info"]` menjadi hanya `["Hero Section"]`.
 - Hal ini secara bersih mengeliminasi properti alamat kantor, nomor telepon CS/NOC/Sales, ASN, kapasitas backbone, dan SLA dari panel kustomisasi Hero tanpa menghapus field tersebut dari kategori aslinya di tema.
-- Menjaga seluruh preset translasi bahasa lokal (`hero_badge_text_id/en/su`, `hero_title_id/en/su`, `hero_subtitle_id/en/su`, `hero_primary_cta_text_id/en/su`, `hero_secondary_cta_text_id/en/su`, dll.) tetap utuh di [schema.settings.json](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/customizer/schema.settings.json) dan [theme.json](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/theme.json).
+- Menjaga seluruh preset translasi bahasa lokal (`hero_badge_text_id/en/su`, `hero_title_id/en/su`, `hero_subtitle_id/en/su`, `hero_primary_cta_text_id/en/su`, `hero_secondary_cta_text_id/en/su`, dll.) tetap utuh di [schema.settings.json](../../frontend/src/modules/Layout/views/themes/layung/customizer/schema.settings.json) dan [theme.json](../../frontend/src/modules/Layout/views/themes/layung/theme.json).
 
-### 4. Ketinggian Layar Penuh Proporsional Desktop ([layung.css](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Layout/views/themes/layung/assets/styles/layung.css))
+### 4. Ketinggian Layar Penuh Proporsional Desktop ([layung.css](../../frontend/src/modules/Layout/views/themes/layung/assets/styles/layung.css))
 - Mengganti pembatas statis dengan `min-height: max(660px, calc(100dvh - 4.5rem))` dengan `flex-col justify-between`.
 - Panggung utama (Headline, Subjudul, Tombol CTA, dan Animasi Grafis) berpusat vertikal (`my-auto py-2`), dan strip berita/promo bersandar rapi di batas bawah viewport desktop tanpa scroll.
 

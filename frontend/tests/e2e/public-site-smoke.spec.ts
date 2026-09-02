@@ -23,7 +23,7 @@ test.describe('public apex theme runtime', () => {
     });
 
     test('header marketing pages do not 404', async ({ page }) => {
-        for (const path of ['/solusi', '/services', '/pricing', '/career', '/achievement', '/blog']) {
+        for (const path of ['/solusi', '/services', '/pricing', '/pricing/isp', '/pricing/msp', '/career', '/achievement', '/blog']) {
             await page.goto(path);
             await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15000 });
             await expect(page).not.toHaveURL(/\/404/);

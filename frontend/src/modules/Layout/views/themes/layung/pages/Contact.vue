@@ -457,32 +457,18 @@ import api, { getCsrfCookie } from '@/engine/api/client';
 import { useToast } from '@/shared/composables/useToast';
 import { logger } from '@/shared/utils/logger';
 import type { CaptchaPayload } from '@/modules/Core/System/components/captcha/CaptchaWrapper.vue';
+import {
+  appendPayloadToFormData,
+  buildPublicFormSubmitPayload,
+  classifyFormRedirect,
+  mapPublicFormValidationErrors,
+  publicFormSubmitPath,
+  publicFormTrackPath,
+  type PublicFormDefinition,
+  type PublicFormField,
+} from '../composables/layungPublicForm';
 
 const CaptchaWrapper = defineAsyncComponent(() => import('@/modules/Core/System/components/captcha/CaptchaWrapper.vue'));
-
-interface PublicFormField {
-  name: string;
-  label: string;
-  type: string;
-  placeholder?: string | null;
-  help_text?: string | null;
-  options: unknown;
-  is_required: boolean;
-}
-
-interface PublicFormDefinition {
-  id: string;
-  slug: string;
-  name: string;
-  description?: string | null;
-  success_message?: string | null;
-  redirect_url?: string;
-  settings: {
-    captcha_required: boolean;
-    email_notifications?: boolean;
-  };
-  fields: PublicFormField[];
-}
 
 const { t } = useThemeI18n('layung');
 const { getSetting } = useTheme();
@@ -767,29 +753,6 @@ function formHasFileFields(): boolean {
   return !!fd?.fields?.some((f) => f.type === 'file' || f.type === 'image');
 }
 
-function appendPayloadToFormData(fd: FormData, body: Record<string, unknown>): void {
-  for (const [key, val] of Object.entries(body)) {
-    if (val === null || val === undefined) {
-      continue;
-    }
-    if (Array.isArray(val)) {
-      for (const item of val) {
-        fd.append(`${key}[]`, String(item));
-      }
-      continue;
-    }
-    if (typeof val === 'boolean') {
-      fd.append(key, val ? '1' : '0');
-      continue;
-    }
-    if (typeof val === 'number') {
-      fd.append(key, String(val));
-      continue;
-    }
-    fd.append(key, String(val));
-  }
-}
-
 function fieldErrorClass(name: string): string {
   return fieldErrors.value[name] ? 'border-red-500 focus:ring-red-500/30' : '';
 }
@@ -819,65 +782,13 @@ function onCaptchaVerified(payload: CaptchaPayload): void {
 }
 
 function mapValidationErrors(err: unknown): void {
-  fieldErrors.value = {};
-  if (!axios.isAxiosError(err)) {
-    return;
-  }
-  const data = err.response?.data as { errors?: Record<string, string[] | string> } | undefined;
-  const errs = data?.errors;
-  if (!errs || typeof errs !== 'object') {
-    return;
-  }
-  const out: Record<string, string> = {};
-  for (const [k, v] of Object.entries(errs)) {
-    if (Array.isArray(v) && v[0]) {
-      out[k] = String(v[0]);
-    } else if (typeof v === 'string') {
-      out[k] = v;
-    }
-  }
-  fieldErrors.value = out;
+  fieldErrors.value = axios.isAxiosError(err)
+    ? mapPublicFormValidationErrors(err.response?.data)
+    : {};
 }
 
 function buildSubmitPayload(): Record<string, unknown> {
-  const out: Record<string, unknown> = {};
-  const fd = formDefinition.value;
-  if (!fd?.fields?.length) {
-    return out;
-  }
-  for (const field of fd.fields) {
-    if (field.type === 'file' || field.type === 'image') {
-      continue;
-    }
-    const key = field.name;
-    const val = formValues.value[key];
-
-    if (field.type === 'multiselect' || field.type === 'checkbox') {
-      out[key] = Array.isArray(val) ? val : [];
-      continue;
-    }
-    if (field.type === 'boolean') {
-      out[key] = !!val;
-      continue;
-    }
-
-    const isEmpty = val === '' || val === null || val === undefined;
-    if (isEmpty) {
-      if (field.is_required) {
-        out[key] = '';
-      }
-      continue;
-    }
-
-    if (field.type === 'number' && typeof val === 'string') {
-      const n = Number(val);
-      out[key] = Number.isNaN(n) ? val : n;
-      continue;
-    }
-
-    out[key] = val;
-  }
-  return out;
+  return buildPublicFormSubmitPayload(formDefinition.value?.fields, formValues.value);
 }
 
 async function trackStartOnce(): Promise<void> {
@@ -886,7 +797,7 @@ async function trackStartOnce(): Promise<void> {
   }
   startTracked.value = true;
   try {
-    await api.post(`/public/forms/${encodeURIComponent(formDefinition.value.slug)}/track`, { event: 'start' });
+    await api.post(publicFormTrackPath(formDefinition.value.slug), { event: 'start' });
   } catch {
     /* ignore */
   }
@@ -907,7 +818,7 @@ async function loadContactForm(): Promise<void> {
     initFormValuesFromDefinition();
 
     try {
-      await api.post(`/public/forms/${encodeURIComponent(slug)}/track`, { event: 'view' });
+      await api.post(publicFormTrackPath(slug), { event: 'view' });
     } catch {
       /* ignore */
     }
@@ -940,7 +851,7 @@ async function submitForm(): Promise<void> {
       body.captcha_answer = captchaPayload.value.answer;
     }
 
-    const url = `/public/forms/${encodeURIComponent(formDefinition.value.slug)}/submit`;
+    const url = publicFormSubmitPath(formDefinition.value.slug);
     const useMultipart = formHasFileFields();
     let res: { data: { submission_id?: string; redirect_url?: string } };
 
@@ -963,14 +874,11 @@ async function submitForm(): Promise<void> {
       || t('pages.contact.formSuccess', 'Terima kasih, pesan Anda telah terkirim.');
     toast.success.action(msg);
 
-    const redir = inner?.redirect_url;
-    if (typeof redir === 'string' && redir.trim() !== '') {
-      const u = redir.trim();
-      if (u.startsWith('/') && !u.startsWith('//')) {
-        await router.push(u);
-      } else if (/^https?:\/\//i.test(u)) {
-        window.location.href = u;
-      }
+    const redir = classifyFormRedirect(inner?.redirect_url);
+    if (redir.kind === 'in-app') {
+      await router.push(redir.url);
+    } else if (redir.kind === 'absolute') {
+      window.location.href = redir.url;
     }
 
     initFormValuesFromDefinition();

@@ -35,12 +35,12 @@ Menerapkan 4 varian visual yang jelas dan tegas di seluruh komponen Layung:
 - `applyThemeStyles()` diperluas untuk mendeteksi seluruh key tipografi (`font_heading`, `font_body`, `font_mono`) dan secara dinamis memanggil `injectGoogleFont()` serta membuat CSS variables `--theme-font-*` dan format HSL `--theme-*-hsl`.
 - Token warna utama (`color_primary`), sekunder (`color_secondary`), dan aksen (`color_accent`) tersinkronisasi langsung ke variabel `--primary`, `--secondary`, dan `--accent` pada theme Layung.
 
-### 4. Smart Collision Detection & Auto-Flipping Dropdown ([SelectContent.vue](file:///home/jejakawan/dev/k2net-portal/frontend/src/shared/components/ui/SelectContent.vue))
+### 4. Smart Collision Detection & Auto-Flipping Dropdown ([SelectContent.vue](../../frontend/src/shared/components/ui/SelectContent.vue))
 - Mengaktifkan `avoidCollisions: true`, `collisionPadding: 16`, dan `sideOffset: 6` dengan `useForwardPropsEmits` pada Radix Popper.
 - Jika ruang di bawah trigger tidak mencukupi, dropdown secara cerdas **membalik arah ke atas (*flip to top*)**.
 - Menambahkan scrollbar internal adaptif `max-h-[min(var(--radix-select-content-available-height), 16rem)]` dan memperluas padding scroll container sidebar (`pb-36`).
 
-### 5. Isolasi Kontras & Solid Fallback Popper ([console.css](file:///home/jejakawan/dev/k2net-portal/frontend/src/styles/console.css) & [useConsoleTheme.ts](file:///home/jejakawan/dev/k2net-portal/frontend/src/modules/Core/System/composables/useConsoleTheme.ts))
+### 5. Isolasi Kontras & Solid Fallback Popper ([console.css](../../frontend/src/styles/console.css) & [useConsoleTheme.ts](../../frontend/src/modules/Core/System/composables/useConsoleTheme.ts))
 - Menetapkan opasitas background popper pada level tinggi/pekat (`opacity >= 0.96` - `0.98`) dan fallback solid `#ffffff` (light) / `#0f172a` (dark) untuk mencegah teks form di bawahnya tembus pandang.
 
 ---

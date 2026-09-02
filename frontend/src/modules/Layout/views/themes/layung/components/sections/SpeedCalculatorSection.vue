@@ -257,6 +257,11 @@ import {
   type BandwidthSegment,
   type BandwidthWorkload,
 } from '@/modules/Layout/views/themes/layung/composables/layungBandwidthEstimate';
+import {
+  LAYUNG_ISP_DEDICATED,
+  LAYUNG_ISP_RETAIL_PLANS,
+  LAYUNG_ISP_SOHO_PLANS,
+} from '@/modules/Layout/views/themes/layung/composables/layungPricingPlans';
 
 const { t } = useThemeI18n('layung');
 const route = useRoute();
@@ -270,23 +275,23 @@ const selectedWorkload = ref<WorkloadId>('standard');
 
 const hasPackagesSectionAbove = computed(() => route.path.includes('/pricing'));
 
-const segments = [
-  { id: 'auto' as const, label: 'Otomatis Pintar', icon: Sparkles },
-  { id: 'retail' as const, label: 'Rumah & Retail', icon: Home },
-  { id: 'soho' as const, label: 'Bisnis SOHO', icon: Building2 },
-  { id: 'dia' as const, label: 'Dedicated DIA', icon: ShieldCheck },
-];
+const segments = computed(() => [
+  { id: 'auto' as const, label: t('calculator.segmentAuto', 'Otomatis Pintar'), icon: Sparkles },
+  { id: 'retail' as const, label: t('calculator.segmentRetail', 'Rumah & Retail'), icon: Home },
+  { id: 'soho' as const, label: t('calculator.segmentSoho', 'Bisnis SOHO'), icon: Building2 },
+  { id: 'dia' as const, label: t('calculator.segmentDia', 'Dedicated DIA'), icon: ShieldCheck },
+]);
 
 const currentSegmentNote = computed(() => {
   switch (activeSegment.value) {
     case 'retail':
-      return 'rentang 2–20 perangkat (paket retail 10–20 Mbps)';
+      return t('calculator.noteRetail', 'rentang 2–20 perangkat (paket retail 10–20 Mbps)');
     case 'soho':
-      return 'rentang 10–80 perangkat (broadband bisnis 50–100 Mbps)';
+      return t('calculator.noteSoho', 'rentang 10–80 perangkat (broadband bisnis 50–100 Mbps)');
     case 'dia':
-      return 'rentang 30–500+ perangkat (dedicated internet access 1:1)';
+      return t('calculator.noteDia', 'rentang 30–500+ perangkat (dedicated internet access 1:1)');
     default:
-      return 'pemilihan cerdas otomatis sesuai jumlah perangkat';
+      return t('calculator.noteAuto', 'pemilihan cerdas otomatis sesuai jumlah perangkat');
   }
 });
 
@@ -359,39 +364,39 @@ const currentPresets = computed(() => {
  * - 6.5 Mbps: cloud ERP, POS, backups
  * - 10 Mbps: labs, concurrent exams, 4K
  */
-const workloads = [
+const workloads = computed(() => [
   {
     id: 'standard' as const,
-    label: 'Office & Browsing',
-    sub: 'Web, Email, Chat, Media Sosial',
+    label: t('calculator.workloadStandard', 'Office & Browsing'),
+    sub: t('calculator.workloadStandardSub', 'Web, Email, Chat, Media Sosial'),
     icon: Globe,
     mbpsPerUser: WORKLOAD_MBPS.standard,
   },
   {
     id: 'video' as const,
-    label: 'Video HD & CCTV',
-    sub: 'Zoom/Teams HD, Streaming, IP Camera',
+    label: t('calculator.workloadVideo', 'Video HD & CCTV'),
+    sub: t('calculator.workloadVideoSub', 'Zoom/Teams HD, Streaming, IP Camera'),
     icon: Video,
     mbpsPerUser: WORKLOAD_MBPS.video,
   },
   {
     id: 'cloud' as const,
-    label: 'Cloud ERP & Server',
-    sub: 'Database, POS Kasir, SAP, Cloud Backup',
+    label: t('calculator.workloadCloud', 'Cloud ERP & Server'),
+    sub: t('calculator.workloadCloudSub', 'Database, POS Kasir, SAP, Cloud Backup'),
     icon: Database,
     mbpsPerUser: WORKLOAD_MBPS.cloud,
   },
   {
     id: 'heavy' as const,
-    label: 'High-Demand & Lab',
-    sub: 'Ujian Daring, Lab Komputer, Server',
+    label: t('calculator.workloadHeavy', 'High-Demand & Lab'),
+    sub: t('calculator.workloadHeavySub', 'Ujian Daring, Lab Komputer, Server'),
     icon: Zap,
     mbpsPerUser: WORKLOAD_MBPS.heavy,
   },
-];
+]);
 
 const currentWorkload = computed(() => {
-  return workloads.find((w) => w.id === selectedWorkload.value) || workloads[0]!;
+  return workloads.value.find((w) => w.id === selectedWorkload.value) || workloads.value[0]!;
 });
 
 const currentWorkloadRate = computed(() => currentWorkload.value.mbpsPerUser.toFixed(1));
@@ -422,14 +427,25 @@ interface PlanRecommendation {
   ctaUrl: string;
 }
 
+const retail10 = LAYUNG_ISP_RETAIL_PLANS[0]!;
+const retail15 = LAYUNG_ISP_RETAIL_PLANS[1]!;
+const retail20 = LAYUNG_ISP_RETAIL_PLANS[2]!;
+const soho50 = LAYUNG_ISP_SOHO_PLANS[0]!;
+const soho100 = LAYUNG_ISP_SOHO_PLANS[1]!;
+
+const indicativePriceNote = (note?: string): string => {
+  const base = (note ?? '+ PPN / bulan').trim();
+  return /indikasi/i.test(base) ? base : `${base} (indikasi)`;
+};
+
 const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
   'retail-10': {
     tierBadge: 'RETAIL BROADBAND',
-    name: 'Retail Broadband 10',
-    description: 'Paket internet rumah tangga dan ritel dengan kebutuhan browsing, streaming, dan belajar daring.',
-    speedLabel: '10 Mbps (Up to 15 Mbps)',
-    price: 'Rp 150.000',
-    priceNote: '+ PPN / bulan (indikasi)',
+    name: retail10.name,
+    description: retail10.description,
+    speedLabel: retail10.speed ?? '10 Mbps (Up to 15 Mbps)',
+    price: retail10.price,
+    priceNote: indicativePriceNote(retail10.priceNote),
     features: [
       'Kapasitas 10 Mbps (up to 15 Mbps)',
       'Ideal untuk 2–5 perangkat aktif',
@@ -441,11 +457,11 @@ const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
   },
   'retail-15': {
     tierBadge: 'RETAIL BROADBAND',
-    name: 'Retail Broadband 15',
-    description: 'Pilihan menengah untuk keluarga atau usaha rumahan dengan aktivitas daring lebih intens.',
-    speedLabel: '15 Mbps (Up to 20 Mbps)',
-    price: 'Rp 200.000',
-    priceNote: '+ PPN / bulan (indikasi)',
+    name: retail15.name,
+    description: retail15.description,
+    speedLabel: retail15.speed ?? '15 Mbps (Up to 20 Mbps)',
+    price: retail15.price,
+    priceNote: indicativePriceNote(retail15.priceNote),
     isPopular: true,
     features: [
       'Kapasitas 15 Mbps (up to 20 Mbps)',
@@ -458,11 +474,11 @@ const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
   },
   'retail-20': {
     tierBadge: 'RETAIL BROADBAND',
-    name: 'Retail Broadband 20',
-    description: 'Paket retail untuk kebutuhan multi-perangkat keluarga besar atau WFH intensif.',
-    speedLabel: '20 Mbps (Up to 25 Mbps)',
-    price: 'Rp 250.000',
-    priceNote: '+ PPN / bulan (indikasi)',
+    name: retail20.name,
+    description: retail20.description,
+    speedLabel: retail20.speed ?? '20 Mbps (Up to 25 Mbps)',
+    price: retail20.price,
+    priceNote: indicativePriceNote(retail20.priceNote),
     features: [
       'Kapasitas 20 Mbps (up to 25 Mbps)',
       'Ideal untuk 8–15 perangkat aktif',
@@ -474,11 +490,11 @@ const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
   },
   'soho-50': {
     tierBadge: 'BROADBAND BISNIS SOHO',
-    name: 'Broadband Bisnis 50 Mbps',
-    description: 'Internet untuk SOHO, ruko, dan usaha kecil dengan kebutuhan cloud dan operasional rutin.',
-    speedLabel: 'Up to 50 Mbps (Bisnis SOHO)',
-    price: 'Mulai Rp 1.200.000',
-    priceNote: '+ PPN / bulan (indikasi)',
+    name: soho50.name,
+    description: soho50.description,
+    speedLabel: soho50.speed ?? 'Up to 50 Mbps (Bisnis SOHO)',
+    price: soho50.price,
+    priceNote: indicativePriceNote(soho50.priceNote),
     features: [
       'Up to 50 Mbps rasio bisnis',
       '1 IP Publik Statis included',
@@ -490,11 +506,11 @@ const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
   },
   'soho-100': {
     tierBadge: 'BROADBAND BISNIS SOHO',
-    name: 'Broadband Bisnis 100 Mbps',
-    description: 'Kapasitas lebih besar untuk kantor menengah, co-working, dan ruko dengan traffic tinggi.',
-    speedLabel: 'Up to 100 Mbps (Bisnis SOHO)',
-    price: 'Mulai Rp 2.000.000',
-    priceNote: '+ PPN / bulan (indikasi)',
+    name: soho100.name,
+    description: soho100.description,
+    speedLabel: soho100.speed ?? 'Up to 100 Mbps (Bisnis SOHO)',
+    price: soho100.price,
+    priceNote: indicativePriceNote(soho100.priceNote),
     isPopular: true,
     features: [
       'Up to 100 Mbps prioritas bandwidth',
@@ -523,10 +539,10 @@ const recommendedPlan = computed<PlanRecommendation>(() => {
   const diaSpeed = diaSpeedLabel(mbps);
   return {
     tierBadge: 'DEDICATED 1:1 ENTERPRISE',
-    name: 'Dedicated Internet Access (DIA)',
-    description: 'Koneksi dedicated simetris 1:1. Kapasitas dan tarif mengikuti survei dan kontrak.',
+    name: LAYUNG_ISP_DEDICATED.name,
+    description: LAYUNG_ISP_DEDICATED.description,
     speedLabel: `${diaSpeed} Simetris 1:1 Dedicated`,
-    price: 'Hubungi Sales',
+    price: LAYUNG_ISP_DEDICATED.price,
     priceNote: `Perkiraan kapasitas ${diaSpeed}`,
     features: [
       `Bandwidth ${diaSpeed} simetris (upload = download 1:1)`,
