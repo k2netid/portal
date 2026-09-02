@@ -1,11 +1,11 @@
 <template>
   <nav
-    class="flex items-center gap-2 text-xs text-muted-foreground font-mono"
+    class="layung-breadcrumb"
     :aria-label="t('common.breadcrumbAria', 'Breadcrumb')"
   >
     <router-link
       to="/"
-      class="hover:text-primary transition-colors flex items-center gap-1 font-semibold"
+      class="layung-breadcrumb__home"
     >
       <Home class="w-3.5 h-3.5" />
       <span>{{ t('header.home', 'Beranda') }}</span>
@@ -15,17 +15,17 @@
       v-for="(item, idx) in items"
       :key="idx"
     >
-      <ChevronRight class="w-3.5 h-3.5 opacity-40 shrink-0" />
+      <ChevronRight class="w-3.5 h-3.5 layung-breadcrumb__sep" />
       <router-link
         v-if="item.path"
         :to="item.path"
-        class="hover:text-primary transition-colors truncate"
+        class="layung-breadcrumb__link truncate"
       >
         {{ item.name }}
       </router-link>
       <span
         v-else
-        class="text-foreground font-bold truncate"
+        class="layung-breadcrumb__current truncate"
         aria-current="page"
       >
         {{ item.name }}
@@ -44,3 +44,4 @@ defineProps<{
 
 const { t } = useThemeI18n('layung');
 </script>
+
