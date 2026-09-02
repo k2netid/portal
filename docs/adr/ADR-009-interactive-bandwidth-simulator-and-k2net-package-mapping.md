@@ -39,11 +39,16 @@ $$\text{Kebutuhan Bandwidth Puncak} = (\text{Jumlah User} \times \text{Faktor Ko
 3. **Safety Headroom Buffer**: Ditambahkan margin `25%` (sesuai Cisco best practice) untuk meredam traffic spike dan menjaga latensi/jitter tetap stabil.
 4. **Indikator Metodologi Transparan**: Menampilkan bar kalkulasi ilmiah (Beban per User, Rasio Konkurensi Aktif, Headroom Buffer, dan Kebutuhan Bersih) secara transparan.
 
-### 3. Fitur Interaktif Tambahan
-- **Filter Segmen Penggunaan**: Opsi *Otomatis*, *Rumah & Retail*, *Bisnis SOHO*, dan *Dedicated DIA*.
-- **Tombol Preset Perangkat Cepat**: Tombol pilihan langsung (3 unit keluarga, 15 unit ruko, 35 unit kantor menengah, 120+ unit kampus).
-- **Seleksi Beban Kerja**: Pilihan aktivitas dominan (*Office & Browsing*, *Video HD & CCTV*, *Cloud ERP & Server*, *High-Demand & Lab*).
-- **Tautan CTA Dinamis**: Tombol pemesanan langsung mengarah ke `/contact?plan=...` dengan parameter paket yang dipilih.
+### 4. Penyelarasan Lebar Section & Responsivitas Mobile
+- **Penyelarasan Lebar Container**: Menghapus pembatasan `max-w-5xl` dan padding ganda pada `SpeedCalculatorSection`. Komponen kini menggunakan `w-full` di dalam container `max-w-7xl`, sehingga tepi kiri dan kanannya sejajar 100% presisi dengan grid kartu paket internet di atasnya (`IspPackagesSection`).
+- **Refinement Breadcrumb di Mode Mobile**:
+  - Pada layar desktop (`sm:inline-flex`), breadcrumb tetap menampilkan rute lengkap.
+  - Pada layar mobile (`< sm`), alih-alih teks panjang berjenjang yang terpotong dan menabrak tata letak, breadcrumb beralih ke tombol navigasi balik pintar yang ringkas (*Smart Back Pill* e.g. `← Paket & Harga`).
+  - Menghapus efek sticky breadcrumb pada mobile (`< 640px`) agar tidak melayang menutupi kartu konten saat di-scroll.
+- **Relokasi Social Dock pada Mobile**:
+  - Pada viewport mobile (`< 768px`), floating dock diposisikan aman di sudut kanan bawah (`bottom: 5.5rem; right: 1rem`) sehingga tidak lagi menutupi judul teks kartu produk di sebelah kiri.
+- **Kompaksi Padding Kartu Mobile**:
+  - Padding kartu paket diubah dari `p-8` menjadi `p-6 sm:p-8`, mencegah overflow horizontal pada perangkat smartphone.
 
 ---
 
