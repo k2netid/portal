@@ -372,7 +372,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
 import { Building2, ExternalLink, Globe, MapPin, Network, Search, Target, Telescope } from 'lucide-vue-next';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
@@ -403,6 +403,7 @@ const {
 } = useLayungIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('about');
 const {
+  ScrollTrigger,
   fadeInUp,
   fadeInLeft,
   staggerChildren,
@@ -520,8 +521,10 @@ const memberships = computed(() => [
 ]);
 
 // ─── GSAP Animations ─────────────────────────────────────────────
-onMounted(() => {
+onMounted(async () => {
   if (!isEnabled.value || hasBuilderBlocks.value || cmsBody.value) return;
+
+  await nextTick();
 
   // Hero entrance
   if (heroBadgeRef.value)    fadeInUp(heroBadgeRef.value,    { delay: 0,   duration: 0.6 });
@@ -530,18 +533,20 @@ onMounted(() => {
   if (heroStatsRef.value)    staggerChildren(heroStatsRef.value, '.about-hero-stat', { delay: 0.3, stagger: 0.08, distance: 20 });
 
   // Section 2 — history + entity card
-  if (historyTextRef.value) fadeInLeft(historyTextRef.value,  { duration: 0.8, start: 'top 85%' });
-  if (entityCardRef.value)  scaleReveal(entityCardRef.value,  { delay: 0.1, start: 'top 85%' });
+  if (historyTextRef.value) fadeInLeft(historyTextRef.value,  { duration: 0.8, start: 'top 95%' });
+  if (entityCardRef.value)  scaleReveal(entityCardRef.value,  { delay: 0.1, start: 'top 95%' });
 
   // Section 3 — visi misi
-  if (visionMissionRef.value) staggerChildren(visionMissionRef.value, '.about-vm-card', { stagger: 0.14, distance: 28, start: 'top 88%' });
+  if (visionMissionRef.value) staggerChildren(visionMissionRef.value, '.about-vm-card', { stagger: 0.14, distance: 28, start: 'top 95%' });
 
   // Section 4 — network
-  if (networkHeaderRef.value) fadeInUp(networkHeaderRef.value, { duration: 0.7, start: 'top 88%' });
-  if (networkCardsRef.value)  staggerChildren(networkCardsRef.value, '.about-net-card', { stagger: 0.1, distance: 24, start: 'top 88%' });
+  if (networkHeaderRef.value) fadeInUp(networkHeaderRef.value, { duration: 0.7, start: 'top 95%' });
+  if (networkCardsRef.value)  staggerChildren(networkCardsRef.value, '.about-net-card', { stagger: 0.1, distance: 24, start: 'top 95%' });
 
   // Section 5 — compliance
-  if (complianceHeaderRef.value) fadeInUp(complianceHeaderRef.value, { duration: 0.7, start: 'top 88%' });
-  if (complianceRef.value)       staggerChildren(complianceRef.value, '.about-compliance-card', { stagger: 0.12, distance: 28, start: 'top 88%' });
+  if (complianceHeaderRef.value) fadeInUp(complianceHeaderRef.value, { duration: 0.7, start: 'top 95%' });
+  if (complianceRef.value)       staggerChildren(complianceRef.value, '.about-compliance-card', { stagger: 0.12, distance: 28, start: 'top 95%' });
+
+  ScrollTrigger?.refresh?.();
 });
 </script>

@@ -147,18 +147,24 @@ export function useThemeMotion() {
             return;
         }
         run(() =>
-            gsap.from(target, {
-                y: dist,
-                opacity: 0,
-                duration: dur,
-                delay: Number(opts.delay ?? 0),
-                ease: String(opts.ease || 'power3.out'),
-                scrollTrigger: {
-                    trigger: target,
-                    start: String(opts.start || 'top 88%'),
-                    toggleActions: String(opts.toggleActions || 'play none none none'),
+            gsap.fromTo(
+                target as gsap.TweenTarget,
+                { y: dist, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: dur,
+                    delay: Number(opts.delay ?? 0),
+                    ease: String(opts.ease || 'power3.out'),
+                    immediateRender: false,
+                    scrollTrigger: {
+                        trigger: target,
+                        start: String(opts.start || 'top 92%'),
+                        toggleActions: String(opts.toggleActions || 'play none none none'),
+                        once: true,
+                    },
                 },
-            }),
+            ),
         );
     };
 
@@ -171,14 +177,24 @@ export function useThemeMotion() {
             return;
         }
         run(() =>
-            gsap.from(target, {
-                x: -(Number(opts.distance ?? 40) * distance),
-                opacity: 0,
-                duration: (Number(opts.duration ?? 0.8) * duration),
-                delay: Number(opts.delay ?? 0),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: target, start: String(opts.start || 'top 88%') },
-            }),
+            gsap.fromTo(
+                target as gsap.TweenTarget,
+                { x: -(Number(opts.distance ?? 40) * distance), opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: Number(opts.duration ?? 0.8) * duration,
+                    delay: Number(opts.delay ?? 0),
+                    ease: 'power3.out',
+                    immediateRender: false,
+                    scrollTrigger: {
+                        trigger: target,
+                        start: String(opts.start || 'top 92%'),
+                        toggleActions: String(opts.toggleActions || 'play none none none'),
+                        once: true,
+                    },
+                },
+            ),
         );
     };
 
@@ -191,14 +207,24 @@ export function useThemeMotion() {
             return;
         }
         run(() =>
-            gsap.from(target, {
-                x: Number(opts.distance ?? 40) * distance,
-                opacity: 0,
-                duration: (Number(opts.duration ?? 0.8) * duration),
-                delay: Number(opts.delay ?? 0),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: target, start: String(opts.start || 'top 88%') },
-            }),
+            gsap.fromTo(
+                target as gsap.TweenTarget,
+                { x: Number(opts.distance ?? 40) * distance, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: Number(opts.duration ?? 0.8) * duration,
+                    delay: Number(opts.delay ?? 0),
+                    ease: 'power3.out',
+                    immediateRender: false,
+                    scrollTrigger: {
+                        trigger: target,
+                        start: String(opts.start || 'top 92%'),
+                        toggleActions: String(opts.toggleActions || 'play none none none'),
+                        once: true,
+                    },
+                },
+            ),
         );
     };
 
@@ -211,14 +237,24 @@ export function useThemeMotion() {
             return;
         }
         run(() =>
-            gsap.from(target, {
-                scale: 0.94,
-                opacity: 0,
-                duration: (Number(opts.duration ?? 0.75) * duration),
-                delay: Number(opts.delay ?? 0),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: target, start: String(opts.start || 'top 88%') },
-            }),
+            gsap.fromTo(
+                target as gsap.TweenTarget,
+                { scale: 0.94, opacity: 0 },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    duration: Number(opts.duration ?? 0.75) * duration,
+                    delay: Number(opts.delay ?? 0),
+                    ease: 'power3.out',
+                    immediateRender: false,
+                    scrollTrigger: {
+                        trigger: target,
+                        start: String(opts.start || 'top 92%'),
+                        toggleActions: String(opts.toggleActions || 'play none none none'),
+                        once: true,
+                    },
+                },
+            ),
         );
     };
 
@@ -233,18 +269,25 @@ export function useThemeMotion() {
             return;
         }
         run(() =>
-            gsap.from(children, {
-                y: Number(opts.distance ?? 28) * distance,
-                opacity: 0,
-                duration: (Number(opts.duration ?? 0.65) * duration),
-                stagger: Number(opts.stagger ?? 0.1),
-                delay: Number(opts.delay ?? 0),
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: container,
-                    start: String(opts.start || 'top 90%'),
+            gsap.fromTo(
+                children as gsap.TweenTarget,
+                { y: Number(opts.distance ?? 28) * distance, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: Number(opts.duration ?? 0.65) * duration,
+                    stagger: Number(opts.stagger ?? 0.1),
+                    delay: Number(opts.delay ?? 0),
+                    ease: 'power3.out',
+                    immediateRender: false,
+                    scrollTrigger: {
+                        trigger: container,
+                        start: String(opts.start || 'top 95%'),
+                        toggleActions: String(opts.toggleActions || 'play none none none'),
+                        once: true,
+                    },
                 },
-            }),
+            ),
         );
     };
 
