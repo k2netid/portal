@@ -43,6 +43,8 @@
         <IspPackagesSection />
       </section>
 
+      <SpeedCalculatorSection />
+
       <FaqSection />
       <CtaSection />
     </template>
@@ -56,6 +58,7 @@ import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRen
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
 import IspPackagesSection from '../components/sections/IspPackagesSection.vue';
+import SpeedCalculatorSection from '../components/sections/SpeedCalculatorSection.vue';
 import FaqSection from '../components/sections/FaqSection.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
 import { useLayungIdentity } from '../composables/useLayungIdentity';
