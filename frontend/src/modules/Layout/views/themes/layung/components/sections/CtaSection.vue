@@ -1,5 +1,9 @@
 <template>
-  <section class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section
+    id="cta"
+    class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24"
+  >
+    <span id="konsultasi" class="sr-only">Konsultasi</span>
     <div
       ref="ctaCardRef"
       class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-slate-900 to-sky-950/80 border border-sky-500/40 p-6 sm:p-10 text-center shadow-2xl space-y-6"

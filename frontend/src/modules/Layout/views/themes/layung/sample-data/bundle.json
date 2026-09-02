@@ -86,13 +86,13 @@
         {
           "title": "Layanan",
           "title_en": "Services",
-          "url": "/#isp",
+          "url": "/services",
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Internet", "title_en": "Internet", "url": "/#isp", "type": "custom" },
+            { "title": "Internet", "title_en": "Internet", "url": "/pricing/isp", "type": "custom" },
             { "title": "Managed Services", "title_en": "Managed Services", "url": "/solusi", "type": "custom" },
-            { "title": "Produk IT", "title_en": "IT Products", "url": "/contact", "type": "custom" }
+            { "title": "SLA & Jaringan", "title_en": "SLA & Network", "url": "/achievement", "type": "custom" }
           ]
         },
         {
@@ -114,7 +114,7 @@
       "name": "K2NET Footer ISP",
       "items": [
         { "title": "Internet", "title_en": "Internet", "url": "/pricing/isp", "type": "custom", "sort_order": 0 },
-        { "title": "Paket Internet", "title_en": "Internet Plans", "url": "/pricing/isp", "type": "custom", "sort_order": 1 },
+        { "title": "Simulator Bandwidth", "title_en": "Bandwidth Simulator", "url": "/#calculator", "type": "custom", "sort_order": 1 },
         { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 2 },
         { "title": "SLA", "title_en": "SLA", "url": "/achievement", "type": "custom", "sort_order": 3 }
       ]

@@ -43,8 +43,7 @@ export const publicRoutes: RouteRecordRaw[] = [
                 path: 'services',
                 name: 'public-services',
                 component: publicThemePage,
-                // Janari has Solusi (not Services); avoid falling through to Sarangenge Services.vue
-                meta: { public: true, themePage: 'pages/Solusi' },
+                meta: { public: true, themePage: 'pages/Services' },
             },
             {
                 path: 'pricing',

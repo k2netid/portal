@@ -1,8 +1,10 @@
 <template>
   <section
+    id="calculator"
     data-ja-customizer-target="calculator"
-    class="py-20 bg-slate-950 text-white relative overflow-hidden"
+    class="py-20 bg-slate-950 text-white relative overflow-hidden scroll-mt-24"
   >
+    <span id="simulator" class="sr-only">Simulator</span>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
       <div class="text-center max-w-3xl mx-auto space-y-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 uppercase tracking-wider font-mono">

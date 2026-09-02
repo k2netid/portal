@@ -1,5 +1,9 @@
 <template>
-  <section class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section
+    id="sla"
+    class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24"
+  >
+    <span id="guarantee" class="sr-only">Guarantee</span>
     <div class="layung-panel p-8 sm:p-12 border border-emerald-500/30 bg-gradient-to-br from-card via-card to-emerald-500/5 relative overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         <div class="lg:col-span-8 space-y-4 flex flex-col">

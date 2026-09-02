@@ -68,6 +68,7 @@
                 :to="resolvePublicMenuTo(item.url)"
                 class="layung-nav-link px-2.5 py-1 rounded-lg text-[13px] font-medium transition-colors inline-flex items-center gap-1.5 focus:outline-none whitespace-nowrap shrink-0"
                 :class="isNavItemActive(item, route) || activeDesktopDropdown === String(item.id || item.title || idx) ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'"
+                @click="setDropdown(null)"
               >
                 <span>{{ item.title }}</span>
                 <ChevronDown
@@ -613,13 +614,13 @@ const defaultNavItems = computed((): MenuItem[] => [
   {
     id: 'ly-nav-layanan',
     title: tt('header.layanan', 'Layanan'),
-    url: '/#isp',
+    url: '/services',
     type: 'custom',
     sort_order: 2,
     children: [
-      { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/#isp', type: 'custom' },
+      { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/pricing/isp', type: 'custom' },
       { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/solusi', type: 'custom' },
-      { id: 'ly-nav-products', title: tt('header.products', 'Produk IT'), url: '/contact', type: 'custom' },
+      { id: 'ly-nav-achievement', title: tt('header.achievement', 'SLA & Jaringan'), url: '/achievement', type: 'custom' },
     ],
   },
   {
@@ -664,6 +665,7 @@ watch(mobileMenuOpen, (open) => {
 watch(() => route.fullPath, () => {
   mobileMenuOpen.value = false;
   mobileOpenSubmenus.value = new Set();
+  activeDesktopDropdown.value = null;
   document.body.style.overflow = '';
 });
 

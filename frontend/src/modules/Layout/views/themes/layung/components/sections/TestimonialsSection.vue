@@ -3,6 +3,8 @@
     id="klien"
     class="py-12 sm:py-14 scroll-mt-24"
   >
+    <span id="testimonials" class="sr-only">Testimonials</span>
+    <span id="partners" class="sr-only">Partners</span>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       <div class="text-center max-w-3xl mx-auto space-y-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 uppercase tracking-wider font-mono">

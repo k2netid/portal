@@ -1,8 +1,12 @@
 <template>
   <section
+    id="layanan"
     data-ja-customizer-target="bento"
-    class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10"
+    class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24"
   >
+    <span id="services" class="sr-only">Services</span>
+    <span id="isp" class="sr-only">ISP</span>
+    <span id="bento" class="sr-only">Bento</span>
     <div class="text-center max-w-3xl mx-auto space-y-4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 uppercase tracking-wider font-mono">
         {{ t('bento.badge', 'Tiga Lini Bisnis K2NET') }}

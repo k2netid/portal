@@ -1,10 +1,10 @@
 <template>
   <section
-    id="layanan"
+    id="msp"
     class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24"
   >
-    <span id="isp" class="sr-only">ISP</span>
-    <span id="msp" class="sr-only">MSP</span>
+    <span id="solusi" class="sr-only">Solusi</span>
+    <span id="managed-services" class="sr-only">Managed Services</span>
     <div class="text-center max-w-3xl mx-auto space-y-4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 uppercase tracking-wider font-mono">
         {{ t('servicesTabs.badge', 'Layanan ISP & MSP') }}
