@@ -17,10 +17,17 @@ SYNC_ONLY=1 bash "$ROOT/scripts/sync-frontend-assets-to-backend.sh"
 
 echo "==> permissions"
 PERM_SCRIPT="/home/jejakawan/dev/docs/configs/www-php-permissions-jadev.sh"
-if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+JADEV_SUDO_CRED="${JADEV_SUDO_CRED:-/home/jejakawan/dev/docs/configs/jejakawan_cred.md}"
+if ! command -v sudo >/dev/null 2>&1; then
+  bash "$PERM_SCRIPT" "$BACKEND" || echo "warning: could not apply www-data permissions (sudo missing). Run: bash $PERM_SCRIPT $BACKEND" >&2
+elif sudo -n true 2>/dev/null; then
   sudo -n bash "$PERM_SCRIPT" "$BACKEND"
+elif [[ -f "$JADEV_SUDO_CRED" ]]; then
+  # Password stays in ja-dev docs, never in this repo.
+  awk -F': ' '/^sudo[[:space:]]*:/{print $2}' "$JADEV_SUDO_CRED" \
+    | sudo -S -p '' bash "$PERM_SCRIPT" "$BACKEND"
 else
-  bash "$PERM_SCRIPT" "$BACKEND" || echo "warning: could not apply www-data permissions (passwordless sudo not available). Run: bash $PERM_SCRIPT $BACKEND" >&2
+  echo "warning: could not apply www-data permissions (passwordless sudo not available). Run: bash $PERM_SCRIPT $BACKEND" >&2
 fi
 
 cd "$BACKEND"
