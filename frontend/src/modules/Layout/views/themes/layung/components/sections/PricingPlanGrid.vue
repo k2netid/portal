@@ -6,7 +6,7 @@
     <div
       v-for="(pkg, idx) in plans"
       :key="`${pkg.tier}-${idx}`"
-      class="layung-panel p-8 space-y-6 flex flex-col justify-between relative transition-all hover:-translate-y-1"
+      class="layung-panel p-6 sm:p-8 space-y-6 flex flex-col justify-between relative transition-all hover:-translate-y-1"
       :class="{ 'border-2 border-sky-500 shadow-xl bg-gradient-to-b from-card to-sky-500/5': pkg.popular }"
     >
       <div

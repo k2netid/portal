@@ -2,12 +2,12 @@
   <section
     id="calculator"
     data-ja-customizer-target="calculator"
-    class="scroll-mt-24 my-8 max-w-5xl mx-auto px-4 sm:px-6 relative z-10"
+    class="scroll-mt-24 my-6 w-full relative z-10"
   >
     <span id="simulator" class="sr-only">Simulator</span>
 
-    <!-- Single Unified Main Card (No double wrapper) -->
-    <div class="relative overflow-hidden bg-slate-950 text-white border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+    <!-- Single Unified Main Card (No double wrapper, 100% width matching top section) -->
+    <div class="relative overflow-hidden w-full bg-slate-950 text-white border border-slate-800 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-2xl space-y-8">
       <!-- Glow ambient background inside the card -->
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
       <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />

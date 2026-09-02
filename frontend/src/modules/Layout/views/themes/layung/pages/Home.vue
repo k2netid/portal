@@ -7,7 +7,12 @@
     <IspBentoSection v-if="isSectionVisible('services') || isSectionVisible('bento')" />
 
     <!-- Interactive Bandwidth Simulator -->
-    <SpeedCalculatorSection v-if="calculatorEnabled && (isSectionVisible('calculator') || isSectionVisible('simulator'))" />
+    <div
+      v-if="calculatorEnabled && (isSectionVisible('calculator') || isSectionVisible('simulator'))"
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
+    >
+      <SpeedCalculatorSection />
+    </div>
 
     <!-- SLA Guarantee -->
     <SlaGuaranteeSection v-if="isSectionVisible('sla') || isSectionVisible('guarantee')" />
