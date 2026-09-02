@@ -20,7 +20,7 @@
         <button
           type="button"
           class="px-4 py-2 rounded-xl transition-all"
-          :class="activeTab === 'isp' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'"
+          :class="activeTab === 'isp' ? 'bg-primary text-primary-foreground shadow-md' : 'text-muted-foreground hover:text-foreground'"
           @click="selectTab('isp')"
         >
           {{ t('servicesTabs.ispTab', 'Internet (ISP)') }}
@@ -28,7 +28,7 @@
         <button
           type="button"
           class="px-4 py-2 rounded-xl transition-all"
-          :class="activeTab === 'msp' ? 'bg-primary text-white shadow-md' : 'text-muted-foreground hover:text-foreground'"
+          :class="activeTab === 'msp' ? 'bg-primary text-primary-foreground shadow-md' : 'text-muted-foreground hover:text-foreground'"
           @click="selectTab('msp')"
         >
           {{ t('servicesTabs.mspTab', 'Managed Services (MSP)') }}

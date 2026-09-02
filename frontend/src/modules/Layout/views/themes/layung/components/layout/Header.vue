@@ -333,7 +333,7 @@
                     :key="lang.code"
                     type="button"
                     class="px-2.5 py-1 text-xs rounded-md border font-semibold uppercase"
-                    :class="currentLanguageCode === lang.code ? 'bg-primary text-white font-bold border-primary' : 'border-border text-muted-foreground'"
+                    :class="currentLanguageCode === lang.code ? 'bg-primary text-primary-foreground font-bold border-primary' : 'border-border text-muted-foreground'"
                     @click="handleSelectLanguage(lang.code)"
                   >
                     {{ lang.code }}
