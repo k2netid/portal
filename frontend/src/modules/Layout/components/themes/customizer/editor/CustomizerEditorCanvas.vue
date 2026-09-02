@@ -385,7 +385,7 @@ const menusBridgeVisible = computed(
 );
 
 const footerBridgeVisible = computed(
-  () => props.selectedItem?.id === 'ux-footer' && props.organizationMode === 'design',
+  () => (props.selectedItem?.id === 'ux-footer' || props.selectedItem?.id === 'comp-footer') && props.organizationMode === 'design',
 );
 
 const relatedBindingId = computed(() => {
