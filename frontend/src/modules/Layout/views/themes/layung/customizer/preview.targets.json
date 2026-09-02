@@ -1,6 +1,10 @@
 {
     "targets": {
         "header": { "navItemId": "identity-general", "mode": "design" },
+        "branding": { "navItemId": "design-branding", "mode": "design" },
+        "colors": { "navItemId": "design-colors", "mode": "design" },
+        "typo": { "navItemId": "design-typo", "mode": "design" },
+        "social_links": { "navItemId": "identity-social", "mode": "design" },
         "nav": { "navItemId": "identity-menus", "mode": "design" },
         "hero": { "navItemId": "comp-hero", "mode": "design", "bindingsId": "hero" },
         "hero-news": { "navItemId": "comp-hero", "mode": "bindings", "bindingsId": "hero" },

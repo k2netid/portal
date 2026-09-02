@@ -26,21 +26,21 @@
   --layung-primary: var(--theme-color-primary, #00aeef);
   --layung-secondary: var(--theme-color-secondary, #0077a8);
   --layung-accent: var(--theme-color-accent, #38c6f4);
-  --layung-font-heading: Geist, ui-sans-serif, system-ui, sans-serif;
-  --layung-font-body: Geist, ui-sans-serif, system-ui, sans-serif;
-  --layung-font-mono: 'Geist Mono', ui-monospace, monospace;
+  --layung-font-heading: var(--theme-font-heading, Geist), ui-sans-serif, system-ui, sans-serif;
+  --layung-font-body: var(--theme-font-body, Geist), ui-sans-serif, system-ui, sans-serif;
+  --layung-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
   
-  --layung-radius: 0.85rem;
+  --layung-radius: var(--theme-button-radius, 0.85rem);
   --layung-radius-sm: 0.5rem;
   --layung-radius-lg: 1.25rem;
 }
 
 .layung-theme {
-  --primary: 196 100% 47%;
+  --primary: var(--theme-color-primary-hsl, 196 100% 47%);
   --primary-foreground: 0 0% 100%;
-  --secondary: 196 100% 33%;
+  --secondary: var(--theme-color-secondary-hsl, 196 100% 33%);
   --secondary-foreground: 0 0% 100%;
-  --accent: 196 89% 59%;
+  --accent: var(--theme-color-accent-hsl, 196 89% 59%);
   --accent-foreground: 210 40% 8%;
   --background: 220 33% 98%;
   --foreground: 222 47% 11%;
@@ -49,7 +49,8 @@
   --card: 0 0% 100%;
   --card-foreground: 222 47% 11%;
   --border: 214 32% 88%;
-  --ring: 196 100% 47%;
+  --ring: var(--theme-color-primary-hsl, 196 100% 47%);
+  --radius: var(--theme-button-radius, 0.85rem);
 
   font-family: var(--layung-font-body);
   font-size: 0.875rem;
@@ -68,11 +69,11 @@
 
 .dark .layung-theme,
 .layung-theme.dark {
-  --primary: 196 100% 47%;
+  --primary: var(--theme-color-primary-hsl, 196 100% 47%);
   --primary-foreground: 0 0% 100%;
-  --secondary: 196 89% 59%;
+  --secondary: var(--theme-color-secondary-hsl, 196 89% 59%);
   --secondary-foreground: 210 40% 8%;
-  --accent: 196 100% 40%;
+  --accent: var(--theme-color-accent-hsl, 196 100% 40%);
   --accent-foreground: 0 0% 100%;
   --background: 222 47% 4%;
   --foreground: 210 40% 98%;
@@ -81,7 +82,7 @@
   --card: 222 40% 7%;
   --card-foreground: 210 40% 98%;
   --border: 222 30% 15%;
-  --ring: 196 100% 47%;
+  --ring: var(--theme-color-primary-hsl, 196 100% 47%);
 }
 
 .layung-brand-mark {
