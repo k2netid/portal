@@ -1153,6 +1153,109 @@ html.dark .layung-social-dock__tooltip,
   display: flex !important;
 }
 
+/* ==========================================================================
+   Theme Visual Style Variants (Clean, Flat, Soft, Glassmorphism)
+   ========================================================================== */
+
+/* ── 1. Clean & Minimalist (Default) ────────────────────────── */
+.layung-theme[data-theme-style="clean"],
+[data-theme-style="clean"] .layung-theme {
+  --layung-card-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
+}
+
+/* ── 2. Flat Modern (Neo-Flat / Clean Swiss) ─────────────────── */
+.layung-theme[data-theme-style="flat"],
+[data-theme-style="flat"] .layung-theme {
+  --layung-card-shadow: none !important;
+}
+
+.layung-theme[data-theme-style="flat"] .layung-card,
+.layung-theme[data-theme-style="flat"] .about-net-card,
+.layung-theme[data-theme-style="flat"] .about-vm-card,
+.layung-theme[data-theme-style="flat"] .bento-card,
+.layung-theme[data-theme-style="flat"] .pricing-card,
+.layung-theme[data-theme-style="flat"] .layung-social-dock__body,
+.layung-theme[data-theme-style="flat"] .layung-contact-card,
+[data-theme-style="flat"] .layung-theme .layung-card,
+[data-theme-style="flat"] .layung-theme .about-net-card,
+[data-theme-style="flat"] .layung-theme .about-vm-card,
+[data-theme-style="flat"] .layung-theme .bento-card,
+[data-theme-style="flat"] .layung-theme .pricing-card,
+[data-theme-style="flat"] .layung-theme .layung-social-dock__body,
+[data-theme-style="flat"] .layung-theme .layung-contact-card {
+  box-shadow: none !important;
+  border-width: 1.5px !important;
+}
+
+/* ── 3. Soft & Pastel (Playful curves & diffused glow) ───────── */
+.layung-theme[data-theme-style="soft"],
+[data-theme-style="soft"] .layung-theme {
+  --radius: 1.25rem;
+  --layung-radius: 1.25rem;
+  --layung-radius-lg: 1.5rem;
+}
+
+.layung-theme[data-theme-style="soft"] .layung-card,
+.layung-theme[data-theme-style="soft"] .about-net-card,
+.layung-theme[data-theme-style="soft"] .about-vm-card,
+.layung-theme[data-theme-style="soft"] .bento-card,
+.layung-theme[data-theme-style="soft"] .pricing-card,
+.layung-theme[data-theme-style="soft"] .layung-contact-card,
+[data-theme-style="soft"] .layung-theme .layung-card,
+[data-theme-style="soft"] .layung-theme .about-net-card,
+[data-theme-style="soft"] .layung-theme .about-vm-card,
+[data-theme-style="soft"] .layung-theme .bento-card,
+[data-theme-style="soft"] .layung-theme .pricing-card,
+[data-theme-style="soft"] .layung-theme .layung-contact-card {
+  border-radius: 1.25rem !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 174, 239, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* ── 4. Premium Glassmorphism (Frosted glass & vibrant glow) ─── */
+.layung-theme[data-theme-style="glass"] .about-net-card,
+.layung-theme[data-theme-style="glass"] .about-vm-card,
+.layung-theme[data-theme-style="glass"] .bento-card,
+.layung-theme[data-theme-style="glass"] .pricing-card,
+.layung-theme[data-theme-style="glass"] .layung-contact-card,
+.layung-theme[data-theme-style="glass"] .layung-card,
+[data-theme-style="glass"] .layung-theme .about-net-card,
+[data-theme-style="glass"] .layung-theme .about-vm-card,
+[data-theme-style="glass"] .layung-theme .bento-card,
+[data-theme-style="glass"] .layung-theme .pricing-card,
+[data-theme-style="glass"] .layung-theme .layung-contact-card,
+[data-theme-style="glass"] .layung-theme .layung-card {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(0, 174, 239, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 174, 239, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+.dark .layung-theme[data-theme-style="glass"] .about-net-card,
+.dark .layung-theme[data-theme-style="glass"] .about-vm-card,
+.dark .layung-theme[data-theme-style="glass"] .bento-card,
+.dark .layung-theme[data-theme-style="glass"] .pricing-card,
+.dark .layung-theme[data-theme-style="glass"] .layung-contact-card,
+.dark .layung-theme[data-theme-style="glass"] .layung-card,
+.layung-theme.dark[data-theme-style="glass"] .about-net-card,
+.layung-theme.dark[data-theme-style="glass"] .about-vm-card,
+.layung-theme.dark[data-theme-style="glass"] .bento-card,
+.layung-theme.dark[data-theme-style="glass"] .pricing-card,
+.layung-theme.dark[data-theme-style="glass"] .layung-contact-card,
+.layung-theme.dark[data-theme-style="glass"] .layung-card,
+[data-theme-style="glass"] .dark .layung-theme .about-net-card,
+[data-theme-style="glass"] .dark .layung-theme .about-vm-card,
+[data-theme-style="glass"] .dark .layung-theme .bento-card,
+[data-theme-style="glass"] .dark .layung-theme .pricing-card,
+[data-theme-style="glass"] .dark .layung-theme .layung-contact-card,
+[data-theme-style="glass"] .dark .layung-theme .layung-card {
+  background: rgba(11, 17, 26, 0.68) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(0, 174, 239, 0.35) !important;
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(0, 174, 239, 0.25) !important;
+}
+
 /* ── Reduced motion overrides ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .about-hero-stat,

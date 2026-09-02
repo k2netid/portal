@@ -4,7 +4,7 @@
     class="frontend-layout min-h-screen flex flex-col bg-background text-foreground"
     :class="[rootClasses, activeThemeClass, layungCanvasClass]"
     :style="[rootStyles, janariRootStyleVars]"
-    v-bind="janariRootDataAttrs"
+    v-bind="themeRootDataAttrs"
   >
     <!-- CASE 1: FULL WIDTH (Default) & HYBRID -->
     <!-- For Hybrid: Header/Footer are here (full), Main is constrained below -->
@@ -305,6 +305,29 @@ const janariRootDataAttrs = computed((): Record<string, string> => {
   }
 
   return attrs
+})
+
+const themeRootDataAttrs = computed((): Record<string, string> => {
+  const styleRaw = String(getSetting('theme_style', 'clean') ?? 'clean')
+  const navRaw = String(getSetting('nav_style', 'glass') ?? 'glass')
+  const btnRadiusRaw = String(getSetting('button_radius', '8px') ?? '8px')
+  const btnShadowRaw = String(getSetting('button_shadow', 'subtle') ?? 'subtle')
+
+  const baseAttrs: Record<string, string> = {
+    'data-theme-style': styleRaw,
+    'data-theme-nav': navRaw,
+    'data-button-radius': btnRadiusRaw,
+    'data-button-shadow': btnShadowRaw,
+  }
+
+  if (usesJanariCanvas.value) {
+    return {
+      ...baseAttrs,
+      ...janariRootDataAttrs.value,
+    }
+  }
+
+  return baseAttrs
 })
 
 const janariRootStyleVars = computed((): Record<string, string> => {
