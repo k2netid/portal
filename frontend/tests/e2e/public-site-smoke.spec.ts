@@ -10,9 +10,9 @@ test.describe('public apex theme runtime', () => {
     });
 
     test('legacy /site prefix redirects to apex', async ({ page }) => {
-        await page.goto('/site/contact');
-        await expect(page).toHaveURL(/\/contact\/?$/);
-        await expect(page.locator('form').first()).toBeVisible({ timeout: 15000 });
+        const response = await page.request.get('/site/contact', { maxRedirects: 0 });
+        expect([301, 302]).toContain(response.status());
+        expect(response.headers()['location'] || '').toMatch(/\/contact\/?$/);
     });
 
     test('contact page still exposes a public form', async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('public apex theme runtime', () => {
 
     test('console login stays on console shell when site is active', async ({ page }) => {
         await page.goto('/auth/console-sign-in');
-        await expect(page.locator('input[name="login"], input[type="text"], input[autocomplete="username"]').first()).toBeVisible({
+        await expect(page.locator('input[name="login"], input[type="email"], input[type="text"], #email, input[autocomplete="username"]').first()).toBeVisible({
             timeout: 15000,
         });
         await expect(page.locator('header.janari-header-toolbar, .sarangenge-theme')).toHaveCount(0);
