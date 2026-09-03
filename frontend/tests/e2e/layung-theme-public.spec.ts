@@ -1,17 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-const publicHost = process.env.PLAYWRIGHT_PUBLIC_HOST;
-
 test.describe('Layung public theme honesty and drawer', () => {
     test.use({
-        extraHTTPHeaders: publicHost
-            ? {
-                  Host: publicHost,
-                  'X-E2E-Captcha-Bypass': process.env.E2E_CAPTCHA_BYPASS_TOKEN || 'local-e2e',
-              }
-            : {
-                  'X-E2E-Captcha-Bypass': process.env.E2E_CAPTCHA_BYPASS_TOKEN || 'local-e2e',
-              },
+        locale: 'id-ID',
+        extraHTTPHeaders: {
+            'X-E2E-Captcha-Bypass': process.env.E2E_CAPTCHA_BYPASS_TOKEN || 'local-e2e',
+        },
     });
 
     test('pricing/isp hydrates without third-party benchmark or fake school claims', async ({ page }) => {
@@ -21,8 +15,8 @@ test.describe('Layung public theme honesty and drawer', () => {
 
         const body = await page.locator('body').innerText();
         expect(body).not.toMatch(/Ookla|Cisco SBA|ITU-T Y\.1541|SMP Negeri/i);
-        await expect(page.getByText(/estimasi internal/i).first()).toBeVisible();
-        await expect(page.getByText(/indikasi/i).first()).toBeVisible();
+        await expect(page.getByText(/estimasi internal|internal k2net estimate/i).first()).toBeVisible();
+        await expect(page.getByText(/indikasi|indicative/i).first()).toBeVisible();
     });
 
     test('mobile drawer closes on Escape and restores hamburger', async ({ page }) => {

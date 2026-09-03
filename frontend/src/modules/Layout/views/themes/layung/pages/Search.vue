@@ -15,7 +15,7 @@
       <Search class="w-5 h-5 text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2" />
       <input
         v-model="query"
-        type="text"
+        type="search"
         :placeholder="t('pages.search.placeholder', 'Cari layanan atau paket…')"
         class="w-full pl-12 pr-4 py-3 rounded-2xl border border-border bg-card text-foreground placeholder:text-muted-foreground/60 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/50 shadow-sm"
       >
