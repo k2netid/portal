@@ -1,0 +1,59 @@
+name: DAST Security & Vulnerability Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Target URL to scan'
+        required: true
+        default: 'https://staging.k2net.id'
+      fail_on_critical:
+        description: 'Fail workflow if High/Critical issues are detected'
+        type: boolean
+        default: false
+  schedule:
+    # Run weekly every Monday at 02:00 UTC
+    - cron: '0 2 * * 1'
+
+concurrency:
+  group: dast-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  owasp-zap-scan:
+    name: OWASP ZAP Baseline Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ github.event.inputs.target_url || 'https://staging.k2net.id' }}
+          issue_title: 'OWASP ZAP DAST Security Report'
+          fail_action: ${{ github.event.inputs.fail_on_critical || false }}
+          allow_issue_writing: false
+          cmd_options: '-a'
+
+  nuclei-cve-scan:
+    name: ProjectDiscovery Nuclei Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Nuclei Scan
+        uses: projectdiscovery/nuclei-action@main
+        with:
+          target: ${{ github.event.inputs.target_url || 'https://staging.k2net.id' }}
+          flags: '-severity critical,high,medium -silent'
+          output: 'nuclei-report.json'
+
+      - name: Upload Nuclei Scan Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuclei-security-report
+          path: nuclei-report.json
+          retention-days: 14
