@@ -1,6 +1,7 @@
 import '@/styles/shell/console-tailwind.css';
 import i18n from '@/engine/i18n';
 import { bootstrapConsoleApp } from '@/engine/bootstrap/console';
+import { scheduleDeferredConsoleModules } from '@/engine/bootstrap/deferredConsoleModules';
 import apiClient from '@/engine/api/client';
 import {
     createShellApp,
@@ -75,7 +76,6 @@ async function bootstrap(): Promise<void> {
     logger.info('[SPA] Mounting console kernel');
     app.mount('#app');
 
-    const { scheduleDeferredConsoleModules } = await import('@/engine/bootstrap/deferredConsoleModules');
     scheduleDeferredConsoleModules(router, navStore, dbStore);
 }
 

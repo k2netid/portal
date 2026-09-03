@@ -125,12 +125,16 @@ export default defineConfig({
         })
       },
     },
-    visualizer({
-      filename: './dist/stats.html',
-      open: false,
-      gzipSize: true,
-      brotliSize: true,
-    }),
+    ...(process.env.ANALYZE === 'true' || process.env.VITE_ANALYZE === 'true'
+      ? [
+          visualizer({
+            filename: './dist/stats.html',
+            open: false,
+            gzipSize: true,
+            brotliSize: true,
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
