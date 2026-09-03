@@ -21,6 +21,7 @@
         "test:e2e:smoke": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts tests/e2e/onboarding-wizard.spec.ts",
         "test:e2e:smoke:docker": "bash ../scripts/e2e-docker.sh",
         "test:e2e:public": "playwright test tests/e2e/public-site-smoke.spec.ts tests/e2e/layung-theme-public.spec.ts",
+        "test:e2e:staging": "PLAYWRIGHT_BASE_URL=http://127.0.0.1:8083 npm run test:e2e:public",
         "test:e2e:auth": "playwright test tests/e2e/auth-probe-notfound.spec.ts tests/e2e/login.spec.ts",
         "test:e2e:member": "playwright test tests/e2e/member-security.spec.ts",
         "quality:frontend": "eslint src tests --max-warnings=0 && npm run i18n:check && npm run i18n:check:full && npm run type-check && npm run test:unit && npm run test:e2e:list",
