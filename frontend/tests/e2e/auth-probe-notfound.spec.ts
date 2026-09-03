@@ -13,8 +13,13 @@ test.describe('Auth And Probe Routing Guard', () => {
         const probePaths = ['/admin', '/dashboard', '/panel', '/wp-admin', '/phpmyadmin'];
 
         for (const probePath of probePaths) {
-            await page.goto(probePath);
-            await expect(page).toHaveURL(/\/404$/);
+            const res = await page.request.get(probePath, { maxRedirects: 0 });
+            if (res.status() >= 300 && res.status() < 400) {
+                expect(res.headers()['location']).toMatch(/\/404$/);
+            } else {
+                await page.goto(probePath);
+                await expect(page).toHaveURL(/\/404$/);
+            }
         }
     });
 
@@ -22,8 +27,13 @@ test.describe('Auth And Probe Routing Guard', () => {
         const probePaths = ['/%61dmin', '/AdMiN', '/%2Fadmin', '/DaShBoArD'];
 
         for (const probePath of probePaths) {
-            await page.goto(probePath);
-            await expect(page).toHaveURL(/\/404$/);
+            const res = await page.request.get(probePath, { maxRedirects: 0 });
+            if (res.status() >= 300 && res.status() < 400) {
+                expect(res.headers()['location']).toMatch(/\/404$/);
+            } else {
+                await page.goto(probePath);
+                await expect(page).toHaveURL(/\/404$/);
+            }
         }
     });
 
@@ -34,8 +44,13 @@ test.describe('Auth And Probe Routing Guard', () => {
 
     test('reserved scanner slugs resolve to not-found on public site', async ({ page }) => {
         for (const path of ['/system', '/random-probe-xyz-not-a-page']) {
-            await page.goto(path);
-            await expect(page).toHaveURL(/\/404$/);
+            const res = await page.request.get(path, { maxRedirects: 0 });
+            if (res.status() >= 300 && res.status() < 400) {
+                expect(res.headers()['location']).toMatch(/\/404$/);
+            } else {
+                await page.goto(path);
+                await expect(page).toHaveURL(/\/404$/);
+            }
         }
     });
 
