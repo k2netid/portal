@@ -5,6 +5,8 @@ import {
     isSafePublicReturnPath,
     rememberRouteBeforeNotFound,
     resolveErrorReturnPath,
+    consumeErrorReturnPath,
+    sanitizeLoginRedirect,
     trackLastSafeRoute,
 } from '@/shared/utils/errorReturn';
 import { SECURITY_ROUTES } from '@/config/security';
@@ -56,6 +58,54 @@ describe('errorReturn', () => {
             rememberRouteBeforeNotFound('/admin', 'console', false);
             expect(resolveErrorReturnPath('console', false)).toBe(SECURITY_ROUTES.login);
             expect(defaultHomeForShell('console', false)).toBe(SECURITY_ROUTES.login);
+        });
+    });
+
+    describe('consumeErrorReturnPath', () => {
+        it('resolves and consumes the stored return path', () => {
+            sessionStorage.setItem('ja_404_return_public', '/blog');
+            expect(consumeErrorReturnPath('public')).toBe('/blog');
+            expect(sessionStorage.getItem('ja_404_return_public')).toBeNull();
+        });
+    });
+
+    describe('sanitizeLoginRedirect', () => {
+        it('allows safe public paths', () => {
+            expect(sanitizeLoginRedirect('/pricing/isp')).toBe('/pricing/isp');
+            expect(sanitizeLoginRedirect('/services')).toBe('/services');
+        });
+
+        it('rejects protocol relative and non-string candidates', () => {
+            expect(sanitizeLoginRedirect('//evil.com')).toBeUndefined();
+            expect(sanitizeLoginRedirect(123 as any)).toBeUndefined();
+            expect(sanitizeLoginRedirect('')).toBeUndefined();
+        });
+
+        it('rejects probe and error screen paths', () => {
+            expect(sanitizeLoginRedirect('/404')).toBeUndefined();
+            expect(sanitizeLoginRedirect('/admin')).toBeUndefined();
+            expect(sanitizeLoginRedirect('/current', '/current')).toBeUndefined();
+        });
+    });
+
+    describe('session expired builders', () => {
+        it('builds session expired query and href', async () => {
+            const { buildSessionExpiredHref, buildSessionExpiredQuery } = await import('@/shared/utils/errorReturn');
+
+            const href = buildSessionExpiredHref({
+                reason: 'timeout',
+                currentPath: '/blog',
+            });
+            expect(href).toContain('/419?');
+            expect(href).toContain('reason=timeout');
+            expect(href).toContain('redirect=%2Fblog');
+
+            const query = buildSessionExpiredQuery({
+                reason: 'concurrent',
+                currentPath: '/pricing',
+            });
+            expect(query.reason).toBe('concurrent');
+            expect(query.redirect).toBe('/pricing');
         });
     });
 });

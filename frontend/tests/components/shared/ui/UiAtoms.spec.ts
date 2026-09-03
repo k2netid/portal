@@ -117,4 +117,85 @@ describe('UI Atoms', () => {
             expect(wrapper.text()).toContain('Content 1');
         });
     });
+
+    describe('Dialog Suite', () => {
+        it('renders Dialog, DialogHeader, and DialogFooter', async () => {
+            const Dialog = (await import('@/shared/components/ui/Dialog.vue')).default;
+            const DialogHeader = (await import('@/shared/components/ui/DialogHeader.vue')).default;
+            const DialogFooter = (await import('@/shared/components/ui/DialogFooter.vue')).default;
+
+            const header = mount(DialogHeader, { slots: { default: 'Header Content' } });
+            expect(header.text()).toBe('Header Content');
+
+            const footer = mount(DialogFooter, { slots: { default: 'Footer Content' } });
+            expect(footer.text()).toBe('Footer Content');
+
+            const wrapper = mount(Dialog, {
+                slots: {
+                    default: '<div id="content">Dialog Slot Body</div>',
+                },
+            });
+
+            expect(wrapper.exists()).toBe(true);
+            expect(wrapper.text()).toContain('Dialog Slot Body');
+        });
+    });
+
+    describe('Forms and Primitives Suite', () => {
+        it('renders Input, Label, Textarea, Separator, Switch, Spinner', async () => {
+            const Input = (await import('@/shared/components/ui/Input.vue')).default;
+            const Label = (await import('@/shared/components/ui/Label.vue')).default;
+            const Textarea = (await import('@/shared/components/ui/Textarea.vue')).default;
+            const Separator = (await import('@/shared/components/ui/Separator.vue')).default;
+            const Switch = (await import('@/shared/components/ui/Switch.vue')).default;
+            const Spinner = (await import('@/shared/components/ui/Spinner.vue')).default;
+
+            const input = mount(Input, { props: { modelValue: 'test value' } });
+            expect((input.find('input').element as HTMLInputElement).value).toBe('test value');
+
+            const label = mount(Label, { slots: { default: 'Username' } });
+            expect(label.text()).toBe('Username');
+
+            const textarea = mount(Textarea, { props: { modelValue: 'text content' } });
+            expect((textarea.find('textarea').element as HTMLTextAreaElement).value).toBe('text content');
+
+            const separator = mount(Separator);
+            expect(separator.exists()).toBe(true);
+
+            const sw = mount(Switch, { props: { checked: true } });
+            expect(sw.exists()).toBe(true);
+
+            const spinner = mount(Spinner);
+            expect(spinner.exists()).toBe(true);
+        });
+    });
+
+    describe('Radix Wrapper Primitives', () => {
+        it('renders Popover, Tooltip, Select, DropdownMenu roots with slots', async () => {
+            const Popover = (await import('@/shared/components/ui/Popover.vue')).default;
+            const Tooltip = (await import('@/shared/components/ui/Tooltip.vue')).default;
+            const TooltipProvider = (await import('@/shared/components/ui/TooltipProvider.vue')).default;
+            const Select = (await import('@/shared/components/ui/Select.vue')).default;
+            const DropdownMenu = (await import('@/shared/components/ui/dropdown-menu/DropdownMenu.vue')).default;
+
+            const popover = mount(Popover, { slots: { default: 'popover content' } });
+            expect(popover.text()).toBe('popover content');
+
+            const tooltipWrapper = mount(TooltipProvider, {
+                slots: {
+                    default: '<Tooltip><div id="tt">tooltip content</div></Tooltip>',
+                },
+                global: {
+                    components: { Tooltip },
+                },
+            });
+            expect(tooltipWrapper.text()).toContain('tooltip content');
+
+            const select = mount(Select, { slots: { default: 'select content' } });
+            expect(select.text()).toBe('select content');
+
+            const dropdown = mount(DropdownMenu, { slots: { default: 'menu content' } });
+            expect(dropdown.text()).toBe('menu content');
+        });
+    });
 });
