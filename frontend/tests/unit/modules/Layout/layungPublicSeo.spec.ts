@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { resolveLayungPublicSeo } from '@/modules/Layout/views/themes/layung/composables/layungPublicSeo';
 
-const t = (key: string, fallback: string) => fallback;
+const t = (_key: string, fallback: string) => fallback;
 
 describe('layung public SEO', () => {
     it('uses the site name alone on the homepage', () => {

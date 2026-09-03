@@ -355,9 +355,12 @@ withDefaults(
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .layung-hero-visual,
+  .layung-hero-visual *,
   .layung-pulse-line,
   .layung-rf-wave {
     animation: none !important;
+    transition: none !important;
   }
 }
 </style>
