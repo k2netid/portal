@@ -27,6 +27,8 @@ PAGES=(
   "/"
   "/pricing/isp"
   "/contact"
+  "/tim"
+  "/career"
 )
 
 for PAGE in "${PAGES[@]}"; do
