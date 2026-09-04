@@ -9,7 +9,7 @@ import {
 
 setAppShell('public');
 
-document.title = i18n.global.t('system.app.publicTitle', 'K2NET');
+document.title = i18n.global.t('system.app.publicTitle', 'SMK Negeri 6 Bandung');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('public'));

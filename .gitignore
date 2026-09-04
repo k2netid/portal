@@ -74,3 +74,8 @@ backend/public/stats.html
 backend/bootstrap/cache/*.php
 
 # Documentation is versioned under docs/ (see ROADMAP_2026_Q4.md)
+
+# Local dev credentials
+../dev/
+dev/
+
