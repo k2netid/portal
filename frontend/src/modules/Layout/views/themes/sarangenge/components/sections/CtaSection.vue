@@ -20,26 +20,25 @@
           </p>
 
           <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button
-              as="router-link"
-              to="/contact"
-              variant="secondary"
-              size="lg"
-              class="w-full sm:w-auto !bg-amber-500 hover:!bg-amber-400 !text-slate-950 font-bold shadow-xl border-none"
+            <a
+              :href="ppdbPortalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[var(--sarangenge-radius-sm)] bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-xl transition-colors text-base"
             >
-              <PhoneCall class="w-5 h-5 mr-1" />
-              {{ t('cta.primary', 'Daftar PPDB / Konsultasi') }}
-            </Button>
+              <ExternalLink class="w-5 h-5 mr-1" />
+              {{ t('cta.primary', 'Portal Resmi PPDB Jabar') }}
+            </a>
 
             <a
               v-if="whatsAppUrl"
               :href="whatsAppUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[var(--sarangenge-radius-sm)] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base transition-colors shadow-lg"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[var(--sarangenge-radius-sm)] bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base transition-colors shadow-lg"
             >
               <MessageCircle class="w-5 h-5" />
-              {{ t('cta.whatsapp', 'Chat WhatsApp Hotline') }}
+              {{ t('cta.whatsapp', 'Konsultasi Jurusan (WhatsApp)') }}
             </a>
           </div>
         </div>
@@ -50,12 +49,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { GraduationCap, PhoneCall, MessageCircle } from 'lucide-vue-next';
-import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
+import { GraduationCap, MessageCircle, ExternalLink } from 'lucide-vue-next';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 
-const { whatsAppUrl, displaySchoolName } = useSarangengeIdentity();
+const { whatsAppUrl, displaySchoolName, ppdbPortalUrl } = useSarangengeIdentity();
 const { t } = useThemeI18n('sarangenge');
 
 const ctaTitle = computed(() => {

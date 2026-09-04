@@ -35,17 +35,17 @@
             { "title": "Profil & Visi Misi", "title_en": "Profile & Vision", "url": "/about#profil", "type": "custom", "description": "Visi, misi, dan nilai kejuruan" },
             { "title": "Pendidik & Tenaga Kependidikan", "title_en": "Teachers & Staff", "url": "/tim", "type": "custom", "description": "Direktori guru dan manajemen sekolah" },
             { "title": "Prestasi Siswa", "title_en": "Student Achievements", "url": "/achievement", "type": "custom", "description": "LKS Nasional & kejuaraan vokasi" },
-            { "title": "Fasilitas & Bengkel Praktik", "title_en": "Workshops & Labs", "url": "/services#smart-class", "type": "custom", "description": "Laboratorium komputer, bengkel mesin & otomasi" }
+            { "title": "Fasilitas & Bengkel Praktik", "title_en": "Workshops & Labs", "url": "/facilities", "type": "custom", "description": "Laboratorium komputer, bengkel mesin & otomasi" }
           ]
         },
         {
           "title": "Program Keahlian",
           "title_en": "Competencies",
-          "url": "/solusi",
+          "url": "/programs",
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/solusi#programs", "type": "custom", "description": "RPL, Listrik, Otomotif, Bangunan & Manufaktur" },
+            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/programs", "type": "custom", "description": "RPL, Listrik, Otomotif, Bangunan & Manufaktur" },
             { "title": "Bursa Kerja Khusus (BKK) & Alumni", "title_en": "Career & Alumni", "url": "/career", "type": "custom", "description": "Penyaluran kerja industri & jejaring alumni" }
           ]
         },
@@ -67,8 +67,8 @@
     "footer_col_1": {
       "name": "SMKN 6 Bandung Footer Programs",
       "items": [
-        { "title": "Program Keahlian", "url": "/solusi#programs", "type": "custom", "sort_order": 0 },
-        { "title": "Fasilitas & Lab Praktik", "url": "/services#smart-class", "type": "custom", "sort_order": 1 },
+        { "title": "Program Keahlian", "url": "/programs", "type": "custom", "sort_order": 0 },
+        { "title": "Fasilitas & Lab Praktik", "url": "/facilities", "type": "custom", "sort_order": 1 },
         { "title": "Prestasi LKS & Vokasi", "url": "/achievement", "type": "custom", "sort_order": 2 },
         { "title": "Direktori Guru & Staf", "url": "/tim", "type": "custom", "sort_order": 3 }
       ]
@@ -86,8 +86,8 @@
   "pages": [
     { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi SMK Negeri 6 Bandung — PPDB, kompetensi keahlian, dan fasilitas bengkel modern.", "body": "<p>Portal resmi SMK Negeri 6 Bandung — PPDB, kompetensi keahlian vokasi, dan fasilitas bengkel modern.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official SMK Negeri 6 Bandung portal — admissions, vocational programs, and modern workshop facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
     { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, sejarah, dan nilai keunggulan SMK Negeri 6 Bandung.", "body": "<p>Visi, misi, sejarah, dan nilai keunggulan SMK Negeri 6 Bandung.</p>", "body_en": "<p>SMK Negeri 6 Bandung vision, mission, and vocational excellence philosophy.</p>" },
-    { "slug": "services", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Services", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga SMK Negeri 6 Bandung.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities at SMKN 6 Bandung.</p>" },
-    { "slug": "solusi", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan: RPL, Listrik, Otomotif, Bangunan, Otomasi & Manufaktur.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan: RPL, Listrik, Otomotif, Bangunan, Otomasi & Manufaktur.</p>", "body_en": "<p>Merdeka Curriculum at SMKN 6 Bandung: Software Engineering, Electrical, Automotive, Architecture, Automation & Manufacturing.</p>" },
+    { "slug": "facilities", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Facilities", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga SMK Negeri 6 Bandung.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities at SMKN 6 Bandung.</p>" },
+    { "slug": "programs", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Programs", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan: DPIB, TITL, TPM, TKRO, TAV, TFLM.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan: DPIB, TITL, TPM, TKRO, TAV, TFLM.</p>", "body_en": "<p>Merdeka Curriculum at SMKN 6 Bandung: DPIB, TITL, TPM, TKRO, TAV, TFLM.</p>" },
     { "slug": "pricing", "title": "Layanan PPDB & Bantuan", "title_en": "Fees & Admissions", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB.", "body": "<p>Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB SMK Negeri 6 Bandung.</p>", "body_en": "<p>Educational assistance, vocational scholarships, and admissions consultation services at SMKN 6 Bandung.</p>" },
     { "slug": "tim", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan SMK Negeri 6 Bandung.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan SMK Negeri 6 Bandung.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and leadership at SMKN 6 Bandung.</p>" },
     { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita kegiatan sekolah, agenda industri, dan pengumuman SMK Negeri 6 Bandung.", "body": "<p>Berita kegiatan sekolah, agenda industri, dan pengumuman SMK Negeri 6 Bandung.</p>", "body_en": "<p>School events, industry partnerships, and SMKN 6 Bandung announcements.</p>" },

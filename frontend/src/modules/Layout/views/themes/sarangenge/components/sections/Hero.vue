@@ -29,7 +29,19 @@
 
       <!-- Action Buttons -->
       <div class="sarangenge-rise sarangenge-rise-delay-3 mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+        <a
+          v-if="isExternalPrimary"
+          :href="heroPrimaryLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[var(--sarangenge-radius-sm,0.85rem)] bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-xl shadow-amber-500/25 transition-all duration-200 text-base"
+        >
+          <GraduationCap class="w-5 h-5 mr-1" />
+          {{ heroPrimaryText }}
+        </a>
+
         <Button
+          v-else
           as="router-link"
           :to="heroPrimaryLink"
           variant="primary"
@@ -104,10 +116,10 @@ import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
-const { displayAccreditation } = useSarangengeIdentity();
+const { displayAccreditation, ppdbPortalUrl } = useSarangengeIdentity();
 
 const heroBadge = computed(() => {
-  return (getSetting('hero_badge_text', '') as string) || t('pages.home.heroBadge', 'Penerimaan Peserta Didik Baru (PPDB) 2026/2027');
+  return (getSetting('hero_badge_text', '') as string) || t('pages.home.heroBadge', 'Penerimaan Peserta Didik Baru (PPDB) 2026/2027 Dibuka');
 });
 
 const heroTitle = computed(() => {
@@ -115,29 +127,33 @@ const heroTitle = computed(() => {
 });
 
 const heroSubtitle = computed(() => {
-  return (getSetting('hero_subtitle', '') as string) || t('pages.home.heroSubtitle', 'Situs resmi sekolah: terinspirasi kembang sarangenge nu nyanghareup kana cahaya panonpoé isuk, ngaping siswa mikacinta élmu sarta miboga ahlak luhung.');
+  return (getSetting('hero_subtitle', '') as string) || t('pages.home.heroSubtitle', 'Situs resmi sekolah: pendidikan vokasi unggulan berstandar industri dengan bengkel modern dan penyiapan karir masa depan.');
 });
 
 const heroPrimaryText = computed(() => {
-  return (getSetting('hero_primary_cta_text', '') as string) || t('pages.home.heroCta', 'Daftar PPDB Online');
+  return (getSetting('hero_primary_cta_text', '') as string) || t('pages.home.heroCta', 'Daftar PPDB Jabar (Resmi)');
 });
 
 const heroPrimaryLink = computed(() => {
-  return (getSetting('hero_primary_cta_link', '') as string) || '/contact';
+  return (getSetting('hero_primary_cta_link', '') as string) || ppdbPortalUrl.value;
+});
+
+const isExternalPrimary = computed(() => {
+  return typeof heroPrimaryLink.value === 'string' && (heroPrimaryLink.value.startsWith('http://') || heroPrimaryLink.value.startsWith('https://'));
 });
 
 const heroSecondaryText = computed(() => {
-  return (getSetting('hero_secondary_cta_text', '') as string) || t('pages.home.heroSecondary', 'Jelajahi Program');
+  return (getSetting('hero_secondary_cta_text', '') as string) || t('pages.home.heroSecondary', 'Program Keahlian');
 });
 
 const heroSecondaryLink = computed(() => {
-  return (getSetting('hero_secondary_cta_link', '') as string) || '/solusi';
+  return (getSetting('hero_secondary_cta_link', '') as string) || '/programs';
 });
 
 const stat1Val = computed(() => (getSetting('hero_stat_1_val', '100%') as string) || '100%');
-const stat1Label = computed(() => (getSetting('hero_stat_1_label', 'Kelulusan & Lanjut Studi') as string) || 'Kelulusan & Lanjut Studi');
-const stat2Val = computed(() => (getSetting('hero_stat_2_val', '150+') as string) || '150+');
-const stat2Label = computed(() => (getSetting('hero_stat_2_label', 'Prestasi Nasional & Dunia') as string) || 'Prestasi Nasional & Dunia');
+const stat1Label = computed(() => (getSetting('hero_stat_1_label', 'Keterserapan DUDI & Kuliah') as string) || 'Keterserapan DUDI & Kuliah');
+const stat2Val = computed(() => (getSetting('hero_stat_2_val', '6') as string) || '6');
+const stat2Label = computed(() => (getSetting('hero_stat_2_label', 'Program Keahlian Vokasi') as string) || 'Program Keahlian Vokasi');
 const stat3Val = computed(() => (getSetting('hero_stat_3_val', '1:12') as string) || '1:12');
 const stat3Label = computed(() => (getSetting('hero_stat_3_label', 'Rasio Guru & Siswa') as string) || 'Rasio Guru & Siswa');
 </script>

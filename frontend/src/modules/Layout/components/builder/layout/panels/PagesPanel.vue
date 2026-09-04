@@ -135,12 +135,16 @@ const loading = computed(() => builder?.pagesLoading?.value || false);
 const searchQuery = ref('');
 const activeTypeFilter = ref<'all' | 'page' | 'post' | 'theme'>('all');
 
-/** Derived from public.ts routes — stays in sync with live site catalog. */
-const themeTemplates = getPublicThemePageCatalog() as ContentItem[];
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+/** Derived from active router — stays in sync with live site catalog. */
+const themeTemplates = computed(() => getPublicThemePageCatalog(router) as ContentItem[]);
 
 const allContentList = computed<ContentItem[]>(() => {
   const cmsSlugs = new Set(pages.value.map((p) => p.slug));
-  const unboundTheme = themeTemplates.filter((t) => !cmsSlugs.has(t.slug));
+  const unboundTheme = themeTemplates.value.filter((t) => !cmsSlugs.has(t.slug));
   return [...pages.value, ...unboundTheme];
 });
 
@@ -157,7 +161,7 @@ const filteredItems = computed<ContentItem[]>(() => {
   } else if (activeTypeFilter.value === 'post') {
     list = pages.value.filter(p => p.type === 'post');
   } else if (activeTypeFilter.value === 'theme') {
-    list = themeTemplates;
+    list = themeTemplates.value;
   }
 
   if (!searchQuery.value) return list;

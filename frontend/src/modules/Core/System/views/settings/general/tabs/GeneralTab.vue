@@ -206,7 +206,7 @@ const generalSettingsGrouped = computed(() => {
             description: t('system.settings.groups.brand.description'),
             icon: Sparkles,
             color: 'indigo',
-            keys: ['app_name', 'app_logo', 'app_favicon', 'branding_display'],
+            keys: ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
             settings: [],
             defaultExpanded: true,
         },
@@ -237,7 +237,7 @@ const generalSettingsGrouped = computed(() => {
         
         // Ensure settings are in logical order
         const orders: Record<string, string[]> = {
-            'brand': ['app_name', 'brand_logo', 'brand_favicon', 'branding_display'],
+            'brand': ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
             'maintenance': ['maintenance_mode', 'maintenance_title', 'maintenance_message', 'maintenance_countdown_enabled', 'maintenance_end_time'],
             'localization': ['timezone', 'date_format', 'time_format', 'items_per_page']
         };

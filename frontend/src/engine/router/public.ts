@@ -33,60 +33,7 @@ export const publicRoutes: RouteRecordRaw[] = [
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/About' },
             },
-            {
-                path: 'solusi',
-                name: 'public-solusi',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Solusi' },
-            },
-            {
-                path: 'services',
-                name: 'public-services',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Services' },
-            },
-            {
-                path: 'pricing',
-                name: 'public-pricing',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Pricing' },
-            },
-            {
-                path: 'pricing/isp',
-                name: 'public-pricing-isp',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/PricingIsp' },
-            },
-            {
-                path: 'pricing/msp',
-                name: 'public-pricing-msp',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/PricingMsp' },
-            },
-            {
-                path: 'career',
-                name: 'public-career',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/CareerCenter' },
-            },
-            {
-                path: 'achievement',
-                name: 'public-achievement',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Achievement' },
-            },
-            {
-                path: 'contact',
-                name: 'public-contact',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Contact' },
-            },
-            {
-                path: 'tim',
-                name: 'public-tim',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Tim' },
-            },
+
             {
                 path: 'search',
                 name: 'public-search',
@@ -187,7 +134,39 @@ export const createPublicRouter = () => {
         scrollBehavior: publicScrollBehavior,
     });
 
+    let themeRoutesInjected = false;
+
     router.beforeEach(async (to, from) => {
+        if (!themeRoutesInjected && to.path !== '/404' && to.path !== '/maintenance') {
+            try {
+                const { useTheme } = await import('@/modules/Layout/composables/useTheme');
+                const { loadActiveTheme, activeTheme } = useTheme();
+                await loadActiveTheme();
+                
+                if (activeTheme.value?.slug) {
+                    const slug = activeTheme.value.slug;
+                    const modules = import.meta.glob('@/modules/Layout/views/themes/*/routes.ts');
+                    const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${slug}/routes.ts`];
+                    
+                    if (loadThemeRoutes) {
+                        const module = await loadThemeRoutes() as any;
+                        if (module.default && Array.isArray(module.default)) {
+                            module.default.forEach((route: any) => {
+                                router.addRoute('public-layout', route);
+                            });
+                            themeRoutesInjected = true;
+                            if (to.matched.length === 0 || to.name === 'public-not-found') {
+                                return to.fullPath;
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                // Ignore error, theme routes just won't be loaded
+            }
+            themeRoutesInjected = true;
+        }
+
         const result = await handleBeforeEachGuard(to, from, {
             loginPath: '/member/login',
             registerPath: '/member/register',

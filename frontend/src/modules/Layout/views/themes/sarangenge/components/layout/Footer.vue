@@ -258,6 +258,7 @@ const {
   displayNpsn,
   phoneDialHref,
   whatsAppUrl,
+  ppdbPortalUrl,
 } = useSarangengeIdentity();
 
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
@@ -376,17 +377,17 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
 };
 
 const defaultCol1Items = computed((): Partial<MenuItem>[] => [
-  { title: tt('header.solusi', 'Program Unggulan'), url: '/solusi#programs' },
-  { title: tt('header.services', 'Fasilitas Kampus'), url: '/services#smart-class' },
-  { title: tt('header.achievement', 'Prestasi Siswa'), url: '/achievement' },
-  { title: tt('header.tim', 'Direktori Guru'), url: '/tim' },
+  { title: 'Program Keahlian', url: '/programs' },
+  { title: 'Fasilitas & Bengkel', url: '/facilities' },
+  { title: 'BKK & Mitra Industri', url: '/career' },
+  { title: 'Prestasi Siswa', url: '/achievement' },
 ]);
 
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
-  { title: tt('header.pricing', 'Biaya & Beasiswa'), url: '/pricing#beasiswa' },
-  { title: tt('header.career', 'Jejaring Alumni'), url: '/career-center' },
-  { title: tt('header.blog', 'Berita & Pengumuman'), url: '/blog' },
-  { title: tt('header.getStarted', 'Pendaftaran PPDB'), url: '/contact#ppdb' },
+  { title: 'Portal Resmi PPDB Jabar', url: ppdbPortalUrl.value },
+  { title: 'Warta & Agenda Sekolah', url: '/blog' },
+  { title: 'Guru & Tenaga Kependidikan', url: '/tim' },
+  { title: 'Kontak & Lokasi Kampus', url: '/contact' },
 ]);
 
 const footerCol1Items = computed(() => {

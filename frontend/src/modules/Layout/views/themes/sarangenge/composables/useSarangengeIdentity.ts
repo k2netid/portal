@@ -84,6 +84,12 @@ export function useSarangengeIdentity() {
     return raw !== false && raw !== 'false' && raw !== 0;
   });
 
+  const ppdbPortalUrl = computed(() => {
+    const fromTheme = getSetting('ppdb_external_url', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
+    return 'https://ppdb.jabarprov.go.id/';
+  });
+
   return {
     displaySchoolName,
     displayTagline,
@@ -96,5 +102,6 @@ export function useSarangengeIdentity() {
     phoneDialHref,
     whatsAppUrl,
     isPpdbOpen,
+    ppdbPortalUrl,
   };
 }

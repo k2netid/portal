@@ -588,6 +588,12 @@
             "default": "2026/2027",
             "category": "Hero Section"
         },
+        "ppdb_external_url": {
+            "label": "Tautan Portal Resmi PPDB Jabar",
+            "type": "text",
+            "default": "https://ppdb.jabarprov.go.id/",
+            "category": "Hero Section"
+        },
         "hero_badge_text": {
             "label": "Hero Eyebrow / Badge",
             "type": "text",

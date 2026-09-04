@@ -1,5 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { publicRoutes } from '@/engine/router/public'
+import type { Router } from 'vue-router'
 
 export type ThemePageCatalogItem = {
   id: string
@@ -44,14 +43,13 @@ function routeSlug(path: string): string {
   return path.replace(/^\/+/, '').split('/')[0] || 'home'
 }
 
-/** Theme page catalog derived from public router (single source of truth). */
-export function getPublicThemePageCatalog(): ThemePageCatalogItem[] {
-  const root = publicRoutes.find((r: RouteRecordRaw) => r.path === '/')
-  const children = (root?.children || []) as RouteRecordRaw[]
+/** Theme page catalog derived from active router (single source of truth). */
+export function getPublicThemePageCatalog(router: Router): ThemePageCatalogItem[] {
+  const routes = router.getRoutes();
   const seen = new Set<string>()
   const items: ThemePageCatalogItem[] = []
 
-  for (const child of children) {
+  for (const child of routes) {
     const themePage = child.meta?.themePage
     if (typeof themePage !== 'string' || !themePage.startsWith('pages/')) continue
     // Skip dynamic post/page shells

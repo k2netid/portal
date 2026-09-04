@@ -220,16 +220,15 @@
             {{ loginLabel }}
           </Button>
 
-          <Button
+          <a
             v-if="ctaUrl"
-            as="a"
             :href="ctaUrl"
-            variant="primary"
-            size="sm"
-            class="hidden sm:inline-flex font-bold !bg-amber-500 hover:!bg-amber-400 !text-slate-950 shadow-md shadow-amber-500/20 border-none"
+            :target="ctaUrl.startsWith('http') ? '_blank' : undefined"
+            :rel="ctaUrl.startsWith('http') ? 'noopener noreferrer' : undefined"
+            class="hidden sm:inline-flex items-center justify-center font-bold !bg-amber-500 hover:!bg-amber-400 !text-slate-950 shadow-md shadow-amber-500/20 px-3.5 py-1.5 text-xs rounded-[var(--sarangenge-radius-sm,0.85rem)] transition-all"
           >
             {{ ctaText }}
-          </Button>
+          </a>
 
           <button
             v-if="!isDesktop"
@@ -441,7 +440,7 @@ const device = useResponsiveDevice();
 const memberStore = useMemberStore();
 const authStore = useAuthStore();
 const systemStore = useSystemStore();
-const { displaySchoolName, displayAccreditation, displayNpsn } = useSarangengeIdentity();
+const { displaySchoolName, displayAccreditation, displayNpsn, ppdbPortalUrl } = useSarangengeIdentity();
 
 const isDesktop = computed(() => device.value === 'desktop');
 const mobileMenuOpen = ref(false);
@@ -483,12 +482,12 @@ const loginLabel = computed(() => {
 const ctaText = computed(() => {
   const raw = getSetting('header_cta_text', '');
   if (typeof raw === 'string' && raw.trim()) return raw.trim();
-  return tt('header.getStarted', 'Info PPDB');
+  return tt('header.getStarted', 'PPDB Jabar');
 });
 
 const ctaUrl = computed(() => {
-  const raw = getSetting('header_cta_url', '/contact');
-  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/contact';
+  const raw = getSetting('header_cta_url', '');
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : ppdbPortalUrl.value;
 });
 
 const handleSelectLanguage = async (code: string) => {
@@ -553,36 +552,37 @@ const defaultNavItems = computed((): MenuItem[] => [
     type: 'custom',
     sort_order: 1,
     children: [
-      { id: 'sg-nav-about-profil', title: tt('pages.about.title', 'Profil Sekolah'), url: '/about#profil', type: 'custom', description: 'Visi, misi, sejarah dan nilai luhur' },
-      { id: 'sg-nav-about-tim', title: tt('header.tim', 'Guru & Staf'), url: '/tim', type: 'custom', description: 'Direktori pendidik dan pimpinan sekolah' },
-      { id: 'sg-nav-about-achievement', title: tt('header.achievement', 'Prestasi Siswa'), url: '/achievement', type: 'custom', description: 'Galeri medali & kejuaraan' },
-      { id: 'sg-nav-about-services', title: tt('header.services', 'Fasilitas Kampus'), url: '/services#smart-class', type: 'custom', description: 'Smart Class, Lab & Sport Arena' },
+      { id: 'sg-nav-about-history', title: 'Visi & Sejarah', url: '/about#visi', type: 'custom', description: 'Falsafah dan keunggulan sekolah' },
+      { id: 'sg-nav-about-facilities', title: 'Fasilitas & Bengkel', url: '/facilities', type: 'custom', description: 'Laboratorium & bengkel kejuruan' },
+      { id: 'sg-nav-about-team', title: tt('header.teachers', 'Guru & Staf'), url: '/tim', type: 'custom', description: 'Pendidik bersertifikasi industri' },
+      { id: 'sg-nav-about-achieve', title: tt('header.achievements', 'Prestasi Siswa'), url: '/achievement', type: 'custom', description: 'Medali LKS & juara nasional' },
     ],
   },
   {
-    id: 'sg-nav-solusi',
-    title: tt('header.solusi', 'Akademik'),
-    url: '/solusi',
+    id: 'sg-nav-programs',
+    title: 'Program Keahlian',
+    url: '/programs',
     type: 'custom',
     sort_order: 2,
     children: [
-      { id: 'sg-nav-solusi-program', title: 'Program & Kurikulum', url: '/solusi#programs', type: 'custom', description: 'Kurikulum Merdeka & Cambridge Track' },
-      { id: 'sg-nav-solusi-career', title: tt('header.career', 'Jejaring Alumni'), url: '/career-center', type: 'custom', description: 'Tracer study & bimbingan kampus' },
+      { id: 'sg-nav-prog-dpib', title: 'DPIB (Desain Bangunan)', url: '/programs#dpib', type: 'custom', description: 'Arsitektur & Pemodelan BIM' },
+      { id: 'sg-nav-prog-titl', title: 'TITL (Teknik Listrik)', url: '/programs#titl', type: 'custom', description: 'Ketenagalistrikan & Otomasi PLC' },
+      { id: 'sg-nav-prog-tpm', title: 'TPM (Teknik Pemesinan)', url: '/programs#tpm', type: 'custom', description: 'CNC Milling & Bubut Presisi' },
+      { id: 'sg-nav-prog-tkro', title: 'TKRO (Teknik Otomotif)', url: '/programs#tkro', type: 'custom', description: 'Perawatan Kendaraan Ringan' },
+      { id: 'sg-nav-prog-tav', title: 'TAV (Audio Video)', url: '/programs#tav', type: 'custom', description: 'Elektronika & Smart IoT' },
+      { id: 'sg-nav-prog-tflm', title: 'TFLM (Pengelasan)', url: '/programs#tflm', type: 'custom', description: 'Fabrikasi Logam & Las Industri' },
     ],
   },
   {
-    id: 'sg-nav-pricing',
-    title: tt('header.pricing', 'PPDB & Biaya'),
-    url: '/pricing',
+    id: 'sg-nav-bkk',
+    title: 'BKK & Karir',
+    url: '/career',
     type: 'custom',
     sort_order: 3,
-    children: [
-      { id: 'sg-nav-pricing-ppdb', title: 'Informasi & Alur PPDB', url: '/contact#ppdb', type: 'custom', description: 'Jalur reguler, prestasi & beasiswa' },
-      { id: 'sg-nav-pricing-biaya', title: 'Biaya & Skema Beasiswa', url: '/pricing#beasiswa', type: 'custom', description: 'Transparansi SPP & beasiswa' },
-    ],
   },
   { id: 'sg-nav-blog', title: tt('header.blog', 'Warta'), url: '/blog', type: 'custom', sort_order: 4 },
-  { id: 'sg-nav-contact', title: tt('header.contact', 'Kontak'), url: '/contact', type: 'custom', sort_order: 5 },
+  { id: 'sg-nav-ppdb', title: 'PPDB Jabar', url: ppdbPortalUrl.value, type: 'custom', sort_order: 5 },
+  { id: 'sg-nav-contact', title: tt('header.contact', 'Kontak'), url: '/contact', type: 'custom', sort_order: 6 },
 ]);
 
 const navItems = computed<MenuItem[]>(() => {

@@ -203,24 +203,90 @@ class FoundationSeeder extends Seeder
 
     protected function seedSettings(): void
     {
+        $appName = (string) config('app.name', 'Portal SMKN 6 Bandung');
+        $superEmailRaw = config('app.super_admin_email');
+        $superEmail = is_scalar($superEmailRaw) && (string) $superEmailRaw !== '' ? (string) $superEmailRaw : 'super@jejakawan.com';
+        $appUrl = (string) config('app.url', 'http://localhost');
+
         $settings = [
             // System Settings
-            ['key' => 'app_name', 'value' => 'K2NET', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'app_name', 'value' => $appName, 'group' => 'system', 'type' => 'string'],
             ['key' => 'license_type', 'value' => 'pro', 'group' => 'system', 'type' => 'string'],
             ['key' => 'maintenance_mode', 'value' => '0', 'group' => 'system', 'type' => 'boolean'],
-            ['key' => 'timezone', 'value' => 'Asia/Jakarta', 'group' => 'general', 'type' => 'string'],
-            ['key' => 'log_retention_days', 'value' => '90', 'group' => 'monitoring', 'type' => 'integer'],
+            ['key' => 'maintenance_title', 'value' => 'Situs Sedang Dalam Pemeliharaan', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'maintenance_message', 'value' => 'Kami sedang melakukan pemeliharaan sistem berkala. Mohon kembali beberapa saat lagi.', 'group' => 'system', 'type' => 'text'],
+            ['key' => 'maintenance_countdown_enabled', 'value' => '0', 'group' => 'system', 'type' => 'boolean'],
+            ['key' => 'maintenance_end_time', 'value' => '', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'timezone', 'value' => 'Asia/Jakarta', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'date_format', 'value' => 'Y-m-d', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'time_format', 'value' => 'H:i:s', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'items_per_page', 'value' => '20', 'group' => 'system', 'type' => 'integer'],
+            ['key' => 'content.autosave_interval_seconds', 'value' => '30', 'group' => 'system', 'type' => 'integer'],
 
             // General / Identity (Site Settings)
-            ['key' => 'site_name', 'value' => 'K2NET', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'site_name', 'value' => $appName, 'group' => 'general', 'type' => 'string'],
             ['key' => 'site_logo', 'value' => '/logo.png', 'group' => 'general', 'type' => 'image'],
             ['key' => 'site_favicon', 'value' => '/favicon.ico', 'group' => 'general', 'type' => 'image'],
-            ['key' => 'site_description', 'value' => 'Internet Service Provider & Managed Service Provider', 'group' => 'general', 'type' => 'string'],
-            ['key' => 'site_url', 'value' => 'http://localhost', 'group' => 'general', 'type' => 'string'],
-            ['key' => 'admin_email', 'value' => 'info@k2net.id', 'group' => 'brand', 'type' => 'string'],
-            ['key' => 'brand_logo', 'value' => '', 'group' => 'brand', 'type' => 'image'],
-            ['key' => 'brand_favicon', 'value' => '', 'group' => 'brand', 'type' => 'image'],
+            ['key' => 'site_description', 'value' => 'Portal Resmi SMKN 6 Bandung', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'site_url', 'value' => $appUrl, 'group' => 'general', 'type' => 'string'],
+            ['key' => 'admin_email', 'value' => $superEmail, 'group' => 'brand', 'type' => 'string'],
+            ['key' => 'app_logo', 'value' => '/logo.png', 'group' => 'brand', 'type' => 'image'],
+            ['key' => 'app_favicon', 'value' => '/favicon.ico', 'group' => 'brand', 'type' => 'image'],
+            ['key' => 'brand_logo', 'value' => '/logo.png', 'group' => 'brand', 'type' => 'image'],
+            ['key' => 'brand_favicon', 'value' => '/favicon.ico', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
+
+            // Contact & Social
+            ['key' => 'contact_email', 'value' => (string) config('mail.from.address', 'portal@smkn6bandung.sch.id'), 'group' => 'general', 'type' => 'string'],
+            ['key' => 'contact_phone', 'value' => '', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'contact_address', 'value' => '', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'social_twitter', 'value' => '', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'social_github', 'value' => '', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'social_linkedin', 'value' => '', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'social_instagram', 'value' => '', 'group' => 'general', 'type' => 'string'],
+
+            // Performance Settings
+            ['key' => 'enable_cache', 'value' => '1', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'cache_driver', 'value' => 'file', 'group' => 'performance', 'type' => 'string'],
+            ['key' => 'cache_ttl', 'value' => '3600', 'group' => 'performance', 'type' => 'integer'],
+            ['key' => 'enable_cdn', 'value' => '0', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'cdn_url', 'value' => '', 'group' => 'performance', 'type' => 'string'],
+            ['key' => 'cdn_preset', 'value' => 'custom', 'group' => 'performance', 'type' => 'string'],
+            ['key' => 'cdn_included_dirs', 'value' => 'assets, storage', 'group' => 'performance', 'type' => 'string'],
+            ['key' => 'cdn_excluded_extensions', 'value' => '.php, .json', 'group' => 'performance', 'type' => 'string'],
+            ['key' => 'enable_compression', 'value' => '1', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'minify_html', 'value' => '0', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'minify_css', 'value' => '0', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'minify_js', 'value' => '0', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'query_cache_enabled', 'value' => '1', 'group' => 'performance', 'type' => 'boolean'],
+            ['key' => 'query_cache_ttl', 'value' => '3600', 'group' => 'performance', 'type' => 'integer'],
+
+            // Media Settings
+            ['key' => 'storage_driver', 'value' => 'local', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'max_upload_size', 'value' => '10240', 'group' => 'media', 'type' => 'integer'],
+            ['key' => 'allowed_image_types', 'value' => 'jpg,jpeg,png,webp,gif', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'allowed_file_types', 'value' => 'pdf,doc,docx,xls,xlsx,zip,rar', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'allowed_upload_extensions', 'value' => 'jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,txt,zip', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'thumbnail_width', 'value' => '300', 'group' => 'media', 'type' => 'integer'],
+            ['key' => 'thumbnail_height', 'value' => '300', 'group' => 'media', 'type' => 'integer'],
+            ['key' => 'enable_watermark', 'value' => '0', 'group' => 'media', 'type' => 'boolean'],
+            ['key' => 'watermark_text', 'value' => $appName, 'group' => 'media', 'type' => 'string'],
+            ['key' => 'aws_access_key_id', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'aws_secret_access_key', 'value' => '', 'group' => 'media', 'type' => 'password'],
+            ['key' => 'aws_default_region', 'value' => 'us-east-1', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'aws_bucket', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'aws_endpoint', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'google_client_id', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'google_client_secret', 'value' => '', 'group' => 'media', 'type' => 'password'],
+            ['key' => 'google_refresh_token', 'value' => '', 'group' => 'media', 'type' => 'password'],
+            ['key' => 'google_folder_id', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'ftp_host', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'ftp_username', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'ftp_password', 'value' => '', 'group' => 'media', 'type' => 'password'],
+            ['key' => 'ftp_root', 'value' => '', 'group' => 'media', 'type' => 'string'],
+            ['key' => 'ftp_port', 'value' => '21', 'group' => 'media', 'type' => 'integer'],
+            ['key' => 'ftp_ssl', 'value' => '0', 'group' => 'media', 'type' => 'boolean'],
+            ['key' => 'dropbox_authorization_token', 'value' => '', 'group' => 'media', 'type' => 'password'],
 
             // Console appearance (admin dashboard tokens)
             ['key' => 'console_color_preset', 'value' => 'custom', 'group' => 'console_branding', 'type' => 'string'],
@@ -229,9 +295,9 @@ class FoundationSeeder extends Seeder
             ['key' => 'console_sidebar_accent', 'value' => '#0f172a', 'group' => 'console_branding', 'type' => 'string'],
 
             // SEO Settings
-            ['key' => 'meta_title', 'value' => 'K2NET', 'group' => 'seo', 'type' => 'string'],
-            ['key' => 'meta_description', 'value' => 'Internet Service Provider & Managed Service Provider — PT Kirana Karina Network', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_keywords', 'value' => 'k2net, isp, msp, internet, bandung', 'group' => 'seo', 'type' => 'string'],
+            ['key' => 'meta_title', 'value' => $appName, 'group' => 'seo', 'type' => 'string'],
+            ['key' => 'meta_description', 'value' => 'Portal Resmi SMKN 6 Bandung', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_keywords', 'value' => 'smkn6bandung, portal, sekolah, bandung', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_analytics_id', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_search_console', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'enable_sitemap', 'value' => '1', 'group' => 'seo', 'type' => 'boolean'],
@@ -249,10 +315,11 @@ class FoundationSeeder extends Seeder
             ['key' => 'mail_username', 'value' => '', 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_password', 'value' => '', 'group' => 'email', 'type' => 'password'],
             ['key' => 'mail_encryption', 'value' => 'tls', 'group' => 'email', 'type' => 'string'],
-            ['key' => 'mail_from_address', 'value' => 'hello@jejakawan.com', 'group' => 'email', 'type' => 'string'],
-            ['key' => 'mail_from_name', 'value' => 'Jejakawan', 'group' => 'email', 'type' => 'string'],
+            ['key' => 'mail_from_address', 'value' => (string) config('mail.from.address', 'portal@smkn6bandung.sch.id'), 'group' => 'email', 'type' => 'string'],
+            ['key' => 'mail_from_name', 'value' => $appName, 'group' => 'email', 'type' => 'string'],
 
             // Monitoring Settings
+            ['key' => 'log_retention_days', 'value' => '90', 'group' => 'monitoring', 'type' => 'integer'],
             ['key' => 'activity_log_retention_days', 'value' => '90', 'group' => 'monitoring', 'type' => 'integer'],
             ['key' => 'security_log_retention_days', 'value' => '180', 'group' => 'monitoring', 'type' => 'integer'],
             ['key' => 'login_history_retention_days', 'value' => '30', 'group' => 'monitoring', 'type' => 'integer'],
@@ -307,6 +374,14 @@ class FoundationSeeder extends Seeder
             ['key' => 'shield_enable_ip_intelligence', 'value' => '0', 'group' => 'security', 'type' => 'boolean'],
             ['key' => 'shield_allowed_countries', 'value' => '[]', 'group' => 'security', 'type' => 'json'],
             ['key' => Setting::KEY_CONSOLE_DASHBOARD_SLUG, 'value' => 'ja-dash', 'group' => 'security', 'type' => 'string'],
+            ['key' => 'scanner_auto_block_threshold', 'value' => '10', 'group' => 'security', 'type' => 'integer'],
+            ['key' => 'security_learned_scanner_paths', 'value' => '[]', 'group' => 'security', 'type' => 'json'],
+            ['key' => 'abuseipdb_api_key', 'value' => '', 'group' => 'security', 'type' => 'password'],
+            ['key' => 'threat_intel_auto_block_threshold', 'value' => '75', 'group' => 'security', 'type' => 'integer'],
+            ['key' => 'telegram_bot_token', 'value' => '', 'group' => 'security', 'type' => 'password'],
+            ['key' => 'telegram_chat_id', 'value' => '', 'group' => 'security', 'type' => 'string'],
+            ['key' => 'email_to', 'value' => '', 'group' => 'security', 'type' => 'string'],
+            ['key' => 'webhook_url', 'value' => '', 'group' => 'security', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {
