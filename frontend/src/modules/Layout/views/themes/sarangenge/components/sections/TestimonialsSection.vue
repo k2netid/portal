@@ -50,23 +50,27 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { MessageSquare, Quote } from 'lucide-vue-next';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 
-const testimonials = [
+const { displaySchoolName } = useSarangengeIdentity();
+
+const testimonials = computed(() => [
   {
     name: 'Ir. Hendra Kusuma',
     role: 'Orang Tua Siswa Kelas X',
-    quote: 'Sarangenge tidak hanya mengajarkan akademik tinggi, tapi sangat memperhatikan adab dan mental anak. Komunikasi guru dengan orang tua sangat transparan dan hangat.',
+    quote: `${displaySchoolName.value} tidak hanya mengajarkan akademik tinggi, tapi sangat memperhatikan adab dan mental anak. Komunikasi guru dengan orang tua sangat transparan dan hangat.`,
   },
   {
     name: 'Siti Sarah Nurhaliza',
     role: 'Alumni 2024 · Mahasiswi Kedokteran UI',
-    quote: 'Bimbingan riset sains dan pembinaan guru di Sarangenge menjadi modal paling berharga saat saya menempuh seleksi masuk fakultas kedokteran.',
+    quote: `Bimbingan riset sains dan pembinaan guru di ${displaySchoolName.value} menjadi modal paling berharga saat saya menempuh seleksi masuk perguruan tinggi dan karir profesional.`,
   },
   {
     name: 'Rian Pratama',
     role: 'Ketua OSIS Periode 2025/2026',
-    quote: 'Fasilitas AI lab, klub debat, dan ruang diskusi di sekolah membuat kami bebas berinovasi dan percaya diri bersaing di kancah nasional.',
+    quote: 'Fasilitas bengkel modern, AI lab, dan ruang diskusi di sekolah membuat kami bebas berinovasi dan percaya diri bersaing di kancah nasional.',
   },
-];
+]);
 </script>

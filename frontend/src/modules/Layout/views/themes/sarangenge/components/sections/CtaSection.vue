@@ -12,7 +12,7 @@
           </span>
 
           <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white font-heading tracking-tight">
-            {{ t('cta.title', 'Siap Bergabung dengan Keluarga Besar Sarangenge?') }}
+            {{ ctaTitle }}
           </h2>
 
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
@@ -49,11 +49,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { GraduationCap, PhoneCall, MessageCircle } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 
-const { whatsAppUrl } = useSarangengeIdentity();
+const { whatsAppUrl, displaySchoolName } = useSarangengeIdentity();
 const { t } = useThemeI18n('sarangenge');
+
+const ctaTitle = computed(() => {
+  return t('cta.title', { school: displaySchoolName.value }, `Siap Bergabung dengan Keluarga Besar ${displaySchoolName.value}?`);
+});
 </script>

@@ -83,19 +83,21 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { Trophy, ArrowRight, Medal } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
+const { displaySchoolName } = useSarangengeIdentity();
 
 const achievementsTitle = computed(() => {
-  return (getSetting('achievements_title', '') as string) || t('pages.achievement.title', 'Prestasi & Penghargaan Siswa');
+  return (getSetting('achievements_title', '') as string) || t('pages.achievement.title', { school: displaySchoolName.value }, `Prestasi & Penghargaan Siswa ${displaySchoolName.value}`);
 });
 
 const achievementsSubtitle = computed(() => {
   return (getSetting('achievements_subtitle', '') as string) || t('pages.achievement.subtitle', 'Bukti dedikasi dan keunggulan akademik, sains, seni, dan olahraga di tingkat regional hingga internasional.');
 });
 
-const achievementsList = [
+const achievementsList = computed(() => [
   {
     year: '2026',
     level: 'Tingkat Internasional',
@@ -109,7 +111,7 @@ const achievementsList = [
     level: 'Tingkat Nasional',
     title: 'Juara 1 National Autonomous Robotics Championship',
     description: 'Inovasi robot pemilah sampah berbasis Computer Vision dan AI Machine Learning.',
-    student: 'Tim Robotika Sarangenge',
+    student: `Tim Robotika ${displaySchoolName.value}`,
     category: 'Klub STEM & Robotika',
   },
   {
@@ -120,5 +122,5 @@ const achievementsList = [
     student: 'Nadia Putri Anindita',
     category: 'Klub English & Debat',
   },
-];
+]);
 </script>

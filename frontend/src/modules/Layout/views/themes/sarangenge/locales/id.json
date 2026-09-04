@@ -22,7 +22,7 @@
     "closeMenuAria": "Tutup menu"
   },
   "footer": {
-    "description": "SMK Negeri 6 Bandung (Pusat Keunggulan) berkomitmen menyelenggarakan pendidikan vokasi berkualitas, berintegritas, berstandar industri, dan berlandaskan kearifan lokal Jawa Barat.",
+    "description": "{school} berkomitmen menyelenggarakan pendidikan berkualitas, berintegritas, berstandar tinggi, dan berlandaskan kearifan lokal.",
     "programs": "Program & Kurikulum",
     "admissions": "Informasi PPDB",
     "contact": "Kontak & Hotline",
@@ -60,7 +60,7 @@
       "tileBerita": "Berita & Agenda",
       "tileBeritaDesc": "Aktivitas resmi, kalender akademik, jadwal asesmen, dan siaran pers sekolah.",
       "tileProfil": "Profil Sekolah",
-      "tileProfilDesc": "Visi, misi, sejarah, dan nilai luhur pendidikan Sarangenge.",
+      "tileProfilDesc": "Visi, misi, sejarah, dan nilai luhur pendidikan {school}.",
       "tileKontak": "Kontak & Lokasi",
       "tileKontakDesc": "Alamat kampus, jam operasional, dan saluran WhatsApp hotline PPDB."
     },
@@ -147,10 +147,10 @@
     },
     "career_center": {
       "title": "Jejaring Alumni & Bimbingan Studi",
-      "subtitle": "Menjaga ikatan kekeluargaan alumni Sarangenge di seluruh dunia serta memfasilitasi bimbingan karir dan beasiswa bagi siswa."
+      "subtitle": "Menjaga ikatan kekeluargaan alumni {school} di seluruh dunia serta memfasilitasi bimbingan karir dan beasiswa bagi siswa."
     },
     "achievement": {
-      "title": "Prestasi & Penghargaan Sivitas Sarangenge",
+      "title": "Prestasi & Penghargaan Sivitas {school}",
       "subtitle": "Rangkuman prestasi kejuaraan akademik, sains, teknologi, seni budaya, dan olahraga di kancah nasional maupun internasional."
     },
     "tim": {
@@ -188,7 +188,7 @@
   },
   "cta": {
     "badge": "Mekar Bersama Cahaya Pagi",
-    "title": "Siap Bergabung dengan Keluarga Besar Sarangenge?",
+    "title": "Siap Bergabung dengan Keluarga Besar {school}?",
     "subtitle": "Dapatkan informasi lengkap mengenai kuota pendaftaran, jadwal seleksi, beasiswa, dan konsultasi kurikulum bersama tim konselor kami.",
     "primary": "Daftar PPDB / Konsultasi",
     "whatsapp": "Chat WhatsApp Hotline"

@@ -30,7 +30,7 @@
               {{ t('pages.career_center.title', 'Jejaring Alumni & Bimbingan Studi') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {{ t('pages.career_center.subtitle', 'Menjaga ikatan kekeluargaan alumni Sarangenge di seluruh dunia serta memfasilitasi bimbingan karir dan beasiswa bagi siswa.') }}
+              {{ t('pages.career_center.subtitle', { school: displaySchoolName }, `Menjaga ikatan kekeluargaan alumni ${displaySchoolName} di seluruh dunia serta memfasilitasi bimbingan karir dan beasiswa bagi siswa.`) }}
             </p>
           </div>
         </div>
@@ -117,6 +117,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
@@ -129,13 +130,13 @@ const { t } = useThemeI18n('sarangenge');
 const { displaySchoolName } = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('career_center');
 
-const alumniStories = [
+const alumniStories = computed(() => [
   {
     name: 'dr. Farhan Maulana',
     grad: 'Alumni 2018',
     campus: 'Fakultas Kedokteran UI',
     role: 'Dokter Residen & Peneliti Medis',
-    story: 'Pendidikan disiplin riset dan laboratorium biologi di Sarangenge meletakkan pondasi kuat bagi karir kedokteran saya.',
+    story: `Pendidikan disiplin riset dan laboratorium di ${displaySchoolName.value} meletakkan pondasi kuat bagi karir profesional saya.`,
   },
   {
     name: 'Annisa Larasati, S.T., M.Sc.',
@@ -151,5 +152,5 @@ const alumniStories = [
     role: 'Co-Founder Startup Agritech',
     story: 'Jiwa kepemimpinan dan empati sosial yang ditanamkan selama bersekolah menjadi kompas utama dalam mendirikan usaha.',
   },
-];
+]);
 </script>

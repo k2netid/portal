@@ -22,7 +22,7 @@
     "closeMenuAria": "Tutup menu"
   },
   "footer": {
-    "description": "Sarangenge kainspirasi ku kembang sarangenge (bunga matahari) sarta haneutna panonpoé isuk anu numuwuhkeun budi pekerti luhur, sains, sarta integritas.",
+    "description": "{school} komitmen ngalaksanakeun atikan anu miboga kualitas, integritas, standar luhur, sarta dumasar kana ajén-inajén luhur.",
     "programs": "Program & Kurikulum",
     "admissions": "Émbaran PPDB",
     "contact": "Kontak & Hotline",
@@ -60,7 +60,7 @@
       "tileBerita": "Warta & Agenda",
       "tileBeritaDesc": "Kagiatan resmi, kalénder akademik, jadwal asesmén, sareng siaran pérs sakola.",
       "tileProfil": "Profil Sakola",
-      "tileProfilDesc": "Visi, misi, sajarah, sareng ajén-inajén atikan Sarangenge.",
+      "tileProfilDesc": "Visi, misi, sajarah, sareng ajén-inajén atikan {school}.",
       "tileKontak": "Kontak & Lokasi",
       "tileKontakDesc": "Alamat kampus, jam operasional, sareng saluran WhatsApp hotline PPDB."
     },
@@ -147,10 +147,10 @@
     },
     "career_center": {
       "title": "Jaringan Alumni & Bimbingan Studi",
-      "subtitle": "Ngajaga beungkeutan kakulawargaan alumni Sarangenge di sakumna dunya sarta ngabimbing karir sareng beasiswa pikeun siswa."
+      "subtitle": "Ngajaga beungkeutan kakulawargaan alumni {school} di sakumna dunya sarta ngabimbing karir sareng beasiswa pikeun siswa."
     },
     "achievement": {
-      "title": "Préstasi & Pangajén Sivitas Sarangenge",
+      "title": "Préstasi & Pangajén Sivitas {school}",
       "subtitle": "Rangkuman préstasi kajuaraan akademik, sains, téknologi, seni budaya, sareng olahraga di tingkat nasional dugi ka internasional."
     },
     "tim": {
@@ -188,7 +188,7 @@
   },
   "cta": {
     "badge": "Mekar Bareng Cahaya Isuk",
-    "title": "Siap Gabung jeung Kulawarga Sarangenge?",
+    "title": "Siap Gabung jeung Kulawarga {school}?",
     "subtitle": "Meunangkeun émbaran lengkep ngeunaan kuota pendaptaran, jadwal seleksi, beasiswa, sareng konsultasi kurikulum sareng tim konselor kami.",
     "primary": "Daftar PPDB / Konsultasi",
     "whatsapp": "Chat WhatsApp Hotline"

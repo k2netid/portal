@@ -30,7 +30,7 @@
               Mengenal Lebih Dekat
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
-              {{ t('pages.about.title', 'Profil & Filosofi Pendidikan Sarangenge') }}
+              {{ t('pages.about.title', { school: displaySchoolName }, `Profil & Filosofi Pendidikan ${displaySchoolName}`) }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {{ t('pages.about.subtitle', 'Mendedikasikan ekosistem pembelajaran holistik yang memadukan keunggulan sains, teknologi, dan keteguhan akhlak mulia.') }}
@@ -48,10 +48,10 @@
             </div>
             <div>
               <h3 class="text-lg font-bold text-foreground font-heading">
-                Drs. H. Rahmat Sudrajat, M.Pd.
+                {{ displayPrincipalName }}
               </h3>
               <p class="text-xs text-primary font-bold">
-                Kepala Sekolah Sarangenge
+                Kepala {{ displaySchoolName }}
               </p>
             </div>
           </div>
@@ -63,10 +63,10 @@
             </h2>
             <div class="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3">
               <p>
-                "Selamat datang di portal resmi Sarangenge. Filosofi nama *Sarangenge* terilhami dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi (haneut moyan) — saat matahari mulai memancarkan cahaya kebaikan dan harapan baru bagi alam semesta."
+                "Selamat datang di portal resmi {{ displaySchoolName }}. Kami mendedikasikan ekosistem pembelajaran holistik berstandar industri dan berakar pada nilai karakter unggul."
               </p>
               <p>
-                "Sebagaimana kembang sarangenge yang selalu merekah menghadap sumber cahaya, kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam kebaikan budi pekerti, dan percaya diri menjadi pelopor kemajuan di era global."
+                "Kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam integritas budi pekerti, dan percaya diri menjadi pelopor kemajuan di era global."
               </p>
             </div>
           </div>
@@ -160,7 +160,7 @@ import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScr
 import { Building2, Quote, Target, Compass, ShieldCheck, Heart, Sparkles, Users } from 'lucide-vue-next';
 
 const { t } = useThemeI18n('sarangenge');
-const { displaySchoolName } = useSarangengeIdentity();
+const { displaySchoolName, displayPrincipalName } = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('about');
 
 useThemeHashScroll(128);

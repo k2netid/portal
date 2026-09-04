@@ -22,7 +22,7 @@
     "closeMenuAria": "Close menu"
   },
   "footer": {
-    "description": "Sarangenge is inspired by the sunflower and the gentle morning dawn that nurtures noble character, academic mastery, and future-ready innovation.",
+    "description": "{school} is committed to delivering quality education, integrity, high standards, and noble character.",
     "programs": "Programs & Curriculum",
     "admissions": "Admissions Info",
     "contact": "Contact & Hotline",
@@ -60,7 +60,7 @@
       "tileBerita": "News & Calendar",
       "tileBeritaDesc": "Official updates, academic calendar, assessment schedule, and campus life stories.",
       "tileProfil": "School Profile",
-      "tileProfilDesc": "Vision, mission, history, and founding values of Sarangenge education.",
+      "tileProfilDesc": "Vision, mission, history, and founding values of {school}.",
       "tileKontak": "Contact & Campus Location",
       "tileKontakDesc": "Campus address, operating hours, and WhatsApp admissions hotline."
     },
@@ -147,10 +147,10 @@
     },
     "career_center": {
       "title": "Alumni Network & Career Guidance",
-      "subtitle": "Fostering global alumni bonds and providing university admission counseling and scholarship mentorship."
+      "subtitle": "Fostering global {school} alumni bonds and providing university admission counseling and scholarship mentorship."
     },
     "achievement": {
-      "title": "Sarangenge Community Achievements",
+      "title": "{school} Community Achievements",
       "subtitle": "Celebrating outstanding milestones in academic olympiads, sciences, technology, arts, and athletics."
     },
     "tim": {
@@ -188,7 +188,7 @@
   },
   "cta": {
     "badge": "Blooming with the Morning Dawn",
-    "title": "Ready to Join the Sarangenge Family?",
+    "title": "Ready to Join the {school} Family?",
     "subtitle": "Get full details on enrollment quotas, selection schedules, scholarships, and curriculum consultation with our counselors.",
     "primary": "Apply PPDB / Consultation",
     "whatsapp": "Chat WhatsApp Hotline"

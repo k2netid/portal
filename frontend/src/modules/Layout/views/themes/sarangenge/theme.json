@@ -546,6 +546,18 @@
             "category": "Animations",
             "scope": "platform"
         },
+        "school_name": {
+            "label": "Nama Resmi Sekolah",
+            "type": "text",
+            "default": "SMK Negeri 6 Bandung",
+            "category": "School Info"
+        },
+        "school_tagline": {
+            "label": "Slogan / Tagline Sekolah",
+            "type": "text",
+            "default": "Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan",
+            "category": "School Info"
+        },
         "school_accreditation": {
             "label": "Status Akreditasi",
             "type": "text",
@@ -753,13 +765,13 @@
         "footer_about_text": {
             "label": "Teks Deskripsi Footer",
             "type": "textarea",
-            "default": "Sarangenge adalah institusi pendidikan terdepan yang berfokus pada keunggulan akademik, integritas karakter, dan kesiapan teknologi masa depan.",
+            "default": "",
             "category": "Footer"
         },
         "footer_copyright": {
             "label": "Teks Hak Cipta Footer",
             "type": "text",
-            "default": "© 2026 Sarangenge Academy. Hak cipta dilindungi undang-undang.",
+            "default": "",
             "category": "Footer"
         }
     },

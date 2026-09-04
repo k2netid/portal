@@ -88,7 +88,7 @@
               </div>
             </div>
             <h3 class="text-lg font-bold text-foreground font-heading">
-              Sarangenge Science, Tech & Cultural Exhibition
+              {{ displaySchoolName }} Science, Tech & Cultural Exhibition
             </h3>
             <p class="text-xs text-muted-foreground leading-relaxed">
               Unjuk gelar proyek penelitian sains, demo robotika AI, dan pameran seni budaya nusantara karya seluruh siswa.
@@ -152,9 +152,11 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { Calendar, ArrowRight } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
+const { displaySchoolName } = useSarangengeIdentity();
 
 const announcementsTitle = computed(() => {
   return (getSetting('announcements_title', '') as string) || t('pages.home.tileBerita', 'Agenda & Kabar Sekolah Terkini');

@@ -83,7 +83,7 @@
 
         <div class="space-y-1">
           <div class="text-2xl sm:text-3xl font-extrabold font-heading text-emerald-400">
-            A (Unggul)
+            {{ displayAccreditation }}
           </div>
           <div class="text-xs sm:text-sm text-slate-300 font-medium">
             Akreditasi BAN-S/M
@@ -100,9 +100,11 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { SunMedium, GraduationCap, ArrowRight } from 'lucide-vue-next';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
+const { displayAccreditation } = useSarangengeIdentity();
 
 const heroBadge = computed(() => {
   return (getSetting('hero_badge_text', '') as string) || t('pages.home.heroBadge', 'Penerimaan Peserta Didik Baru (PPDB) 2026/2027');

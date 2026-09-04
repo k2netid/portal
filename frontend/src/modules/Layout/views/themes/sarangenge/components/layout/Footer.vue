@@ -273,7 +273,11 @@ const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?:
 const footerAboutText = computed(() => {
   const fromTheme = getSetting('footer_about_text', '');
   if (fromTheme && typeof fromTheme === 'string') return fromTheme;
-  return tt('footer.description', 'Sarangenge terinspirasi dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi yang menumbuhkan kebaikan budi, kecerdasan sains, dan integritas luhur.');
+  return tt(
+    'footer.description',
+    { school: displaySchoolName.value },
+    `${displaySchoolName.value} berkomitmen menyelenggarakan pendidikan berkualitas, berintegritas, berstandar tinggi, dan berlandaskan kearifan lokal.`
+  );
 });
 
 const footerCopyrightText = computed(() => {

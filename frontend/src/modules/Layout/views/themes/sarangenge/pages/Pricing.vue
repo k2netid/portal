@@ -142,7 +142,7 @@
                 Jalur Beasiswa
               </span>
               <h3 class="text-2xl font-bold text-foreground font-heading">
-                Beasiswa Bintang Sarangenge
+                Beasiswa Bintang {{ displaySchoolName }}
               </h3>
               <p class="text-xs text-muted-foreground leading-relaxed">
                 Potongan biaya SPP dan uang gedung 50% hingga 100% (Bebas Biaya) bagi peraih medali olimpiade dan penghafal Quran.

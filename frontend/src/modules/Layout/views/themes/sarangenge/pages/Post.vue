@@ -43,7 +43,7 @@
               <div class="flex items-center gap-4 text-xs text-muted-foreground pt-1">
                 <span>{{ t('common.publishedOn', 'Diterbitkan') }} {{ post.published_at ? new Date(post.published_at).toLocaleDateString() : 'Baru saja' }}</span>
                 <span>·</span>
-                <span>{{ post.author?.name || 'Redaksi Sarangenge' }}</span>
+                <span>{{ post.author?.name || `Redaksi ${displaySchoolName}` }}</span>
               </div>
             </div>
 
@@ -162,7 +162,10 @@ import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shar
 import BlogSidebar from '@/modules/Layout/views/themes/sarangenge/components/blog/BlogSidebar.vue';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { ArrowLeft } from 'lucide-vue-next';
+
+const { displaySchoolName } = useSarangengeIdentity();
 
 interface Post {
   id: string | number;
@@ -275,7 +278,7 @@ onMounted(async () => {
       id: 1,
       title: 'Pembukaan Pendaftaran Siswa Baru (PPDB) 2026/2027 Gelombang 1',
       slug,
-      body: '<p>Penerimaan Peserta Didik Baru (PPDB) tahun ajaran 2026/2027 resmi dibuka mulai hari ini. Sekolah Sarangenge menyambut calon siswa berkarakter unggul melalui tiga jalur utama: Jalur Prestasi Akademik & Tahfidz, Jalur Minat Bakat (Olahraga & Seni), dan Jalur Tes Reguler.</p><p>Calon orang tua dan siswa dapat mengunduh panduan lengkap, memeriksa alur seleksi, atau melakukan registrasi langsung secara daring melalui menu PPDB di portal resmi ini.</p>',
+      body: `<p>Penerimaan Peserta Didik Baru (PPDB) tahun ajaran 2026/2027 resmi dibuka mulai hari ini. ${displaySchoolName.value} menyambut calon siswa berkarakter unggul melalui tiga jalur utama: Jalur Prestasi Akademik & Tahfidz, Jalur Minat Bakat (Olahraga & Seni), dan Jalur Tes Reguler.</p><p>Calon orang tua dan siswa dapat mengunduh panduan lengkap, memeriksa alur seleksi, atau melakukan registrasi langsung secara daring melalui menu PPDB di portal resmi ini.</p>`,
       published_at: new Date().toISOString(),
       category: { name: 'Pengumuman & PPDB' },
       author: { name: 'Sekretariat PPDB' },

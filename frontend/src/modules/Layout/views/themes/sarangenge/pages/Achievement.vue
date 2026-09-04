@@ -125,14 +125,14 @@ const filterTabs = [
 ];
 
 const achievementsTitle = computed(() => {
-  return (getSetting('achievements_title', '') as string) || t('pages.achievement.title', 'Prestasi & Penghargaan Sivitas Sarangenge');
+  return (getSetting('achievements_title', '') as string) || t('pages.achievement.title', { school: displaySchoolName.value }, `Prestasi & Penghargaan Sivitas ${displaySchoolName.value}`);
 });
 
 const achievementsSubtitle = computed(() => {
   return (getSetting('achievements_subtitle', '') as string) || t('pages.achievement.subtitle', 'Rangkuman prestasi kejuaraan akademik, sains, teknologi, seni budaya, dan olahraga di kancah nasional maupun internasional.');
 });
 
-const allAchievements = [
+const allAchievements = computed(() => [
   {
     year: '2026',
     level: 'Tingkat Internasional',
@@ -149,7 +149,7 @@ const allAchievements = [
     categoryName: 'Kontes Robotika Nasional',
     title: 'Juara 1 National Autonomous Robotics & AI Championship',
     description: 'Inovasi robot penyortir otomatis dengan integrasi Computer Vision dan algoritma deep learning.',
-    student: 'Tim Robotika Alpha Sarangenge',
+    student: `Tim Robotika Alpha ${displaySchoolName.value}`,
   },
   {
     year: '2026',
@@ -166,7 +166,7 @@ const allAchievements = [
     category: 'olahraga',
     categoryName: 'Kejuaraan Basket Antarpelajar',
     title: 'Juara 1 DBL Basketball League Jawa Barat',
-    description: 'Tim basket putra Sarangenge berhasil mempertahankan gelar juara dengan rekor tak terkalahkan.',
+    description: `Tim basket putra ${displaySchoolName.value} berhasil mempertahankan gelar juara dengan rekor tak terkalahkan.`,
     student: 'Tim Basket Putra',
   },
   {
@@ -185,12 +185,12 @@ const allAchievements = [
     categoryName: 'International Choir Festival',
     title: 'Gold Diploma Choir Championship di Singapura',
     description: 'Paduan suara sekolah mempersembahkan medley lagu daerah Sunda dan musik klasik kontemporer.',
-    student: 'Paduan Suara Gita Sarangenge',
+    student: `Paduan Suara Gita ${displaySchoolName.value}`,
   },
-];
+]);
 
 const filteredAchievements = computed(() => {
-  if (activeTab.value === 'all') return allAchievements;
-  return allAchievements.filter((a) => a.category === activeTab.value);
+  if (activeTab.value === 'all') return allAchievements.value;
+  return allAchievements.value.filter((a) => a.category === activeTab.value);
 });
 </script>
