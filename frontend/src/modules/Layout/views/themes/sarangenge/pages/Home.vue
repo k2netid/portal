@@ -21,6 +21,7 @@
       <PluginSlot name="after_hero" class="w-full" />
 
       <SchoolBentoSection />
+      <VocationalTrackFinder />
       <ProgramsSection />
       <AnnouncementsSection />
       <AchievementsSection />
@@ -43,6 +44,7 @@ import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/
 // Section components
 import Hero from '@/modules/Layout/views/themes/sarangenge/components/sections/Hero.vue';
 import SchoolBentoSection from '@/modules/Layout/views/themes/sarangenge/components/sections/SchoolBentoSection.vue';
+import VocationalTrackFinder from '@/modules/Layout/views/themes/sarangenge/components/sections/VocationalTrackFinder.vue';
 import ProgramsSection from '@/modules/Layout/views/themes/sarangenge/components/sections/ProgramsSection.vue';
 import AnnouncementsSection from '@/modules/Layout/views/themes/sarangenge/components/sections/AnnouncementsSection.vue';
 import AchievementsSection from '@/modules/Layout/views/themes/sarangenge/components/sections/AchievementsSection.vue';

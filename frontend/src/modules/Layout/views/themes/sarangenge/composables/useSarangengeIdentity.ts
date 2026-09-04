@@ -7,11 +7,33 @@ export function useSarangengeIdentity() {
   const systemStore = useSystemStore();
 
   const siteSettings = computed(() => {
-    return (systemStore.settings as Record<string, unknown> | undefined) || {};
+    return {
+      ...((systemStore.settings as Record<string, unknown> | undefined) || {}),
+      ...((systemStore.siteSettings as Record<string, unknown> | undefined) || {}),
+    };
+  });
+
+  const siteLogo = computed(() => {
+    // 1. Theme Customizer override
+    const fromTheme = getSetting('brand_logo', '') || getSetting('site_logo', '') || getSetting('school_logo', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) {
+      return fromTheme.trim();
+    }
+    // 2. Global Site Settings (general.site_logo)
+    const fromSite = (siteSettings.value.site_logo || systemStore.siteSettings?.site_logo) as string | undefined;
+    if (fromSite && typeof fromSite === 'string' && fromSite.trim()) {
+      return fromSite.trim();
+    }
+    // 3. Fallback to App Identity logo
+    const fromApp = systemStore.appIdentity?.app_logo;
+    if (fromApp && typeof fromApp === 'string' && fromApp.trim()) {
+      return fromApp.trim();
+    }
+    return '';
   });
 
   const displaySchoolName = computed(() => {
-    const fromTheme = getSetting('school_name', '');
+    const fromTheme = getSetting('school_name', '') || getSetting('site_title', '') || getSetting('site_name', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
     const fromSystem = siteSettings.value.site_name;
     if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
@@ -103,5 +125,6 @@ export function useSarangengeIdentity() {
     whatsAppUrl,
     isPpdbOpen,
     ppdbPortalUrl,
+    siteLogo,
   };
 }

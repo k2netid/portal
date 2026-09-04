@@ -213,12 +213,14 @@
         </div>
       </div>
     </div>
+    <JanariFloatingSocialDock />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import JanariFloatingSocialDock from '@/modules/Layout/views/themes/janari/components/layout/JanariFloatingSocialDock.vue'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'

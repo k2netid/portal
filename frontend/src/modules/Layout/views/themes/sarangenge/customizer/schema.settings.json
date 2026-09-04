@@ -130,6 +130,48 @@
         "default": "Rasio Guru & Siswa",
         "category": "Hero Section"
     },
+    "hero_bg_type": {
+        "label": "Tipe Background Hero",
+        "type": "select",
+        "options": [
+            { "label": "Preset Gradien", "value": "preset" },
+            { "label": "Foto Kustom Kampus", "value": "custom_image" }
+        ],
+        "default": "preset",
+        "category": "Hero Section"
+    },
+    "hero_bg_preset": {
+        "label": "Preset Background Hero",
+        "type": "select",
+        "options": [
+            { "label": "Sunrise Teal (Fajar Emas & Toska)", "value": "sunrise_teal" },
+            { "label": "Deep Navy (Biru Kejuruan)", "value": "deep_navy" },
+            { "label": "Golden Dawn (Fajar Keemasan)", "value": "golden_dawn" }
+        ],
+        "default": "sunrise_teal",
+        "category": "Hero Section"
+    },
+    "hero_bg_image": {
+        "label": "Gambar Background Hero",
+        "type": "image",
+        "default": "",
+        "category": "Hero Section"
+    },
+    "hero_bg_overlay_opacity": {
+        "label": "Kegelapan Overlay Background (%)",
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "default": 75,
+        "category": "Hero Section"
+    },
+    "track_finder_enabled": {
+        "label": "Aktifkan Widget Pencari Jurusan",
+        "type": "boolean",
+        "default": true,
+        "category": "Bento Campus Section"
+    },
     "bento_title": {
         "label": "Judul Bento Grid Kampus",
         "type": "text",
@@ -237,5 +279,92 @@
         "type": "text",
         "default": "",
         "category": "Footer"
+    },
+    "enable_about": {
+        "label": "Aktifkan Halaman Profil Sekolah",
+        "type": "boolean",
+        "default": true,
+        "category": "About Page"
+    },
+    "enable_programs": {
+        "label": "Aktifkan Halaman Program Keahlian",
+        "type": "boolean",
+        "default": true,
+        "category": "Programs Section"
+    },
+    "enable_facilities": {
+        "label": "Aktifkan Halaman Fasilitas & Bengkel",
+        "type": "boolean",
+        "default": true,
+        "category": "Services Page"
+    },
+    "enable_pricing": {
+        "label": "Aktifkan Halaman Biaya & PPDB",
+        "type": "boolean",
+        "default": true,
+        "category": "Pricing Page"
+    },
+    "enable_tim": {
+        "label": "Aktifkan Halaman Guru & Staf",
+        "type": "boolean",
+        "default": true,
+        "category": "Tim Page"
+    },
+    "enable_achievement": {
+        "label": "Aktifkan Halaman Prestasi",
+        "type": "boolean",
+        "default": true,
+        "category": "Achievements Page"
+    },
+    "enable_career": {
+        "label": "Aktifkan Halaman Alumni & Karir",
+        "type": "boolean",
+        "default": true,
+        "category": "Alumni Page"
+    },
+    "enable_blog": {
+        "label": "Aktifkan Halaman Berita & Agenda",
+        "type": "boolean",
+        "default": true,
+        "category": "Blog Page"
+    },
+    "enable_contact": {
+        "label": "Aktifkan Halaman Kontak",
+        "type": "boolean",
+        "default": true,
+        "category": "Contact Page"
+    },
+    "social_instagram_feed_enabled": {
+        "label": "Tampilkan Instagram Feed di Beranda",
+        "type": "boolean",
+        "default": false,
+        "category": "Social Media"
+    },
+    "social_instagram_feed_slot": {
+        "label": "Posisi Penempatan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bawah Hero Section (after_hero)", "value": "after_hero" },
+            { "label": "Atas Footer Situs (before_footer)", "value": "before_footer" }
+        ],
+        "default": "after_hero",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_layout": {
+        "label": "Gaya Tampilan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bento Grid (Modern Berjenjang)", "value": "bento" },
+            { "label": "Classic Grid (Kotak Responsif)", "value": "grid" },
+            { "label": "Carousel Slider (Geser Horizontal)", "value": "carousel" }
+        ],
+        "default": "bento",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_title": {
+        "label": "Judul Seksi Instagram",
+        "type": "text",
+        "default": "",
+        "category": "Social Media"
     }
 }

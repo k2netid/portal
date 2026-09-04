@@ -13,6 +13,7 @@ Direktori ini merupakan pusat dokumentasi resmi perancangan, implementasi fitur,
 | **Kontak** | Telp: (022) 7563286 · Email: `info@smkn6bandung.sch.id` |
 | **Branch Git** | `feat/smkn6-theme-sarangenge` |
 | **Tema Aktif** | **Sarangenge 2.0.0** (Tema Sekolah Modern & Aksesibilitas 2026) |
+| **Environment Dev (ja-dev)** | `http://192.168.88.71:49280/` (Path: `/home/jejakawan/dev/smkn6-portal`) |
 | **Environment Staging** | `http://192.168.10.233:49280/` (Path: `/home/jejakawan/portal/www/staging`) |
 | **Environment Publish** | Domain `smkn6bandung.sch.id` (Target Path: `/home/jejakawan/portal/www/portal`) |
 
@@ -22,6 +23,8 @@ Direktori ini merupakan pusat dokumentasi resmi perancangan, implementasi fitur,
 
 1. **[tasks.md](./tasks.md)**: Daftar tugas, milestone implementasi, backlog fitur, dan catatan deployment.
 2. **[ADR-001: Dynamic School Identity & Dedicated Staging Port](./ADR-001-dynamic-school-identity-and-vhost-port.md)**: Keputusan arsitektur mengenai pemindahan seluruh identitas sekolah ke Theme Customization dinamis dan isolasi port staging berbasis RFC 6335.
+3. **[ADR-002: Pemisahan APP_NAME vs SITE_NAME](./ADR-002-app-name-vs-site-name-identity-separation.md)**: Keputusan arsitektur mengenai pemisahan identitas brand pengembang (`APP_NAME` = Jejakawan) dan identitas pemilik situs (`SITE_NAME` = SMKN 6 Bandung), termasuk mekanisme proteksi via lisensi White Label.
+4. **[ADR-003: Integrasi Plugin Instagram Feed Generik & Slot Tema Dinamis](./ADR-003-generic-fail-safe-instagram-feed-plugin-and-theme-slots.md)**: Keputusan arsitektur integrasi media sosial fail-safe, circuit breaker gatekeeper, caching proxy server-side, dan slot dinamis lintas tema.
 
 ---
 

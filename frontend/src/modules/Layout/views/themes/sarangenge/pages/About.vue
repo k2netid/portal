@@ -1,28 +1,32 @@
 <template>
-  <div
-    data-ja-customizer-target="about"
-    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+  <SarangengePageGate
+    setting-key="enable_about"
+    :title="t('pages.about.title', { school: displaySchoolName }, `Profil & Filosofi Pendidikan ${displaySchoolName}`)"
   >
-    <BlockRenderer
-      v-if="hasBuilderBlocks"
-      :blocks="builderBlocks"
-      :context="{ post: pageData, site: { name: displaySchoolName } }"
-    />
+    <div
+      data-ja-customizer-target="about"
+      class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+    >
+      <BlockRenderer
+        v-if="hasBuilderBlocks"
+        :blocks="builderBlocks"
+        :context="{ post: pageData, site: { name: displaySchoolName } }"
+      />
 
-    <ThemeSafeHtml
-      v-else-if="cmsBody"
-      class="container mx-auto px-4 py-10 md:py-12"
-      :html="cmsBody"
-      mode="publishing"
-    />
+      <ThemeSafeHtml
+        v-else-if="cmsBody"
+        class="container mx-auto px-4 py-10 md:py-12"
+        :html="cmsBody"
+        mode="publishing"
+      />
 
-    <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
-        <!-- Breadcrumb & Header -->
-        <div
-          id="profil"
-          class="scroll-mt-28 space-y-4"
-        >
+      <template v-else>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
+          <!-- Breadcrumb & Header -->
+          <div
+            id="profil"
+            class="scroll-mt-28 space-y-4"
+          >
           <Breadcrumb :items="[{ name: t('pages.about.title', 'Profil Sekolah') }]" />
           <div class="max-w-3xl space-y-3">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
@@ -147,6 +151,7 @@
       </div>
     </template>
   </div>
+  </SarangengePageGate>
 </template>
 
 <script setup lang="ts">
@@ -155,6 +160,7 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
+import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScroll';
 import { Building2, Quote, Target, Compass, ShieldCheck, Heart, Sparkles, Users } from 'lucide-vue-next';

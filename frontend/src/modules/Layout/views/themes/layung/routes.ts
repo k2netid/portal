@@ -52,6 +52,12 @@ const routes: RouteRecordRaw[] = [
         component: publicThemePage,
         meta: { public: true, themePage: 'pages/Tim' },
     },
+    {
+        path: 'contact',
+        name: 'layung-contact',
+        component: publicThemePage,
+        meta: { public: true, themePage: 'pages/Contact' },
+    },
 ];
 
 export default routes;

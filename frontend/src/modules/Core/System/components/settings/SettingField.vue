@@ -1,12 +1,20 @@
 <template>
   <div :class="colSpanClass">
     <div class="flex items-center justify-between mb-1">
-      <label :for="type !== 'image' && type !== 'media' ? fieldId : undefined" class="block text-sm font-medium text-foreground">
-        {{ label }}
-      </label>
+      <div class="flex items-center gap-1.5">
+        <label :for="type !== 'image' && type !== 'media' ? fieldId : undefined" class="block text-sm font-medium text-foreground">
+          {{ label }}
+        </label>
+        <LucideIcon
+          v-if="isControlDisabled"
+          name="Lock"
+          class="w-3.5 h-3.5 text-muted-foreground/70"
+          :title="$t('system.settings.locked_by_license_policy')"
+        />
+      </div>
 
       <!-- Presets Picker -->
-      <Popover v-if="hasPresets">
+      <Popover v-if="hasPresets && !isControlDisabled">
         <PopoverTrigger as-child>
           <button 
             type="button" 
@@ -52,7 +60,7 @@
     <Select
       v-if="hasOptions && !isMailPort"
       :model-value="localValue !== null && localValue !== undefined ? String(localValue) : undefined"
-      :disabled="disabled"
+      :disabled="isControlDisabled"
       @update:model-value="localValue = hasNumericOptions ? Number($event) : $event; updateValue()"
     >
       <SelectTrigger :id="fieldId" :name="fieldKey" :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
@@ -73,7 +81,7 @@
     <Select
       v-else-if="isMailPort"
       :model-value="String(localValue)"
-      :disabled="disabled"
+      :disabled="isControlDisabled"
       @update:model-value="localValue = Number($event); updateValue()"
     >
       <SelectTrigger :id="fieldId" :name="fieldKey" :aria-label="label" :class="error ? 'border-destructive focus:ring-destructive' : ''">
@@ -95,7 +103,7 @@
       :name="fieldKey"
       v-else-if="(type === 'string' || type === 'password' || type === 'datetime') && !isTextarea"
       :model-value="(localValue as string)"
-      :disabled="disabled"
+      :disabled="isControlDisabled"
       :type="type === 'datetime' ? 'datetime-local' : ((isPassword || type === 'password') ? 'password' : 'text')"
       :class="error ? 'border-destructive focus-visible:ring-destructive' : ''"
       @input="localValue = ($event.target as HTMLInputElement).value; updateValue()"
@@ -107,7 +115,7 @@
       :name="fieldKey"
       v-else-if="isTextarea"
       :model-value="(localValue as string)"
-      :disabled="disabled"
+      :disabled="isControlDisabled"
       :rows="3"
       :class="error ? 'border-destructive focus-visible:ring-destructive' : ''"
       @input="localValue = ($event.target as HTMLTextAreaElement).value; updateValue()"
@@ -119,7 +127,7 @@
       :name="fieldKey"
       v-else-if="type === 'integer'"
       :model-value="(localValue as number)"
-      :disabled="disabled"
+      :disabled="isControlDisabled"
       type="number"
       :class="error ? 'border-destructive focus-visible:ring-destructive' : ''"
       @input="localValue = Number(($event.target as HTMLInputElement).value); updateValue()"
@@ -135,7 +143,7 @@
         :name="fieldKey"
         :aria-label="label"
         :checked="Boolean(localValue)"
-        :disabled="disabled"
+        :disabled="isControlDisabled"
         @update:checked="localValue = $event; updateValue()"
       />
       <span class="text-sm text-foreground">
@@ -173,6 +181,7 @@
           variant="secondary"
           size="sm"
           class="h-8 px-2.5 text-xs font-medium"
+          :disabled="isControlDisabled"
           @click="showMediaPicker = true"
         >
           <LucideIcon
@@ -188,6 +197,7 @@
           variant="ghost"
           size="icon"
           class="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+          :disabled="isControlDisabled"
           :aria-label="$t('common.actions.remove')"
           title="Remove"
           @click="localValue = ''; updateValue()"
@@ -262,6 +272,7 @@ const props = withDefaults(defineProps<{
     disabledText?: string;
     error?: string | string[] | null;
     disabled?: boolean;
+    readonly?: boolean;
     colSpan?: number | 'full';
 }>(), {
     description: '',
@@ -271,8 +282,11 @@ const props = withDefaults(defineProps<{
     disabledText: 'Disabled',
     error: null,
     disabled: false,
+    readonly: false,
     colSpan: 1,
 });
+
+const isControlDisabled = computed(() => Boolean(props.disabled || props.readonly));
 
 const emit = defineEmits<{
     (e: 'update:modelValue', value: SettingValue): void;

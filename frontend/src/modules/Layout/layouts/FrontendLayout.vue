@@ -152,9 +152,13 @@ import { useSystemStore } from '@/modules/Core/System/stores/system'
 import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { resolveLayungPublicSeo } from '@/modules/Layout/views/themes/layung/composables/layungPublicSeo'
+import { resolveSarangengePublicSeo } from '@/modules/Layout/views/themes/sarangenge/composables/sarangengePublicSeo'
+import { resolveJanariPublicSeo } from '@/modules/Layout/views/themes/janari/composables/janariPublicSeo'
 
 const { t } = useI18n({ useScope: 'global' })
 const { t: tLayung } = useThemeI18n('layung')
+const { t: tSarangenge } = useThemeI18n('sarangenge')
+const { t: tJanari } = useThemeI18n('janari')
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 const systemStore = useSystemStore()
 
@@ -194,15 +198,38 @@ const activeThemeSlug = computed(
 )
 
 useHead(computed(() => {
-  if (activeThemeSlug.value.toLowerCase() !== 'layung' || useMemberShell.value) {
+  if (useMemberShell.value) {
     return {}
   }
-  const siteName = String(getSetting('site_name', '') || '').trim() || 'K2NET'
-  const seo = resolveLayungPublicSeo({
-    themePage: typeof route.meta.themePage === 'string' ? route.meta.themePage : undefined,
-    siteName,
-    t: tLayung,
-  })
+  const slug = activeThemeSlug.value.toLowerCase()
+  const siteName = String(getSetting('site_name', '') || getSetting('school_name', '') || '').trim()
+  const themePage = typeof route.meta.themePage === 'string' ? route.meta.themePage : undefined
+
+  let seo: { title: string; description: string } | null = null
+  if (slug === 'layung') {
+    seo = resolveLayungPublicSeo({
+      themePage,
+      siteName: siteName || 'K2NET',
+      t: tLayung,
+    })
+  } else if (slug === 'sarangenge') {
+    seo = resolveSarangengePublicSeo({
+      themePage,
+      siteName: siteName || 'SMK Negeri 6 Bandung',
+      t: tSarangenge,
+    })
+  } else if (slug === 'janari') {
+    seo = resolveJanariPublicSeo({
+      themePage,
+      siteName: siteName || 'Jejakawan',
+      t: tJanari,
+    })
+  }
+
+  if (!seo) {
+    return {}
+  }
+
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const path = route.path === '/' ? '/' : route.path
   return {

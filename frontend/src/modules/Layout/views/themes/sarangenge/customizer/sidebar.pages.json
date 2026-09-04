@@ -1,6 +1,20 @@
 {
     "specialPageItems": [
         {
+            "id": "page-school-info",
+            "manifestCategories": ["School Info"],
+            "icon": "sparkles",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_school_info",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_school_info_desc"
+        },
+        {
+            "id": "page-hero",
+            "manifestCategories": ["Hero Section", "Bento Campus Section"],
+            "icon": "panels-top-left",
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_hero",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_hero_desc"
+        },
+        {
             "id": "page-school-about",
             "manifestCategories": ["About Page"],
             "icon": "building-2",

@@ -1,0 +1,25 @@
+{
+  "slug": "instagram-feed",
+  "type": "plugin",
+  "name": "Instagram Feed Integration",
+  "version": "1.0.0",
+  "description": "Seamlessly integrate Instagram feed, posts, and media grids into your website themes and page builder.",
+  "author": "Jejakawan",
+  "license": "MIT",
+  "is_core": false,
+  "default_status": "inactive",
+  "settings": {
+    "access_token": "",
+    "instagram_username": "",
+    "instagram_account_id": "",
+    "theme_blocks": [
+      { "slot": "after_hero" }
+    ],
+    "cache_ttl_minutes": 60,
+    "post_limit": 8,
+    "show_likes_count": true,
+    "show_comments_count": true,
+    "enable_lightbox": true,
+    "comment_filter_keywords": ""
+  }
+}

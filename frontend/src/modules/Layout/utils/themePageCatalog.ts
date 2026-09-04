@@ -17,6 +17,8 @@ const TITLE_BY_THEME_PAGE: Record<string, string> = {
   'pages/Pricing': 'Harga & Paket (Pricing)',
   'pages/PricingIsp': 'Paket Internet ISP',
   'pages/PricingMsp': 'Managed Services MSP',
+  'pages/Programs': 'Program Keahlian (Programs)',
+  'pages/Facilities': 'Fasilitas & Bengkel (Facilities)',
   'pages/Solusi': 'Produk & Solusi',
   'pages/Services': 'Layanan (Services)',
   'pages/Contact': 'Hubungi Kami (Contact)',

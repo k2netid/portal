@@ -4209,5 +4209,38 @@
         "default": "",
         "category": "Public Pages",
         "scope": "theme"
+    },
+    "social_instagram_feed_enabled": {
+        "label": "Tampilkan Instagram Feed di Beranda",
+        "type": "boolean",
+        "default": false,
+        "category": "Social Media"
+    },
+    "social_instagram_feed_slot": {
+        "label": "Posisi Penempatan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bawah Hero Section (after_hero)", "value": "after_hero" },
+            { "label": "Atas Footer Situs (before_footer)", "value": "before_footer" }
+        ],
+        "default": "after_hero",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_layout": {
+        "label": "Gaya Tampilan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bento Grid (Modern Berjenjang)", "value": "bento" },
+            { "label": "Classic Grid (Kotak Responsif)", "value": "grid" },
+            { "label": "Carousel Slider (Geser Horizontal)", "value": "carousel" }
+        ],
+        "default": "bento",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_title": {
+        "label": "Judul Seksi Instagram",
+        "type": "text",
+        "default": "",
+        "category": "Social Media"
     }
 }

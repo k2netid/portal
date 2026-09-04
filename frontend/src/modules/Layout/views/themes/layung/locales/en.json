@@ -86,7 +86,14 @@
     "slideMspCta": "Consult Managed IT",
     "slideWifiTitle": "Enterprise Wireless & IT Hardware Solutions",
     "slideWifiDesc": "High-density enterprise wireless design, seamless roaming, and authorized hardware procurement.",
-    "slideWifiCta": "Contact Sales"
+    "slideWifiCta": "Contact Sales",
+    "scrollCue": "Scroll Down",
+    "statsLabel": "INFRASTRUCTURE TELEMETRY & PERFORMANCE",
+    "statsSubLabel": "Realtime SLA & Backbone Status",
+    "statSla": "SLA Guaranteed",
+    "statBackbone": "Ring Backbone Capacity",
+    "statNoc": "24/7 Active NOC Monitoring",
+    "statLatency": "Ultra-Low Latency"
   },
   "calculator": {
     "badge": "Bandwidth estimate",
@@ -314,7 +321,7 @@
       "companyLabel": "Company / organization",
       "companyPlaceholder": "Institution name",
       "emailLabel": "Email",
-      "emailPlaceholder": "email@domain.com",
+      "emailPlaceholder": "email{'@'}domain.com",
       "phoneLabel": "Phone / WhatsApp",
       "phonePlaceholder": "08xxxxxxxxxx",
       "serviceLabel": "Service of interest",

@@ -7,6 +7,7 @@ const publicThemePage = () => import('@/modules/Layout/components/themes/PublicT
 export const publicRoutes: RouteRecordRaw[] = [
     {
         path: '/',
+        name: 'public-layout',
         component: () => import('@/modules/Layout/layouts/FrontendLayout.vue'),
         children: [
             {
@@ -32,6 +33,12 @@ export const publicRoutes: RouteRecordRaw[] = [
                 name: 'public-about',
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/About' },
+            },
+            {
+                path: 'contact',
+                name: 'public-contact',
+                component: publicThemePage,
+                meta: { public: true, themePage: 'pages/Contact' },
             },
 
             {
@@ -134,19 +141,19 @@ export const createPublicRouter = () => {
         scrollBehavior: publicScrollBehavior,
     });
 
-    let themeRoutesInjected = false;
+    let injectedThemeSlug: string | null = null;
 
     router.beforeEach(async (to, from) => {
-        if (!themeRoutesInjected && to.path !== '/404' && to.path !== '/maintenance') {
+        if (to.path !== '/404' && to.path !== '/maintenance') {
             try {
                 const { useTheme } = await import('@/modules/Layout/composables/useTheme');
                 const { loadActiveTheme, activeTheme } = useTheme();
                 await loadActiveTheme();
                 
-                if (activeTheme.value?.slug) {
-                    const slug = activeTheme.value.slug;
+                const currentSlug = activeTheme.value?.slug;
+                if (currentSlug && currentSlug !== injectedThemeSlug) {
                     const modules = import.meta.glob('@/modules/Layout/views/themes/*/routes.ts');
-                    const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${slug}/routes.ts`];
+                    const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${currentSlug}/routes.ts`];
                     
                     if (loadThemeRoutes) {
                         const module = await loadThemeRoutes() as any;
@@ -154,17 +161,18 @@ export const createPublicRouter = () => {
                             module.default.forEach((route: any) => {
                                 router.addRoute('public-layout', route);
                             });
-                            themeRoutesInjected = true;
+                            injectedThemeSlug = currentSlug;
                             if (to.matched.length === 0 || to.name === 'public-not-found') {
                                 return to.fullPath;
                             }
                         }
+                    } else {
+                        injectedThemeSlug = currentSlug;
                     }
                 }
             } catch (e) {
                 // Ignore error, theme routes just won't be loaded
             }
-            themeRoutesInjected = true;
         }
 
         const result = await handleBeforeEachGuard(to, from, {

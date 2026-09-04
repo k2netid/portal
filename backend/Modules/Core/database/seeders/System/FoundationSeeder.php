@@ -203,15 +203,19 @@ class FoundationSeeder extends Seeder
 
     protected function seedSettings(): void
     {
-        $appName = (string) config('app.name', 'Portal SMKN 6 Bandung');
+        $appName = (string) config('app.name', 'Jejakawan');
         $superEmailRaw = config('app.super_admin_email');
         $superEmail = is_scalar($superEmailRaw) && (string) $superEmailRaw !== '' ? (string) $superEmailRaw : 'super@jejakawan.com';
         $appUrl = (string) config('app.url', 'http://localhost');
 
+        // APP_NAME is the developer/engine brand (Jejakawan); site_name is the site owner identity.
+        // These are intentionally separate: app_name is protected by White Label licensing.
+        $siteName = (string) env('SITE_NAME', $appName);
+
         $settings = [
             // System Settings
             ['key' => 'app_name', 'value' => $appName, 'group' => 'system', 'type' => 'string'],
-            ['key' => 'license_type', 'value' => 'pro', 'group' => 'system', 'type' => 'string'],
+            ['key' => 'license_type', 'value' => 'enterprise', 'group' => 'system', 'type' => 'string'],
             ['key' => 'maintenance_mode', 'value' => '0', 'group' => 'system', 'type' => 'boolean'],
             ['key' => 'maintenance_title', 'value' => 'Situs Sedang Dalam Pemeliharaan', 'group' => 'system', 'type' => 'string'],
             ['key' => 'maintenance_message', 'value' => 'Kami sedang melakukan pemeliharaan sistem berkala. Mohon kembali beberapa saat lagi.', 'group' => 'system', 'type' => 'text'],
@@ -224,10 +228,11 @@ class FoundationSeeder extends Seeder
             ['key' => 'content.autosave_interval_seconds', 'value' => '30', 'group' => 'system', 'type' => 'integer'],
 
             // General / Identity (Site Settings)
-            ['key' => 'site_name', 'value' => $appName, 'group' => 'general', 'type' => 'string'],
+            // site_name uses $siteName (from SITE_NAME env or fallback to APP_NAME)
+            ['key' => 'site_name', 'value' => $siteName, 'group' => 'general', 'type' => 'string'],
             ['key' => 'site_logo', 'value' => '/logo.png', 'group' => 'general', 'type' => 'image'],
             ['key' => 'site_favicon', 'value' => '/favicon.ico', 'group' => 'general', 'type' => 'image'],
-            ['key' => 'site_description', 'value' => 'Portal Resmi SMKN 6 Bandung', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'site_description', 'value' => (string) env('SITE_DESCRIPTION', ''), 'group' => 'general', 'type' => 'string'],
             ['key' => 'site_url', 'value' => $appUrl, 'group' => 'general', 'type' => 'string'],
             ['key' => 'admin_email', 'value' => $superEmail, 'group' => 'brand', 'type' => 'string'],
             ['key' => 'app_logo', 'value' => '/logo.png', 'group' => 'brand', 'type' => 'image'],
@@ -237,7 +242,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
 
             // Contact & Social
-            ['key' => 'contact_email', 'value' => (string) config('mail.from.address', 'portal@smkn6bandung.sch.id'), 'group' => 'general', 'type' => 'string'],
+            ['key' => 'contact_email', 'value' => (string) config('mail.from.address', 'hello@example.com'), 'group' => 'general', 'type' => 'string'],
             ['key' => 'contact_phone', 'value' => '', 'group' => 'general', 'type' => 'string'],
             ['key' => 'contact_address', 'value' => '', 'group' => 'general', 'type' => 'string'],
             ['key' => 'social_twitter', 'value' => '', 'group' => 'general', 'type' => 'string'],

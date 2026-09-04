@@ -14,6 +14,7 @@ import errors from '@/locales/su/errors.json';
 import genders from '@/locales/su/genders.json';
 import auth from '@/locales/su/auth.json';
 import editor from '@/locales/su/editor.json';
+import plugin from '@/locales/su/plugin.json';
 
 import { moduleLocaleBundles } from '@/engine/i18n/moduleLocales';
 
@@ -36,5 +37,6 @@ export default {
     common,
     shared: common,
     editor,
+    plugin,
     ...moduleLocaleBundles.su,
 };

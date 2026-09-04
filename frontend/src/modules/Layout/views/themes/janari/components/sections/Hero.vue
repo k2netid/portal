@@ -4,41 +4,53 @@
     class="relative overflow-hidden flex flex-col"
     :style="{ height: heroHeight }"
   >
-    <!-- Hero Slides (Dynamic) -->
-    <div 
-      v-for="(slide, idx) in heroSlides" 
-      :key="'slide-' + idx"
-      ref="slideElements"
-      class="absolute inset-0 w-full h-full transition-opacity duration-1000"
-      :style="{ opacity: idx === activeSlide ? 1 : 0, zIndex: idx === activeSlide ? 2 : 1 }"
-    >
-      <div 
-        v-if="slide"
-        class="absolute inset-0 w-full h-full"
-      >
-        <img 
-          :src="slide" 
-          class="w-full h-full object-cover scale-105"
-          :alt="t('theme.janari.common.slideAlt', { n: idx + 1 })"
-          width="1920"
-          height="1080"
-          sizes="100vw"
-          :decoding="idx === 0 ? 'sync' : 'async'"
-          :fetchpriority="idx === 0 ? 'high' : 'low'"
-          :loading="idx === 0 ? 'eager' : 'lazy'"
-          referrerpolicy="no-referrer"
-        >
-      </div>
-      <!-- Non-image fallback: sophisticated dark gradient -->
-      <div 
-        v-else
-        class="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-zinc-900 to-black"
+    <!-- Background Layer: Presets / Custom Image / Slides -->
+    <template v-if="heroBgType === 'preset'">
+      <div class="absolute inset-0 w-full h-full" :class="`janari-hero--${heroBgPreset}`" />
+    </template>
+    <template v-else-if="heroBgType === 'custom_image' && heroBgImage">
+      <div
+        class="absolute inset-0 w-full h-full bg-cover bg-center"
+        :style="{ backgroundImage: `url(${heroBgImage})` }"
       />
-    </div>
+    </template>
+    <template v-else>
+      <!-- Hero Slides (Dynamic) -->
+      <div 
+        v-for="(slide, idx) in heroSlides" 
+        :key="'slide-' + idx"
+        ref="slideElements"
+        class="absolute inset-0 w-full h-full transition-opacity duration-1000"
+        :style="{ opacity: idx === activeSlide ? 1 : 0, zIndex: idx === activeSlide ? 2 : 1 }"
+      >
+        <div 
+          v-if="slide"
+          class="absolute inset-0 w-full h-full"
+        >
+          <img 
+            :src="slide" 
+            class="w-full h-full object-cover scale-105"
+            :alt="t('theme.janari.common.slideAlt', { n: idx + 1 })"
+            width="1920"
+            height="1080"
+            sizes="100vw"
+            :decoding="idx === 0 ? 'sync' : 'async'"
+            :fetchpriority="idx === 0 ? 'high' : 'low'"
+            :loading="idx === 0 ? 'eager' : 'lazy'"
+            referrerpolicy="no-referrer"
+          >
+        </div>
+        <!-- Non-image fallback: sophisticated dark gradient -->
+        <div 
+          v-else
+          class="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-zinc-900 to-black"
+        />
+      </div>
+    </template>
     
     <!-- Dark overlay for text readability -->
     <div
-      class="absolute inset-0 z-10"
+      class="absolute inset-0 z-10 pointer-events-none"
       :style="{ background: `linear-gradient(to top, rgba(0,0,0,${heroOverlay/100 * 1.2}), rgba(0,0,0,${heroOverlay/100 * 0.4}), rgba(0,0,0,${heroOverlay/100 * 0.15}))` }"
     />
     
@@ -75,7 +87,17 @@
 
       <!-- CTA Buttons -->
       <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto shrink-0 relative z-20">
+        <a
+          v-if="isExternalPrimary"
+          :href="heroCtaPrimaryUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
+        >
+          {{ heroCtaPrimaryText }}
+        </a>
         <router-link
+          v-else
           :to="heroCtaPrimaryUrl"
           class="w-full sm:w-auto px-8 py-3 text-xs font-bold text-center tracking-[0.5px] uppercase bg-white text-black rounded-[6px] hover:bg-gray-100 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
         >
@@ -91,7 +113,7 @@
 
       <!-- Slide Indicators (Dynamic) -->
       <div
-        v-if="heroSlides.length > 1"
+        v-if="heroBgType === 'slides' && heroSlides.length > 1"
         class="flex items-center gap-3 mt-10"
       >
         <button
@@ -120,9 +142,35 @@
       </div>
     </div>
 
+    <!-- ========== HERO STATS OVERLAY (Minimalist Editorial Metrics) ========== -->
+    <div
+      v-if="heroBottomMode === 'stats' || heroBottomMode === 'both'"
+      class="absolute bottom-0 left-0 w-full z-30 bg-zinc-950/95 backdrop-blur-md border-t border-white/10 px-6 lg:px-24 py-4 flex items-center justify-between"
+      :class="{ '!relative !bottom-auto': heroBottomMode === 'both' }"
+    >
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12 w-full max-w-7xl mx-auto">
+        <div class="space-y-0.5">
+          <div class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">{{ stat1Val }}</div>
+          <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white/60 font-mono">{{ stat1Label }}</div>
+        </div>
+        <div class="space-y-0.5">
+          <div class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">{{ stat2Val }}</div>
+          <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white/60 font-mono">{{ stat2Label }}</div>
+        </div>
+        <div class="space-y-0.5">
+          <div class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">{{ stat3Val }}</div>
+          <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white/60 font-mono">{{ stat3Label }}</div>
+        </div>
+        <div class="space-y-0.5">
+          <div class="text-xl sm:text-2xl font-black text-primary font-mono tracking-tight">{{ stat4Val }}</div>
+          <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white/60 font-mono">{{ stat4Label }}</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ========== REFINED: HERO NEWS OVERLAY (3-Column Interactive Carousel) ========== -->
     <div
-      v-if="visibleNews.length > 0"
+      v-if="(heroBottomMode === 'news' || heroBottomMode === 'both') && visibleNews.length > 0"
       class="absolute bottom-0 left-0 w-full z-30 bg-zinc-950/90 backdrop-blur-md border-t border-white/10 hidden md:flex items-stretch h-[112px]"
     >
       <!-- COL 1: LATEST NEWS -->
@@ -267,7 +315,10 @@
     </div>
 
     <!-- Mobile News -->
-    <div class="md:hidden flex flex-col justify-center px-4 py-8 border-b border-white/10 bg-black/80 backdrop-blur-lg w-full z-40">
+    <div
+      v-if="(heroBottomMode === 'news' || heroBottomMode === 'both') && visibleNews.length > 0"
+      class="md:hidden flex flex-col justify-center px-4 py-8 border-b border-white/10 bg-black/80 backdrop-blur-lg w-full z-40"
+    >
       <div class="flex items-center justify-between mb-4">
         <span class="text-[9px] font-black tracking-widest text-primary uppercase">{{ latestNewsLabel }}</span>
         <div class="flex gap-3">
@@ -370,6 +421,25 @@ const heroCtaPricingUrl = computed(() => {
     const raw = getSetting('cta_secondary_url', '/pricing')
     return typeof raw === 'string' && raw.trim() ? raw.trim() : '/pricing'
 })
+const heroBgType = computed(() => String(getSetting('hero_bg_type', 'slides') || 'slides'));
+const heroBgPreset = computed(() => String(getSetting('hero_bg_preset', 'janari_dawn') || 'janari_dawn'));
+const heroBgImage = computed(() => String(getSetting('hero_bg_image', '') || ''));
+
+const heroBottomMode = computed(() => String(getSetting('hero_bottom_mode', 'news') || 'news'));
+
+const stat1Val = computed(() => (getSetting('hero_stat_1_val', '100%') as string) || '100%');
+const stat1Label = computed(() => (getSetting('hero_stat_1_label', 'Uptime & Reliability') as string) || 'Uptime & Reliability');
+const stat2Val = computed(() => (getSetting('hero_stat_2_val', '50K+') as string) || '50K+');
+const stat2Label = computed(() => (getSetting('hero_stat_2_label', 'Active Users') as string) || 'Active Users');
+const stat3Val = computed(() => (getSetting('hero_stat_3_val', '99.9%') as string) || '99.9%');
+const stat3Label = computed(() => (getSetting('hero_stat_3_label', 'Customer Satisfaction') as string) || 'Customer Satisfaction');
+const stat4Val = computed(() => (getSetting('hero_stat_4_val', '24/7') as string) || '24/7');
+const stat4Label = computed(() => (getSetting('hero_stat_4_label', 'Global Support') as string) || 'Global Support');
+
+const isExternalPrimary = computed(() => {
+    return typeof heroCtaPrimaryUrl.value === 'string' && (heroCtaPrimaryUrl.value.startsWith('http://') || heroCtaPrimaryUrl.value.startsWith('https://'));
+});
+
 const heroSlideCount = computed(() => parseInt(String(getSetting('hero_slide_count', 3)), 10))
 const heroSlideInterval = computed(() => parseInt(String(getSetting('hero_slide_interval', 6)), 10) * 1000)
 const heroOverlay = computed(() => parseInt(String(getSetting('hero_overlay_opacity', 50)), 10))

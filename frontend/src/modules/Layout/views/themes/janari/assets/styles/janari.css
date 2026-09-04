@@ -1113,4 +1113,178 @@
     [data-janari-overlay] {
         z-index: 150 !important;
     }
+
+    /* ─── Janari Hero Background Presets ─── */
+    .janari-hero--janari_dawn {
+        background:
+            radial-gradient(ellipse 80% 50% at 85% 15%, rgba(56, 189, 248, 0.15), transparent 60%),
+            radial-gradient(ellipse 60% 50% at 15% 85%, rgba(99, 102, 241, 0.18), transparent 65%),
+            linear-gradient(155deg, #090d16 0%, #111827 50%, #030712 100%) !important;
+    }
+
+    .janari-hero--janari_emerald {
+        background:
+            radial-gradient(ellipse 70% 45% at 90% 15%, rgba(16, 185, 129, 0.18), transparent 60%),
+            radial-gradient(ellipse 60% 50% at 10% 85%, rgba(13, 148, 136, 0.2), transparent 65%),
+            linear-gradient(145deg, #041412 0%, #09221f 50%, #020908 100%) !important;
+    }
+
+    .janari-hero--janari_midnight {
+        background:
+            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 65%),
+            linear-gradient(180deg, #09090b 0%, #020203 100%) !important;
+    }
+
+    /* ─── Janari Floating Social Dock ─── */
+    .janari-social-dock {
+        position: fixed;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: auto;
+    }
+
+    .janari-social-dock--right {
+        right: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .janari-social-dock--left {
+        left: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .janari-social-dock--bottom_left {
+        left: 1.25rem;
+        bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .janari-social-dock {
+            display: none;
+        }
+        .janari-social-dock--show-mobile {
+            display: flex;
+        }
+    }
+
+    .janari-social-dock__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.5rem;
+        border-radius: 9999px;
+        background: hsl(var(--card) / 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid hsl(var(--border) / 0.8);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+    }
+
+    .janari-social-dock__toggle-btn {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 9999px;
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .janari-social-dock__toggle-btn:hover {
+        transform: scale(1.08);
+    }
+
+    .janari-social-dock__collapse-btn {
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: hsl(var(--muted-foreground));
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        transition: color 0.15s ease;
+    }
+
+    .janari-social-dock__collapse-btn:hover {
+        color: hsl(var(--foreground));
+    }
+
+    .janari-social-dock__divider {
+        width: 1rem;
+        height: 1px;
+        background: hsl(var(--border));
+        margin: 0.15rem 0;
+    }
+
+    .janari-social-dock__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .janari-social-dock__item {
+        position: relative;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: hsl(var(--muted-foreground));
+        transition: all 0.2s ease;
+    }
+
+    .janari-social-dock__item:hover {
+        color: hsl(var(--primary));
+        background: hsl(var(--primary) / 0.1);
+    }
+
+    .janari-social-dock__tooltip {
+        position: absolute;
+        pointer-events: none;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateX(8px);
+        transition: all 0.2s ease;
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.375rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background: hsl(var(--foreground));
+        color: hsl(var(--background));
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .janari-social-dock--right .janari-social-dock__tooltip {
+        right: calc(100% + 0.65rem);
+        transform: translateX(6px);
+    }
+
+    .janari-social-dock--left .janari-social-dock__tooltip,
+    .janari-social-dock--bottom_left .janari-social-dock__tooltip {
+        left: calc(100% + 0.65rem);
+        transform: translateX(-6px);
+    }
+
+    .group:hover .janari-social-dock__tooltip {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

@@ -44,9 +44,22 @@ Dalam proses adaptasi tema **Sarangenge** (tema resmi institusi pendidikan Jejak
 
 ---
 
+### 3. Sinkronisasi Dua Arah (Bidirectional Sync) & Lokalisasi Properti Customizer
+- **Bidirectional Synchronization**:
+  - Ketika administrator mengubah `site_name` atau `site_tagline` di **General Settings** (Admin Console), perubahan otomatis disinkronkan ke dalam `settings['school_name']`, `settings['site_title']`, `settings['school_tagline']`, dan `settings['site_tagline']` dari tema aktif di database serta membersihkan cache tema.
+  - Sebaliknya, ketika administrator menyimpan perubahan `school_name` atau `school_tagline` di **Theme Customizer**, perubahan otomatis disinkronkan ke `sys_settings.site_name` dan `sys_settings.site_tagline`.
+  - Di sisi antarmuka penyesuai tema (`onSarangengeSettingChange.ts` dan `useThemeCustomizer.ts`), preview reaktif menjaga `school_name` dan `site_title` selalu berpadu satu sama lain tanpa duplikasi membingungkan.
+- **Lokalisasi Menyeluruh Properti Customizer**:
+  - Ditambahkan seluruh definisi properti dan hint (`school_name`, `school_tagline`, `school_accreditation`, `school_npsn`, `school_principal_name`, `ppdb_*`, `hero_*`, `bento_*`, dll.) pada `customizer.items` serta kategori skema pada `customizer.manifest_categories` di ketiga bahasa (`id.json`, `en.json`, `su.json`).
+  - Label dan petunjuk bantuan (hints) otomatis berganti sesuai preferensi bahasa aktif operator tanpa fallback mentah string statis.
+
+---
+
 ## Konsekuensi
 
 ### Positif
-1. **Fleksibilitas 100%**: Nama dan profil sekolah dapat diganti sewaktu-waktu melalui Theme Customizer tanpa perlu mengubah kode sumber Vue.
-2. **Reusabilitas Tema**: Tema Sarangenge tetap bersih dan dapat diadopsi oleh institusi pendidikan lain tanpa residu hardcode.
-3. **Isolasi Lingkungan Bersih**: Staging berjalan independen di port 49280 / 8080 tanpa mengganggu port 80 yang siap digunakan untuk production.
+1. **Fleksibilitas 100%**: Nama dan profil sekolah dapat diganti sewaktu-waktu baik melalui Pengaturan Umum (General Settings) maupun Theme Customizer, dan keduanya selalu sinkron 100%.
+2. **Pengalaman Pengguna Konsisten**: Tidak ada lagi duplikasi atau kebingungan antara Nama Resmi Sekolah dan Nama Situs.
+3. **Dukungan Multibahasa Paripurna**: Seluruh panel Customizer tema Sarangenge terlokalisasi dalam Bahasa Indonesia, Inggris, dan Sunda.
+4. **Reusabilitas Tema**: Tema Sarangenge tetap bersih dan dapat diadopsi oleh institusi pendidikan lain tanpa residu hardcode.
+5. **Isolasi Lingkungan Bersih**: Staging berjalan independen di port 49280 / 8080 tanpa mengganggu port 80 yang siap digunakan untuk production.

@@ -119,6 +119,23 @@ class Setting extends Model
         };
     }
 
+    public static function clearCache(?string $key = null): void
+    {
+        if ($key !== null) {
+            Cache::forget("sys_setting_{$key}");
+            return;
+        }
+
+        try {
+            $keys = static::query()->pluck('key');
+            foreach ($keys as $k) {
+                Cache::forget("sys_setting_{$k}");
+            }
+        } catch (\Throwable) {
+            // silent fail
+        }
+    }
+
     public static function resolveConsoleDashboardSlug(): string
     {
         $raw = self::get(self::KEY_CONSOLE_DASHBOARD_SLUG, 'dash');

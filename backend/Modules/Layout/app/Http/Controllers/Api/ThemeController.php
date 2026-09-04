@@ -218,6 +218,7 @@ class ThemeController extends BaseApiController
 
             $newSettings = array_merge($existingSettings, $settingsInput);
             $newSettings = $this->themeService->normalizeThemeDataBindingsInSettings($newSettings);
+            $this->syncThemeSettingsToGlobalSettings($newSettings);
 
             $theme->update(['settings' => $newSettings]);
 
@@ -262,6 +263,7 @@ class ThemeController extends BaseApiController
             $customCss = isset($validated['custom_css']) && is_string($validated['custom_css']) ? $validated['custom_css'] : '';
 
             $newSettings = $this->themeService->settingsForCustomizationPublish($theme, $settingsInput);
+            $this->syncThemeSettingsToGlobalSettings($newSettings);
 
             \DB::transaction(function () use ($theme, $newSettings, $customCss): void {
                 $theme->update([
@@ -509,5 +511,41 @@ class ThemeController extends BaseApiController
         }
 
         return $this->success($result->toArray(), 'Theme sample data installed successfully');
+    }
+
+    /**
+     * Bidirectionally sync school identity settings back to global sys_settings.
+     */
+    private function syncThemeSettingsToGlobalSettings(array &$newSettings): void
+    {
+        $schoolName = $newSettings['school_name'] ?? $newSettings['site_title'] ?? null;
+        if (is_string($schoolName) && trim($schoolName) !== '') {
+            $trimmed = trim($schoolName);
+            $newSettings['school_name'] = $trimmed;
+            $newSettings['site_title'] = $trimmed;
+            try {
+                if (class_exists(\Modules\Core\System\Models\Setting::class)) {
+                    \Modules\Core\System\Models\Setting::set('site_name', $trimmed, 'string', 'general');
+                    \Modules\Core\System\Models\Setting::clearCache('site_name');
+                }
+            } catch (\Throwable $e) {
+                Log::warning('Failed to sync school_name to site_name: '.$e->getMessage());
+            }
+        }
+
+        $schoolTagline = $newSettings['school_tagline'] ?? $newSettings['site_tagline'] ?? null;
+        if (is_string($schoolTagline) && trim($schoolTagline) !== '') {
+            $trimmedTag = trim($schoolTagline);
+            $newSettings['school_tagline'] = $trimmedTag;
+            $newSettings['site_tagline'] = $trimmedTag;
+            try {
+                if (class_exists(\Modules\Core\System\Models\Setting::class)) {
+                    \Modules\Core\System\Models\Setting::set('site_tagline', $trimmedTag, 'string', 'general');
+                    \Modules\Core\System\Models\Setting::clearCache('site_tagline');
+                }
+            } catch (\Throwable $e) {
+                Log::warning('Failed to sync school_tagline to site_tagline: '.$e->getMessage());
+            }
+        }
     }
 }

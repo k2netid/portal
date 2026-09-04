@@ -305,7 +305,10 @@ class LicenseService
         $protectedKeys = [
             'app_name',
             'app_logo',
+            'brand_logo',
             'app_favicon',
+            'brand_favicon',
+            'branding_display',
             'app_identity',
             'powered_by_link',
             'admin_footer_text',

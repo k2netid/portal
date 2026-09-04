@@ -72,9 +72,12 @@ const displaySubtitle = computed(() => {
   if (props.subtitle) return props.subtitle;
   const tier = systemStore.appIdentity?.app_license_tier || 'basic';
   const tierNames: Record<string, string> = {
+    community: 'Community',
     basic: 'Basic',
+    starter: 'Starter',
     pro: 'Pro',
     pro_plus: 'Pro+',
+    enterprise: 'Enterprise',
     white_label: 'Enterprise',
   };
   return tierNames[tier] || tier;
@@ -83,10 +86,13 @@ const displaySubtitle = computed(() => {
 const licenseBadgeClasses = computed(() => {
   const tier = systemStore.appIdentity?.app_license_tier || 'basic';
   switch (tier) {
+    case 'starter':
+      return 'bg-sky-500/10 text-sky-600 border border-sky-500/20';
     case 'pro':
       return 'bg-blue-500/10 text-blue-600 border border-blue-500/20';
     case 'pro_plus':
       return 'bg-indigo-500/10 text-indigo-600 border border-indigo-500/20';
+    case 'enterprise':
     case 'white_label':
       return 'bg-purple-500/10 text-purple-600 border border-purple-500/20';
     default:

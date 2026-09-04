@@ -88,28 +88,115 @@
             "category": "General",
             "scope": "platform"
         },
+        "color_primary": {
+            "label": "Warna Utama (Primary)",
+            "type": "color",
+            "default": "#00aeef",
+            "category": "Colors",
+            "scope": "platform"
+        },
+        "color_secondary": {
+            "label": "Warna Sekunder (Secondary)",
+            "type": "color",
+            "default": "#0077a8",
+            "category": "Colors",
+            "scope": "platform"
+        },
+        "color_accent": {
+            "label": "Warna Aksen / Glow (Accent)",
+            "type": "color",
+            "default": "#38c6f4",
+            "category": "Colors",
+            "scope": "platform"
+        },
         "font_heading": {
-            "label": "Heading Font",
+            "label": "Font Judul (Heading Font)",
             "type": "select",
             "options": [
+                {
+                    "label": "Geist (Modern Clean)",
+                    "value": "Geist"
+                },
                 {
                     "label": "Inter",
                     "value": "Inter"
                 },
                 {
-                    "label": "Roboto",
-                    "value": "Roboto"
+                    "label": "Plus Jakarta Sans",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Outfit",
+                    "value": "Outfit"
                 },
                 {
                     "label": "Poppins",
                     "value": "Poppins"
                 },
                 {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
                     "label": "Merriweather",
                     "value": "Merriweather"
                 }
             ],
-            "default": "Inter",
+            "default": "Geist",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "font_body": {
+            "label": "Font Konten / Body",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Geist (Modern Clean)",
+                    "value": "Geist"
+                },
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Plus Jakarta Sans",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Open Sans",
+                    "value": "Open Sans"
+                }
+            ],
+            "default": "Geist",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "font_mono": {
+            "label": "Font Kode / Monospace",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Geist Mono",
+                    "value": "Geist Mono"
+                },
+                {
+                    "label": "JetBrains Mono",
+                    "value": "JetBrains Mono"
+                },
+                {
+                    "label": "Fira Code",
+                    "value": "Fira Code"
+                },
+                {
+                    "label": "UI Monospace",
+                    "value": "ui-monospace"
+                }
+            ],
+            "default": "Geist Mono",
             "category": "Typography",
             "scope": "platform"
         },
@@ -167,22 +254,42 @@
                     "value": "hero"
                 },
                 {
-                    "label": "Partner logos",
-                    "value": "partners"
+                    "label": "Bento Infrastructure & Services",
+                    "value": "services"
                 },
                 {
-                    "label": "Testimonials",
+                    "label": "Bandwidth & Speed Calculator",
+                    "value": "calculator"
+                },
+                {
+                    "label": "SLA Performance Guarantee",
+                    "value": "sla"
+                },
+                {
+                    "label": "Managed IT & SOC Services",
+                    "value": "managed_services"
+                },
+                {
+                    "label": "Client Testimonials & Partners",
                     "value": "testimonials"
                 },
                 {
-                    "label": "Call to action",
+                    "label": "Technical & Provisioning FAQ",
+                    "value": "faq"
+                },
+                {
+                    "label": "Call to action (CTA)",
                     "value": "cta"
                 }
             ],
             "default": [
                 "hero",
-                "partners",
+                "services",
+                "calculator",
+                "sla",
+                "managed_services",
                 "testimonials",
+                "faq",
                 "cta"
             ],
             "category": "Layout",
@@ -271,7 +378,7 @@
         "header_cta_text": {
             "label": "Header CTA Button Text",
             "type": "text",
-            "default": "Info PPDB",
+            "default": "Get Started",
             "category": "Layout",
             "scope": "platform"
         },
@@ -281,20 +388,6 @@
             "default": "/contact",
             "category": "Layout",
             "scope": "platform"
-        },
-        "header_login_url": {
-            "label": "Header Login URL",
-            "type": "text",
-            "default": "/member/login",
-            "category": "Layout",
-            "scope": "theme"
-        },
-        "header_login_label": {
-            "label": "Header Login Label",
-            "type": "text",
-            "default": "Masuk Portal",
-            "category": "Layout",
-            "scope": "theme"
         },
         "nav_style": {
             "label": "Navigation Style",
@@ -430,39 +523,34 @@
             "scope": "platform"
         },
         "enable_about": {
-            "label": "Show About page",
-            "type": "checkbox",
+            "label": "Aktifkan Halaman Profil Sekolah",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "About Page"
         },
         "enable_achievement": {
-            "label": "Show Achievements page",
-            "type": "checkbox",
+            "label": "Aktifkan Halaman Prestasi",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Achievements Page"
         },
         "enable_career": {
-            "label": "Show Careers page",
-            "type": "checkbox",
+            "label": "Aktifkan Halaman Alumni & Karir",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Alumni Page"
         },
         "enable_blog": {
-            "label": "Show News page",
-            "type": "checkbox",
+            "label": "Aktifkan Halaman Berita & Agenda",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Blog Page"
         },
         "enable_contact": {
-            "label": "Show Contact page",
-            "type": "checkbox",
+            "label": "Aktifkan Halaman Kontak",
+            "type": "boolean",
             "default": true,
-            "category": "Public Pages",
-            "scope": "platform"
+            "category": "Contact Page"
         },
         "footer_text": {
             "label": "Copyright Text",
@@ -476,6 +564,52 @@
             "type": "checkbox",
             "default": true,
             "category": "Footer",
+            "scope": "platform"
+        },
+        "enable_floating_social": {
+            "label": "Tampilkan Floating Social Dock",
+            "type": "checkbox",
+            "default": true,
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_position": {
+            "label": "Posisi Floating Dock",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Kanan Tengah (Right Center)",
+                    "value": "right"
+                },
+                {
+                    "label": "Kiri Tengah (Left Center)",
+                    "value": "left"
+                },
+                {
+                    "label": "Kanan Bawah (Bottom Right)",
+                    "value": "bottom_right"
+                },
+                {
+                    "label": "Kiri Bawah (Bottom Left)",
+                    "value": "bottom_left"
+                }
+            ],
+            "default": "right",
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_default_collapsed": {
+            "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
+            "type": "checkbox",
+            "default": false,
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_show_on_mobile": {
+            "label": "Tampilkan di Layar Mobile",
+            "type": "checkbox",
+            "default": false,
+            "category": "Social Media",
             "scope": "platform"
         },
         "social_links": {
@@ -492,6 +626,11 @@
                 {
                     "name": "url",
                     "label": "URL",
+                    "type": "text"
+                },
+                {
+                    "name": "label",
+                    "label": "Label Tooltip Kustom (Opsional)",
                     "type": "text"
                 }
             ],
@@ -672,6 +811,63 @@
             "default": "Rasio Guru & Siswa",
             "category": "Hero Section"
         },
+        "hero_bg_type": {
+            "label": "Tipe Background Hero",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Preset Gradien",
+                    "value": "preset"
+                },
+                {
+                    "label": "Foto Kustom Kampus",
+                    "value": "custom_image"
+                }
+            ],
+            "default": "preset",
+            "category": "Hero Section"
+        },
+        "hero_bg_preset": {
+            "label": "Preset Background Hero",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Sunrise Teal (Fajar Emas & Toska)",
+                    "value": "sunrise_teal"
+                },
+                {
+                    "label": "Deep Navy (Biru Kejuruan)",
+                    "value": "deep_navy"
+                },
+                {
+                    "label": "Golden Dawn (Fajar Keemasan)",
+                    "value": "golden_dawn"
+                }
+            ],
+            "default": "sunrise_teal",
+            "category": "Hero Section"
+        },
+        "hero_bg_image": {
+            "label": "Gambar Background Hero",
+            "type": "image",
+            "default": "",
+            "category": "Hero Section"
+        },
+        "hero_bg_overlay_opacity": {
+            "label": "Kegelapan Overlay Background (%)",
+            "type": "range",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 75,
+            "category": "Hero Section"
+        },
+        "track_finder_enabled": {
+            "label": "Aktifkan Widget Pencari Jurusan",
+            "type": "boolean",
+            "default": true,
+            "category": "Bento Campus Section"
+        },
         "bento_title": {
             "label": "Judul Bento Grid Kampus",
             "type": "text",
@@ -779,6 +975,78 @@
             "type": "text",
             "default": "",
             "category": "Footer"
+        },
+        "enable_programs": {
+            "label": "Aktifkan Halaman Program Keahlian",
+            "type": "boolean",
+            "default": true,
+            "category": "Programs Section"
+        },
+        "enable_facilities": {
+            "label": "Aktifkan Halaman Fasilitas & Bengkel",
+            "type": "boolean",
+            "default": true,
+            "category": "Services Page"
+        },
+        "enable_pricing": {
+            "label": "Aktifkan Halaman Biaya & PPDB",
+            "type": "boolean",
+            "default": true,
+            "category": "Pricing Page"
+        },
+        "enable_tim": {
+            "label": "Aktifkan Halaman Guru & Staf",
+            "type": "boolean",
+            "default": true,
+            "category": "Tim Page"
+        },
+        "social_instagram_feed_enabled": {
+            "label": "Tampilkan Instagram Feed di Beranda",
+            "type": "boolean",
+            "default": false,
+            "category": "Social Media"
+        },
+        "social_instagram_feed_slot": {
+            "label": "Posisi Penempatan Instagram Feed",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Bawah Hero Section (after_hero)",
+                    "value": "after_hero"
+                },
+                {
+                    "label": "Atas Footer Situs (before_footer)",
+                    "value": "before_footer"
+                }
+            ],
+            "default": "after_hero",
+            "category": "Social Media"
+        },
+        "social_instagram_feed_layout": {
+            "label": "Gaya Tampilan Instagram Feed",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Bento Grid (Modern Berjenjang)",
+                    "value": "bento"
+                },
+                {
+                    "label": "Classic Grid (Kotak Responsif)",
+                    "value": "grid"
+                },
+                {
+                    "label": "Carousel Slider (Geser Horizontal)",
+                    "value": "carousel"
+                }
+            ],
+            "default": "bento",
+            "category": "Social Media"
+        },
+        "social_instagram_feed_title": {
+            "label": "Judul Seksi Instagram",
+            "type": "text",
+            "default": "",
+            "category": "Social Media"
         }
     },
     "menus": {

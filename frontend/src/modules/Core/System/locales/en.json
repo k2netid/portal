@@ -1364,6 +1364,8 @@
     "description": "Manage Jejakawan configuration, identity, discussion, and performance",
     "loading": "Loading settings...",
     "noSettings": "No settings found in this tab.",
+    "white_label_required": "White Label Required",
+    "locked_by_license_policy": "Locked by license policy",
     "tabs": {
       "identity": "Identity",
       "general": "General",

@@ -38,7 +38,8 @@ class PublicSettingsController extends BaseApiController
             'app_name' => Setting::get('app_name', 'Jejakawan'),
             'app_logo' => Setting::get('app_logo', ''),
             'app_favicon' => Setting::get('app_favicon', ''),
-            'app_license_tier' => Setting::get('license_type') ?: Setting::get('app_license_tier', 'basic'),
+            'app_license_tier' => app(\Modules\Core\System\Services\LicenseService::class)->getLicenseTier(),
+            'has_white_label' => app(\Modules\Core\System\Services\LicenseService::class)->hasWhiteLabel(),
 
             // Contact Info
             'contact_email' => Setting::get('contact_email', 'hello@jejakawan.com'),

@@ -86,7 +86,14 @@
     "slideMspCta": "Konsultasi Layanan",
     "slideWifiTitle": "Infrastruktur Nirkabel & Pangadaan Parangkat IT",
     "slideWifiDesc": "Desain jaringan nirkabel kantor kapasitas luhur, seamless roaming, sareng pangadaan parangkat resmi bergaransi.",
-    "slideWifiCta": "Hubungi Sales"
+    "slideWifiCta": "Hubungi Sales",
+    "scrollCue": "Gulung Ka Handap",
+    "statsLabel": "TÉLÉMÉTRI & KINERJA INFRASTRUKTUR",
+    "statsSubLabel": "Realtime SLA & Status Backbone",
+    "statSla": "Jaminan Kasediaan (SLA)",
+    "statBackbone": "Kapasitas Backbone Ring",
+    "statNoc": "Active NOC Monitoring 24/7",
+    "statLatency": "Laténsi Ring Terintegrasi"
   },
   "calculator": {
     "badge": "Perkiraan bandwidth",
@@ -314,7 +321,7 @@
       "companyLabel": "Nami pausahaan / organisasi",
       "companyPlaceholder": "Nami institusi",
       "emailLabel": "Email",
-      "emailPlaceholder": "email@domain.com",
+      "emailPlaceholder": "email{'@'}domain.com",
       "phoneLabel": "Telepon / WhatsApp",
       "phonePlaceholder": "08xxxxxxxxxx",
       "serviceLabel": "Layanan anu dipikahoyong",

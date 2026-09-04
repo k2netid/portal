@@ -308,8 +308,9 @@ const fetchLicense = async () => {
   loading.value = true;
   try {
     const res = await api.get('/manage/system/license');
-    if (res.data?.data) {
-      licenseData.value = res.data.data;
+    const data = (res.data?.data ?? res.data) as LicenseState | undefined;
+    if (data && typeof data === 'object' && data.tier) {
+      licenseData.value = data;
     }
   } catch (err) {
     logger.error('Failed to fetch license:', err);

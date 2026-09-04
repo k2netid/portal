@@ -768,6 +768,24 @@
         />
       </div>
 
+      <!-- 21C. INSTAGRAM FEED BLOCK -->
+      <div
+        v-else-if="block.type === 'instagram_feed' || block.type === 'instagram'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-instagram-feed-block w-full"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <InstagramFeedBlock
+          :layout="(getSettingStr(block, 'layout') as 'bento' | 'grid' | 'carousel') || 'bento'"
+          :title="getSettingStr(block, 'title')"
+          :subtitle="getSettingStr(block, 'subtitle')"
+          :limit="getSettingNum(block, 'limit', 8)"
+          :is-preview="isPreview"
+          :context="context"
+        />
+      </div>
+
       <!-- 22. GENERIC CONTAINER FALLBACK -->
       <div
         v-else
@@ -791,6 +809,7 @@
 import { computed, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import PublicComments from '@/modules/Publishing/components/comments/PublicComments.vue';
+import InstagramFeedBlock from '@/engine/plugins/blocks/InstagramFeedBlock.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import api from '@/engine/api/client';
 import { logger } from '@/shared/utils/logger';

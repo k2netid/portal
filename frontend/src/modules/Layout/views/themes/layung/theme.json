@@ -3,7 +3,7 @@
     "slug": "layung",
     "version": "1.0.0",
     "type": "frontend",
-    "description": "Layung — tema portal K2NET untuk ISP, managed services, dan penyedia produk IT.",
+    "description": "Layung — tema portal penyedia layanan internet (ISP) dan Managed Service Provider (MSP) terdepan. Arsitektur serat optik, jaminan SLA 99.999%, dan layanan NOC 24/7.",
     "author": "Jejakawan Team",
     "supports": {
         "layung_canvas": true
@@ -12,7 +12,7 @@
         "site_title": {
             "label": "Site Title",
             "type": "text",
-            "default": "K2NET",
+            "default": "Jejakawan",
             "category": "General",
             "scope": "platform"
         },
@@ -56,14 +56,14 @@
         "site_tagline": {
             "label": "Site Tagline",
             "type": "text",
-            "default": "Internet Service Provider & Managed Service Provider",
+            "default": "Modern & Elegant Jejakawan",
             "category": "General",
             "scope": "platform"
         },
         "site_description": {
             "label": "Site Description",
             "type": "textarea",
-            "default": "K2NET — ISP dan Managed Service Provider. PT Kirana Karina Network, Bandung.",
+            "default": "Modern Content Management System built with Laravel and Vue.js",
             "category": "General",
             "scope": "platform"
         },
@@ -88,13 +88,6 @@
             "category": "General",
             "scope": "platform"
         },
-        "color_primary": {
-            "label": "Warna Utama (Primary)",
-            "type": "color",
-            "default": "#00aeef",
-            "category": "Colors",
-            "scope": "platform"
-        },
         "color_secondary": {
             "label": "Warna Sekunder (Secondary)",
             "type": "color",
@@ -113,13 +106,34 @@
             "label": "Font Judul (Heading Font)",
             "type": "select",
             "options": [
-                { "label": "Geist (Modern Clean)", "value": "Geist" },
-                { "label": "Inter", "value": "Inter" },
-                { "label": "Plus Jakarta Sans", "value": "Plus Jakarta Sans" },
-                { "label": "Outfit", "value": "Outfit" },
-                { "label": "Poppins", "value": "Poppins" },
-                { "label": "Roboto", "value": "Roboto" },
-                { "label": "Merriweather", "value": "Merriweather" }
+                {
+                    "label": "Geist (Modern Clean)",
+                    "value": "Geist"
+                },
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Plus Jakarta Sans",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Outfit",
+                    "value": "Outfit"
+                },
+                {
+                    "label": "Poppins",
+                    "value": "Poppins"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Merriweather",
+                    "value": "Merriweather"
+                }
             ],
             "default": "Geist",
             "category": "Typography",
@@ -129,11 +143,26 @@
             "label": "Font Konten / Body",
             "type": "select",
             "options": [
-                { "label": "Geist (Modern Clean)", "value": "Geist" },
-                { "label": "Inter", "value": "Inter" },
-                { "label": "Plus Jakarta Sans", "value": "Plus Jakarta Sans" },
-                { "label": "Roboto", "value": "Roboto" },
-                { "label": "Open Sans", "value": "Open Sans" }
+                {
+                    "label": "Geist (Modern Clean)",
+                    "value": "Geist"
+                },
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Plus Jakarta Sans",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Open Sans",
+                    "value": "Open Sans"
+                }
             ],
             "default": "Geist",
             "category": "Typography",
@@ -143,10 +172,22 @@
             "label": "Font Kode / Monospace",
             "type": "select",
             "options": [
-                { "label": "Geist Mono", "value": "Geist Mono" },
-                { "label": "JetBrains Mono", "value": "JetBrains Mono" },
-                { "label": "Fira Code", "value": "Fira Code" },
-                { "label": "UI Monospace", "value": "ui-monospace" }
+                {
+                    "label": "Geist Mono",
+                    "value": "Geist Mono"
+                },
+                {
+                    "label": "JetBrains Mono",
+                    "value": "JetBrains Mono"
+                },
+                {
+                    "label": "Fira Code",
+                    "value": "Fira Code"
+                },
+                {
+                    "label": "UI Monospace",
+                    "value": "ui-monospace"
+                }
             ],
             "default": "Geist Mono",
             "category": "Typography",
@@ -330,30 +371,16 @@
         "header_cta_text": {
             "label": "Header CTA Button Text",
             "type": "text",
-            "default": "Minta Penawaran",
+            "default": "Get Started",
             "category": "Layout",
             "scope": "platform"
         },
         "header_cta_url": {
             "label": "Header CTA Button URL",
             "type": "text",
-            "default": "",
+            "default": "/contact",
             "category": "Layout",
             "scope": "platform"
-        },
-        "header_login_url": {
-            "label": "Header Login URL",
-            "type": "text",
-            "default": "/member/login",
-            "category": "Layout",
-            "scope": "theme"
-        },
-        "header_login_label": {
-            "label": "Header Login Label",
-            "type": "text",
-            "default": "Portal Klien",
-            "category": "Layout",
-            "scope": "theme"
         },
         "nav_style": {
             "label": "Navigation Style",
@@ -493,27 +520,7 @@
             "type": "boolean",
             "default": true,
             "category": "About Page",
-            "scope": "theme"
-        },
-        "enable_services": {
-            "label": "Aktifkan halaman Layanan",
-            "type": "boolean",
-            "default": true,
-            "category": "Services Page",
-            "scope": "theme"
-        },
-        "enable_solusi": {
-            "label": "Aktifkan halaman Solusi",
-            "type": "boolean",
-            "default": true,
-            "category": "Solusi Page",
-            "scope": "theme"
-        },
-        "enable_pricing": {
-            "label": "Aktifkan halaman Paket & Harga",
-            "type": "boolean",
-            "default": true,
-            "category": "Pricing Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung.",
             "scope": "theme"
         },
         "enable_achievement": {
@@ -521,20 +528,7 @@
             "type": "boolean",
             "default": true,
             "category": "Achievements Page",
-            "scope": "theme"
-        },
-        "enable_tim": {
-            "label": "Aktifkan halaman Tim",
-            "type": "boolean",
-            "default": true,
-            "category": "Tim Page",
-            "scope": "theme"
-        },
-        "enable_blog": {
-            "label": "Aktifkan halaman Berita",
-            "type": "boolean",
-            "default": true,
-            "category": "News Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /achievement dari pengunjung.",
             "scope": "theme"
         },
         "enable_career": {
@@ -542,6 +536,15 @@
             "type": "boolean",
             "default": true,
             "category": "Careers Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /career dari pengunjung.",
+            "scope": "theme"
+        },
+        "enable_blog": {
+            "label": "Aktifkan halaman Berita",
+            "type": "boolean",
+            "default": true,
+            "category": "News Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /blog dari pengunjung.",
             "scope": "theme"
         },
         "enable_contact": {
@@ -549,33 +552,13 @@
             "type": "boolean",
             "default": true,
             "category": "Contact Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /contact dari pengunjung.",
             "scope": "theme"
         },
         "footer_text": {
-            "label": "Teks Hak Cipta Footer (fallback)",
+            "label": "Copyright Text",
             "type": "text",
-            "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
-            "category": "Footer",
-            "scope": "platform"
-        },
-        "footer_text_id": {
-            "label": "Teks Hak Cipta Footer (Indonesia)",
-            "type": "text",
-            "default": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
-            "category": "Footer",
-            "scope": "platform"
-        },
-        "footer_text_en": {
-            "label": "Teks Hak Cipta Footer (English)",
-            "type": "text",
-            "default": "© 2026 PT Kirana Karina Network (K2NET). All rights reserved.",
-            "category": "Footer",
-            "scope": "platform"
-        },
-        "footer_text_su": {
-            "label": "Teks Hak Cipta Footer (Sunda)",
-            "type": "text",
-            "default": "© 2026 PT Kirana Karina Network (K2NET). Sadaya hak cipta ditangtayungan undang-undang.",
+            "default": "© 2026 Jejakawan. All rights reserved.",
             "category": "Footer",
             "scope": "platform"
         },
@@ -597,10 +580,22 @@
             "label": "Posisi Floating Dock",
             "type": "select",
             "options": [
-                { "label": "Kanan Tengah (Right Center)", "value": "right" },
-                { "label": "Kiri Tengah (Left Center)", "value": "left" },
-                { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
-                { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" }
+                {
+                    "label": "Kanan Tengah (Right Center)",
+                    "value": "right"
+                },
+                {
+                    "label": "Kiri Tengah (Left Center)",
+                    "value": "left"
+                },
+                {
+                    "label": "Kanan Bawah (Bottom Right)",
+                    "value": "bottom_right"
+                },
+                {
+                    "label": "Kiri Bawah (Bottom Left)",
+                    "value": "bottom_left"
+                }
             ],
             "default": "right",
             "category": "Social Media",
@@ -956,6 +951,7 @@
             "label": "Aktifkan Animasi Hero",
             "type": "checkbox",
             "default": true,
+            "description": "Tampilkan visual interaktif teknologi di area kanan hero",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -964,11 +960,24 @@
             "type": "select",
             "default": "network",
             "options": [
-                { "value": "network", "label": "Network Topology (Topologi Jaringan)" },
-                { "value": "datacenter", "label": "Data Center & Server Rack" },
-                { "value": "wireless", "label": "Enterprise Wireless AP (Wi-Fi 6/7)" },
-                { "value": "cyber_globe", "label": "Cyber Matrix & Digital Globe" }
+                {
+                    "value": "network",
+                    "label": "Network Topology (Topologi Jaringan)"
+                },
+                {
+                    "value": "datacenter",
+                    "label": "Data Center & Server Rack"
+                },
+                {
+                    "value": "wireless",
+                    "label": "Enterprise Wireless AP (Wi-Fi 6/7)"
+                },
+                {
+                    "value": "cyber_globe",
+                    "label": "Cyber Matrix & Digital Globe"
+                }
             ],
+            "description": "Pilih animasi visual yang sesuai dengan identitas bisnis K2NET",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -976,6 +985,7 @@
             "label": "Aktifkan Slider Hero",
             "type": "checkbox",
             "default": false,
+            "description": "Tampilkan multi-slide hero dengan transisi interaktif dan indikator waktu",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -983,6 +993,7 @@
             "label": "Autoplay Slider Hero",
             "type": "checkbox",
             "default": true,
+            "description": "Putar slide hero secara otomatis",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -993,6 +1004,7 @@
             "max": 15,
             "step": 1,
             "default": 5,
+            "description": "Durasi tampilan setiap slide sebelum berganti otomatis",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -1001,9 +1013,16 @@
             "type": "select",
             "default": "preset",
             "options": [
-                { "value": "preset", "label": "Preset Tema (Gradien & Cyber Mesh)" },
-                { "value": "custom_image", "label": "Gambar Kustom (Upload Gambar)" }
+                {
+                    "value": "preset",
+                    "label": "Preset Tema (Gradien & Cyber Mesh)"
+                },
+                {
+                    "value": "custom_image",
+                    "label": "Gambar Kustom (Upload Gambar)"
+                }
             ],
+            "description": "Pilih gaya latar belakang area hero",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -1012,11 +1031,24 @@
             "type": "select",
             "default": "coastal_cyber",
             "options": [
-                { "value": "coastal_cyber", "label": "Coastal Cyber (Oceanic Deep Navy & Cyan)" },
-                { "value": "fiber_pulse", "label": "Fiber Pulse (Neon Emerald & Electric Blue)" },
-                { "value": "dark_datacenter", "label": "Dark Datacenter (Carbon Mesh & Blue Ambiance)" },
-                { "value": "minimal_midnight", "label": "Minimal Midnight (Deep Obsidian & Ambient Glow)" }
+                {
+                    "value": "coastal_cyber",
+                    "label": "Coastal Cyber (Oceanic Deep Navy & Cyan)"
+                },
+                {
+                    "value": "fiber_pulse",
+                    "label": "Fiber Pulse (Neon Emerald & Electric Blue)"
+                },
+                {
+                    "value": "dark_datacenter",
+                    "label": "Dark Datacenter (Carbon Mesh & Blue Ambiance)"
+                },
+                {
+                    "value": "minimal_midnight",
+                    "label": "Minimal Midnight (Deep Obsidian & Ambient Glow)"
+                }
             ],
+            "description": "Pilihan palet visual latar belakang yang selaras dengan tema Layung",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -1024,6 +1056,7 @@
             "label": "Gambar Background Hero",
             "type": "media",
             "default": "",
+            "description": "Gambar latar belakang kustom untuk area hero",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -1034,6 +1067,7 @@
             "max": 95,
             "step": 5,
             "default": 65,
+            "description": "Tingkat kegelapan lapisan overlay agar teks dan animasi tetap terbaca jelas",
             "category": "Hero Section",
             "scope": "theme"
         },
@@ -1143,31 +1177,50 @@
             "category": "Simulator Bandwidth",
             "scope": "theme"
         },
+        "enable_services": {
+            "label": "Aktifkan halaman Layanan",
+            "type": "boolean",
+            "default": true,
+            "category": "Services Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /services dari pengunjung.",
+            "scope": "theme"
+        },
+        "enable_solusi": {
+            "label": "Aktifkan halaman Solusi",
+            "type": "boolean",
+            "default": true,
+            "category": "Solusi Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /solusi dari pengunjung.",
+            "scope": "theme"
+        },
+        "enable_pricing": {
+            "label": "Aktifkan halaman Paket & Harga",
+            "type": "boolean",
+            "default": true,
+            "category": "Pricing Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /pricing dari pengunjung.",
+            "scope": "theme"
+        },
+        "enable_tim": {
+            "label": "Aktifkan halaman Tim",
+            "type": "boolean",
+            "default": true,
+            "category": "Tim Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung.",
+            "scope": "theme"
+        },
+        "contact_form_slug": {
+            "label": "Slug formulir kontak",
+            "type": "text",
+            "default": "contact",
+            "category": "Contact Page",
+            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+            "scope": "theme"
+        },
         "footer_about_text": {
-            "label": "Deskripsi Singkat Footer (fallback)",
+            "label": "Deskripsi Singkat Footer",
             "type": "textarea",
             "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
-            "category": "Footer",
-            "scope": "theme"
-        },
-        "footer_about_text_id": {
-            "label": "Deskripsi Singkat Footer (Indonesia)",
-            "type": "textarea",
-            "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
-            "category": "Footer",
-            "scope": "theme"
-        },
-        "footer_about_text_en": {
-            "label": "Deskripsi Singkat Footer (English)",
-            "type": "textarea",
-            "default": "K2NET is a brand of PT Kirana Karina Network — ISP and managed services based in Bandung.",
-            "category": "Footer",
-            "scope": "theme"
-        },
-        "footer_about_text_su": {
-            "label": "Deskripsi Singkat Footer (Sunda)",
-            "type": "textarea",
-            "default": "K2NET nyaeta merek PT Kirana Karina Network — ISP sareng managed services di Bandung.",
             "category": "Footer",
             "scope": "theme"
         },
@@ -1192,26 +1245,57 @@
             "category": "Footer",
             "scope": "theme"
         },
-        "contact_form_slug": {
-            "label": "Slug formulir kontak",
+        "social_instagram_feed_enabled": {
+            "label": "Tampilkan Instagram Feed di Beranda",
+            "type": "boolean",
+            "default": false,
+            "category": "Social Media",
+            "scope": "theme"
+        },
+        "social_instagram_feed_slot": {
+            "label": "Posisi Penempatan Instagram Feed",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Bawah Hero Section (after_hero)",
+                    "value": "after_hero"
+                },
+                {
+                    "label": "Atas Footer Situs (before_footer)",
+                    "value": "before_footer"
+                }
+            ],
+            "default": "after_hero",
+            "category": "Social Media",
+            "scope": "theme"
+        },
+        "social_instagram_feed_layout": {
+            "label": "Gaya Tampilan Instagram Feed",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Bento Grid (Modern Berjenjang)",
+                    "value": "bento"
+                },
+                {
+                    "label": "Classic Grid (Kotak Responsif)",
+                    "value": "grid"
+                },
+                {
+                    "label": "Carousel Slider (Geser Horizontal)",
+                    "value": "carousel"
+                }
+            ],
+            "default": "bento",
+            "category": "Social Media",
+            "scope": "theme"
+        },
+        "social_instagram_feed_title": {
+            "label": "Judul Seksi Instagram",
             "type": "text",
-            "default": "contact",
-            "category": "Contact Page",
-            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+            "default": "",
+            "category": "Social Media",
             "scope": "theme"
         }
-    },
-    "menus": {
-        "header": "Header Primary Navigation",
-        "header_top": "Header Top Utility",
-        "footer": "Footer Bottom Links",
-        "footer_col_1": "Footer Column 1",
-        "footer_col_2": "Footer Column 2",
-        "footer_col_3": "Footer Column 3",
-        "sidebar": "Sidebar Navigation"
-    },
-    "customizer": {
-        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
-        "themeSchema": "customizer/schema.settings.json"
     }
 }
