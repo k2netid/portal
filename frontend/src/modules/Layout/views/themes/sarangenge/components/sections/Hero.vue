@@ -705,10 +705,10 @@ onMounted(async () => {
       fadeInUp(heroCtaRef.value, { delay: 0.25, duration: 0.5 });
     }
     if (heroStatsRef.value) {
-      staggerChildren(heroStatsRef.value, '> div', { delay: 0.35, stagger: 0.08 });
+      staggerChildren(heroStatsRef.value, ':scope .grid > div', { delay: 0.35, stagger: 0.08 });
     }
     if (heroNewsRef.value) {
-      staggerChildren(heroNewsRef.value, '> div:last-child > a', { delay: 0.35, stagger: 0.08 });
+      staggerChildren(heroNewsRef.value, ':scope .grid > a', { delay: 0.35, stagger: 0.08 });
     }
   }
 

@@ -97,7 +97,16 @@ export function useThemeMotion() {
   const staggerChildren = (parent: Element | string, childSelector: string, _opts: AnimationOptions = {}) => {
     const container = resolveTarget(parent);
     if (!container) return;
-    revealMany(Array.from(container.querySelectorAll(childSelector)));
+    const normalizedSelector = /^[>+~]/.test(childSelector.trim())
+      ? `:scope ${childSelector.trim()}`
+      : childSelector;
+    let children: Element[] = [];
+    try {
+      children = Array.from(container.querySelectorAll(normalizedSelector));
+    } catch {
+      children = [];
+    }
+    revealMany(children);
   };
 
   const counterUp = (el: Element | string, endValue: number, _opts: AnimationOptions = {}) => {
