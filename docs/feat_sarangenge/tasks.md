@@ -264,6 +264,33 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Playwright E2E: `categories-menu-consolidation.spec.ts` → 2/2 tests passed di SMKN6 (7.0s) dan K2NET (9.9s).
   - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
 
+### Milestone 7.11: Dinamisasi Konten Tema Sarangenge (6 Kategori Utama) (🟢 Selesai)
+- [x] **Backend Publishing Seeder (`VocationalContentSeeder.php`)**:
+  - [x] Registrasi 6 kategori CMS di `lib_categories`:
+    - `prestasi`: "Prestasi & Penghargaan"
+    - `guru-staf`: "Dewan Guru & Tenaga Kependidikan"
+    - `karir-alumni`: "Bursa Kerja Khusus (BKK) & Karir Alumni"
+    - `ekstrakurikuler`: "Ekstrakurikuler & Pengembangan Diri"
+    - `agenda`: "Agenda & Pengumuman Sekolah"
+    - `testimoni`: "Testimoni Sivitas & Mitra Industri"
+  - [x] Injeksi 32 konten published berkualitas tinggi standar vokasi ke dalam `pub_contents` dengan atribut `meta` terstruktur.
+- [x] **Dinamisasi Halaman & Seksi Tema Sarangenge**:
+  - [x] `Achievement.vue`: Query API `category: 'prestasi'`, filter tab kategori dinamis, spinner loading, empty state, dan link detail ke `/blog/:slug`.
+  - [x] `AchievementsSection.vue`: Query API publik (top-3 limit), link kartu ke `/blog/:slug` dengan fallback anggun.
+  - [x] `Tim.vue`: Query API `category: 'guru-staf'`, kartu dewan guru dengan inisial/avatar, jabatan, mata pelajaran, pendidikan, dan link `Profil →` ke `/blog/:slug`.
+  - [x] `CareerCenter.vue`: Query API `category: 'karir-alumni'`, metrik kelulusan & kartu kisah sukses alumni dengan link `Kisah Lengkap →` ke `/blog/:slug`.
+  - [x] `ExtracurricularSection.vue`: Query API `category: 'ekstrakurikuler'`, pemetaan ikon dinamis (Bot, Globe2, ShieldAlert, Award, Music, Camera, Palette), dan link ke `/blog/:slug`.
+  - [x] `AnnouncementsSection.vue`: Query API `category: 'agenda'`, render kalender tanggal interaktif, lokasi acara, dan link detail/registrasi.
+  - [x] `TestimonialsSection.vue`: Query API `category: 'testimoni'`, render kutipan apresiasi sivitas dan mitra industri DUDI.
+  - [x] `Programs.vue` & `Facilities.vue`: Hardening ekstraksi array data untuk paginated response (`data?.data?.data`).
+  - [x] `public.ts`: Hardening router navigation guard agar direct navigation (hit langsung/refresh browser) ke dynamic theme routes tidak mengalami 404.
+- [x] **Pemeriksaan Kualitas & Pengujian Menyeluruh**:
+  - [x] `npm run i18n:check` → 27 gate keys, 9.169 kunci simetris per bahasa (`id`, `en`, `su`) valid 100%.
+  - [x] `npm run type-check` (`vue-tsc -b`) → 0 errors.
+  - [x] `npm run test:unit` → 45 test files, 286/286 unit tests passed.
+  - [x] Playwright E2E: `sarangenge-dynamic-content.spec.ts` (4/4 tests passed) dan `public-site-smoke.spec.ts` (12/12 tests passed).
+  - [x] Build produksi frontend dan sinkronisasi aset ke `backend/public/`.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.

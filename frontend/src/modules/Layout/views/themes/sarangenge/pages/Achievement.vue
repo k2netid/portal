@@ -55,12 +55,18 @@
             </button>
           </div>
 
+          <!-- Loading Spinner -->
+          <div v-if="loading && !hasBinding" class="min-h-[250px] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-full border-2 border-[var(--sarangenge-teal,#0f766e)] border-t-transparent animate-spin" />
+          </div>
+
           <!-- Achievements List Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div
+          <div v-else-if="filteredAchievements.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <router-link
               v-for="(ach, idx) in filteredAchievements"
-              :key="idx"
-              class="sarangenge-panel p-8 space-y-4 flex flex-col justify-between hover:border-[var(--sarangenge-teal,#0f766e)]/40 hover:shadow-xl transition-all duration-300 group"
+              :key="ach.id || idx"
+              :to="ach.slug ? `/blog/${ach.slug}` : '#'"
+              class="sarangenge-panel p-8 space-y-4 flex flex-col justify-between hover:border-[var(--sarangenge-teal,#0f766e)]/40 hover:shadow-xl transition-all duration-300 group cursor-pointer block text-left"
             >
               <div class="space-y-4">
                 <div class="flex items-center justify-between">
@@ -77,25 +83,36 @@
                   {{ ach.title }}
                 </h3>
 
-                <p class="text-sm text-muted-foreground leading-relaxed">
+                <p class="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                   {{ ach.description }}
                 </p>
               </div>
 
-              <div class="pt-4 mt-4 border-t border-border/60 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shadow-inner">
-                  {{ (ach.student || 'S').charAt(0) }}
-                </div>
-                <div>
-                  <div class="text-xs font-bold text-foreground">
-                    {{ ach.student }}
+              <div class="pt-4 mt-4 border-t border-border/60 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shadow-inner">
+                    {{ (ach.student || 'S').charAt(0) }}
                   </div>
-                  <div class="text-[11px] text-muted-foreground">
-                    {{ ach.categoryName }}
+                  <div>
+                    <div class="text-xs font-bold text-foreground">
+                      {{ ach.student }}
+                    </div>
+                    <div class="text-[11px] text-muted-foreground">
+                      {{ ach.categoryName }}
+                    </div>
                   </div>
                 </div>
+                <span v-if="ach.slug" class="text-xs font-medium text-[var(--sarangenge-teal,#0f766e)] group-hover:underline flex items-center gap-0.5">
+                  Detail →
+                </span>
               </div>
-            </div>
+            </router-link>
+          </div>
+
+          <div v-else class="sarangenge-panel p-10 text-center text-muted-foreground space-y-3">
+            <p class="text-base font-semibold text-foreground">
+              {{ t('pages.achievement.noData', 'Belum ada data prestasi untuk kategori ini.') }}
+            </p>
           </div>
         </div>
       </template>
@@ -104,8 +121,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import api from '@/engine/api/client';
+import { publishingPaths } from '@/engine/api/paths';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import { useThemeDataBindings } from '@/modules/Layout/composables/useThemeDataBindings';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
@@ -114,6 +133,7 @@ import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shar
 import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
+import type { Content } from '@/modules/Publishing/types/content';
 import { Trophy, Medal } from 'lucide-vue-next';
 
 const { t } = useThemeI18n('sarangenge');
@@ -123,11 +143,13 @@ const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverr
 
 const { data: dynamicAchievements, hasBinding } = useThemeDataBindings('achievements', 'list');
 
+const achievements = ref<Content[]>([]);
+const loading = ref(true);
 const activeTab = ref('all');
 
 const filterTabs = [
   { id: 'all', name: 'Semua Prestasi' },
-  { id: 'sains', name: 'Sains & Matematika' },
+  { id: 'sains', name: 'Sains & Kejuruan' },
   { id: 'robotika', name: 'Robotika & IT' },
   { id: 'bahasa', name: 'Bahasa & Seni' },
   { id: 'olahraga', name: 'Olahraga' },
@@ -143,15 +165,19 @@ const achievementsSubtitle = computed(() => {
 
 const defaultAchievements = computed(() => [
   {
+    id: 'default-1',
+    slug: 'medali-emas-lks-nasional-cad-building',
     year: '2026',
-    level: 'Tingkat Internasional',
+    level: 'Tingkat Nasional',
     category: 'sains',
-    categoryName: 'Olimpiade Sains (IMO)',
-    title: 'Medali Emas International Mathematical Olympiad',
-    description: 'Menyabet medali emas dengan nilai sempurna di babak final olimpiade matematika dunia.',
+    categoryName: 'LKS SMK Nasional',
+    title: 'Medali Emas LKS Tingkat Nasional Bidang CAD Building',
+    description: 'Menyabet medali emas dengan skor tertinggi dalam desain permodelan konstruksi 3D dan Building Information Modeling.',
     student: 'Ahmad Fadhil Prasetya',
   },
   {
+    id: 'default-2',
+    slug: 'juara-1-national-robotics-ai-championship',
     year: '2026',
     level: 'Tingkat Nasional',
     category: 'robotika',
@@ -161,6 +187,8 @@ const defaultAchievements = computed(() => [
     student: `Tim Robotika Alpha ${displaySchoolName.value}`,
   },
   {
+    id: 'default-3',
+    slug: 'overall-best-speaker-nsdc-debating',
     year: '2026',
     level: 'Tingkat Nasional',
     category: 'bahasa',
@@ -170,6 +198,8 @@ const defaultAchievements = computed(() => [
     student: 'Nadia Putri Anindita',
   },
   {
+    id: 'default-4',
+    slug: 'juara-1-dbl-basketball-league-jabar',
     year: '2025',
     level: 'Tingkat Provinsi',
     category: 'olahraga',
@@ -179,6 +209,8 @@ const defaultAchievements = computed(() => [
     student: 'Tim Basket Putra',
   },
   {
+    id: 'default-5',
+    slug: 'medali-perak-osn-fisika-terapan',
     year: '2025',
     level: 'Tingkat Nasional',
     category: 'sains',
@@ -188,6 +220,8 @@ const defaultAchievements = computed(() => [
     student: 'Muhammad Rizky Ramadhan',
   },
   {
+    id: 'default-6',
+    slug: 'gold-diploma-international-choir-singapura',
     year: '2025',
     level: 'Tingkat Internasional',
     category: 'bahasa',
@@ -203,6 +237,8 @@ const baseAchievements = computed(() => {
     return dynamicAchievements.value.map((item: any) => {
       const raw = item._raw || item;
       return {
+        id: item.id,
+        slug: item.slug || '',
         year: raw.meta?.year || (raw.published_at ? new Date(raw.published_at).getFullYear().toString() : '2026'),
         level: raw.meta?.level || 'Tingkat Nasional',
         category: raw.meta?.category || 'sains',
@@ -213,11 +249,55 @@ const baseAchievements = computed(() => {
       };
     });
   }
+
+  if (achievements.value.length > 0) {
+    return achievements.value.map((item: any) => {
+      const raw = item._raw || item;
+      const meta = raw.meta || {};
+      return {
+        id: item.id,
+        slug: item.slug || '',
+        year: meta.year || (raw.published_at ? new Date(raw.published_at).getFullYear().toString() : '2026'),
+        level: meta.level || 'Tingkat Nasional',
+        category: meta.category || 'sains',
+        categoryName: meta.category_name || item.excerpt || 'Kejuaraan',
+        title: item.title,
+        description: item.excerpt || item.description || raw.intro || '',
+        student: meta.winner || meta.student || displaySchoolName.value,
+      };
+    });
+  }
+
   return defaultAchievements.value;
 });
 
 const filteredAchievements = computed(() => {
   if (activeTab.value === 'all') return baseAchievements.value;
   return baseAchievements.value.filter((a) => a.category === activeTab.value);
+});
+
+onMounted(async () => {
+  if (hasBinding.value) {
+    loading.value = false;
+    return;
+  }
+  try {
+    const res = await api.get(publishingPaths.publicContents, {
+      params: { category: 'prestasi', status: 'published', sort: '-created_at' },
+    });
+    const data = res.data;
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+    achievements.value = items;
+  } catch {
+    achievements.value = [];
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
