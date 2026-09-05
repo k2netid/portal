@@ -26,6 +26,7 @@
   "content": {
     "title": "Content Studio",
     "description": "Manage your content, media, and taxonomy",
+    "noCategory": "Uncategorized",
     "actions": {
       "approve": "Approve",
       "duplicate": "Duplicate",
@@ -136,6 +137,7 @@
       "createNew": "Create New Content",
       "description": "Manage your content, blog posts, and pages",
       "filterByStatus": "Filter by status",
+      "filterByCategory": "Filter by category",
       "empty": "No content found",
       "revisions": "Revisions",
       "selected": "{count} selected",
@@ -239,7 +241,9 @@
       "tags": "Tags"
     },
     "filters": {
-      "allStatus": "All statuses"
+      "allStatus": "All statuses",
+      "allCategories": "All categories",
+      "uncategorized": "Uncategorized"
     }
   },
   "content_templates": {
