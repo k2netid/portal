@@ -232,10 +232,44 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] `tests/e2e/theme-package-lifecycle.spec.ts` → 4/4 E2E tests passed.
 - [x] **Dokumentasi**: ADR-008 diterbitkan.
 
+### Milestone 7.9: Perbaikan Layering Stacking Context Modal (Z-Index) & Penyelarasan Penuh i18n Multibahasa WidgetModal (🟢 Selesai)
+- [x] **Perbaikan Z-Index Radix UI Dialog / Select Dropdown**:
+  - [x] Memperbaiki layering popover / select menu (`SelectContent`, `PopoverContent`, `DropdownMenuContent`, `ContextMenuContent`) ke `!z-[100080]`, mengatasi isu dropdown yang ter-teleportasi di belakang modal `DialogContent` (`z-[100060]`).
+- [x] **Validasi & Fallback Lokasi Database PostgreSQL**:
+  - [x] Memperbarui `WidgetController.php` dengan fallback nilai default `'sidebar'` pada field `location`, mencegah SQLSTATE[23502] Not-Null constraint error.
+  - [x] Memperluas enum `widgetSchema.type` di Zod (`common.ts`) mencakup `'search'`, `'newsletter'`, dan `'social_share'`.
+- [x] **Penyelarasan Penuh i18n Multibahasa Modal Widget (`WidgetModal.vue`)**:
+  - [x] Menambahkan 23 kunci terjemahan simetris pada `layout.widgets.modals.widget` di `locales/{id,en,su}.json`:
+    - `locationHint`, `preset`, `contentPlaceholderHtml`, `contentPlaceholderText`
+    - `titlePlaceholders` (`categories`, `custom`, `default`, `html`, `newsletter`, `recent_posts`, `search`, `social_share`, `text`)
+    - `info` cards (`searchTitle`, `searchDesc`, `categoriesTitle`, `categoriesDesc`, `recentPostsTitle`, `recentPostsDesc`, `newsletterTitle`, `newsletterDesc`, `socialShareTitle`, `socialShareDesc`)
+  - [x] Mengganti seluruh teks statis/hardcoded di `WidgetModal.vue` dengan `$t(...)` reaktif.
+- [x] **Pengujian & Sinkronisasi Paritas**:
+  - [x] `npm run i18n:check` → 27 gate keys, 9.168 kunci simetris per bahasa (`id`, `en`, `su`) lulus 100% tanpa error di SMKN6 dan K2NET.
+  - [x] Playwright E2E (`tests/e2e/widget-modal-dropdown.spec.ts`) → Passed 100% di SMKN6 (7.0s) dan K2NET (7.0s).
+  - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
+
+### Milestone 7.10: Konsolidasi Menu Kategori ke Tab Content Studio & Penamaan "General Tags" di Library (🟢 Selesai)
+- [x] **Pembersihan Menu Kategori dari Sidebar Editorial**:
+  - [x] Migration `2026_09_05_000004_prune_categories_menu_and_rename_general_tags.php` menghapus record `categories.index` dari `sys_console_menus`.
+  - [x] Mengamankan `ConsoleMenu.php` (`defaultHierarchy` & `ensureMissingDefaults`) agar menu Kategori tidak ter-recreate saat migrate/seed.
+  - [x] Mengalihkan rute `/manage/categories` dan named route `categories.index` ke `{ name: 'contents.index', query: { tab: 'categories' } }` (backward compatibility aman).
+  - [x] Mengarahkan shortcut `create-category` pada `QuickActions.vue` ke tab kategori di Content Studio.
+- [x] **Penamaan Ulang "General Tags" di Sidebar Library**:
+  - [x] Mengubah nama item menu `tags` di `sys_console_menus` dan `ConsoleMenu.php` menjadi `"General Tags"` (`library.navigation.menu.generalTags`).
+  - [x] Menambahkan definisi i18n simetris: `"generalTags": "General Tags"` (`en`), `"generalTags": "Tag Umum"` (`id` & `su`).
+- [x] **Pengujian & Verifikasi Lintas Repositori**:
+  - [x] Backend test: `php artisan test Modules/Core/tests/Feature/ConsoleMenuControllerTest.php` → 9/9 tests passed (42 assertions).
+  - [x] i18n check: `npm run i18n:check` → 27 gate keys, 9.169 symmetric definitions per language (100% valid).
+  - [x] Playwright E2E: `categories-menu-consolidation.spec.ts` → 2/2 tests passed di SMKN6 (7.0s) dan K2NET (9.9s).
+  - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
 - [ ] Integrasi SSL & Edge Proxy WAF di CT 104 (NPMplus).
 - [ ] Konfigurasi `SITE_NAME`, `SITE_DESCRIPTION`, dan `contact_*` via `.env` dan Theme Customizer per deployment.
+
+
 
