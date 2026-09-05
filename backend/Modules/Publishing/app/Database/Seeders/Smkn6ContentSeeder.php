@@ -93,6 +93,8 @@ class Smkn6ContentSeeder extends Seeder
             );
         }
 
-        $this->command->info('SMKN 6 programs successfully seeded!');
+        $this->call(Smkn6FacilitiesSeeder::class);
+
+        $this->command->info('SMKN 6 programs and facilities successfully seeded!');
     }
 }

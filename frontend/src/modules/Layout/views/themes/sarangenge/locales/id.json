@@ -153,7 +153,8 @@
     "facilities": {
       "title": "Fasilitas & Bengkel",
       "heading": "Fasilitas & Bengkel Praktik",
-      "subtitle": "Sarana prasarana berstandar industri untuk menunjang kompetensi keahlian siswa di lingkungan SMK Pusat Keunggulan."
+      "subtitle": "Sarana prasarana berstandar industri untuk menunjang kompetensi keahlian siswa di lingkungan SMK Pusat Keunggulan.",
+      "noData": "Data sarana & fasilitas praktik belum tersedia."
     },
     "pricing": {
       "title": "Informasi Biaya Pendidikan & Beasiswa",

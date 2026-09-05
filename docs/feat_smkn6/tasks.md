@@ -25,6 +25,11 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
 
 ### Milestone 3: Penyesuaian Konten Spesifik Kejuruan (🟢 Selesai)
 - [x] Pembuatan CMS Category `program-keahlian` dan injeksi konten dinamis untuk 6 Program Keahlian SMKN 6 Bandung (DPIB, TITL, TPM, TKRO, TAV, TFLM).
+- [x] **Dinamisasi Fasilitas Vokasi & Bengkel Praktik**:
+  - [x] Pembuatan CMS Category `fasilitas` ("Fasilitas & Sarana") via [Smkn6FacilitiesSeeder.php](file:///home/jejakawan/dev/smkn6-portal/backend/Modules/Publishing/app/Database/Seeders/Smkn6FacilitiesSeeder.php).
+  - [x] Injeksi 8 konten fasilitas berstandar industri (Studio Desain BIM, Bengkel CNC TPM, Lab Listrik TITL, Bengkel Otomotif TKRO, Lab Mikroelektronik TAV, Bengkel Las TFLM, Gedung CoE Smart Classroom, Perpustakaan Digital).
+  - [x] Pembaruan [Facilities.vue](file:///home/jejakawan/dev/smkn6-portal/frontend/src/modules/Layout/views/themes/sarangenge/pages/Facilities.vue) memanggil API publik dinamis (`category: 'fasilitas'`) dengan spinner loading, pemetaan icon adaptif, dan navigasi detail ke `/blog/:slug`.
+  - [x] Pemastian dukungan Visual Page Builder (`theme_page: 'pages/Facilities'`, `useThemePageOverride`, dan `BlockRenderer`).
 - [x] Pembuatan halaman `Programs.vue` (Kompetensi Kejuruan) dan `Facilities.vue` (Fasilitas & Bengkel Praktik) yang mendukung fitur Page Builder.
 - [x] Menjaga kompatibilitas mundur dengan menjadikan `Solusi.vue` dan `Services.vue` sebagai *shim* / *redirect*.
 - [x] Merombak `Pricing.vue` menjadi laman Informasi Bebas Biaya Pendidikan (BOS/BOPD) dan panduan PPDB terpusat Provinsi Jawa Barat.

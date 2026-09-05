@@ -153,7 +153,8 @@
     "facilities": {
       "title": "Fasilitas & Bengkel",
       "heading": "Fasilitas & Bengkel Prakték",
-      "subtitle": "Sarana prasarana standar industri pikeun ngarojong kompetensi kaahlian siswa di lingkungan SMK Pusat Keunggulan."
+      "subtitle": "Sarana prasarana standar industri pikeun ngarojong kompetensi kaahlian siswa di lingkungan SMK Pusat Keunggulan.",
+      "noData": "Data sarana & fasilitas prakték teu acan sayaga."
     },
     "pricing": {
       "title": "Émbaran Waragad Atikan & Beasiswa",
