@@ -159,6 +159,29 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] `grep smkn6|SMKN` → 0 matches in source.
 - [x] **Dokumentasi**: ADR-005 diterbitkan.
 
+### Milestone 7.6: Arsitektur Official Plugin Floating Social Dock & Pemisahan Kategori Ekstensi (🟢 Selesai)
+- [x] **Transformasi Floating Social Dock Menjadi Official Plugin**:
+  - [x] Registrasi migration `2026_09_05_000002_register_floating_social_dock_extension.php` (`slug: floating-social-dock`, `type: plugin`, `family: plugin`).
+  - [x] Registrasi slot global `floating_overlay` di `backend/config/layout.php` dengan default binding plugin.
+  - [x] Pemasangan `<PluginSlot v-if="!useMemberShell" name="floating_overlay" />` di `FrontendLayout.vue`, menghapus hardcode komponen dock lama di tema.
+  - [x] Pembuatan canonical block `FloatingSocialDockBlock.vue` dengan GSAP animations, 7 posisi adaptif, 3 orientasi, 3 style kapsul, ARIA a11y, dan i18n.
+  - [x] Penataan Stacking Context di `PluginSlot.vue` (`fixed inset-0 z-[9990] pointer-events-none overflow-visible`) agar interaksi tombol tidak pernah terblokir oleh elemen hero SVG.
+- [x] **Integrasi Dua Arah & Conditional Logic dengan Theme Customizer**:
+  - [x] Implementasi conditional logic di `useCustomizerNavigation.ts` (`getVisibleSettings`) untuk menyembunyikan opsi subordinate dock saat `enable_floating_social` false.
+- [x] **Penyelarasan Kategori di Halaman Manajemen Ekstensi**:
+  - [x] Perbaikan fallback kolom `family` di database dan migration menjadi `'plugin'`.
+  - [x] Pembaruan `resolveFamily` di `Index.vue` agar `type === 'plugin' || family === 'plugin'` masuk ke tab **Plugin**.
+  - [x] Verifikasi tampilan tab Plugin merender `Floating Social Dock & Hotline` dan `Instagram Feed Integration`.
+- [x] **Resolusi Keamanan & Bypass E2E Staging**:
+  - [x] Penambahan environment `'staging'` ke `CaptchaService::isE2eBypassed()` untuk kelancaran pengujian Playwright tanpa mengorbankan keamanan production.
+  - [x] Pendaftaran workstation dev (`192.168.88.4`) dan `127.0.0.1` ke tabel whitelist `sys_ip_lists`.
+- [x] **Verifikasi & E2E Testing**:
+  - [x] `tests/e2e/floating-social-dock.spec.ts` → Passed di SMKN6 (`49280`) dan K2NET (`8083`).
+  - [x] `tests/e2e/extensions-integration.spec.ts` → Passed di SMKN6 (`49280`) dan K2NET (`8083`).
+  - [x] `npm run i18n:check` → 27 gate keys, 9098 definisi per bahasa (simetris).
+  - [x] Build frontend dan sinkronisasi aset ke `backend/public/` di kedua portal.
+- [x] **Dokumentasi**: ADR-006 diterbitkan.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.

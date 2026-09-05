@@ -21,6 +21,7 @@ return new class extends Migration
                 'id' => (string) Str::uuid(),
                 'slug' => 'floating-social-dock',
                 'type' => 'plugin',
+                'family' => 'plugin',
                 'name' => 'Floating Social Dock & Hotline',
                 'version' => '1.0.0',
                 'database_version' => '1.0.0',

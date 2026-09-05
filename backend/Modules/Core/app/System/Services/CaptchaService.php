@@ -72,7 +72,7 @@ class CaptchaService
      */
     public static function isE2eBypassed(): bool
     {
-        if (! app()->environment(['local', 'testing'])) {
+        if (! app()->environment(['local', 'testing', 'staging'])) {
             return false;
         }
 
