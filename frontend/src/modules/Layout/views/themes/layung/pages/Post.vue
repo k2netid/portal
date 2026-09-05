@@ -110,11 +110,15 @@ onMounted(async () => {
   const slug = route.params.slug as string;
   try {
     const res = await apiClient.get(`/public/publishing/contents/${slug}`);
-    if (res.data?.data) {
-      post.value = res.data.data;
+    const payload = res.data?.data ?? res.data;
+    if (payload && (payload.id || payload.title)) {
+      post.value = payload;
+    } else {
+      throw new Error('Post not found');
     }
   } catch {
     post.value = {
+      id: 'fallback-post',
       title: 'Kami Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC',
       published_at: '2026-08-15',
       excerpt: 'Penyedia Layanan Internet mengumumkan operasional BGP mandiri AS153992 (IDNIC-Kami-ID) untuk layanan ISP di Bandung.',

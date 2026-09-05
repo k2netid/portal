@@ -76,7 +76,7 @@
         <div class="space-y-1.5">
           <div class="flex items-center justify-between">
             <Label>{{ $t('layout.widgets.modals.widget.location') }} <span class="text-destructive">*</span></Label>
-            <span class="text-[11px] text-muted-foreground">Target area template</span>
+            <span class="text-[11px] text-muted-foreground">{{ $t('layout.widgets.modals.widget.locationHint') }}</span>
           </div>
           <Input
             v-model="form.location"
@@ -86,7 +86,7 @@
           />
           <!-- Quick presets -->
           <div class="flex items-center gap-1.5 flex-wrap pt-1">
-            <span class="text-[11px] text-muted-foreground mr-1">Preset:</span>
+            <span class="text-[11px] text-muted-foreground mr-1">{{ $t('layout.widgets.modals.widget.preset') }}</span>
             <button
               v-for="loc in ['sidebar', 'footer', 'footer_col_1', 'footer_col_2']"
               :key="loc"
@@ -127,7 +127,7 @@
           <Textarea
             v-model="form.content"
             :rows="4"
-            :placeholder="form.type === 'html' ? '<div class=\'banner\'>...</div>' : 'Isi konten teks widget...'"
+            :placeholder="form.type === 'html' ? $t('layout.widgets.modals.widget.contentPlaceholderHtml') : $t('layout.widgets.modals.widget.contentPlaceholderText')"
           />
           <span
             v-if="errorMessage('content')"
@@ -265,28 +265,28 @@ const widgetTypeInfo = computed(() => {
     switch (form.value.type) {
         case 'search':
             return {
-                title: 'Widget Pencarian Otomatis',
-                description: 'Menampilkan form pencarian interaktif lengkap dengan saran kata kunci (auto-suggestions) secara real-time.'
+                title: t('layout.widgets.modals.widget.info.searchTitle'),
+                description: t('layout.widgets.modals.widget.info.searchDesc')
             };
         case 'categories':
             return {
-                title: 'Widget Kategori Berita',
-                description: 'Menampilkan daftar kategori hierarkis dengan badge jumlah postingan serta filter konten otomatis.'
+                title: t('layout.widgets.modals.widget.info.categoriesTitle'),
+                description: t('layout.widgets.modals.widget.info.categoriesDesc')
             };
         case 'recent_posts':
             return {
-                title: 'Widget Artikel Terbaru',
-                description: 'Menampilkan daftar warta/berita terbaru yang diterbitkan dengan thumbnail gambar dan tanggal publikasi.'
+                title: t('layout.widgets.modals.widget.info.recentPostsTitle'),
+                description: t('layout.widgets.modals.widget.info.recentPostsDesc')
             };
         case 'newsletter':
             return {
-                title: 'Widget Buletin Berita',
-                description: 'Menampilkan formulir langganan email untuk pengunjung portal secara otomatis.'
+                title: t('layout.widgets.modals.widget.info.newsletterTitle'),
+                description: t('layout.widgets.modals.widget.info.newsletterDesc')
             };
         case 'social_share':
             return {
-                title: 'Widget Bagikan Media Sosial',
-                description: 'Menampilkan tombol berbagi interaktif ke WhatsApp, Telegram, X, Facebook, serta salin tautan.'
+                title: t('layout.widgets.modals.widget.info.socialShareTitle'),
+                description: t('layout.widgets.modals.widget.info.socialShareDesc')
             };
         default:
             return { title: '', description: '' };
@@ -295,13 +295,15 @@ const widgetTypeInfo = computed(() => {
 
 const titlePlaceholder = computed(() => {
     switch (form.value.type) {
-        case 'search': return 'Cari Warta & Artikel';
-        case 'categories': return 'Kategori Berita';
-        case 'recent_posts': return 'Warta Terbaru';
-        case 'newsletter': return 'Buletin & Kabar';
-        case 'social_share': return 'Bagikan Artikel';
-        case 'html': return 'Custom HTML Widget';
-        default: return 'Nama Widget';
+        case 'search': return t('layout.widgets.modals.widget.titlePlaceholders.search');
+        case 'categories': return t('layout.widgets.modals.widget.titlePlaceholders.categories');
+        case 'recent_posts': return t('layout.widgets.modals.widget.titlePlaceholders.recent_posts');
+        case 'newsletter': return t('layout.widgets.modals.widget.titlePlaceholders.newsletter');
+        case 'social_share': return t('layout.widgets.modals.widget.titlePlaceholders.social_share');
+        case 'html': return t('layout.widgets.modals.widget.titlePlaceholders.html');
+        case 'text': return t('layout.widgets.modals.widget.titlePlaceholders.text');
+        case 'custom': return t('layout.widgets.modals.widget.titlePlaceholders.custom');
+        default: return t('layout.widgets.modals.widget.titlePlaceholders.default');
     }
 });
 

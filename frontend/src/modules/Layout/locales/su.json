@@ -210,12 +210,39 @@
       "widget": {
         "active": "Aktip",
         "content": "Eusi/Kusi",
+        "contentPlaceholderHtml": "<div class=\"banner\">...</div>",
+        "contentPlaceholderText": "Eusi kontén téks widget...",
+        "info": {
+          "categoriesDesc": "Némbongkeun daptar kategori hierarkis kalayan badge jumlah postingan sareng saringan kontén.",
+          "categoriesTitle": "Widget Kategori Warta",
+          "newsletterDesc": "Némbongkeun formulir langganan surélék pikeun sémah portal sacara otomatis.",
+          "newsletterTitle": "Widget Surat Warta",
+          "recentPostsDesc": "Némbongkeun daptar warta panganyarna anu dipublikasikeun kalayan gambar leutik sareng titimangsa.",
+          "recentPostsTitle": "Widget Warta Panganyarna",
+          "searchDesc": "Némbongkeun formulir panéangan interaktif kalayan saran kecap konci sacara real-time.",
+          "searchTitle": "Widget Panéangan Otomatis",
+          "socialShareDesc": "Némbongkeun tombol bagikeun interaktif ka WhatsApp, Telegram, X, Facebook, sareng salin tautan.",
+          "socialShareTitle": "Widget Bagikeun Média Sosial"
+        },
         "location": "Lokasi",
+        "locationHint": "Target aréa témplat",
         "positionPlaceholder": "sidebar, footer, jst.",
+        "preset": "Prasét:",
         "saving": "Nuju nyimpen...",
         "title": "Judul",
         "titleCreate": "Jieun Widget",
         "titleEdit": "Ubah Widget",
+        "titlePlaceholders": {
+          "categories": "Kategori Warta",
+          "custom": "Widget Kustom",
+          "default": "Nami Widget",
+          "html": "Widget HTML Kustom",
+          "newsletter": "Surat Warta & Langganan",
+          "recent_posts": "Warta Panganyarna",
+          "search": "Téang Warta & Artikel",
+          "social_share": "Bagikeun Artikel",
+          "text": "Wawaran"
+        },
         "type": "Tipe"
       }
     },

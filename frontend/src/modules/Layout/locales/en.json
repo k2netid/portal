@@ -210,12 +210,39 @@
       "widget": {
         "active": "Active",
         "content": "Content",
+        "contentPlaceholderHtml": "<div class=\"banner\">...</div>",
+        "contentPlaceholderText": "Enter widget text content...",
+        "info": {
+          "categoriesDesc": "Displays a hierarchical category list with post count badges and content filtering.",
+          "categoriesTitle": "Article Categories Widget",
+          "newsletterDesc": "Displays an automated email subscription box for portal visitors.",
+          "newsletterTitle": "Newsletter Widget",
+          "recentPostsDesc": "Displays latest published articles with image thumbnails and publication dates.",
+          "recentPostsTitle": "Recent Articles Widget",
+          "searchDesc": "Displays an interactive search form with real-time keyword suggestions.",
+          "searchTitle": "Automated Search Widget",
+          "socialShareDesc": "Displays interactive sharing buttons for WhatsApp, Telegram, X, Facebook, and copy link.",
+          "socialShareTitle": "Social Share Widget"
+        },
         "location": "Location",
+        "locationHint": "Target template area",
         "positionPlaceholder": "sidebar, footer, etc.",
+        "preset": "Preset:",
         "saving": "Saving...",
         "title": "Title",
         "titleCreate": "Create Widget",
         "titleEdit": "Edit Widget",
+        "titlePlaceholders": {
+          "categories": "Article Categories",
+          "custom": "Custom Widget",
+          "default": "Widget Name",
+          "html": "Custom HTML Widget",
+          "newsletter": "Newsletter & Updates",
+          "recent_posts": "Recent Articles",
+          "search": "Search Articles & News",
+          "social_share": "Share Article",
+          "text": "Announcement"
+        },
         "type": "Type"
       }
     },
