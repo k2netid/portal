@@ -210,12 +210,39 @@
       "widget": {
         "active": "Aktif",
         "content": "Konten",
+        "contentPlaceholderHtml": "<div class=\"banner\">...</div>",
+        "contentPlaceholderText": "Isi konten teks widget...",
+        "info": {
+          "categoriesDesc": "Menampilkan daftar kategori hierarkis dengan badge jumlah postingan serta filter konten otomatis.",
+          "categoriesTitle": "Widget Kategori Berita",
+          "newsletterDesc": "Menampilkan formulir langganan email untuk pengunjung portal secara otomatis.",
+          "newsletterTitle": "Widget Buletin Berita",
+          "recentPostsDesc": "Menampilkan daftar warta/berita terbaru yang diterbitkan dengan thumbnail gambar dan tanggal publikasi.",
+          "recentPostsTitle": "Widget Artikel Terbaru",
+          "searchDesc": "Menampilkan form pencarian interaktif lengkap dengan saran kata kunci (auto-suggestions) secara real-time.",
+          "searchTitle": "Widget Pencarian Otomatis",
+          "socialShareDesc": "Menampilkan tombol berbagi interaktif ke WhatsApp, Telegram, X, Facebook, serta salin tautan.",
+          "socialShareTitle": "Widget Bagikan Media Sosial"
+        },
         "location": "Lokasi",
+        "locationHint": "Target area template",
         "positionPlaceholder": "sidebar, footer, dll.",
+        "preset": "Preset:",
         "saving": "Menyimpan...",
         "title": "Judul",
         "titleCreate": "Buat Widget",
         "titleEdit": "Ubah Widget",
+        "titlePlaceholders": {
+          "categories": "Kategori Berita",
+          "custom": "Widget Kustom",
+          "default": "Nama Widget",
+          "html": "Custom HTML Widget",
+          "newsletter": "Buletin & Kabar",
+          "recent_posts": "Warta Terbaru",
+          "search": "Cari Warta & Artikel",
+          "social_share": "Bagikan Artikel",
+          "text": "Pengumuman"
+        },
         "type": "Tipe"
       }
     },
