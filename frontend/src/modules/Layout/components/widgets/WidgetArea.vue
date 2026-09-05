@@ -1,81 +1,130 @@
 <template>
   <aside
-    v-if="widgets.length > 0"
     class="widget-area space-y-6"
     :data-widget-location="location"
   >
-    <section
-      v-for="widget in widgets"
-      :key="widget.id"
-      class="rounded-2xl border border-border/60 bg-card/60 p-5 space-y-3"
-    >
-      <h3 class="text-sm font-bold uppercase tracking-wider text-foreground">
-        {{ widget.title }}
-      </h3>
-
-      <ThemeSafeHtml
-        v-if="widget.type === 'html' || widget.type === 'custom'"
-        :html="widget.content || ''"
-      />
-
-      <p
-        v-else-if="widget.type === 'text'"
-        class="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap"
+    <!-- Dynamic DB widgets when configured in lay_widgets -->
+    <template v-if="widgets && widgets.length > 0">
+      <template
+        v-for="widget in widgets"
+        :key="widget.id"
       >
-        {{ widget.content }}
-      </p>
+        <!-- Search widget -->
+        <SearchWidget
+          v-if="widget.type === 'search'"
+          :widget="widget"
+        />
 
-      <ul
-        v-else-if="widget.type === 'recent_posts' || widget.type === 'content_list'"
-        class="space-y-2"
-      >
-        <li
-          v-for="item in widget.items || []"
-          :key="item.id"
+        <!-- Categories widget -->
+        <CategoriesWidget
+          v-else-if="widget.type === 'categories'"
+          :widget="widget"
+        />
+
+        <!-- Recent posts widget -->
+        <RecentPostsWidget
+          v-else-if="widget.type === 'recent_posts' || widget.type === 'content_list'"
+          :widget="widget"
+          :current-post-slug="context?.post?.slug"
+        />
+
+        <!-- Newsletter widget -->
+        <NewsletterWidget
+          v-else-if="widget.type === 'newsletter'"
+          :widget="widget"
+        />
+
+        <!-- Social share widget -->
+        <SocialShareWidget
+          v-else-if="widget.type === 'social_share'"
+          :widget="widget"
+          :post="context?.post"
+        />
+
+        <!-- HTML / Custom widget -->
+        <div
+          v-else-if="widget.type === 'html' || widget.type === 'custom'"
+          class="universal-widget custom-html-widget rounded-2xl border border-border/70 bg-card p-5 shadow-sm space-y-3"
         >
-          <router-link
-            :to="`/blog/${item.slug}`"
-            class="text-sm font-medium hover:text-primary"
+          <h3
+            v-if="widget.title"
+            class="text-sm font-bold uppercase tracking-wider text-foreground font-heading"
           >
-            {{ item.title }}
-          </router-link>
-        </li>
-      </ul>
+            {{ widget.title }}
+          </h3>
+          <ThemeSafeHtml :html="widget.content || ''" />
+        </div>
 
-      <ul
-        v-else-if="widget.type === 'categories'"
-        class="space-y-2"
-      >
-        <li
-          v-for="item in widget.items || []"
-          :key="item.id"
+        <!-- Plain text widget -->
+        <div
+          v-else-if="widget.type === 'text'"
+          class="universal-widget text-widget rounded-2xl border border-border/70 bg-card p-5 shadow-sm space-y-3"
         >
-          <router-link
-            :to="{ path: '/blog', query: item.slug ? { category: item.slug } : {} }"
-            class="text-sm text-muted-foreground hover:text-foreground"
+          <h3
+            v-if="widget.title"
+            class="text-sm font-bold uppercase tracking-wider text-foreground font-heading"
           >
-            {{ item.name }}
-          </router-link>
-        </li>
-      </ul>
+            {{ widget.title }}
+          </h3>
+          <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+            {{ widget.content }}
+          </p>
+        </div>
 
-      <p
-        v-else-if="widget.content"
-        class="text-sm text-muted-foreground"
-      >
-        {{ widget.content }}
-      </p>
-    </section>
+        <!-- Generic fallback container -->
+        <div
+          v-else-if="widget.content"
+          class="universal-widget generic-widget rounded-2xl border border-border/70 bg-card p-5 shadow-sm space-y-3"
+        >
+          <h3
+            v-if="widget.title"
+            class="text-sm font-bold uppercase tracking-wider text-foreground font-heading"
+          >
+            {{ widget.title }}
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            {{ widget.content }}
+          </p>
+        </div>
+      </template>
+    </template>
+
+    <!-- Smart Fallback when database has no widgets configured -->
+    <template v-else-if="!loading && enableFallback">
+      <slot :context="context">
+        <!-- Default standard Universal Widget Stack -->
+        <SearchWidget />
+        <CategoriesWidget />
+        <RecentPostsWidget :current-post-slug="context?.post?.slug" />
+        <SocialShareWidget :post="context?.post" />
+        <NewsletterWidget />
+      </slot>
+    </template>
   </aside>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import { usePublicWidgets } from '@/modules/Layout/composables/usePublicWidgets';
+import SearchWidget from './SearchWidget.vue';
+import CategoriesWidget from './CategoriesWidget.vue';
+import RecentPostsWidget from './RecentPostsWidget.vue';
+import NewsletterWidget from './NewsletterWidget.vue';
+import SocialShareWidget from './SocialShareWidget.vue';
 
-const props = defineProps<{
+const props = withDefaults(
+  defineProps<{
     location: string;
-}>();
+    context?: Record<string, any>;
+    fallback?: boolean;
+  }>(),
+  {
+    context: () => ({}),
+    fallback: true,
+  }
+);
 
-const { widgets } = usePublicWidgets(props.location);
+const { widgets, loading } = usePublicWidgets(computed(() => props.location));
+const enableFallback = computed(() => props.fallback !== false);
 </script>

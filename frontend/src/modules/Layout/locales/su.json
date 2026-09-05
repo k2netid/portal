@@ -234,7 +234,47 @@
       "custom": "Kustom",
       "html": "HTML",
       "recent_posts": "Tulisan Panganyarna",
+      "search": "Pilari",
+      "newsletter": "Serat Warta / Newsletter",
+      "social_share": "Bagikeun Media Sosial",
       "text": "Téks"
+    },
+    "universal": {
+      "search": {
+        "title": "Pilari Warta & Tulisan",
+        "placeholder": "Ketik kecap konci...",
+        "noResults": "Teu aya saran pilarian"
+      },
+      "categories": {
+        "title": "Kategori Warta",
+        "all": "Sadaya Kategori",
+        "empty": "Teu acan aya kategori"
+      },
+      "recentPosts": {
+        "title": "Warta Panganyarna",
+        "empty": "Teu acan aya warta panganyarna",
+        "readMore": "Maca salengkepna"
+      },
+      "newsletter": {
+        "title": "Serat Warta & Bewara",
+        "description": "Kengingkeun rangkuman informasi sareng agenda panganyarna langsung dina surélék anjeun.",
+        "placeholder": "Lebetkeun alamat surélék anjeun",
+        "subscribe": "Langganan",
+        "subscribing": "Nuju daptar...",
+        "success": "Hatur nuhun! Anjeun parantos hasil ngalanggan serat warta.",
+        "alreadySubscribed": "Surélék ieu parantos kadaptar dina serat warta.",
+        "invalidEmail": "Format alamat surélék teu sah."
+      },
+      "socialShare": {
+        "title": "Bagikeun Warta",
+        "copyLink": "Salin Tumbu",
+        "linkCopied": "Tumbu disalin kana papan klip!",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "twitter": "X (Twitter)",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
     },
     "title": "Widget",
     "subtitle": "Ngokolakeun widget sidebar sareng footer pikeun situs publik.",

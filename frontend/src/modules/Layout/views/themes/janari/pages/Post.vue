@@ -133,7 +133,9 @@
 
           <!-- Sidebar -->
           <aside class="lg:col-span-3">
-            <BlogSidebar />
+            <WidgetArea location="sidebar" :context="{ post }">
+              <BlogSidebar />
+            </WidgetArea>
             <PluginSlot name="sidebar_article" class="mt-8" :context="{ post_id: post.id, slug: post.slug }" />
           </aside>
         </div>
@@ -165,6 +167,7 @@ import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import PublicComments from '@/modules/Publishing/components/comments/PublicComments.vue';
 import PluginSlot from '@/shared/components/PluginSlot.vue';
+import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 import BlogSidebar from '../components/blog/BlogSidebar.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
