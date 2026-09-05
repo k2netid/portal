@@ -18,7 +18,14 @@
     "cta_primary_label": "Info PPDB",
     "cta_primary_url": "/contact#ppdb",
     "cta_login_label": "Portal Guru & Siswa",
-    "cta_login_url": "/member/login"
+    "cta_login_url": "/member/login",
+    "hero_animation_enabled": true,
+    "hero_animation_type": "engineering",
+    "hero_slider_enabled": true,
+    "hero_slider_autoplay": true,
+    "hero_slider_interval": 7,
+    "hero_bottom_mode": "news",
+    "hero_news_enabled": true
   },
   "menus": {
     "header": {

@@ -6,6 +6,14 @@
  * `custom` preset uses --theme-primary-color-hsl from theme color picker.
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --janari-font-heading: var(--theme-font-heading, Geist), ui-sans-serif, system-ui, sans-serif;
+    --janari-font-body: var(--theme-font-body, Geist), ui-sans-serif, system-ui, sans-serif;
+    --janari-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
+}
+
 @layer base {
     /* Performance baseline for all Janari pages:
        keep first section eager, let below-fold sections render on demand. */
@@ -22,6 +30,13 @@
 
     /* ─── MODERN BOLD Canvas: clean white with strong typography & vibrant accents ─── */
     .theme-janari {
+        font-family: var(--janari-font-body);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        letter-spacing: -0.014em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
         --background: 0 0% 99.5%;
         --foreground: 0 0% 7%;
         background-color: hsl(var(--background)) !important;
@@ -90,6 +105,17 @@
         --janari-surface-tint-alpha: 0.14;
         --janari-border-tint-alpha: 0.28;
         color-scheme: dark;
+    }
+
+    .theme-janari .font-heading,
+    .janari-heading {
+        font-family: var(--janari-font-heading);
+        letter-spacing: -0.035em;
+    }
+
+    .theme-janari .font-mono,
+    .janari-mono {
+        font-family: var(--janari-font-mono);
     }
 
     /* Monochrome base depth (optional) */

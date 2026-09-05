@@ -7,7 +7,9 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: var(--font-sans);
         -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
     }
 
     @supports (-moz-osx-font-smoothing: grayscale) {

@@ -862,6 +862,121 @@
             "default": 75,
             "category": "Hero Section"
         },
+        "hero_animation_enabled": {
+            "label": "Aktifkan Animasi Hero Vokasi",
+            "type": "checkbox",
+            "default": true,
+            "description": "Tampilkan panggung animasi visual interaktif kejuruan di area kanan hero",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_animation_type": {
+            "label": "Pilihan Animasi Hero Vokasi",
+            "type": "select",
+            "default": "engineering",
+            "options": [
+                {
+                    "value": "engineering",
+                    "label": "Manufaktur CNC & Teaching Factory (Presisi Mesin)"
+                },
+                {
+                    "value": "architecture",
+                    "label": "Desain Pemodelan Bangunan (BIM 4.0 & Sipil)"
+                },
+                {
+                    "value": "automotive",
+                    "label": "Teknik Otomotif & Kendaraan Listrik (EV Tech)"
+                },
+                {
+                    "value": "tech_network",
+                    "label": "Teknik Komputer, Jaringan & IoT Kampus"
+                }
+            ],
+            "description": "Pilih animasi visual yang selaras dengan identitas SMK Pusat Keunggulan",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_enabled": {
+            "label": "Aktifkan Slider Hero",
+            "type": "checkbox",
+            "default": true,
+            "description": "Tampilkan multi-slide hero dengan transisi interaktif dan tab indikator numerik",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_autoplay": {
+            "label": "Autoplay Slider Hero",
+            "type": "checkbox",
+            "default": true,
+            "description": "Putar slide hero secara otomatis bergantian",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_slider_interval": {
+            "label": "Interval Slider Hero (detik)",
+            "type": "range",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "default": 7,
+            "description": "Durasi tampilan setiap slide sebelum berganti otomatis",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_bottom_mode": {
+            "label": "Mode Bagian Bawah Hero",
+            "type": "select",
+            "default": "news",
+            "options": [
+                {
+                    "value": "stats",
+                    "label": "Bar Metrik & Statistik Keunggulan"
+                },
+                {
+                    "value": "news",
+                    "label": "Carousel Warta & Agenda Kampus"
+                },
+                {
+                    "value": "both",
+                    "label": "Mode Ganda (Metrik + Warta)"
+                },
+                {
+                    "value": "none",
+                    "label": "Nonaktifkan Bagian Bawah"
+                }
+            ],
+            "description": "Tentukan informasi yang tampil pada dock bagian bawah hero",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_news_enabled": {
+            "label": "Aktifkan Strip Warta Sekolah di Hero",
+            "type": "checkbox",
+            "default": true,
+            "description": "Tampilkan cuplikan berita dan agenda sekolah terbaru di bagian bawah hero",
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_news_limit": {
+            "label": "Jumlah Warta di Hero",
+            "type": "range",
+            "min": 2,
+            "max": 6,
+            "step": 1,
+            "default": 4,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
+        "hero_news_autoplay_interval": {
+            "label": "Interval Autoplay Warta Hero (detik)",
+            "type": "range",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "default": 5,
+            "category": "Hero Section",
+            "scope": "theme"
+        },
         "track_finder_enabled": {
             "label": "Aktifkan Widget Pencari Jurusan",
             "type": "boolean",

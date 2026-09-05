@@ -6,7 +6,7 @@
    Palette, Micro-interactions, Accessible Contrast & High-performance Typography.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap');
 
 :root {
   /* Scholastic Dawn Palette (Navy, Morning Gold & Crisp Slate) */
@@ -24,8 +24,9 @@
   --sarangenge-primary: var(--theme-color-primary, #1e3a8a);
   --sarangenge-secondary: var(--theme-color-secondary, #f59e0b);
   --sarangenge-accent: var(--theme-color-accent, #059669);
-  --sarangenge-font-heading: var(--theme-font-heading, 'Bricolage Grotesque', system-ui, sans-serif);
-  --sarangenge-font-body: var(--theme-font-body, 'Figtree', system-ui, sans-serif);
+  --sarangenge-font-heading: var(--theme-font-heading, Geist), ui-sans-serif, system-ui, sans-serif;
+  --sarangenge-font-body: var(--theme-font-body, Geist), ui-sans-serif, system-ui, sans-serif;
+  --sarangenge-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
   
   --sarangenge-radius: 1rem;
   --sarangenge-radius-sm: 0.65rem;
@@ -49,11 +50,18 @@
   --ring: 221 83% 53%;
 
   font-family: var(--sarangenge-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.014em;
   color: hsl(var(--foreground));
   background-color: hsl(var(--background));
   display: flex;
   flex-direction: column;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .dark .sarangenge-theme,
@@ -78,7 +86,11 @@
 .sarangenge-heading {
   font-family: var(--sarangenge-font-heading);
   letter-spacing: -0.025em;
-  font-weight: 700;
+}
+
+.sarangenge-theme .font-mono,
+.sarangenge-mono {
+  font-family: var(--sarangenge-font-mono);
 }
 
 /* Subtle morning ambient light */
@@ -151,12 +163,12 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
 .sarangenge-rise-delay-2 { animation-delay: 0.2s; }
 .sarangenge-rise-delay-3 { animation-delay: 0.3s; }
 
-/* 2026 Scholastic Morning Hero */
+/* 2026 Scholastic Morning Hero — Full Proportion Desktop Viewport */
 .sarangenge-hero {
-  min-height: min(85vh, 760px);
+  min-height: max(600px, calc(100dvh - 4.5rem));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   isolation: isolate;
   overflow: hidden;
   position: relative;
@@ -165,6 +177,13 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
     radial-gradient(ellipse 60% 50% at 15% 85%, rgba(37, 99, 235, 0.2), transparent 65%),
     linear-gradient(145deg, #0a1128 0%, #0f1e36 45%, #132742 100%);
   color: #f8fafc;
+}
+
+@media (min-width: 1024px) {
+  .sarangenge-hero {
+    height: calc(100dvh - 4.5rem);
+    max-height: calc(100dvh - 4.5rem);
+  }
 }
 
 .sarangenge-hero--sunrise_teal {
@@ -462,3 +481,52 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
 .sarangenge-hero .animate-scroll-line {
   animation: sarangenge-scroll-line 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
+
+/* ── Sarangenge Hero Visual & Interactive Vocational Stage ── */
+@keyframes sarangenge-pulse-dash {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+  }
+}
+
+.sarangenge-pulse-line {
+  stroke-dasharray: 20 180;
+  animation: sarangenge-pulse-dash 3s linear infinite;
+}
+
+@keyframes sarangenge-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-spin-reverse {
+  animation: sarangenge-spin-reverse 12s linear infinite;
+}
+
+@keyframes sarangenge-scan-beam-anim {
+  0%, 100% { transform: translateY(-30px); opacity: 0.3; }
+  50% { transform: translateY(30px); opacity: 0.9; }
+}
+
+.sarangenge-scan-beam {
+  animation: sarangenge-scan-beam-anim 4s ease-in-out infinite;
+}
+
+.sarangenge-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+  display: inline-block;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

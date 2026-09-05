@@ -203,6 +203,9 @@ const injectThemeStyles = () => {
       if (settings.font_body) {
         css += `body { font-family: '${settings.font_body}', sans-serif; }\n`;
       }
+      if (settings.font_mono) {
+        css += `code, pre, .font-mono { font-family: '${settings.font_mono}', monospace; }\n`;
+      }
 
       css += `
                 :root {
