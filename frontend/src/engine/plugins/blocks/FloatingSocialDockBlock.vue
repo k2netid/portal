@@ -297,7 +297,7 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string; label?: string 
 <style scoped>
 .ja-floating-social-dock {
   position: fixed;
-  z-index: 55;
+  z-index: 9995;
   display: flex;
   pointer-events: auto;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;

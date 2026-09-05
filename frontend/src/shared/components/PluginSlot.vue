@@ -1,8 +1,8 @@
 <template>
   <div
     v-if="activeBlocks.length > 0"
-    class="plugin-slot-wrapper plugin-slot-isolate"
-    :class="name === 'floating_overlay' ? 'pointer-events-none' : 'flex flex-col gap-4 w-full'"
+    class="plugin-slot-wrapper"
+    :class="name === 'floating_overlay' ? 'pointer-events-none fixed inset-0 z-[9990] overflow-visible' : 'plugin-slot-isolate flex flex-col gap-4 w-full'"
     :data-plugin-slot="name"
   >
     <div
