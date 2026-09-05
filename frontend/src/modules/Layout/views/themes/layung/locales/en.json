@@ -31,7 +31,8 @@
     "closeMenuAria": "Close menu"
   },
   "common": {
-    "breadcrumbAria": "Breadcrumb"
+    "breadcrumbAria": "Breadcrumb",
+    "link": "Link"
   },
   "footer": {
     "description": "Kami (Penyedia Layanan Internet) — ISP, managed services, and IT product supply from connectivity through to equipment procurement.",
@@ -61,7 +62,12 @@
     "badgeMembership": "APJII · IDNIC · APNIC",
     "legalLine": "Penyedia Layanan Internet",
     "social": "Social Media",
-    "socialDesc": "Follow our network updates, product offers, and announcements."
+    "socialDesc": "Follow our network updates, product offers, and announcements.",
+    "socialExpand": "Open Social Media",
+    "socialCollapse": "Hide Social Media",
+    "socialMedia": "Social Media",
+    "floatingSocialDockAria": "Floating Social Media Links",
+    "visitSocial": "Visit {platform}"
   },
   "hero": {
     "badge": "Provide different IT solution",

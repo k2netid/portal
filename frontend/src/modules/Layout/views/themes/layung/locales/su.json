@@ -31,7 +31,8 @@
     "closeMenuAria": "Tutup menu"
   },
   "common": {
-    "breadcrumbAria": "Breadcrumb"
+    "breadcrumbAria": "Breadcrumb",
+    "link": "Tautan"
   },
   "footer": {
     "description": "Kami (Penyedia Layanan Internet) — ISP, managed services, sareng panyadia produk IT ti koneksi internét nepi ka pangadaan parangkat.",
@@ -61,7 +62,12 @@
     "badgeMembership": "APJII · IDNIC · APNIC",
     "legalLine": "Penyedia Layanan Internet",
     "social": "Média Sosial",
-    "socialDesc": "Follow warta jaringan, promo produk, sareng inpormasi panganyarna."
+    "socialDesc": "Follow warta jaringan, promo produk, sareng inpormasi panganyarna.",
+    "socialExpand": "Buka Média Sosial",
+    "socialCollapse": "Puterkeun Média Sosial",
+    "socialMedia": "Média Sosial",
+    "floatingSocialDockAria": "Tautan Média Sosial Ngalayang",
+    "visitSocial": "Kunjungan {platform}"
   },
   "hero": {
     "badge": "Provide different IT solution",

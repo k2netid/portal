@@ -33,7 +33,9 @@
     "badgeChildFriendly": "Sakola Ramah Anak 2026",
     "socialExpand": "Buka Média Sosial & Hotline",
     "socialCollapse": "Puterkeun Média Sosial",
-    "socialMedia": "Média Sosial & Hotline"
+    "socialMedia": "Média Sosial & Hotline",
+    "floatingSocialDockAria": "Tautan Média Sosial Ngalayang",
+    "visitSocial": "Kunjungan {platform}"
   },
   "common": {
     "readMore": "Maca Salengkepna",
@@ -45,7 +47,8 @@
     "searchPlaceholder": "Ketik kecap konci...",
     "publishedOn": "Dipedalkeun dina",
     "by": "ku",
-    "breadcrumbAria": "Breadcrumb"
+    "breadcrumbAria": "Breadcrumb",
+    "link": "Tautan"
   },
   "pages": {
     "home": {
@@ -294,7 +297,8 @@
       "tim_page": "Kaca Guru & Tanaga Kependidikan",
       "pricing_page": "Kaca Waragad & Béasiswa",
       "contact_page": "Kaca Kontak & PPDB",
-      "footer": "Footer & Hak Cipta"
+      "footer": "Footer & Hak Cipta",
+      "floating_dock": "Floating Social Dock"
     },
     "items": {
       "school_name": "Nami Resmi Sakola",
@@ -452,7 +456,34 @@
       "staff_page": "Kaca Dewan Guru",
       "staff_page_desc": "Diréktori pendidik sareng staf pangajar",
       "staff_list": "Daptar Guru & Staf",
-      "subject": "Mata Pangajaran / Widang"
+      "subject": "Mata Pangajaran / Widang",
+      "enable_floating_social": "Témbongkeun Floating Social Dock",
+      "enable_floating_social_hint": "Témbongkeun tombol ngalayang aksés gancang média sosial sareng hotline dina juru layar.",
+      "floating_social_position": "Posisi Floating Dock",
+      "floating_social_position_hint": "Pilih lokasi nempatkeun dock ngalayang dina layar (katuhu, kénca, handap tengah, atawa luhur).",
+      "floating_social_orientation": "Orientasi Dock",
+      "floating_social_orientation_hint": "Arah susunan ikon dina dock (otomatis nuturkeun posisi, nangtung, atawa ngagolér).",
+      "floating_social_style": "Gaya Kapsul Dock",
+      "floating_social_style_hint": "Pilihan téma visual dock (Frosted Glassmorphism, Solid Dark Slate, atawa Aura Glow Emas).",
+      "floating_social_default_collapsed": "Mimitian dina Kaayaan Nyumput (Collapsed)",
+      "floating_social_default_collapsed_hint": "Ukur témbongkeun tombol pemicu leutik nalika kaca mimiti dibuka.",
+      "floating_social_show_on_mobile": "Témbongkeun dina Layar Mobile",
+      "floating_social_show_on_mobile_hint": "Kaci dock ngalayang tetep némbongan dina layar hp (otomatis dina posisi aman)."
+    },
+    "common_options": {
+      "kanan_tengah_right_center": "Katuhu Tengah (Right Center)",
+      "kiri_tengah_left_center": "Kénca Tengah (Left Center)",
+      "kanan_bawah_bottom_right": "Katuhu Handap (Bottom Right)",
+      "kiri_bawah_bottom_left": "Kénca Handap (Bottom Left)",
+      "bawah_tengah_bottom_center_dock_pill": "Handap Tengah (Bottom Center / Dock Pill)",
+      "kanan_atas_top_right": "Katuhu Luhur (Top Right)",
+      "kiri_atas_top_left": "Kénca Luhur (Top Left)",
+      "otomatis_sesuai_posisi": "Otomatis (Nurutkeun Posisi)",
+      "vertikal_tegak": "Vértikal (Nangtung)",
+      "horizontal_mendatar": "Horisontal (Ngagolér)",
+      "frosted_glassmorphism_glass": "Frosted Glassmorphism (Glass)",
+      "solid_dark_slate_solid": "Solid Dark Slate (Solid)",
+      "aura_glow_keemasan_glow": "Aura Glow Emas (Glow)"
     }
   }
 }

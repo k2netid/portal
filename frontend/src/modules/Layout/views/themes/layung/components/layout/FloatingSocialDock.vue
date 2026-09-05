@@ -11,7 +11,7 @@
         'layung-social-dock--show-mobile': showOnMobile,
       }
     ]"
-    aria-label="Tautan Media Sosial Melayang"
+    :aria-label="tt('footer.floatingSocialDockAria', 'Tautan Media Sosial Melayang')"
   >
     <!-- Collapsed Trigger Button -->
     <div
@@ -223,7 +223,7 @@ const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
   if (customLabel) return customLabel;
 
   const clean = trimStr(link?.icon);
-  if (!clean) return 'Tautan';
+  if (!clean) return tt('common.link', 'Tautan');
   if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp CS';
   if (clean === 'Linkedin') return 'LinkedIn Kami';
   if (clean === 'Mail' || clean === 'Email') return 'Kirim Email';
@@ -260,7 +260,7 @@ const getSocialRel = (link: { icon?: string; url?: string }) =>
 
 const getSocialAriaLabel = (link: { icon?: string; url?: string; label?: string }) => {
   const icon = trimStr(link?.label) || trimStr(link?.icon) || 'social';
-  return `Kunjungi ${icon}`;
+  return tt('footer.visitSocial', { platform: icon }, `Kunjungi ${icon}`);
 };
 </script>
 

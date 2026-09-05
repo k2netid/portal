@@ -489,9 +489,36 @@
             { "label": "Kanan Tengah (Right Center)", "value": "right" },
             { "label": "Kiri Tengah (Left Center)", "value": "left" },
             { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
-            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" }
+            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" },
+            { "label": "Bawah Tengah (Bottom Center / Dock Pill)", "value": "bottom_center" },
+            { "label": "Kanan Atas (Top Right)", "value": "top_right" },
+            { "label": "Kiri Atas (Top Left)", "value": "top_left" }
         ],
         "default": "right",
+        "category": "Social Media",
+        "scope": "platform"
+    },
+    "floating_social_orientation": {
+        "label": "Orientasi Dock",
+        "type": "select",
+        "options": [
+            { "label": "Otomatis (Sesuai Posisi)", "value": "auto" },
+            { "label": "Vertikal (Tegak)", "value": "vertical" },
+            { "label": "Horizontal (Mendatar)", "value": "horizontal" }
+        ],
+        "default": "auto",
+        "category": "Social Media",
+        "scope": "platform"
+    },
+    "floating_social_style": {
+        "label": "Gaya Kapsul Dock",
+        "type": "select",
+        "options": [
+            { "label": "Frosted Glassmorphism (Glass)", "value": "glass" },
+            { "label": "Solid Dark Slate (Solid)", "value": "solid" },
+            { "label": "Aura Glow Keemasan (Glow)", "value": "glow" }
+        ],
+        "default": "glass",
         "category": "Social Media",
         "scope": "platform"
     },

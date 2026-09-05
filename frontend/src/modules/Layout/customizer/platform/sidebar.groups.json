@@ -30,7 +30,7 @@
                     "labelKey": "publishing.theme_customizer.sidebar.items.social",
                     "descriptionKey": "publishing.theme_customizer.sidebar.items.social_desc",
                     "icon": "share-2",
-                    "manifestCategories": ["Social Media"]
+                    "manifestCategories": ["Social Media", "Floating Dock"]
                 }
             ]
         },

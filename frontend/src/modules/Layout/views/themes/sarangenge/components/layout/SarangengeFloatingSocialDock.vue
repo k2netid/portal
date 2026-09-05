@@ -13,7 +13,7 @@
         'sarangenge-social-dock--show-mobile': showOnMobile,
       }
     ]"
-    aria-label="Tautan Media Sosial Sekolah Melayang"
+    :aria-label="t('footer.floatingSocialDockAria', 'Tautan Media Sosial Melayang')"
   >
     <!-- Collapsed Trigger Button -->
     <div
@@ -252,7 +252,7 @@ const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
   if (customLabel) return customLabel;
 
   const clean = trimStr(link?.icon);
-  if (!clean) return 'Tautan';
+  if (!clean) return t('common.link', 'Tautan');
   if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp';
   if (clean === 'Instagram') return 'Instagram';
   if (clean === 'Youtube') return 'YouTube';
@@ -290,6 +290,6 @@ const getSocialRel = (link: { icon?: string; url?: string }) =>
 
 const getSocialAriaLabel = (link: { icon?: string; url?: string; label?: string }) => {
   const icon = trimStr(link?.label) || trimStr(link?.icon) || 'social';
-  return `Kunjungi ${icon}`;
+  return t('footer.visitSocial', { platform: icon }, `Kunjungi ${icon}`);
 };
 </script>

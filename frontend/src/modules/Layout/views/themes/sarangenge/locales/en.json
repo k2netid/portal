@@ -33,7 +33,9 @@
     "badgeChildFriendly": "Child-Friendly School 2026",
     "socialExpand": "Open Social Media & Hotline",
     "socialCollapse": "Hide Social Media",
-    "socialMedia": "Social Media & Hotline"
+    "socialMedia": "Social Media & Hotline",
+    "floatingSocialDockAria": "Floating Social Media Links",
+    "visitSocial": "Visit {platform}"
   },
   "common": {
     "readMore": "Read More",
@@ -45,7 +47,8 @@
     "searchPlaceholder": "Type keywords...",
     "publishedOn": "Published on",
     "by": "by",
-    "breadcrumbAria": "Breadcrumb"
+    "breadcrumbAria": "Breadcrumb",
+    "link": "Link"
   },
   "pages": {
     "home": {
@@ -294,7 +297,8 @@
       "tim_page": "Faculty & Staff Page",
       "pricing_page": "Fees & Scholarships Page",
       "contact_page": "Contact & Admissions Page",
-      "footer": "Footer & Copyright"
+      "footer": "Footer & Copyright",
+      "floating_dock": "Floating Social Dock"
     },
     "items": {
       "school_name": "Official School Name",
@@ -452,7 +456,34 @@
       "staff_page": "Faculty & Staff Page",
       "staff_page_desc": "Directory of educators and staff",
       "staff_list": "Staff List",
-      "subject": "Subject / Department"
+      "subject": "Subject / Department",
+      "enable_floating_social": "Enable Floating Social Dock",
+      "enable_floating_social_hint": "Display a floating quick-access dock for social media and hotline on the screen.",
+      "floating_social_position": "Floating Dock Position",
+      "floating_social_position_hint": "Choose dock placement on the screen (right, left, bottom center, or top).",
+      "floating_social_orientation": "Dock Orientation",
+      "floating_social_orientation_hint": "Icon layout direction inside the dock (automatic by position, vertical, or horizontal).",
+      "floating_social_style": "Dock Capsule Style",
+      "floating_social_style_hint": "Visual theme style for the dock capsule (Frosted Glassmorphism, Solid Dark Slate, or Golden Aura Glow).",
+      "floating_social_default_collapsed": "Start in Collapsed State",
+      "floating_social_default_collapsed_hint": "Only show a compact trigger button when the page first loads.",
+      "floating_social_show_on_mobile": "Show on Mobile Screen",
+      "floating_social_show_on_mobile_hint": "Allow the floating dock to remain visible on mobile devices (automatically positioned in safe area)."
+    },
+    "common_options": {
+      "kanan_tengah_right_center": "Right Center",
+      "kiri_tengah_left_center": "Left Center",
+      "kanan_bawah_bottom_right": "Bottom Right",
+      "kiri_bawah_bottom_left": "Bottom Left",
+      "bawah_tengah_bottom_center_dock_pill": "Bottom Center (Dock Pill)",
+      "kanan_atas_top_right": "Top Right",
+      "kiri_atas_top_left": "Top Left",
+      "otomatis_sesuai_posisi": "Automatic (Based on Position)",
+      "vertikal_tegak": "Vertical",
+      "horizontal_mendatar": "Horizontal",
+      "frosted_glassmorphism_glass": "Frosted Glassmorphism (Glass)",
+      "solid_dark_slate_solid": "Solid Dark Slate (Solid)",
+      "aura_glow_keemasan_glow": "Golden Aura Glow (Glow)"
     }
   }
 }
