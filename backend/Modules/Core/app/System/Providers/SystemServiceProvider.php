@@ -46,7 +46,7 @@ class SystemServiceProvider extends ServiceProvider
 
         // Register Request Macro for CSP Nonce
         Request::macro('cspNonce', function () {
-            if (! $this->has('__csp_nonce')) {
+            if (! $this->attributes->has('__csp_nonce')) {
                 $this->attributes->set('__csp_nonce', Str::random(32));
             }
 

@@ -60,6 +60,17 @@ final class SpaHtmlFavicon
         return self::inject($html, self::resolveHref($shell));
     }
 
+    public static function injectNonce(string $html, ?string $nonce): string
+    {
+        if (! is_string($nonce) || $nonce === '') {
+            return $html;
+        }
+
+        $safe = htmlspecialchars($nonce, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        return preg_replace('/<script(?!\s+[^>]*\bnonce=)([\s>])/i', '<script nonce="'.$safe.'"$1', $html) ?? $html;
+    }
+
     public static function isGenericEngineIcon(string $href): bool
     {
         $path = strtolower(parse_url($href, PHP_URL_PATH) ?: $href);

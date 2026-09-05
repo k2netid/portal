@@ -141,7 +141,10 @@ class SpaController extends Controller
         if (file_exists(public_path('index.html'))) {
             $content = file_get_contents(public_path('index.html'));
             if (is_string($content)) {
-                return response(SpaHtmlFavicon::injectForShell($content, 'console'))
+                $html = SpaHtmlFavicon::injectForShell($content, 'console');
+                $html = SpaHtmlFavicon::injectNonce($html, request()->cspNonce());
+
+                return response($html)
                     ->header('Content-Type', 'text/html');
             }
         }
@@ -164,18 +167,22 @@ class SpaController extends Controller
             if (is_file($path)) {
                 $content = file_get_contents($path);
                 if (is_string($content)) {
-                    return response(SpaHtmlFavicon::injectForShell($content, 'landing'))
+                    $html = SpaHtmlFavicon::injectForShell($content, 'landing');
+                    $html = SpaHtmlFavicon::injectNonce($html, request()->cspNonce());
+
+                    return response($html)
                         ->header('Content-Type', 'text/html');
                 }
             }
         }
 
         // Dev / pre-build fallback — still not the console login form.
+        $nonce = htmlspecialchars((string) request()->cspNonce(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         return response(
             '<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">'
             .'<meta name="viewport" content="width=device-width,initial-scale=1">'
             .'<title>Jejakawan</title>'
-            .'<script>window.__JA_SHELL__=\'landing\';</script>'
+            .'<script nonce="'.$nonce.'">window.__JA_SHELL__=\'landing\';</script>'
             .'</head><body style="font-family:system-ui,sans-serif;max-width:40rem;margin:4rem auto;padding:0 1.25rem;line-height:1.5">'
             .'<p style="letter-spacing:.04em;text-transform:uppercase;font-size:.75rem;color:#0f766e">Core Engine</p>'
             .'<h1>Siap dijalankan.</h1>'
@@ -194,7 +201,10 @@ class SpaController extends Controller
             if (is_file($path)) {
                 $content = file_get_contents($path);
                 if (is_string($content)) {
-                    return response(SpaHtmlFavicon::injectForShell($content, 'public'))
+                    $html = SpaHtmlFavicon::injectForShell($content, 'public');
+                    $html = SpaHtmlFavicon::injectNonce($html, request()->cspNonce());
+
+                    return response($html)
                         ->header('Content-Type', 'text/html');
                 }
             }

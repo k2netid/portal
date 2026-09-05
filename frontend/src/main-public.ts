@@ -8,6 +8,9 @@ import {
 } from './main-shared';
 
 setAppShell('public');
+if (typeof window !== 'undefined') {
+    (window as any).__JA_SHELL__ = 'public';
+}
 
 document.title = i18n.global.t('system.app.publicTitle', 'Portal');
 
