@@ -11,6 +11,7 @@ import {
   Clock3,
   FileEdit,
   FileText,
+  Folder,
   History,
   LayoutGrid,
   Pencil,
@@ -27,7 +28,7 @@ import api from '@/engine/api/client';
 import { parseResponse, parseSingleResponse, ensureArray, type PaginationData } from '@/shared/utils/responseParser';
 import { cn } from '@/shared/utils/lib-utils';
 import { PageHeader, ConsoleStatCard, ConsoleListCard } from '@/shared/components/shell';
-import type { Content } from '@/modules/Publishing/types/content';
+import type { Content, Category } from '@/modules/Publishing/types/content';
 
 // UI Components
 import {
@@ -103,6 +104,8 @@ const contents = ref<Content[]>([]);
 const pagination = ref<PaginationData | null>(null);
 const search = ref('');
 const statusFilter = ref('all');
+const categories = ref<Category[]>([]);
+const categoryFilter = ref('all');
 const perPage = ref('10');
 const selectedContents = ref<string[]>([]);
 const bulkAction = ref('');
@@ -151,6 +154,30 @@ const columns = [
                     content.deleted_at ? h(Badge, { variant: 'destructive', class: 'h-4.5 text-[9px] px-1.5 font-bold tracking-wider' }, t('publishing.content.status.trashed')) : null
                 ]),
                 h('span', { class: 'text-xs text-muted-foreground font-mono' }, content.slug)
+            ]);
+        }
+    }),
+    columnHelper.accessor('category', {
+        header: t('publishing.content.form.category'),
+        cell: ({ row }) => {
+            const category = row.original.category;
+            if (!category) {
+                return h(Badge, {
+                    variant: 'outline',
+                    class: 'text-muted-foreground/60 border-dashed border-border/60 font-normal text-xs px-2 py-0.5 whitespace-nowrap'
+                }, t('publishing.content.noCategory'));
+            }
+            return h(Badge, {
+                variant: 'secondary',
+                class: 'bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors font-medium text-xs px-2.5 py-0.5 max-w-[150px] inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap',
+                title: category.name,
+                onClick: (e: MouseEvent) => {
+                    e.stopPropagation();
+                    categoryFilter.value = category.id;
+                }
+            }, [
+                h(Folder, { class: 'w-3 h-3 flex-shrink-0 text-primary/70' }),
+                h('span', { class: 'truncate' }, category.name)
             ]);
         }
     }),
@@ -296,6 +323,17 @@ const stats = ref<ContentStats>({
     trashed: 0
 });
 
+const fetchCategories = async () => {
+    try {
+        const response = await api.get('/manage/library/categories', { params: { per_page: 100 } });
+        const { data } = parseResponse<Category[]>(response);
+        categories.value = ensureArray(data);
+    } catch (error: unknown) {
+        logger.error('Failed to fetch categories:', error);
+        categories.value = [];
+    }
+};
+
 const fetchContents = async (page: number = 1) => {
     loading.value = true;
     try {
@@ -309,6 +347,9 @@ const fetchContents = async (page: number = 1) => {
         if (search.value) params.search = search.value;
         if (statusFilter.value && statusFilter.value !== 'all') {
             params.status = statusFilter.value;
+        }
+        if (categoryFilter.value && categoryFilter.value !== 'all') {
+            params.category_id = categoryFilter.value;
         }
 
         const response = await api.get('/manage/publishing/contents', { params });
@@ -512,7 +553,13 @@ const formatDate = (date: string | undefined) => {
     return new Date(date).toLocaleDateString();
 };
 
-watch([search, statusFilter], () => {
+const resetFilters = () => {
+    search.value = '';
+    statusFilter.value = 'all';
+    categoryFilter.value = 'all';
+};
+
+watch([search, statusFilter, categoryFilter], () => {
     fetchContents();
 });
 
@@ -520,6 +567,15 @@ onMounted(() => {
     if (route.query.q) {
         search.value = route.query.q as string;
     }
+    if (route.query.category_id) {
+        categoryFilter.value = route.query.category_id as string;
+    } else if (route.query.category) {
+        categoryFilter.value = route.query.category as string;
+    }
+    if (route.query.status) {
+        statusFilter.value = route.query.status as string;
+    }
+    fetchCategories();
     fetchContents();
     fetchStats();
 });
@@ -619,7 +675,7 @@ onMounted(() => {
             </div>
             <Select v-model="statusFilter">
               <SelectTrigger
-                class="h-10 w-full sm:w-[180px] shrink-0 bg-background"
+                class="h-10 w-full sm:w-[170px] shrink-0 bg-background"
                 :aria-label="t('publishing.content.list.filterByStatus')"
               >
                 <SelectValue :placeholder="t('publishing.content.list.filterByStatus')" />
@@ -645,6 +701,42 @@ onMounted(() => {
                 </SelectItem>
               </SelectContent>
             </Select>
+
+            <Select v-model="categoryFilter">
+              <SelectTrigger
+                class="h-10 w-full sm:w-[170px] shrink-0 bg-background"
+                :aria-label="t('publishing.content.list.filterByCategory')"
+              >
+                <SelectValue :placeholder="t('publishing.content.list.filterByCategory')" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  {{ t('publishing.content.filters.allCategories') }}
+                </SelectItem>
+                <SelectItem value="uncategorized">
+                  {{ t('publishing.content.filters.uncategorized') }}
+                </SelectItem>
+                <SelectItem
+                  v-for="category in categories"
+                  :key="category.id"
+                  :value="category.id"
+                >
+                  {{ category.name }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button
+              v-if="search || statusFilter !== 'all' || categoryFilter !== 'all'"
+              variant="ghost"
+              size="sm"
+              class="h-10 px-2.5 text-xs text-muted-foreground hover:text-foreground shrink-0"
+              :title="t('common.actions.reset', 'Reset')"
+              @click="resetFilters"
+            >
+              <RotateCcw data-icon="inline-start" class="size-3.5 shrink-0 mr-1" />
+              {{ t('common.actions.reset', 'Reset') }}
+            </Button>
           </div>
           <div class="flex flex-wrap items-center justify-end gap-2 shrink-0">
             <Button

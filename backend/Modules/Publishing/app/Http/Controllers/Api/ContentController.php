@@ -335,8 +335,20 @@ class ContentController extends BaseApiController
             }
         }
 
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->input('category_id'));
+        $catFilter = $request->input('category_id') ?? $request->input('category');
+        if ($catFilter && $catFilter !== 'all') {
+            if ($catFilter === 'uncategorized' || $catFilter === 'none') {
+                $query->whereNull('category_id');
+            } elseif (is_string($catFilter) && ! Str::isUuid($catFilter)) {
+                $query->where(function ($q) use ($catFilter): void {
+                    $q->where('category_id', $catFilter)
+                        ->orWhereHas('category', function ($cq) use ($catFilter): void {
+                            $cq->where('slug', $catFilter);
+                        });
+                });
+            } else {
+                $query->where('category_id', $catFilter);
+            }
         }
 
         if ($request->has('type')) {

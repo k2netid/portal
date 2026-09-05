@@ -26,6 +26,7 @@
   "content": {
     "title": "Studio Konten",
     "description": "Kelola konten, media, dan taksonomi Anda",
+    "noCategory": "Tanpa Kategori",
     "actions": {
       "approve": "Setujui",
       "duplicate": "Duplikat",
@@ -116,6 +117,7 @@
       "createNew": "Buat Konten Baru",
       "description": "Kelola konten, postingan blog, dan halaman Anda",
       "filterByStatus": "Saring berdasarkan status",
+      "filterByCategory": "Saring berdasarkan kategori",
       "empty": "Tidak ada konten ditemukan",
       "revisions": "Revisi",
       "selected": "{count} dipilih",
@@ -239,7 +241,9 @@
       "blankCanvasDesc": "Merender 100% blok Visual Builder tanpa header dan footer tema."
     },
     "filters": {
-      "allStatus": "All statuses"
+      "allStatus": "All statuses",
+      "allCategories": "Semua kategori",
+      "uncategorized": "Tanpa kategori"
     }
   },
   "content_templates": {
