@@ -249,11 +249,27 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Playwright E2E (`tests/e2e/widget-modal-dropdown.spec.ts`) → Passed 100% di SMKN6 (7.0s) dan K2NET (7.0s).
   - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
 
+### Milestone 7.10: Konsolidasi Menu Kategori ke Tab Content Studio & Penamaan "General Tags" di Library (🟢 Selesai)
+- [x] **Pembersihan Menu Kategori dari Sidebar Editorial**:
+  - [x] Migration `2026_09_05_000004_prune_categories_menu_and_rename_general_tags.php` menghapus record `categories.index` dari `sys_console_menus`.
+  - [x] Mengamankan `ConsoleMenu.php` (`defaultHierarchy` & `ensureMissingDefaults`) agar menu Kategori tidak ter-recreate saat migrate/seed.
+  - [x] Mengalihkan rute `/manage/categories` dan named route `categories.index` ke `{ name: 'contents.index', query: { tab: 'categories' } }` (backward compatibility aman).
+  - [x] Mengarahkan shortcut `create-category` pada `QuickActions.vue` ke tab kategori di Content Studio.
+- [x] **Penamaan Ulang "General Tags" di Sidebar Library**:
+  - [x] Mengubah nama item menu `tags` di `sys_console_menus` dan `ConsoleMenu.php` menjadi `"General Tags"` (`library.navigation.menu.generalTags`).
+  - [x] Menambahkan definisi i18n simetris: `"generalTags": "General Tags"` (`en`), `"generalTags": "Tag Umum"` (`id` & `su`).
+- [x] **Pengujian & Verifikasi Lintas Repositori**:
+  - [x] Backend test: `php artisan test Modules/Core/tests/Feature/ConsoleMenuControllerTest.php` → 9/9 tests passed (42 assertions).
+  - [x] i18n check: `npm run i18n:check` → 27 gate keys, 9.169 symmetric definitions per language (100% valid).
+  - [x] Playwright E2E: `categories-menu-consolidation.spec.ts` → 2/2 tests passed di SMKN6 (7.0s) dan K2NET (9.9s).
+  - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
 - [ ] Integrasi SSL & Edge Proxy WAF di CT 104 (NPMplus).
 - [ ] Konfigurasi `SITE_NAME`, `SITE_DESCRIPTION`, dan `contact_*` via `.env` dan Theme Customizer per deployment.
+
 
 
