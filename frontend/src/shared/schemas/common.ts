@@ -50,7 +50,7 @@ export const widgetSchema = z.object({
     title: z.string()
         .min(1, t('common.validation.required', { field: 'Name' }))
         .max(255, t('common.validation.max', { field: 'Name', max: 255 })),
-    type: z.enum(['text', 'html', 'recent_posts', 'categories', 'custom']),
+    type: z.enum(['text', 'html', 'recent_posts', 'categories', 'search', 'newsletter', 'social_share', 'custom']),
     location: z.string().optional().or(z.literal('')),
     content: z.string().optional().or(z.literal('')),
     is_active: z.boolean().optional(),

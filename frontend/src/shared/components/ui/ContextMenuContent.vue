@@ -3,7 +3,7 @@
     <ContextMenuContent
       v-bind="forwarded"
       :class="cn(
-        '!z-[100010] min-w-[200px] overflow-hidden rounded-2xl border border-border/40 bg-background/95 p-1.5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 ring-1 ring-black/5',
+        '!z-[100080] min-w-[200px] overflow-hidden rounded-2xl border border-border/40 bg-background/95 p-1.5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 ring-1 ring-black/5',
         props.class
       )"
     >
