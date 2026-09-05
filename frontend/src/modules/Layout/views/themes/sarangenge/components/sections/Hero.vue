@@ -440,7 +440,7 @@ const secondaryTargetUrl = computed(() => {
   return (getSetting('hero_secondary_cta_link', '') as string) || '/programs';
 });
 
-// Default Vocational Multi-Slides for SMKN 6 Bandung
+// Default Vocational Multi-Slides for Sarangenge Theme (Education Archetype)
 const defaultManualSlides = computed(() => [
   {
     id: 'ppdb-2026',

@@ -81,7 +81,8 @@ export const findThemeViewKey = (
   themeSlugs: string[],
   pageName: string,
 ): string | undefined => {
-  const slugs = themeSlugs.length > 0 ? themeSlugs : [...BUNDLED_FRONTEND_THEME_SLUGS]
+  // Defensive: if no candidates provided, fallback to janari (universal parent) only — never leak sibling themes.
+  const slugs = themeSlugs.length > 0 ? themeSlugs : ['janari']
   const pageBase = themePageBaseName(pageName)
 
   for (const slug of slugs) {

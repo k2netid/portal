@@ -61,8 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "Konsol K2NET",
-    "publicTitle": "K2NET"
+    "consoleTitle": "Konsol Portal",
+    "publicTitle": "Portal"
   },
   "routes": {
     "maintenance": "Nuju Pangropéa",

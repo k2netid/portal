@@ -448,7 +448,7 @@ const heroSubtitle = computed(() =>
     'hero_subtitle',
     t(
       'hero.subheadline',
-      'Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.',
+      'Bukan hanya konektivitas jaringan. Kami membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.',
     ),
     STALE_HERO_SUBTITLES,
   ),
@@ -507,11 +507,11 @@ const isExternalPrimary = computed(() => {
   return typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:'));
 });
 
-// Fallback manual slides for K2NET core business
+// Fallback manual slides for Kami core business
 const defaultManualSlides = computed(() => [
   {
     id: 'isp',
-    badge: 'K2NET DEDICATED',
+    badge: 'Kami DEDICATED',
     title: t('hero.slideIspTitle', 'Internet Service Provider Berbasis Fiber Optik'),
     subtitle: t('hero.slideIspDesc', 'Konektivitas simetris 1:1 tanpa FUP dengan dukungan latensi rendah dan jaminan SLA 99.98%.'),
     ctaText: t('hero.slideIspCta', 'Lihat Paket Internet'),
@@ -542,7 +542,7 @@ const activeSlides = computed(() => {
   if (hasHeroSlidesBinding.value && Array.isArray(dynamicHeroSlides.value) && dynamicHeroSlides.value.length > 0) {
     return (dynamicHeroSlides.value as Record<string, unknown>[]).map((item, idx) => ({
       id: String(item.id || idx),
-      badge: String(item.badge || item.category || 'K2NET SOLUTION'),
+      badge: String(item.badge || item.category || 'Kami SOLUTION'),
       title: String(item.title || item.name || ''),
       subtitle: String(item.description || item.excerpt || item.subtitle || ''),
       ctaText: String(item.cta_text || item.button_text || heroContactCtaText.value),

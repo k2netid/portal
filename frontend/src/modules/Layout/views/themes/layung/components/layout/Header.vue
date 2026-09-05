@@ -376,7 +376,7 @@
                     </div>
                     <div>
                       <span class="text-xs font-bold text-white group-hover:text-cyan-300 transition-colors block font-heading">
-                        Simulator Bandwidth K2NET
+                        Simulator Bandwidth Kami
                       </span>
                       <span class="text-[10px] text-slate-400 font-mono block">
                         Hitung estimasi Mbps & paket ideal

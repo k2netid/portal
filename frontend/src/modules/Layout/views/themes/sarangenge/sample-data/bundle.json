@@ -1,19 +1,19 @@
 {
   "version": 1,
   "settings": {
-    "site_title": "SMK Negeri 6 Bandung",
+    "site_title": "Portal Sekolah Vokasi",
     "site_tagline": "Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan",
     "site_tagline_en": "Progressive, Independent & Character-Driven — Vocational School of Excellence",
-    "school_name": "SMK Negeri 6 Bandung",
+    "school_name": "Portal Sekolah Vokasi",
     "hero_title": "Membentuk Lulusan Vokasi Unggul, Mandiri & Berakhlak Mulia",
     "hero_title_en": "Shaping Superior, Independent & Character-Driven Vocational Graduates",
-    "hero_subtitle": "Portal Resmi SMK Negeri 6 Bandung: Pendidikan vokasi berstandar industri dengan 7 program keahlian unggulan, fasilitas modern, dan jejaring kerja sama dunia usaha & industri.",
-    "hero_subtitle_en": "Official Portal of SMK Negeri 6 Bandung: Industry-standard vocational education with 7 flagship expertise programs, modern facilities, and industry partnerships.",
+    "hero_subtitle": "Portal resmi sekolah menengah kejuruan: pendidikan vokasi berstandar industri dengan program keahlian unggulan, fasilitas modern, dan jejaring kerja sama dunia usaha & industri.",
+    "hero_subtitle_en": "Official vocational school portal: industry-standard vocational education with flagship expertise programs, modern facilities, and industry partnerships.",
     "ppdb_is_open": true,
-    "contact_whatsapp": "+628127563286",
-    "contact_email": "info@smkn6bandung.sch.id",
-    "contact_phone": "+62 22 7563286",
-    "contact_address": "Jl. Soekarno-Hatta No. 636, Sekejati, Kec. Buahbatu, Kota Bandung, Jawa Barat 40286",
+    "contact_whatsapp": "",
+    "contact_email": "info@portal.sch.id",
+    "contact_phone": "",
+    "contact_address": "",
     "contact_map_enabled": true,
     "cta_primary_label": "Info PPDB",
     "cta_primary_url": "/contact#ppdb",
@@ -42,7 +42,7 @@
   },
   "menus": {
     "header": {
-      "name": "SMKN 6 Bandung Header Navigation",
+      "name": "Sarangenge Header Navigation",
       "items": [
         { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
         {
@@ -65,7 +65,7 @@
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/programs", "type": "custom", "description": "RPL, Listrik, Otomotif, Bangunan & Manufaktur" },
+            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/programs", "type": "custom", "description": "Program keahlian berstandar industri" },
             { "title": "Bursa Kerja Khusus (BKK) & Alumni", "title_en": "Career & Alumni", "url": "/career", "type": "custom", "description": "Penyaluran kerja industri & jejaring alumni" }
           ]
         },
@@ -85,7 +85,7 @@
       ]
     },
     "footer_col_1": {
-      "name": "SMKN 6 Bandung Footer Programs",
+      "name": "Sarangenge Footer Programs",
       "items": [
         { "title": "Program Keahlian", "url": "/programs", "type": "custom", "sort_order": 0 },
         { "title": "Fasilitas & Lab Praktik", "url": "/facilities", "type": "custom", "sort_order": 1 },
@@ -94,7 +94,7 @@
       ]
     },
     "footer_col_2": {
-      "name": "SMKN 6 Bandung Footer Admissions",
+      "name": "Sarangenge Footer Admissions",
       "items": [
         { "title": "Informasi PPDB", "url": "/contact#ppdb", "type": "custom", "sort_order": 0 },
         { "title": "BKK & Jejaring Alumni", "url": "/career", "type": "custom", "sort_order": 1 },
@@ -104,16 +104,16 @@
     }
   },
   "pages": [
-    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi SMK Negeri 6 Bandung — PPDB, kompetensi keahlian, dan fasilitas bengkel modern.", "body": "<p>Portal resmi SMK Negeri 6 Bandung — PPDB, kompetensi keahlian vokasi, dan fasilitas bengkel modern.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official SMK Negeri 6 Bandung portal — admissions, vocational programs, and modern workshop facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
-    { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, sejarah, dan nilai keunggulan SMK Negeri 6 Bandung.", "body": "<p>Visi, misi, sejarah, dan nilai keunggulan SMK Negeri 6 Bandung.</p>", "body_en": "<p>SMK Negeri 6 Bandung vision, mission, and vocational excellence philosophy.</p>" },
-    { "slug": "facilities", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Facilities", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga SMK Negeri 6 Bandung.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities at SMKN 6 Bandung.</p>" },
-    { "slug": "programs", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Programs", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan: DPIB, TITL, TPM, TKRO, TAV, TFLM.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan: DPIB, TITL, TPM, TKRO, TAV, TFLM.</p>", "body_en": "<p>Merdeka Curriculum at SMKN 6 Bandung: DPIB, TITL, TPM, TKRO, TAV, TFLM.</p>" },
-    { "slug": "pricing", "title": "Layanan PPDB & Bantuan", "title_en": "Fees & Admissions", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB.", "body": "<p>Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB SMK Negeri 6 Bandung.</p>", "body_en": "<p>Educational assistance, vocational scholarships, and admissions consultation services at SMKN 6 Bandung.</p>" },
-    { "slug": "tim", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan SMK Negeri 6 Bandung.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan SMK Negeri 6 Bandung.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and leadership at SMKN 6 Bandung.</p>" },
-    { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita kegiatan sekolah, agenda industri, dan pengumuman SMK Negeri 6 Bandung.", "body": "<p>Berita kegiatan sekolah, agenda industri, dan pengumuman SMK Negeri 6 Bandung.</p>", "body_en": "<p>School events, industry partnerships, and SMKN 6 Bandung announcements.</p>" },
-    { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB, alamat kampus Soekarno-Hatta 636, dan formulir konsultasi.", "body": "<p>Hotline PPDB, alamat kampus Soekarno-Hatta 636, dan formulir konsultasi SMK Negeri 6 Bandung.</p>", "body_en": "<p>Admissions hotline, campus address at Soekarno-Hatta 636, and SMKN 6 Bandung consultation form.</p>" },
-    { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali LKS tingkat kota, provinsi, dan nasional SMK Negeri 6 Bandung.", "body": "<p>Galeri medali LKS tingkat kota, provinsi, dan nasional SMK Negeri 6 Bandung.</p>", "body_en": "<p>Gallery of vocational skills competition (LKS) medals and championships at SMKN 6 Bandung.</p>" },
-    { "slug": "career_center", "title": "BKK & Jejaring Alumni", "title_en": "Career Center & Alumni", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni.", "body": "<p>Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni SMK Negeri 6 Bandung.</p>", "body_en": "<p>Special Job Fair (BKK), industry partner recruitment, and alumni tracer study at SMKN 6 Bandung.</p>" }
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi sekolah vokasi — PPDB, kompetensi keahlian, dan fasilitas bengkel modern.", "body": "<p>Portal resmi sekolah menengah kejuruan — PPDB, kompetensi keahlian vokasi, dan fasilitas bengkel modern.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official vocational school portal — admissions, vocational programs, and modern workshop facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
+    { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, sejarah, dan nilai keunggulan sekolah vokasi.", "body": "<p>Visi, misi, sejarah, dan nilai keunggulan sekolah menengah kejuruan.</p>", "body_en": "<p>Vocational school vision, mission, and excellence philosophy.</p>" },
+    { "slug": "facilities", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Facilities", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga sekolah vokasi.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities.</p>" },
+    { "slug": "programs", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Programs", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian berstandar industri.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian vokasi berstandar industri.</p>", "body_en": "<p>Merdeka Curriculum at Vocational School of Excellence — industry-aligned expertise programs.</p>" },
+    { "slug": "pricing", "title": "Layanan PPDB & Bantuan", "title_en": "Fees & Admissions", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB.", "body": "<p>Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB sekolah.</p>", "body_en": "<p>Educational assistance, vocational scholarships, and admissions consultation services.</p>" },
+    { "slug": "tim", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan sekolah vokasi.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan sekolah.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and school leadership.</p>" },
+    { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.", "body": "<p>Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.</p>", "body_en": "<p>School events, industry partnerships, and latest announcements.</p>" },
+    { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB, alamat kampus, dan formulir konsultasi.", "body": "<p>Hotline PPDB, alamat kampus, dan formulir konsultasi sekolah vokasi.</p>", "body_en": "<p>Admissions hotline, campus address, and school consultation form.</p>" },
+    { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali LKS tingkat kota, provinsi, dan nasional.", "body": "<p>Galeri medali LKS tingkat kota, provinsi, dan nasional sekolah vokasi.</p>", "body_en": "<p>Gallery of vocational skills competition (LKS) medals and championships.</p>" },
+    { "slug": "career_center", "title": "BKK & Jejaring Alumni", "title_en": "Career Center & Alumni", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni.", "body": "<p>Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni.</p>", "body_en": "<p>Special Job Fair (BKK), industry partner recruitment, and alumni tracer study.</p>" }
   ],
   "posts": [
     {
@@ -128,8 +128,8 @@
     },
     {
       "slug": "sarangenge-sample-olimpiade-emas",
-      "title": "Siswa Sarangenge Raih Medali Emas Olimpiade Matematika 2026",
-      "title_en": "Sarangenge Student Wins Gold at 2026 Math Olympiad",
+      "title": "Siswa Vokasi Raih Medali Emas Olimpiade Matematika 2026",
+      "title_en": "Vocational Student Wins Gold at 2026 Math Olympiad",
       "status": "published",
       "excerpt": "Prestasi membanggakan kembali ditorehkan dalam ajang olimpiade matematika tingkat internasional.",
       "excerpt_en": "Another proud achievement at an international mathematics olympiad.",

@@ -13,7 +13,7 @@
         {{ t('servicesTabs.title', 'Konektivitas dan operasional IT untuk sekolah & institusi') }}
       </h2>
       <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">
-        {{ t('servicesTabs.subtitle', 'Pilih tab sesuai kebutuhan: internet dari K2NET, atau pendampingan IT harian di lingkungan sekolah.') }}
+        {{ t('servicesTabs.subtitle', 'Pilih tab sesuai kebutuhan: internet dari Kami, atau pendampingan IT harian di lingkungan sekolah.') }}
       </p>
 
       <div class="inline-flex p-1.5 rounded-2xl bg-muted/80 border border-border text-xs font-bold gap-1 mt-2">
@@ -131,7 +131,7 @@ const ispItems = computed(() => [
   {
     icon: Home,
     title: t('servicesTabs.isp3Title', 'Retail Broadband'),
-    description: t('servicesTabs.isp3Desc', 'Paket rumah tangga dan ritel di area jangkauan K2NET, mulai 10 Mbps (up to 15 Mbps).'),
+    description: t('servicesTabs.isp3Desc', 'Paket rumah tangga dan ritel di area jangkauan Kami, mulai 10 Mbps (up to 15 Mbps).'),
   },
   {
     icon: MapPin,

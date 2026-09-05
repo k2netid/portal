@@ -29,7 +29,7 @@
             {{ t('pages.pricing.hubBadge', 'Paket & Harga') }}
           </span>
           <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-            {{ t('pages.pricing.hubTitle', 'Paket Layanan K2NET') }}
+            {{ t('pages.pricing.hubTitle', 'Paket Layanan Kami') }}
           </h1>
           <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
             {{ t('pages.pricing.hubSubtitle', 'Pilih antara paket konektivitas internet (ISP) atau layanan IT terkelola (MSP) — masing-masing dengan skema dan harga yang disesuaikan kebutuhan Anda.') }}

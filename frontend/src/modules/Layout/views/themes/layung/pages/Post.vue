@@ -93,10 +93,10 @@ onMounted(async () => {
     }
   } catch {
     post.value = {
-      title: 'K2NET Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC',
+      title: 'Kami Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC',
       published_at: '2026-08-15',
-      excerpt: 'PT Kirana Karina Network mengumumkan operasional BGP mandiri AS153992 (IDNIC-K2NET-ID) untuk layanan ISP di Bandung.',
-      body: '<p>K2NET mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>',
+      excerpt: 'Penyedia Layanan Internet mengumumkan operasional BGP mandiri AS153992 (IDNIC-Kami-ID) untuk layanan ISP di Bandung.',
+      body: '<p>Kami mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>',
       category: { name: 'Infrastruktur' },
       author: { name: 'NOC Engineering Team' },
     };

@@ -33,7 +33,7 @@
               {{ t('pages.blog.title', 'Berita') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {{ t('pages.blog.subtitle', 'Pengumuman layanan, jangkauan, dan operasional K2NET.') }}
+              {{ t('pages.blog.subtitle', 'Pengumuman layanan, jangkauan, dan operasional Kami.') }}
             </p>
           </div>
         </div>

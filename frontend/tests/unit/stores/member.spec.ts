@@ -91,7 +91,7 @@ describe('member store', () => {
         vi.mocked(api.post).mockResolvedValueOnce({
             data: {
                 data: {
-                    member: { id: 'm1', name: 'Logged In User', email: 'user@k2net.id' },
+                    member: { id: 'm1', name: 'Logged In User', email: 'user@portal.net' },
                     token: 'tok-123',
                 },
             },
@@ -99,7 +99,7 @@ describe('member store', () => {
         vi.mocked(api.get).mockResolvedValueOnce({
             data: {
                 data: {
-                    member: { id: 'm1', name: 'Logged In User', email: 'user@k2net.id' },
+                    member: { id: 'm1', name: 'Logged In User', email: 'user@portal.net' },
                     capabilities: [],
                     active_extensions: [],
                     navigation: [],
@@ -108,7 +108,7 @@ describe('member store', () => {
             },
         });
 
-        const res1 = await store.login('user@k2net.id', 'secret123');
+        const res1 = await store.login('user@portal.net', 'secret123');
         expect(res1.requires_two_factor).toBeFalsy();
         expect(store.isAuthenticated).toBe(true);
         expect(store.token).toBe('tok-123');
@@ -118,12 +118,12 @@ describe('member store', () => {
             data: {
                 data: {
                     requires_two_factor: true,
-                    member: { email: 'user@k2net.id' },
+                    member: { email: 'user@portal.net' },
                 },
             },
         });
 
-        const res2 = await store.login('user@k2net.id', 'secret123');
+        const res2 = await store.login('user@portal.net', 'secret123');
         expect(res2.requires_two_factor).toBe(true);
     });
 
@@ -133,7 +133,7 @@ describe('member store', () => {
         vi.mocked(api.post).mockResolvedValueOnce({
             data: {
                 data: {
-                    member: { id: 'm2', name: 'New Reg', email: 'reg@k2net.id' },
+                    member: { id: 'm2', name: 'New Reg', email: 'reg@portal.net' },
                     token: 'tok-reg',
                 },
             },
@@ -141,7 +141,7 @@ describe('member store', () => {
         vi.mocked(api.get).mockResolvedValueOnce({
             data: {
                 data: {
-                    member: { id: 'm2', name: 'New Reg', email: 'reg@k2net.id' },
+                    member: { id: 'm2', name: 'New Reg', email: 'reg@portal.net' },
                     capabilities: ['read'],
                     active_extensions: [],
                     navigation: [],
@@ -152,7 +152,7 @@ describe('member store', () => {
 
         await store.register({
             name: 'New Reg',
-            email: 'reg@k2net.id',
+            email: 'reg@portal.net',
             password: 'pass',
             password_confirmation: 'pass',
         });
@@ -164,13 +164,13 @@ describe('member store', () => {
     it('updates profile and uploads avatar', async () => {
         const store = useMemberStore();
         store.applyAuth({
-            member: { id: 'm1', name: 'Old Name', email: 'old@k2net.id', status: 'active' },
+            member: { id: 'm1', name: 'Old Name', email: 'old@portal.net', status: 'active' },
             token: 'tok-1',
         });
 
         vi.mocked(api.patch).mockResolvedValueOnce({
             data: {
-                data: { id: 'm1', name: 'Updated Name', email: 'old@k2net.id' },
+                data: { id: 'm1', name: 'Updated Name', email: 'old@portal.net' },
             },
         });
 
@@ -181,7 +181,7 @@ describe('member store', () => {
         const fakeFile = new File(['content'], 'avatar.png', { type: 'image/png' });
         vi.mocked(api.post).mockResolvedValueOnce({
             data: {
-                data: { id: 'm1', name: 'Updated Name', email: 'old@k2net.id', avatar: '/avatar.png' },
+                data: { id: 'm1', name: 'Updated Name', email: 'old@portal.net', avatar: '/avatar.png' },
             },
         });
 
@@ -229,7 +229,7 @@ describe('member store', () => {
     it('handles password operations and account deletion', async () => {
         const store = useMemberStore();
         store.applyAuth({
-            member: { id: 'm1', name: 'User', email: 'u@k2net.id', status: 'active' },
+            member: { id: 'm1', name: 'User', email: 'u@portal.net', status: 'active' },
             token: 'tok-1',
         });
 
@@ -243,12 +243,12 @@ describe('member store', () => {
         ).resolves.not.toThrow();
 
         vi.mocked(api.post).mockResolvedValueOnce({ data: { success: true } });
-        await expect(store.forgotPassword('u@k2net.id')).resolves.not.toThrow();
+        await expect(store.forgotPassword('u@portal.net')).resolves.not.toThrow();
 
         vi.mocked(api.post).mockResolvedValueOnce({ data: { success: true } });
         await expect(
             store.resetPassword({
-                email: 'u@k2net.id',
+                email: 'u@portal.net',
                 token: 'tok',
                 password: 'new',
                 password_confirmation: 'new',
@@ -264,7 +264,7 @@ describe('member store', () => {
     it('logs out and clears state', async () => {
         const store = useMemberStore();
         store.applyAuth({
-            member: { id: 'm1', name: 'User', email: 'u@k2net.id', status: 'active' },
+            member: { id: 'm1', name: 'User', email: 'u@portal.net', status: 'active' },
             token: 'tok-1',
         });
 

@@ -5,7 +5,7 @@ import {
     readParentOriginFromQuery,
 } from '@/modules/Layout/customizer/preview/protocol';
 
-const SELF = 'https://staging.k2net.id';
+const SELF = 'https://staging.portal.net';
 
 describe('customizer parent origin allowlist', () => {
     it('ignores ja_parent_origin on the public site', () => {
@@ -25,14 +25,14 @@ describe('customizer parent origin allowlist', () => {
     it('allows same-hostname parent on a different port in preview', () => {
         const search =
             '?ja_customizer_preview=1&ja_parent_origin=' +
-            encodeURIComponent('https://staging.k2net.id:5173');
+            encodeURIComponent('https://staging.portal.net:5173');
         const allowed = resolveAllowedCustomizerOrigins(search, SELF);
-        expect(allowed.has('https://staging.k2net.id:5173')).toBe(true);
+        expect(allowed.has('https://staging.portal.net:5173')).toBe(true);
     });
 
     it('rejects credentials in the parent origin', () => {
         expect(
-            isTrustedCustomizerParentOrigin('https://user:pass@staging.k2net.id', SELF),
+            isTrustedCustomizerParentOrigin('https://user:pass@staging.portal.net', SELF),
         ).toBe(false);
     });
 

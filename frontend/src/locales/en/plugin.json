@@ -10,7 +10,7 @@
     "showRawJson": "Switch to Raw JSON",
     "fieldUsername": "Account Username / Handle",
     "placeholderUsername": "your_username",
-    "helpUsername": "Instagram account username without the {'@'} symbol, e.g., smkn6bandung or your organization name.",
+    "helpUsername": "Instagram account username without the {'@'} symbol, e.g., your_organization or your brand name.",
     "fieldAccessToken": "Instagram User Access Token",
     "placeholderAccessToken": "IGQ...",
     "helpAccessToken": "Long-Lived Meta User Token (valid for 60 days with automatic background refresh).",

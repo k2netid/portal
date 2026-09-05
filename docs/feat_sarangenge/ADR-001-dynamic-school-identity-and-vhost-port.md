@@ -1,9 +1,9 @@
 # ADR-001: Dinamisasi Identitas Sekolah pada Tema Sarangenge & Isolasi Port Staging (RFC 6335)
 
-**Status:** Accepted  
+**Status:** Accepted — *Fallbacks generalized by [ADR-005](./ADR-005-complete-brand-generalization-smkn6-and-k2net.md)*  
 **Tanggal:** 2026-09-04  
 **Author:** Jejakawan Engineering  
-**Scope:** `frontend/src/modules/Layout/views/themes/sarangenge/`, `/etc/nginx/sites-available/portal-staging`, `docs/feat_smkn6/`
+**Scope:** `frontend/src/modules/Layout/views/themes/sarangenge/`, `/etc/nginx/sites-available/portal-staging`, `docs/feat_sarangenge/`
 
 ---
 
@@ -29,7 +29,8 @@ Dalam proses adaptasi tema **Sarangenge** (tema resmi institusi pendidikan Jejak
   Menambahkan field `school_name` dan `school_tagline` di bawah kategori `"School Info"` pada `customizer/schema.settings.json` dan `theme.json`.
 - **Sentralisasi Identitas pada `useSarangengeIdentity.ts`**:
   Composable `useSarangengeIdentity()` dijadikan satu-satunya *Single Source of Truth* (SSOT) untuk nama sekolah, tagline, alamat, kontak, akreditasi, NPSN, dan nama kepala sekolah.
-  - Urutan resolusi `displaySchoolName`: `getSetting('school_name')` ➔ `siteSettings.site_name` ➔ fallback default `"SMK Negeri 6 Bandung"`.
+   - Urutan resolusi `displaySchoolName`: `getSetting('school_name')` ➔ `siteSettings.site_name` ➔ fallback default `"Portal Sekolah"`.
+   - Urutan resolusi `displayEmail`: `getSetting('contact_email')` ➔ `siteSettings.contact_email` ➔ fallback `"info@portal.sch.id"`.
 - **Refaktor Komponen & Halaman**:
   Mengganti seluruh teks statis yang memuat nama sekolah dengan reaktif `displaySchoolName` atau `displayPrincipalName`.
 - **Pembersihan String i18n**:

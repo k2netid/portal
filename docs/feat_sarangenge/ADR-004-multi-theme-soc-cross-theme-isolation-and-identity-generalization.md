@@ -1,6 +1,6 @@
 # ADR-004: Multi-Theme Separation of Concerns (SoC), Eliminasi Cross-Theme Leakage, dan Generalisasi Identitas
 
-- **Status:** Accepted / Implemented
+- **Status:** Accepted / Implemented — *Extended by [ADR-005](./ADR-005-complete-brand-generalization-smkn6-and-k2net.md)*
 - **Tanggal:** 2026-09-05
 - **Penulis:** Platform & Theme Architecture Team
 - **Konteks Proyek:** Fork SMKN 6 Portal (`ja-core_engine`) — Multi-Theme & Public Layout

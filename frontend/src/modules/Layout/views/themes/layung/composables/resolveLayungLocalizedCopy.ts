@@ -18,8 +18,8 @@ export const STALE_HERO_TITLES = [
 ];
 
 export const STALE_HERO_SUBTITLES = [
-  'Internet dedicated, fiber, dan managed services dari NOC K2NET di Bandung — PT Kirana Karina Network.',
-  'Dedicated internet, fiber, and managed services from K2NET NOC in Bandung — PT Kirana Karina Network.',
+  'Internet dedicated, fiber, dan managed services dari NOC kami di Bandung.',
+  'Dedicated internet, fiber, and managed services from our NOC in Bandung.',
   'Hadirkeun backbone internét gancang siga cahaya, laténsi super handap sahandapeun 3ms, multi-cloud interconnect, sarta panyalindungan Cyber SOC 24/7.',
 ];
 
@@ -38,10 +38,10 @@ export const DEFAULT_SALES_PHONE = '+62 851-3629-0871';
 export const DEFAULT_SERVICE_DESK_PHONE = '+62 851-3629-0852';
 export const DEFAULT_WHATSAPP_DIGITS = '6285136290851';
 
-export const DEFAULT_INFO_EMAIL = 'info@k2net.id';
-export const DEFAULT_CS_EMAIL = 'cs@k2net.id';
-export const DEFAULT_SALES_EMAIL = 'sales@k2net.id';
-export const DEFAULT_BILLING_EMAIL = 'billing@k2net.id';
+export const DEFAULT_INFO_EMAIL = 'info@portal.net';
+export const DEFAULT_CS_EMAIL = 'cs@portal.net';
+export const DEFAULT_SALES_EMAIL = 'sales@portal.net';
+export const DEFAULT_BILLING_EMAIL = 'billing@portal.net';
 
 export function isStaleThemeCopy(value: unknown, stale: readonly string[] = []): boolean {
   if (value == null) return true;

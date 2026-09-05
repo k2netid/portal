@@ -41,7 +41,7 @@ describe('Layung Tim and Career pages', () => {
         });
 
         expect(wrapper.exists()).toBe(true);
-        expect(wrapper.text()).toContain('Mengapa Bergabung di K2NET?');
+        expect(wrapper.text()).toContain('Mengapa Bergabung di Kami?');
         expect(wrapper.text()).toContain('Sertifikasi Didukung');
         expect(wrapper.text()).toContain('NOC Network Engineer (L2)');
         expect(wrapper.text()).toContain('Fiber Optic Field Technician');

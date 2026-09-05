@@ -29,7 +29,7 @@
             {{ t('pages.services.badge', 'Internet') }}
           </span>
           <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-            {{ t('pages.services.title', 'Layanan Internet K2NET') }}
+            {{ t('pages.services.title', 'Layanan Internet Kami') }}
           </h1>
           <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
             {{ t('pages.services.subtitle', 'Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung & Jawa Barat.') }}

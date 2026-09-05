@@ -750,25 +750,25 @@
         "isp_email": {
             "label": "Email umum (info)",
             "type": "text",
-            "default": "info@k2net.id",
+            "default": "info@portal.net",
             "category": "ISP Info"
         },
         "isp_cs_email": {
             "label": "Email Customer Service (CS)",
             "type": "text",
-            "default": "cs@k2net.id",
+            "default": "cs@portal.net",
             "category": "ISP Info"
         },
         "isp_sales_email": {
             "label": "Email Sales",
             "type": "text",
-            "default": "sales@k2net.id",
+            "default": "sales@portal.net",
             "category": "ISP Info"
         },
         "isp_billing_email": {
             "label": "Email Billing / Keuangan",
             "type": "text",
-            "default": "billing@k2net.id",
+            "default": "billing@portal.net",
             "category": "ISP Info"
         },
         "isp_address": {
@@ -840,25 +840,25 @@
         "hero_subtitle": {
             "label": "Subjudul Hero (fallback)",
             "type": "textarea",
-            "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+            "default": "Bukan hanya konektivitas jaringan. Kami membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
             "category": "Hero Section"
         },
         "hero_subtitle_id": {
             "label": "Subjudul Hero (Indonesia)",
             "type": "textarea",
-            "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+            "default": "Bukan hanya konektivitas jaringan. Kami membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
             "category": "Hero Section"
         },
         "hero_subtitle_en": {
             "label": "Subjudul Hero (English)",
             "type": "textarea",
-            "default": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
+            "default": "More than network connectivity. Kami supports you from internet access through to IT services in your workplace.",
             "category": "Hero Section"
         },
         "hero_subtitle_su": {
             "label": "Subjudul Hero (Sunda)",
             "type": "textarea",
-            "default": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
+            "default": "Lain ngan konektivitas jaringan. Kami ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
             "category": "Hero Section"
         },
         "hero_primary_cta_text": {
@@ -944,7 +944,7 @@
                     "label": "Cyber Matrix & Digital Globe"
                 }
             ],
-            "description": "Pilih animasi visual yang sesuai dengan identitas bisnis K2NET",
+            "description": "Pilih animasi visual yang sesuai dengan identitas bisnis Kami",
             "category": "Hero Section"
         },
         "hero_slider_enabled": {
@@ -1160,7 +1160,7 @@
         "footer_about_text": {
             "label": "Deskripsi Singkat Footer",
             "type": "textarea",
-            "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
+            "default": "Kami adalah merek Penyedia Layanan Internet — ISP dan managed services berkantor di Bandung.",
             "category": "Footer"
         },
         "footer_col_1_title": {

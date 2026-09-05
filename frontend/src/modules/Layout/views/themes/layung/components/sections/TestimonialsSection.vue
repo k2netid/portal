@@ -14,7 +14,7 @@
           {{ t('clients.title', 'Pendampingan IT untuk sekolah dan institusi') }}
         </h2>
         <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">
-          {{ t('clients.subtitle', 'K2NET menyediakan jaringan, server, CCTV, dan dukungan operasional IT untuk institusi pendidikan di Bandung dan Jawa Barat. Daftar mitra resmi dipublikasikan setelah persetujuan masing-masing institusi.') }}
+          {{ t('clients.subtitle', 'Kami menyediakan jaringan, server, CCTV, dan dukungan operasional IT untuk institusi pendidikan di Bandung dan Jawa Barat. Daftar mitra resmi dipublikasikan setelah persetujuan masing-masing institusi.') }}
         </p>
       </div>
 

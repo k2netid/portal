@@ -1,6 +1,6 @@
-# Log & Rencana Tugas (Tasks Tracker) — SMKN 6 Bandung
+# Log & Rencana Tugas (Tasks Tracker) — Adaptasi Portal Pendidikan
 
-Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian issue untuk website SMK Negeri 6 Bandung.
+Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian issue untuk adaptasi platform JA Core Engine ke institusi pendidikan.
 
 ---
 
@@ -14,7 +14,7 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
 
 ### Milestone 2: Dinamisasi Identitas Tema Sarangenge (🟢 Selesai)
 - [x] Registrasi tema Sarangenge di database staging `portal_staging`.
-- [x] Penyesuaian konfigurasi awal profil SMKN 6 Bandung di `sample-data/bundle.json`.
+- [x] Penyesuaian konfigurasi awal profil sekolah di `sample-data/bundle.json` (sekarang generik).
 - [x] **Pembersihan hardcode nama sekolah**:
   - [x] Menambahkan `school_name` dan `school_tagline` ke skema Theme Customizer (`schema.settings.json` & `theme.json`).
   - [x] Memperbarui composable `useSarangengeIdentity.ts` agar mengambil nama sekolah secara dinamis dengan fallback yang bersih.
@@ -24,9 +24,9 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
 - [x] Deployment ke staging (`www/staging`) dan pengujian akses HTTP 200 di port 49280.
 
 ### Milestone 3: Penyesuaian Konten Spesifik Kejuruan (🟢 Selesai)
-- [x] Pembuatan CMS Category `program-keahlian` dan injeksi konten dinamis untuk 6 Program Keahlian SMKN 6 Bandung (DPIB, TITL, TPM, TKRO, TAV, TFLM).
+- [x] Pembuatan CMS Category `program-keahlian` dan injeksi konten dinamis untuk program keahlian kejuruan.
 - [x] **Dinamisasi Fasilitas Vokasi & Bengkel Praktik**:
-  - [x] Pembuatan CMS Category `fasilitas` ("Fasilitas & Sarana") via [Smkn6FacilitiesSeeder.php](file:///home/jejakawan/dev/smkn6-portal/backend/Modules/Publishing/app/Database/Seeders/Smkn6FacilitiesSeeder.php).
+  - [x] Pembuatan CMS Category `fasilitas` ("Fasilitas & Sarana") via [VocationalFacilitiesSeeder.php](file:///home/jejakawan/dev/smkn6-portal/backend/Modules/Publishing/app/Database/Seeders/VocationalFacilitiesSeeder.php).
   - [x] Injeksi 8 konten fasilitas berstandar industri (Studio Desain BIM, Bengkel CNC TPM, Lab Listrik TITL, Bengkel Otomotif TKRO, Lab Mikroelektronik TAV, Bengkel Las TFLM, Gedung CoE Smart Classroom, Perpustakaan Digital).
   - [x] Pembaruan [Facilities.vue](file:///home/jejakawan/dev/smkn6-portal/frontend/src/modules/Layout/views/themes/sarangenge/pages/Facilities.vue) memanggil API publik dinamis (`category: 'fasilitas'`) dengan spinner loading, pemetaan icon adaptif, dan navigasi detail ke `/blog/:slug`.
   - [x] Pemastian dukungan Visual Page Builder (`theme_page: 'pages/Facilities'`, `useThemePageOverride`, dan `BlockRenderer`).
@@ -57,7 +57,7 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Deteksi Tautan Otomatis: CTA utama mendeteksi link eksternal (`http(s)://`) vs rute navigasi internal router.
 - [x] **Sistem Universal Floating Social Dock**:
   - [x] Pembuatan komponen dock melayang di tema Janari (`JanariFloatingSocialDock.vue`) dan Sarangenge (`SarangengeFloatingSocialDock.vue`), menyelaraskan komponen Layung (`FloatingSocialDock.vue`).
-  - [x] Integrasi saluran komunikasi resmi SMKN 6 Bandung (Hotline WhatsApp PPDB, Instagram, YouTube, Facebook).
+  - [x] Integrasi saluran komunikasi resmi sekolah (Hotline WhatsApp PPDB, Instagram, YouTube, Facebook).
   - [x] Pendaftaran skema customizer simetris di seluruh `theme.json` (`enable_floating_social`, `floating_social_position`, `floating_social_default_collapsed`, `floating_social_show_on_mobile`).
 - [x] **Paritas Bahasa (i18n) & Standar Kualitas Penuh**:
   - [x] 9.002 entri terjemahan 100% simetris di bahasa Indonesia (`id`), Inggris (`en`), dan Sunda (`su`).
@@ -133,8 +133,35 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Menyelaraskan seluruh teks translasi di 3 bahasa (`id.json`, `en.json`, `su.json`) tanpa menyisakan key sampah.
   - [x] 100% Quality Gates: `npm run i18n:check:full` (symmetric), `npm run type-check` (0 error), `npm run test:unit` (286/286 tests passed), `npm run deploy:assets:full` (sukses), `php artisan optimize:clear` (sukses).
 
+### Milestone 7.5: Generalisasi Menyeluruh Brand Tenant & Platform (🟢 Selesai)
+- [x] **Penghapusan Total Hardcode SMKN 6 Bandung** (Sarangenge Theme):
+  - [x] P0: `useSarangengeIdentity.ts` email fallback → resolve dinamis dari `systemStore` + fallback `info@portal.sch.id`.
+  - [x] P0: `bundle.json` → data generik "Portal Sekolah Vokasi" (alamat/telepon/WA dikosongkan).
+  - [x] P1: `sidebar.navigation.json` → `"Pricing Page"` → `"Admissions Page"`.
+  - [x] P1: `plugin.json` (3 bahasa) → contoh Instagram username generik.
+  - [x] P2: `Hero.vue` comment → "Sarangenge Theme (Education Archetype)".
+  - [x] P2: `findThemeViewKey` defensive gap → fallback hanya ke `['janari']`.
+- [x] **Penghapusan Total Hardcode K2NET** (Layung Theme & Backend):
+  - [x] `useLayungIdentity.ts` → legal name, AS name, logo fallback generik.
+  - [x] `resolveLayungLocalizedCopy.ts` → email defaults `*@portal.net`.
+  - [x] `layungStoreUrls.ts` → empty strings (configurable via customizer).
+  - [x] Locale files (id/en/su) → `K2NET` → `Kami` (~44 refs per file).
+  - [x] `schema.settings.json` + `theme.json` → defaults generik.
+  - [x] 24 Vue components (13 sections + 11 pages) → bulk generalized.
+  - [x] Core System locales (id/en/su) → generalized.
+  - [x] Backend `challenge.blade.php`, `SpaHtmlFaviconTest.php`, `composer.json` → generalized.
+  - [x] Backend Layung theme mirror → synced with frontend.
+  - [x] Test fixtures (8 files) → assertions updated.
+- [x] **Verifikasi**:
+  - [x] `vue-tsc --noEmit` → 0 errors.
+  - [x] `vitest run` → 45/45 files, 286/286 tests passed.
+  - [x] `grep K2NET|k2net` → 0 matches in source.
+  - [x] `grep smkn6|SMKN` → 0 matches in source.
+- [x] **Dokumentasi**: ADR-005 diterbitkan.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
-- [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain resmi `smkn6bandung.sch.id`.
+- [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
 - [ ] Integrasi SSL & Edge Proxy WAF di CT 104 (NPMplus).
+- [ ] Konfigurasi `SITE_NAME`, `SITE_DESCRIPTION`, dan `contact_*` via `.env` dan Theme Customizer per deployment.

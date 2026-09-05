@@ -63,7 +63,9 @@ export function useSarangengeIdentity() {
   const displayEmail = computed(() => {
     const fromTheme = getSetting('contact_email', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return 'info@smkn6bandung.sch.id';
+    const fromSystem = (siteSettings.value.contact_email || systemStore.siteSettings?.contact_email) as string | undefined;
+    if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
+    return 'info@portal.sch.id';
   });
 
   const displayAccreditation = computed(() => {

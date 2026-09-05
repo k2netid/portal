@@ -75,7 +75,7 @@
           {{ t('pricingIsp.retailTitle', 'Retail Broadband') }}
         </h2>
         <p class="text-sm text-muted-foreground leading-relaxed">
-          {{ t('pricingIsp.retailSubtitle', 'Paket internet rumah tangga dan ritel di area jangkauan jaringan K2NET. Harga belum termasuk PPN.') }}
+          {{ t('pricingIsp.retailSubtitle', 'Paket internet rumah tangga dan ritel di area jangkauan jaringan Kami. Harga belum termasuk PPN.') }}
         </p>
       </div>
       <PricingPlanGrid

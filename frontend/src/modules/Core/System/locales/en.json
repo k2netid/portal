@@ -61,8 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "K2NET Console",
-    "publicTitle": "K2NET"
+    "consoleTitle": "Portal Console",
+    "publicTitle": "Portal"
   },
   "routes": {
     "maintenance": "Under Maintenance",

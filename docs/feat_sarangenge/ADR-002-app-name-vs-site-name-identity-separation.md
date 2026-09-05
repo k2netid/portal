@@ -1,6 +1,6 @@
 # ADR-002: Pemisahan Identitas Aplikasi (APP_NAME) dan Identitas Situs (SITE_NAME)
 
-**Status:** Accepted  
+**Status:** Accepted — *Fallbacks generalized by [ADR-005](./ADR-005-complete-brand-generalization-smkn6-and-k2net.md)*  
 **Tanggal:** 2026-09-04  
 **Author:** Jejakawan  
 **Scope:** `backend/.env`, `FoundationSeeder.php`, `LicenseService.php`, `system.ts`, `PublicSettingsController.php`, `GeneralTab.vue`, `SettingField.vue`, `LicenseTab.vue`
@@ -96,13 +96,13 @@ Pengaturan visibilitas (`branding_display`) untuk tema institusi pendidikan (Sar
 displaySchoolName:
   1. Theme Customizer → getSetting('school_name') || getSetting('site_title')
   2. Site Settings    → siteSettings.site_name
-  3. Fallback         → 'SMK Negeri 6 Bandung'
+  3. Fallback         → 'Portal Sekolah'
 
 siteLogo:
   1. Theme Customizer → getSetting('brand_logo') || getSetting('site_logo')
   2. Site Settings    → siteSettings.site_logo
   3. App Identity     → appIdentity.app_logo
-  4. Fallback         → Initial Letter Badge ("S")
+  4. Fallback         → Initial Letter Badge
 
 Console/Auth Branding:
   1. App Identity     → appIdentity.app_name

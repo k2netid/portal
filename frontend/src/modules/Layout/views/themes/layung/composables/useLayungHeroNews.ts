@@ -150,7 +150,7 @@ export function useLayungHeroNews(slotCountOverride?: Ref<number>) {
 
       return {
         id: (item.id || raw.id || slug || idx) as string | number,
-        title: String(item.title || raw.title || t('hero.newsDefaultTitle', 'Pembaruan K2NET')),
+        title: String(item.title || raw.title || t('hero.newsDefaultTitle', 'Pembaruan Kami')),
         category: categoryName || t('hero.newsDefaultCategory', 'Info'),
         date: formatNewsDate(publishedAt, String(locale.value)),
         url: `/blog/${slug}`,

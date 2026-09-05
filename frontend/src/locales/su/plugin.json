@@ -10,7 +10,7 @@
     "showRawJson": "Pindah ka Raw JSON",
     "fieldUsername": "Nami Pamaké / Akun",
     "placeholderUsername": "nami_akun_anjeun",
-    "helpUsername": "Nami pamaké Instagram tanpa simbul {'@'}, conto: smkn6bandung atanapi nami instansi anjeun.",
+    "helpUsername": "Nami pamaké Instagram tanpa simbul {'@'}, conto: instansi_anjeun atanapi nami organisasi anjeun.",
     "fieldAccessToken": "Instagram User Access Token",
     "placeholderAccessToken": "IGQ...",
     "helpAccessToken": "Long-Lived Meta User Token (lumaku 60 dinten kalayan auto-refresh otomatis di latar tukang).",

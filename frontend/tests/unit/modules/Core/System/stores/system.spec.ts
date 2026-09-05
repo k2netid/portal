@@ -86,10 +86,10 @@ describe('System Store', () => {
         const store = useSystemStore();
         vi.mocked(api.get).mockResolvedValueOnce({
             data: {
-                site_name: 'K2NET Portal',
+                site_name: 'Portal Portal',
                 site_description: 'ISP & MSP Bandung',
-                site_url: 'https://staging.k2net.id',
-                admin_email: 'admin@k2net.id',
+                site_url: 'https://staging.portal.net',
+                admin_email: 'admin@portal.net',
                 site_version: '1.0.0',
                 maintenance_mode: true,
                 maintenance_title: 'Server Maintenance',
@@ -104,8 +104,8 @@ describe('System Store', () => {
 
         await store.fetchPublicSettings();
         expect(store.publicSettingsLoaded).toBe(true);
-        expect(store.siteSettings.site_name).toBe('K2NET Portal');
-        expect(store.siteSettings.site_url).toBe('https://staging.k2net.id');
+        expect(store.siteSettings.site_name).toBe('Portal Portal');
+        expect(store.siteSettings.site_url).toBe('https://staging.portal.net');
         expect(store.maintenance.mode).toBe(true);
         expect(store.maintenance.title).toBe('Server Maintenance');
         expect(store.consoleDashboardSlug).toBe('ja-dash');
@@ -121,14 +121,14 @@ describe('System Store', () => {
         const store = useSystemStore();
         vi.mocked(api.get).mockResolvedValueOnce({
             data: {
-                app_name: 'K2NET Identity',
+                app_name: 'Portal Identity',
                 app_logo: '/media/logo.png',
                 app_license_tier: 'white_label',
             },
         });
 
         const identity = await store.fetchAppIdentity();
-        expect(identity.app_name).toBe('K2NET Identity');
+        expect(identity.app_name).toBe('Portal Identity');
         expect(identity.has_white_label).toBe(true);
         expect(identity.app_logo).toBe('/media/logo.png');
     });

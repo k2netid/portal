@@ -10,7 +10,7 @@
     "showRawJson": "Beralih ke Raw JSON",
     "fieldUsername": "Username / Handle Akun",
     "placeholderUsername": "username_anda",
-    "helpUsername": "Nama pengguna Instagram tanpa simbol {'@'}, contoh: smkn6bandung atau nama instansi Anda.",
+    "helpUsername": "Nama pengguna Instagram tanpa simbol {'@'}, contoh: instansi_anda atau nama organisasi Anda.",
     "fieldAccessToken": "Instagram User Access Token",
     "placeholderAccessToken": "IGQ...",
     "helpAccessToken": "Long-Lived Meta User Token (berlaku 60 hari dengan auto-refresh otomatis di latar belakang).",

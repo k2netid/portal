@@ -1,6 +1,6 @@
 {
   "name": "Layung",
-  "description": "Layung — K2NET portal theme for ISP, managed services, and IT product supply.",
+  "description": "Layung — Kami portal theme for ISP, managed services, and IT product supply.",
   "header": {
     "home": "Home",
     "about": "About Us",
@@ -34,7 +34,7 @@
     "breadcrumbAria": "Breadcrumb"
   },
   "footer": {
-    "description": "K2NET (PT Kirana Karina Network) — ISP, managed services, and IT product supply from connectivity through to equipment procurement.",
+    "description": "Kami (Penyedia Layanan Internet) — ISP, managed services, and IT product supply from connectivity through to equipment procurement.",
     "isp": "ISP — Connectivity",
     "msp": "MSP — IT Services",
     "products": "IT Products",
@@ -59,20 +59,20 @@
     "badgeSla": "Contract-based SLA",
     "badgeDatacenter": "Company profile",
     "badgeMembership": "APJII · IDNIC · APNIC",
-    "legalLine": "PT Kirana Karina Network",
+    "legalLine": "Penyedia Layanan Internet",
     "social": "Social Media",
     "socialDesc": "Follow our network updates, product offers, and announcements."
   },
   "hero": {
     "badge": "Provide different IT solution",
     "headline": "Internet Service Provider and Managed Service Provider",
-    "subheadline": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
+    "subheadline": "More than network connectivity. Kami supports you from internet access through to IT services in your workplace.",
     "ctaPrimary": "Contact Us",
     "ctaSecondary": "Chat on WhatsApp",
-    "whatsappPrefill": "Hello K2NET, I would like to discuss internet and managed IT services for our company.",
+    "whatsappPrefill": "Hello Kami, I would like to discuss internet and managed IT services for our company.",
     "newsSection": "News & promos",
     "newsViewAll": "All news",
-    "newsDefaultTitle": "K2NET update",
+    "newsDefaultTitle": "Kami update",
     "newsDefaultCategory": "Info",
     "newsPrevious": "Previous article",
     "newsNext": "Next article",
@@ -98,8 +98,8 @@
   "calculator": {
     "badge": "Bandwidth estimate",
     "title": "Estimate office internet needs",
-    "subtitle": "An internal K2NET estimate from device count, workload profile, concurrent-use ratio, and a 25% headroom. This is not a quotation and not a third-party benchmark.",
-    "methodology": "Internal K2NET estimate",
+    "subtitle": "An internal Kami estimate from device count, workload profile, concurrent-use ratio, and a 25% headroom. This is not a quotation and not a third-party benchmark.",
+    "methodology": "Internal Kami estimate",
     "usersLabel": "Active Users / Devices:",
     "cloudUsageLabel": "Business Workload:",
     "workloadHint": "Workload assumption",
@@ -129,9 +129,9 @@
     "workloadHeavySub": "Online exams, computer labs, servers"
   },
   "bento": {
-    "badge": "Three K2NET Business Lines",
+    "badge": "Three Kami Business Lines",
     "title": "Connectivity, IT Operations, and Hardware Supply in One Partner",
-    "subtitle": "K2NET (PT Kirana Karina Network) supports customers and partners from internet access and managed IT through to IT equipment — with an operations team based in Bandung, West Java.",
+    "subtitle": "Kami (Penyedia Layanan Internet) supports customers and partners from internet access and managed IT through to IT equipment — with an operations team based in Bandung, West Java.",
     "ispTitle": "Internet Service Provider (ISP)",
     "ispDesc": "Dedicated Internet, SOHO business broadband, and retail broadband for offices, institutions, and homes in Bandung & West Java.",
     "ispPoint1": "Dedicated Internet — contact sales",
@@ -149,11 +149,11 @@
     "productsTitle": "IT Product Supply",
     "productsDesc": "Offline store at Bandung Trade Mall, plus Tokopedia, Shopee, and SIPLah for network equipment and day-to-day IT needs.",
     "productsOfflineLabel": "Offline store",
-    "productsCta": "Visit K2NET online stores"
+    "productsCta": "Visit Kami online stores"
   },
   "packages": {
     "badge": "Capacity & Service Plans",
-    "hubTitle": "Two K2NET Product Lines",
+    "hubTitle": "Two Kami Product Lines",
     "hubSubtitle": "Choose internet connectivity (ISP) or managed IT services (MSP) packages for your institution.",
     "ispCardTitle": "Internet Plans (ISP)",
     "ispCardDesc": "Dedicated Internet, SOHO Business Broadband, and Retail Broadband with transparent pricing.",
@@ -177,26 +177,26 @@
     "sohoTitle": "Business Broadband (SOHO)",
     "sohoSubtitle": "Business broadband 50–100 Mbps for SOHO, shop-houses, and small offices. Final pricing confirmed after a site survey.",
     "retailTitle": "Retail Broadband",
-    "retailSubtitle": "Home and retail internet packages within K2NET network coverage. Prices exclude VAT."
+    "retailSubtitle": "Home and retail internet packages within Kami network coverage. Prices exclude VAT."
   },
   "pricingMsp": {
-    "audience": "K2NET managed services are built for schools and educational institutions that need dependable IT support without staffing a full in-house team. We handle networking, servers and applications, CCTV, and other operational IT needs — scoped and agreed in your service contract.",
-    "footnote": "Pricing and service scope are tailored to your institution. Contact K2NET sales for a consultation and quote."
+    "audience": "Kami managed services are built for schools and educational institutions that need dependable IT support without staffing a full in-house team. We handle networking, servers and applications, CCTV, and other operational IT needs — scoped and agreed in your service contract.",
+    "footnote": "Pricing and service scope are tailored to your institution. Contact Kami sales for a consultation and quote."
   },
   "pages": {
     "about": {
       "title": "About Us",
       "badge": "Company",
-      "subtitle": "The operating brand of PT Kirana Karina Network. We provide dedicated internet, fiber, and managed IT services for business.",
-      "storyTitle": "K2NET — ISP and managed services from Bandung",
-      "storyText": "K2NET is the brand of PT Kirana Karina Network.",
+      "subtitle": "The operating brand of Penyedia Layanan Internet. We provide dedicated internet, fiber, and managed IT services for business.",
+      "storyTitle": "Kami — ISP and managed services from Bandung",
+      "storyText": "Kami is the brand of Penyedia Layanan Internet.",
       "foundedHeading": "From Bandung for West Java",
       "historyTitle": "Brief history",
-      "historyP1": "PT Kirana Karina Network built K2NET as an internet service and managed-services operator, with operations in Cikutra, Bandung. Our focus is dedicated connectivity and IT operations support for businesses in West Java.",
-      "historyP2": "Independent routing identity is recorded as ASN AS153992 (AS-Name IDNIC-K2NET-ID) and IPv4 prefix 165.99.252.0/24. Public lookup is available in the IDNIC/APNIC registries.",
+      "historyP1": "Penyedia Layanan Internet built Kami as an internet service and managed-services operator, with operations in Cikutra, Bandung. Our focus is dedicated connectivity and IT operations support for businesses in West Java.",
+      "historyP2": "Independent routing identity is recorded as ASN AS153992 (AS-Name IDNIC-Kami-ID) and IPv4 prefix 165.99.252.0/24. Public lookup is available in the IDNIC/APNIC registries.",
       "timeline1Year": "Founded",
-      "timeline1Text": "PT Kirana Karina Network was established in Bandung as an internet service provider.",
-      "timeline2Text": "Obtained ASN AS153992 from IDNIC (AS-Name: IDNIC-K2NET-ID) and IPv4 prefix 165.99.252.0/24.",
+      "timeline1Text": "Penyedia Layanan Internet was established in Bandung as an internet service provider.",
+      "timeline2Text": "Obtained ASN AS153992 from IDNIC (AS-Name: IDNIC-Kami-ID) and IPv4 prefix 165.99.252.0/24.",
       "timeline3Year": "Today",
       "timeline3Text": "Operating as ISP and MSP — serving businesses, schools, and institutions in West Java.",
       "entityTitle": "Legal entity",
@@ -217,7 +217,7 @@
       "mission3": "Support client IT operations through the NOC and managed services.",
       "networkTitle": "Network identity",
       "networkHeading": "Independent routing with our own ASN and prefix",
-      "networkIntro": "Public routing identity for K2NET. Kept off the header so the homepage stays uncluttered.",
+      "networkIntro": "Public routing identity for Kami. Kept off the header so the homepage stays uncluttered.",
       "networkPrefixHint": "Prefix for dedicated services",
       "networkRegion": "Region",
       "networkNoc": "NOC Cikutra, Bandung",
@@ -225,12 +225,12 @@
       "networkLookupHint": "Public routing tables",
       "complianceTitle": "ISP authorization and memberships",
       "complianceHeading": "Formally operating within Indonesia's internet ecosystem",
-      "complianceIntro": "K2NET operates as an ISP and participates in Indonesia’s internet registry and industry associations.",
+      "complianceIntro": "Kami operates as an ISP and participates in Indonesia’s internet registry and industry associations.",
       "licenseTitle": "ISP operating authorization",
-      "licenseText": "K2NET operates as an internet access service provider (ISP) under Indonesia’s Kominfo / Ministry of Communication regulatory framework. The license number appears on official company documents.",
+      "licenseText": "Kami operates as an internet access service provider (ISP) under Indonesia’s Kominfo / Ministry of Communication regulatory framework. The license number appears on official company documents.",
       "apjiiText": "Indonesia Internet Service Provider Association — the national ISP industry body for policy, peering, and operating standards.",
-      "idnicText": "Indonesia Network Information Center, the NIR under APJII. Source of K2NET’s ASN and prefix (corporate member, AS-Name IDNIC-K2NET-ID).",
-      "apnicText": "Asia Pacific Network Information Centre, the regional internet registry. K2NET’s allocation is recorded via APNIC → IDNIC.",
+      "idnicText": "Indonesia Network Information Center, the NIR under APJII. Source of Kami’s ASN and prefix (corporate member, AS-Name IDNIC-Kami-ID).",
+      "apnicText": "Asia Pacific Network Information Centre, the regional internet registry. Kami’s allocation is recorded via APNIC → IDNIC.",
       "datacenterTitle": "Data Centers & Points of Presence (PoP)"
     },
     "solusi": {
@@ -239,25 +239,25 @@
       "badge": "Managed Services"
     },
     "services": {
-      "title": "K2NET Internet Services",
+      "title": "Kami Internet Services",
       "subtitle": "Dedicated Internet, Business Broadband, and Retail Broadband in Bandung and West Java.",
       "badge": "Internet"
     },
     "pricing": {
       "hubBadge": "Plans & Pricing",
-      "hubTitle": "K2NET Service Plans",
+      "hubTitle": "Kami Service Plans",
       "hubSubtitle": "Choose between internet connectivity (ISP) or managed IT services (MSP) — each with plans and pricing tailored to your needs.",
       "title": "Transparent Bandwidth Pricing & Service Plans",
       "subtitle": "Clear connectivity investment with zero hidden fees and enforceable Service Level Agreements (SLA)."
     },
     "pricingIsp": {
       "badge": "Internet Plans — ISP",
-      "title": "K2NET Internet Connectivity Plans",
+      "title": "Kami Internet Connectivity Plans",
       "subtitle": "Dedicated Internet for business and institutions, business broadband for SOHO, and retail broadband for homes — serving Bandung & West Java."
     },
     "pricingMsp": {
       "badge": "Managed Services — MSP",
-      "title": "K2NET Managed Services Plans",
+      "title": "Kami Managed Services Plans",
       "subtitle": "Operational IT support for schools and institutions — from network installation to server, application, and CCTV maintenance."
     },
     "achievements": {
@@ -266,13 +266,13 @@
     },
     "team": {
       "title": "Operations team",
-      "subtitle": "The K2NET team works from Bandung. Contact us for technical coordination and sales.",
+      "subtitle": "The Kami team works from Bandung. Contact us for technical coordination and sales.",
       "body": "Network support, installation, and managed services are handled by the operations team at the Cikutra and Garut offices.",
       "cta": "Contact us"
     },
     "careers": {
       "title": "Careers",
-      "subtitle": "Join the K2NET operations team in Bandung.",
+      "subtitle": "Join the Kami operations team in Bandung.",
       "body": "Roles open according to operational needs. Send a CV and short cover note through the contact page.",
       "cta": "Apply",
       "badge": "Careers"
@@ -302,7 +302,7 @@
       "whatsappAria": "WhatsApp",
       "whatsappCta": "Fast WhatsApp Response",
       "formTitle": "Quote request form",
-      "formDescription": "Fill in the form below. The K2NET team will get back to you.",
+      "formDescription": "Fill in the form below. The Kami team will get back to you.",
       "formLoading": "Loading form…",
       "formNotPublished": "The contact form is not published or is inactive. Check the form slug in theme settings.",
       "formLoadFailed": "Could not load the form. Refresh the page or try again later.",
@@ -335,11 +335,11 @@
       "addressLabel": "Site address",
       "addressPlaceholder": "Street, district, city",
       "submitButton": "Send request",
-      "submitSuccess": "Thank you. The K2NET team will contact you for a survey and quotation."
+      "submitSuccess": "Thank you. The Kami team will contact you for a survey and quotation."
     },
     "blog": {
       "title": "News",
-      "subtitle": "Service, coverage, and operations updates from K2NET.",
+      "subtitle": "Service, coverage, and operations updates from Kami.",
       "sectionBadge": "News",
       "allCategories": "All news",
       "catInfra": "Internet",
@@ -351,7 +351,7 @@
     },
     "search": {
       "title": "Search",
-      "subtitle": "Find K2NET plans, services, and information.",
+      "subtitle": "Find Kami plans, services, and information.",
       "placeholder": "Search services or plans…",
       "popular": "Popular searches",
       "tagDedicated": "Dedicated Internet",
@@ -368,7 +368,7 @@
   "servicesTabs": {
     "badge": "ISP & MSP services",
     "title": "Connectivity and IT operations for schools and institutions",
-    "subtitle": "Choose a tab: internet from K2NET, or day-to-day IT support on campus.",
+    "subtitle": "Choose a tab: internet from Kami, or day-to-day IT support on campus.",
     "ispTab": "Internet (ISP)",
     "mspTab": "Managed Services (MSP)",
     "isp1Title": "Dedicated Internet",
@@ -376,7 +376,7 @@
     "isp2Title": "Business Broadband (SOHO)",
     "isp2Desc": "50–100 Mbps internet for shop-houses, small offices, and school units that need more than a home plan.",
     "isp3Title": "Retail Broadband",
-    "isp3Desc": "Home and retail plans within K2NET coverage, starting at 10 Mbps (up to 15 Mbps).",
+    "isp3Desc": "Home and retail plans within Kami coverage, starting at 10 Mbps (up to 15 Mbps).",
     "isp4Title": "Survey & last-mile activation",
     "isp4Desc": "Coverage check in Bandung and surrounding areas, then install based on what the site can support.",
     "isp5Title": "Public IP as contracted",
@@ -399,7 +399,7 @@
   "clients": {
     "badge": "Education institutions",
     "title": "IT support for schools and institutions",
-    "subtitle": "K2NET provides network, servers, CCTV, and operational IT support for education institutions in Bandung and West Java. Named partners are published only with each institution’s consent.",
+    "subtitle": "Kami provides network, servers, CCTV, and operational IT support for education institutions in Bandung and West Java. Named partners are published only with each institution’s consent.",
     "focus1Title": "Campus and lab networks",
     "focus1Body": "Installation, documentation, and care of school networks, including computer labs and Wi-Fi access.",
     "focus2Title": "Servers, applications, and CCTV",
@@ -426,20 +426,20 @@
   "faq": {
     "badge": "FAQ",
     "title": "Frequently asked questions",
-    "subtitle": "Activation, public IP, SLA, and K2NET coverage.",
+    "subtitle": "Activation, public IP, SLA, and Kami coverage.",
     "q1": "How long does Dedicated Internet installation take?",
     "a1": "After a site survey. If coverage is already in place, work is faster. New last-mile depends on the site — the schedule is confirmed after the survey.",
     "q2": "Does Dedicated Internet include a public IP?",
     "a2": "Public IP follows the plan and contract. It is not a /29 for every service.",
     "q3": "What if service misses the SLA?",
     "a3": "Report incidents to the NOC or Service Desk. Any compensation follows the signed contract.",
-    "q4": "Where does K2NET cover?",
+    "q4": "Where does Kami cover?",
     "a4": "Bandung and nearby West Java. Last-mile availability is checked with a site survey."
   },
   "cta": {
     "badge": "Service consultation",
     "title": "Ready to discuss your internet and IT needs?",
-    "subtitle": "Contact the K2NET team for a site survey and a contract-based quotation.",
+    "subtitle": "Contact the Kami team for a site survey and a contract-based quotation.",
     "primary": "Contact us",
     "whatsapp": "WhatsApp chat"
   },
@@ -448,7 +448,7 @@
       "page_hero": "Home Hero",
       "page_hero_desc": "Slogan, headline, CMS news strip, and WhatsApp number",
       "page_about": "About Us Page",
-      "page_about_desc": "PT Kirana Karina Network (K2NET) profile, vision mission, and ASN identity",
+      "page_about_desc": "Penyedia Layanan Internet (Kami) profile, vision mission, and ASN identity",
       "page_services": "Services Page",
       "page_services_desc": "Internet ISP and Managed Services MSP",
       "page_solusi": "Solutions Page",
@@ -458,7 +458,7 @@
       "page_achievement": "SLA & Network Page",
       "page_achievement_desc": "SLA commitment, ASN AS153992 identity, and IDNIC membership",
       "page_tim": "Team Page",
-      "page_tim_desc": "K2NET operations team, NOC, and Service Desk in Bandung",
+      "page_tim_desc": "Kami operations team, NOC, and Service Desk in Bandung",
       "page_careers": "Careers Page",
       "page_careers_desc": "Operational roles in Bandung",
       "page_news": "News Page",
@@ -504,9 +504,9 @@
       "hero_news_enabled": "Show news/promos ticker on hero",
       "hero_news_enabled_hint": "Enable the CMS news/promo carousel on the hero section.",
       "isp_asn_number": "ASN Number & BGP Peering",
-      "isp_asn_number_hint": "K2NET Autonomous System Number registered in IDNIC.",
+      "isp_asn_number_hint": "Kami Autonomous System Number registered in IDNIC.",
       "isp_sla_guarantee": "SLA Uptime Guarantee",
-      "isp_sla_guarantee_hint": "Official K2NET uptime SLA clause.",
+      "isp_sla_guarantee_hint": "Official Kami uptime SLA clause.",
       "isp_noc_latency": "Average Core Latency",
       "isp_noc_latency_hint": "Network latency coverage region.",
       "isp_backbone_capacity": "Backbone Network Capacity",

@@ -34,7 +34,7 @@
             {{ t('pages.pricingIsp.badge', 'Paket Internet — ISP') }}
           </span>
           <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-            {{ t('pages.pricingIsp.title', 'Paket Konektivitas Internet K2NET') }}
+            {{ t('pages.pricingIsp.title', 'Paket Konektivitas Internet Kami') }}
           </h1>
           <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
             {{ t('pages.pricingIsp.subtitle', 'Dedicated Internet untuk bisnis dan institusi, Broadband Bisnis untuk SOHO, serta Retail Broadband untuk rumah tangga di Bandung & Jawa Barat.') }}

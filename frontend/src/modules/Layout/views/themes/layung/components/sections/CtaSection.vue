@@ -19,7 +19,7 @@
           <LayungSplitText :text="t('cta.title', 'Siap diskusikan kebutuhan internet dan IT Anda?')" />
         </h2>
         <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-          {{ t('cta.subtitle', 'Hubungi tim K2NET untuk survei lokasi dan penawaran sesuai kontrak.') }}
+          {{ t('cta.subtitle', 'Hubungi tim Kami untuk survei lokasi dan penawaran sesuai kontrak.') }}
         </p>
       </div>
 
