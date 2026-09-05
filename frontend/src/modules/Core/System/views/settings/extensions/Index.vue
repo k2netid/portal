@@ -507,13 +507,16 @@ const filterTabs = computed(() => [
 ]);
 
 const resolveFamily = (ext: ExtensionItem): string => {
-    if (ext.family) {
+    if (ext.type === 'plugin' || ext.family === 'plugin') {
+        return 'plugin';
+    }
+    if (ext.family && ext.family !== 'module') {
         return ext.family;
     }
     if (ext.is_core || ext.slug === 'core') {
         return 'platform';
     }
-    return ext.type === 'plugin' ? 'plugin' : 'module';
+    return ext.family || 'cms';
 };
 
 const familyLabel = (key: string): string => {
