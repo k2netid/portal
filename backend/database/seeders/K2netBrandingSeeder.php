@@ -68,6 +68,15 @@ class K2netBrandingSeeder extends Seeder
             $this->command?->warn('⚠️ Layung theme not found in database. Seed themes first.');
         }
 
-        $this->command?->info('✅ K2NET branding seeded successfully.');
+        // 3. Perpetual Enterprise License Activation
+        /** @var \Modules\Core\System\Services\LicenseService $licenseService */
+        $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        $licenseService->activateLicense('JACP-ENT-PERPETUAL-K2NET-ID');
+        Setting::set('license_domain', 'staging.k2net.id');
+        Setting::set('app_license_tier', 'enterprise');
+        Setting::set('has_white_label', true);
+        $this->command?->info('✅ Perpetual Enterprise license applied.');
+
+        $this->command?->info('✅ K2NET branding & enterprise license seeded successfully.');
     }
 }

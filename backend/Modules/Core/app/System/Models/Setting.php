@@ -58,30 +58,54 @@ class Setting extends Model
         'is_public' => 'boolean',
     ];
 
+    /**
+     * In-memory runtime cache for the active request lifecycle.
+     *
+     * @var array<string, mixed>
+     */
+    protected static array $runtimeCache = [];
+
+    public static function clearRuntimeCache(): void
+    {
+        static::$runtimeCache = [];
+    }
+
     protected static function booted(): void
     {
         static::saved(function (self $setting): void {
-            Cache::forget("sys_setting_{$setting->key}");
+            static::$runtimeCache[$setting->key] = static::castValue($setting->value, (string) $setting->type);
+            try {
+                Cache::forget("sys_setting_{$setting->key}");
+            } catch (\Throwable) {
+                // Ignore cache forget failure
+            }
         });
 
         static::deleted(function (self $setting): void {
-            Cache::forget("sys_setting_{$setting->key}");
+            unset(static::$runtimeCache[$setting->key]);
+            try {
+                Cache::forget("sys_setting_{$setting->key}");
+            } catch (\Throwable) {
+                // Ignore cache forget failure
+            }
         });
     }
 
     public static function get(string $key, mixed $default = null): mixed
     {
+        if (array_key_exists($key, static::$runtimeCache)) {
+            return static::$runtimeCache[$key];
+        }
+
         try {
-            return Cache::rememberForever("sys_setting_{$key}", function () use ($key, $default) {
-                $setting = static::where('key', $key)->first();
+            $setting = static::where('key', $key)->first();
 
-                if (! $setting) {
-                    return $default;
-                }
+            if (! $setting) {
+                return static::$runtimeCache[$key] = $default;
+            }
 
-                return static::castValue($setting->value, (string) $setting->type);
-            });
-        } catch (QueryException) {
+            return static::$runtimeCache[$key] = static::castValue($setting->value, (string) $setting->type);
+        } catch (\Throwable) {
             return $default;
         }
     }

@@ -190,17 +190,21 @@ class LicenseService
 
         if (str_starts_with($cleanKey, 'JACP-ENT-') || str_starts_with($cleanKey, 'JACP-WL-')) {
             $tier = str_starts_with($cleanKey, 'JACP-WL-') ? self::TIER_WHITE_LABEL : self::TIER_ENTERPRISE;
+            $isPerpetual = $this->isPerpetualLicense($cleanKey);
             $this->persistLicense([
                 'license_key' => $cleanKey,
                 'license_type' => $tier,
                 'license_status' => self::STATUS_ACTIVE,
+                'license_is_perpetual' => $isPerpetual,
+                'license_expires_at' => $isPerpetual ? null : Setting::get('license_expires_at'),
+                'license_grace_until' => null,
                 'license_last_checked_at' => now()->toIso8601String(),
                 'license_domain' => request()->getHost() ?: 'localhost',
             ]);
 
             return [
                 'success' => true,
-                'message' => 'License activated ('.ucfirst(str_replace('_', ' ', $tier)).').',
+                'message' => 'License activated ('.ucfirst(str_replace('_', ' ', $tier)).($isPerpetual ? ' Perpetual' : '').').',
                 'data' => $this->getLicenseStatus(),
             ];
         }
@@ -209,6 +213,23 @@ class LicenseService
             'success' => false,
             'message' => 'Invalid license key format or could not verify with JA-CP.',
         ];
+    }
+
+    /**
+     * Check if a license key represents a perpetual (lifetime) entitlement.
+     */
+    public function isPerpetualLicense(?string $key = null): bool
+    {
+        $rawKey = $key ?? (string) Setting::get('license_key', '');
+        if (empty($rawKey)) {
+            return false;
+        }
+
+        $upper = strtoupper($rawKey);
+
+        return str_contains($upper, 'PERPETUAL')
+            || str_contains($upper, 'LIFETIME')
+            || (bool) Setting::get('license_is_perpetual', false);
     }
 
     /**
@@ -223,6 +244,23 @@ class LicenseService
         $rawKey = is_scalar($rawKeyVal) ? (string) $rawKeyVal : '';
         if (empty($rawKey)) {
             return ['success' => true, 'message' => 'Community tier (no commercial key registered).', 'status' => self::STATUS_ACTIVE];
+        }
+
+        // Perpetual license bypass: perpetual licenses are lifetime and verified offline
+        if ($this->isPerpetualLicense($rawKey)) {
+            $this->persistLicense([
+                'license_status' => self::STATUS_ACTIVE,
+                'license_last_checked_at' => now()->toIso8601String(),
+                'license_grace_until' => null,
+                'license_expires_at' => null,
+                'license_is_perpetual' => true,
+            ]);
+
+            return [
+                'success' => true,
+                'message' => 'Perpetual Enterprise license active (offline verified).',
+                'status' => self::STATUS_ACTIVE,
+            ];
         }
 
         $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
@@ -327,8 +365,17 @@ class LicenseService
         foreach ($values as $k => $v) {
             Setting::set($k, $v);
         }
+        if (isset($values['license_type'])) {
+            Setting::set('app_license_tier', $values['license_type']);
+        }
         Cache::forget('system_settings_public');
         Cache::forget('system_settings_all');
+        Cache::forget('sys_setting_license_key');
+        Cache::forget('sys_setting_license_type');
+        Cache::forget('sys_setting_app_license_tier');
+        Cache::forget('sys_setting_license_status');
+        Cache::forget('sys_setting_license_expires_at');
+        Cache::forget('sys_setting_license_is_perpetual');
     }
 
     /**

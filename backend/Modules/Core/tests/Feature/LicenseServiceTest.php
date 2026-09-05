@@ -54,6 +54,28 @@ final class LicenseServiceTest extends TestCase
         $this->assertTrue($this->licenseService->canUseFeature('multi_site'));
     }
 
+    public function test_perpetual_enterprise_activation_and_sync(): void
+    {
+        $result = $this->licenseService->activateLicense('JACP-ENT-PERPETUAL-K2NET-ID');
+
+        $this->assertTrue($result['success']);
+        $this->assertEquals('enterprise', $result['data']['tier']);
+        $this->assertNull($result['data']['expires_at']);
+        $this->assertTrue($this->licenseService->canUseFeature('white_label'));
+        $this->assertTrue($this->licenseService->canUseFeature('multi_site'));
+        $this->assertTrue($this->licenseService->hasWhiteLabel());
+
+        // Heartbeat on offline should stay active and not degrade to grace_period
+        $syncResult = $this->licenseService->syncHeartbeat(true);
+        $this->assertTrue($syncResult['success']);
+        $this->assertEquals('active', $syncResult['status']);
+
+        $status = $this->licenseService->getLicenseStatus();
+        $this->assertEquals('active', $status['status']);
+        $this->assertEquals('enterprise', $status['tier']);
+        $this->assertNull($status['expires_at']);
+    }
+
     public function test_deactivate_license(): void
     {
         $this->licenseService->activateLicense('JACP-PRO-TEST-1234-5678');
