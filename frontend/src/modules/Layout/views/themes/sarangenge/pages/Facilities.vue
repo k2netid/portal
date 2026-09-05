@@ -29,10 +29,11 @@
           </div>
 
           <div v-else-if="resolvedFacilities.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div
+            <router-link
               v-for="facility in resolvedFacilities"
               :key="facility.id || facility.slug"
-              class="sarangenge-panel group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[var(--sarangenge-teal,#0f766e)]/30"
+              :to="facility.slug ? `/blog/${facility.slug}` : '#'"
+              class="sarangenge-panel group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[var(--sarangenge-teal,#0f766e)]/30 cursor-pointer block text-left"
             >
               <div class="h-48 sm:h-52 bg-muted/30 flex items-center justify-center relative overflow-hidden">
                 <template v-if="facility.image">
@@ -64,16 +65,14 @@
               </div>
               <div class="px-6 py-4 border-t bg-muted/20 flex items-center justify-between">
                 <span class="text-xs font-semibold text-muted-foreground uppercase tracking-wider">SMK Pusat Keunggulan</span>
-                <router-link
-                  v-if="facility.slug"
-                  :to="`/blog/${facility.slug}`"
-                  class="text-sm font-medium text-[var(--sarangenge-teal,#0f766e)] hover:underline inline-flex items-center gap-1"
+                <span
+                  class="text-sm font-medium text-[var(--sarangenge-teal,#0f766e)] group-hover:underline inline-flex items-center gap-1"
                 >
                   Detail Fasilitas
-                  <ArrowRight class="w-4 h-4" />
-                </router-link>
+                  <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
               </div>
-            </div>
+            </router-link>
           </div>
 
           <div v-else class="sarangenge-panel p-10 text-center text-muted-foreground space-y-3">
