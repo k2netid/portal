@@ -232,10 +232,28 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] `tests/e2e/theme-package-lifecycle.spec.ts` → 4/4 E2E tests passed.
 - [x] **Dokumentasi**: ADR-008 diterbitkan.
 
+### Milestone 7.9: Perbaikan Layering Stacking Context Modal (Z-Index) & Penyelarasan Penuh i18n Multibahasa WidgetModal (🟢 Selesai)
+- [x] **Perbaikan Z-Index Radix UI Dialog / Select Dropdown**:
+  - [x] Memperbaiki layering popover / select menu (`SelectContent`, `PopoverContent`, `DropdownMenuContent`, `ContextMenuContent`) ke `!z-[100080]`, mengatasi isu dropdown yang ter-teleportasi di belakang modal `DialogContent` (`z-[100060]`).
+- [x] **Validasi & Fallback Lokasi Database PostgreSQL**:
+  - [x] Memperbarui `WidgetController.php` dengan fallback nilai default `'sidebar'` pada field `location`, mencegah SQLSTATE[23502] Not-Null constraint error.
+  - [x] Memperluas enum `widgetSchema.type` di Zod (`common.ts`) mencakup `'search'`, `'newsletter'`, dan `'social_share'`.
+- [x] **Penyelarasan Penuh i18n Multibahasa Modal Widget (`WidgetModal.vue`)**:
+  - [x] Menambahkan 23 kunci terjemahan simetris pada `layout.widgets.modals.widget` di `locales/{id,en,su}.json`:
+    - `locationHint`, `preset`, `contentPlaceholderHtml`, `contentPlaceholderText`
+    - `titlePlaceholders` (`categories`, `custom`, `default`, `html`, `newsletter`, `recent_posts`, `search`, `social_share`, `text`)
+    - `info` cards (`searchTitle`, `searchDesc`, `categoriesTitle`, `categoriesDesc`, `recentPostsTitle`, `recentPostsDesc`, `newsletterTitle`, `newsletterDesc`, `socialShareTitle`, `socialShareDesc`)
+  - [x] Mengganti seluruh teks statis/hardcoded di `WidgetModal.vue` dengan `$t(...)` reaktif.
+- [x] **Pengujian & Sinkronisasi Paritas**:
+  - [x] `npm run i18n:check` → 27 gate keys, 9.168 kunci simetris per bahasa (`id`, `en`, `su`) lulus 100% tanpa error di SMKN6 dan K2NET.
+  - [x] Playwright E2E (`tests/e2e/widget-modal-dropdown.spec.ts`) → Passed 100% di SMKN6 (7.0s) dan K2NET (7.0s).
+  - [x] Build frontend dan sinkronisasi aset ke `backend/public/` berhasil di kedua portal.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
 - [ ] Integrasi SSL & Edge Proxy WAF di CT 104 (NPMplus).
 - [ ] Konfigurasi `SITE_NAME`, `SITE_DESCRIPTION`, dan `contact_*` via `.env` dan Theme Customizer per deployment.
+
 
