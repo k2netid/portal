@@ -216,9 +216,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Floating Social Dock -->
-    <FloatingSocialDock />
   </footer>
 </template>
 
@@ -230,7 +227,6 @@ import {
   Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe, Mail, MapPin,
 } from 'lucide-vue-next';
 import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
-import FloatingSocialDock from '@/modules/Layout/views/themes/layung/components/layout/FloatingSocialDock.vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';

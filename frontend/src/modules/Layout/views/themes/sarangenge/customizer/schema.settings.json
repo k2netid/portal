@@ -431,5 +431,60 @@
         ],
         "category": "Layout",
         "scope": "theme"
+    },
+    "enable_floating_social": {
+        "label": "Tampilkan Floating Social Dock",
+        "type": "boolean",
+        "default": true,
+        "category": "Floating Dock"
+    },
+    "floating_social_position": {
+        "label": "Posisi Floating Dock",
+        "type": "select",
+        "options": [
+            { "label": "Kanan Tengah (Right Center)", "value": "right" },
+            { "label": "Kiri Tengah (Left Center)", "value": "left" },
+            { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
+            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" },
+            { "label": "Bawah Tengah (Bottom Center / Dock Pill)", "value": "bottom_center" },
+            { "label": "Kanan Atas (Top Right)", "value": "top_right" },
+            { "label": "Kiri Atas (Top Left)", "value": "top_left" }
+        ],
+        "default": "right",
+        "category": "Floating Dock"
+    },
+    "floating_social_orientation": {
+        "label": "Orientasi Dock",
+        "type": "select",
+        "options": [
+            { "label": "Otomatis (Sesuai Posisi)", "value": "auto" },
+            { "label": "Vertikal (Tegak)", "value": "vertical" },
+            { "label": "Horizontal (Mendatar)", "value": "horizontal" }
+        ],
+        "default": "auto",
+        "category": "Floating Dock"
+    },
+    "floating_social_style": {
+        "label": "Gaya Kapsul Dock",
+        "type": "select",
+        "options": [
+            { "label": "Frosted Glassmorphism (Glass)", "value": "glass" },
+            { "label": "Solid Dark Slate (Solid)", "value": "solid" },
+            { "label": "Aura Glow Keemasan (Glow)", "value": "glow" }
+        ],
+        "default": "glass",
+        "category": "Floating Dock"
+    },
+    "floating_social_default_collapsed": {
+        "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
+        "type": "boolean",
+        "default": false,
+        "category": "Floating Dock"
+    },
+    "floating_social_show_on_mobile": {
+        "label": "Tampilkan di Layar Mobile",
+        "type": "boolean",
+        "default": false,
+        "category": "Floating Dock"
     }
 }

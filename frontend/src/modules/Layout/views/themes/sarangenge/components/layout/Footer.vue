@@ -234,13 +234,11 @@
         </div>
       </div>
     </div>
-    <SarangengeFloatingSocialDock />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
-import SarangengeFloatingSocialDock from '@/modules/Layout/views/themes/sarangenge/components/layout/SarangengeFloatingSocialDock.vue';
 import {
   MapPin, Phone, Mail, GraduationCap, Award, MessageCircle,
   Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe,

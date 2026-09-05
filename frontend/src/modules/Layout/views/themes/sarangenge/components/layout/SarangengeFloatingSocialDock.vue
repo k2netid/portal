@@ -6,6 +6,8 @@
     class="sarangenge-social-dock"
     :class="[
       `sarangenge-social-dock--${dockPosition}`,
+      `sarangenge-social-dock--style-${dockStyle}`,
+      `sarangenge-social-dock--${effectiveOrientation}`,
       {
         'sarangenge-social-dock--collapsed': isCollapsed,
         'sarangenge-social-dock--show-mobile': showOnMobile,
@@ -108,6 +110,8 @@ const { whatsAppUrl } = useSarangengeIdentity();
 
 const isEnabled = computed(() => getSetting('enable_floating_social', true) !== false);
 const dockPosition = computed(() => String(getSetting('floating_social_position', 'right') || 'right'));
+const dockOrientation = computed(() => String(getSetting('floating_social_orientation', 'auto') || 'auto'));
+const dockStyle = computed(() => String(getSetting('floating_social_style', 'glass') || 'glass'));
 const defaultCollapsed = computed(() => Boolean(getSetting('floating_social_default_collapsed', false)));
 const showOnMobile = computed(() => Boolean(getSetting('floating_social_show_on_mobile', false)));
 
@@ -117,8 +121,17 @@ watch(defaultCollapsed, (val) => {
   isCollapsed.value = val;
 });
 
+const effectiveOrientation = computed<'vertical' | 'horizontal'>(() => {
+  if (dockOrientation.value === 'horizontal') return 'horizontal';
+  if (dockOrientation.value === 'vertical') return 'vertical';
+  return dockPosition.value === 'bottom_center' ? 'horizontal' : 'vertical';
+});
+
 const chevronRotationClass = computed(() => {
-  if (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') {
+  if (effectiveOrientation.value === 'horizontal') {
+    return 'rotate-90';
+  }
+  if (dockPosition.value === 'left' || dockPosition.value === 'bottom_left' || dockPosition.value === 'top_left') {
     return 'rotate-180';
   }
   return '';
@@ -140,11 +153,17 @@ const handleToggle = async (collapsed: boolean) => {
       { scale: 1, opacity: 1, rotation: 0, duration: 0.35, ease: 'back.out(1.8)', clearProps: 'all' }
     );
   } else if (!collapsed && bodyRef.value) {
-    const slideX = (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') ? -15 : 15;
+    let slideX = 0;
+    let slideY = 0;
+    if (effectiveOrientation.value === 'horizontal') {
+      slideY = 15;
+    } else {
+      slideX = (dockPosition.value === 'left' || dockPosition.value === 'bottom_left' || dockPosition.value === 'top_left') ? -15 : 15;
+    }
     gsap.fromTo(
       bodyRef.value,
-      { scale: 0.8, opacity: 0, x: slideX },
-      { scale: 1, opacity: 1, x: 0, duration: 0.35, ease: 'back.out(1.5)', clearProps: 'all' }
+      { scale: 0.8, opacity: 0, x: slideX, y: slideY },
+      { scale: 1, opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.5)', clearProps: 'all' }
     );
     const items = bodyRef.value.querySelectorAll('.sarangenge-social-dock__item');
     if (items.length) {
@@ -159,11 +178,19 @@ const handleToggle = async (collapsed: boolean) => {
 
 onMounted(() => {
   if (dockRef.value && isAnimationEnabled()) {
-    const enterX = (dockPosition.value === 'left' || dockPosition.value === 'bottom_left') ? -36 : 36;
+    let enterX = 0;
+    let enterY = 0;
+    if (dockPosition.value === 'bottom_center') {
+      enterY = 36;
+    } else if (dockPosition.value === 'left' || dockPosition.value === 'bottom_left' || dockPosition.value === 'top_left') {
+      enterX = -36;
+    } else {
+      enterX = 36;
+    }
     gsap.fromTo(
       dockRef.value,
-      { x: enterX, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.55, delay: 0.3, ease: 'back.out(1.4)', clearProps: 'all' }
+      { x: enterX, y: enterY, opacity: 0 },
+      { x: 0, y: 0, opacity: 1, duration: 0.55, delay: 0.3, ease: 'back.out(1.4)', clearProps: 'all' }
     );
   }
 });
