@@ -11,8 +11,8 @@ export const libraryNavigation: NavItem[] = [
         children: [
             {
                 name: 'tags',
-                label: 'Tags',
-                labelKey: 'library.navigation.menu.tags',
+                label: 'General Tags',
+                labelKey: 'library.navigation.menu.generalTags',
                 permission: 'manage tags',
                 extension: 'library',
                 icon: 'tags',

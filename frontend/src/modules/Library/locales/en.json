@@ -1,9 +1,10 @@
 {
   "navigation": {
     "menu": {
+      "customFields": "Custom Fields",
+      "generalTags": "General Tags",
       "library": "Library",
-      "tags": "Tags",
-      "customFields": "Custom Fields"
+      "tags": "Tags"
     }
   },
   "tags": {
