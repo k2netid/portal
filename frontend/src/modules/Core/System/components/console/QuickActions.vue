@@ -228,7 +228,7 @@ const actionRoutes: Record<string, RouteLocationRaw> = {
   'create-post': { name: 'contents.create', query: { type: 'post' } },
   'create-page': { name: 'contents.create', query: { type: 'page' } },
   'upload-media': { name: 'media' },
-  'create-category': { name: 'categories.index' },
+  'create-category': { name: 'contents.index', query: { tab: 'categories' } },
   'create-tag': { name: 'tags' },
   'manage-users': { name: 'users.index' },
   'view-comments': { name: 'comments.index' },

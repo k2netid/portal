@@ -34,8 +34,7 @@ const publishingRoutes: RouteRecordRaw[] = [
     {
         path: 'categories',
         name: 'categories.index',
-        component: () => import('@/modules/Publishing/views/categories/Index.vue'),
-        meta: { extension: 'publishing', permission: 'view categories', title: 'publishing.categories.title', breadcrumb: 'publishing.navigation.menu.categories' },
+        redirect: () => ({ name: 'contents.index', query: { tab: 'categories' } }),
     },
     {
         path: 'content-templates',

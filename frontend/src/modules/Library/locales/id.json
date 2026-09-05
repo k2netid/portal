@@ -1,9 +1,10 @@
 {
   "navigation": {
     "menu": {
+      "customFields": "Bidang Kustom",
+      "generalTags": "Tag Umum",
       "library": "Pustaka",
-      "tags": "Tag",
-      "customFields": "Bidang Kustom"
+      "tags": "Tag"
     }
   },
   "tags": {

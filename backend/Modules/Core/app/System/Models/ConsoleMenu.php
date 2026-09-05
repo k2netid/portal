@@ -126,22 +126,13 @@ class ConsoleMenu extends Model
                         'order' => 1,
                     ],
                     [
-                        'name' => 'Categories',
-                        'label_key' => 'publishing.navigation.menu.categories',
-                        'route_name' => 'categories.index',
-                        'icon' => 'folder',
-                        'permission' => 'view categories',
-                        'extension_slug' => 'publishing',
-                        'order' => 2,
-                    ],
-                    [
                         'name' => 'Comments',
                         'label_key' => 'publishing.navigation.menu.comments',
                         'route_name' => 'comments.index',
                         'icon' => 'message-square',
                         'permission' => 'view comments',
                         'extension_slug' => 'publishing',
-                        'order' => 3,
+                        'order' => 2,
                     ],
                     [
                         'name' => 'Media Library',
@@ -272,8 +263,8 @@ class ConsoleMenu extends Model
                 'order' => 7,
                 'children' => [
                     [
-                        'name' => 'Tags',
-                        'label_key' => 'library.navigation.menu.tags',
+                        'name' => 'General Tags',
+                        'label_key' => 'library.navigation.menu.generalTags',
                         'route_name' => 'tags',
                         'icon' => 'tags',
                         'permission' => 'manage tags',
@@ -658,6 +649,15 @@ class ConsoleMenu extends Model
 
             return;
         }
+
+        // Prune deprecated menus that are now consolidated into tabs
+        self::query()->where('route_name', 'categories.index')->delete();
+
+        // Sync renamed labels for general taxonomy
+        self::query()->where('route_name', 'tags')->update([
+            'name' => 'General Tags',
+            'label_key' => 'library.navigation.menu.generalTags',
+        ]);
 
         $existingRoutes = self::query()
             ->whereNotNull('route_name')

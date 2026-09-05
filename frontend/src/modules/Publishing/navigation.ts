@@ -19,15 +19,6 @@ export const publishingNavigation: NavItem[] = [
                 priority: 100,
             },
             {
-                name: 'categories.index',
-                label: 'Categories',
-                labelKey: 'publishing.navigation.menu.categories',
-                permission: 'view categories',
-                extension: 'publishing',
-                icon: 'folder',
-                priority: 95,
-            },
-            {
                 name: 'comments.index',
                 label: 'Comments',
                 labelKey: 'publishing.navigation.menu.comments',
