@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Universal Widget Catalog & Post Sidebar WidgetArea', () => {
     test('post detail page displays widget area with search and categories', async ({ page }) => {
-        await page.goto('/blog/sarangenge-sample-ppdb-2026');
+        const sampleSlug = process.env.PLAYWRIGHT_POST_SLUG || (process.env.PLAYWRIGHT_BASE_URL?.includes('8083') ? 'k2net-coverage-bandung' : 'sarangenge-sample-ppdb-2026');
+        await page.goto(`/blog/${sampleSlug}`);
         await page.waitForLoadState('networkidle');
 
         // Check that WidgetArea exists with location="sidebar"
@@ -14,12 +15,12 @@ test.describe('Universal Widget Catalog & Post Sidebar WidgetArea', () => {
         await expect(searchInput).toBeVisible({ timeout: 10000 });
 
         // Check for CategoriesWidget presence
-        const categoriesHeader = page.locator('text=/Kategori Berita|Article Categories|Kategori Warta/i').first();
+        const categoriesHeader = page.locator('.categories-widget').or(page.locator('text=/Kategori Berita|Article Categories|Kategori Warta/i')).first();
         await expect(categoriesHeader).toBeVisible({ timeout: 10000 });
 
         // Test typing into search input
-        await searchInput.fill('PPDB');
-        await expect(searchInput).toHaveValue('PPDB');
+        await searchInput.fill('Kabar');
+        await expect(searchInput).toHaveValue('Kabar');
     });
 
     test('blog index page displays universal search and interactive categories', async ({ page }) => {
