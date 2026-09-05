@@ -284,6 +284,10 @@ const featureDefinitions = [
   { key: 'white_label', name: 'White Label Console', description: 'Custom console logos, brand naming, and admin customization.' },
   { key: 'multi_site', name: 'Multi-Site Fleet Management', description: 'Centralized management across multiple tenant instances.' },
   { key: 'priority_updates', name: 'Priority Updates & Support', description: 'Instant OTA patches and direct JA-CP sync.' },
+  { key: 'theme_upload', name: 'Custom Theme Import', description: 'Upload and install external theme packages (.zip).' },
+  { key: 'plugin_upload', name: 'Custom Plugin/Extension Import', description: 'Upload and install external extensions and plugins (.zip).' },
+  { key: 'theme_export', name: 'Theme Package Export', description: 'Export active or custom themes into redistributable ZIP archives.' },
+  { key: 'plugin_export', name: 'Plugin Package Export', description: 'Export installed extensions and plugins into certified ZIP packages.' },
 ];
 
 const featureList = computed(() => {

@@ -64,4 +64,14 @@ return [
         'instagram-feed' => ['after_hero'],
         'floating-social-dock' => ['floating_overlay'],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Uploaded & Portable Themes Settings
+    |--------------------------------------------------------------------------
+    */
+    'uploaded_themes' => [
+        'enabled' => env('FEATURE_UPLOADED_THEMES', true),
+        'max_zip_bytes' => (int) env('MAX_THEME_ZIP_BYTES', 52_428_800),
+    ],
 ];

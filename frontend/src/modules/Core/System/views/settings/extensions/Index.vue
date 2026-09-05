@@ -60,6 +60,7 @@
                   {{ trans.gitBtn }}
                 </Button>
                 <Button
+                  v-if="canUpload"
                   class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white border-0"
                   @click="openUploadModal"
                 >
@@ -296,6 +297,17 @@
                     >
                       {{ trans.configure }}
                     </Button>
+                    <Button
+                      v-if="ext.can_export"
+                      variant="ghost"
+                      size="sm"
+                      :disabled="exportingExtension === ext.slug"
+                      :title="t('system.appStore.exportZip')"
+                      @click="exportExtension(ext)"
+                    >
+                      <Download class="h-3.5 w-3.5 mr-1" :class="{ 'animate-bounce': exportingExtension === ext.slug }" />
+                      {{ t('system.appStore.export') }}
+                    </Button>
                   </td>
                 </tr>
               </tbody>
@@ -376,6 +388,7 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 
 // Lucide icons
 import {
+  Download,
   GitBranch,
   Globe,
   Layers,
@@ -409,6 +422,7 @@ interface ExtensionItem {
     status: 'active' | 'inactive';
     is_core: boolean;
     can_uninstall?: boolean;
+    can_export?: boolean;
     author?: string;
     description?: string;
     license?: string;
@@ -1470,7 +1484,52 @@ const scaffoldPlugin = async (payload: Record<string, unknown>) => {
     }
 };
 
+const canUpload = ref(true);
+const canExport = ref(true);
+const exportingExtension = ref<string | null>(null);
+
+const fetchCapabilities = async () => {
+    try {
+        const response = await api.get('/manage/infra/extensions/capabilities');
+        const payload = response.data?.data || response.data;
+        if (payload) {
+            if (typeof payload.can_upload === 'boolean') {
+                canUpload.value = payload.can_upload;
+            }
+            if (typeof payload.can_export === 'boolean') {
+                canExport.value = payload.can_export;
+            }
+        }
+    } catch {
+        // Keep defaults
+    }
+};
+
+const exportExtension = async (ext: ExtensionItem) => {
+    exportingExtension.value = ext.slug;
+    try {
+        const response = await api.get(`/manage/infra/extensions/${ext.slug}/export`, {
+            responseType: 'blob',
+        });
+        const blob = new Blob([response.data], { type: 'application/zip' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${ext.slug}-extension.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        toast.success(t('system.appStore.messages.exportSuccess'));
+    } catch {
+        toast.error(t('system.appStore.messages.exportFailed'));
+    } finally {
+        exportingExtension.value = null;
+    }
+};
+
 onMounted(() => {
+    fetchCapabilities();
     fetchExtensions();
 });
 

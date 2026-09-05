@@ -67,6 +67,7 @@ Route::prefix('v1')->group(function (): void {
         Route::get('themes/{theme}/composables', [ThemeController::class, 'getComposables']);
         Route::post('themes/{theme}/validate', [ThemeController::class, 'validate']);
         Route::post('themes/{theme}/install-sample', [ThemeController::class, 'installSample']);
+        Route::get('themes/{theme}/export', [ThemeController::class, 'export']);
         Route::get('plugin-theme-slots', [PluginThemeSlotsController::class, 'index']);
         Route::apiResource('themes', ThemeController::class);
 

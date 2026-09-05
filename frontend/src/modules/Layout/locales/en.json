@@ -317,7 +317,8 @@
       "preview": "Preview",
       "settings": "Settings",
       "validate": "Validate",
-      "installSample": "Install Sample Data"
+      "installSample": "Install Sample Data",
+      "export": "Export ZIP"
     },
     "uploading": "Uploading…",
     "source": {
@@ -328,6 +329,8 @@
       "uploadSuccess": "Theme package installed.",
       "uploadFailed": "Theme upload failed.",
       "uploadDisabled": "Uploaded themes are disabled on this server.",
+      "exportSuccess": "Theme package exported successfully.",
+      "exportFailed": "Failed to export theme.",
       "activateConfirm": "Are you sure you want to activate theme \"{name}\"?",
       "activateFailed": "Failed to activate theme",
       "activateSuccess": "Theme activated successfully",

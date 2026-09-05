@@ -182,9 +182,36 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Build frontend dan sinkronisasi aset ke `backend/public/` di kedua portal.
 - [x] **Dokumentasi**: ADR-006 diterbitkan.
 
+### Milestone 7.7: Arsitektur Siklus Hidup Paket (Ekspor/Impor) Tema & Ekstensi serta Kontrol Lisensi dan Keamanan (🟢 Selesai)
+- [x] **Skema Basis Data & Konfigurasi Pengaturan Sistem (`sys_settings`)**:
+  - [x] Migration `2026_09_05_000003_add_package_upload_export_settings.php` menambahkan 4 kunci pengaturan: `enable_theme_upload`, `enable_plugin_upload`, `enable_theme_export`, `enable_plugin_export` di bawah grup `security`.
+  - [x] Registrasi seeder default di `FoundationSeeder.php`.
+- [x] **Integrasi Licensing Service & Entitlements**:
+  - [x] Penambahan 4 kapabilitas paket kustom (`theme_upload`, `plugin_upload`, `theme_export`, `plugin_export`) di `LicenseService::getFeaturesMatrix()` dengan pemetaan tier Pro/Enterprise/White-Label.
+  - [x] Dukungan developer pass-through untuk environment non-produksi dengan proteksi mode uji isolasi `community`.
+- [x] **Backend Package Lifecycle**:
+  - [x] Penambahan validasi ganda (setting toggle + license check) pada `ThemePackageInstallService::isEnabled()`.
+  - [x] Endpoint `uploadStatus` di `ThemeController` diperluas dengan flag `export_enabled`.
+  - [x] Implementasi streaming download file ZIP paket tema di `ThemeController::export` (`GET /api/v1/themes/{theme}/export`).
+  - [x] Penambahan helper `isUploadAllowed()` dan `isExportAllowed()` serta endpoint `capabilities` (`GET /manage/system/extensions/capabilities`) di `ExtensionController`.
+  - [x] Implementasi streaming download arsip ZIP ekstensi di `ExtensionController::export` (`GET /manage/system/extensions/{slug}/export`) dengan pelindung modul inti via `can_export`.
+  - [x] Penyediaan manifest kanonikal `backend/extensions/floating-social-dock/manifest.json`.
+- [x] **Harmonisasi UI & i18n Multilingual**:
+  - [x] Tombol "Unggah ZIP" dan aksi "Ekspor ZIP" per tema di `frontend/src/modules/Layout/views/themes/Index.vue`.
+  - [x] Tombol "Unggah ZIP" dan aksi "Ekspor" per plugin di `frontend/src/modules/Core/System/views/settings/extensions/Index.vue`.
+  - [x] Grup akordion baru "Paket Tema & Ekstensi" dengan 4 sakelar toggle di `SecurityTab.vue`.
+  - [x] Visualisasi 4 kapabilitas di kartu "Current Tier Capabilities" di `LicenseTab.vue`.
+  - [x] Reactive query parameter switching (`?tab=...`) di `General/Index.vue`.
+  - [x] Penyelarasan terjemahan `id.json`, `en.json`, `su.json` (9.117 symmetric keys di `npm run i18n:check`).
+- [x] **Pengujian & Verifikasi**:
+  - [x] Backend tests: `ExtensionControllerTest` (48/48 passed), `ThemePackageLifecycleTest` (16/16 passed).
+  - [x] Frontend Playwright E2E: `theme-package-lifecycle.spec.ts` (4/4 passed).
+- [x] **Dokumentasi**: ADR-007 diterbitkan.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
 - [ ] Integrasi SSL & Edge Proxy WAF di CT 104 (NPMplus).
 - [ ] Konfigurasi `SITE_NAME`, `SITE_DESCRIPTION`, dan `contact_*` via `.env` dan Theme Customizer per deployment.
+

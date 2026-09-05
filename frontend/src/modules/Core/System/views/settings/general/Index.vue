@@ -826,6 +826,12 @@ watch(activeTab, (newTab) => {
     }
 });
 
+watch(() => route.query.tab, (newTab) => {
+    if (newTab && typeof newTab === 'string' && validTabs.includes(newTab)) {
+        activeTab.value = newTab;
+    }
+});
+
 onMounted(() => {
     fetchSettings();
     // Load email test data if email tab is active

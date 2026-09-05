@@ -73,7 +73,7 @@ const updateField = (key: string, value: unknown) => {
     emit('update:formData', { ...props.formData, [key]: value })
 }
 
-import { ShieldCheck, Key, Clock, Lock, Bot, ShieldAlert, Bell } from 'lucide-vue-next'
+import { ShieldCheck, Key, Clock, Lock, Bot, ShieldAlert, Bell, Package } from 'lucide-vue-next'
 
 const isSettingDisabled = (key: string) => {
     // Captcha dependencies
@@ -185,6 +185,16 @@ const securitySettingsGrouped = computed(() => {
             keys: ['telegram_bot_token', 'telegram_chat_id', 'email_to', 'webhook_url'],
             settings: [],
             defaultExpanded: false,
+        },
+        {
+            id: 'packages',
+            title: t('system.settings.groups.packages.title'),
+            description: t('system.settings.groups.packages.description'),
+            icon: Package,
+            color: 'purple',
+            keys: ['enable_theme_upload', 'enable_plugin_upload', 'enable_theme_export', 'enable_plugin_export'],
+            settings: [],
+            defaultExpanded: true,
         },
     ]
     

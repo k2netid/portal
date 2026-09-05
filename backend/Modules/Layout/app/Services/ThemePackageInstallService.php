@@ -18,7 +18,33 @@ final class ThemePackageInstallService
 
     public function isEnabled(): bool
     {
-        return (bool) config('layout.uploaded_themes.enabled', false);
+        if (! config('layout.uploaded_themes.enabled', true)) {
+            return false;
+        }
+
+        if (class_exists(\Modules\Core\System\Models\Setting::class)) {
+            $settingAllowed = filter_var(\Modules\Core\System\Models\Setting::get('enable_theme_upload', true), FILTER_VALIDATE_BOOLEAN);
+            if (! $settingAllowed) {
+                return false;
+            }
+
+            if (\Modules\Core\System\Models\Setting::get('license_type') === 'community') {
+                return false;
+            }
+        }
+
+        if (! app()->isProduction()) {
+            return true;
+        }
+
+        if (class_exists(\Modules\Core\System\Services\LicenseService::class)) {
+            $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+            if (! $licenseService->canUseFeature('theme_upload')) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

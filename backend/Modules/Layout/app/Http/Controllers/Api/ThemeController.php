@@ -14,6 +14,11 @@ use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
 use Modules\Layout\SampleData\ThemeSampleDataReader;
 use Modules\Layout\Services\ThemePackageInstallService;
 use Modules\Layout\Services\ThemeService;
+use Modules\Layout\Support\ThemeViews;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use ZipArchive;
 
 class ThemeController extends BaseApiController
 {
@@ -308,10 +313,35 @@ class ThemeController extends BaseApiController
 
     // Legacy Blade methods removed
 
+    protected function isExportAllowed(): bool
+    {
+        if (class_exists(\Modules\Core\System\Models\Setting::class)) {
+            $settingAllowed = filter_var(\Modules\Core\System\Models\Setting::get('enable_theme_export', true), FILTER_VALIDATE_BOOLEAN);
+            if (! $settingAllowed) {
+                return false;
+            }
+
+            if (\Modules\Core\System\Models\Setting::get('license_type') === 'community') {
+                return false;
+            }
+        }
+
+        if (! app()->isProduction()) {
+            return true;
+        }
+
+        if (class_exists(\Modules\Core\System\Services\LicenseService::class)) {
+            return app(\Modules\Core\System\Services\LicenseService::class)->canUseFeature('theme_export');
+        }
+
+        return true;
+    }
+
     public function uploadStatus(ThemePackageInstallService $installer): JsonResponse
     {
         return $this->success([
             'enabled' => $installer->isEnabled(),
+            'export_enabled' => $this->isExportAllowed(),
             'max_zip_bytes' => config('layout.uploaded_themes.max_zip_bytes', 52_428_800),
             'storage_path' => 'storage/app/public/themes',
         ], 'Theme upload status');
@@ -377,7 +407,39 @@ class ThemeController extends BaseApiController
         ], 'Theme setting retrieved successfully');
     }
 
-    // Import/Export methods removed
+    public function export(Theme $theme): BinaryFileResponse|JsonResponse
+    {
+        if (! $this->isExportAllowed()) {
+            return $this->error('Theme export is disabled on this installation.', 403);
+        }
+
+        $sourcePath = ThemeViews::pathForSlug($theme->slug);
+        if (! is_dir($sourcePath) || ! is_file($sourcePath.'/theme.json')) {
+            return $this->error("Theme directory or manifest not found for [{$theme->slug}].", 404);
+        }
+
+        $tempDir = storage_path('app/temp/theme-export-'.Str::random(16));
+        File::ensureDirectoryExists($tempDir);
+        $zipPath = $tempDir."/{$theme->slug}-theme.zip";
+
+        $zip = new ZipArchive;
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            return $this->error('Failed to create theme zip archive.', 500);
+        }
+
+        $files = File::allFiles($sourcePath);
+        foreach ($files as $file) {
+            $relative = $file->getRelativePathname();
+            if (str_starts_with($relative, '.git') || str_ends_with($relative, '.DS_Store')) {
+                continue;
+            }
+            $zip->addFile($file->getRealPath(), "{$theme->slug}/{$relative}");
+        }
+
+        $zip->close();
+
+        return response()->download($zipPath, "{$theme->slug}-theme.zip")->deleteFileAfterSend(true);
+    }
 
     // =====================================================
     // VUE SPA ENDPOINTS (New methods for Vue themes)

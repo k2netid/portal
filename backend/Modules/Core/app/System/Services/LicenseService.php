@@ -119,6 +119,10 @@ class LicenseService
             'white_label' => in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
             'multi_site' => in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
             'priority_updates' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            'theme_upload' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            'plugin_upload' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            'theme_export' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            'plugin_export' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
         ];
 
         return $matrix;

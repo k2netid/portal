@@ -64,6 +64,10 @@ class ExtensionControllerTest extends TestCase
             @unlink($this->evilZipPath);
         }
 
+        Setting::set('license_type', 'enterprise', 'string', 'license');
+        Setting::set('enable_plugin_upload', true, 'boolean', 'security');
+        Setting::set('enable_plugin_export', true, 'boolean', 'security');
+
         parent::tearDown();
     }
 
@@ -1128,23 +1132,27 @@ class ExtensionControllerTest extends TestCase
     {
         Setting::set('license_type', 'community', 'string', 'license');
 
-        $ext = Extension::create([
-            'slug' => 'pro-only-pack',
-            'type' => 'plugin',
-            'name' => 'Pro Only Pack',
-            'version' => '1.0.0',
-            'database_version' => '1.0.0',
-            'status' => 'inactive',
-            'is_core' => false,
-            'settings' => ['license_tier' => 'pro'],
-        ]);
+        try {
+            $ext = Extension::create([
+                'slug' => 'pro-only-pack',
+                'type' => 'plugin',
+                'name' => 'Pro Only Pack',
+                'version' => '1.0.0',
+                'database_version' => '1.0.0',
+                'status' => 'inactive',
+                'is_core' => false,
+                'settings' => ['license_tier' => 'pro'],
+            ]);
 
-        $response = $this->actingAs($this->admin, 'sanctum')
-            ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate");
+            $response = $this->actingAs($this->admin, 'sanctum')
+                ->postJson("/api/v1/manage/infra/extensions/{$ext->slug}/activate");
 
-        $response->assertStatus(400);
-        $this->assertStringContainsString('Lisensi', (string) $response->json('message'));
-        $this->assertEquals('inactive', $ext->fresh()->status);
+            $response->assertStatus(400);
+            $this->assertStringContainsString('Lisensi', (string) $response->json('message'));
+            $this->assertEquals('inactive', $ext->fresh()->status);
+        } finally {
+            Setting::set('license_type', 'enterprise', 'string', 'license');
+        }
     }
 
     public function test_index_health_flags_route_conflicts(): void
@@ -1326,4 +1334,50 @@ class ExtensionControllerTest extends TestCase
         $this->assertTrue((bool) $visibleContent['is_visible']);
         $this->assertEquals('publishing', $visibleContent['extension_slug']);
     }
+
+    public function test_admin_can_retrieve_extension_capabilities(): void
+    {
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions/capabilities')
+            ->assertOk();
+
+        $response->assertJsonPath('data.can_upload', true);
+        $response->assertJsonPath('data.can_export', true);
+    }
+
+    public function test_admin_upload_blocked_when_setting_disabled(): void
+    {
+        Setting::set('enable_plugin_upload', false, 'boolean', 'security');
+
+        $uploadedFile = \Illuminate\Http\UploadedFile::fake()->create('fake-pack.zip', 100, 'application/zip');
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/upload', [
+                'file' => $uploadedFile,
+            ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_admin_export_blocked_when_setting_disabled(): void
+    {
+        Setting::set('enable_plugin_export', false, 'boolean', 'security');
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions/floating-social-dock/export');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_admin_can_export_extension_zip(): void
+    {
+        Setting::set('enable_plugin_export', true, 'boolean', 'security');
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions/floating-social-dock/export');
+
+        $response->assertOk();
+        $this->assertTrue(str_contains((string) $response->headers->get('content-type'), 'zip') || str_contains((string) $response->headers->get('content-disposition'), 'attachment'));
+    }
 }
+
