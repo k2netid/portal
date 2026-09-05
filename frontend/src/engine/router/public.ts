@@ -145,7 +145,10 @@ export const createPublicRouter = () => {
     let activeThemeRouteRemovers: Array<() => void> = [];
 
     router.beforeEach(async (to, from) => {
-        if (to.path !== '/404' && to.path !== '/maintenance') {
+        const rawPath = typeof window !== 'undefined' ? window.location.pathname : to.path;
+        const isUnknownDirectHit = to.path === '/404' && rawPath !== '/404';
+
+        if ((to.path !== '/404' || isUnknownDirectHit) && to.path !== '/maintenance') {
             try {
                 const { useTheme } = await import('@/modules/Layout/composables/useTheme');
                 const { loadActiveTheme, activeTheme } = useTheme();
@@ -170,6 +173,9 @@ export const createPublicRouter = () => {
                                 }
                             });
                             injectedThemeSlug = currentSlug;
+                            if (isUnknownDirectHit) {
+                                return rawPath;
+                            }
                             if (to.matched.length === 0 || to.name === 'public-not-found') {
                                 return to.fullPath;
                             }

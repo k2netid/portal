@@ -84,18 +84,24 @@
               Kisah Sukses Alumni
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div
-                v-for="(alumni, idx) in alumniStories"
-                :key="idx"
-                class="sarangenge-panel p-8 space-y-4 flex flex-col justify-between hover:border-[var(--sarangenge-teal,#0f766e)]/40 transition-all duration-300 group"
+            <!-- Loading Spinner -->
+            <div v-if="loading" class="min-h-[200px] flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full border-2 border-[var(--sarangenge-teal,#0f766e)] border-t-transparent animate-spin" />
+            </div>
+
+            <div v-else-if="resolvedStories.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <router-link
+                v-for="(alumni, idx) in resolvedStories"
+                :key="alumni.id || idx"
+                :to="alumni.slug ? `/blog/${alumni.slug}` : '#'"
+                class="sarangenge-panel p-8 space-y-4 flex flex-col justify-between hover:border-[var(--sarangenge-teal,#0f766e)]/40 transition-all duration-300 group cursor-pointer block text-left"
               >
                 <div class="space-y-3">
                   <div class="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center text-amber-400 font-extrabold text-lg">
                     {{ alumni.name.charAt(0) }}
                   </div>
                   <div>
-                    <h3 class="text-base font-bold text-foreground font-heading">
+                    <h3 class="text-base font-bold text-foreground font-heading group-hover:text-[var(--sarangenge-teal,#0f766e)] transition-colors">
                       {{ alumni.name }}
                     </h3>
                     <span class="text-xs font-bold text-[var(--sarangenge-teal,#0f766e)] block">
@@ -105,11 +111,24 @@
                       {{ alumni.role }}
                     </span>
                   </div>
-                  <p class="text-sm text-muted-foreground italic leading-relaxed pt-2">
+                  <p class="text-sm text-muted-foreground italic leading-relaxed pt-2 line-clamp-4">
                     "{{ alumni.story }}"
                   </p>
                 </div>
-              </div>
+
+                <div class="pt-4 border-t border-border/60 flex items-center justify-between text-xs">
+                  <span class="text-muted-foreground font-medium">SMK Pusat Keunggulan</span>
+                  <span v-if="alumni.slug" class="font-bold text-[var(--sarangenge-teal,#0f766e)] group-hover:underline flex items-center gap-0.5">
+                    Kisah Lengkap →
+                  </span>
+                </div>
+              </router-link>
+            </div>
+
+            <div v-else class="sarangenge-panel p-10 text-center text-muted-foreground space-y-3">
+              <p class="text-base font-semibold text-foreground">
+                {{ t('pages.career_center.noData', 'Data kisah sukses alumni belum tersedia.') }}
+              </p>
             </div>
           </div>
         </div>
@@ -119,22 +138,30 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import api from '@/engine/api/client';
+import { publishingPaths } from '@/engine/api/paths';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
 import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
+import type { Content } from '@/modules/Publishing/types/content';
 import { GraduationCap } from 'lucide-vue-next';
 
 const { t } = useThemeI18n('sarangenge');
 const { displaySchoolName } = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('career_center');
 
-const alumniStories = computed(() => [
+const storiesList = ref<Content[]>([]);
+const loading = ref(true);
+
+const defaultAlumniStories = computed(() => [
   {
+    id: 'story-1',
+    slug: 'farhan-maulana-karir-alumni',
     name: 'dr. Farhan Maulana',
     grad: 'Alumni 2018',
     campus: 'Fakultas Kedokteran UI',
@@ -142,18 +169,63 @@ const alumniStories = computed(() => [
     story: `Pendidikan disiplin riset dan laboratorium di ${displaySchoolName.value} meletakkan pondasi kuat bagi karir profesional saya.`,
   },
   {
+    id: 'story-2',
+    slug: 'annisa-larasati-ai-engineer-alumni',
     name: 'Annisa Larasati, S.T., M.Sc.',
     grad: 'Alumni 2019',
     campus: 'TU Delft (Belanda)',
-    role: 'AI Engineer di Perusahaan Teknologi',
-    story: 'Dukungan klub coding sekolah dan bimbingan guru bahasa Inggris mempermudah langkah saya meraih beasiswa master di Eropa.',
+    role: 'AI Engineer di Perusahaan Teknologi Global',
+    story: 'Dukungan klub coding sekolah dan bimbingan guru bahasa mempermudah langkah saya meraih beasiswa master di Eropa.',
   },
   {
+    id: 'story-3',
+    slug: 'dimas-wicaksono-founder-agritech',
     name: 'Dimas Wicaksono, S.E.',
     grad: 'Alumni 2020',
     campus: 'Fakultas Ekonomika dan Bisnis UGM',
     role: 'Co-Founder Startup Agritech',
-    story: 'Jiwa kepemimpinan dan empati sosial yang ditanamkan selama bersekolah menjadi kompas utama dalam mendirikan usaha.',
+    story: 'Jiwa kepemimpinan dan empati sosial yang ditanamkan selama bersekolah menjadi kompas utama dalam mendirikan usaha mandiri.',
   },
 ]);
+
+const resolvedStories = computed(() => {
+  if (storiesList.value.length > 0) {
+    return storiesList.value.map((item: any) => {
+      const raw = item._raw || item;
+      const meta = raw.meta || {};
+      return {
+        id: item.id,
+        slug: item.slug || '',
+        name: meta.name || item.title.split('—')[0]?.trim() || item.title,
+        grad: meta.grad || 'Alumni Vokasi',
+        campus: meta.campus || 'Mitra Industri / Kampus',
+        role: meta.role || item.excerpt || 'Profesional',
+        story: meta.story || item.excerpt || raw.intro || '',
+      };
+    });
+  }
+
+  return defaultAlumniStories.value;
+});
+
+onMounted(async () => {
+  try {
+    const res = await api.get(publishingPaths.publicContents, {
+      params: { category: 'karir-alumni', status: 'published', sort: '-created_at' },
+    });
+    const data = res.data;
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+    storiesList.value = items;
+  } catch {
+    storiesList.value = [];
+  } finally {
+    loading.value = false;
+  }
+});
 </script>

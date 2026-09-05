@@ -115,7 +115,14 @@ onMounted(async () => {
       params: { category: 'program-keahlian', status: 'published', sort: 'title' },
     });
     const data = res.data;
-    programs.value = Array.isArray(data) ? data : data?.data || [];
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+    programs.value = items;
   } catch (err) {
     programs.value = [];
   } finally {

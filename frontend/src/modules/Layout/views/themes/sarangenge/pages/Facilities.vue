@@ -234,7 +234,14 @@ onMounted(async () => {
       params: { category: 'fasilitas', status: 'published', sort: 'title' },
     });
     const data = res.data;
-    facilities.value = Array.isArray(data) ? data : data?.data || [];
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+    facilities.value = items;
   } catch {
     facilities.value = [];
   } finally {

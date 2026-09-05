@@ -19,13 +19,13 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div
-          v-for="(testi, idx) in testimonials"
-          :key="idx"
+          v-for="(testi, idx) in resolvedTestimonials"
+          :key="testi.id || idx"
           class="sarangenge-panel p-8 flex flex-col justify-between space-y-6 hover:shadow-xl transition-all duration-300"
         >
           <div class="space-y-4">
             <Quote class="w-8 h-8 text-[var(--sarangenge-teal,#0f766e)]/30" />
-            <p class="text-sm text-foreground/90 leading-relaxed italic">
+            <p class="text-sm text-foreground/90 leading-relaxed italic line-clamp-4">
               "{{ testi.quote }}"
             </p>
           </div>
@@ -50,27 +50,71 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import api from '@/engine/api/client';
+import { publishingPaths } from '@/engine/api/paths';
+import type { Content } from '@/modules/Publishing/types/content';
 import { MessageSquare, Quote } from 'lucide-vue-next';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 
 const { displaySchoolName } = useSarangengeIdentity();
 
-const testimonials = computed(() => [
+const testiList = ref<Content[]>([]);
+
+const defaultTestimonials = computed(() => [
   {
+    id: 'testi-1',
     name: 'Ir. Hendra Kusuma',
     role: 'Orang Tua Siswa Kelas X',
     quote: `${displaySchoolName.value} tidak hanya mengajarkan akademik tinggi, tapi sangat memperhatikan adab dan mental anak. Komunikasi guru dengan orang tua sangat transparan dan hangat.`,
   },
   {
+    id: 'testi-2',
     name: 'Siti Sarah Nurhaliza',
     role: 'Alumni 2024 · Mahasiswi Kedokteran UI',
     quote: `Bimbingan riset sains dan pembinaan guru di ${displaySchoolName.value} menjadi modal paling berharga saat saya menempuh seleksi masuk perguruan tinggi dan karir profesional.`,
   },
   {
+    id: 'testi-3',
     name: 'Rian Pratama',
     role: 'Ketua OSIS Periode 2025/2026',
     quote: 'Fasilitas bengkel modern, AI lab, dan ruang diskusi di sekolah membuat kami bebas berinovasi dan percaya diri bersaing di kancah nasional.',
   },
 ]);
+
+const resolvedTestimonials = computed(() => {
+  if (testiList.value.length > 0) {
+    return testiList.value.slice(0, 3).map((item: any) => {
+      const raw = item._raw || item;
+      const meta = raw.meta || {};
+      return {
+        id: item.id,
+        name: meta.name || item.title.split('—')[0]?.trim() || item.title,
+        role: meta.role || item.excerpt || 'Sivitas Sekolah',
+        quote: meta.quote || item.excerpt || raw.intro || '',
+      };
+    });
+  }
+
+  return defaultTestimonials.value;
+});
+
+onMounted(async () => {
+  try {
+    const res = await api.get(publishingPaths.publicContents, {
+      params: { category: 'testimoni', status: 'published', limit: 3, sort: '-created_at' },
+    });
+    const data = res.data;
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+    testiList.value = items;
+  } catch {
+    testiList.value = [];
+  }
+});
 </script>
