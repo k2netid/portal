@@ -34,12 +34,23 @@
               :key="facility.id || facility.slug"
               class="sarangenge-panel group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[var(--sarangenge-teal,#0f766e)]/30"
             >
-              <div class="h-44 bg-muted/30 flex items-center justify-center relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-gradient-to-br from-[var(--sarangenge-teal,#0f766e)] to-transparent"></div>
-                <component
-                  :is="facility.iconComponent"
-                  class="w-14 h-14 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-400 z-10 group-hover:scale-110 transition-transform duration-500"
-                />
+              <div class="h-48 sm:h-52 bg-muted/30 flex items-center justify-center relative overflow-hidden">
+                <template v-if="facility.image">
+                  <img
+                    :src="facility.image"
+                    :alt="facility.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </template>
+                <template v-else>
+                  <div class="absolute inset-0 opacity-20 bg-gradient-to-br from-[var(--sarangenge-teal,#0f766e)] to-transparent"></div>
+                  <component
+                    :is="facility.iconComponent"
+                    class="w-14 h-14 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-400 z-10 group-hover:scale-110 transition-transform duration-500"
+                  />
+                </template>
               </div>
               <div class="p-6 sm:p-7 flex-1 space-y-3 flex flex-col justify-between">
                 <div class="space-y-2">
@@ -109,11 +120,21 @@ const { data: dynamicFacilities, hasBinding } = useThemeDataBindings('facilities
 const facilities = ref<Content[]>([]);
 const loading = ref(true);
 
-const defaultFacilities = [
+interface FacilityItem {
+  id: string | number;
+  slug: string;
+  title: string;
+  image?: string | null;
+  description: string;
+  iconComponent: any;
+}
+
+const defaultFacilities: FacilityItem[] = [
   {
     id: 'f-1',
     slug: 'studio-desain-bim-dpib',
     title: 'Studio Desain & BIM (DPIB)',
+    image: null,
     description: 'Laboratorium komputer berstandar industri dengan perangkat lunak AutoCAD, SketchUp, dan aplikasi Building Information Modeling (BIM) untuk perancangan konstruksi.',
     iconComponent: MonitorPlay,
   },
@@ -121,6 +142,7 @@ const defaultFacilities = [
     id: 'f-2',
     slug: 'laboratorium-listrik-otomasi-titl',
     title: 'Laboratorium Listrik & Otomasi (TITL)',
+    image: null,
     description: 'Bengkel praktik instalasi penerangan, instalasi tenaga, dan kontrol motor listrik berbasis kontaktor serta PLC (Programmable Logic Controller).',
     iconComponent: Zap,
   },
@@ -128,6 +150,7 @@ const defaultFacilities = [
     id: 'f-3',
     slug: 'bengkel-cnc-mesin-presisi-tpm',
     title: 'Bengkel CNC & Mesin Produksi (TPM)',
+    image: null,
     description: 'Bengkel manufaktur presisi yang dilengkapi dengan mesin bubut, mesin frais konvensional, serta mesin perkakas CNC berteknologi terkini.',
     iconComponent: Wrench,
   },
@@ -135,6 +158,7 @@ const defaultFacilities = [
     id: 'f-4',
     slug: 'bengkel-otomotif-tkro',
     title: 'Bengkel Servis & Engine Stand (TKRO)',
+    image: null,
     description: 'Fasilitas praktik otomotif roda empat yang mencakup engine scanner (EFI), spooring/balancing, dan alat uji emisi berstandar bengkel resmi.',
     iconComponent: CarFront,
   },
@@ -142,6 +166,7 @@ const defaultFacilities = [
     id: 'f-5',
     slug: 'laboratorium-mikroelektronik-tav',
     title: 'Laboratorium Mikroelektronik (TAV)',
+    image: null,
     description: 'Ruang praktik perakitan sistem audio video, desain PCB, serta pengembangan mikrokontroler dan sistem otomasi cerdas (IoT).',
     iconComponent: Cpu,
   },
@@ -149,6 +174,7 @@ const defaultFacilities = [
     id: 'f-6',
     slug: 'bengkel-fabrikasi-pengelasan-tflm',
     title: 'Bengkel Las GMAW/SMAW (TFLM)',
+    image: null,
     description: 'Area fabrikasi logam dan pengelasan profesional (Welding) yang dirancang dengan sistem ventilasi aman untuk berbagai metode pengelasan (SMAW, GMAW).',
     iconComponent: Hammer,
   },
@@ -167,7 +193,7 @@ function resolveFacilityIcon(title: string, slug: string) {
   return Wrench;
 }
 
-const resolvedFacilities = computed(() => {
+const resolvedFacilities = computed<FacilityItem[]>(() => {
   if (hasBinding.value && dynamicFacilities.value && dynamicFacilities.value.length > 0) {
     return dynamicFacilities.value.map((item: any, idx: number) => {
       const raw = item._raw || item;
@@ -177,6 +203,7 @@ const resolvedFacilities = computed(() => {
         id: raw.id || `dyn-${idx}`,
         title,
         slug,
+        image: raw.featured_image || item.featured_image || item.image || null,
         description: item.excerpt || item.description || raw.description || raw.intro || '',
         iconComponent: resolveFacilityIcon(title, slug),
       };
@@ -191,6 +218,7 @@ const resolvedFacilities = computed(() => {
         id: item.id || `api-${idx}`,
         title,
         slug,
+        image: item.featured_image || null,
         description: item.excerpt || item.intro || '',
         iconComponent: resolveFacilityIcon(title, slug),
       };

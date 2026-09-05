@@ -22,6 +22,16 @@
         >
           {{ pageTitle }}
         </h1>
+        <div
+          v-if="pageFeaturedImage"
+          class="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[16/9] border border-border/60 shadow-lg bg-muted"
+        >
+          <img
+            :src="pageFeaturedImage"
+            :alt="pageTitle"
+            class="w-full h-full object-cover"
+          />
+        </div>
         <div class="prose prose-lg dark:prose-invert max-w-none text-foreground leading-relaxed">
           <ThemeSafeHtml :html="pageHtml" />
         </div>
@@ -61,6 +71,11 @@ const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverr
 const pageTitle = computed(() => {
   const title = pageData.value?.title;
   return typeof title === 'string' ? title : '';
+});
+
+const pageFeaturedImage = computed(() => {
+  const img = pageData.value?.featured_image;
+  return typeof img === 'string' && img.trim() !== '' ? img : null;
 });
 
 const pageHtml = computed(() => {
