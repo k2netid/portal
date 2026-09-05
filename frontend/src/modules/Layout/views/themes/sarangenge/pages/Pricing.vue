@@ -18,7 +18,7 @@
               {{ t('pages.pricing.heading', 'Bebas Biaya Pendidikan') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {{ t('pages.pricing.subtitle', 'Sebagai sekolah negeri, SMK Negeri 6 Bandung didukung sepenuhnya oleh dana BOS (APBN) dan BOPD (APBD Jawa Barat).') }}
+              {{ t('pages.pricing.subtitle', 'Sebagai lembaga pendidikan vokasi negeri, seluruh kegiatan didukung penuh oleh dana operasional pendidikan resmi.') }}
             </p>
           </div>
 
@@ -61,7 +61,7 @@
               {{ t('pages.pricing.ppdbTitle', 'Penerimaan Peserta Didik Baru (PPDB)') }}
             </h2>
             <p class="text-muted-foreground text-sm max-w-xl mx-auto">
-              {{ t('pages.pricing.ppdbDesc', 'Proses seleksi dan pendaftaran PPDB SMK Negeri 6 Bandung dilaksanakan secara terpusat melalui portal resmi Dinas Pendidikan Provinsi Jawa Barat.') }}
+              {{ t('pages.pricing.ppdbDesc', 'Proses seleksi dan pendaftaran peserta didik baru dilaksanakan secara terpusat melalui portal resmi penerimaan.') }}
             </p>
             <a
               :href="ppdbPortalUrl"
@@ -69,7 +69,7 @@
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-[var(--sarangenge-teal,#0f766e)] text-primary-foreground font-bold hover:bg-[var(--sarangenge-teal-deep,#115e59)] transition-colors"
             >
-              {{ t('pages.pricing.ppdbButton', 'Akses Portal PPDB Jabar') }}
+              {{ t('pages.pricing.ppdbButton', 'Akses Portal PPDB') }}
               <ExternalLink class="w-5 h-5" />
             </a>
           </div>

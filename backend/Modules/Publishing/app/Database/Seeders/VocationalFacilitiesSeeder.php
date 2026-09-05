@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Publishing\Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -7,13 +9,13 @@ use Modules\Core\System\Models\User;
 use Modules\Library\Models\Category;
 use Modules\Publishing\Models\Content;
 
-class Smkn6FacilitiesSeeder extends Seeder
+class VocationalFacilitiesSeeder extends Seeder
 {
     public function run(): void
     {
         $author = User::query()->first();
         if (!$author) {
-            $this->command->warn('No user found to set as author.');
+            $this->command?->warn('No user found to set as author.');
             return;
         }
 
@@ -22,20 +24,20 @@ class Smkn6FacilitiesSeeder extends Seeder
             ['slug' => 'fasilitas'],
             [
                 'name' => 'Fasilitas & Sarana',
-                'description' => 'Fasilitas dan Sarana Prasarana Praktik SMK Negeri 6 Bandung',
+                'description' => 'Fasilitas dan Sarana Prasarana Praktik Kejuruan Standar Industri',
                 'is_active' => true,
                 'author_id' => $author->id,
             ]
         );
 
-        // 2. Define standard vocational facilities for SMKN 6 Bandung
+        // 2. Define standard vocational facilities
         $facilities = [
             [
                 'title' => 'Studio Desain & BIM (DPIB)',
                 'slug' => 'studio-desain-bim-dpib',
                 'excerpt' => 'Laboratorium komputer arsitektur berstandar industri dengan perangkat lunak AutoCAD, SketchUp, dan Building Information Modeling (BIM).',
                 'intro' => 'Fasilitas perancangan dan pemodelan konstruksi digital berbasis teknologi industri konstruksi 4.0.',
-                'body' => '<p>Studio Desain Pemodelan dan Informasi Bangunan (DPIB) SMK Negeri 6 Bandung dilengkapi dengan workstation berperforma tinggi dan perangkat lunak standar industri seperti AutoCAD, SketchUp, Revit, dan aplikasi BIM lainnya. Fasilitas ini mendukung siswa dalam merancang bangunan 2D/3D, analisis struktur, dan penyusunan Rencana Anggaran Biaya (RAB).</p><ul><li>Workstation PC High-End untuk rendering 3D</li><li>Software resmi Autodesk AutoCAD dan Building Information Modeling (BIM)</li><li>Plotter cetak format besar A0/A1 untuk gambar kerja teknik</li><li>Alat ukur tanah digital Total Station dan Theodolite</li></ul>',
+                'body' => '<p>Studio Desain Pemodelan dan Informasi Bangunan (DPIB) dilengkapi dengan workstation berperforma tinggi dan perangkat lunak standar industri seperti AutoCAD, SketchUp, Revit, dan aplikasi BIM lainnya. Fasilitas ini mendukung siswa dalam merancang bangunan 2D/3D, analisis struktur, dan penyusunan Rencana Anggaran Biaya (RAB).</p><ul><li>Workstation PC High-End untuk rendering 3D</li><li>Software resmi Autodesk AutoCAD dan Building Information Modeling (BIM)</li><li>Plotter cetak format besar A0/A1 untuk gambar kerja teknik</li><li>Alat ukur tanah digital Total Station dan Theodolite</li></ul>',
             ],
             [
                 'title' => 'Bengkel CNC & Mesin Bubut Presisi (TPM)',
@@ -77,14 +79,14 @@ class Smkn6FacilitiesSeeder extends Seeder
                 'slug' => 'gedung-center-of-excellence-coe',
                 'excerpt' => 'Ruang pembelajaran kolaboratif modern dengan layar interaktif, audio konferensi, dan konektivitas internet berkecepatan tinggi.',
                 'intro' => 'Gedung representatif program SMK Pusat Keunggulan untuk seminar industri dan kolaborasi pembelajaran digital.',
-                'body' => '<p>Gedung Center of Excellence (CoE) merupakan sarana kebanggaan SMK Negeri 6 Bandung sebagai SMK Pusat Keunggulan. Dilengkapi dengan smart board interaktif, sistem video conference untuk kuliah tamu praktisi industri, serta tata ruang fleksibel untuk pembelajaran berbasis proyek (Project-Based Learning).</p><ul><li>Smart Interactive Display Touchscreen 86 inci</li><li>High-Speed Gigabit WiFi & LAN connectivity</li><li>Ruang seminar akustik berkapasitas 150 peserta</li><li>Area kolaborasi Teaching Factory bersama mitra dunia usaha & industri</li></ul>',
+                'body' => '<p>Gedung Center of Excellence (CoE) merupakan sarana representatif sebagai SMK Pusat Keunggulan. Dilengkapi dengan smart board interaktif, sistem video conference untuk kuliah tamu praktisi industri, serta tata ruang fleksibel untuk pembelajaran berbasis proyek (Project-Based Learning).</p><ul><li>Smart Interactive Display Touchscreen 86 inci</li><li>High-Speed Gigabit WiFi & LAN connectivity</li><li>Ruang seminar akustik berkapasitas 150 peserta</li><li>Area kolaborasi Teaching Factory bersama mitra dunia usaha & industri</li></ul>',
             ],
             [
                 'title' => 'Perpustakaan Digital & Learning Commons',
                 'slug' => 'perpustakaan-digital-learning-commons',
                 'excerpt' => 'Pusat sumber belajar dengan ribuan koleksi e-book kejuruan, jurnal industri, dan bilik riset mandiri bagi siswa dan guru.',
                 'intro' => 'Layanan literasi digital dan ruang belajar mandiri yang nyaman dengan fasilitas komputasi modern.',
-                'body' => '<p>Perpustakaan SMK Negeri 6 Bandung memadukan koleksi literatur cetak dan akses repositori digital (e-library). Tersedia komputer terminal riset, akses jurnal teknik, ruang baca ber-AC, dan area diskusi yang mendukung literasi vokasi berkelanjutan.</p><ul><li>Katalog digital (OPAC) dan platform e-book vokasi</li><li>Bilik komputer riset internet mandiri untuk siswa</li><li>Koleksi buku referensi teknik, standar industri, dan umum</li><li>Ruang baca tenang ber-AC dengan pencahayaan ramah mata</li></ul>',
+                'body' => '<p>Perpustakaan vokasi memadukan koleksi literatur cetak dan akses repositori digital (e-library). Tersedia komputer terminal riset, akses jurnal teknik, ruang baca ber-AC, dan area diskusi yang mendukung literasi vokasi berkelanjutan.</p><ul><li>Katalog digital (OPAC) dan platform e-book vokasi</li><li>Bilik komputer riset internet mandiri untuk siswa</li><li>Koleksi buku referensi teknik, standar industri, dan umum</li><li>Ruang baca tenang ber-AC dengan pencahayaan ramah mata</li></ul>',
             ],
         ];
 
@@ -110,6 +112,11 @@ class Smkn6FacilitiesSeeder extends Seeder
             );
         }
 
-        $this->command->info('SMKN 6 facilities category and 8 content items successfully seeded!');
+        $this->command?->info('Vocational facilities category and 8 content items successfully seeded!');
     }
+}
+
+// Backward compatibility alias for legacy scripts
+if (!class_exists('Modules\Publishing\Database\Seeders\Smkn6FacilitiesSeeder', false)) {
+    class_alias(VocationalFacilitiesSeeder::class, 'Modules\Publishing\Database\Seeders\Smkn6FacilitiesSeeder');
 }

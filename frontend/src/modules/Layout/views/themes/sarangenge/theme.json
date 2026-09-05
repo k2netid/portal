@@ -3,7 +3,10 @@
     "slug": "sarangenge",
     "version": "2.0.0",
     "type": "frontend",
-    "description": "Sarangenge — tema situs sekolah (bahasa Sunda: tengah hari). Saudara filosofis Janari (fajar). Fokus kampus, PPDB, prestasi, dan aksesibilitas 2026.",
+    "archetype": "education_school",
+    "category": "Education & Institution",
+    "parent_theme": "janari",
+    "description": "Sarangenge — tema situs sekolah kejuruan & institusi pendidikan. Fokus kampus vokasi SMK Pusat Keunggulan, PPDB, prestasi, bengkel TEFA, dan aksesibilitas 2026.",
     "author": "Jejakawan Team",
     "supports": {
         "sarangenge_canvas": true
@@ -246,54 +249,69 @@
             "scope": "platform"
         },
         "home_sections": {
-            "label": "Homepage sections",
+            "label": "Bagian Beranda Sekolah",
             "type": "checkbox_list",
             "options": [
                 {
-                    "label": "Landing hero",
+                    "label": "Hero Vokasi & Banner PPDB",
                     "value": "hero"
                 },
                 {
-                    "label": "Bento Infrastructure & Services",
-                    "value": "services"
+                    "label": "Bento Keunggulan & BLUD Kampus",
+                    "value": "bento"
                 },
                 {
-                    "label": "Bandwidth & Speed Calculator",
-                    "value": "calculator"
+                    "label": "Pencari Jalur Vokasi & Minat Karir",
+                    "value": "track_finder"
                 },
                 {
-                    "label": "SLA Performance Guarantee",
-                    "value": "sla"
+                    "label": "Program Keahlian Vokasi (6 Konsentrasi)",
+                    "value": "programs"
                 },
                 {
-                    "label": "Managed IT & SOC Services",
-                    "value": "managed_services"
+                    "label": "Warta Kampus & Pengumuman",
+                    "value": "announcements"
                 },
                 {
-                    "label": "Client Testimonials & Partners",
+                    "label": "Prestasi Siswa & Guru",
+                    "value": "achievements"
+                },
+                {
+                    "label": "Fasilitas & Bengkel Praktik TEFA",
+                    "value": "facilities"
+                },
+                {
+                    "label": "Ekstrakurikuler & Pembinaan Karakter",
+                    "value": "extracurricular"
+                },
+                {
+                    "label": "Testimoni Alumni & DUDI Mitra",
                     "value": "testimonials"
                 },
                 {
-                    "label": "Technical & Provisioning FAQ",
+                    "label": "Tanya Jawab (FAQ PPDB & Sekolah)",
                     "value": "faq"
                 },
                 {
-                    "label": "Call to action (CTA)",
+                    "label": "Panggilan Aksi (CTA Pendaftaran)",
                     "value": "cta"
                 }
             ],
             "default": [
                 "hero",
-                "services",
-                "calculator",
-                "sla",
-                "managed_services",
+                "bento",
+                "track_finder",
+                "programs",
+                "announcements",
+                "achievements",
+                "facilities",
+                "extracurricular",
                 "testimonials",
                 "faq",
                 "cta"
             ],
             "category": "Layout",
-            "scope": "platform"
+            "scope": "theme"
         },
         "container_max_width": {
             "label": "Container Max Width",
@@ -645,7 +663,7 @@
                 },
                 {
                     "icon": "Github",
-                    "url": "https://github.com/jejakawan/k2net"
+                    "url": "https://github.com/jejakawan"
                 }
             ],
             "scope": "platform"
@@ -862,121 +880,6 @@
             "default": 75,
             "category": "Hero Section"
         },
-        "hero_animation_enabled": {
-            "label": "Aktifkan Animasi Hero Vokasi",
-            "type": "checkbox",
-            "default": true,
-            "description": "Tampilkan panggung animasi visual interaktif kejuruan di area kanan hero",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_animation_type": {
-            "label": "Pilihan Animasi Hero Vokasi",
-            "type": "select",
-            "default": "engineering",
-            "options": [
-                {
-                    "value": "engineering",
-                    "label": "Manufaktur CNC & Teaching Factory (Presisi Mesin)"
-                },
-                {
-                    "value": "architecture",
-                    "label": "Desain Pemodelan Bangunan (BIM 4.0 & Sipil)"
-                },
-                {
-                    "value": "automotive",
-                    "label": "Teknik Otomotif & Kendaraan Listrik (EV Tech)"
-                },
-                {
-                    "value": "tech_network",
-                    "label": "Teknik Komputer, Jaringan & IoT Kampus"
-                }
-            ],
-            "description": "Pilih animasi visual yang selaras dengan identitas SMK Pusat Keunggulan",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_slider_enabled": {
-            "label": "Aktifkan Slider Hero",
-            "type": "checkbox",
-            "default": true,
-            "description": "Tampilkan multi-slide hero dengan transisi interaktif dan tab indikator numerik",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_slider_autoplay": {
-            "label": "Autoplay Slider Hero",
-            "type": "checkbox",
-            "default": true,
-            "description": "Putar slide hero secara otomatis bergantian",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_slider_interval": {
-            "label": "Interval Slider Hero (detik)",
-            "type": "range",
-            "min": 3,
-            "max": 15,
-            "step": 1,
-            "default": 7,
-            "description": "Durasi tampilan setiap slide sebelum berganti otomatis",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_bottom_mode": {
-            "label": "Mode Bagian Bawah Hero",
-            "type": "select",
-            "default": "news",
-            "options": [
-                {
-                    "value": "stats",
-                    "label": "Bar Metrik & Statistik Keunggulan"
-                },
-                {
-                    "value": "news",
-                    "label": "Carousel Warta & Agenda Kampus"
-                },
-                {
-                    "value": "both",
-                    "label": "Mode Ganda (Metrik + Warta)"
-                },
-                {
-                    "value": "none",
-                    "label": "Nonaktifkan Bagian Bawah"
-                }
-            ],
-            "description": "Tentukan informasi yang tampil pada dock bagian bawah hero",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_news_enabled": {
-            "label": "Aktifkan Strip Warta Sekolah di Hero",
-            "type": "checkbox",
-            "default": true,
-            "description": "Tampilkan cuplikan berita dan agenda sekolah terbaru di bagian bawah hero",
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_news_limit": {
-            "label": "Jumlah Warta di Hero",
-            "type": "range",
-            "min": 2,
-            "max": 6,
-            "step": 1,
-            "default": 4,
-            "category": "Hero Section",
-            "scope": "theme"
-        },
-        "hero_news_autoplay_interval": {
-            "label": "Interval Autoplay Warta Hero (detik)",
-            "type": "range",
-            "min": 3,
-            "max": 15,
-            "step": 1,
-            "default": 5,
-            "category": "Hero Section",
-            "scope": "theme"
-        },
         "track_finder_enabled": {
             "label": "Aktifkan Widget Pencari Jurusan",
             "type": "boolean",
@@ -1023,13 +926,13 @@
             "label": "Judul Fasilitas Sekolah",
             "type": "text",
             "default": "Fasilitas & Sarana Kampus Modern",
-            "category": "Services Page"
+            "category": "Facilities Page"
         },
         "facilities_subtitle": {
             "label": "Subjudul Fasilitas",
             "type": "text",
             "default": "Lingkungan belajar kondusif dengan teknologi cerdas dan laboratorium lengkap.",
-            "category": "Services Page"
+            "category": "Facilities Page"
         },
         "tim_title": {
             "label": "Judul Halaman Pendidik & Staf",
@@ -1101,7 +1004,7 @@
             "label": "Aktifkan Halaman Fasilitas & Bengkel",
             "type": "boolean",
             "default": true,
-            "category": "Services Page"
+            "category": "Facilities Page"
         },
         "enable_pricing": {
             "label": "Aktifkan Halaman Biaya & PPDB",

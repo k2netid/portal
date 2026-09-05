@@ -187,8 +187,6 @@ const CORE_PUBLIC_PATH_TO_PAGE: Record<string, string> = {
   '/tim': 'Tim',
   '/solusi': 'Solusi',
   '/pricing': 'Pricing',
-  '/pricing/isp': 'PricingIsp',
-  '/pricing/msp': 'PricingMsp',
   '/blog': 'Blog',
   '/contact': 'Contact',
 }
@@ -202,26 +200,35 @@ useHead(computed(() => {
     return {}
   }
   const slug = activeThemeSlug.value.toLowerCase()
-  const siteName = String(getSetting('site_name', '') || getSetting('school_name', '') || '').trim()
+  const siteName = String(
+    systemStore.siteSettings?.site_name ||
+    systemStore.siteSettings?.site_title ||
+    getSetting('site_name', '') ||
+    getSetting('site_title', '') ||
+    getSetting('school_name', '') ||
+    getSetting('brand_name', '') ||
+    activeTheme.value?.name ||
+    ''
+  ).trim()
   const themePage = typeof route.meta.themePage === 'string' ? route.meta.themePage : undefined
 
   let seo: { title: string; description: string } | null = null
   if (slug === 'layung') {
     seo = resolveLayungPublicSeo({
       themePage,
-      siteName: siteName || 'K2NET',
+      siteName: siteName || t('common.siteName', 'Portal Layanan'),
       t: tLayung,
     })
   } else if (slug === 'sarangenge') {
     seo = resolveSarangengePublicSeo({
       themePage,
-      siteName: siteName || 'SMK Negeri 6 Bandung',
+      siteName: siteName || t('common.schoolName', 'Portal Sekolah'),
       t: tSarangenge,
     })
   } else if (slug === 'janari') {
     seo = resolveJanariPublicSeo({
       themePage,
-      siteName: siteName || 'Jejakawan',
+      siteName: siteName || t('common.siteName', 'Portal'),
       t: tJanari,
     })
   }

@@ -9,7 +9,7 @@ import {
     useLoggerPlugin,
 } from './main-shared';
 
-document.title = i18n.global.t('system.app.consoleTitle', 'K2NET Console');
+document.title = i18n.global.t('system.app.consoleTitle', 'Console');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('console'));

@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Publishing\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 use Modules\Core\System\Models\User;
 use Modules\Library\Models\Category;
 use Modules\Publishing\Models\Content;
 
-class Smkn6ContentSeeder extends Seeder
+class VocationalProgramsSeeder extends Seeder
 {
     public function run(): void
     {
         $author = User::query()->first();
         if (!$author) {
-            $this->command->warn('No user found to set as author.');
+            $this->command?->warn('No user found to set as author.');
             return;
         }
 
@@ -23,13 +24,13 @@ class Smkn6ContentSeeder extends Seeder
             ['slug' => 'program-keahlian'],
             [
                 'name' => 'Program Keahlian',
-                'description' => 'Program Keahlian SMK Negeri 6 Bandung',
+                'description' => 'Program Keahlian Vokasi & Pusat Keunggulan',
                 'is_active' => true,
                 'author_id' => $author->id,
             ]
         );
 
-        // 2. Define the 6 majors
+        // 2. Define the standard vocational majors
         $majors = [
             [
                 'title' => 'Desain Pemodelan dan Informasi Bangunan (DPIB)',
@@ -93,8 +94,13 @@ class Smkn6ContentSeeder extends Seeder
             );
         }
 
-        $this->call(Smkn6FacilitiesSeeder::class);
+        $this->call(VocationalFacilitiesSeeder::class);
 
-        $this->command->info('SMKN 6 programs and facilities successfully seeded!');
+        $this->command?->info('Vocational programs and facilities successfully seeded!');
     }
+}
+
+// Backward compatibility alias for legacy scripts
+if (!class_exists('Modules\Publishing\Database\Seeders\Smkn6ContentSeeder', false)) {
+    class_alias(VocationalProgramsSeeder::class, 'Modules\Publishing\Database\Seeders\Smkn6ContentSeeder');
 }

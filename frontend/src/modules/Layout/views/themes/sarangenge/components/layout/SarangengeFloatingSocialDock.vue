@@ -173,10 +173,10 @@ const rawSocialLinks = computed(() => {
 });
 
 const defaultSocialLinks = computed(() => [
-  { icon: 'WhatsApp', url: whatsAppUrl.value || '628122222066', label: 'Hotline PPDB' },
-  { icon: 'Instagram', url: 'https://instagram.com/smkn6bandung', label: 'Instagram SMKN 6' },
-  { icon: 'Youtube', url: 'https://youtube.com/@smkn6bandung', label: 'YouTube Sekolah' },
-  { icon: 'Mail', url: 'info@smkn6bandung.sch.id', label: 'Email Resmi' },
+  { icon: 'WhatsApp', url: whatsAppUrl.value || '', label: 'Hotline Informasi' },
+  { icon: 'Instagram', url: '#', label: 'Instagram' },
+  { icon: 'Youtube', url: '#', label: 'YouTube' },
+  { icon: 'Mail', url: 'info@school.sch.id', label: 'Email Resmi' },
 ]);
 
 const socialLinks = computed(() => {
@@ -226,10 +226,10 @@ const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
 
   const clean = trimStr(link?.icon);
   if (!clean) return 'Tautan';
-  if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp PPDB';
-  if (clean === 'Instagram') return 'Instagram Sekolah';
-  if (clean === 'Youtube') return 'YouTube SMKN 6';
-  if (clean === 'Mail' || clean === 'Email') return 'Email Sekolah';
+  if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp';
+  if (clean === 'Instagram') return 'Instagram';
+  if (clean === 'Youtube') return 'YouTube';
+  if (clean === 'Mail' || clean === 'Email') return 'Email';
   return clean;
 };
 

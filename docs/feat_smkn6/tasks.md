@@ -108,7 +108,32 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Menyelaraskan skema tema `schema.settings.json` dan `theme.json` lintas tema (`Sarangenge`, `Janari`, `Layung`) dengan label deskriptif berbahasa Indonesia.
   - [x] Kompilasi build dan deployment aset via `npm run deploy:assets:full` serta pembersihan cache artisan `php artisan optimize:clear`.
 
-### Milestone 7: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
+### Milestone 7: Multi-Theme SoC, Cross-Theme Isolation, & Generalisasi Naming (🟢 Selesai)
+- [x] **Eliminasi Kebocoran Tampilan Silang (Cross-Theme Leakage)**:
+  - [x] Membatasi kandidat resolving tampilan tema di `themeViewResolver.ts` dan `ThemePageResolver.vue` murni pada `[theme.slug, theme.parent_theme]`.
+  - [x] Menghapus fallback silang global ke seluruh sibling themes (`BUNDLED_FRONTEND_THEME_SLUGS`) dan fuzzy resolver lintas tema.
+  - [x] Implementasi pembersihan dynamic routes (`activeThemeRouteRemovers`) saat pergantian tema di `public.ts`.
+  - [x] Menghapus pemetaan statis `/pricing/isp` dan `/pricing/msp` dari `CORE_PUBLIC_PATH_TO_PAGE` di `FrontendLayout.vue`.
+  - [x] Pembuatan unit test `themeViewResolver.spec.ts` untuk memastikan isolasi antar-tema.
+- [x] **Standarisasi Arsitektur Multi-Theme SoC**:
+  - [x] `janari`: Universal reference theme (`archetype: "universal"`).
+  - [x] `sarangenge`: Institutional / Vocational school theme (`archetype: "education_school"`, `parent_theme: "janari"`).
+  - [x] `layung`: Corporate & Industry theme (`archetype: "corporate_industry"`, `parent_theme: "janari"`).
+  - [x] Sinkronisasi skema kustomisasi terisolasi: Janari (582 keys), Layung (118 keys), Sarangenge (97 keys).
+- [x] **Generalisasi Identitas Dinamis & Pembersihan Hardcode**:
+  - [x] Resolusi dinamis `siteName` dari `systemStore.siteSettings?.site_name` di `useSarangengeIdentity.ts`, `useLayungIdentity.ts`, dan SEO composables.
+  - [x] Pembersihan hardcode title di `main.ts` ('Console') dan `main-public.ts` ('Portal' dengan update dinamis setelah fetch).
+  - [x] Dinamisasi preview address bar di `PreviewArea.vue` mengikuti `window.location.host`.
+  - [x] Generalisasi footer Janari (`Footer.vue`) dan dock media sosial (`SarangengeFloatingSocialDock.vue`).
+- [x] **Generalisasi Penamaan File & Komponen**:
+  - [x] Komponen frontend: `SchoolBentoSection.vue` $\rightarrow$ `BentoSection.vue`.
+  - [x] Seeder backend: `Smkn6ContentSeeder.php` $\rightarrow$ `VocationalProgramsSeeder.php` dan `Smkn6FacilitiesSeeder.php` $\rightarrow$ `VocationalFacilitiesSeeder.php` dengan alias backward compatibility.
+  - [x] Pembersihan meta keywords dan mail default di `FoundationSeeder.php`.
+- [x] **Penyelarasan Translasi i18n & Quality Gates**:
+  - [x] Menyelaraskan seluruh teks translasi di 3 bahasa (`id.json`, `en.json`, `su.json`) tanpa menyisakan key sampah.
+  - [x] 100% Quality Gates: `npm run i18n:check:full` (symmetric), `npm run type-check` (0 error), `npm run test:unit` (286/286 tests passed), `npm run deploy:assets:full` (sukses), `php artisan optimize:clear` (sukses).
+
+### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain resmi `smkn6bandung.sch.id`.

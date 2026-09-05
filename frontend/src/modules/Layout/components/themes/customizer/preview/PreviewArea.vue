@@ -155,7 +155,7 @@
             <!-- Address Pill -->
             <div class="px-3 py-0.5 rounded-lg bg-background/80 border border-border/60 text-[11px] font-mono text-muted-foreground flex items-center gap-1.5 shadow-2xs max-w-sm w-64 justify-center">
               <Lock class="w-3 h-3 text-emerald-500 shrink-0" />
-              <span class="truncate">k2net.id{{ props.previewUrl || '/' }}</span>
+              <span class="truncate">{{ previewHost }}{{ props.previewUrl || '/' }}</span>
             </div>
 
             <!-- Resolution tag -->
@@ -307,6 +307,8 @@ const deviceModes = [
   { id: 'tablet' as const, icon: TabletIcon },
   { id: 'mobile' as const, icon: SmartphoneIcon },
 ];
+
+const previewHost = computed(() => (typeof window !== 'undefined' && window.location.host ? window.location.host : 'portal.local'));
 
 const zoomLevel = ref<number>(100);
 const zoomPresets = [50, 75, 90, 100, 110, 125, 150];

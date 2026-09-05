@@ -194,50 +194,8 @@
     "home_sections": {
         "label": "Homepage sections",
         "type": "checkbox_list",
-        "options": [
-            {
-                "label": "Landing hero",
-                "value": "hero"
-            },
-            {
-                "label": "Bento Infrastructure & Services",
-                "value": "services"
-            },
-            {
-                "label": "Bandwidth & Speed Calculator",
-                "value": "calculator"
-            },
-            {
-                "label": "SLA Performance Guarantee",
-                "value": "sla"
-            },
-            {
-                "label": "Managed IT & SOC Services",
-                "value": "managed_services"
-            },
-            {
-                "label": "Client Testimonials & Partners",
-                "value": "testimonials"
-            },
-            {
-                "label": "Technical & Provisioning FAQ",
-                "value": "faq"
-            },
-            {
-                "label": "Call to action (CTA)",
-                "value": "cta"
-            }
-        ],
-        "default": [
-            "hero",
-            "services",
-            "calculator",
-            "sla",
-            "managed_services",
-            "testimonials",
-            "faq",
-            "cta"
-        ],
+        "options": [],
+        "default": [],
         "category": "Layout",
         "scope": "platform"
     },
@@ -584,7 +542,7 @@
             },
             {
                 "icon": "Github",
-                "url": "https://github.com/jejakawan/k2net"
+                "url": "https://github.com/jejakawan"
             }
         ],
         "scope": "platform"

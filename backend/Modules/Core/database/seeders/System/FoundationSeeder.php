@@ -301,8 +301,8 @@ class FoundationSeeder extends Seeder
 
             // SEO Settings
             ['key' => 'meta_title', 'value' => $appName, 'group' => 'seo', 'type' => 'string'],
-            ['key' => 'meta_description', 'value' => 'Portal Resmi SMKN 6 Bandung', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_keywords', 'value' => 'smkn6bandung, portal, sekolah, bandung', 'group' => 'seo', 'type' => 'string'],
+            ['key' => 'meta_description', 'value' => 'Portal Resmi', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_keywords', 'value' => 'portal, website, cms', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_analytics_id', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'google_search_console', 'value' => '', 'group' => 'seo', 'type' => 'string'],
             ['key' => 'enable_sitemap', 'value' => '1', 'group' => 'seo', 'type' => 'boolean'],
@@ -320,7 +320,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'mail_username', 'value' => '', 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_password', 'value' => '', 'group' => 'email', 'type' => 'password'],
             ['key' => 'mail_encryption', 'value' => 'tls', 'group' => 'email', 'type' => 'string'],
-            ['key' => 'mail_from_address', 'value' => (string) config('mail.from.address', 'portal@smkn6bandung.sch.id'), 'group' => 'email', 'type' => 'string'],
+            ['key' => 'mail_from_address', 'value' => (string) config('mail.from.address', 'noreply@example.com'), 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_from_name', 'value' => $appName, 'group' => 'email', 'type' => 'string'],
 
             // Monitoring Settings

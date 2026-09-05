@@ -5,7 +5,7 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     titleKey: 'header.home',
     titleFallback: 'Beranda',
     descKey: 'footer.description',
-    descFallback: 'SMK Negeri 6 Bandung — Sekolah Menengah Kejuruan Pusat Keunggulan.',
+    descFallback: 'Sekolah Menengah Kejuruan Pusat Keunggulan.',
   },
   'pages/About': {
     titleKey: 'header.about',
@@ -86,12 +86,12 @@ export function resolveSarangengePublicSeo(input: {
   siteName: string;
   t: SarangengeTranslate;
 }): { title: string; description: string } {
-  const siteName = input.siteName.trim() || 'SMK Negeri 6 Bandung';
+  const siteName = input.siteName.trim() || 'Portal Sekolah';
   const copy = input.themePage ? PAGE_SEO[input.themePage] : undefined;
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', 'SMK Negeri 6 Bandung — Sekolah Menengah Kejuruan Pusat Keunggulan.');
+    : input.t('footer.description', `${siteName} — Sekolah Menengah Kejuruan Pusat Keunggulan.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'

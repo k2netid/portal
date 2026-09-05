@@ -362,7 +362,7 @@ import { publishingPaths } from '@/engine/api/paths';
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
-const { displayAccreditation, ppdbPortalUrl } = useSarangengeIdentity();
+const { displaySchoolName, displayAccreditation, ppdbPortalUrl } = useSarangengeIdentity();
 const { isAnimationEnabled, splitTextRevealSafe, staggerChildren, fadeInUp } = useThemeMotion();
 
 // Template Refs for Motion
@@ -478,7 +478,7 @@ const activeSlides = computed(() => {
   if (hasHeroSlidesBinding.value && Array.isArray(dynamicHeroSlides.value) && dynamicHeroSlides.value.length > 0) {
     return (dynamicHeroSlides.value as Record<string, unknown>[]).map((item, idx) => ({
       id: String(item.id || idx),
-      badge: String(item.badge || item.category || 'SMKN 6 BANDUNG'),
+      badge: String(item.badge || item.category || displaySchoolName.value || 'VOKASI UNGGULAN'),
       title: String(item.title || item.name || ''),
       subtitle: String(item.subtitle || item.description || item.excerpt || ''),
       ctaText: String(item.cta_text || item.button_text || heroPrimaryText.value),
@@ -552,7 +552,7 @@ const isExternalPrimary = computed(() => {
 // Bottom Mode & Scroll Indicators (Default to 'news' like Layung)
 const heroBottomMode = computed(() => String(getSetting('hero_bottom_mode', 'news') || 'news'));
 const heroShowScroll = computed(() => getSetting('hero_show_scroll', true) !== false);
-const scrollCueText = computed(() => t('pages.home.scrollCue', 'JELAJAHI SMKN 6 BANDUNG'));
+const scrollCueText = computed(() => t('pages.home.scrollCue', 'JELAJAHI KAMPUS'));
 const statsSectionLabel = computed(() => t('pages.home.statsSectionLabel', 'METRIK & KINERJA PUSAT KEUNGGULAN'));
 const statsSubLabel = computed(() => t('pages.home.statsSubLabel', 'Status Vokasi & Penjaminan Mutu'));
 const newsSectionLabel = computed(() => t('pages.home.newsSectionLabel', 'WARTA KAMPUS & PPDB 2026'));
@@ -589,7 +589,7 @@ const defaultSchoolNews = computed<SchoolNewsItem[]>(() => [
   },
   {
     id: 'lks-champions',
-    title: t('pages.home.newsLksTitle', 'Siswa SMKN 6 Raih Medali Emas Lomba Kompetensi Siswa (LKS) Tingkat Provinsi'),
+    title: t('pages.home.newsLksTitle', 'Siswa Vokasi Raih Medali Emas Lomba Kompetensi Siswa (LKS) Tingkat Provinsi'),
     category: 'Prestasi',
     date: 'Mei 2026',
     url: '/blog',

@@ -142,6 +142,7 @@ export const createPublicRouter = () => {
     });
 
     let injectedThemeSlug: string | null = null;
+    let activeThemeRouteRemovers: Array<() => void> = [];
 
     router.beforeEach(async (to, from) => {
         if (to.path !== '/404' && to.path !== '/maintenance') {
@@ -152,6 +153,10 @@ export const createPublicRouter = () => {
                 
                 const currentSlug = activeTheme.value?.slug;
                 if (currentSlug && currentSlug !== injectedThemeSlug) {
+                    // Clean up routes from previously active theme
+                    activeThemeRouteRemovers.forEach((remove) => remove());
+                    activeThemeRouteRemovers = [];
+
                     const modules = import.meta.glob('@/modules/Layout/views/themes/*/routes.ts');
                     const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${currentSlug}/routes.ts`];
                     
@@ -159,7 +164,10 @@ export const createPublicRouter = () => {
                         const module = await loadThemeRoutes() as any;
                         if (module.default && Array.isArray(module.default)) {
                             module.default.forEach((route: any) => {
-                                router.addRoute('public-layout', route);
+                                const remove = router.addRoute('public-layout', route);
+                                if (typeof remove === 'function') {
+                                    activeThemeRouteRemovers.push(remove);
+                                }
                             });
                             injectedThemeSlug = currentSlug;
                             if (to.matched.length === 0 || to.name === 'public-not-found') {

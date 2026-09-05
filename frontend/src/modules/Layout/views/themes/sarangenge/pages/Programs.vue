@@ -19,7 +19,7 @@
                 {{ t('pages.programs.heading', 'Kompetensi Keahlian') }}
               </h1>
               <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                {{ t('pages.programs.subtitle', 'Program keahlian unggulan di SMK Negeri 6 Bandung yang diselaraskan dengan kebutuhan dunia usaha dan industri (DUDI).') }}
+                {{ t('pages.programs.subtitle', 'Program keahlian unggulan yang diselaraskan dengan kebutuhan dunia usaha dan industri (DUDI).') }}
               </p>
             </div>
           </div>

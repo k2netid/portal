@@ -10,7 +10,8 @@ const themeSchemaBySlug: Record<string, CustomizerSettingsSchema> = {};
 for (const [modulePath, schema] of Object.entries(themeSchemaModules)) {
     const match = modulePath.match(/views\/themes\/([^/]+)\/customizer\/schema\.settings\.json$/);
     if (match?.[1]) {
-        themeSchemaBySlug[match[1]] = schema;
+        const raw = ((schema as { default?: CustomizerSettingsSchema })?.default ?? schema) as CustomizerSettingsSchema;
+        themeSchemaBySlug[match[1]] = raw;
     }
 }
 

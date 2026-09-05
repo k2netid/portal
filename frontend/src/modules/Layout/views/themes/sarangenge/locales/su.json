@@ -54,7 +54,7 @@
       "heroSubtitle": "Ramatloka resmi sakola: kainspirasi ku kembang sarangenge nu nyanghareup kana panonpoé isuk, ngaping siswa mikacinta élmu sarta miboga ahlak luhung.",
       "heroCta": "Daptar PPDB Online",
       "heroSecondary": "Tilik Program",
-      "scrollCue": "Kokolétak SMKN 6 Bandung",
+      "scrollCue": "Kokolétak Kampus Sakola",
       "statsSectionLabel": "MÉTRIK & KINERJA PUSAT KAUNGGULAN",
       "statsSubLabel": "Status Vokasi & Jaminan Mutu",
       "heroPrevSlide": "Slide sateuacanna",
@@ -75,7 +75,7 @@
       "newsSectionLabel": "WARTA KAMPUS & PPDB 2026",
       "viewAllNews": "Sadaya Warta Sakola",
       "newsPpdbTitle": "Sosialisasi Alur & Cara Daptar PPDB Jawa Barat 2026/2027",
-      "newsLksTitle": "Murid SMKN 6 Kenging Medali Emas Lomba Kompeténsi Siswa (LKS) Tingkat Propinsi",
+      "newsLksTitle": "Murid Vokasi Kenging Medali Emas Lomba Kompeténsi Siswa (LKS) Tingkat Propinsi",
       "newsDudiTitle": "Nandatanganan MoU Kelas Khusus Industri Sareng Mitra DUDI Kautama",
       "newsTefaTitle": "Paméran Produk Pinunjul Teaching Factory & Uji Sértifikasi BNSP 2026",
       "bentoTitle": "Aksés Gancang Kampus",
@@ -164,7 +164,7 @@
     "programs": {
       "title": "Program Kaahlian",
       "heading": "Kompetensi Kaahlian",
-      "subtitle": "Program kaahlian punjul di SMKN 6 Bandung anu disaluyukeun sareng kabutuhan industri (DUDI).",
+      "subtitle": "Program kaahlian punjul anu disaluyukeun sareng kabutuhan industri (DUDI).",
       "noData": "Data program kaahlian teu acan sayaga."
     },
     "facilities": {
@@ -184,8 +184,8 @@
       "benefit3": "Bantuan Operasional Sakola (BOS) Pusat",
       "benefit4": "Fasilitas Prakték Standar Industri SMK PK",
       "ppdbTitle": "Panarimaan Murid Enggal (PPDB)",
-      "ppdbDesc": "Prosés seléksi sareng paptaran PPDB SMKN 6 Bandung dilaksanakeun sacara puseur ngaliwatan portal resmi Dinas Pendidikan Jawa Barat.",
-      "ppdbButton": "Aksés Portal PPDB Jabar",
+      "ppdbDesc": "Prosés seléksi sareng paptaran peserta didik énggal dilaksanakeun sacara puseur ngaliwatan portal resmi Dinas Pendidikan.",
+      "ppdbButton": "Aksés Portal PPDB",
       "monthly": "Per Sasih",
       "annual": "Per Taun"
     },
@@ -249,7 +249,7 @@
   },
   "trackFinder": {
     "badge": "Pituduh Peminatan & Rekomendasi Jurusan",
-    "title": "Panggihan Jurusan Impian Anjeun di SMKN 6",
+    "title": "Panggihan Jurusan Impian Anjeun",
     "subtitle": "Eksplorasi program kaahlian vokasi standar industri anu cocog sareng karesep, bakat, sareng karir mangsa payun.",
     "step1Label": "Pilih Widang anu Paling Dipikaresep:",
     "step2Label": "Gaya Diajar anu Paling Genah:",

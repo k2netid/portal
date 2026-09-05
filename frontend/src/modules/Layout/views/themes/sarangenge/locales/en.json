@@ -54,7 +54,7 @@
       "heroSubtitle": "Official school portal: inspired by the sunflower greeting the morning sun, guiding learners to love knowledge and embody noble character.",
       "heroCta": "Apply Online",
       "heroSecondary": "Explore Programs",
-      "scrollCue": "Explore SMKN 6 Bandung",
+      "scrollCue": "Explore Vocational Campus",
       "statsSectionLabel": "EXCELLENCE CENTER PERFORMANCE METRICS",
       "statsSubLabel": "Vocational Status & Quality Assurance",
       "heroPrevSlide": "Previous slide",
@@ -75,7 +75,7 @@
       "newsSectionLabel": "CAMPUS NEWS & ADMISSIONS 2026",
       "viewAllNews": "All School News",
       "newsPpdbTitle": "West Java Admissions (PPDB) 2026/2027 Registration Workflow",
-      "newsLksTitle": "SMKN 6 Students Win Gold Medal in Provincial Student Competency Competition (LKS)",
+      "newsLksTitle": "Vocational Students Win Gold Medal in Provincial Student Competency Competition (LKS)",
       "newsDudiTitle": "Industrial Partnership MoU Signing for Specialized Industry Class",
       "newsTefaTitle": "Teaching Factory Flagship Exhibition & BNSP Certification Assessment 2026",
       "bentoTitle": "Campus Quick Access",
@@ -164,7 +164,7 @@
     "programs": {
       "title": "Vocational Programs",
       "heading": "Vocational Competencies",
-      "subtitle": "Excellence vocational programs at SMKN 6 Bandung aligned with enterprise and industrial demands.",
+      "subtitle": "Excellence vocational programs aligned with enterprise and industrial demands.",
       "noData": "Vocational program data is not yet available."
     },
     "facilities": {
@@ -184,8 +184,8 @@
       "benefit3": "National School Operational Assistance (BOS)",
       "benefit4": "Industry-Standard Vocational Center of Excellence Facilities",
       "ppdbTitle": "New Student Admissions (PPDB)",
-      "ppdbDesc": "Selection and admission for SMKN 6 Bandung are centrally conducted through the official West Java Education Department portal.",
-      "ppdbButton": "Access West Java PPDB Portal",
+      "ppdbDesc": "Selection and student admission are centrally conducted through the official education department portal.",
+      "ppdbButton": "Access PPDB Portal",
       "monthly": "Per Month",
       "annual": "Per Year"
     },
@@ -249,7 +249,7 @@
   },
   "trackFinder": {
     "badge": "Vocational Major Discovery & Career Guide",
-    "title": "Find Your Dream Major at SMKN 6",
+    "title": "Find Your Dream Vocational Major",
     "subtitle": "Explore industrial-grade vocational majors tailored to your passion, skills, and future career path.",
     "step1Label": "Choose the Field You Love Most:",
     "step2Label": "Your Preferred Learning Style:",

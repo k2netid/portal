@@ -212,13 +212,13 @@
         "label": "Judul Fasilitas Sekolah",
         "type": "text",
         "default": "Fasilitas & Sarana Kampus Modern",
-        "category": "Services Page"
+        "category": "Facilities Page"
     },
     "facilities_subtitle": {
         "label": "Subjudul Fasilitas",
         "type": "text",
         "default": "Lingkungan belajar kondusif dengan teknologi cerdas dan laboratorium lengkap.",
-        "category": "Services Page"
+        "category": "Facilities Page"
     },
     "tim_title": {
         "label": "Judul Halaman Pendidik & Staf",
@@ -296,7 +296,7 @@
         "label": "Aktifkan Halaman Fasilitas & Bengkel",
         "type": "boolean",
         "default": true,
-        "category": "Services Page"
+        "category": "Facilities Page"
     },
     "enable_pricing": {
         "label": "Aktifkan Halaman Biaya & PPDB",
@@ -366,5 +366,70 @@
         "type": "text",
         "default": "",
         "category": "Social Media"
+    },
+    "home_sections": {
+        "label": "Bagian Beranda Sekolah",
+        "type": "checkbox_list",
+        "options": [
+            {
+                "label": "Hero Vokasi & Banner PPDB",
+                "value": "hero"
+            },
+            {
+                "label": "Bento Keunggulan & BLUD Kampus",
+                "value": "bento"
+            },
+            {
+                "label": "Pencari Jalur Vokasi & Minat Karir",
+                "value": "track_finder"
+            },
+            {
+                "label": "Program Keahlian Vokasi (6 Konsentrasi)",
+                "value": "programs"
+            },
+            {
+                "label": "Warta Kampus & Pengumuman",
+                "value": "announcements"
+            },
+            {
+                "label": "Prestasi Siswa & Guru",
+                "value": "achievements"
+            },
+            {
+                "label": "Fasilitas & Bengkel Praktik TEFA",
+                "value": "facilities"
+            },
+            {
+                "label": "Ekstrakurikuler & Pembinaan Karakter",
+                "value": "extracurricular"
+            },
+            {
+                "label": "Testimoni Alumni & DUDI Mitra",
+                "value": "testimonials"
+            },
+            {
+                "label": "Tanya Jawab (FAQ PPDB & Sekolah)",
+                "value": "faq"
+            },
+            {
+                "label": "Panggilan Aksi (CTA Pendaftaran)",
+                "value": "cta"
+            }
+        ],
+        "default": [
+            "hero",
+            "bento",
+            "track_finder",
+            "programs",
+            "announcements",
+            "achievements",
+            "facilities",
+            "extracurricular",
+            "testimonials",
+            "faq",
+            "cta"
+        ],
+        "category": "Layout",
+        "scope": "theme"
     }
 }

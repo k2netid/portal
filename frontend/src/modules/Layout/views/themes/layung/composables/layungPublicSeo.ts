@@ -86,12 +86,12 @@ export function resolveLayungPublicSeo(input: {
   siteName: string;
   t: LayungTranslate;
 }): { title: string; description: string } {
-  const siteName = input.siteName.trim() || 'K2NET';
+  const siteName = input.siteName.trim() || 'Portal Layanan';
   const copy = input.themePage ? PAGE_SEO[input.themePage] : undefined;
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', 'K2NET — ISP, managed services, dan penyedia produk IT.');
+    : input.t('footer.description', `${siteName} — Solusi konektivitas, cloud, dan infrastruktur IT enterprise.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'

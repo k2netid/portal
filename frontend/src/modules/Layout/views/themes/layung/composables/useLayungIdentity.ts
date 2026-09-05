@@ -51,11 +51,11 @@ export function useLayungIdentity() {
   const systemStore = useSystemStore();
 
   const displayCompanyName = computed(() => {
-    const fromTheme = getSetting('site_title', '') || getSetting('brand_name', '');
+    const fromTheme = getSetting('site_title', '') || getSetting('brand_name', '') || getSetting('site_name', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim() !== '') return fromTheme.trim();
-    const systemName = (systemStore.settings as { site_name?: string } | undefined)?.site_name;
+    const systemName = (systemStore.settings as { site_name?: string } | undefined)?.site_name || systemStore.siteSettings?.site_name;
     if (systemName && typeof systemName === 'string' && systemName.trim() !== '') return systemName.trim();
-    return 'K2NET';
+    return 'Portal Layanan';
   });
 
   const displayLegalName = computed(() => {

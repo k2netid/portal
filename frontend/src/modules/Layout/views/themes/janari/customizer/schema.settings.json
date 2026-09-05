@@ -4242,5 +4242,27 @@
         "type": "text",
         "default": "",
         "category": "Social Media"
+    },
+    "home_sections": {
+        "label": "Homepage sections",
+        "type": "checkbox_list",
+        "options": [
+            { "label": "Hero Showcase", "value": "hero" },
+            { "label": "Featured Products", "value": "products" },
+            { "label": "Latest Updates & News", "value": "updates" },
+            { "label": "Clients & Partners", "value": "partners" },
+            { "label": "Testimonials & Reviews", "value": "testimonials" },
+            { "label": "Call to action (CTA)", "value": "cta" }
+        ],
+        "default": [
+            "hero",
+            "products",
+            "updates",
+            "partners",
+            "testimonials",
+            "cta"
+        ],
+        "category": "Layout",
+        "scope": "theme"
     }
 }

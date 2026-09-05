@@ -19,7 +19,7 @@
           {{ t('trackFinder.badge', 'Panduan Peminatan & Rekomendasi Jurusan') }}
         </span>
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
-          {{ t('trackFinder.title', 'Temukan Jurusan Impianmu di SMKN 6') }}
+          {{ t('trackFinder.title', 'Temukan Program Keahlian Impianmu') }}
         </h2>
         <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
           {{ t('trackFinder.subtitle', 'Eksplorasi program keahlian vokasi berstandar industri yang sesuai dengan passion, bakat, dan masa depan karirmu.') }}

@@ -25,7 +25,20 @@
     "hero_slider_autoplay": true,
     "hero_slider_interval": 7,
     "hero_bottom_mode": "news",
-    "hero_news_enabled": true
+    "hero_news_enabled": true,
+    "home_sections": [
+      "hero",
+      "bento",
+      "track_finder",
+      "programs",
+      "announcements",
+      "achievements",
+      "facilities",
+      "extracurricular",
+      "testimonials",
+      "faq",
+      "cta"
+    ]
   },
   "menus": {
     "header": {

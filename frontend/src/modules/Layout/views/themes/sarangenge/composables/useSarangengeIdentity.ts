@@ -35,9 +35,9 @@ export function useSarangengeIdentity() {
   const displaySchoolName = computed(() => {
     const fromTheme = getSetting('school_name', '') || getSetting('site_title', '') || getSetting('site_name', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    const fromSystem = siteSettings.value.site_name;
+    const fromSystem = (siteSettings.value.site_name || systemStore.siteSettings?.site_name) as string | undefined;
     if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
-    return 'SMK Negeri 6 Bandung';
+    return 'Portal Sekolah';
   });
 
   const displayTagline = computed(() => {

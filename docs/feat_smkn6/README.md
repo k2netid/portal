@@ -25,6 +25,7 @@ Direktori ini merupakan pusat dokumentasi resmi perancangan, implementasi fitur,
 2. **[ADR-001: Dynamic School Identity & Dedicated Staging Port](./ADR-001-dynamic-school-identity-and-vhost-port.md)**: Keputusan arsitektur mengenai pemindahan seluruh identitas sekolah ke Theme Customization dinamis dan isolasi port staging berbasis RFC 6335.
 3. **[ADR-002: Pemisahan APP_NAME vs SITE_NAME](./ADR-002-app-name-vs-site-name-identity-separation.md)**: Keputusan arsitektur mengenai pemisahan identitas brand pengembang (`APP_NAME` = Jejakawan) dan identitas pemilik situs (`SITE_NAME` = SMKN 6 Bandung), termasuk mekanisme proteksi via lisensi White Label.
 4. **[ADR-003: Integrasi Plugin Instagram Feed Generik & Slot Tema Dinamis](./ADR-003-generic-fail-safe-instagram-feed-plugin-and-theme-slots.md)**: Keputusan arsitektur integrasi media sosial fail-safe, circuit breaker gatekeeper, caching proxy server-side, dan slot dinamis lintas tema.
+5. **[ADR-004: Multi-Theme SoC, Cross-Theme Isolation, dan Generalisasi Identitas](./ADR-004-multi-theme-soc-cross-theme-isolation-and-identity-generalization.md)**: Keputusan arsitektur eliminasi kebocoran tema silang (*cross-theme leakage*), klasifikasi archetype & parent theme, pembersihan hardcode brand, generalisasi komponen, dan seeder database.
 
 ---
 

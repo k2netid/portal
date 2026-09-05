@@ -50,12 +50,12 @@ export function resolveJanariPublicSeo(input: {
   siteName: string;
   t: JanariTranslate;
 }): { title: string; description: string } {
-  const siteName = input.siteName.trim() || 'Jejakawan';
+  const siteName = input.siteName.trim() || 'Portal';
   const copy = input.themePage ? PAGE_SEO[input.themePage] : undefined;
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', 'Jejakawan Core Engine — Platform Modern CMS, Publishing, dan Manajemen Tema.');
+    : input.t('footer.description', `${siteName} — Platform Modern CMS, Publishing, dan Manajemen Tema.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'

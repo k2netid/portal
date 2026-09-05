@@ -54,7 +54,7 @@
       "heroSubtitle": "Situs resmi sekolah: terinspirasi kembang sarangenge nu nyanghareup kana cahaya panonpoé isuk, ngaping siswa mikacinta élmu sarta miboga ahlak luhung.",
       "heroCta": "Daftar PPDB Online",
       "heroSecondary": "Jelajahi Program",
-      "scrollCue": "Jelajahi SMKN 6 Bandung",
+      "scrollCue": "Jelajahi Kampus Vokasi",
       "statsSectionLabel": "METRIK & KINERJA PUSAT KEUNGGULAN",
       "statsSubLabel": "Status Vokasi & Penjaminan Mutu",
       "heroPrevSlide": "Slide sebelumnya",
@@ -75,7 +75,7 @@
       "newsSectionLabel": "WARTA KAMPUS & PPDB 2026",
       "viewAllNews": "Semua Warta Sekolah",
       "newsPpdbTitle": "Sosialisasi Alur & Tata Cara Pendaftaran PPDB Jawa Barat 2026/2027",
-      "newsLksTitle": "Siswa SMKN 6 Raih Medali Emas Lomba Kompetensi Siswa (LKS) Tingkat Provinsi",
+      "newsLksTitle": "Siswa Vokasi Raih Medali Emas Lomba Kompetensi Siswa (LKS) Tingkat Provinsi",
       "newsDudiTitle": "Penandatanganan MoU Kelas Khusus Industri Bersama Mitra DUDI Terkemuka",
       "newsTefaTitle": "Pameran Produk Unggulan Teaching Factory & Uji Sertifikasi BNSP 2026",
       "bentoTitle": "Akses Cepat Kampus",
@@ -164,7 +164,7 @@
     "programs": {
       "title": "Program Keahlian",
       "heading": "Kompetensi Keahlian",
-      "subtitle": "Program keahlian unggulan di SMK Negeri 6 Bandung yang diselaraskan dengan kebutuhan dunia usaha dan industri (DUDI).",
+      "subtitle": "Program keahlian unggulan yang diselaraskan dengan kebutuhan dunia usaha dan industri (DUDI).",
       "noData": "Data program keahlian belum tersedia."
     },
     "facilities": {
@@ -184,8 +184,8 @@
       "benefit3": "Bantuan Operasional Sekolah (BOS) Pusat",
       "benefit4": "Fasilitas Praktik Standar Industri SMK PK",
       "ppdbTitle": "Penerimaan Peserta Didik Baru (PPDB)",
-      "ppdbDesc": "Proses seleksi dan pendaftaran PPDB SMK Negeri 6 Bandung dilaksanakan secara terpusat melalui portal resmi Dinas Pendidikan Provinsi Jawa Barat.",
-      "ppdbButton": "Akses Portal PPDB Jabar",
+      "ppdbDesc": "Proses seleksi dan pendaftaran peserta didik baru dilaksanakan secara terpusat melalui portal resmi Dinas Pendidikan.",
+      "ppdbButton": "Akses Portal PPDB",
       "monthly": "Per Bulan",
       "annual": "Per Tahun"
     },
@@ -249,7 +249,7 @@
   },
   "trackFinder": {
     "badge": "Panduan Peminatan & Rekomendasi Jurusan",
-    "title": "Temukan Jurusan Impianmu di SMKN 6",
+    "title": "Temukan Program Keahlian Impianmu",
     "subtitle": "Eksplorasi program keahlian vokasi berstandar industri yang sesuai dengan passion, bakat, dan masa depan karirmu.",
     "step1Label": "Pilih Bidang yang Paling Kamu Sukai:",
     "step2Label": "Gaya Belajar Paling Nyaman:",

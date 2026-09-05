@@ -173,10 +173,10 @@
           <span v-if="copyrightText">{{ copyrightText }}</span>
           <template v-else>
             <span>&copy; {{ new Date().getFullYear() }} <a
-              href="https://k2net.id"
+              :href="brandUrl"
               target="_blank"
               class="hover:text-primary transition-colors"
-            >K2NET</a></span>
+            >{{ siteName }}</a></span>
             <span class="hidden md:inline text-foreground/5">/</span>
             <span>{{ developedByText }} <a
               :href="brandUrl"

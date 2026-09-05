@@ -3,7 +3,9 @@
     "slug": "janari",
     "version": "V.2.0",
     "type": "frontend",
-    "description": "Janari — public marketing theme for the Jejakawan control plane (single hub, not per-customer Jejakawan).",
+    "archetype": "universal",
+    "category": "Universal CMS & Editorial",
+    "description": "Janari — default reference marketing theme for the Jejakawan control plane (single hub, adaptive, content-agnostic).",
     "author": "Jejakawan",
     "supports": {
         "janari_canvas": true
@@ -250,32 +252,24 @@
             "type": "checkbox_list",
             "options": [
                 {
-                    "label": "Landing hero",
+                    "label": "Hero Showcase",
                     "value": "hero"
                 },
                 {
-                    "label": "Bento Infrastructure & Services",
-                    "value": "services"
+                    "label": "Featured Products",
+                    "value": "products"
                 },
                 {
-                    "label": "Bandwidth & Speed Calculator",
-                    "value": "calculator"
+                    "label": "Latest Updates & News",
+                    "value": "updates"
                 },
                 {
-                    "label": "SLA Performance Guarantee",
-                    "value": "sla"
+                    "label": "Clients & Partners",
+                    "value": "partners"
                 },
                 {
-                    "label": "Managed IT & SOC Services",
-                    "value": "managed_services"
-                },
-                {
-                    "label": "Client Testimonials & Partners",
+                    "label": "Testimonials & Reviews",
                     "value": "testimonials"
-                },
-                {
-                    "label": "Technical & Provisioning FAQ",
-                    "value": "faq"
                 },
                 {
                     "label": "Call to action (CTA)",
@@ -284,16 +278,14 @@
             ],
             "default": [
                 "hero",
-                "services",
-                "calculator",
-                "sla",
-                "managed_services",
+                "products",
+                "updates",
+                "partners",
                 "testimonials",
-                "faq",
                 "cta"
             ],
             "category": "Layout",
-            "scope": "platform"
+            "scope": "theme"
         },
         "container_max_width": {
             "label": "Container Max Width",
@@ -650,7 +642,7 @@
                 },
                 {
                     "icon": "Github",
-                    "url": "https://github.com/jejakawan/k2net"
+                    "url": "https://github.com/jejakawan"
                 }
             ],
             "scope": "platform"

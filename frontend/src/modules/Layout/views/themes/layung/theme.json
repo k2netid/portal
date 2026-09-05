@@ -3,6 +3,9 @@
     "slug": "layung",
     "version": "1.0.0",
     "type": "frontend",
+    "archetype": "corporate_industry",
+    "category": "Corporate & Industry (ISP/MSP)",
+    "parent_theme": "janari",
     "description": "Layung — tema portal penyedia layanan internet (ISP) dan Managed Service Provider (MSP) terdepan. Arsitektur serat optik, jaminan SLA 99.999%, dan layanan NOC 24/7.",
     "author": "Jejakawan Team",
     "supports": {
@@ -86,6 +89,13 @@
             ],
             "default": "logo_only",
             "category": "General",
+            "scope": "platform"
+        },
+        "color_primary": {
+            "label": "Warna Utama (Primary)",
+            "type": "color",
+            "default": "#00aeef",
+            "category": "Colors",
             "scope": "platform"
         },
         "color_secondary": {
@@ -239,7 +249,7 @@
             "scope": "platform"
         },
         "home_sections": {
-            "label": "Homepage sections",
+            "label": "Homepage Sections",
             "type": "checkbox_list",
             "options": [
                 {
@@ -286,7 +296,7 @@
                 "cta"
             ],
             "category": "Layout",
-            "scope": "platform"
+            "scope": "theme"
         },
         "container_max_width": {
             "label": "Container Max Width",
@@ -520,40 +530,35 @@
             "type": "boolean",
             "default": true,
             "category": "About Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /about dari pengunjung."
         },
         "enable_achievement": {
             "label": "Aktifkan halaman SLA & Jaringan",
             "type": "boolean",
             "default": true,
             "category": "Achievements Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /achievement dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /achievement dari pengunjung."
         },
         "enable_career": {
             "label": "Aktifkan halaman Karir",
             "type": "boolean",
             "default": true,
             "category": "Careers Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /career dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /career dari pengunjung."
         },
         "enable_blog": {
             "label": "Aktifkan halaman Berita",
             "type": "boolean",
             "default": true,
             "category": "News Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /blog dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /blog dari pengunjung."
         },
         "enable_contact": {
             "label": "Aktifkan halaman Kontak",
             "type": "boolean",
             "default": true,
             "category": "Contact Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /contact dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /contact dari pengunjung."
         },
         "footer_text": {
             "label": "Copyright Text",
@@ -648,7 +653,7 @@
                 },
                 {
                     "icon": "Github",
-                    "url": "https://github.com/jejakawan/k2net"
+                    "url": "https://github.com/jejakawan"
                 }
             ],
             "scope": "platform"
@@ -692,268 +697,230 @@
             "label": "Nomor ASN & BGP Peering",
             "type": "text",
             "default": "AS153992",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_sla_guarantee": {
             "label": "Jaminan Uptime SLA",
             "type": "text",
             "default": "SLA berbasis kontrak",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_noc_latency": {
             "label": "Latensi Rata-rata Inti",
             "type": "text",
             "default": "Regional Jawa Barat",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_backbone_capacity": {
             "label": "Kapasitas Backbone Jaringan",
             "type": "text",
             "default": "165.99.252.0/24",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_cs_phone": {
             "label": "Nomor Telepon Customer Service (CS)",
             "type": "text",
             "default": "+62 851-3629-0851",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_noc_phone": {
             "label": "Nomor Hotline NOC",
             "type": "text",
             "default": "+62 851-3629-0861",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_sales_phone": {
             "label": "Nomor Telepon Sales",
             "type": "text",
             "default": "+62 851-3629-0871",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_service_desk_phone": {
             "label": "Nomor Service Desk (sistem & aplikasi)",
             "type": "text",
             "default": "+62 851-3629-0852",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_whatsapp": {
             "label": "Nomor WhatsApp CS",
             "type": "text",
             "default": "6285136290851",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_email": {
             "label": "Email umum (info)",
             "type": "text",
             "default": "info@k2net.id",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_cs_email": {
             "label": "Email Customer Service (CS)",
             "type": "text",
             "default": "cs@k2net.id",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_sales_email": {
             "label": "Email Sales",
             "type": "text",
             "default": "sales@k2net.id",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_billing_email": {
             "label": "Email Billing / Keuangan",
             "type": "text",
             "default": "billing@k2net.id",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_address": {
             "label": "Alamat Kantor Bandung",
             "type": "textarea",
             "default": "Jl. Terusan Sukarajin 3 No.99, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_garut_address": {
             "label": "Alamat Kantor Garut",
             "type": "textarea",
             "default": "Jl. Brajasetra, Margahayu, Kec. Leuwigoong, Kabupaten Garut, Jawa Barat 44192",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "isp_store_address": {
             "label": "Alamat Toko Offline",
             "type": "textarea",
             "default": "Bandung Trade Mall, Jl. Ibrahim Adjie No.47 Lantai 2 Blok EE No.1, Babakan Surabaya, Kec. Kiaracondong, Kota Bandung, Jawa Barat 40272",
-            "category": "ISP Info",
-            "scope": "theme"
+            "category": "ISP Info"
         },
         "hero_badge_text": {
             "label": "Hero Badge / Slogan (fallback)",
             "type": "text",
             "default": "Provide different IT solution",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_badge_text_id": {
             "label": "Hero Badge / Slogan (Indonesia)",
             "type": "text",
             "default": "Provide different IT solution",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_badge_text_en": {
             "label": "Hero Badge / Slogan (English)",
             "type": "text",
             "default": "Provide different IT solution",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_badge_text_su": {
             "label": "Hero Badge / Slogan (Sunda)",
             "type": "text",
             "default": "Provide different IT solution",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_title": {
             "label": "Judul Utama Hero (fallback)",
             "type": "text",
             "default": "Internet Service Provider dan Managed Service Provider",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_title_id": {
             "label": "Judul Utama Hero (Indonesia)",
             "type": "text",
             "default": "Internet Service Provider dan Managed Service Provider",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_title_en": {
             "label": "Judul Utama Hero (English)",
             "type": "text",
             "default": "Internet Service Provider and Managed Service Provider",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_title_su": {
             "label": "Judul Utama Hero (Sunda)",
             "type": "text",
             "default": "Internet Service Provider sareng Managed Service Provider",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_subtitle": {
             "label": "Subjudul Hero (fallback)",
             "type": "textarea",
             "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_subtitle_id": {
             "label": "Subjudul Hero (Indonesia)",
             "type": "textarea",
             "default": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_subtitle_en": {
             "label": "Subjudul Hero (English)",
             "type": "textarea",
             "default": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_subtitle_su": {
             "label": "Subjudul Hero (Sunda)",
             "type": "textarea",
             "default": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_primary_cta_text": {
             "label": "Teks Tombol Kontak (fallback)",
             "type": "text",
             "default": "Hubungi Kami",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_primary_cta_text_id": {
             "label": "Teks Tombol Kontak (Indonesia)",
             "type": "text",
             "default": "Hubungi Kami",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_primary_cta_text_en": {
             "label": "Teks Tombol Kontak (English)",
             "type": "text",
             "default": "Contact Us",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_primary_cta_text_su": {
             "label": "Teks Tombol Kontak (Sunda)",
             "type": "text",
             "default": "Hubungi Kami",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_contact_url": {
             "label": "URL Formulir Kontak Hero",
             "type": "text",
             "default": "/contact",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_secondary_cta_text": {
             "label": "Teks Tombol WhatsApp (fallback)",
             "type": "text",
             "default": "Chat WhatsApp",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_secondary_cta_text_id": {
             "label": "Teks Tombol WhatsApp (Indonesia)",
             "type": "text",
             "default": "Chat WhatsApp",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_secondary_cta_text_en": {
             "label": "Teks Tombol WhatsApp (English)",
             "type": "text",
             "default": "Chat on WhatsApp",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_secondary_cta_text_su": {
             "label": "Teks Tombol WhatsApp (Sunda)",
             "type": "text",
             "default": "Chat WhatsApp",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_animation_enabled": {
             "label": "Aktifkan Animasi Hero",
             "type": "checkbox",
             "default": true,
             "description": "Tampilkan visual interaktif teknologi di area kanan hero",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_animation_type": {
             "label": "Pilihan Animasi Hero",
@@ -978,24 +945,21 @@
                 }
             ],
             "description": "Pilih animasi visual yang sesuai dengan identitas bisnis K2NET",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_slider_enabled": {
             "label": "Aktifkan Slider Hero",
             "type": "checkbox",
             "default": false,
             "description": "Tampilkan multi-slide hero dengan transisi interaktif dan indikator waktu",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_slider_autoplay": {
             "label": "Autoplay Slider Hero",
             "type": "checkbox",
             "default": true,
             "description": "Putar slide hero secara otomatis",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_slider_interval": {
             "label": "Interval Slider Hero (detik)",
@@ -1005,8 +969,7 @@
             "step": 1,
             "default": 5,
             "description": "Durasi tampilan setiap slide sebelum berganti otomatis",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_bg_type": {
             "label": "Tipe Background Hero",
@@ -1023,8 +986,7 @@
                 }
             ],
             "description": "Pilih gaya latar belakang area hero",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_bg_preset": {
             "label": "Preset Background Hero",
@@ -1049,16 +1011,14 @@
                 }
             ],
             "description": "Pilihan palet visual latar belakang yang selaras dengan tema Layung",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_bg_image": {
             "label": "Gambar Background Hero",
             "type": "media",
             "default": "",
             "description": "Gambar latar belakang kustom untuk area hero",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_bg_overlay_opacity": {
             "label": "Kegelapan Overlay Background (%)",
@@ -1068,23 +1028,20 @@
             "step": 5,
             "default": 65,
             "description": "Tingkat kegelapan lapisan overlay agar teks dan animasi tetap terbaca jelas",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_enabled": {
             "label": "Tampilkan strip berita/promo di hero",
             "type": "boolean",
             "default": true,
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_category": {
             "label": "Filter kategori berita (slug)",
             "type": "text",
             "default": "",
             "description": "Slug kategori CMS (mis. promo, maintenance). Kosongkan untuk semua berita.",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_limit": {
             "label": "Jumlah item berita di hero",
@@ -1093,8 +1050,7 @@
             "max": 6,
             "step": 1,
             "default": 4,
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_autoplay_interval": {
             "label": "Interval autoplay strip berita (detik)",
@@ -1104,153 +1060,132 @@
             "step": 1,
             "default": 4,
             "description": "Interval putar otomatis antar berita di strip hero",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_section_label": {
             "label": "Label strip berita (fallback)",
             "type": "text",
             "default": "Warta & promo",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_section_label_id": {
             "label": "Label strip berita (Indonesia)",
             "type": "text",
             "default": "Warta & promo",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_section_label_en": {
             "label": "Label strip berita (English)",
             "type": "text",
             "default": "News & promos",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_section_label_su": {
             "label": "Label strip berita (Sunda)",
             "type": "text",
             "default": "Warta & promo",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_view_all_text": {
             "label": "Teks tautan semua warta (fallback)",
             "type": "text",
             "default": "Semua warta",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_view_all_text_id": {
             "label": "Teks tautan semua warta (Indonesia)",
             "type": "text",
             "default": "Semua warta",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_view_all_text_en": {
             "label": "Teks tautan semua warta (English)",
             "type": "text",
             "default": "All news",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_view_all_text_su": {
             "label": "Teks tautan semua warta (Sunda)",
             "type": "text",
             "default": "Sadaya warta",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "hero_news_view_all_url": {
             "label": "URL halaman semua warta",
             "type": "text",
             "default": "/blog",
-            "category": "Hero Section",
-            "scope": "theme"
+            "category": "Hero Section"
         },
         "speed_calculator_enabled": {
             "label": "Tampilkan Simulator Bandwidth",
             "type": "boolean",
             "default": true,
-            "category": "Simulator Bandwidth",
-            "scope": "theme"
+            "category": "Simulator Bandwidth"
         },
         "enable_services": {
             "label": "Aktifkan halaman Layanan",
             "type": "boolean",
             "default": true,
             "category": "Services Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /services dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /services dari pengunjung."
         },
         "enable_solusi": {
             "label": "Aktifkan halaman Solusi",
             "type": "boolean",
             "default": true,
             "category": "Solusi Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /solusi dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /solusi dari pengunjung."
         },
         "enable_pricing": {
             "label": "Aktifkan halaman Paket & Harga",
             "type": "boolean",
             "default": true,
             "category": "Pricing Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /pricing dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /pricing dari pengunjung."
         },
         "enable_tim": {
             "label": "Aktifkan halaman Tim",
             "type": "boolean",
             "default": true,
             "category": "Tim Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung.",
-            "scope": "theme"
+            "description": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung."
         },
         "contact_form_slug": {
             "label": "Slug formulir kontak",
             "type": "text",
             "default": "contact",
             "category": "Contact Page",
-            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
-            "scope": "theme"
+            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact."
         },
         "footer_about_text": {
             "label": "Deskripsi Singkat Footer",
             "type": "textarea",
             "default": "K2NET adalah merek PT Kirana Karina Network — ISP dan managed services berkantor di Bandung.",
-            "category": "Footer",
-            "scope": "theme"
+            "category": "Footer"
         },
         "footer_col_1_title": {
             "label": "Judul Kolom 1 Footer",
             "type": "text",
             "default": "ISP — Konektivitas",
-            "category": "Footer",
-            "scope": "theme"
+            "category": "Footer"
         },
         "footer_col_2_title": {
             "label": "Judul Kolom 2 Footer",
             "type": "text",
             "default": "MSP — Layanan IT",
-            "category": "Footer",
-            "scope": "theme"
+            "category": "Footer"
         },
         "footer_col_3_title": {
             "label": "Judul Kolom 3 Footer",
             "type": "text",
             "default": "Produk IT",
-            "category": "Footer",
-            "scope": "theme"
+            "category": "Footer"
         },
         "social_instagram_feed_enabled": {
             "label": "Tampilkan Instagram Feed di Beranda",
             "type": "boolean",
             "default": false,
-            "category": "Social Media",
-            "scope": "theme"
+            "category": "Social Media"
         },
         "social_instagram_feed_slot": {
             "label": "Posisi Penempatan Instagram Feed",
@@ -1266,8 +1201,7 @@
                 }
             ],
             "default": "after_hero",
-            "category": "Social Media",
-            "scope": "theme"
+            "category": "Social Media"
         },
         "social_instagram_feed_layout": {
             "label": "Gaya Tampilan Instagram Feed",
@@ -1287,15 +1221,17 @@
                 }
             ],
             "default": "bento",
-            "category": "Social Media",
-            "scope": "theme"
+            "category": "Social Media"
         },
         "social_instagram_feed_title": {
             "label": "Judul Seksi Instagram",
             "type": "text",
             "default": "",
-            "category": "Social Media",
-            "scope": "theme"
+            "category": "Social Media"
         }
+    },
+    "customizer": {
+        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
+        "themeSchema": "customizer/schema.settings.json"
     }
 }
