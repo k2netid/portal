@@ -45,6 +45,15 @@
               <SelectItem value="categories">
                 {{ $t('layout.widgets.types.categories') }}
               </SelectItem>
+              <SelectItem value="search">
+                {{ $t('layout.widgets.types.search') }}
+              </SelectItem>
+              <SelectItem value="newsletter">
+                {{ $t('layout.widgets.types.newsletter') }}
+              </SelectItem>
+              <SelectItem value="social_share">
+                {{ $t('layout.widgets.types.social_share') }}
+              </SelectItem>
               <SelectItem value="custom">
                 {{ $t('layout.widgets.types.custom') }}
               </SelectItem>

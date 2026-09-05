@@ -145,7 +145,9 @@
 
         <!-- Sidebar -->
         <div class="lg:col-span-4">
-          <BlogSidebar />
+          <WidgetArea location="sidebar" :context="{ post }">
+            <BlogSidebar />
+          </WidgetArea>
         </div>
       </div>
     </div>
@@ -159,6 +161,7 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
+import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 import BlogSidebar from '@/modules/Layout/views/themes/sarangenge/components/blog/BlogSidebar.vue';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useMemberStore } from '@/modules/Member/stores/member';

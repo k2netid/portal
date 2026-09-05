@@ -234,7 +234,47 @@
       "custom": "Kustom",
       "html": "HTML",
       "recent_posts": "Postingan Terbaru",
+      "search": "Pencarian",
+      "newsletter": "Buletin / Newsletter",
+      "social_share": "Bagikan Media Sosial",
       "text": "Teks"
+    },
+    "universal": {
+      "search": {
+        "title": "Cari Warta & Artikel",
+        "placeholder": "Ketik kata kunci pencarian...",
+        "noResults": "Tidak ada saran pencarian"
+      },
+      "categories": {
+        "title": "Kategori Berita",
+        "all": "Semua Kategori",
+        "empty": "Belum ada kategori"
+      },
+      "recentPosts": {
+        "title": "Warta Terbaru",
+        "empty": "Belum ada warta terbaru",
+        "readMore": "Baca selengkapnya"
+      },
+      "newsletter": {
+        "title": "Buletin & Kabar",
+        "description": "Dapatkan rangkuman informasi dan agenda terbaru langsung di email Anda.",
+        "placeholder": "Masukkan alamat email Anda",
+        "subscribe": "Langganan",
+        "subscribing": "Mendaftar...",
+        "success": "Terima kasih! Anda berhasil berlangganan buletin warta.",
+        "alreadySubscribed": "Email ini sudah terdaftar dalam buletin.",
+        "invalidEmail": "Format alamat email tidak valid."
+      },
+      "socialShare": {
+        "title": "Bagikan Warta",
+        "copyLink": "Salin Tautan",
+        "linkCopied": "Tautan disalin ke papan klip!",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "twitter": "X (Twitter)",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
     },
     "title": "Widget",
     "subtitle": "Kelola widget sidebar dan footer untuk situs publik.",

@@ -1,32 +1,10 @@
 <template>
-  <aside class="space-y-8">
-    <!-- Search Box -->
-    <div class="sarangenge-panel p-6">
-      <h3 class="text-base font-bold text-foreground font-heading mb-3">
-        {{ t('common.search', 'Cari Berita & Agenda') }}
-      </h3>
-      <form
-        class="flex gap-2"
-        @submit.prevent="handleSearch"
-      >
-        <Input
-          v-model="searchQuery"
-          :placeholder="t('common.searchPlaceholder', 'Ketik kata kunci...')"
-          class="flex-1"
-        />
-        <Button
-          type="submit"
-          variant="primary"
-          size="sm"
-          class="!px-3.5"
-        >
-          <Search class="w-4 h-4" />
-        </Button>
-      </form>
-    </div>
+  <aside class="space-y-6">
+    <!-- Search Widget (Universal) -->
+    <SearchWidget @search="$emit('search', $event)" />
 
     <!-- Quick PPDB Banner -->
-    <div class="sarangenge-bento__cell sarangenge-bento__cell--teal !p-6">
+    <div class="sarangenge-bento__cell sarangenge-bento__cell--teal !p-6 rounded-2xl shadow-sm">
       <div class="space-y-3">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[var(--sarangenge-sun,#e8a317)] text-[var(--sarangenge-teal-deep,#115e59)] uppercase tracking-wider inline-block">
           PPDB Online
@@ -49,39 +27,15 @@
       </div>
     </div>
 
-    <!-- Categories -->
-    <div
-      v-if="categories && categories.length > 0"
-      class="sarangenge-panel p-6 space-y-4"
-    >
-      <h3 class="text-base font-bold text-foreground font-heading border-b border-border/60 pb-2">
-        {{ t('blog.categories', 'Kategori Berita') }}
-      </h3>
-      <ul class="space-y-2 text-sm">
-        <li
-          v-for="cat in categories"
-          :key="cat.slug"
-        >
-          <button
-            type="button"
-            class="flex items-center justify-between w-full py-1.5 px-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors text-left"
-            :class="{ '!text-[var(--sarangenge-teal,#0f766e)] !font-bold !bg-[var(--sarangenge-teal,#0f766e)]/10': activeCategory === cat.slug }"
-            @click="$emit('selectCategory', cat.slug)"
-          >
-            <span>{{ cat.name }}</span>
-            <span
-              v-if="cat.count !== undefined"
-              class="text-xs bg-muted px-2 py-0.5 rounded-full"
-            >
-              {{ cat.count }}
-            </span>
-          </button>
-        </li>
-      </ul>
-    </div>
+    <!-- Categories Widget (Universal) -->
+    <CategoriesWidget
+      :categories="categories"
+      :active-category="activeCategory"
+      @select-category="$emit('selectCategory', $event)"
+    />
 
     <!-- School Contact Card -->
-    <div class="sarangenge-panel p-6 space-y-3 text-xs text-muted-foreground">
+    <div class="sarangenge-panel p-5 rounded-2xl border border-border/70 bg-card shadow-sm space-y-3 text-xs text-muted-foreground">
       <h4 class="font-bold text-foreground text-sm font-heading">
         {{ displaySchoolName }}
       </h4>
@@ -98,17 +52,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
-import { Search } from 'lucide-vue-next';
-import { Input, Button } from '@/modules/Layout/views/themes/sarangenge/ui';
+import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
+import SearchWidget from '@/modules/Layout/components/widgets/SearchWidget.vue';
+import CategoriesWidget from '@/modules/Layout/components/widgets/CategoriesWidget.vue';
 
 interface Category {
   name: string;
   slug: string;
   count?: number;
+  contents_count?: number;
 }
 
 withDefaults(
@@ -122,20 +76,11 @@ withDefaults(
   }
 );
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'selectCategory', slug: string): void;
   (e: 'search', query: string): void;
 }>();
 
 const { t } = useThemeI18n('sarangenge');
-const router = useRouter();
-const searchQuery = ref('');
 const { displaySchoolName, displayAddress, displayPhone, displayEmail, displayAccreditation } = useSarangengeIdentity();
-
-const handleSearch = () => {
-  if (searchQuery.value.trim()) {
-    emit('search', searchQuery.value.trim());
-    router.push({ path: '/search', query: { q: searchQuery.value.trim() } });
-  }
-};
 </script>

@@ -234,7 +234,47 @@
       "custom": "Custom",
       "html": "HTML",
       "recent_posts": "Recent Posts",
+      "search": "Search",
+      "newsletter": "Newsletter",
+      "social_share": "Social Media Share",
       "text": "Text"
+    },
+    "universal": {
+      "search": {
+        "title": "Search Articles & News",
+        "placeholder": "Type search keywords...",
+        "noResults": "No search suggestions"
+      },
+      "categories": {
+        "title": "Article Categories",
+        "all": "All Categories",
+        "empty": "No categories available"
+      },
+      "recentPosts": {
+        "title": "Recent News",
+        "empty": "No recent articles",
+        "readMore": "Read more"
+      },
+      "newsletter": {
+        "title": "Newsletter & Updates",
+        "description": "Get the latest news highlights and upcoming events delivered to your inbox.",
+        "placeholder": "Enter your email address",
+        "subscribe": "Subscribe",
+        "subscribing": "Subscribing...",
+        "success": "Thank you! You have successfully subscribed to our newsletter.",
+        "alreadySubscribed": "This email is already subscribed to the newsletter.",
+        "invalidEmail": "Invalid email address format."
+      },
+      "socialShare": {
+        "title": "Share Article",
+        "copyLink": "Copy Link",
+        "linkCopied": "Link copied to clipboard!",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "twitter": "X (Twitter)",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
     },
     "title": "Widgets",
     "subtitle": "Manage sidebar and footer widgets for the public site.",

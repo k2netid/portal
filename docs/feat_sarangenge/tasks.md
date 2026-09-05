@@ -208,6 +208,30 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Frontend Playwright E2E: `theme-package-lifecycle.spec.ts` (4/4 passed).
 - [x] **Dokumentasi**: ADR-007 diterbitkan.
 
+### Milestone 7.8: Arsitektur Universal Widget Catalog & Smart Fallback WidgetArea (🟢 Selesai)
+- [x] **Universal Widget Catalog (`frontend/src/modules/Layout/components/widgets/`)**:
+  - [x] `SearchWidget.vue`: Input pencarian interaktif dengan real-time debounced suggestions, keyboard a11y navigation, dan clear button.
+  - [x] `CategoriesWidget.vue`: Render kategori dinamis, count badge, subcategory accordion toggle, dan deteksi kategori aktif.
+  - [x] `RecentPostsWidget.vue`: Daftar artikel terbaru dengan thumbnail, date formatting, badge kategori, dan filtering current article.
+  - [x] `NewsletterWidget.vue`: Formulir langganan buletin warta sekolah dengan validasi email dan status umpan balik interaktif.
+  - [x] `SocialShareWidget.vue`: Tombol berbagi artikel instan (WhatsApp, Telegram, X, Facebook) dan copy link to clipboard dengan toast feedback.
+  - [x] `index.ts`: Barrel export seluruh widget katalog universal.
+- [x] **Peningkatan Smart Fallback pada `WidgetArea.vue`**:
+  - [x] Resolusi dinamis komponen widget berdasarkan atribut `widget.type` (`search`, `categories`, `recent_posts`, `newsletter`, `social_share`, `html`, `text`).
+  - [x] Smart Fallback Slot: Merender slot cadangan `<slot :context="context">` atau default universal widget stack jika tabel `lay_widgets` belum memiliki konfigurasi kustom, mencegah area sidebar kosong.
+- [x] **Integrasi Halaman Detail Artikel (`Post.vue`) & Refaktorisasi `BlogSidebar.vue`**:
+  - [x] Pemasangan `<WidgetArea location="sidebar" :context="{ post }">` pada halaman detail artikel `Post.vue` tema Sarangenge dan Janari.
+  - [x] Refaktorisasi `BlogSidebar.vue` tema Sarangenge menggunakan `SearchWidget` dan `CategoriesWidget`, mengeliminasi duplikasi kode.
+  - [x] Penambahan tipe `search`, `newsletter`, dan `social_share` pada antarmuka dropdown modal pembuatan widget (`WidgetModal.vue`).
+- [x] **Pemeriksaan Kualitas & Pengujian**:
+  - [x] `npm run i18n:check` → 27 gate keys, 9.145 kunci simetris per bahasa (`id`, `en`, `su`).
+  - [x] `npm run build` → Selesai dalam 11.8s (0 type/syntax errors).
+  - [x] `sync-frontend-assets-to-backend.sh` → Aset tersinkronisasi ke `backend/public/`.
+  - [x] `php artisan test Modules/Layout/tests` → 16/16 tests passed.
+  - [x] `tests/e2e/universal-widgets-lifecycle.spec.ts` → 2/2 E2E tests passed.
+  - [x] `tests/e2e/theme-package-lifecycle.spec.ts` → 4/4 E2E tests passed.
+- [x] **Dokumentasi**: ADR-008 diterbitkan.
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.

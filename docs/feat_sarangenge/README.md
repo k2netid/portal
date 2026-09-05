@@ -29,6 +29,7 @@ Direktori ini merupakan pusat dokumentasi resmi perancangan, implementasi fitur,
 6. **[ADR-005: Generalisasi Menyeluruh Referensi Brand Tenant & Platform](./ADR-005-complete-brand-generalization-smkn6-and-k2net.md)**: Penghapusan total hardcode SMKN 6 Bandung (Sarangenge) dan K2NET (Layung) dari seluruh codebase — composables, locales, schema, Vue components, backend, dan test fixtures.
 7. **[ADR-006: Arsitektur Official Plugin Floating Social Dock & Hotline serta Kategorisasi Ekstensi](./ADR-006-official-plugin-floating-social-dock-and-extensions-categorization.md)**: Decoupling dock dari tema menjadi plugin resmi dengan slot layout `floating_overlay`, styling kanonikal, integrasi dynamic customizer, dan perbaikan kategorisasi tab panel ekstensi.
 8. **[ADR-007: Arsitektur Siklus Hidup Paket (Ekspor/Impor) Tema & Ekstensi serta Kontrol Lisensi dan Keamanan](./ADR-007-unified-package-lifecycle-and-licensing-controls.md)**: Penyelarasan antarmuka ekspor/impor tema dan ekstensi, kontrol granular keamanan via `sys_settings`, integrasi komersial licensing tier (Pro/Enterprise/White-Label), dan kesetaraan i18n penuh.
+9. **[ADR-008: Arsitektur Universal Widget Catalog & Smart Fallback WidgetArea](./ADR-008-universal-widget-catalog-and-smart-widget-area.md)**: Pembangunan katalog widget universal (Search, Categories, Recent Posts, Newsletter, Social Share), smart fallback slot pada `WidgetArea.vue`, eliminasi duplikasi di `BlogSidebar.vue`, dan integrasi dinamis pada `Post.vue`.
 
 ---
 
