@@ -1,13 +1,15 @@
 <template>
   <div
     v-if="activeBlocks.length > 0"
-    class="plugin-slot-wrapper plugin-slot-isolate flex flex-col gap-4 w-full"
+    class="plugin-slot-wrapper plugin-slot-isolate"
+    :class="name === 'floating_overlay' ? 'pointer-events-none' : 'flex flex-col gap-4 w-full'"
     :data-plugin-slot="name"
   >
     <div
       v-for="block in activeBlocks"
       :key="`${name}-${block.pluginSlug}`"
-      class="ja-plugin-block w-full"
+      class="ja-plugin-block"
+      :class="name === 'floating_overlay' ? 'pointer-events-auto' : 'w-full'"
       :data-plugin="block.pluginSlug"
     >
       <component

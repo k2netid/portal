@@ -141,15 +141,25 @@ export function useCustomizerNavigation(
   function getVisibleSettings(settings: any[]) {
     if (!Array.isArray(settings)) return [];
 
+    let filtered = settings;
     const extension = themeCustomizerExtension.value;
     if (extension?.filterVisibleSettings) {
-      return extension.filterVisibleSettings(settings, {
+      filtered = extension.filterVisibleSettings(settings, {
         formValues: formValues.value,
         usesJanariCanvas: themeUsesJanariCanvas(theme.value),
       });
     }
 
-    return settings.filter((setting: { hidden?: boolean }) => !setting.hidden);
+    const isFloatingSocialEnabled = formValues.value.enable_floating_social !== false;
+
+    return filtered.filter((setting: { key?: string; hidden?: boolean }) => {
+      if (!setting || setting.hidden) return false;
+      const key = String(setting.key || '');
+      if (!isFloatingSocialEnabled && key.startsWith('floating_social_')) {
+        return false;
+      }
+      return true;
+    });
   }
 
   const specialPageNavItems = computed<NavItem[]>(() => {

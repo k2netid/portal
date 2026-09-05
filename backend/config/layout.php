@@ -18,6 +18,7 @@ return [
         'before_footer',
         'after_post_content',
         'sidebar_article',
+        'floating_overlay',
     ],
 
     /*
@@ -46,6 +47,10 @@ return [
             'label' => 'Article Sidebar',
             'maxBlocks' => 5,
         ],
+        'floating_overlay' => [
+            'label' => 'Global Floating Overlay Layer',
+            'maxBlocks' => 5,
+        ],
     ],
 
     /*
@@ -57,5 +62,6 @@ return [
         'content-share-bar' => ['after_post_content'],
         'before-footer-promo' => ['before_footer'],
         'instagram-feed' => ['after_hero'],
+        'floating-social-dock' => ['floating_overlay'],
     ],
 ];

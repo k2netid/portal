@@ -128,14 +128,13 @@
       <ArrowUp class="w-5 h-5 stroke-[2.5]" />
     </button>
 
-    <!-- Theme-level Floating Social Docks (Root Viewport Level) -->
-    <SarangengeFloatingSocialDock v-if="activeThemeSlug === 'sarangenge' && !useMemberShell" />
-    <LayungFloatingSocialDock v-else-if="activeThemeSlug === 'layung' && !useMemberShell" />
+    <!-- Global Floating Overlay (Plugin Slot for Floating Social Dock, Hotline, etc.) -->
+    <PluginSlot v-if="!useMemberShell" name="floating_overlay" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, ref, onUnmounted, watch } from 'vue'
+import { computed, onMounted, ref, onUnmounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import ThemePageResolver from '@/modules/Layout/components/themes/ThemePageResolver.vue'
@@ -147,12 +146,6 @@ import {
   ArrowUp,
 } from 'lucide-vue-next'
 
-const SarangengeFloatingSocialDock = defineAsyncComponent(
-  () => import('@/modules/Layout/views/themes/sarangenge/components/layout/SarangengeFloatingSocialDock.vue')
-)
-const LayungFloatingSocialDock = defineAsyncComponent(
-  () => import('@/modules/Layout/views/themes/layung/components/layout/FloatingSocialDock.vue')
-)
 import { JANARI_PRESETS } from '@/modules/Layout/config/janariPresets'
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest'
 import { headerChromeWrapClass, isHeaderStickySetting } from '@/modules/Layout/layouts/headerChromeWrap'
@@ -641,6 +634,13 @@ onMounted(async () => {
     Object.entries(vars).forEach(([key, val]) => {
       el.style.setProperty(key, val)
     })
+  }
+
+  try {
+    const { bootstrapPluginThemeBlocks } = await import('@/engine/plugins/pluginBootstrap')
+    await bootstrapPluginThemeBlocks()
+  } catch {
+    /* ignore plugin bootstrap errors */
   }
 })
 

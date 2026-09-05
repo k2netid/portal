@@ -21,5 +21,9 @@
     "label": "Article sidebar",
     "maxBlocks": 5,
     "context": ["post_id", "slug"]
+  },
+  "floating_overlay": {
+    "label": "Global floating viewport layer",
+    "maxBlocks": 5
   }
 }

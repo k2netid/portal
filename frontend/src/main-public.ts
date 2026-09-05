@@ -85,6 +85,13 @@ async function bootstrap(): Promise<void> {
         }
     }
 
+    try {
+        const { bootstrapPluginThemeBlocks } = await import('@/engine/plugins/pluginBootstrap');
+        await bootstrapPluginThemeBlocks();
+    } catch (e) {
+        logger.warning('[SPA] Could not bootstrap plugin theme blocks', e);
+    }
+
     logger.info('[SPA] Mounting public theme runtime');
     app.mount('#app');
 }
