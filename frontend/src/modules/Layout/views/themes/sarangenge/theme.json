@@ -706,7 +706,7 @@
         "school_name": {
             "label": "Nama Resmi Sekolah",
             "type": "text",
-            "default": "SMK Negeri 6 Bandung",
+            "default": "Portal Sekolah",
             "category": "School Info"
         },
         "school_tagline": {
