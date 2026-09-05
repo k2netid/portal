@@ -1,8 +1,8 @@
 {
   "version": 1,
   "settings": {
-    "site_title": "K2NET",
-    "brand_logo": "/logofull_k2net.png",
+    "site_title": "Portal ISP",
+    "brand_logo": "/logofull_portal-isp.png",
     "branding_display": "logo_only",
     "header_cta_url": "",
     "site_tagline": "Internet Service Provider & Managed Service Provider",
@@ -11,10 +11,10 @@
     "hero_title_id": "Internet Service Provider dan Managed Service Provider",
     "hero_title_en": "Internet Service Provider and Managed Service Provider",
     "hero_title_su": "Internet Service Provider sareng Managed Service Provider",
-    "hero_subtitle": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-    "hero_subtitle_id": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
-    "hero_subtitle_en": "More than network connectivity. K2NET supports you from internet access through to IT services in your workplace.",
-    "hero_subtitle_su": "Lain ngan konektivitas jaringan. K2NET ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
+    "hero_subtitle": "Bukan hanya konektivitas jaringan. Portal ISP membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+    "hero_subtitle_id": "Bukan hanya konektivitas jaringan. Portal ISP membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+    "hero_subtitle_en": "More than network connectivity. Portal ISP supports you from internet access through to IT services in your workplace.",
+    "hero_subtitle_su": "Lain ngan konektivitas jaringan. Portal ISP ngabantosan anjeun ti koneksi internét nepi ka layanan IT di lingkungan kerja anjeun.",
     "hero_badge_text": "Provide different IT solution",
     "hero_badge_text_id": "Provide different IT solution",
     "hero_badge_text_en": "Provide different IT solution",
@@ -56,7 +56,7 @@
     "stat_latency": "Regional Jawa Barat",
     "stat_uptime": "SLA berbasis kontrak",
     "stat_backbone": "165.99.252.0/24",
-    "stat_asn": "AS153992 (IDNIC-K2NET-ID)",
+    "stat_asn": "AS153992 (IDNIC-Portal ISP-ID)",
     "isp_asn_number": "AS153992",
     "isp_sla_guarantee": "SLA berbasis kontrak",
     "isp_noc_latency": "Regional Jawa Barat",
@@ -64,22 +64,22 @@
     "isp_address": "Jl. Terusan Sukarajin 3 No.99, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124",
     "isp_garut_address": "Jl. Brajasetra, Margahayu, Kec. Leuwigoong, Kabupaten Garut, Jawa Barat 44192",
     "isp_store_address": "Bandung Trade Mall, Jl. Ibrahim Adjie No.47 Lantai 2 Blok EE No.1, Babakan Surabaya, Kec. Kiaracondong, Kota Bandung, Jawa Barat 40272",
-    "isp_email": "info@k2net.id",
-    "isp_cs_email": "cs@k2net.id",
-    "isp_sales_email": "sales@k2net.id",
-    "isp_billing_email": "billing@k2net.id",
+    "isp_email": "info@portal.net",
+    "isp_cs_email": "cs@portal.net",
+    "isp_sales_email": "sales@portal.net",
+    "isp_billing_email": "billing@portal.net",
     "isp_cs_phone": "+62 851-3629-0851",
     "isp_noc_phone": "+62 851-3629-0861",
     "isp_sales_phone": "+62 851-3629-0871",
     "isp_service_desk_phone": "+62 851-3629-0852",
     "isp_whatsapp": "+6285136290851",
-    "footer_about_text": "K2NET (PT Kirana Karina Network) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.",
-    "footer_copyright": "© 2026 PT Kirana Karina Network (K2NET). Hak cipta dilindungi undang-undang.",
+    "footer_about_text": "Portal ISP (Penyedia Layanan Internet) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.",
+    "footer_copyright": "© 2026 Penyedia Layanan Internet (Portal ISP). Hak cipta dilindungi undang-undang.",
     "contact_map_enabled": true
   },
   "menus": {
     "header": {
-      "name": "K2NET Header Navigation",
+      "name": "Portal ISP Header Navigation",
       "items": [
         { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
         { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 1 },
@@ -111,7 +111,7 @@
       ]
     },
     "footer_col_1": {
-      "name": "K2NET Footer ISP",
+      "name": "Portal ISP Footer ISP",
       "items": [
         { "title": "Internet", "title_en": "Internet", "url": "/pricing/isp", "type": "custom", "sort_order": 0 },
         { "title": "Simulator Bandwidth", "title_en": "Bandwidth Simulator", "url": "/#calculator", "type": "custom", "sort_order": 1 },
@@ -120,7 +120,7 @@
       ]
     },
     "footer_col_2": {
-      "name": "K2NET Footer MSP",
+      "name": "Portal ISP Footer MSP",
       "items": [
         { "title": "Managed Services", "title_en": "Managed Services", "url": "/solusi", "type": "custom", "sort_order": 0 },
         { "title": "Paket MSP", "title_en": "MSP Plans", "url": "/pricing/msp", "type": "custom", "sort_order": 1 },
@@ -129,96 +129,96 @@
       ]
     },
     "footer_col_3": {
-      "name": "K2NET Footer Produk IT",
+      "name": "Portal ISP Footer Produk IT",
       "items": [
         { "title": "Toko Offline", "url": "/contact", "type": "custom", "sort_order": 0 },
-        { "title": "Tokopedia K2NET", "url": "https://www.tokopedia.com/k2net-bandung", "type": "custom", "sort_order": 1 },
-        { "title": "Shopee K2NET", "url": "https://shopee.co.id/k2net?entryPoint=ShopByPDP", "type": "custom", "sort_order": 2 },
+        { "title": "Tokopedia Portal ISP", "url": "https://www.tokopedia.com/portal-isp-bandung", "type": "custom", "sort_order": 1 },
+        { "title": "Shopee Portal ISP", "url": "https://shopee.co.id/portal-isp?entryPoint=ShopByPDP", "type": "custom", "sort_order": 2 },
         { "title": "SIPLah Blibli", "url": "https://siplah.blibli.com/merchant-detail/SPKK-1030", "type": "custom", "sort_order": 3 },
-        { "title": "SIPLah Toko Ladang", "url": "https://siplah.tokoladang.co.id/m/k2net.39644", "type": "custom", "sort_order": 4 }
+        { "title": "SIPLah Toko Ladang", "url": "https://siplah.tokoladang.co.id/m/portal-isp.39644", "type": "custom", "sort_order": 4 }
       ]
     }
   },
   "pages": [
-    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi K2NET — ISP dan Managed Service Provider.", "body": "<p>Portal resmi K2NET (PT Kirana Karina Network) — Internet Service Provider dan Managed Service Provider di Bandung.</p>", "body_en": "<p>Official K2NET (PT Kirana Karina Network) portal — Internet Service Provider and Managed Service Provider in Bandung.</p>" },
-    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil PT Kirana Karina Network (K2NET).", "body": "", "body_en": "" },
-    { "slug": "services", "title": "Internet", "title_en": "Internet", "theme_page": "pages/Services", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis, dan Retail Broadband.", "body": "<p>Layanan internet K2NET: Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung dan Jawa Barat.</p>", "body_en": "<p>K2NET internet services: Dedicated Internet, Business Broadband, and Retail Broadband in Bandung and West Java.</p>" },
-    { "slug": "solusi", "title": "Managed Services", "title_en": "Managed Services", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Pendampingan IT operasional untuk sekolah dan institusi.", "body": "<p>Managed services K2NET: jaringan, server, CCTV, dan dukungan IT harian untuk sekolah dan institusi.</p>", "body_en": "<p>K2NET managed services: network, servers, CCTV, and day-to-day IT support for schools and institutions.</p>" },
-    { "slug": "pricing", "title": "Paket & Harga", "title_en": "Plans & Pricing", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Pilih paket ISP atau MSP sesuai kebutuhan.", "body": "<p>Halaman induk paket layanan K2NET — konektivitas internet (ISP) dan managed services (MSP).</p>", "body_en": "<p>K2NET service plans hub — internet connectivity (ISP) and managed services (MSP).</p>" },
-    { "slug": "pricing-isp", "title": "Paket Internet (ISP)", "title_en": "Internet Plans (ISP)", "theme_page": "pages/PricingIsp", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.", "body": "<p>Paket konektivitas internet K2NET untuk dedicated, bisnis, dan retail.</p>", "body_en": "<p>K2NET internet connectivity plans for dedicated, business, and retail.</p>" },
-    { "slug": "pricing-msp", "title": "Managed Services (MSP)", "title_en": "Managed Services (MSP)", "theme_page": "pages/PricingMsp", "status": "published", "excerpt": "Paket Basic, Standard, dan Custom untuk sekolah dan institusi.", "body": "<p>Paket managed services K2NET untuk sekolah dan institusi pendidikan.</p>", "body_en": "<p>K2NET managed services plans for schools and educational institutions.</p>" },
-    { "slug": "tim", "title": "Tim", "title_en": "Team", "theme_page": "pages/Tim", "status": "published", "excerpt": "Tim operasional K2NET di Bandung.", "body": "<p>Tim operasional K2NET beroperasi dari Bandung untuk dukungan teknis dan sales.</p>", "body_en": "<p>The K2NET operations team works from Bandung for technical support and sales.</p>" },
-    { "slug": "blog", "title": "Berita", "title_en": "News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Pengumuman layanan dan operasional K2NET.", "body": "<p>Berita layanan, jangkauan, dan operasional K2NET.</p>", "body_en": "<p>K2NET service, coverage, and operations news.</p>" },
-    { "slug": "contact", "title": "Kontak", "title_en": "Contact", "theme_page": "pages/Contact", "status": "published", "excerpt": "Sales, CS, NOC, dan Service Desk.", "body": "<p>Hubungi tim K2NET untuk survei, penawaran, dan dukungan operasional.</p>", "body_en": "<p>Contact the K2NET team for surveys, quotations, and operational support.</p>" },
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Portal ISP — ISP dan Managed Service Provider.", "body": "<p>Portal resmi Portal ISP (Penyedia Layanan Internet) — Internet Service Provider dan Managed Service Provider di Bandung.</p>", "body_en": "<p>Official Portal ISP (Penyedia Layanan Internet) portal — Internet Service Provider and Managed Service Provider in Bandung.</p>" },
+    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil Penyedia Layanan Internet (Portal ISP).", "body": "", "body_en": "" },
+    { "slug": "services", "title": "Internet", "title_en": "Internet", "theme_page": "pages/Services", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis, dan Retail Broadband.", "body": "<p>Layanan internet Portal ISP: Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung dan Jawa Barat.</p>", "body_en": "<p>Portal ISP internet services: Dedicated Internet, Business Broadband, and Retail Broadband in Bandung and West Java.</p>" },
+    { "slug": "solusi", "title": "Managed Services", "title_en": "Managed Services", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Pendampingan IT operasional untuk sekolah dan institusi.", "body": "<p>Managed services Portal ISP: jaringan, server, CCTV, dan dukungan IT harian untuk sekolah dan institusi.</p>", "body_en": "<p>Portal ISP managed services: network, servers, CCTV, and day-to-day IT support for schools and institutions.</p>" },
+    { "slug": "pricing", "title": "Paket & Harga", "title_en": "Plans & Pricing", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Pilih paket ISP atau MSP sesuai kebutuhan.", "body": "<p>Halaman induk paket layanan Portal ISP — konektivitas internet (ISP) dan managed services (MSP).</p>", "body_en": "<p>Portal ISP service plans hub — internet connectivity (ISP) and managed services (MSP).</p>" },
+    { "slug": "pricing-isp", "title": "Paket Internet (ISP)", "title_en": "Internet Plans (ISP)", "theme_page": "pages/PricingIsp", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.", "body": "<p>Paket konektivitas internet Portal ISP untuk dedicated, bisnis, dan retail.</p>", "body_en": "<p>Portal ISP internet connectivity plans for dedicated, business, and retail.</p>" },
+    { "slug": "pricing-msp", "title": "Managed Services (MSP)", "title_en": "Managed Services (MSP)", "theme_page": "pages/PricingMsp", "status": "published", "excerpt": "Paket Basic, Standard, dan Custom untuk sekolah dan institusi.", "body": "<p>Paket managed services Portal ISP untuk sekolah dan institusi pendidikan.</p>", "body_en": "<p>Portal ISP managed services plans for schools and educational institutions.</p>" },
+    { "slug": "tim", "title": "Tim", "title_en": "Team", "theme_page": "pages/Tim", "status": "published", "excerpt": "Tim operasional Portal ISP di Bandung.", "body": "<p>Tim operasional Portal ISP beroperasi dari Bandung untuk dukungan teknis dan sales.</p>", "body_en": "<p>The Portal ISP operations team works from Bandung for technical support and sales.</p>" },
+    { "slug": "blog", "title": "Berita", "title_en": "News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Pengumuman layanan dan operasional Portal ISP.", "body": "<p>Berita layanan, jangkauan, dan operasional Portal ISP.</p>", "body_en": "<p>Portal ISP service, coverage, and operations news.</p>" },
+    { "slug": "contact", "title": "Kontak", "title_en": "Contact", "theme_page": "pages/Contact", "status": "published", "excerpt": "Sales, CS, NOC, dan Service Desk.", "body": "<p>Hubungi tim Portal ISP untuk survei, penawaran, dan dukungan operasional.</p>", "body_en": "<p>Contact the Portal ISP team for surveys, quotations, and operational support.</p>" },
     { "slug": "achievement", "title": "SLA", "title_en": "SLA", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Komitmen layanan sesuai kontrak.", "body": "<p>Komitmen SLA berbasis kontrak, anggota korporat IDNIC, dan operasional AS153992.</p>", "body_en": "<p>Contract-based SLA commitment, IDNIC corporate membership, and AS153992 operations.</p>" },
-    { "slug": "careers", "title": "Karir", "title_en": "Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan operasional K2NET di Bandung.", "body": "<p>Lowongan dibuka sesuai kebutuhan operasional K2NET di Bandung.</p>", "body_en": "<p>Roles open according to K2NET operational needs in Bandung.</p>" }
+    { "slug": "careers", "title": "Karir", "title_en": "Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan operasional Portal ISP di Bandung.", "body": "<p>Lowongan dibuka sesuai kebutuhan operasional Portal ISP di Bandung.</p>", "body_en": "<p>Roles open according to Portal ISP operational needs in Bandung.</p>" }
   ],
   "posts": [
     {
-      "slug": "k2net-asn-idnic",
-      "title": "K2NET Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC",
-      "title_en": "K2NET Operates AS153992 as an IDNIC Corporate Member",
+      "slug": "portal-isp-asn-idnic",
+      "title": "Portal ISP Mengoperasikan AS153992 sebagai Anggota Korporat IDNIC",
+      "title_en": "Portal ISP Operates AS153992 as an IDNIC Corporate Member",
       "status": "published",
       "featured_image": "/logo-bw.png",
-      "excerpt": "PT Kirana Karina Network mengumumkan operasional BGP mandiri AS153992 (IDNIC-K2NET-ID) untuk layanan ISP di Bandung.",
-      "excerpt_en": "PT Kirana Karina Network announces independent BGP operations on AS153992 (IDNIC-K2NET-ID) for ISP services in Bandung.",
-      "body": "<p>K2NET mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>",
-      "body_en": "<p>K2NET originates 165.99.252.0/24 under AS153992 as an IDNIC corporate member. This strengthens independent routing identity for dedicated internet and managed network services.</p>"
+      "excerpt": "Penyedia Layanan Internet mengumumkan operasional BGP mandiri AS153992 (IDNIC-Portal ISP-ID) untuk layanan ISP di Bandung.",
+      "excerpt_en": "Penyedia Layanan Internet announces independent BGP operations on AS153992 (IDNIC-Portal ISP-ID) for ISP services in Bandung.",
+      "body": "<p>Portal ISP mengoperasikan prefix 165.99.252.0/24 di bawah AS153992 sebagai anggota korporat IDNIC. Langkah ini memperkuat identitas routing mandiri untuk layanan dedicated internet dan managed network.</p>",
+      "body_en": "<p>Portal ISP originates 165.99.252.0/24 under AS153992 as an IDNIC corporate member. This strengthens independent routing identity for dedicated internet and managed network services.</p>"
     },
     {
-      "slug": "k2net-msp-layanan-terkelola",
-      "title": "Layanan Managed IT & Network Operations dari K2NET",
-      "title_en": "Managed IT & Network Operations from K2NET",
+      "slug": "portal-isp-msp-layanan-terkelola",
+      "title": "Layanan Managed IT & Network Operations dari Portal ISP",
+      "title_en": "Managed IT & Network Operations from Portal ISP",
       "status": "published",
       "featured_image": "/logo.png",
-      "excerpt": "Selain konektivitas, K2NET mendampingi operasional IT harian: monitoring, firewall, dan dukungan NOC.",
-      "excerpt_en": "Beyond connectivity, K2NET supports day-to-day IT operations: monitoring, firewall, and NOC support.",
-      "body": "<p>Sebagai MSP, K2NET membantu klien merancang, mengoperasikan, dan menjaga jaringan kantor — dari dedicated internet hingga keamanan perimeter dan dukungan teknis.</p>",
-      "body_en": "<p>As an MSP, K2NET helps clients design, operate, and maintain office networks — from dedicated internet to perimeter security and technical support.</p>"
+      "excerpt": "Selain konektivitas, Portal ISP mendampingi operasional IT harian: monitoring, firewall, dan dukungan NOC.",
+      "excerpt_en": "Beyond connectivity, Portal ISP supports day-to-day IT operations: monitoring, firewall, and NOC support.",
+      "body": "<p>Sebagai MSP, Portal ISP membantu klien merancang, mengoperasikan, dan menjaga jaringan kantor — dari dedicated internet hingga keamanan perimeter dan dukungan teknis.</p>",
+      "body_en": "<p>As an MSP, Portal ISP helps clients design, operate, and maintain office networks — from dedicated internet to perimeter security and technical support.</p>"
     },
     {
-      "slug": "k2net-coverage-bandung",
-      "title": "Jangkauan Layanan K2NET di Bandung dan Jawa Barat",
-      "title_en": "K2NET Service Coverage in Bandung and West Java",
+      "slug": "portal-isp-coverage-bandung",
+      "title": "Jangkauan Layanan Portal ISP di Bandung dan Jawa Barat",
+      "title_en": "Portal ISP Service Coverage in Bandung and West Java",
       "status": "published",
-      "featured_image": "/logofull_k2net.png",
+      "featured_image": "/logofull_portal-isp.png",
       "excerpt": "Survei last-mile dan aktivasi dedicated internet untuk kawasan Bandung Raya dan kota-kota Jawa Barat.",
       "excerpt_en": "Last-mile survey and dedicated internet activation for Greater Bandung and West Java cities.",
-      "body": "<p>Tim provision K2NET melakukan survei lokasi sebelum aktivasi. Hubungi NOC untuk cek jangkauan di Bandung, Cimahi, dan kawasan Jawa Barat lainnya.</p>",
-      "body_en": "<p>K2NET provisioning surveys the site before activation. Contact NOC to check coverage in Bandung, Cimahi, and other West Java areas.</p>"
+      "body": "<p>Tim provision Portal ISP melakukan survei lokasi sebelum aktivasi. Hubungi NOC untuk cek jangkauan di Bandung, Cimahi, dan kawasan Jawa Barat lainnya.</p>",
+      "body_en": "<p>Portal ISP provisioning surveys the site before activation. Contact NOC to check coverage in Bandung, Cimahi, and other West Java areas.</p>"
     },
     {
-      "slug": "k2net-noc-dukungan",
-      "title": "Dukungan NOC K2NET untuk Insiden Jaringan",
-      "title_en": "K2NET NOC Support for Network Incidents",
+      "slug": "portal-isp-noc-dukungan",
+      "title": "Dukungan NOC Portal ISP untuk Insiden Jaringan",
+      "title_en": "Portal ISP NOC Support for Network Incidents",
       "status": "published",
       "featured_image": "/logo-bw.png",
       "excerpt": "Eskalasi gangguan, tiket, dan koordinasi recovery melalui hotline dan WhatsApp NOC.",
       "excerpt_en": "Incident escalation, ticketing, and recovery coordination via NOC hotline and WhatsApp.",
-      "body": "<p>Klien dedicated dan managed services dapat menghubungi NOC K2NET di +62 851-3629-0861 atau info@k2net.id untuk eskalasi gangguan dan permintaan perubahan.</p>",
-      "body_en": "<p>Dedicated and managed-service clients can reach K2NET NOC at +62 851-3629-0861 or info@k2net.id for incident escalation and change requests.</p>"
+      "body": "<p>Klien dedicated dan managed services dapat menghubungi NOC Portal ISP di +62 851-3629-0861 atau info@portal.net untuk eskalasi gangguan dan permintaan perubahan.</p>",
+      "body_en": "<p>Dedicated and managed-service clients can reach Portal ISP NOC at +62 851-3629-0861 or info@portal.net for incident escalation and change requests.</p>"
     },
     {
-      "slug": "k2net-maintenance-window",
-      "title": "Jadwal Maintenance Backbone K2NET",
-      "title_en": "K2NET Backbone Maintenance Schedule",
+      "slug": "portal-isp-maintenance-window",
+      "title": "Jadwal Maintenance Backbone Portal ISP",
+      "title_en": "Portal ISP Backbone Maintenance Schedule",
       "status": "published",
       "featured_image": "/logo.png",
       "excerpt": "Pemberitahuan jendela maintenance terjadwal untuk upgrade kapasitas backbone regional.",
       "excerpt_en": "Scheduled maintenance window notice for regional backbone capacity upgrades.",
-      "body": "<p>NOC K2NET akan menginformasikan jadwal maintenance backbone melalui kanal resmi sebelum aktivitas upgrade dilakukan.</p>",
-      "body_en": "<p>K2NET NOC will announce backbone maintenance schedules through official channels before upgrade activities.</p>"
+      "body": "<p>NOC Portal ISP akan menginformasikan jadwal maintenance backbone melalui kanal resmi sebelum aktivitas upgrade dilakukan.</p>",
+      "body_en": "<p>Portal ISP NOC will announce backbone maintenance schedules through official channels before upgrade activities.</p>"
     },
     {
-      "slug": "k2net-promo-dedicated-internet",
+      "slug": "portal-isp-promo-dedicated-internet",
       "title": "Promo Dedicated Internet untuk UMKM Bandung",
       "title_en": "Dedicated Internet Promo for Bandung SMEs",
       "status": "published",
-      "featured_image": "/logofull_k2net.png",
+      "featured_image": "/logofull_portal-isp.png",
       "excerpt": "Paket dedicated internet dengan aktivasi survei gratis untuk UMKM di Bandung Raya.",
       "excerpt_en": "Dedicated internet packages with free site survey for SMEs in Greater Bandung.",
-      "body": "<p>Hubungi tim sales K2NET untuk konsultasi paket dedicated internet yang sesuai kebutuhan operasional bisnis Anda.</p>",
-      "body_en": "<p>Contact the K2NET sales team for dedicated internet packages tailored to your business operations.</p>"
+      "body": "<p>Hubungi tim sales Portal ISP untuk konsultasi paket dedicated internet yang sesuai kebutuhan operasional bisnis Anda.</p>",
+      "body_en": "<p>Contact the Portal ISP sales team for dedicated internet packages tailored to your business operations.</p>"
     }
   ]
 }

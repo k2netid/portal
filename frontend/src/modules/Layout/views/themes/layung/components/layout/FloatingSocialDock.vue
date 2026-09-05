@@ -172,9 +172,9 @@ const rawSocialLinks = computed(() => {
 
 const defaultSocialLinks = [
   { icon: 'WhatsApp', url: '6285136290851' },
-  { icon: 'Linkedin', url: 'https://linkedin.com/company/k2net' },
-  { icon: 'Instagram', url: 'https://instagram.com/k2net.id' },
-  { icon: 'Mail', url: 'info@k2net.id' },
+  { icon: 'Linkedin', url: 'https://linkedin.com/company/isp-provider' },
+  { icon: 'Instagram', url: 'https://instagram.com/portal.net' },
+  { icon: 'Mail', url: 'info@portal.net' },
 ];
 
 const socialLinks = computed(() => {
@@ -225,7 +225,7 @@ const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
   const clean = trimStr(link?.icon);
   if (!clean) return 'Tautan';
   if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp CS';
-  if (clean === 'Linkedin') return 'LinkedIn K2NET';
+  if (clean === 'Linkedin') return 'LinkedIn Kami';
   if (clean === 'Mail' || clean === 'Email') return 'Kirim Email';
   return clean;
 };

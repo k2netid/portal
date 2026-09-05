@@ -5,17 +5,17 @@ const t = (_key: string, fallback: string) => fallback;
 
 describe('layung public SEO', () => {
     it('uses the site name alone on the homepage', () => {
-        const seo = resolveLayungPublicSeo({ themePage: 'pages/Home', siteName: 'K2NET', t });
-        expect(seo.title).toBe('K2NET');
+        const seo = resolveLayungPublicSeo({ themePage: 'pages/Home', siteName: 'Portal', t });
+        expect(seo.title).toBe('Portal');
         expect(seo.description.length).toBeGreaterThan(20);
     });
 
     it('prefixes inner pages and covers /pricing/isp', () => {
         const seo = resolveLayungPublicSeo({
             themePage: 'pages/PricingIsp',
-            siteName: 'K2NET',
+            siteName: 'Portal',
             t,
         });
-        expect(seo.title).toBe('Paket Internet · K2NET');
+        expect(seo.title).toBe('Paket Internet · Portal');
     });
 });

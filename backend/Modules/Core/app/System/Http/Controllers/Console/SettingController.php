@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\RedisSetting;
@@ -133,6 +134,8 @@ class SettingController extends BaseApiController
 
         $setting->update($validated);
 
+        $this->syncSiteIdentityToActiveTheme((string) $setting->key, $setting->value);
+
         return $this->success($setting, 'Setting updated successfully');
     }
 
@@ -173,6 +176,7 @@ class SettingController extends BaseApiController
                 // In Core context, we want settings to be Global by default unless explicitly specified.
                 // Hub-wide system settings (no subscription or organization column on Setting).
                 Setting::set($sKey, $sValue, $sType, $sGroup);
+                $this->syncSiteIdentityToActiveTheme($sKey, $sValue);
 
                 // Sync with Redis Settings if cache driver or enable_cache is changed
                 if ($sKey === 'cache_driver' || $sKey === 'enable_cache') {
@@ -308,6 +312,44 @@ class SettingController extends BaseApiController
             }
 
             return $this->error('Connection failed: '.$message, 500);
+        }
+    }
+
+    private function syncSiteIdentityToActiveTheme(string $key, mixed $value): void
+    {
+        if (! in_array($key, ['site_name', 'site_tagline'], true)) {
+            return;
+        }
+
+        try {
+            if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+                return;
+            }
+
+            $activeTheme = \Modules\Layout\Models\Theme::getActiveTheme('frontend');
+            if (! $activeTheme) {
+                return;
+            }
+
+            $settings = is_array($activeTheme->settings) ? $activeTheme->settings : [];
+            $val = is_scalar($value) ? trim((string) $value) : '';
+
+            if ($key === 'site_name') {
+                $settings['school_name'] = $val;
+                $settings['site_title'] = $val;
+            } elseif ($key === 'site_tagline') {
+                $settings['school_tagline'] = $val;
+                $settings['site_tagline'] = $val;
+            }
+
+            $activeTheme->settings = $settings;
+            $activeTheme->save();
+
+            if (class_exists(\Modules\Layout\Services\ThemeService::class) && app()->bound(\Modules\Layout\Services\ThemeService::class)) {
+                app(\Modules\Layout\Services\ThemeService::class)->clearThemeCache($activeTheme);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Failed to sync '.$key.' to active theme settings: '.$e->getMessage());
         }
     }
 }

@@ -40,14 +40,14 @@
               ref="heroTitleRef"
               class="text-[1.65rem] sm:text-[2.3rem] font-medium tracking-tight text-white font-heading leading-[1.15]"
             >
-              <LayungSplitText :text="t('pages.about.storyTitle', 'K2NET — ISP dan managed services dari Bandung')" />
+              <LayungSplitText :text="t('pages.about.storyTitle', 'Kami — ISP dan managed services dari Bandung')" />
             </h1>
 
             <p
               ref="heroSubtitleRef"
               class="text-[13px] sm:text-sm text-slate-400 max-w-xl leading-relaxed"
             >
-              {{ t('pages.about.subtitle', 'Merek operasional PT Kirana Karina Network. Kami menyediakan internet dedicated, fiber, dan layanan IT terkelola untuk bisnis.') }}
+              {{ t('pages.about.subtitle', 'Merek operasional Penyedia Layanan Internet. Kami menyediakan internet dedicated, fiber, dan layanan IT terkelola untuk bisnis.') }}
             </p>
 
             <!-- Quick-stat strip -->
@@ -451,11 +451,11 @@ const heroStats = computed(() => [
 const timelines = computed(() => [
   {
     year: t('pages.about.timeline1Year', 'Berdiri'),
-    text: t('pages.about.timeline1Text', 'PT Kirana Karina Network didirikan di Bandung sebagai penyelenggara jasa internet.'),
+    text: t('pages.about.timeline1Text', 'Penyedia Layanan Internet didirikan di Bandung sebagai penyelenggara jasa internet.'),
   },
   {
     year: 'ASN AS153992',
-    text: t('pages.about.timeline2Text', 'Mendapatkan ASN AS153992 dari IDNIC (AS-Name: IDNIC-K2NET-ID) dan prefix IPv4 165.99.252.0/24.'),
+    text: t('pages.about.timeline2Text', 'Mendapatkan ASN AS153992 dari IDNIC (AS-Name: IDNIC-Kami-ID) dan prefix IPv4 165.99.252.0/24.'),
   },
   {
     year: t('pages.about.timeline3Year', 'Sekarang'),

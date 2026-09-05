@@ -124,7 +124,10 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
 import { Button, Input } from '@/modules/Layout/views/themes/sarangenge/ui';
+import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { Search } from 'lucide-vue-next';
+
+const { displaySchoolName } = useSarangengeIdentity();
 
 interface SearchHit {
     id: string;
@@ -187,7 +190,7 @@ const runSearch = async (): Promise<void> => {
             id: '2',
             type: 'Kurikulum & Program',
             title: 'Kurikulum Merdeka Riset, STEM & Kelas Bilingual Cambridge',
-            excerpt: 'Struktur kurikulum unggulan dan peminatan sains serta teknologi di Sarangenge.',
+            excerpt: `Struktur kurikulum unggulan dan peminatan sains serta teknologi di ${displaySchoolName.value}.`,
             url: '/solusi',
           },
           {

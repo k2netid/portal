@@ -1,52 +1,44 @@
+/**
+ * Merge platform + layung customizer schema files → layung/theme.json settings_schema.
+ * Source of truth: split JSON files (not theme.json).
+ *
+ * Usage: node scripts/merge-layung-theme-schema.mjs
+ */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const layungThemeJsonPath = path.join(root, 'src/modules/Layout/views/themes/layung/theme.json');
+const platformPath = path.join(root, 'src/modules/Layout/customizer/platform/schema/global.settings.schema.json');
+const layungSchemaPath = path.join(root, 'src/modules/Layout/views/themes/layung/customizer/schema.settings.json');
 
-const janariJsonPath = path.join(ROOT, 'src/modules/Layout/views/themes/janari/theme.json');
-const layungSchemaPath = path.join(ROOT, 'src/modules/Layout/views/themes/layung/customizer/schema.settings.json');
-const layungThemeJsonPath = path.join(ROOT, 'src/modules/Layout/views/themes/layung/theme.json');
-
-const janari = JSON.parse(fs.readFileSync(janariJsonPath, 'utf8'));
-const layungCustomizer = JSON.parse(fs.readFileSync(layungSchemaPath, 'utf8'));
-
-// Extract platform-scoped settings from janari
-const platformSettings = {};
-for (const [k, v] of Object.entries(janari.settings_schema || {})) {
-  if (v && v.scope === 'platform') {
-    platformSettings[k] = v;
-  }
+function omitMeta(schema) {
+    const out = {};
+    for (const [key, def] of Object.entries(schema)) {
+        if (key === '_meta') continue;
+        out[key] = def;
+    }
+    return out;
 }
 
-// Extract layung theme settings (excluding _meta)
-const themeSettings = {};
-for (const [k, v] of Object.entries(layungCustomizer)) {
-  if (k === '_meta') continue;
-  themeSettings[k] = {
-    ...v,
-    scope: 'theme',
-  };
-}
+const themeDoc = JSON.parse(fs.readFileSync(layungThemeJsonPath, 'utf8'));
+const platform = JSON.parse(fs.readFileSync(platformPath, 'utf8'));
+const themeSchema = JSON.parse(fs.readFileSync(layungSchemaPath, 'utf8'));
 
-const mergedSchema = {
-  ...platformSettings,
-  ...themeSettings,
+const merged = {
+    ...omitMeta(platform),
+    ...omitMeta(themeSchema),
 };
 
-const layungManifest = {
-  name: 'Layung',
-  slug: 'layung',
-  version: '1.0.0',
-  type: 'frontend',
-  description: 'Layung — tema portal penyedia layanan internet (ISP) dan Managed Service Provider (MSP) terdepan. Arsitektur serat optik, jaminan SLA 99.999%, dan layanan NOC 24/7.',
-  author: 'Jejakawan Team',
-  supports: {
-    layung_canvas: true,
-  },
-  settings_schema: mergedSchema,
+themeDoc.settings_schema = merged;
+themeDoc.customizer = {
+    platformSchema: 'Layout/customizer/platform/schema/global.settings.schema.json',
+    themeSchema: 'customizer/schema.settings.json',
 };
 
-fs.writeFileSync(layungThemeJsonPath, JSON.stringify(layungManifest, null, 4), 'utf8');
-console.log(`merged ${Object.keys(mergedSchema).length} keys → layung theme.json (platform ${Object.keys(platformSettings).length}, theme ${Object.keys(themeSettings).length})`);
+fs.writeFileSync(layungThemeJsonPath, `${JSON.stringify(themeDoc, null, 4)}\n`, 'utf8');
+
+console.log(
+    `merged ${Object.keys(merged).length} keys → layung theme.json (platform ${Object.keys(omitMeta(platform)).length}, theme ${Object.keys(omitMeta(themeSchema)).length})`,
+);

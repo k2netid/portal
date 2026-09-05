@@ -9,6 +9,7 @@ export function filterSarangengeCustomizerSettings(
     ctx: CustomizerFilterContext,
 ): (ThemeSetting & { key: string })[] {
     const isPpdbOpen = ctx.formValues.ppdb_is_open !== false;
+    const heroBgType = String(ctx.formValues.hero_bg_type || 'preset');
 
     return settings.filter((setting) => {
         const key = String(setting?.key || '');
@@ -17,6 +18,10 @@ export function filterSarangengeCustomizerSettings(
 
         // Hide specific PPDB fields if PPDB is marked closed
         if (key === 'ppdb_year' && !isPpdbOpen) return false;
+
+        // Hero background conditional visibility
+        if (key === 'hero_bg_preset' && heroBgType !== 'preset') return false;
+        if ((key === 'hero_bg_image' || key === 'hero_bg_overlay_opacity') && heroBgType !== 'custom_image') return false;
 
         return true;
     });

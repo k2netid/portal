@@ -9,13 +9,13 @@
     <span id="bento" class="sr-only">Bento</span>
     <div class="text-center max-w-3xl mx-auto space-y-4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 uppercase tracking-wider font-mono">
-        {{ t('bento.badge', 'Tiga Lini Bisnis K2NET') }}
+        {{ t('bento.badge', 'Tiga Lini Bisnis Kami') }}
       </span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-foreground font-heading tracking-tight">
         {{ t('bento.title', 'Konektivitas, Operasional IT, dan Kebutuhan Perangkat dalam Satu Mitra') }}
       </h2>
       <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">
-        {{ t('bento.subtitle', 'K2NET (PT Kirana Karina Network) mendampingi pelanggan dan mitra dari penyediaan koneksi internet, pengelolaan layanan IT, hingga pengadaan perangkat — dengan tim operasional di Bandung, Jawa Barat.') }}
+        {{ t('bento.subtitle', 'Kami (Penyedia Layanan Internet) mendampingi pelanggan dan mitra dari penyediaan koneksi internet, pengelolaan layanan IT, hingga pengadaan perangkat — dengan tim operasional di Bandung, Jawa Barat.') }}
       </p>
     </div>
 
@@ -153,7 +153,7 @@
             size="md"
             class="w-full font-bold"
           >
-            {{ t('bento.productsCta', 'Kunjungi toko daring K2NET') }}
+            {{ t('bento.productsCta', 'Kunjungi toko daring Kami') }}
             <ArrowUpRight class="w-4 h-4" />
           </Button>
         </div>

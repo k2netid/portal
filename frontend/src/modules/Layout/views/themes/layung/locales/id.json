@@ -1,6 +1,6 @@
 {
   "name": "Layung",
-  "description": "Layung — tema portal K2NET untuk ISP, managed services, dan penyedia produk IT.",
+  "description": "Layung — tema portal Kami untuk ISP, managed services, dan penyedia produk IT.",
   "header": {
     "home": "Beranda",
     "about": "Tentang Kami",
@@ -34,7 +34,7 @@
     "breadcrumbAria": "Breadcrumb"
   },
   "footer": {
-    "description": "K2NET (PT Kirana Karina Network) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.",
+    "description": "Kami (Penyedia Layanan Internet) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.",
     "isp": "ISP — Konektivitas",
     "msp": "MSP — Layanan IT",
     "products": "Produk IT",
@@ -59,20 +59,20 @@
     "badgeSla": "SLA berbasis kontrak",
     "badgeDatacenter": "Profil perusahaan",
     "badgeMembership": "APJII · IDNIC · APNIC",
-    "legalLine": "PT Kirana Karina Network",
+    "legalLine": "Penyedia Layanan Internet",
     "social": "Media Sosial",
     "socialDesc": "Ikuti perkembangan jaringan, promo produk, dan kabar terbaru kami."
   },
   "hero": {
     "badge": "Provide different IT solution",
     "headline": "Internet Service Provider dan Managed Service Provider",
-    "subheadline": "Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
+    "subheadline": "Bukan hanya konektivitas jaringan. Kami membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.",
     "ctaPrimary": "Hubungi Kami",
     "ctaSecondary": "Chat WhatsApp",
-    "whatsappPrefill": "Halo K2NET, saya ingin konsultasi layanan internet dan IT terkelola untuk perusahaan kami.",
+    "whatsappPrefill": "Halo Kami, saya ingin konsultasi layanan internet dan IT terkelola untuk perusahaan kami.",
     "newsSection": "Warta & promo",
     "newsViewAll": "Semua warta",
-    "newsDefaultTitle": "Pembaruan K2NET",
+    "newsDefaultTitle": "Pembaruan Kami",
     "newsDefaultCategory": "Info",
     "newsPrevious": "Berita sebelumnya",
     "newsNext": "Berita berikutnya",
@@ -86,13 +86,20 @@
     "slideMspCta": "Konsultasi Layanan",
     "slideWifiTitle": "Infrastruktur Nirkabel & Pengadaan Perangkat IT",
     "slideWifiDesc": "Desain jaringan wireless kantor berkapasitas tinggi, seamless roaming, dan pengadaan perangkat resmi bergaransi.",
-    "slideWifiCta": "Hubungi Sales"
+    "slideWifiCta": "Hubungi Sales",
+    "scrollCue": "Gulir ke Bawah",
+    "statsLabel": "TELEMETRI & KINERJA INFRASTRUKTUR",
+    "statsSubLabel": "Realtime SLA & Backbone Status",
+    "statSla": "Jaminan Ketersediaan (SLA)",
+    "statBackbone": "Kapasitas Backbone Ring",
+    "statNoc": "Active NOC Monitoring",
+    "statLatency": "Latensi Ring Wilayah"
   },
   "calculator": {
     "badge": "Perkiraan bandwidth",
     "title": "Hitung kebutuhan internet kantor",
-    "subtitle": "Estimasi internal K2NET berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.",
-    "methodology": "Estimasi internal K2NET",
+    "subtitle": "Estimasi internal Kami berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.",
+    "methodology": "Estimasi internal Kami",
     "usersLabel": "Jumlah Pengguna / Perangkat:",
     "cloudUsageLabel": "Aktivitas Bisnis:",
     "workloadHint": "Asumsi beban",
@@ -122,9 +129,9 @@
     "workloadHeavySub": "Ujian Daring, Lab Komputer, Server"
   },
   "bento": {
-    "badge": "Tiga Lini Bisnis K2NET",
+    "badge": "Tiga Lini Bisnis Kami",
     "title": "Konektivitas, Operasional IT, dan Kebutuhan Perangkat dalam Satu Mitra",
-    "subtitle": "K2NET (PT Kirana Karina Network) mendampingi pelanggan dan mitra dari penyediaan koneksi internet, pengelolaan layanan IT, hingga pengadaan perangkat — dengan tim operasional di Bandung, Jawa Barat.",
+    "subtitle": "Kami (Penyedia Layanan Internet) mendampingi pelanggan dan mitra dari penyediaan koneksi internet, pengelolaan layanan IT, hingga pengadaan perangkat — dengan tim operasional di Bandung, Jawa Barat.",
     "ispTitle": "Internet Service Provider (ISP)",
     "ispDesc": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband untuk kantor, institusi, dan rumah tangga di Bandung & Jawa Barat.",
     "ispPoint1": "Dedicated Internet — hubungi sales",
@@ -142,11 +149,11 @@
     "productsTitle": "Penyedia Produk IT",
     "productsDesc": "Toko offline di Bandung Trade Mall, plus Tokopedia, Shopee, dan SIPLah untuk pengadaan perangkat jaringan dan kebutuhan IT.",
     "productsOfflineLabel": "Toko offline",
-    "productsCta": "Kunjungi toko daring K2NET"
+    "productsCta": "Kunjungi toko daring Kami"
   },
   "packages": {
     "badge": "Skema Paket & Kapasitas",
-    "hubTitle": "Dua Lini Produk K2NET",
+    "hubTitle": "Dua Lini Produk Kami",
     "hubSubtitle": "Pilih paket konektivitas internet (ISP) atau layanan IT terkelola (MSP) sesuai kebutuhan institusi Anda.",
     "ispCardTitle": "Paket Internet (ISP)",
     "ispCardDesc": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband dengan harga transparan.",
@@ -170,26 +177,26 @@
     "sohoTitle": "Broadband Bisnis (SOHO)",
     "sohoSubtitle": "Broadband bisnis 50–100 Mbps untuk SOHO, ruko, dan kantor kecil. Harga final dikonfirmasi setelah survei lokasi.",
     "retailTitle": "Retail Broadband",
-    "retailSubtitle": "Paket internet rumah tangga dan ritel di area jangkauan jaringan K2NET. Harga belum termasuk PPN."
+    "retailSubtitle": "Paket internet rumah tangga dan ritel di area jangkauan jaringan Kami. Harga belum termasuk PPN."
   },
   "pricingMsp": {
-    "audience": "Paket managed services K2NET dirancang untuk sekolah dan lembaga pendidikan yang membutuhkan dukungan IT andal tanpa harus membangun tim internal. Kami menangani jaringan, server & aplikasi, CCTV, serta kebutuhan operasional IT lainnya — sesuai lingkup yang disepakati dalam kontrak.",
-    "footnote": "Harga dan cakupan layanan disesuaikan kebutuhan institusi Anda. Hubungi tim sales K2NET untuk konsultasi dan penawaran."
+    "audience": "Paket managed services Kami dirancang untuk sekolah dan lembaga pendidikan yang membutuhkan dukungan IT andal tanpa harus membangun tim internal. Kami menangani jaringan, server & aplikasi, CCTV, serta kebutuhan operasional IT lainnya — sesuai lingkup yang disepakati dalam kontrak.",
+    "footnote": "Harga dan cakupan layanan disesuaikan kebutuhan institusi Anda. Hubungi tim sales Kami untuk konsultasi dan penawaran."
   },
   "pages": {
     "about": {
       "title": "Tentang Kami",
       "badge": "Tentang perusahaan",
-      "subtitle": "Merek operasional PT Kirana Karina Network. Kami menyediakan internet dedicated, fiber, dan layanan IT terkelola untuk bisnis.",
-      "storyTitle": "K2NET — ISP dan managed services dari Bandung",
-      "storyText": "K2NET adalah merek dagang PT Kirana Karina Network.",
+      "subtitle": "Merek operasional Penyedia Layanan Internet. Kami menyediakan internet dedicated, fiber, dan layanan IT terkelola untuk bisnis.",
+      "storyTitle": "Kami — ISP dan managed services dari Bandung",
+      "storyText": "Kami adalah merek dagang Penyedia Layanan Internet.",
       "foundedHeading": "Dari Bandung untuk Jawa Barat",
       "historyTitle": "Sejarah singkat",
-      "historyP1": "PT Kirana Karina Network membangun K2NET sebagai penyelenggara jasa internet dan managed services dengan kantor operasional di Cikutra, Bandung. Fokus kami adalah konektivitas dedicated dan pendampingan operasional IT untuk bisnis di Jawa Barat.",
-      "historyP2": "Identitas routing mandiri dicatat melalui ASN AS153992 (AS-Name IDNIC-K2NET-ID) dan prefix IPv4 165.99.252.0/24. Rincian lookup publik tersedia di registri IDNIC/APNIC.",
+      "historyP1": "Penyedia Layanan Internet membangun Kami sebagai penyelenggara jasa internet dan managed services dengan kantor operasional di Cikutra, Bandung. Fokus kami adalah konektivitas dedicated dan pendampingan operasional IT untuk bisnis di Jawa Barat.",
+      "historyP2": "Identitas routing mandiri dicatat melalui ASN AS153992 (AS-Name IDNIC-Kami-ID) dan prefix IPv4 165.99.252.0/24. Rincian lookup publik tersedia di registri IDNIC/APNIC.",
       "timeline1Year": "Berdiri",
-      "timeline1Text": "PT Kirana Karina Network didirikan di Bandung sebagai penyelenggara jasa internet.",
-      "timeline2Text": "Mendapatkan ASN AS153992 dari IDNIC (AS-Name: IDNIC-K2NET-ID) dan prefix IPv4 165.99.252.0/24.",
+      "timeline1Text": "Penyedia Layanan Internet didirikan di Bandung sebagai penyelenggara jasa internet.",
+      "timeline2Text": "Mendapatkan ASN AS153992 dari IDNIC (AS-Name: IDNIC-Kami-ID) dan prefix IPv4 165.99.252.0/24.",
       "timeline3Year": "Sekarang",
       "timeline3Text": "Beroperasi sebagai ISP dan MSP — melayani bisnis, sekolah, dan institusi di Jawa Barat.",
       "entityTitle": "Badan usaha",
@@ -210,7 +217,7 @@
       "mission3": "Mendampingi operasional IT klien melalui NOC dan managed services.",
       "networkTitle": "Identitas jaringan",
       "networkHeading": "Routing mandiri dengan ASN dan prefix sendiri",
-      "networkIntro": "Data berikut adalah identitas routing publik K2NET. Tidak ditampilkan di header agar beranda tetap ringkas.",
+      "networkIntro": "Data berikut adalah identitas routing publik Kami. Tidak ditampilkan di header agar beranda tetap ringkas.",
       "networkPrefixHint": "Prefix untuk layanan dedicated",
       "networkRegion": "Wilayah",
       "networkNoc": "NOC Cikutra, Bandung",
@@ -218,12 +225,12 @@
       "networkLookupHint": "Tabel routing publik",
       "complianceTitle": "Izin ISP dan keanggotaan",
       "complianceHeading": "Beroperasi secara resmi dalam ekosistem internet Indonesia",
-      "complianceIntro": "K2NET beroperasi sebagai ISP dan menjadi bagian dari ekosistem registri serta asosiasi industri internet Indonesia.",
+      "complianceIntro": "Kami beroperasi sebagai ISP dan menjadi bagian dari ekosistem registri serta asosiasi industri internet Indonesia.",
       "licenseTitle": "Izin penyelenggaraan ISP",
-      "licenseText": "K2NET beroperasi sebagai penyelenggara jasa akses internet (ISP) sesuai kerangka perizinan Kementerian Komunikasi dan Digital / Kominfo. Nomor izin tercantum pada dokumen resmi perusahaan.",
+      "licenseText": "Kami beroperasi sebagai penyelenggara jasa akses internet (ISP) sesuai kerangka perizinan Kementerian Komunikasi dan Digital / Kominfo. Nomor izin tercantum pada dokumen resmi perusahaan.",
       "apjiiText": "Asosiasi Penyelenggara Jasa Internet Indonesia — wadah industri ISP nasional untuk kebijakan, peering, dan standar penyelenggaraan.",
-      "idnicText": "Indonesia Network Information Center, NIR di bawah APJII. Sumber alokasi ASN dan prefix K2NET (anggota korporat, AS-Name IDNIC-K2NET-ID).",
-      "apnicText": "Asia Pacific Network Information Centre, RIR kawasan Asia Pasifik. Alokasi K2NET tercatat melalui hirarki APNIC → IDNIC.",
+      "idnicText": "Indonesia Network Information Center, NIR di bawah APJII. Sumber alokasi ASN dan prefix Kami (anggota korporat, AS-Name IDNIC-Kami-ID).",
+      "apnicText": "Asia Pacific Network Information Centre, RIR kawasan Asia Pasifik. Alokasi Kami tercatat melalui hirarki APNIC → IDNIC.",
       "datacenterTitle": "Data Center & Point of Presence (PoP)"
     },
     "solusi": {
@@ -232,25 +239,25 @@
       "badge": "Managed Services"
     },
     "services": {
-      "title": "Layanan Internet K2NET",
+      "title": "Layanan Internet Kami",
       "subtitle": "Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung & Jawa Barat.",
       "badge": "Internet"
     },
     "pricing": {
       "hubBadge": "Paket & Harga",
-      "hubTitle": "Paket Layanan K2NET",
+      "hubTitle": "Paket Layanan Kami",
       "hubSubtitle": "Pilih antara paket konektivitas internet (ISP) atau layanan IT terkelola (MSP) — masing-masing dengan skema dan harga yang disesuaikan kebutuhan Anda.",
       "title": "Transparansi Biaya & Rincian Paket Bandwidth",
       "subtitle": "Investasi konektivitas yang jelas, tanpa biaya tersembunyi, dilengkapi jaminan Service Level Agreement (SLA)."
     },
     "pricingIsp": {
       "badge": "Paket Internet — ISP",
-      "title": "Paket Konektivitas Internet K2NET",
+      "title": "Paket Konektivitas Internet Kami",
       "subtitle": "Dedicated Internet untuk bisnis dan institusi, Broadband Bisnis untuk SOHO, serta Retail Broadband untuk rumah tangga di Bandung & Jawa Barat."
     },
     "pricingMsp": {
       "badge": "Managed Services — MSP",
-      "title": "Paket Managed Services K2NET",
+      "title": "Paket Managed Services Kami",
       "subtitle": "Pendampingan IT operasional untuk sekolah dan institusi — dari instalasi jaringan hingga perawatan server, aplikasi, dan CCTV."
     },
     "achievements": {
@@ -259,13 +266,13 @@
     },
     "team": {
       "title": "Tim operasional",
-      "subtitle": "Tim K2NET beroperasi dari Bandung. Hubungi kami untuk koordinasi teknis dan sales.",
+      "subtitle": "Tim Kami beroperasi dari Bandung. Hubungi kami untuk koordinasi teknis dan sales.",
       "body": "Dukungan jaringan, instalasi, dan managed services ditangani tim operasional di kantor Cikutra dan Garut.",
       "cta": "Hubungi kami"
     },
     "careers": {
       "title": "Karir",
-      "subtitle": "Bergabung dengan tim operasional K2NET di Bandung.",
+      "subtitle": "Bergabung dengan tim operasional Kami di Bandung.",
       "body": "Lowongan dibuka sesuai kebutuhan operasional. Kirim CV dan pengantar singkat melalui halaman kontak.",
       "cta": "Kirim lamaran",
       "badge": "Karir"
@@ -295,7 +302,7 @@
       "whatsappAria": "WhatsApp",
       "whatsappCta": "WhatsApp Response Cepat",
       "formTitle": "Formulir permintaan penawaran",
-      "formDescription": "Isi formulir di bawah ini. Tim K2NET akan menghubungi Anda.",
+      "formDescription": "Isi formulir di bawah ini. Tim Kami akan menghubungi Anda.",
       "formLoading": "Memuat formulir…",
       "formNotPublished": "Formulir kontak belum dipublikasikan atau tidak aktif. Periksa slug formulir di pengaturan tema.",
       "formLoadFailed": "Tidak dapat memuat formulir. Silakan refresh halaman atau coba lagi nanti.",
@@ -314,7 +321,7 @@
       "companyLabel": "Nama perusahaan / organisasi",
       "companyPlaceholder": "Nama institusi",
       "emailLabel": "Email",
-      "emailPlaceholder": "email@domain.com",
+      "emailPlaceholder": "email{'@'}domain.com",
       "phoneLabel": "Telepon / WhatsApp",
       "phonePlaceholder": "08xxxxxxxxxx",
       "serviceLabel": "Layanan yang diminati",
@@ -328,11 +335,11 @@
       "addressLabel": "Alamat lokasi",
       "addressPlaceholder": "Jalan, kelurahan, kota",
       "submitButton": "Kirim permintaan",
-      "submitSuccess": "Terima kasih. Tim K2NET akan menghubungi Anda untuk survei dan penawaran."
+      "submitSuccess": "Terima kasih. Tim Kami akan menghubungi Anda untuk survei dan penawaran."
     },
     "blog": {
       "title": "Berita",
-      "subtitle": "Pengumuman layanan, jangkauan, dan operasional K2NET.",
+      "subtitle": "Pengumuman layanan, jangkauan, dan operasional Kami.",
       "sectionBadge": "Berita",
       "allCategories": "Semua berita",
       "catInfra": "Internet",
@@ -344,7 +351,7 @@
     },
     "search": {
       "title": "Pencarian",
-      "subtitle": "Cari paket, layanan, dan informasi K2NET.",
+      "subtitle": "Cari paket, layanan, dan informasi Kami.",
       "placeholder": "Cari layanan atau paket…",
       "popular": "Pencarian populer",
       "tagDedicated": "Dedicated Internet",
@@ -361,7 +368,7 @@
   "servicesTabs": {
     "badge": "Layanan ISP & MSP",
     "title": "Konektivitas dan operasional IT untuk sekolah & institusi",
-    "subtitle": "Pilih tab sesuai kebutuhan: internet dari K2NET, atau pendampingan IT harian di lingkungan sekolah.",
+    "subtitle": "Pilih tab sesuai kebutuhan: internet dari Kami, atau pendampingan IT harian di lingkungan sekolah.",
     "ispTab": "Internet (ISP)",
     "mspTab": "Managed Services (MSP)",
     "isp1Title": "Dedicated Internet",
@@ -369,7 +376,7 @@
     "isp2Title": "Broadband Bisnis (SOHO)",
     "isp2Desc": "Internet 50–100 Mbps untuk ruko, kantor kecil, dan unit sekolah yang butuh kapasitas lebih dari paket rumah.",
     "isp3Title": "Retail Broadband",
-    "isp3Desc": "Paket rumah tangga dan ritel di area jangkauan K2NET, mulai 10 Mbps (up to 15 Mbps).",
+    "isp3Desc": "Paket rumah tangga dan ritel di area jangkauan Kami, mulai 10 Mbps (up to 15 Mbps).",
     "isp4Title": "Survei & aktivasi last-mile",
     "isp4Desc": "Pengecekan jangkauan di Bandung dan sekitarnya, lalu instalasi sesuai kesiapan infrastruktur di lokasi.",
     "isp5Title": "IP publik sesuai paket",
@@ -392,7 +399,7 @@
   "clients": {
     "badge": "Layanan institusi pendidikan",
     "title": "Pendampingan IT untuk sekolah dan institusi",
-    "subtitle": "K2NET menyediakan jaringan, server, CCTV, dan dukungan operasional IT untuk institusi pendidikan di Bandung dan Jawa Barat. Daftar mitra resmi dipublikasikan setelah persetujuan masing-masing institusi.",
+    "subtitle": "Kami menyediakan jaringan, server, CCTV, dan dukungan operasional IT untuk institusi pendidikan di Bandung dan Jawa Barat. Daftar mitra resmi dipublikasikan setelah persetujuan masing-masing institusi.",
     "focus1Title": "Jaringan kampus & lab",
     "focus1Body": "Instalasi, dokumentasi, dan perawatan jaringan sekolah termasuk lab komputer dan akses Wi-Fi.",
     "focus2Title": "Server, aplikasi, dan CCTV",
@@ -419,20 +426,20 @@
   "faq": {
     "badge": "Tanya jawab",
     "title": "Pertanyaan yang sering diajukan",
-    "subtitle": "Aktivasi, IP publik, SLA, dan jangkauan layanan K2NET.",
+    "subtitle": "Aktivasi, IP publik, SLA, dan jangkauan layanan Kami.",
     "q1": "Berapa lama instalasi Dedicated Internet?",
     "a1": "Setelah survei lokasi. Jika jaringan sudah tersedia di area, pengerjaan lebih cepat. Last-mile baru menyesuaikan kondisi di lapangan — jadwal dipastikan setelah survei.",
     "q2": "Apakah Dedicated Internet mendapat IP publik?",
     "a2": "Alokasi IP publik mengikuti paket dan kontrak, bukan janji blok /29 untuk semua layanan.",
     "q3": "Bagaimana jika layanan tidak sesuai SLA?",
     "a3": "Laporkan gangguan ke NOC atau Service Desk. Kompensasi, jika ada, mengikuti klausul kontrak yang ditandatangani.",
-    "q4": "Di mana jangkauan layanan K2NET?",
+    "q4": "Di mana jangkauan layanan Kami?",
     "a4": "Bandung dan sekitarnya di Jawa Barat. Ketersediaan last-mile dicek dulu lewat survei lokasi."
   },
   "cta": {
     "badge": "Konsultasi layanan",
     "title": "Siap diskusikan kebutuhan internet dan IT Anda?",
-    "subtitle": "Hubungi tim K2NET untuk survei lokasi dan penawaran sesuai kontrak.",
+    "subtitle": "Hubungi tim Kami untuk survei lokasi dan penawaran sesuai kontrak.",
     "primary": "Hubungi kami",
     "whatsapp": "Chat WhatsApp"
   },
@@ -441,7 +448,7 @@
       "page_hero": "Hero Beranda",
       "page_hero_desc": "Slogan, judul, strip berita CMS, dan nomor WhatsApp",
       "page_about": "Halaman Tentang Kami",
-      "page_about_desc": "Profil PT Kirana Karina Network (K2NET), Visi Misi, dan identitas ASN",
+      "page_about_desc": "Profil Penyedia Layanan Internet (Kami), Visi Misi, dan identitas ASN",
       "page_services": "Halaman Layanan",
       "page_services_desc": "Layanan Internet ISP dan Managed Services MSP",
       "page_solusi": "Halaman Solusi",
@@ -451,7 +458,7 @@
       "page_achievement": "Halaman SLA & Jaringan",
       "page_achievement_desc": "Komitmen SLA, identitas ASN AS153992, dan keanggotaan IDNIC",
       "page_tim": "Halaman Tim",
-      "page_tim_desc": "Tim operasional K2NET, NOC, dan Service Desk di Bandung",
+      "page_tim_desc": "Tim operasional Kami, NOC, dan Service Desk di Bandung",
       "page_careers": "Halaman Karir",
       "page_careers_desc": "Lowongan operasional di Bandung",
       "page_news": "Halaman Berita",
@@ -497,9 +504,9 @@
       "hero_news_enabled": "Tampilkan strip berita/promo di hero",
       "hero_news_enabled_hint": "Nyalakan ticker berita/promo CMS di bagian hero.",
       "isp_asn_number": "Nomor ASN & BGP Peering",
-      "isp_asn_number_hint": "Nomor Autonomous System K2NET terdaftar di IDNIC.",
+      "isp_asn_number_hint": "Nomor Autonomous System Kami terdaftar di IDNIC.",
       "isp_sla_guarantee": "Jaminan Uptime SLA",
-      "isp_sla_guarantee_hint": "Klausul SLA uptime resmi K2NET.",
+      "isp_sla_guarantee_hint": "Klausul SLA uptime resmi Kami.",
       "isp_noc_latency": "Latensi Rata-rata Inti",
       "isp_noc_latency_hint": "Wilayah cakupan latensi jaringan.",
       "isp_backbone_capacity": "Kapasitas Backbone Jaringan",

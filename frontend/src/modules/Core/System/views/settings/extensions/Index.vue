@@ -940,8 +940,14 @@ const toggleExtensionStatus = async (ext: ExtensionItem) => {
             toast.error(t('system.appStore.messages.toggleFailed', { action }));
         }
     } catch (err: unknown) {
-        const axiosMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        const errData = (err as { response?: { data?: { message?: string; data?: { code?: string } } } })?.response?.data;
+        const axiosMessage = errData?.message;
         toast.error(axiosMessage || t('system.appStore.messages.toggleError', { action }));
+        if (errData?.data?.code === 'missing_required_settings') {
+            activeExtConfig.value = ext;
+            rawSettingsJson.value = JSON.stringify(ext.settings || {}, null, 2);
+            settingsModalOpen.value = true;
+        }
     }
 };
 

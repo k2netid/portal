@@ -9,7 +9,7 @@ import {
 
 setAppShell('public');
 
-document.title = i18n.global.t('system.app.publicTitle', 'K2NET');
+document.title = i18n.global.t('system.app.publicTitle', 'Portal');
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initShellLayout('public'));
@@ -27,6 +27,9 @@ async function bootstrap(): Promise<void> {
         const { useSystemStore } = await import('@/modules/Core/System/stores/system');
         const systemStore = useSystemStore();
         await systemStore.fetchPublicSettings();
+        if (systemStore.siteSettings?.site_name) {
+            document.title = systemStore.siteSettings.site_name;
+        }
         active = systemStore.activeExtensions ?? [];
     } catch {
         /* theme runtime still mounts without public settings */

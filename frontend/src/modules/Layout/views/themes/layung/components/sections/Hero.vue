@@ -58,8 +58,22 @@
             class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1"
           >
             <Button
+              v-if="isExternalPrimary"
+              as="a"
+              :href="primaryTargetUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              size="md"
+              class="!py-3 !px-6 font-semibold shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all"
+            >
+              <Mail class="w-4 h-4 mr-1.5" />
+              {{ activeSlide.ctaText || heroContactCtaText }}
+            </Button>
+            <Button
+              v-else
               as="router-link"
-              :to="activeSlide.ctaUrl || contactHref"
+              :to="primaryTargetUrl"
               variant="primary"
               size="md"
               class="!py-3 !px-6 font-semibold shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all"
@@ -140,9 +154,76 @@
         </div>
       </div>
 
+      <!-- Animated Scroll Indicator -->
+      <div
+        v-if="heroShowScroll"
+        class="hidden lg:flex items-center justify-center gap-3 py-1 text-[10px] font-mono text-slate-500 uppercase tracking-widest"
+      >
+        <div class="w-8 h-[1px] bg-slate-800 relative overflow-hidden">
+          <div class="absolute inset-0 bg-sky-400 animate-scroll-line" />
+        </div>
+        <span>{{ scrollCueText }}</span>
+        <div class="w-8 h-[1px] bg-slate-800 relative overflow-hidden">
+          <div class="absolute inset-0 bg-sky-400 animate-scroll-line" />
+        </div>
+      </div>
+
+      <!-- Bottom Infrastructure Metrics / Telemetry Bar -->
+      <div
+        v-if="heroBottomMode === 'stats' || heroBottomMode === 'both'"
+        ref="heroStatsRef"
+        data-ja-customizer-target="hero-stats"
+        class="pt-6 border-t border-slate-800/80 space-y-3"
+      >
+        <div class="flex items-center justify-between gap-3">
+          <span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 font-mono flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            {{ statsSectionLabel }}
+          </span>
+          <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">
+            {{ statsSubLabel }}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="rounded-xl border border-slate-800/80 bg-slate-950/40 p-3.5 sm:p-4 relative overflow-hidden group hover:border-sky-500/40 transition-colors">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400 tracking-tight flex items-baseline gap-1">
+              {{ stat1Val }}
+            </div>
+            <div class="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase font-mono tracking-wider mt-1">
+              {{ stat1Label }}
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-950/40 p-3.5 sm:p-4 relative overflow-hidden group hover:border-sky-500/40 transition-colors">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400 tracking-tight flex items-baseline gap-1">
+              {{ stat2Val }}
+            </div>
+            <div class="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase font-mono tracking-wider mt-1">
+              {{ stat2Label }}
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-950/40 p-3.5 sm:p-4 relative overflow-hidden group hover:border-sky-500/40 transition-colors">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400 tracking-tight flex items-baseline gap-1">
+              {{ stat3Val }}
+            </div>
+            <div class="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase font-mono tracking-wider mt-1">
+              {{ stat3Label }}
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800/80 bg-slate-950/40 p-3.5 sm:p-4 relative overflow-hidden group hover:border-sky-500/40 transition-colors">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-emerald-400 tracking-tight flex items-baseline gap-1">
+              {{ stat4Val }}
+            </div>
+            <div class="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase font-mono tracking-wider mt-1">
+              {{ stat4Label }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bottom News & Promo Ticker -->
       <div
-        v-if="heroNewsEnabled && carouselItems.length > 0"
+        v-if="(heroBottomMode === 'news' || heroBottomMode === 'both') && heroNewsEnabled && carouselItems.length > 0"
         ref="heroNewsRef"
         data-ja-customizer-target="hero-news"
         data-ja-customizer-mode="bindings"
@@ -332,6 +413,7 @@ const heroBadgeRef = ref<HTMLElement>();
 const heroTitleRef = ref<HTMLElement>();
 const heroSubtitleRef = ref<HTMLElement>();
 const heroCtaRef = ref<HTMLElement>();
+const heroStatsRef = ref<HTMLElement>();
 const heroNewsRef = ref<HTMLElement>();
 const heroNewsCardsRef = ref<HTMLElement>();
 
@@ -366,7 +448,7 @@ const heroSubtitle = computed(() =>
     'hero_subtitle',
     t(
       'hero.subheadline',
-      'Bukan hanya konektivitas jaringan. K2NET membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.',
+      'Bukan hanya konektivitas jaringan. Kami membantu Anda mulai dari koneksi internet hingga layanan IT di lingkungan kerja Anda.',
     ),
     STALE_HERO_SUBTITLES,
   ),
@@ -384,11 +466,52 @@ const contactHref = computed(() =>
   resolveThemeHref(getSetting('hero_contact_url', ''), '/contact'),
 );
 
-// Fallback manual slides for K2NET core business
+const heroBottomMode = computed(() => String(getSetting('hero_bottom_mode', 'news') || 'news'));
+const heroShowScroll = computed(() => getSetting('hero_show_scroll', true) !== false);
+
+const scrollCueText = computed(() =>
+  copy('hero_scroll_cue_text', t('hero.scrollCue', 'SCROLL DOWN'), ['SCROLL_DOWN'])
+);
+
+const statsSectionLabel = computed(() =>
+  copy('hero_stats_section_label', t('hero.statsLabel', 'TELEMETRI & KINERJA INFRASTRUKTUR'), [])
+);
+
+const statsSubLabel = computed(() =>
+  copy('hero_stats_sub_label', t('hero.statsSubLabel', 'Realtime SLA & Backbone Status'), [])
+);
+
+const stat1Val = computed(() => String(getSetting('hero_stat_1_val', '99.98%') || '99.98%'));
+const stat1Label = computed(() =>
+  copy('hero_stat_1_label', t('hero.statSla', 'Jaminan Ketersediaan (SLA)'), [])
+);
+
+const stat2Val = computed(() => String(getSetting('hero_stat_2_val', '10 Gbps') || '10 Gbps'));
+const stat2Label = computed(() =>
+  copy('hero_stat_2_label', t('hero.statBackbone', 'Kapasitas Backbone Ring'), [])
+);
+
+const stat3Val = computed(() => String(getSetting('hero_stat_3_val', '24/7/365') || '24/7/365'));
+const stat3Label = computed(() =>
+  copy('hero_stat_3_label', t('hero.statNoc', 'Active NOC Monitoring'), [])
+);
+
+const stat4Val = computed(() => String(getSetting('hero_stat_4_val', '< 5ms') || '< 5ms'));
+const stat4Label = computed(() =>
+  copy('hero_stat_4_label', t('hero.statLatency', 'Latensi Ring Wilayah'), [])
+);
+
+const primaryTargetUrl = computed(() => activeSlide.value.ctaUrl || contactHref.value);
+const isExternalPrimary = computed(() => {
+  const url = primaryTargetUrl.value;
+  return typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:'));
+});
+
+// Fallback manual slides for Kami core business
 const defaultManualSlides = computed(() => [
   {
     id: 'isp',
-    badge: 'K2NET DEDICATED',
+    badge: 'Kami DEDICATED',
     title: t('hero.slideIspTitle', 'Internet Service Provider Berbasis Fiber Optik'),
     subtitle: t('hero.slideIspDesc', 'Konektivitas simetris 1:1 tanpa FUP dengan dukungan latensi rendah dan jaminan SLA 99.98%.'),
     ctaText: t('hero.slideIspCta', 'Lihat Paket Internet'),
@@ -419,7 +542,7 @@ const activeSlides = computed(() => {
   if (hasHeroSlidesBinding.value && Array.isArray(dynamicHeroSlides.value) && dynamicHeroSlides.value.length > 0) {
     return (dynamicHeroSlides.value as Record<string, unknown>[]).map((item, idx) => ({
       id: String(item.id || idx),
-      badge: String(item.badge || item.category || 'K2NET SOLUTION'),
+      badge: String(item.badge || item.category || 'Kami SOLUTION'),
       title: String(item.title || item.name || ''),
       subtitle: String(item.description || item.excerpt || item.subtitle || ''),
       ctaText: String(item.cta_text || item.button_text || heroContactCtaText.value),
@@ -576,6 +699,14 @@ onMounted(async () => {
   if (heroTitleRef.value) splitTextRevealSafe(heroTitleRef.value, { delay: 0.18, stagger: 0.045 });
   if (heroSubtitleRef.value) tl.from(heroSubtitleRef.value, { y: 16, opacity: 0, duration: 0.65 }, 0.28);
   if (heroCtaRef.value) tl.from(heroCtaRef.value, { y: 20, opacity: 0, duration: 0.7 }, 0.38);
+  if (heroStatsRef.value) {
+    staggerChildren(heroStatsRef.value, ':scope .grid > div', {
+      distance: 20,
+      stagger: 0.08,
+      delay: 0.2,
+      start: 'top 95%',
+    });
+  }
   if (heroNewsRef.value) {
     staggerChildren(heroNewsRef.value, ':scope .grid > a', {
       distance: 20,

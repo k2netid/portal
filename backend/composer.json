@@ -8,7 +8,7 @@
         {
             "name": "Jejakawan",
             "email": "jejakawan007@github.com",
-            "homepage": "https://k2net.id",
+            "homepage": "https://jejakawan.com",
             "role": "Developer"
         }
     ],
@@ -18,12 +18,6 @@
         "core-engine"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://mirrors.cloud.tencent.com/composer/"
-        }
-    ],
     "require": {
         "php": "^8.2|^8.5",
         "dedoc/scramble": "^0.13.22",

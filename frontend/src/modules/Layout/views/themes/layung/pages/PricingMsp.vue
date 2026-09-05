@@ -34,7 +34,7 @@
             {{ t('pages.pricingMsp.badge', 'Managed Services — MSP') }}
           </span>
           <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-            {{ t('pages.pricingMsp.title', 'Paket Managed Services K2NET') }}
+            {{ t('pages.pricingMsp.title', 'Paket Managed Services Kami') }}
           </h1>
           <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
             {{ t('pages.pricingMsp.subtitle', 'Pendampingan IT operasional untuk sekolah dan institusi — dari instalasi jaringan hingga perawatan server, aplikasi, dan CCTV.') }}

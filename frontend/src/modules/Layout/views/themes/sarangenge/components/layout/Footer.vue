@@ -9,25 +9,30 @@
         <div class="lg:col-span-2 space-y-4">
           <div class="flex items-center gap-3.5">
             <div
-              v-if="brandingDisplay !== 'text_only'"
-              class="w-11 h-11 rounded-2xl bg-[#0f172a] text-amber-400 flex items-center justify-center font-black text-xl shadow-md border border-slate-700/60 overflow-hidden"
-              aria-hidden="true"
+              v-if="siteLogo && brandingDisplay !== 'text_only'"
+              class="h-12 w-auto flex items-center shrink-0"
             >
               <img
-                v-if="siteLogo"
                 :src="siteLogo"
-                :alt="displaySchoolName"
-                class="h-full w-full object-contain p-1"
+                :alt="brandingDisplay === 'logo_only' ? displaySchoolName : ''"
+                class="h-12 w-auto object-contain"
               >
-              <template v-else>
-                {{ displaySchoolName.charAt(0).toUpperCase() }}
-              </template>
             </div>
-            <div v-if="brandingDisplay !== 'logo_only'">
-              <span class="text-xl font-extrabold tracking-tight text-foreground font-heading block">
+            <div
+              v-else-if="brandingDisplay !== 'text_only'"
+              class="w-11 h-11 rounded-2xl bg-[#0f172a] text-amber-400 flex items-center justify-center font-black text-xl shadow-md border border-slate-700/60 overflow-hidden shrink-0"
+              aria-hidden="true"
+            >
+              {{ displaySchoolName.charAt(0).toUpperCase() }}
+            </div>
+            <div
+              v-if="brandingDisplay !== 'logo_only'"
+              class="min-w-0"
+            >
+              <span class="text-lg sm:text-xl font-extrabold tracking-tight text-foreground font-heading block">
                 {{ displaySchoolName }}
               </span>
-              <span class="text-xs text-primary font-bold">
+              <span class="text-xs text-primary font-bold block mt-0.5">
                 {{ displayAccreditation }} · {{ displayNpsn }}
               </span>
             </div>
@@ -229,11 +234,13 @@
         </div>
       </div>
     </div>
+    <SarangengeFloatingSocialDock />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
+import SarangengeFloatingSocialDock from '@/modules/Layout/views/themes/sarangenge/components/layout/SarangengeFloatingSocialDock.vue';
 import {
   MapPin, Phone, Mail, GraduationCap, Award, MessageCircle,
   Twitter, Instagram, Facebook, Youtube, Linkedin, Github, Music2, Globe,
@@ -241,14 +248,12 @@ import {
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
-import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import type { MenuItem } from '@/modules/Layout/types/menu';
 
 const { t: tt } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
-const systemStore = useSystemStore();
 const {
   displaySchoolName,
   displayAddress,
@@ -258,22 +263,22 @@ const {
   displayNpsn,
   phoneDialHref,
   whatsAppUrl,
+  ppdbPortalUrl,
+  siteLogo,
 } = useSarangengeIdentity();
 
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
-
-const siteLogo = computed(() => {
-  const custom = getSetting('brand_logo', '');
-  if (custom && typeof custom === 'string') return custom;
-  return (systemStore.settings as { site_logo?: string } | undefined)?.site_logo || '';
-});
 
 const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || []);
 
 const footerAboutText = computed(() => {
   const fromTheme = getSetting('footer_about_text', '');
   if (fromTheme && typeof fromTheme === 'string') return fromTheme;
-  return tt('footer.description', 'Sarangenge terinspirasi dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi yang menumbuhkan kebaikan budi, kecerdasan sains, dan integritas luhur.');
+  return tt(
+    'footer.description',
+    { school: displaySchoolName.value },
+    `${displaySchoolName.value} berkomitmen menyelenggarakan pendidikan berkualitas, berintegritas, berstandar tinggi, dan berlandaskan kearifan lokal.`
+  );
 });
 
 const footerCopyrightText = computed(() => {
@@ -372,17 +377,17 @@ const getSocialAriaLabel = (link: { icon?: string; url?: string }) => {
 };
 
 const defaultCol1Items = computed((): Partial<MenuItem>[] => [
-  { title: tt('header.solusi', 'Program Unggulan'), url: '/solusi#programs' },
-  { title: tt('header.services', 'Fasilitas Kampus'), url: '/services#smart-class' },
-  { title: tt('header.achievement', 'Prestasi Siswa'), url: '/achievement' },
-  { title: tt('header.tim', 'Direktori Guru'), url: '/tim' },
+  { title: 'Program Keahlian', url: '/programs' },
+  { title: 'Fasilitas & Bengkel', url: '/facilities' },
+  { title: 'BKK & Mitra Industri', url: '/career' },
+  { title: 'Prestasi Siswa', url: '/achievement' },
 ]);
 
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
-  { title: tt('header.pricing', 'Biaya & Beasiswa'), url: '/pricing#beasiswa' },
-  { title: tt('header.career', 'Jejaring Alumni'), url: '/career-center' },
-  { title: tt('header.blog', 'Berita & Pengumuman'), url: '/blog' },
-  { title: tt('header.getStarted', 'Pendaftaran PPDB'), url: '/contact#ppdb' },
+  { title: 'Portal Resmi PPDB Jabar', url: ppdbPortalUrl.value },
+  { title: 'Warta & Agenda Sekolah', url: '/blog' },
+  { title: 'Guru & Tenaga Kependidikan', url: '/tim' },
+  { title: 'Kontak & Lokasi Kampus', url: '/contact' },
 ]);
 
 const footerCol1Items = computed(() => {

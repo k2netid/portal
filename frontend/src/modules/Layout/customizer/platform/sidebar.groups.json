@@ -16,7 +16,7 @@
                     "labelKey": "publishing.theme_customizer.sidebar.items.site_profile",
                     "descriptionKey": "publishing.theme_customizer.sidebar.items.site_profile_desc",
                     "icon": "sparkles",
-                    "manifestCategories": ["Site Info", "Organization Info"]
+                    "manifestCategories": ["Site Info", "Organization Info", "School Info"]
                 },
                 {
                     "id": "identity-menus",

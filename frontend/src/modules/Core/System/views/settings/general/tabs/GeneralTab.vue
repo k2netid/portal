@@ -9,6 +9,16 @@
       :color="group.color"
       :default-expanded="group.defaultExpanded"
     >
+      <template #badge>
+        <span
+          v-if="group.id === 'brand' && !systemStore.appIdentity.has_white_label"
+          class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+        >
+          <Lock class="w-3 h-3" />
+          {{ $t('system.settings.white_label_required') }}
+        </span>
+      </template>
+
       <template
         v-for="setting in group.settings"
         :key="setting.id"
@@ -24,6 +34,7 @@
           :enabled-text="$t('system.settings.enabled')"
           :disabled-text="$t('system.settings.disabled')"
           :error="errors?.[setting.key]"
+          :disabled="isFieldProtected(setting.key)"
           :readonly="isFieldProtected(setting.key)"
           @update:model-value="(value) => updateField(setting.key, value)"
         />
@@ -151,7 +162,7 @@ const handleAutosaveCustomInput = (event: Event) => {
     updateField('content.autosave_interval_seconds', normalizeAutosaveInterval(value))
 }
 
-import { Clock, Wrench, Sparkles } from 'lucide-vue-next'
+import { Clock, Wrench, Sparkles, Lock } from 'lucide-vue-next'
 
 interface SettingGroupData {
     id: string;
@@ -182,7 +193,7 @@ const isMaintenanceSettingVisible = (key: string) => {
 
 const isFieldProtected = (key: string) => {
     // Branding fields are protected if no White Label license
-    const brandingKeys = ['app_name', 'app_logo', 'app_favicon', 'branding_display'];
+    const brandingKeys = ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'];
     if (brandingKeys.includes(key)) {
         return !systemStore.appIdentity.has_white_label;
     }
@@ -206,7 +217,7 @@ const generalSettingsGrouped = computed(() => {
             description: t('system.settings.groups.brand.description'),
             icon: Sparkles,
             color: 'indigo',
-            keys: ['app_name', 'app_logo', 'app_favicon', 'branding_display'],
+            keys: ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
             settings: [],
             defaultExpanded: true,
         },
@@ -237,7 +248,7 @@ const generalSettingsGrouped = computed(() => {
         
         // Ensure settings are in logical order
         const orders: Record<string, string[]> = {
-            'brand': ['app_name', 'brand_logo', 'brand_favicon', 'branding_display'],
+            'brand': ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
             'maintenance': ['maintenance_mode', 'maintenance_title', 'maintenance_message', 'maintenance_countdown_enabled', 'maintenance_end_time'],
             'localization': ['timezone', 'date_format', 'time_format', 'items_per_page']
         };

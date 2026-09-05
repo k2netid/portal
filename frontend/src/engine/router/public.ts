@@ -7,6 +7,7 @@ const publicThemePage = () => import('@/modules/Layout/components/themes/PublicT
 export const publicRoutes: RouteRecordRaw[] = [
     {
         path: '/',
+        name: 'public-layout',
         component: () => import('@/modules/Layout/layouts/FrontendLayout.vue'),
         children: [
             {
@@ -34,59 +35,12 @@ export const publicRoutes: RouteRecordRaw[] = [
                 meta: { public: true, themePage: 'pages/About' },
             },
             {
-                path: 'solusi',
-                name: 'public-solusi',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Solusi' },
-            },
-            {
-                path: 'services',
-                name: 'public-services',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Services' },
-            },
-            {
-                path: 'pricing',
-                name: 'public-pricing',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Pricing' },
-            },
-            {
-                path: 'pricing/isp',
-                name: 'public-pricing-isp',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/PricingIsp' },
-            },
-            {
-                path: 'pricing/msp',
-                name: 'public-pricing-msp',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/PricingMsp' },
-            },
-            {
-                path: 'career',
-                name: 'public-career',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/CareerCenter' },
-            },
-            {
-                path: 'achievement',
-                name: 'public-achievement',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Achievement' },
-            },
-            {
                 path: 'contact',
                 name: 'public-contact',
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Contact' },
             },
-            {
-                path: 'tim',
-                name: 'public-tim',
-                component: publicThemePage,
-                meta: { public: true, themePage: 'pages/Tim' },
-            },
+
             {
                 path: 'search',
                 name: 'public-search',
@@ -187,7 +141,48 @@ export const createPublicRouter = () => {
         scrollBehavior: publicScrollBehavior,
     });
 
+    let injectedThemeSlug: string | null = null;
+    let activeThemeRouteRemovers: Array<() => void> = [];
+
     router.beforeEach(async (to, from) => {
+        if (to.path !== '/404' && to.path !== '/maintenance') {
+            try {
+                const { useTheme } = await import('@/modules/Layout/composables/useTheme');
+                const { loadActiveTheme, activeTheme } = useTheme();
+                await loadActiveTheme();
+                
+                const currentSlug = activeTheme.value?.slug;
+                if (currentSlug && currentSlug !== injectedThemeSlug) {
+                    // Clean up routes from previously active theme
+                    activeThemeRouteRemovers.forEach((remove) => remove());
+                    activeThemeRouteRemovers = [];
+
+                    const modules = import.meta.glob('@/modules/Layout/views/themes/*/routes.ts');
+                    const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${currentSlug}/routes.ts`];
+                    
+                    if (loadThemeRoutes) {
+                        const module = await loadThemeRoutes() as any;
+                        if (module.default && Array.isArray(module.default)) {
+                            module.default.forEach((route: any) => {
+                                const remove = router.addRoute('public-layout', route);
+                                if (typeof remove === 'function') {
+                                    activeThemeRouteRemovers.push(remove);
+                                }
+                            });
+                            injectedThemeSlug = currentSlug;
+                            if (to.matched.length === 0 || to.name === 'public-not-found') {
+                                return to.fullPath;
+                            }
+                        }
+                    } else {
+                        injectedThemeSlug = currentSlug;
+                    }
+                }
+            } catch (e) {
+                // Ignore error, theme routes just won't be loaded
+            }
+        }
+
         const result = await handleBeforeEachGuard(to, from, {
             loginPath: '/member/login',
             registerPath: '/member/register',

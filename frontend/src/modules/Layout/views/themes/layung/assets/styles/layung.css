@@ -4,7 +4,7 @@
    Merepresentasikan: Konektivitas ISP, managed services, dan operasional jaringan 24/7.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* K2NET brand: cyan wordmark #00AEEF on charcoal/black */
@@ -1475,7 +1475,18 @@ html.dark .layung-social-dock__tooltip,
   .layung-hero-visual .animate-ping,
   .layung-hero-visual .animate-spin,
   .layung-pulse-line,
-  .layung-rf-wave {
+  .layung-rf-wave,
+  .animate-scroll-line {
     animation: none !important;
   }
+}
+
+/* ── Hero Scroll Cue Line Animation ────────────────────────────── */
+@keyframes layung-scroll-line {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-scroll-line {
+  animation: layung-scroll-line 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }

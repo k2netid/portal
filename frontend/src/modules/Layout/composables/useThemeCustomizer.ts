@@ -123,12 +123,14 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
             const fallbackGlobalMap: Record<string, string> = {
                 site_title: siteName,
                 site_name: siteName,
+                school_name: siteName,
                 brand_logo: siteLogo,
                 site_logo: siteLogo,
                 brand_favicon: siteFavicon,
                 site_favicon: siteFavicon,
                 site_tagline: siteDesc,
                 site_description: siteDesc,
+                school_tagline: siteDesc,
             };
 
             const rawSettings = (theme.value?.settings || {}) as Record<string, unknown>;

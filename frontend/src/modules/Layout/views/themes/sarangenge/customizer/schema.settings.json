@@ -4,6 +4,18 @@
         "slug": "sarangenge",
         "description": "Sarangenge modern school theme customizer settings schema."
     },
+    "school_name": {
+        "label": "Nama Resmi Sekolah",
+        "type": "text",
+        "default": "SMK Negeri 6 Bandung",
+        "category": "School Info"
+    },
+    "school_tagline": {
+        "label": "Slogan / Tagline Sekolah",
+        "type": "text",
+        "default": "Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan",
+        "category": "School Info"
+    },
     "school_accreditation": {
         "label": "Status Akreditasi",
         "type": "text",
@@ -32,6 +44,12 @@
         "label": "Tahun Ajaran PPDB",
         "type": "text",
         "default": "2026/2027",
+        "category": "Hero Section"
+    },
+    "ppdb_external_url": {
+        "label": "Tautan Portal Resmi PPDB Jabar",
+        "type": "text",
+        "default": "https://ppdb.jabarprov.go.id/",
         "category": "Hero Section"
     },
     "hero_badge_text": {
@@ -112,6 +130,48 @@
         "default": "Rasio Guru & Siswa",
         "category": "Hero Section"
     },
+    "hero_bg_type": {
+        "label": "Tipe Background Hero",
+        "type": "select",
+        "options": [
+            { "label": "Preset Gradien", "value": "preset" },
+            { "label": "Foto Kustom Kampus", "value": "custom_image" }
+        ],
+        "default": "preset",
+        "category": "Hero Section"
+    },
+    "hero_bg_preset": {
+        "label": "Preset Background Hero",
+        "type": "select",
+        "options": [
+            { "label": "Sunrise Teal (Fajar Emas & Toska)", "value": "sunrise_teal" },
+            { "label": "Deep Navy (Biru Kejuruan)", "value": "deep_navy" },
+            { "label": "Golden Dawn (Fajar Keemasan)", "value": "golden_dawn" }
+        ],
+        "default": "sunrise_teal",
+        "category": "Hero Section"
+    },
+    "hero_bg_image": {
+        "label": "Gambar Background Hero",
+        "type": "image",
+        "default": "",
+        "category": "Hero Section"
+    },
+    "hero_bg_overlay_opacity": {
+        "label": "Kegelapan Overlay Background (%)",
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "default": 75,
+        "category": "Hero Section"
+    },
+    "track_finder_enabled": {
+        "label": "Aktifkan Widget Pencari Jurusan",
+        "type": "boolean",
+        "default": true,
+        "category": "Bento Campus Section"
+    },
     "bento_title": {
         "label": "Judul Bento Grid Kampus",
         "type": "text",
@@ -152,13 +212,13 @@
         "label": "Judul Fasilitas Sekolah",
         "type": "text",
         "default": "Fasilitas & Sarana Kampus Modern",
-        "category": "Services Page"
+        "category": "Facilities Page"
     },
     "facilities_subtitle": {
         "label": "Subjudul Fasilitas",
         "type": "text",
         "default": "Lingkungan belajar kondusif dengan teknologi cerdas dan laboratorium lengkap.",
-        "category": "Services Page"
+        "category": "Facilities Page"
     },
     "tim_title": {
         "label": "Judul Halaman Pendidik & Staf",
@@ -211,13 +271,165 @@
     "footer_about_text": {
         "label": "Teks Deskripsi Footer",
         "type": "textarea",
-        "default": "Sarangenge adalah institusi pendidikan terdepan yang berfokus pada keunggulan akademik, integritas karakter, dan kesiapan teknologi masa depan.",
+        "default": "",
         "category": "Footer"
     },
     "footer_copyright": {
         "label": "Teks Hak Cipta Footer",
         "type": "text",
-        "default": "© 2026 Sarangenge Academy. Hak cipta dilindungi undang-undang.",
+        "default": "",
         "category": "Footer"
+    },
+    "enable_about": {
+        "label": "Aktifkan Halaman Profil Sekolah",
+        "type": "boolean",
+        "default": true,
+        "category": "About Page"
+    },
+    "enable_programs": {
+        "label": "Aktifkan Halaman Program Keahlian",
+        "type": "boolean",
+        "default": true,
+        "category": "Programs Section"
+    },
+    "enable_facilities": {
+        "label": "Aktifkan Halaman Fasilitas & Bengkel",
+        "type": "boolean",
+        "default": true,
+        "category": "Facilities Page"
+    },
+    "enable_pricing": {
+        "label": "Aktifkan Halaman Biaya & PPDB",
+        "type": "boolean",
+        "default": true,
+        "category": "Pricing Page"
+    },
+    "enable_tim": {
+        "label": "Aktifkan Halaman Guru & Staf",
+        "type": "boolean",
+        "default": true,
+        "category": "Tim Page"
+    },
+    "enable_achievement": {
+        "label": "Aktifkan Halaman Prestasi",
+        "type": "boolean",
+        "default": true,
+        "category": "Achievements Page"
+    },
+    "enable_career": {
+        "label": "Aktifkan Halaman Alumni & Karir",
+        "type": "boolean",
+        "default": true,
+        "category": "Alumni Page"
+    },
+    "enable_blog": {
+        "label": "Aktifkan Halaman Berita & Agenda",
+        "type": "boolean",
+        "default": true,
+        "category": "Blog Page"
+    },
+    "enable_contact": {
+        "label": "Aktifkan Halaman Kontak",
+        "type": "boolean",
+        "default": true,
+        "category": "Contact Page"
+    },
+    "social_instagram_feed_enabled": {
+        "label": "Tampilkan Instagram Feed di Beranda",
+        "type": "boolean",
+        "default": false,
+        "category": "Social Media"
+    },
+    "social_instagram_feed_slot": {
+        "label": "Posisi Penempatan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bawah Hero Section (after_hero)", "value": "after_hero" },
+            { "label": "Atas Footer Situs (before_footer)", "value": "before_footer" }
+        ],
+        "default": "after_hero",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_layout": {
+        "label": "Gaya Tampilan Instagram Feed",
+        "type": "select",
+        "options": [
+            { "label": "Bento Grid (Modern Berjenjang)", "value": "bento" },
+            { "label": "Classic Grid (Kotak Responsif)", "value": "grid" },
+            { "label": "Carousel Slider (Geser Horizontal)", "value": "carousel" }
+        ],
+        "default": "bento",
+        "category": "Social Media"
+    },
+    "social_instagram_feed_title": {
+        "label": "Judul Seksi Instagram",
+        "type": "text",
+        "default": "",
+        "category": "Social Media"
+    },
+    "home_sections": {
+        "label": "Bagian Beranda Sekolah",
+        "type": "checkbox_list",
+        "options": [
+            {
+                "label": "Hero Vokasi & Banner PPDB",
+                "value": "hero"
+            },
+            {
+                "label": "Bento Keunggulan & BLUD Kampus",
+                "value": "bento"
+            },
+            {
+                "label": "Pencari Jalur Vokasi & Minat Karir",
+                "value": "track_finder"
+            },
+            {
+                "label": "Program Keahlian Vokasi (6 Konsentrasi)",
+                "value": "programs"
+            },
+            {
+                "label": "Warta Kampus & Pengumuman",
+                "value": "announcements"
+            },
+            {
+                "label": "Prestasi Siswa & Guru",
+                "value": "achievements"
+            },
+            {
+                "label": "Fasilitas & Bengkel Praktik TEFA",
+                "value": "facilities"
+            },
+            {
+                "label": "Ekstrakurikuler & Pembinaan Karakter",
+                "value": "extracurricular"
+            },
+            {
+                "label": "Testimoni Alumni & DUDI Mitra",
+                "value": "testimonials"
+            },
+            {
+                "label": "Tanya Jawab (FAQ PPDB & Sekolah)",
+                "value": "faq"
+            },
+            {
+                "label": "Panggilan Aksi (CTA Pendaftaran)",
+                "value": "cta"
+            }
+        ],
+        "default": [
+            "hero",
+            "bento",
+            "track_finder",
+            "programs",
+            "announcements",
+            "achievements",
+            "facilities",
+            "extracurricular",
+            "testimonials",
+            "faq",
+            "cta"
+        ],
+        "category": "Layout",
+        "scope": "theme"
     }
 }

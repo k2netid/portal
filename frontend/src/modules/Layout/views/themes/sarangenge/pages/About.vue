@@ -1,28 +1,32 @@
 <template>
-  <div
-    data-ja-customizer-target="about"
-    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+  <SarangengePageGate
+    setting-key="enable_about"
+    :title="t('pages.about.title', { school: displaySchoolName }, `Profil & Filosofi Pendidikan ${displaySchoolName}`)"
   >
-    <BlockRenderer
-      v-if="hasBuilderBlocks"
-      :blocks="builderBlocks"
-      :context="{ post: pageData, site: { name: displaySchoolName } }"
-    />
+    <div
+      data-ja-customizer-target="about"
+      class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+    >
+      <BlockRenderer
+        v-if="hasBuilderBlocks"
+        :blocks="builderBlocks"
+        :context="{ post: pageData, site: { name: displaySchoolName } }"
+      />
 
-    <ThemeSafeHtml
-      v-else-if="cmsBody"
-      class="container mx-auto px-4 py-10 md:py-12"
-      :html="cmsBody"
-      mode="publishing"
-    />
+      <ThemeSafeHtml
+        v-else-if="cmsBody"
+        class="container mx-auto px-4 py-10 md:py-12"
+        :html="cmsBody"
+        mode="publishing"
+      />
 
-    <template v-else>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
-        <!-- Breadcrumb & Header -->
-        <div
-          id="profil"
-          class="scroll-mt-28 space-y-4"
-        >
+      <template v-else>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
+          <!-- Breadcrumb & Header -->
+          <div
+            id="profil"
+            class="scroll-mt-28 space-y-4"
+          >
           <Breadcrumb :items="[{ name: t('pages.about.title', 'Profil Sekolah') }]" />
           <div class="max-w-3xl space-y-3">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
@@ -30,7 +34,7 @@
               Mengenal Lebih Dekat
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
-              {{ t('pages.about.title', 'Profil & Filosofi Pendidikan Sarangenge') }}
+              {{ t('pages.about.title', { school: displaySchoolName }, `Profil & Filosofi Pendidikan ${displaySchoolName}`) }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {{ t('pages.about.subtitle', 'Mendedikasikan ekosistem pembelajaran holistik yang memadukan keunggulan sains, teknologi, dan keteguhan akhlak mulia.') }}
@@ -48,10 +52,10 @@
             </div>
             <div>
               <h3 class="text-lg font-bold text-foreground font-heading">
-                Drs. H. Rahmat Sudrajat, M.Pd.
+                {{ displayPrincipalName }}
               </h3>
               <p class="text-xs text-primary font-bold">
-                Kepala Sekolah Sarangenge
+                Kepala {{ displaySchoolName }}
               </p>
             </div>
           </div>
@@ -63,10 +67,10 @@
             </h2>
             <div class="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3">
               <p>
-                "Selamat datang di portal resmi Sarangenge. Filosofi nama *Sarangenge* terilhami dari kembang sarangenge (bunga matahari) dan hangatnya fajar pagi (haneut moyan) — saat matahari mulai memancarkan cahaya kebaikan dan harapan baru bagi alam semesta."
+                "Selamat datang di portal resmi {{ displaySchoolName }}. Kami mendedikasikan ekosistem pembelajaran holistik berstandar industri dan berakar pada nilai karakter unggul."
               </p>
               <p>
-                "Sebagaimana kembang sarangenge yang selalu merekah menghadap sumber cahaya, kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam kebaikan budi pekerti, dan percaya diri menjadi pelopor kemajuan di era global."
+                "Kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam integritas budi pekerti, dan percaya diri menjadi pelopor kemajuan di era global."
               </p>
             </div>
           </div>
@@ -147,6 +151,7 @@
       </div>
     </template>
   </div>
+  </SarangengePageGate>
 </template>
 
 <script setup lang="ts">
@@ -155,12 +160,13 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
+import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScroll';
 import { Building2, Quote, Target, Compass, ShieldCheck, Heart, Sparkles, Users } from 'lucide-vue-next';
 
 const { t } = useThemeI18n('sarangenge');
-const { displaySchoolName } = useSarangengeIdentity();
+const { displaySchoolName, displayPrincipalName } = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('about');
 
 useThemeHashScroll(128);

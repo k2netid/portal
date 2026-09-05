@@ -61,8 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "Konsol K2NET",
-    "publicTitle": "K2NET"
+    "consoleTitle": "Konsol Portal",
+    "publicTitle": "Portal"
   },
   "routes": {
     "maintenance": "Sedang Pemeliharaan",
@@ -1364,6 +1364,8 @@
     "description": "Kelola konfigurasi, identitas, diskusi, dan performa Jejakawan",
     "loading": "Memuat pengaturan...",
     "noSettings": "Tidak ada pengaturan ditemukan di tab ini.",
+    "white_label_required": "Perlu Lisensi White Label",
+    "locked_by_license_policy": "Terkunci oleh kebijakan lisensi",
     "tabs": {
       "identity": "Identitas",
       "general": "Umum",

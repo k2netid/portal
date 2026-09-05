@@ -337,7 +337,7 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Bot Shield Active
             </span>
-            <span>&copy; {{ date('Y') }} <a href="https://k2net.id" target="_blank" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">K2NET</a>. All rights reserved.</span>
+            <span>&copy; {{ date('Y') }} <a href="https://jejakawan.com" target="_blank" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">Portal</a>. All rights reserved.</span>
             <span>Developed by <a href="https://jejakawan.com" target="_blank" style="color: inherit; text-decoration: none; font-weight: 600;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='inherit'">jejakawan</a></span>
         </div>
     </div>

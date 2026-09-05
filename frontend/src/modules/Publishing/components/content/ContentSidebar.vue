@@ -726,11 +726,21 @@ const sections = ref({
     publishing: true,
     menu: false,
     taxonomy: true,
-    image: false,
+    image: Boolean(props.modelValue.featured_image),
     excerpt: false,
     seo: false,
     discussion: false
 });
+
+watch(
+    () => props.modelValue.featured_image,
+    (val) => {
+        if (val) {
+            sections.value.image = true;
+        }
+    },
+    { immediate: true }
+);
 
 // Tag input state
 const tagInput = ref('');

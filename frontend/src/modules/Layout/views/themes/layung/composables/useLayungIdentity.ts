@@ -51,17 +51,17 @@ export function useLayungIdentity() {
   const systemStore = useSystemStore();
 
   const displayCompanyName = computed(() => {
-    const fromTheme = getSetting('site_title', '') || getSetting('brand_name', '');
+    const fromTheme = getSetting('site_title', '') || getSetting('brand_name', '') || getSetting('site_name', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim() !== '') return fromTheme.trim();
-    const systemName = (systemStore.settings as { site_name?: string } | undefined)?.site_name;
+    const systemName = (systemStore.settings as { site_name?: string } | undefined)?.site_name || systemStore.siteSettings?.site_name;
     if (systemName && typeof systemName === 'string' && systemName.trim() !== '') return systemName.trim();
-    return 'K2NET';
+    return 'Portal Layanan';
   });
 
   const displayLegalName = computed(() => {
     const custom = getSetting('isp_legal_name', '');
     if (custom && typeof custom === 'string' && custom.trim() !== '') return custom.trim();
-    return 'PT Kirana Karina Network';
+    return 'PT Penyedia Layanan Internet';
   });
 
   const displayAsn = computed(() => {
@@ -74,7 +74,7 @@ export function useLayungIdentity() {
   const displayAsName = computed(() => {
     const custom = getSetting('isp_as_name', '');
     if (custom && typeof custom === 'string' && custom.trim() !== '') return custom.trim();
-    return 'IDNIC-K2NET-ID';
+    return 'IDNIC-ISP-ID';
   });
 
   const displayPrefix = computed(() => {
@@ -171,7 +171,7 @@ export function useLayungIdentity() {
     const text = encodeURIComponent(
       t(
         'hero.whatsappPrefill',
-        'Halo K2NET, saya ingin konsultasi layanan internet dan IT terkelola untuk perusahaan kami.',
+        'Halo, saya ingin konsultasi layanan internet dan IT terkelola untuk perusahaan kami.',
       ),
     );
     return `https://wa.me/${cleanNumber}?text=${text}`;
@@ -184,7 +184,7 @@ export function useLayungIdentity() {
       const isGenericEngineLogo = value === '/logo.png' || value.endsWith('/logo.png');
       if (!isGenericEngineLogo) return value;
     }
-    return '/logofull_k2net.png';
+    return '/logo.png';
   });
 
   return {

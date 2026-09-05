@@ -266,7 +266,7 @@ const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?:
 
 const defaultSocialLinks = [
   { icon: 'Instagram', url: 'https://instagram.com/jejakawan', label: 'Instagram' },
-  { icon: 'Github', url: 'https://github.com/jejakawan/k2net', label: 'GitHub' },
+  { icon: 'Github', url: 'https://github.com/jejakawan/isp-provider', label: 'GitHub' },
   { icon: 'MessageCircle', url: 'https://wa.me/6285136290851', label: 'WhatsApp' },
 ];
 
@@ -285,7 +285,7 @@ const footerAboutText = computed(() => {
   }
   return tt(
     'footer.description',
-    'K2NET (PT Kirana Karina Network) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.',
+    'Kami (Penyedia Layanan Internet) — ISP, managed services, dan penyedia produk IT dari koneksi internet hingga pengadaan perangkat.',
   );
 });
 
@@ -432,8 +432,8 @@ const defaultCol2Items = computed((): Partial<MenuItem>[] => [
 
 const defaultCol3Items = computed((): Partial<MenuItem>[] => [
   { title: tt('footer.storeOffline', 'Toko Offline'), url: '/contact' },
-  { title: 'Tokopedia K2NET', url: LAYUNG_STORE_TOKOPEDIA },
-  { title: 'Shopee K2NET', url: LAYUNG_STORE_SHOPEE },
+  { title: 'Tokopedia Kami', url: LAYUNG_STORE_TOKOPEDIA },
+  { title: 'Shopee Kami', url: LAYUNG_STORE_SHOPEE },
   { title: 'SIPLah Blibli', url: LAYUNG_STORE_SIPLAH_BLIBLI },
   { title: 'SIPLah Toko Ladang', url: LAYUNG_STORE_SIPLAH_TOKOLADANG },
 ]);

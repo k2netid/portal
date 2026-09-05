@@ -6,10 +6,10 @@
           Routing &amp; Peering
         </span>
         <h2 class="text-3xl sm:text-4xl font-extrabold font-heading tracking-tight text-white">
-          Identitas Jaringan K2NET
+          Identitas Jaringan Kami
         </h2>
         <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-          PT Kirana Karina Network mengoperasikan AS153992 sebagai anggota korporat IDNIC, dengan prefix mandiri untuk layanan ISP dan managed network.
+          Penyedia Layanan Internet mengoperasikan AS153992 sebagai anggota korporat IDNIC, dengan prefix mandiri untuk layanan ISP dan managed network.
         </p>
       </div>
 
@@ -23,7 +23,7 @@
             BGP Mandiri
           </div>
           <p class="text-xs text-slate-400 font-sans">
-            AS-Name IDNIC-K2NET-ID untuk routing dedicated internet.
+            AS-Name IDNIC-Kami-ID untuk routing dedicated internet.
           </p>
         </div>
 
@@ -71,5 +71,5 @@
 </template>
 
 <script setup lang="ts">
-// Topologi peering K2NET (AS153992)
+// Topologi peering Kami (AS153992)
 </script>

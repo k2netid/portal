@@ -34,26 +34,26 @@ describe('customizer preview protocol', () => {
         });
 
         it('validates trusted parent origin (same hostname, http/https only, no credentials)', () => {
-            const self = 'http://staging.k2net.id:8083';
-            expect(isTrustedCustomizerParentOrigin('http://staging.k2net.id:8083', self)).toBe(true);
-            expect(isTrustedCustomizerParentOrigin('https://staging.k2net.id', self)).toBe(true);
-            expect(isTrustedCustomizerParentOrigin('https://malicious.k2net.id', self)).toBe(false);
+            const self = 'http://staging.portal.net:8083';
+            expect(isTrustedCustomizerParentOrigin('http://staging.portal.net:8083', self)).toBe(true);
+            expect(isTrustedCustomizerParentOrigin('https://staging.portal.net', self)).toBe(true);
+            expect(isTrustedCustomizerParentOrigin('https://malicious.portal.net', self)).toBe(false);
             expect(isTrustedCustomizerParentOrigin('http://attacker.com', self)).toBe(false);
-            expect(isTrustedCustomizerParentOrigin('https://user:pass@staging.k2net.id', self)).toBe(false);
+            expect(isTrustedCustomizerParentOrigin('https://user:pass@staging.portal.net', self)).toBe(false);
             expect(isTrustedCustomizerParentOrigin('invalid-url', self)).toBe(false);
         });
 
         it('resolves allowed customizer origins', () => {
-            const self = 'http://staging.k2net.id:8083';
+            const self = 'http://staging.portal.net:8083';
             // Not in preview mode
-            const normalVisits = resolveAllowedCustomizerOrigins('?ja_parent_origin=http%3A%2F%2Fstaging.k2net.id', self);
+            const normalVisits = resolveAllowedCustomizerOrigins('?ja_parent_origin=http%3A%2F%2Fstaging.portal.net', self);
             expect(normalVisits.has(self)).toBe(true);
             expect(normalVisits.size).toBe(1);
 
             // In preview mode with trusted parent
-            const previewTrusted = resolveAllowedCustomizerOrigins('?ja_customizer_preview=1&ja_parent_origin=https%3A%2F%2Fstaging.k2net.id', self);
+            const previewTrusted = resolveAllowedCustomizerOrigins('?ja_customizer_preview=1&ja_parent_origin=https%3A%2F%2Fstaging.portal.net', self);
             expect(previewTrusted.has(self)).toBe(true);
-            expect(previewTrusted.has('https://staging.k2net.id')).toBe(true);
+            expect(previewTrusted.has('https://staging.portal.net')).toBe(true);
 
             // In preview mode with untrusted parent
             const previewUntrusted = resolveAllowedCustomizerOrigins('?ja_customizer_preview=1&ja_parent_origin=https%3A%2F%2Fevil.com', self);
@@ -131,7 +131,7 @@ describe('customizer preview protocol', () => {
 
             const mockTheme = {
                 slug: 'layung',
-                name: 'Layung K2NET',
+                name: 'Layung Portal',
                 version: '1.0.0',
             };
 

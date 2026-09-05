@@ -30,7 +30,7 @@
               {{ t('pages.team.badge', 'Struktur Operasional') }}
             </span>
             <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-              {{ t('pages.team.mainTitle', 'Tim & Keandalan Operasional K2NET') }}
+              {{ t('pages.team.mainTitle', 'Tim & Keandalan Operasional Kami') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {{ t('pages.team.mainSubtitle', 'Didukung teknisi jaringan tersertifikasi, pemantauan 24/7 Network Operations Center (NOC), dan tim lapangan tanggap darurat di Bandung dan Jawa Barat.') }}
@@ -127,7 +127,7 @@
               {{ t('pages.team.hubsTitle', 'Pusat Operasional & Lapangan') }}
             </h2>
             <p class="text-sm text-muted-foreground max-w-2xl">
-              {{ t('pages.team.hubsSubtitle', 'Kantor koordinasi dan titik persebaran armada teknis K2NET.') }}
+              {{ t('pages.team.hubsSubtitle', 'Kantor koordinasi dan titik persebaran armada teknis Kami.') }}
             </p>
           </div>
 

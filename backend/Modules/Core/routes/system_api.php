@@ -28,6 +28,7 @@ use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
 use Modules\Core\System\Http\Controllers\Console\OnboardingStatusController;
 use Modules\Core\System\Http\Controllers\Console\ProfileKycController;
 use Modules\Core\System\Http\Controllers\Console\PublicSettingsController;
+use Modules\Core\System\Http\Controllers\PublicInstagramFeedController;
 use Modules\Core\System\Http\Controllers\Console\RedisController;
 use Modules\Core\System\Http\Controllers\Console\RoleController;
 use Modules\Core\System\Http\Controllers\Console\ScheduledTaskController;
@@ -56,6 +57,7 @@ Route::prefix('v1')->group(function (): void {
     Route::get('public/system/settings', [PublicSettingsController::class, 'index']);
     Route::get('public/system/languages', [LanguageController::class, 'index']);
     Route::get('public/system/console-theme', [ConsoleThemeController::class, 'showPublic']);
+    Route::get('public/social-feed/instagram', [PublicInstagramFeedController::class, 'index']);
 
     // Dashboard routes
     Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function (): void {
@@ -285,6 +287,7 @@ Route::prefix('v1')->group(function (): void {
         Route::post('{slug}/deactivate', [ExtensionController::class, 'deactivate']);
         Route::put('{slug}/settings', [ExtensionController::class, 'updateSettings']);
         Route::delete('{slug}/uninstall', [ExtensionController::class, 'uninstall']);
+        Route::post('instagram/test-connection', [ExtensionController::class, 'testInstagramConnection']);
     });
 
     // Data Model Studio (Schema & Data Modeling Engine)

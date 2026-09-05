@@ -61,8 +61,8 @@
     }
   },
   "app": {
-    "consoleTitle": "Konsol K2NET",
-    "publicTitle": "K2NET"
+    "consoleTitle": "Konsol Portal",
+    "publicTitle": "Portal"
   },
   "routes": {
     "maintenance": "Nuju Pangropéa",
@@ -1364,6 +1364,8 @@
     "description": "Ngokolakeun konfigurasi, identitas, diskusi, sareng performa Jejakawan",
     "loading": "Nuju ngamuat petélan...",
     "noSettings": "Teu aya petélan kapendak di tab ieu.",
+    "white_label_required": "Peryogi Lisensi White Label",
+    "locked_by_license_policy": "Dikonci ku kawijakan lisensi",
     "tabs": {
       "identity": "Identitas",
       "general": "Umum",

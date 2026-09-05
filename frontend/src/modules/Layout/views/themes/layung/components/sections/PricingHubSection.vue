@@ -8,7 +8,7 @@
         {{ t('packages.badge', 'Skema Paket & Kapasitas') }}
       </span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-foreground font-heading tracking-tight">
-        {{ t('packages.hubTitle', 'Dua Lini Produk K2NET') }}
+        {{ t('packages.hubTitle', 'Dua Lini Produk Kami') }}
       </h2>
       <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">
         {{ t('packages.hubSubtitle', 'Pilih paket konektivitas internet (ISP) atau layanan IT terkelola (MSP) sesuai kebutuhan institusi Anda.') }}

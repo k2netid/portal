@@ -483,6 +483,40 @@
         </figcaption>
       </figure>
 
+      <!-- 15b. FEATURED IMAGE BLOCK -->
+      <figure
+        v-else-if="block.type === 'featuredimage' || block.type === 'postfeaturedimage' || block.type === 'featured_image'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-featured-image overflow-hidden rounded-2xl"
+        :class="[
+          getTextAlignClass(getSettingStr(block, 'alignment')),
+          getSettingStr(block, 'css_class')
+        ]"
+        :style="resolveBlockStyles(block)"
+      >
+        <img
+          v-if="getFeaturedImageUrl(block)"
+          :src="getFeaturedImageUrl(block)"
+          :alt="getSettingStr(block, 'alt') || props.context?.post?.title || builder?.content.value?.title || 'Featured Image'"
+          class="w-full h-auto object-cover rounded-2xl shadow-sm transition-transform duration-300"
+          loading="lazy"
+        >
+        <div
+          v-else-if="mode === 'edit' || isPreview"
+          class="w-full aspect-video min-h-[160px] flex flex-col items-center justify-center border-2 border-dashed border-border/50 bg-muted/20 text-muted-foreground rounded-2xl p-6 text-center"
+        >
+          <Sparkles class="w-8 h-8 opacity-40 mb-2" />
+          <span class="text-xs font-semibold uppercase tracking-wider">Gambar Unggulan (Featured Image)</span>
+          <span class="text-[11px] opacity-70 mt-1">Atur gambar unggulan pada panel pengaturan halaman atau opsi modul.</span>
+        </div>
+        <figcaption
+          v-if="getSettingStr(block, 'caption')"
+          class="mt-2 text-xs text-center text-muted-foreground"
+        >
+          {{ getSettingStr(block, 'caption') }}
+        </figcaption>
+      </figure>
+
       <!-- 16. BUTTON BLOCK -->
       <div
         v-else-if="block.type === 'button'"
@@ -768,6 +802,24 @@
         />
       </div>
 
+      <!-- 21C. INSTAGRAM FEED BLOCK -->
+      <div
+        v-else-if="block.type === 'instagram_feed' || block.type === 'instagram'"
+        :id="getSettingStr(block, 'html_id') || undefined"
+        class="builder-instagram-feed-block w-full"
+        :class="getSettingStr(block, 'css_class')"
+        :style="resolveBlockStyles(block)"
+      >
+        <InstagramFeedBlock
+          :layout="(getSettingStr(block, 'layout') as 'bento' | 'grid' | 'carousel') || 'bento'"
+          :title="getSettingStr(block, 'title')"
+          :subtitle="getSettingStr(block, 'subtitle')"
+          :limit="getSettingNum(block, 'limit', 8)"
+          :is-preview="isPreview"
+          :context="context"
+        />
+      </div>
+
       <!-- 22. GENERIC CONTAINER FALLBACK -->
       <div
         v-else
@@ -791,6 +843,7 @@
 import { computed, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import PublicComments from '@/modules/Publishing/components/comments/PublicComments.vue';
+import InstagramFeedBlock from '@/engine/plugins/blocks/InstagramFeedBlock.vue';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import api from '@/engine/api/client';
 import { logger } from '@/shared/utils/logger';
@@ -851,6 +904,18 @@ const getSettingNum = (block: BlockInstance, key: string, fallback = 0): number 
   if (typeof val === 'number') return val;
   if (typeof val === 'string' && !isNaN(Number(val))) return Number(val);
   return fallback;
+};
+
+const getFeaturedImageUrl = (block: BlockInstance): string => {
+  const direct = getSettingStr(block, 'url') || getSettingStr(block, 'src') || getSettingStr(block, 'image');
+  if (direct) return direct;
+  return (
+    (props.context?.post?.featured_image as string) ||
+    (props.context?.page?.featured_image as string) ||
+    (props.context?.featured_image as string) ||
+    (builder?.content.value?.featured_image as string) ||
+    ''
+  );
 };
 
 const heroPrimaryLabel = (block: BlockInstance): string => {

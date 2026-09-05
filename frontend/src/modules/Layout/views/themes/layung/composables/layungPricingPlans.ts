@@ -78,7 +78,7 @@ export const LAYUNG_ISP_RETAIL_PLANS: LayungPlanCard[] = [
       'Cocok untuk 2–5 perangkat aktif',
       'Instalasi standar area coverage',
       'Pembayaran bulanan',
-      'Area layanan sesuai jangkauan jaringan K2NET',
+      'Area layanan sesuai jangkauan jaringan Kami',
     ],
   },
   {

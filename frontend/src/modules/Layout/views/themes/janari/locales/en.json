@@ -18,7 +18,10 @@
         "dateDayOff": "{date} day off",
         "readTimeMinutes": "{n} min",
         "author": "Author",
-        "breadcrumbAria": "Breadcrumb"
+        "breadcrumbAria": "Breadcrumb",
+        "socialExpand": "Open Social Media",
+        "socialCollapse": "Hide Social Media",
+        "socialMedia": "Social Media"
     },
     "header": {
         "officialLine1": "JEJAKAWAN",

@@ -1,28 +1,32 @@
 <template>
-  <div
-    data-ja-customizer-target="contact"
-    class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+  <SarangengePageGate
+    setting-key="enable_contact"
+    :title="t('pages.contact.title', 'Hubungi Kami & Pendaftaran PPDB')"
   >
-    <BlockRenderer
-      v-if="hasBuilderBlocks"
-      :blocks="builderBlocks"
-      :context="{ post: pageData, site: { name: displaySchoolName } }"
-    />
-
-    <template v-else>
-      <ThemeSafeHtml
-        v-if="cmsBody"
-        class="sr-only"
-        :html="cmsBody"
-        mode="publishing"
+    <div
+      data-ja-customizer-target="contact"
+      class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
+    >
+      <BlockRenderer
+        v-if="hasBuilderBlocks"
+        :blocks="builderBlocks"
+        :context="{ post: pageData, site: { name: displaySchoolName } }"
       />
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
-        <div class="space-y-4">
-          <Breadcrumb :items="[{ name: t('pages.contact.title', 'Kontak & PPDB') }]" />
-          <div class="max-w-3xl space-y-3">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--sarangenge-teal,#0f766e)]/10 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-200">
-              <PhoneCall class="w-3.5 h-3.5" />
+      <template v-else>
+        <ThemeSafeHtml
+          v-if="cmsBody"
+          class="sr-only"
+          :html="cmsBody"
+          mode="publishing"
+        />
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
+          <div class="space-y-4">
+            <Breadcrumb :items="[{ name: t('pages.contact.title', 'Kontak & PPDB') }]" />
+            <div class="max-w-3xl space-y-3">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--sarangenge-teal,#0f766e)]/10 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-200">
+                <PhoneCall class="w-3.5 h-3.5" />
               {{ t('pages.contact.badge', 'Layanan Informasi & Konsultasi') }}
             </span>
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
@@ -33,6 +37,11 @@
             </p>
           </div>
         </div>
+
+        <PluginSlot
+          name="after_hero"
+          class="w-full"
+        />
 
         <div
           id="ppdb"
@@ -200,7 +209,7 @@
                     <Input
                       v-model="form.email"
                       type="email"
-                      :placeholder="t('pages.contact.emailPlaceholder', 'budi@example.com')"
+                      :placeholder="t('pages.contact.emailPlaceholder', 'budi{\'@\'}example.com')"
                     />
                   </div>
 
@@ -240,9 +249,24 @@
             </div>
           </div>
         </div>
+
+        <div
+          v-if="mapsEmbedUrl"
+          class="sarangenge-panel overflow-hidden p-2 rounded-[var(--sarangenge-radius,1.25rem)] border border-border/80 shadow-sm"
+        >
+          <iframe
+            :src="mapsEmbedUrl"
+            class="w-full h-72 sm:h-80 md:h-96 rounded-[calc(var(--sarangenge-radius,1.25rem)-0.5rem)] border-0"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            :title="t('pages.contact.mapsTitle', 'Peta Lokasi Kampus')"
+          />
+        </div>
       </div>
     </template>
   </div>
+  </SarangengePageGate>
 </template>
 
 <script setup lang="ts">
@@ -253,7 +277,9 @@ import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageO
 import { useThemeContactMap } from '@/modules/Layout/composables/useThemeContactMap';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
+import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { Button, Input, Textarea, Label, Select } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
@@ -282,6 +308,10 @@ const operatingHours = computed(() => {
   return (getSetting('contact_operating_hours', '') as string) || t('pages.contact.defaultHours', 'Senin – Jumat: 07.30 – 15.30 WIB');
 });
 
+const mapsEmbedUrl = computed(() => {
+  return (getSetting('contact_maps_embed_url', '') as string) || '';
+});
+
 const form = ref({
   name: '',
   phone: '',
@@ -296,7 +326,7 @@ const submitSuccess = ref(false);
 const handleSubmit = async () => {
   submitting.value = true;
   try {
-    await api.post('/public/forms/submissions/contact', {
+    await api.post('/public/forms/contact/submit', {
       data: {
         name: form.value.name,
         phone: form.value.phone,

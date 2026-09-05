@@ -5,8 +5,8 @@ describe('resolveFavicon', () => {
     it('skips the engine fallback when identity favicon exists', () => {
         expect(resolveFavicon([
             '/favicon.ico',
-            '/storage/k2net-icon.png',
-        ])).toBe('/storage/k2net-icon.png');
+            '/storage/portal-icon.png',
+        ])).toBe('/storage/portal-icon.png');
     });
 
     it('prefers theme brand favicon over identity and fallback', () => {
@@ -23,7 +23,7 @@ describe('resolveFavicon', () => {
 
     it('detects generic engine icons', () => {
         expect(isGenericEngineFavicon('/favicon.ico')).toBe(true);
-        expect(isGenericEngineFavicon('https://staging.k2net.id/favicon.ico')).toBe(true);
-        expect(isGenericEngineFavicon('/storage/k2net.png')).toBe(false);
+        expect(isGenericEngineFavicon('https://staging.portal.net/favicon.ico')).toBe(true);
+        expect(isGenericEngineFavicon('/storage/portal.png')).toBe(false);
     });
 });

@@ -30,7 +30,7 @@
               {{ t('pages.careers.badge', 'Peluang Karir') }}
             </span>
             <h1 class="text-4xl sm:text-5xl font-black text-foreground font-heading tracking-tight">
-              {{ t('pages.careers.mainTitle', 'Berkarya Membangun Jaringan Bersama K2NET') }}
+              {{ t('pages.careers.mainTitle', 'Berkarya Membangun Jaringan Bersama Kami') }}
             </h1>
             <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {{ t('pages.careers.mainSubtitle', 'Bergabunglah dengan tim engineering dan operasional kami di Bandung. Kembangkan keahlian infrastruktur internet carrier-grade, routing BGP, dan solusi enterprise.') }}
@@ -44,7 +44,7 @@
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8">
           <div class="space-y-2">
             <h2 class="text-2xl sm:text-3xl font-bold text-foreground font-heading">
-              {{ t('pages.careers.benefitsTitle', 'Mengapa Bergabung di K2NET?') }}
+              {{ t('pages.careers.benefitsTitle', 'Mengapa Bergabung di Kami?') }}
             </h2>
             <p class="text-sm text-muted-foreground max-w-2xl">
               {{ t('pages.careers.benefitsSubtitle', 'Kami mengutamakan pertumbuhan kompetensi teknis, kesejahteraan tim, dan lingkungan kerja yang saling mendukung.') }}
@@ -278,7 +278,7 @@ const openJobs = computed(() => [
     location: 'Bandung (Hybrid)',
     type: 'Full-time',
     experience: 'Min. 2 Tahun',
-    summary: t('pages.careers.job4Summary', 'Mengembangkan portal pelanggan, customizer tema, dan integrasi API billing/monitoring internal K2NET.'),
+    summary: t('pages.careers.job4Summary', 'Mengembangkan portal pelanggan, customizer tema, dan integrasi API billing/monitoring internal Kami.'),
     requirements: [
       'Mahir Vue.js 3 (Composition API), TypeScript, dan Tailwind CSS',
       'Familiar dengan ekosistem PHP/Laravel atau REST API integration',

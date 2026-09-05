@@ -148,7 +148,7 @@
                   {{ formDefinition?.name || t('pages.contact.formTitle', 'Formulir permintaan penawaran') }}
                 </h3>
                 <p class="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {{ formDefinition?.description || t('pages.contact.formDescription', 'Isi formulir di bawah ini. Tim K2NET akan menghubungi Anda.') }}
+                  {{ formDefinition?.description || t('pages.contact.formDescription', 'Isi formulir di bawah ini. Tim Kami akan menghubungi Anda.') }}
                 </p>
               </div>
 

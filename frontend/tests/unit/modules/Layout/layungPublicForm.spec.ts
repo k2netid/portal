@@ -42,9 +42,9 @@ describe('layung public form helpers', () => {
 
     it('only follows in-app paths or http(s) redirects', () => {
         expect(classifyFormRedirect('/thanks')).toEqual({ kind: 'in-app', url: '/thanks' });
-        expect(classifyFormRedirect('https://k2net.id/ok')).toEqual({
+        expect(classifyFormRedirect('https://portal.net/ok')).toEqual({
             kind: 'absolute',
-            url: 'https://k2net.id/ok',
+            url: 'https://portal.net/ok',
         });
         expect(classifyFormRedirect('//evil.example/phish').kind).toBe('ignore');
         expect(classifyFormRedirect('javascript:alert(1)').kind).toBe('ignore');

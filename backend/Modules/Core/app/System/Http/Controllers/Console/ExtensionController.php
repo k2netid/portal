@@ -23,6 +23,7 @@ use Modules\Core\System\Services\ExtensionHealthService;
 use Modules\Core\System\Services\ExtensionLifecycleLock;
 use Modules\Core\System\Services\ExtensionLifecycleOrchestrator;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
+use Modules\Core\System\Services\InstagramFeedService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
 use ZipArchive;
@@ -126,6 +127,22 @@ class ExtensionController extends BaseApiController
 
             if ($extension->status === 'active') {
                 return $this->error('Extension is already active');
+            }
+
+            if ($extension->slug === 'instagram-feed') {
+                $settings = is_array($extension->settings) ? $extension->settings : [];
+                $token = trim((string) ($settings['access_token'] ?? ''));
+                $username = trim((string) ($settings['instagram_username'] ?? ''));
+                if ($token === '' || $username === '') {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Parameter wajib belum dikonfigurasi: Access Token dan Handle Instagram harus diisi sebelum plugin dapat diaktifkan.',
+                        'data' => [
+                            'code' => 'missing_required_settings',
+                            'required' => ['access_token', 'instagram_username'],
+                        ],
+                    ], 422);
+                }
             }
 
             $licenseBlock = app(ExtensionHealthService::class)->licenseBlocker($extension);
@@ -402,7 +419,36 @@ class ExtensionController extends BaseApiController
 
         $extension->update(['settings' => $validated['settings']]);
 
+        if ($slug === 'instagram-feed') {
+            Cache::flush();
+        }
+
         return $this->success($extension, 'Extension settings updated successfully');
+    }
+
+    /**
+     * Test connection to Meta Instagram Graph API.
+     */
+    public function testInstagramConnection(Request $request, InstagramFeedService $feedService): JsonResponse
+    {
+        $validated = $request->validate([
+            'access_token' => 'required|string',
+            'instagram_username' => 'nullable|string',
+        ]);
+
+        $result = $feedService->testConnection(
+            $validated['access_token'],
+            $validated['instagram_username'] ?? ''
+        );
+
+        if (! $result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'] ?? 'Gagal menghubungi Instagram Graph API.',
+            ], 422);
+        }
+
+        return $this->success($result['account'] ?? [], 'Koneksi ke Instagram Graph API berhasil diverifikasi.');
     }
 
     /**

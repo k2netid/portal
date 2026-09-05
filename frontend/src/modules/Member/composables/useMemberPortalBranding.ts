@@ -43,7 +43,7 @@ export function useMemberPortalBranding() {
 
     const siteLogo = computed((): string => {
         const fromSetting = getSetting('brand_logo');
-        const fromSite = systemStore.settings?.site_logo;
+        const fromSite = (systemStore.siteSettings?.site_logo || systemStore.settings?.site_logo);
         return (typeof fromSetting === 'string' ? fromSetting : '')
             || (typeof fromSite === 'string' ? fromSite : '');
     });

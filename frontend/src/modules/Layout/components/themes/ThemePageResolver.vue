@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { shallowRef, watch, ref, computed, onBeforeUnmount, type Component } from 'vue'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
-import { BUNDLED_FRONTEND_THEME_SLUGS, buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
+import { buildThemeViewResolveCandidates, findThemeViewKey } from '@/modules/Layout/utils/themeViewResolver'
 import { isUploadedThemeActive, loadDynamicThemeComponent } from '@/modules/Layout/utils/dynamicThemeLoader'
 import { logger } from '@/shared/utils/logger'
 
@@ -104,10 +104,7 @@ async function resolveView() {
   }
 
   const themeSlugs = buildThemeViewResolveCandidates(activeTheme.value)
-  let matchingKey = findThemeViewKey(viewModules, themeSlugs, pageName)
-  if (!matchingKey) {
-    matchingKey = findThemeViewKey(viewModules, [...BUNDLED_FRONTEND_THEME_SLUGS], pageName)
-  }
+  const matchingKey = findThemeViewKey(viewModules, themeSlugs, pageName)
   lastResolveDebug.value = { matchingKey: matchingKey ?? '', page: pageName }
 
   const resolveId = ++currentResolveId

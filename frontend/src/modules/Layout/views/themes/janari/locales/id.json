@@ -18,7 +18,10 @@
         "dateDayOff": "{date} libur",
         "readTimeMinutes": "{n} menit",
         "author": "Penulis",
-        "breadcrumbAria": "Breadcrumb"
+        "breadcrumbAria": "Breadcrumb",
+        "socialExpand": "Buka Media Sosial",
+        "socialCollapse": "Sembunyikan Media Sosial",
+        "socialMedia": "Media Sosial"
     },
     "header": {
         "officialLine1": "JEJAKAWAN",

@@ -8,6 +8,7 @@ export const engineThemeBlockLoaders: Record<
 > = {
   'content-share-bar': () => import('./contentShareBar'),
   'before-footer-promo': () => import('./beforeFooterPromo'),
+  'instagram-feed': () => import('./instagramFeed'),
 };
 
 let mergedLoaders: Record<string, () => Promise<{ registerThemeBlocks: RegisterThemeBlocksFn }>> | null =

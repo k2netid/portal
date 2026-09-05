@@ -17,11 +17,11 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <span class="inline-flex items-center self-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-mono uppercase tracking-wider">
             <Sparkles class="w-3.5 h-3.5 shrink-0" />
-            <span>{{ t('calculator.badge', 'Simulator Bandwidth K2NET') }}</span>
+            <span>{{ t('calculator.badge', 'Simulator Bandwidth Kami') }}</span>
           </span>
           <div class="inline-flex items-center self-start sm:self-auto gap-1.5 text-[10px] sm:text-[11px] font-mono text-slate-400 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 max-w-full">
             <BarChart2 class="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span class="truncate">{{ t('calculator.methodology', 'Estimasi internal K2NET') }}</span>
+            <span class="truncate">{{ t('calculator.methodology', 'Estimasi internal Kami') }}</span>
           </div>
         </div>
 
@@ -29,7 +29,7 @@
           {{ t('calculator.title', 'Hitung Kebutuhan Bandwidth & Rekomendasi Paket') }}
         </h2>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-3xl">
-          {{ t('calculator.subtitle', 'Estimasi internal K2NET berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.') }}
+          {{ t('calculator.subtitle', 'Estimasi internal Kami berdasarkan jumlah perangkat, profil beban, rasio pemakaian bersamaan, dan cadangan 25%. Hasil ini bukan quotation dan bukan standar merek pihak ketiga.') }}
         </p>
       </div>
 
@@ -449,7 +449,7 @@ const PLAN_COPY: Record<Exclude<BandwidthPlanId, 'dia'>, PlanRecommendation> = {
     features: [
       'Kapasitas 10 Mbps (up to 15 Mbps)',
       'Ideal untuk 2–5 perangkat aktif',
-      'Instalasi standar coverage K2NET',
+      'Instalasi standar coverage Kami',
       'Konfirmasi tarif saat survei',
     ],
     ctaLabel: 'Pilih Retail 10',

@@ -152,8 +152,20 @@ export const useSystemStore = defineStore('system', {
                         password_policy: data.password_policy ?? this.siteSettings.password_policy,
                     };
 
+                    // Bridge siteSettings into settings dictionary for public themes
+                    this.settings = {
+                        ...this.settings,
+                        ...this.siteSettings,
+                        ...data,
+                    };
+
                     // Sync App Identity (Branding)
                     // We preserve existing values if the new ones are empty to avoid flickering
+                    const licenseTier = String(data.app_license_tier || data.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
+                    const hasWhiteLabel = typeof data.has_white_label === 'boolean'
+                        ? data.has_white_label
+                        : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
+
                     this.appIdentity = {
                         ...this.appIdentity,
                         app_name: data.app_name || data.site_name || this.appIdentity.app_name || 'Jejakawan',
@@ -164,8 +176,8 @@ export const useSystemStore = defineStore('system', {
                             || this.appIdentity.app_favicon
                             || '',
                         ),
-                        app_license_tier: data.license_type || data.app_license_tier || this.appIdentity.app_license_tier || 'basic',
-                        has_white_label: ['pro_plus', 'white_label'].includes(data.app_license_tier || this.appIdentity.app_license_tier),
+                        app_license_tier: licenseTier,
+                        has_white_label: hasWhiteLabel,
                     };
 
                     this.maintenance = {
@@ -201,15 +213,19 @@ export const useSystemStore = defineStore('system', {
             try {
                 // Fetch branding from System settings
                 const response = await api.get('/manage/system/settings/group/system');
-                const data = response.data || {};
-                
+                const rawData = (response.data?.data ?? response.data) || {};
+                const licenseTier = String(rawData.app_license_tier || rawData.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
+                const hasWhiteLabel = typeof rawData.has_white_label === 'boolean'
+                    ? rawData.has_white_label
+                    : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
+
                 this.appIdentity = {
                     ...this.appIdentity,
-                    app_name: data.app_name || this.appIdentity.app_name || 'Jejakawan',
-                    app_logo: data.app_logo || this.appIdentity.app_logo || '',
-                    app_favicon: data.app_favicon || this.appIdentity.app_favicon || '',
-                    app_license_tier: data.license_type || data.app_license_tier || this.appIdentity.app_license_tier || 'basic',
-                    has_white_label: ['pro_plus', 'white_label'].includes(data.app_license_tier || this.appIdentity.app_license_tier),
+                    app_name: rawData.app_name || this.appIdentity.app_name || 'Jejakawan',
+                    app_logo: rawData.app_logo || this.appIdentity.app_logo || '',
+                    app_favicon: rawData.app_favicon || this.appIdentity.app_favicon || '',
+                    app_license_tier: licenseTier,
+                    has_white_label: hasWhiteLabel,
                 };
 
                 applyFavicon(resolveFavicon([
@@ -312,7 +328,9 @@ export const useSystemStore = defineStore('system', {
 
             // Remove no-transitions class after short delay
             setTimeout(() => {
-                document.documentElement.classList.remove('no-transitions');
+                if (typeof document !== 'undefined') {
+                    document.documentElement.classList.remove('no-transitions');
+                }
             }, 50);
         },
 

@@ -5,19 +5,19 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     titleKey: 'header.home',
     titleFallback: 'Beranda',
     descKey: 'footer.description',
-    descFallback: 'K2NET — ISP, managed services, dan penyedia produk IT.',
+    descFallback: 'Kami — ISP, managed services, dan penyedia produk IT.',
   },
   'pages/About': {
     titleKey: 'pages.about.title',
     titleFallback: 'Tentang Kami',
     descKey: 'pages.about.subtitle',
-    descFallback: 'Merek operasional PT Kirana Karina Network.',
+    descFallback: 'Merek operasional Penyedia Layanan Internet.',
   },
   'pages/Contact': {
     titleKey: 'pages.contact.title',
     titleFallback: 'Kontak',
     descKey: 'pages.contact.subtitle',
-    descFallback: 'Sales, CS, NOC, dan Service Desk K2NET.',
+    descFallback: 'Sales, CS, NOC, dan Service Desk Kami.',
   },
   'pages/Services': {
     titleKey: 'header.services',
@@ -53,31 +53,31 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     titleKey: 'header.achievement',
     titleFallback: 'SLA',
     descKey: 'footer.description',
-    descFallback: 'SLA dan sertifikasi operasional K2NET.',
+    descFallback: 'SLA dan sertifikasi operasional Kami.',
   },
   'pages/CareerCenter': {
     titleKey: 'header.career',
     titleFallback: 'Karir',
     descKey: 'footer.description',
-    descFallback: 'Lowongan dan karir di K2NET.',
+    descFallback: 'Lowongan dan karir di Kami.',
   },
   'pages/Tim': {
     titleKey: 'header.tim',
     titleFallback: 'Tim',
     descKey: 'footer.description',
-    descFallback: 'Tim operasional K2NET.',
+    descFallback: 'Tim operasional Kami.',
   },
   'pages/Blog': {
     titleKey: 'header.blog',
     titleFallback: 'Berita',
     descKey: 'footer.description',
-    descFallback: 'Berita dan warta K2NET.',
+    descFallback: 'Berita dan warta Kami.',
   },
   'pages/Search': {
     titleKey: 'header.search',
     titleFallback: 'Pencarian',
     descKey: 'footer.description',
-    descFallback: 'Cari halaman di situs K2NET.',
+    descFallback: 'Cari halaman di situs Kami.',
   },
 };
 
@@ -86,12 +86,12 @@ export function resolveLayungPublicSeo(input: {
   siteName: string;
   t: LayungTranslate;
 }): { title: string; description: string } {
-  const siteName = input.siteName.trim() || 'K2NET';
+  const siteName = input.siteName.trim() || 'Portal Layanan';
   const copy = input.themePage ? PAGE_SEO[input.themePage] : undefined;
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', 'K2NET — ISP, managed services, dan penyedia produk IT.');
+    : input.t('footer.description', `${siteName} — Solusi konektivitas, cloud, dan infrastruktur IT enterprise.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'

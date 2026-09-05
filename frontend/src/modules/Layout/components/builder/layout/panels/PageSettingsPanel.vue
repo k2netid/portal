@@ -462,11 +462,21 @@ const sections = ref({
   publishing: true,
   menu: false,
   taxonomy: true,
-  image: false,
+  image: Boolean(content.value?.featured_image),
   excerpt: false,
   discussion: false,
   seo: false
 });
+
+watch(
+  () => content.value?.featured_image,
+  (val) => {
+    if (val) {
+      sections.value.image = true;
+    }
+  },
+  { immediate: true }
+);
 
 // Menu handling
 const selectedMenuId = ref<number | string>(content.value?.menu_item?.menu_id || '');

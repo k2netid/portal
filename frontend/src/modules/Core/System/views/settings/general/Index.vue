@@ -369,9 +369,9 @@ const fetchSettings = async () => {
         ];
         const securityKeys = [
             'abuseipdb_api_key', 'threat_intel_auto_block_threshold', 'telegram_bot_token', 'telegram_chat_id',
-            'email_to', 'webhook_url', 'console_dashboard_slug'
+            'email_to', 'webhook_url', 'console_dashboard_slug', 'scanner_auto_block_threshold', 'security_learned_scanner_paths'
         ];
-        const brandKeys = ['admin_email', 'app_name', 'brand_logo', 'brand_favicon', 'branding_display'];
+        const brandKeys = ['admin_email', 'app_name', 'app_logo', 'app_favicon', 'brand_logo', 'brand_favicon', 'branding_display'];
         const emailKeys = ['mail_from_address', 'mail_from_name', 'mail_driver', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption'];
         const monitoringKeys = ['log_retention_days', 'activity_log_retention_days', 'security_log_retention_days', 'login_history_retention_days', 'security_alert_failed_login_threshold', 'backup_retention_days'];
         const aiKeys = [
@@ -426,6 +426,8 @@ const fetchSettings = async () => {
         ensureSetting('enable_cache', true, 'boolean', 'performance');
         ensureSetting('cache_driver', 'file', 'string', 'performance');
         ensureSetting('cache_ttl', 3600, 'integer', 'performance');
+        ensureSetting('enable_cdn', false, 'boolean', 'performance');
+        ensureSetting('cdn_url', '', 'string', 'performance');
         ensureSetting('cdn_preset', 'custom', 'string', 'performance');
         ensureSetting('cdn_included_dirs', 'assets, storage', 'string', 'performance');
         ensureSetting('cdn_excluded_extensions', '.php, .json', 'string', 'performance');

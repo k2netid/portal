@@ -67,7 +67,13 @@ export const buildThemeViewResolveCandidates = (theme: Theme | null | undefined)
       ? theme.parent_theme.trim()
       : ''
 
-  return withBundledThemeFallbacks([slug, parentSlug].filter(Boolean))
+  if (!slug) return withBundledThemeFallbacks([])
+
+  const candidates: string[] = [slug]
+  if (parentSlug && parentSlug.toLowerCase() !== slug.toLowerCase()) {
+    candidates.push(parentSlug)
+  }
+  return candidates
 }
 
 export const findThemeViewKey = (
@@ -75,7 +81,8 @@ export const findThemeViewKey = (
   themeSlugs: string[],
   pageName: string,
 ): string | undefined => {
-  const slugs = themeSlugs.length > 0 ? themeSlugs : [...BUNDLED_FRONTEND_THEME_SLUGS]
+  // Defensive: if no candidates provided, fallback to janari (universal parent) only — never leak sibling themes.
+  const slugs = themeSlugs.length > 0 ? themeSlugs : ['janari']
   const pageBase = themePageBaseName(pageName)
 
   for (const slug of slugs) {
@@ -99,11 +106,16 @@ export const findThemeViewKey = (
     if (found) return found
   }
 
-  // Last resort: any theme package file whose basename matches (case-insensitive).
-  return Object.keys(viewModules).find((key) => {
-    const k = normalizeGlobKey(key)
-    const file = k.slice(k.lastIndexOf('/') + 1).split('?')[0] ?? ''
-    if (!file.endsWith('.vue')) return false
-    return file.slice(0, -4) === pageBase
-  })
+  // Last resort: only for core layout chrome (Header, Footer) if theme is incomplete.
+  // Never cross-fallback pages or custom sections to unrelated peer themes.
+  if (pageName.startsWith('components/Header') || pageName.startsWith('components/Footer')) {
+    return Object.keys(viewModules).find((key) => {
+      const k = normalizeGlobKey(key)
+      const file = k.slice(k.lastIndexOf('/') + 1).split('?')[0] ?? ''
+      if (!file.endsWith('.vue')) return false
+      return file.slice(0, -4) === pageBase
+    })
+  }
+
+  return undefined
 }

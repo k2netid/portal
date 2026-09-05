@@ -1,24 +1,44 @@
 {
   "version": 1,
   "settings": {
-    "site_title": "Sarangenge",
-    "site_tagline": "Mekar Bersama Cahaya Pagi — Sekolah Cerdas & Berkarakter",
-    "site_tagline_en": "Blooming with Morning Light — A Smart & Character-Driven School",
-    "school_name": "SMP-SMA Sarangenge",
-    "hero_title": "Mekar Bersama Cahaya Pagi — Membentuk Generasi Cerdas & Berkarakter",
-    "hero_title_en": "Blooming with Morning Light — Shaping Smart & Noble Generations",
-    "hero_subtitle": "Portal resmi sekolah: kurikulum Merdeka berbasis riset, fasilitas smart class, dan jalur PPDB transparan.",
-    "hero_subtitle_en": "Official school portal: research-based Merdeka curriculum, smart class facilities, and transparent admissions.",
+    "site_title": "Portal Sekolah Vokasi",
+    "site_tagline": "Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan",
+    "site_tagline_en": "Progressive, Independent & Character-Driven — Vocational School of Excellence",
+    "school_name": "Portal Sekolah Vokasi",
+    "hero_title": "Membentuk Lulusan Vokasi Unggul, Mandiri & Berakhlak Mulia",
+    "hero_title_en": "Shaping Superior, Independent & Character-Driven Vocational Graduates",
+    "hero_subtitle": "Portal resmi sekolah menengah kejuruan: pendidikan vokasi berstandar industri dengan program keahlian unggulan, fasilitas modern, dan jejaring kerja sama dunia usaha & industri.",
+    "hero_subtitle_en": "Official vocational school portal: industry-standard vocational education with flagship expertise programs, modern facilities, and industry partnerships.",
     "ppdb_is_open": true,
-    "contact_whatsapp": "+6281234567890",
-    "contact_email": "info@sekolahsarangenge.sch.id",
-    "contact_phone": "+62 22 7208899",
-    "contact_address": "Jl. Pendidikan No. 45, Bandung, Jawa Barat 40123",
+    "contact_whatsapp": "",
+    "contact_email": "info@portal.sch.id",
+    "contact_phone": "",
+    "contact_address": "",
     "contact_map_enabled": true,
     "cta_primary_label": "Info PPDB",
     "cta_primary_url": "/contact#ppdb",
-    "cta_login_label": "Masuk Portal",
-    "cta_login_url": "/member/login"
+    "cta_login_label": "Portal Guru & Siswa",
+    "cta_login_url": "/member/login",
+    "hero_animation_enabled": true,
+    "hero_animation_type": "engineering",
+    "hero_slider_enabled": true,
+    "hero_slider_autoplay": true,
+    "hero_slider_interval": 7,
+    "hero_bottom_mode": "news",
+    "hero_news_enabled": true,
+    "home_sections": [
+      "hero",
+      "bento",
+      "track_finder",
+      "programs",
+      "announcements",
+      "achievements",
+      "facilities",
+      "extracurricular",
+      "testimonials",
+      "faq",
+      "cta"
+    ]
   },
   "menus": {
     "header": {
@@ -26,74 +46,74 @@
       "items": [
         { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
         {
-          "title": "Tentang Kami",
-          "title_en": "About",
+          "title": "Profil",
+          "title_en": "Profile",
           "url": "/about",
           "type": "custom",
           "sort_order": 1,
           "children": [
-            { "title": "Profil Sekolah", "title_en": "School Profile", "url": "/about#profil", "type": "custom", "description": "Visi, misi, sejarah dan nilai luhur" },
-            { "title": "Guru & Staf", "title_en": "Teachers & Staff", "url": "/tim", "type": "custom", "description": "Direktori pendidik dan pimpinan sekolah" },
-            { "title": "Prestasi Siswa", "title_en": "Student Achievements", "url": "/achievement", "type": "custom", "description": "Galeri medali & kejuaraan" },
-            { "title": "Fasilitas Kampus", "title_en": "Campus Facilities", "url": "/services#smart-class", "type": "custom", "description": "Smart Class, Lab & Sport Arena" }
+            { "title": "Profil & Visi Misi", "title_en": "Profile & Vision", "url": "/about#profil", "type": "custom", "description": "Visi, misi, dan nilai kejuruan" },
+            { "title": "Pendidik & Tenaga Kependidikan", "title_en": "Teachers & Staff", "url": "/tim", "type": "custom", "description": "Direktori guru dan manajemen sekolah" },
+            { "title": "Prestasi Siswa", "title_en": "Student Achievements", "url": "/achievement", "type": "custom", "description": "LKS Nasional & kejuaraan vokasi" },
+            { "title": "Fasilitas & Bengkel Praktik", "title_en": "Workshops & Labs", "url": "/facilities", "type": "custom", "description": "Laboratorium komputer, bengkel mesin & otomasi" }
           ]
         },
         {
-          "title": "Akademik",
-          "title_en": "Academics",
-          "url": "/solusi",
+          "title": "Program Keahlian",
+          "title_en": "Competencies",
+          "url": "/programs",
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Program & Kurikulum", "title_en": "Programs & Curriculum", "url": "/solusi#programs", "type": "custom", "description": "Kurikulum Merdeka & Cambridge Track" },
-            { "title": "Jejaring Alumni", "title_en": "Alumni Network", "url": "/career", "type": "custom", "description": "Tracer study & bimbingan kampus" }
+            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/programs", "type": "custom", "description": "Program keahlian berstandar industri" },
+            { "title": "Bursa Kerja Khusus (BKK) & Alumni", "title_en": "Career & Alumni", "url": "/career", "type": "custom", "description": "Penyaluran kerja industri & jejaring alumni" }
           ]
         },
         {
-          "title": "PPDB & Biaya",
-          "title_en": "Admissions & Fees",
+          "title": "PPDB",
+          "title_en": "Admissions",
           "url": "/pricing",
           "type": "custom",
           "sort_order": 3,
           "children": [
-            { "title": "Informasi & Alur PPDB", "title_en": "Admissions Info", "url": "/contact#ppdb", "type": "custom", "description": "Jalur reguler, prestasi & beasiswa" },
-            { "title": "Biaya & Skema Beasiswa", "title_en": "Fees & Scholarships", "url": "/pricing#beasiswa", "type": "custom", "description": "Transparansi SPP & beasiswa" }
+            { "title": "Informasi & Alur PPDB", "title_en": "Admissions Info", "url": "/contact#ppdb", "type": "custom", "description": "Jalur afirmasi, prestasi, dan zonasi/reguler" },
+            { "title": "Layanan Bantuan PPDB", "title_en": "Admissions Helpdesk", "url": "/pricing#beasiswa", "type": "custom", "description": "Posko konsultasi dan verifikasi berkas" }
           ]
         },
-        { "title": "Warta", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
+        { "title": "Warta Sekolah", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 4 },
         { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 5 }
       ]
     },
     "footer_col_1": {
       "name": "Sarangenge Footer Programs",
       "items": [
-        { "title": "Program Unggulan", "url": "/solusi#programs", "type": "custom", "sort_order": 0 },
-        { "title": "Fasilitas Kampus", "url": "/services#smart-class", "type": "custom", "sort_order": 1 },
-        { "title": "Prestasi Siswa", "url": "/achievement", "type": "custom", "sort_order": 2 },
-        { "title": "Direktori Guru", "url": "/tim", "type": "custom", "sort_order": 3 }
+        { "title": "Program Keahlian", "url": "/programs", "type": "custom", "sort_order": 0 },
+        { "title": "Fasilitas & Lab Praktik", "url": "/facilities", "type": "custom", "sort_order": 1 },
+        { "title": "Prestasi LKS & Vokasi", "url": "/achievement", "type": "custom", "sort_order": 2 },
+        { "title": "Direktori Guru & Staf", "url": "/tim", "type": "custom", "sort_order": 3 }
       ]
     },
     "footer_col_2": {
       "name": "Sarangenge Footer Admissions",
       "items": [
-        { "title": "Biaya & Beasiswa", "url": "/pricing#beasiswa", "type": "custom", "sort_order": 0 },
-        { "title": "Jejaring Alumni", "url": "/career", "type": "custom", "sort_order": 1 },
+        { "title": "Informasi PPDB", "url": "/contact#ppdb", "type": "custom", "sort_order": 0 },
+        { "title": "BKK & Jejaring Alumni", "url": "/career", "type": "custom", "sort_order": 1 },
         { "title": "Berita & Pengumuman", "url": "/blog", "type": "custom", "sort_order": 2 },
-        { "title": "Pendaftaran PPDB", "url": "/contact#ppdb", "type": "custom", "sort_order": 3 }
+        { "title": "Kontak & Alamat", "url": "/contact", "type": "custom", "sort_order": 3 }
       ]
     }
   },
   "pages": [
-    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Sarangenge — PPDB, program unggulan, dan fasilitas kampus.", "body": "<p>Portal resmi Sarangenge — PPDB, program unggulan, dan fasilitas kampus.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official Sarangenge portal — admissions, flagship programs, and campus facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
-    { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, dan filosofi pendidikan Sarangenge.", "body": "<p>Visi, misi, dan filosofi pendidikan Sarangenge.</p>", "body_en": "<p>Sarangenge vision, mission, and educational philosophy.</p>" },
-    { "slug": "services", "title": "Fasilitas Kampus", "title_en": "Campus Facilities", "theme_page": "pages/Services", "status": "published", "excerpt": "Smart class, laboratorium, dan sport arena.", "body": "<p>Smart class, laboratorium sains, dan sport arena Sarangenge.</p>", "body_en": "<p>Sarangenge smart classrooms, science labs, and sports arena.</p>" },
-    { "slug": "solusi", "title": "Program & Kurikulum", "title_en": "Programs & Curriculum", "theme_page": "pages/Solusi", "status": "published", "excerpt": "Kurikulum Merdeka, STEM, dan bilingual track.", "body": "<p>Kurikulum Merdeka, STEM, dan bilingual track Sarangenge.</p>", "body_en": "<p>Merdeka Curriculum, STEM, and bilingual track at Sarangenge.</p>" },
-    { "slug": "pricing", "title": "Biaya & Beasiswa", "title_en": "Fees & Scholarships", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Transparansi SPP dan skema beasiswa.", "body": "<p>Transparansi SPP dan skema beasiswa Sarangenge.</p>", "body_en": "<p>Transparent tuition fees and Sarangenge scholarship schemes.</p>" },
-    { "slug": "tim", "title": "Guru & Staf", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori pendidik dan pimpinan sekolah.", "body": "<p>Direktori guru, staf, dan pimpinan sekolah Sarangenge.</p>", "body_en": "<p>Directory of Sarangenge teachers, staff, and school leadership.</p>" },
-    { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita, agenda, dan pengumuman kampus.", "body": "<p>Berita sekolah, agenda kampus, dan pengumuman Sarangenge.</p>", "body_en": "<p>School news, campus events, and Sarangenge announcements.</p>" },
-    { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB dan formulir konsultasi.", "body": "<p>Hotline PPDB dan formulir konsultasi pendaftaran Sarangenge.</p>", "body_en": "<p>Admissions hotline and Sarangenge enrollment consultation form.</p>" },
-    { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali dan kejuaraan siswa.", "body": "<p>Galeri medali dan kejuaraan siswa Sarangenge.</p>", "body_en": "<p>Gallery of Sarangenge student medals and championships.</p>" },
-    { "slug": "career_center", "title": "Jejaring Alumni", "title_en": "Alumni Network", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Tracer study dan bimbingan kampus.", "body": "<p>Tracer study alumni dan bimbingan lanjut kampus Sarangenge.</p>", "body_en": "<p>Alumni tracer study and campus placement guidance at Sarangenge.</p>" }
+    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi sekolah vokasi — PPDB, kompetensi keahlian, dan fasilitas bengkel modern.", "body": "<p>Portal resmi sekolah menengah kejuruan — PPDB, kompetensi keahlian vokasi, dan fasilitas bengkel modern.</p><p>Layout publik dari template tema Sarangenge. Konten editor untuk SEO.</p>", "body_en": "<p>Official vocational school portal — admissions, vocational programs, and modern workshop facilities.</p><p>Public layout comes from the Sarangenge theme. Editor content is for SEO.</p>" },
+    { "slug": "about", "title": "Profil Sekolah", "title_en": "School Profile", "theme_page": "pages/About", "status": "published", "excerpt": "Visi, misi, sejarah, dan nilai keunggulan sekolah vokasi.", "body": "<p>Visi, misi, sejarah, dan nilai keunggulan sekolah menengah kejuruan.</p>", "body_en": "<p>Vocational school vision, mission, and excellence philosophy.</p>" },
+    { "slug": "facilities", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Facilities", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga sekolah vokasi.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities.</p>" },
+    { "slug": "programs", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Programs", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian berstandar industri.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian vokasi berstandar industri.</p>", "body_en": "<p>Merdeka Curriculum at Vocational School of Excellence — industry-aligned expertise programs.</p>" },
+    { "slug": "pricing", "title": "Layanan PPDB & Bantuan", "title_en": "Fees & Admissions", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB.", "body": "<p>Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB sekolah.</p>", "body_en": "<p>Educational assistance, vocational scholarships, and admissions consultation services.</p>" },
+    { "slug": "tim", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan sekolah vokasi.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan sekolah.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and school leadership.</p>" },
+    { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.", "body": "<p>Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.</p>", "body_en": "<p>School events, industry partnerships, and latest announcements.</p>" },
+    { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB, alamat kampus, dan formulir konsultasi.", "body": "<p>Hotline PPDB, alamat kampus, dan formulir konsultasi sekolah vokasi.</p>", "body_en": "<p>Admissions hotline, campus address, and school consultation form.</p>" },
+    { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali LKS tingkat kota, provinsi, dan nasional.", "body": "<p>Galeri medali LKS tingkat kota, provinsi, dan nasional sekolah vokasi.</p>", "body_en": "<p>Gallery of vocational skills competition (LKS) medals and championships.</p>" },
+    { "slug": "career_center", "title": "BKK & Jejaring Alumni", "title_en": "Career Center & Alumni", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni.", "body": "<p>Bursa Kerja Khusus (BKK), rekrutmen mitra industri, dan tracer study alumni.</p>", "body_en": "<p>Special Job Fair (BKK), industry partner recruitment, and alumni tracer study.</p>" }
   ],
   "posts": [
     {
@@ -108,8 +128,8 @@
     },
     {
       "slug": "sarangenge-sample-olimpiade-emas",
-      "title": "Siswa Sarangenge Raih Medali Emas Olimpiade Matematika 2026",
-      "title_en": "Sarangenge Student Wins Gold at 2026 Math Olympiad",
+      "title": "Siswa Vokasi Raih Medali Emas Olimpiade Matematika 2026",
+      "title_en": "Vocational Student Wins Gold at 2026 Math Olympiad",
       "status": "published",
       "excerpt": "Prestasi membanggakan kembali ditorehkan dalam ajang olimpiade matematika tingkat internasional.",
       "excerpt_en": "Another proud achievement at an international mathematics olympiad.",

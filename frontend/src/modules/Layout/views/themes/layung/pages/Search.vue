@@ -7,7 +7,7 @@
         {{ t('pages.search.title', 'Pencarian') }}
       </h1>
       <p class="text-sm text-muted-foreground">
-        {{ t('pages.search.subtitle', 'Cari paket, layanan, dan informasi K2NET.') }}
+        {{ t('pages.search.subtitle', 'Cari paket, layanan, dan informasi Kami.') }}
       </p>
     </div>
 
@@ -80,7 +80,7 @@ const popularTags = computed(() => [
 
 const allItems = computed(() => [
   {
-    title: t('pages.services.title', 'Layanan Internet K2NET'),
+    title: t('pages.services.title', 'Layanan Internet Kami'),
     category: t('header.services', 'Internet'),
     desc: t('pages.services.subtitle'),
     path: '/pricing/isp',

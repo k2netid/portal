@@ -48,14 +48,14 @@
       class="relative"
     >
       <Select
-        :model-value="String(modelValue || (isDynamicFormSelect ? 'contact' : ''))"
+        :model-value="effectiveSelectValue"
         @update:model-value="(val) => { handleInput(val); $emit('change'); }"
       >
         <SelectTrigger
           :aria-label="settingLabel(setting.key, setting.label)"
           class="h-10 rounded-xl border border-border bg-background text-sm font-medium"
         >
-          <SelectValue :placeholder="setting.placeholder ? $t('publishing.theme_customizer.items.' + setting.key + '_placeholder') : $t('publishing.theme_customizer.editor.menus.placeholder')" />
+          <SelectValue :placeholder="setting.placeholder ? $t('publishing.theme_customizer.items.' + setting.key + '_placeholder') : $t('placeholders.select', 'Pilih...')" />
         </SelectTrigger>
         <SelectContent v-if="resolvedOptions.length > 0">
           <SelectItem
@@ -435,10 +435,10 @@
     </div>
 
     <p
-      v-if="setting.description"
+      v-if="setting.description || (setting.key && settingHint(setting.key, ''))"
       class="text-[11px] text-muted-foreground leading-normal"
     >
-      {{ settingHint(setting.key, setting.description) }}
+      {{ settingHint(setting.key, setting.description || '') }}
     </p>
   </div>
 </template>
@@ -593,12 +593,37 @@ const isDynamicFormSelect = computed(() => {
   return props.setting?.key === 'contact_form_slug' || props.setting?.options === 'dynamic:forms';
 });
 
+const effectiveSelectValue = computed(() => {
+  if (props.modelValue !== undefined && props.modelValue !== null && props.modelValue !== '') {
+    return String(props.modelValue);
+  }
+  if (isDynamicFormSelect.value) {
+    return 'contact';
+  }
+  if (props.setting?.default !== undefined && props.setting?.default !== null && props.setting?.default !== '') {
+    return String(props.setting.default);
+  }
+  return '';
+});
+
 const resolvedOptions = computed<ThemeOption[]>(() => {
   if (isDynamicFormSelect.value) {
     return dynamicFormOptions.value;
   }
   if (Array.isArray(props.setting?.options)) {
-    return props.setting.options as ThemeOption[];
+    return props.setting.options.map((opt: unknown) => {
+      if (typeof opt === 'string' || typeof opt === 'number') {
+        return { label: String(opt), value: String(opt) };
+      }
+      if (opt && typeof opt === 'object' && 'value' in opt) {
+        const item = opt as { label?: string; value: string | number };
+        return {
+          label: item.label !== undefined ? String(item.label) : String(item.value),
+          value: item.value,
+        };
+      }
+      return { label: String(opt), value: String(opt) };
+    });
   }
   return [];
 });

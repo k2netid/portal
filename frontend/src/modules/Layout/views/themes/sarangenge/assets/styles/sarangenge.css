@@ -6,7 +6,7 @@
    Palette, Micro-interactions, Accessible Contrast & High-performance Typography.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap');
 
 :root {
   /* Scholastic Dawn Palette (Navy, Morning Gold & Crisp Slate) */
@@ -24,8 +24,9 @@
   --sarangenge-primary: var(--theme-color-primary, #1e3a8a);
   --sarangenge-secondary: var(--theme-color-secondary, #f59e0b);
   --sarangenge-accent: var(--theme-color-accent, #059669);
-  --sarangenge-font-heading: var(--theme-font-heading, 'Bricolage Grotesque', system-ui, sans-serif);
-  --sarangenge-font-body: var(--theme-font-body, 'Figtree', system-ui, sans-serif);
+  --sarangenge-font-heading: var(--theme-font-heading, Geist), ui-sans-serif, system-ui, sans-serif;
+  --sarangenge-font-body: var(--theme-font-body, Geist), ui-sans-serif, system-ui, sans-serif;
+  --sarangenge-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
   
   --sarangenge-radius: 1rem;
   --sarangenge-radius-sm: 0.65rem;
@@ -49,11 +50,18 @@
   --ring: 221 83% 53%;
 
   font-family: var(--sarangenge-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.014em;
   color: hsl(var(--foreground));
   background-color: hsl(var(--background));
   display: flex;
   flex-direction: column;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .dark .sarangenge-theme,
@@ -78,7 +86,11 @@
 .sarangenge-heading {
   font-family: var(--sarangenge-font-heading);
   letter-spacing: -0.025em;
-  font-weight: 700;
+}
+
+.sarangenge-theme .font-mono,
+.sarangenge-mono {
+  font-family: var(--sarangenge-font-mono);
 }
 
 /* Subtle morning ambient light */
@@ -151,12 +163,12 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
 .sarangenge-rise-delay-2 { animation-delay: 0.2s; }
 .sarangenge-rise-delay-3 { animation-delay: 0.3s; }
 
-/* 2026 Scholastic Morning Hero */
+/* 2026 Scholastic Morning Hero — Full Proportion Desktop Viewport */
 .sarangenge-hero {
-  min-height: min(85vh, 760px);
+  min-height: max(600px, calc(100dvh - 4.5rem));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   isolation: isolate;
   overflow: hidden;
   position: relative;
@@ -167,10 +179,39 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
   color: #f8fafc;
 }
 
+@media (min-width: 1024px) {
+  .sarangenge-hero {
+    height: calc(100dvh - 4.5rem);
+    max-height: calc(100dvh - 4.5rem);
+  }
+}
+
+.sarangenge-hero--sunrise_teal {
+  background:
+    radial-gradient(ellipse 80% 60% at 85% 20%, rgba(245, 158, 11, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(15, 118, 110, 0.25), transparent 65%),
+    linear-gradient(145deg, #0a1128 0%, #0f1e36 45%, #0f766e 100%);
+}
+
+.sarangenge-hero--deep_navy {
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(56, 189, 248, 0.15), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(30, 58, 138, 0.3), transparent 70%),
+    linear-gradient(160deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+}
+
+.sarangenge-hero--golden_dawn {
+  background:
+    radial-gradient(ellipse 85% 65% at 85% 15%, rgba(234, 179, 8, 0.25), transparent 60%),
+    radial-gradient(ellipse 65% 55% at 15% 85%, rgba(180, 83, 9, 0.2), transparent 65%),
+    linear-gradient(145deg, #18181b 0%, #27272a 45%, #451a03 100%);
+}
+
 .sarangenge-hero__media {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 2;
+  pointer-events: none;
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
@@ -276,3 +317,216 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
     transition: none !important;
   }
 }
+
+/* ─── Sarangenge Floating Social & Hotline Dock ─── */
+.sarangenge-social-dock {
+  position: fixed;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.sarangenge-social-dock--right {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sarangenge-social-dock--left {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sarangenge-social-dock--bottom_left {
+  left: 1.25rem;
+  bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .sarangenge-social-dock {
+    display: none;
+  }
+  .sarangenge-social-dock--show-mobile {
+    display: flex;
+  }
+}
+
+.sarangenge-social-dock__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background: hsl(var(--card) / 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.18), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+}
+
+.sarangenge-social-dock__toggle-btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px -3px rgba(245, 158, 11, 0.4);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.sarangenge-social-dock__toggle-btn:hover {
+  transform: scale(1.08);
+}
+
+.sarangenge-social-dock__collapse-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: color 0.15s ease;
+}
+
+.sarangenge-social-dock__collapse-btn:hover {
+  color: #f59e0b;
+}
+
+.sarangenge-social-dock__divider {
+  width: 1rem;
+  height: 1px;
+  background: rgba(245, 158, 11, 0.3);
+  margin: 0.15rem 0;
+}
+
+.sarangenge-social-dock__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sarangenge-social-dock__item {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(var(--muted-foreground));
+  transition: all 0.2s ease;
+}
+
+.sarangenge-social-dock__item:hover {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.sarangenge-social-dock__tooltip {
+  position: absolute;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all 0.2s ease;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.375rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #0f172a;
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.sarangenge-social-dock--right .sarangenge-social-dock__tooltip {
+  right: calc(100% + 0.65rem);
+  transform: translateX(6px);
+}
+
+.sarangenge-social-dock--left .sarangenge-social-dock__tooltip,
+.sarangenge-social-dock--bottom_left .sarangenge-social-dock__tooltip {
+  left: calc(100% + 0.65rem);
+  transform: translateX(-6px);
+}
+
+.group:hover .sarangenge-social-dock__tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Hero Scroll Cue Line Animation ────────────────────────────── */
+@keyframes sarangenge-scroll-line {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.sarangenge-hero .animate-scroll-line {
+  animation: sarangenge-scroll-line 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* ── Sarangenge Hero Visual & Interactive Vocational Stage ── */
+@keyframes sarangenge-pulse-dash {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+  }
+}
+
+.sarangenge-pulse-line {
+  stroke-dasharray: 20 180;
+  animation: sarangenge-pulse-dash 3s linear infinite;
+}
+
+@keyframes sarangenge-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-spin-reverse {
+  animation: sarangenge-spin-reverse 12s linear infinite;
+}
+
+@keyframes sarangenge-scan-beam-anim {
+  0%, 100% { transform: translateY(-30px); opacity: 0.3; }
+  50% { transform: translateY(30px); opacity: 0.9; }
+}
+
+.sarangenge-scan-beam {
+  animation: sarangenge-scan-beam-anim 4s ease-in-out infinite;
+}
+
+.sarangenge-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+  display: inline-block;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

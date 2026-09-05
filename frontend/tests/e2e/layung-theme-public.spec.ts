@@ -15,7 +15,7 @@ test.describe('Layung public theme honesty and drawer', () => {
 
         const body = await page.locator('body').innerText();
         expect(body).not.toMatch(/Ookla|Cisco SBA|ITU-T Y\.1541|SMP Negeri/i);
-        await expect(page.getByText(/estimasi internal|internal k2net estimate/i).first()).toBeVisible();
+        await expect(page.getByText(/estimasi internal|internal portal estimate/i).first()).toBeVisible();
         await expect(page.getByText(/indikasi|indicative/i).first()).toBeVisible();
     });
 

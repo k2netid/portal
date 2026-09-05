@@ -47,7 +47,7 @@
 
         <!-- 2. Programs & Curriculum (Tall Gold) -->
         <router-link
-          to="/solusi"
+          to="/programs"
           class="sarangenge-bento__cell sarangenge-bento__cell--gold sarangenge-bento__tall group"
         >
           <div class="space-y-3">
@@ -88,7 +88,7 @@
 
         <!-- 4. Fasilitas Kampus -->
         <router-link
-          to="/services"
+          to="/facilities"
           class="sarangenge-bento__cell group"
         >
           <div class="space-y-2">

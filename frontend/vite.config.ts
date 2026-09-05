@@ -254,6 +254,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/storage': {
+        target: devApiProxyTarget,
+        changeOrigin: true,
+        secure: false,
+      },
       '/user/passkeys': {
         target: devApiProxyTarget,
         changeOrigin: true,
