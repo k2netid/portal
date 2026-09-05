@@ -418,14 +418,21 @@ class ThemeController extends BaseApiController
             return $this->error("Theme directory or manifest not found for [{$theme->slug}].", 404);
         }
 
-        $tempDir = storage_path('app/temp/theme-export-'.Str::random(16));
-        File::ensureDirectoryExists($tempDir);
-        $zipPath = $tempDir."/{$theme->slug}-theme.zip";
+        try {
+            $tempParent = storage_path('app/temp');
+            if (! is_dir($tempParent)) {
+                File::ensureDirectoryExists($tempParent, 0777, true);
+                @chmod($tempParent, 0777);
+            }
+            $tempDir = $tempParent.'/theme-export-'.Str::random(16);
+            File::ensureDirectoryExists($tempDir, 0777, true);
+            @chmod($tempDir, 0777);
+            $zipPath = $tempDir."/{$theme->slug}-theme.zip";
 
-        $zip = new ZipArchive;
-        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
-            return $this->error('Failed to create theme zip archive.', 500);
-        }
+            $zip = new ZipArchive;
+            if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+                return $this->error('Failed to create theme zip archive.', 500);
+            }
 
         $files = File::allFiles($sourcePath);
         foreach ($files as $file) {
@@ -439,6 +446,10 @@ class ThemeController extends BaseApiController
         $zip->close();
 
         return response()->download($zipPath, "{$theme->slug}-theme.zip")->deleteFileAfterSend(true);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Theme export failed', ['theme' => $theme->slug, 'error' => $e->getMessage()]);
+            return $this->error('Theme export failed: '.$e->getMessage(), 500);
+        }
     }
 
     // =====================================================

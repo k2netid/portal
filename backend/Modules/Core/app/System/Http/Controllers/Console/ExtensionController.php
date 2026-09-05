@@ -730,32 +730,43 @@ class ExtensionController extends BaseApiController
             return $this->error("Extension directory not found for [{$slug}].", 404);
         }
 
-        $tempDir = storage_path('app/temp/extension-export-'.\Illuminate\Support\Str::random(16));
-        File::ensureDirectoryExists($tempDir);
-        $zipPath = $tempDir."/{$slug}-extension.zip";
-
-        $zip = new ZipArchive;
-        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
-            return $this->error('Failed to create extension zip archive.', 500);
-        }
-
-        $files = File::allFiles($targetDir);
-        foreach ($files as $file) {
-            $relative = $file->getRelativePathname();
-            if (
-                str_starts_with($relative, '.git') ||
-                str_ends_with($relative, '.DS_Store') ||
-                str_contains($relative, 'node_modules') ||
-                str_contains($relative, 'vendor')
-            ) {
-                continue;
+        try {
+            $tempParent = storage_path('app/temp');
+            if (! is_dir($tempParent)) {
+                File::ensureDirectoryExists($tempParent, 0777, true);
+                @chmod($tempParent, 0777);
             }
-            $zip->addFile($file->getRealPath(), "{$slug}/{$relative}");
+            $tempDir = $tempParent.'/extension-export-'.\Illuminate\Support\Str::random(16);
+            File::ensureDirectoryExists($tempDir, 0777, true);
+            @chmod($tempDir, 0777);
+            $zipPath = $tempDir."/{$slug}-extension.zip";
+
+            $zip = new ZipArchive;
+            if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+                return $this->error('Failed to create extension zip archive.', 500);
+            }
+
+            $files = File::allFiles($targetDir);
+            foreach ($files as $file) {
+                $relative = $file->getRelativePathname();
+                if (
+                    str_starts_with($relative, '.git') ||
+                    str_ends_with($relative, '.DS_Store') ||
+                    str_contains($relative, 'node_modules') ||
+                    str_contains($relative, 'vendor')
+                ) {
+                    continue;
+                }
+                $zip->addFile($file->getRealPath(), "{$slug}/{$relative}");
+            }
+
+            $zip->close();
+
+            return response()->download($zipPath, "{$slug}-extension.zip")->deleteFileAfterSend(true);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Extension export failed', ['slug' => $slug, 'error' => $e->getMessage()]);
+            return $this->error('Extension export failed: '.$e->getMessage(), 500);
         }
-
-        $zip->close();
-
-        return response()->download($zipPath, "{$slug}-extension.zip")->deleteFileAfterSend(true);
     }
 
     /**
