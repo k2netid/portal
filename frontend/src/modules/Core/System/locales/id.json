@@ -562,6 +562,8 @@
     "scaffolderBtn": "Scaffolder",
     "gitBtn": "Integrasi Git",
     "uploadBtn": "Unggah ZIP",
+    "export": "Ekspor",
+    "exportZip": "Unduh paket ZIP",
     "all": "Semua",
     "platform": "Platform",
     "modules": "Modul",
@@ -673,6 +675,10 @@
       "gitCloneFailed": "Gagal mengklon ekstensi.",
       "gitCloneSecurityFailed": "Gerbang keamanan: Kata kunci terlarang atau validasi tanda tangan Git gagal!",
       "loadFailed": "Gagal memuat daftar ekstensi.",
+      "exportSuccess": "Ekstensi berhasil diekspor.",
+      "exportFailed": "Gagal mengekspor ekstensi.",
+      "uploadDisabled": "Unggahan plugin dinonaktifkan.",
+      "exportDisabled": "Ekspor plugin dinonaktifkan.",
       "toggleConfirmTitleActivate": "Aktifkan {name}?",
       "toggleConfirmTitleDeactivate": "Nonaktifkan {name}?",
       "toggleConfirmMessageActivate": "Apakah Anda yakin ingin mengaktifkan {name}? Ini akan menjalankan semua migrasi skema database secara dinamis.",
@@ -1521,6 +1527,10 @@
         "title": "Notifikasi Keamanan",
         "description": "Peringatan via Telegram, Email, dan Webhook"
       },
+      "packages": {
+        "title": "Paket Tema & Ekstensi",
+        "description": "Kendali keamanan unggah (impor) dan ekspor paket tema serta plugin"
+      },
       "logs": {
         "title": "Retensi Log Sistem",
         "description": "Konfigurasi berapa lama log aktivitas dan sistem disimpan sebelum dihapus otomatis."
@@ -1802,6 +1812,10 @@
       "login_attempts_limit": "Batas Percobaan Login",
       "block_duration_minutes": "Durasi Pemblokiran (menit)",
       "enable_2fa": "Aktifkan 2FA",
+      "enable_theme_upload": "Unggah / Impor Tema",
+      "enable_plugin_upload": "Unggah / Impor Plugin",
+      "enable_theme_export": "Ekspor Paket Tema",
+      "enable_plugin_export": "Ekspor Paket Plugin",
       "session_lifetime": "Masa Berlaku Sesi (menit)",
       "single_session_enabled": "Mode Sesi Tunggal",
       "max_concurrent_sessions": "Maksimal Sesi Bersamaan",
@@ -1938,6 +1952,10 @@
       "login_attempts_limit": "Jumlah percobaan login gagal sebelum penguncian sementara (konsol dan pembaca)",
       "block_duration_minutes": "Berapa lama IP diblokir setelah melampaui batas login",
       "enable_2fa": "Aktifkan autentikasi dua faktor sistem-wide untuk operator konsol dan pembaca",
+      "enable_theme_upload": "Izinkan operator mengunggah file arsip ZIP tema baru ke sistem",
+      "enable_plugin_upload": "Izinkan operator mengunggah file arsip ZIP plugin/ekstensi baru ke sistem",
+      "enable_theme_export": "Izinkan operator mengunduh arsip ZIP paket tema terinstal",
+      "enable_plugin_export": "Izinkan operator mengunduh arsip ZIP paket plugin terinstal",
       "session_lifetime": "Berapa lama sesi pengguna berlangsung sebelum kedaluwarsa karena tidak aktif",
       "single_session_enabled": "Jika aktif, login baru akan otomatis logout sesi sebelumnya (1 akun = 1 perangkat)",
       "max_concurrent_sessions": "Jumlah maksimal sesi aktif per pengguna. Atur 0 untuk tidak terbatas",

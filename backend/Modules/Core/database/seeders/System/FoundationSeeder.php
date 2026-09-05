@@ -387,6 +387,10 @@ class FoundationSeeder extends Seeder
             ['key' => 'telegram_chat_id', 'value' => '', 'group' => 'security', 'type' => 'string'],
             ['key' => 'email_to', 'value' => '', 'group' => 'security', 'type' => 'string'],
             ['key' => 'webhook_url', 'value' => '', 'group' => 'security', 'type' => 'string'],
+            ['key' => 'enable_theme_upload', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
+            ['key' => 'enable_plugin_upload', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
+            ['key' => 'enable_theme_export', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
+            ['key' => 'enable_plugin_export', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
         ];
 
         foreach ($settings as $setting) {

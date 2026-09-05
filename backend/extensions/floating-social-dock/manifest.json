@@ -1,0 +1,21 @@
+{
+  "slug": "floating-social-dock",
+  "type": "plugin",
+  "name": "Floating Social Dock & Hotline",
+  "version": "1.0.0",
+  "description": "Dock mengambang interaktif akses cepat media sosial, hotline WhatsApp, dan saluran komunikasi resmi sekolah/organisasi di semua tema.",
+  "author": "Jejakawan",
+  "license": "MIT",
+  "is_core": false,
+  "default_status": "active",
+  "settings": {
+    "theme_blocks": [
+      { "slot": "floating_overlay" }
+    ],
+    "position": "right",
+    "orientation": "auto",
+    "style": "glass",
+    "default_collapsed": false,
+    "show_on_mobile": false
+  }
+}

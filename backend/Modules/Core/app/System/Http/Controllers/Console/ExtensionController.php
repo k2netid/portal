@@ -26,6 +26,8 @@ use Modules\Core\System\Services\ExtensionSecurityScanner;
 use Modules\Core\System\Services\InstagramFeedService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
+use Modules\Core\System\Services\LicenseService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
 class ExtensionController extends BaseApiController
@@ -48,8 +50,10 @@ class ExtensionController extends BaseApiController
 
         $extensions = Extension::with('features')->latest()->get();
         app(ExtensionHealthService::class)->attach($extensions);
-        $extensions->each(function (Extension $extension): void {
+        $exportAllowed = $this->isExportAllowed();
+        $extensions->each(function (Extension $extension) use ($exportAllowed): void {
             $extension->setAttribute('can_uninstall', $this->canUninstall($extension));
+            $extension->setAttribute('can_export', $exportAllowed && $this->canExport($extension));
         });
 
         return $this->success($extensions, 'Extensions retrieved successfully');
@@ -84,6 +88,63 @@ class ExtensionController extends BaseApiController
         }
 
         return ! $this->isShippedFirstPartyModule($extension);
+    }
+
+    protected function canExport(Extension $extension): bool
+    {
+        if ($this->isKernelSlug($extension->slug)) {
+            return false;
+        }
+
+        $folder = $extension->type === 'module'
+            ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $extension->slug))))
+            : ExtensionPaths::pluginDirectory($extension->slug);
+
+        return is_dir($folder);
+    }
+
+    protected function isUploadAllowed(): bool
+    {
+        $settingAllowed = filter_var(Setting::get('enable_plugin_upload', true), FILTER_VALIDATE_BOOLEAN);
+        if (! $settingAllowed) {
+            return false;
+        }
+
+        if (Setting::get('license_type') === LicenseService::TIER_COMMUNITY) {
+            return false;
+        }
+
+        if (! app()->isProduction()) {
+            return true;
+        }
+
+        return app(LicenseService::class)->canUseFeature('plugin_upload');
+    }
+
+    protected function isExportAllowed(): bool
+    {
+        $settingAllowed = filter_var(Setting::get('enable_plugin_export', true), FILTER_VALIDATE_BOOLEAN);
+        if (! $settingAllowed) {
+            return false;
+        }
+
+        if (Setting::get('license_type') === LicenseService::TIER_COMMUNITY) {
+            return false;
+        }
+
+        if (! app()->isProduction()) {
+            return true;
+        }
+
+        return app(LicenseService::class)->canUseFeature('plugin_export');
+    }
+
+    public function capabilities(): JsonResponse
+    {
+        return $this->success([
+            'can_upload' => $this->isUploadAllowed(),
+            'can_export' => $this->isExportAllowed(),
+        ], 'Extension capabilities retrieved successfully');
     }
 
     /**
@@ -539,6 +600,10 @@ class ExtensionController extends BaseApiController
      */
     public function upload(Request $request): JsonResponse
     {
+        if (! $this->isUploadAllowed()) {
+            return $this->error('Plugin/extension upload is disabled on this installation.', 403);
+        }
+
         $request->validate([
             'file' => 'required|file|mimes:zip|max:51200', // max 50MB
         ]);
@@ -641,6 +706,56 @@ class ExtensionController extends BaseApiController
         } catch (Exception $e) {
             return $this->error('Failed to upload/install package: '.$e->getMessage());
         }
+    }
+
+    /**
+     * Export an extension/plugin directory into a certified .zip distribution package.
+     */
+    public function export(string $slug): BinaryFileResponse|JsonResponse
+    {
+        if (! $this->isExportAllowed()) {
+            return $this->error('Plugin/extension export is disabled on this installation.', 403);
+        }
+
+        if ($this->isKernelSlug($slug)) {
+            return $this->error('Platform kernel extensions cannot be exported.', 403);
+        }
+
+        $extension = Extension::where('slug', $slug)->first();
+        $targetDir = ($extension && $extension->type === 'module')
+            ? base_path('Modules/'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug))))
+            : ExtensionPaths::pluginDirectory($slug);
+
+        if (! is_dir($targetDir)) {
+            return $this->error("Extension directory not found for [{$slug}].", 404);
+        }
+
+        $tempDir = storage_path('app/temp/extension-export-'.\Illuminate\Support\Str::random(16));
+        File::ensureDirectoryExists($tempDir);
+        $zipPath = $tempDir."/{$slug}-extension.zip";
+
+        $zip = new ZipArchive;
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            return $this->error('Failed to create extension zip archive.', 500);
+        }
+
+        $files = File::allFiles($targetDir);
+        foreach ($files as $file) {
+            $relative = $file->getRelativePathname();
+            if (
+                str_starts_with($relative, '.git') ||
+                str_ends_with($relative, '.DS_Store') ||
+                str_contains($relative, 'node_modules') ||
+                str_contains($relative, 'vendor')
+            ) {
+                continue;
+            }
+            $zip->addFile($file->getRealPath(), "{$slug}/{$relative}");
+        }
+
+        $zip->close();
+
+        return response()->download($zipPath, "{$slug}-extension.zip")->deleteFileAfterSend(true);
     }
 
     /**

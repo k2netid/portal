@@ -562,6 +562,8 @@
     "scaffolderBtn": "Scaffolder",
     "gitBtn": "Git Integration",
     "uploadBtn": "Upload ZIP",
+    "export": "Export",
+    "exportZip": "Download ZIP package",
     "all": "All",
     "platform": "Platform",
     "modules": "Modules",
@@ -673,6 +675,10 @@
       "gitCloneFailed": "Failed to clone extension.",
       "gitCloneSecurityFailed": "Security gate: Banned keyword or Git signature validation failed!",
       "loadFailed": "Failed to load extensions list.",
+      "exportSuccess": "Extension exported successfully.",
+      "exportFailed": "Failed to export extension.",
+      "uploadDisabled": "Plugin upload is disabled.",
+      "exportDisabled": "Plugin export is disabled.",
       "toggleConfirmTitleActivate": "Activate {name}?",
       "toggleConfirmTitleDeactivate": "Deactivate {name}?",
       "toggleConfirmMessageActivate": "Are you sure you want to activate {name}? This will run all database schema migrations dynamically.",
@@ -1527,7 +1533,11 @@
       },
       "securityNotifications": {
         "title": "Security Notifications",
-        "description": "Telegram, Email, and Webhook alerts"
+        "description": "Alerts via Telegram, Email, and Webhooks"
+      },
+      "packages": {
+        "title": "Themes & Extensions Packages",
+        "description": "Security controls for uploading (importing) and exporting theme and plugin packages"
       },
       "logs": {
         "title": "System Log Retention",
@@ -1802,6 +1812,10 @@
       "login_attempts_limit": "Login Attempts Limit",
       "block_duration_minutes": "Block Duration (minutes)",
       "enable_2fa": "Enable 2FA",
+      "enable_theme_upload": "Upload / Import Themes",
+      "enable_plugin_upload": "Upload / Import Plugins",
+      "enable_theme_export": "Export Theme Packages",
+      "enable_plugin_export": "Export Plugin Packages",
       "two_factor_method": "2FA Method",
       "two_factor_enforced_roles": "2FA Enforcement",
       "session_lifetime": "Session Lifetime (minutes)",
@@ -1940,6 +1954,10 @@
       "login_attempts_limit": "Number of failed logins allowed before temporary lockout (console and readers)",
       "block_duration_minutes": "How long an IP is blocked after exceeding login limits",
       "enable_2fa": "Enable two-factor authentication system-wide for console operators and readers",
+      "enable_theme_upload": "Allow operators to upload new theme ZIP packages to the system",
+      "enable_plugin_upload": "Allow operators to upload new plugin/extension ZIP packages to the system",
+      "enable_theme_export": "Allow operators to download installed theme packages as ZIP archives",
+      "enable_plugin_export": "Allow operators to download installed plugin packages as ZIP archives",
       "two_factor_method": "Method used for 2FA verification",
       "two_factor_enforced_roles": "Enforce 2FA for specific console user roles (readers opt in from portal Security)",
       "session_lifetime": "How long a user session lasts before expiring due to inactivity",

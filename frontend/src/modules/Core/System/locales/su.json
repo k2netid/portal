@@ -562,6 +562,8 @@
     "scaffolderBtn": "Scaffolder",
     "gitBtn": "Integrasi Git",
     "uploadBtn": "Unggah ZIP",
+    "export": "Ékspor",
+    "exportZip": "Unduh paket ZIP",
     "all": "Sadaya",
     "platform": "Platform",
     "modules": "Modul",
@@ -673,6 +675,10 @@
       "gitCloneFailed": "Gagal mengklon ekstensi.",
       "gitCloneSecurityFailed": "Gerbang keamanan: Kata kunci terlarang atawa validasi tanda tangan Git gagal!",
       "loadFailed": "Gagal nuju ngamuat daftar ekstensi.",
+      "exportSuccess": "Ekstensi parantos hasil diékspor.",
+      "exportFailed": "Gagal ngékspor ekstensi.",
+      "uploadDisabled": "Unggahan plugin dinonaktipkeun.",
+      "exportDisabled": "Ékspor plugin dinonaktipkeun.",
       "toggleConfirmTitleActivate": "Aktifkan {name}?",
       "toggleConfirmTitleDeactivate": "Nonaktifkan {name}?",
       "toggleConfirmMessageActivate": "Naha salira yakin hoyong mengaktifkan {name}? Ieu bakal menjalankan sadaya migrasi skema database secara dinamis.",
@@ -1521,6 +1527,10 @@
         "title": "Notifikasi Keamanan",
         "description": "Pangeling via Telegram, Email, sareng Webhook"
       },
+      "packages": {
+        "title": "Pakét Téma & Ekstensi",
+        "description": "Kontrol kaamanan ngunggah (impor) sareng ngékspor pakét téma sarta plugin"
+      },
       "logs": {
         "title": "Retensi Log Sistem",
         "description": "Konfigurasi berapa lami log aktivitas sareng sistem disimpen sateuacan dihapus otomatis."
@@ -1802,6 +1812,10 @@
       "login_attempts_limit": "Batas Percobaan Login",
       "block_duration_minutes": "Durasi Pemblokiran (menit)",
       "enable_2fa": "Aktifkan 2FA",
+      "enable_theme_upload": "Unggah / Impor Téma",
+      "enable_plugin_upload": "Unggah / Impor Plugin",
+      "enable_theme_export": "Ékspor Pakét Téma",
+      "enable_plugin_export": "Ékspor Pakét Plugin",
       "session_lifetime": "Masa Berlaku Sesi (menit)",
       "single_session_enabled": "Mode Sesi Tunggal",
       "max_concurrent_sessions": "Maksimal Sesi Bersamaan",
@@ -1938,6 +1952,10 @@
       "login_attempts_limit": "Jumlah percobaan login gagal sateuacan dikonci (konsol jeung pamaca)",
       "block_duration_minutes": "Berapa lami IP diblokir saatos melampaui batas login",
       "enable_2fa": "Aktipkeun 2FA sistem-wide pikeun operator konsol jeung pamaca",
+      "enable_theme_upload": "Widian operator ngunggah file arsip ZIP téma anyar kana sistem",
+      "enable_plugin_upload": "Widian operator ngunggah file arsip ZIP plugin/ekstensi anyar kana sistem",
+      "enable_theme_export": "Widian operator ngunduh arsip ZIP pakét téma anu parantos dipasang",
+      "enable_plugin_export": "Widian operator ngunduh arsip ZIP pakét plugin anu parantos dipasang",
       "session_lifetime": "Berapa lami sesi pamaké berlangsung sateuacan kedaluwarsa sabab teu aktif",
       "single_session_enabled": "Upami aktif, login anyar bakal otomatis logout sesi sebelumnya (1 akun = 1 alat)",
       "max_concurrent_sessions": "Jumlah maksimal sesi aktif per pamaké. Atur 0 pikeun teu terbatas",

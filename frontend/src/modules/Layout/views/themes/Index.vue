@@ -243,6 +243,17 @@
             >
               <Database class="w-4 h-4" />
             </Button>
+            <Button
+              v-if="exportEnabled"
+              variant="outline"
+              size="icon"
+              :disabled="exportingTheme === theme.slug"
+              :aria-label="$t('layout.themes.actions.export')"
+              :title="$t('layout.themes.actions.export')"
+              @click="exportTheme(theme)"
+            >
+              <Download class="w-4 h-4" :class="{ 'animate-bounce': exportingTheme === theme.slug }" />
+            </Button>
           </div>
         </div>
       </div>
@@ -301,6 +312,7 @@ import {
   Check,
   CheckCircle,
   Database,
+  Download,
   Eye,
   Image,
   Palette,
@@ -343,6 +355,8 @@ const scanning = ref(false);
 const installingSample = ref<string | null>(null);
 const uploading = ref(false);
 const uploadEnabled = ref(false);
+const exportEnabled = ref(true);
+const exportingTheme = ref<string | null>(null);
 const zipInputRef = ref<HTMLInputElement | null>(null);
 const showPreviewModal = ref(false);
 const selectedTheme = ref<Theme | null>(null);
@@ -488,9 +502,36 @@ const openThemeCustomizer = (theme: Theme) => {
 const fetchUploadStatus = async () => {
     try {
         const res = await api.get('/manage/layout/themes/upload-status');
-        uploadEnabled.value = !!res.data?.enabled;
+        const payload = res.data?.data || res.data;
+        uploadEnabled.value = !!payload?.enabled;
+        exportEnabled.value = payload?.export_enabled !== undefined ? !!payload?.export_enabled : true;
     } catch {
         uploadEnabled.value = false;
+        exportEnabled.value = false;
+    }
+};
+
+const exportTheme = async (theme: Theme) => {
+    exportingTheme.value = theme.slug;
+    try {
+        const response = await api.get(`/manage/layout/themes/${theme.slug}/export`, {
+            responseType: 'blob',
+        });
+        const blob = new Blob([response.data], { type: 'application/zip' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${theme.slug}-theme.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        toast.success(t('layout.themes.messages.exportSuccess'));
+    } catch (error: unknown) {
+        logger.error('Theme export failed:', error);
+        toast.error(t('layout.themes.messages.exportFailed'));
+    } finally {
+        exportingTheme.value = null;
     }
 };
 

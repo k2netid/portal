@@ -317,7 +317,8 @@
       "preview": "Pratinjau",
       "settings": "Pengaturan",
       "validate": "Validasi",
-      "installSample": "Pasang Sample Data"
+      "installSample": "Pasang Sample Data",
+      "export": "Ekspor ZIP"
     },
     "uploading": "Mengunggah…",
     "source": {
@@ -328,6 +329,8 @@
       "uploadSuccess": "Paket tema berhasil diunggah.",
       "uploadFailed": "Gagal mengunggah tema.",
       "uploadDisabled": "Unggahan tema dinonaktifkan di server ini.",
+      "exportSuccess": "Paket tema berhasil diekspor.",
+      "exportFailed": "Gagal mengekspor tema.",
       "activateConfirm": "Apakah Anda yakin ingin mengaktifkan tema \"{name}\"?",
       "activateFailed": "Gagal mengaktifkan tema",
       "activateSuccess": "Tema berhasil diaktifkan",

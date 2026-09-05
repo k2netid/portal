@@ -287,6 +287,8 @@ Route::prefix('v1')->group(function (): void {
         Route::post('{slug}/deactivate', [ExtensionController::class, 'deactivate']);
         Route::put('{slug}/settings', [ExtensionController::class, 'updateSettings']);
         Route::delete('{slug}/uninstall', [ExtensionController::class, 'uninstall']);
+        Route::get('capabilities', [ExtensionController::class, 'capabilities']);
+        Route::get('{slug}/export', [ExtensionController::class, 'export']);
         Route::post('instagram/test-connection', [ExtensionController::class, 'testInstagramConnection']);
     });
 

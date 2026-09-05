@@ -317,7 +317,8 @@
       "preview": "Pratinjau",
       "settings": "Setélan",
       "validate": "Validasi",
-      "installSample": "Pasang Sample Data"
+      "installSample": "Pasang Sample Data",
+      "export": "Ékspor ZIP"
     },
     "uploading": "Nuju ngunggah…",
     "source": {
@@ -328,6 +329,8 @@
       "uploadSuccess": "Paket téma parantos hasil diunggah.",
       "uploadFailed": "Gagal ngunggah téma.",
       "uploadDisabled": "Unggahan téma dinonaktipkeun di server ieu.",
+      "exportSuccess": "Paket téma parantos hasil diékspor.",
+      "exportFailed": "Gagal ngékspor téma.",
       "activateConfirm": "Naha salira yakin hoyong ngaktipkeun téma \"{name}\"?",
       "activateFailed": "Gagal ngaktipkeun téma",
       "activateSuccess": "Téma parantos hasil diaktipkeun",
