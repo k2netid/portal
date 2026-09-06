@@ -3,7 +3,7 @@ import { persistConsoleDarkModeToStorage, readConsoleDarkModeFromStorage } from 
 import { logger } from '@/shared/utils/logger';
 import { defineStore } from 'pinia';
 import api, { type ApiRequestConfig } from '@/engine/api/client';
-import { applyFavicon, isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
+import { isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
 
 
 export interface SiteSettings {
@@ -212,8 +212,6 @@ export const useSystemStore = defineStore('system', {
                         this.activeExtensions = data.active_extensions;
                     }
 
-                    applyFavicon(effectiveAppFavicon, { allowGeneric: true });
-
                     return data;
                 } catch (error) {
                     logger.error('[System Store] Error fetching public settings:', error);
@@ -273,8 +271,6 @@ export const useSystemStore = defineStore('system', {
                     brand_sync_site_identity: syncEnabled,
                     branding_display: brandData.branding_display || 'both',
                 };
-
-                applyFavicon(effectiveAppFavicon, { allowGeneric: true });
 
                 return this.appIdentity;
             } catch (error) {

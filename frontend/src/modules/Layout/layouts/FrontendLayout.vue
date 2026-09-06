@@ -685,7 +685,7 @@ watch(
   ([href, ready]) => {
     if (!href) return
     if (isGenericEngineFavicon(href) && !ready) return
-    applyFavicon(href, { allowGeneric: ready })
+    applyFavicon(href, { allowGeneric: ready, scope: 'site' })
   },
   { immediate: true },
 )

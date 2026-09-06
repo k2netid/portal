@@ -111,7 +111,7 @@ watch(
     faviconHref,
     (href) => {
         if (!href) return;
-        applyFavicon(href, { allowGeneric: true });
+        applyFavicon(href, { allowGeneric: true, scope: 'console' });
     },
     { immediate: true },
 );
