@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- Site Favicon Isolation & DOM Equality: `FrontendLayout.vue` acts as the single source of truth for public site favicon lifecycle, using the isolated `ja_site_favicon_href` cache key and DOM equality check in `applySiteFavicon` to eliminate cross-tab favicon flickering ([ADR-015](../../../../docs/adr/ADR-015-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md)).
+- Viewport Preview Scaling & Adaptive Toolbar: Live preview modal features proportional viewport scaling (`scale(0.8)` for tablet/mobile), dynamic iframe aspect ratio, and adaptive mobile toolbar wrap ([ADR-010](../../../../docs/adr/ADR-010-builder-viewport-preview-scaling-and-adaptive-responsive-toolbar.md)).
+- Preview Controls Separation: Separated "Open in New Tab" action from the dialog close button with dedicated button styling and distinct tooltips.
+- Canvas Header Dropdown Stacking: Fixed z-index layering and clipping of dropdown menus in the builder toolbar.
+- Visual Builder Extension Modularization: Visual Builder migrated into pluggable first-party extension gated by license (`builder.site`, [ADR-011](../../../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md)).
 - Site Editor Preview Sandboxing: isolasi rute dan event link di dalam kanvas preview menggunakan Capture-Phase Event Shield dan Scoped Router/Route Mock (`provide(routerKey, canvasRouter)` & `provide(routeLocationKey, canvasRoute)`). Mencegah kebocoran klik link/menu tema ke host router yang menyebabkan editor tertutup tiba-tiba, serta menambahkan internal `builder.navigateToPath` dan `onBeforeRouteLeave` guard di `SiteEditor.vue`.
 - Layung kontak: popup peta untuk semua alamat, ikon WhatsApp menggantikan nomor, email `mailto`, dan kolom wajib No. telp/WA pada formulir Reach.
 - Rename theme **Zenith → Sarangenge** (Sundanese midday sun; school-focused sibling to Janari dawn): folder/slug/locales/CSS, Member shell classes, bundled fallbacks, and campus UI (teal+sun, bento home, PPDB CTA).
