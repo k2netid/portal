@@ -44,7 +44,6 @@
 
         <ConsoleThemeModeSection
           :theme-mode="themeMode"
-          @update:theme-mode="themeMode = $event"
         />
 
         <form @submit.prevent="save">
@@ -53,6 +52,31 @@
             class="relative mt-0 focus-visible:outline-none"
           >
             <ColorsTab />
+
+            <!-- Easy Mode CTA to switch to Advanced Mode -->
+            <div
+              v-if="themeMode === 'global'"
+              class="m-6 rounded-xl border border-dashed border-border/80 bg-muted/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+            >
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                  <Sliders class="w-3.5 h-3.5 text-primary" />
+                  <span>{{ t('system.settings.consoleAppearance.themeMode.banner.advancedTitle') }}</span>
+                </div>
+                <p class="text-xs text-muted-foreground">
+                  {{ t('system.settings.consoleAppearance.themeMode.banner.advancedDescription') }}
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                class="shrink-0 text-xs gap-1.5 cursor-pointer"
+                @click="requestSwitchMode('advanced')"
+              >
+                <span>{{ t('system.settings.consoleAppearance.themeMode.banner.easyCta') }}</span>
+              </Button>
+            </div>
           </TabsContent>
 
           <TabsContent
@@ -60,6 +84,31 @@
             class="relative mt-0 focus-visible:outline-none"
           >
             <ShellTab />
+
+            <!-- Advanced Mode CTA to switch to Easy Mode -->
+            <div
+              v-if="themeMode === 'advanced'"
+              class="m-6 rounded-xl border border-dashed border-border/80 bg-muted/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+            >
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                  <Sparkles class="w-3.5 h-3.5 text-primary" />
+                  <span>{{ t('system.settings.consoleAppearance.themeMode.banner.easyTitle') }}</span>
+                </div>
+                <p class="text-xs text-muted-foreground">
+                  {{ t('system.settings.consoleAppearance.themeMode.banner.easyDescription') }}
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                class="shrink-0 text-xs gap-1.5 cursor-pointer"
+                @click="requestSwitchMode('global')"
+              >
+                <span>{{ t('system.settings.consoleAppearance.themeMode.banner.advancedCta') }}</span>
+              </Button>
+            </div>
           </TabsContent>
 
           <TabsContent
@@ -129,7 +178,7 @@
 import { computed, defineAsyncComponent, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { Image, LayoutTemplate, Palette } from 'lucide-vue-next';
+import { Image, LayoutTemplate, Palette, Sliders, Sparkles } from 'lucide-vue-next';
 import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
 import { Tabs, TabsList, TabsTrigger, TabsContent, Button } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
@@ -159,6 +208,7 @@ const {
     syncDraft,
     load,
     save,
+    requestSwitchMode,
     showLogoLightPicker,
     showLogoDarkPicker,
     showLogoCompactPicker,
@@ -168,14 +218,26 @@ const {
 const validTabs: ConsoleAppearanceTabId[] = ['colors', 'shell', 'logos'];
 const queryTab = route.query.tab as string;
 if (validTabs.includes(queryTab as ConsoleAppearanceTabId)) {
-    activeTab.value = queryTab as ConsoleAppearanceTabId;
+    if (themeMode.value === 'global' && queryTab === 'shell') {
+        activeTab.value = 'colors';
+    } else {
+        activeTab.value = queryTab as ConsoleAppearanceTabId;
+    }
 }
 
-const tabItems = computed(() => [
-    { id: 'colors' as const, label: t('system.settings.consoleAppearance.tabs.colorPreset'), icon: Palette },
-    { id: 'shell' as const, label: t('system.settings.consoleAppearance.tabs.uiShell'), icon: LayoutTemplate },
-    { id: 'logos' as const, label: t('system.settings.consoleAppearance.tabs.logos'), icon: Image },
-]);
+const tabItems = computed(() => {
+    if (themeMode.value === 'global') {
+        return [
+            { id: 'colors' as const, label: t('system.settings.consoleAppearance.themeMode.banner.easyTitle'), icon: Palette },
+            { id: 'logos' as const, label: t('system.settings.consoleAppearance.tabs.logos'), icon: Image },
+        ];
+    }
+    return [
+        { id: 'shell' as const, label: t('system.settings.consoleAppearance.tabs.uiShell'), icon: LayoutTemplate },
+        { id: 'colors' as const, label: t('system.settings.consoleAppearance.tabs.colorPreset'), icon: Palette },
+        { id: 'logos' as const, label: t('system.settings.consoleAppearance.tabs.logos'), icon: Image },
+    ];
+});
 
 onMounted(() => {
     void load();

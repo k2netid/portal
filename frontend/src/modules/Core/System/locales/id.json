@@ -2403,6 +2403,26 @@
         "advanced": {
           "label": "Mode Lanjutan",
           "hint": "Kustomisasi mendalam untuk tiap komponen, sidebar, navbar, kartu, dan tipografi."
+        },
+        "confirmSwitchToAdvanced": {
+          "title": "Beralih ke Mode Lanjutan?",
+          "description": "Mode Lanjutan memberi Anda kendali penuh untuk mengatur gaya tiap komponen konsol (sidebar, navbar, kartu, tombol, tipografi, dan overlay) secara terperinci.\n\nPenyesuaian otomatis dari preset akan dinonaktifkan. Apakah Anda ingin melanjutkan?",
+          "confirm": "Ya, Beralih ke Mode Lanjutan",
+          "cancel": "Batal"
+        },
+        "confirmSwitchToEasy": {
+          "title": "Beralih ke Mode Praktis?",
+          "description": "Mode Praktis menggunakan preset warna dan gaya terkurasi yang harmonis secara otomatis untuk seluruh konsol.\n\nPengaturan manual per-komponen sebelumnya akan diselaraskan kembali dengan preset yang dipilih. Apakah Anda ingin beralih ke Mode Praktis?",
+          "confirm": "Ya, Beralih ke Mode Praktis",
+          "cancel": "Batal"
+        },
+        "banner": {
+          "easyTitle": "Mode Praktis (Preset Terkurasi)",
+          "easyDescription": "Cukup pilih preset warna dan gaya tampilan. Seluruh komponen konsol akan diselaraskan secara otomatis dan harmonis.",
+          "easyCta": "Ingin kustomisasi per komponen secara manual? Beralih ke Mode Lanjutan →",
+          "advancedTitle": "Mode Lanjutan (Studio Komponen)",
+          "advancedDescription": "Kustomisasi mendalam untuk tiap komponen individual, navigasi shell, kartu, overlay, dan tipografi.",
+          "advancedCta": "← Kembali ke Mode Praktis (Gunakan Preset)"
         }
       },
       "scopeOverlay": {
