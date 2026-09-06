@@ -7,10 +7,14 @@ import { BUILDER_SCHEMA_VERSION } from '../constants'
 import type { BuilderState } from '@/modules/Layout/types/builder'
 import type { Category, Tag } from '@/modules/Publishing/types/taxonomy'
 import type { Menu } from '@/modules/Layout/types/menu'
+import { useRouter } from 'vue-router'
+import { getPublicThemePageCatalog } from '@/modules/Layout/utils/themePageCatalog'
+import { toast } from '@/shared/services/toastService'
 import type { HistoryManager } from './useBuilderModules'
 import type { GlobalVariablesManager } from '../useGlobalVariables'
 
 export function useBuilderSync(state: BuilderState, historyManager: HistoryManager, globalVariables: GlobalVariablesManager) {
+    const router = useRouter()
     const {
         blocks,
         content,
@@ -92,6 +96,127 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         triggerRef(blocks)
         takeSnapshot({ immediate: true })
         markAsSaved()
+    }
+
+    /**
+     * Safely navigate within the Site Editor preview without touching the host router.
+     * Switches the active CMS page or theme template in the canvas preview.
+     */
+    async function navigateToPath(rawPath: string): Promise<boolean> {
+        if (!rawPath || rawPath === '#' || rawPath.startsWith('javascript:')) {
+            return false
+        }
+
+        // Handle external protocols
+        if (rawPath.startsWith('mailto:') || rawPath.startsWith('tel:')) {
+            toast.info(`Link protokol (${rawPath}) dinonaktifkan di Site Editor.`)
+            return false
+        }
+
+        let pathname = rawPath
+        if (rawPath.startsWith('http://') || rawPath.startsWith('https://')) {
+            try {
+                const parsed = new URL(rawPath, window.location.origin)
+                if (parsed.origin !== window.location.origin) {
+                    toast.info('Navigasi eksternal dinonaktifkan di Site Editor.')
+                    return false
+                }
+                pathname = parsed.pathname
+            } catch {
+                return false
+            }
+        }
+
+        // Strip query params and hash
+        pathname = (pathname.split('?')[0] ?? '').split('#')[0] ?? ''
+
+        // Prevent portal / admin routes from escaping
+        if (
+            pathname.startsWith('/manage') ||
+            pathname.startsWith('/admin') ||
+            pathname.startsWith('/auth') ||
+            pathname.startsWith('/member')
+        ) {
+            toast.info('Link portal login / manajemen dinonaktifkan di preview Site Editor.')
+            return false
+        }
+
+        let cleanSlug = pathname.replace(/^\/+/, '').replace(/\/+$/, '')
+        if (!cleanSlug) cleanSlug = 'home'
+
+        // Ensure pages are fetched
+        if (pages.value.length === 0) {
+            try {
+                await fetchPages()
+            } catch {
+                // proceed with whatever is available
+            }
+        }
+
+        // 1. Check CMS Pages
+        const existingPage = pages.value.find((p) => {
+            if (cleanSlug === 'home') {
+                return p.slug === 'home' || p.slug === '' || !p.slug
+            }
+            return p.slug === cleanSlug
+        })
+
+        if (existingPage?.id != null) {
+            await setCurrentPage(existingPage.id)
+            if ((blocks.value?.length ?? 0) > 0) {
+                return true
+            }
+            const meta = (existingPage as { meta?: Record<string, unknown> }).meta
+            const themePage = typeof meta?.theme_page === 'string' ? meta.theme_page : null
+            if (themePage) {
+                openThemePage({
+                    slug: existingPage.slug || cleanSlug,
+                    themePage,
+                    title: existingPage.title,
+                    preserveDocumentId: existingPage.id,
+                })
+            }
+            return true
+        }
+
+        // 2. Check Public Theme Templates catalog
+        if (router) {
+            const themeTemplates = getPublicThemePageCatalog(router)
+            const matchedTemplate = themeTemplates.find((t) => {
+                if (cleanSlug === 'home') {
+                    return t.slug === 'home' || t.slug === ''
+                }
+                return t.slug === cleanSlug
+            })
+
+            if (matchedTemplate) {
+                openThemePage({
+                    slug: matchedTemplate.slug,
+                    themePage: matchedTemplate.themePage,
+                    title: matchedTemplate.title,
+                })
+                return true
+            }
+
+            // 3. Fallback: Check if Vue Router matches a route with meta.themePage
+            try {
+                const resolved = router.resolve(pathname)
+                const metaThemePage = resolved?.meta?.themePage
+                if (typeof metaThemePage === 'string') {
+                    openThemePage({
+                        slug: cleanSlug,
+                        themePage: metaThemePage,
+                        title: cleanSlug.charAt(0).toUpperCase() + cleanSlug.slice(1),
+                    })
+                    return true
+                }
+            } catch {
+                // ignore resolve errors
+            }
+        }
+
+        toast.info(`Halaman "${cleanSlug}" belum tersedia di CMS.`)
+        return false
     }
 
     function themePageCmsTitle(title: string): string {
@@ -759,5 +884,6 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         restoreRevision,
         acquireLock,
         releaseLock,
+        navigateToPath,
     }
 }

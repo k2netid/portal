@@ -7,6 +7,8 @@
       `theme-${activeTheme}`,
       `device-${device}`
     ]"
+    @click.capture="handleCanvasClickCapture"
+    @submit.capture.prevent="handleCanvasSubmitCapture"
     @click.self="clearSelection"
     @contextmenu.stop.prevent="handleCanvasContextMenu"
   >
@@ -123,7 +125,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, watch, onMounted, ref } from 'vue'
+import { computed, inject, watch, onMounted, ref, provide, reactive } from 'vue'
+import { useRouter, routerKey, routeLocationKey } from 'vue-router'
 import Plus from 'lucide-vue-next/dist/esm/icons/plus.js'
 import Sparkles from 'lucide-vue-next/dist/esm/icons/sparkles.js'
 import { saasLandingPage, homePage, aboutPage, contactPage } from '@/modules/Layout/components/builder/templates/PageTemplates';
@@ -141,6 +144,110 @@ import type { ThemeData } from '@/modules/Layout/types/theme'
 const builder = inject<BuilderInstance>('builder')
 const openContextMenu = inject<(moduleId: string, event: MouseEvent, title?: string, type?: string, mode?: string) => void>('openContextMenu')
 const { t } = useI18n()
+
+// =========================================================================
+// SCOPED ROUTER & ROUTE SANDBOX
+// Prevents programmatic router.push / replace and <router-link> from leaking
+// to the root host router and destroying the visual builder session.
+// =========================================================================
+const hostRouter = useRouter()
+
+const canvasRouter = {
+  ...hostRouter,
+  push: async (to: any) => {
+    const path = typeof to === 'string' ? to : (to?.path || to?.name || '')
+    if (builder?.navigateToPath && path) {
+      await builder.navigateToPath(String(path))
+    }
+    return Promise.resolve()
+  },
+  replace: async (to: any) => {
+    const path = typeof to === 'string' ? to : (to?.path || to?.name || '')
+    if (builder?.navigateToPath && path) {
+      await builder.navigateToPath(String(path))
+    }
+    return Promise.resolve()
+  },
+  go: () => {},
+  back: () => {},
+  forward: () => {},
+}
+provide(routerKey, canvasRouter as any)
+
+const canvasRoute = reactive<any>({
+  path: '/',
+  fullPath: '/',
+  name: 'home',
+  params: {},
+  query: {},
+  hash: '',
+  meta: {},
+  matched: [],
+})
+provide(routeLocationKey, canvasRoute)
+
+watch(
+  [() => builder?.content?.value?.slug, () => builder?.activeThemePage?.value],
+  ([slug, themePage]) => {
+    let clean = ''
+    if (themePage) {
+      clean = themePage.replace(/^pages\//, '').toLowerCase()
+    } else if (slug) {
+      clean = slug.replace(/^\/+/, '').toLowerCase()
+    }
+    const path = (!clean || clean === 'home') ? '/' : `/${clean}`
+    canvasRoute.path = path
+    canvasRoute.fullPath = path
+    canvasRoute.name = clean || 'home'
+    canvasRoute.meta = { themePage: themePage || undefined }
+  },
+  { immediate: true }
+)
+
+// =========================================================================
+// GLOBAL CAPTURE-PHASE EVENT SHIELD
+// Intercepts all clicks on links/anchors inside the canvas BEFORE Vue Router's
+// global <router-link> listener or native browser navigation can fire.
+// =========================================================================
+const handleCanvasClickCapture = async (e: MouseEvent) => {
+  const target = e.target as HTMLElement | null
+  if (!target) return
+
+  // Find closest link, router-link, or anchor
+  const anchor = target.closest('a, [data-router-link], [role="link"]') as HTMLAnchorElement | HTMLElement | null
+  if (!anchor) return
+
+  // CRITICAL: Prevent default so browser navigation & Vue Router guardEvent never trigger
+  e.preventDefault()
+
+  // In Edit Mode (previewMode is false), if the click is inside a builder editable block (.module-wrapper),
+  // do NOT navigate: allow the click to propagate so module selection (selectModule) selects the block.
+  const isInsideModule = !!target.closest('.module-wrapper')
+  if (!previewMode.value && isInsideModule) {
+    return
+  }
+
+  // Otherwise (in Preview Mode or when clicking on Header/Footer chrome or live theme template):
+  const href = anchor.getAttribute('href')
+    || anchor.getAttribute('to')
+    || (anchor as any).to
+    || ''
+
+  if (!href || href === '#' || href.startsWith('javascript:')) {
+    return
+  }
+
+  e.stopPropagation()
+
+  if (builder?.navigateToPath) {
+    await builder.navigateToPath(href)
+  }
+}
+
+const handleCanvasSubmitCapture = (e: Event) => {
+  e.preventDefault()
+  e.stopPropagation()
+}
 
 // Computed
 const blocks = computed<BlockInstance[]>({
