@@ -90,7 +90,7 @@ class MenuItemPersistTest extends TestCase
         $this->seedPermissionsAndRoles();
 
         $menu = Menu::query()->create([
-            'name' => 'K2NET Footer Produk IT',
+            'name' => 'Footer Produk IT',
             'slug' => 'footer-produk-'.uniqid(),
             'location' => null,
             'is_active' => true,
@@ -98,7 +98,7 @@ class MenuItemPersistTest extends TestCase
 
         $item = $menu->items()->create([
             'title' => 'Tokopedia',
-            'url' => 'https://www.tokopedia.com/k2net-lama',
+            'url' => 'https://www.tokopedia.com/old-store',
             'type' => 'custom',
             'sort_order' => 1,
         ]);
@@ -110,8 +110,8 @@ class MenuItemPersistTest extends TestCase
                     [
                         'id' => $item->id,
                         'client_id' => $item->id,
-                        'title' => 'Tokopedia K2NET',
-                        'url' => 'https://www.tokopedia.com/k2net-bandung',
+                        'title' => 'Tokopedia Portal',
+                        'url' => 'https://www.tokopedia.com/portal-store',
                         'type' => 'custom',
                         'parent_id' => null,
                         'sort_order' => 1,
@@ -124,12 +124,12 @@ class MenuItemPersistTest extends TestCase
                 ],
             ])
             ->assertOk()
-            ->assertJsonPath('data.0.title', 'Tokopedia K2NET')
-            ->assertJsonPath('data.0.url', 'https://www.tokopedia.com/k2net-bandung');
+            ->assertJsonPath('data.0.title', 'Tokopedia Portal')
+            ->assertJsonPath('data.0.url', 'https://www.tokopedia.com/portal-store');
 
         $item->refresh();
-        $this->assertSame('Tokopedia K2NET', $item->title);
-        $this->assertSame('https://www.tokopedia.com/k2net-bandung', $item->url);
+        $this->assertSame('Tokopedia Portal', $item->title);
+        $this->assertSame('https://www.tokopedia.com/portal-store', $item->url);
         $this->assertTrue($item->open_in_new_tab);
     }
 }

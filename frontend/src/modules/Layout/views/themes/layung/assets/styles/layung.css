@@ -7,13 +7,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* K2NET brand: cyan wordmark #00AEEF on charcoal/black */
+  /* Layung brand palette: cyan wordmark #00AEEF on charcoal/black */
   --layung-obsidian: #070a0f;
   --layung-obsidian-surface: #0b111a;
   --layung-obsidian-card: #0f1724;
-  --k2net-cyan: #00aeef;
-  --k2net-cyan-deep: #0094cc;
-  --k2net-ink: #1a1a1a;
+  --layung-brand-cyan: #00aeef;
+  --layung-brand-cyan-deep: #0094cc;
+  --layung-brand-ink: #1a1a1a;
   --layung-orange: #00aeef;
   --layung-orange-glow: #0094cc;
   --layung-crimson: #ef4444;

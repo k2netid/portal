@@ -13,6 +13,7 @@
 ### Fixed
 - Extension discovery: slug `core` is platform kernel (`is_core`, always `active`); heals stale Inactive App Store rows.
 - Deactivate/uninstall refuse kernel slugs even when `is_core` DB flag is wrong.
+- Decoupled `appName` fallback in `SecurityNotificationService` from vendor name to generic kernel default.
 - Dropped stale CMS `is_core` whitelist (`analytics`, `media`, `publishing`, …).
 
 ### Changed
