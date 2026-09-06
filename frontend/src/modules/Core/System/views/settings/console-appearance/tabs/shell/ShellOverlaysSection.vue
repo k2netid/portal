@@ -30,17 +30,17 @@
     <div class="space-y-2 max-w-md">
       <div class="flex items-center justify-between text-xs">
         <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.popperOpacityLabel') }}</span>
-        <span class="tabular-nums text-foreground">{{ form.console_popper_opacity }}%</span>
+        <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ form.console_popper_opacity }}%</span>
       </div>
-      <input v-model.number="form.console_popper_opacity" type="range" min="30" max="100" class="console-range-input h-2 w-full accent-primary">
+      <input v-model.number="form.console_popper_opacity" type="range" min="30" max="100" class="console-range-input w-full">
     </div>
 
     <div class="space-y-2 max-w-md">
       <div class="flex items-center justify-between text-xs">
         <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.advancedComponents.overlays.modalBackdropLabel') }}</span>
-        <span class="tabular-nums text-foreground">{{ form.console_modal_backdrop_opacity }}%</span>
+        <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ form.console_modal_backdrop_opacity }}%</span>
       </div>
-      <input v-model.number="form.console_modal_backdrop_opacity" type="range" min="0" max="90" class="console-range-input h-2 w-full accent-primary">
+      <input v-model.number="form.console_modal_backdrop_opacity" type="range" min="0" max="90" class="console-range-input w-full">
     </div>
   </section>
 </template>

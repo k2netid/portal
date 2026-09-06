@@ -2393,34 +2393,34 @@
       "glassGradientSelectPlaceholder": "Pilih gradasi glass…",
       "themeMode": {
         "title": "Mode penerapan tema",
-        "description": "Pilih naha konsol mengikuti preset global atawa penyesuaian per komponen (lanjutan). Ukur satu mode anu berlaku dina satu waktu.",
-        "globalActiveHint": "Mode global aktif: preset warna, permukaan, sareng gradasi glass berlaku. Petélan shell lanjutan diabaikan dugi ka salira mengganti mode.",
-        "advancedActiveHint": "Mode lanjutan aktif: sidebar, navbar, popper, tipografi, sareng kedalaman berlaku. Preset warna sareng permukaan glass diabaikan dugi ka salira mengganti mode.",
+        "description": "Pilih naha konsol nganggo preset praktis atanapi pangaturan lanjutan per komponen. Ukur satu mode anu berlaku dina satu waktu.",
+        "globalActiveHint": "Mode Praktis aktif: preset warna, permukaan, sareng gradasi glass berlaku. Petélan shell lanjutan diabaikan dugi ka salira ngaganti mode.",
+        "advancedActiveHint": "Mode Lanjutan aktif: sidebar, navbar, popper, tipografi, sareng kedalaman berlaku. Preset warna sareng permukaan glass diabaikan dugi ka salira ngaganti mode.",
         "global": {
-          "label": "Global",
-          "hint": "Palet preset, permukaan, glass, sareng token bentuk pikeun seluruh konsol."
+          "label": "Mode Praktis",
+          "hint": "Preset siap anggo pikeun tampilan konsol anu gancang, harmonis, tur saluyu."
         },
         "advanced": {
-          "label": "Lanjutan",
-          "hint": "Sesuaikan sidebar, navbar, dropdown, kartu, border, font, sareng warna aksen."
+          "label": "Mode Lanjutan",
+          "hint": "Pangaturan jero pikeun unggal komponén, sidebar, navbar, kartu, sareng tipografi."
         }
       },
       "scopeOverlay": {
-        "colorsDisabledTitle": "Perlu mode global",
-        "colorsDisabledDescription": "Preset warna sareng gaya permukaan ukur tersedia di mode Global. Beralih ka Global pikeun mengedit.",
-        "shellDisabledTitle": "Perlu mode lanjutan",
-        "shellDisabledDescription": "Gaya shell sareng komponen ukur tersedia di mode Lanjutan. Beralih ka Lanjutan pikeun nyaluyukeun sidebar, navbar, sareng kedalaman.",
+        "colorsDisabledTitle": "Perlu Mode Praktis",
+        "colorsDisabledDescription": "Preset warna sareng gaya permukaan ukur sayogi di Mode Praktis. Beralih ka Mode Praktis pikeun ngarobih.",
+        "shellDisabledTitle": "Perlu Mode Lanjutan",
+        "shellDisabledDescription": "Gaya shell sareng komponén ukur sayogi di Mode Lanjutan. Beralih ka Mode Lanjutan pikeun nyaluyukeun sidebar, navbar, sareng kedalaman.",
         "goToColors": "Buka Warna & Preset",
         "goToShell": "Buka Desain UI Shell"
       },
       "advancedAccent": {
-        "title": "Aksen & bentuk komponen",
-        "description": "Warna brand sareng radius tombol pikeun tombol, tumbu, sareng focus ring di mode Lanjutan."
+        "title": "Aksen & bentuk komponén",
+        "description": "Warna brand sareng radius tombol pikeun tombol, tumbu, sareng focus ring di Mode Lanjutan."
       },
       "themeModeGroups": {
-        "globalTitle": "Global (token desain)",
-        "globalItems": "Preset warna, hex brand (kustom), permukaan glass/datar, gradasi glass, radius sudut, impor/ekspor tema",
-        "advancedTitle": "Lanjutan (chrome komponen)",
+        "globalTitle": "Mode Praktis (preset pilihan)",
+        "globalItems": "Preset warna, hex brand (kustom), permukaan glass/datar, gradasi glass, radius sudut, impor/ékspor tema",
+        "advancedTitle": "Mode Lanjutan (chrome komponén)",
         "advancedItems": "Sidebar, navbar, overlay dropdown/popper, font utama & mono, bayangan kartu, ketebalan border, warna aksen"
       },
       "advancedComponents": {
