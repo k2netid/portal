@@ -1357,6 +1357,8 @@ const openSettingsModal = (ext: ExtensionItem) => {
         newsletter: consolePath('/newsletter'),
         member: { name: 'members.index' },
         search: { name: 'settings', query: { tab: 'system' } },
+        site: { name: 'settings', query: { tab: 'identity' } },
+        layout: { name: 'themes' },
     };
 
     let target: { name: string; query?: Record<string, string> } | string | undefined;

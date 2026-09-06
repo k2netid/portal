@@ -56,7 +56,7 @@
           :model-value="(formData[setting.key] as any)"
           :field-key="setting.key"
           :label="$t('system.settings.labels.' + setting.key)"
-          :description="$t('system.settings.descriptions.' + setting.key)"
+          :description="getFieldDescription(setting.key)"
           :type="setting.type"
           :col-span="setting.key === 'brand_sync_site_identity' ? 'full' : 1"
           :enabled-text="$t('system.settings.enabled')"
@@ -219,19 +219,34 @@ const isMaintenanceSettingVisible = (key: string) => {
     return true;
 }
 
+const isSiteActive = computed(() => systemStore.activeExtensions?.includes('site') ?? false)
+
 const isFieldProtected = (key: string) => {
+    // brand_sync_site_identity requires both White Label AND an active Site module
+    if (key === 'brand_sync_site_identity') {
+        return !systemStore.appIdentity.has_white_label || !isSiteActive.value
+    }
+
     // Branding fields are protected if no White Label license
-    const brandingKeys = ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'brand_sync_site_identity', 'branding_display'];
+    const brandingKeys = ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display']
     if (brandingKeys.includes(key)) {
-        return !systemStore.appIdentity.has_white_label;
+        return !systemStore.appIdentity.has_white_label
     }
     
     // License Type is readonly
     if (key === 'app_license_tier' || key === 'license_type') {
-        return true;
+        return true
     }
     
-    return false;
+    return false
+}
+
+const getFieldDescription = (key: string) => {
+    const base = t('system.settings.descriptions.' + key)
+    if (key === 'brand_sync_site_identity' && !isSiteActive.value) {
+        return `${base} (${t('system.settings.brand_sync_requires_site_module')})`
+    }
+    return base
 }
 
 // General settings grouped by category

@@ -403,6 +403,10 @@ class SettingController extends BaseApiController
             return;
         }
 
+        if (! \Modules\Core\System\Models\Extension::isProductActive('layout')) {
+            return;
+        }
+
         try {
             if (! class_exists(\Modules\Layout\Models\Theme::class)) {
                 return;
