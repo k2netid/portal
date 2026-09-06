@@ -2292,6 +2292,7 @@
       "faviconDescription": "Browser tab icon (supports .ico, .png).",
       "whiteLabelRequired": "White Label License Required",
       "whiteLabelDescription": "Uploading custom logos is a premium feature. Please upgrade your license to unlock it.",
+      "manageLicense": "Manage License",
       "glassGradients": {
         "none": {
           "label": "None",
@@ -2328,6 +2329,8 @@
       },
       "themePortabilityTitle": "Theme backup & restore",
       "themePortabilityDescription": "Copy the JSON below to back up or move your theme to another server.",
+      "themeExportLockedTitle": "Theme Portability Requires Pro License",
+      "themeExportLockedDescription": "Theme configuration export and import is available for Pro and Enterprise licenses.",
       "themeImportPlaceholder": "Paste theme JSON here…",
       "themeImportApply": "Apply",
       "themeCopied": "Theme configuration copied to clipboard.",

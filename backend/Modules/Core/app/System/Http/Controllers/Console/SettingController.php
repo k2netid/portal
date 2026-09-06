@@ -178,6 +178,14 @@ class SettingController extends BaseApiController
                 Setting::set($sKey, $sValue, $sType, $sGroup);
                 $this->syncSiteIdentityToActiveTheme($sKey, $sValue);
 
+                // Auto-sync console app_logo_light to general app_logo if general app_logo is empty
+                if ($sKey === 'app_logo_light' && $hasWhiteLabel && ! empty($sValue)) {
+                    $currentAppLogo = Setting::get('app_logo');
+                    if (empty($currentAppLogo)) {
+                        Setting::set('app_logo', $sValue, 'image', 'brand');
+                    }
+                }
+
                 // Sync with Redis Settings if cache driver or enable_cache is changed
                 if ($sKey === 'cache_driver' || $sKey === 'enable_cache') {
                     try {

@@ -40,6 +40,7 @@ export interface ConsoleAppearanceContext {
     activeTab: Ref<ConsoleAppearanceTabId>;
     form: Record<string, string | number>;
     hasWhiteLabel: ComputedRef<boolean>;
+    canExportTheme: ComputedRef<boolean>;
     colorPreset: WritableComputedRef<ConsoleColorPresetId>;
     surfaceStyle: WritableComputedRef<ConsoleSurfaceStyle>;
     brandColor: WritableComputedRef<string>;
@@ -161,6 +162,10 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
     const isAdvancedMode = computed(() => !isGlobalMode.value);
 
     const hasWhiteLabel = computed(() => systemStore.appIdentity?.has_white_label ?? false);
+    const canExportTheme = computed(() => {
+        const tier = (systemStore.appIdentity?.app_license_tier || 'community').toLowerCase();
+        return ['pro', 'enterprise', 'white_label', 'pro_plus'].includes(tier);
+    });
 
     const getContrastAnalysis = (colorHex: string, bgHex: string) => {
         try {
@@ -265,11 +270,19 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
     }
 
     function copyThemeConfig() {
+        if (!canExportTheme.value) {
+            toast.error.default(t('system.settings.consoleAppearance.themeExportLockedTitle'));
+            return;
+        }
         navigator.clipboard.writeText(exportedThemeJson.value);
         toast.success.default(t('system.settings.consoleAppearance.themeCopied'));
     }
 
     function importThemeConfig() {
+        if (!canExportTheme.value) {
+            toast.error.default(t('system.settings.consoleAppearance.themeExportLockedTitle'));
+            return;
+        }
         try {
             const parsed = JSON.parse(importTarget.value) as Record<string, unknown>;
             if (parsed.mode) form.console_theme_mode = String(parsed.mode);
@@ -339,44 +352,51 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
     const save = async () => {
         saving.value = true;
         try {
-            const payload = [
-                { key: 'console_theme_mode', value: form.console_theme_mode, group: 'console_branding', type: 'string' },
-                { key: 'console_color_preset', value: form.console_color_preset, group: 'console_branding', type: 'string' },
-                { key: 'console_brand_primary', value: form.console_brand_primary, group: 'console_branding', type: 'string' },
-                { key: 'console_brand_primary_dark', value: form.console_brand_primary_dark, group: 'console_branding', type: 'string' },
-                { key: 'console_button_radius', value: String(form.console_button_radius), group: 'console_branding', type: 'integer' },
-                { key: 'console_surface_style', value: form.console_surface_style, group: 'console_branding', type: 'string' },
-                { key: 'console_sidebar_style', value: form.console_sidebar_style, group: 'console_branding', type: 'string' },
-                { key: 'console_sidebar_accent', value: form.console_sidebar_accent, group: 'console_branding', type: 'string' },
-                { key: 'console_navbar_style', value: form.console_navbar_style, group: 'console_branding', type: 'string' },
-                { key: 'console_popper_opacity', value: String(form.console_popper_opacity), group: 'console_branding', type: 'integer' },
-                { key: 'console_glass_gradient_preset', value: form.console_glass_gradient_preset, group: 'console_branding', type: 'string' },
-                { key: 'console_glass_gradient_color', value: form.console_glass_gradient_color, group: 'console_branding', type: 'string' },
-                { key: 'console_glass_gradient_intensity', value: String(form.console_glass_gradient_intensity), group: 'console_branding', type: 'integer' },
-                { key: 'console_glass_gradient_angle', value: String(form.console_glass_gradient_angle), group: 'console_branding', type: 'integer' },
-                { key: 'app_logo_light', value: form.app_logo_light, group: 'brand', type: 'image' },
-                { key: 'app_logo_dark', value: form.app_logo_dark, group: 'brand', type: 'image' },
-                { key: 'app_logo_compact', value: form.app_logo_compact, group: 'brand', type: 'image' },
-                { key: 'app_favicon', value: form.app_favicon, group: 'brand', type: 'image' },
-                { key: 'console_font_primary', value: String(form.console_font_primary), group: 'console_branding', type: 'string' },
-                { key: 'console_font_mono', value: String(form.console_font_mono), group: 'console_branding', type: 'string' },
-                { key: 'console_shadow_elevation', value: String(form.console_shadow_elevation), group: 'console_branding', type: 'string' },
-                { key: 'console_border_style', value: String(form.console_border_style), group: 'console_branding', type: 'string' },
-                { key: 'console_button_style', value: String(form.console_button_style), group: 'console_branding', type: 'string' },
-                { key: 'console_card_style', value: String(form.console_card_style), group: 'console_branding', type: 'string' },
-                { key: 'console_modal_backdrop_opacity', value: String(form.console_modal_backdrop_opacity), group: 'console_branding', type: 'integer' },
-                { key: 'console_dropdown_style', value: String(form.console_dropdown_style), group: 'console_branding', type: 'string' },
-                { key: 'console_icon_weight', value: String(form.console_icon_weight), group: 'console_branding', type: 'string' },
+            const payload: Array<{ key: string; value: string | number | boolean | null; group: string; type: string }> = [
+                { key: 'console_theme_mode', value: String(form.console_theme_mode ?? 'global'), group: 'console_branding', type: 'string' },
+                { key: 'console_color_preset', value: String(form.console_color_preset ?? 'blue'), group: 'console_branding', type: 'string' },
+                { key: 'console_brand_primary', value: String(form.console_brand_primary ?? '#4f46e5'), group: 'console_branding', type: 'string' },
+                { key: 'console_brand_primary_dark', value: String(form.console_brand_primary_dark ?? '#6366f1'), group: 'console_branding', type: 'string' },
+                { key: 'console_button_radius', value: Number(form.console_button_radius ?? 8), group: 'console_branding', type: 'integer' },
+                { key: 'console_surface_style', value: String(form.console_surface_style ?? 'glass'), group: 'console_branding', type: 'string' },
+                { key: 'console_sidebar_style', value: String(form.console_sidebar_style ?? 'translucent'), group: 'console_branding', type: 'string' },
+                { key: 'console_sidebar_accent', value: String(form.console_sidebar_accent ?? 'bold'), group: 'console_branding', type: 'string' },
+                { key: 'console_navbar_style', value: String(form.console_navbar_style ?? 'translucent'), group: 'console_branding', type: 'string' },
+                { key: 'console_popper_opacity', value: Number(form.console_popper_opacity ?? 85), group: 'console_branding', type: 'integer' },
+                { key: 'console_glass_gradient_preset', value: String(form.console_glass_gradient_preset ?? 'balanced'), group: 'console_branding', type: 'string' },
+                { key: 'console_glass_gradient_color', value: String(form.console_glass_gradient_color ?? '#6366f1'), group: 'console_branding', type: 'string' },
+                { key: 'console_glass_gradient_intensity', value: Number(form.console_glass_gradient_intensity ?? 35), group: 'console_branding', type: 'integer' },
+                { key: 'console_glass_gradient_angle', value: Number(form.console_glass_gradient_angle ?? 135), group: 'console_branding', type: 'integer' },
+                { key: 'console_font_primary', value: String(form.console_font_primary ?? ''), group: 'console_branding', type: 'string' },
+                { key: 'console_font_mono', value: String(form.console_font_mono ?? ''), group: 'console_branding', type: 'string' },
+                { key: 'console_shadow_elevation', value: String(form.console_shadow_elevation ?? 'medium'), group: 'console_branding', type: 'string' },
+                { key: 'console_border_style', value: String(form.console_border_style ?? 'subtle'), group: 'console_branding', type: 'string' },
+                { key: 'console_button_style', value: String(form.console_button_style ?? 'solid'), group: 'console_branding', type: 'string' },
+                { key: 'console_card_style', value: String(form.console_card_style ?? 'translucent'), group: 'console_branding', type: 'string' },
+                { key: 'console_modal_backdrop_opacity', value: Number(form.console_modal_backdrop_opacity ?? 80), group: 'console_branding', type: 'integer' },
+                { key: 'console_dropdown_style', value: String(form.console_dropdown_style ?? 'frosted'), group: 'console_branding', type: 'string' },
+                { key: 'console_icon_weight', value: String(form.console_icon_weight ?? 'regular'), group: 'console_branding', type: 'string' },
             ];
+
+            // White Label protected branding keys
+            if (hasWhiteLabel.value) {
+                payload.push(
+                    { key: 'app_logo_light', value: form.app_logo_light ? String(form.app_logo_light) : null, group: 'brand', type: 'image' },
+                    { key: 'app_logo_dark', value: form.app_logo_dark ? String(form.app_logo_dark) : null, group: 'brand', type: 'image' },
+                    { key: 'app_logo_compact', value: form.app_logo_compact ? String(form.app_logo_compact) : null, group: 'brand', type: 'image' },
+                    { key: 'app_favicon', value: form.app_favicon ? String(form.app_favicon) : null, group: 'brand', type: 'image' },
+                );
+            }
+
             await api.post('/manage/system/settings/bulk-update', { settings: payload });
             await systemStore.fetchPublicSettings({ force: true });
             await systemStore.fetchAppIdentity();
             await reloadConsoleTheme(true);
             syncDraft();
-            toast.success.action(t('system.settings.consoleAppearance.saved'));
+            toast.success.default(t('system.settings.consoleAppearance.savedSuccess', 'Pengaturan tema konsol berhasil disimpan'));
         } catch (e) {
             logger.error('[ConsoleAppearance] save failed', e);
-            toast.error.default(t('system.settings.consoleAppearance.saveError'));
+            toast.error.default(t('system.settings.consoleAppearance.saveFailed', 'Gagal menyimpan tema'));
         } finally {
             saving.value = false;
         }
@@ -390,6 +410,7 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
         activeTab,
         form,
         hasWhiteLabel,
+        canExportTheme,
         colorPreset,
         surfaceStyle,
         brandColor,

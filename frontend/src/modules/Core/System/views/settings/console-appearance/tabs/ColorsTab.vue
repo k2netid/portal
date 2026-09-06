@@ -208,23 +208,50 @@
             </div>
           </section>
 
-    <section class="space-y-4 p-6 border-t border-border/40 bg-muted/5">
+    <section class="space-y-4 p-6 border-t border-border/40 bg-muted/5 relative">
+      <div
+        v-if="!canExportTheme"
+        class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/85 p-6 text-center backdrop-blur-xs rounded-b-xl"
+      >
+        <div class="mb-2 rounded-full border border-amber-500/20 bg-amber-500/10 p-2 text-amber-500 shadow-sm">
+          <Lock class="h-4 w-4" />
+        </div>
+        <h4 class="text-xs font-semibold text-foreground">
+          {{ t('system.settings.consoleAppearance.themeExportLockedTitle') }}
+        </h4>
+        <p class="mt-1 max-w-xs text-[11px] text-muted-foreground">
+          {{ t('system.settings.consoleAppearance.themeExportLockedDescription') }}
+        </p>
+      </div>
+
       <div>
-        <h3 class="text-xs font-semibold text-foreground uppercase tracking-wider">
-          {{ t('system.settings.consoleAppearance.themePortabilityTitle') }}
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-xs font-semibold text-foreground uppercase tracking-wider">
+            {{ t('system.settings.consoleAppearance.themePortabilityTitle') }}
+          </h3>
+          <span
+            v-if="!canExportTheme"
+            class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+          >
+            <Lock class="w-2.5 h-2.5" />
+            Pro
+          </span>
+        </div>
         <p class="mt-0.5 text-xs text-foreground/80">
           {{ t('system.settings.consoleAppearance.themePortabilityDescription') }}
         </p>
       </div>
-      <div class="space-y-3 max-w-xl">
+      <div
+        class="space-y-3 max-w-xl"
+        :class="{ 'opacity-50 pointer-events-none': !canExportTheme }"
+      >
         <div class="flex gap-2">
-          <Input readonly :value="exportedThemeJson" :aria-label="t('system.settings.consoleAppearance.themeExportJsonLabel')" class="h-9 flex-1 font-mono-selectable bg-muted/30 font-mono text-[11px]" />
-          <Button type="button" variant="outline" size="sm" class="h-9 px-3" @click="copyThemeConfig">{{ t('common.actions.copy') }}</Button>
+          <Input readonly :value="exportedThemeJson" :disabled="!canExportTheme" :aria-label="t('system.settings.consoleAppearance.themeExportJsonLabel')" class="h-9 flex-1 font-mono-selectable bg-muted/30 font-mono text-[11px]" />
+          <Button type="button" variant="outline" size="sm" :disabled="!canExportTheme" class="h-9 px-3" @click="copyThemeConfig">{{ t('common.actions.copy') }}</Button>
         </div>
         <div class="flex items-center gap-2">
-          <Input v-model="importTarget" :placeholder="t('system.settings.consoleAppearance.themeImportPlaceholder')" class="h-9 flex-1 font-mono text-[11px]" />
-          <Button type="button" size="sm" variant="secondary" class="h-9 px-3" @click="importThemeConfig">{{ t('system.settings.consoleAppearance.themeImportApply') }}</Button>
+          <Input v-model="importTarget" :disabled="!canExportTheme" :placeholder="t('system.settings.consoleAppearance.themeImportPlaceholder')" class="h-9 flex-1 font-mono text-[11px]" />
+          <Button type="button" size="sm" variant="secondary" :disabled="!canExportTheme" class="h-9 px-3" @click="importThemeConfig">{{ t('system.settings.consoleAppearance.themeImportApply') }}</Button>
         </div>
       </div>
     </section>
@@ -232,6 +259,7 @@
 </template>
 
 <script setup lang="ts">
+import { Lock } from 'lucide-vue-next';
 import ConsoleThemePresetPicker from '@/modules/Core/System/components/console/ConsoleThemePresetPicker.vue';
 import ConsoleGlassGradientPicker from '@/modules/Core/System/components/console/ConsoleGlassGradientPicker.vue';
 import ColorPicker from '@/shared/components/ui/ColorPicker.vue';
@@ -242,5 +270,5 @@ import { useI18n } from 'vue-i18n';
 import { useConsoleAppearanceContext } from '../composables/useConsoleAppearancePage';
 import { CONSOLE_SURFACE_FLAT } from '@/modules/Core/System/constants/consoleThemePresets';
 const { t } = useI18n();
-const { form, colorPreset, surfaceStyle, brandColor, brandColorDark, glassGradientPreset, glassGradientColor, primaryHsl, lightModeContrast, darkModeContrast, exportedThemeJson, importTarget, clampGlassIntensity, clampGlassAngle, copyThemeConfig, importThemeConfig, CONSOLE_SURFACE_GLASS } = useConsoleAppearanceContext();
+const { form, colorPreset, surfaceStyle, brandColor, brandColorDark, glassGradientPreset, glassGradientColor, primaryHsl, lightModeContrast, darkModeContrast, exportedThemeJson, importTarget, canExportTheme, clampGlassIntensity, clampGlassAngle, copyThemeConfig, importThemeConfig, CONSOLE_SURFACE_GLASS } = useConsoleAppearanceContext();
 </script>

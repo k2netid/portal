@@ -13,6 +13,16 @@
       <p class="mt-1 max-w-sm text-xs text-muted-foreground">
         {{ t('system.settings.consoleAppearance.whiteLabelDescription') }}
       </p>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        class="mt-4 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 gap-1.5 cursor-pointer"
+        @click="goToLicenseSettings"
+      >
+        <KeyRound class="h-3.5 w-3.5" />
+        <span>{{ t('system.settings.consoleAppearance.manageLicense') }}</span>
+      </Button>
     </div>
 
     <div
@@ -207,12 +217,14 @@
 </template>
 
 <script setup lang="ts">
-import { Lock, UploadCloud, Trash2, Image } from 'lucide-vue-next';
+import { useRouter } from 'vue-router';
+import { Lock, UploadCloud, Trash2, Image, KeyRound } from 'lucide-vue-next';
 import Button from '@/shared/components/ui/Button.vue';
 import { useI18n } from 'vue-i18n';
 import { useConsoleAppearanceContext } from '../composables/useConsoleAppearancePage';
 
 const { t } = useI18n();
+const router = useRouter();
 const {
     form,
     hasWhiteLabel,
@@ -221,4 +233,8 @@ const {
     showLogoCompactPicker,
     showFaviconPicker,
 } = useConsoleAppearanceContext();
+
+function goToLicenseSettings() {
+    router.push({ name: 'settings', query: { tab: 'license' } });
+}
 </script>
