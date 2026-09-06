@@ -92,6 +92,9 @@ final class LicenseServiceTest extends TestCase
         $this->assertTrue($this->licenseService->isProtectedKey('app_logo_light'));
         $this->assertTrue($this->licenseService->isProtectedKey('app_logo_dark'));
         $this->assertTrue($this->licenseService->isProtectedKey('app_logo_compact'));
+        $this->assertTrue($this->licenseService->isProtectedKey('brand_logo'));
+        $this->assertTrue($this->licenseService->isProtectedKey('brand_favicon'));
+        $this->assertTrue($this->licenseService->isProtectedKey('brand_sync_site_identity'));
         $this->assertTrue($this->licenseService->isProtectedKey('app_favicon'));
         $this->assertFalse($this->licenseService->isProtectedKey('site_title'));
     }

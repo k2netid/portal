@@ -239,6 +239,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'app_favicon', 'value' => '/favicon.ico', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'brand_logo', 'value' => '/logo.png', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'brand_favicon', 'value' => '/favicon.ico', 'group' => 'brand', 'type' => 'image'],
+            ['key' => 'brand_sync_site_identity', 'value' => '0', 'group' => 'brand', 'type' => 'boolean'],
             ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
 
             // Contact & Social

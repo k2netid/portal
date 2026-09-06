@@ -19,6 +19,33 @@
         </span>
       </template>
 
+      <!-- Platform Engine Default Info Box -->
+      <div
+        v-if="group.id === 'brand'"
+        class="mb-4 rounded-xl border border-border/60 bg-muted/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+      >
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-background shadow-2xs overflow-hidden p-1.5">
+            <img
+              src="/logo.png"
+              alt="Jejakawan Core"
+              class="h-full w-full object-contain"
+            >
+          </div>
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-foreground">{{ $t('system.settings.engine_default_title') }}</span>
+              <span class="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold text-primary border border-primary/20">
+                JEJAKAWAN
+              </span>
+            </div>
+            <p class="text-xs text-muted-foreground">
+              {{ $t('system.settings.engine_default_description') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <template
         v-for="setting in group.settings"
         :key="setting.id"
@@ -193,7 +220,7 @@ const isMaintenanceSettingVisible = (key: string) => {
 
 const isFieldProtected = (key: string) => {
     // Branding fields are protected if no White Label license
-    const brandingKeys = ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'];
+    const brandingKeys = ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'brand_sync_site_identity', 'branding_display'];
     if (brandingKeys.includes(key)) {
         return !systemStore.appIdentity.has_white_label;
     }
@@ -217,7 +244,7 @@ const generalSettingsGrouped = computed(() => {
             description: t('system.settings.groups.brand.description'),
             icon: Sparkles,
             color: 'indigo',
-            keys: ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
+            keys: ['app_name', 'brand_logo', 'brand_favicon', 'brand_sync_site_identity', 'branding_display'],
             settings: [],
             defaultExpanded: true,
         },
@@ -248,7 +275,7 @@ const generalSettingsGrouped = computed(() => {
         
         // Ensure settings are in logical order
         const orders: Record<string, string[]> = {
-            'brand': ['app_name', 'app_logo', 'brand_logo', 'app_favicon', 'brand_favicon', 'branding_display'],
+            'brand': ['app_name', 'brand_logo', 'brand_favicon', 'brand_sync_site_identity', 'branding_display'],
             'maintenance': ['maintenance_mode', 'maintenance_title', 'maintenance_message', 'maintenance_countdown_enabled', 'maintenance_end_time'],
             'localization': ['timezone', 'date_format', 'time_format', 'items_per_page']
         };
