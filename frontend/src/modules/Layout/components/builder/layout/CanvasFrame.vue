@@ -1,33 +1,144 @@
 <template>
-  <div class="canvas-frame" :class="[`canvas-frame--${device}`]">
-    <div 
-      class="canvas-frame__viewport"
-      :style="viewportStyle"
+  <div 
+    class="canvas-frame flex-1 min-h-0 w-full h-full overflow-auto flex justify-center custom-scrollbar select-none"
+    :class="[
+      `canvas-frame--${device}`,
+      device === 'desktop' && zoom === 100 && !width ? 'items-stretch p-0' : 'items-start p-4 md:p-8',
+    ]"
+  >
+    <div
+      class="canvas-frame__stage-wrapper flex flex-col items-center justify-start shrink-0 transition-all duration-150"
+      :style="stageWrapperStyle"
     >
-      <!-- Tablet Camera Dot -->
-      <div v-if="device === 'tablet'" class="device-tablet-camera"></div>
+      <!-- DESKTOP BROWSER FRAME -->
+      <div
+        v-if="device === 'desktop'"
+        class="canvas-frame__viewport canvas-frame__viewport--desktop relative bg-background overflow-hidden flex flex-col min-h-0 origin-top transition-transform duration-150"
+        :class="[
+          zoom === 100 && !width
+            ? 'w-full h-full rounded-none border-0 shadow-none'
+            : 'rounded-2xl border border-border/80 bg-card shadow-2xl ring-1 ring-black/5 dark:ring-white/10 shrink-0',
+        ]"
+        :style="previewStyles"
+      >
+        <!-- macOS Studio Window Header (shown when scaled or custom width) -->
+        <div
+          v-if="zoom !== 100 || !!width"
+          class="h-9 px-4 flex items-center justify-between border-b border-border/60 bg-muted/60 backdrop-blur-md shrink-0 select-none"
+        >
+          <!-- Traffic Lights -->
+          <div class="flex items-center gap-1.5 w-16">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] border border-black/10 shadow-xs" />
+            <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] border border-black/10 shadow-xs" />
+            <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] border border-black/10 shadow-xs" />
+          </div>
 
-      <!-- Mobile Dynamic Island -->
-      <div v-if="device === 'mobile'" class="device-mobile-island">
-        <div class="device-mobile-island__camera"></div>
+          <!-- Address Pill -->
+          <div class="px-3 py-0.5 rounded-lg bg-background/80 border border-border/60 text-[11px] font-mono text-muted-foreground flex items-center gap-1.5 shadow-2xs max-w-sm w-64 justify-center">
+            <Lock class="w-3 h-3 text-emerald-500 shrink-0" />
+            <span class="truncate">{{ previewUrl }}</span>
+          </div>
+
+          <!-- Resolution tag -->
+          <div class="w-16 flex justify-end">
+            <span class="text-[10px] font-mono font-semibold text-muted-foreground/60">{{ width ? `${width}px` : '1280px' }}</span>
+          </div>
+        </div>
+
+        <!-- Grid Overlay -->
+        <div v-if="showGridOverlay" class="canvas-grid-overlay" />
+
+        <!-- Inner Screen Container -->
+        <div 
+          class="canvas-frame__screen flex-1 min-h-0 w-full"
+          :class="zoom === 100 && !width ? 'h-full min-h-full' : 'overflow-y-auto overflow-x-hidden custom-scrollbar'"
+        >
+          <slot />
+        </div>
       </div>
 
-      <!-- Grid Overlay -->
-      <div v-if="showGridOverlay" class="canvas-grid-overlay"></div>
+      <!-- TABLET FRAME (iPad Pro Titanium Bezel) -->
+      <div
+        v-else-if="device === 'tablet'"
+        class="canvas-frame__viewport canvas-frame__viewport--tablet relative p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 rounded-[2.5rem] border border-slate-700/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/10 shrink-0 flex flex-col origin-top transition-transform duration-150"
+        :style="previewStyles"
+      >
+        <!-- Camera Dot -->
+        <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-slate-950 border border-slate-800 shadow-inner z-30 pointer-events-none" />
 
-      <!-- Inner Screen Container (Guarantees Content Clipping to Frame) -->
-      <div class="canvas-frame__screen">
-        <slot />
+        <!-- Inner Screen -->
+        <div class="rounded-[2rem] overflow-hidden bg-background flex flex-col flex-1 min-h-0 border border-slate-900/50 shadow-inner relative">
+          <!-- Status Bar -->
+          <div class="h-7 w-full shrink-0 z-20 flex items-center justify-between px-6 bg-slate-900/90 text-slate-300 text-[11px] font-medium border-b border-white/5 select-none">
+            <div>9:41</div>
+            <div class="flex items-center gap-2">
+              <Wifi class="w-3 h-3 text-slate-400" />
+              <BatteryFull class="w-3 h-3 text-slate-400" />
+            </div>
+          </div>
+
+          <!-- Grid Overlay -->
+          <div v-if="showGridOverlay" class="canvas-grid-overlay" />
+
+          <!-- Screen Content (Scrollable) -->
+          <div class="canvas-frame__screen flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden custom-scrollbar">
+            <slot />
+          </div>
+
+          <!-- Bottom Home Indicator -->
+          <div class="h-4 w-full shrink-0 z-20 flex items-center justify-center bg-slate-900/90 select-none">
+            <div class="w-32 h-1 rounded-full bg-white/25" />
+          </div>
+        </div>
       </div>
 
-      <!-- Mobile Home Indicator -->
-      <div v-if="device === 'mobile'" class="device-mobile-home-indicator"></div>
+      <!-- MOBILE FRAME (iPhone 16 Pro Dynamic Island) -->
+      <div
+        v-else-if="device === 'mobile'"
+        class="canvas-frame__viewport canvas-frame__viewport--mobile relative p-2.5 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 rounded-[3rem] border border-slate-700/60 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.6)] ring-1 ring-white/10 shrink-0 flex flex-col origin-top transition-transform duration-150"
+        :style="previewStyles"
+      >
+        <!-- Dynamic Island -->
+        <div class="absolute top-3.5 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full bg-black z-30 flex items-center justify-end px-2.5 shadow-md pointer-events-none border border-white/10">
+          <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800" />
+        </div>
+
+        <!-- Inner Screen -->
+        <div class="rounded-[2.4rem] overflow-hidden bg-background flex flex-col flex-1 min-h-0 border border-slate-900/50 shadow-inner relative">
+          <!-- Status Bar -->
+          <div class="h-8 pt-1.5 w-full shrink-0 z-20 flex items-center justify-between px-6 bg-slate-900/90 text-slate-300 text-[11px] font-medium border-b border-white/5 select-none">
+            <div>9:41</div>
+            <div class="flex items-center gap-1.5">
+              <Wifi class="w-3 h-3 text-slate-400" />
+              <BatteryFull class="w-3 h-3 text-slate-400" />
+            </div>
+          </div>
+
+          <!-- Grid Overlay -->
+          <div v-if="showGridOverlay" class="canvas-grid-overlay" />
+
+          <!-- Screen Content (Scrollable) -->
+          <div class="canvas-frame__screen flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden custom-scrollbar">
+            <slot />
+          </div>
+
+          <!-- Bottom Home Indicator -->
+          <div class="h-4 w-full shrink-0 z-20 flex items-center justify-center bg-slate-900/90 select-none">
+            <div class="w-28 h-1 rounded-full bg-white/25" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, inject } from 'vue'
+import {
+  BatteryFull,
+  Lock,
+  Wifi,
+} from 'lucide-vue-next'
 import type { BuilderInstance } from '@/modules/Layout/types/builder'
 
 interface Props {
@@ -45,156 +156,78 @@ const props = withDefaults(defineProps<Props>(), {
 const builder = inject<BuilderInstance | null>('builder', null)
 const showGridOverlay = computed(() => builder?.showGrid?.value ?? false)
 
-const viewportStyle = computed(() => {
-  const widths: Record<string, number | null> = {
-    desktop: 1280,
-    tablet: 768,
-    mobile: 390
+const previewHost = computed(() => (typeof window !== 'undefined' && window.location.host ? window.location.host : 'portal.local'))
+
+const previewUrl = computed(() => {
+  const slug = (builder?.content?.value?.slug || '').replace(/^\/+/, '')
+  return `${previewHost.value}/${slug}`
+})
+
+const stageWrapperStyle = computed(() => {
+  const scale = (props.zoom ?? 100) / 100
+  if (props.device === 'desktop' && props.zoom === 100 && !props.width) {
+    return { width: '100%', height: '100%' }
   }
 
-  const width = widths[props.device]
-  
-  const styles: Record<string, string | number> = {
-    transform: `scale(${props.zoom / 100}) translateZ(0)`,
+  let baseW = typeof props.width === 'number' ? props.width : (props.width ? parseInt(String(props.width), 10) : 1280)
+  let baseH = 900
+  if (props.device === 'tablet') {
+    baseW = 768 + 28
+    baseH = 1024 + 28
+  } else if (props.device === 'mobile') {
+    baseW = 390 + 28
+    baseH = 844 + 28
+  }
+
+  return {
+    width: `${baseW * scale}px`,
+    height: `${baseH * scale}px`,
+    minHeight: `${baseH * scale}px`,
+  }
+})
+
+const previewStyles = computed(() => {
+  const scale = (props.zoom ?? 100) / 100
+  let baseW = typeof props.width === 'number' ? `${props.width}px` : (props.width ? `${props.width}` : '1280px')
+  let baseH = '900px'
+
+  if (props.device === 'mobile') {
+    baseW = `${390 + 28}px`
+    baseH = `${844 + 28}px`
+  } else if (props.device === 'tablet') {
+    baseW = `${768 + 28}px`
+    baseH = `${1024 + 28}px`
+  } else if (props.zoom === 100 && !props.width) {
+    return {
+      width: '100%',
+      height: '100%',
+      transform: 'none',
+    }
+  }
+
+  return {
+    width: baseW,
+    height: baseH,
+    transform: `scale(${scale}) translateZ(0)`,
     transformOrigin: 'top center',
-    willChange: 'transform, width'
   }
-  
-  if (props.width) {
-    styles.width = `${props.width}px`
-    styles.maxWidth = `${props.width}px`
-  } else if (width) {
-    styles.width = `${width}px`
-    styles.maxWidth = `${width}px`
-  } else {
-    styles.width = '100%'
-    styles.maxWidth = '100%'
-  }
-  
-  return styles
 })
 </script>
 
 <style scoped>
-.canvas-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  padding: 32px 0;
-  min-width: 0;
-}
-
-.canvas-frame__viewport {
-  background: var(--builder-bg-canvas, #ffffff);
-  min-height: calc(100% - 64px);
-  height: auto;
-  box-sizing: content-box; 
-  position: relative; 
-  z-index: 1; 
-  flex-shrink: 0;
-  margin: 0 auto; /* Centered when fitting, scrollable from 0 when overflowing */
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.3s ease, box-shadow 0.3s ease;
-}
-
-.canvas-frame__screen {
-  width: 100%;
-  height: 100%;
-  min-height: inherit;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
-
-/* =========================================
-   DESKTOP FRAME
-   ========================================= */
-.canvas-frame--desktop .canvas-frame__viewport {
-  border-radius: 12px;
-  box-shadow: 
-    0 20px 50px -15px rgba(0, 0, 0, 0.18),
-    0 0 0 1px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
-/* =========================================
-   TABLET FRAME (iPad Pro Modern Style)
-   ========================================= */
-.canvas-frame--tablet .canvas-frame__viewport {
-  border-radius: 36px;
-  border: 14px solid #1c1d22;
-  box-shadow: 
-    0 30px 80px -20px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.12),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-}
-
-.device-tablet-camera {
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%);
+.custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-  background: #0d0e12;
-  border-radius: 50%;
-  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.35);
-  z-index: 100;
-  pointer-events: none;
 }
-
-/* =========================================
-   MOBILE FRAME (iPhone 16 Pro Style)
-   ========================================= */
-.canvas-frame--mobile .canvas-frame__viewport {
-  border-radius: 48px;
-  border: 12px solid #16171b;
-  box-shadow: 
-    0 35px 90px -20px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.14),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.9);
-  overflow: hidden;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-.device-mobile-island {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92px;
-  height: 24px;
-  background: #000000;
-  border-radius: 16px;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}
-
-.device-mobile-island__camera {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #0d0f1a;
-  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.25);
-}
-
-.device-mobile-home-indicator {
-  position: sticky;
-  bottom: 8px;
-  left: 50%;
-  margin: 16px auto 4px auto;
-  width: 120px;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.3);
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 140, 0.25);
   border-radius: 4px;
-  z-index: 999;
-  pointer-events: none;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 140, 0.45);
 }
 
 /* Grid Overlay */

@@ -26,29 +26,77 @@
     
     <!-- Center Section: Tools (Zoom, Wireframe, Devices) -->
     <div class="top-toolbar__center">
-       <!-- Zoom -->
-       <BaseDropdown align="center" width="auto">
-            <template #trigger="{ open }">
-              <IconButton 
-                variant="ghost"
-                :icon="Search" 
-                :active="open" 
-                :title="t('builder.toolbar.zoom')" 
-              />
-            </template>
-            
-            <template #default="{ close }">
-              <button 
-                v-for="opt in zoomOptions" 
-                :key="opt"
-                class="dropdown-item"
-                :class="{ 'active': opt === zoom }"
-                @click="selectZoom(opt); close()"
-              >
-                {{ opt }}%
-              </button>
-            </template>
-       </BaseDropdown>
+       <!-- Zoom Controls (Scale identical to ThemeCustomizer) -->
+       <div class="zoom-controls">
+         <IconButton 
+           variant="ghost"
+           :icon="ZoomOut" 
+           :disabled="zoom <= 50"
+           class="zoom-btn"
+           title="Zoom Out (-10%)"
+           @click="zoomOut"
+         />
+
+         <div class="zoom-slider-container hidden xl:flex items-center gap-1 w-20">
+           <input
+             :value="zoom"
+             type="range"
+             min="50"
+             max="150"
+             step="5"
+             class="zoom-slider"
+             title="Skala Ukuran Layar"
+             aria-label="Skala Ukuran Layar"
+             @input="handleZoomSliderChange"
+           />
+         </div>
+
+         <IconButton 
+           variant="ghost"
+           :icon="ZoomIn" 
+           :disabled="zoom >= 150"
+           class="zoom-btn"
+           title="Zoom In (+10%)"
+           @click="zoomIn"
+         />
+
+         <BaseDropdown align="center" width="auto">
+           <template #trigger="{ open }">
+             <button
+               type="button"
+               class="zoom-preset-trigger"
+               :class="{ 'zoom-preset-trigger--active': open }"
+               title="Pilihan Skala Layar"
+               aria-label="Pilihan Skala Layar"
+             >
+               <span>{{ zoom }}%</span>
+               <ChevronDown :size="11" class="opacity-60" />
+             </button>
+           </template>
+           
+           <template #default="{ close }">
+             <button 
+               v-for="opt in zoomPresets" 
+               :key="opt"
+               class="dropdown-item"
+               :class="{ 'active': opt === zoom }"
+               @click="selectZoom(opt); close()"
+             >
+               {{ opt }}%
+             </button>
+             <BaseDivider orientation="horizontal" :margin="4" />
+             <button
+               class="dropdown-item"
+               @click="resetZoom(); close()"
+             >
+               <div class="flex items-center gap-2">
+                 <RotateCcw :size="12" />
+                 100% (Reset)
+               </div>
+             </button>
+           </template>
+         </BaseDropdown>
+       </div>
 
        <BaseDivider orientation="vertical" :margin="4" />
 
@@ -237,7 +285,9 @@ import Menu from 'lucide-vue-next/dist/esm/icons/menu.js';
 import Monitor from 'lucide-vue-next/dist/esm/icons/monitor.js';
 import Tablet from 'lucide-vue-next/dist/esm/icons/tablet.js';
 import Smartphone from 'lucide-vue-next/dist/esm/icons/smartphone.js';
-import Search from 'lucide-vue-next/dist/esm/icons/search.js';
+import ZoomIn from 'lucide-vue-next/dist/esm/icons/zoom-in.js';
+import ZoomOut from 'lucide-vue-next/dist/esm/icons/zoom-out.js';
+import RotateCcw from 'lucide-vue-next/dist/esm/icons/rotate-ccw.js';
 import Save from 'lucide-vue-next/dist/esm/icons/save.js';
 import X from 'lucide-vue-next/dist/esm/icons/x.js';
 import Maximize from 'lucide-vue-next/dist/esm/icons/maximize.js';
@@ -301,11 +351,36 @@ const setDeviceMode = (modeId: string) => {
     builder.setDeviceMode(modeId as 'desktop' | 'tablet' | 'mobile')
 }
 
-// Zoom Options
-const zoomOptions = [50, 75, 100, 125, 150]
+// Zoom Controls
+const zoomPresets = [50, 75, 90, 100, 110, 125, 150]
 
 const selectZoom = (val: number) => {
     if (builder) {
+        builder.zoom.value = val
+    }
+}
+
+const zoomIn = () => {
+    if (builder) {
+        builder.zoom.value = Math.min(150, (builder.zoom.value || 100) + 10)
+    }
+}
+
+const zoomOut = () => {
+    if (builder) {
+        builder.zoom.value = Math.max(50, (builder.zoom.value || 100) - 10)
+    }
+}
+
+const resetZoom = () => {
+    if (builder) {
+        builder.zoom.value = 100
+    }
+}
+
+const handleZoomSliderChange = (e: Event) => {
+    const val = Number((e.target as HTMLInputElement).value)
+    if (!isNaN(val) && builder) {
         builder.zoom.value = val
     }
 }
@@ -656,5 +731,59 @@ onMounted(() => {
 :deep(.icon-button.border-white\/20) {
     border-color: rgba(255, 255, 255, 0.4) !important;
     box-shadow: 0 0 10px rgba(32, 89, 234, 0.3) !important;
+}
+
+/* Zoom Controls */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.zoom-btn {
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+}
+
+.zoom-slider-container {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.zoom-slider {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  accent-color: #3b82f6;
+}
+
+.zoom-preset-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 26px;
+  padding: 0 7px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 7px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.zoom-preset-trigger:hover,
+.zoom-preset-trigger--active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 </style>
