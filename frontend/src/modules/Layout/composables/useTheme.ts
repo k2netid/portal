@@ -2,6 +2,7 @@ import { logger } from '@/shared/utils/logger';
 import { ref, computed, inject, type InjectionKey, type Ref, type ComputedRef } from 'vue';
 import i18n from '@/engine/i18n';
 import api from '@/engine/api/client';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/janariPresets';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { hexToHslString } from '@/shared/utils/color';
@@ -525,8 +526,19 @@ export function useTheme() {
             return defaultValue;
         }
 
-        if (themeSettings.value && themeSettings.value[key] !== undefined) {
+        if (themeSettings.value && themeSettings.value[key] !== undefined && themeSettings.value[key] !== '') {
             return themeSettings.value[key];
+        }
+
+        // Core Contract: if active theme hasn't set this key, fallback to Core System settings (e.g. branding_display)
+        try {
+            const systemStore = useSystemStore();
+            const coreVal = systemStore.getSetting(key);
+            if (coreVal !== null && coreVal !== undefined && coreVal !== '') {
+                return coreVal;
+            }
+        } catch {
+            /* Pinia store context not yet active */
         }
 
         const manifest = activeTheme.value.manifest;
@@ -713,8 +725,17 @@ export function useTheme() {
 
     if (builderOverride) {
         const getOverrideSetting = (key: string, defaultValue: unknown = null) => {
-            if (builderOverride.themeSettings.value && builderOverride.themeSettings.value[key] !== undefined) {
+            if (builderOverride.themeSettings.value && builderOverride.themeSettings.value[key] !== undefined && builderOverride.themeSettings.value[key] !== '') {
                 return builderOverride.themeSettings.value[key];
+            }
+            try {
+                const systemStore = useSystemStore();
+                const coreVal = systemStore.getSetting(key);
+                if (coreVal !== null && coreVal !== undefined && coreVal !== '') {
+                    return coreVal;
+                }
+            } catch {
+                /* Pinia store context not yet active */
             }
             const manifest = builderOverride.activeTheme.value?.manifest as ThemeManifest | undefined;
             if (manifest?.settings_schema?.[key]) {

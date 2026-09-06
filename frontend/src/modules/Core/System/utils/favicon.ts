@@ -40,35 +40,49 @@ export function resolveFavicon(candidates: unknown[], options?: { preferFirst?: 
     return generic || DEFAULT_FAVICON;
 }
 
-export function applyFavicon(href: unknown, options?: { allowGeneric?: boolean }): void {
+export function clearFaviconCache(): void {
+    lastAppliedFavicon = '';
+    try {
+        localStorage.removeItem(FAVICON_STORAGE_KEY);
+    } catch {
+        /* private mode */
+    }
+}
+
+export function applyFavicon(href: unknown, options?: { allowGeneric?: boolean; force?: boolean }): void {
     if (typeof document === 'undefined' || !document.head) return;
 
     const normalizedHref = asHref(href);
     if (!normalizedHref) return;
-    if (lastAppliedFavicon === normalizedHref) return;
 
-    // First paint often already has a real icon from PHP inject / localStorage cache.
-    // Do not clobber it with /favicon.ico while identity or theme settings are still loading.
-    if (isGenericEngineFavicon(normalizedHref) && !options?.allowGeneric) {
+    const isGeneric = isGenericEngineFavicon(normalizedHref);
+    if (isGeneric && !options?.allowGeneric) {
         return;
     }
+
+    if (!options?.force && lastAppliedFavicon === normalizedHref) return;
 
     const existing = document.head.querySelectorAll(
         'link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]',
     );
     existing.forEach((el) => el.remove());
 
+    // Cache-busting parameter forces browsers to reload tab icon immediately
+    const cacheBustedHref = isGeneric
+        ? `${DEFAULT_FAVICON}?v=core_${Date.now()}`
+        : (normalizedHref.includes('?') ? `${normalizedHref}&v=${Date.now()}` : `${normalizedHref}?v=${Date.now()}`);
+
     const rels = ['icon', 'shortcut icon', 'apple-touch-icon'];
     rels.forEach((rel) => {
         const link = document.createElement('link');
         link.rel = rel;
-        link.href = normalizedHref;
+        link.href = cacheBustedHref;
         document.head.appendChild(link);
     });
 
     lastAppliedFavicon = normalizedHref;
     try {
-        if (!isGenericEngineFavicon(normalizedHref)) {
+        if (!isGeneric) {
             localStorage.setItem(FAVICON_STORAGE_KEY, normalizedHref);
         } else {
             localStorage.removeItem(FAVICON_STORAGE_KEY);

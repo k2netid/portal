@@ -246,6 +246,7 @@ const route = useRoute();
 const { confirm } = useConfirm();
 const toast = useToast();
 const { load: reloadConsoleTheme } = useConsoleTheme();
+import { clearFaviconCache, applyFavicon } from '@/modules/Core/System/utils/favicon';
 
 const loading = ref(false);
 const saving = ref(false);
@@ -606,11 +607,17 @@ const handleSubmit = async () => {
         const refreshGroup = activeTab.value === 'identity' ? 'general' : activeTab.value;
         await systemStore.fetchSettingsGroup(refreshGroup);
 
+        clearFaviconCache();
         // Refetch public settings to update the store's dashboard slug
         systemStore.publicSettingsLoaded = false;
         await systemStore.fetchPublicSettings({ force: true });
         await systemStore.fetchAppIdentity();
         await reloadConsoleTheme(true);
+
+        const activeFav = systemStore.appIdentity?.has_white_label && systemStore.getSetting('brand_favicon')
+            ? String(systemStore.getSetting('brand_favicon'))
+            : (systemStore.appIdentity?.app_favicon || '/favicon.ico');
+        applyFavicon(activeFav, { allowGeneric: true, force: true });
 
         const newSlug = systemStore.consoleDashboardSlug || 'dash';
         if (newSlug !== oldSlug) {

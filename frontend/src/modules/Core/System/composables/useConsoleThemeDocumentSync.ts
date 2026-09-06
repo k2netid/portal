@@ -2,7 +2,7 @@ import { watchEffect, onScopeDispose } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConsoleTheme } from '@/modules/Core/System/composables/useConsoleTheme';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
+import { applyFavicon, isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
 
 const THEME_FLAG = 'data-console-theme';
 const THEME_ATTRS = ['data-console-preset', 'data-console-surface', 'data-console-glass-gradient', 'data-console-theme-mode', 'data-console-button-style', 'data-console-card-style', 'data-console-dropdown-style', 'data-console-icon-weight'] as const;
@@ -39,7 +39,7 @@ const THEME_VARS = [
 export function useConsoleThemeDocumentSync() {
     const { cssVars, layoutAttrs, settings } = useConsoleTheme();
     const systemStore = useSystemStore();
-    const { appIdentity, siteSettings } = storeToRefs(systemStore);
+    const { appIdentity } = storeToRefs(systemStore);
 
     watchEffect(() => {
         const root = document.documentElement;
@@ -64,16 +64,23 @@ export function useConsoleThemeDocumentSync() {
             }
         }
 
-        const syncEnabled = Boolean(systemStore.getSetting('brand_sync_site_identity', false));
-        const href = resolveFavicon([
-            settings.value.app_favicon,
-            systemStore.getSetting('brand_favicon'),
-            appIdentity.value.app_favicon,
-            syncEnabled ? siteSettings.value.site_favicon : null,
-        ], { preferFirst: true });
-        if (!isGenericEngineFavicon(href) || systemStore.publicSettingsLoaded) {
-            applyFavicon(href, { allowGeneric: systemStore.publicSettingsLoaded });
+        const hasWl = Boolean(appIdentity.value.has_white_label);
+        const themeFav = (settings.value.app_favicon as string) || '';
+        const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
+        const identityFav = (appIdentity.value.app_favicon as string) || '';
+
+        let consoleFav = '/favicon.ico';
+        if (hasWl) {
+            if (themeFav && !isGenericEngineFavicon(themeFav)) {
+                consoleFav = themeFav;
+            } else if (brandFav && !isGenericEngineFavicon(brandFav)) {
+                consoleFav = brandFav;
+            } else if (identityFav && !isGenericEngineFavicon(identityFav)) {
+                consoleFav = identityFav;
+            }
         }
+
+        applyFavicon(consoleFav, { allowGeneric: true });
 
         // Dynamically load Google Fonts if custom font is active
         const fontPrimary = settings.value.console_font_primary;

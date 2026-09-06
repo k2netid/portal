@@ -221,9 +221,16 @@ export const maintenanceMessagePresets: SettingsOption[] = [
     { value: "We are updating our system to provide you a better experience. We'll be back online soon.", labelKey: 'system.settings.options.maintenanceMessagePresets.better_exp' },
 ]
 
+export const brandingDisplayOptions: SettingsOption[] = [
+    { value: 'both', labelKey: 'system.settings.options.brandingDisplay.both' },
+    { value: 'logo_only', labelKey: 'system.settings.options.brandingDisplay.logo_only' },
+    { value: 'text_only', labelKey: 'system.settings.options.brandingDisplay.text_only' },
+]
+
 // Helper function to get options for a specific field
 export function getFieldOptions(fieldKey: string): SettingsOption[] | null {
     const optionsMap: Record<string, SettingsOption[]> = {
+        branding_display: brandingDisplayOptions,
         timezone: timezoneOptions,
         date_format: dateFormatOptions,
         time_format: timeFormatOptions,

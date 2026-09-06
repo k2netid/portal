@@ -659,11 +659,22 @@ watch(() => activeTheme.value?.slug, () => {
   schedulePublicPrefetch()
 })
 
-const publicFaviconHref = computed(() => resolveFavicon([
-  getSetting('brand_favicon', ''),
-  systemStore.appIdentity?.app_favicon,
-  systemStore.siteSettings?.site_favicon,
-]))
+const publicFaviconHref = computed(() => {
+  const syncEnabled = Boolean(systemStore.getSetting('brand_sync_site_identity', false));
+  const hasWl = Boolean(systemStore.appIdentity?.has_white_label);
+  const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
+
+  if (hasWl && syncEnabled && brandFav) {
+    return brandFav;
+  }
+
+  return resolveFavicon([
+    getSetting('site_favicon', ''),
+    systemStore.siteSettings?.site_favicon,
+    getSetting('brand_favicon', ''),
+    systemStore.appIdentity?.app_favicon,
+  ]);
+});
 
 const publicFaviconReady = computed(() =>
   activeTheme.value !== null || (!loading.value && !!error.value),

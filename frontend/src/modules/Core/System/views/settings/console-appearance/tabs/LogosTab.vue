@@ -229,6 +229,8 @@ import { useI18n } from 'vue-i18n';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useConsoleAppearanceContext } from '../composables/useConsoleAppearancePage';
 
+import { isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
+
 const { t } = useI18n();
 const router = useRouter();
 const systemStore = useSystemStore();
@@ -241,12 +243,49 @@ const {
     showFaviconPicker,
 } = useConsoleAppearanceContext();
 
-const fallbackBrandLogo = computed(() => (systemStore.getSetting('brand_logo') as string) || systemStore.appIdentity?.app_logo || '/logo.png');
-const fallbackBrandFavicon = computed(() => (systemStore.getSetting('brand_favicon') as string) || systemStore.appIdentity?.app_favicon || '/favicon.ico');
+const syncEnabled = computed(() => Boolean(systemStore.getSetting('brand_sync_site_identity', false)));
+
+const fallbackBrandLogo = computed(() => {
+    const brandLogo = (systemStore.getSetting('brand_logo') as string) || '';
+    if (brandLogo) return brandLogo;
+    if (hasWhiteLabel.value && systemStore.appIdentity?.app_logo && systemStore.appIdentity.app_logo !== '/logo.png') {
+        return systemStore.appIdentity.app_logo;
+    }
+    if (hasWhiteLabel.value && syncEnabled.value && systemStore.siteSettings?.site_logo) {
+        return systemStore.siteSettings.site_logo;
+    }
+    return '/logo.png';
+});
+
+const fallbackBrandFavicon = computed(() => {
+    const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
+    if (brandFav) return brandFav;
+    if (hasWhiteLabel.value && systemStore.appIdentity?.app_favicon && !isGenericEngineFavicon(systemStore.appIdentity.app_favicon)) {
+        return systemStore.appIdentity.app_favicon;
+    }
+    if (hasWhiteLabel.value && syncEnabled.value && systemStore.siteSettings?.site_favicon) {
+        return systemStore.siteSettings.site_favicon;
+    }
+    return '/favicon.ico';
+});
+
+const fallbackCompactLogo = computed(() => {
+    const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
+    if (brandFav) return brandFav;
+    const brandLogo = (systemStore.getSetting('brand_logo') as string) || '';
+    if (brandLogo) return brandLogo;
+    if (hasWhiteLabel.value && systemStore.appIdentity?.app_favicon && !isGenericEngineFavicon(systemStore.appIdentity.app_favicon)) {
+        return systemStore.appIdentity.app_favicon;
+    }
+    if (hasWhiteLabel.value && syncEnabled.value && systemStore.siteSettings?.site_favicon) {
+        return systemStore.siteSettings.site_favicon;
+    }
+    return '/favicon.ico';
+});
 
 const effectiveLogoLight = computed(() => form.app_logo_light || fallbackBrandLogo.value);
 const effectiveLogoDark = computed(() => form.app_logo_dark || form.app_logo_light || fallbackBrandLogo.value);
-const effectiveLogoCompact = computed(() => form.app_logo_compact || fallbackBrandFavicon.value);
+const effectiveLogoCompact = computed(() => form.app_logo_compact || fallbackCompactLogo.value);
 const effectiveFavicon = computed(() => form.app_favicon || fallbackBrandFavicon.value);
 
 function goToLicenseSettings() {

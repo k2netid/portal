@@ -47,7 +47,7 @@ import { useSessionTimeout } from '@/shared/composables/useSessionTimeout';
 import { syncDocumentDarkClassForRoute } from '@/shared/composables/useDarkMode';
 import { useHead } from '@unhead/vue';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
-import { applyFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
+import { applyFavicon, isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
 import { whenConsoleThemeBootstrapped } from '@/modules/Core/System/composables/useConsoleTheme';
 import { Loader2 } from 'lucide-vue-next';
 
@@ -97,12 +97,14 @@ onUnmounted(() => {
 
 const faviconHref = computed(() => {
     if (!systemStore.publicSettingsLoaded) return '';
-    const syncWithSite = Boolean(systemStore.getSetting('brand_sync_site_identity', false));
-    return resolveFavicon([
-        systemStore.getSetting('brand_favicon'),
-        systemStore.appIdentity?.app_favicon,
-        syncWithSite ? systemStore.siteSettings?.site_favicon : null,
-    ], { preferFirst: true });
+    const hasWl = Boolean(systemStore.appIdentity?.has_white_label);
+    const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
+    const appFav = (systemStore.getSetting('app_favicon') as string) || systemStore.appIdentity?.app_favicon || '';
+
+    if (hasWl && brandFav) return brandFav;
+    if (hasWl && appFav && !isGenericEngineFavicon(appFav)) return appFav;
+
+    return '/favicon.ico';
 });
 
 watch(
