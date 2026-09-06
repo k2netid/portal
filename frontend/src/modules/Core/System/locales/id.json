@@ -2277,6 +2277,8 @@
         "logos": "Unggah Logo"
       },
       "sidebarStyleLabel": "Gaya latar sidebar",
+      "sidebarAccordionModeLabel": "Mode Akordion Sidebar",
+      "sidebarAccordionModeDescription": "Atur perilaku pembukaan grup menu pada navigasi sidebar konsol.",
       "navbarStyleLabel": "Gaya latar navbar",
       "popperOpacityLabel": "Opasitas popper & dropdown overlay",
       "logoLightLabel": "Logo Terang (Light Mode)",
@@ -2350,6 +2352,16 @@
           "clean": {
             "label": "Minimal bersih",
             "description": "Permukaan netral datar tanpa gangguan visual."
+          }
+        },
+        "sidebarAccordion": {
+          "single": {
+            "label": "Tunggal (Fokus & Rapi)",
+            "description": "Hanya 1 grup menu terbuka. Saat menu lain dibuka atau berpindah rute, menu sebelumnya otomatis tertutup."
+          },
+          "multiple": {
+            "label": "Banyak (Bebas / Klasik)",
+            "description": "Beberapa grup menu dapat terbuka bersamaan tanpa menutup menu lainnya."
           }
         },
         "navbar": {
