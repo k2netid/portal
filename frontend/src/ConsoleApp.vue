@@ -96,7 +96,11 @@ onUnmounted(() => {
 });
 
 const faviconHref = computed(() => {
-    if (!systemStore.publicSettingsLoaded) return '';
+    if (!systemStore.publicSettingsLoaded) {
+        const cached = typeof localStorage !== 'undefined' ? localStorage.getItem('ja_console_favicon_href') : null;
+        if (cached && !isGenericEngineFavicon(cached)) return cached;
+        return '/favicon.ico';
+    }
     const hasWl = Boolean(systemStore.appIdentity?.has_white_label);
     const brandFav = (systemStore.getSetting('brand_favicon') as string) || '';
     const appFav = (systemStore.getSetting('app_favicon') as string) || systemStore.appIdentity?.app_favicon || '';
