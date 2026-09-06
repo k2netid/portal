@@ -70,12 +70,24 @@ return new class extends Migration
                 'updated_at' => now(),
             ]);
         }
+
+        if (Schema::hasTable('sys_console_menus')) {
+            DB::table('sys_console_menus')
+                ->where('route_name', 'builder.site')
+                ->update(['extension_slug' => 'visual-builder']);
+        }
     }
 
     public function down(): void
     {
         if (Schema::hasTable('sys_extensions')) {
             DB::table('sys_extensions')->where('slug', 'visual-builder')->delete();
+        }
+
+        if (Schema::hasTable('sys_console_menus')) {
+            DB::table('sys_console_menus')
+                ->where('route_name', 'builder.site')
+                ->update(['extension_slug' => 'layout']);
         }
     }
 };
