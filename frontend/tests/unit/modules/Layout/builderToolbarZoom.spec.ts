@@ -91,4 +91,14 @@ describe('TopToolbar Zoom & Scale Controls', () => {
     await slider.trigger('input')
     expect(builder.zoom.value).toBe(75)
   })
+
+  it('displays Fit when zoom is 0 or less', () => {
+    const builder = createMockBuilder()
+    builder.zoom.value = 0
+    const wrapper = mountToolbar(builder)
+
+    const trigger = wrapper.find('.zoom-preset-trigger')
+    expect(trigger.exists()).toBe(true)
+    expect(trigger.text()).toBe('Fit')
+  })
 })

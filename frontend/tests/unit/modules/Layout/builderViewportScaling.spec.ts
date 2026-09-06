@@ -124,4 +124,23 @@ describe('CanvasFrame Viewport Preview Scaling', () => {
     expect(stageWrapper.attributes('style')).toContain('width: 209px')
     expect(viewport.attributes('style')).toContain('scale(0.5)')
   })
+
+  it('renders desktop in auto fit mode when zoom is 0', () => {
+    const wrapper = mount(CanvasFrame, {
+      props: {
+        device: 'desktop',
+        zoom: 0,
+      },
+      slots: {
+        default: '<div class="test-canvas-content">Content</div>',
+      },
+      ...globalProvide,
+    })
+
+    const viewport = wrapper.find('.canvas-frame__viewport--desktop')
+    expect(viewport.exists()).toBe(true)
+    // In fit mode (zoom <= 0), macOS Studio header is shown with Fit tag
+    expect(viewport.text()).toContain('Fit')
+    expect(viewport.text()).toContain('beranda-sekolah')
+  })
 })

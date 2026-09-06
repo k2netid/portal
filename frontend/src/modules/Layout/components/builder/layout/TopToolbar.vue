@@ -2,7 +2,7 @@
   <header class="top-toolbar">
     <!-- Left Section: Menu & Branding -->
     <div class="top-toolbar__left">
-      <!-- Menu Button (Mobile Only) -->
+      <!-- Menu Button (Mobile / Compact Only) -->
       <IconButton 
         variant="ghost"
         :icon="sidebarVisible ? ChevronsLeft : Menu" 
@@ -13,7 +13,7 @@
       />
       
       <!-- Divider (Mobile Only) -->
-      <BaseDivider orientation="vertical" :margin="6" class="mobile-only" />
+      <BaseDivider orientation="vertical" :margin="6" class="mobile-only divider-mobile" />
 
       <!-- Branding (Logo with Override) -->
       <AdminLogo 
@@ -31,17 +31,17 @@
          <IconButton 
            variant="ghost"
            :icon="ZoomOut" 
-           :disabled="zoom <= 50"
+           :disabled="zoom <= 25 && zoom > 0"
            class="zoom-btn"
            title="Zoom Out (-10%)"
            @click="zoomOut"
          />
 
-         <div class="zoom-slider-container hidden xl:flex items-center gap-1 w-20">
+         <div class="zoom-slider-container">
            <input
-             :value="zoom"
+             :value="zoom <= 0 ? 100 : zoom"
              type="range"
-             min="50"
+             min="25"
              max="150"
              step="5"
              class="zoom-slider"
@@ -69,12 +69,26 @@
                title="Pilihan Skala Layar"
                aria-label="Pilihan Skala Layar"
              >
-               <span>{{ zoom }}%</span>
+               <span>{{ zoomDisplay }}</span>
                <ChevronDown :size="11" class="opacity-60" />
              </button>
            </template>
            
            <template #default="{ close }">
+             <button
+               class="dropdown-item"
+               :class="{ 'active': zoom <= 0 }"
+               @click="selectZoom(0); close()"
+             >
+               <div class="flex items-center justify-between w-full gap-3">
+                 <div class="flex items-center gap-2">
+                   <Wand2 :size="12" />
+                   <span>Fit to Screen (Auto)</span>
+                 </div>
+                 <Check v-if="zoom <= 0" :size="12" />
+               </div>
+             </button>
+             <BaseDivider orientation="horizontal" :margin="4" />
              <button 
                v-for="opt in zoomPresets" 
                :key="opt"
@@ -82,7 +96,10 @@
                :class="{ 'active': opt === zoom }"
                @click="selectZoom(opt); close()"
              >
-               {{ opt }}%
+               <div class="flex items-center justify-between w-full gap-3">
+                 <span>{{ opt }}%</span>
+                 <Check v-if="opt === zoom" :size="12" />
+               </div>
              </button>
              <BaseDivider orientation="horizontal" :margin="4" />
              <button
@@ -91,35 +108,37 @@
              >
                <div class="flex items-center gap-2">
                  <RotateCcw :size="12" />
-                 100% (Reset)
+                 <span>100% (Reset)</span>
                </div>
              </button>
            </template>
          </BaseDropdown>
        </div>
 
-       <BaseDivider orientation="vertical" :margin="4" />
+       <BaseDivider orientation="vertical" :margin="4" class="divider-subtle" />
 
        <!-- Undo/Redo -->
-       <IconButton 
-         variant="ghost"
-         :icon="Undo2" 
-         :disabled="!canUndo" 
-         @click="builder?.undo()" 
-         :title="t('builder.toolbar.undo')"
-       />
-       <IconButton 
-         variant="ghost"
-         :icon="Redo2" 
-         :disabled="!canRedo" 
-         @click="builder?.redo()" 
-         :title="t('builder.toolbar.redo')"
-       />
+       <div class="undo-redo-group flex items-center gap-0.5">
+         <IconButton 
+           variant="ghost"
+           :icon="Undo2" 
+           :disabled="!canUndo" 
+           @click="builder?.undo()" 
+           :title="t('builder.toolbar.undo')"
+         />
+         <IconButton 
+           variant="ghost"
+           :icon="Redo2" 
+           :disabled="!canRedo" 
+           @click="builder?.redo()" 
+           :title="t('builder.toolbar.redo')"
+         />
+       </div>
 
-       <BaseDivider orientation="vertical" :margin="4" />
+       <BaseDivider v-if="isSiteMode" orientation="vertical" :margin="4" class="divider-subtle theme-divider" />
 
        <!-- Theme Switcher (site mode only — page mode is content-only) -->
-       <BaseDropdown v-if="isSiteMode" align="center" width="200px">
+       <BaseDropdown v-if="isSiteMode" align="center" width="200px" class="theme-switcher-dropdown">
          <template #trigger="{ open }">
            <button class="theme-switcher-btn" :class="{ 'theme-switcher-btn--active': open }" :title="t('builder.toolbar.theme')">
              <Palette :size="14" />
@@ -150,7 +169,7 @@
          </template>
        </BaseDropdown>
 
-       <BaseDivider v-if="isSiteMode" orientation="vertical" :margin="4" />
+       <BaseDivider orientation="vertical" :margin="4" class="divider-subtle device-divider" />
 
       <!-- Device Modes (Desktop) -->
       <div class="device-modes desktop-only">
@@ -173,8 +192,8 @@
         />
       </div>
 
-      <!-- Device Modes (Mobile Dropdown) -->
-      <div class="mobile-only">
+      <!-- Device Modes (Mobile/Compact Dropdown) -->
+      <div class="mobile-only device-dropdown-wrapper">
         <BaseDropdown align="center" width="auto">
             <template #trigger="{ open }">
               <IconButton 
@@ -214,13 +233,14 @@
         </BaseDropdown>
       </div>
 
-      <BaseDivider orientation="vertical" :margin="6" />
+      <BaseDivider orientation="vertical" :margin="6" class="divider-subtle extra-tools-divider" />
 
-      <!-- Fullview Toggle -->
+      <!-- Fullview Toggle (Desktop only) -->
       <IconButton 
         variant="ghost"
         :icon="isFullscreen ? Minimize : Maximize" 
         :active="isFullscreen"
+        class="extra-tool-btn"
         :title="isFullscreen ? t('builder.toolbar.exitFullscreen') || 'Exit Full View' : t('builder.toolbar.fullscreen') || 'Enter Full View'" 
         @click="toggleFullscreen"
       />
@@ -228,6 +248,7 @@
       <IconButton
         variant="ghost"
         :icon="ExternalLink"
+        class="extra-tool-btn"
         :title="t('builder.toolbar.livePreview', 'Live site preview')"
         @click="$emit('open-live-preview')"
       />
@@ -240,9 +261,11 @@
         :icon="Sparkles"
         :disabled="props.readOnly || props.generatingAi"
         :title="props.generatingAi ? t('builder.toolbar.generateAiWorking', 'Generating…') : t('builder.toolbar.generateAi', 'Generate layout with AI')"
+        class="ai-sparkles-btn"
         @click="$emit('generate-ai')"
       />
-<!-- Save Actions -->
+
+      <!-- Save Actions -->
       <div class="save-actions">
         <button 
           class="save-draft-btn" 
@@ -260,12 +283,12 @@
           :class="{ 'opacity-50 cursor-not-allowed': props.readOnly || !builder.isDirty.value }"
           :title="builder.content.value.status === 'published' ? t('builder.toolbar.update') : t('builder.toolbar.publish')"
         >
-          <Save class="w-3.5 h-3.5 mr-1.5" />
-          {{ builder.content.value.status === 'published' ? (t('builder.toolbar.update') || 'Update') : (t('builder.toolbar.publish') || 'Publish') }}
+          <Save class="w-3.5 h-3.5 publish-icon mr-1.5" />
+          <span class="publish-text">{{ builder.content.value.status === 'published' ? (t('builder.toolbar.update') || 'Update') : (t('builder.toolbar.publish') || 'Publish') }}</span>
         </button>
       </div>
 
-      <BaseDivider orientation="vertical" :margin="6" />
+      <BaseDivider orientation="vertical" :margin="6" class="divider-subtle close-divider" />
 
       <!-- Cancel/Close Button -->
       <IconButton 
@@ -275,7 +298,7 @@
         @click="$emit('close-builder')" 
         :title="t('builder.toolbar.close') || 'Close'" 
       />
-</div>
+    </div>
   </header>
 </template>
 
@@ -337,8 +360,7 @@ const { t } = useI18n()
 
 // State
 const device = computed(() => builder?.device.value || 'desktop')
-const zoom = computed(() => builder?.zoom.value || 100)
-
+const zoom = computed(() => builder?.zoom.value ?? 100)
 
 const deviceModes = Object.values(DEVICE_MODES)
 
@@ -351,8 +373,14 @@ const setDeviceMode = (modeId: string) => {
     builder.setDeviceMode(modeId as 'desktop' | 'tablet' | 'mobile')
 }
 
-// Zoom Controls
-const zoomPresets = [50, 75, 90, 100, 110, 125, 150]
+// Zoom Controls: support Fit to Screen (0) and extended granular presets
+const zoomPresets = [25, 33, 50, 75, 90, 100, 110, 125, 150]
+
+const zoomDisplay = computed(() => {
+    const z = zoom.value
+    if (z <= 0) return 'Fit'
+    return `${z}%`
+})
 
 const selectZoom = (val: number) => {
     if (builder) {
@@ -362,13 +390,23 @@ const selectZoom = (val: number) => {
 
 const zoomIn = () => {
     if (builder) {
-        builder.zoom.value = Math.min(150, (builder.zoom.value || 100) + 10)
+        const current = builder.zoom.value ?? 100
+        if (current <= 0) {
+            builder.zoom.value = 50
+        } else {
+            builder.zoom.value = Math.min(150, current + 10)
+        }
     }
 }
 
 const zoomOut = () => {
     if (builder) {
-        builder.zoom.value = Math.max(50, (builder.zoom.value || 100) - 10)
+        const current = builder.zoom.value ?? 100
+        if (current <= 25) {
+            builder.zoom.value = 0
+        } else {
+            builder.zoom.value = Math.max(25, current - 10)
+        }
     }
 }
 
@@ -433,57 +471,52 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   height: var(--toolbar-height);
-  padding: 0 20px 0 6px;
+  padding: 0 16px 0 6px;
   background: var(--builder-bg-topbar);
   border-bottom: 1px solid var(--builder-border-layout);
   color: var(--builder-text-primary);
-  position: relative; /* For absolute center */
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-.top-toolbar__left,
+.top-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
 .top-toolbar__right {
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 2; /* Above center */
+  flex-shrink: 0;
+  margin-left: auto;
+  z-index: 2;
 }
 
-/* True center using absolute positioning */
+/* Center section: flex flow on narrow/medium, true absolute center on wide desktop */
 .top-toolbar__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 auto;
+  z-index: 1;
+}
+
+@media (min-width: 1200px) {
+  .top-toolbar__center {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 1;
-}
-
-@media (max-width: 768px) {
-    .top-toolbar__center {
-        position: static;
-        transform: none;
-        flex: 1;
-        justify-content: center;
-        gap: 4px;
-        order: 2;
-    }
-    
-    .top-toolbar__left {
-        order: 1;
-        flex: 0;
-    }
-    
-    .top-toolbar__right {
-        order: 3;
-        flex: 0;
-        gap: 4px;
-    }
-
-    .device-modes {
-        display: none !important; /* Hide device modes on small mobile */
-    }
+    flex: 0 0 auto;
+  }
 }
 
 /* Branding */
@@ -497,14 +530,13 @@ onMounted(() => {
 :deep(.admin-logo-override .text-muted-foreground) {
     color: rgba(255,255,255,0.7) !important;
 }
-/* Make the logo box border crisp without shadow */
 :deep(.admin-logo-override .border-primary) {
     border-color: #10b981 !important; /* Emerald green */
     border-width: 2px !important;
-    box-shadow: none !important; /* Remove blur/shadow */
+    box-shadow: none !important;
 }
 :deep(.admin-logo-override .shadow-sm) {
-    box-shadow: none !important; /* Remove the shadow-sm class effect */
+    box-shadow: none !important;
 }
 :deep(.admin-logo-override [class*="text-primary"]) {
     color: #10b981 !important;
@@ -594,28 +626,6 @@ onMounted(() => {
   gap: 4px;
 }
 
-@media (max-width: 768px) {
-  .top-toolbar {
-    padding: 0 8px;
-  }
-  
-  .builder-title-badge {
-      display: none; /* Hide title on small screens */
-  }
-  
-  /* Hide logo on mobile to prevent overlap */
-  :deep(.admin-logo-override) {
-      display: none;
-  }
-
-  /* Hide zoom on very small screens */
-  @media (max-width: 480px) {
-     .top-toolbar__center {
-         display: none;
-     }
-  }
-}
-
 /* Cancel Button */
 .cancel-btn {
     color: var(--builder-text-secondary);
@@ -643,6 +653,7 @@ onMounted(() => {
     border: 1px solid var(--builder-border);
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .save-draft-btn:hover {
@@ -664,6 +675,7 @@ onMounted(() => {
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+    white-space: nowrap;
 }
 
 .publish-btn:hover {
@@ -677,60 +689,15 @@ onMounted(() => {
     transform: translateY(0);
 }
 
-/* Mobile Visibility Helpers */
+/* Responsive Visibility Helpers */
 .mobile-only {
     display: none;
 }
 .desktop-only {
     display: flex;
 }
-
-@media (max-width: 768px) {
-    .mobile-only {
-        display: flex;
-    }
-    .desktop-only {
-        display: none !important;
-    }
-}
-
-/* Toolbar Fixes */
 .toolbar-btn-mobile {
     display: none;
-}
-@media (max-width: 768px) {
-    .toolbar-btn-mobile {
-        display: flex;
-    }
-}
-
-/* Menu Toggle Button - Active State Styling */
-.menu-toggle--active {
-    background: var(--builder-accent, #2059ea) !important;
-    border-color: var(--builder-accent, #2059ea) !important;
-    color: white !important;
-}
-.menu-toggle--active:hover {
-    background: rgba(32, 89, 234, 0.8) !important;
-}
-
-/* Force specific button styling for Toolbar to prevent "White Block" on light mode */
-/* Force specific button styling for Toolbar to prevent "White Block" on light mode */
-:deep(.icon-button) {
-    background: transparent !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-:deep(.icon-button:hover) {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
-}
-
-/* Active state now handled by IconButton switching to primary (default) variant */
-:deep(.icon-button.border-white\/20) {
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 0 10px rgba(32, 89, 234, 0.3) !important;
 }
 
 /* Zoom Controls */
@@ -747,9 +714,16 @@ onMounted(() => {
 }
 
 .zoom-slider-container {
-  display: flex;
+  display: none;
   align-items: center;
   padding: 0 4px;
+  width: 80px;
+}
+
+@media (min-width: 1280px) {
+  .zoom-slider-container {
+    display: flex;
+  }
 }
 
 .zoom-slider {
@@ -785,5 +759,114 @@ onMounted(() => {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.16);
   border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Force specific button styling for Toolbar */
+:deep(.icon-button) {
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+:deep(.icon-button:hover) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+:deep(.icon-button.border-white\/20) {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 0 10px rgba(32, 89, 234, 0.3) !important;
+}
+
+/* Menu Toggle Button - Active State Styling */
+.menu-toggle--active {
+    background: var(--builder-accent, #2059ea) !important;
+    border-color: var(--builder-accent, #2059ea) !important;
+    color: white !important;
+}
+.menu-toggle--active:hover {
+    background: rgba(32, 89, 234, 0.8) !important;
+}
+
+/* =========================================================
+   BREAKPOINT OVERRIDES FOR NARROW & MOBILE SCREENS
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+  :deep(.admin-logo-override) {
+    display: none !important;
+  }
+  .toolbar-btn-mobile {
+    display: flex !important;
+  }
+  .theme-switcher-name {
+    display: none !important;
+  }
+  .theme-switcher-btn {
+    min-width: unset !important;
+    padding: 0 8px !important;
+  }
+  .extra-tool-btn,
+  .extra-tools-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-toolbar {
+    padding: 0 8px 0 4px;
+  }
+  .top-toolbar__center {
+    gap: 4px;
+  }
+  .zoom-btn {
+    display: none !important;
+  }
+  .theme-switcher-dropdown,
+  .theme-divider {
+    display: none !important;
+  }
+  .ai-sparkles-btn {
+    display: none !important;
+  }
+  .save-draft-btn {
+    display: none !important;
+  }
+  .top-toolbar__right {
+    gap: 4px;
+  }
+  .publish-btn {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-toolbar {
+    padding: 0 6px 0 2px;
+  }
+  .top-toolbar__center {
+    gap: 2px;
+  }
+  .publish-btn {
+    padding: 6px 10px !important;
+  }
+  .publish-text {
+    display: none !important;
+  }
+  .publish-icon {
+    margin-right: 0 !important;
+  }
+  .close-divider,
+  .divider-subtle,
+  .undo-redo-group {
+    display: none !important;
+  }
 }
 </style>

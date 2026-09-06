@@ -1,9 +1,10 @@
 <template>
   <div 
+    ref="containerRef"
     class="canvas-frame flex-1 min-h-0 w-full h-full overflow-auto flex justify-center custom-scrollbar select-none"
     :class="[
       `canvas-frame--${device}`,
-      device === 'desktop' && zoom === 100 && !width ? 'items-stretch p-0' : 'items-start p-4 md:p-8',
+      device === 'desktop' && zoom === 100 && !width ? 'items-stretch p-0' : 'items-start p-2 sm:p-4 md:p-8',
     ]"
   >
     <div
@@ -40,8 +41,10 @@
           </div>
 
           <!-- Resolution tag -->
-          <div class="w-16 flex justify-end">
-            <span class="text-[10px] font-mono font-semibold text-muted-foreground/60">{{ width ? `${width}px` : '1280px' }}</span>
+          <div class="w-20 flex justify-end">
+            <span class="text-[10px] font-mono font-semibold text-muted-foreground/60">
+              {{ width ? `${width}px` : (zoom <= 0 ? `Fit ${Math.round(effectiveScale * 100)}%` : '1280px') }}
+            </span>
           </div>
         </div>
 
@@ -133,7 +136,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { ref, computed, inject } from 'vue'
+import { useElementSize } from '@vueuse/core'
 import {
   BatteryFull,
   Lock,
@@ -153,6 +157,9 @@ const props = withDefaults(defineProps<Props>(), {
   width: null
 })
 
+const containerRef = ref<HTMLElement | null>(null)
+const { width: containerWidth } = useElementSize(containerRef)
+
 const builder = inject<BuilderInstance | null>('builder', null)
 const showGridOverlay = computed(() => builder?.showGrid?.value ?? false)
 
@@ -163,8 +170,33 @@ const previewUrl = computed(() => {
   return `${previewHost.value}/${slug}`
 })
 
+const maxFitScale = computed(() => {
+  if (!containerWidth.value || containerWidth.value <= 0) return 1
+  const horizontalPadding = containerWidth.value < 640 ? 16 : 48
+  const availW = Math.max(260, containerWidth.value - horizontalPadding)
+  
+  let baseW = 1280
+  if (props.device === 'tablet') {
+    baseW = 768 + 28
+  } else if (props.device === 'mobile') {
+    baseW = 390 + 28
+  } else if (props.width) {
+    baseW = typeof props.width === 'number' ? props.width : parseInt(String(props.width), 10)
+  }
+  
+  return Math.min(1, Math.max(0.15, Math.floor((availW / baseW) * 100) / 100))
+})
+
+const effectiveScale = computed(() => {
+  // zoom <= 0 indicates Auto / Fit to Screen mode
+  if (props.zoom <= 0) {
+    return maxFitScale.value
+  }
+  return props.zoom / 100
+})
+
 const stageWrapperStyle = computed(() => {
-  const scale = (props.zoom ?? 100) / 100
+  const scale = effectiveScale.value
   if (props.device === 'desktop' && props.zoom === 100 && !props.width) {
     return { width: '100%', height: '100%' }
   }
@@ -187,7 +219,7 @@ const stageWrapperStyle = computed(() => {
 })
 
 const previewStyles = computed(() => {
-  const scale = (props.zoom ?? 100) / 100
+  const scale = effectiveScale.value
   let baseW = typeof props.width === 'number' ? `${props.width}px` : (props.width ? `${props.width}` : '1280px')
   let baseH = '900px'
 
