@@ -15,6 +15,8 @@
 - Deactivate/uninstall refuse kernel slugs even when `is_core` DB flag is wrong.
 - Decoupled `appName` fallback in `SecurityNotificationService` from vendor name to generic kernel default.
 - Dropped stale CMS `is_core` whitelist (`analytics`, `media`, `publishing`, …).
+- Console Navigation: Synchronized database menu hierarchy order during authentication completion to ensure consistent menu rendering on initial dashboard mount.
+
 
 ### Changed
 - `module.json` marks `is_core: true` for the consolidated kernel package.

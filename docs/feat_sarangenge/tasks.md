@@ -291,6 +291,26 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Playwright E2E: `sarangenge-dynamic-content.spec.ts` (4/4 tests passed) dan `public-site-smoke.spec.ts` (12/12 tests passed).
   - [x] Build produksi frontend dan sinkronisasi aset ke `backend/public/`.
 
+### Milestone 7.12: Stabilisasi Hidrasi Menu Konsol Saat Transisi Otentikasi (🟢 Selesai)
+- [x] **Pusat Logika Fetch di Store Navigasi (`navigation.ts`)**:
+  - [x] Implementasi `fetchConsoleMenus()` di `navigationStore` dengan proteksi concurrency guard (`isFetchingMenus`).
+  - [x] Pemuatan paralel `/manage/console-menus` dan `/manage/infra/extensions/navigation`.
+- [x] **Pre-fetching Saat Transisi Login (`Login.vue`)**:
+  - [x] Menjalankan `await navStore.fetchConsoleMenus()` sesaat sebelum `router.replace(...)` di `completeLogin()`.
+  - [x] Eliminasi FOUC (menu acak sebelum F5/refresh browser).
+- [x] **Defensive Resilient Fallback di Sidebar Shell (`TheSidebar.vue`)**:
+  - [x] Trigger otomatis di `onMounted()` jika `authStore.isAuthenticated` dan `!navigationStore.dbMenuRegistry`.
+  - [x] Watcher reaktif pada `authStore.isAuthenticated` untuk menangani perubahan status otentikasi tanpa reload.
+- [x] **Penyederhanaan Kernel Bootstrap (`main.ts`)**:
+  - [x] Refactor kode bootstrap memanggil `await navStore.fetchConsoleMenus()`.
+- [x] **Penyelarasan Dokumentasi & Changelogs**:
+  - [x] Pembuatan [ADR-009](./ADR-009-console-sidebar-menu-preloading-and-reactive-hydration.md) dan [ADR-013](../adr/ADR-013-console-sidebar-database-menu-preloading-and-reactive-hydration.md).
+  - [x] Pembaruan changelog kernel dan modul Core.
+- [x] **Pengujian & Verifikasi**:
+  - [x] Type-check (`vue-tsc -b`) lulus 0 errors.
+  - [x] Unit test suite 49 files, 302/302 tests passed.
+  - [x] Build asset frontend disinkronkan ke `backend/public/` di kedua portal (`smkn6-portal` & `k2net-portal`).
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
