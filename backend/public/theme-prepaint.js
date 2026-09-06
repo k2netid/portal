@@ -1,11 +1,16 @@
 (function () {
     try {
-        const cachedFavicon = localStorage.getItem('ja_favicon_href');
+        const path = window.location.pathname;
+        const isConsole = path.startsWith('/dash') || path.startsWith('/ja-dash') || path.startsWith('/auth') || path.startsWith('/login') || path.startsWith('/setup') || path.startsWith('/manage');
+        const cachedFavicon = isConsole
+            ? localStorage.getItem('ja_console_favicon_href')
+            : localStorage.getItem('ja_site_favicon_href');
+
         function isGenericFavicon(href) {
             if (!href) return true;
             try {
-                var path = new URL(href, window.location.origin).pathname.toLowerCase();
-                return path === '/favicon.ico' || path.endsWith('/favicon.ico');
+                var p = new URL(href, window.location.origin).pathname.toLowerCase();
+                return p === '/favicon.ico' || p.endsWith('/favicon.ico');
             } catch (e) {
                 return href === '/favicon.ico' || /\/favicon\.ico$/i.test(href);
             }
@@ -22,9 +27,6 @@
             document.head.appendChild(icon);
         }
 
-        const path = window.location.pathname;
-        const isConsole = path.startsWith('/dash') || path.startsWith('/ja-dash') || path.startsWith('/auth') || path.startsWith('/login') || path.startsWith('/setup');
-        
         if (isConsole) {
             // Console Prepaint
             const savedDark = localStorage.getItem('console-dark-mode');
