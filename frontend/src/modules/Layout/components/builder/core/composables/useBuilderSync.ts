@@ -98,6 +98,43 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
         markAsSaved()
     }
 
+    const SLUG_ALIASES: Record<string, string> = {
+        profil: 'about',
+        tentang: 'about',
+        'tentang-kami': 'about',
+        profile: 'about',
+        beranda: 'home',
+        kontak: 'contact',
+        'hubungi-kami': 'contact',
+        hubungi: 'contact',
+        'program-keahlian': 'programs',
+        jurusan: 'programs',
+        'kompetensi-keahlian': 'programs',
+        program: 'programs',
+        fasilitas: 'facilities',
+        bengkel: 'facilities',
+        lab: 'facilities',
+        'sarana-prasarana': 'facilities',
+        prestasi: 'achievement',
+        penghargaan: 'achievement',
+        'sorotan-prestasi': 'achievement',
+        karir: 'career',
+        bkk: 'career',
+        'bursa-kerja': 'career',
+        'pusat-karier': 'career',
+        alumni: 'career',
+        warta: 'blog',
+        'warta-sekolah': 'blog',
+        berita: 'blog',
+        news: 'blog',
+        guru: 'tim',
+        staf: 'tim',
+        'guru-staf': 'tim',
+        'direktori-guru': 'tim',
+        team: 'tim',
+        ppdb: 'contact',
+    }
+
     /**
      * Safely navigate within the Site Editor preview without touching the host router.
      * Switches the active CMS page or theme template in the canvas preview.
@@ -143,6 +180,7 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
 
         let cleanSlug = pathname.replace(/^\/+/, '').replace(/\/+$/, '')
         if (!cleanSlug) cleanSlug = 'home'
+        const aliasedSlug = SLUG_ALIASES[cleanSlug] || cleanSlug
 
         // Ensure pages are fetched
         if (pages.value.length === 0) {
@@ -153,12 +191,12 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             }
         }
 
-        // 1. Check CMS Pages
+        // 1. Check CMS Pages (direct slug or aliased slug)
         const existingPage = pages.value.find((p) => {
-            if (cleanSlug === 'home') {
+            if (cleanSlug === 'home' || aliasedSlug === 'home') {
                 return p.slug === 'home' || p.slug === '' || !p.slug
             }
-            return p.slug === cleanSlug
+            return p.slug === cleanSlug || p.slug === aliasedSlug
         })
 
         if (existingPage?.id != null) {
@@ -179,26 +217,26 @@ export function useBuilderSync(state: BuilderState, historyManager: HistoryManag
             return true
         }
 
-        // 2. Check Public Theme Templates catalog
-        if (router) {
-            const themeTemplates = getPublicThemePageCatalog(router)
-            const matchedTemplate = themeTemplates.find((t) => {
-                if (cleanSlug === 'home') {
-                    return t.slug === 'home' || t.slug === ''
-                }
-                return t.slug === cleanSlug
-            })
-
-            if (matchedTemplate) {
-                openThemePage({
-                    slug: matchedTemplate.slug,
-                    themePage: matchedTemplate.themePage,
-                    title: matchedTemplate.title,
-                })
-                return true
+        // 2. Check Public Theme Templates catalog (with static fallback)
+        const themeTemplates = getPublicThemePageCatalog(router)
+        const matchedTemplate = themeTemplates.find((t) => {
+            if (cleanSlug === 'home' || aliasedSlug === 'home') {
+                return t.slug === 'home' || t.slug === ''
             }
+            return t.slug === cleanSlug || t.slug === aliasedSlug
+        })
 
-            // 3. Fallback: Check if Vue Router matches a route with meta.themePage
+        if (matchedTemplate) {
+            openThemePage({
+                slug: matchedTemplate.slug,
+                themePage: matchedTemplate.themePage,
+                title: matchedTemplate.title,
+            })
+            return true
+        }
+
+        // 3. Fallback: Check if Vue Router matches a route with meta.themePage
+        if (router) {
             try {
                 const resolved = router.resolve(pathname)
                 const metaThemePage = resolved?.meta?.themePage

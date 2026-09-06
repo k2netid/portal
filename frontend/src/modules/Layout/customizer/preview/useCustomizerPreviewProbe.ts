@@ -95,10 +95,49 @@ export function useCustomizerPreviewProbe() {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
+  function onAnchorClick(event: MouseEvent) {
+    const target = event.target as HTMLElement | null;
+    const anchor = target?.closest('a') as HTMLAnchorElement | null;
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href') || '';
+    if (!href || href === '#' || href.startsWith('javascript:')) return;
+
+    // Block portal / auth logins from breaking customizer preview
+    if (
+      href.startsWith('/member') ||
+      href.startsWith('/auth') ||
+      href.startsWith('/admin') ||
+      href.startsWith('/manage') ||
+      href.startsWith('/console') ||
+      href.startsWith('mailto:') ||
+      href.startsWith('tel:')
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    // Block external origins
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+      try {
+        const u = new URL(href, window.location.origin);
+        if (u.origin !== window.location.origin) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      } catch {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+  }
+
   onMounted(() => {
     document.documentElement.classList.add(ROOT_CLASS);
     ensureStyles();
     document.addEventListener('click', onClick, true);
+    document.addEventListener('click', onAnchorClick, false);
     document.addEventListener('keydown', onKeydown);
     window.addEventListener('message', onParentMessage);
 
@@ -111,6 +150,7 @@ export function useCustomizerPreviewProbe() {
     document.documentElement.classList.remove(ROOT_CLASS);
     document.getElementById(STYLE_ID)?.remove();
     document.removeEventListener('click', onClick, true);
+    document.removeEventListener('click', onAnchorClick, false);
     document.removeEventListener('keydown', onKeydown);
     window.removeEventListener('message', onParentMessage);
   });

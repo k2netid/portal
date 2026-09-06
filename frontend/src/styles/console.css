@@ -261,7 +261,7 @@
     }
 
     .console-dialog-full {
-        @apply w-[96vw] max-w-[1400px] h-[90vh] p-0 overflow-hidden bg-card border border-border/80 rounded-xl shadow-none;
+        @apply !w-[96vw] !max-w-[1500px] !h-[92vh] !max-h-[92vh] !p-0 overflow-hidden bg-card border border-border/80 rounded-2xl shadow-2xl;
     }
 
     /* Legacy left-accent stat cards */

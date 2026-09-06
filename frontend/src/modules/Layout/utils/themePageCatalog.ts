@@ -45,9 +45,27 @@ function routeSlug(path: string): string {
   return path.replace(/^\/+/, '').split('/')[0] || 'home'
 }
 
-/** Theme page catalog derived from active router (single source of truth). */
-export function getPublicThemePageCatalog(router: Router): ThemePageCatalogItem[] {
-  const routes = router.getRoutes();
+const THEME_PAGE_DEFAULT_SLUGS: Record<string, string> = {
+  'pages/Home': 'home',
+  'pages/About': 'about',
+  'pages/Tim': 'tim',
+  'pages/Pricing': 'pricing',
+  'pages/PricingIsp': 'pricing-isp',
+  'pages/PricingMsp': 'pricing-msp',
+  'pages/Programs': 'programs',
+  'pages/Facilities': 'facilities',
+  'pages/Solusi': 'solusi',
+  'pages/Services': 'services',
+  'pages/Contact': 'contact',
+  'pages/Blog': 'blog',
+  'pages/CareerCenter': 'career',
+  'pages/Achievement': 'achievement',
+  'pages/Search': 'search',
+}
+
+/** Theme page catalog derived from active router (single source of truth) with robust static fallback. */
+export function getPublicThemePageCatalog(router?: Router | null): ThemePageCatalogItem[] {
+  const routes = router && typeof router.getRoutes === 'function' ? router.getRoutes() : []
   const seen = new Set<string>()
   const items: ThemePageCatalogItem[] = []
 
@@ -74,6 +92,28 @@ export function getPublicThemePageCatalog(router: Router): ThemePageCatalogItem[
       status: 'published',
       themePage,
     })
+  }
+
+  // Fallback: When inside console router (JA-Builder), routes has no public themePage meta.
+  // Generate items directly from known theme pages so builder can navigate and display templates.
+  if (items.length === 0) {
+    for (const [themePage, title] of Object.entries(TITLE_BY_THEME_PAGE)) {
+      if (!themePageHasVue(themePage)) continue
+      const slug = THEME_PAGE_DEFAULT_SLUGS[themePage] || themePage.split('/').pop()?.toLowerCase() || 'page'
+      if (seen.has(themePage) || seen.has(slug)) continue
+      seen.add(themePage)
+      seen.add(slug)
+
+      items.push({
+        id: `theme-${slug}`,
+        title,
+        slug,
+        type: 'page',
+        isThemeTemplate: true,
+        status: 'published',
+        themePage,
+      })
+    }
   }
 
   return items
