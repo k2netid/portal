@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { NavItem } from '@/shared/utils/navigation';
+import apiClient from '@/engine/api/client';
+import { logger } from '@/shared/utils/logger';
 
 /** Sidebar parents with the same `group` are merged into one accordion. */
 const MERGE_BY_GROUP = new Set<NonNullable<NavItem['group']>>([
@@ -102,6 +104,36 @@ export const useNavigationStore = defineStore('navigation', () => {
 
     const markMenusReady = () => {
         menusReady.value = true;
+    };
+
+    const isFetchingMenus = ref(false);
+
+    const fetchConsoleMenus = async (): Promise<void> => {
+        if (isFetchingMenus.value) return;
+        isFetchingMenus.value = true;
+        try {
+            const res = await apiClient.get('/manage/console-menus');
+            const data = res.data?.data || res.data;
+            if (Array.isArray(data) && data.length > 0) {
+                setDatabaseMenus(data);
+            } else {
+                markMenusReady();
+            }
+        } catch (error) {
+            logger.warning('[NavigationStore] Failed to load console database menus', error);
+            markMenusReady();
+        } finally {
+            isFetchingMenus.value = false;
+        }
+
+        try {
+            const dynamicNavs = await apiClient.get('/manage/infra/extensions/navigation');
+            if (Array.isArray(dynamicNavs.data)) {
+                registerModuleNavigation('dynamic_plugins', dynamicNavs.data);
+            }
+        } catch (error) {
+            logger.warning('[NavigationStore] Failed to load dynamic plugin navigation', error);
+        }
     };
 
     const setDatabaseMenus = (menus: Array<{
@@ -265,6 +297,7 @@ export const useNavigationStore = defineStore('navigation', () => {
         registerModuleNavigation,
         setDatabaseMenus,
         markMenusReady,
+        fetchConsoleMenus,
         navigationItems,
         navigationGroups,
     };

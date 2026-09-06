@@ -293,6 +293,7 @@ import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
 import { useConsoleContextStore } from '@/engine/stores/consoleContext';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
+import { useNavigationStore } from '@/shared/stores/navigation';
 import { useFormValidation } from '@/shared/composables/useFormValidation';
 import { loginSchema } from '@/modules/Core/System/schemas/auth';
 import {
@@ -560,6 +561,14 @@ const completeLogin = async () => {
     const target: RouteLocationRaw = (redirectPath && typeof redirectPath === 'string' && !redirectPath.includes('/login') && !redirectPath.includes('/419'))
         ? redirectPath
         : defaultDashboard;
+
+    // Preload database menus so sidebar is cleanly ordered upon landing on dashboard
+    const navStore = useNavigationStore();
+    try {
+        await navStore.fetchConsoleMenus();
+    } catch {
+        // Non-blocking fallback
+    }
 
     await nextTick();
 
