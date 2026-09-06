@@ -10,13 +10,40 @@ final class SpaHtmlFavicon
 {
     public static function resolveHref(string $shell): string
     {
-        $app = self::trimString(Setting::get('app_favicon', ''));
-        $site = self::trimString(Setting::get('site_favicon', ''));
-        $theme = $shell === 'public' ? self::activeThemeBrandFavicon() : '';
+        $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        $hasWhiteLabel = $licenseService->hasWhiteLabel();
 
-        $preferred = $shell === 'public'
-            ? [$theme, $app, $site]
-            : [$app, $site, $theme];
+        // Console and Landing shells: Strictly use App / Brand identity, NEVER site or theme identity
+        if ($shell === 'console' || $shell === 'landing') {
+            if ($hasWhiteLabel) {
+                $brand = self::trimString(Setting::get('brand_favicon', ''));
+                if ($brand !== '' && ! self::isGenericEngineIcon($brand)) {
+                    return $brand;
+                }
+
+                $app = self::trimString(Setting::get('app_favicon', ''));
+                if ($app !== '' && ! self::isGenericEngineIcon($app)) {
+                    return $app;
+                }
+            }
+
+            return '/favicon.ico';
+        }
+
+        // Public shell: Check Brand Sync first (if White Label active)
+        $brandSync = filter_var(Setting::get('brand_sync_site_identity', false), FILTER_VALIDATE_BOOLEAN);
+        if ($hasWhiteLabel && $brandSync) {
+            $brand = self::trimString(Setting::get('brand_favicon', ''));
+            if ($brand !== '' && ! self::isGenericEngineIcon($brand)) {
+                return $brand;
+            }
+        }
+
+        $theme = self::activeThemeBrandFavicon();
+        $site = self::trimString(Setting::get('site_favicon', ''));
+        $app = self::trimString(Setting::get('app_favicon', ''));
+
+        $preferred = [$theme, $site, $app];
 
         foreach ($preferred as $href) {
             if ($href !== '' && ! self::isGenericEngineIcon($href)) {
