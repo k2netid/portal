@@ -25,13 +25,13 @@
       class="w-full"
     >
       <ConsoleListCard>
-        <div class="border-b border-border/50 px-6 py-4">
-          <TabsList class="h-auto flex-wrap gap-0 bg-transparent p-0">
+        <div class="border-b border-border/50 px-5 sm:px-6 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-card">
+          <TabsList class="h-auto flex-wrap gap-1 bg-transparent p-0">
             <TabsTrigger
               v-for="tab in tabItems"
               :key="tab.id"
               :value="tab.id"
-              class="relative rounded-none border-b-2 border-transparent px-5 py-2.5 text-sm data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+              class="relative rounded-lg border border-transparent px-4 py-2 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-muted/60 data-[state=active]:text-foreground data-[state=active]:shadow-xs data-[state=active]:border-border/60 text-muted-foreground hover:text-foreground cursor-pointer"
             >
               <component
                 :is="tab.icon"
@@ -40,11 +40,30 @@
               {{ tab.label }}
             </TabsTrigger>
           </TabsList>
-        </div>
 
-        <ConsoleThemeModeSection
-          :theme-mode="themeMode"
-        />
+          <!-- Segmented Pill Mode Switcher -->
+          <div
+            class="inline-flex items-center rounded-lg border border-border/60 bg-muted/30 p-1 self-start sm:self-auto shadow-2xs"
+            role="radiogroup"
+            :aria-label="t('system.settings.consoleAppearance.themeMode.title')"
+          >
+            <button
+              v-for="opt in modeOptions"
+              :key="opt.id"
+              type="button"
+              role="radio"
+              :aria-checked="themeMode === opt.id"
+              class="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-pointer"
+              :class="themeMode === opt.id
+                ? 'bg-background text-foreground shadow-xs font-semibold border border-border/60'
+                : 'text-muted-foreground hover:text-foreground'"
+              @click="requestSwitchMode(opt.id)"
+            >
+              <component :is="opt.icon" class="w-3.5 h-3.5" :class="themeMode === opt.id ? 'text-primary' : ''" />
+              <span>{{ opt.label }}</span>
+            </button>
+          </div>
+        </div>
 
         <form @submit.prevent="save">
           <TabsContent
@@ -182,7 +201,6 @@ import { Image, LayoutTemplate, Palette, Sliders, Sparkles } from 'lucide-vue-ne
 import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
 import { Tabs, TabsList, TabsTrigger, TabsContent, Button } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
-import ConsoleThemeModeSection from './components/ConsoleThemeModeSection.vue';
 import {
     provideConsoleAppearance,
     useConsoleAppearancePage,
@@ -215,6 +233,21 @@ const {
     showFaviconPicker,
 } = appearance;
 
+const modeOptions = computed(() => [
+    {
+        id: 'global' as const,
+        label: t('system.settings.consoleAppearance.themeMode.global.label'),
+        hint: t('system.settings.consoleAppearance.themeMode.global.hint'),
+        icon: Sparkles,
+    },
+    {
+        id: 'advanced' as const,
+        label: t('system.settings.consoleAppearance.themeMode.advanced.label'),
+        hint: t('system.settings.consoleAppearance.themeMode.advanced.hint'),
+        icon: Sliders,
+    },
+]);
+
 const validTabs: ConsoleAppearanceTabId[] = ['colors', 'shell', 'logos'];
 const queryTab = route.query.tab as string;
 if (validTabs.includes(queryTab as ConsoleAppearanceTabId)) {
@@ -228,7 +261,7 @@ if (validTabs.includes(queryTab as ConsoleAppearanceTabId)) {
 const tabItems = computed(() => {
     if (themeMode.value === 'global') {
         return [
-            { id: 'colors' as const, label: t('system.settings.consoleAppearance.themeMode.banner.easyTitle'), icon: Palette },
+            { id: 'colors' as const, label: t('system.settings.consoleAppearance.tabs.colorPreset'), icon: Palette },
             { id: 'logos' as const, label: t('system.settings.consoleAppearance.tabs.logos'), icon: Image },
         ];
     }

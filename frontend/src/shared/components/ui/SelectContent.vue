@@ -46,6 +46,7 @@ const props = withDefaults(
     sideOffset: 6,
     avoidCollisions: true,
     collisionPadding: 16,
+    bodyLock: false,
     class: undefined,
   }
 );
