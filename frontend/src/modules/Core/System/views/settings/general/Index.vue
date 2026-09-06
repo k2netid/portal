@@ -33,13 +33,19 @@
                   v-for="tab in tabs" 
                   :key="tab.id" 
                   :value="tab.id"
-                  class="relative px-6 py-3 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none"
+                  class="relative px-6 py-3 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none inline-flex items-center"
                 >
                   <component
                     :is="getTabIcon(tab.id)"
                     class="w-4 h-4 mr-2"
                   />
-                  {{ te('system.settings.tabs.' + tab.id) ? $t('system.settings.tabs.' + tab.id) : tab.label }}
+                  <span>{{ te('system.settings.tabs.' + tab.id) ? $t('system.settings.tabs.' + tab.id) : tab.label }}</span>
+                  <span
+                    v-if="tab.badge"
+                    class="ml-2 text-[10px] leading-none px-1.5 py-0.5 rounded-full font-medium bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25"
+                  >
+                    {{ tab.badge }}
+                  </span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -237,6 +243,8 @@ interface Setting {
 interface Tab {
     id: string;
     label: string;
+    badge?: string;
+    inactive?: boolean;
 }
 
 const { t, te } = useI18n();
@@ -292,11 +300,18 @@ const cacheStatus = ref<CacheStatus | null>(null);
 const clearingCache = ref(false);
 const warmingCache = ref(false);
 
+const isSiteActive = computed(() => systemStore.activeExtensions?.includes('site') ?? false);
+
 const tabs = computed<Tab[]>(() => {
     const allTabs: Tab[] = [
         { id: 'system', label: 'System' },
         { id: 'license', label: 'License' },
-        { id: 'identity', label: 'Identity' },
+        { 
+            id: 'identity', 
+            label: 'Identity',
+            badge: isSiteActive.value ? undefined : t('system.settings.site_module_inactive_badge'),
+            inactive: !isSiteActive.value,
+        },
         { id: 'security', label: 'Security' },
         { id: 'performance', label: 'Performance' },
         { id: 'monitoring', label: 'Monitoring' },
