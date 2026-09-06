@@ -165,8 +165,8 @@
         :open="showLivePreview"
         @update:open="(open) => showLivePreview = open"
       >
-        <DialogContent class="console-dialog-full">
-          <div class="h-full flex flex-col bg-background">
+        <DialogContent class="console-dialog-full !w-[96vw] !max-w-[1500px] !h-[92vh] !max-h-[92vh] !p-0 sm:!rounded-2xl overflow-hidden border border-border/80 shadow-2xl flex flex-col">
+          <div class="h-full flex flex-col bg-background min-h-0">
             <div class="h-12 px-4 border-b border-border flex items-center justify-between shrink-0 gap-3">
               <p class="text-sm font-semibold text-foreground">
                 {{ t('builder.toolbar.livePreview', 'Live site preview') }}

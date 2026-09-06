@@ -13,12 +13,14 @@ export const publicRoutes: RouteRecordRaw[] = [
             {
                 path: '',
                 name: 'public-home',
+                alias: ['home', 'beranda'],
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Home' },
             },
             {
                 path: 'blog',
                 name: 'public-blog',
+                alias: ['berita', 'warta', 'warta-sekolah', 'news'],
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Blog' },
             },
@@ -31,12 +33,14 @@ export const publicRoutes: RouteRecordRaw[] = [
             {
                 path: 'about',
                 name: 'public-about',
+                alias: ['profil', 'tentang', 'tentang-kami', 'profile'],
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/About' },
             },
             {
                 path: 'contact',
                 name: 'public-contact',
+                alias: ['kontak', 'hubungi-kami', 'hubungi'],
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Contact' },
             },
@@ -44,6 +48,7 @@ export const publicRoutes: RouteRecordRaw[] = [
             {
                 path: 'search',
                 name: 'public-search',
+                alias: ['cari', 'pencarian'],
                 component: publicThemePage,
                 meta: { public: true, themePage: 'pages/Search' },
             },
@@ -146,9 +151,11 @@ export const createPublicRouter = () => {
 
     router.beforeEach(async (to, from) => {
         const rawPath = typeof window !== 'undefined' ? window.location.pathname : to.path;
-        const isUnknownDirectHit = to.path === '/404' && rawPath !== '/404';
+        const redirectedTarget = to.redirectedFrom?.fullPath || to.redirectedFrom?.path || '';
+        const is404Hit = to.path === '/404' || to.name === 'public-not-found';
+        const isUnknownHit = is404Hit && (rawPath !== '/404' || (redirectedTarget !== '' && redirectedTarget !== '/404'));
 
-        if ((to.path !== '/404' || isUnknownDirectHit) && to.path !== '/maintenance') {
+        if ((!is404Hit || isUnknownHit) && to.path !== '/maintenance') {
             try {
                 const { useTheme } = await import('@/modules/Layout/composables/useTheme');
                 const { loadActiveTheme, activeTheme } = useTheme();
@@ -161,7 +168,9 @@ export const createPublicRouter = () => {
                     activeThemeRouteRemovers = [];
 
                     const modules = import.meta.glob('@/modules/Layout/views/themes/*/routes.ts');
-                    const loadThemeRoutes = modules[`/src/modules/Layout/views/themes/${currentSlug}/routes.ts`];
+                    const suffix = `/themes/${currentSlug}/routes.ts`.toLowerCase();
+                    const moduleKey = Object.keys(modules).find((k) => k.toLowerCase().replace(/\\/g, '/').endsWith(suffix));
+                    const loadThemeRoutes = moduleKey ? modules[moduleKey] : undefined;
                     
                     if (loadThemeRoutes) {
                         const module = await loadThemeRoutes() as any;
@@ -173,7 +182,10 @@ export const createPublicRouter = () => {
                                 }
                             });
                             injectedThemeSlug = currentSlug;
-                            if (isUnknownDirectHit) {
+                            if (redirectedTarget && redirectedTarget !== '/404') {
+                                return redirectedTarget;
+                            }
+                            if (isUnknownHit && rawPath !== '/404') {
                                 return rawPath;
                             }
                             if (to.matched.length === 0 || to.name === 'public-not-found') {
@@ -186,6 +198,15 @@ export const createPublicRouter = () => {
                 }
             } catch (e) {
                 // Ignore error, theme routes just won't be loaded
+            }
+        }
+
+        // Theme Customizer live preview safety: never trap the preview frame on a dead 404 page
+        if (typeof window !== 'undefined') {
+            const isCustomizerPreview = window.location.search.includes('ja_customizer_preview') ||
+                (window.parent !== window && window.sessionStorage?.getItem('ja_customizer_preview') === '1');
+            if (isCustomizerPreview && (to.path === '/404' || to.name === 'public-not-found')) {
+                return { path: '/' };
             }
         }
 

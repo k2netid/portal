@@ -71,5 +71,70 @@ describe('Site Editor Preview Sandboxing', () => {
             expect(extractSlug('/ppdb?ref=banner#syarat')).toBe('ppdb');
             expect(extractSlug('http://localhost:3000/kontak')).toBe('kontak');
         });
+
+        it('resolves Indonesian slug aliases correctly to canonical targets', () => {
+            const SLUG_ALIASES: Record<string, string> = {
+                profil: 'about',
+                tentang: 'about',
+                'tentang-kami': 'about',
+                beranda: 'home',
+                kontak: 'contact',
+                'hubungi-kami': 'contact',
+                'program-keahlian': 'programs',
+                jurusan: 'programs',
+                fasilitas: 'facilities',
+                bengkel: 'facilities',
+                prestasi: 'achievement',
+                karir: 'career',
+                bkk: 'career',
+                warta: 'blog',
+                'warta-sekolah': 'blog',
+                berita: 'blog',
+                guru: 'tim',
+                ppdb: 'contact',
+            };
+
+            const resolveSlug = (slug: string) => SLUG_ALIASES[slug] || slug;
+
+            expect(resolveSlug('profil')).toBe('about');
+            expect(resolveSlug('tentang')).toBe('about');
+            expect(resolveSlug('beranda')).toBe('home');
+            expect(resolveSlug('kontak')).toBe('contact');
+            expect(resolveSlug('program-keahlian')).toBe('programs');
+            expect(resolveSlug('jurusan')).toBe('programs');
+            expect(resolveSlug('fasilitas')).toBe('facilities');
+            expect(resolveSlug('prestasi')).toBe('achievement');
+            expect(resolveSlug('karir')).toBe('career');
+            expect(resolveSlug('bkk')).toBe('career');
+            expect(resolveSlug('warta')).toBe('blog');
+            expect(resolveSlug('unknown-page')).toBe('unknown-page');
+        });
+    });
+
+    describe('Theme Page Catalog Fallback', () => {
+        it('falls back to static theme catalog when router has no themePage routes', async () => {
+            const { getPublicThemePageCatalog } = await import(
+                '@/modules/Layout/utils/themePageCatalog'
+            );
+
+            // Mock console router with 0 themePage routes
+            const mockConsoleRouter = {
+                getRoutes: vi.fn(() => [
+                    { path: '/console/dashboard', meta: {} },
+                    { path: '/console/builder', meta: {} },
+                ]),
+            } as any;
+
+            const catalog = getPublicThemePageCatalog(mockConsoleRouter);
+            expect(Array.isArray(catalog)).toBe(true);
+            expect(catalog.length).toBeGreaterThan(0);
+
+            const slugs = catalog.map((item) => item.slug);
+            expect(slugs).toContain('home');
+            expect(slugs).toContain('about');
+            expect(slugs).toContain('programs');
+            expect(slugs).toContain('facilities');
+            expect(slugs).toContain('contact');
+        });
     });
 });

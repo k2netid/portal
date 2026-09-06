@@ -76,8 +76,16 @@
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="center"
-            class="w-32 rounded-xl"
+            class="w-36 rounded-xl"
           >
+            <DropdownMenuItem
+              class="font-medium text-primary flex items-center"
+              @click="fitToScreen"
+            >
+              <Maximize2 class="w-3.5 h-3.5 mr-1.5" />
+              Fit Layar ({{ fitScaleForCurrentDevice }}%)
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               v-for="preset in zoomPresets"
               :key="preset"
@@ -122,6 +130,7 @@
 
     <!-- Canvas Scrollable Stage -->
     <div
+      ref="stageContainerRef"
       class="flex-1 min-h-0 overflow-auto flex justify-center custom-scrollbar"
       :class="activeDevice === 'desktop' && zoomLevel === 100 ? 'items-stretch p-0' : 'items-start p-4 md:p-8'"
     >
@@ -257,10 +266,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useElementSize } from '@vueuse/core';
 import {
   BatteryFull,
   ChevronDown,
   Lock,
+  Maximize2,
   MonitorIcon,
   RotateCcw,
   SmartphoneIcon,
@@ -290,6 +301,9 @@ const emit = defineEmits<{
   (e: 'select-target', payload: { target: string; mode?: 'design' | 'bindings' }): void;
 }>();
 
+const stageContainerRef = ref<HTMLElement | null>(null);
+const { width: containerWidth, height: containerHeight } = useElementSize(stageContainerRef);
+
 const themePreviewRef = ref<{ refreshPreview: () => void } | null>(null);
 const isRefreshing = ref(false);
 
@@ -308,13 +322,51 @@ const deviceModes = [
   { id: 'mobile' as const, icon: SmartphoneIcon },
 ];
 
+function getDeviceDimensions(device: 'desktop' | 'tablet' | 'mobile') {
+  if (device === 'tablet') {
+    // iPad Pro outer frame with 12px bezel padding + 1px border on each side
+    return { width: 794, height: 1050 };
+  }
+  if (device === 'mobile') {
+    // iPhone 16 Pro outer frame with 10px bezel padding + 1px border on each side
+    return { width: 412, height: 866 };
+  }
+  return { width: 1280, height: 900 };
+}
+
 const previewHost = computed(() => (typeof window !== 'undefined' && window.location.host ? window.location.host : 'portal.local'));
 
 const zoomLevel = ref<number>(100);
 const zoomPresets = [50, 75, 90, 100, 110, 125, 150];
 
+const fitScaleForCurrentDevice = computed(() => {
+  const h = containerHeight.value;
+  const w = containerWidth.value;
+  if (!h || !w || h <= 0 || w <= 0) return 100;
+
+  const { width: baseW, height: baseH } = getDeviceDimensions(activeDevice.value);
+  const availH = Math.max(260, h - 48);
+  const availW = Math.max(260, w - 48);
+
+  const scaleH = availH / baseH;
+  const scaleW = availW / baseW;
+  const scale = Math.min(scaleH, scaleW, 1);
+  return Math.max(40, Math.floor(scale * 100));
+});
+
 const selectDevice = (device: 'desktop' | 'tablet' | 'mobile') => {
   activeDevice.value = device;
+  if (device === 'desktop') {
+    zoomLevel.value = 100;
+  } else {
+    // Automatically adjust initial zoom so mock devices are fully visible without vertical clipping
+    const fit = fitScaleForCurrentDevice.value;
+    zoomLevel.value = device === 'tablet' ? Math.min(80, fit) : Math.min(90, fit);
+  }
+};
+
+const fitToScreen = () => {
+  zoomLevel.value = fitScaleForCurrentDevice.value;
 };
 
 const zoomIn = () => {
@@ -322,7 +374,7 @@ const zoomIn = () => {
 };
 
 const zoomOut = () => {
-  zoomLevel.value = Math.max(50, zoomLevel.value - 10);
+  zoomLevel.value = Math.max(40, zoomLevel.value - 10);
 };
 
 const setZoom = (preset: number) => {
@@ -339,35 +391,18 @@ const stageWrapperStyle = computed(() => {
     return { width: '100%', height: '100%' };
   }
 
-  let baseW = 1280;
-  let baseH = 900;
-  if (activeDevice.value === 'tablet') {
-    baseW = 768 + 28;
-    baseH = 1024 + 28;
-  } else if (activeDevice.value === 'mobile') {
-    baseW = 390 + 28;
-    baseH = 844 + 28;
-  }
+  const { width: baseW, height: baseH } = getDeviceDimensions(activeDevice.value);
 
   return {
-    width: `${baseW * scale}px`,
-    height: `${baseH * scale}px`,
-    minHeight: `${baseH * scale}px`,
+    width: `${Math.round(baseW * scale)}px`,
+    height: `${Math.round(baseH * scale)}px`,
+    minHeight: `${Math.round(baseH * scale)}px`,
   };
 });
 
 const previewStyles = computed(() => {
   const scale = zoomLevel.value / 100;
-  let baseW = '1280px';
-  let baseH = '900px';
-
-  if (activeDevice.value === 'mobile') {
-    baseW = '390px';
-    baseH = '844px';
-  } else if (activeDevice.value === 'tablet') {
-    baseW = '768px';
-    baseH = '1024px';
-  } else if (zoomLevel.value === 100) {
+  if (activeDevice.value === 'desktop' && zoomLevel.value === 100) {
     return {
       width: '100%',
       height: '100%',
@@ -375,9 +410,11 @@ const previewStyles = computed(() => {
     };
   }
 
+  const { width: baseW, height: baseH } = getDeviceDimensions(activeDevice.value);
+
   return {
-    width: baseW,
-    height: baseH,
+    width: `${baseW}px`,
+    height: `${baseH}px`,
     transform: `scale(${scale}) translateZ(0)`,
     transformOrigin: 'top center',
   };
