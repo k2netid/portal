@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { PopoverRoot, useForwardPropsEmits, type PopoverRootEmits, type PopoverRootProps } from 'radix-vue'
 
-const props = defineProps<PopoverRootProps>()
+const props = withDefaults(defineProps<PopoverRootProps>(), {
+  modal: false,
+})
 const emits = defineEmits<PopoverRootEmits>()
 
 const forwarded = useForwardPropsEmits(props, emits)
