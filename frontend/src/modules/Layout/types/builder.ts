@@ -364,6 +364,7 @@ export interface BuilderInstance extends BuilderState, ModuleManager {
     ensureThemePageDocument: () => Promise<boolean>;
     addPage: (title: string) => Promise<void>;
     deletePage: (id: number | string) => Promise<void>;
+    navigateToPath?: (rawPath: string) => Promise<boolean>;
 }
 
 export interface BuilderPreset {

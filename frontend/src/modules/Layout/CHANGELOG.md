@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Site Editor Preview Sandboxing: isolasi rute dan event link di dalam kanvas preview menggunakan Capture-Phase Event Shield dan Scoped Router/Route Mock (`provide(routerKey, canvasRouter)` & `provide(routeLocationKey, canvasRoute)`). Mencegah kebocoran klik link/menu tema ke host router yang menyebabkan editor tertutup tiba-tiba, serta menambahkan internal `builder.navigateToPath` dan `onBeforeRouteLeave` guard di `SiteEditor.vue`.
 - Layung kontak: popup peta untuk semua alamat, ikon WhatsApp menggantikan nomor, email `mailto`, dan kolom wajib No. telp/WA pada formulir Reach.
 - Rename theme **Zenith → Sarangenge** (Sundanese midday sun; school-focused sibling to Janari dawn): folder/slug/locales/CSS, Member shell classes, bundled fallbacks, and campus UI (teal+sun, bento home, PPDB CTA).
 - Fix public site keeping the previous theme after activate: clear `frontend_theme_snapshot_v1`, broadcast activation to other tabs, drop API payload cache on activate/deactivate, force-reconcile on notification.

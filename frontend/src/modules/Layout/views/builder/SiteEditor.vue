@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, unref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { toast } from '@/shared/services/toastService';
 import type { BuilderInstance } from '@/modules/Layout/types/builder';
@@ -55,6 +55,7 @@ const router = useRouter();
 const isFullscreen = ref(false);
 const builderRef = ref<{ builder?: BuilderInstance } | null>(null);
 const showConfirmDialog = ref(false);
+const isIntentionallyClosing = ref(false);
 
 const handleSave = (status: string | null) => {
     // Persistence is owned by Builder.handleSave (single PUT). Parent only notifies.
@@ -67,14 +68,30 @@ const handleClose = () => {
     if (isDirty) {
         showConfirmDialog.value = true
     } else {
+        isIntentionallyClosing.value = true
         router.push({ name: 'dashboard' })
     }
 }
 
 const confirmClose = () => {
     showConfirmDialog.value = false
+    isIntentionallyClosing.value = true
     router.push({ name: 'dashboard' })
 }
+
+onBeforeRouteLeave((_to, _from, next) => {
+    if (isIntentionallyClosing.value) {
+        next()
+        return
+    }
+    const isDirty = unref(builderRef.value?.builder?.isDirty)
+    if (isDirty) {
+        showConfirmDialog.value = true
+        next(false)
+    } else {
+        next()
+    }
+})
 
 const handleFullscreenUpdate = (val: boolean) => {
   isFullscreen.value = val
