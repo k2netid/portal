@@ -1,52 +1,54 @@
 <template>
-  <section class="space-y-4 border-b border-border/50 bg-muted/10 p-6">
-    <div>
-      <h3 class="text-sm font-medium text-foreground">
-        {{ t('system.settings.consoleAppearance.themeMode.title') }}
-      </h3>
-      <p class="mt-0.5 text-xs text-muted-foreground">
-        {{ t('system.settings.consoleAppearance.themeMode.description') }}
-      </p>
-    </div>
+  <div class="border-b border-border/50 bg-muted/20 px-6 py-3.5">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="space-y-0.5">
+        <div class="flex items-center gap-2">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-foreground/80">
+            {{ t('system.settings.consoleAppearance.themeMode.title') }}
+          </h3>
+          <span
+            class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
+            :class="themeMode === 'global' ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-secondary text-secondary-foreground border border-border/40'"
+          >
+            <component :is="themeMode === 'global' ? Sparkles : Sliders" class="w-2.5 h-2.5" />
+            {{ themeMode === 'global' ? t('system.settings.consoleAppearance.themeMode.global.label') : t('system.settings.consoleAppearance.themeMode.advanced.label') }}
+          </span>
+        </div>
+        <p class="text-xs text-muted-foreground">
+          {{ t('system.settings.consoleAppearance.themeMode.description') }}
+        </p>
+      </div>
 
-    <div
-      class="grid max-w-2xl grid-cols-1 gap-2 rounded-xl border border-border/50 bg-muted/20 p-1.5 sm:grid-cols-2"
-      role="radiogroup"
-      :aria-label="t('system.settings.consoleAppearance.themeMode.title')"
-    >
-      <button
-        v-for="opt in modeOptions"
-        :key="opt.id"
-        type="button"
-        role="radio"
-        :aria-checked="themeMode === opt.id"
-        class="min-h-[4.5rem] rounded-lg px-4 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        :class="themeMode === opt.id
-          ? 'bg-primary text-primary-foreground shadow-sm'
-          : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'"
-        @click="emit('update:themeMode', opt.id)"
+      <!-- Segmented Pill Control -->
+      <div
+        class="inline-flex items-center rounded-lg border border-border/60 bg-muted/40 p-1 self-start sm:self-auto"
+        role="radiogroup"
+        :aria-label="t('system.settings.consoleAppearance.themeMode.title')"
       >
-        <span class="block text-sm font-semibold">{{ opt.label }}</span>
-        <span
-          class="mt-1 block text-xs leading-snug text-foreground/80"
-          :class="themeMode === opt.id ? 'text-primary-foreground' : 'text-foreground/80'"
+        <button
+          v-for="opt in modeOptions"
+          :key="opt.id"
+          type="button"
+          role="radio"
+          :aria-checked="themeMode === opt.id"
+          class="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-pointer"
+          :class="themeMode === opt.id
+            ? 'bg-background text-foreground shadow-xs font-semibold border border-border/50'
+            : 'text-muted-foreground hover:text-foreground'"
+          @click="emit('update:themeMode', opt.id)"
         >
-          {{ opt.hint }}
-        </span>
-      </button>
+          <component :is="opt.icon" class="w-3.5 h-3.5" />
+          <span>{{ opt.label }}</span>
+        </button>
+      </div>
     </div>
-
-    <p class="max-w-2xl text-xs text-foreground/80">
-      {{ themeMode === 'global'
-        ? t('system.settings.consoleAppearance.themeMode.globalActiveHint')
-        : t('system.settings.consoleAppearance.themeMode.advancedActiveHint') }}
-    </p>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Sparkles, Sliders } from 'lucide-vue-next';
 import type { ConsoleThemeMode } from '@/modules/Core/System/constants/consoleThemeMode';
 
 defineProps<{
@@ -64,11 +66,13 @@ const modeOptions = computed(() => [
         id: 'global' as const,
         label: t('system.settings.consoleAppearance.themeMode.global.label'),
         hint: t('system.settings.consoleAppearance.themeMode.global.hint'),
+        icon: Sparkles,
     },
     {
         id: 'advanced' as const,
         label: t('system.settings.consoleAppearance.themeMode.advanced.label'),
         hint: t('system.settings.consoleAppearance.themeMode.advanced.hint'),
+        icon: Sliders,
     },
 ]);
 </script>

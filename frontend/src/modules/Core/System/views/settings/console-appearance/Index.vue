@@ -53,14 +53,6 @@
             class="relative mt-0 focus-visible:outline-none"
           >
             <ColorsTab />
-            <ConsoleThemeScopeOverlay
-              :disabled="isAdvancedMode"
-              :title="t('system.settings.consoleAppearance.scopeOverlay.colorsDisabledTitle')"
-              :description="t('system.settings.consoleAppearance.scopeOverlay.colorsDisabledDescription')"
-              :switch-tab-label="t('system.settings.consoleAppearance.scopeOverlay.goToColors')"
-              :icon="Palette"
-              @switch-tab="themeMode = 'global'"
-            />
           </TabsContent>
 
           <TabsContent
@@ -68,14 +60,6 @@
             class="relative mt-0 focus-visible:outline-none"
           >
             <ShellTab />
-            <ConsoleThemeScopeOverlay
-              :disabled="isGlobalMode"
-              :title="t('system.settings.consoleAppearance.scopeOverlay.shellDisabledTitle')"
-              :description="t('system.settings.consoleAppearance.scopeOverlay.shellDisabledDescription')"
-              :switch-tab-label="t('system.settings.consoleAppearance.scopeOverlay.goToShell')"
-              :icon="LayoutTemplate"
-              @switch-tab="themeMode = 'advanced'"
-            />
           </TabsContent>
 
           <TabsContent
@@ -85,23 +69,30 @@
             <LogosTab />
           </TabsContent>
 
-          <div class="flex flex-wrap items-center gap-2 border-t border-border/50 p-6">
-            <Button
-              type="submit"
-              size="sm"
-              :disabled="saving"
-            >
-              {{ saving ? t('common.actions.saving') : t('common.actions.save') }}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              :disabled="saving"
-              @click="load"
-            >
-              {{ t('common.actions.reset') }}
-            </Button>
+          <div class="flex flex-wrap items-center justify-between gap-3 border-t border-border/50 bg-muted/10 px-6 py-4 rounded-b-xl">
+            <div class="flex items-center gap-2 text-xs text-muted-foreground">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{{ t('system.settings.consoleAppearance.statusLiveDraft', 'Pratinjau langsung aktif pada konsol') }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                :disabled="saving"
+                @click="load"
+              >
+                {{ t('common.actions.reset') }}
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                :disabled="saving"
+                class="min-w-[7rem]"
+              >
+                {{ saving ? t('common.actions.saving') : t('common.actions.save') }}
+              </Button>
+            </div>
           </div>
         </form>
       </ConsoleListCard>
@@ -143,7 +134,6 @@ import { PageHeader, ConsoleListCard } from '@/shared/components/shell';
 import { Tabs, TabsList, TabsTrigger, TabsContent, Button } from '@/shared/components/ui';
 import MediaPicker from '@/shared/components/ui/MediaPicker.vue';
 import ConsoleThemeModeSection from './components/ConsoleThemeModeSection.vue';
-import ConsoleThemeScopeOverlay from './components/ConsoleThemeScopeOverlay.vue';
 import {
     provideConsoleAppearance,
     useConsoleAppearancePage,
@@ -165,8 +155,6 @@ const {
     saving,
     activeTab,
     themeMode,
-    isGlobalMode,
-    isAdvancedMode,
     form,
     syncDraft,
     load,
