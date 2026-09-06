@@ -311,6 +311,70 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Unit test suite 49 files, 302/302 tests passed.
   - [x] Build asset frontend disinkronkan ke `backend/public/` di kedua portal (`smkn6-portal` & `k2net-portal`).
 
+### Milestone 7.13: Hardening Visual Builder & Live Preview Sandboxing (🟢 Selesai)
+- [x] **Sandboxing Live Preview Canvas (`SiteEditor.vue`)**:
+  - [x] Implementasi Capture-Phase Event Shield dan Scoped Router/Route Mock (`provide(routerKey, canvasRouter)` & `provide(routeLocationKey, canvasRoute)`) untuk mengisolasi navigasi kanvas dari host router.
+  - [x] Pencegahan kebocoran event klik link/menu tema yang menutup editor secara tidak sengaja.
+  - [x] Penambahan internal `builder.navigateToPath` dan `onBeforeRouteLeave` navigation guard.
+- [x] **Proporsi Modal Preview & Scaling Viewport**:
+  - [x] Optimasi viewport scaling tablet/mobile (`scale(0.8)`) dengan responsive toolbar wrap.
+  - [x] Pemisahan tombol "Buka di Tab Baru" (*Open in New Tab*) dari tombol close modal preview dengan styling button mandiri.
+  - [x] Perbaikan z-index layering dan clipping dropdown menu pada header kanvas builder.
+- [x] **Modularisasi Ekstensi Gated License**:
+  - [x] Ekstraksi Visual Builder (`builder.site`) dan Data Model Studio (`studio.datamodel`) menjadi ekstensi opsional terproteksi lisensi ([ADR-011](../adr/ADR-011-visual-builder-modular-extension-and-license-gating.md), [ADR-012](../adr/ADR-012-data-model-studio-modular-extension-and-license-gating.md)).
+  - [x] Sinkronisasi slug `builder.site` pada `sys_console_menus` untuk menyembuhkan health warning.
+
+### Milestone 7.14: Workspace Tampilan Konsol Dual-Mode & Komponen Slider (🟢 Selesai)
+- [x] **Segregasi Dual-Mode Workspace (`AppearanceSettings.vue`)**:
+  - [x] Implementasi **Easy Mode** sebagai mode default: pemilihan Theme Mode (*Light/Dark/System*) dan kurasi preset warna instan (*Emerald, Sapphire, Indigo, Rose, Amber, Slate*).
+  - [x] Implementasi **Advanced Mode**: kontrol token desain granular (Border Radius, Elevation Shadows, Typography Scale, Spacing Density, Saturation, dan Custom CSS Code Editor).
+  - [x] Perlindungan transisi mode menggunakan `ConfirmDialog.vue` saat beralih ke Advanced Mode maupun saat reset token ke default.
+- [x] **Komponen UI `Slider.vue` Berkontras Tinggi**:
+  - [x] Pembuatan komponen `frontend/src/shared/components/ui/Slider.vue` dengan active filled progress track, glow effect saat hover/fokus, dan indikator nilai real-time.
+  - [x] Penggantian seluruh slider native `<input type="range">` lama dengan komponen `Slider.vue`.
+- [x] **Proteksi Lisensi Komersial (License Gating)**:
+  - [x] Portabilitas tema (ekspor/impor skema JSON) dan kustomisasi logo konsol diproteksi lisensi Enterprise/Pro dengan badge informatif dan disabled state yang elegan.
+  - [x] Penataan ulang header konsol appearance dan eliminasi dropdown layout shift.
+
+### Milestone 7.15: Arsitektur 3-Tier Identitas & Smart Brand Fallback (🟢 Selesai)
+- [x] **Pemisahan 3-Tier Identitas Sistem**:
+  - [x] **Tier 1 (Core Engine Identity)**: Baseline kanonikal Jejakawan (`/logo.png`, `/favicon.ico`) sebagai fallback mutlak tak terhapus.
+  - [x] **Tier 2 (White Label / Brand Identity)**: Identitas konsol manajemen (`app_name`, `brand_logo`, `brand_favicon`, `branding_display`) di `GeneralTab.vue` di bawah kendali lisensi Enterprise.
+  - [x] **Tier 3 (Site Identity)**: Identitas situs publik (`site_name`, `site_logo`, `site_favicon`, `site_description`, `site_url`) di `PlatformIdentityTab.vue`.
+- [x] **Smart Brand Sync (`brand_sync_site_identity`)**:
+  - [x] Toggle sinkronisasi pintar di `GeneralTab.vue` dan `PlatformIdentityTab.vue` untuk menyalin identitas brand ke identitas situs publik dan tema aktif secara atomik.
+- [x] **Eliminasi Redundansi Logo & Graceful Fallback**:
+  - [x] Penghapusan form upload logo duplikat di Console Appearance.
+  - [x] Auto-fallback cerdas ke logo Jejakawan saat logo brand kustom dihapus atau bernilai null.
+  - [x] Selector mode tampilan branding konsol reaktif di `TheSidebar.vue` (`both`, `logo_only`, `name_only`, `collapsed_icon_only`).
+  - [x] Dokumentasi lengkap: [ADR-010](./ADR-010-three-tier-identity-whitelabel-brand-and-smart-sync.md) / [ADR-014](../adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md).
+
+### Milestone 7.16: Isolasi Favicon Shell & Eliminasi Total Race Condition (🟢 Selesai)
+- [x] **Pemisahan Kunci Cache Pre-paint LocalStorage**:
+  - [x] Shell konsol menggunakan `ja_console_favicon_href`.
+  - [x] Shell publik tema menggunakan `ja_site_favicon_href`.
+  - [x] Purge otomatis cache lama `ja_favicon_href` saat aplikasi dimuat.
+- [x] **Hardening Server-Side Resolution (`SpaHtmlFavicon.php`)**:
+  - [x] Resolusi shell konsol dan landing engine strictly HANYA mengambil `brand_favicon` atau jatuh ke `/favicon.ico`—TIDAK PERNAH membocorkan `site_favicon` ke halaman konsol.
+- [x] **Guard Kesetaraan DOM & Single Source of Truth**:
+  - [x] `applyFavicon` memvalidasi kesetaraan pathname URL target dan elemen DOM saat ini sebelum melakukan manipulasi node.
+  - [x] Delegasi penanganan eksklusif kepada `ConsoleApp.vue` (shell konsol) dan `FrontendLayout.vue` (shell situs publik).
+  - [x] Dokumentasi lengkap: [ADR-011](./ADR-011-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md) / [ADR-015](../adr/ADR-015-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md).
+
+### Milestone 7.17: Orkes Lifecycle & Dependensi Modul pada Site Identity (🟢 Selesai)
+- [x] **Reaktivitas Siklus Hidup Modul di Frontend (`PlatformIdentityTab.vue`)**:
+  - [x] Pemantauan status ekstensi `site`, `layout`, dan `publishing` via `useExtensionStore()`.
+  - [x] Badge `(Nonaktif)` amber pada tab header `Index.vue` saat modul `site` tidak aktif.
+  - [x] Notice banner dengan tombol aksi cepat (*Quick CTA*) ke Module Registry (`/dash/infra/extensions`).
+  - [x] Menonaktifkan seluruh input form dan tombol simpan saat modul `site` tidak aktif.
+- [x] **Peringatan Dependensi Modul**:
+  - [x] Banner merah peringatan dependensi saat modul `layout` atau `publishing` nonaktif ketika `site` aktif.
+- [x] **Cross-Tab & Backend Guards**:
+  - [x] Menonaktifkan toggle `brand_sync_site_identity` di `GeneralTab.vue` saat modul `site` nonaktif disertai keterangan tooltip edukatif.
+  - [x] Guard backend di `SettingController::updatePlatformIdentity`: hanya menjalankan `syncSiteIdentityToActiveTheme()` saat `Extension::isProductActive('layout')` bernilai true.
+  - [x] Integrasi tombol "Configure" modul `site` di Module Registry langsung menuju tab Site Identity (`?tab=identity`).
+  - [x] Dokumentasi lengkap: [ADR-012](./ADR-012-module-aware-site-identity-and-dependency-orchestration.md) / [ADR-016](../adr/ADR-016-module-aware-site-identity-and-dependency-orchestration.md).
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
