@@ -510,7 +510,19 @@ onMounted(() => {
     }
     autoExpandActiveGroup();
     ensureSiteEditorGroupExpanded();
+    if (authStore.isAuthenticated && !navigationStore.dbMenuRegistry) {
+        void navigationStore.fetchConsoleMenus();
+    }
 });
+
+watch(
+    () => authStore.isAuthenticated,
+    (isAuth) => {
+        if (isAuth && !navigationStore.dbMenuRegistry) {
+            void navigationStore.fetchConsoleMenus();
+        }
+    },
+);
 
 watch(() => $route.name, () => autoExpandActiveGroup());
 watch(filteredNavigation, () => ensureSiteEditorGroupExpanded(), { flush: 'post' });

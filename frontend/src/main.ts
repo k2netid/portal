@@ -2,7 +2,6 @@ import '@/styles/shell/console-tailwind.css';
 import i18n from '@/engine/i18n';
 import { bootstrapConsoleApp } from '@/engine/bootstrap/console';
 import { scheduleDeferredConsoleModules } from '@/engine/bootstrap/deferredConsoleModules';
-import apiClient from '@/engine/api/client';
 import {
     createShellApp,
     initShellLayout,
@@ -38,29 +37,7 @@ async function bootstrap(): Promise<void> {
     });
 
     if (authStore.isAuthenticated) {
-        try {
-            const res = await apiClient.get('/manage/console-menus');
-            const data = res.data?.data || res.data;
-            if (Array.isArray(data) && data.length > 0) {
-                navStore.setDatabaseMenus(data);
-            } else {
-                navStore.markMenusReady();
-            }
-        } catch (error) {
-            logger.warning('[App] Failed to load console database menus', error);
-            navStore.markMenusReady();
-        }
-
-        void apiClient
-            .get('/manage/infra/extensions/navigation')
-            .then((dynamicNavs) => {
-                if (Array.isArray(dynamicNavs.data)) {
-                    navStore.registerModuleNavigation('dynamic_plugins', dynamicNavs.data);
-                }
-            })
-            .catch((error) => {
-                logger.warning('[App] Failed to load dynamic plugin navigation', error);
-            });
+        await navStore.fetchConsoleMenus();
     } else {
         navStore.markMenusReady();
     }
