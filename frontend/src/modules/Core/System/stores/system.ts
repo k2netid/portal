@@ -228,10 +228,12 @@ export const useSystemStore = defineStore('system', {
                     has_white_label: hasWhiteLabel,
                 };
 
+                const syncEnabled = Boolean(this.getSetting('brand_sync_site_identity', false));
                 applyFavicon(resolveFavicon([
+                    this.getSetting('brand_favicon'),
                     this.appIdentity.app_favicon,
-                    this.siteSettings.site_favicon,
-                ]), { allowGeneric: this.publicSettingsLoaded });
+                    syncEnabled ? this.siteSettings.site_favicon : null,
+                ], { preferFirst: true }), { allowGeneric: this.publicSettingsLoaded });
 
                 return this.appIdentity;
             } catch (error) {

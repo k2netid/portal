@@ -200,6 +200,7 @@ import { useToast } from '@/shared/composables/useToast';
 import { useConfirm } from '@/shared/composables/useConfirm';
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useAuthStore } from '@/modules/Core/System/stores/auth';
+import { useConsoleTheme } from '@/modules/Core/System/composables/useConsoleTheme';
 import type { CacheStatus, QueueStatus, EmailLog, SettingValue } from '@/engine/types/settings';
 import {
   Activity,
@@ -244,6 +245,7 @@ const systemStore = useSystemStore();
 const route = useRoute();
 const { confirm } = useConfirm();
 const toast = useToast();
+const { load: reloadConsoleTheme } = useConsoleTheme();
 
 const loading = ref(false);
 const saving = ref(false);
@@ -485,6 +487,7 @@ const fetchSettings = async () => {
         ensureSetting('app_name', 'Jejakawan', 'string', 'brand');
         ensureSetting('brand_logo', '', 'image', 'brand');
         ensureSetting('brand_favicon', '', 'image', 'brand');
+        ensureSetting('brand_sync_site_identity', false, 'boolean', 'brand');
         ensureSetting('branding_display', 'logo', 'string', 'brand');
 
         // Ensure General Site Settings
@@ -606,6 +609,8 @@ const handleSubmit = async () => {
         // Refetch public settings to update the store's dashboard slug
         systemStore.publicSettingsLoaded = false;
         await systemStore.fetchPublicSettings({ force: true });
+        await systemStore.fetchAppIdentity();
+        await reloadConsoleTheme(true);
 
         const newSlug = systemStore.consoleDashboardSlug || 'dash';
         if (newSlug !== oldSlug) {

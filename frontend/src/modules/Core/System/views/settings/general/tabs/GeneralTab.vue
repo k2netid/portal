@@ -22,7 +22,7 @@
       <!-- Platform Engine Default Info Box -->
       <div
         v-if="group.id === 'brand'"
-        class="mb-4 rounded-xl border border-border/60 bg-muted/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+        class="col-span-1 md:col-span-2 mb-2 rounded-xl border border-border/60 bg-muted/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
       >
         <div class="flex items-center gap-3">
           <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-background shadow-2xs overflow-hidden p-1.5">
@@ -58,6 +58,7 @@
           :label="$t('system.settings.labels.' + setting.key)"
           :description="$t('system.settings.descriptions.' + setting.key)"
           :type="setting.type"
+          :col-span="setting.key === 'brand_sync_site_identity' ? 'full' : 1"
           :enabled-text="$t('system.settings.enabled')"
           :disabled-text="$t('system.settings.disabled')"
           :error="errors?.[setting.key]"

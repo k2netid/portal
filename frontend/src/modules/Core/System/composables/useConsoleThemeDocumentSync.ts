@@ -64,11 +64,13 @@ export function useConsoleThemeDocumentSync() {
             }
         }
 
+        const syncEnabled = Boolean(systemStore.getSetting('brand_sync_site_identity', false));
         const href = resolveFavicon([
             settings.value.app_favicon,
+            systemStore.getSetting('brand_favicon'),
             appIdentity.value.app_favicon,
-            siteSettings.value.site_favicon,
-        ]);
+            syncEnabled ? siteSettings.value.site_favicon : null,
+        ], { preferFirst: true });
         if (!isGenericEngineFavicon(href) || systemStore.publicSettingsLoaded) {
             applyFavicon(href, { allowGeneric: systemStore.publicSettingsLoaded });
         }
