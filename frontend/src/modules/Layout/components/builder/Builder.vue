@@ -167,17 +167,21 @@
       >
         <DialogContent class="console-dialog-full !w-[96vw] !max-w-[1500px] !h-[92vh] !max-h-[92vh] !p-0 sm:!rounded-2xl overflow-hidden border border-border/80 shadow-2xl flex flex-col">
           <div class="h-full flex flex-col bg-background min-h-0">
-            <div class="h-12 px-4 border-b border-border flex items-center justify-between shrink-0 gap-3">
-              <p class="text-sm font-semibold text-foreground">
-                {{ t('builder.toolbar.livePreview', 'Live site preview') }}
-              </p>
+            <div class="h-12 px-4 pr-14 border-b border-border flex items-center justify-between shrink-0 gap-3 bg-card/60">
+              <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <p class="text-sm font-semibold text-foreground">
+                  {{ t('builder.toolbar.livePreview', 'Live site preview') }}
+                </p>
+              </div>
               <a
-                class="text-xs font-medium text-primary hover:underline"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-muted/80 hover:bg-muted text-foreground border border-border/80 shadow-2xs hover:border-primary/40 hover:text-primary transition-all focus:outline-none"
                 :href="livePreviewUrl"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {{ t('builder.toolbar.openInTab', 'Open in new tab') }}
+                <span>{{ t('builder.toolbar.openInTab', 'Open in new tab') }}</span>
+                <ExternalLink class="w-3.5 h-3.5 opacity-70" />
               </a>
             </div>
             <div class="flex-1 min-h-0">
@@ -235,6 +239,7 @@ import InputModal from './modals/InputModal.vue'
 import ContextMenu from './ui/ContextMenu.vue'
 import PreviewArea from '@/modules/Layout/components/themes/customizer/preview/PreviewArea.vue'
 import { Dialog, DialogContent } from '@/shared/components/ui'
+import { ExternalLink } from 'lucide-vue-next'
 import type { Theme as ThemeModel } from '@/modules/Layout/types/theme'
 import { BUILDER_THEME_OVERRIDE_KEY, type Theme as RuntimeTheme } from '@/modules/Layout/composables/useTheme'
 import { resolvePublicEmbedUrl } from '@/modules/Layout/utils/publicSiteUrl'
