@@ -123,14 +123,6 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
     const isGlobalMode = computed(() => themeMode.value === CONSOLE_THEME_MODE_GLOBAL);
     const isAdvancedMode = computed(() => !isGlobalMode.value);
 
-    watch(themeMode, (mode) => {
-        if (mode === CONSOLE_THEME_MODE_GLOBAL && activeTab.value === 'shell') {
-            activeTab.value = 'colors';
-        } else if (mode !== CONSOLE_THEME_MODE_GLOBAL && activeTab.value === 'colors') {
-            activeTab.value = 'shell';
-        }
-    });
-
     const hasWhiteLabel = computed(() => systemStore.appIdentity?.has_white_label ?? false);
 
     const getContrastAnalysis = (colorHex: string, bgHex: string) => {

@@ -2279,6 +2279,7 @@
       "sidebarStyleLabel": "Gaya latar sidebar",
       "sidebarAccordionModeLabel": "Mode Akordion Sidebar",
       "sidebarAccordionModeDescription": "Atur perilaku pembukaan grup menu pada navigasi sidebar konsol.",
+      "statusLiveDraft": "Pratinjau langsung aktif pada konsol",
       "navbarStyleLabel": "Gaya latar navbar",
       "popperOpacityLabel": "Opasitas popper & dropdown overlay",
       "logoLightLabel": "Logo Terang (Light Mode)",

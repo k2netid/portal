@@ -2279,6 +2279,7 @@
       "sidebarStyleLabel": "Sidebar background style",
       "sidebarAccordionModeLabel": "Sidebar Accordion Mode",
       "sidebarAccordionModeDescription": "Configure how menu groups expand and collapse in the console sidebar.",
+      "statusLiveDraft": "Live preview active on console",
       "navbarStyleLabel": "Navbar background style",
       "popperOpacityLabel": "Overlay & Dropdown transparency",
       "logoLightLabel": "Logo (Light Mode)",
