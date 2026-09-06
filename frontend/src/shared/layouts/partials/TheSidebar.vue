@@ -274,7 +274,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useNavigationStore } from '@/shared/stores/navigation';
@@ -368,10 +368,30 @@ const isDashboardActive = computed(() => {
     return names.includes(String($route.name));
 });
 
+const accordionMode = ref<'single' | 'multiple'>('single');
+
+const loadAccordionMode = () => {
+    const saved = localStorage.getItem('console_sidebar_accordion_mode');
+    if (saved === 'single' || saved === 'multiple') {
+        accordionMode.value = saved;
+    } else {
+        accordionMode.value = 'single';
+    }
+};
+
 const expandedGroups = ref<Record<string, boolean>>({});
 
 const toggleGroup = (key: string) => {
-    expandedGroups.value[key] = !expandedGroups.value[key];
+    if (accordionMode.value === 'single') {
+        const isCurrentlyOpen = !!expandedGroups.value[key];
+        if (isCurrentlyOpen) {
+            expandedGroups.value = {};
+        } else {
+            expandedGroups.value = { [key]: true };
+        }
+    } else {
+        expandedGroups.value[key] = !expandedGroups.value[key];
+    }
 };
 
 const isChildActive = (item: Pick<NavItem, 'name' | 'to'>) => {
@@ -399,7 +419,13 @@ const autoExpandActiveGroup = () => {
     for (const item of filteredNavigation.value) {
         if (item.children && item.children.length > 0) {
             if (item.children.some(c => isChildActive(c))) {
-                expandedGroups.value[navItemKey(item)] = true;
+                const key = navItemKey(item);
+                if (accordionMode.value === 'single') {
+                    expandedGroups.value = { [key]: true };
+                } else {
+                    expandedGroups.value[key] = true;
+                }
+                return;
             }
         }
     }
@@ -409,8 +435,14 @@ const ensureSiteEditorGroupExpanded = () => {
     for (const item of filteredNavigation.value) {
         if (item.children?.some((c) => c.name === 'builder.site')) {
             const key = navItemKey(item);
-            if (expandedGroups.value[key] !== false) {
-                expandedGroups.value[key] = true;
+            if (accordionMode.value === 'single') {
+                if (Object.keys(expandedGroups.value).length === 0 || item.children.some(c => isChildActive(c))) {
+                    expandedGroups.value = { [key]: true };
+                }
+            } else {
+                if (expandedGroups.value[key] !== false) {
+                    expandedGroups.value[key] = true;
+                }
             }
         }
     }
@@ -502,7 +534,27 @@ watch(expandedGroups, (newVal) => {
     localStorage.setItem('sidebarExpandedGroups', JSON.stringify(newVal));
 }, { deep: true });
 
+const handleAccordionModeChanged = (event: Event) => {
+    const customEvent = event as CustomEvent<string>;
+    if (customEvent.detail === 'single' || customEvent.detail === 'multiple') {
+        accordionMode.value = customEvent.detail;
+        if (accordionMode.value === 'single') {
+            autoExpandActiveGroup();
+        }
+    }
+};
+
+const handleStorage = (e: StorageEvent) => {
+    if (e.key === 'console_sidebar_accordion_mode') {
+        loadAccordionMode();
+        if (accordionMode.value === 'single') {
+            autoExpandActiveGroup();
+        }
+    }
+};
+
 onMounted(() => {
+    loadAccordionMode();
     const saved = localStorage.getItem('sidebarExpandedGroups');
     if (saved) {
         try { expandedGroups.value = JSON.parse(saved); } 
@@ -513,6 +565,13 @@ onMounted(() => {
     if (authStore.isAuthenticated && !navigationStore.dbMenuRegistry) {
         void navigationStore.fetchConsoleMenus();
     }
+    window.addEventListener('console:sidebar-accordion-mode-changed', handleAccordionModeChanged);
+    window.addEventListener('storage', handleStorage);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('console:sidebar-accordion-mode-changed', handleAccordionModeChanged);
+    window.removeEventListener('storage', handleStorage);
 });
 
 watch(

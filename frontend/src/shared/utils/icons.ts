@@ -1,9 +1,36 @@
 import { h, type Component } from 'vue';
+import * as LucideIcons from 'lucide-vue-next';
 
 /**
  * Cache for icon component instances to ensure stable references
  */
 const iconCache = new Map<string, Component>();
+
+const toPascalCase = (str: string): string => {
+    return str.replace(/(^|[-_])(\w)/g, (_, __, c) => c.toUpperCase());
+};
+
+const LUCIDE_ALIASES: Record<string, string> = {
+    HelpCircle: 'CircleHelp',
+    AlertCircle: 'CircleAlert',
+    PlusCircle: 'CirclePlus',
+    XCircle: 'CircleX',
+    CheckCircle2: 'CircleCheckBig',
+    Circle2: 'Circle',
+    MoreHorizontal: 'Ellipsis',
+    MoreVertical: 'EllipsisVertical',
+    ArrowUpCircle: 'CircleArrowUp',
+    ArrowDownCircle: 'CircleArrowDown',
+    ArrowLeftCircle: 'CircleArrowLeft',
+    ArrowRightCircle: 'CircleArrowRight',
+    Edit3: 'PenTool',
+    Edit: 'Pen',
+    Filter: 'ListFilter',
+    Sort: 'ArrowUpDown',
+    Grid: 'Grid2X2',
+    Layout: 'LayoutDashboard',
+    BarChart: 'BarChart2',
+};
 
 /**
  * Get icon component by name
@@ -489,9 +516,178 @@ export const getIcon = (name: string): Component => {
             h('circle', { cx: '12', cy: '12', r: '6', 'stroke-width': '2' }),
             h('circle', { cx: '12', cy: '12', r: '2', 'stroke-width': '2' })
         ]),
+        'bar-chart-2': () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('line', { x1: '18', y1: '20', x2: '18', y2: '10', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '12', y1: '20', x2: '12', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '6', y1: '20', x2: '6', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        BarChart2: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('line', { x1: '18', y1: '20', x2: '18', y2: '10', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '12', y1: '20', x2: '12', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '6', y1: '20', x2: '6', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        sparkles: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M20 3v4M22 5h-4M4 17v2M5 18H3' })
+        ]),
+        Sparkles: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M20 3v4M22 5h-4M4 17v2M5 18H3' })
+        ]),
+        terminal: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('polyline', { points: '4 17 10 11 4 5', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '12', y1: '19', x2: '20', y2: '19', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        Terminal: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('polyline', { points: '4 17 10 11 4 5', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '12', y1: '19', x2: '20', y2: '19', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        key: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '7.5', cy: '15.5', r: '5.5', 'stroke-width': '2' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M11.4 11.6L21.5 1.5M16.5 6.5l2.5 2.5M19 4l2 2' })
+        ]),
+        Key: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '7.5', cy: '15.5', r: '5.5', 'stroke-width': '2' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M11.4 11.6L21.5 1.5M16.5 6.5l2.5 2.5M19 4l2 2' })
+        ]),
+        cpu: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2', 'stroke-width': '2' }),
+            h('rect', { x: '9', y: '9', width: '6', height: '6', 'stroke-width': '2' }),
+            h('line', { x1: '9', y1: '1', x2: '9', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '1', x2: '15', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '9', y1: '20', x2: '9', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '20', x2: '15', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '9', x2: '23', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '14', x2: '23', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '9', x2: '4', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '14', x2: '4', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        Cpu: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2', 'stroke-width': '2' }),
+            h('rect', { x: '9', y: '9', width: '6', height: '6', 'stroke-width': '2' }),
+            h('line', { x1: '9', y1: '1', x2: '9', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '1', x2: '15', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '9', y1: '20', x2: '9', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '20', x2: '15', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '9', x2: '23', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '14', x2: '23', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '9', x2: '4', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '14', x2: '4', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        info: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('line', { x1: '12', y1: '16', x2: '12', y2: '12', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        Info: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('line', { x1: '12', y1: '16', x2: '12', y2: '12', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        clock: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('polyline', { points: '12 6 12 12 16 14', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        Clock: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('polyline', { points: '12 6 12 12 16 14', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        bell: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M13.73 21a2 2 0 0 1-3.46 0' })
+        ]),
+        Bell: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M13.73 21a2 2 0 0 1-3.46 0' })
+        ]),
+        circle: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '8', 'stroke-width': '2' })
+        ]),
+        Circle: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '8', 'stroke-width': '2' })
+        ]),
+        // Aliases for common console routes & groups
+        insight: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('line', { x1: '18', y1: '20', x2: '18', y2: '10', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '12', y1: '20', x2: '12', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
+            h('line', { x1: '6', y1: '20', x2: '6', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+        ]),
+        ai: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M20 3v4M22 5h-4M4 17v2M5 18H3' })
+        ]),
+        'ai-panel': () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M20 3v4M22 5h-4M4 17v2M5 18H3' })
+        ]),
+        'ai-assistant': () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z' }),
+            h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-width': '2', d: 'M20 3v4M22 5h-4M4 17v2M5 18H3' })
+        ]),
+        infrastructure: () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2', 'stroke-width': '2' }),
+            h('rect', { x: '9', y: '9', width: '6', height: '6', 'stroke-width': '2' }),
+            h('line', { x1: '9', y1: '1', x2: '9', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '1', x2: '15', y2: '4', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '9', y1: '20', x2: '9', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '15', y1: '20', x2: '15', y2: '23', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '9', x2: '23', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '20', y1: '14', x2: '23', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '9', x2: '4', y2: '9', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '1', y1: '14', x2: '4', y2: '14', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        'system-info': () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('line', { x1: '12', y1: '16', x2: '12', y2: '12', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
+        'info-sistem': () => h('svg', { class: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
+            h('circle', { cx: '12', cy: '12', r: '10', 'stroke-width': '2' }),
+            h('line', { x1: '12', y1: '16', x2: '12', y2: '12', 'stroke-width': '2', 'stroke-linecap': 'round' }),
+            h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8', 'stroke-width': '2', 'stroke-linecap': 'round' })
+        ]),
     };
     
-    const icon = (icons[name as keyof typeof icons] || icons.dashboard) as Component;
-    iconCache.set(name, icon);
-    return icon;
+    const rawKey = (name || '').trim();
+    if (!rawKey) {
+        return (icons.folder || icons.dashboard) as Component;
+    }
+
+    if (iconCache.has(rawKey)) {
+        return iconCache.get(rawKey)!;
+    }
+
+    // 1. Direct match in icons dictionary
+    if (icons[rawKey as keyof typeof icons]) {
+        const iconComp = icons[rawKey as keyof typeof icons] as Component;
+        iconCache.set(rawKey, iconComp);
+        return iconComp;
+    }
+
+    // 2. Lowercase match in icons dictionary
+    const lowerKey = rawKey.toLowerCase();
+    if (icons[lowerKey as keyof typeof icons]) {
+        const iconComp = icons[lowerKey as keyof typeof icons] as Component;
+        iconCache.set(rawKey, iconComp);
+        return iconComp;
+    }
+
+    // 3. Dynamic lookup from lucide-vue-next
+    let pascalName = toPascalCase(rawKey);
+    if (LUCIDE_ALIASES[pascalName]) {
+        pascalName = LUCIDE_ALIASES[pascalName] ?? pascalName;
+    }
+    const lucideComp = (LucideIcons as unknown as Record<string, Component | undefined>)[pascalName];
+    if (lucideComp) {
+        iconCache.set(rawKey, lucideComp);
+        return lucideComp;
+    }
+
+    // 4. Fallback: use dashboard only when expressly referencing dashboard/home, otherwise neutral folder
+    const fallback = (lowerKey.includes('dashboard') || lowerKey === 'home') 
+        ? icons.dashboard 
+        : (icons.folder || icons.dashboard);
+    const finalIcon = fallback as Component;
+    iconCache.set(rawKey, finalIcon);
+    return finalIcon;
 };

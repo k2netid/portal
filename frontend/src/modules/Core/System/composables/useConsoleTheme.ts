@@ -44,6 +44,7 @@ export interface ConsoleThemeSettings {
     console_surface_style?: string;
     console_sidebar_accent?: string;
     console_sidebar_style?: string;
+    console_sidebar_accordion_mode?: string;
     console_navbar_style?: string;
     console_popper_opacity?: number | string;
     console_glass_gradient_preset?: string;
