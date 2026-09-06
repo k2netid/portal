@@ -239,13 +239,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: flex-start;
     background: var(--builder-bg-secondary);
-    overflow: auto;
-    padding: var(--spacing-md);
+    overflow: hidden;
+    padding: 0;
     position: relative;
     min-width: 0; /* Allow flex child to shrink and enable scroll */
+    min-height: 0;
 }
 
 /* Global Transition Suppression (Only when active/dragging or for specific UI) */
