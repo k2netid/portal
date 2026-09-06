@@ -659,6 +659,11 @@ class ConsoleMenu extends Model
             'label_key' => 'library.navigation.menu.generalTags',
         ]);
 
+        // Sync extension_slug for builder.site to visual-builder
+        self::query()->where('route_name', 'builder.site')->update([
+            'extension_slug' => 'visual-builder',
+        ]);
+
         $existingRoutes = self::query()
             ->whereNotNull('route_name')
             ->pluck('route_name')
