@@ -181,7 +181,7 @@ class SecurityNotificationService
             $body .= "\nTimestamp: ".now()->format('Y-m-d H:i:s T');
             $body .= "\nServer: ".gethostname();
 
-            $appName = is_string($appNameRaw = config('app.name')) ? $appNameRaw : 'K2NET';
+            $appName = is_string($appNameRaw = config('app.name')) ? $appNameRaw : 'Jejakawan';
 
             Mail::raw($body, function ($mail) use ($to, $title, $severityLabel, $appName): void {
                 $mail->to($to)
