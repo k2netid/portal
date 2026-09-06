@@ -39,6 +39,13 @@ describe('resolvePreferredLocale', () => {
         })).toBe('id');
     });
 
+    it('defaults to site default locale (id) on initial load', () => {
+        expect(resolvePreferredLocale(available, {
+            stored: null,
+            fallback: 'id',
+        })).toBe('id');
+    });
+
     it('normalizes region tags', () => {
         expect(normalizeAgainstAvailable('su-ID', available, 'id')).toBe('su');
         expect(normalizeAgainstAvailable('xx-YY', available, 'id')).toBe('id');

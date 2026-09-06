@@ -55,5 +55,14 @@ describe('resolvePreferredLocale', () => {
                 }),
             ).toBe('id');
         });
+
+        it('defaults to fallback (id) on initial load when stored is missing and browser detection is not requested', () => {
+            expect(
+                resolvePreferredLocale(available, {
+                    stored: null,
+                    fallback: 'id',
+                }),
+            ).toBe('id');
+        });
     });
 });
