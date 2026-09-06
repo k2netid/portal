@@ -45,28 +45,28 @@
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs">
           <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.glassGradientIntensityLabel') }}</span>
-          <span class="tabular-nums text-foreground">{{ intensity }}%</span>
+          <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ intensity }}%</span>
         </div>
         <input
           :value="intensity"
           type="range"
           min="0"
           max="100"
-          class="console-range-input w-full accent-primary"
+          class="console-range-input w-full"
           @input="emit('update:intensity', Number(($event.target as HTMLInputElement).value))"
         >
       </div>
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs">
           <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.glassGradientAngleLabel') }}</span>
-          <span class="tabular-nums text-foreground">{{ angle }}°</span>
+          <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ angle }}°</span>
         </div>
         <input
           :value="angle"
           type="range"
           min="0"
           max="360"
-          class="console-range-input w-full accent-primary"
+          class="console-range-input w-full"
           @input="emit('update:angle', Number(($event.target as HTMLInputElement).value))"
         >
       </div>

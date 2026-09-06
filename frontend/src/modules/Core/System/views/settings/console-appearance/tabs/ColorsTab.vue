@@ -200,9 +200,12 @@
                 type="range"
                 min="0"
                 max="24"
-                :aria-label="t('system.settings.consoleAppearance.brandRadiusLabel')" class="console-range-input flex-1 h-2 cursor-pointer accent-primary"
+                :aria-label="t('system.settings.consoleAppearance.brandRadiusLabel')"
+                class="console-range-input flex-1"
               >
-              <span class="w-12 text-right text-sm tabular-nums text-muted-foreground">{{ form.console_button_radius }}px</span>
+              <span class="inline-flex min-w-[3.25rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">
+                {{ form.console_button_radius }}px
+              </span>
             </div>
           </section>
 

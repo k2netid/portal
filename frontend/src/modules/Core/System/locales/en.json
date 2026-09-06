@@ -2392,22 +2392,22 @@
       "presetSelectPlaceholder": "Choose a color preset…",
       "glassGradientSelectPlaceholder": "Choose a glass gradient…",
       "themeMode": {
-        "title": "Theme application",
-        "description": "Choose whether the console follows a global preset or per-component advanced styling. Only one mode applies at a time.",
-        "globalActiveHint": "Global mode is active: color presets, surfaces, and glass gradients apply. Advanced shell controls are ignored until you switch modes.",
+        "title": "Theme mode",
+        "description": "Choose whether the console uses easy presets or advanced per-component styling. Only one mode applies at a time.",
+        "globalActiveHint": "Easy mode is active: color presets, surfaces, and glass gradients apply. Advanced shell controls are ignored until you switch modes.",
         "advancedActiveHint": "Advanced mode is active: sidebar, navbar, poppers, typography, and depth apply. Color presets and glass surfaces are ignored until you switch modes.",
         "global": {
-          "label": "Global",
-          "hint": "Preset palettes, surfaces, glass, and shape tokens for the whole console."
+          "label": "Easy Mode",
+          "hint": "Curated presets for quick, harmonious styling across the console."
         },
         "advanced": {
-          "label": "Advanced",
-          "hint": "Fine-tune sidebar, navbar, dropdowns, cards, borders, fonts, and accent colors."
+          "label": "Advanced Mode",
+          "hint": "Fine-grained tuning for shell components, typography, and layout tokens."
         }
       },
       "scopeOverlay": {
-        "colorsDisabledTitle": "Global mode required",
-        "colorsDisabledDescription": "Color presets and surface styles are only available in Global mode. Switch to Global or open the Colors tab after switching.",
+        "colorsDisabledTitle": "Easy mode required",
+        "colorsDisabledDescription": "Color presets and surface styles are only available in Easy mode. Switch to Easy Mode to customize colors and presets.",
         "shellDisabledTitle": "Advanced mode required",
         "shellDisabledDescription": "Component and shell styling is only available in Advanced mode. Switch to Advanced to customize sidebar, navbar, and depth.",
         "goToColors": "Open Colors & Presets",
@@ -2418,9 +2418,9 @@
         "description": "Brand accent and button radius used across buttons, links, and focus rings in Advanced mode."
       },
       "themeModeGroups": {
-        "globalTitle": "Global (design tokens)",
+        "globalTitle": "Easy Mode (curated presets)",
         "globalItems": "Color presets, brand hex (custom), surface glass/flat, glass gradient, corner radius, theme import/export",
-        "advancedTitle": "Advanced (component chrome)",
+        "advancedTitle": "Advanced Mode (component chrome)",
         "advancedItems": "Sidebar, navbar, dropdown/popper overlays, primary & mono fonts, card shadow, border weight, accent colors"
       },
       "advancedComponents": {
