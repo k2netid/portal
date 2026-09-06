@@ -47,28 +47,26 @@
           <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.glassGradientIntensityLabel') }}</span>
           <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ intensity }}%</span>
         </div>
-        <input
-          :value="intensity"
-          type="range"
-          min="0"
-          max="100"
-          class="console-range-input w-full"
-          @input="emit('update:intensity', Number(($event.target as HTMLInputElement).value))"
-        >
+        <Slider
+          :model-value="intensity"
+          :min="0"
+          :max="100"
+          class="w-full"
+          @update:model-value="emit('update:intensity', $event)"
+        />
       </div>
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs">
           <span class="text-muted-foreground">{{ t('system.settings.consoleAppearance.glassGradientAngleLabel') }}</span>
           <span class="inline-flex min-w-[2.75rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">{{ angle }}°</span>
         </div>
-        <input
-          :value="angle"
-          type="range"
-          min="0"
-          max="360"
-          class="console-range-input w-full"
-          @input="emit('update:angle', Number(($event.target as HTMLInputElement).value))"
-        >
+        <Slider
+          :model-value="angle"
+          :min="0"
+          :max="360"
+          class="w-full"
+          @update:model-value="emit('update:angle', $event)"
+        />
       </div>
     </div>
 
@@ -85,6 +83,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ColorPicker from '@/shared/components/ui/ColorPicker.vue';
 import Input from '@/shared/components/ui/Input.vue';
+import Slider from '@/shared/components/ui/Slider.vue';
 import { ConsoleRichSelect } from '@/shared/components/shell';
 import {
     CONSOLE_GLASS_GRADIENT_PRESETS,

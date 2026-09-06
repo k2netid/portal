@@ -5,6 +5,7 @@ export { default as Button } from './Button.vue';
 export { default as Input } from './Input.vue';
 export { default as Checkbox } from './Checkbox.vue';
 export { default as Switch } from './Switch.vue';
+export { default as Slider } from './Slider.vue';
 export { default as Textarea } from './Textarea.vue';
 export { default as Label } from './Label.vue';
 export { default as Badge } from './Badge.vue';

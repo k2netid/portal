@@ -194,15 +194,14 @@
                 for="console_button_radius"
                 class="sr-only"
               >{{ t('system.settings.consoleAppearance.buttonRadiusLabel') }}</label>
-              <input
+              <Slider
                 id="console_button_radius"
-                v-model.number="form.console_button_radius"
-                type="range"
-                min="0"
-                max="24"
+                v-model="form.console_button_radius"
+                :min="0"
+                :max="24"
                 :aria-label="t('system.settings.consoleAppearance.brandRadiusLabel')"
-                class="console-range-input flex-1"
-              >
+                class="flex-1"
+              />
               <span class="inline-flex min-w-[3.25rem] justify-center rounded-md border border-border/70 bg-muted/40 px-2 py-0.5 text-xs font-mono font-medium tabular-nums text-foreground shadow-2xs">
                 {{ form.console_button_radius }}px
               </span>
@@ -238,6 +237,7 @@ import ConsoleGlassGradientPicker from '@/modules/Core/System/components/console
 import ColorPicker from '@/shared/components/ui/ColorPicker.vue';
 import Input from '@/shared/components/ui/Input.vue';
 import Button from '@/shared/components/ui/Button.vue';
+import Slider from '@/shared/components/ui/Slider.vue';
 import { useI18n } from 'vue-i18n';
 import { useConsoleAppearanceContext } from '../composables/useConsoleAppearancePage';
 import { CONSOLE_SURFACE_FLAT } from '@/modules/Core/System/constants/consoleThemePresets';
