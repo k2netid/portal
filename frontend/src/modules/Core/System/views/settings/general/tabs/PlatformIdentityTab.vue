@@ -9,6 +9,20 @@
       :color="group.color"
       :default-expanded="group.defaultExpanded"
     >
+      <!-- Active Brand Sync Notice -->
+      <div
+        v-if="isBrandSyncActive"
+        class="mb-4 rounded-xl border border-sky-500/25 bg-sky-500/10 p-3.5 flex items-start gap-2.5 text-xs text-sky-900 dark:text-sky-200"
+      >
+        <Info class="h-4 w-4 shrink-0 mt-0.5 text-sky-600 dark:text-sky-400" />
+        <div class="space-y-0.5">
+          <span class="font-semibold">{{ $t('system.settings.labels.brand_sync_site_identity') }}</span>
+          <p class="text-sky-800/80 dark:text-sky-300/80">
+            {{ $t('system.settings.brand_sync_active_notice') }}
+          </p>
+        </div>
+      </div>
+
       <template
         v-for="setting in group.settings"
         :key="setting.id"
@@ -61,7 +75,11 @@ const updateField = (key: string, value: unknown) => {
     emit('update:formData', { ...props.formData, [key]: value })
 }
 
-import { Globe } from 'lucide-vue-next'
+import { Globe, Info } from 'lucide-vue-next'
+import { useSystemStore } from '@/modules/Core/System/stores/system'
+
+const systemStore = useSystemStore()
+const isBrandSyncActive = computed(() => Boolean(props.formData.brand_sync_site_identity ?? systemStore.getSetting('brand_sync_site_identity')) && systemStore.appIdentity.has_white_label)
 
 interface SettingGroupData {
     id: string;

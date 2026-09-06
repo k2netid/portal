@@ -105,6 +105,7 @@ const appLogo = computed(() =>
     minimized: props.minimized,
     isDark: isDark.value,
     legacyLogo: systemStore.appIdentity?.app_logo || '',
+    brandLogo: (systemStore.getSetting('brand_logo') as string) || '',
   }),
 );
 

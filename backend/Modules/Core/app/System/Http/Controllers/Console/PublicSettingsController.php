@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\LicenseService;
 
 /**
  * Controller for public settings (no auth required)
@@ -17,7 +18,7 @@ class PublicSettingsController extends BaseApiController
     /**
      * Get public settings for the frontend
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, LicenseService $licenseService): JsonResponse
     {
         $payload = [
             'enable_registration' => (bool) Setting::get('enable_registration', true),
@@ -35,11 +36,14 @@ class PublicSettingsController extends BaseApiController
             Setting::KEY_CONSOLE_DASHBOARD_SLUG => Setting::resolveConsoleDashboardSlug(),
 
             // App Branding (Core)
-            'app_name' => Setting::get('app_name', 'Jejakawan'),
-            'app_logo' => Setting::get('app_logo', ''),
-            'app_favicon' => Setting::get('app_favicon', ''),
-            'app_license_tier' => app(\Modules\Core\System\Services\LicenseService::class)->getLicenseTier(),
-            'has_white_label' => app(\Modules\Core\System\Services\LicenseService::class)->hasWhiteLabel(),
+            'app_name' => $licenseService->hasWhiteLabel() ? Setting::get('app_name', 'Jejakawan') : 'Jejakawan',
+            'app_logo' => $licenseService->hasWhiteLabel() ? (Setting::get('brand_logo') ?: Setting::get('app_logo') ?: '/logo.png') : '/logo.png',
+            'app_favicon' => $licenseService->hasWhiteLabel() ? (Setting::get('brand_favicon') ?: Setting::get('app_favicon') ?: '/favicon.ico') : '/favicon.ico',
+            'brand_logo' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_logo', '') : '',
+            'brand_favicon' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_favicon', '') : '',
+            'brand_sync_site_identity' => (bool) Setting::get('brand_sync_site_identity', false),
+            'app_license_tier' => $licenseService->getLicenseTier(),
+            'has_white_label' => $licenseService->hasWhiteLabel(),
 
             // Contact Info
             'contact_email' => Setting::get('contact_email', 'hello@jejakawan.com'),

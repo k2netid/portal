@@ -39,17 +39,18 @@
             {{ t('system.settings.consoleAppearance.logoLightDescription') }}
           </p>
           <div class="mt-2 flex items-center gap-3">
-            <div class="flex h-12 w-32 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-white/70 shadow-sm">
+            <div class="relative flex h-12 w-32 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-white/70 shadow-xs">
               <img
-                v-if="form.app_logo_light"
-                :src="String(form.app_logo_light)"
+                :src="String(effectiveLogoLight)"
                 class="h-full w-full object-contain p-1"
                 alt=""
               >
-              <Image
-                v-else
-                class="h-5 w-5 text-muted-foreground/40"
-              />
+              <span
+                v-if="!form.app_logo_light"
+                class="absolute bottom-0.5 right-0.5 rounded bg-black/60 px-1 py-0.2 font-mono text-[8px] font-medium text-white/90 backdrop-blur-xs"
+              >
+                DEFAULT
+              </span>
             </div>
             <div class="flex items-center gap-1.5">
               <Button
@@ -86,17 +87,18 @@
             {{ t('system.settings.consoleAppearance.logoDarkDescription') }}
           </p>
           <div class="mt-2 flex items-center gap-3">
-            <div class="flex h-12 w-32 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-black/90 shadow-sm">
+            <div class="relative flex h-12 w-32 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-black/90 shadow-xs">
               <img
-                v-if="form.app_logo_dark"
-                :src="String(form.app_logo_dark)"
+                :src="String(effectiveLogoDark)"
                 class="h-full w-full object-contain p-1"
                 alt=""
               >
-              <Image
-                v-else
-                class="h-5 w-5 text-muted-foreground/40"
-              />
+              <span
+                v-if="!form.app_logo_dark"
+                class="absolute bottom-0.5 right-0.5 rounded bg-white/20 px-1 py-0.2 font-mono text-[8px] font-medium text-white/90 backdrop-blur-xs"
+              >
+                DEFAULT
+              </span>
             </div>
             <div class="flex items-center gap-1.5">
               <Button
@@ -130,17 +132,18 @@
             {{ t('system.settings.consoleAppearance.logoCompactDescription') }}
           </p>
           <div class="mt-2 flex items-center gap-3">
-            <div class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted/40 shadow-sm">
+            <div class="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted/40 shadow-xs">
               <img
-                v-if="form.app_logo_compact"
-                :src="String(form.app_logo_compact)"
+                :src="String(effectiveLogoCompact)"
                 class="h-full w-full object-contain p-1"
                 alt=""
               >
-              <Image
-                v-else
-                class="h-5 w-5 text-muted-foreground/40"
-              />
+              <span
+                v-if="!form.app_logo_compact"
+                class="absolute bottom-0.5 right-0.5 rounded bg-black/60 px-0.5 py-0.2 font-mono text-[7px] font-medium text-white/90 backdrop-blur-xs"
+              >
+                DEF
+              </span>
             </div>
             <div class="flex items-center gap-1.5">
               <Button
@@ -174,17 +177,18 @@
             {{ t('system.settings.consoleAppearance.faviconDescription') }}
           </p>
           <div class="mt-2 flex items-center gap-3">
-            <div class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted/40 shadow-sm">
+            <div class="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-muted/40 shadow-xs">
               <img
-                v-if="form.app_favicon"
-                :src="String(form.app_favicon)"
+                :src="String(effectiveFavicon)"
                 class="h-full w-full object-contain p-1"
                 alt=""
               >
-              <Image
-                v-else
-                class="h-5 w-5 text-muted-foreground/40"
-              />
+              <span
+                v-if="!form.app_favicon"
+                class="absolute bottom-0.5 right-0.5 rounded bg-black/60 px-0.5 py-0.2 font-mono text-[7px] font-medium text-white/90 backdrop-blur-xs"
+              >
+                DEF
+              </span>
             </div>
             <div class="flex items-center gap-1.5">
               <Button
@@ -217,14 +221,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { Lock, UploadCloud, Trash2, Image, KeyRound } from 'lucide-vue-next';
+import { Lock, UploadCloud, Trash2, KeyRound } from 'lucide-vue-next';
 import Button from '@/shared/components/ui/Button.vue';
 import { useI18n } from 'vue-i18n';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { useConsoleAppearanceContext } from '../composables/useConsoleAppearancePage';
 
 const { t } = useI18n();
 const router = useRouter();
+const systemStore = useSystemStore();
 const {
     form,
     hasWhiteLabel,
@@ -233,6 +240,14 @@ const {
     showLogoCompactPicker,
     showFaviconPicker,
 } = useConsoleAppearanceContext();
+
+const fallbackBrandLogo = computed(() => (systemStore.getSetting('brand_logo') as string) || systemStore.appIdentity?.app_logo || '/logo.png');
+const fallbackBrandFavicon = computed(() => (systemStore.getSetting('brand_favicon') as string) || systemStore.appIdentity?.app_favicon || '/favicon.ico');
+
+const effectiveLogoLight = computed(() => form.app_logo_light || fallbackBrandLogo.value);
+const effectiveLogoDark = computed(() => form.app_logo_dark || form.app_logo_light || fallbackBrandLogo.value);
+const effectiveLogoCompact = computed(() => form.app_logo_compact || fallbackBrandFavicon.value);
+const effectiveFavicon = computed(() => form.app_favicon || fallbackBrandFavicon.value);
 
 function goToLicenseSettings() {
     router.push({ name: 'settings', query: { tab: 'license' } });

@@ -355,6 +355,7 @@ class LicenseService
             'brand_logo',
             'app_favicon',
             'brand_favicon',
+            'brand_sync_site_identity',
             'branding_display',
             'app_identity',
             'powered_by_link',

@@ -178,11 +178,58 @@ class SettingController extends BaseApiController
                 Setting::set($sKey, $sValue, $sType, $sGroup);
                 $this->syncSiteIdentityToActiveTheme($sKey, $sValue);
 
-                // Auto-sync console app_logo_light to general app_logo if general app_logo is empty
-                if ($sKey === 'app_logo_light' && $hasWhiteLabel && ! empty($sValue)) {
-                    $currentAppLogo = Setting::get('app_logo');
-                    if (empty($currentAppLogo)) {
+                // Smart Brand Synchronization (brand_sync_site_identity)
+                $syncEnabled = (bool) Setting::get('brand_sync_site_identity', false);
+                if ($sKey === 'brand_sync_site_identity') {
+                    $syncEnabled = filter_var($sValue, FILTER_VALIDATE_BOOLEAN);
+                    if ($syncEnabled && $hasWhiteLabel) {
+                        // Immediately cascade existing brand assets to site assets
+                        $existingBrandLogo = Setting::get('brand_logo');
+                        if (! empty($existingBrandLogo)) {
+                            Setting::set('site_logo', $existingBrandLogo, 'image', 'general');
+                            $this->syncSiteIdentityToActiveTheme('site_logo', $existingBrandLogo);
+                        }
+                        $existingBrandFavicon = Setting::get('brand_favicon');
+                        if (! empty($existingBrandFavicon)) {
+                            Setting::set('site_favicon', $existingBrandFavicon, 'image', 'general');
+                            $this->syncSiteIdentityToActiveTheme('site_favicon', $existingBrandFavicon);
+                        }
+                    }
+                }
+
+                if ($hasWhiteLabel) {
+                    if ($sKey === 'brand_logo') {
+                        // Keep app_logo aligned with brand_logo
                         Setting::set('app_logo', $sValue, 'image', 'brand');
+                        if ($syncEnabled || empty(Setting::get('app_logo_light'))) {
+                            Setting::set('app_logo_light', $sValue, 'image', 'brand');
+                        }
+                        if ($syncEnabled && ! empty($sValue)) {
+                            Setting::set('site_logo', $sValue, 'image', 'general');
+                            $this->syncSiteIdentityToActiveTheme('site_logo', $sValue);
+                        }
+                    }
+
+                    if ($sKey === 'brand_favicon') {
+                        // Keep app_favicon aligned with brand_favicon
+                        Setting::set('app_favicon', $sValue, 'image', 'brand');
+                        if ($syncEnabled && ! empty($sValue)) {
+                            Setting::set('site_favicon', $sValue, 'image', 'general');
+                            $this->syncSiteIdentityToActiveTheme('site_favicon', $sValue);
+                        }
+                    }
+
+                    if ($sKey === 'app_logo_light') {
+                        // Auto-sync console app_logo_light to general app_logo if general app_logo is empty
+                        $currentAppLogo = Setting::get('app_logo');
+                        if (empty($currentAppLogo)) {
+                            Setting::set('app_logo', $sValue, 'image', 'brand');
+                        }
+                        if ($syncEnabled && ! empty($sValue)) {
+                            Setting::set('brand_logo', $sValue, 'image', 'brand');
+                            Setting::set('site_logo', $sValue, 'image', 'general');
+                            $this->syncSiteIdentityToActiveTheme('site_logo', $sValue);
+                        }
                     }
                 }
 
