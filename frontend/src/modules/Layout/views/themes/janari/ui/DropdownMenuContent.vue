@@ -55,7 +55,7 @@ const positionPanel = () => {
     position: 'fixed',
     top: `${rect.bottom + offset}px`,
     left: `${Math.max(8, left)}px`,
-    zIndex: '150',
+    zIndex: '100002',
   };
 };
 

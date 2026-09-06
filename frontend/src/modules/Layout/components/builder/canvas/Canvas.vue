@@ -14,7 +14,7 @@
 
     <template v-else>
       <!-- Header Preview (site mode only — page mode is content-only) -->
-      <div v-if="showThemeChrome" class="canvas-header-preview w-full flex-none relative z-10">
+      <div v-if="showThemeChrome" class="canvas-header-preview w-full flex-none relative z-50 overflow-visible">
         <ThemePageResolver page="components/Header" />
       </div>
 
@@ -405,11 +405,11 @@ onMounted(() => {
 
 .canvas-header-preview {
   position: relative;
-  z-index: 10;
+  z-index: 50;
   margin-bottom: var(--spacing-lg, 24px);
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow: visible !important;
 }
 
 .canvas-header-preview :deep(header),
@@ -422,7 +422,7 @@ onMounted(() => {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow-x: hidden !important;
+  overflow: visible !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
