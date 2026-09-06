@@ -198,7 +198,7 @@
         </AccordionItem>
 
         <!-- Data Models -->
-        <AccordionItem value="models">
+        <AccordionItem v-if="isDataStudioActive" value="models">
           <AccordionTrigger class="px-4 py-3 hover:no-underline hover:bg-muted/50">
             <div class="flex items-center gap-2 flex-1">
               <Database class="w-4 h-4 text-cyan-500" />
@@ -322,12 +322,13 @@
 
 <script setup lang="ts">
 import { logger } from '@/shared/utils/logger';
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import draggable from 'vuedraggable';
 import api from '@/engine/api/client';
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
 import { useMenuContext } from '@/modules/Layout/composables/useMenu';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { menuItemRegistry } from '../registry';
 
 // UI Components
@@ -360,6 +361,11 @@ import {
 
 const { t } = useI18n();
 const menuContext = useMenuContext();
+const systemStore = useSystemStore();
+
+const isDataStudioActive = computed(() => {
+    return systemStore.activeExtensions?.includes('data-studio') ?? false;
+});
 
 defineEmits<{
     (e: 'collapse'): void;
@@ -419,6 +425,10 @@ const fetchCategories = async () => {
 };
 
 const fetchModels = async () => {
+    if (!isDataStudioActive.value) {
+        models.value = [];
+        return;
+    }
     loadingModels.value = true;
     try {
         const response = await api.get('/manage/infra/models/types');

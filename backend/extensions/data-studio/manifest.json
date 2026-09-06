@@ -1,0 +1,20 @@
+{
+  "slug": "data-studio",
+  "type": "plugin",
+  "name": "Data Model Studio",
+  "version": "1.0.0",
+  "description": "Dynamic entity modeling engine, custom field schemas, relational validations, and instant REST API generation.",
+  "author": "Jejakawan",
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "is_core": false,
+  "default_status": "active",
+  "family": "infra",
+  "dependencies": {
+    "core": ">=1.0.0"
+  },
+  "settings": {
+    "enable_instant_api": true,
+    "enable_scaffolding": true
+  }
+}

@@ -7,6 +7,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/models/Index.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.models.title',
             breadcrumb: 'infra.models.title',
         },
@@ -17,6 +18,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/models/Edit.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.models.newType',
             breadcrumb: 'infra.models.newType',
         },
@@ -27,6 +29,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/models/Edit.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.models.editType',
             breadcrumb: 'infra.models.editType',
         },
@@ -37,6 +40,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/dynamic/Index.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.models.title',
             breadcrumb: 'infra.models.title',
         },
@@ -47,6 +51,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/dynamic/Edit.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.dynamic.record.newTitle',
             breadcrumb: 'infra.dynamic.record.newTitle',
         },
@@ -57,6 +62,7 @@ const infraRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Core/Infra/views/dynamic/Edit.vue'),
         meta: {
             permission: 'manage settings',
+            extension: 'data-studio',
             title: 'infra.dynamic.record.editTitle',
             breadcrumb: 'infra.dynamic.record.editTitle',
         },
