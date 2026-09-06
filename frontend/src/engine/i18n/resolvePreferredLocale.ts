@@ -34,7 +34,7 @@ export const readBrowserLanguages = (): string[] => {
 };
 
 /**
- * Priority: 1) stored preference, 2) browser language list, 3) fallback.
+ * Priority: 1) stored preference, 2) browser language list (if provided or enabled), 3) fallback.
  */
 export const resolvePreferredLocale = (
     available: readonly string[],
@@ -42,6 +42,7 @@ export const resolvePreferredLocale = (
         stored?: string | null;
         browserLanguages?: readonly string[];
         fallback?: string;
+        detectBrowser?: boolean;
     },
 ): string => {
     const fallback = options?.fallback && available.includes(options.fallback)
@@ -53,7 +54,8 @@ export const resolvePreferredLocale = (
         return stored;
     }
 
-    const browserLanguages = options?.browserLanguages ?? readBrowserLanguages();
+    const browserLanguages = options?.browserLanguages
+        ?? (options?.detectBrowser ? readBrowserLanguages() : []);
     for (const lang of browserLanguages) {
         const normalized = normalizeAgainstAvailable(lang, available, fallback);
         if (available.includes(normalized) && normalized !== fallback) {

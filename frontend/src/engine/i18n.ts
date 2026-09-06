@@ -12,7 +12,7 @@ export const normalizeLocaleCode = (code: string): string => {
     if (availableCodes().includes(trimmed)) return trimmed;
     const base = trimmed.split('-')[0]?.toLowerCase() ?? '';
     if (base && availableCodes().includes(base)) return base;
-    return 'en';
+    return config.locale || 'id';
 };
 
 const getComposer = (): Composer => i18n.global as unknown as Composer;

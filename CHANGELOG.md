@@ -35,6 +35,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - Layout `dynamicSources` dropped query-string debug log.
 - Honesty pass: uninstall refuses when deactivate is blocked; kernel Identity owns `general`; Publishing no longer writes site identity; Member APIs gated; public theme pages follow the active theme; Sanctum 5273; layout public menus/themes gated; Mail/cron skip when pack off.
 - Console navigation: Preload database console menus upon successful authentication in `Login.vue` and add reactive fallback in `TheSidebar.vue` to eliminate disordered menu flicker without requiring page refresh.
+- Site Default Locale: Set site default language on initial load strictly to `id` (Bahasa Indonesia) by preventing client browser language sniffing from overriding the primary portal locale when no user preference is stored.
+
 
 
 Kernel `/manage/ai/generate` stays settings-flag gated (`ai_enabled`), not `cms-ai` pack — by design for downstream apps without CMS.
