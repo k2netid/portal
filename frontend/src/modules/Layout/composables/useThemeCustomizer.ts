@@ -119,6 +119,7 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
             const siteLogo = systemStore.siteSettings?.site_logo || '';
             const siteFavicon = systemStore.siteSettings?.site_favicon || '';
             const siteDesc = systemStore.siteSettings?.site_description || '';
+            const coreBrandingDisplay = (systemStore.getSetting('branding_display') as string) || '';
 
             const fallbackGlobalMap: Record<string, string> = {
                 site_title: siteName,
@@ -131,6 +132,7 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
                 site_tagline: siteDesc,
                 site_description: siteDesc,
                 school_tagline: siteDesc,
+                branding_display: coreBrandingDisplay,
             };
 
             const rawSettings = (theme.value?.settings || {}) as Record<string, unknown>;
@@ -205,6 +207,7 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
         const siteLogo = systemStore.siteSettings?.site_logo || '';
         const siteFavicon = systemStore.siteSettings?.site_favicon || '';
         const siteDesc = systemStore.siteSettings?.site_description || '';
+        const coreBrandingDisplay = (systemStore.getSetting('branding_display') as string) || '';
 
         const fallbackGlobalMap: Record<string, string> = {
             site_title: siteName,
@@ -215,6 +218,7 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
             site_favicon: siteFavicon,
             site_tagline: siteDesc,
             site_description: siteDesc,
+            branding_display: coreBrandingDisplay,
         };
 
         Object.entries(fallbackGlobalMap).forEach(([k, fallbackVal]) => {

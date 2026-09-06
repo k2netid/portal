@@ -42,6 +42,7 @@ class PublicSettingsController extends BaseApiController
             'brand_logo' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_logo', '') : '',
             'brand_favicon' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_favicon', '') : '',
             'brand_sync_site_identity' => (bool) Setting::get('brand_sync_site_identity', false),
+            'branding_display' => Setting::get('branding_display', 'both'),
             'app_license_tier' => $licenseService->getLicenseTier(),
             'has_white_label' => $licenseService->hasWhiteLabel(),
 

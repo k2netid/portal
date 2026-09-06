@@ -59,7 +59,7 @@
     <!-- Dropdown Select (if field has options) -->
     <Select
       v-if="hasOptions && !isMailPort"
-      :model-value="localValue !== null && localValue !== undefined ? String(localValue) : undefined"
+      :model-value="normalizedSelectValue"
       :disabled="isControlDisabled"
       @update:model-value="localValue = hasNumericOptions ? Number($event) : $event; updateValue()"
     >
@@ -323,6 +323,16 @@ const translatedFieldOptions = computed(() => {
         value: String(option.value),
         label: option.labelKey ? t(option.labelKey) : (option.label || String(option.value))
     }))
+})
+
+const normalizedSelectValue = computed(() => {
+    if (localValue.value === null || localValue.value === undefined) return undefined;
+    const str = String(localValue.value);
+    if (props.fieldKey === 'branding_display') {
+        if (str === 'logo') return 'logo_only';
+        if (str === 'name' || str === 'text') return 'text_only';
+    }
+    return str;
 })
 
 const hasNumericOptions = computed(() => {

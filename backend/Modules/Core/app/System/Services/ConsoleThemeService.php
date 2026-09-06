@@ -73,13 +73,16 @@ final class ConsoleThemeService
         }
 
         // Logo assets are saved under group `brand` from console appearance UI.
-        $brand = Setting::getGroup('brand');
-        foreach ($brand as $key => $value) {
-            if (! array_key_exists($key, $merged)) {
-                continue;
-            }
-            if ($value !== null && $value !== '') {
-                $merged[$key] = $value;
+        $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        if ($licenseService->hasWhiteLabel()) {
+            $brand = Setting::getGroup('brand');
+            foreach ($brand as $key => $value) {
+                if (! array_key_exists($key, $merged)) {
+                    continue;
+                }
+                if ($value !== null && $value !== '') {
+                    $merged[$key] = $value;
+                }
             }
         }
 

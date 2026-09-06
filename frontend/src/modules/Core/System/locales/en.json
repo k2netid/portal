@@ -1588,6 +1588,11 @@
     "failed": "Failed to save settings",
     "jsonPlaceholder": "Enter valid JSON format",
     "options": {
+      "brandingDisplay": {
+        "both": "Logo & App Name",
+        "logo_only": "Logo Only",
+        "text_only": "App Name Only"
+      },
       "timezone": {
         "utc": "UTC (Coordinated Universal Time)",
         "jakarta": "Asia/Jakarta (WIB - GMT+7)",

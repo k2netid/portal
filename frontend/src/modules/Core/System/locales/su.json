@@ -1588,6 +1588,11 @@
     "failed": "Gagal nyimpen petélan",
     "jsonPlaceholder": "Asupkeun format JSON anu valid",
     "options": {
+      "brandingDisplay": {
+        "both": "Logo & Nami Aplikasi",
+        "logo_only": "Ukur Logo",
+        "text_only": "Ukur Nami Aplikasi"
+      },
       "timezone": {
         "utc": "UTC (Waktu Universal Terkoordinasi)",
         "jakarta": "Asia/Jakarta (WIB - GMT+7)",

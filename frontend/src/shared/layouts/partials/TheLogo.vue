@@ -5,6 +5,7 @@
     :class="[minimized ? 'flex-col justify-center' : 'flex-row']"
   >
     <div 
+      v-if="minimized || brandingDisplay !== 'text_only'"
       class="relative flex items-center justify-center overflow-hidden"
       :class="[ minimized ? 'w-9 h-9' : 'w-auto h-9 max-w-[120px]' ]"
     >
@@ -28,7 +29,7 @@
     </div>
 
     <div
-      v-if="!minimized"
+      v-if="!minimized && brandingDisplay !== 'logo_only'"
       class="flex flex-col ml-1"
     >
       <span class="text-sm font-black tracking-tight text-foreground leading-none">{{ displayTitle }}</span>
@@ -98,6 +99,13 @@ const licenseBadgeClasses = computed(() => {
     default:
       return 'bg-muted text-muted-foreground border border-border';
   }
+});
+
+const brandingDisplay = computed(() => {
+  const raw = String(systemStore.getSetting('branding_display', 'both') || 'both');
+  if (raw === 'logo') return 'logo_only';
+  if (raw === 'name' || raw === 'text') return 'text_only';
+  return raw;
 });
 
 const appLogo = computed(() =>

@@ -238,6 +238,14 @@ class SettingController extends BaseApiController
                         }
                     }
 
+                    if ($sKey === 'app_favicon' && empty($sValue)) {
+                        Setting::set('app_favicon', null, 'image', 'brand');
+                    }
+
+                    if ($sKey === 'app_logo_compact' && empty($sValue)) {
+                        Setting::set('app_logo_compact', null, 'image', 'brand');
+                    }
+
                     if ($sKey === 'app_logo_light') {
                         // Auto-sync console app_logo_light to general app_logo if general app_logo is empty
                         $currentAppLogo = Setting::get('app_logo');

@@ -6,6 +6,7 @@ import { useConsoleTheme } from '@/modules/Core/System/composables/useConsoleThe
 import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { logger } from '@/shared/utils/logger';
 import { calculateContrastRatio } from '@/shared/utils/color';
+import { clearFaviconCache, applyFavicon } from '@/modules/Core/System/utils/favicon';
 import {
     CONSOLE_COLOR_PRESET_CUSTOM,
     CONSOLE_SURFACE_GLASS,
@@ -389,9 +390,13 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
             }
 
             await api.post('/manage/system/settings/bulk-update', { settings: payload });
+            clearFaviconCache();
+            systemStore.publicSettingsLoaded = false;
             await systemStore.fetchPublicSettings({ force: true });
             await systemStore.fetchAppIdentity();
             await reloadConsoleTheme(true);
+            const effectiveFav = form.app_favicon ? String(form.app_favicon) : (systemStore.getSetting('brand_favicon') as string) || '/favicon.ico';
+            applyFavicon(effectiveFav, { allowGeneric: true, force: true });
             syncDraft();
             toast.success.default(t('system.settings.consoleAppearance.savedSuccess', 'Pengaturan tema konsol berhasil disimpan'));
         } catch (e) {

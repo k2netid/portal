@@ -3,7 +3,7 @@ import { persistConsoleDarkModeToStorage, readConsoleDarkModeFromStorage } from 
 import { logger } from '@/shared/utils/logger';
 import { defineStore } from 'pinia';
 import api, { type ApiRequestConfig } from '@/engine/api/client';
-import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/Core/System/utils/favicon';
+import { applyFavicon, isGenericEngineFavicon } from '@/modules/Core/System/utils/favicon';
 
 
 export interface SiteSettings {
@@ -160,24 +160,41 @@ export const useSystemStore = defineStore('system', {
                     };
 
                     // Sync App Identity (Branding)
-                    // We preserve existing values if the new ones are empty to avoid flickering
                     const licenseTier = String(data.app_license_tier || data.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
                     const hasWhiteLabel = typeof data.has_white_label === 'boolean'
                         ? data.has_white_label
                         : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
 
+                    const syncEnabled = Boolean(data.brand_sync_site_identity);
+                    const brandLogo = (data.brand_logo as string) || '';
+                    const brandFavicon = (data.brand_favicon as string) || '';
+
+                    // In console, brand overrides apply if White Label is active.
+                    // Fallback is strictly Jejakawan Core (/logo.png & /favicon.ico) unless syncEnabled is true.
+                    const effectiveAppLogo = hasWhiteLabel
+                        ? (brandLogo || (syncEnabled ? data.site_logo : '') || '/logo.png')
+                        : '/logo.png';
+                    const effectiveAppFavicon = hasWhiteLabel
+                        ? (brandFavicon || (syncEnabled ? data.site_favicon : '') || '/favicon.ico')
+                        : '/favicon.ico';
+
                     this.appIdentity = {
                         ...this.appIdentity,
-                        app_name: data.app_name || data.site_name || this.appIdentity.app_name || 'Jejakawan',
-                        app_logo: data.app_logo || data.site_logo || this.appIdentity.app_logo || '',
-                        app_favicon: String(
-                            (!isGenericEngineFavicon(String(data.app_favicon || '')) && data.app_favicon)
-                            || (!isGenericEngineFavicon(String(data.site_favicon || '')) && data.site_favicon)
-                            || this.appIdentity.app_favicon
-                            || '',
-                        ),
+                        app_name: (hasWhiteLabel ? (data.app_name || (syncEnabled ? data.site_name : '')) : '') || 'Jejakawan',
+                        app_logo: effectiveAppLogo,
+                        app_favicon: effectiveAppFavicon,
                         app_license_tier: licenseTier,
                         has_white_label: hasWhiteLabel,
+                    };
+
+                    this.settings = {
+                        ...this.settings,
+                        ...this.siteSettings,
+                        ...data,
+                        brand_logo: brandLogo,
+                        brand_favicon: brandFavicon,
+                        brand_sync_site_identity: syncEnabled,
+                        branding_display: data.branding_display || 'both',
                     };
 
                     this.maintenance = {
@@ -195,6 +212,7 @@ export const useSystemStore = defineStore('system', {
                         this.activeExtensions = data.active_extensions;
                     }
 
+                    applyFavicon(effectiveAppFavicon, { allowGeneric: true });
 
                     return data;
                 } catch (error) {
@@ -211,29 +229,52 @@ export const useSystemStore = defineStore('system', {
 
         async fetchAppIdentity() {
             try {
-                // Fetch branding from System settings
-                const response = await api.get('/manage/system/settings/group/system');
-                const rawData = (response.data?.data ?? response.data) || {};
+                // Fetch branding from both System & Brand settings groups
+                const [systemRes, brandRes] = await Promise.all([
+                    api.get('/manage/system/settings/group/system').catch(() => ({ data: {} })),
+                    api.get('/manage/system/settings/group/brand').catch(() => ({ data: {} })),
+                ]);
+                const systemData = (systemRes.data?.data ?? systemRes.data) || {};
+                const brandData = (brandRes.data?.data ?? brandRes.data) || {};
+                const rawData = { ...systemData, ...brandData };
+
                 const licenseTier = String(rawData.app_license_tier || rawData.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
                 const hasWhiteLabel = typeof rawData.has_white_label === 'boolean'
                     ? rawData.has_white_label
                     : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
 
+                const syncEnabled = Boolean(brandData.brand_sync_site_identity);
+                const brandLogo = (brandData.brand_logo as string) || '';
+                const brandFavicon = (brandData.brand_favicon as string) || '';
+                const appLogo = (brandData.app_logo as string) || (brandData.app_logo_light as string) || '';
+                const appFavicon = (brandData.app_favicon as string) || '';
+
+                const effectiveAppLogo = hasWhiteLabel
+                    ? (brandLogo || appLogo || (syncEnabled ? this.siteSettings.site_logo : '') || '/logo.png')
+                    : '/logo.png';
+                const effectiveAppFavicon = hasWhiteLabel
+                    ? (brandFavicon || appFavicon || (syncEnabled ? this.siteSettings.site_favicon : '') || '/favicon.ico')
+                    : '/favicon.ico';
+
                 this.appIdentity = {
                     ...this.appIdentity,
-                    app_name: rawData.app_name || this.appIdentity.app_name || 'Jejakawan',
-                    app_logo: rawData.app_logo || this.appIdentity.app_logo || '',
-                    app_favicon: rawData.app_favicon || this.appIdentity.app_favicon || '',
+                    app_name: (hasWhiteLabel ? (brandData.app_name || (syncEnabled ? this.siteSettings.site_name : '')) : '') || 'Jejakawan',
+                    app_logo: effectiveAppLogo,
+                    app_favicon: effectiveAppFavicon,
                     app_license_tier: licenseTier,
                     has_white_label: hasWhiteLabel,
                 };
 
-                const syncEnabled = Boolean(this.getSetting('brand_sync_site_identity', false));
-                applyFavicon(resolveFavicon([
-                    this.getSetting('brand_favicon'),
-                    this.appIdentity.app_favicon,
-                    syncEnabled ? this.siteSettings.site_favicon : null,
-                ], { preferFirst: true }), { allowGeneric: this.publicSettingsLoaded });
+                this.settings = {
+                    ...this.settings,
+                    ...brandData,
+                    brand_logo: brandLogo,
+                    brand_favicon: brandFavicon,
+                    brand_sync_site_identity: syncEnabled,
+                    branding_display: brandData.branding_display || 'both',
+                };
+
+                applyFavicon(effectiveAppFavicon, { allowGeneric: true });
 
                 return this.appIdentity;
             } catch (error) {
