@@ -2403,6 +2403,26 @@
         "advanced": {
           "label": "Advanced Mode",
           "hint": "Fine-grained tuning for shell components, typography, and layout tokens."
+        },
+        "confirmSwitchToAdvanced": {
+          "title": "Switch to Advanced Mode?",
+          "description": "Advanced Mode gives you full manual control over each shell component (sidebar, navbar, buttons, cards, overlays, typography).\n\nAutomatic preset harmonization will be disabled. Do you want to switch to Advanced Mode?",
+          "confirm": "Yes, Switch to Advanced Mode",
+          "cancel": "Cancel"
+        },
+        "confirmSwitchToEasy": {
+          "title": "Switch to Easy Mode?",
+          "description": "Easy Mode automatically applies curated, harmonious presets across the entire console.\n\nManual per-component overrides will be harmonized with the selected preset. Do you want to return to Easy Mode?",
+          "confirm": "Yes, Switch to Easy Mode",
+          "cancel": "Cancel"
+        },
+        "banner": {
+          "easyTitle": "Easy Mode (Curated Presets)",
+          "easyDescription": "Choose a color preset and surface style. The entire console is harmonized automatically.",
+          "easyCta": "Need per-component control? Switch to Advanced Mode →",
+          "advancedTitle": "Advanced Mode (Component Studio)",
+          "advancedDescription": "Fine-tune individual shell components, navigation, cards, overlays, and typography.",
+          "advancedCta": "← Switch back to Easy Mode (Use Presets)"
         }
       },
       "scopeOverlay": {

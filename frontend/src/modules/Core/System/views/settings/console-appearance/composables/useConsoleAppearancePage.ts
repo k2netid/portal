@@ -21,7 +21,9 @@ import {
     clampGlassIntensity,
     type ConsoleGlassGradientPresetId,
 } from '@/modules/Core/System/constants/consoleGlassGradient';
+import { useConfirm } from '@/shared/composables/useConfirm';
 import {
+    CONSOLE_THEME_MODE_ADVANCED,
     CONSOLE_THEME_MODE_DEFAULT,
     CONSOLE_THEME_MODE_GLOBAL,
     normalizeConsoleThemeMode,
@@ -65,6 +67,7 @@ export interface ConsoleAppearanceContext {
     themeMode: WritableComputedRef<ConsoleThemeMode>;
     isGlobalMode: ComputedRef<boolean>;
     isAdvancedMode: ComputedRef<boolean>;
+    requestSwitchMode: (targetMode: ConsoleThemeMode) => Promise<boolean>;
 }
 
 const CONSOLE_APPEARANCE_KEY: InjectionKey<ConsoleAppearanceContext> = Symbol('consoleAppearance');
@@ -119,6 +122,40 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
         get: () => normalizeConsoleThemeMode(form.console_theme_mode),
         set: (mode: ConsoleThemeMode) => { form.console_theme_mode = mode; },
     });
+
+    const { confirm } = useConfirm();
+
+    const requestSwitchMode = async (targetMode: ConsoleThemeMode): Promise<boolean> => {
+        const current = themeMode.value;
+        if (current === targetMode) return true;
+
+        const isGoingToAdvanced = targetMode === CONSOLE_THEME_MODE_ADVANCED;
+        const confKey = isGoingToAdvanced ? 'confirmSwitchToAdvanced' : 'confirmSwitchToEasy';
+
+        const confirmed = await confirm({
+            title: t(`system.settings.consoleAppearance.themeMode.${confKey}.title`),
+            description: t(`system.settings.consoleAppearance.themeMode.${confKey}.description`),
+            confirmText: t(`system.settings.consoleAppearance.themeMode.${confKey}.confirm`),
+            cancelText: t(`system.settings.consoleAppearance.themeMode.${confKey}.cancel`),
+            variant: isGoingToAdvanced ? 'info' : 'question',
+        });
+
+        if (confirmed) {
+            themeMode.value = targetMode;
+            if (targetMode === CONSOLE_THEME_MODE_GLOBAL) {
+                if (activeTab.value === 'shell') {
+                    activeTab.value = 'colors';
+                }
+            } else if (targetMode === CONSOLE_THEME_MODE_ADVANCED) {
+                if (activeTab.value === 'colors') {
+                    activeTab.value = 'shell';
+                }
+            }
+            syncDraft();
+            return true;
+        }
+        return false;
+    };
 
     const isGlobalMode = computed(() => themeMode.value === CONSOLE_THEME_MODE_GLOBAL);
     const isAdvancedMode = computed(() => !isGlobalMode.value);
@@ -380,6 +417,7 @@ export function useConsoleAppearancePage(): ConsoleAppearanceContext {
         themeMode,
         isGlobalMode,
         isAdvancedMode,
+        requestSwitchMode,
     };
 
     return ctx;

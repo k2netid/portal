@@ -2403,6 +2403,26 @@
         "advanced": {
           "label": "Mode Lanjutan",
           "hint": "Pangaturan jero pikeun unggal komponén, sidebar, navbar, kartu, sareng tipografi."
+        },
+        "confirmSwitchToAdvanced": {
+          "title": "Beralih ka Mode Lanjutan?",
+          "description": "Mode Lanjutan masihan salira kontrol pinuh pikeun ngatur gaya unggal komponén konsol (sidebar, navbar, kartu, tombol, tipografi, sareng overlay) sacara rinci.\n\nPangaturan otomatis tina preset bakal dinonaktipkeun. Naha salira hoyong neraskeun?",
+          "confirm": "Leres, Beralih ka Mode Lanjutan",
+          "cancel": "Batal"
+        },
+        "confirmSwitchToEasy": {
+          "title": "Beralih ka Mode Praktis?",
+          "description": "Mode Praktis ngagunakeun preset warna sareng gaya pilihan anu harmonis sacara otomatis pikeun sakabéh konsol.\n\nPangaturan manual per komponén sateuacanna bakal disaluyukeun deui sareng preset anu dipilih. Naha salira hoyong beralih ka Mode Praktis?",
+          "confirm": "Leres, Beralih ka Mode Praktis",
+          "cancel": "Batal"
+        },
+        "banner": {
+          "easyTitle": "Mode Praktis (Preset Pilihan)",
+          "easyDescription": "Cukup pilih preset warna sareng gaya tampilan. Sakabéh komponén konsol bakal disaluyukeun sacara otomatis tur harmonis.",
+          "easyCta": "Hoyong kustomisasi per komponén sacara manual? Beralih ka Mode Lanjutan →",
+          "advancedTitle": "Mode Lanjutan (Studio Komponén)",
+          "advancedDescription": "Kustomisasi jero pikeun unggal komponén individual, navigasi shell, kartu, overlay, sareng tipografi.",
+          "advancedCta": "← Wangsul deui ka Mode Praktis (Anggo Preset)"
         }
       },
       "scopeOverlay": {
