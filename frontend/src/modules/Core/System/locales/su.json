@@ -2292,6 +2292,7 @@
       "faviconDescription": "Ikon tab browser (mendukung berkas .ico, .png).",
       "whiteLabelRequired": "Lisensi White Label Diperlukan",
       "whiteLabelDescription": "Pengunggahan logo kustom nyaéta fitur premium. Silakan tingkatkan lisensi salira pikeun mengaktifkannya.",
+      "manageLicense": "Atur Lisensi",
       "glassGradients": {
         "none": {
           "label": "Tanpa",
@@ -2328,6 +2329,8 @@
       },
       "themePortabilityTitle": "Backup & restore tema",
       "themePortabilityDescription": "Salin JSON di handap pikeun backup atawa pindahkan tema ka server lain.",
+      "themeExportLockedTitle": "Theme Portability Peryogi Lisensi Pro",
+      "themeExportLockedDescription": "Fitur ekspor sareng impor konfigurasi tema konsol sayogi kanggo lisensi Pro sareng Enterprise.",
       "themeImportPlaceholder": "Tempel JSON tema di sini…",
       "themeImportApply": "Terapkan",
       "themeCopied": "Konfigurasi tema disalin ka clipboard.",

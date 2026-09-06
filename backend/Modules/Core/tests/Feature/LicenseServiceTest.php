@@ -85,4 +85,14 @@ final class LicenseServiceTest extends TestCase
         $status = $this->licenseService->getLicenseStatus();
         $this->assertEquals('community', $status['tier']);
     }
+
+    public function test_console_logo_keys_are_protected(): void
+    {
+        $this->assertTrue($this->licenseService->isProtectedKey('app_logo'));
+        $this->assertTrue($this->licenseService->isProtectedKey('app_logo_light'));
+        $this->assertTrue($this->licenseService->isProtectedKey('app_logo_dark'));
+        $this->assertTrue($this->licenseService->isProtectedKey('app_logo_compact'));
+        $this->assertTrue($this->licenseService->isProtectedKey('app_favicon'));
+        $this->assertFalse($this->licenseService->isProtectedKey('site_title'));
+    }
 }
