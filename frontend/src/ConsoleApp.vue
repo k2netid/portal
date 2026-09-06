@@ -97,10 +97,12 @@ onUnmounted(() => {
 
 const faviconHref = computed(() => {
     if (!systemStore.publicSettingsLoaded) return '';
+    const syncWithSite = Boolean(systemStore.getSetting('brand_sync_site_identity', false));
     return resolveFavicon([
+        systemStore.getSetting('brand_favicon'),
         systemStore.appIdentity?.app_favicon,
-        systemStore.siteSettings?.site_favicon,
-    ]);
+        syncWithSite ? systemStore.siteSettings?.site_favicon : null,
+    ], { preferFirst: true });
 });
 
 watch(

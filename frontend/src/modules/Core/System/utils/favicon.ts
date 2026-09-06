@@ -23,11 +23,14 @@ function asHref(candidate: unknown): string {
     return '';
 }
 
-export function resolveFavicon(candidates: unknown[]): string {
+export function resolveFavicon(candidates: unknown[], options?: { preferFirst?: boolean }): string {
     let generic = '';
     for (const candidate of candidates) {
         const trimmed = asHref(candidate);
         if (!trimmed) continue;
+        if (options?.preferFirst) {
+            return trimmed;
+        }
         if (isGenericEngineFavicon(trimmed)) {
             if (!generic) generic = trimmed;
             continue;
@@ -67,6 +70,8 @@ export function applyFavicon(href: unknown, options?: { allowGeneric?: boolean }
     try {
         if (!isGenericEngineFavicon(normalizedHref)) {
             localStorage.setItem(FAVICON_STORAGE_KEY, normalizedHref);
+        } else {
+            localStorage.removeItem(FAVICON_STORAGE_KEY);
         }
     } catch {
         /* private mode */
