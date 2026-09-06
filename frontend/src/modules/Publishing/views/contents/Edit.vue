@@ -121,7 +121,7 @@
             @save="handleSubmit"
             @toggle-auto-save="handleAutoSaveToggle"
             @cancel="handleCancel"
-            @open-builder="isVisualBuilderOpen = true"
+            @open-builder="openVisualBuilder"
           />
         </ConsoleFormCard>
       </div>
@@ -359,6 +359,15 @@ const handleReject = async () => {
 
 // Visual Builder State
 const isVisualBuilderOpen = ref(false);
+
+const openVisualBuilder = () => {
+  const isVisualBuilderActive = systemStore.activeExtensions?.includes('visual-builder') ?? false;
+  if (!isVisualBuilderActive) {
+    toast.error.default(t('publishing.content.builder.extensionInactive', 'Modul Visual Builder tidak aktif. Aktifkan modul Visual Builder di Pengaturan Ekstensi.'));
+    return;
+  }
+  isVisualBuilderOpen.value = true;
+};
 
 const handleBuilderUpdate = (payload: { blocks: BlockInstance[] }) => {
   if (!form.value.meta) {

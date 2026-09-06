@@ -151,7 +151,7 @@ class ConsoleMenu extends Model
                         'route_name' => 'builder.site',
                         'icon' => 'layout',
                         'permission' => 'edit content',
-                        'extension_slug' => 'layout',
+                        'extension_slug' => 'visual-builder',
                         'badge_text' => 'PRO',
                         'badge_variant' => 'primary',
                         'order' => 5,

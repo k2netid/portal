@@ -48,15 +48,28 @@
             >
               {{ t('publishing.content.builder.blocksCount', { count: builderBlocksCount }) }}
             </Badge>
+            <Badge
+              v-if="!isVisualBuilderActive"
+              variant="outline"
+              class="text-[10px] font-medium text-muted-foreground border-border/60 bg-muted/40 px-2 py-0.5 rounded-full"
+            >
+              {{ t('publishing.content.builder.extensionInactiveBadge', 'Modul Tidak Aktif') }}
+            </Badge>
           </div>
           <p class="text-xs text-muted-foreground mt-0.5">
-            {{ hasBuilderBlocks ? t('publishing.content.builder.hasBlocksDesc', 'Halaman ini dirancang dengan blok visual builder interaktif.') : t('publishing.content.builder.noBlocksDesc', 'Rancang halaman dengan drag & drop block responsif (Grid, Hero, Forms, Carousel).') }}
+            <template v-if="isVisualBuilderActive">
+              {{ hasBuilderBlocks ? t('publishing.content.builder.hasBlocksDesc', 'Halaman ini dirancang dengan blok visual builder interaktif.') : t('publishing.content.builder.noBlocksDesc', 'Rancang halaman dengan drag & drop block responsif (Grid, Hero, Forms, Carousel).') }}
+            </template>
+            <template v-else>
+              {{ t('publishing.content.builder.inactiveNotice', 'Modul Visual Builder sedang nonaktif. Anda dapat mengedit konten menggunakan Tiptap di bawah, atau aktifkan modul di menu Ekstensi.') }}
+            </template>
           </p>
         </div>
       </div>
 
       <div class="flex items-center gap-2 shrink-0">
         <Button
+          v-if="isVisualBuilderActive"
           type="button"
           class="h-9 px-4 rounded-xl font-semibold text-xs gap-1.5 shadow-sm bg-primary hover:bg-primary/90 text-primary-foreground"
           @click="emit('open-builder')"
@@ -64,6 +77,14 @@
           <Palette class="w-4 h-4" />
           <span>{{ hasBuilderBlocks ? t('publishing.content.builder.editVisual', 'Buka di Visual Builder') : t('publishing.content.builder.launchVisual', 'Rancang dengan Visual Builder') }}</span>
         </Button>
+        <router-link
+          v-else
+          :to="{ name: 'extensions.index' }"
+          class="inline-flex items-center gap-1.5 h-9 px-3 text-xs font-semibold rounded-xl border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Settings class="w-3.5 h-3.5" />
+          <span>{{ t('publishing.content.builder.activateModule', 'Pengaturan Ekstensi') }}</span>
+        </router-link>
       </div>
     </div>
 
@@ -88,7 +109,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import TiptapEditor from '@/shared/components/editor/TiptapEditor.vue';
 import { Button, Badge } from '@/shared/components/ui';
-import { LayoutTemplate, Palette, Info } from 'lucide-vue-next';
+import { LayoutTemplate, Palette, Info, Settings } from 'lucide-vue-next';
+import { useSystemStore } from '@/modules/Core/System/stores/system';
 import type { ContentForm } from '@/modules/Publishing/types/content';
 
 const props = defineProps<{
@@ -105,6 +127,11 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const systemStore = useSystemStore();
+
+const isVisualBuilderActive = computed(() => {
+  return systemStore.activeExtensions?.includes('visual-builder') ?? false;
+});
 
 const builderBlocks = computed(() => {
   return props.modelValue.meta?.builder_blocks || [];

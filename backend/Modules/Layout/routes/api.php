@@ -72,11 +72,11 @@ Route::prefix('v1')->group(function (): void {
         Route::apiResource('themes', ThemeController::class);
 
         // Visual Builder
-        Route::prefix('builder')->group(function (): void {
+        Route::prefix('builder')->middleware(['extension.active:visual-builder'])->group(function (): void {
             Route::get('dynamic-sources', [BuilderController::class, 'dynamicSources']);
             Route::post('resolve-dynamic', [BuilderController::class, 'resolveDynamic']);
             Route::post('generate-blocks', [BuilderController::class, 'generateBlocks']);
         });
-        Route::apiResource('builder-presets', BuilderPresetController::class);
+        Route::apiResource('builder-presets', BuilderPresetController::class)->middleware(['extension.active:visual-builder']);
     });
 });

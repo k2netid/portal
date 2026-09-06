@@ -1,0 +1,22 @@
+{
+  "slug": "visual-builder",
+  "type": "plugin",
+  "name": "Visual Page & Site Builder",
+  "version": "1.0.0",
+  "description": "Visual drag-and-drop page editor and site layout composer with multi-device responsive preview scaling.",
+  "author": "Jejakawan",
+  "license": "Commercial PRO",
+  "license_tier": "pro",
+  "is_core": false,
+  "default_status": "active",
+  "family": "cms",
+  "dependencies": {
+    "layout": ">=1.0.0",
+    "publishing": ">=1.0.0"
+  },
+  "settings": {
+    "enable_site_editor": true,
+    "enable_page_builder": true,
+    "default_device_mode": "desktop"
+  }
+}

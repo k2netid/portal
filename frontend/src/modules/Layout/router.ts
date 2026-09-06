@@ -63,7 +63,7 @@ const layoutRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/Layout/views/builder/SiteEditor.vue'),
         meta: {
             permission: 'edit content',
-            extension: 'layout',
+            extension: 'visual-builder',
             title: 'Visual Site Editor',
             breadcrumb: 'layout.navigation.menu.siteEditor',
             // Fresh mount each visit — avoids KeepAlive stale builder methods/locks/content.
