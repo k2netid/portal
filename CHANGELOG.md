@@ -34,6 +34,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 - Public builder HTML/embed and Janari classic body go through SafeHtml.
 - Layout `dynamicSources` dropped query-string debug log.
 - Honesty pass: uninstall refuses when deactivate is blocked; kernel Identity owns `general`; Publishing no longer writes site identity; Member APIs gated; public theme pages follow the active theme; Sanctum 5273; layout public menus/themes gated; Mail/cron skip when pack off.
+- Console navigation: Preload database console menus upon successful authentication in `Login.vue` and add reactive fallback in `TheSidebar.vue` to eliminate disordered menu flicker without requiring page refresh.
+
 
 Kernel `/manage/ai/generate` stays settings-flag gated (`ai_enabled`), not `cms-ai` pack — by design for downstream apps without CMS.
 
