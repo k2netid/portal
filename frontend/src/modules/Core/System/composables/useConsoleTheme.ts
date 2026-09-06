@@ -370,46 +370,34 @@ export function useConsoleTheme() {
         const isDark = systemStore.isDarkMode;
         const shell = effectiveShellSettings.value;
 
-        if (isGlobalMode.value) {
-            vars['--console-radius'] = normalizeRadiusPx(settings.value.console_button_radius, '8px');
+        vars['--console-radius'] = normalizeRadiusPx(settings.value.console_button_radius, '8px');
 
-            if (isCustomPreset.value) {
-                const hex = isDark ? primaryDarkHex.value : primaryHex.value;
-                vars['--console-primary'] = hex;
-                const hsl = hexToHslComponents(hex);
-                if (hsl) {
-                    vars['--console-primary-hsl'] = hsl.hsl;
-                    vars['--console-primary-foreground-hsl'] = hsl.foregroundHsl;
-                }
-            } else {
-                const tokens = getPresetHslTokens(colorPreset.value, isDark);
-                if (tokens) {
-                    vars['--console-primary-hsl'] = tokens.primary;
-                    vars['--console-primary-foreground-hsl'] = tokens.primaryForeground;
-                }
-            }
-
-            if (surfaceStyle.value === 'glass') {
-                const bg = buildConsoleGlassBackgroundImage({
-                    preset: glassGradientPreset.value,
-                    colorHex: glassGradientColorHex.value,
-                    primaryHsl: vars['--console-primary-hsl'] ?? '238.9 77.1% 60.6%',
-                    intensity: glassGradientIntensity.value,
-                    angle: glassGradientAngle.value,
-                });
-                if (bg !== 'none') {
-                    vars['--console-glass-bg-image'] = bg;
-                }
-            }
-        } else {
-            // Advanced: accent from brand hex only; preset selection is ignored.
-            vars['--console-radius'] = normalizeRadiusPx(settings.value.console_button_radius, '8px');
+        if (isCustomPreset.value) {
             const hex = isDark ? primaryDarkHex.value : primaryHex.value;
             vars['--console-primary'] = hex;
             const hsl = hexToHslComponents(hex);
             if (hsl) {
                 vars['--console-primary-hsl'] = hsl.hsl;
                 vars['--console-primary-foreground-hsl'] = hsl.foregroundHsl;
+            }
+        } else {
+            const tokens = getPresetHslTokens(colorPreset.value, isDark);
+            if (tokens) {
+                vars['--console-primary-hsl'] = tokens.primary;
+                vars['--console-primary-foreground-hsl'] = tokens.primaryForeground;
+            }
+        }
+
+        if (surfaceStyle.value === 'glass') {
+            const bg = buildConsoleGlassBackgroundImage({
+                preset: glassGradientPreset.value,
+                colorHex: glassGradientColorHex.value,
+                primaryHsl: vars['--console-primary-hsl'] ?? '238.9 77.1% 60.6%',
+                intensity: glassGradientIntensity.value,
+                angle: glassGradientAngle.value,
+            });
+            if (bg !== 'none') {
+                vars['--console-glass-bg-image'] = bg;
             }
         }
 
@@ -437,9 +425,9 @@ export function useConsoleTheme() {
     const layoutAttrs = computed(() => {
         const attrs: Record<string, string> = {
             'data-console-theme-mode': themeMode.value,
+            'data-console-preset': colorPreset.value,
         };
         if (isGlobalMode.value) {
-            attrs['data-console-preset'] = colorPreset.value;
             attrs['data-console-surface'] = surfaceStyle.value;
             attrs['data-console-glass-gradient'] = glassGradientPreset.value;
             const derivedShell = effectiveShellSettings.value;
@@ -450,6 +438,7 @@ export function useConsoleTheme() {
         } else {
             const shell = effectiveShellSettings.value;
             attrs['data-console-surface'] = 'advanced';
+            attrs['data-console-glass-gradient'] = glassGradientPreset.value;
             attrs['data-console-button-style'] = normalizeConsoleButtonStyle(shell.console_button_style);
             attrs['data-console-card-style'] = normalizeConsoleCardStyle(shell.console_card_style);
             attrs['data-console-dropdown-style'] = normalizeConsoleDropdownStyle(shell.console_dropdown_style);
