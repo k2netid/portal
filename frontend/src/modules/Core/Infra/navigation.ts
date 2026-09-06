@@ -8,6 +8,7 @@ export const infraNavigation: NavItem[] = [
         icon: 'layers',
         group: 'studio',
         permission: 'manage settings',
+        extension: 'data-studio',
         priority: 100,
     },
 ];

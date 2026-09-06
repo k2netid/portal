@@ -293,7 +293,7 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // Data Model Studio (Schema & Data Modeling Engine)
-    Route::prefix('manage/infra/models')->middleware(['auth:sanctum'])->group(function (): void {
+    Route::prefix('manage/infra/models')->middleware(['auth:sanctum', 'extension.active:data-studio'])->group(function (): void {
         Route::get('types', [DataModelApiController::class, 'listTypes']);
         Route::post('types', [DataModelApiController::class, 'storeType']);
         Route::get('types/openapi-index', [DataModelApiController::class, 'openApiIndex']);
@@ -307,7 +307,7 @@ Route::prefix('v1')->group(function (): void {
     });
 
     // Instant API Generation EAV Endpoints
-    Route::prefix('dynamic/{slug}')->group(function (): void {
+    Route::prefix('dynamic/{slug}')->middleware(['extension.active:data-studio'])->group(function (): void {
         Route::get('', [DataModelApiController::class, 'index']);
         Route::post('', [DataModelApiController::class, 'store']);
         Route::get('{id}', [DataModelApiController::class, 'show']);

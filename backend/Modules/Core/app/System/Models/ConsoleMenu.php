@@ -93,6 +93,7 @@ class ConsoleMenu extends Model
                 'name' => 'Data Model Studio',
                 'label_key' => 'infra.models.title',
                 'icon' => 'layers',
+                'extension_slug' => 'data-studio',
                 'order' => 5,
                 'children' => [
                     [
@@ -101,6 +102,9 @@ class ConsoleMenu extends Model
                         'route_name' => 'model-index',
                         'icon' => 'layers',
                         'permission' => 'manage settings',
+                        'extension_slug' => 'data-studio',
+                        'badge_text' => 'PRO',
+                        'badge_variant' => 'primary',
                         'order' => 1,
                     ],
                 ],
@@ -662,6 +666,16 @@ class ConsoleMenu extends Model
         // Sync extension_slug for builder.site to visual-builder
         self::query()->where('route_name', 'builder.site')->update([
             'extension_slug' => 'visual-builder',
+        ]);
+
+        // Sync extension_slug for Data Model Studio
+        self::query()->where('route_name', 'model-index')->update([
+            'extension_slug' => 'data-studio',
+            'badge_text' => 'PRO',
+            'badge_variant' => 'primary',
+        ]);
+        self::query()->where('group_slug', 'studio')->whereNull('parent_id')->update([
+            'extension_slug' => 'data-studio',
         ]);
 
         $existingRoutes = self::query()
