@@ -110,6 +110,53 @@ class RolesAndUsersApiTest extends TestCase
         $this->assertCount(0, $user->fresh()->tokens);
     }
 
+    public function test_user_created_by_default_is_unverified_and_can_be_manually_verified(): void
+    {
+        $superAdmin = $this->createSuperAdminUser();
+        $adminRole = Role::findByName('admin', 'web');
+
+        // 1. Create User without is_verified -> should be unverified (email_verified_at is null)
+        $createResponse = $this->actingAs($superAdmin, 'sanctum')
+            ->postJson('/api/v1/manage/system/users', [
+                'name' => 'Unverified User',
+                'email' => 'unverified@example.com',
+                'password' => 'Password123!@#',
+                'roles' => [$adminRole->id],
+            ]);
+
+        $createResponse->assertCreated();
+        $userId = (string) $createResponse->json('data.id');
+        $user = User::findOrFail($userId);
+        $this->assertNull($user->email_verified_at);
+
+        // 2. Super admin manually verifies the user
+        $verifyResponse = $this->actingAs($superAdmin, 'sanctum')
+            ->postJson('/api/v1/manage/system/users/'.$userId.'/verify');
+
+        $verifyResponse->assertOk();
+        $this->assertNotNull($user->fresh()->email_verified_at);
+    }
+
+    public function test_user_created_with_is_verified_flag_is_immediately_verified(): void
+    {
+        $superAdmin = $this->createSuperAdminUser();
+        $adminRole = Role::findByName('admin', 'web');
+
+        $createResponse = $this->actingAs($superAdmin, 'sanctum')
+            ->postJson('/api/v1/manage/system/users', [
+                'name' => 'Verified User',
+                'email' => 'verified@example.com',
+                'password' => 'Password123!@#',
+                'roles' => [$adminRole->id],
+                'is_verified' => true,
+            ]);
+
+        $createResponse->assertCreated();
+        $userId = (string) $createResponse->json('data.id');
+        $user = User::findOrFail($userId);
+        $this->assertNotNull($user->email_verified_at);
+    }
+
     public function test_unauthenticated_cannot_access_roles_or_users(): void
     {
         $this->getJson('/api/v1/manage/system/roles')->assertUnauthorized();
