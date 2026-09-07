@@ -754,3 +754,19 @@ html.is-customizer-preview .sarangenge-nav-dots {
   display: flex !important;
 }
 
+/* Guarantee fixed center positioning for side dots above all layout containers */
+.sarangenge-nav-dots {
+  position: fixed !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 0.75rem !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
+@media (min-width: 1280px) {
+  .sarangenge-nav-dots {
+    right: 1.5rem !important;
+  }
+}
+

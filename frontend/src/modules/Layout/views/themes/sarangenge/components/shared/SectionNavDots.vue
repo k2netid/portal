@@ -1,39 +1,43 @@
 <template>
-  <nav
-    aria-label="Navigasi Seksi Beranda"
-    class="sarangenge-nav-dots fixed right-3 xl:right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-2.5 py-3 px-1.5 rounded-full bg-background/50 hover:bg-background/90 backdrop-blur-md border border-border/50 shadow-xl transition-all duration-300"
-  >
-    <button
-      v-for="item in sections"
-      :key="item.id"
-      type="button"
-      :aria-label="item.label"
-      :aria-current="activeSectionId === item.id ? 'true' : undefined"
-      class="group relative flex items-center justify-end p-1 focus:outline-none"
-      @click="scrollTo(item.id)"
+  <Teleport to="body" :disabled="!isMounted">
+    <nav
+      v-if="isMounted"
+      aria-label="Navigasi Seksi Beranda"
+      class="sarangenge-nav-dots fixed right-3 xl:right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-2.5 py-3 px-1.5 rounded-full bg-background/50 hover:bg-background/90 backdrop-blur-md border border-border/50 shadow-xl transition-all duration-300"
     >
-      <!-- Tooltip Label (Floating on Hover) -->
-      <span
-        class="absolute right-7 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap bg-card text-foreground shadow-md border border-border pointer-events-none opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+      <button
+        v-for="item in sections"
+        :key="item.id"
+        type="button"
+        :aria-label="item.label"
+        :aria-current="activeSectionId === item.id ? 'true' : undefined"
+        class="group relative flex items-center justify-end p-1 focus:outline-none"
+        @click="scrollTo(item.id)"
       >
-        {{ item.label }}
-      </span>
+        <!-- Tooltip Label (Floating on Hover) -->
+        <span
+          class="absolute right-7 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap bg-card text-foreground shadow-md border border-border pointer-events-none opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+        >
+          {{ item.label }}
+        </span>
 
-      <!-- Indicator Dot / Pill -->
-      <span
-        class="transition-all duration-300 block"
-        :class="[
-          activeSectionId === item.id
-            ? 'w-2.5 h-6 rounded-full bg-gradient-to-b from-amber-400 to-amber-500 shadow-sm shadow-amber-500/50 ring-2 ring-amber-400/30'
-            : 'w-2 h-2 rounded-full bg-muted-foreground/30 group-hover:bg-foreground/60 group-hover:scale-125'
-        ]"
-      />
-    </button>
-  </nav>
+        <!-- Indicator Dot / Pill -->
+        <span
+          class="transition-all duration-300 block"
+          :class="[
+            activeSectionId === item.id
+              ? 'w-2.5 h-6 rounded-full bg-gradient-to-b from-amber-400 to-amber-500 shadow-sm shadow-amber-500/50 ring-2 ring-amber-400/30'
+              : 'w-2 h-2 rounded-full bg-muted-foreground/30 group-hover:bg-foreground/60 group-hover:scale-125'
+          ]"
+        />
+      </button>
+    </nav>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
+import { throttle } from '@/shared/utils/performance';
 
 export interface SectionNavItem {
   id: string;
@@ -44,54 +48,104 @@ const props = defineProps<{
   sections: SectionNavItem[];
 }>();
 
+const isMounted = ref(false);
 const activeSectionId = ref<string>(props.sections[0]?.id || '');
 let observer: IntersectionObserver | null = null;
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const navOffset = 72; // header height 4.5rem
+    const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = Math.max(0, elementPosition - navOffset);
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
     activeSectionId.value = id;
   }
 };
 
-const attachObserver = () => {
-  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+const handleScroll = () => {
+  if (typeof window === 'undefined') return;
+  const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+  const viewportHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
 
-  if (observer) {
-    observer.disconnect();
+  // At the bottom of the page, activate the last section
+  if (scrollY + viewportHeight >= docHeight - 80 && props.sections.length > 0) {
+    const lastSection = props.sections[props.sections.length - 1];
+    if (lastSection && activeSectionId.value !== lastSection.id) {
+      activeSectionId.value = lastSection.id;
+    }
+    return;
   }
 
-  observer = new IntersectionObserver(
-    (entries) => {
-      // Find the entry that has the highest intersection ratio or is currently intersecting
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+  const triggerLine = scrollY + viewportHeight * 0.35;
 
-      const primary = visible[0];
-      if (primary) {
-        activeSectionId.value = primary.target.id;
-      }
-    },
-    {
-      root: null,
-      rootMargin: '-20% 0px -35% 0px',
-      threshold: [0.1, 0.3, 0.6],
-    }
-  );
-
-  props.sections.forEach((item) => {
+  let current = '';
+  for (const item of props.sections) {
     const el = document.getElementById(item.id);
-    if (el && observer) {
-      observer.observe(el);
+    if (el) {
+      const top = el.getBoundingClientRect().top + scrollY;
+      if (top <= triggerLine) {
+        current = item.id;
+      }
     }
-  });
+  }
+
+  if (current && current !== activeSectionId.value) {
+    activeSectionId.value = current;
+  }
+};
+
+const throttledScroll = throttle(handleScroll, 100);
+
+const attachObserver = () => {
+  if (typeof window === 'undefined') return;
+
+  if ('IntersectionObserver' in window) {
+    if (observer) {
+      observer.disconnect();
+    }
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        const primary = visible[0];
+        if (primary) {
+          activeSectionId.value = primary.target.id;
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-20% 0px -35% 0px',
+        threshold: [0.1, 0.3, 0.6],
+      }
+    );
+
+    props.sections.forEach((item) => {
+      const el = document.getElementById(item.id);
+      if (el && observer) {
+        observer.observe(el);
+      }
+    });
+  }
+
+  // Also run initial scroll check
+  handleScroll();
 };
 
 onMounted(() => {
+  isMounted.value = true;
   nextTick(() => {
     attachObserver();
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    window.addEventListener('resize', throttledScroll, { passive: true });
   });
 });
 
@@ -106,16 +160,21 @@ watch(
 );
 
 onUnmounted(() => {
+  isMounted.value = false;
   if (observer) {
     observer.disconnect();
     observer = null;
+  }
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', throttledScroll);
+    window.removeEventListener('resize', throttledScroll);
   }
 });
 </script>
 
 <style scoped>
 .sarangenge-nav-dots {
-  opacity: 0.75;
+  opacity: 0.85;
 }
 .sarangenge-nav-dots:hover {
   opacity: 1;
