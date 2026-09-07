@@ -1,12 +1,12 @@
 import { nextTick, type Ref } from 'vue';
-import type { JanariPanelAlign, JanariPanelSide } from './popoverContext';
+import type { SareupnaPanelAlign, SareupnaPanelSide } from './popoverContext';
 
 export function useFloatingPanelPosition(
     triggerRef: Ref<HTMLElement | null>,
     panelRef: Ref<HTMLElement | null>,
     options: {
-        side: JanariPanelSide;
-        align: JanariPanelAlign;
+        side: SareupnaPanelSide;
+        align: SareupnaPanelAlign;
         sideOffset: number;
     },
 ) {

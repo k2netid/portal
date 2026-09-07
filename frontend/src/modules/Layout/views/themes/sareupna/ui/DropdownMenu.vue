@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { provide, ref } from 'vue';
-import { JANARI_DROPDOWN_KEY } from './composables/dropdownContext';
+import { SAREUPNA_DROPDOWN_KEY } from './composables/dropdownContext';
 
 const props = withDefaults(defineProps<{
   align?: 'start' | 'end' | 'center';
@@ -21,7 +21,7 @@ const triggerRef = ref<HTMLElement | null>(null);
 const close = () => { open.value = false; };
 const toggle = () => { open.value = !open.value; };
 
-provide(JANARI_DROPDOWN_KEY, {
+provide(SAREUPNA_DROPDOWN_KEY, {
   open,
   align: ref(props.align),
   sideOffset: ref(props.sideOffset),

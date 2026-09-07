@@ -6,12 +6,12 @@
 
 <script setup lang="ts">
 import { computed, provide, ref } from 'vue';
-import { JANARI_POPOVER_KEY, type JanariPanelAlign, type JanariPanelSide } from './composables/popoverContext';
+import { SAREUPNA_POPOVER_KEY, type SareupnaPanelAlign, type SareupnaPanelSide } from './composables/popoverContext';
 
 const props = withDefaults(defineProps<{
   open?: boolean;
-  side?: JanariPanelSide;
-  align?: JanariPanelAlign;
+  side?: SareupnaPanelSide;
+  align?: SareupnaPanelAlign;
   sideOffset?: number;
 }>(), {
   side: 'bottom',
@@ -36,7 +36,7 @@ const triggerRef = ref<HTMLElement | null>(null);
 const close = () => { open.value = false; };
 const toggle = () => { open.value = !open.value; };
 
-provide(JANARI_POPOVER_KEY, {
+provide(SAREUPNA_POPOVER_KEY, {
   open,
   side: ref(props.side),
   align: ref(props.align),

@@ -18,14 +18,14 @@
 <script setup lang="ts">
 import { inject, ref, watch, onMounted, onUnmounted, type HTMLAttributes } from 'vue';
 import { onClickOutside } from '@vueuse/core';
-import { JANARI_SELECT_KEY } from './composables/selectContext';
+import { SAREUPNA_SELECT_KEY } from './composables/selectContext';
 import { cn } from './utils/classNames';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];
 }>();
 
-const ctx = inject(JANARI_SELECT_KEY);
+const ctx = inject(SAREUPNA_SELECT_KEY);
 if (!ctx) throw new Error('SelectContent must be used inside Select');
 
 const panelRef = ref<HTMLElement | null>(null);

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed, provide, ref } from 'vue';
-import { JANARI_SELECT_KEY } from './composables/selectContext';
+import { SAREUPNA_SELECT_KEY } from './composables/selectContext';
 
 const props = defineProps<{
   modelValue?: string;
@@ -32,7 +32,7 @@ const select = (value: string) => {
   close();
 };
 
-provide(JANARI_SELECT_KEY, {
+provide(SAREUPNA_SELECT_KEY, {
   open,
   modelValue,
   placeholder,

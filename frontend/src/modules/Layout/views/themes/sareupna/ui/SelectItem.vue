@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { inject, onMounted, useSlots, watchEffect } from 'vue';
-import { JANARI_SELECT_KEY } from './composables/selectContext';
+import { SAREUPNA_SELECT_KEY } from './composables/selectContext';
 import { cn } from './utils/classNames';
 import type { HTMLAttributes } from 'vue';
 
@@ -25,7 +25,7 @@ const props = defineProps<{
   class?: HTMLAttributes['class'];
 }>();
 
-const ctx = inject(JANARI_SELECT_KEY);
+const ctx = inject(SAREUPNA_SELECT_KEY);
 if (!ctx) throw new Error('SelectItem must be used inside Select');
 
 const slots = useSlots();

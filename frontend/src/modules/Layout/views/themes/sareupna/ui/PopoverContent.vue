@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { computed, inject, ref, watch, onMounted, onUnmounted, type HTMLAttributes } from 'vue';
 import { onClickOutside } from '@vueuse/core';
-import { JANARI_POPOVER_KEY } from './composables/popoverContext';
+import { SAREUPNA_POPOVER_KEY } from './composables/popoverContext';
 import { useFloatingPanelPosition } from './composables/useFloatingPanel';
 import { cn } from './utils/classNames';
 
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<{
   class: undefined,
 });
 
-const ctx = inject(JANARI_POPOVER_KEY);
+const ctx = inject(SAREUPNA_POPOVER_KEY);
 if (!ctx) throw new Error('PopoverContent must be used inside Popover');
 
 const panelRef = ref<HTMLElement | null>(null);

@@ -1,11 +1,11 @@
-# Janari UI
+# Sareupna UI
 
-Presentation components for the Janari theme only. They do not import `@/shared/components/ui` or console layouts.
+Presentation components for the Sareupna theme only. They do not import `@/shared/components/ui` or console layouts.
 
 ## Usage
 
 ```ts
-import { ThemeToggle, Button, DropdownMenu } from '@/modules/Layout/views/themes/janari/ui';
+import { ThemeToggle, Button, DropdownMenu } from '@/modules/Layout/views/themes/sareupna/ui';
 ```
 
 ## Host dependencies inside UI

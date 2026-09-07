@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { inject, ref, watch } from 'vue';
-import { JANARI_POPOVER_KEY } from './composables/popoverContext';
+import { SAREUPNA_POPOVER_KEY } from './composables/popoverContext';
 
 const props = defineProps<{
   asChild?: boolean;
@@ -25,7 +25,7 @@ const props = defineProps<{
 
 const asChild = props.asChild ?? false;
 
-const ctx = inject(JANARI_POPOVER_KEY);
+const ctx = inject(SAREUPNA_POPOVER_KEY);
 if (!ctx) throw new Error('PopoverTrigger must be used inside Popover');
 
 const triggerEl = ref<HTMLElement | null>(null);

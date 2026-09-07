@@ -6,14 +6,14 @@
 
 <script setup lang="ts">
 import { computed, inject, watch } from 'vue';
-import { JANARI_SELECT_KEY } from './composables/selectContext';
+import { SAREUPNA_SELECT_KEY } from './composables/selectContext';
 import { cn } from './utils/classNames';
 
 const props = defineProps<{
   placeholder?: string;
 }>();
 
-const ctx = inject(JANARI_SELECT_KEY);
+const ctx = inject(SAREUPNA_SELECT_KEY);
 if (!ctx) throw new Error('SelectValue must be used inside Select');
 
 watch(() => props.placeholder, (value) => {

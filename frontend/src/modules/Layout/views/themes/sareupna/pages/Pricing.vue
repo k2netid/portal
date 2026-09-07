@@ -1,5 +1,6 @@
 <template>
-  <div class="sareupna-page flex-1 w-full min-h-0 py-16 md:py-24">
+  <SareupnaPageGate setting-key="enable_pricing" title="Paket & Layanan">
+    <div class="sareupna-page flex-1 w-full min-h-0 py-16 md:py-24">
     <div class="container mx-auto px-4 md:px-8">
       <!-- Header -->
       <div class="text-center max-w-2xl mx-auto mb-16">
@@ -120,8 +121,10 @@
       </div>
     </div>
   </div>
+</SareupnaPageGate>
 </template>
 
 <script setup lang="ts">
 import { Check } from 'lucide-vue-next';
+import SareupnaPageGate from '../components/shared/SareupnaPageGate.vue';
 </script>

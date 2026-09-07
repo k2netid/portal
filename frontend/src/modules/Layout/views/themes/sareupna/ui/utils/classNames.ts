@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'vue';
 
 type ClassValue = HTMLAttributes['class'];
 
-/** Local class merge for Janari UI (no dependency on shared/console components). */
+/** Local class merge for Sareupna UI (no dependency on shared/console components). */
 export function cn(...parts: ClassValue[]): string {
     return parts
         .flatMap((part) => {

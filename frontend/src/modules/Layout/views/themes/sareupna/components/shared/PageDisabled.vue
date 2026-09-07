@@ -54,21 +54,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 import { Construction } from 'lucide-vue-next';
-import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 
-const { t } = useI18n();
-const { localizedString } = useLocalizedThemeSetting()
+const { t } = useThemeI18n('sareupna');
+const { localizedString } = useLocalizedThemeSetting();
 
 defineProps<{
   title?: string;
   message?: string;
 }>();
 
-const statusLabel = computed(() => localizedString('page_disabled_status') || t('theme.janari.pages.disabled.statusLabel'))
-const defaultMessage = computed(() => t('theme.janari.pages.disabled.defaultMessage'))
-const backHomeLabel = computed(() => localizedString('page_disabled_back_home') || t('theme.janari.pages.disabled.backHome'))
-const contactLabel = computed(() => localizedString('page_disabled_contact') || t('theme.janari.pages.disabled.contactAdmin'))
+const statusLabel = computed(() => localizedString('page_disabled_status') || t('pages.disabled.statusLabel'));
+const defaultMessage = computed(() => t('pages.disabled.defaultMessage'));
+const backHomeLabel = computed(() => localizedString('page_disabled_back_home') || t('pages.disabled.backHome'));
+const contactLabel = computed(() => localizedString('page_disabled_contact') || t('pages.disabled.contactAdmin'));
 </script>

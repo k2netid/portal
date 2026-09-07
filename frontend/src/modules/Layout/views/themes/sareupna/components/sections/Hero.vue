@@ -77,37 +77,37 @@
       >
         <div class="flex flex-col items-center">
           <span class="text-2xl md:text-3xl font-heading font-black tracking-tight text-primary">
-            {{ t('hero.stat1Val') }}
+            {{ stat1Val }}
           </span>
           <span class="text-[11px] font-mono uppercase tracking-wider text-muted-foreground mt-1">
-            {{ t('hero.stat1Label') }}
+            {{ stat1Label }}
           </span>
         </div>
 
         <div class="flex flex-col items-center">
           <span class="text-2xl md:text-3xl font-heading font-black tracking-tight text-secondary">
-            {{ t('hero.stat2Val') }}
+            {{ stat2Val }}
           </span>
           <span class="text-[11px] font-mono uppercase tracking-wider text-muted-foreground mt-1">
-            {{ t('hero.stat2Label') }}
+            {{ stat2Label }}
           </span>
         </div>
 
         <div class="flex flex-col items-center">
           <span class="text-2xl md:text-3xl font-heading font-black tracking-tight text-foreground">
-            {{ t('hero.stat3Val') }}
+            {{ stat3Val }}
           </span>
           <span class="text-[11px] font-mono uppercase tracking-wider text-muted-foreground mt-1">
-            {{ t('hero.stat3Label') }}
+            {{ stat3Label }}
           </span>
         </div>
 
         <div class="flex flex-col items-center">
           <span class="text-2xl md:text-3xl font-heading font-black tracking-tight text-emerald-400">
-            {{ t('hero.stat4Val') }}
+            {{ stat4Val }}
           </span>
           <span class="text-[11px] font-mono uppercase tracking-wider text-muted-foreground mt-1">
-            {{ t('hero.stat4Label') }}
+            {{ stat4Label }}
           </span>
         </div>
       </div>
@@ -126,16 +126,24 @@ const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting();
 const { t } = useThemeI18n('sareupna');
 
-
-const heroBadgeText = computed(() => localizedString('hero_badge') || t('hero.badgeDefault'));
+const heroBadgeText = computed(() => localizedString('hero_badge_text') || localizedString('hero_badge') || t('hero.badgeDefault'));
 const heroTitle = computed(() => localizedString('hero_title') || t('hero.brandFallback'));
 const heroSubtitle = computed(() => localizedString('hero_subtitle') || t('hero.subtitleDefault'));
 
-const heroCtaPrimaryText = computed(() => localizedString('hero_cta_primary') || t('hero.ctaPrimary'));
-const heroCtaPrimaryUrl = computed(() => String(getSetting('hero_cta_primary_url', '/solusi') || '/solusi'));
+const heroCtaPrimaryText = computed(() => localizedString('hero_primary_cta_text') || localizedString('hero_cta_primary') || t('hero.ctaPrimary'));
+const heroCtaPrimaryUrl = computed(() => String(getSetting('hero_primary_cta_link') || getSetting('hero_cta_primary_url', '/solusi') || '/solusi'));
 
-const heroCtaSecondaryText = computed(() => localizedString('cta_secondary_text') || t('hero.ctaPricing'));
-const heroCtaSecondaryUrl = computed(() => String(getSetting('cta_secondary_url', '/pricing') || '/pricing'));
+const heroCtaSecondaryText = computed(() => localizedString('hero_secondary_cta_text') || localizedString('cta_secondary_text') || t('hero.ctaPricing'));
+const heroCtaSecondaryUrl = computed(() => String(getSetting('hero_secondary_cta_link') || getSetting('cta_secondary_url', '/pricing') || '/pricing'));
+
+const stat1Val = computed(() => String(getSetting('hero_stat_1_val') || t('hero.stat1Val')));
+const stat1Label = computed(() => String(getSetting('hero_stat_1_label') || t('hero.stat1Label')));
+const stat2Val = computed(() => String(getSetting('hero_stat_2_val') || t('hero.stat2Val')));
+const stat2Label = computed(() => String(getSetting('hero_stat_2_label') || t('hero.stat2Label')));
+const stat3Val = computed(() => String(getSetting('hero_stat_3_val') || t('hero.stat3Val')));
+const stat3Label = computed(() => String(getSetting('hero_stat_3_label') || t('hero.stat3Label')));
+const stat4Val = computed(() => String(getSetting('hero_stat_4_val') || t('hero.stat4Val')));
+const stat4Label = computed(() => String(getSetting('hero_stat_4_label') || t('hero.stat4Label')));
 
 const badgeCopied = ref(false);
 

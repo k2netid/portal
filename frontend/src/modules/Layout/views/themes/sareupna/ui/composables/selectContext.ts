@@ -1,6 +1,6 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 
-export interface JanariSelectContext {
+export interface SareupnaSelectContext {
     open: Ref<boolean>;
     modelValue: ComputedRef<string>;
     placeholder: Ref<string>;
@@ -10,4 +10,4 @@ export interface JanariSelectContext {
     select: (value: string) => void;
 }
 
-export const JANARI_SELECT_KEY: InjectionKey<JanariSelectContext> = Symbol('janari-select');
+export const SAREUPNA_SELECT_KEY: InjectionKey<SareupnaSelectContext> = Symbol('sareupna-select');

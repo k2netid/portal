@@ -1,6 +1,6 @@
 <template>
   <span
-    class="janari-split-text inline-block"
+    class="sareupna-split-text inline-block"
     :aria-label="text"
   >
     <span 
@@ -19,30 +19,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    text: string
-    type?: 'words' | 'chars'
+    text: string;
+    type?: 'words' | 'chars';
   }>(),
   { type: 'words' },
-)
+);
 
-const isWordMode = computed(() => props.type !== 'chars')
+const isWordMode = computed(() => props.type !== 'chars');
 
 const units = computed(() => {
-  if (!props.text) return []
+  if (!props.text) return [];
   if (props.type === 'chars') {
-    return props.text.split('')
+    return props.text.split('');
   }
-  // Words (default): split on whitespace; spaces re-inserted in template between units
-  return props.text.trim().split(/\s+/).filter(Boolean)
-})
+  return props.text.trim().split(/\s+/).filter(Boolean);
+});
 </script>
 
 <style scoped>
-.janari-split-text {
+.sareupna-split-text {
   display: inline-block;
   line-height: inherit;
 }

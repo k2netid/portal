@@ -2,12 +2,14 @@ import type { ThemeCustomizerExtension } from '@/modules/Layout/customizer/types
 import { janariCustomizerExtension } from '@/modules/Layout/views/themes/janari/customizer';
 import { sarangengeCustomizerExtension } from '@/modules/Layout/views/themes/sarangenge/customizer';
 import { layungCustomizerExtension } from '@/modules/Layout/views/themes/layung/customizer';
+import { sareupnaCustomizerExtension } from '@/modules/Layout/views/themes/sareupna/customizer';
 
 /** Bundled theme customizer extensions (add new themes here when introduced). */
 const extensionBySlug: Record<string, ThemeCustomizerExtension> = {
     janari: janariCustomizerExtension,
     sarangenge: sarangengeCustomizerExtension,
     layung: layungCustomizerExtension,
+    sareupna: sareupnaCustomizerExtension,
 };
 
 export function resolveThemeCustomizerExtension(slug: string): ThemeCustomizerExtension | null {

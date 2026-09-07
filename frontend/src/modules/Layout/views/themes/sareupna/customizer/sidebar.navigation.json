@@ -1,0 +1,20 @@
+{
+    "reservedManifestCategories": [
+        "General",
+        "Appearance",
+        "Colors",
+        "Typography",
+        "Layout",
+        "Buttons",
+        "Platform Specs",
+        "Hero Section",
+        "Bento Architecture",
+        "Developer Terminal",
+        "Products & Modules",
+        "Cloud Specs & SLA",
+        "Public Pages",
+        "Social Media",
+        "Animations",
+        "Footer"
+    ]
+}

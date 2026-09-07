@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref } from 'vue';
 
-export interface JanariDropdownContext {
+export interface SareupnaDropdownContext {
     open: Ref<boolean>;
     align: Ref<'start' | 'end' | 'center'>;
     sideOffset: Ref<number>;
@@ -9,4 +9,4 @@ export interface JanariDropdownContext {
     toggle: () => void;
 }
 
-export const JANARI_DROPDOWN_KEY: InjectionKey<JanariDropdownContext> = Symbol('janari-dropdown');
+export const SAREUPNA_DROPDOWN_KEY: InjectionKey<SareupnaDropdownContext> = Symbol('sareupna-dropdown');

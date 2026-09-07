@@ -2,13 +2,13 @@
   <Teleport to="body">
     <nav
       :aria-label="t('nav_sections.aria_label', 'Navigasi Seksi Beranda')"
-      class="janari-nav-dots hidden md:block"
+      class="sareupna-nav-dots hidden md:block"
       style="position: fixed !important; top: 50% !important; transform: translateY(-50%) !important; right: 0.75rem !important; z-index: 99999 !important; pointer-events: auto !important;"
     >
       <!-- Inner Dock Container (animated with GSAP, isolated from vertical center anchor) -->
       <div
         ref="innerDockRef"
-        class="janari-nav-dock flex flex-col items-end gap-2 transition-colors duration-300"
+        class="sareupna-nav-dock flex flex-col items-end gap-2 transition-colors duration-300"
         :class="dockPresetClasses"
       >
         <button
@@ -18,12 +18,12 @@
           type="button"
           :aria-label="item.label"
           :aria-current="activeSectionId === item.id ? 'true' : undefined"
-          class="janari-nav-btn group relative flex items-center justify-end p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+          class="sareupna-nav-btn group relative flex items-center justify-end p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
           @click="handleClick(item.id, $event)"
         >
           <!-- Tooltip Label (Floating on Hover) -->
           <div
-            class="janari-nav-tooltip absolute right-7 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap shadow-lg pointer-events-none opacity-0 translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 backdrop-blur-md flex items-center gap-1.5"
+            class="sareupna-nav-tooltip absolute right-7 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap shadow-lg pointer-events-none opacity-0 translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 backdrop-blur-md flex items-center gap-1.5"
             :class="tooltipPresetClasses"
           >
             <span v-if="stylePreset === 'bars'" class="text-[10px] font-mono text-primary font-bold">
@@ -41,10 +41,10 @@
           <!-- 1. BARS PRESET -->
           <template v-if="stylePreset === 'bars'">
             <span
-              class="janari-nav-indicator transition-all duration-300 block origin-center rounded-full"
+              class="sareupna-nav-indicator transition-all duration-300 block origin-center rounded-full"
               :class="[
                 activeSectionId === item.id
-                  ? 'janari-nav-bar-active w-6 h-1.5 bg-primary shadow-sm shadow-primary/50 ring-1 ring-primary/40'
+                  ? 'sareupna-nav-bar-active w-6 h-1.5 bg-primary shadow-sm shadow-primary/50 ring-1 ring-primary/40'
                   : 'w-3.5 h-1 bg-muted-foreground/35 group-hover:w-5 group-hover:bg-foreground/80'
               ]"
             />
@@ -53,10 +53,10 @@
           <!-- 2. MINIMAL PRESET -->
           <template v-else-if="stylePreset === 'minimal'">
             <span
-              class="janari-nav-indicator transition-all duration-300 block origin-center rounded-full"
+              class="sareupna-nav-indicator transition-all duration-300 block origin-center rounded-full"
               :class="[
                 activeSectionId === item.id
-                  ? 'janari-nav-minimal-active w-3 h-3 bg-primary shadow-md shadow-primary/40 ring-4 ring-primary/20'
+                  ? 'sareupna-nav-minimal-active w-3 h-3 bg-primary shadow-md shadow-primary/40 ring-4 ring-primary/20'
                   : 'w-2 h-2 bg-foreground/30 group-hover:bg-foreground/80 group-hover:scale-125'
               ]"
             />
@@ -65,10 +65,10 @@
           <!-- 3. GLOW PRESET -->
           <template v-else-if="stylePreset === 'glow'">
             <span
-              class="janari-nav-indicator transition-all duration-300 block origin-center rounded-full"
+              class="sareupna-nav-indicator transition-all duration-300 block origin-center rounded-full"
               :class="[
                 activeSectionId === item.id
-                  ? 'janari-nav-glow-active w-2.5 h-6 bg-primary ring-2 ring-primary/60'
+                  ? 'sareupna-nav-glow-active w-2.5 h-6 bg-primary ring-2 ring-primary/60'
                   : 'w-2 h-2 bg-primary/40 group-hover:bg-primary group-hover:scale-125 group-hover:shadow-[0_0_8px_hsl(var(--primary))]'
               ]"
             />
@@ -77,10 +77,10 @@
           <!-- 4. GLASS PRESET (DEFAULT) -->
           <template v-else>
             <span
-              class="janari-nav-indicator transition-all duration-300 block origin-center rounded-full"
+              class="sareupna-nav-indicator transition-all duration-300 block origin-center rounded-full"
               :class="[
                 activeSectionId === item.id
-                  ? 'janari-nav-pill-active w-2.5 h-6 bg-primary shadow-sm shadow-primary/50 ring-2 ring-primary/30'
+                  ? 'sareupna-nav-pill-active w-2.5 h-6 bg-primary shadow-sm shadow-primary/50 ring-2 ring-primary/30'
                   : 'w-2 h-2 bg-muted-foreground/35 group-hover:bg-foreground/75 group-hover:scale-125'
               ]"
             />
@@ -171,7 +171,7 @@ const playEntranceAnimation = () => {
     { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
   );
 
-  const dots = innerDockRef.value.querySelectorAll('.janari-nav-btn');
+  const dots = innerDockRef.value.querySelectorAll('.sareupna-nav-btn');
   if (dots.length > 0) {
     gsap.fromTo(
       dots,
@@ -183,7 +183,7 @@ const playEntranceAnimation = () => {
 
 const animateActiveChange = (sectionId: string) => {
   if (!innerDockRef.value || !isAnimationEnabled()) return;
-  const target = innerDockRef.value.querySelector(`[data-section-id="${sectionId}"] .janari-nav-indicator`);
+  const target = innerDockRef.value.querySelector(`[data-section-id="${sectionId}"] .sareupna-nav-indicator`);
   if (target) {
     gsap.fromTo(
       target,
@@ -196,7 +196,7 @@ const animateActiveChange = (sectionId: string) => {
 const handleClick = (id: string, event?: MouseEvent) => {
   if (event && isAnimationEnabled()) {
     const currentBtn = event.currentTarget as HTMLElement;
-    const indicator = currentBtn?.querySelector('.janari-nav-indicator');
+    const indicator = currentBtn?.querySelector('.sareupna-nav-indicator');
     if (indicator) {
       gsap.fromTo(
         indicator,
@@ -333,7 +333,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.janari-nav-dots {
+.sareupna-nav-dots {
   position: fixed !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
@@ -343,16 +343,16 @@ onUnmounted(() => {
 }
 
 @media (min-width: 1280px) {
-  .janari-nav-dots {
+  .sareupna-nav-dots {
     right: 1.5rem !important;
   }
 }
 
-.janari-nav-dock {
+.sareupna-nav-dock {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes janari-pill-glow {
+@keyframes sareupna-pill-glow {
   0%, 100% {
     box-shadow: 0 0 10px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.2);
   }
@@ -361,11 +361,11 @@ onUnmounted(() => {
   }
 }
 
-.janari-nav-pill-active {
-  animation: janari-pill-glow 2.5s ease-in-out infinite;
+.sareupna-nav-pill-active {
+  animation: sareupna-pill-glow 2.5s ease-in-out infinite;
 }
 
-@keyframes janari-cyber-glow {
+@keyframes sareupna-cyber-glow {
   0%, 100% {
     box-shadow: 0 0 12px hsl(var(--primary)), 0 0 25px hsl(var(--primary) / 0.4);
   }
@@ -374,15 +374,15 @@ onUnmounted(() => {
   }
 }
 
-.janari-nav-glow-active {
-  animation: janari-cyber-glow 2s ease-in-out infinite;
+.sareupna-nav-glow-active {
+  animation: sareupna-cyber-glow 2s ease-in-out infinite;
 }
 
-.janari-nav-bar-active {
-  animation: janari-pill-glow 2.5s ease-in-out infinite;
+.sareupna-nav-bar-active {
+  animation: sareupna-pill-glow 2.5s ease-in-out infinite;
 }
 
-.janari-nav-minimal-active {
-  animation: janari-pill-glow 2.5s ease-in-out infinite;
+.sareupna-nav-minimal-active {
+  animation: sareupna-pill-glow 2.5s ease-in-out infinite;
 }
 </style>

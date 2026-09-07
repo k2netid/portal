@@ -23,7 +23,7 @@ const props = defineProps<{
 }>();
 
 const { getSetting } = useTheme();
-const { t } = useThemeI18n('janari');
+const { t } = useThemeI18n('sareupna');
 
 const isEnabled = computed(() => getSetting(props.settingKey, true) !== false);
 
@@ -32,6 +32,6 @@ const disabledMessage = computed(() => {
   if (typeof raw === 'string' && raw.trim() !== '') {
     return raw;
   }
-  return t('pages.disabled.defaultMessage', 'Halaman ini sedang tidak dapat diakses.');
+  return t('pages.disabled.defaultMessage', 'Layanan ini sedang dalam peningkatan performa berkala.');
 });
 </script>

@@ -199,29 +199,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import api from '@/engine/api/client'
 import { libraryPaths, publishingPaths } from '@/engine/api/paths'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import { logger } from '@/shared/utils/logger'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import {
   Calendar,
   Clock,
   ArrowRight,
   ChevronDown,
   Search,
-} from 'lucide-vue-next'
+} from 'lucide-vue-next';
 
-const { t } = useI18n()
-const { localizedString } = useLocalizedThemeSetting()
+const { t } = useThemeI18n('sareupna');
+const { localizedString } = useLocalizedThemeSetting();
 
-const categoriesLabel = computed(() => localizedString('page_blog_categories_label') || t('theme.janari.pages.blog.categoriesLabel'))
-const searchPlaceholder = computed(() => localizedString('page_blog_search_placeholder') || t('theme.janari.pages.blog.searchPlaceholder'))
-const categoryAllLabel = computed(() => localizedString('page_blog_category_all') || t('theme.janari.pages.blog.categoryAll'))
-const calendarTitle = computed(() => localizedString('page_blog_calendar_title') || t('theme.janari.pages.blog.professionalCalendar'))
-const viewAllAgenda = computed(() => localizedString('page_blog_view_all_agenda') || t('theme.janari.pages.blog.viewAllAgenda'))
+const categoriesLabel = computed(() => localizedString('page_blog_categories_label') || t('pages.blog.categoriesLabel'));
+const searchPlaceholder = computed(() => localizedString('page_blog_search_placeholder') || t('pages.blog.searchPlaceholder'));
+const categoryAllLabel = computed(() => localizedString('page_blog_category_all') || t('pages.blog.categoryAll'));
+const calendarTitle = computed(() => localizedString('page_blog_calendar_title') || t('pages.blog.professionalCalendar'));
+const viewAllAgenda = computed(() => localizedString('page_blog_view_all_agenda') || t('pages.blog.viewAllAgenda'));
 
 interface Category {
   id: string;
@@ -239,33 +239,33 @@ interface SearchSuggestionItem {
   category: string;
 }
 
-const router = useRouter()
-const route = useRoute()
-const categories = ref<Category[]>([])
-const loadingCategories = ref(true)
-const expandedCategories = ref<Set<string>>(new Set())
+const router = useRouter();
+const route = useRoute();
+const categories = ref<Category[]>([]);
+const loadingCategories = ref(true);
+const expandedCategories = ref<Set<string>>(new Set());
 
-const suggestions = ref<SearchSuggestionItem[]>([])
-const showSuggestions = ref(false)
-let searchDebounce: any = null
+const suggestions = ref<SearchSuggestionItem[]>([]);
+const showSuggestions = ref(false);
+let searchDebounce: any = null;
 
-const currentCategory = computed(() => route.query.category as string || '')
-const searchQuery = ref(route.query.q as string || '')
+const currentCategory = computed(() => route.query.category as string || '');
+const searchQuery = ref(route.query.q as string || '');
 
 const typeLabel = (type: string): string => {
   switch (type) {
     case 'post':
-      return t('theme.janari.common.article')
+      return t('common.article');
     case 'page':
-      return t('theme.janari.common.page')
+      return t('common.page');
     case 'category':
-      return t('theme.janari.pages.blog.contentTypeCategory')
+      return t('pages.blog.contentTypeCategory');
     case 'tag':
-      return t('theme.janari.pages.blog.contentTypeTag')
+      return t('pages.blog.contentTypeTag');
     default:
-      return type
+      return type;
   }
-}
+};
 
 const toInternalPath = (rawUrl: string | null | undefined): string | null => {
   if (!rawUrl) return null

@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue';
-import { JANARI_DROPDOWN_KEY } from './composables/dropdownContext';
+import { SAREUPNA_DROPDOWN_KEY } from './composables/dropdownContext';
 import { cn } from './utils/classNames';
 import type { HTMLAttributes } from 'vue';
 
@@ -27,7 +27,7 @@ const emit = defineEmits<{
   (e: 'click', event: MouseEvent): void;
 }>();
 
-const ctx = inject(JANARI_DROPDOWN_KEY);
+const ctx = inject(SAREUPNA_DROPDOWN_KEY);
 
 const onClick = (event: MouseEvent) => {
   emit('click', event);

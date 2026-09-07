@@ -4,9 +4,9 @@
       v-if="ctx?.open.value"
       ref="panelRef"
       role="menu"
-      data-janari-overlay
+      data-sareupna-overlay
       :class="cn(
-        'janari-overlay-panel min-w-32 overflow-hidden rounded-xl border border-border/50 bg-background p-1.5 text-foreground shadow-lg ring-1 ring-border/40',
+        'sareupna-overlay-panel min-w-32 overflow-hidden rounded-xl border border-border/50 bg-background p-1.5 text-foreground shadow-lg ring-1 ring-border/40',
         props.class,
       )"
       :style="panelStyle"
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { inject, ref, watch, onMounted, onUnmounted, type HTMLAttributes } from 'vue';
 import { onClickOutside } from '@vueuse/core';
-import { JANARI_DROPDOWN_KEY } from './composables/dropdownContext';
+import { SAREUPNA_DROPDOWN_KEY } from './composables/dropdownContext';
 import { cn } from './utils/classNames';
 
 const props = defineProps<{
@@ -28,7 +28,7 @@ const props = defineProps<{
   sideOffset?: number;
 }>();
 
-const ctx = inject(JANARI_DROPDOWN_KEY);
+const ctx = inject(SAREUPNA_DROPDOWN_KEY);
 if (!ctx) {
   throw new Error('DropdownMenuContent must be used inside DropdownMenu');
 }

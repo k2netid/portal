@@ -32,7 +32,7 @@
         <section class="border-y border-border bg-gradient-to-b from-primary/[0.09] via-primary/[0.04] to-background">
           <div class="container mx-auto px-4 py-12 md:py-16">
             <h1 class="mt-6 text-3xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              <JanariSplitText :text="pageTitle" />
+              <SareupnaSplitText :text="pageTitle" />
             </h1>
             <SafeHtml
               v-if="pageIntro"
@@ -169,7 +169,7 @@
                   </figcaption>
                 </figure>
                 <SafeHtml
-                  class="janari-page-content prose prose-slate max-w-none prose-p:my-4 prose-p:leading-relaxed prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-ul:my-4 prose-ol:my-4"
+                  class="sareupna-page-content prose prose-slate max-w-none prose-p:my-4 prose-p:leading-relaxed prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-ul:my-4 prose-ol:my-4"
                   :html="pageBody"
                   mode="publishing"
                 />
@@ -224,11 +224,11 @@
 import { PluginSlot } from '@/shared/components'
 import { logger } from '@/shared/utils/logger';
 import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import SafeHtml from '@/modules/Core/System/components/ui/SafeHtml.vue';
 import { useRoute, useRouter } from 'vue-router';
-import JanariSplitText from '../components/shared/JanariSplitText.vue';
+import SareupnaSplitText from '../components/shared/SareupnaSplitText.vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import PublicComments from '@/modules/Publishing/components/comments/PublicComments.vue';
 import api from '@/engine/api/client';
@@ -244,23 +244,23 @@ import {
 
 import type { Content } from '@/modules/Publishing/types/content'
 
-const { t, locale } = useI18n({ useScope: 'global' });
+const { t, locale } = useThemeI18n('sareupna');
 const { localizedString } = useLocalizedThemeSetting();
 const route = useRoute();
 const router = useRouter();
 const pageData = ref<Content | null>(null);
 const loading = ref(true);
 
-const emptyPublishedText = computed(() => localizedString('page_cms_empty') || t('theme.janari.pages.page.emptyPublished'));
-const metaLabel = computed(() => localizedString('page_cms_meta_label') || t('theme.janari.pages.page.metaLabel'));
-const typeLabel = computed(() => localizedString('page_cms_type_label') || t('theme.janari.pages.page.typeLabel'));
-const notFoundTitle = computed(() => localizedString('page_cms_not_found_title') || t('theme.janari.pages.page.notFoundTitle'));
-const notFoundDescription = computed(() => localizedString('page_cms_not_found_description') || t('theme.janari.pages.page.notFoundDescription'));
+const emptyPublishedText = computed(() => localizedString('page_cms_empty') || t('pages.page.emptyPublished'));
+const metaLabel = computed(() => localizedString('page_cms_meta_label') || t('pages.page.metaLabel'));
+const typeLabel = computed(() => localizedString('page_cms_type_label') || t('pages.page.typeLabel'));
+const notFoundTitle = computed(() => localizedString('page_cms_not_found_title') || t('pages.page.notFoundTitle'));
+const notFoundDescription = computed(() => localizedString('page_cms_not_found_description') || t('pages.page.notFoundDescription'));
 
 const pageSlug = computed(() => (route.params.slug as string) || '');
 const pageTitle = computed(() => {
     const localized = resolveLocalizedContentField(pageData.value, 'title', locale.value);
-    return localized || pageSlug.value.replace(/-/g, ' ') || t('theme.janari.common.page');
+    return localized || pageSlug.value.replace(/-/g, ' ') || t('common.page');
 });
 const pageIntro = computed(() => resolveLocalizedContentField(pageData.value, 'intro', locale.value).trim());
 const pageBody = computed(() => resolveLocalizedContentField(pageData.value, 'body', locale.value));
@@ -338,17 +338,17 @@ watch(locale, fetchPage);
 </script>
 
 <style scoped>
-:deep(.janari-page-content p) {
+:deep(.sareupna-page-content p) {
   margin-top: 1rem !important;
   margin-bottom: 1rem !important;
   line-height: 1.85 !important;
 }
 
-:deep(.janari-page-content p:first-child) {
+:deep(.sareupna-page-content p:first-child) {
   margin-top: 0 !important;
 }
 
-:deep(.janari-page-content p:last-child) {
+:deep(.sareupna-page-content p:last-child) {
   margin-bottom: 0 !important;
 }
 </style>

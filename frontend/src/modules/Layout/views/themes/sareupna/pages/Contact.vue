@@ -9,7 +9,7 @@
       class="flex-1"
     >
       <PageDisabled 
-        :title="(pageTitle as string) || t('theme.janari.pages.contact.title')" 
+        :title="(pageTitle as string) || t('pages.contact.title')" 
         :message="(getSetting('disabled_page_message') as string)" 
       />
     </div>
@@ -20,7 +20,7 @@
     >
       <Loader2 class="w-10 h-10 animate-spin text-primary/50" />
       <p class="text-sm font-medium text-muted-foreground animate-pulse">
-        {{ t('theme.janari.pages.contact.loadingPage') }}
+        {{ t('pages.contact.loadingPage') }}
       </p>
     </div>
 
@@ -44,7 +44,7 @@
             fetchpriority="high"
             loading="eager"
             decoding="sync"
-            :alt="t('theme.janari.pages.contact.heroAlt')"
+            :alt="t('pages.contact.heroAlt')"
           />
           <div
             v-if="contactHeroImage"
@@ -54,9 +54,9 @@
             class="container mx-auto px-6 relative z-10"
             :class="contactHeroImage ? 'py-16 md:py-20' : 'py-8 md:py-10'"
           >
-            <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">{{ pageTitle || t('theme.janari.pages.contact.sectionLabel') }}</span>
+            <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">{{ pageTitle || t('pages.contact.sectionLabel') }}</span>
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-              {{ pageTitle ? pageTitle : t('theme.janari.pages.contact.title') }}
+              {{ pageTitle ? pageTitle : t('pages.contact.title') }}
             </h1>
             <p class="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
               {{ pageSubtitle }}
@@ -186,7 +186,7 @@
                             class="w-full h-56"
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
-                            :title="t('theme.janari.pages.contact.mapTitle')"
+                            :title="t('pages.contact.mapTitle')"
                           />
                         </div>
                         <p class="text-xs text-muted-foreground leading-relaxed">
@@ -273,7 +273,7 @@
                 >
                   <Loader2 class="w-8 h-8 animate-spin text-primary/50" />
                   <p class="text-sm text-muted-foreground">
-                    {{ t('theme.janari.pages.contact.formLoading') }}
+                    {{ t('pages.contact.formLoading') }}
                   </p>
                 </div>
 
@@ -283,7 +283,7 @@
                   variant="destructive"
                   class="mb-4"
                 >
-                  <AlertTitle>{{ t('theme.janari.pages.contact.formUnavailableTitle') }}</AlertTitle>
+                  <AlertTitle>{{ t('pages.contact.formUnavailableTitle') }}</AlertTitle>
                   <AlertDescription>
                     {{ formLoadError }}
                   </AlertDescription>
@@ -441,7 +441,7 @@
                         <label
                           :html-for="'cf-' + field.name"
                           class="text-sm text-muted-foreground cursor-pointer"
-                        >{{ field.placeholder || t('theme.janari.pages.contact.yes') }}</label>
+                        >{{ field.placeholder || t('pages.contact.yes') }}</label>
                       </div>
 
                       <!-- select -->
@@ -451,7 +451,7 @@
                         @update:model-value="formValues[field.name] = $event"
                       >
                         <SelectTrigger :id="'cf-' + field.name" :class="fieldErrorClass(field.name)">
-                          <SelectValue :placeholder="field.placeholder || t('theme.janari.pages.contact.select')" />
+                          <SelectValue :placeholder="field.placeholder || t('pages.contact.select')" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem
@@ -561,9 +561,9 @@
                   v-else-if="formDefinition && !formDefinition.fields?.length"
                   variant="destructive"
                 >
-                  <AlertTitle>{{ t('theme.janari.pages.contact.formNotConfiguredTitle') }}</AlertTitle>
+                  <AlertTitle>{{ t('pages.contact.formNotConfiguredTitle') }}</AlertTitle>
                   <AlertDescription>
-                    {{ t('theme.janari.pages.contact.formNoValidFields') }}
+                    {{ t('pages.contact.formNoValidFields') }}
                   </AlertDescription>
                 </Alert>
               </Card>
@@ -579,7 +579,7 @@
 import { PluginSlot } from '@/shared/components'
 import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, computed, nextTick, defineAsyncComponent, watchEffect, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { normalizeLocaleCode } from '@/engine/i18n'
 import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
@@ -613,11 +613,11 @@ import {
     SelectValue,
     SelectContent,
     SelectItem,
-} from '@/modules/Layout/views/themes/janari/ui'
+} from '../ui'
 import { Mail, Phone, MapPin, Loader2 } from 'lucide-vue-next';
 import { useToast } from '@/shared/composables/useToast'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
-import { useJanariIdentity } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity'
+// Identity provided via useTheme
 import type { CaptchaPayload } from '@/modules/Core/System/components/captcha/CaptchaWrapper.vue'
 
 const CaptchaWrapper = defineAsyncComponent(() => import('@/modules/Core/System/components/captcha/CaptchaWrapper.vue'))
@@ -665,29 +665,41 @@ const startTracked = ref(false)
 const pageData = ref<PageData | null>(null)
 const mapPopoverOpen = ref(false)
 const mapIframeVisible = ref(false)
-const { getSetting } = useTheme()
-const { localizedString } = useLocalizedThemeSetting()
-const { t, locale } = useI18n({ useScope: 'global' })
-const labelEmail = computed(() => localizedString('page_contact_label_email') || t('theme.janari.pages.contact.labelEmail'))
-const labelPhone = computed(() => localizedString('page_contact_label_phone') || t('theme.janari.pages.contact.labelPhone'))
-const labelAddress = computed(() => localizedString('page_contact_label_address') || t('theme.janari.pages.contact.labelAddress'))
-const labelSubmit = computed(() => localizedString('page_contact_submit') || t('theme.janari.pages.contact.submit'))
-const labelMapOpen = computed(() => localizedString('page_contact_map_open') || t('theme.janari.pages.contact.mapOpen'))
-const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || t('theme.janari.pages.contact.mapDirections'))
-const labelCopyAddress = computed(() => localizedString('page_contact_copy_address') || t('theme.janari.pages.contact.copyAddress'))
-const labelShareLocation = computed(() => localizedString('page_contact_share_location') || t('theme.janari.pages.contact.shareLocation'))
-const labelCopyCoords = computed(() => localizedString('page_contact_copy_coords') || t('theme.janari.pages.contact.copyCoords'))
-const formTitleFallback = computed(() => localizedString('page_contact_form_title') || t('theme.janari.pages.contact.formTitle'))
-const formDescriptionFallback = computed(() => localizedString('page_contact_form_description') || t('theme.janari.pages.contact.formDescription'))
-const contactSetupHint = computed(() => t('theme.janari.pages.contact.setupHint'))
+const { getSetting } = useTheme();
+const { localizedString } = useLocalizedThemeSetting();
+const { t, locale } = useThemeI18n('sareupna');
+
+const displayAddress = computed(() => String(getSetting('platform_address', 'PT Jejak Awan Digital, Bandung & Jakarta, Indonesia') || 'PT Jejak Awan Digital, Bandung & Jakarta, Indonesia'));
+const displayPhone = computed(() => String(getSetting('platform_contact_phone', '+62 811-2345-6789') || '+62 811-2345-6789'));
+const displayEmail = computed(() => String(getSetting('platform_contact_email', 'halo@jejakawan.com') || 'halo@jejakawan.com'));
+
+const labelEmail = computed(() => localizedString('page_contact_label_email') || t('pages.contact.labelEmail'))
+const labelPhone = computed(() => localizedString('page_contact_label_phone') || t('pages.contact.labelPhone'))
+const labelAddress = computed(() => localizedString('page_contact_label_address') || t('pages.contact.labelAddress'))
+const labelSubmit = computed(() => localizedString('page_contact_submit') || t('pages.contact.submit'))
+const labelMapOpen = computed(() => localizedString('page_contact_map_open') || t('pages.contact.mapOpen'))
+const labelMapDirections = computed(() => localizedString('page_contact_map_directions') || t('pages.contact.mapDirections'))
+const labelCopyAddress = computed(() => localizedString('page_contact_copy_address') || t('pages.contact.copyAddress'))
+const labelShareLocation = computed(() => localizedString('page_contact_share_location') || t('pages.contact.shareLocation'))
+const labelCopyCoords = computed(() => localizedString('page_contact_copy_coords') || t('pages.contact.copyCoords'))
+const formTitleFallback = computed(() => localizedString('page_contact_form_title') || t('pages.contact.formTitle'))
+const formDescriptionFallback = computed(() => localizedString('page_contact_form_description') || t('pages.contact.formDescription'))
+const contactSetupHint = computed(() => t('pages.contact.setupHint'))
 const router = useRouter()
 const publishingStore = usePublishingStore()
 const toast = useToast()
-const { displayEmail, displayPhone, displayAddress, phoneDialHref, whatsAppAdminUrl } = useJanariIdentity()
-const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value))
+const phoneDialHref = computed(() => {
+  const raw = String(displayPhone.value || '').replace(/[^\d+]/g, '');
+  return raw ? `tel:${raw}` : '';
+});
+const whatsAppAdminUrl = computed(() => {
+  const raw = String(getSetting('platform_contact_whatsapp', '') || '').replace(/[^\d]/g, '');
+  return raw ? `https://wa.me/${raw}` : '';
+});
+const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value));
 
-const phoneActionHref = computed(() => whatsAppAdminUrl.value || phoneDialHref.value || '')
-const phoneActionIsExternal = computed(() => phoneActionHref.value.startsWith('http'))
+const phoneActionHref = computed(() => whatsAppAdminUrl.value || phoneDialHref.value || '');
+const phoneActionIsExternal = computed(() => phoneActionHref.value.startsWith('http'));
 
 const builderBlocks = computed<BlockInstance[]>(() => {
   const meta = pageData.value?.meta as Record<string, unknown> | undefined
@@ -717,10 +729,10 @@ function animateTo(target: HTMLElement, vars: Record<string, unknown>): void {
 
 const isEnabled = computed(() => getSetting('enable_contact', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
-const pageTitle = computed(() => localizedString('page_contact_title') || t('theme.janari.pages.contact.title'))
+const pageTitle = computed(() => localizedString('page_contact_title') || t('pages.contact.title'))
 const pageSubtitle = computed(() =>
     localizedString('page_contact_subtitle') ||
-    t('theme.janari.pages.contact.introQuestion')
+    t('pages.contact.introQuestion')
 )
 const contactHeroImage = computed(() => {
     const raw = getSetting('page_contact_hero')
@@ -861,7 +873,7 @@ async function copyToClipboard(value: string, okMessage: string): Promise<void> 
         await navigator.clipboard.writeText(value)
         toast.success.action(okMessage)
     } catch {
-        toast.error.default(t('theme.janari.pages.contact.copyFailed'))
+        toast.error.default(t('pages.contact.copyFailed'))
     }
 }
 
@@ -894,22 +906,22 @@ function onMapPopoverOpenChange(open: boolean): void {
 }
 
 async function copyLocationAddress(): Promise<void> {
-    await copyToClipboard(String(displayAddress.value || ''), t('theme.janari.pages.contact.addressCopied'))
+    await copyToClipboard(String(displayAddress.value || ''), t('pages.contact.addressCopied'))
 }
 
 async function copyLocationCoordinates(): Promise<void> {
     const m = mapQuery.value.match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/)
     const coords = m ? `${m[1]},${m[2]}` : ''
     if (!coords) {
-        toast.error.default(t('theme.janari.pages.contact.coordsUnavailable'))
+        toast.error.default(t('pages.contact.coordsUnavailable'))
         return
     }
-    await copyToClipboard(coords, t('theme.janari.pages.contact.coordsCopied'))
+    await copyToClipboard(coords, t('pages.contact.coordsCopied'))
 }
 
 async function shareLocation(): Promise<void> {
-    const title = String(pageTitle.value || t('theme.janari.pages.contact.location'))
-    const text = String(displayAddress.value || t('theme.janari.pages.contact.siteLocationDefault'))
+    const title = String(pageTitle.value || t('pages.contact.location'))
+    const text = String(displayAddress.value || t('pages.contact.siteLocationDefault'))
     const url = mapExternalUrl.value
     if ((navigator as Navigator & { share?: (data: { title?: string; text?: string; url?: string }) => Promise<void> }).share) {
         try {
@@ -923,7 +935,7 @@ async function shareLocation(): Promise<void> {
             /* user cancelled or browser blocked */
         }
     }
-    await copyToClipboard(`${text}\n${url}`, t('theme.janari.pages.contact.locationLinkCopied'))
+    await copyToClipboard(`${text}\n${url}`, t('pages.contact.locationLinkCopied'))
 }
 
 function selectOptions(field: PublicFormField): { label: string; value: string }[] {
@@ -1157,9 +1169,9 @@ async function loadContactForm(): Promise<void> {
         const status = axios.isAxiosError(e) ? e.response?.status : undefined
         if (status === 404) {
             formLoadError.value =
-                t('theme.janari.pages.contact.formNotPublished')
+                t('pages.contact.formNotPublished')
         } else {
-            formLoadError.value = t('theme.janari.pages.contact.formLoadFailed')
+            formLoadError.value = t('pages.contact.formLoadFailed')
         }
         logger.warning('[Contact] Form schema load failed:', e)
     } finally {
@@ -1203,7 +1215,7 @@ async function submitForm(): Promise<void> {
         const inner = res.data as { submission_id?: string; redirect_url?: string }
         const msg =
             formDefinition.value.success_message?.trim() ||
-            t('theme.janari.pages.contact.formSuccess')
+            t('pages.contact.formSuccess')
         toast.success.action(msg)
 
         const redir = inner?.redirect_url
@@ -1222,12 +1234,12 @@ async function submitForm(): Promise<void> {
     } catch (e: unknown) {
         mapValidationErrors(e)
         if (axios.isAxiosError(e) && e.response?.status === 422) {
-            toast.error.validation(t('theme.janari.pages.contact.formValidationError'))
+            toast.error.validation(t('pages.contact.formValidationError'))
         } else if (axios.isAxiosError(e) && e.response?.data && typeof e.response.data === 'object') {
             const msg = (e.response.data as { message?: string }).message
-            toast.error.default(msg || t('theme.janari.pages.contact.sendFailed'))
+            toast.error.default(msg || t('pages.contact.sendFailed'))
         } else {
-            toast.error.default(t('theme.janari.pages.contact.sendFailed'))
+            toast.error.default(t('pages.contact.sendFailed'))
         }
         await captchaRef.value?.refresh?.()
         captchaPayload.value = null

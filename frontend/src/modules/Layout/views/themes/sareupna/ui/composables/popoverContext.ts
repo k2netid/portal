@@ -1,16 +1,16 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 
-export type JanariPanelSide = 'top' | 'bottom' | 'left' | 'right';
-export type JanariPanelAlign = 'start' | 'end' | 'center';
+export type SareupnaPanelSide = 'top' | 'bottom' | 'left' | 'right';
+export type SareupnaPanelAlign = 'start' | 'end' | 'center';
 
-export interface JanariPopoverContext {
+export interface SareupnaPopoverContext {
     open: ComputedRef<boolean> | Ref<boolean>;
-    side: Ref<JanariPanelSide>;
-    align: Ref<JanariPanelAlign>;
+    side: Ref<SareupnaPanelSide>;
+    align: Ref<SareupnaPanelAlign>;
     sideOffset: Ref<number>;
     triggerRef: Ref<HTMLElement | null>;
     close: () => void;
     toggle: () => void;
 }
 
-export const JANARI_POPOVER_KEY: InjectionKey<JanariPopoverContext> = Symbol('janari-popover');
+export const SAREUPNA_POPOVER_KEY: InjectionKey<SareupnaPopoverContext> = Symbol('sareupna-popover');

@@ -11,27 +11,32 @@
     <!-- Standard Sareupna Flagship Layout -->
     <template v-else>
       <!-- Hero Section -->
-      <div id="section-hero">
+      <div v-if="isSectionVisible('hero')" id="section-hero">
         <Hero />
       </div>
 
       <!-- Bento Grid Section -->
-      <div id="section-bento">
+      <div v-if="isSectionVisible('bento')" id="section-bento">
         <BentoGridSection />
       </div>
 
       <!-- Developer Terminal Showcase -->
-      <div id="section-terminal">
+      <div v-if="isSectionVisible('terminal')" id="section-terminal">
         <TerminalShowcaseSection />
       </div>
 
       <!-- Products & Modules Section -->
-      <div id="section-products">
+      <div v-if="isSectionVisible('products')" id="section-products">
         <ProductsSection />
       </div>
 
+      <!-- Cloud Specs & SLA Telemetry -->
+      <div v-if="isSectionVisible('specs')" id="section-specs">
+        <SpecsSection />
+      </div>
+
       <!-- Conversion CTA Banner -->
-      <div id="section-cta">
+      <div v-if="isSectionVisible('cta')" id="section-cta">
         <CtaSection />
       </div>
 
@@ -53,6 +58,7 @@ import Hero from '../components/sections/Hero.vue';
 import BentoGridSection from '../components/sections/BentoGridSection.vue';
 import TerminalShowcaseSection from '../components/sections/TerminalShowcaseSection.vue';
 import ProductsSection from '../components/sections/ProductsSection.vue';
+import SpecsSection from '../components/sections/SpecsSection.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
 import SectionNavDots from '../components/shared/SectionNavDots.vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
@@ -70,6 +76,14 @@ const hasBuilderBlocks = computed(() => {
   return Array.isArray(builderBlocks.value) && builderBlocks.value.length > 0;
 });
 
+// Section Visibility Filter
+const homeSections = computed<string[]>(() => {
+  const val = getSetting('home_sections', ['hero', 'bento', 'terminal', 'products', 'specs', 'cta']);
+  return Array.isArray(val) ? val : ['hero', 'bento', 'terminal', 'products', 'specs', 'cta'];
+});
+
+const isSectionVisible = (key: string) => homeSections.value.includes(key);
+
 // Side Navigation Dots Configuration
 const showSideNavDots = computed(() => Boolean(getSetting('home_side_nav_dots', true)));
 const sideNavStyle = computed(() => {
@@ -80,11 +94,14 @@ const sideNavStyle = computed(() => {
   return 'glass';
 });
 
-const visibleNavSections = computed(() => [
-  { id: 'section-hero', label: t('navDots.hero') },
-  { id: 'section-bento', label: t('navDots.bento') },
-  { id: 'section-terminal', label: t('navDots.terminal') },
-  { id: 'section-products', label: t('navDots.products') },
-  { id: 'section-cta', label: t('navDots.cta') },
-]);
+const visibleNavSections = computed(() => {
+  const sections = [];
+  if (isSectionVisible('hero')) sections.push({ id: 'section-hero', label: t('navDots.hero') });
+  if (isSectionVisible('bento')) sections.push({ id: 'section-bento', label: t('navDots.bento') });
+  if (isSectionVisible('terminal')) sections.push({ id: 'section-terminal', label: t('navDots.terminal') });
+  if (isSectionVisible('products')) sections.push({ id: 'section-products', label: t('navDots.products') });
+  if (isSectionVisible('specs')) sections.push({ id: 'section-specs', label: t('navDots.specs') });
+  if (isSectionVisible('cta')) sections.push({ id: 'section-cta', label: t('navDots.cta') });
+  return sections;
+});
 </script>

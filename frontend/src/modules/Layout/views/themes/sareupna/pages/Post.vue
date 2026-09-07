@@ -170,32 +170,33 @@ import PluginSlot from '@/shared/components/PluginSlot.vue';
 import WidgetArea from '@/modules/Layout/components/widgets/WidgetArea.vue';
 import BlogSidebar from '../components/blog/BlogSidebar.vue';
 import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import { normalizeLocaleCode } from '@/engine/i18n';
 import { PublishingService } from '@/modules/Publishing/services/publishingService';
-import { useJanariIdentity } from '@/modules/Layout/views/themes/janari/composables/useJanariIdentity';
+import { useTheme } from '@/modules/Layout/composables/useTheme';
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride';
 
 import { useIconHydration } from '@/shared/composables/useIconHydration';
 import { Calendar, User } from 'lucide-vue-next';
 
-import type { Content } from '@/modules/Publishing/types/content'
+import type { Content } from '@/modules/Publishing/types/content';
 
 const route = useRoute();
-const { locale, t } = useI18n({ useScope: 'global' });
+const { locale, t } = useThemeI18n('sareupna');
+const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting();
 const { hydrateIcons } = useIconHydration();
 
 const post = ref<Content | null>(null);
 const loading = ref(true);
 const contentRef = ref<{ $el: HTMLElement } | null>(null);
-const { displaySiteName } = useJanariIdentity();
+const displaySiteName = computed(() => getSetting('site_title', 'PT Jejak Awan Digital'));
 const authorFallback = computed(() => {
-  const tpl = localizedString('page_post_author_fallback') || '{site} Editorial'
-  return tpl.replace(/\{site\}/g, displaySiteName.value || 'Jejakawan')
+  const tpl = localizedString('page_post_author_fallback') || '{site} Editorial';
+  return tpl.replace(/\{site\}/g, String(displaySiteName.value || 'PT Jejak Awan Digital'));
 });
-const authorRole = computed(() => localizedString('page_post_author_role') || t('theme.janari.pages.post.authorRole'));
+const authorRole = computed(() => localizedString('page_post_author_role') || t('pages.post.authorRole', 'Tim Arsitek Cloud'));
 const notFoundText = computed(() => localizedString('page_post_not_found') || t('publishing.frontend.post.notFound'));
 const backToBlogText = computed(() => localizedString('page_post_back_to_blog') || t('publishing.frontend.post.backToBlog'));
 

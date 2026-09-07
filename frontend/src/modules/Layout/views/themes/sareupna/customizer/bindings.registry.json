@@ -1,0 +1,63 @@
+{
+    "components": [
+        {
+            "id": "hero",
+            "nameKey": "theme.sareupna.customizer.items.hero_section",
+            "descriptionKey": "theme.sareupna.customizer.items.hero_section_desc",
+            "icon": "hero",
+            "manifestCategory": "Hero Section",
+            "manifestCategories": ["Hero Section", "Platform Specs"],
+            "slots": [
+                {
+                    "id": "updates",
+                    "labelKey": "publishing.theme_customizer.items.news_overlay",
+                    "props": [
+                        { "key": "title", "labelKey": "publishing.theme_customizer.items.news_title" },
+                        { "key": "badge", "labelKey": "publishing.theme_customizer.items.badge" },
+                        { "key": "url", "labelKey": "publishing.theme_customizer.items.target_url" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "bento",
+            "nameKey": "theme.sareupna.customizer.items.bento_section",
+            "descriptionKey": "theme.sareupna.customizer.items.bento_section_desc",
+            "icon": "layers",
+            "manifestCategory": "Bento Architecture",
+            "slots": []
+        },
+        {
+            "id": "terminal",
+            "nameKey": "theme.sareupna.customizer.items.terminal_section",
+            "descriptionKey": "theme.sareupna.customizer.items.terminal_section_desc",
+            "icon": "terminal",
+            "manifestCategory": "Developer Terminal",
+            "slots": []
+        },
+        {
+            "id": "products",
+            "nameKey": "theme.sareupna.customizer.items.products_section",
+            "descriptionKey": "theme.sareupna.customizer.items.products_section_desc",
+            "icon": "boxes",
+            "manifestCategory": "Products & Modules",
+            "slots": []
+        },
+        {
+            "id": "specs",
+            "nameKey": "theme.sareupna.customizer.items.specs_section",
+            "descriptionKey": "theme.sareupna.customizer.items.specs_section_desc",
+            "icon": "cpu",
+            "manifestCategory": "Cloud Specs & SLA",
+            "slots": []
+        },
+        {
+            "id": "footer",
+            "nameKey": "theme.sareupna.customizer.items.footer_section",
+            "descriptionKey": "theme.sareupna.customizer.items.footer_section_desc",
+            "icon": "footer",
+            "manifestCategory": "Footer",
+            "slots": []
+        }
+    ]
+}

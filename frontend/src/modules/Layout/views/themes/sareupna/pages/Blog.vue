@@ -11,7 +11,7 @@
       class="flex-1"
     >
       <PageDisabled 
-        :title="(pageTitle as string) || t('theme.janari.pages.blog.title')" 
+        :title="(pageTitle as string) || t('pages.blog.title')" 
         :message="(getSetting('disabled_page_message') as string)" 
       />
     </div>
@@ -21,15 +21,15 @@
         <!-- Blog header -->
         <section class="py-10 md:py-12 bg-gradient-to-b from-primary/10 to-background dark:from-primary/20">
           <div class="container mx-auto px-4 text-center">
-            <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">{{ pageTitle || t('theme.janari.pages.blog.sectionLabel') }}</span>
+            <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">{{ pageTitle || t('pages.blog.sectionLabel') }}</span>
             <h1
               ref="blogTitle"
               class="text-3xl md:text-4xl font-extrabold mb-3 text-foreground"
             >
-              <JanariSplitText :text="pageTitle || t('theme.janari.pages.blog.headline')" />
+              <SareupnaSplitText :text="pageTitle || t('pages.blog.headline')" />
             </h1>
             <p class="text-muted-foreground max-w-lg mx-auto font-medium text-sm md:text-base">
-              {{ pageSubtitle || t('theme.janari.pages.blog.subtitle') }}
+              {{ pageSubtitle || t('pages.blog.subtitle') }}
             </p>
           </div>
         </section>
@@ -110,7 +110,7 @@
                   <!-- Subtle Search Indicator -->
                   <div v-if="searching || loading" class="flex items-center gap-2 text-primary">
                     <div class="animate-spin rounded-full h-3 w-3 border-b-2 border-current" />
-                    <span class="text-[10px] font-bold uppercase tracking-widest">{{ searching ? t('theme.janari.pages.blog.searching') : t('theme.janari.common.loading') }}</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">{{ searching ? t('pages.blog.searching') : t('common.loading') }}</span>
                   </div>
                 </div>
 
@@ -216,7 +216,7 @@
                 >
                   <div v-if="loadingMore" class="flex flex-col items-center gap-2">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-                    <span class="text-xs text-muted-foreground animate-pulse">{{ t('theme.janari.pages.blog.loadingMore') }}</span>
+                    <span class="text-xs text-muted-foreground animate-pulse">{{ t('pages.blog.loadingMore') }}</span>
                   </div>
                 </div>
 
@@ -261,11 +261,11 @@
 
 <script setup lang="ts">
 import { PluginSlot } from '@/shared/components'
-import JanariSplitText from '../components/shared/JanariSplitText.vue'
+import SareupnaSplitText from '../components/shared/SareupnaSplitText.vue'
 import BlogSidebar from '../components/blog/BlogSidebar.vue'
 import { logger } from '@/shared/utils/logger';
 import { ref, onMounted, computed, nextTick, watch, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { useRouter, useRoute } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
@@ -286,7 +286,7 @@ interface Article extends Omit<Partial<Content>, 'category'> {
     link: string;
 }
 
-const { t } = useI18n()
+const { t } = useThemeI18n('sareupna');
 const { getSetting } = useTheme()
 const { localizedString } = useLocalizedThemeSetting()
 const { pageData: cmsPageData, builderBlocks, hasBuilderBlocks } = useThemePageOverride('blog')
@@ -295,13 +295,13 @@ const route = useRoute()
 
 const isEnabled = computed(() => getSetting('enable_blog', true))
 const behavior = computed(() => getSetting('disabled_page_behavior', 'message'))
-const pageTitle = computed(() => localizedString('page_blog_title') || t('theme.janari.pages.blog.title'))
-const pageSubtitle = computed(() => localizedString('page_blog_subtitle') || t('theme.janari.pages.blog.subtitle'))
-const emptyResultsText = computed(() => localizedString('page_blog_empty') || t('theme.janari.pages.blog.emptyResults'))
-const viewAllArticlesText = computed(() => localizedString('page_blog_view_all') || t('theme.janari.pages.blog.viewAllArticles'))
-const featuredHeading = computed(() => localizedString('page_blog_featured_heading') || t('theme.janari.pages.blog.featuredHeading'))
-const readCta = computed(() => localizedString('page_blog_read_cta') || t('theme.janari.pages.blog.readCta'))
-const editorialLabel = computed(() => localizedString('page_blog_editorial_label') || t('theme.janari.blog.editorialTeam'))
+const pageTitle = computed(() => localizedString('page_blog_title') || t('pages.blog.title'))
+const pageSubtitle = computed(() => localizedString('page_blog_subtitle') || t('pages.blog.subtitle'))
+const emptyResultsText = computed(() => localizedString('page_blog_empty') || t('pages.blog.emptyResults'))
+const viewAllArticlesText = computed(() => localizedString('page_blog_view_all') || t('pages.blog.viewAllArticles'))
+const featuredHeading = computed(() => localizedString('page_blog_featured_heading') || t('pages.blog.featuredHeading'))
+const readCta = computed(() => localizedString('page_blog_read_cta') || t('pages.blog.readCta'))
+const editorialLabel = computed(() => localizedString('page_blog_editorial_label') || t('pages.blog.editorialTeam'))
 
 const pageData = ref<Content | null>(null)
 const articles = ref<Article[]>([])
@@ -316,8 +316,8 @@ const lastPage = ref(1)
 const isSearchMode = computed(() => Boolean((route.query.q as string || '').trim()))
 const listHeading = computed(() =>
   isSearchMode.value
-    ? (localizedString('page_blog_search_heading') || t('theme.janari.pages.blog.searchResultsHeading'))
-    : (localizedString('page_blog_latest_heading') || t('theme.janari.pages.blog.latestArticlesHeading')),
+    ? (localizedString('page_blog_search_heading') || t('pages.blog.searchResultsHeading'))
+    : (localizedString('page_blog_latest_heading') || t('pages.blog.latestArticlesHeading')),
 )
 const hasMore = computed(() => !isSearchMode.value && currentPage.value < lastPage.value)
 const searchSuggestions = ref<Array<{ text: string; type: string }>>([])
@@ -383,21 +383,21 @@ const normalizePath = (raw: string | undefined | null): string => {
 const typeLabel = (type: string | undefined): string => {
     switch ((type || '').toLowerCase()) {
         case 'post':
-            return t('theme.janari.common.article')
+            return t('common.article')
         case 'page':
-            return t('theme.janari.common.page')
+            return t('common.page')
         case 'category':
-            return t('theme.janari.pages.blog.contentTypeCategory')
+            return t('pages.blog.contentTypeCategory')
         case 'tag':
-            return t('theme.janari.pages.blog.contentTypeTag')
+            return t('pages.blog.contentTypeTag')
         default:
-            return t('theme.janari.pages.blog.contentTypeDefault')
+            return t('pages.blog.contentTypeDefault')
     }
 }
 
 const estimateReadTime = (text: string | undefined): string => {
     const minutes = text ? Math.max(1, Math.ceil(text.split(' ').length / 200)) : 1
-    return t('theme.janari.common.readTimeMinutes', { n: minutes })
+    return t('common.readTimeMinutes', { n: minutes })
 }
 
 const mapContentToArticle = (post: Content): Article => {

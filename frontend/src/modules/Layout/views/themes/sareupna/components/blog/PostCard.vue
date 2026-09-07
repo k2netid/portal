@@ -56,18 +56,18 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import type { Content } from '@/modules/Publishing/types/content'
-import { Calendar } from 'lucide-vue-next'
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import type { Content } from '@/modules/Publishing/types/content';
+import { Calendar } from 'lucide-vue-next';
 
 interface Props {
   post: Content;
 }
 
-const props = defineProps<Props>()
-const { t, locale } = useI18n({ useScope: 'global' })
-const authorFallback = computed(() => t('theme.janari.common.author'))
-const router = useRouter()
+const props = defineProps<Props>();
+const { t, locale } = useThemeI18n('sareupna');
+const authorFallback = computed(() => t('common.author', 'Tim Editorial Jejakawan'));
+const router = useRouter();
 
 const excerpt = computed(() => {
   if (props.post.excerpt) return props.post.excerpt
