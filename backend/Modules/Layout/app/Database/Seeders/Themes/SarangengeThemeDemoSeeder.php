@@ -162,7 +162,13 @@ class SarangengeThemeDemoSeeder extends Seeder
             }
         }
 
-        $themeService->clearAllThemeCaches();
+        if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
+            try {
+                app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+            } catch (\Throwable $e) {
+                // Ignore cache clear error
+            }
+        }
         $this->command?->info('Sarangenge Theme demo seed completed successfully.');
     }
 }

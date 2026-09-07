@@ -38,7 +38,18 @@ class JanariThemeDemoSeeder extends Seeder
         Setting::set('site_description', 'Portal layanan informasi publik resmi berbasis sistem modular Jejakawan.', 'string', 'general');
         Setting::set('contact_email', 'info@portal-komunitas.id', 'string', 'general');
 
-        // 3. Install bundle sample data
+        // 3. Ensure Author User exists for sample content attribution
+        $author = User::query()->first();
+        if (! $author) {
+            $author = User::query()->create([
+                'name' => 'Administrator',
+                'email' => 'admin@jejakawan.com',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+            ]);
+        }
+
+        // 4. Install bundle sample data
         if ($janari) {
             try {
                 $orchestrator = app(ThemeSampleDataOrchestrator::class);
@@ -55,8 +66,7 @@ class JanariThemeDemoSeeder extends Seeder
             }
         }
 
-        // 4. Ensure Standard Categories & Content
-        $author = User::query()->first();
+        // 5. Ensure Standard Categories & Content
         if ($author) {
             $categories = [
                 ['name' => 'Berita Terkini', 'slug' => 'berita', 'description' => 'Kumpulan warta dan informasi terbaru'],
@@ -77,7 +87,13 @@ class JanariThemeDemoSeeder extends Seeder
             }
         }
 
-        $themeService->clearAllThemeCaches();
+        if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
+            try {
+                app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+            } catch (\Throwable $e) {
+                // Ignore cache clear error
+            }
+        }
         $this->command?->info('Janari Theme demo seed completed successfully.');
     }
 }
