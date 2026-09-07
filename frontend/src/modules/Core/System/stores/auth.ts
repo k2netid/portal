@@ -17,17 +17,17 @@ interface ApiErrorResponse {
     requires_two_factor?: boolean;
 }
 
-/** Hub RBAC: internal operators vs subscription Jejakawan. */
+/** Unified RBAC Hierarchy: aligned with backend User::getRoleRankMap() */
 export const ROLE_RANKS: Record<string, number> = {
     super: 100,
-    'system-admin': 90,
+    'system-admin': 95,
+    admin: 90,
     'security-officer': 85,
+    operator: 80,
     editor: 60,
-    staff: 50,
+    author: 40,
+    staff: 30,
     member: 10,
-    // Legacy names (tests / old data)
-    admin: 95,
-    operator: 85,
 };
 
 // Define extended window interface for circuit breaker flags
@@ -119,6 +119,15 @@ export const useAuthStore = defineStore('auth', {
                 if (!this.user) return false;
                 if (this.user.roles?.some((role: Role) => (ROLE_RANKS[role.name] || 0) >= 100)) return true;
                 return this.permissionNameSet.has(permission);
+            };
+        },
+
+        hasRole(): (roleName: string) => boolean {
+            return (roleName: string): boolean => {
+                if (!this.user || !this.user.roles) return false;
+                return this.user.roles.some((role: any) => 
+                    (typeof role === 'string' ? role : role?.name) === roleName
+                );
             };
         },
     },

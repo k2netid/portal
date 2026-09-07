@@ -74,7 +74,7 @@ Route::prefix('v1')->group(function (): void {
         Route::get('seo/check-url', [SeoController::class, 'checkUrl'])->middleware('permission:view seo');
         Route::get('seo/sitemap', [SeoController::class, 'generateSitemap'])->middleware('permission:view seo');
         Route::get('seo/robots-txt', [SeoController::class, 'getRobotsTxt'])->middleware('permission:view seo');
-        Route::put('seo/robots-txt', [SeoController::class, 'updateRobotsTxt'])->middleware('permission:edit seo');
+        Route::put('seo/robots-txt', [SeoController::class, 'updateRobotsTxt'])->middleware('permission:manage seo');
 
         // Settings
         Route::get('settings', [SettingController::class, 'index'])->middleware('permission:view settings');

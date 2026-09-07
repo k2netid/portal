@@ -21,12 +21,16 @@ Route::prefix('v1')->group(function (): void {
         Route::get('tags/statistics', [TagController::class, 'statistics'])->middleware('permission:manage tags');
         Route::post('tags/bulk-delete', [TagController::class, 'bulkDelete'])->middleware('permission:manage tags');
         Route::apiResource('tags', TagController::class)->middleware('permission:manage tags');
-        Route::post('categories/bulk-destroy', [CategoryController::class, 'bulkDestroy']);
-        Route::post('categories/{category}/move', [CategoryController::class, 'move']);
-        Route::put('categories/{category}/restore', [CategoryController::class, 'restore']);
-        Route::delete('categories/{category}/force-delete', [CategoryController::class, 'forceDelete']);
+        Route::middleware('permission:manage categories')->group(function (): void {
+            Route::post('categories/bulk-destroy', [CategoryController::class, 'bulkDestroy']);
+            Route::post('categories/{category}/move', [CategoryController::class, 'move']);
+            Route::put('categories/{category}/restore', [CategoryController::class, 'restore']);
+            Route::delete('categories/{category}/force-delete', [CategoryController::class, 'forceDelete']);
+        });
         Route::apiResource('categories', CategoryController::class);
-        Route::apiResource('custom-fields', CustomFieldController::class);
-        Route::apiResource('field-groups', FieldGroupController::class);
+        Route::middleware('permission:manage content|manage settings')->group(function (): void {
+            Route::apiResource('custom-fields', CustomFieldController::class);
+            Route::apiResource('field-groups', FieldGroupController::class);
+        });
     });
 });

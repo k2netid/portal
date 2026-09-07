@@ -242,10 +242,14 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     {
         $coreRanks = [
             'super' => 100,
-            'system-admin' => 98,
-            'admin' => 95,
-            'operator' => 85,
-            'member' => 20,
+            'system-admin' => 95,
+            'admin' => 90,
+            'security-officer' => 85,
+            'operator' => 80,
+            'editor' => 60,
+            'author' => 40,
+            'staff' => 30,
+            'member' => 10,
         ];
 
         return array_merge($coreRanks, static::$moduleRoleRanks);

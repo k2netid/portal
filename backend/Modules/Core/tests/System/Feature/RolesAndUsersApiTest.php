@@ -195,4 +195,24 @@ class RolesAndUsersApiTest extends TestCase
         $this->assertNotEmpty($response->json('data.user.roles'));
         $this->assertIsArray($response->json('data.user.permissions'));
     }
+
+    public function test_member_user_without_permission_cannot_access_roles_or_users(): void
+    {
+        $memberRole = Role::firstOrCreate(['name' => 'member', 'guard_name' => 'web']);
+        $member = User::factory()->create([
+            'email' => 'member_norights@example.com',
+            'password' => bcrypt('Password123!@#'),
+            'email_verified_at' => now(),
+        ]);
+        $member->assignRole($memberRole);
+
+        $this->actingAs($member, 'sanctum')->getJson('/api/v1/manage/system/users')->assertForbidden();
+        $this->actingAs($member, 'sanctum')->getJson('/api/v1/manage/system/roles')->assertForbidden();
+        $this->actingAs($member, 'sanctum')->postJson('/api/v1/manage/system/users', [
+            'name' => 'Should Fail',
+            'email' => 'fail@example.com',
+            'password' => 'Password123!@#',
+            'roles' => [$memberRole->id],
+        ])->assertForbidden();
+    }
 }
