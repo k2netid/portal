@@ -31,6 +31,7 @@ class CmsRolesSeeder extends Seeder
             'view users', 'create users', 'edit users', 'delete users', 'verify users', 'manage users',
             'view roles',
             'view media', 'upload media', 'edit media', 'delete media', 'manage media',
+            'view files', 'upload files', 'edit files', 'delete files', 'manage files',
             'view analytics',
             'view redirects', 'manage redirects',
             'use mail',
@@ -76,6 +77,7 @@ class CmsRolesSeeder extends Seeder
         $operatorPermissions = [
             'view profile', 'edit profile',
             'view media', 'upload media',
+            'view files', 'upload files', 'manage files',
             'view analytics',
             'view system',
             'view logs',

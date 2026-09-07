@@ -77,6 +77,7 @@ class FoundationSeeder extends Seeder
             'view redirects', 'manage redirects',
             'view scheduled tasks', 'manage scheduled tasks',
             'view backups', 'create backups', 'manage backups',
+            'view files', 'upload files', 'edit files', 'delete files', 'manage files',
             'view analytics',
 
             // Module Governance (CMS)
@@ -110,6 +111,7 @@ class FoundationSeeder extends Seeder
             'view system', 'manage system',
             'view logs', 'delete logs',
             'view backups', 'create backups', 'manage backups',
+            'view files', 'upload files', 'edit files', 'delete files', 'manage files',
             'view scheduled tasks', 'manage scheduled tasks',
             'view plugins', 'manage plugins',
             'manage security operations',

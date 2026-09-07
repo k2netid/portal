@@ -72,7 +72,7 @@ const infraRoutes: RouteRecordRaw[] = [
         name: 'file-manager',
         component: () => import('@/modules/Core/Infra/views/file-manager/Index.vue'),
         meta: {
-            permission: 'manage settings',
+            permission: 'manage files',
             title: 'infra.fileManager.title',
             breadcrumb: 'infra.fileManager.title',
         },
@@ -82,7 +82,7 @@ const infraRoutes: RouteRecordRaw[] = [
         name: 'file-manager-alias',
         component: () => import('@/modules/Core/Infra/views/file-manager/Index.vue'),
         meta: {
-            permission: 'manage settings',
+            permission: 'manage files',
             title: 'infra.fileManager.title',
             breadcrumb: 'infra.fileManager.title',
         },
