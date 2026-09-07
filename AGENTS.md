@@ -1,30 +1,59 @@
-# Panduan Agen — K2NET Portal
+# Panduan Agen — K2NET Portal (`k2net-portal`)
 
-**Produk:** portal publik + member + CMS untuk **k2net.id** (fork dari ja-core_engine).
+**Peran:** Downstream Deployment Resmi untuk **PT Kirana Karina Network** (`k2net.id` — ISP & Managed Services).
+**Basis Arsitektur:** Fork modular dari `ja-core_engine` dengan tema default publik **`layung`**.
 
-## Baca dulu (wajib)
+---
 
-1. **[`../docs/handoff/k2net-portal-agent.md`](../docs/handoff/k2net-portal-agent.md)** — workspace, build, deploy, larangan
-2. [`../docs/handoff/agent-workspace.md`](../docs/handoff/agent-workspace.md) — ja-dev vs ja-srv
-3. [`../docs/runbooks/k2net-portal.md`](../docs/runbooks/k2net-portal.md) — staging/prod, NPM, port
+## 1. Wajib Dibaca Sebelum Mulai (*Mandatory Reading*)
+1. [`docs/branching.md`](docs/branching.md) — Matriks multi-repo & sinkronisasi upstream core.
+2. [`/home/jejakawan/dev/docs/handoff/k2net-portal-agent.md`](../docs/handoff/k2net-portal-agent.md) — Handoff spesifik K2NET.
+3. [`/home/jejakawan/dev/docs/runbooks/k2net-portal.md`](../docs/runbooks/k2net-portal.md) — Runbook staging & production K2NET.
 
-## Workspace Cursor
+---
 
-- **Host:** `ja-dev` (`10.20.0.207`)
-- **Path:** `/home/jejakawan/dev/k2net-portal`
-- **Bukan** `ja-srv` / `~/www/*` untuk coding
+## 2. Batasan Scope Repositori Ini
+- **Yang Ditangani di Repositori Ini**:
+  - Konfigurasi identitas legal PT Kirana Karina Network, paket internet broadband & dedicated, WhatsApp sales/support.
+  - Seeder khusus: [`backend/database/seeders/K2netDeploymentSeeder.php`](backend/database/seeders/K2netDeploymentSeeder.php) (memanggil `LayungThemeDemoSeeder` sebagai basis).
+  - Tema aktif default: **`layung`**.
+  - Aset logo: `/logofull_k2net.png`, `/logo.png`.
+- **Jika Menemukan Bug Inti / Core Engine**:
+  - Jangan hanya diperbaiki di repo ini! Komit dan kirimkan juga ke [`ja-core_engine`](../ja-core_engine).
 
-## Aturan singkat
+---
 
-1. **Staging origin = ja-dev** `:8083` (`backend/public`). Deploy: `bash scripts/deploy-staging-local.sh` — **jangan** rsync ke ja-srv.
-2. NPM forward: `http://192.168.88.71:8083` (SoT: `../docs/configs/nginx-k2net-staging-jadev.conf`).
-3. Frontend build: `NODE_OPTIONS=--max-old-space-size=4096 npx vite build` (satu project, tidak parallel).
-4. Jangan `php artisan ja:install` di staging.
-5. Commit ke repo **`k2netid/portal`**, bukan `ja-core_engine`.
-6. Production `k2net.id` tetap di ja-srv `:8084`. Engine docs: [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md).
-
-## Verify
-
+## 3. Remote Git & Sinkronisasi
 ```bash
+# origin   -> git@github.com:k2netid/portal.git (repo downstream K2NET)
+# upstream -> git@github.com:jejak-awan/ja-core_engine.git (upstream core)
+```
+- **Tarik pembaruan core**:
+  ```bash
+  git fetch upstream main
+  git merge upstream/main
+  ```
+
+---
+
+## 4. Lingkungan Staging & Produksi
+- **Staging Lokal (`ja-dev` / CT 207)**:
+  - Port: **`8083`** (`http://192.168.88.71:8083`)
+  - Database: PostgreSQL `k2net_portal_staging` pada `127.0.0.1:5432`.
+  - Nginx vhost: `/etc/nginx/sites-available/k2net-staging`
+- **Produksi (`ja-srv` / CT 200)**:
+  - Target: Port 8084 di `ja-srv`.
+
+---
+
+## 5. Quality Gate Sebelum Selesai
+```bash
+# 1. Verifikasi linter & test
 npm run agent:verify
+
+# 2. Sinkronisasi izin modul
+php artisan rbac:sync
+
+# 3. Validasi seeder K2NET
+php artisan db:seed --class=K2netDeploymentSeeder
 ```
