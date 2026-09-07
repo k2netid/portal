@@ -10,10 +10,15 @@ export function filterLayungCustomizerSettings(
     const heroSliderEnabled = ctx.formValues.hero_slider_enabled === true;
     const heroBgType = String(ctx.formValues.hero_bg_type || 'preset');
 
+    const sideNavDotsEnabled = ctx.formValues.home_side_nav_dots !== false;
+    const floatingSocialEnabled = ctx.formValues.enable_floating_social !== false;
+
     return settings.filter((setting) => {
         const key = String(setting?.key || '');
         if (!key) return true;
         if ((setting as { hidden?: boolean }).hidden) return false;
+        if (key.startsWith('home_side_nav_') && key !== 'home_side_nav_dots' && !sideNavDotsEnabled) return false;
+        if (key.startsWith('floating_social_') && !floatingSocialEnabled) return false;
         if (key.startsWith('speed_calculator_') && !calculatorEnabled) return false;
         if (key === 'hero_animation_type' && !heroAnimationEnabled) return false;
         if ((key === 'hero_slider_autoplay' || key === 'hero_slider_interval') && !heroSliderEnabled) return false;

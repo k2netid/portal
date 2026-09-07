@@ -1,33 +1,51 @@
 <template>
   <div class="layung-home-view flex-1 flex flex-col space-y-0">
     <!-- Hero Section with Laser Grid & Coverage Checker -->
-    <Hero v-if="isSectionVisible('hero')" />
+    <div v-if="isSectionVisible('hero')" id="section-hero">
+      <Hero />
+    </div>
+
+    <!-- Plugin Slot: After Hero (e.g. Instagram Feed) -->
+    <PluginSlot name="after_hero" class="w-full" />
 
     <!-- Bento Infrastructure Grid -->
-    <IspBentoSection v-if="isSectionVisible('services') || isSectionVisible('bento')" />
+    <div v-if="isSectionVisible('services') || isSectionVisible('bento')" id="section-services">
+      <IspBentoSection />
+    </div>
 
     <!-- Interactive Bandwidth Simulator -->
     <div
       v-if="calculatorEnabled && (isSectionVisible('calculator') || isSectionVisible('simulator'))"
+      id="section-calculator"
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
     >
       <SpeedCalculatorSection />
     </div>
 
     <!-- SLA Guarantee -->
-    <SlaGuaranteeSection v-if="isSectionVisible('sla') || isSectionVisible('guarantee')" />
+    <div v-if="isSectionVisible('sla') || isSectionVisible('guarantee')" id="section-sla">
+      <SlaGuaranteeSection />
+    </div>
 
     <!-- Managed IT & SOC Services -->
-    <ManagedServicesSection v-if="isSectionVisible('managed_services') || isSectionVisible('msp')" />
+    <div v-if="isSectionVisible('managed_services') || isSectionVisible('msp')" id="section-managed-services">
+      <ManagedServicesSection />
+    </div>
 
     <!-- Enterprise Client Testimonials -->
-    <TestimonialsSection v-if="isSectionVisible('testimonials') || isSectionVisible('partners')" />
+    <div v-if="isSectionVisible('testimonials') || isSectionVisible('partners')" id="section-testimonials">
+      <TestimonialsSection />
+    </div>
 
     <!-- Technical & Provisioning FAQ -->
-    <FaqSection v-if="isSectionVisible('faq')" />
+    <div v-if="isSectionVisible('faq')" id="section-faq">
+      <FaqSection />
+    </div>
 
     <!-- Urgent NOC Hotline & Quotation CTA -->
-    <CtaSection v-if="isSectionVisible('cta')" />
+    <div v-if="isSectionVisible('cta')" id="section-cta">
+      <CtaSection />
+    </div>
 
     <PluginSlot
       name="home-bottom"
