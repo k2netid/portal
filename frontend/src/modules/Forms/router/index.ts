@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Index.vue'),
     meta: {
       extension: 'forms',
-      permission: 'use forms',
+      permission: 'view forms',
       title: 'Forms',
     },
   },

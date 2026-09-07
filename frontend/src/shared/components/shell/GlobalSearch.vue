@@ -361,7 +361,7 @@ const staticActions = computed<SearchItem[]>(() => {
         { title: t('system.navigation.menu.redis'), icon: Cpu, route: { name: 'redis' }, type: 'action', keywords: 'redis cache system performance memory infrastructure', permission: 'manage settings', role: 'super', context: 'foundation' },
         { title: t('system.navigation.menu.scheduledTasks'), icon: Calendar, route: { name: 'scheduled-tasks' }, type: 'action', keywords: 'scheduled tasks cron background jobs schedules', permission: 'view scheduled tasks', role: 'super', context: 'foundation' },
         { title: t('system.navigation.menu.languages'), icon: Globe, route: { name: 'languages' }, type: 'action', keywords: 'languages translate locale localization', permission: 'view settings' },
-        { title: t('infra.webhooks.title'), icon: Webhook, route: { name: 'webhooks' }, type: 'action', keywords: 'webhooks api integrations events webhook infrastructure', permission: 'manage webhooks', context: 'foundation' },
+        { title: t('infra.webhooks.title'), icon: Webhook, route: { name: 'webhooks' }, type: 'action', keywords: 'webhooks api integrations events webhook infrastructure', permission: 'manage system', context: 'foundation' },
         
         // Monitoring & Journals
         { title: t('system.navigation.menu.journalDashboard'), icon: Activity, route: { name: 'journal-dashboard' }, type: 'action', keywords: 'monitoring dashboard logs summary journals', permission: 'view logs', role: 'super', context: 'foundation' },

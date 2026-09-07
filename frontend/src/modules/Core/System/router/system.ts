@@ -101,7 +101,7 @@ const systemRoutes: RouteRecordRaw[] = [
             noCache: true,
             title: 'system.access_journal.title',
             breadcrumb: 'system.navigation.menu.accessJournal',
-            permission: 'view access logs',
+            permission: 'view activity logs',
         },
     },
     {
@@ -153,7 +153,7 @@ const systemRoutes: RouteRecordRaw[] = [
             noCache: true,
             title: 'system.system.logs.title',
             breadcrumb: 'system.navigation.menu.systemJournal',
-            permission: 'view system logs',
+            permission: 'view logs',
         },
     },
 ];
