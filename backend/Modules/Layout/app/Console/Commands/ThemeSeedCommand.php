@@ -25,9 +25,9 @@ class ThemeSeedCommand extends Command
 
         if ($this->option('all')) {
             $this->info('Seeding demo data for all official themes...');
-            $this->call(JanariThemeDemoSeeder::class);
-            $this->call(LayungThemeDemoSeeder::class);
-            $this->call(SarangengeThemeDemoSeeder::class);
+            $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]);
+            $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
+            $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
             $this->info('All theme demo datasets seeded successfully.');
 
             return self::SUCCESS;
@@ -38,12 +38,14 @@ class ThemeSeedCommand extends Command
 
         $this->info("Target theme for demo seeding: [{$slug}]");
 
-        return match ($slug) {
-            'janari' => $this->call(JanariThemeDemoSeeder::class),
-            'layung' => $this->call(LayungThemeDemoSeeder::class),
-            'sarangenge' => $this->call(SarangengeThemeDemoSeeder::class),
+        match ($slug) {
+            'janari' => $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]),
+            'layung' => $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]),
+            'sarangenge' => $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]),
             default => $this->fallbackGenericSeed($slug),
         };
+
+        return self::SUCCESS;
     }
 
     private function fallbackGenericSeed(string $slug): int
