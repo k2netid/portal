@@ -35,12 +35,51 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "categories": {
+      "name": "Taxonomy Categories",
+      "description": "Hierarchical content categories for articles and media",
+      "actions": {
+        "view": {
+          "permission": "view categories",
+          "label": "View Categories",
+          "label_key": "system.capabilities.library.categories.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "library:read"
+        },
+        "manage": {
+          "permission": "manage categories",
+          "label": "Manage Categories",
+          "label_key": "system.capabilities.library.categories.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "library:write"
+        }
+      }
+    },
+    "tags": {
+      "name": "Content Tags",
+      "description": "Tagging and keywords for content discoverability",
+      "actions": {
+        "manage": {
+          "permission": "manage tags",
+          "label": "Manage Tags",
+          "label_key": "system.capabilities.library.tags.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "library:write"
+        }
+      }
+    }
+  },
+
   "permissions": [
     "view categories",
     "manage categories",
-    "manage tags",
-    "manage content"
+    "manage tags"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

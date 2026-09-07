@@ -14,6 +14,7 @@ use Modules\Core\System\Console\Commands\ApplyInstallProfileCommand;
 use Modules\Core\System\Console\Commands\CleanupOldLogs;
 use Modules\Core\System\Console\Commands\DynamicOpenApiExport;
 use Modules\Core\System\Console\Commands\LicenseCheckCommand;
+use Modules\Core\System\Console\Commands\RbacSyncCommand;
 use Modules\Core\System\Console\Commands\SystemAudit;
 use Modules\Core\System\Console\Commands\SystemClearCache;
 use Modules\Core\System\Console\Commands\SystemHealthCheck;
@@ -113,6 +114,7 @@ class SystemServiceProvider extends ServiceProvider
             SystemHealthCheck::class,
             LicenseCheckCommand::class,
             ApplyInstallProfileCommand::class,
+            RbacSyncCommand::class,
         ]);
     }
 
@@ -123,6 +125,7 @@ class SystemServiceProvider extends ServiceProvider
         $this->app->singleton(PasswordPolicyPortInterface::class, PasswordPolicyService::class);
         $this->app->singleton(LoginThrottlePortInterface::class, LoginThrottleService::class);
         $this->app->singleton(PermissionRegistry::class);
+        $this->app->singleton(\Modules\Core\System\Services\CapabilityRegistryService::class);
         $this->app->singleton(ModuleHealthProbe::class);
         $this->app->singleton(DashboardRegistry::class);
         $this->app->singleton(\Modules\Core\System\Services\DashboardRegistry::class);

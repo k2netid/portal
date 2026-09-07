@@ -42,7 +42,157 @@
       "category": "marketing"
     }
   ],
-    "permissions": [
+  "capabilities": {
+    "contents": {
+      "name": "Published Contents",
+      "description": "Articles and pages with editorial and publishing workflow",
+      "actions": {
+        "view": {
+          "permission": "view content",
+          "label": "View Content",
+          "label_key": "system.capabilities.publishing.contents.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "publishing:read"
+        },
+        "create": {
+          "permission": "create content",
+          "label": "Create Content Draft",
+          "label_key": "system.capabilities.publishing.contents.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "publishing:write"
+        },
+        "edit": {
+          "permission": "edit content",
+          "label": "Edit Content",
+          "label_key": "system.capabilities.publishing.contents.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "publishing:write"
+        },
+        "delete": {
+          "permission": "delete content",
+          "label": "Delete Content",
+          "label_key": "system.capabilities.publishing.contents.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:delete"
+        },
+        "approve": {
+          "permission": "approve content",
+          "label": "Approve Content",
+          "label_key": "system.capabilities.publishing.contents.approve",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:approve"
+        },
+        "publish": {
+          "permission": "publish content",
+          "label": "Publish Content",
+          "label_key": "system.capabilities.publishing.contents.publish",
+          "action_type": "execute",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:publish"
+        },
+        "manage": {
+          "permission": "manage content",
+          "label": "Manage All Content",
+          "label_key": "system.capabilities.publishing.contents.manage",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:manage"
+        }
+      }
+    },
+    "templates": {
+      "name": "Content Templates",
+      "description": "Reusable page and article layout templates",
+      "actions": {
+        "view": {
+          "permission": "view content templates",
+          "label": "View Templates",
+          "label_key": "system.capabilities.publishing.templates.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "publishing:read"
+        },
+        "edit": {
+          "permission": "edit content templates",
+          "label": "Edit Templates",
+          "label_key": "system.capabilities.publishing.templates.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:write"
+        },
+        "delete": {
+          "permission": "delete content templates",
+          "label": "Delete Templates",
+          "label_key": "system.capabilities.publishing.templates.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:delete"
+        },
+        "manage": {
+          "permission": "manage content templates",
+          "label": "Manage Templates",
+          "label_key": "system.capabilities.publishing.templates.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "publishing:manage"
+        }
+      }
+    },
+    "comments": {
+      "name": "Comments Moderation",
+      "description": "Reader comments moderation and approval",
+      "actions": {
+        "view": {
+          "permission": "view comments",
+          "label": "View Comments",
+          "label_key": "system.capabilities.publishing.comments.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "comments:read"
+        },
+        "manage": {
+          "permission": "manage comments",
+          "label": "Moderate & Manage Comments",
+          "label_key": "system.capabilities.publishing.comments.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "comments:manage"
+        }
+      }
+    },
+    "seo": {
+      "name": "SEO & Metadata",
+      "description": "Search engine optimization and meta tags",
+      "actions": {
+        "view": {
+          "permission": "view seo",
+          "label": "View SEO Metadata",
+          "label_key": "system.capabilities.publishing.seo.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "seo:read"
+        },
+        "manage": {
+          "permission": "manage seo",
+          "label": "Manage SEO Metadata",
+          "label_key": "system.capabilities.publishing.seo.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "seo:manage"
+        }
+      }
+    }
+  },
+
+  "permissions": [
     "view content",
     "create content",
     "edit content",
@@ -59,6 +209,7 @@
     "edit content templates",
     "delete content templates"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

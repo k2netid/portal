@@ -32,9 +32,26 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "traffic": {
+      "name": "Traffic Statistics & Analytics",
+      "description": "Site visitor monitoring, content engagement metrics, and performance analytics",
+      "actions": {
+        "view": {
+          "permission": "view analytics",
+          "label": "View Analytics Reports",
+          "label_key": "system.capabilities.analytics.traffic.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "analytics:read"
+        }
+      }
+    }
+  },
   "permissions": [
     "view analytics"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

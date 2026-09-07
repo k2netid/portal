@@ -33,9 +33,26 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "search": {
+      "name": "Search Engine & Index",
+      "description": "Full-text search index management, health checks, and reindexing",
+      "actions": {
+        "manage": {
+          "permission": "manage search",
+          "label": "Manage & Reindex Search",
+          "label_key": "system.capabilities.search.search.manage",
+          "action_type": "manage",
+          "default_roles": ["admin"],
+          "oauth_scope": "search:manage"
+        }
+      }
+    }
+  },
   "permissions": [
     "manage search"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

@@ -520,6 +520,31 @@
         "description": "Click on a role in the sidebar to edit its permissions, or select multiple roles use the checkbox to compare them side-by-side.",
         "title": "Role management panel"
       }
+    },
+    "resetDefaults": "Reset to System Default",
+    "resetDefaultsConfirm": "Reset permissions for \"{name}\" back to standard module factory defaults?",
+    "resetDefaultsSuccess": "Role permissions successfully reset to system default",
+    "resetAllDefaults": "Reset All Roles to Default",
+    "resetAllDefaultsConfirm": "Warning: This will reset permissions for ALL roles back to standard system defaults. Continue?",
+    "diff": {
+      "title": "Default Permissions Difference",
+      "additions": "Permissions to be added ({count})",
+      "removals": "Permissions to be revoked ({count})",
+      "noChanges": "This role is already fully aligned with system defaults"
+    },
+    "quickSelect": {
+      "allRead": "Select All Read",
+      "clearAll": "Deselect All",
+      "selectAll": "Select All Module"
+    },
+    "actionTypes": {
+      "read": "READ",
+      "create": "CREATE",
+      "update": "UPDATE",
+      "delete": "DELETE",
+      "execute": "EXECUTE",
+      "manage": "MANAGE",
+      "admin": "ADMIN"
     }
   },
   "notifications": {
@@ -3587,6 +3612,165 @@
     "messages": {
       "approved": "KYC approved",
       "rejected": "KYC rejected"
+    }
+  },
+  "capabilities": {
+    "core": {
+      "profile": {
+        "view": "View Own Profile",
+        "edit": "Edit Own Profile"
+      },
+      "users": {
+        "view": "View Users",
+        "create": "Create Users",
+        "edit": "Edit Users",
+        "verify": "Verify User Accounts",
+        "delete": "Delete Users",
+        "manage": "Manage All Users"
+      },
+      "roles": {
+        "view": "View Roles",
+        "create": "Create Roles",
+        "edit": "Edit Roles & Permissions",
+        "delete": "Delete Roles",
+        "manage": "Manage All Roles"
+      },
+      "settings": {
+        "view": "View Settings",
+        "manage": "Manage Settings",
+        "system_info": "View System Info",
+        "system_manage": "Manage System Parameters"
+      },
+      "logs": {
+        "view": "View System Logs",
+        "activity": "View Activity Journals",
+        "purge": "Purge Logs"
+      },
+      "security": {
+        "view": "View Security Logs",
+        "operate": "Manage Security Operations",
+        "manage_logs": "Manage Security Logs",
+        "blocklist": "Manage IP Blocklists",
+        "integrity": "Manage File Integrity",
+        "maintenance": "Manage Security Maintenance",
+        "kyc": "Manage Identity (KYC) Reviews"
+      },
+      "maintenance": {
+        "view_tasks": "View Scheduled Tasks",
+        "manage_tasks": "Manage Scheduled Tasks",
+        "view_backups": "View Backups",
+        "backup": "Execute Database Backups",
+        "cleanup": "Execute Storage Cleanup",
+        "toggle": "Toggle Maintenance Mode"
+      },
+      "modules": {
+        "view": "View Modules",
+        "manage": "Manage Module Lifecycle"
+      }
+    },
+    "publishing": {
+      "contents": {
+        "view": "View Content",
+        "create": "Create Content Draft",
+        "edit": "Edit Content",
+        "publish": "Publish Content",
+        "delete": "Delete Content",
+        "manage": "Manage All Content"
+      },
+      "comments": {
+        "view": "View Comments",
+        "moderate": "Moderate Comments",
+        "delete": "Delete Comments"
+      },
+      "seo": {
+        "manage": "Manage Content SEO"
+      }
+    },
+    "media": {
+      "media": {
+        "view": "View Media",
+        "upload": "Upload Media",
+        "edit": "Edit Media Details",
+        "delete": "Delete Media",
+        "manage": "Manage Media & Folders"
+      }
+    },
+    "layout": {
+      "menus": {
+        "view": "View Menus",
+        "create": "Create Menus",
+        "edit": "Edit Menus",
+        "delete": "Delete Menus",
+        "manage": "Manage All Menus"
+      },
+      "widgets": {
+        "view": "View Widgets",
+        "create": "Create Widgets",
+        "edit": "Edit Widgets",
+        "delete": "Delete Widgets",
+        "manage": "Manage All Widgets"
+      },
+      "redirects": {
+        "view": "View Redirects",
+        "create": "Create Redirects",
+        "edit": "Edit Redirects",
+        "delete": "Delete Redirects",
+        "manage": "Manage All Redirects"
+      },
+      "themes": {
+        "view": "View Themes",
+        "upload": "Upload Themes",
+        "customize": "Customize Themes",
+        "delete": "Delete Themes",
+        "manage": "Manage All Themes"
+      }
+    },
+    "library": {
+      "categories": {
+        "view": "View Categories",
+        "manage": "Manage Categories"
+      },
+      "tags": {
+        "manage": "Manage Tags"
+      }
+    },
+    "forms": {
+      "forms": {
+        "view": "View Forms & Submissions",
+        "create": "Create Forms",
+        "edit": "Edit Forms",
+        "delete": "Delete Forms & Submissions",
+        "manage": "Manage All Forms"
+      }
+    },
+    "member": {
+      "members": {
+        "view": "View Members",
+        "manage": "Manage Members"
+      }
+    },
+    "mail": {
+      "webmail": {
+        "use": "Use Webmail",
+        "manage_personal": "Manage Personal Mail Account",
+        "manage_multi": "Manage System Multi-Mail Accounts"
+      }
+    },
+    "analytics": {
+      "traffic": {
+        "view": "View Analytics Reports"
+      }
+    },
+    "newsletter": {
+      "subscribers": {
+        "view": "View Newsletter Subscribers",
+        "manage": "Manage Newsletter & Subscribers"
+      }
+    },
+    "search": {
+      "search": {
+        "manage": "Manage & Reindex Search"
+      }
     }
   }
 }

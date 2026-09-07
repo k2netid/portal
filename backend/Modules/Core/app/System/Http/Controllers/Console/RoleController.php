@@ -10,6 +10,7 @@ use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
+use Modules\Core\System\Services\CapabilityRegistryService;
 use Modules\Core\System\Support\SqlLikeEscape;
 
 class RoleController extends BaseApiController
@@ -228,5 +229,33 @@ class RoleController extends BaseApiController
         $newRole->syncPermissions($role->permissions);
 
         return $this->success($newRole->load('permissions'), 'Role duplicated successfully', 201);
+    }
+
+    public function capabilities(CapabilityRegistryService $registry): JsonResponse
+    {
+        return $this->success($registry->getRegistryTree(), 'Capabilities retrieved successfully');
+    }
+
+    public function defaultsDiff(Role $role, CapabilityRegistryService $registry): JsonResponse
+    {
+        return $this->success($registry->getRoleDiffWithDefaults($role), 'Role defaults diff calculated successfully');
+    }
+
+    public function resetDefaults(Role $role, CapabilityRegistryService $registry): JsonResponse
+    {
+        if ($role->name === 'super') {
+            return $this->error('Cannot modify super role', 403);
+        }
+
+        $registry->resetRoleToDefaults($role);
+
+        return $this->success($role->load('permissions'), 'Role permissions reset to default successfully');
+    }
+
+    public function resetAllDefaults(CapabilityRegistryService $registry): JsonResponse
+    {
+        $results = $registry->resetAllRolesToDefaults();
+
+        return $this->success($results, 'All roles reset to default successfully');
     }
 }

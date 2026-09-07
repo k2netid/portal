@@ -32,10 +32,35 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "subscribers": {
+      "name": "Newsletter & Subscribers",
+      "description": "Subscriber email list management, data exports, and subscription integrations",
+      "actions": {
+        "view": {
+          "permission": "view newsletter",
+          "label": "View Newsletter Subscribers",
+          "label_key": "system.capabilities.newsletter.subscribers.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "newsletter:read"
+        },
+        "manage": {
+          "permission": "manage newsletter",
+          "label": "Manage Newsletter & Subscribers",
+          "label_key": "system.capabilities.newsletter.subscribers.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "newsletter:manage"
+        }
+      }
+    }
+  },
   "permissions": [
     "view newsletter",
     "manage newsletter"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

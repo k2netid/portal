@@ -32,6 +32,57 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "media": {
+      "name": "Media Library",
+      "description": "Upload images, documents, organize folders, and picker integration",
+      "actions": {
+        "view": {
+          "permission": "view media",
+          "label": "View Media",
+          "label_key": "system.capabilities.media.media.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "media:read"
+        },
+        "upload": {
+          "permission": "upload media",
+          "label": "Upload Media",
+          "label_key": "system.capabilities.media.media.upload",
+          "action_type": "create",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "media:write"
+        },
+        "edit": {
+          "permission": "edit media",
+          "label": "Edit Media Details",
+          "label_key": "system.capabilities.media.media.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "media:write"
+        },
+        "delete": {
+          "permission": "delete media",
+          "label": "Delete Media",
+          "label_key": "system.capabilities.media.media.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "media:delete"
+        },
+        "manage": {
+          "permission": "manage media",
+          "label": "Manage Media & Folders",
+          "label_key": "system.capabilities.media.media.manage",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "media:manage"
+        }
+      }
+    }
+  },
+
   "permissions": [
     "view media",
     "upload media",
@@ -39,6 +90,7 @@
     "delete media",
     "manage media"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [
