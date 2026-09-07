@@ -35,6 +35,55 @@
       "category": "utility"
     }
   ],
+  "capabilities": {
+    "forms": {
+      "name": "Dynamic Forms & Submissions",
+      "description": "Online form builder, submission management, and response inbox",
+      "actions": {
+        "view": {
+          "permission": "view forms",
+          "label": "View Forms & Submissions",
+          "label_key": "system.capabilities.forms.forms.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "forms:read"
+        },
+        "create": {
+          "permission": "create forms",
+          "label": "Create Forms",
+          "label_key": "system.capabilities.forms.forms.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "forms:write"
+        },
+        "edit": {
+          "permission": "edit forms",
+          "label": "Edit Forms",
+          "label_key": "system.capabilities.forms.forms.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "forms:write"
+        },
+        "delete": {
+          "permission": "delete forms",
+          "label": "Delete Forms & Submissions",
+          "label_key": "system.capabilities.forms.forms.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin"],
+          "oauth_scope": "forms:delete"
+        },
+        "manage": {
+          "permission": "manage forms",
+          "label": "Manage All Forms",
+          "label_key": "system.capabilities.forms.forms.manage",
+          "action_type": "manage",
+          "default_roles": ["admin"],
+          "oauth_scope": "forms:manage"
+        }
+      }
+    }
+  },
   "permissions": [
     "view forms",
     "create forms",
@@ -42,6 +91,7 @@
     "delete forms",
     "manage forms"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

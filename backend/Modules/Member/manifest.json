@@ -15,10 +15,35 @@
   "license": "Commercial PRO",
   "license_tier": "pro",
   "settings_route": "members.index",
+  "capabilities": {
+    "members": {
+      "name": "Public Readers & Member Accounts",
+      "description": "Public reader accounts, student registrations, and member portal management",
+      "actions": {
+        "view": {
+          "permission": "view members",
+          "label": "View Members",
+          "label_key": "system.capabilities.member.members.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "member:read"
+        },
+        "manage": {
+          "permission": "manage members",
+          "label": "Manage Members",
+          "label_key": "system.capabilities.member.members.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "operator"],
+          "oauth_scope": "member:manage"
+        }
+      }
+    }
+  },
   "permissions": [
     "view members",
     "manage members"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

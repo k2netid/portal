@@ -1,0 +1,369 @@
+{
+  "name": "Core",
+  "slug": "core",
+  "version": "1.0.0",
+  "description": "Platform kernel — System, Security, Identity, and Infra (always active)",
+  "author": "Jejakawan Team",
+  "type": "module",
+  "family": "platform",
+  "is_core": true,
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0"
+  },
+  "license": "Commercial Enterprise",
+  "license_tier": "pro_plus",
+  "capabilities": {
+    "profile": {
+      "name": "User Profile",
+      "description": "Personal account profile and credentials",
+      "actions": {
+        "view": {
+          "permission": "view profile",
+          "label": "View Own Profile",
+          "label_key": "system.capabilities.core.profile.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin", "security-officer", "operator", "editor", "author", "staff", "member"],
+          "oauth_scope": "profile:read"
+        },
+        "edit": {
+          "permission": "edit profile",
+          "label": "Edit Own Profile",
+          "label_key": "system.capabilities.core.profile.edit",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "admin", "security-officer", "operator", "editor", "author", "staff", "member"],
+          "oauth_scope": "profile:write"
+        }
+      }
+    },
+    "users": {
+      "name": "User Management",
+      "description": "Manage user accounts, verification, and status",
+      "actions": {
+        "view": {
+          "permission": "view users",
+          "label": "View Users",
+          "label_key": "system.capabilities.core.users.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "users:read"
+        },
+        "create": {
+          "permission": "create users",
+          "label": "Create Users",
+          "label_key": "system.capabilities.core.users.create",
+          "action_type": "create",
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "users:write"
+        },
+        "edit": {
+          "permission": "edit users",
+          "label": "Edit Users",
+          "label_key": "system.capabilities.core.users.edit",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "users:write"
+        },
+        "verify": {
+          "permission": "verify users",
+          "label": "Verify User Accounts",
+          "label_key": "system.capabilities.core.users.verify",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "users:verify"
+        },
+        "delete": {
+          "permission": "delete users",
+          "label": "Delete Users",
+          "label_key": "system.capabilities.core.users.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "users:delete"
+        },
+        "manage": {
+          "permission": "manage users",
+          "label": "Manage All Users",
+          "label_key": "system.capabilities.core.users.manage",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "users:manage"
+        }
+      }
+    },
+    "roles": {
+      "name": "Roles & Permissions (RBAC)",
+      "description": "Manage roles, permissions matrix, and authorization policies",
+      "actions": {
+        "view": {
+          "permission": "view roles",
+          "label": "View Roles",
+          "label_key": "system.capabilities.core.roles.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "roles:read"
+        },
+        "create": {
+          "permission": "create roles",
+          "label": "Create Roles",
+          "label_key": "system.capabilities.core.roles.create",
+          "action_type": "create",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "roles:write"
+        },
+        "edit": {
+          "permission": "edit roles",
+          "label": "Edit Roles & Permissions",
+          "label_key": "system.capabilities.core.roles.edit",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "roles:write"
+        },
+        "delete": {
+          "permission": "delete roles",
+          "label": "Delete Roles",
+          "label_key": "system.capabilities.core.roles.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "roles:delete"
+        },
+        "manage": {
+          "permission": "manage roles",
+          "label": "Manage All Roles",
+          "label_key": "system.capabilities.core.roles.manage",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "roles:manage"
+        }
+      }
+    },
+    "settings": {
+      "name": "System Settings",
+      "description": "General platform settings, branding identity, and parameters",
+      "actions": {
+        "view": {
+          "permission": "view settings",
+          "label": "View Settings",
+          "label_key": "system.capabilities.core.settings.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "settings:read"
+        },
+        "manage": {
+          "permission": "manage settings",
+          "label": "Manage Settings",
+          "label_key": "system.capabilities.core.settings.manage",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "settings:write"
+        },
+        "view_system": {
+          "permission": "view system",
+          "label": "View System Info",
+          "label_key": "system.capabilities.core.settings.view_system",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "system:read"
+        },
+        "manage_system": {
+          "permission": "manage system",
+          "label": "Manage System Parameters",
+          "label_key": "system.capabilities.core.settings.manage_system",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "system:manage"
+        }
+      }
+    },
+    "logs": {
+      "name": "Audit & Activity Logs",
+      "description": "Activity journals, audit trails, and system logs",
+      "actions": {
+        "view": {
+          "permission": "view logs",
+          "label": "View System Logs",
+          "label_key": "system.capabilities.core.logs.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "logs:read"
+        },
+        "view_activity": {
+          "permission": "view activity logs",
+          "label": "View Activity Journals",
+          "label_key": "system.capabilities.core.logs.view_activity",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin", "security-officer"],
+          "oauth_scope": "logs:read"
+        },
+        "delete": {
+          "permission": "delete logs",
+          "label": "Purge Logs",
+          "label_key": "system.capabilities.core.logs.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "logs:delete"
+        }
+      }
+    },
+    "security": {
+      "name": "Security & Compliance",
+      "description": "SIEM operations, IP blocklists, file integrity, and maintenance",
+      "actions": {
+        "view_security_logs": {
+          "permission": "view security logs",
+          "label": "View Security Logs",
+          "label_key": "system.capabilities.core.security.view_logs",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:read"
+        },
+        "manage_operations": {
+          "permission": "manage security operations",
+          "label": "Manage Security Operations",
+          "label_key": "system.capabilities.core.security.manage_operations",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:manage"
+        },
+        "manage_logs": {
+          "permission": "manage security logs",
+          "label": "Manage Security Logs",
+          "label_key": "system.capabilities.core.security.manage_logs",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:manage"
+        },
+        "manage_ip_lists": {
+          "permission": "manage security ip-lists",
+          "label": "Manage IP Blocklists",
+          "label_key": "system.capabilities.core.security.manage_ip_lists",
+          "action_type": "manage",
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:manage"
+        },
+        "manage_integrity": {
+          "permission": "manage security integrity",
+          "label": "Manage File Integrity",
+          "label_key": "system.capabilities.core.security.manage_integrity",
+          "action_type": "manage",
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:manage"
+        },
+        "manage_maintenance": {
+          "permission": "manage security maintenance",
+          "label": "Manage Security Maintenance",
+          "label_key": "system.capabilities.core.security.manage_maintenance",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "security:admin"
+        },
+        "manage_kyc": {
+          "permission": "manage kyc reviews",
+          "label": "Manage Identity (KYC) Reviews",
+          "label_key": "system.capabilities.core.security.manage_kyc",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "security-officer"],
+          "oauth_scope": "security:kyc"
+        }
+      }
+    },
+    "maintenance": {
+      "name": "Scheduled Tasks & Backups",
+      "description": "Cron task scheduling, background workers, and database backups",
+      "actions": {
+        "view_tasks": {
+          "permission": "view scheduled tasks",
+          "label": "View Scheduled Tasks",
+          "label_key": "system.capabilities.core.maintenance.view_tasks",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "tasks:read"
+        },
+        "manage_tasks": {
+          "permission": "manage scheduled tasks",
+          "label": "Manage Scheduled Tasks",
+          "label_key": "system.capabilities.core.maintenance.manage_tasks",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "tasks:manage"
+        },
+        "view_backups": {
+          "permission": "view backups",
+          "label": "View Backups",
+          "label_key": "system.capabilities.core.maintenance.view_backups",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "backups:read"
+        },
+        "create_backups": {
+          "permission": "create backups",
+          "label": "Create Backups",
+          "label_key": "system.capabilities.core.maintenance.create_backups",
+          "action_type": "create",
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "backups:create"
+        },
+        "manage_backups": {
+          "permission": "manage backups",
+          "label": "Manage Backups",
+          "label_key": "system.capabilities.core.maintenance.manage_backups",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "backups:manage"
+        }
+      }
+    },
+    "modules": {
+      "name": "Modules & Extensions",
+      "description": "Discovery, activation, and management of extensions and plugins",
+      "actions": {
+        "view": {
+          "permission": "view plugins",
+          "label": "View Extensions Registry",
+          "label_key": "system.capabilities.core.modules.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "modules:read"
+        },
+        "install": {
+          "permission": "install plugins",
+          "label": "Install Extensions",
+          "label_key": "system.capabilities.core.modules.install",
+          "action_type": "create",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "modules:install"
+        },
+        "manage": {
+          "permission": "manage plugins",
+          "label": "Manage Extensions",
+          "label_key": "system.capabilities.core.modules.manage",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "modules:manage"
+        },
+        "manage_access": {
+          "permission": "manage module access",
+          "label": "Manage Module Access",
+          "label_key": "system.capabilities.core.modules.manage_access",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin"],
+          "oauth_scope": "modules:manage"
+        }
+      }
+    }
+  }
+}

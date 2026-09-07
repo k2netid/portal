@@ -41,9 +41,45 @@
       "category": "business"
     }
   ],
+  "capabilities": {
+    "webmail": {
+      "name": "Webmail & Outbound Communications",
+      "description": "Outbound email dispatch, encrypted SMTP credentials, and scheduled messaging",
+      "actions": {
+        "use": {
+          "permission": "use mail",
+          "label": "Use Webmail",
+          "label_key": "system.capabilities.mail.webmail.use",
+          "action_type": "execute",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "mail:send"
+        },
+        "manage_personal": {
+          "permission": "manage personal mail account",
+          "label": "Manage Personal Mail Account",
+          "label_key": "system.capabilities.mail.webmail.manage_personal",
+          "action_type": "update",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "mail:account"
+        },
+        "manage_multi": {
+          "permission": "manage multi mail accounts",
+          "label": "Manage System Multi-Mail Accounts",
+          "label_key": "system.capabilities.mail.webmail.manage_multi",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["admin"],
+          "oauth_scope": "mail:manage"
+        }
+      }
+    }
+  },
   "permissions": [
-    "use mail"
+    "use mail",
+    "manage personal mail account",
+    "manage multi mail accounts"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [

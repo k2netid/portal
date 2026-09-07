@@ -520,6 +520,31 @@
         "description": "Klik pada peran di sidebar untuk mengedit izinnya, atau pilih beberapa peran menggunakan kotak centang untuk membandingkannya secara berdampingan.",
         "title": "Panel manajemen peran"
       }
+    },
+    "resetDefaults": "Reset ke Default Sistem",
+    "resetDefaultsConfirm": "Kembalikan izin peran \"{name}\" ke standar pabrikan modul?",
+    "resetDefaultsSuccess": "Izin peran berhasil dikembalikan ke default sistem",
+    "resetAllDefaults": "Reset Semua Peran ke Default",
+    "resetAllDefaultsConfirm": "Peringatan: Tindakan ini akan mengembalikan izin SEMUA peran ke standar default sistem. Lanjutkan?",
+    "diff": {
+      "title": "Perubahan Izin Default",
+      "additions": "Izin yang akan ditambahkan ({count})",
+      "removals": "Izin yang akan dicabut ({count})",
+      "noChanges": "Peran ini sudah sesuai dengan default sistem"
+    },
+    "quickSelect": {
+      "allRead": "Pilih Semua Baca",
+      "clearAll": "Batalkan Semua",
+      "selectAll": "Pilih Semua Modul"
+    },
+    "actionTypes": {
+      "read": "BACA",
+      "create": "BUAT",
+      "update": "UBAH",
+      "delete": "HAPUS",
+      "execute": "EKSEKUSI",
+      "manage": "KELOLA",
+      "admin": "ADMIN"
     }
   },
   "notifications": {
@@ -3587,6 +3612,165 @@
     "messages": {
       "approved": "KYC disetujui",
       "rejected": "KYC ditolak"
+    }
+  },
+  "capabilities": {
+    "core": {
+      "profile": {
+        "view": "Melihat Profil Sendiri",
+        "edit": "Mengubah Profil Sendiri"
+      },
+      "users": {
+        "view": "Melihat Pengguna",
+        "create": "Membuat Pengguna",
+        "edit": "Mengubah Pengguna",
+        "verify": "Verifikasi Akun Pengguna",
+        "delete": "Menghapus Pengguna",
+        "manage": "Kelola Semua Pengguna"
+      },
+      "roles": {
+        "view": "Melihat Peran",
+        "create": "Membuat Peran",
+        "edit": "Mengubah Peran & Izin",
+        "delete": "Menghapus Peran",
+        "manage": "Kelola Semua Peran"
+      },
+      "settings": {
+        "view": "Melihat Pengaturan",
+        "manage": "Kelola Pengaturan",
+        "system_info": "Melihat Info Sistem",
+        "system_manage": "Kelola Parameter Sistem"
+      },
+      "logs": {
+        "view": "Melihat Log Sistem",
+        "activity": "Melihat Jurnal Aktivitas",
+        "purge": "Bersihkan Log"
+      },
+      "security": {
+        "view": "Melihat Log Keamanan",
+        "operate": "Kelola Operasi Keamanan",
+        "manage_logs": "Kelola Log Keamanan",
+        "blocklist": "Kelola Daftar Blokir IP",
+        "integrity": "Kelola Integritas Berkas",
+        "maintenance": "Kelola Pemeliharaan Keamanan",
+        "kyc": "Kelola Verifikasi Identitas (KYC)"
+      },
+      "maintenance": {
+        "view_tasks": "Melihat Tugas Terjadwal",
+        "manage_tasks": "Kelola Tugas Terjadwal",
+        "view_backups": "Melihat Cadangan Data",
+        "backup": "Jalankan Pencadangan Database",
+        "cleanup": "Jalankan Pembersihan Penyimpanan",
+        "toggle": "Ubah Mode Pemeliharaan"
+      },
+      "modules": {
+        "view": "Melihat Modul",
+        "manage": "Kelola Siklus Modul"
+      }
+    },
+    "publishing": {
+      "contents": {
+        "view": "Melihat Konten",
+        "create": "Membuat Draf Konten",
+        "edit": "Mengubah Konten",
+        "publish": "Mempublikasikan Konten",
+        "delete": "Menghapus Konten",
+        "manage": "Kelola Semua Konten"
+      },
+      "comments": {
+        "view": "Melihat Komentar",
+        "moderate": "Moderasi Komentar",
+        "delete": "Menghapus Komentar"
+      },
+      "seo": {
+        "manage": "Kelola SEO Konten"
+      }
+    },
+    "media": {
+      "media": {
+        "view": "Melihat Media",
+        "upload": "Unggah Media",
+        "edit": "Mengubah Rincian Media",
+        "delete": "Menghapus Media",
+        "manage": "Kelola Media & Folder"
+      }
+    },
+    "layout": {
+      "menus": {
+        "view": "Melihat Menu Navigasi",
+        "create": "Membuat Menu",
+        "edit": "Mengubah Menu",
+        "delete": "Menghapus Menu",
+        "manage": "Kelola Semua Menu"
+      },
+      "widgets": {
+        "view": "Melihat Widget",
+        "create": "Membuat Widget",
+        "edit": "Mengubah Widget",
+        "delete": "Menghapus Widget",
+        "manage": "Kelola Semua Widget"
+      },
+      "redirects": {
+        "view": "Melihat Pengalihan URL",
+        "create": "Membuat Pengalihan URL",
+        "edit": "Mengubah Pengalihan URL",
+        "delete": "Menghapus Pengalihan URL",
+        "manage": "Kelola Semua Pengalihan URL"
+      },
+      "themes": {
+        "view": "Melihat Tema",
+        "upload": "Unggah Tema",
+        "customize": "Sesuaikan Tema",
+        "delete": "Menghapus Tema",
+        "manage": "Kelola Semua Tema"
+      }
+    },
+    "library": {
+      "categories": {
+        "view": "Melihat Kategori",
+        "manage": "Kelola Kategori"
+      },
+      "tags": {
+        "manage": "Kelola Tag"
+      }
+    },
+    "forms": {
+      "forms": {
+        "view": "Melihat Formulir & Tanggapan",
+        "create": "Membuat Formulir",
+        "edit": "Mengubah Formulir",
+        "delete": "Menghapus Formulir & Tanggapan",
+        "manage": "Kelola Semua Formulir"
+      }
+    },
+    "member": {
+      "members": {
+        "view": "Melihat Anggota",
+        "manage": "Kelola Anggota"
+      }
+    },
+    "mail": {
+      "webmail": {
+        "use": "Menggunakan Webmail",
+        "manage_personal": "Kelola Akun Email Pribadi",
+        "manage_multi": "Kelola Multi-Akun Email Sistem"
+      }
+    },
+    "analytics": {
+      "traffic": {
+        "view": "Melihat Laporan Statistik"
+      }
+    },
+    "newsletter": {
+      "subscribers": {
+        "view": "Melihat Daftar Pelanggan",
+        "manage": "Kelola Buletin & Pelanggan"
+      }
+    },
+    "search": {
+      "search": {
+        "manage": "Kelola & Reindeks Pencarian"
+      }
     }
   }
 }

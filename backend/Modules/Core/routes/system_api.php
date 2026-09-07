@@ -157,8 +157,10 @@ Route::prefix('v1')->group(function (): void {
         // Roles Management
         Route::middleware('permission:view roles')->group(function (): void {
             Route::get('roles', [RoleController::class, 'index']);
+            Route::get('roles/capabilities', [RoleController::class, 'capabilities']);
             Route::get('roles/permissions', [RoleController::class, 'permissions']);
             Route::get('roles/{role}', [RoleController::class, 'show']);
+            Route::get('roles/{role}/defaults-diff', [RoleController::class, 'defaultsDiff']);
         });
         Route::middleware('permission:create roles|manage roles')->group(function (): void {
             Route::post('roles', [RoleController::class, 'store']);
@@ -166,6 +168,8 @@ Route::prefix('v1')->group(function (): void {
         Route::middleware('permission:edit roles|manage roles')->group(function (): void {
             Route::match(['put', 'patch'], 'roles/{role}', [RoleController::class, 'update']);
             Route::post('roles/bulk-action', [RoleController::class, 'bulkAction']);
+            Route::post('roles/reset-all-defaults', [RoleController::class, 'resetAllDefaults']);
+            Route::post('roles/{role}/reset-defaults', [RoleController::class, 'resetDefaults']);
         });
         Route::middleware('permission:delete roles|manage roles')->group(function (): void {
             Route::delete('roles/{role}', [RoleController::class, 'destroy']);

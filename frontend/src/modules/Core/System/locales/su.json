@@ -520,6 +520,31 @@
         "description": "Klik dina peran di sidebar pikeun mengedit izinnya, atawa pilih babaraha peran menggunakan kotak centang pikeun membandingkannya secara berdampingan.",
         "title": "Panel manajemen peran"
       }
+    },
+    "resetDefaults": "Reset ka Default Sistem",
+    "resetDefaultsConfirm": "Balikkeun idin peran \"{name}\" ka standar pabrik modul?",
+    "resetDefaultsSuccess": "Idin peran parantos hasil dibalikkeun ka default sistem",
+    "resetAllDefaults": "Reset Sadaya Peran ka Default",
+    "resetAllDefaultsConfirm": "Perhatosan: Tindakan ieu bakal ngabalikkeun idin SADAYA peran ka standar default sistem. Teruskeun?",
+    "diff": {
+      "title": "Parobahan Idin Default",
+      "additions": "Idin nu bakal ditambahkeun ({count})",
+      "removals": "Idin nu bakal dicabut ({count})",
+      "noChanges": "Peran ieu parantos cocog sareng default sistem"
+    },
+    "quickSelect": {
+      "allRead": "Pilih Sadaya Baca",
+      "clearAll": "Batalkeun Sadaya",
+      "selectAll": "Pilih Sadaya Modul"
+    },
+    "actionTypes": {
+      "read": "BACA",
+      "create": "NYIEUN",
+      "update": "ROBAH",
+      "delete": "PUPUS",
+      "execute": "JALANKEUN",
+      "manage": "ATUR",
+      "admin": "ADMIN"
     }
   },
   "notifications": {
@@ -3587,6 +3612,165 @@
     "messages": {
       "approved": "KYC disatujuan",
       "rejected": "KYC ditampik"
+    }
+  },
+  "capabilities": {
+    "core": {
+      "profile": {
+        "view": "Nempo Profil Sorangan",
+        "edit": "Ngarobah Profil Sorangan"
+      },
+      "users": {
+        "view": "Nempo Pamaké",
+        "create": "Nyieun Pamaké",
+        "edit": "Ngarobah Pamaké",
+        "verify": "Verifikasi Akun Pamaké",
+        "delete": "Mupus Pamaké",
+        "manage": "Ngatur Sadaya Pamaké"
+      },
+      "roles": {
+        "view": "Nempo Peran",
+        "create": "Nyieun Peran",
+        "edit": "Ngarobah Peran & Idin",
+        "delete": "Mupus Peran",
+        "manage": "Ngatur Sadaya Peran"
+      },
+      "settings": {
+        "view": "Nempo Setelan",
+        "manage": "Ngatur Setelan",
+        "system_info": "Nempo Info Sistem",
+        "system_manage": "Ngatur Parameter Sistem"
+      },
+      "logs": {
+        "view": "Nempo Log Sistem",
+        "activity": "Nempo Jurnal Kagiatan",
+        "purge": "Ngabersihkeun Log"
+      },
+      "security": {
+        "view": "Nempo Log Kaamanan",
+        "operate": "Ngatur Operasi Kaamanan",
+        "manage_logs": "Ngatur Log Kaamanan",
+        "blocklist": "Ngatur Daptar Blokir IP",
+        "integrity": "Ngatur Integritas Berkas",
+        "maintenance": "Ngatur Pangropéa Kaamanan",
+        "kyc": "Ngatur Verifikasi Idéntitas (KYC)"
+      },
+      "maintenance": {
+        "view_tasks": "Nempo Pancén Terjadwal",
+        "manage_tasks": "Ngatur Pancén Terjadwal",
+        "view_backups": "Nempo Cadangan Data",
+        "backup": "Jalankeun Nyadangkeun Database",
+        "cleanup": "Jalankeun Ngabersihkeun Panyimpenan",
+        "toggle": "Ganti Mode Pangropéa"
+      },
+      "modules": {
+        "view": "Nempo Modul",
+        "manage": "Ngatur Siklus Modul"
+      }
+    },
+    "publishing": {
+      "contents": {
+        "view": "Nempo Konten",
+        "create": "Nyieun Draf Konten",
+        "edit": "Ngarobah Konten",
+        "publish": "Medalkeun Konten",
+        "delete": "Mupus Konten",
+        "manage": "Ngatur Sadaya Konten"
+      },
+      "comments": {
+        "view": "Nempo Komentar",
+        "moderate": "Modérasi Komentar",
+        "delete": "Mupus Komentar"
+      },
+      "seo": {
+        "manage": "Ngatur SEO Konten"
+      }
+    },
+    "media": {
+      "media": {
+        "view": "Nempo Média",
+        "upload": "Unggah Média",
+        "edit": "Ngarobah Rinci Média",
+        "delete": "Mupus Média",
+        "manage": "Ngatur Média & Folder"
+      }
+    },
+    "layout": {
+      "menus": {
+        "view": "Nempo Menu Navigasi",
+        "create": "Nyieun Menu",
+        "edit": "Ngarobah Menu",
+        "delete": "Mupus Menu",
+        "manage": "Ngatur Sadaya Menu"
+      },
+      "widgets": {
+        "view": "Nempo Widget",
+        "create": "Nyieun Widget",
+        "edit": "Ngarobah Widget",
+        "delete": "Mupus Widget",
+        "manage": "Ngatur Sadaya Widget"
+      },
+      "redirects": {
+        "view": "Nempo Pangalihan URL",
+        "create": "Nyieun Pangalihan URL",
+        "edit": "Ngarobah Pangalihan URL",
+        "delete": "Mupus Pangalihan URL",
+        "manage": "Ngatur Sadaya Pangalihan URL"
+      },
+      "themes": {
+        "view": "Nempo Téma",
+        "upload": "Unggah Téma",
+        "customize": "Nyaruaan Téma",
+        "delete": "Mupus Téma",
+        "manage": "Ngatur Sadaya Téma"
+      }
+    },
+    "library": {
+      "categories": {
+        "view": "Nempo Kategori",
+        "manage": "Ngatur Kategori"
+      },
+      "tags": {
+        "manage": "Ngatur Tag"
+      }
+    },
+    "forms": {
+      "forms": {
+        "view": "Nempo Formulir & Réspon",
+        "create": "Nyieun Formulir",
+        "edit": "Ngarobah Formulir",
+        "delete": "Mupus Formulir & Réspon",
+        "manage": "Ngatur Sadaya Formulir"
+      }
+    },
+    "member": {
+      "members": {
+        "view": "Nempo Anggota",
+        "manage": "Ngatur Anggota"
+      }
+    },
+    "mail": {
+      "webmail": {
+        "use": "Ngagunakeun Webmail",
+        "manage_personal": "Ngatur Akun Surél Pribadi",
+        "manage_multi": "Ngatur Multi-Akun Surél Sistem"
+      }
+    },
+    "analytics": {
+      "traffic": {
+        "view": "Nempo Laporan Statistik"
+      }
+    },
+    "newsletter": {
+      "subscribers": {
+        "view": "Nempo Daptar Langganan",
+        "manage": "Ngatur Buletin & Langganan"
+      }
+    },
+    "search": {
+      "search": {
+        "manage": "Ngatur & Reindéks Pilarian"
+      }
     }
   }
 }

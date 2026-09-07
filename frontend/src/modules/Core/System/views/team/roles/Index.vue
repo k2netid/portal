@@ -204,6 +204,16 @@
             class="flex items-center gap-2"
           >
             <Button
+              v-if="panelMode === 'edit' && activeRole && !isProtectedRole(activeRole.name) && authStore.hasPermission('edit roles')"
+              variant="outline"
+              size="sm"
+              class="h-8 text-xs font-medium border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10"
+              @click="openDefaultsDiffModal"
+            >
+              <RotateCcw class="w-3.5 h-3.5 mr-1.5" />
+              {{ $t('system.roles.resetDefaults') }}
+            </Button>
+            <Button
               variant="ghost"
               size="sm"
           class="h-8 text-xs"
@@ -314,7 +324,151 @@
                 </div>
               </div>
 
+              <!-- Capability-Driven Auto-Discovered Matrix -->
               <Accordion
+                v-if="capabilities.length > 0"
+                v-model:model-value="expandedModules"
+                type="multiple"
+                class="space-y-3 border-none"
+              >
+                <AccordionItem
+                  v-for="mod in capabilities"
+                  :key="mod.slug"
+                  :value="mod.slug"
+                  class="bg-card/40 border border-border/70 rounded-xl overflow-hidden shadow-xs transition-colors hover:border-border"
+                >
+                  <div class="flex items-center gap-2 px-4 py-1 bg-muted/20">
+                    <AccordionTrigger class="flex-1 py-3.5 bg-transparent hover:no-underline">
+                      <div class="flex items-center gap-3.5">
+                        <div class="p-2 bg-primary/10 border border-primary/20 rounded-xl text-primary">
+                          <Layers class="w-4 h-4" />
+                        </div>
+                        <div class="text-left">
+                          <div class="flex items-center gap-2">
+                            <h5 class="text-sm font-bold text-foreground tracking-tight">
+                              {{ mod.name }}
+                            </h5>
+                            <Badge variant="outline" class="text-[10px] uppercase font-mono px-1.5 py-0 border-primary/20 text-primary">
+                              {{ mod.family }}
+                            </Badge>
+                            <Badge v-if="mod.is_core" variant="secondary" class="text-[9px] px-1 py-0">
+                              Core
+                            </Badge>
+                          </div>
+                          <p class="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                            {{ mod.description }}
+                          </p>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+
+                    <div class="flex items-center gap-2 shrink-0 pr-2">
+                      <Badge
+                        variant="outline"
+                        class="text-xs font-mono font-medium"
+                        :class="getModulePermissionStats(mod).active > 0 ? 'bg-primary/10 text-primary border-primary/30' : 'text-muted-foreground'"
+                      >
+                        {{ getModulePermissionStats(mod).active }} / {{ getModulePermissionStats(mod).total }}
+                      </Badge>
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="xs"
+                        class="h-7 text-xs font-medium text-muted-foreground hover:text-foreground"
+                        @click.stop="selectAllReadPermissions(mod)"
+                      >
+                        {{ $t('system.roles.quickSelect.allRead') }}
+                      </Button>
+
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="xs"
+                        class="h-7 text-xs font-bold border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
+                        @click.stop="toggleModulePermissions(mod)"
+                      >
+                        {{ getModulePermissionStats(mod).isAllSelected ? $t('system.roles.quickSelect.clearAll') : $t('system.roles.quickSelect.selectAll') }}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <AccordionContent class="pt-2 pb-5 px-5 bg-background/50">
+                    <div class="space-y-6 pt-3">
+                      <div
+                        v-for="feat in mod.features"
+                        :key="feat.slug"
+                        class="space-y-3 p-4 rounded-xl bg-card border border-border/50"
+                      >
+                        <div class="flex items-center justify-between border-b border-border/40 pb-2">
+                          <div>
+                            <h6 class="text-xs font-bold text-foreground">
+                              {{ feat.name }}
+                            </h6>
+                            <p v-if="feat.description" class="text-[11px] text-muted-foreground mt-0.5">
+                              {{ feat.description }}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+                          <div
+                            v-for="action in feat.actions"
+                            :key="action.permission"
+                            class="flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-all duration-150 group/act"
+                            :class="[
+                              isSelectedPermission(action.permission)
+                                ? 'bg-primary/[0.04] border-primary/40 shadow-xs ring-1 ring-primary/20'
+                                : 'bg-card border-border/60 hover:border-border hover:bg-muted/10'
+                            ]"
+                            @click="togglePermission(action.permission)"
+                          >
+                            <Checkbox
+                              :checked="isSelectedPermission(action.permission)"
+                              :aria-label="getActionLabel(action)"
+                              class="mt-0.5 shrink-0"
+                              @update:checked="() => togglePermission(action.permission)"
+                            />
+
+                            <div class="flex-1 min-w-0">
+                              <div class="flex items-center gap-1.5 flex-wrap">
+                                <Badge
+                                  variant="outline"
+                                  class="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0"
+                                  :class="getActionBadgeClass(action.action_type)"
+                                >
+                                  {{ getActionTypeLabel(action.action_type) }}
+                                </Badge>
+                                <Badge
+                                  v-if="action.is_dangerous"
+                                  variant="outline"
+                                  class="text-[9px] font-bold px-1 py-0 bg-destructive/10 text-destructive border-destructive/20"
+                                >
+                                  <AlertTriangle class="w-2.5 h-2.5 mr-0.5 inline" />
+                                  DANGER
+                                </Badge>
+                              </div>
+
+                              <div class="text-xs font-semibold text-foreground group-hover/act:text-primary transition-colors mt-1 leading-snug">
+                                {{ getActionLabel(action) }}
+                              </div>
+
+                              <div class="flex items-center gap-2 text-[10px] font-mono text-muted-foreground mt-1 truncate">
+                                <span>{{ action.permission }}</span>
+                                <span v-if="action.oauth_scope" class="opacity-60">· {{ action.oauth_scope }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <!-- Legacy Fallback Matrix when capabilities empty -->
+              <Accordion
+                v-else
                 v-model:model-value="expandedCategories"
                 type="multiple"
                 class="space-y-0 border-t border-border"
@@ -530,6 +684,97 @@
       </div>
     </div>
     </ConsoleListCard>
+
+    <!-- Defaults Diff & Reset Modal -->
+    <Dialog :open="defaultsDiffModalOpen" @update:open="defaultsDiffModalOpen = $event">
+      <DialogContent class="max-w-xl bg-card border-border shadow-2xl p-6">
+        <DialogHeader>
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              <RotateCcw class="w-5 h-5" />
+            </div>
+            <div>
+              <DialogTitle class="text-base font-bold">
+                {{ $t('system.roles.diff.title') }}
+              </DialogTitle>
+              <DialogDescription class="text-xs text-muted-foreground mt-0.5">
+                {{ activeRole?.name }} · {{ $t('system.roles.resetDefaultsConfirm', { name: activeRole?.name }) }}
+              </DialogDescription>
+            </div>
+          </div>
+        </DialogHeader>
+
+        <div v-if="diffLoading" class="py-12 flex flex-col items-center justify-center gap-3">
+          <Loader2 class="w-8 h-8 animate-spin text-primary" />
+          <p class="text-xs text-muted-foreground">{{ $t('common.status.loading') }}</p>
+        </div>
+
+        <div v-else-if="defaultsDiff" class="space-y-4 my-2 max-h-[60vh] overflow-y-auto custom-scrollbar pr-1">
+          <!-- In sync banner -->
+          <div v-if="defaultsDiff.is_in_sync" class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3">
+            <CheckCircle2 class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <p class="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+              {{ $t('system.roles.diff.noChanges') }}
+            </p>
+          </div>
+
+          <template v-else>
+            <!-- Additions (To Add) -->
+            <div v-if="defaultsDiff.to_add.length > 0" class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+              <div class="flex items-center gap-2 mb-2.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                <Plus class="w-4 h-4" />
+                <span>{{ $t('system.roles.diff.additions', { count: defaultsDiff.to_add.length }) }}</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <Badge
+                  v-for="perm in defaultsDiff.to_add"
+                  :key="perm"
+                  variant="outline"
+                  class="text-[11px] font-mono bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30"
+                >
+                  + {{ perm }}
+                </Badge>
+              </div>
+            </div>
+
+            <!-- Removals (To Remove) -->
+            <div v-if="defaultsDiff.to_remove.length > 0" class="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20">
+              <div class="flex items-center gap-2 mb-2.5 text-xs font-bold text-rose-600 dark:text-rose-400">
+                <Trash2 class="w-4 h-4" />
+                <span>{{ $t('system.roles.diff.removals', { count: defaultsDiff.to_remove.length }) }}</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <Badge
+                  v-for="perm in defaultsDiff.to_remove"
+                  :key="perm"
+                  variant="outline"
+                  class="text-[11px] font-mono bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30"
+                >
+                  - {{ perm }}
+                </Badge>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <DialogFooter class="flex items-center justify-between sm:justify-between border-t border-border pt-4">
+          <Button variant="ghost" size="sm" class="h-9 text-xs" @click="defaultsDiffModalOpen = false">
+            {{ $t('common.actions.cancel') }}
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            :disabled="resettingDefaults || (defaultsDiff && defaultsDiff.is_in_sync)"
+            class="h-9 text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white"
+            @click="confirmResetDefaults"
+          >
+            <Loader2 v-if="resettingDefaults" class="w-3.5 h-3.5 animate-spin mr-2" />
+            <RotateCcw v-else class="w-3.5 h-3.5 mr-2" />
+            {{ $t('system.roles.resetDefaults') }}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
 
@@ -566,10 +811,17 @@ import {
     Accordion,
     AccordionItem,
     AccordionTrigger,
-    AccordionContent
+    AccordionContent,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter
 } from '@/shared/components/ui';
 
 import {
+  AlertTriangle,
   CheckCircle2,
   CheckSquare,
   Circle,
@@ -577,10 +829,12 @@ import {
   Copy,
   Edit3,
   FolderOpen,
+  Layers,
   Loader2,
   Lock,
   Plus,
   RefreshCw,
+  RotateCcw,
   Search,
   Shield,
   Trash2,
@@ -597,11 +851,50 @@ const { confirm } = useConfirm();
 const authStore = useAuthStore();
 const { errors, validateWithZod, clearErrors, setErrors } = useFormValidation(roleSchema);
 
+interface ActionCapability {
+    key: string;
+    permission: string;
+    label: string;
+    label_key?: string;
+    action_type: 'read' | 'create' | 'update' | 'delete' | 'execute' | 'manage' | 'admin';
+    default_roles: string[];
+    oauth_scope?: string;
+    is_dangerous?: boolean;
+}
+
+interface FeatureCapability {
+    slug: string;
+    name: string;
+    description?: string;
+    actions: ActionCapability[];
+}
+
+interface ModuleCapability {
+    slug: string;
+    name: string;
+    description?: string;
+    is_core: boolean;
+    family: string;
+    features: FeatureCapability[];
+}
+
 // State
 const loading = ref(false);
 const saving = ref(false);
 const roles = ref<Role[]>([]);
 const permissions = ref<Record<string, Permission[]>>({});
+const capabilities = ref<ModuleCapability[]>([]);
+const expandedModules = ref<string[]>([]);
+const defaultsDiffModalOpen = ref(false);
+const diffLoading = ref(false);
+const resettingDefaults = ref(false);
+const defaultsDiff = ref<{
+    current: string[];
+    defaults: string[];
+    to_add: string[];
+    to_remove: string[];
+    is_in_sync: boolean;
+} | null>(null);
 const search = ref('');
 const activeRoleId = ref<string | number | null>(null);
 const selectedRoleIds = ref<string[]>([]);
@@ -691,6 +984,124 @@ const fetchPermissions = async () => {
         expandedCategories.value = Object.keys(sanitized).slice(0, 2);
     } catch (error: unknown) {
         logger.error('Failed to fetch permissions:', error);
+    }
+};
+
+const fetchCapabilities = async () => {
+    try {
+        const response = await api.get('/manage/system/roles/capabilities');
+        const data = response.data?.data || response.data || [];
+        capabilities.value = Array.isArray(data) ? data : [];
+        if (capabilities.value.length > 0 && expandedModules.value.length === 0) {
+            expandedModules.value = capabilities.value.slice(0, 3).map(m => m.slug);
+        }
+    } catch (error: unknown) {
+        logger.error('Failed to fetch capabilities:', error);
+    }
+};
+
+const getActionBadgeClass = (actionType: string) => {
+    switch (actionType?.toLowerCase()) {
+        case 'read':
+            return 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20';
+        case 'create':
+            return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+        case 'update':
+            return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
+        case 'delete':
+            return 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20';
+        case 'execute':
+            return 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20';
+        case 'manage':
+        case 'admin':
+            return 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20';
+        default:
+            return 'bg-muted text-muted-foreground border-border';
+    }
+};
+
+const getActionTypeLabel = (actionType: string) => {
+    const key = `system.roles.actionTypes.${actionType?.toLowerCase()}`;
+    return t(key, actionType?.toUpperCase() || 'ACTION');
+};
+
+const getActionLabel = (action: ActionCapability) => {
+    if (action.label_key) {
+        return t(action.label_key, action.label);
+    }
+    return action.label;
+};
+
+const getModulePermissionStats = (mod: ModuleCapability) => {
+    const modPerms = mod.features.flatMap(f => f.actions.map(a => a.permission));
+    const active = modPerms.filter(p => form.value.permissions.includes(p)).length;
+    return {
+        active,
+        total: modPerms.length,
+        isAllSelected: modPerms.length > 0 && active === modPerms.length,
+        isNoneSelected: active === 0,
+    };
+};
+
+const toggleModulePermissions = (mod: ModuleCapability) => {
+    if (isProtectedRole(activeRole.value?.name || '')) return;
+    const modPerms = mod.features.flatMap(f => f.actions.map(a => a.permission));
+    const stats = getModulePermissionStats(mod);
+    if (stats.isAllSelected) {
+        form.value.permissions = form.value.permissions.filter(p => !modPerms.includes(p));
+    } else {
+        const set = new Set([...form.value.permissions, ...modPerms]);
+        form.value.permissions = Array.from(set);
+    }
+};
+
+const selectAllReadPermissions = (mod: ModuleCapability) => {
+    if (isProtectedRole(activeRole.value?.name || '')) return;
+    const readPerms = mod.features.flatMap(f => 
+        f.actions.filter(a => a.action_type === 'read').map(a => a.permission)
+    );
+    const set = new Set([...form.value.permissions, ...readPerms]);
+    form.value.permissions = Array.from(set);
+};
+
+const openDefaultsDiffModal = async () => {
+    if (!activeRole.value) return;
+    diffLoading.value = true;
+    defaultsDiffModalOpen.value = true;
+    defaultsDiff.value = null;
+    try {
+        const response = await api.get(`/manage/system/roles/${activeRole.value.id}/defaults-diff`);
+        defaultsDiff.value = response.data?.data || response.data;
+    } catch (error: unknown) {
+        toast.error.load(error as Record<string, unknown>);
+        defaultsDiffModalOpen.value = false;
+    } finally {
+        diffLoading.value = false;
+    }
+};
+
+const confirmResetDefaults = async () => {
+    if (!activeRole.value) return;
+    resettingDefaults.value = true;
+    try {
+        const response = await api.post(`/manage/system/roles/${activeRole.value.id}/reset-defaults`);
+        const updatedRole = response.data?.data || response.data;
+        if (updatedRole?.permissions) {
+            form.value.permissions = updatedRole.permissions.map((p: any) => p.name);
+            if (initialData.value) {
+                initialData.value.permissions = [...form.value.permissions];
+            }
+        }
+        const index = roles.value.findIndex(r => r.id === activeRole.value?.id);
+        if (index !== -1 && updatedRole) {
+            roles.value[index] = updatedRole;
+        }
+        toast.success.action(t('system.roles.resetDefaultsSuccess'));
+        defaultsDiffModalOpen.value = false;
+    } catch (error: unknown) {
+        toast.error.load(error as Record<string, unknown>);
+    } finally {
+        resettingDefaults.value = false;
     }
 };
 
@@ -919,8 +1330,14 @@ const deleteRole = async (role: Role) => {
     }
 };
 
-const expandAll = () => expandedCategories.value = Object.keys(permissions.value);
-const collapseAll = () => expandedCategories.value = [];
+const expandAll = () => {
+    expandedCategories.value = Object.keys(permissions.value);
+    expandedModules.value = capabilities.value.map(m => m.slug);
+};
+const collapseAll = () => {
+    expandedCategories.value = [];
+    expandedModules.value = [];
+};
 
 const formatPermissionName = (name: string, category: string) => {
     const lowerCategory = category.toLowerCase();
@@ -979,7 +1396,8 @@ onMounted(async () => {
     try {
         await Promise.all([
             fetchPermissions(),
-            fetchRoles()
+            fetchRoles(),
+            fetchCapabilities()
         ]);
     } finally {
         loading.value = false;

@@ -66,6 +66,198 @@
       "category": "marketing"
     }
   ],
+  "capabilities": {
+    "menus": {
+      "name": "Navigation Menus",
+      "description": "Build and manage multi-level navigation menus for header, footer, and sidebar",
+      "actions": {
+        "view": {
+          "permission": "view menus",
+          "label": "View Menus",
+          "label_key": "system.capabilities.layout.menus.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "layout:read"
+        },
+        "create": {
+          "permission": "create menus",
+          "label": "Create Menus",
+          "label_key": "system.capabilities.layout.menus.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "edit": {
+          "permission": "edit menus",
+          "label": "Edit Menus",
+          "label_key": "system.capabilities.layout.menus.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "delete": {
+          "permission": "delete menus",
+          "label": "Delete Menus",
+          "label_key": "system.capabilities.layout.menus.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:delete"
+        },
+        "manage": {
+          "permission": "manage menus",
+          "label": "Manage All Menus",
+          "label_key": "system.capabilities.layout.menus.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:manage"
+        }
+      }
+    },
+    "widgets": {
+      "name": "Widgets Area",
+      "description": "Manage block components and widgets across layout regions",
+      "actions": {
+        "view": {
+          "permission": "view widgets",
+          "label": "View Widgets",
+          "label_key": "system.capabilities.layout.widgets.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "layout:read"
+        },
+        "create": {
+          "permission": "create widgets",
+          "label": "Create Widgets",
+          "label_key": "system.capabilities.layout.widgets.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "edit": {
+          "permission": "edit widgets",
+          "label": "Edit Widgets",
+          "label_key": "system.capabilities.layout.widgets.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "delete": {
+          "permission": "delete widgets",
+          "label": "Delete Widgets",
+          "label_key": "system.capabilities.layout.widgets.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:delete"
+        },
+        "manage": {
+          "permission": "manage widgets",
+          "label": "Manage All Widgets",
+          "label_key": "system.capabilities.layout.widgets.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:manage"
+        }
+      }
+    },
+    "redirects": {
+      "name": "URL Redirects",
+      "description": "Manage 301 and 302 URL redirects and path aliases",
+      "actions": {
+        "view": {
+          "permission": "view redirects",
+          "label": "View Redirects",
+          "label_key": "system.capabilities.layout.redirects.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:read"
+        },
+        "create": {
+          "permission": "create redirects",
+          "label": "Create Redirects",
+          "label_key": "system.capabilities.layout.redirects.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "edit": {
+          "permission": "edit redirects",
+          "label": "Edit Redirects",
+          "label_key": "system.capabilities.layout.redirects.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "delete": {
+          "permission": "delete redirects",
+          "label": "Delete Redirects",
+          "label_key": "system.capabilities.layout.redirects.delete",
+          "action_type": "delete",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:delete"
+        },
+        "manage": {
+          "permission": "manage redirects",
+          "label": "Manage All Redirects",
+          "label_key": "system.capabilities.layout.redirects.manage",
+          "action_type": "manage",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:manage"
+        }
+      }
+    },
+    "themes": {
+      "name": "Themes & Customizer",
+      "description": "Install, activate, and customize frontend public themes",
+      "actions": {
+        "view": {
+          "permission": "view themes",
+          "label": "View Themes",
+          "label_key": "system.capabilities.layout.themes.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "operator"],
+          "oauth_scope": "layout:read"
+        },
+        "upload": {
+          "permission": "upload themes",
+          "label": "Upload Themes",
+          "label_key": "system.capabilities.layout.themes.upload",
+          "action_type": "create",
+          "is_dangerous": true,
+          "default_roles": ["admin"],
+          "oauth_scope": "layout:admin"
+        },
+        "edit": {
+          "permission": "edit themes",
+          "label": "Customize Themes",
+          "label_key": "system.capabilities.layout.themes.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "layout:write"
+        },
+        "delete": {
+          "permission": "delete themes",
+          "label": "Delete Themes",
+          "label_key": "system.capabilities.layout.themes.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin"],
+          "oauth_scope": "layout:delete"
+        },
+        "manage": {
+          "permission": "manage themes",
+          "label": "Manage All Themes",
+          "label_key": "system.capabilities.layout.themes.manage",
+          "action_type": "admin",
+          "is_dangerous": true,
+          "default_roles": ["admin"],
+          "oauth_scope": "layout:manage"
+        }
+      }
+    }
+  },
+
   "permissions": [
     "view menus",
     "create menus",
@@ -88,6 +280,7 @@
     "delete themes",
     "manage themes"
   ],
+
   "lifecycle": {
     "preserve_data_on_deactivate": true,
     "seeders_on_activate": [
