@@ -132,6 +132,10 @@ class SettingController extends BaseApiController
             return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
         }
 
+        if (in_array((string) $setting->key, ['brand_logo', 'brand_favicon', 'site_logo', 'site_favicon', 'app_logo', 'app_favicon', 'app_logo_light', 'app_logo_dark', 'app_logo_compact'])) {
+            $validated['type'] = 'image';
+        }
+
         $setting->update($validated);
 
         $this->syncSiteIdentityToActiveTheme((string) $setting->key, $setting->value);
@@ -166,6 +170,13 @@ class SettingController extends BaseApiController
                 $sType = is_scalar($sTypeRaw) ? (string) $sTypeRaw : 'string';
                 $sGroupRaw = $settingData['group'] ?? 'system';
                 $sGroup = is_scalar($sGroupRaw) ? (string) $sGroupRaw : 'system';
+
+                if (in_array($sKey, ['brand_logo', 'brand_favicon', 'site_logo', 'site_favicon', 'app_logo', 'app_favicon', 'app_logo_light', 'app_logo_dark', 'app_logo_compact'])) {
+                    $sType = 'image';
+                    if (str_starts_with($sKey, 'brand_') || str_starts_with($sKey, 'app_')) {
+                        $sGroup = 'brand';
+                    }
+                }
 
                 $existing = Setting::query()->where('key', $sKey)->first();
                 $existingGroup = is_string($existing?->group) ? $existing->group : '';

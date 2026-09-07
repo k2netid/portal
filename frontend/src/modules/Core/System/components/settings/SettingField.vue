@@ -2,7 +2,7 @@
   <div :class="colSpanClass">
     <div class="flex items-center justify-between mb-1">
       <div class="flex items-center gap-1.5">
-        <label :for="type !== 'image' && type !== 'media' ? fieldId : undefined" class="block text-sm font-medium text-foreground">
+        <label :for="effectiveType !== 'image' && effectiveType !== 'media' ? fieldId : undefined" class="block text-sm font-medium text-foreground">
           {{ label }}
         </label>
         <LucideIcon
@@ -98,13 +98,14 @@
       </SelectContent>
     </Select>
 
+    <!-- Input Field (String/Password/Date) -->
     <Input
       :id="fieldId"
       :name="fieldKey"
-      v-else-if="(type === 'string' || type === 'password' || type === 'datetime') && !isTextarea"
+      v-else-if="(effectiveType === 'string' || effectiveType === 'password' || effectiveType === 'datetime') && !isTextarea"
       :model-value="(localValue as string)"
       :disabled="isControlDisabled"
-      :type="type === 'datetime' ? 'datetime-local' : ((isPassword || type === 'password') ? 'password' : 'text')"
+      :type="effectiveType === 'datetime' ? 'datetime-local' : ((isPassword || effectiveType === 'password') ? 'password' : 'text')"
       :class="error ? 'border-destructive focus-visible:ring-destructive' : ''"
       @input="localValue = ($event.target as HTMLInputElement).value; updateValue()"
     />
@@ -125,7 +126,7 @@
     <Input
       :id="fieldId"
       :name="fieldKey"
-      v-else-if="type === 'integer'"
+      v-else-if="effectiveType === 'integer'"
       :model-value="(localValue as number)"
       :disabled="isControlDisabled"
       type="number"
@@ -135,7 +136,7 @@
 
     <!-- Boolean Toggle -->
     <div
-      v-else-if="type === 'boolean'"
+      v-else-if="effectiveType === 'boolean'"
       class="mt-1 flex items-center space-x-2"
     >
       <Switch
@@ -153,7 +154,7 @@
 
     <!-- Image/Media Picker -->
     <div
-      v-else-if="type === 'image' || type === 'media'"
+      v-else-if="effectiveType === 'image' || effectiveType === 'media'"
       class="flex items-center gap-3"
     >
       <!-- Preview/Placeholder Box -->
@@ -309,6 +310,14 @@ watch(() => props.modelValue, (newValue) => {
 })
 
 // Computed properties
+const effectiveType = computed(() => {
+    // Defense-in-depth: Ensure known image/asset settings are always treated as 'image'
+    if (['brand_logo', 'brand_favicon', 'site_logo', 'site_favicon', 'app_logo', 'app_favicon', 'app_logo_light', 'app_logo_dark', 'app_logo_compact'].includes(props.fieldKey)) {
+        return 'image';
+    }
+    return props.type || 'string';
+});
+
 const hasOptions = computed(() => {
     return getFieldOptions(props.fieldKey) !== null
 })
@@ -359,7 +368,7 @@ const isPassword = computed(() => {
 })
 
 const isTextarea = computed(() => {
-    return props.type === 'text' || props.type === 'json'
+    return effectiveType.value === 'text' || effectiveType.value === 'json'
 })
 
 const hasPresets = computed(() => {
