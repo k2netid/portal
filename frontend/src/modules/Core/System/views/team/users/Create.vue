@@ -292,6 +292,52 @@
             {{ $t('system.users.modals.user.noRoles') }}
           </p>
         </div>
+
+        <!-- Verification Options -->
+        <div class="pt-4 border-t border-border/40 space-y-3">
+          <label class="block text-sm font-medium text-foreground">
+            {{ $t('system.users.form.verificationSection') }}
+          </label>
+          
+          <div class="space-y-3">
+            <div class="flex items-center space-x-2">
+              <Checkbox
+                id="user-create-is-verified"
+                :checked="form.is_verified"
+                @update:checked="(checked: boolean) => {
+                  form.is_verified = checked;
+                  if (checked) form.send_verification_email = false;
+                }"
+              />
+              <label
+                for="user-create-is-verified"
+                class="text-sm font-medium leading-none cursor-pointer select-none"
+              >
+                {{ $t('system.users.form.verifiedImmediately') }}
+              </label>
+            </div>
+            <p class="text-xs text-muted-foreground ml-6">
+              {{ $t('system.users.form.verifiedImmediatelyHint') }}
+            </p>
+
+            <div
+              v-if="!form.is_verified"
+              class="flex items-center space-x-2 pt-1"
+            >
+              <Checkbox
+                id="user-create-send-email"
+                :checked="form.send_verification_email"
+                @update:checked="(checked: boolean) => form.send_verification_email = checked"
+              />
+              <label
+                for="user-create-send-email"
+                class="text-sm font-medium leading-none cursor-pointer select-none"
+              >
+                {{ $t('system.users.form.sendVerificationEmail') }}
+              </label>
+            </div>
+          </div>
+        </div>
       </ConsoleFormCard>
 
       <!-- Actions -->
@@ -371,6 +417,8 @@ const form = ref<{
     location: string;
     avatar: string | null;
     roles: string[];
+    is_verified: boolean;
+    send_verification_email: boolean;
 }>({
     name: '',
     email: '',
@@ -382,6 +430,8 @@ const form = ref<{
     location: '',
     avatar: null,
     roles: [],
+    is_verified: false,
+    send_verification_email: true,
 });
 
 const isValid = computed(() => {

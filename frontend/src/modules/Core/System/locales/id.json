@@ -346,7 +346,11 @@
       "selectAvatar": "Pilih Avatar",
       "titleCreate": "Buat Pengguna",
       "titleEdit": "Ubah Pengguna",
+      "verificationSection": "Status Verifikasi Email",
       "verified": "Terverifikasi",
+      "verifiedImmediately": "Langsung tandai email sebagai terverifikasi",
+      "verifiedImmediatelyHint": "Jika dicentang, pengguna dapat langsung login tanpa perlu verifikasi email terlebih dahulu.",
+      "sendVerificationEmail": "Kirim notifikasi email verifikasi ke pengguna",
       "website": "Situs Web"
     },
     "loading": "Memuat pengguna...",

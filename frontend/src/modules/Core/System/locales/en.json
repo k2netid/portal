@@ -346,7 +346,11 @@
       "selectAvatar": "Select Avatar",
       "titleCreate": "Buat Pengguna",
       "titleEdit": "Ubah Pengguna",
+      "verificationSection": "Email Verification Status",
       "verified": "Verified",
+      "verifiedImmediately": "Mark email as verified immediately",
+      "verifiedImmediatelyHint": "If checked, the user can log in immediately without prior email verification.",
+      "sendVerificationEmail": "Send verification email to user",
       "website": "Website"
     },
     "loading": "Loading users...",

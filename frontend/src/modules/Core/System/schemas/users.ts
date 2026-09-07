@@ -28,6 +28,8 @@ export const createUserSchema = z.object({
     location: z.string().optional().nullable(),
     avatar: z.string().optional().nullable(),
     roles: z.array(z.string()).min(1, t('system.users.messages.roleRequired')),
+    is_verified: z.boolean().optional(),
+    send_verification_email: z.boolean().optional(),
 }).refine(data => data.password === data.password_confirmation, {
     message: t('common.validation.confirmed'),
     path: ['password_confirmation'],

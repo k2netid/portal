@@ -346,7 +346,11 @@
       "selectAvatar": "Pilih Avatar",
       "titleCreate": "Jieun Pamaké",
       "titleEdit": "Édit Pamaké",
+      "verificationSection": "Status Vérifikasi Email",
       "verified": "Kavérifikasi",
+      "verifiedImmediately": "Langsung cirian email parantos kavérifikasi",
+      "verifiedImmediatelyHint": "Upami dicientang, pamaké tiasa langsung lebet tanpa kedah vérifikasi email heula.",
+      "sendVerificationEmail": "Kintunkeun notifikasi email vérifikasi ka pamaké",
       "website": "Situs Web"
     },
     "loading": "Nuju ngamuat pamaké...",

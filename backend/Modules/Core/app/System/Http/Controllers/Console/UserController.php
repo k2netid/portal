@@ -166,14 +166,32 @@ class UserController extends BaseApiController
             'avatar' => 'nullable|string',
             'roles' => 'required|array',
             'roles.*' => Rule::exists($rolesTable, 'id'),
+            'is_verified' => 'sometimes|boolean',
+            'send_verification_email' => 'sometimes|boolean',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-        $validated['email_verified_at'] = now();
+        $isVerified = (bool) ($validated['is_verified'] ?? false);
+        $sendVerificationEmail = (bool) ($validated['send_verification_email'] ?? true);
 
-        $user = User::create(Arr::except($validated, ['roles']));
-        $user->email_verified_at = now();
-        $user->save();
+        $validated['password'] = Hash::make($validated['password']);
+
+        $user = User::create(Arr::except($validated, ['roles', 'is_verified', 'send_verification_email']));
+
+        if ($isVerified) {
+            $user->email_verified_at = now();
+            $user->save();
+        } else {
+            $user->email_verified_at = null;
+            $user->save();
+
+            if ($sendVerificationEmail) {
+                try {
+                    $user->sendEmailVerificationNotification();
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning('Failed to send email verification notification: '.$e->getMessage());
+                }
+            }
+        }
 
         if ($request->has('roles')) {
             $maxRequestedRank = 0;
