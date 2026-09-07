@@ -23,8 +23,7 @@ class SareupnaThemeDemoSeeder extends Seeder
         $sareupna = Theme::where('slug', 'sareupna')->first();
 
         if ($sareupna) {
-            $sareupna->is_active = true;
-            $sareupna->save();
+            $sareupna->activate();
             Setting::set('theme_active', 'sareupna', 'string', 'layout');
         }
 
