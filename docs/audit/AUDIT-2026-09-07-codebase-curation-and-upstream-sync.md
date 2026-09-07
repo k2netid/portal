@@ -23,21 +23,25 @@ Hasil kurasi:
 
 | Repositori | Branch Aktif | Remote Origin | Remote Upstream | Head Commit | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`ja-core_engine`** | `main` | `jejak-awan/ja-core_engine.git` | - | `ae8b1902` | Clean |
-| **`k2net-portal`** | `main` | `k2netid/portal.git` | `jejak-awan/ja-core_engine.git` | `4d0d041` | Clean |
-| **`smkn6-portal`** | `feat/theme-sarangenge` | `k2netid/portal.git` | `jejak-awan/ja-core_engine.git` | `38374cb` | Clean |
+| **`ja-core_engine`** | `main` | `jejak-awan/ja-core_engine.git` | - | `9a23e42a` | Clean |
+| **`k2net-portal`** | `main` | `k2netid/portal.git` | `jejak-awan/ja-core_engine.git` | `cf87c83` | Clean |
+| **`smkn6-portal`** | `feat/theme-sarangenge` | `k2netid/portal.git` | `jejak-awan/ja-core_engine.git` | `7095f61` | Clean |
+| **`ja-cms`** | `main` | `jejak-awan/ja-cmspro.git` | `jejak-awan/ja-core_engine.git` | `2125e078` | Clean (Archival + Reset to Upstream Core) |
+
+> [!NOTE]
+> State monolitik lama dari repositori `ja-cms` telah diamankan secara permanen ke branch `legacy-monolith-archive` di GitHub (`origin/legacy-monolith-archive`), sehingga kode lama tetap dapat diaudit kapan pun tanpa mengotori pohon Git aktif.
 
 ### Hubungan Silsilah (*Genealogy Graph*):
 ```
 [ ja-core_engine: 5b03d68 (31 Aug 2026) ]
                │
                ▼ (154 Commits Core Features)
-[ ja-core_engine: 253b25e / ae8b1902 ] ─── (Upstream Base)
+[ ja-core_engine: 9a23e42a ] ─── (Upstream Base Engine)
                │
-       ┌───────┴────────────────────────┐
-       ▼                                ▼
-[ k2net-portal: 4d0d041 ]        [ smkn6-portal: 38374cb ]
-(Base + K2netDeploymentSeeder)   (Base + Smkn6DeploymentSeeder)
+       ┌───────┼────────────────────────┬────────────────────────┐
+       ▼       ▼                        ▼                        ▼
+[ k2net-portal ]  [ smkn6-portal ]     [ ja-cms (jejakawan.com) ]  [ cdn ]
+ (Theme Layung)  (Theme Sarangenge)      (Theme Janari)          (Assets & SME CDN)
 ```
 
 ---
@@ -48,7 +52,7 @@ Hasil kurasi:
 * **Akar Masalah (*Root Cause*)**: Terjadinya pemindaian rekursif `diff` berbasis disk pada direktori kerja besar yang mencakup struktur `node_modules` dan `vendor` mendalam sebelum penyaringan lengkap.
 * **Mitigasi Diterapkan**:
   1. Seluruh operasi perbandingan berikutnya **wajib dan ketat menggunakan *native git object database*** (`git diff <commit>..<commit>` dan `git merge-base`), yang berjalan dalam hitungan milidetik langsung di memori pointer Git tanpa memindai fisik disk.
-  2. Status memori pasca-mitigasi: **RAM 16 GB stabil dengan 11.3 GB free/available** (penggunaan normal 5 GB untuk service OS dan database).
+  2. Status memori pasca-mitigasi: **RAM 16 GB stabil dengan 12+ GB free/available** (penggunaan normal 2-3 GB untuk service OS dan database).
 
 ---
 
@@ -62,6 +66,7 @@ Seluruh seeder baru dan file command diuji dengan linter PHP (`php -l`):
 * `ThemeSeedCommand.php` → **Pass (0 syntax errors)**
 * `K2netDeploymentSeeder.php` → **Pass (0 syntax errors)**
 * `Smkn6DeploymentSeeder.php` → **Pass (0 syntax errors)**
+* `JejakawanDeploymentSeeder.php` → **Pass (0 syntax errors)**
 
 ### B. Verifikasi CLI Artisan Theme Seed
 ```bash
@@ -69,16 +74,26 @@ $ php artisan theme:seed --help
 Description:
   Seed generic starter demo data for a theme (janari, layung, sarangenge) or the currently active theme.
 ```
-Perintah berjalan normal dan mengenali opsi `--all` maupun argumen slug tema.
+Perintah berjalan normal dan mengenali opsi `--all` maupun argumen slug tema. Telah diuji dengan `php artisan theme:seed janari` dan selesai dalam 1.7 detik.
 
 ### C. Verifikasi RBAC Capability Registry
-Perintah `php artisan rbac:sync` dijalankan secara simultan di ketiga repositori:
+Perintah `php artisan rbac:sync` dijalankan secara simultan di seluruh repositori:
 ```
 - ja-core_engine : Discovered 11 modules, 105 permissions (100% sync)
 - k2net-portal   : Discovered 11 modules, 105 permissions (100% sync)
 - smkn6-portal   : Discovered 11 modules, 105 permissions (100% sync)
+- ja-cms         : Discovered 11 modules, 105 permissions (100% sync)
 ```
 Hasil menunjukkan **100% parity** pada katalog kapabilitas dan izin di seluruh repositori.
+
+### D. Verifikasi Jejakawan Deployment Seeder
+```bash
+$ php artisan db:seed --class=JejakawanDeploymentSeeder
+INFO  Seeding Jejakawan (jejakawan.com) deployment identity configuration...
+INFO  Seeding Janari theme public demo content (Portal Komunitas)...
+INFO  Layout seeded successfully.
+```
+Status: **Pass (100% Success, 2.1 detik)**. Brand legal PT Jejak Awan Digital, tema aktif `janari`, dan URL ekosistem (`portal`, `sme`, `aksara`, `cdn`) berhasil terkonfigurasi.
 
 ---
 
@@ -87,5 +102,6 @@ Hasil menunjukkan **100% parity** pada katalog kapabilitas dan izin di seluruh r
 - [x] **Upstream Sync**: Seluruh commit fitur baru telah berada di `ja-core_engine/main`.
 - [x] **Sanitasi Core**: `ja-core_engine` bersih dari data instansi spesifik.
 - [x] **Theme Demo Seeders**: Tema Janari, Layung, dan Sarangenge memiliki seeder mandiri.
-- [x] **Deployment Seeders**: Masing-masing repo klien memiliki seeder deployment terpisah.
-- [x] **Dokumentasi Terpadu**: Terbit ADR-022 dan laporan audit teknis.
+- [x] **Deployment Seeders**: Masing-masing repo klien (`k2net-portal`, `smkn6-portal`, `ja-cms`) memiliki seeder deployment terpisah.
+- [x] **ja-cms Modernization**: Repositori lama diarsipkan ke `legacy-monolith-archive` dan branch `main` direset bersih ke upstream `ja-core_engine` dengan tema default Janari.
+- [x] **Dokumentasi Terpadu**: Terbit ADR-022, panduan runbook `cms.md`, dan laporan audit teknis lengkap.
