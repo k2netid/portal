@@ -12,6 +12,11 @@ use Modules\Publishing\Models\ContentTemplate;
 
 class ContentTemplateController extends BaseApiController
 {
+    protected function canManageTemplates(?User $user): bool
+    {
+        return (bool) ($user && ($user->can('manage content templates') || $user->can('manage templates')));
+    }
+
     public function index(Request $request): JsonResponse
     {
         $user = $request->user();
@@ -19,7 +24,7 @@ class ContentTemplateController extends BaseApiController
         $query = ContentTemplate::with('category');
 
         // Scope logic
-        if ($user && ! $user->can('manage templates')) {
+        if ($user && ! $this->canManageTemplates($user)) {
             $query->where(function ($q) use ($user): void {
                 $q->whereNull('author_id')->orWhere('author_id', $user->id);
             });
@@ -88,7 +93,7 @@ class ContentTemplateController extends BaseApiController
         $query = ContentTemplate::whereIn('id', $ids);
 
         // Scope
-        if (! $user->can('manage templates')) {
+        if (! $this->canManageTemplates($user)) {
             $query->where('author_id', $user->id);
         }
 
@@ -133,7 +138,7 @@ class ContentTemplateController extends BaseApiController
         ]);
 
         // Author Assignment
-        if ($user->can('manage templates')) {
+        if ($this->canManageTemplates($user)) {
             // Admin can assign
         } else {
             $validated['author_id'] = $user->id;
@@ -152,7 +157,7 @@ class ContentTemplateController extends BaseApiController
         // Permission/Ownership check?
         // Usually viewing templates is fine if they are visible in index?
         // But let's enforce consistency.
-        if ($user && ! $user->can('manage templates') && ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id)) {
+        if ($user && ! $this->canManageTemplates($user) && ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id)) {
             return $this->forbidden('You do not have permission to view this template');
         }
 
@@ -168,7 +173,7 @@ class ContentTemplateController extends BaseApiController
         }
 
         // Ownership check
-        if (! $user->can('manage templates')) {
+        if (! $this->canManageTemplates($user)) {
             if ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id) {
                 return $this->forbidden('You do not have permission to update this template');
             }
@@ -207,7 +212,7 @@ class ContentTemplateController extends BaseApiController
         }
 
         // Ownership check
-        if (! $user->can('manage templates')) {
+        if (! $this->canManageTemplates($user)) {
             if ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id) {
                 return $this->forbidden('You do not have permission to delete this template');
             }
@@ -248,7 +253,7 @@ class ContentTemplateController extends BaseApiController
         }
 
         // Scope?
-        if (! $user->can('manage templates') && ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id)) {
+        if (! $this->canManageTemplates($user) && ($contentTemplate->author_id && $contentTemplate->author_id !== $user->id)) {
             // But wait, can I use a template if it is Global? YES.
             // So only forbidden if it's someone ELSE'S private template.
             // Global (null) is OK.

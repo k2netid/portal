@@ -48,6 +48,31 @@
           "default_roles": ["admin", "editor", "author", "operator"],
           "oauth_scope": "library:read"
         },
+        "create": {
+          "permission": "create categories",
+          "label": "Create Categories",
+          "label_key": "system.capabilities.library.categories.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "library:write"
+        },
+        "edit": {
+          "permission": "edit categories",
+          "label": "Edit Categories",
+          "label_key": "system.capabilities.library.categories.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "library:write"
+        },
+        "delete": {
+          "permission": "delete categories",
+          "label": "Delete Categories",
+          "label_key": "system.capabilities.library.categories.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "library:delete"
+        },
         "manage": {
           "permission": "manage categories",
           "label": "Manage Categories",
@@ -62,6 +87,39 @@
       "name": "Content Tags",
       "description": "Tagging and keywords for content discoverability",
       "actions": {
+        "view": {
+          "permission": "view tags",
+          "label": "View Tags",
+          "label_key": "system.capabilities.library.tags.view",
+          "action_type": "read",
+          "default_roles": ["admin", "editor", "author", "operator"],
+          "oauth_scope": "library:read"
+        },
+        "create": {
+          "permission": "create tags",
+          "label": "Create Tags",
+          "label_key": "system.capabilities.library.tags.create",
+          "action_type": "create",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "library:write"
+        },
+        "edit": {
+          "permission": "edit tags",
+          "label": "Edit Tags",
+          "label_key": "system.capabilities.library.tags.edit",
+          "action_type": "update",
+          "default_roles": ["admin", "editor", "author"],
+          "oauth_scope": "library:write"
+        },
+        "delete": {
+          "permission": "delete tags",
+          "label": "Delete Tags",
+          "label_key": "system.capabilities.library.tags.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["admin", "editor"],
+          "oauth_scope": "library:delete"
+        },
         "manage": {
           "permission": "manage tags",
           "label": "Manage Tags",
@@ -76,7 +134,14 @@
 
   "permissions": [
     "view categories",
+    "create categories",
+    "edit categories",
+    "delete categories",
     "manage categories",
+    "view tags",
+    "create tags",
+    "edit tags",
+    "delete tags",
     "manage tags"
   ],
 
