@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="trackFinderEnabled"
-    id="track-finder"
+    id="section-track-finder"
     data-ja-customizer-target="track-finder"
     class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden"
   >
