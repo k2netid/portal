@@ -23,33 +23,51 @@ Route::prefix('v1')->group(function (): void {
 
     Route::prefix('manage/layout')->middleware(['auth:sanctum', 'extension.active:layout'])->group(function (): void {
         // Menus
-        Route::get('menus/locations', [MenuController::class, 'locations']);
-        Route::get('menus/location/{location}', [MenuController::class, 'getByLocation']);
-        Route::get('menus/{menu}/usage', [MenuController::class, 'usage']);
-        Route::post('menus/{menu}/restore', [MenuController::class, 'restore']);
-        Route::delete('menus/{menu}/force-delete', [MenuController::class, 'forceDestroy']);
-        Route::get('menus/{menu}/items', [MenuController::class, 'listItems']);
-        Route::post('menus/{menu}/items/sync', [MenuController::class, 'syncItems']);
-        Route::post('menus/{menu}/items', [MenuController::class, 'addItem']);
-        Route::put('menus/{menu}/items/{item}', [MenuController::class, 'updateItem']);
-        Route::delete('menus/{menu}/items/{item}', [MenuController::class, 'deleteItem']);
-        Route::post('menus/{menu}/reorder', [MenuController::class, 'reorderItems']);
-        Route::apiResource('menus', MenuController::class);
+        Route::middleware('permission:view menus')->group(function (): void {
+            Route::get('menus/locations', [MenuController::class, 'locations']);
+            Route::get('menus/location/{location}', [MenuController::class, 'getByLocation']);
+            Route::get('menus/{menu}/usage', [MenuController::class, 'usage']);
+            Route::get('menus/{menu}/items', [MenuController::class, 'listItems']);
+            Route::get('menus', [MenuController::class, 'index']);
+            Route::get('menus/{menu}', [MenuController::class, 'show']);
+        });
+        Route::middleware('permission:manage menus')->group(function (): void {
+            Route::post('menus/{menu}/restore', [MenuController::class, 'restore']);
+            Route::delete('menus/{menu}/force-delete', [MenuController::class, 'forceDestroy']);
+            Route::post('menus/{menu}/items/sync', [MenuController::class, 'syncItems']);
+            Route::post('menus/{menu}/items', [MenuController::class, 'addItem']);
+            Route::put('menus/{menu}/items/{item}', [MenuController::class, 'updateItem']);
+            Route::delete('menus/{menu}/items/{item}', [MenuController::class, 'deleteItem']);
+            Route::post('menus/{menu}/reorder', [MenuController::class, 'reorderItems']);
+            Route::post('menus', [MenuController::class, 'store']);
+            Route::match(['put', 'patch'], 'menus/{menu}', [MenuController::class, 'update']);
+            Route::delete('menus/{menu}', [MenuController::class, 'destroy']);
+        });
 
         // Widgets
-        Route::get('widgets/locations', [WidgetController::class, 'locations']);
-        Route::post('widgets/reorder', [WidgetController::class, 'reorder']);
-        Route::apiResource('widgets', WidgetController::class);
+        Route::middleware('permission:view widgets')->group(function (): void {
+            Route::get('widgets/locations', [WidgetController::class, 'locations']);
+            Route::get('widgets', [WidgetController::class, 'index']);
+            Route::get('widgets/{widget}', [WidgetController::class, 'show']);
+        });
+        Route::middleware('permission:manage widgets')->group(function (): void {
+            Route::post('widgets/reorder', [WidgetController::class, 'reorder']);
+            Route::post('widgets', [WidgetController::class, 'store']);
+            Route::match(['put', 'patch'], 'widgets/{widget}', [WidgetController::class, 'update']);
+            Route::delete('widgets/{widget}', [WidgetController::class, 'destroy']);
+        });
 
         // Redirects
-        Route::get('redirects/statistics', [RedirectController::class, 'statistics'])->name('layout.redirects.statistics');
-        Route::apiResource('redirects', RedirectController::class)->names([
-            'index' => 'layout.redirects.index',
-            'store' => 'layout.redirects.store',
-            'show' => 'layout.redirects.show',
-            'update' => 'layout.redirects.update',
-            'destroy' => 'layout.redirects.destroy',
-        ]);
+        Route::middleware('permission:view redirects')->group(function (): void {
+            Route::get('redirects/statistics', [RedirectController::class, 'statistics'])->name('layout.redirects.statistics');
+            Route::get('redirects', [RedirectController::class, 'index'])->name('layout.redirects.index');
+            Route::get('redirects/{redirect}', [RedirectController::class, 'show'])->name('layout.redirects.show');
+        });
+        Route::middleware('permission:manage redirects')->group(function (): void {
+            Route::post('redirects', [RedirectController::class, 'store'])->name('layout.redirects.store');
+            Route::match(['put', 'patch'], 'redirects/{redirect}', [RedirectController::class, 'update'])->name('layout.redirects.update');
+            Route::delete('redirects/{redirect}', [RedirectController::class, 'destroy'])->name('layout.redirects.destroy');
+        });
 
         // Themes
         Route::get('themes/active', [ThemeController::class, 'getActive']);

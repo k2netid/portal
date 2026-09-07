@@ -198,6 +198,9 @@ apiClient.interceptors.response.use(
 
         // Permission denied — do not treat as session expiry
         if (status === 403) {
+            if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('app:forbidden', { detail: error }));
+            }
             return Promise.reject(error);
         }
 

@@ -25,10 +25,10 @@ Route::prefix('v1')->group(function (): void {
         });
 
         Route::prefix('folders')->group(function (): void {
-            Route::get('/', [FolderController::class, 'index']);
-            Route::post('/', [FolderController::class, 'store']);
-            Route::put('/{folder}', [FolderController::class, 'update']);
-            Route::delete('/{folder}', [FolderController::class, 'destroy']);
+            Route::get('/', [FolderController::class, 'index'])->middleware('permission:view media');
+            Route::post('/', [FolderController::class, 'store'])->middleware('permission:upload media|manage media');
+            Route::put('/{folder}', [FolderController::class, 'update'])->middleware('permission:edit media|manage media');
+            Route::delete('/{folder}', [FolderController::class, 'destroy'])->middleware('permission:delete media|manage media');
         });
     });
 });

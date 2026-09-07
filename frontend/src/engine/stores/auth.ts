@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import api from '../api/client';
 import { logger } from '@/shared/utils/logger';
 import type { LoginCredentials } from '@/engine/types/auth';
+import { ROLE_RANKS } from '@/modules/Core/System/stores/auth';
 
 interface User {
     id: string;
@@ -113,27 +114,24 @@ export const useAuthStore = defineStore('auth', {
         },
 
         getRoleRank(): number {
-            if (!this.user) return 0;
-            if (this.hasRole('super')) return 100;
-            if (this.hasRole('admin')) return 90;
-            if (this.hasRole('staff')) return 80;
-            return 10;
+            if (!this.user || !this.user.roles) return 0;
+            let maxRank = 0;
+            for (const r of this.user.roles) {
+                const roleName = typeof r === 'string' ? r : r?.name;
+                const rank = ROLE_RANKS[roleName] || 0;
+                if (rank > maxRank) maxRank = rank;
+            }
+            return maxRank;
         },
 
         hasPermission(permissionName: string): boolean {
-            if (this.hasRole("super")) return true;
+            if (this.hasRole("super") || this.getRoleRank() >= 100) return true;
             return this.user?.permissions?.some(p => (typeof p === 'string' ? p : p?.name) === permissionName) ?? false;
         },
 
         isAtLeastRole(minRole: string): boolean {
-            const roleRanks: Record<string, number> = {
-                'super': 100,
-                'admin': 90,
-                'staff': 80,
-                'member': 10
-            };
             const userRank = this.getRoleRank();
-            const targetRank = roleRanks[minRole] || 0;
+            const targetRank = ROLE_RANKS[minRole] || 0;
             return userRank >= targetRank;
         }
     },

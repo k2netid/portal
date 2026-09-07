@@ -4,6 +4,8 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { createHead } from '@unhead/vue/client';
 import lazyLoad from '@/shared/utils/directives/lazyLoad';
+import { vCan, vRole } from '@/shared/directives/permission';
+import Can from '@/shared/components/auth/Can.vue';
 import i18n from '@/engine/i18n';
 import { readConsoleDarkModeFromStorage } from '@/config/theme';
 import { attemptChunkRecoveryReload, isChunkLoadError } from '@/shared/utils/chunkRecovery';
@@ -91,6 +93,9 @@ export function createShellApp(RootComponent: Component): App {
     app.use(head);
     app.use(i18n);
     app.directive('lazy', lazyLoad);
+    app.directive('can', vCan);
+    app.directive('role', vRole);
+    app.component('Can', Can);
 
     return app;
 }

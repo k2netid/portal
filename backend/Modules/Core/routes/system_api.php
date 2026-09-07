@@ -133,15 +133,44 @@ Route::prefix('v1')->group(function (): void {
         Route::get('profile/kyc/documents/{document}/download', [ProfileKycController::class, 'downloadOwnDocument']);
         Route::post('profile/kyc/step', [UserController::class, 'updateKycStep']);
 
-        Route::get('users/stats', [UserController::class, 'stats']);
-        Route::post('users/{user}/verify', [UserController::class, 'verify']);
-        Route::post('users/{user}/force-logout', [UserController::class, 'forceLogout']);
-        Route::post('users/{user}/restore', [UserController::class, 'restore']);
-        Route::delete('users/{user}/force-delete', [UserController::class, 'forceDelete']);
-        Route::post('users/bulk-action', [UserController::class, 'bulkAction']);
-        Route::apiResource('users', UserController::class);
-        Route::get('roles/permissions', [RoleController::class, 'permissions']);
-        Route::apiResource('roles', RoleController::class);
+        // Users Management
+        Route::middleware('permission:view users')->group(function (): void {
+            Route::get('users/stats', [UserController::class, 'stats']);
+            Route::get('users', [UserController::class, 'index']);
+            Route::get('users/{user}', [UserController::class, 'show']);
+        });
+        Route::middleware('permission:create users|manage users')->group(function (): void {
+            Route::post('users', [UserController::class, 'store']);
+        });
+        Route::middleware('permission:edit users|manage users')->group(function (): void {
+            Route::match(['put', 'patch'], 'users/{user}', [UserController::class, 'update']);
+            Route::post('users/{user}/verify', [UserController::class, 'verify']);
+            Route::post('users/{user}/force-logout', [UserController::class, 'forceLogout']);
+            Route::post('users/{user}/restore', [UserController::class, 'restore']);
+            Route::post('users/bulk-action', [UserController::class, 'bulkAction']);
+        });
+        Route::middleware('permission:delete users|manage users')->group(function (): void {
+            Route::delete('users/{user}', [UserController::class, 'destroy']);
+            Route::delete('users/{user}/force-delete', [UserController::class, 'forceDelete']);
+        });
+
+        // Roles Management
+        Route::middleware('permission:view roles')->group(function (): void {
+            Route::get('roles', [RoleController::class, 'index']);
+            Route::get('roles/permissions', [RoleController::class, 'permissions']);
+            Route::get('roles/{role}', [RoleController::class, 'show']);
+        });
+        Route::middleware('permission:create roles|manage roles')->group(function (): void {
+            Route::post('roles', [RoleController::class, 'store']);
+        });
+        Route::middleware('permission:edit roles|manage roles')->group(function (): void {
+            Route::match(['put', 'patch'], 'roles/{role}', [RoleController::class, 'update']);
+            Route::post('roles/bulk-action', [RoleController::class, 'bulkAction']);
+        });
+        Route::middleware('permission:delete roles|manage roles')->group(function (): void {
+            Route::delete('roles/{role}', [RoleController::class, 'destroy']);
+        });
+
         Route::middleware('permission:manage kyc reviews')->prefix('kyc')->group(function (): void {
             Route::get('submissions', [KycReviewController::class, 'index']);
             Route::get('submissions/{submission}', [KycReviewController::class, 'show']);
@@ -153,10 +182,20 @@ Route::prefix('v1')->group(function (): void {
         Route::apiResource('oauth-clients', OAuthClientController::class)->except(['show']);
 
         Route::get('console-theme', [ConsoleThemeController::class, 'show']);
-        Route::get('settings/group/{group}', [SettingController::class, 'getGroup']);
-        Route::post('settings/test-storage', [SettingController::class, 'testStorage']);
-        Route::post('settings/bulk-update', [SettingController::class, 'bulkUpdate']);
-        Route::apiResource('settings', SettingController::class);
+
+        // Settings
+        Route::middleware('permission:view settings')->group(function (): void {
+            Route::get('settings', [SettingController::class, 'index']);
+            Route::get('settings/group/{group}', [SettingController::class, 'getGroup']);
+            Route::get('settings/{setting}', [SettingController::class, 'show']);
+        });
+        Route::middleware('permission:manage settings')->group(function (): void {
+            Route::post('settings', [SettingController::class, 'store']);
+            Route::match(['put', 'patch'], 'settings/{setting}', [SettingController::class, 'update']);
+            Route::delete('settings/{setting}', [SettingController::class, 'destroy']);
+            Route::post('settings/test-storage', [SettingController::class, 'testStorage']);
+            Route::post('settings/bulk-update', [SettingController::class, 'bulkUpdate']);
+        });
 
         Route::apiResource('languages', LanguageController::class);
         Route::post('languages/{language}/set-default', [LanguageController::class, 'setDefault']);
@@ -168,17 +207,26 @@ Route::prefix('v1')->group(function (): void {
         Route::put('notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
         Route::delete('notifications/{notification}', [NotificationController::class, 'destroy']);
 
-        Route::get('activity-journal', [ActivityLogController::class, 'index']);
+        Route::get('activity-journal', [ActivityLogController::class, 'index'])->middleware('permission:view activity logs');
 
         Route::get('translations', [TranslationController::class, 'getTranslations']);
         Route::post('translations', [TranslationController::class, 'setTranslation']);
 
-        Route::get('scheduled-tasks/allowed-commands', [ScheduledTaskController::class, 'allowedCommands']);
-        Route::post('scheduled-tasks/bulk', [ScheduledTaskController::class, 'bulk']);
-        Route::post('scheduled-tasks/apply-preset', [ScheduledTaskController::class, 'applyPreset']);
-        Route::post('scheduled-tasks/run-adhoc', [ScheduledTaskController::class, 'runAdhoc']);
-        Route::post('scheduled-tasks/{id}/run', [ScheduledTaskController::class, 'run']);
-        Route::apiResource('scheduled-tasks', ScheduledTaskController::class);
+        // Scheduled Tasks
+        Route::middleware('permission:view scheduled tasks')->group(function (): void {
+            Route::get('scheduled-tasks', [ScheduledTaskController::class, 'index']);
+            Route::get('scheduled-tasks/allowed-commands', [ScheduledTaskController::class, 'allowedCommands']);
+            Route::get('scheduled-tasks/{scheduled_task}', [ScheduledTaskController::class, 'show']);
+        });
+        Route::middleware('permission:manage scheduled tasks')->group(function (): void {
+            Route::post('scheduled-tasks', [ScheduledTaskController::class, 'store']);
+            Route::match(['put', 'patch'], 'scheduled-tasks/{scheduled_task}', [ScheduledTaskController::class, 'update']);
+            Route::delete('scheduled-tasks/{scheduled_task}', [ScheduledTaskController::class, 'destroy']);
+            Route::post('scheduled-tasks/bulk', [ScheduledTaskController::class, 'bulk']);
+            Route::post('scheduled-tasks/apply-preset', [ScheduledTaskController::class, 'applyPreset']);
+            Route::post('scheduled-tasks/run-adhoc', [ScheduledTaskController::class, 'runAdhoc']);
+            Route::post('scheduled-tasks/{id}/run', [ScheduledTaskController::class, 'run']);
+        });
 
         Route::get('email-test/recent-journal', [EmailTestController::class, 'recentJournal']);
         Route::post('email-test/send', [EmailTestController::class, 'sendTestEmail']);
@@ -188,9 +236,14 @@ Route::prefix('v1')->group(function (): void {
         Route::post('email-templates/{email_template}/send-test', [EmailTemplateController::class, 'sendTest']);
         Route::apiResource('email-templates', EmailTemplateController::class);
 
-        Route::get('logs', [LogController::class, 'index']);
-        Route::get('logs/{filename}', [LogController::class, 'show']);
-        Route::delete('logs/{filename}', [LogController::class, 'destroy']);
+        // Logs
+        Route::middleware('permission:view logs')->group(function (): void {
+            Route::get('logs', [LogController::class, 'index']);
+            Route::get('logs/{filename}', [LogController::class, 'show']);
+        });
+        Route::middleware('permission:delete logs')->group(function (): void {
+            Route::delete('logs/{filename}', [LogController::class, 'destroy']);
+        });
     });
 
     // AI Integration Management API
