@@ -655,3 +655,52 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* ── Sarangenge Proportional Viewport & Snap Scroll (Desktop Only: lg >= 1024px) ── */
+@media (min-width: 1024px) {
+  html.sarangenge-snap-scroll {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 4.5rem;
+  }
+
+  .sarangenge-home--proportional > section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    min-height: calc(100dvh - 4.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+    box-sizing: border-box;
+  }
+
+  .sarangenge-home--proportional section.sarangenge-hero {
+    min-height: calc(100dvh - 4.5rem);
+    justify-content: space-between;
+  }
+
+  /* Compact section vertical rhythm in proportional mode so cards fit seamlessly */
+  .sarangenge-home--proportional section .mb-12,
+  .sarangenge-home--proportional section .mb-14,
+  .sarangenge-home--proportional section .mb-16 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .sarangenge-home--proportional section.py-12,
+  .sarangenge-home--proportional section.py-14,
+  .sarangenge-home--proportional section.py-16,
+  .sarangenge-home--proportional section.py-20,
+  .sarangenge-home--proportional section.py-24 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .sarangenge-home--proportional section .py-12,
+  .sarangenge-home--proportional section .py-14,
+  .sarangenge-home--proportional section .py-16,
+  .sarangenge-home--proportional section .py-20 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+}
+

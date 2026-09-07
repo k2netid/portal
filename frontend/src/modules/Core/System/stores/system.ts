@@ -228,12 +228,18 @@ export const useSystemStore = defineStore('system', {
         async fetchAppIdentity() {
             try {
                 // Fetch branding from both System & Brand settings groups
-                const [systemRes, brandRes] = await Promise.all([
-                    api.get('/manage/system/settings/group/system').catch(() => ({ data: {} })),
-                    api.get('/manage/system/settings/group/brand').catch(() => ({ data: {} })),
+                const fetchGroup = async (group: string) => {
+                    try {
+                        const res = await api.get(`/manage/system/settings/group/${group}`);
+                        return (res?.data?.data ?? res?.data) || {};
+                    } catch {
+                        return {};
+                    }
+                };
+                const [systemData, brandData] = await Promise.all([
+                    fetchGroup('system'),
+                    fetchGroup('brand'),
                 ]);
-                const systemData = (systemRes.data?.data ?? systemRes.data) || {};
-                const brandData = (brandRes.data?.data ?? brandRes.data) || {};
                 const rawData = { ...systemData, ...brandData };
 
                 const licenseTier = String(rawData.app_license_tier || rawData.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
@@ -241,11 +247,11 @@ export const useSystemStore = defineStore('system', {
                     ? rawData.has_white_label
                     : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
 
-                const syncEnabled = Boolean(brandData.brand_sync_site_identity);
-                const brandLogo = (brandData.brand_logo as string) || '';
-                const brandFavicon = (brandData.brand_favicon as string) || '';
-                const appLogo = (brandData.app_logo as string) || (brandData.app_logo_light as string) || '';
-                const appFavicon = (brandData.app_favicon as string) || '';
+                const syncEnabled = Boolean(rawData.brand_sync_site_identity);
+                const brandLogo = (rawData.brand_logo as string) || '';
+                const brandFavicon = (rawData.brand_favicon as string) || '';
+                const appLogo = (rawData.app_logo as string) || (rawData.app_logo_light as string) || '';
+                const appFavicon = (rawData.app_favicon as string) || '';
 
                 const effectiveAppLogo = hasWhiteLabel
                     ? (brandLogo || appLogo || (syncEnabled ? this.siteSettings.site_logo : '') || '/logo.png')
@@ -256,7 +262,7 @@ export const useSystemStore = defineStore('system', {
 
                 this.appIdentity = {
                     ...this.appIdentity,
-                    app_name: (hasWhiteLabel ? (brandData.app_name || (syncEnabled ? this.siteSettings.site_name : '')) : '') || 'Jejakawan',
+                    app_name: (hasWhiteLabel ? (rawData.app_name || (syncEnabled ? this.siteSettings.site_name : '')) : '') || 'Jejakawan',
                     app_logo: effectiveAppLogo,
                     app_favicon: effectiveAppFavicon,
                     app_license_tier: licenseTier,

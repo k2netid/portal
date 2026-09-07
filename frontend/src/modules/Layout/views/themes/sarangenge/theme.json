@@ -313,6 +313,30 @@
             "category": "Layout",
             "scope": "theme"
         },
+        "home_scroll_mode": {
+            "label": "Gaya Tampilan & Gulir Beranda",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Standar Alami (Continuous Flow)",
+                    "value": "natural"
+                },
+                {
+                    "label": "Sinematik Proporsional (1-Screen Viewport Snap)",
+                    "value": "snap"
+                }
+            ],
+            "default": "natural",
+            "category": "Layout",
+            "scope": "theme"
+        },
+        "home_side_nav_dots": {
+            "label": "Tampilkan Navigasi Titik Samping",
+            "type": "boolean",
+            "default": true,
+            "category": "Layout",
+            "scope": "theme"
+        },
         "container_max_width": {
             "label": "Container Max Width",
             "type": "range",
