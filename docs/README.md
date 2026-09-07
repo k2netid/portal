@@ -34,7 +34,7 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 | [**03. Frontend Standards**](architecture/03-frontend-standards.md) | Vue 3 SPA, Pinia, engine layout |
 | [**05. i18n Guidelines**](architecture/05-i18n-guidelines.md) | Paritas `id` / `en` / `su` |
 | [**06. Security & Governance**](architecture/06-security-and-governance.md) | CSP, ABAC, passkeys, SIEM |
-| [**Architecture Decision Records (ADRs)**](adr/README.md) | Koleksi ADR (ADR-001 s.d. ADR-017) keputusan arsitektur sistem |
+| [**Architecture Decision Records (ADRs)**](adr/README.md) | Koleksi ADR (ADR-001 s.d. ADR-020) keputusan arsitektur sistem |
 
 ---
 
