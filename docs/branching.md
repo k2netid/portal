@@ -1,45 +1,67 @@
-# Git branching — `ja-core_engine`
+# Git Branching & Multi-Repository Architecture — `Jejakawan Portal Platform`
 
-Update: 2026-08-30
+Update: 2026-09-07 (Pasca Kurasi Codebase — ADR-022)
 
-Model: **trunk + short-lived worktrees**. Hanya `main` yang long-lived. Integrasi besar boleh ada **satu** branch sementara, lalu merge & hapus.
+Sistem portal Jejakawan beroperasi dengan model **Upstream Core Engine + Downstream Client Deployments**:
 
-## Jenis branch
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 UPSTREAM CORE REPOSITORY                    │
+│     ja-core_engine (git@github.com:jejak-awan/ja-core_engine.git)   │
+│     Branch: main                                            │
+│     - Kernel, System, RBAC Registry, Extension Engine       │
+│     - Official Theme Library: Janari, Layung, Sarangenge    │
+│     - Generic Demo Seeders (theme:seed)                     │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+               git pull upstream main (Fast-Forward)
+                               │
+         ┌─────────────────────┴─────────────────────┐
+         ▼                                           ▼
+┌─────────────────────────────┐             ┌─────────────────────────────┐
+│    DOWNSTREAM K2NET PORTAL  │             │   DOWNSTREAM SMKN6 PORTAL   │
+│ k2net-portal (origin: portal)│             │ smkn6-portal (origin: portal│
+│ Branch: main                │             │ Branch: feat/theme-sarangenge│
+│ Theme: Layung (ISP & MSP)   │             │ Theme: Sarangenge (Sekolah) │
+│ Seeder: K2netDeploymentSeeder│             │ Seeder: Smkn6DeploymentSeeder│
+└─────────────────────────────┘             └─────────────────────────────┘
+```
 
-| Jenis | Pola nama | Basis | Umur | Kapan dipakai |
+---
+
+## 1. Topologi Repositori
+
+| Repositori | Peran / Role | Branch Utama | Remote Upstream | Konten Utama |
 | :--- | :--- | :--- | :--- | :--- |
-| **Trunk** | `main` | — | Selamanya | Kernel (+ pack yang sudah layak rilis). Satu-satunya default PR target setelah integrasi selesai. |
-| **Integration** | `integrate/<domain>` | `main` | Gelombang besar saja → **merge ke `main` lalu hapus** | Contoh: `integrate/cms` (ex-`fix/module-registry-p0-kernel-lock`). Max satu integrate aktif per domain besar. |
-| **Feature** | `feat/<area>-<ringkas>` | `main` *atau* `integrate/<domain>` bila menyentuh line itu | Hari–minggu | Kerja harian; PR → basis; **hapus** setelah merge. |
-| **Hotfix** | `fix/<ringkas>` | `main` (atau tag rilis) | Pendek | Bug mendesak di trunk; PR kecil; hapus setelah merge. |
+| **`ja-core_engine`** | **Upstream Source of Truth** | `main` | - | Platform engine agnostik, core modules, deklarasi manifest RBAC, generic theme seeders |
+| **`k2net-portal`** | **K2NET Corporate Deployment** | `main` | `ja-core_engine.git` | Produk portal K2NET ISP/MSP, tema Layung, K2netDeploymentSeeder |
+| **`smkn6-portal`** | **SMKN 6 Bandung Deployment** | `feat/theme-sarangenge` | `ja-core_engine.git` | Produk portal SMKN 6 Bandung, tema Sarangenge, Smkn6DeploymentSeeder |
 
-**Dilarang:** long-lived `develop`, `mail`, `publishing`, `member`, dll. Domain = nama *feature/integrate*, bukan trunk kedua.
+---
 
-## Alur
+## 2. Alur Pengembangan (*Development & Synchronization Workflow*)
 
-```
-main
- └── feat/… / fix/…         ← kerja harian dari trunk
- └── integrate/<domain>     ← hanya gelombang besar baru (sementara → merge & hapus)
-```
+### A. Perubahan Arsitektur & Fitur Umum (*Core Changes*)
+* Perubahan pada modul inti (Core, Layout engine, RBAC, Security, Forms, Media, Publishing) **wajib dilakukan atau disinkronkan ke `ja-core_engine/main`**.
+* Setelah diuji di upstream, repositori downstream memperbarui kode dengan:
+  ```bash
+  git fetch upstream main
+  git merge upstream/main
+  ```
 
-1. Semua kerja harian → branch dari **`main`**, PR ke **`main`**.
-2. Gelombang besar (jarang) → `integrate/<domain>` dari `main`, lalu PR ke `main` dan **hapus**.
-3. ~~`integrate/cms`~~ → **merged** PR #14 (2026-08-30); hapus remote/local sisa.
+### B. Perubahan Spesifik Instansi (*Client-Specific Changes*)
+* Kustomisasi unik klien (kontak resmi, legalitas PT, data jurusan/lab sekolah) **hanya boleh ditulis di seeder deployment masing-masing**:
+  - `K2netDeploymentSeeder.php` di `k2net-portal`
+  - `Smkn6DeploymentSeeder.php` di `smkn6-portal`
+* Tidak boleh menyentuh atau mengotori `ja-core_engine` dengan hardcoded nama klien.
 
-## Hygiene GitHub
+---
 
-- Setelah merge: hapus branch remote (+ lokal).
-- Jangan force-push `main`.
-- `integrate/*` boleh rebase ke `main` berkala (tim sepakat); feature di atasnya ikut rebase/merge.
-- Branch `feat/mail-*` lama: **sudah** terserap ke `integrate/cms` dan dihapus di remote (2026-08-30). Tutup PR mail terbuka di GitHub UI bila masih ada.
+## 3. Hygiene & Aturan Git
 
-## Snapshot aktif (2026-08-30)
+- **Jangan force-push** ke branch `main` di repositori manapun.
+- Pastikan seluruh manifest modul menggunakan standar bahasa Inggris canonical (ADR-021).
+- Jalankan `php artisan rbac:sync` setelah menambahkan atau memodifikasi kapabilitas di `manifest.json`.
+- Gunakan `php artisan theme:seed [slug]` untuk menginisialisasi starter data tema.
 
-| Branch | Status |
-| :--- | :--- |
-| `main` | Kernel + CMS packs (PR #14) |
-| ~~`integrate/cms`~~ | **Merged** → hapus sisa remote/local |
-| ~~`feat/mail-*`~~ | **Dihapus** — sudah terserap sebelum merge CMS |
-
-Lihat juga: [architectural-status.md](architectural-status.md) · [AGENT_START_HERE.md](AGENT_START_HERE.md)
+Lihat juga: [ADR-022](adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md) · [AUDIT-2026-09-07](audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md)
