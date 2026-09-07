@@ -45,6 +45,9 @@
         v-if="showSideNavDots && visibleNavSections.length > 0"
         :sections="visibleNavSections"
         :style-preset="sideNavStyle"
+        :position="sideNavPosition"
+        :label-mode="sideNavLabelMode"
+        :show-on-mobile="sideNavShowOnMobile"
       />
     </template>
   </div>
@@ -84,15 +87,25 @@ const homeSections = computed<string[]>(() => {
 
 const isSectionVisible = (key: string) => homeSections.value.includes(key);
 
-// Side Navigation Dots Configuration
+// Side Navigation Dots Configuration (SoT & Derivatives)
 const showSideNavDots = computed(() => Boolean(getSetting('home_side_nav_dots', true)));
-const sideNavStyle = computed(() => {
+const sideNavPosition = computed<'right' | 'left'>(() => {
+  const val = String(getSetting('home_side_nav_position', 'right') || 'right');
+  return val === 'left' ? 'left' : 'right';
+});
+const sideNavStyle = computed<'glass' | 'minimal' | 'glow' | 'bars'>(() => {
   const val = String(getSetting('home_side_nav_style', 'glass') || 'glass');
   if (['glass', 'minimal', 'glow', 'bars'].includes(val)) {
     return val as 'glass' | 'minimal' | 'glow' | 'bars';
   }
   return 'glass';
 });
+const sideNavLabelMode = computed<'hover' | 'always' | 'none'>(() => {
+  const val = String(getSetting('home_side_nav_labels', 'hover') || 'hover');
+  if (val === 'always' || val === 'none') return val;
+  return 'hover';
+});
+const sideNavShowOnMobile = computed(() => Boolean(getSetting('home_side_nav_show_mobile', false)));
 
 const visibleNavSections = computed(() => {
   const sections = [];

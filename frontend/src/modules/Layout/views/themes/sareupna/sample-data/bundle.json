@@ -101,19 +101,31 @@
     "disabled_page_behavior": "show_message",
     "disabled_page_message": "Layanan ini sedang dalam peningkatan performa berkala.",
     "enable_floating_social": true,
-    "floating_social_position": "bottom_right",
-    "floating_social_orientation": "horizontal",
+    "floating_social_position": "right",
+    "floating_social_orientation": "auto",
     "floating_social_style": "glass",
     "floating_social_default_collapsed": false,
-    "floating_social_show_on_mobile": true,
+    "floating_social_show_on_mobile": false,
     "social_links": [
       {
-        "network": "github",
+        "icon": "Github",
+        "label": "GitHub",
         "url": "https://github.com/jejakawan"
       },
       {
-        "network": "linkedin",
+        "icon": "Linkedin",
+        "label": "LinkedIn",
         "url": "https://linkedin.com/company/jejakawan"
+      },
+      {
+        "icon": "MessageCircle",
+        "label": "WhatsApp Hotline",
+        "url": "https://wa.me/6281234567890"
+      },
+      {
+        "icon": "Mail",
+        "label": "Email Enterprise",
+        "url": "mailto:halo@jejakawan.com"
       }
     ],
     "animation_enabled": true,

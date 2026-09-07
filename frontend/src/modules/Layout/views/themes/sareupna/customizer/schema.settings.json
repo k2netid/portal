@@ -148,6 +148,24 @@
         "category": "Layout",
         "scope": "platform"
     },
+    "container_max_width": {
+        "label": "Container Max Width",
+        "type": "range",
+        "min": 1024,
+        "max": 1600,
+        "step": 32,
+        "default": 1280,
+        "unit": "px",
+        "category": "Layout",
+        "scope": "platform"
+    },
+    "boxed_bg_color": {
+        "label": "Page Background Color",
+        "type": "color",
+        "default": "#07090e",
+        "category": "Layout",
+        "scope": "platform"
+    },
     "home_sections": {
         "label": "Bagian Beranda Platform",
         "type": "checkbox_list",
@@ -178,6 +196,16 @@
         "default": true,
         "category": "Layout"
     },
+    "home_side_nav_position": {
+        "label": "Posisi Navigasi Titik",
+        "type": "select",
+        "options": [
+            { "label": "Kanan Layar (Right Edge)", "value": "right" },
+            { "label": "Kiri Layar (Left Edge)", "value": "left" }
+        ],
+        "default": "right",
+        "category": "Layout"
+    },
     "home_side_nav_style": {
         "label": "Gaya & Efek Navigasi Samping",
         "type": "select",
@@ -190,23 +218,22 @@
         "default": "glass",
         "category": "Layout"
     },
-    "container_max_width": {
-        "label": "Container Max Width",
-        "type": "range",
-        "min": 1024,
-        "max": 1600,
-        "step": 32,
-        "default": 1280,
-        "unit": "px",
-        "category": "Layout",
-        "scope": "platform"
+    "home_side_nav_labels": {
+        "label": "Mode Tampilan Label Tooltip",
+        "type": "select",
+        "options": [
+            { "label": "Mengambang saat Kursor Mengarah (Hover)", "value": "hover" },
+            { "label": "Selalu Tampil (Always Visible)", "value": "always" },
+            { "label": "Sembunyikan Label (None)", "value": "none" }
+        ],
+        "default": "hover",
+        "category": "Layout"
     },
-    "boxed_bg_color": {
-        "label": "Page Background Color",
-        "type": "color",
-        "default": "#07090e",
-        "category": "Layout",
-        "scope": "platform"
+    "home_side_nav_show_mobile": {
+        "label": "Tampilkan Titik Navigasi di Layar Mobile",
+        "type": "boolean",
+        "default": false,
+        "category": "Layout"
     },
     "boxed_shadow": {
         "label": "Boxed Content Shadow",
@@ -718,50 +745,62 @@
         "label": "Tampilkan Floating Social Dock",
         "type": "checkbox",
         "default": true,
-        "category": "Social Media"
+        "category": "Social Media",
+        "scope": "platform"
     },
     "floating_social_position": {
         "label": "Posisi Floating Dock",
         "type": "select",
         "options": [
-            { "label": "Bottom Right", "value": "bottom_right" },
-            { "label": "Bottom Left", "value": "bottom_left" }
+            { "label": "Kanan Tengah (Right Center)", "value": "right" },
+            { "label": "Kiri Tengah (Left Center)", "value": "left" },
+            { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
+            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" },
+            { "label": "Bawah Tengah (Bottom Center / Dock Pill)", "value": "bottom_center" },
+            { "label": "Kanan Atas (Top Right)", "value": "top_right" },
+            { "label": "Kiri Atas (Top Left)", "value": "top_left" }
         ],
-        "default": "bottom_right",
-        "category": "Social Media"
+        "default": "right",
+        "category": "Social Media",
+        "scope": "platform"
     },
     "floating_social_orientation": {
         "label": "Orientasi Dock",
         "type": "select",
         "options": [
-            { "label": "Horizontal", "value": "horizontal" },
-            { "label": "Vertical", "value": "vertical" }
+            { "label": "Otomatis (Sesuai Posisi)", "value": "auto" },
+            { "label": "Vertikal (Tegak)", "value": "vertical" },
+            { "label": "Horizontal (Mendatar)", "value": "horizontal" }
         ],
-        "default": "horizontal",
-        "category": "Social Media"
+        "default": "auto",
+        "category": "Social Media",
+        "scope": "platform"
     },
     "floating_social_style": {
         "label": "Gaya Kapsul Dock",
         "type": "select",
         "options": [
-            { "label": "Frosted Acrylic Glass", "value": "glass" },
-            { "label": "Solid Dark", "value": "solid" },
-            { "label": "Neon Glow Halo", "value": "glow" }
+            { "label": "Frosted Obsidian Glass (Glassmorphism)", "value": "glass" },
+            { "label": "Solid Dark Obsidian (Solid)", "value": "solid" },
+            { "label": "Radiant Neon Aura (Glow)", "value": "glow" }
         ],
         "default": "glass",
-        "category": "Social Media"
+        "category": "Social Media",
+        "scope": "platform"
     },
     "floating_social_default_collapsed": {
         "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
         "type": "checkbox",
         "default": false,
-        "category": "Social Media"
+        "category": "Social Media",
+        "scope": "platform"
     },
     "floating_social_show_on_mobile": {
         "label": "Tampilkan di Layar Mobile",
         "type": "checkbox",
-        "default": true,
-        "category": "Social Media"
+        "default": false,
+        "category": "Social Media",
+        "scope": "platform"
     },
     "social_links": {
         "label": "Social Media Links",

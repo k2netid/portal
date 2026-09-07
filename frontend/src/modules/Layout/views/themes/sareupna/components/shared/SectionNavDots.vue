@@ -2,14 +2,15 @@
   <Teleport to="body">
     <nav
       :aria-label="t('nav_sections.aria_label', 'Navigasi Seksi Beranda')"
-      class="sareupna-nav-dots hidden md:block"
-      style="position: fixed !important; top: 50% !important; transform: translateY(-50%) !important; right: 0.75rem !important; z-index: 99999 !important; pointer-events: auto !important;"
+      class="sareupna-nav-dots"
+      :class="[showOnMobile ? 'block' : 'hidden md:block']"
+      :style="rootStyles"
     >
       <!-- Inner Dock Container (animated with GSAP, isolated from vertical center anchor) -->
       <div
         ref="innerDockRef"
-        class="sareupna-nav-dock flex flex-col items-end gap-2 transition-colors duration-300"
-        :class="dockPresetClasses"
+        class="sareupna-nav-dock flex flex-col gap-2 transition-colors duration-300"
+        :class="[dockPresetClasses, position === 'left' ? 'items-start' : 'items-end']"
       >
         <button
           v-for="(item, index) in sections"
@@ -18,13 +19,15 @@
           type="button"
           :aria-label="item.label"
           :aria-current="activeSectionId === item.id ? 'true' : undefined"
-          class="sareupna-nav-btn group relative flex items-center justify-end p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+          class="sareupna-nav-btn group relative flex items-center p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+          :class="[position === 'left' ? 'justify-start' : 'justify-end']"
           @click="handleClick(item.id, $event)"
         >
-          <!-- Tooltip Label (Floating on Hover) -->
+          <!-- Tooltip Label (Floating on Hover or Always) -->
           <div
-            class="sareupna-nav-tooltip absolute right-7 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap shadow-lg pointer-events-none opacity-0 translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 backdrop-blur-md flex items-center gap-1.5"
-            :class="tooltipPresetClasses"
+            v-if="labelMode !== 'none'"
+            class="sareupna-nav-tooltip absolute px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap shadow-lg pointer-events-none transition-all duration-200 backdrop-blur-md flex items-center gap-1.5"
+            :class="[tooltipPresetClasses, tooltipPositionClasses]"
           >
             <span v-if="stylePreset === 'bars'" class="text-[10px] font-mono text-primary font-bold">
               {{ String(index + 1).padStart(2, '0') }}
@@ -32,8 +35,8 @@
             <span>{{ item.label }}</span>
             <!-- Micro pointing triangle caret -->
             <span
-              class="absolute -right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45"
-              :class="tooltipCaretClasses"
+              class="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45"
+              :class="[tooltipCaretClasses, caretPositionClasses]"
             />
           </div>
 
@@ -92,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, nextTick, onMounted, onUnmounted, type CSSProperties } from 'vue';
 import gsap from 'gsap';
 import { throttle } from '@/shared/utils/performance';
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion';
@@ -103,22 +106,40 @@ export interface SectionNavItem {
   label: string;
 }
 
-const props = withDefaults(
-  defineProps<{
-    sections: SectionNavItem[];
-    stylePreset?: 'glass' | 'minimal' | 'glow' | 'bars' | string;
-  }>(),
-  {
-    stylePreset: 'glass',
-  }
-);
+interface Props {
+  sections: SectionNavItem[];
+  position?: 'right' | 'left';
+  stylePreset?: 'glass' | 'minimal' | 'glow' | 'bars';
+  labelMode?: 'hover' | 'always' | 'none';
+  showOnMobile?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  position: 'right',
+  stylePreset: 'glass',
+  labelMode: 'hover',
+  showOnMobile: false,
+});
 
 const { t } = useThemeI18n('sareupna');
 const { isAnimationEnabled } = useThemeMotion();
 
+const activeSectionId = ref<string>('');
 const innerDockRef = ref<HTMLElement | null>(null);
-const activeSectionId = ref<string>(props.sections[0]?.id || '');
 let observer: IntersectionObserver | null = null;
+
+const rootStyles = computed<CSSProperties>(() => {
+  const isLeft = props.position === 'left';
+  return {
+    position: 'fixed',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    left: isLeft ? '0.75rem' : 'auto',
+    right: isLeft ? 'auto' : '0.75rem',
+    zIndex: 99999,
+    pointerEvents: 'auto',
+  };
+});
 
 const dockPresetClasses = computed(() => {
   switch (props.stylePreset) {
@@ -132,6 +153,28 @@ const dockPresetClasses = computed(() => {
     default:
       return 'bg-background/70 hover:bg-background/95 backdrop-blur-md border border-border/60 shadow-xl py-2.5 px-1.5 rounded-full';
   }
+});
+
+const tooltipPositionClasses = computed(() => {
+  const isLeft = props.position === 'left';
+  if (isLeft) {
+    return [
+      'left-7',
+      props.labelMode === 'always'
+        ? 'opacity-100 translate-x-0'
+        : 'opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0',
+    ];
+  }
+  return [
+    'right-7',
+    props.labelMode === 'always'
+      ? 'opacity-100 translate-x-0'
+      : 'opacity-0 translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0',
+  ];
+});
+
+const caretPositionClasses = computed(() => {
+  return props.position === 'left' ? '-left-1' : '-right-1';
 });
 
 const tooltipPresetClasses = computed(() => {
@@ -149,25 +192,28 @@ const tooltipPresetClasses = computed(() => {
 });
 
 const tooltipCaretClasses = computed(() => {
+  const isLeft = props.position === 'left';
+  const borderSides = isLeft ? 'border-l border-b' : 'border-r border-t';
   switch (props.stylePreset) {
     case 'glow':
-      return 'bg-zinc-950 border-r border-t border-primary/40';
+      return `bg-zinc-950 ${borderSides} border-primary/40`;
     case 'minimal':
-      return 'bg-card border-r border-t border-border';
+      return `bg-card ${borderSides} border-border`;
     case 'bars':
-      return 'bg-card border-r border-t border-primary/30';
+      return `bg-card ${borderSides} border-primary/30`;
     case 'glass':
     default:
-      return 'bg-card border-r border-t border-primary/25';
+      return `bg-card ${borderSides} border-primary/25`;
   }
 });
 
 const playEntranceAnimation = () => {
   if (!innerDockRef.value || !isAnimationEnabled()) return;
 
+  const enterX = props.position === 'left' ? -25 : 25;
   gsap.fromTo(
     innerDockRef.value,
-    { x: 25, opacity: 0 },
+    { x: enterX, opacity: 0 },
     { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
   );
 
