@@ -53,5 +53,16 @@ class MediaPermissionSeeder extends Seeder
                 'edit media',
             ]);
         }
+
+        $operator = Role::query()
+            ->where('name', 'operator')
+            ->where('guard_name', 'web')
+            ->first();
+        if ($operator) {
+            $operator->givePermissionTo([
+                'view media',
+                'upload media',
+            ]);
+        }
     }
 }

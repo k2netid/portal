@@ -28,7 +28,7 @@ class AnalyticsPermissionSeeder extends Seeder
             Permission::findOrCreate($name, 'web');
         }
 
-        foreach (['super', 'admin', 'editor'] as $roleName) {
+        foreach (['super', 'admin', 'editor', 'operator'] as $roleName) {
             $role = Role::query()
                 ->where('name', $roleName)
                 ->where('guard_name', 'web')

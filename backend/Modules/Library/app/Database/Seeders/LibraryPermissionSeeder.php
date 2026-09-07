@@ -25,7 +25,14 @@ class LibraryPermissionSeeder extends Seeder
 
         $perms = [
             'view categories',
+            'create categories',
+            'edit categories',
+            'delete categories',
             'manage categories',
+            'view tags',
+            'create tags',
+            'edit tags',
+            'delete tags',
             'manage tags',
             'manage content',
         ];
@@ -51,6 +58,10 @@ class LibraryPermissionSeeder extends Seeder
         if ($author) {
             $author->givePermissionTo([
                 'view categories',
+                'view tags',
+                'create tags',
+                'edit tags',
+                'manage tags',
                 'manage content',
             ]);
         }

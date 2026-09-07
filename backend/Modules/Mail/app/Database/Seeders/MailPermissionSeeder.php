@@ -20,21 +20,36 @@ class MailPermissionSeeder extends Seeder
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        $perms = [
+        $allPerms = [
             'use mail',
+            'manage personal mail account',
+            'manage multi mail accounts',
         ];
 
-        foreach ($perms as $name) {
+        foreach ($allPerms as $name) {
             Permission::findOrCreate($name, 'web');
         }
 
-        foreach (['super', 'admin', 'editor', 'operator'] as $roleName) {
+        foreach (['super', 'admin'] as $roleName) {
             $role = Role::query()
                 ->where('name', $roleName)
                 ->where('guard_name', 'web')
                 ->first();
             if ($role) {
-                $role->givePermissionTo($perms);
+                $role->givePermissionTo($allPerms);
+            }
+        }
+
+        foreach (['editor', 'operator'] as $roleName) {
+            $role = Role::query()
+                ->where('name', $roleName)
+                ->where('guard_name', 'web')
+                ->first();
+            if ($role) {
+                $role->givePermissionTo([
+                    'use mail',
+                    'manage personal mail account',
+                ]);
             }
         }
     }

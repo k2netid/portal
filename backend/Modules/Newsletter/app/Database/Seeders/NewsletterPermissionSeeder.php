@@ -38,5 +38,13 @@ class NewsletterPermissionSeeder extends Seeder
                 $role->givePermissionTo($perms);
             }
         }
+
+        $operator = Role::query()
+            ->where('name', 'operator')
+            ->where('guard_name', 'web')
+            ->first();
+        if ($operator) {
+            $operator->givePermissionTo(['view newsletter']);
+        }
     }
 }

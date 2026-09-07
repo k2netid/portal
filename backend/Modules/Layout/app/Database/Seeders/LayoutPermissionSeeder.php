@@ -68,5 +68,18 @@ class LayoutPermissionSeeder extends Seeder
                 'view redirects',
             ]);
         }
+
+        $operator = Role::query()
+            ->where('name', 'operator')
+            ->where('guard_name', 'web')
+            ->first();
+        if ($operator) {
+            $operator->givePermissionTo([
+                'view menus',
+                'view widgets',
+                'view redirects',
+                'view themes',
+            ]);
+        }
     }
 }
