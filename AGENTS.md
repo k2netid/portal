@@ -1,30 +1,47 @@
-# Panduan Agen — K2NET Portal
+# Panduan Agen — Jejakawan Core Engine (`ja-core_engine`)
 
-**Produk:** portal publik + member + CMS untuk **k2net.id** (fork dari ja-core_engine).
+**Peran:** Upstream Source of Truth & Agnostic Kernel Platform untuk seluruh ekosistem portal Jejakawan.
 
-## Baca dulu (wajib)
+---
 
-1. **[`../docs/handoff/k2net-portal-agent.md`](../docs/handoff/k2net-portal-agent.md)** — workspace, build, deploy, larangan
-2. [`../docs/handoff/agent-workspace.md`](../docs/handoff/agent-workspace.md) — ja-dev vs ja-srv
-3. [`../docs/runbooks/k2net-portal.md`](../docs/runbooks/k2net-portal.md) — staging/prod, NPM, port
+## 1. Wajib Dibaca Sebelum Mulai (*Mandatory Reading*)
+1. [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md) — Arsitektur engine, modul, dan lifecycle.
+2. [`docs/branching.md`](docs/branching.md) — Matriks 4-repo & strategi sinkronisasi upstream/downstream.
+3. [`docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md`](docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md) — Filosofi pemisahan core vs deployment seeder.
+4. [`docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md`](docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md) — Laporan audit kualitas & sinkronisasi multi-repo.
 
-## Workspace Cursor
+---
 
-- **Host:** `ja-dev` (`10.20.0.207`)
-- **Path:** `/home/jejakawan/dev/k2net-portal`
-- **Bukan** `ja-srv` / `~/www/*` untuk coding
+## 2. Batasan Scope Repositori Ini
+- **Yang BOLEH dilakukan di sini**:
+  - Pengembangan modul inti (`Modules/Core`, `Layout`, `Publishing`, `Library`, `Forms`, `Mail`, `Media`, `Member`, `Analytics`, `Search`, `Newsletter`).
+  - Pembaruan library tema publik generic (`Janari`, `Layung`, `Sarangenge`).
+  - Penambahan generic theme demo seeders (`JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`).
+  - Sinkronisasi kapabilitas manifest & Spatie permission (`php artisan rbac:sync`).
+- **Yang DILARANG KERAS (RESTRICTED)**:
+  - ❌ **DILARANG** memasukkan data spesifik klien/organisasi (nama legal PT, nomor telepon riil, alamat fisik instansi, jurusan spesifik sekolah).
+  - ❌ **DILARANG** memasukkan logo komersial klien (misal logo K2NET atau SMKN 6).
+  - ❌ **DILARANG** membuat `DeploymentSeeder` klien di repo ini.
 
-## Aturan singkat
+---
 
-1. **Staging origin = ja-dev** `:8083` (`backend/public`). Deploy: `bash scripts/deploy-staging-local.sh` — **jangan** rsync ke ja-srv.
-2. NPM forward: `http://192.168.88.71:8083` (SoT: `../docs/configs/nginx-k2net-staging-jadev.conf`).
-3. Frontend build: `NODE_OPTIONS=--max-old-space-size=4096 npx vite build` (satu project, tidak parallel).
-4. Jangan `php artisan ja:install` di staging.
-5. Commit ke repo **`k2netid/portal`**, bukan `ja-core_engine`.
-6. Production `k2net.id` tetap di ja-srv `:8084`. Engine docs: [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md).
+## 3. Alur Kerja Git & Upstream Parity
+- Branch utama: **`main`**.
+- Setiap perubahan arsitektur atau perbaikan bug di repo ini wajib dipropagasikan ke 3 downstream repo:
+  - [`/home/jejakawan/dev/ja-cms`](../ja-cms)
+  - [`/home/jejakawan/dev/k2net-portal`](../k2net-portal)
+  - [`/home/jejakawan/dev/smkn6-portal`](../smkn6-portal)
 
-## Verify
+---
 
+## 4. Quality Gate Sebelum Selesai
 ```bash
+# Verifikasi linter & test
 npm run agent:verify
+
+# Verifikasi sinkronisasi RBAC
+php artisan rbac:sync
+
+# Verifikasi seeder tema
+php artisan theme:seed --all
 ```
