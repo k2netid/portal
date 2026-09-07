@@ -32,7 +32,8 @@ return new class extends Migration
             $columnType = DB::selectOne(<<<'SQL'
                 SELECT data_type
                 FROM information_schema.columns
-                WHERE table_name = 'sys_mail_messages'
+                WHERE table_schema = current_schema()
+                  AND table_name = 'sys_mail_messages'
                   AND column_name = 'account_id'
             SQL);
 
@@ -40,7 +41,7 @@ return new class extends Migration
                 ? $columnType->data_type
                 : null;
 
-            if ($dataType === 'character varying') {
+            if ($dataType !== 'uuid') {
                 DB::statement('ALTER TABLE sys_mail_messages ALTER COLUMN account_id TYPE uuid USING account_id::uuid');
             }
         } else {
