@@ -1,7 +1,7 @@
 <template>
   <nav
     aria-label="Navigasi Seksi Beranda"
-    class="sarangenge-nav-dots fixed right-4 xl:right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-end gap-2.5 py-3 px-1.5 rounded-full bg-background/40 hover:bg-background/80 backdrop-blur-md border border-border/40 shadow-lg transition-all duration-300"
+    class="sarangenge-nav-dots fixed right-3 xl:right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-2.5 py-3 px-1.5 rounded-full bg-background/50 hover:bg-background/90 backdrop-blur-md border border-border/50 shadow-xl transition-all duration-300"
   >
     <button
       v-for="item in sections"
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
 
 export interface SectionNavItem {
   id: string;
@@ -55,8 +55,12 @@ const scrollTo = (id: string) => {
   }
 };
 
-onMounted(() => {
+const attachObserver = () => {
   if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+
+  if (observer) {
+    observer.disconnect();
+  }
 
   observer = new IntersectionObserver(
     (entries) => {
@@ -83,7 +87,23 @@ onMounted(() => {
       observer.observe(el);
     }
   });
+};
+
+onMounted(() => {
+  nextTick(() => {
+    attachObserver();
+  });
 });
+
+watch(
+  () => props.sections,
+  () => {
+    nextTick(() => {
+      attachObserver();
+    });
+  },
+  { deep: true }
+);
 
 onUnmounted(() => {
   if (observer) {
