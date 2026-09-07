@@ -22,6 +22,7 @@ use Modules\Layout\Console\Commands\ThemePathsCommand;
 use Modules\Layout\Console\Commands\ThemeScanRegisterCommand;
 use Modules\Layout\Console\Commands\ThemeStagingUploadedCommand;
 use Modules\Layout\Console\Commands\ThemeInstallSampleCommand;
+use Modules\Layout\Console\Commands\ThemeSeedCommand;
 use Modules\Layout\Console\Commands\ThemeValidateCommand;
 use Modules\Layout\Database\Seeders\LayoutPermissionSeeder;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
@@ -61,6 +62,7 @@ class LayoutServiceProvider extends ServiceProvider
                 ThemeBuildCommand::class,
                 ThemeChecksumCommand::class,
                 ThemeInstallSampleCommand::class,
+                ThemeSeedCommand::class,
             ]);
         }
 
