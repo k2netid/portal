@@ -1,0 +1,21 @@
+{
+  "slug": "cinematic-nav",
+  "type": "plugin",
+  "name": "Cinematic Side Navigation & Viewport Scroll Snap",
+  "version": "1.0.0",
+  "description": "Navigasi titik samping mengambang universal dengan 4 preset visual (glass, minimal, glow, bars), GSAP spring motion, dan viewport scroll snap di semua tema.",
+  "author": "Jejakawan",
+  "license": "MIT",
+  "is_core": false,
+  "default_status": "active",
+  "settings": {
+    "theme_blocks": [
+      { "slot": "floating_overlay" }
+    ],
+    "preset": "glass",
+    "position": "right",
+    "label_mode": "hover",
+    "show_on_mobile": false,
+    "enable_scroll_snap": false
+  }
+}

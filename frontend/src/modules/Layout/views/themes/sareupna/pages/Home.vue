@@ -15,6 +15,9 @@
         <Hero />
       </div>
 
+      <!-- Plugin Slot: After Hero (e.g. Instagram Feed) -->
+      <PluginSlot name="after_hero" class="w-full" />
+
       <!-- Bento Grid Section -->
       <div v-if="isSectionVisible('bento')" id="section-bento">
         <BentoGridSection />
@@ -39,16 +42,6 @@
       <div v-if="isSectionVisible('cta')" id="section-cta">
         <CtaSection />
       </div>
-
-      <!-- Floating Side Navigation Dots -->
-      <SectionNavDots
-        v-if="showSideNavDots && visibleNavSections.length > 0"
-        :sections="visibleNavSections"
-        :style-preset="sideNavStyle"
-        :position="sideNavPosition"
-        :label-mode="sideNavLabelMode"
-        :show-on-mobile="sideNavShowOnMobile"
-      />
     </template>
   </div>
 </template>
@@ -56,18 +49,16 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
-import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import Hero from '../components/sections/Hero.vue';
 import BentoGridSection from '../components/sections/BentoGridSection.vue';
 import TerminalShowcaseSection from '../components/sections/TerminalShowcaseSection.vue';
 import ProductsSection from '../components/sections/ProductsSection.vue';
 import SpecsSection from '../components/sections/SpecsSection.vue';
 import CtaSection from '../components/sections/CtaSection.vue';
-import SectionNavDots from '../components/shared/SectionNavDots.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 
 const { getSetting } = useTheme();
-const { t } = useThemeI18n('sareupna');
 
 // Visual Builder Detection
 const builderBlocks = computed(() => {
@@ -86,35 +77,4 @@ const homeSections = computed<string[]>(() => {
 });
 
 const isSectionVisible = (key: string) => homeSections.value.includes(key);
-
-// Side Navigation Dots Configuration (SoT & Derivatives)
-const showSideNavDots = computed(() => Boolean(getSetting('home_side_nav_dots', true)));
-const sideNavPosition = computed<'right' | 'left'>(() => {
-  const val = String(getSetting('home_side_nav_position', 'right') || 'right');
-  return val === 'left' ? 'left' : 'right';
-});
-const sideNavStyle = computed<'glass' | 'minimal' | 'glow' | 'bars'>(() => {
-  const val = String(getSetting('home_side_nav_style', 'glass') || 'glass');
-  if (['glass', 'minimal', 'glow', 'bars'].includes(val)) {
-    return val as 'glass' | 'minimal' | 'glow' | 'bars';
-  }
-  return 'glass';
-});
-const sideNavLabelMode = computed<'hover' | 'always' | 'none'>(() => {
-  const val = String(getSetting('home_side_nav_labels', 'hover') || 'hover');
-  if (val === 'always' || val === 'none') return val;
-  return 'hover';
-});
-const sideNavShowOnMobile = computed(() => Boolean(getSetting('home_side_nav_show_mobile', false)));
-
-const visibleNavSections = computed(() => {
-  const sections = [];
-  if (isSectionVisible('hero')) sections.push({ id: 'section-hero', label: t('navDots.hero') });
-  if (isSectionVisible('bento')) sections.push({ id: 'section-bento', label: t('navDots.bento') });
-  if (isSectionVisible('terminal')) sections.push({ id: 'section-terminal', label: t('navDots.terminal') });
-  if (isSectionVisible('products')) sections.push({ id: 'section-products', label: t('navDots.products') });
-  if (isSectionVisible('specs')) sections.push({ id: 'section-specs', label: t('navDots.specs') });
-  if (isSectionVisible('cta')) sections.push({ id: 'section-cta', label: t('navDots.cta') });
-  return sections;
-});
 </script>
