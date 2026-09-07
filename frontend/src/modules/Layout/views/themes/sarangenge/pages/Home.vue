@@ -127,12 +127,25 @@ const visibleNavSections = computed<SectionNavItem[]>(() => {
   return items;
 });
 
+const isCustomizerPreview = computed(() => {
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.parent !== window || window.location.search.includes('preview');
+  } catch {
+    return true;
+  }
+});
+
 const updateHtmlSnapClass = (enable: boolean) => {
   if (typeof document === 'undefined') return;
   if (enable) {
     document.documentElement.classList.add('sarangenge-snap-scroll');
   } else {
     document.documentElement.classList.remove('sarangenge-snap-scroll');
+  }
+
+  if (isCustomizerPreview.value) {
+    document.documentElement.classList.add('is-customizer-preview');
   }
 };
 
@@ -146,5 +159,8 @@ watch(
 
 onUnmounted(() => {
   updateHtmlSnapClass(false);
+  if (typeof document !== 'undefined') {
+    document.documentElement.classList.remove('is-customizer-preview');
+  }
 });
 </script>

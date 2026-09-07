@@ -655,8 +655,8 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* ── Sarangenge Proportional Viewport & Snap Scroll (Desktop Only: lg >= 1024px) ── */
-@media (min-width: 1024px) {
+/* ── Sarangenge Proportional Viewport & Snap Scroll (Desktop & Tablets md: >= 768px, or in Customizer Preview) ── */
+@media (min-width: 768px) {
   html.sarangenge-snap-scroll {
     scroll-snap-type: y proximity;
     scroll-padding-top: 4.5rem;
@@ -669,8 +669,8 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 2.25rem !important;
-    padding-bottom: 2.25rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
     box-sizing: border-box;
   }
 
@@ -702,5 +702,55 @@ header[data-ja-customizer-target="header"] .sarangenge-panel {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
   }
+}
+
+/* Customizer Preview iframe support (active even when preview width is squeezed below 768px by panels) */
+html.is-customizer-preview.sarangenge-snap-scroll {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 4.5rem;
+}
+
+html.is-customizer-preview .sarangenge-home--proportional > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  min-height: calc(100dvh - 4.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+  box-sizing: border-box;
+}
+
+html.is-customizer-preview .sarangenge-home--proportional section.sarangenge-hero {
+  min-height: calc(100dvh - 4.5rem);
+  justify-content: space-between;
+}
+
+html.is-customizer-preview .sarangenge-home--proportional section .mb-12,
+html.is-customizer-preview .sarangenge-home--proportional section .mb-14,
+html.is-customizer-preview .sarangenge-home--proportional section .mb-16 {
+  margin-bottom: 1.5rem !important;
+}
+
+html.is-customizer-preview .sarangenge-home--proportional section.py-12,
+html.is-customizer-preview .sarangenge-home--proportional section.py-14,
+html.is-customizer-preview .sarangenge-home--proportional section.py-16,
+html.is-customizer-preview .sarangenge-home--proportional section.py-20,
+html.is-customizer-preview .sarangenge-home--proportional section.py-24 {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+html.is-customizer-preview .sarangenge-home--proportional section .py-12,
+html.is-customizer-preview .sarangenge-home--proportional section .py-14,
+html.is-customizer-preview .sarangenge-home--proportional section .py-16,
+html.is-customizer-preview .sarangenge-home--proportional section .py-20 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+html.is-customizer-preview .sarangenge-nav-dots {
+  display: flex !important;
 }
 
