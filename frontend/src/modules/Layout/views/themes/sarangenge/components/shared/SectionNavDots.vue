@@ -1,9 +1,9 @@
 <template>
-  <Teleport to="body" :disabled="!isMounted">
+  <Teleport to="body">
     <nav
-      v-if="isMounted"
       aria-label="Navigasi Seksi Beranda"
-      class="sarangenge-nav-dots fixed right-3 xl:right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-end gap-2.5 py-3 px-1.5 rounded-full bg-background/50 hover:bg-background/90 backdrop-blur-md border border-border/50 shadow-xl transition-all duration-300"
+      class="sarangenge-nav-dots hidden md:flex flex-col items-end gap-2 py-2.5 px-1.5 rounded-full bg-background/50 hover:bg-background/90 backdrop-blur-md border border-border/50 shadow-xl"
+      style="position: fixed !important; top: 50% !important; transform: translateY(-50%) !important; right: 0.75rem !important; z-index: 99999 !important; pointer-events: auto !important;"
     >
       <button
         v-for="item in sections"
@@ -48,7 +48,6 @@ const props = defineProps<{
   sections: SectionNavItem[];
 }>();
 
-const isMounted = ref(false);
 const activeSectionId = ref<string>(props.sections[0]?.id || '');
 let observer: IntersectionObserver | null = null;
 
@@ -141,7 +140,6 @@ const attachObserver = () => {
 };
 
 onMounted(() => {
-  isMounted.value = true;
   nextTick(() => {
     attachObserver();
     window.addEventListener('scroll', throttledScroll, { passive: true });
@@ -160,7 +158,6 @@ watch(
 );
 
 onUnmounted(() => {
-  isMounted.value = false;
   if (observer) {
     observer.disconnect();
     observer = null;
@@ -174,8 +171,22 @@ onUnmounted(() => {
 
 <style scoped>
 .sarangenge-nav-dots {
+  position: fixed !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 0.75rem !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
   opacity: 0.85;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
 }
+
+@media (min-width: 1280px) {
+  .sarangenge-nav-dots {
+    right: 1.5rem !important;
+  }
+}
+
 .sarangenge-nav-dots:hover {
   opacity: 1;
 }
