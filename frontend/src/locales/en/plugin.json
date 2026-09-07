@@ -41,5 +41,32 @@
     "comments": "comments",
     "commentsTitle": "Top Comments",
     "viewOnInstagram": "View on Instagram"
+  },
+  "cinematicNav": {
+    "ariaLabel": "Page Section Navigation",
+    "sections": {
+      "hero": "Home",
+      "bento": "Quick Access",
+      "services": "Services",
+      "calculator": "Speed Simulator",
+      "sla": "SLA Guarantee",
+      "managed_services": "Managed Services",
+      "msp": "Managed Services",
+      "testimonials": "Testimonials",
+      "partners": "Partners",
+      "faq": "FAQ",
+      "cta": "Get Started",
+      "terminal": "Developer Terminal",
+      "products": "Products & Modules",
+      "specs": "Cloud Specs",
+      "track_finder": "Track Finder",
+      "programs": "Vocational Programs",
+      "announcements": "Announcements",
+      "achievements": "Achievements",
+      "facilities": "Facilities",
+      "extracurricular": "Extracurricular",
+      "contact": "Contact",
+      "updates": "Latest Updates"
+    }
   }
 }

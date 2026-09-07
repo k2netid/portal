@@ -41,5 +41,32 @@
     "comments": "komentar",
     "commentsTitle": "Komentar Teratas",
     "viewOnInstagram": "Buka di Instagram"
+  },
+  "cinematicNav": {
+    "ariaLabel": "Navigasi Seksi Halaman",
+    "sections": {
+      "hero": "Beranda",
+      "bento": "Akses Cepat",
+      "services": "Layanan",
+      "calculator": "Kalkulator Kecepatan",
+      "sla": "Jaminan SLA",
+      "managed_services": "Managed Services",
+      "msp": "Managed Services",
+      "testimonials": "Testimoni",
+      "partners": "Mitra",
+      "faq": "Tanya Jawab",
+      "cta": "Pendaftaran",
+      "terminal": "Terminal Showcase",
+      "products": "Produk & Modul",
+      "specs": "Spesifikasi Cloud",
+      "track_finder": "Peminatan",
+      "programs": "Program Keahlian",
+      "announcements": "Informasi",
+      "achievements": "Prestasi",
+      "facilities": "Fasilitas",
+      "extracurricular": "Ekstrakurikuler",
+      "contact": "Kontak",
+      "updates": "Informasi Terkini"
+    }
   }
 }

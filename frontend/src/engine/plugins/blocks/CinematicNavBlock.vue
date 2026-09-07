@@ -4,7 +4,7 @@
       v-if="isVisible"
       data-plugin="cinematic-nav"
       :data-theme="currentThemeSlug"
-      :aria-label="t('nav_sections.aria_label', 'Navigasi Seksi Halaman')"
+      :aria-label="te('plugin.cinematicNav.ariaLabel') ? t('plugin.cinematicNav.ariaLabel') : t('nav_sections.aria_label', 'Navigasi Seksi Halaman')"
       class="ja-cinematic-nav hidden md:block select-none"
       :class="[
         `ja-cinematic-nav--${dockPosition}`,
@@ -276,17 +276,33 @@ const tooltipPresetCaretClasses = computed(() => {
 
 // Helper to humanize ID into a clean label
 const humanizeSectionId = (id: string): string => {
-  const clean = id.replace(/^section[-_]/i, '');
-  // Check theme-specific translation first
+  const clean = id.replace(/^section[-_]/i, '').replace(/[-_]/g, '_');
+  const kebab = id.replace(/^section[-_]/i, '').replace(/[-_]/g, '-');
+
+  // 1. Check centralized plugin translations
+  const pluginKey = `plugin.cinematicNav.sections.${clean}`;
+  if (te(pluginKey)) return t(pluginKey);
+
+  // 2. Check theme-scoped translations
   const theme = activeTheme.value?.slug || '';
-  const themeKey = `theme.${theme}.nav.${clean}`;
-  if (te(themeKey)) return t(themeKey);
+  const themeNavSections = `theme.${theme}.nav_sections.${clean}`;
+  if (te(themeNavSections)) return t(themeNavSections);
 
-  // Common shared keys
-  const commonKey = `nav_sections.${clean}`;
-  if (te(commonKey)) return t(commonKey);
+  const themeNavDots = `theme.${theme}.navDots.${clean}`;
+  if (te(themeNavDots)) return t(themeNavDots);
 
-  // Fallback to title case
+  // 3. Check legacy theme keys
+  const legacySections = `nav_sections.${clean}`;
+  if (te(legacySections)) return t(legacySections);
+
+  const legacyDots = `navDots.${clean}`;
+  if (te(legacyDots)) return t(legacyDots);
+
+  // 4. Also check kebab variant in plugin
+  const pluginKeyKebab = `plugin.cinematicNav.sections.${kebab}`;
+  if (te(pluginKeyKebab)) return t(pluginKeyKebab);
+
+  // Fallback to clean title case
   return clean
     .split(/[-_]/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

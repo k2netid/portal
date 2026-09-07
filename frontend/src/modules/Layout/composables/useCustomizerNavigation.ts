@@ -138,6 +138,18 @@ export function useCustomizerNavigation(
     return Object.values(sections);
   }
 
+  function isTruthySetting(val: unknown, defaultValue = true): boolean {
+    if (val === undefined || val === null) return defaultValue;
+    if (typeof val === 'boolean') return val;
+    if (typeof val === 'number') return val !== 0;
+    if (typeof val === 'string') {
+      const s = val.trim().toLowerCase();
+      if (s === 'false' || s === '0' || s === 'no' || s === 'off') return false;
+      if (s === 'true' || s === '1' || s === 'yes' || s === 'on') return true;
+    }
+    return Boolean(val);
+  }
+
   function getVisibleSettings(settings: any[]) {
     if (!Array.isArray(settings)) return [];
 
@@ -150,12 +162,21 @@ export function useCustomizerNavigation(
       });
     }
 
-    const isFloatingSocialEnabled = formValues.value.enable_floating_social !== false;
+    const isFloatingSocialEnabled = isTruthySetting(formValues.value.enable_floating_social, true);
+    const isSideNavDotsEnabled =
+      isTruthySetting(formValues.value.home_side_nav_dots, true) &&
+      isTruthySetting(formValues.value.enable_side_nav, true);
 
     return filtered.filter((setting: { key?: string; hidden?: boolean }) => {
       if (!setting || setting.hidden) return false;
       const key = String(setting.key || '');
       if (!isFloatingSocialEnabled && key.startsWith('floating_social_')) {
+        return false;
+      }
+      if (!isSideNavDotsEnabled && (key.startsWith('home_side_nav_') && key !== 'home_side_nav_dots')) {
+        return false;
+      }
+      if (!isSideNavDotsEnabled && (key.startsWith('side_nav_') && key !== 'enable_side_nav')) {
         return false;
       }
       return true;
