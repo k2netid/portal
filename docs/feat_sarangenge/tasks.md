@@ -375,7 +375,55 @@ Dokumen ini memantau status pengerjaan fitur, integrasi sistem, dan penyelesaian
   - [x] Integrasi tombol "Configure" modul `site` di Module Registry langsung menuju tab Site Identity (`?tab=identity`).
   - [x] Dokumentasi lengkap: [ADR-012](./ADR-012-module-aware-site-identity-and-dependency-orchestration.md) / [ADR-016](../adr/ADR-016-module-aware-site-identity-and-dependency-orchestration.md).
 
+### Milestone 7.18: Presets Navigasi Samping & Scroll Snap Tema Sarangenge (🟢 Selesai)
+- [x] **Floating Side Dot Navigation (`SarangengeSideNav.vue`)**:
+  - [x] Pembuatan komponen navigasi samping dengan 4 kurasi preset visual: `glass` (default bento blur), `minimal` (clean dots), `glow` (cyber modern ring), dan `bars` (vertical indicator tabs).
+  - [x] Integrasi animasi spring mikro interaktif dengan pustaka GSAP (`gsap.to`) untuk elastisitas transisi status aktif.
+  - [x] Tooltip penjelas nama seksi otomatis dengan dukungan penuh lokalisasi i18n (`id`, `en`, `su`).
+- [x] **Isolasi DOM & Stacking Viewport**:
+  - [x] Pemanfaatan `<Teleport to="body">` tanpa syarat untuk menghindari clipping CSS overflow dari container induk.
+  - [x] Penempatan strictly centered di sumbu vertikal viewport (`position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%)`).
+  - [x] Kompatibilitas responsif di breakpoint `md`, `lg`, `xl` serta isolasi preview di iframe Theme Customizer.
+- [x] **Viewport Scroll Snap Proporsional**:
+  - [x] Pengaturan mode gulir `yMandatory` dan integrasi kontrol skema `schema.settings.json` serta `theme.json`.
+  - [x] Dokumentasi lengkap: [ADR-018](../adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md).
+
+### Milestone 7.19: Alur Verifikasi Email & Pembuatan Pengguna Baru (🟢 Selesai)
+- [x] **Eliminasi Auto-Verified Default pada Akun Baru**:
+  - [x] Mengubah perilaku default pembuatan pengguna baru di `UserController::store` menjadi `is_verified = false` dan `email_verified_at = null`.
+  - [x] Menyediakan parameter `is_verified` opsional yang hanya dapat dipicu oleh akun dengan kewenangan lebih tinggi.
+- [x] **Kontrol UI pada Formulir Tambah Pengguna (`UserModal.vue`)**:
+  - [x] Penambahan sakelar / checkbox transparan "Verifikasi Email Langsung" dengan deskripsi edukatif.
+- [x] **Pesan Penolakan Login yang Akurat**:
+  - [x] Menampilkan status keterangan yang jelas ketika pengguna mencoba login dengan email yang belum diverifikasi.
+- [x] **Pengujian Otomatis Feature Test**:
+  - [x] Skenario pengujian terisolasi di `RolesAndUsersApiTest.php` untuk akun unverified default dan akun instan terverifikasi.
+  - [x] Dokumentasi lengkap: [ADR-019](../adr/ADR-019-user-email-verification-and-privilege-lifecycle.md).
+
+### Milestone 7.20: Standarisasi RBAC, Route Hardening, dan UI Primitives (🟢 Selesai)
+- [x] **Penyelarasan Hirarki Role & Bobot (Unified Role Ranks)**:
+  - [x] Sinkronisasi nilai integer rank antara backend `User::getRoleRankMap()` dan frontend store `auth.ts` (`super: 100 > system-admin: 95 > admin: 90 > security-officer: 85 > operator: 80 > editor: 60 > author: 40 > staff: 30 > member: 10`).
+  - [x] Penyediaan getter `hasRole` di store Pinia.
+- [x] **Seeder Idempotency (`CmsRolesSeeder.php`)**:
+  - [x] Mengganti pemanggilan destruktif `syncPermissions()` dengan `givePermissionTo(...)` non-destruktif guna mencegah terhapusnya permission modul ekstensi saat booting atau aktivasi.
+  - [x] Melengkapi permission bawaan untuk role `admin`, `editor`, `author`, dan `operator`.
+- [x] **Pengamanan Rute API Backend (Defense-in-Depth)**:
+  - [x] Memproteksi rute sensitif di `Core` (Users, Roles, Settings, Tasks, Logs) dengan Spatie permission middleware.
+  - [x] Memperbaiki typo permission `permission:edit seo` menjadi `permission:manage seo` di modul Publishing.
+  - [x] Memproteksi rute folder di Media module, rute menus/widgets di Layout module, serta category/fields di Library module.
+- [x] **Standarisasi Primitives UI/UX Frontend**:
+  - [x] Pembuatan direktif `v-can` dan `v-role` dengan dukungan modifier `.disabled` di `permission.ts`.
+  - [x] Pembuatan komponen `<Can>` dengan properti `:permission`, `:role`, `:any`, `:minRank`, dan slot `#fallback`.
+  - [x] Registrasi global di `main-shared.ts`.
+  - [x] Penanganan respons 403 tak terduga dengan pemancaran global custom event `app:forbidden` di `client.ts`.
+- [x] **Verifikasi Kualitas & Sinkronisasi Repositori**:
+  - [x] Vitest 6/6 tests passed di `CanAndPermissionDirective.spec.ts`.
+  - [x] PHPUnit 11/11 tests passed di `RolesAndUsersApiTest` dan `CmsRolesSeederTest`.
+  - [x] Sinkronisasi 100% dan lolos seluruh quality gates di kedua repositori (`smkn6-portal` dan `k2net-portal`).
+  - [x] Dokumentasi lengkap: [ADR-020](../adr/ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md).
+
 ### Milestone 8: Persiapan Rilis Production (Publish) (⚪ Akan Datang)
+
 - [ ] Setup database production `portal_production` di PostgreSQL 18.
 - [ ] Alokasi namespace Valkey/Redis production di CT 102.
 - [ ] Konfigurasi Virtual Host Nginx port 80/443 di CT 101 untuk domain target deployment.
