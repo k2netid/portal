@@ -349,7 +349,8 @@ class AuthController extends BaseApiController
         $baseUrl = config('app.url');
         $targetUrl = (is_string($baseUrl) ? rtrim($baseUrl, '/') : '').'/'.Setting::resolveConsoleDashboardSlug();
 
-        $user->load('roles');
+        $user->load(['roles']);
+        $user->setRelation('permissions', $user->getAllPermissions());
 
         // Pure session-based auth - no token needed
         return $this->success([

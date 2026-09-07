@@ -110,7 +110,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         permissionNameSet: (state): Set<string> => {
-            const names = state.user?.permissions?.map((perm) => perm.name) ?? [];
+            const names = state.user?.permissions?.map((perm: any) => typeof perm === 'string' ? perm : (perm?.name ?? ''))?.filter(Boolean) ?? [];
             return new Set(names);
         },
 
