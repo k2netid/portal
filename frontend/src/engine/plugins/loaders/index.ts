@@ -10,6 +10,7 @@ export const engineThemeBlockLoaders: Record<
   'before-footer-promo': () => import('./beforeFooterPromo'),
   'instagram-feed': () => import('./instagramFeed'),
   'floating-social-dock': () => import('./floatingSocialDock'),
+  'cinematic-nav': () => import('./cinematicNav'),
 };
 
 let mergedLoaders: Record<string, () => Promise<{ registerThemeBlocks: RegisterThemeBlocksFn }>> | null =

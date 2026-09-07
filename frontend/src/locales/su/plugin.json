@@ -41,5 +41,32 @@
     "comments": "koméntar",
     "commentsTitle": "Koméntar Pangluhurna",
     "viewOnInstagram": "Buka dina Instagram"
+  },
+  "cinematicNav": {
+    "ariaLabel": "Navigasi Seksi Kaca",
+    "sections": {
+      "hero": "Tepas",
+      "bento": "Aksés Gancang",
+      "services": "Layanan",
+      "calculator": "Kalkulator Gancang",
+      "sla": "Jaminan SLA",
+      "managed_services": "Managed Services",
+      "msp": "Managed Services",
+      "testimonials": "Testimoni",
+      "partners": "Mitra",
+      "faq": "Tanya Jawab",
+      "cta": "Mimitian",
+      "terminal": "Terminal Pangembang",
+      "products": "Produk & Modul",
+      "specs": "Spésifikasi Awan",
+      "track_finder": "Peminatan",
+      "programs": "Program Kaahlian",
+      "announcements": "Warta & Béwara",
+      "achievements": "Préstasi",
+      "facilities": "Fasilitas",
+      "extracurricular": "Ékstrakurikulér",
+      "contact": "Kontak",
+      "updates": "Warta Panganyarna"
+    }
   }
 }

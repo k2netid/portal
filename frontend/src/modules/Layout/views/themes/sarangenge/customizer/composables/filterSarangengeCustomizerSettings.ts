@@ -11,10 +11,23 @@ export function filterSarangengeCustomizerSettings(
     const isPpdbOpen = ctx.formValues.ppdb_is_open !== false;
     const heroBgType = String(ctx.formValues.hero_bg_type || 'preset');
 
+    const sideNavDotsEnabled = ctx.formValues.home_side_nav_dots !== false;
+    const floatingSocialEnabled = ctx.formValues.enable_floating_social !== false;
+
     return settings.filter((setting) => {
         const key = String(setting?.key || '');
         if (!key) return true;
         if ((setting as { hidden?: boolean }).hidden) return false;
+
+        // Side nav dots hierarchy
+        if (key.startsWith('home_side_nav_') && key !== 'home_side_nav_dots' && !sideNavDotsEnabled) {
+            return false;
+        }
+
+        // Floating social hierarchy
+        if (key.startsWith('floating_social_') && !floatingSocialEnabled) {
+            return false;
+        }
 
         // Hide specific PPDB fields if PPDB is marked closed
         if (key === 'ppdb_year' && !isPpdbOpen) return false;
