@@ -128,6 +128,14 @@
                     "value": "Plus Jakarta Sans"
                 },
                 {
+                    "label": "Bricolage Grotesque (High Impact)",
+                    "value": "Bricolage Grotesque"
+                },
+                {
+                    "label": "Figtree (Editorial Modern)",
+                    "value": "Figtree"
+                },
+                {
                     "label": "Outfit",
                     "value": "Outfit"
                 },
@@ -163,6 +171,10 @@
                 {
                     "label": "Plus Jakarta Sans",
                     "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Figtree",
+                    "value": "Figtree"
                 },
                 {
                     "label": "Roboto",
@@ -285,6 +297,40 @@
                 "cta"
             ],
             "category": "Layout",
+            "scope": "theme"
+        },
+        "home_side_nav_dots": {
+            "label": "Tampilkan Navigasi Titik Samping",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "description": "Tampilkan titik floating di sisi kanan untuk navigasi cepat antar seksi beranda",
+            "scope": "theme"
+        },
+        "home_side_nav_style": {
+            "label": "Gaya & Efek Navigasi Samping",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glass Capsule (Default)",
+                    "value": "glass"
+                },
+                {
+                    "label": "Minimalist Dots (Transparan & Ramping)",
+                    "value": "minimal"
+                },
+                {
+                    "label": "Cyber Glow (Neon Aura Aksentuasi)",
+                    "value": "glow"
+                },
+                {
+                    "label": "Progress Bars (Garis Indikator Modern)",
+                    "value": "bars"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "description": "Pilih gaya visual kapsul navigasi titik beranda",
             "scope": "theme"
         },
         "container_max_width": {

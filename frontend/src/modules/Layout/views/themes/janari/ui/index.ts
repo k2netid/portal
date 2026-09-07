@@ -1,3 +1,5 @@
+import '../assets/styles/janari.css';
+
 export { default as ThemeToggle } from './ThemeToggle.vue';
 export { default as DropdownMenu } from './DropdownMenu.vue';
 export { default as DropdownMenuTrigger } from './DropdownMenuTrigger.vue';

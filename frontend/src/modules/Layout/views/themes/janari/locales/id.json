@@ -884,7 +884,11 @@
             "url": "URL / Tautan",
             "subtle_halus": "Halus",
             "normal": "Normal",
-            "dramatic_dramatis": "Dramatis"
+            "dramatic_dramatis": "Dramatis",
+            "home_side_nav_dots": "Tampilkan Navigasi Titik Samping",
+            "home_side_nav_dots_hint": "Tampilkan titik floating di sisi kanan untuk navigasi cepat antar seksi beranda",
+            "home_side_nav_style": "Gaya & Efek Navigasi Samping",
+            "home_side_nav_style_hint": "Pilih gaya visual kapsul navigasi titik beranda"
         },
         "manifest_categories": {
             "general": "Umum",
@@ -913,5 +917,14 @@
             "social_media": "Media Sosial",
             "animations": "Efek Animasi"
         }
+    },
+    "nav_sections": {
+        "aria_label": "Navigasi Seksi Beranda",
+        "hero": "Beranda",
+        "products": "Produk & Solusi",
+        "updates": "Informasi & Berita",
+        "partners": "Mitra & Ekosistem",
+        "testimonials": "Testimoni",
+        "cta": "Hubungi Kami"
     }
 }
