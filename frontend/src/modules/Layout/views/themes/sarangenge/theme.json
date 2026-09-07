@@ -337,6 +337,31 @@
             "category": "Layout",
             "scope": "theme"
         },
+        "home_side_nav_style": {
+            "label": "Gaya & Efek Navigasi Samping",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glass Capsule (Default)",
+                    "value": "glass"
+                },
+                {
+                    "label": "Minimalist Dots (Transparan & Ramping)",
+                    "value": "minimal"
+                },
+                {
+                    "label": "Golden Glow (Cyber Aura Emas)",
+                    "value": "glow"
+                },
+                {
+                    "label": "Progress Bars (Garis Indikator Modern)",
+                    "value": "bars"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "theme"
+        },
         "container_max_width": {
             "label": "Container Max Width",
             "type": "range",

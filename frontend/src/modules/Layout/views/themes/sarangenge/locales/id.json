@@ -468,7 +468,13 @@
       "floating_social_default_collapsed": "Mulai dalam Keadaan Sembunyi (Collapsed)",
       "floating_social_default_collapsed_hint": "Hanya tampilkan tombol pemicu kecil saat halaman pertama kali dibuka.",
       "floating_social_show_on_mobile": "Tampilkan di Layar Mobile",
-      "floating_social_show_on_mobile_hint": "Izinkan dock melayang tetap tampil pada layar ponsel (otomatis berada di posisi aman)."
+      "floating_social_show_on_mobile_hint": "Izinkan dock melayang tetap tampil pada layar ponsel (otomatis berada di posisi aman).",
+      "home_scroll_mode": "Mode Gulir Beranda",
+      "home_scroll_mode_hint": "Pilihan mode gulir beranda (Standar Aliran Alami atau Sinematik Proporsional 1 Layar).",
+      "home_side_nav_dots": "Tampilkan Navigasi Titik Samping",
+      "home_side_nav_dots_hint": "Tampilkan indikator titik navigasi vertikal di sisi kanan layar saat mode proporsional aktif.",
+      "home_side_nav_style": "Gaya & Efek Navigasi Samping",
+      "home_side_nav_style_hint": "Pilihan gaya visual dan animasi titik samping (Glass Capsule, Minimalist Dots, Golden Glow, atau Progress Bars)."
     },
     "common_options": {
       "kanan_tengah_right_center": "Kanan Tengah (Right Center)",
@@ -483,7 +489,27 @@
       "horizontal_mendatar": "Horizontal (Mendatar)",
       "frosted_glassmorphism_glass": "Frosted Glassmorphism (Glass)",
       "solid_dark_slate_solid": "Solid Dark Slate (Solid)",
-      "aura_glow_keemasan_glow": "Aura Glow Keemasan (Glow)"
+      "aura_glow_keemasan_glow": "Aura Glow Keemasan (Glow)",
+      "standar_alami_continuous_flow": "Standar Alami (Continuous Flow)",
+      "sinematik_proporsional_1_screen_viewport_snap": "Sinematik Proporsional (1-Screen Viewport Snap)",
+      "glass_capsule_default": "Glass Capsule (Default)",
+      "minimalist_dots_transparan_ramping": "Minimalist Dots (Transparan & Ramping)",
+      "golden_glow_cyber_aura_emas": "Golden Glow (Cyber Aura Emas)",
+      "progress_bars_garis_indikator_modern": "Progress Bars (Garis Indikator Modern)"
+    },
+    "nav_sections": {
+      "aria_label": "Navigasi Seksi Beranda",
+      "hero": "Beranda",
+      "bento": "Akses Cepat",
+      "track_finder": "Peminatan",
+      "programs": "Program Keahlian",
+      "announcements": "Informasi",
+      "achievements": "Prestasi",
+      "facilities": "Fasilitas",
+      "extracurricular": "Ekstrakurikuler",
+      "testimonials": "Testimoni",
+      "faq": "FAQ",
+      "cta": "Pendaftaran"
     }
   }
 }
