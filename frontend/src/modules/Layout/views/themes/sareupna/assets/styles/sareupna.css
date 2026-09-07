@@ -1,0 +1,201 @@
+/* ==========================================================================
+   Sareupna — High-Performance Cloud & Developer Platform Theme
+   Filosofi Basa Sunda: Cahaya Sareupna (Wanci senja nalika langit mintonkeun kaéndahan kosmik).
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Sareupna Brand Tokens */
+  --sareupna-obsidian: #07090e;
+  --sareupna-obsidian-surface: #0c1018;
+  --sareupna-obsidian-card: #111624;
+  --sareupna-obsidian-border: rgba(255, 255, 255, 0.08);
+  --sareupna-obsidian-border-hover: rgba(139, 92, 246, 0.4);
+  
+  --sareupna-violet: #8b5cf6;
+  --sareupna-violet-glow: #a78bfa;
+  --sareupna-cyan: #06b6d4;
+  --sareupna-cyan-glow: #22d3ee;
+  --sareupna-amber: #f59e0b;
+  --sareupna-emerald: #10b981;
+
+  --sareupna-primary: var(--theme-color-primary, #8b5cf6);
+  --sareupna-secondary: var(--theme-color-secondary, #06b6d4);
+  --sareupna-accent: var(--theme-color-accent, #a78bfa);
+  
+  --sareupna-font-heading: var(--theme-font-heading, 'Plus Jakarta Sans'), 'Geist', sans-serif;
+  --sareupna-font-body: var(--theme-font-body, 'Geist'), 'Plus Jakarta Sans', sans-serif;
+  --sareupna-font-mono: var(--theme-font-mono, 'Geist Mono'), ui-monospace, monospace;
+
+  --sareupna-radius: var(--theme-button-radius, 0.85rem);
+  --sareupna-radius-sm: calc(var(--sareupna-radius) * 0.75);
+  --sareupna-radius-lg: calc(var(--sareupna-radius) * 1.4);
+}
+
+/* Base Sareupna Theme Scoping */
+.sareupna-theme {
+  --primary: var(--theme-color-primary-hsl, 258 90% 66%);
+  --primary-foreground: 0 0% 100%;
+  --secondary: var(--theme-color-secondary-hsl, 189 94% 43%);
+  --secondary-foreground: 0 0% 100%;
+  --accent: var(--theme-color-accent-hsl, 255 92% 76%);
+  --accent-foreground: 0 0% 100%;
+  
+  /* Deep obsidian dark-mode defaults */
+  --background: 228 35% 5%;
+  --foreground: 220 20% 98%;
+  --card: 228 32% 8%;
+  --card-foreground: 220 20% 98%;
+  --popover: 228 32% 8%;
+  --popover-foreground: 220 20% 98%;
+  --muted: 226 25% 12%;
+  --muted-foreground: 220 14% 65%;
+  --border: 226 22% 14%;
+  --input: 226 22% 14%;
+  --ring: var(--theme-color-primary-hsl, 258 90% 66%);
+  
+  font-family: var(--sareupna-font-body);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Light mode overrides for high-contrast preference */
+html:not(.dark) .sareupna-theme {
+  --background: 220 25% 98%;
+  --foreground: 224 45% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 45% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 45% 10%;
+  --muted: 220 20% 92%;
+  --muted-foreground: 220 15% 45%;
+  --border: 220 18% 88%;
+  --input: 220 18% 88%;
+}
+
+/* Typography Hierarchy */
+.sareupna-theme h1,
+.sareupna-theme h2,
+.sareupna-theme h3,
+.sareupna-theme h4,
+.sareupna-theme h5,
+.sareupna-theme h6 {
+  font-family: var(--sareupna-font-heading);
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.sareupna-theme h1 {
+  font-size: clamp(2.4rem, 5vw + 1rem, 4.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.sareupna-theme h2 {
+  font-size: clamp(1.85rem, 3.5vw + 0.5rem, 3.2rem);
+  line-height: 1.12;
+  font-weight: 800;
+}
+
+/* Floating Dock Header (Directional Scroll Auto-Hide & Frosted Glass) */
+.sareupna-header {
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.sareupna-header--hidden {
+  transform: translateY(-100%) !important;
+  pointer-events: none !important;
+}
+
+.sareupna-header--scrolled {
+  background-color: hsl(var(--background) / 0.82) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-bottom-color: hsl(var(--border) / 0.8) !important;
+  box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.45), 
+              0 0 20px -3px hsl(var(--primary) / 0.12) !important;
+}
+
+/* Terminal & CLI Elements */
+.sareupna-mono {
+  font-family: var(--sareupna-font-mono);
+}
+
+@keyframes sareupna-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.sareupna-typed-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 13px;
+  background-color: hsl(var(--primary));
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: sareupna-blink 1s infinite;
+}
+
+/* Cyber Radial Hover & Bento Grid Cards */
+.sareupna-bento-card {
+  position: relative;
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, hsl(var(--card) / 0.85) 0%, hsl(var(--card) / 0.5) 100%);
+  border: 1px solid hsl(var(--border) / 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.sareupna-bento-card:hover {
+  transform: translateY(-3px);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5),
+              0 0 25px -5px hsl(var(--primary) / 0.18);
+}
+
+.sareupna-bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sareupna-bento-card:hover::before {
+  opacity: 1;
+}
+
+/* Ambient Ambient Mesh Gradient Background */
+.sareupna-ambient-mesh {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.25;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+/* Micro-Pulse Glow */
+@keyframes sareupna-pulse-subtle {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.08); opacity: 0.32; }
+}
+
+.sareupna-pulse-glow {
+  animation: sareupna-pulse-subtle 8s ease-in-out infinite;
+}

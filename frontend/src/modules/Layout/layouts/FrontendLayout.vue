@@ -280,6 +280,10 @@ const activeThemeClass = computed(() => {
   if (slug.toLowerCase() === 'layung') {
     classes.push('layung-theme')
   }
+  // High-performance Cloud & Developer platform theme tokens.
+  if (slug.toLowerCase() === 'sareupna') {
+    classes.push('sareupna-theme')
+  }
   return classes
 })
 

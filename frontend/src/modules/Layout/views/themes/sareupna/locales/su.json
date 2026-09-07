@@ -1,0 +1,105 @@
+{
+  "name": "Sareupna",
+  "description": "Sareupna — High-Performance Cloud & Developer Platform Theme pikeun Jejakawan.com.",
+  "header": {
+    "home": "Tepas",
+    "solusi": "Solusi Cloud",
+    "platform": "Platform",
+    "pricing": "Paket & Pangaos",
+    "blog": "Wawasan",
+    "contact": "Kontak Kami",
+    "search": "Pamaluruh",
+    "signIn": "Lebet",
+    "account": "Akun Pamekar",
+    "getStarted": "Mimitian",
+    "selectLanguage": "Pilih Basa",
+    "languageAria": "Pilih basa",
+    "themeAriaLight": "Pindah ka mode caang",
+    "themeAriaDark": "Pindah ka mode poék",
+    "navAria": "Navigasi utama",
+    "openMenuAria": "Buka menu navigasi",
+    "closeMenuAria": "Tutup menu navigasi",
+    "login": "Lebet",
+    "profile": "Profil Kuring",
+    "logout": "Kaluar",
+    "memberFallback": "Pamekar",
+    "officialLine1": "PT JEJAK AWAN DIGITAL",
+    "officialLine2": "PLATFORM CLOUD ENTERPRISE"
+  },
+  "common": {
+    "copied": "KASALIN!",
+    "clickToCopy": "Klik pikeun nyalin",
+    "scroll": "Gulung Ka Handap",
+    "learnMore": "Lenyepan Langkung seueur",
+    "viewAll": "Tingali Sadayana",
+    "exploreMore": "Jajah Langkung Jero",
+    "statusOnline": "Sistem Normal (99.99%)",
+    "docs": "Dokuméntasi",
+    "github": "GitHub",
+    "terminal": "Terminal Pamekar"
+  },
+  "hero": {
+    "badgeDefault": "PLATFORM ENGINE V2.0",
+    "brandFallback": "JEJAK AWAN DIGITAL",
+    "subtitleDefault": "Arsitektur cloud sumebar, mesin eusi performa luhung, sareng ékosistem pamekar modérn dina hiji platform ngahiji.",
+    "ctaPrimary": "Jajah Solusi",
+    "ctaPricing": "Tingali Paket",
+    "stat1Val": "99.99%",
+    "stat1Label": "Uptime SLA",
+    "stat2Val": "< 50ms",
+    "stat2Label": "Laténsi Global Edge",
+    "stat3Val": "100%",
+    "stat3Label": "API Driven & Bisa Dirékadicipta",
+    "stat4Val": "24/7",
+    "stat4Label": "Pangrojong Husus"
+  },
+  "bento": {
+    "badge": "KAPABILITAS PLATFORM",
+    "title": "Diwangun pikeun Skala & Kacepatan Ekstrem",
+    "subtitle": "Kombinasi mesin modular, arsitektur cloud pituin, sareng kaamanan tingkat luhung.",
+    "card1Title": "Core Engine Tanpa Tanding",
+    "card1Desc": "Desain micro-kernel kalawan respon sahandapeun 15ms pikeun pamrosésan beurat.",
+    "card2Title": "Kanvas Visual Drag & Drop",
+    "card2Desc": "Panyunting visual henteu ngurangan performa sareng nol tabrakan CSS.",
+    "card3Title": "Kaamanan & Kasaluyuan Enterprise",
+    "card3Desc": "Catetan audit jangkep, RBAC taliti, sareng enkripsi data tungtung-ka-tungtung.",
+    "card4Title": "Panyebaran Cloud Multi-Tenant",
+    "card4Desc": "Dukungan klaster sakedet nétra, kasaimbangan beban pinter, sareng auto-scaling."
+  },
+  "terminal": {
+    "badge": "CLI INTERAKTIF",
+    "title": "Pangalaman Pamekar Tanpa Riribetan",
+    "subtitle": "Atur layanan, deploy modul, sareng pantau métrik langsung ti baris paréntah anjeun.",
+    "tabCli": "Jejakawan CLI",
+    "tabApi": "REST API",
+    "tabSdk": "TypeScript SDK",
+    "tabDocker": "Wadah Container"
+  },
+  "products": {
+    "badge": "PRODUK & MODUL",
+    "title": "Solusi Lengkep pikeun Kamajuan Digital",
+    "subtitle": "Runtuyan produk pilihan pikeun ngagancangan transformasi téknologi organisasi anjeun.",
+    "viewAll": "Jajah Ékosistem"
+  },
+  "cta": {
+    "badge": "SAYAGA NGAMIMITIAN?",
+    "title": "Wangun Solusi Digital Anjeun Babarengan Jejakawan",
+    "subtitle": "Sawalakeun arsitektur sareng pangabutuh platform anjeun sareng tim ahlina ayeuna.",
+    "primary": "Konsultasi Gratis",
+    "secondary": "Baca Dokuméntasi"
+  },
+  "footer": {
+    "description": "PT Jejak Awan Digital — Inovator cloud computing, infrastruktur eusi, sareng solusi enterprise pangpayunna di Indonésia.",
+    "copyright": "Sadaya hak ditangtayungan ku undang-undang.",
+    "tagline": "Empowering Digital Cloud Horizons.",
+    "systemStatus": "Sistem Berjalan Sampurna"
+  },
+  "navDots": {
+    "hero": "Tepas",
+    "bento": "Platform",
+    "terminal": "Pamekar",
+    "products": "Solusi",
+    "testimonials": "Pangalaman",
+    "cta": "Mimitian"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Sareupna",
+  "description": "Sareupna — High-Performance Cloud & Developer Platform Theme for Jejakawan.com.",
+  "header": {
+    "home": "Home",
+    "solusi": "Cloud Solutions",
+    "platform": "Platform",
+    "pricing": "Plans & Pricing",
+    "blog": "Insights",
+    "contact": "Contact Us",
+    "search": "Search",
+    "signIn": "Sign In",
+    "account": "Developer Account",
+    "getStarted": "Get Started",
+    "selectLanguage": "Select Language",
+    "languageAria": "Choose language",
+    "themeAriaLight": "Switch to light theme",
+    "themeAriaDark": "Switch to dark theme",
+    "navAria": "Main navigation",
+    "openMenuAria": "Open navigation menu",
+    "closeMenuAria": "Close navigation menu",
+    "login": "Sign In",
+    "profile": "My Profile",
+    "logout": "Log Out",
+    "memberFallback": "Developer",
+    "officialLine1": "PT JEJAK AWAN DIGITAL",
+    "officialLine2": "ENTERPRISE CLOUD PLATFORM"
+  },
+  "common": {
+    "copied": "COPIED!",
+    "clickToCopy": "Click to copy",
+    "scroll": "Scroll Down",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "exploreMore": "Explore More",
+    "statusOnline": "Systems Operational (99.99%)",
+    "docs": "Documentation",
+    "github": "GitHub",
+    "terminal": "Developer Terminal"
+  },
+  "hero": {
+    "badgeDefault": "PLATFORM ENGINE V2.0",
+    "brandFallback": "JEJAK AWAN DIGITAL",
+    "subtitleDefault": "Distributed cloud architecture, high-performance content engine, and a modern developer ecosystem united in a single cohesive platform.",
+    "ctaPrimary": "Explore Solutions",
+    "ctaPricing": "View Pricing",
+    "stat1Val": "99.99%",
+    "stat1Label": "Uptime SLA",
+    "stat2Val": "< 50ms",
+    "stat2Label": "Global Edge Latency",
+    "stat3Val": "100%",
+    "stat3Label": "API Driven & Extensible",
+    "stat4Val": "24/7",
+    "stat4Label": "Dedicated Support"
+  },
+  "bento": {
+    "badge": "PLATFORM CAPABILITIES",
+    "title": "Built for Extreme Scale & Precision",
+    "subtitle": "A seamless union of modular engine architecture, cloud-native scalability, and enterprise-grade resilience.",
+    "card1Title": "High-Throughput Core Engine",
+    "card1Desc": "Micro-kernel design delivering sub-15ms response times on intensive workloads.",
+    "card2Title": "Visual Drag & Drop Canvas",
+    "card2Desc": "Intuitive visual editing without performance degradation or CSS collisions.",
+    "card3Title": "Enterprise Security & Compliance",
+    "card3Desc": "Full audit trails, granular RBAC, and end-to-end data encryption.",
+    "card4Title": "Multi-Tenant Cloud Deployment",
+    "card4Desc": "Instant cluster orchestration, intelligent load balancing, and auto-scaling."
+  },
+  "terminal": {
+    "badge": "INTERACTIVE CLI",
+    "title": "Frictionless Developer Experience",
+    "subtitle": "Orchestrate services, deploy modules, and stream telemetry straight from your command line.",
+    "tabCli": "Jejakawan CLI",
+    "tabApi": "REST API",
+    "tabSdk": "TypeScript SDK",
+    "tabDocker": "Container Engine"
+  },
+  "products": {
+    "badge": "PRODUCTS & MODULES",
+    "title": "End-to-End Solutions for Digital Growth",
+    "subtitle": "Battle-tested solutions designed to accelerate your technological transformation.",
+    "viewAll": "Explore Ecosystem"
+  },
+  "cta": {
+    "badge": "READY TO BUILD?",
+    "title": "Engineer Your Digital Future with Jejakawan",
+    "subtitle": "Consult your architecture and platform roadmap with our engineering team today.",
+    "primary": "Schedule Architecture Review",
+    "secondary": "Read Documentation"
+  },
+  "footer": {
+    "description": "PT Jejak Awan Digital — Leading cloud computing, content infrastructure, and digital solutions innovator in Indonesia.",
+    "copyright": "All rights reserved.",
+    "tagline": "Empowering Digital Cloud Horizons.",
+    "systemStatus": "All Systems Operational"
+  },
+  "navDots": {
+    "hero": "Home",
+    "bento": "Platform",
+    "terminal": "Developer",
+    "products": "Solutions",
+    "testimonials": "Reviews",
+    "cta": "Get Started"
+  }
+}

@@ -1,0 +1,138 @@
+{
+    "name": "Sareupna",
+    "slug": "sareupna",
+    "version": "1.0.0",
+    "type": "frontend",
+    "archetype": "developer_platform",
+    "category": "Cloud & Developer Platform",
+    "parent_theme": "janari",
+    "description": "Sareupna — High-Performance Cloud & Developer Platform Theme khusus untuk Jejakawan.com (PT Jejak Awan Digital). Dilengkapi directional auto-hide floating dock, interactive CLI badge, 12-column Bento Grid, dan terminal telemetry showcase.",
+    "author": "PT Jejak Awan Digital",
+    "supports": {
+        "sareupna_canvas": true
+    },
+    "settings_schema": {
+        "site_title": {
+            "label": "Site Title",
+            "type": "text",
+            "default": "Jejakawan Digital",
+            "category": "General",
+            "scope": "platform"
+        },
+        "theme_style": {
+            "label": "Theme Visual Style",
+            "type": "select",
+            "options": [
+                { "label": "Obsidian Deep (Default)", "value": "obsidian" },
+                { "label": "Cyber Glow", "value": "cyber_glow" },
+                { "label": "Frosted Glass", "value": "glass" },
+                { "label": "Clean High-Contrast", "value": "clean" }
+            ],
+            "default": "obsidian",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "theme_color_primary": {
+            "label": "Primary Accent Color",
+            "type": "color",
+            "default": "#8b5cf6",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "theme_color_secondary": {
+            "label": "Secondary Accent Color",
+            "type": "color",
+            "default": "#06b6d4",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "brand_logo": {
+            "label": "Logo",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "brand_favicon": {
+            "label": "Favicon",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_tagline": {
+            "label": "Tagline",
+            "type": "text",
+            "default": "High-Performance Cloud & Developer Platform",
+            "category": "General",
+            "scope": "platform"
+        },
+        "hero_badge": {
+            "label": "Hero CLI Command Badge",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "hero_title": {
+            "label": "Hero Title",
+            "type": "text",
+            "default": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "hero_subtitle": {
+            "label": "Hero Subtitle",
+            "type": "textarea",
+            "default": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "hero_cta_primary": {
+            "label": "Hero Primary CTA",
+            "type": "text",
+            "default": "Eksplorasi Solusi",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "hero_cta_primary_url": {
+            "label": "Hero Primary CTA URL",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "cta_secondary_text": {
+            "label": "Hero Secondary CTA",
+            "type": "text",
+            "default": "Lihat Paket",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "cta_secondary_url": {
+            "label": "Hero Secondary CTA URL",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Hero Section",
+            "scope": "platform"
+        },
+        "home_side_nav_dots": {
+            "label": "Floating Side Navigation Dots",
+            "type": "boolean",
+            "default": true,
+            "category": "Navigation",
+            "scope": "platform"
+        },
+        "home_side_nav_style": {
+            "label": "Side Nav Dots Visual Style",
+            "type": "select",
+            "options": [
+                { "label": "Frosted Glass Capsule (Default)", "value": "glass" },
+                { "label": "Minimalist Dots", "value": "minimal" },
+                { "label": "Neon Cyber Glow", "value": "glow" },
+                { "label": "Modern Progress Bars", "value": "bars" }
+            ],
+            "default": "glass",
+            "category": "Navigation",
+            "scope": "platform"
+        }
+    }
+}

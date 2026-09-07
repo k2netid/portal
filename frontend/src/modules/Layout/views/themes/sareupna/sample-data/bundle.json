@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "settings": {
+    "site_title": "PT Jejak Awan Digital",
+    "site_tagline": "High-Performance Cloud & Developer Platform",
+    "site_description": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+    "branding_display": "text_only",
+    "theme_style": "obsidian",
+    "theme_color_primary": "#8b5cf6",
+    "theme_color_secondary": "#06b6d4",
+    "hero_badge": "$ ja cloud:deploy --prod",
+    "hero_title": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
+    "hero_subtitle": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+    "hero_cta_primary": "Eksplorasi Solusi",
+    "hero_cta_primary_url": "/solusi",
+    "cta_secondary_text": "Lihat Paket",
+    "cta_secondary_url": "/pricing",
+    "home_side_nav_dots": true,
+    "home_side_nav_style": "glass"
+  },
+  "menus": [
+    {
+      "name": "Header Nav Sareupna",
+      "location": "header",
+      "items": [
+        { "title": "Beranda", "url": "/" },
+        { "title": "Solusi Cloud", "url": "/solusi" },
+        { "title": "Paket & Harga", "url": "/pricing" },
+        { "title": "Wawasan", "url": "/blog" },
+        { "title": "Hubungi Kami", "url": "/contact" }
+      ]
+    },
+    {
+      "name": "Footer Nav Sareupna",
+      "location": "footer",
+      "items": [
+        { "title": "Solusi Cloud", "url": "/solusi" },
+        { "title": "Paket & Harga", "url": "/pricing" },
+        { "title": "Kontak", "url": "/contact" }
+      ]
+    }
+  ]
+}

@@ -24,6 +24,9 @@ import janariSu from '@/modules/Layout/views/themes/janari/locales/su.json';
 import layungEn from '@/modules/Layout/views/themes/layung/locales/en.json';
 import layungId from '@/modules/Layout/views/themes/layung/locales/id.json';
 import layungSu from '@/modules/Layout/views/themes/layung/locales/su.json';
+import sareupnaEn from '@/modules/Layout/views/themes/sareupna/locales/en.json';
+import sareupnaId from '@/modules/Layout/views/themes/sareupna/locales/id.json';
+import sareupnaSu from '@/modules/Layout/views/themes/sareupna/locales/su.json';
 
 import consoleEn from '@/locales/en/console.json';
 import consoleId from '@/locales/id/console.json';
@@ -56,7 +59,7 @@ export const moduleLocaleBundles = {
         search: searchPack.en,
         ai: cmsAiPack.en,
         member: memberPack.en,
-        theme: { sarangenge: sarangengeEn, janari: janariEn, layung: layungEn },
+        theme: { sarangenge: sarangengeEn, janari: janariEn, layung: layungEn, sareupna: sareupnaEn },
     },
     id: {
         system: system.id,
@@ -73,7 +76,7 @@ export const moduleLocaleBundles = {
         search: searchPack.id,
         ai: cmsAiPack.id,
         member: memberPack.id,
-        theme: { sarangenge: sarangengeId, janari: janariId, layung: layungId },
+        theme: { sarangenge: sarangengeId, janari: janariId, layung: layungId, sareupna: sareupnaId },
     },
     su: {
         system: system.su,
@@ -90,6 +93,6 @@ export const moduleLocaleBundles = {
         search: searchPack.su,
         ai: cmsAiPack.su,
         member: memberPack.su,
-        theme: { sarangenge: sarangengeSu, janari: janariSu, layung: layungSu },
+        theme: { sarangenge: sarangengeSu, janari: janariSu, layung: layungSu, sareupna: sareupnaSu },
     },
 } as const;

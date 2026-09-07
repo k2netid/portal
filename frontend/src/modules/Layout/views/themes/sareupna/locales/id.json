@@ -1,0 +1,105 @@
+{
+  "name": "Sareupna",
+  "description": "Sareupna — High-Performance Cloud & Developer Platform Theme untuk Jejakawan.com.",
+  "header": {
+    "home": "Beranda",
+    "solusi": "Solusi Cloud",
+    "platform": "Platform",
+    "pricing": "Paket & Harga",
+    "blog": "Wawasan",
+    "contact": "Hubungi Kami",
+    "search": "Pencarian",
+    "signIn": "Masuk",
+    "account": "Akun Pengembang",
+    "getStarted": "Mulai Sekarang",
+    "selectLanguage": "Pilih Bahasa",
+    "languageAria": "Pilih bahasa",
+    "themeAriaLight": "Aktifkan mode terang",
+    "themeAriaDark": "Aktifkan mode gelap",
+    "navAria": "Navigasi utama",
+    "openMenuAria": "Buka menu navigasi",
+    "closeMenuAria": "Tutup menu navigasi",
+    "login": "Masuk",
+    "profile": "Profil Saya",
+    "logout": "Keluar",
+    "memberFallback": "Pengembang",
+    "officialLine1": "PT JEJAK AWAN DIGITAL",
+    "officialLine2": "CLOUD PLATFORM ENTERPRISE"
+  },
+  "common": {
+    "copied": "TERSALIN!",
+    "clickToCopy": "Klik untuk menyalin",
+    "scroll": "Gulir ke Bawah",
+    "learnMore": "Pelajari Selengkapnya",
+    "viewAll": "Lihat Semua",
+    "exploreMore": "Jelajahi Lebih Lanjut",
+    "statusOnline": "Sistem Normal (99.99%)",
+    "docs": "Dokumentasi",
+    "github": "GitHub",
+    "terminal": "Terminal Developer"
+  },
+  "hero": {
+    "badgeDefault": "PLATFORM ENGINE V2.0",
+    "brandFallback": "JEJAK AWAN DIGITAL",
+    "subtitleDefault": "Arsitektur cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+    "ctaPrimary": "Eksplorasi Solusi",
+    "ctaPricing": "Lihat Paket",
+    "stat1Val": "99.99%",
+    "stat1Label": "Uptime SLA",
+    "stat2Val": "< 50ms",
+    "stat2Label": "Global Edge Latency",
+    "stat3Val": "100%",
+    "stat3Label": "API Driven & Extensible",
+    "stat4Val": "24/7",
+    "stat4Label": "Dedicated Support"
+  },
+  "bento": {
+    "badge": "KAPABILITAS PLATFORM",
+    "title": "Dibangun untuk Skala & Performa Ekstrem",
+    "subtitle": "Kombinasi modular engine, cloud-native architecture, dan keamanan tingkat enterprise.",
+    "card1Title": "Core Engine Berkinerja Tinggi",
+    "card1Desc": "Micro-kernel arsitektur dengan response time di bawah 15ms untuk query intensif.",
+    "card2Title": "Visual Drag & Drop Canvas",
+    "card2Desc": "Penyunting visual tanpa kompromi performa dan zero CSS collision.",
+    "card3Title": "Keamanan & Kepatuhan Enterprise",
+    "card3Desc": "Audit trail lengkap, RBAC granular, dan enkripsi data end-to-end.",
+    "card4Title": "Multi-Tenant & Cloud Deployment",
+    "card4Desc": "Dukungan clustering instan, load balancing cerdas, dan auto-scaling."
+  },
+  "terminal": {
+    "badge": "INTERAKTIF CLI",
+    "title": "Pengalaman Developer Tanpa Hambatan",
+    "subtitle": "Kelola layanan, deploy modul, dan pantau metrik langsung dari baris perintah Anda.",
+    "tabCli": "Jejakawan CLI",
+    "tabApi": "REST API",
+    "tabSdk": "TypeScript SDK",
+    "tabDocker": "Container Engine"
+  },
+  "products": {
+    "badge": "PRODUK & MODUL",
+    "title": "Solusi End-to-End untuk Pertumbuhan Digital",
+    "subtitle": "Rangkaian produk teruji untuk mempercepat transformasi teknologi organisasi Anda.",
+    "viewAll": "Jelajahi Ekosistem"
+  },
+  "cta": {
+    "badge": "SIAP MELANGKAH?",
+    "title": "Bangun Solusi Digital Anda Bersama Jejakawan",
+    "subtitle": "Konsultasikan arsitektur dan kebutuhan platform Anda bersama tim ahli kami sekarang.",
+    "primary": "Mulai Konsultasi Gratis",
+    "secondary": "Pelajari Dokumentasi"
+  },
+  "footer": {
+    "description": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
+    "copyright": "Hak cipta dilindungi undang-undang.",
+    "tagline": "Empowering Digital Cloud Horizons.",
+    "systemStatus": "Operasional Penuh"
+  },
+  "navDots": {
+    "hero": "Beranda",
+    "bento": "Platform",
+    "terminal": "Developer",
+    "products": "Solusi",
+    "testimonials": "Ulasan",
+    "cta": "Mulai"
+  }
+}

@@ -67,7 +67,7 @@ THEMES_SRC="$ROOT/frontend/src/modules/Layout/views/themes"
 THEMES_DST="$ROOT/backend/resources/themes"
 if [ -d "$THEMES_SRC" ]; then
   mkdir -p "$THEMES_DST"
-  for slug in janari layung sarangenge; do
+  for slug in janari layung sarangenge sareupna; do
     if [ -d "$THEMES_SRC/$slug" ]; then
       rsync -a --delete "$THEMES_SRC/$slug/" "$THEMES_DST/$slug/"
     fi
