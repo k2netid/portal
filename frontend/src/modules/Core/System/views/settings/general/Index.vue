@@ -604,10 +604,11 @@ const handleSubmit = async () => {
                 }
             }
             
+            const isImageKey = ['brand_logo', 'brand_favicon', 'site_logo', 'site_favicon', 'app_logo', 'app_favicon', 'app_logo_light', 'app_logo_dark', 'app_logo_compact'].includes(setting.key);
             return {
                 key: setting.key,
                 value: value,
-                type: setting.type,
+                type: isImageKey ? 'image' : setting.type,
                 group: setting.group,
             };
         });

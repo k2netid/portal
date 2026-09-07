@@ -25,7 +25,7 @@ class K2netBrandingSeeder extends Seeder
         Setting::set('site_description', 'K2NET menyediakan layanan konektivitas internet cepat berkecepatan tinggi dan solusi managed service andal untuk korporasi dan bisnis.', 'string', 'general');
         Setting::set('contact_email', 'info@k2net.id', 'string', 'general');
         Setting::set('admin_email', 'admin@k2net.id', 'string', 'general');
-        Setting::set('brand_logo', '/logofull_k2net.png', 'string', 'general');
+        Setting::set('brand_logo', '/logofull_k2net.png', 'image', 'brand');
 
         // 2. Active Theme Configuration (Layung ISP/Corporate Theme)
         $layung = Theme::where('slug', 'layung')->first();
