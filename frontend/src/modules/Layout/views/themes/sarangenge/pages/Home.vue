@@ -38,6 +38,7 @@
       <SectionNavDots
         v-if="isProportionalSnap && showSideNavDots"
         :sections="visibleNavSections"
+        :style-preset="sideNavStyle"
       />
     </template>
   </div>
@@ -70,6 +71,9 @@ const { getSetting } = useTheme();
 const { displaySchoolName } = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('home');
 
+import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+const { t } = useThemeI18n('sarangenge');
+
 const DEFAULT_HOME_SECTIONS = [
   'hero',
   'bento',
@@ -84,19 +88,19 @@ const DEFAULT_HOME_SECTIONS = [
   'cta',
 ] as const;
 
-const SECTION_META: Record<string, { id: string; label: string }> = {
-  hero: { id: 'section-hero', label: 'Beranda' },
-  bento: { id: 'section-bento', label: 'Akses Cepat' },
-  track_finder: { id: 'section-track-finder', label: 'Peminatan' },
-  programs: { id: 'section-programs', label: 'Program Keahlian' },
-  announcements: { id: 'section-announcements', label: 'Informasi' },
-  achievements: { id: 'section-achievements', label: 'Prestasi' },
-  facilities: { id: 'section-facilities', label: 'Fasilitas' },
-  extracurricular: { id: 'section-extracurricular', label: 'Ekstrakurikuler' },
-  testimonials: { id: 'section-testimonials', label: 'Testimoni' },
-  faq: { id: 'section-faq', label: 'FAQ' },
-  cta: { id: 'section-cta', label: 'Pendaftaran' },
-};
+const sectionMeta = computed<Record<string, { id: string; label: string }>>(() => ({
+  hero: { id: 'section-hero', label: t('nav_sections.hero', 'Beranda') },
+  bento: { id: 'section-bento', label: t('nav_sections.bento', 'Akses Cepat') },
+  track_finder: { id: 'section-track-finder', label: t('nav_sections.track_finder', 'Peminatan') },
+  programs: { id: 'section-programs', label: t('nav_sections.programs', 'Program Keahlian') },
+  announcements: { id: 'section-announcements', label: t('nav_sections.announcements', 'Informasi') },
+  achievements: { id: 'section-achievements', label: t('nav_sections.achievements', 'Prestasi') },
+  facilities: { id: 'section-facilities', label: t('nav_sections.facilities', 'Fasilitas') },
+  extracurricular: { id: 'section-extracurricular', label: t('nav_sections.extracurricular', 'Ekstrakurikuler') },
+  testimonials: { id: 'section-testimonials', label: t('nav_sections.testimonials', 'Testimoni') },
+  faq: { id: 'section-faq', label: t('nav_sections.faq', 'FAQ') },
+  cta: { id: 'section-cta', label: t('nav_sections.cta', 'Pendaftaran') },
+}));
 
 const activeSections = computed(() => {
   const raw = getSetting('home_sections', DEFAULT_HOME_SECTIONS);
@@ -113,12 +117,13 @@ const isSectionVisible = (sectionName: string): boolean => {
 const scrollMode = computed(() => getSetting('home_scroll_mode', 'natural'));
 const isProportionalSnap = computed(() => scrollMode.value === 'snap');
 const showSideNavDots = computed(() => Boolean(getSetting('home_side_nav_dots', true)));
+const sideNavStyle = computed(() => String(getSetting('home_side_nav_style', 'glass') || 'glass'));
 
 const visibleNavSections = computed<SectionNavItem[]>(() => {
   const items: SectionNavItem[] = [];
   for (const secKey of DEFAULT_HOME_SECTIONS) {
     if (isSectionVisible(secKey)) {
-      const meta = SECTION_META[secKey];
+      const meta = sectionMeta.value[secKey];
       if (meta) {
         items.push(meta);
       }

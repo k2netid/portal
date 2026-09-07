@@ -468,7 +468,13 @@
       "floating_social_default_collapsed": "Mimitian dina Kaayaan Nyumput (Collapsed)",
       "floating_social_default_collapsed_hint": "Ukur témbongkeun tombol pemicu leutik nalika kaca mimiti dibuka.",
       "floating_social_show_on_mobile": "Témbongkeun dina Layar Mobile",
-      "floating_social_show_on_mobile_hint": "Kaci dock ngalayang tetep némbongan dina layar hp (otomatis dina posisi aman)."
+      "floating_social_show_on_mobile_hint": "Kaci dock ngalayang tetep némbongan dina layar hp (otomatis dina posisi aman).",
+      "home_scroll_mode": "Mode Gulir Tepas",
+      "home_scroll_mode_hint": "Pilihan mode gulir tepas (Standar Alami atawa Sinematik Proporsional 1 Layar).",
+      "home_side_nav_dots": "Témbongkeun Navigasi Titik Gigir",
+      "home_side_nav_dots_hint": "Témbongkeun indikator titik navigasi ngalayang di sisi katuhu nalika mode proporsional aktip.",
+      "home_side_nav_style": "Gaya & Éfék Navigasi Gigir",
+      "home_side_nav_style_hint": "Pilihan gaya visual sareng animasi titik gigir (Glass Capsule, Minimalist Dots, Golden Glow, atanapi Progress Bars)."
     },
     "common_options": {
       "kanan_tengah_right_center": "Katuhu Tengah (Right Center)",
@@ -483,7 +489,27 @@
       "horizontal_mendatar": "Horisontal (Ngagolér)",
       "frosted_glassmorphism_glass": "Frosted Glassmorphism (Glass)",
       "solid_dark_slate_solid": "Solid Dark Slate (Solid)",
-      "aura_glow_keemasan_glow": "Aura Glow Emas (Glow)"
+      "aura_glow_keemasan_glow": "Aura Glow Emas (Glow)",
+      "standar_alami_continuous_flow": "Standar Alami (Continuous Flow)",
+      "sinematik_proporsional_1_screen_viewport_snap": "Sinematik Proporsional (1-Screen Viewport Snap)",
+      "glass_capsule_default": "Glass Capsule (Default)",
+      "minimalist_dots_transparan_ramping": "Minimalist Dots (Transparan & Ramping)",
+      "golden_glow_cyber_aura_emas": "Golden Glow (Cyber Aura Emas)",
+      "progress_bars_garis_indikator_modern": "Progress Bars (Garis Indikator Modern)"
+    },
+    "nav_sections": {
+      "aria_label": "Navigasi Seksi Tepas",
+      "hero": "Tepas",
+      "bento": "Aksés Gancang",
+      "track_finder": "Peminatan",
+      "programs": "Program Kaahlian",
+      "announcements": "Warta & Informasi",
+      "achievements": "Préstasi",
+      "facilities": "Fasilitas",
+      "extracurricular": "Ékstrakurikulér",
+      "testimonials": "Testimoni",
+      "faq": "FAQ",
+      "cta": "Pangdaftaran"
     }
   }
 }

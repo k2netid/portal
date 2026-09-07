@@ -468,7 +468,13 @@
       "floating_social_default_collapsed": "Start in Collapsed State",
       "floating_social_default_collapsed_hint": "Only show a compact trigger button when the page first loads.",
       "floating_social_show_on_mobile": "Show on Mobile Screen",
-      "floating_social_show_on_mobile_hint": "Allow the floating dock to remain visible on mobile devices (automatically positioned in safe area)."
+      "floating_social_show_on_mobile_hint": "Allow the floating dock to remain visible on mobile devices (automatically positioned in safe area).",
+      "home_scroll_mode": "Home Scroll Mode",
+      "home_scroll_mode_hint": "Choice of home scroll experience (Classic Natural Flow or Cinematic 1-Screen Viewport Snap).",
+      "home_side_nav_dots": "Show Side Dot Navigation",
+      "home_side_nav_dots_hint": "Display vertical floating side dot indicator on desktop when proportional snap mode is active.",
+      "home_side_nav_style": "Side Navigation Style & Effect",
+      "home_side_nav_style_hint": "Visual theme and animation preset for side dots (Glass Capsule, Minimalist Dots, Golden Glow, or Progress Bars)."
     },
     "common_options": {
       "kanan_tengah_right_center": "Right Center",
@@ -483,7 +489,27 @@
       "horizontal_mendatar": "Horizontal",
       "frosted_glassmorphism_glass": "Frosted Glassmorphism (Glass)",
       "solid_dark_slate_solid": "Solid Dark Slate (Solid)",
-      "aura_glow_keemasan_glow": "Golden Aura Glow (Glow)"
+      "aura_glow_keemasan_glow": "Golden Aura Glow (Glow)",
+      "standar_alami_continuous_flow": "Standard Natural (Continuous Flow)",
+      "sinematik_proporsional_1_screen_viewport_snap": "Cinematic Proportional (1-Screen Viewport Snap)",
+      "glass_capsule_default": "Glass Capsule (Default)",
+      "minimalist_dots_transparan_ramping": "Minimalist Dots (Transparent & Clean)",
+      "golden_glow_cyber_aura_emas": "Golden Glow (Golden Cyber Aura)",
+      "progress_bars_garis_indikator_modern": "Progress Bars (Modern Indicator Lines)"
+    },
+    "nav_sections": {
+      "aria_label": "Home Section Navigation",
+      "hero": "Home",
+      "bento": "Quick Access",
+      "track_finder": "Tracks",
+      "programs": "Vocational Programs",
+      "announcements": "Announcements",
+      "achievements": "Achievements",
+      "facilities": "Facilities",
+      "extracurricular": "Extracurriculars",
+      "testimonials": "Testimonials",
+      "faq": "FAQ",
+      "cta": "Admissions"
     }
   }
 }
