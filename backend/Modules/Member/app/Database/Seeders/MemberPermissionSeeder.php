@@ -29,7 +29,7 @@ class MemberPermissionSeeder extends Seeder
             Permission::findOrCreate($name, 'web');
         }
 
-        foreach (['super', 'admin'] as $roleName) {
+        foreach (['super', 'admin', 'operator'] as $roleName) {
             $role = Role::query()
                 ->where('name', $roleName)
                 ->where('guard_name', 'web')
@@ -37,6 +37,14 @@ class MemberPermissionSeeder extends Seeder
             if ($role) {
                 $role->givePermissionTo($perms);
             }
+        }
+
+        $editor = Role::query()
+            ->where('name', 'editor')
+            ->where('guard_name', 'web')
+            ->first();
+        if ($editor) {
+            $editor->givePermissionTo(['view members']);
         }
     }
 }

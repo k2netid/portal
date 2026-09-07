@@ -53,5 +53,15 @@ class FormsPermissionSeeder extends Seeder
                 'edit forms',
             ]);
         }
+
+        $operator = Role::query()
+            ->where('name', 'operator')
+            ->where('guard_name', 'web')
+            ->first();
+        if ($operator) {
+            $operator->givePermissionTo([
+                'view forms',
+            ]);
+        }
     }
 }
