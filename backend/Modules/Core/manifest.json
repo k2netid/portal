@@ -364,6 +364,54 @@
           "oauth_scope": "modules:manage"
         }
       }
+    },
+    "files": {
+      "name": "File Manager",
+      "description": "Server storage explorer, directory management, and file archives",
+      "actions": {
+        "view": {
+          "permission": "view files",
+          "label": "View Files & Directories",
+          "label_key": "system.capabilities.core.files.view",
+          "action_type": "read",
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "files:read"
+        },
+        "upload": {
+          "permission": "upload files",
+          "label": "Upload Files",
+          "label_key": "system.capabilities.core.files.upload",
+          "action_type": "create",
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "files:write"
+        },
+        "edit": {
+          "permission": "edit files",
+          "label": "Edit, Rename & Move Files",
+          "label_key": "system.capabilities.core.files.edit",
+          "action_type": "update",
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "files:write"
+        },
+        "delete": {
+          "permission": "delete files",
+          "label": "Delete & Purge Files",
+          "label_key": "system.capabilities.core.files.delete",
+          "action_type": "delete",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin"],
+          "oauth_scope": "files:delete"
+        },
+        "manage": {
+          "permission": "manage files",
+          "label": "Manage File Storage",
+          "label_key": "system.capabilities.core.files.manage",
+          "action_type": "manage",
+          "is_dangerous": true,
+          "default_roles": ["super", "system-admin", "admin", "operator"],
+          "oauth_scope": "files:manage"
+        }
+      }
     }
   }
 }
