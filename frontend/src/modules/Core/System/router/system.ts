@@ -5,7 +5,7 @@ const systemRoutes: RouteRecordRaw[] = [
         path: 'onboarding',
         name: 'onboarding',
         component: () => import('@/modules/Core/System/views/OnboardingView.vue'),
-        meta: { title: 'system.onboarding.title', breadcrumb: 'system.onboarding.title', permission: 'view dashboard' },
+        meta: { title: 'system.onboarding.title', breadcrumb: 'system.onboarding.title', auth: true },
     },
     {
         path: 'settings',

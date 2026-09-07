@@ -164,4 +164,35 @@ class RolesAndUsersApiTest extends TestCase
         $this->postJson('/api/v1/manage/system/roles', [])->assertUnauthorized();
         $this->postJson('/api/v1/manage/system/users', [])->assertUnauthorized();
     }
+
+    public function test_login_returns_user_with_loaded_permissions_and_roles(): void
+    {
+        $user = $this->createAdminUser([
+            'email' => 'admin_test_rbac@example.com',
+            'password' => bcrypt('Password123!@#'),
+            'email_verified_at' => now(),
+        ]);
+
+        $response = $this->postJson('/api/v1/public/system/auth/login', [
+            'email' => 'admin_test_rbac@example.com',
+            'password' => 'Password123!@#',
+        ]);
+
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
+                'user' => [
+                    'id',
+                    'name',
+                    'email',
+                    'roles',
+                    'permissions',
+                ],
+                'redirect_to',
+            ],
+        ]);
+        $this->assertNotEmpty($response->json('data.user.roles'));
+        $this->assertIsArray($response->json('data.user.permissions'));
+    }
 }

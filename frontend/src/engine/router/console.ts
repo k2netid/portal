@@ -114,7 +114,7 @@ const dashboardRoute: RouteRecordRaw = {
             path: 'dashboard',
             name: 'system.dashboard',
             component: () => import('@/modules/Core/System/views/Dashboard.vue'),
-            meta: { permission: 'view dashboard' },
+            meta: { auth: true },
         },
         {
             path: '',

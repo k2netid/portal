@@ -109,7 +109,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         hasRole(roleName: string): boolean {
-            return this.user?.roles.some(r => r.name === roleName) ?? false;
+            return this.user?.roles?.some(r => (typeof r === 'string' ? r : r?.name) === roleName) ?? false;
         },
 
         getRoleRank(): number {
@@ -122,7 +122,7 @@ export const useAuthStore = defineStore('auth', {
 
         hasPermission(permissionName: string): boolean {
             if (this.hasRole("super")) return true;
-            return this.user?.permissions.some(p => p.name === permissionName) ?? false;
+            return this.user?.permissions?.some(p => (typeof p === 'string' ? p : p?.name) === permissionName) ?? false;
         },
 
         isAtLeastRole(minRole: string): boolean {
