@@ -1,6 +1,6 @@
 <template>
   <LayungPageGate
-    setting-key="enable_tim"
+    setting-key="enable_team"
     :title="t('pages.team.title', 'Tim Operasional')"
   >
     <div
@@ -224,7 +224,7 @@ import {
 
 const { t } = useThemeI18n('layung');
 const { displayCompanyName } = useLayungIdentity();
-const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('tim');
+const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('team');
 
 const operationalPillars = computed(() => [
   {

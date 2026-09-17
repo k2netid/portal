@@ -13,7 +13,11 @@
       try {
         var available = ['id', 'en', 'su'];
         var stored = localStorage.getItem('locale');
+        var themeDefault = localStorage.getItem('ja_theme_default_locale') || 'id';
         var pick = stored && available.indexOf(stored) !== -1 ? stored : null;
+        if (!pick && themeDefault !== 'auto' && available.indexOf(themeDefault) !== -1) {
+          pick = themeDefault;
+        }
         if (!pick) {
           var langs = navigator.languages && navigator.languages.length
             ? navigator.languages

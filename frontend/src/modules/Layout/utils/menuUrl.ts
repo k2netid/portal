@@ -75,7 +75,18 @@ export function isDropdownChildActive(
   if (!pathMatch) return false;
 
   if (childHash) {
-    return currentHash === childHash;
+    if (currentHash) {
+      return currentHash === childHash;
+    }
+    const tabQuery = String(route.query?.tab || '').toLowerCase();
+    if (tabQuery) {
+      return childHash === `#${tabQuery}`;
+    }
+    // Default tab on /solusi or /services is ISP
+    if (childHash === '#isp' && (currentPath === '/solusi' || currentPath === '/services')) {
+      return true;
+    }
+    return false;
   }
 
   if (currentHash) return false;
@@ -96,7 +107,15 @@ export function isDropdownChildActive(
 export function isMenuItemActive(item: MenuItem, route: RouteLocationNormalizedLoaded): boolean {
   const children = Array.isArray(item.children) ? item.children : [];
   if (children.length > 0) {
-    return children.some((child) => isDropdownChildActive(child, children, route));
+    const hasActiveChild = children.some((child) => isDropdownChildActive(child, children, route));
+    if (hasActiveChild) return true;
+
+    const currentPath = normalizePath(route.path);
+    const { path: itemPath } = splitMenuUrl(item.url);
+    if (itemPath && itemPath !== '/' && isRoutePathMatch(itemPath, currentPath)) {
+      return true;
+    }
+    return false;
   }
 
   const currentPath = normalizePath(route.path);

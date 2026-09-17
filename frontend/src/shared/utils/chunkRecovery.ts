@@ -27,6 +27,8 @@ export const isChunkLoadError = (error: unknown): boolean => {
         message.includes('failed to fetch dynamically imported module') ||
         message.includes('error loading dynamically imported module') ||
         message.includes('disallowed mime type') ||
+        message.includes('expected a javascript-or-wasm module script') ||
+        message.includes('strict mime type checking') ||
         message.includes('importing a module script failed') ||
         message.includes('async component timed out')
     );

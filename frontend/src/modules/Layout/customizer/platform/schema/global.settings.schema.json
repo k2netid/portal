@@ -10,6 +10,32 @@
         "category": "General",
         "scope": "platform"
     },
+    "default_site_locale": {
+        "label": "Bahasa Utama Situs",
+        "description": "Bahasa tampilan default saat situs pertama kali dibuka oleh pengunjung baru.",
+        "type": "select",
+        "options": [
+            {
+                "label": "Bahasa Indonesia (id)",
+                "value": "id"
+            },
+            {
+                "label": "English (en)",
+                "value": "en"
+            },
+            {
+                "label": "Basa Sunda (su)",
+                "value": "su"
+            },
+            {
+                "label": "Otomatis (Deteksi Browser)",
+                "value": "auto"
+            }
+        ],
+        "default": "id",
+        "category": "General",
+        "scope": "platform"
+    },
     "theme_style": {
         "label": "Theme Visual Style",
         "type": "select",
@@ -32,6 +58,28 @@
             }
         ],
         "default": "clean",
+        "category": "Appearance",
+        "scope": "platform"
+    },
+    "default_theme_mode": {
+        "label": "Mode Tampilan Default",
+        "description": "Mode warna tampilan awal bagi pengunjung publik sebelum memilih switch tema.",
+        "type": "select",
+        "options": [
+            {
+                "label": "Mode Gelap (Dark Mode)",
+                "value": "dark"
+            },
+            {
+                "label": "Mode Terang (Light Mode)",
+                "value": "light"
+            },
+            {
+                "label": "Ikuti Sistem Pengguna (System)",
+                "value": "system"
+            }
+        ],
+        "default": "dark",
         "category": "Appearance",
         "scope": "platform"
     },

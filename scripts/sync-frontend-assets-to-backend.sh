@@ -59,6 +59,9 @@ rsync -a --delete \
   --exclude='storage' \
   "$SRC_DIST" "$DST_PUBLIC"
 
+# Strip SRI integrity from mutable theme-prepaint.js to prevent CDN/browser cache mismatch
+sed -i -E 's/(<script\s+src="\/theme-prepaint\.js")[^>]*(><\/script>)/\1\2/g' "$DST_PUBLIC"/*.html 2>/dev/null || true
+
 echo "OK: synced $SRC_DIST → $DST_PUBLIC"
 
 # Runtime theme packages (theme.json + sample-data) so staging/prod www can scan-register

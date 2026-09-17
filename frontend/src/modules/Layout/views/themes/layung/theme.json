@@ -19,6 +19,32 @@
             "category": "General",
             "scope": "platform"
         },
+        "default_site_locale": {
+            "label": "Bahasa Utama Situs",
+            "description": "Bahasa tampilan default saat situs pertama kali dibuka oleh pengunjung baru.",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Bahasa Indonesia (id)",
+                    "value": "id"
+                },
+                {
+                    "label": "English (en)",
+                    "value": "en"
+                },
+                {
+                    "label": "Basa Sunda (su)",
+                    "value": "su"
+                },
+                {
+                    "label": "Otomatis (Deteksi Browser)",
+                    "value": "auto"
+                }
+            ],
+            "default": "id",
+            "category": "General",
+            "scope": "platform"
+        },
         "theme_style": {
             "label": "Theme Visual Style",
             "type": "select",
@@ -41,6 +67,28 @@
                 }
             ],
             "default": "clean",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "default_theme_mode": {
+            "label": "Mode Tampilan Default",
+            "description": "Mode warna tampilan awal bagi pengunjung publik sebelum memilih switch tema.",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Mode Gelap (Dark Mode)",
+                    "value": "dark"
+                },
+                {
+                    "label": "Mode Terang (Light Mode)",
+                    "value": "light"
+                },
+                {
+                    "label": "Ikuti Sistem Pengguna (System)",
+                    "value": "system"
+                }
+            ],
+            "default": "dark",
             "category": "Appearance",
             "scope": "platform"
         },
@@ -1162,13 +1210,6 @@
             "category": "Services Page",
             "description": "Nonaktifkan untuk menyembunyikan halaman /services dari pengunjung."
         },
-        "enable_solusi": {
-            "label": "Aktifkan halaman Solusi",
-            "type": "boolean",
-            "default": true,
-            "category": "Solusi Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /solusi dari pengunjung."
-        },
         "enable_pricing": {
             "label": "Aktifkan halaman Paket & Harga",
             "type": "boolean",
@@ -1176,12 +1217,12 @@
             "category": "Pricing Page",
             "description": "Nonaktifkan untuk menyembunyikan halaman /pricing dari pengunjung."
         },
-        "enable_tim": {
+        "enable_team": {
             "label": "Aktifkan halaman Tim",
             "type": "boolean",
             "default": true,
-            "category": "Tim Page",
-            "description": "Nonaktifkan untuk menyembunyikan halaman /tim dari pengunjung."
+            "category": "Team Page",
+            "description": "Nonaktifkan untuk menyembunyikan halaman /team dari pengunjung."
         },
         "contact_form_slug": {
             "label": "Slug formulir kontak",

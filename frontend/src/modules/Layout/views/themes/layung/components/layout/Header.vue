@@ -623,7 +623,7 @@ import { useI18n } from 'vue-i18n';
 import {
   Globe, Menu, X, ChevronDown, ChevronRight, Check,
   Sparkles, User, LogIn, ExternalLink, ArrowRight,
-  MessageCircle, Home, Layers, Package, Newspaper, PhoneCall, Info,
+  MessageCircle, Home, Layers, Package, Newspaper, PhoneCall, Info, Users,
 } from 'lucide-vue-next';
 import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/BrandMark.vue';
 import {
@@ -835,13 +835,12 @@ const defaultNavItems = computed((): MenuItem[] => [
   {
     id: 'ly-nav-layanan',
     title: tt('header.layanan', 'Layanan'),
-    url: '/services',
+    url: '/services#isp',
     type: 'custom',
     sort_order: 2,
     children: [
-      { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/pricing/isp', type: 'custom' },
-      { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/solusi', type: 'custom' },
-      { id: 'ly-nav-achievement', title: tt('header.achievement', 'SLA & Jaringan'), url: '/achievement', type: 'custom' },
+      { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/services#isp', type: 'custom' },
+      { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/services#msp', type: 'custom' },
     ],
   },
   {
@@ -855,8 +854,9 @@ const defaultNavItems = computed((): MenuItem[] => [
       { id: 'ly-nav-pricing-msp', title: tt('header.pricingMsp', 'Paket MSP'), url: '/pricing/msp', type: 'custom' },
     ],
   },
-  { id: 'ly-nav-blog', title: tt('header.blog', 'Berita'), url: '/blog', type: 'custom', sort_order: 4 },
-  { id: 'ly-nav-contact', title: tt('header.contact', 'Kontak'), url: '/contact', type: 'custom', sort_order: 5 },
+  { id: 'ly-nav-team', title: tt('header.team', 'Tim'), url: '/team', type: 'custom', sort_order: 4 },
+  { id: 'ly-nav-blog', title: tt('header.blog', 'Berita'), url: '/blog', type: 'custom', sort_order: 5 },
+  { id: 'ly-nav-contact', title: tt('header.contact', 'Kontak'), url: '/contact', type: 'custom', sort_order: 6 },
 ]);
 
 const navItems = computed<MenuItem[]>(() => {
@@ -883,6 +883,7 @@ const getMenuItemIcon = (item: MenuItem) => {
   if (url.includes('about') || title.includes('tentang')) return Info;
   if (url.includes('service') || title.includes('layanan')) return Layers;
   if (url.includes('pricing') || title.includes('paket') || title.includes('harga')) return Package;
+  if (url.includes('team') || url.includes('tim') || title.includes('tim') || title.includes('team')) return Users;
   if (url.includes('blog') || title.includes('berita') || title.includes('warta')) return Newspaper;
   if (url.includes('contact') || title.includes('kontak')) return PhoneCall;
   return Globe;

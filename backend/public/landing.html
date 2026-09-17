@@ -11,7 +11,11 @@
       try {
         var available = ['id', 'en', 'su'];
         var stored = localStorage.getItem('locale');
+        var themeDefault = localStorage.getItem('ja_theme_default_locale') || 'id';
         var pick = stored && available.indexOf(stored) !== -1 ? stored : null;
+        if (!pick && themeDefault !== 'auto' && available.indexOf(themeDefault) !== -1) {
+          pick = themeDefault;
+        }
         if (!pick) {
           var langs = navigator.languages && navigator.languages.length
             ? navigator.languages
@@ -28,8 +32,8 @@
       } catch (e) { /* ignore */ }
     })();
   </script>
-  <script type="module" crossorigin="" src="/assets/landing-oEQfy1jk.js" integrity="sha384-pcDK7p3Aptx/uiZbTqsrgT1F5NnTTQOmqShf2PST2iGOBVWXc/UBdehgFhEciXPb"></script>
-  <link rel="stylesheet" crossorigin="" href="/assets/shell-Bld6yJ2N.css" integrity="sha384-beb7sD1wGjRuT2BL3dNlnXRX2qyyAX1CP8uoJNbfW22RoH2U5Ywp9B962oT3fmh2">
+  <script type="module" crossorigin="" src="/assets/landing-PIy3j1p7.js" integrity="sha384-MddJUsYxFXjBkyTw+NCI9kC4Su0pzUN3tRD6GQ/Tf5BUitqUmO0w9490nl9NUAv2"></script>
+  <link rel="stylesheet" crossorigin="" href="/assets/shell-CxVVNIUN.css" integrity="sha384-LMpxJX+d4SwOqPyMm5SoVqrKRA0BZriTfA2DRR+w8VDRcEVuR55reyIAi0c8pr1k">
   <link rel="stylesheet" crossorigin="" href="/assets/landing-CqsPwQ0M.css" integrity="sha384-Xpaoh7dHEEvlkAG1oDVIPxvYJUMLM5olbBSx5fQXPeLr9XLYpoDAb2fVZX8wlDkj">
 </head>
 <body>

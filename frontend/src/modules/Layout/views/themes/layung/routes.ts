@@ -5,12 +5,6 @@ const publicThemePage = () => import('@/modules/Layout/components/themes/PublicT
 
 const routes: RouteRecordRaw[] = [
     {
-        path: 'solusi',
-        name: 'layung-solusi',
-        component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Solusi' },
-    },
-    {
         path: 'services',
         name: 'layung-services',
         component: publicThemePage,
@@ -47,10 +41,11 @@ const routes: RouteRecordRaw[] = [
         meta: { public: true, themePage: 'pages/Achievement' },
     },
     {
-        path: 'tim',
-        name: 'layung-tim',
+        path: 'team',
+        name: 'layung-team',
+        alias: ['tim'],
         component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Tim' },
+        meta: { public: true, themePage: 'pages/Team' },
     },
     {
         path: 'contact',

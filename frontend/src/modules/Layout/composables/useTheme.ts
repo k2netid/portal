@@ -6,6 +6,7 @@ import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/janariPresets';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { hexToHslString } from '@/shared/utils/color';
+import { applyFrontendThemeDefault } from '@/shared/composables/useDarkMode';
 import { applyMergedSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema';
 import {
     isCustomizerPreviewQuery,
@@ -400,6 +401,15 @@ export function useTheme() {
                 themeSettings.value = data.settings || {};
             }
 
+            if (themeSettings.value.default_theme_mode) {
+                applyFrontendThemeDefault(themeSettings.value.default_theme_mode);
+            }
+            if (typeof window !== 'undefined' && themeSettings.value.default_site_locale) {
+                try {
+                    localStorage.setItem('ja_theme_default_locale', String(themeSettings.value.default_site_locale));
+                } catch { /* ignore */ }
+            }
+
             // Load theme assets
             if (nextAssetsSig !== prevAssetsSig && data.assets) {
                 themeAssets.value = {
@@ -473,6 +483,15 @@ export function useTheme() {
                             }
 
                             applyThemeStyles();
+
+                            if (incomingSettings.default_theme_mode) {
+                                applyFrontendThemeDefault(incomingSettings.default_theme_mode);
+                            }
+                            if (incomingSettings.default_site_locale) {
+                                try {
+                                    localStorage.setItem('ja_theme_default_locale', String(incomingSettings.default_site_locale));
+                                } catch { /* ignore */ }
+                            }
 
                             if (themeUsesJanariCanvas(activeTheme.value)) {
                                 requestAnimationFrame(() => {
