@@ -14,12 +14,14 @@ Alur wajib: [`WORKFLOW.md`](../WORKFLOW.md) · Mulai task: [`guides/start-a-task
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
-| [2026-09-19-theme-registry-console-ux-3level](2026-09-19-theme-registry-console-ux-3level.md) | Console UI/UX Themes shelf + 3 tingkat visual & kuota lisensi | `in_progress` | M |
+| *(Belum ada task aktif)* | | | |
 
 ## Selesai hari ini (belum diarsip)
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
+| [2026-09-19-theme-registry-3level-e2e](2026-09-19-theme-registry-3level-e2e.md) | Playwright E2E test alur 3-Tingkat Themes di App Store & Themes Manager | `done` | S |
+| [2026-09-19-theme-registry-console-ux-3level](2026-09-19-theme-registry-console-ux-3level.md) | Console UI/UX Themes shelf + 3 tingkat visual & kuota lisensi | `done` | M |
 | [2026-09-18-theme-registry-packs-phase1](2026-09-18-theme-registry-packs-phase1.md) | Theme packs registry + kuota lisensi (fase 1) | `done` | L |
 | [2026-09-18-theme-cms-baseline-alignment](2026-09-18-theme-cms-baseline-alignment.md) | Align fitur CMS lintas tema | `done` | L |
 | [2026-09-18-tim-to-team-rename](2026-09-18-tim-to-team-rename.md) | Tim → Team (English + alias `/tim`) | `done` | M |
