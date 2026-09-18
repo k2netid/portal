@@ -5,10 +5,11 @@ const publicThemePage = () => import('@/modules/Layout/components/themes/PublicT
 
 const routes: RouteRecordRaw[] = [
     {
-        path: 'solusi',
-        name: 'janari-solusi',
+        path: 'solutions',
+        name: 'janari-solutions',
+        alias: ['solusi'],
         component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Solusi' },
+        meta: { public: true, themePage: 'pages/Solutions' },
     },
     {
         path: 'pricing',
@@ -29,10 +30,11 @@ const routes: RouteRecordRaw[] = [
         meta: { public: true, themePage: 'pages/Achievement' },
     },
     {
-        path: 'tim',
-        name: 'janari-tim',
+        path: 'team',
+        name: 'janari-team',
+        alias: ['tim'],
         component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Tim' },
+        meta: { public: true, themePage: 'pages/Team' },
     },
     {
         path: 'contact',

@@ -1,7 +1,7 @@
 {
   "name": "Layout",
   "slug": "layout",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Site layout pack \u2014 menus, widgets, redirects, themes, visual builder, and block renderer for Publishing.",
   "author": "Jejakawan Team",
   "type": "module",

@@ -6,6 +6,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Theme-native Team page: prefetch map `/team` (+ `/tim` alias) → `Team`.
+- Host SEO: wire `resolveSareupnaPublicSeo` in `FrontendLayout` (parity with janari/layung/sarangenge).
+- Theme-native public pages: prefetch map `/solutions` (+ `/solusi` alias) → `Solutions` for janari/sareupna.
 - Theme package `CHANGELOG.md` (Keep a Changelog) for janari / layung / sarangenge / sareupna; host changes remain in this file.
 - **Theme Sarangenge Side Nav Presets & Viewport Scroll Snap**: Created floating side dot navigation (`SarangengeSideNav.vue`) with 4 visual presets (`glass`, `minimal`, `glow`, `bars`), GSAP spring motion, i18n tooltips, `<Teleport to="body">` centered vertical placement, and `yMandatory` scroll snap with Theme Customizer controls ([ADR-018](../../../../docs/adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md)).
 - Site Favicon Isolation & DOM Equality: `FrontendLayout.vue` acts as the single source of truth for public site favicon lifecycle, using the isolated `ja_site_favicon_href` cache key and DOM equality check in `applySiteFavicon` to eliminate cross-tab favicon flickering ([ADR-015](../../../../docs/adr/ADR-015-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md)).

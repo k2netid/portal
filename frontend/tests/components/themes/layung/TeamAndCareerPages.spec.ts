@@ -2,16 +2,16 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createPinia, setActivePinia } from 'pinia';
 import i18n from '@/engine/i18n';
-import Tim from '@/modules/Layout/views/themes/layung/pages/Tim.vue';
+import Team from '@/modules/Layout/views/themes/layung/pages/Team.vue';
 import CareerCenter from '@/modules/Layout/views/themes/layung/pages/CareerCenter.vue';
 
-describe('Layung Tim and Career pages', () => {
+describe('Layung Team and Career pages', () => {
     beforeEach(() => {
         setActivePinia(createPinia());
     });
 
-    it('renders Tim page with 4 operational pillars, escalation tiers, and hubs', async () => {
-        const wrapper = mount(Tim, {
+    it('renders Team page with 4 operational pillars, escalation tiers, and hubs', async () => {
+        const wrapper = mount(Team, {
             global: {
                 plugins: [i18n],
                 stubs: {

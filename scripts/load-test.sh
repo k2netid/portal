@@ -27,7 +27,7 @@ PAGES=(
   "/"
   "/pricing/isp"
   "/contact"
-  "/tim"
+  "/team"
   "/career"
 )
 

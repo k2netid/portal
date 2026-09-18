@@ -31,8 +31,8 @@ Host resolves views by name:
 | Resolver `page` prop | File |
 |----------------------|------|
 | `Home` | `pages/Home.vue` |
-| `Solusi` | `pages/Solusi.vue` (`/solusi`) |
-| `Tim` | `pages/Tim.vue` (`/tim`) |
+| `Solutions` | `pages/Solutions.vue` (`/solutions`, alias `/solusi`) |
+| `Team` | `pages/Team.vue` (`/team`, alias `/tim`) |
 | `Blog` | `pages/Blog.vue` |
 | `components/Header` | `components/layout/Header.vue` |
 | `components/Footer` | `components/layout/Footer.vue` |

@@ -420,9 +420,9 @@ const defaultCol1Items = computed((): Partial<MenuItem>[] => [
 ]);
 
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
-  { title: tt('header.solusi', 'Managed Services'), url: '/solusi' },
+  { title: tt('header.solusi', 'Managed Services'), url: '/pricing/msp' },
   { title: tt('header.pricingMsp', 'Paket MSP'), url: '/pricing/msp' },
-  { title: tt('header.tim', 'Tim'), url: '/tim' },
+  { title: tt('header.tim', 'Tim'), url: '/team' },
   { title: tt('header.career', 'Karir'), url: '/career' },
 ]);
 

@@ -60,9 +60,9 @@ const splitLines = (value: unknown): string[] =>
     .map((line) => line.trim())
     .filter(Boolean)
 
-const titleText = computed(() => localizedString('page_solusi_stack_title') || t('pages.solusi.stackTitle'))
-const subtitleText = computed(() => localizedString('page_solusi_stack_subtitle') || t('pages.solusi.stackSubtitle'))
-const workspaceNote = computed(() => localizedString('page_solusi_workspace_note') || t('pages.solusi.workspaceNote'))
+const titleText = computed(() => localizedString('page_solusi_stack_title') || t('pages.solutions.stackTitle'))
+const subtitleText = computed(() => localizedString('page_solusi_stack_subtitle') || t('pages.solutions.stackSubtitle'))
+const workspaceNote = computed(() => localizedString('page_solusi_workspace_note') || t('pages.solutions.workspaceNote'))
 
 const modules = computed(() => {
   const raw = getSetting('page_solusi_stack_items')
@@ -80,9 +80,9 @@ const modules = computed(() => {
 
   return DEFAULTS.map((def) => ({
     key: def.key,
-    title: t(`pages.solusi.modules.${def.key}.name`),
-    description: t(`pages.solusi.modules.${def.key}.summary`),
-    features: def.features.map((f) => t(`pages.solusi.modules.${def.key}.features.${f}`)),
+    title: t(`pages.solutions.modules.${def.key}.name`),
+    description: t(`pages.solutions.modules.${def.key}.summary`),
+    features: def.features.map((f) => t(`pages.solutions.modules.${def.key}.features.${f}`)),
   }))
 })
 </script>

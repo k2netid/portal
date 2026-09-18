@@ -14,7 +14,7 @@ Alur wajib: [`WORKFLOW.md`](../WORKFLOW.md) · Mulai task: [`guides/start-a-task
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
-| _(tidak ada brief aktif)_ | | | |
+| [2026-09-18-theme-cms-baseline-alignment](2026-09-18-theme-cms-baseline-alignment.md) | Align fitur CMS lintas tema (SoC khas tetap) | `done` | L |
 
 ## Archive
 

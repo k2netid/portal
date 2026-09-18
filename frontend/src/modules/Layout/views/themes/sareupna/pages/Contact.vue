@@ -591,6 +591,7 @@ import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+import { useSareupnaIdentity } from '../composables/useSareupnaIdentity'
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import api, { getCsrfCookie } from '@/engine/api/client'
 import { publishingPaths } from '@/engine/api/paths'
@@ -669,9 +670,13 @@ const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting();
 const { t, locale } = useThemeI18n('sareupna');
 
-const displayAddress = computed(() => String(getSetting('platform_address', 'PT Jejak Awan Digital, Bandung & Jakarta, Indonesia') || 'PT Jejak Awan Digital, Bandung & Jakarta, Indonesia'));
-const displayPhone = computed(() => String(getSetting('platform_contact_phone', '+62 811-2345-6789') || '+62 811-2345-6789'));
-const displayEmail = computed(() => String(getSetting('platform_contact_email', 'halo@jejakawan.com') || 'halo@jejakawan.com'));
+const {
+  displayAddress,
+  displayPhone,
+  displayEmail,
+  phoneDialHref,
+  whatsAppAdminUrl,
+} = useSareupnaIdentity()
 
 const labelEmail = computed(() => localizedString('page_contact_label_email') || t('pages.contact.labelEmail'))
 const labelPhone = computed(() => localizedString('page_contact_label_phone') || t('pages.contact.labelPhone'))
@@ -688,14 +693,6 @@ const contactSetupHint = computed(() => t('pages.contact.setupHint'))
 const router = useRouter()
 const publishingStore = usePublishingStore()
 const toast = useToast()
-const phoneDialHref = computed(() => {
-  const raw = String(displayPhone.value || '').replace(/[^\d+]/g, '');
-  return raw ? `tel:${raw}` : '';
-});
-const whatsAppAdminUrl = computed(() => {
-  const raw = String(getSetting('platform_contact_whatsapp', '') || '').replace(/[^\d]/g, '');
-  return raw ? `https://wa.me/${raw}` : '';
-});
 const cmsBody = computed(() => resolvePublicPageCmsBody(pageData.value, locale.value));
 
 const phoneActionHref = computed(() => whatsAppAdminUrl.value || phoneDialHref.value || '');

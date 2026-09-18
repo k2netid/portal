@@ -22,6 +22,9 @@
         >
           {{ pageTitle }}
         </h1>
+
+        <PluginSlot name="after_hero" class="w-full" />
+
         <div
           v-if="pageFeaturedImage"
           class="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[16/9] border border-border/60 shadow-lg bg-muted"
@@ -53,6 +56,7 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
 import PageDisabled from '@/modules/Layout/views/themes/sarangenge/components/shared/PageDisabled.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';

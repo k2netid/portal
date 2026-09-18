@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background" data-ja-customizer-target="solusi">
+  <div class="min-h-screen bg-background" data-ja-customizer-target="solutions">
     <!-- Visual Builder Content if page was customized in Builder -->
     <BlockRenderer
       v-if="hasBuilderBlocks"
@@ -102,12 +102,12 @@ const builderBlocks = computed<BlockInstance[]>(() => {
 })
 const hasBuilderBlocks = computed(() => pageUsesBuilderOverride(pageData.value))
 
-const pageTitle = computed(() => localizedString('page_solusi_title') || t('pages.solusi.title'))
-const pageSubtitle = computed(() => localizedString('page_solusi_subtitle') || t('pages.solusi.subtitle'))
-const sectionLabel = computed(() => localizedString('page_solusi_section_label') || t('pages.solusi.sectionLabel'))
-const ctaTitle = computed(() => localizedString('page_solusi_cta_title') || t('pages.solusi.ctaTitle'))
-const ctaBody = computed(() => localizedString('page_solusi_cta_body') || t('pages.solusi.ctaBody'))
-const ctaContact = computed(() => localizedString('page_solusi_cta_contact') || t('pages.solusi.ctaContact'))
-const ctaPricing = computed(() => localizedString('page_solusi_cta_pricing') || t('pages.solusi.ctaPricing'))
-const ctaMember = computed(() => localizedString('page_solusi_cta_member') || t('pages.solusi.ctaMember'))
+const pageTitle = computed(() => localizedString('page_solusi_title') || t('pages.solutions.title'))
+const pageSubtitle = computed(() => localizedString('page_solusi_subtitle') || t('pages.solutions.subtitle'))
+const sectionLabel = computed(() => localizedString('page_solusi_section_label') || t('pages.solutions.sectionLabel'))
+const ctaTitle = computed(() => localizedString('page_solusi_cta_title') || t('pages.solutions.ctaTitle'))
+const ctaBody = computed(() => localizedString('page_solusi_cta_body') || t('pages.solutions.ctaBody'))
+const ctaContact = computed(() => localizedString('page_solusi_cta_contact') || t('pages.solutions.ctaContact'))
+const ctaPricing = computed(() => localizedString('page_solusi_cta_pricing') || t('pages.solutions.ctaPricing'))
+const ctaMember = computed(() => localizedString('page_solusi_cta_member') || t('pages.solutions.ctaMember'))
 </script>

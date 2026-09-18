@@ -447,8 +447,8 @@ const heroCtaPrimaryText = computed(
 const scrollLabel = computed(() => localizedString('hero_scroll_label') || t('theme.janari.common.scroll'))
 const latestNewsLabel = computed(() => localizedString('hero_latest_news_label') || t('theme.janari.common.latestNews'))
 const heroCtaPrimaryUrl = computed(() => {
-    const raw = getSetting('hero_cta_primary_url', '/solusi')
-    return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solusi'
+    const raw = getSetting('hero_cta_primary_url', '/solutions')
+    return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solutions'
 })
 const heroCtaPricingUrl = computed(() => {
     const raw = getSetting('cta_secondary_url', '/pricing')

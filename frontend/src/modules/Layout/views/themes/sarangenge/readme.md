@@ -52,7 +52,7 @@ sarangenge/
 │
 ├── pages/                                      # Route Views (ThemePageResolver)
 │   ├── Home.vue, About.vue, Blog.vue, Post.vue, Contact.vue, Search.vue
-│   ├── Achievement.vue, Solusi.vue, Services.vue, CareerCenter.vue, Pricing.vue, Tim.vue, Page.vue
+│   ├── Achievement.vue, Programs.vue, Facilities.vue, CareerCenter.vue, Pricing.vue, Team.vue, Page.vue
 │
 └── locales/                                    # 100% Symmetric 3-Language Bundles
     ├── en.json, id.json, su.json

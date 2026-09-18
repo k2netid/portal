@@ -131,7 +131,7 @@ const heroTitle = computed(() => localizedString('hero_title') || t('hero.brandF
 const heroSubtitle = computed(() => localizedString('hero_subtitle') || t('hero.subtitleDefault'));
 
 const heroCtaPrimaryText = computed(() => localizedString('hero_primary_cta_text') || localizedString('hero_cta_primary') || t('hero.ctaPrimary'));
-const heroCtaPrimaryUrl = computed(() => String(getSetting('hero_primary_cta_link') || getSetting('hero_cta_primary_url', '/solusi') || '/solusi'));
+const heroCtaPrimaryUrl = computed(() => String(getSetting('hero_primary_cta_link') || getSetting('hero_cta_primary_url', '/solutions') || '/solutions'));
 
 const heroCtaSecondaryText = computed(() => localizedString('hero_secondary_cta_text') || localizedString('cta_secondary_text') || t('hero.ctaPricing'));
 const heroCtaSecondaryUrl = computed(() => String(getSetting('hero_secondary_cta_link') || getSetting('cta_secondary_url', '/pricing') || '/pricing'));

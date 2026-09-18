@@ -1,67 +1,61 @@
-export type JanariTranslate = (key: string, fallback?: string) => string;
+export type SareupnaTranslate = (key: string, fallback?: string) => string;
 
 const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKey: string; descFallback: string }> = {
   'pages/Home': {
     titleKey: 'header.home',
     titleFallback: 'Beranda',
     descKey: 'footer.description',
-    descFallback: 'Jejakawan Core Engine — Platform Modern CMS, Publishing, dan Manajemen Tema.',
+    descFallback: 'Sareupna — high-performance cloud & developer platform theme.',
   },
   'pages/About': {
     titleKey: 'header.about',
-    titleFallback: 'Tentang Kami',
-    descKey: 'pages.about.heroSubtitle',
-    descFallback: 'Mengenal ekosistem, visi, dan solusi inovasi Jejakawan.',
+    titleFallback: 'Tentang Platform',
+    descKey: 'pages.about.subtitle',
+    descFallback: 'Visi teknologi dan arsitektur cloud PT Jejak Awan Digital.',
   },
   'pages/Solutions': {
     titleKey: 'pages.solutions.title',
-    titleFallback: 'Solusi',
+    titleFallback: 'Solusi Cloud',
     descKey: 'pages.solutions.subtitle',
-    descFallback: 'Solusi teknologi terpadu dan layanan profesional.',
+    descFallback: 'Infrastruktur terdistribusi dan solusi rekayasa platform.',
   },
   'pages/Pricing': {
-    titleKey: 'header.pricing',
+    titleKey: 'pages.pricing.title',
     titleFallback: 'Paket & Harga',
     descKey: 'pages.pricing.subtitle',
-    descFallback: 'Pilihan paket transparan dengan skema lisensi fleksibel.',
+    descFallback: 'Paket platform cloud dan lisensi modular.',
   },
   'pages/Blog': {
     titleKey: 'header.blog',
-    titleFallback: 'Berita & Warta',
-    descKey: 'footer.description',
-    descFallback: 'Warta terkini, rilis fitur, dan artikel edukatif.',
-  },
-  'pages/Team': {
-    titleKey: 'pages.team.title',
-    titleFallback: 'Tim',
-    descKey: 'pages.team.subtitle',
-    descFallback: 'Tim di balik produk dan layanan Kami.',
+    titleFallback: 'Wawasan',
+    descKey: 'pages.blog.subtitle',
+    descFallback: 'Artikel teknis, arsitektur sistem, dan inovasi cloud.',
   },
   'pages/Contact': {
     titleKey: 'header.contact',
     titleFallback: 'Kontak',
-    descKey: 'pages.contact.subtitle',
-    descFallback: 'Hubungi tim ahli kami untuk konsultasi dan bantuan.',
+    descKey: 'pages.contact.introQuestion',
+    descFallback: 'Hubungi tim arsitek cloud untuk konsultasi platform.',
   },
   'pages/Search': {
     titleKey: 'header.search',
     titleFallback: 'Pencarian',
     descKey: 'footer.description',
-    descFallback: 'Pencarian halaman dan konten publik.',
+    descFallback: 'Cari dokumentasi dan konten platform.',
   },
 };
 
-export function resolveJanariPublicSeo(input: {
+export function resolveSareupnaPublicSeo(input: {
   themePage?: string;
   siteName: string;
-  t: JanariTranslate;
+  t: SareupnaTranslate;
 }): { title: string; description: string } {
   const siteName = input.siteName.trim() || 'Portal';
   const copy = input.themePage ? PAGE_SEO[input.themePage] : undefined;
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', `${siteName} — Platform Modern CMS, Publishing, dan Manajemen Tema.`);
+    : input.t('footer.description', `${siteName} — Cloud & developer platform.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'

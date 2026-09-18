@@ -3,7 +3,7 @@
   "description": "Sareupna — High-Performance Cloud & Developer Platform Theme untuk Jejakawan.com.",
   "header": {
     "home": "Tepas",
-    "solusi": "Solusi Cloud",
+    "about": "Tentang",
     "platform": "Platform",
     "pricing": "Pakét & Rérégan",
     "blog": "Wawasan",
@@ -24,7 +24,8 @@
     "logout": "Keluar",
     "memberFallback": "Pengembang",
     "officialLine1": "Jejakawan",
-    "officialLine2": "Membangun Solusi, Meninggalkan Jejak"
+    "officialLine2": "Membangun Solusi, Meninggalkan Jejak",
+    "solutions": "Solusi Cloud"
   },
   "common": {
     "copied": "KASALIN!",
@@ -147,6 +148,58 @@
       "contentTypeTag": "Topik",
       "contentTypeDefault": "Konten"
     },
+    "about": {
+      "title": "Tentang Platform",
+      "sectionLabel": "Platform Identity",
+      "subtitle": "Visi teknologi dan arsitektur cloud untuk control plane modern.",
+      "missionTitle": "Misi Rekayasa",
+      "missionP1": "Kami membangun control plane modular agar tim produk dapat merilis, mengkurasi, dan mengoperasikan portal tanpa mengorbankan isolasi tema.",
+      "missionP2": "Sareupna menampilkan kontrak CMS yang sama dengan tema lain — About, Contact Reach, Blog, menus — dengan chrome cyber khas developer platform.",
+      "solutionsCta": "Lihat Solusi Platform",
+      "identityLabel": "Operator",
+      "contactCta": "Hubungi Tim Arsitek"
+    },
+    "pricing": {
+      "title": "Paket & Layanan",
+      "sectionLabel": "Pricing & Cloud Subscriptions",
+      "headline": "Pilihan Paket Transparan",
+      "subtitle": "Pilih skala komputasi dan kapabilitas yang sesuai dengan tahap perkembangan platform Anda.",
+      "tiers": {
+        "starter": {
+          "name": "Starter",
+          "price": "IDR 0",
+          "period": "/ selamanya",
+          "description": "Untuk pengembang independen dan eksperimen arsitektur lokal.",
+          "f1": "Single Instance Deployment",
+          "f2": "Core CMS & Visual Canvas",
+          "f3": "Community Discord Support",
+          "cta": "Mulai Gratis"
+        },
+        "pro": {
+          "name": "Professional",
+          "price": "IDR 499K",
+          "period": "/ bulan",
+          "description": "Untuk bisnis berkembang yang membutuhkan edge delivery dan performa teruji.",
+          "f1": "Multi-Tenant Ready",
+          "f2": "CDN & Edge Asset Optimization",
+          "f3": "Granular RBAC & Security Audit",
+          "f4": "Email Support 8x5",
+          "cta": "Pilih Paket Pro",
+          "badge": "Paling Populer"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Custom",
+          "period": "/ SLA Berbasis Kontrak",
+          "description": "Infrastruktur terdedikasi penuh dengan audit regulasi dan dukungan 24/7.",
+          "f1": "Dedicated Cloud Cluster",
+          "f2": "99.99% Uptime SLA Garansi",
+          "f3": "Dedicated Technical Account Manager",
+          "f4": "On-Premise / Hybrid Deployment",
+          "cta": "Hubungi Sales"
+        }
+      }
+    },
     "contact": {
       "title": "Hubungi Tim Arsitek Kami",
       "introQuestion": "Ada kebutuhan arsitektur cloud atau implementasi enterprise?",
@@ -200,6 +253,12 @@
     },
     "post": {
       "authorRole": "Tim Arsitek Cloud"
+    },
+    "solutions": {
+      "title": "Solusi Platform",
+      "sectionLabel": "Cloud Architecture & Solutions",
+      "headline": "Solusi Skalabilitas Platform",
+      "subtitle": "Infrastruktur terdistribusi dan solusi rekayasa cerdas untuk mentransformasi keandalan sistem digital Anda."
     }
   },
   "customizer": {

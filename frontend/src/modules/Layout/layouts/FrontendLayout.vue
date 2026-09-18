@@ -157,11 +157,13 @@ import { applyFavicon, isGenericEngineFavicon, resolveFavicon } from '@/modules/
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n'
 import { resolveLayungPublicSeo } from '@/modules/Layout/views/themes/layung/composables/layungPublicSeo'
 import { resolveSarangengePublicSeo } from '@/modules/Layout/views/themes/sarangenge/composables/sarangengePublicSeo'
+import { resolveSareupnaPublicSeo } from '@/modules/Layout/views/themes/sareupna/composables/sareupnaPublicSeo'
 import { resolveJanariPublicSeo } from '@/modules/Layout/views/themes/janari/composables/janariPublicSeo'
 
 const { t } = useI18n({ useScope: 'global' })
 const { t: tLayung } = useThemeI18n('layung')
 const { t: tSarangenge } = useThemeI18n('sarangenge')
+const { t: tSareupna } = useThemeI18n('sareupna')
 const { t: tJanari } = useThemeI18n('janari')
 const { activeTheme, getSetting, loading, error, loadActiveTheme } = useTheme()
 const systemStore = useSystemStore()
@@ -188,8 +190,10 @@ const viewModules = import.meta.glob('@/modules/Layout/views/themes/**/*.vue') a
 const CORE_PUBLIC_PATH_TO_PAGE: Record<string, string> = {
   '/': 'Home',
   '/about': 'About',
-  '/tim': 'Tim',
-  '/solusi': 'Solusi',
+  '/team': 'Team',
+  '/tim': 'Team',
+  '/solutions': 'Solutions',
+  '/solusi': 'Solutions',
   '/pricing': 'Pricing',
   '/blog': 'Blog',
   '/contact': 'Contact',
@@ -228,6 +232,12 @@ useHead(computed(() => {
       themePage,
       siteName: siteName || t('common.schoolName', 'Portal Sekolah'),
       t: tSarangenge,
+    })
+  } else if (slug === 'sareupna') {
+    seo = resolveSareupnaPublicSeo({
+      themePage,
+      siteName: siteName || t('common.siteName', 'Portal'),
+      t: tSareupna,
     })
   } else if (slug === 'janari') {
     seo = resolveJanariPublicSeo({

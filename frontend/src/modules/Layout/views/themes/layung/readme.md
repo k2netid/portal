@@ -53,10 +53,16 @@ layung/
 │   ├── blog/                                           # PostCard.vue
 │   └── shared/                                         # Breadcrumb, PageDisabled, LayungSplitText
 └── pages/                                              # Route Views (ThemePageResolver)
-    ├── Home.vue, About.vue, Solusi.vue, Services.vue, Pricing.vue,
-    ├── Achievement.vue, CareerCenter.vue, Tim.vue, Blog.vue, Post.vue,
+    ├── Home.vue, About.vue, Services.vue, Pricing.vue, PricingIsp.vue, PricingMsp.vue,
+    ├── Achievement.vue, CareerCenter.vue, Team.vue, Blog.vue, Post.vue,
     └── Contact.vue, Search.vue, Page.vue
 ```
+
+### CMS baseline notes
+
+- Blog is **list + widget sidebar** (`WidgetArea` / Search / Categories / Recent / Newsletter) — not a port of janari `BlogSidebar.vue`.
+- Instagram feed is the host **`instagram-feed` extension** (slots), not theme customizer keys.
+- Side-nav dots: host `cinematic-nav` plugin (ADR-018).
 
 ---
 

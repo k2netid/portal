@@ -44,8 +44,10 @@ const breadcrumbAria = computed(() => tt('common.breadcrumbAria'))
 const PUBLIC_CRUMB_KEYS: Record<string, string> = {
   '/': 'header.navHome',
   '/about': 'header.navAbout',
+  '/solutions': 'header.navSolutions',
   '/solusi': 'header.navSolutions',
   '/services': 'header.navSolutions',
+  '/team': 'header.navTeam',
   '/tim': 'header.navTeam',
   '/pricing': 'header.navPricing',
   '/blog': 'header.navNews',

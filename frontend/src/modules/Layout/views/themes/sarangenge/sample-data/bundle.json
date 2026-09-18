@@ -53,7 +53,7 @@
           "sort_order": 1,
           "children": [
             { "title": "Profil & Visi Misi", "title_en": "Profile & Vision", "url": "/about#profil", "type": "custom", "description": "Visi, misi, dan nilai kejuruan" },
-            { "title": "Pendidik & Tenaga Kependidikan", "title_en": "Teachers & Staff", "url": "/tim", "type": "custom", "description": "Direktori guru dan manajemen sekolah" },
+            { "title": "Pendidik & Tenaga Kependidikan", "title_en": "Teachers & Staff", "url": "/team", "type": "custom", "description": "Direktori guru dan manajemen sekolah" },
             { "title": "Prestasi Siswa", "title_en": "Student Achievements", "url": "/achievement", "type": "custom", "description": "LKS Nasional & kejuaraan vokasi" },
             { "title": "Fasilitas & Bengkel Praktik", "title_en": "Workshops & Labs", "url": "/facilities", "type": "custom", "description": "Laboratorium komputer, bengkel mesin & otomasi" }
           ]
@@ -90,7 +90,7 @@
         { "title": "Program Keahlian", "url": "/programs", "type": "custom", "sort_order": 0 },
         { "title": "Fasilitas & Lab Praktik", "url": "/facilities", "type": "custom", "sort_order": 1 },
         { "title": "Prestasi LKS & Vokasi", "url": "/achievement", "type": "custom", "sort_order": 2 },
-        { "title": "Direktori Guru & Staf", "url": "/tim", "type": "custom", "sort_order": 3 }
+        { "title": "Direktori Guru & Staf", "url": "/team", "type": "custom", "sort_order": 3 }
       ]
     },
     "footer_col_2": {
@@ -109,7 +109,7 @@
     { "slug": "facilities", "title": "Fasilitas & Bengkel", "title_en": "Campus Facilities", "theme_page": "pages/Facilities", "status": "published", "excerpt": "Laboratorium komputer, bengkel CNC/manufaktur, otomasi, dan sarana olahraga.", "body": "<p>Laboratorium komputer, bengkel CNC/manufaktur, otomasi industri, dan sarana olahraga sekolah vokasi.</p>", "body_en": "<p>Computer labs, CNC/manufacturing workshops, industrial automation, and sports facilities.</p>" },
     { "slug": "programs", "title": "Program Keahlian", "title_en": "Programs & Curriculum", "theme_page": "pages/Programs", "status": "published", "excerpt": "Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian berstandar industri.", "body": "<p>Kurikulum Merdeka SMK Pusat Keunggulan — program keahlian vokasi berstandar industri.</p>", "body_en": "<p>Merdeka Curriculum at Vocational School of Excellence — industry-aligned expertise programs.</p>" },
     { "slug": "pricing", "title": "Layanan PPDB & Bantuan", "title_en": "Fees & Admissions", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB.", "body": "<p>Informasi bantuan pendidikan, beasiswa vokasi, dan layanan konsultasi PPDB sekolah.</p>", "body_en": "<p>Educational assistance, vocational scholarships, and admissions consultation services.</p>" },
-    { "slug": "tim", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Tim", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan sekolah vokasi.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan sekolah.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and school leadership.</p>" },
+    { "slug": "team", "title": "Guru & Tenaga Kependidikan", "title_en": "Teachers & Staff", "theme_page": "pages/Team", "status": "published", "excerpt": "Direktori guru bersertifikasi industri dan pimpinan sekolah vokasi.", "body": "<p>Direktori guru bersertifikasi industri, instruktur kejuruan, dan pimpinan sekolah.</p>", "body_en": "<p>Directory of industry-certified teachers, vocational instructors, and school leadership.</p>" },
     { "slug": "blog", "title": "Warta Sekolah", "title_en": "School News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.", "body": "<p>Berita kegiatan sekolah, agenda industri, dan pengumuman terkini.</p>", "body_en": "<p>School events, industry partnerships, and latest announcements.</p>" },
     { "slug": "contact", "title": "Kontak & PPDB", "title_en": "Contact & Admissions", "theme_page": "pages/Contact", "status": "published", "excerpt": "Hotline PPDB, alamat kampus, dan formulir konsultasi.", "body": "<p>Hotline PPDB, alamat kampus, dan formulir konsultasi sekolah vokasi.</p>", "body_en": "<p>Admissions hotline, campus address, and school consultation form.</p>" },
     { "slug": "achievement", "title": "Prestasi Siswa", "title_en": "Student Achievements", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Galeri medali LKS tingkat kota, provinsi, dan nasional.", "body": "<p>Galeri medali LKS tingkat kota, provinsi, dan nasional sekolah vokasi.</p>", "body_en": "<p>Gallery of vocational skills competition (LKS) medals and championships.</p>" },

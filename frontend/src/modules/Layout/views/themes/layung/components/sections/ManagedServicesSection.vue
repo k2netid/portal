@@ -105,7 +105,11 @@ const syncFromRoute = () => {
     activeTab.value = fromHash;
     return;
   }
-  if (route.path.startsWith('/solusi') || route.path.startsWith('/services')) {
+  if (
+    route.path.startsWith('/solusi')
+    || route.path.startsWith('/services')
+    || route.path.startsWith('/pricing/msp')
+  ) {
     activeTab.value = 'msp';
   }
 };

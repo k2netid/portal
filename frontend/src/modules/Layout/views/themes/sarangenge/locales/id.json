@@ -209,11 +209,6 @@
       "title": "Prestasi & Penghargaan Sivitas {school}",
       "subtitle": "Rangkuman prestasi kejuaraan akademik, sains, teknologi, seni budaya, dan olahraga di kancah nasional maupun internasional."
     },
-    "tim": {
-      "badge": "Pendidik Berdedikasi",
-      "title": "Dewan Guru & Tenaga Kependidikan",
-      "subtitle": "Didukung oleh pendidik profesional berkualifikasi sarjana & magister dengan sertifikasi pendidik nasional serta pengajar bersertifikat Cambridge."
-    },
     "disabled": {
       "statusLabel": "Informasi Sekolah",
       "defaultTitle": "Halaman Belum Tersedia",
@@ -228,6 +223,11 @@
       "submit": "Cari",
       "empty": "Tidak ada hasil untuk kata kunci tersebut.",
       "unavailable": "Layanan pencarian sedang tidak tersedia."
+    },
+    "team": {
+      "badge": "Pendidik Berdedikasi",
+      "title": "Dewan Guru & Tenaga Kependidikan",
+      "subtitle": "Didukung oleh pendidik profesional berkualifikasi sarjana & magister dengan sertifikasi pendidik nasional serta pengajar bersertifikat Cambridge."
     }
   },
   "faq": {
@@ -276,8 +276,8 @@
       "page_achievements_desc": "Kelola galeri dan daftar prestasi siswa",
       "page_facilities": "Halaman Fasilitas",
       "page_facilities_desc": "Kelola sarana dan prasarana kampus",
-      "page_tim": "Halaman Guru & Staf",
-      "page_tim_desc": "Kelola direktori pendidik dan tenaga kependidikan",
+      "page_team": "Halaman Guru & Staf",
+      "page_team_desc": "Kelola direktori pendidik dan tenaga kependidikan",
       "page_pricing": "Halaman Biaya & Beasiswa",
       "page_pricing_desc": "Kelola informasi biaya pendidikan dan skema beasiswa",
       "page_alumni": "Halaman Alumni",
@@ -415,8 +415,8 @@
       "enable_facilities_hint": "Buka atau tutup akses publik halaman fasilitas bengkel.",
       "enable_pricing": "Aktifkan Halaman Biaya & PPDB",
       "enable_pricing_hint": "Buka atau tutup akses publik halaman informasi biaya pendidikan.",
-      "enable_tim": "Aktifkan Halaman Guru & Staf",
-      "enable_tim_hint": "Buka atau tutup akses publik halaman direktori pendidik.",
+      "enable_team": "Aktifkan Halaman Guru & Staf",
+      "enable_team_hint": "Buka atau tutup akses publik halaman direktori pendidik.",
       "enable_achievement": "Aktifkan Halaman Prestasi",
       "enable_achievement_hint": "Buka atau tutup akses publik halaman prestasi siswa.",
       "enable_career": "Aktifkan Halaman Alumni & Karir",

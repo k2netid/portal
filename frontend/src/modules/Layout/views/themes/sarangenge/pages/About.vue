@@ -42,6 +42,8 @@
           </div>
         </div>
 
+        <PluginSlot name="after_hero" class="w-full" />
+
         <!-- Sambutan Kepala Sekolah -->
         <div class="sarangenge-panel p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
@@ -159,6 +161,7 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
 import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';

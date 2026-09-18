@@ -35,13 +35,13 @@
           <span class="text-xs font-mono uppercase tracking-widest text-foreground font-bold">
             {{ t('bento.badge') }}
           </span>
-          <router-link to="/solusi" class="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
             Core Engine Architecture
           </router-link>
-          <router-link to="/solusi" class="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
             Edge Deployment
           </router-link>
-          <router-link to="/solusi" class="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
             Visual Canvas Studio
           </router-link>
           <router-link to="/pricing" class="text-sm text-muted-foreground hover:text-primary transition-colors">
@@ -87,15 +87,14 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import { useSareupnaIdentity } from '../../composables/useSareupnaIdentity';
 
-const { getSetting } = useTheme();
 const { localizedString } = useLocalizedThemeSetting();
 const { t } = useThemeI18n('sareupna');
+const { displaySiteName: siteName } = useSareupnaIdentity();
 
-const siteName = computed(() => (getSetting('site_title') as string) || 'PT Jejak Awan Digital');
 const footerDescription = computed(
   () => localizedString('site_description') || t('footer.description')
 );

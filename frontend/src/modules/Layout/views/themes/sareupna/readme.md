@@ -27,8 +27,8 @@ Tema resmi flagship untuk **jejakawan.com** (PT Jejak Awan Digital).
 5. **Terminal Simulator / Code Showcase**:
    - Tab interaktif untuk simulasi CLI, API, SDK, dan container deployment.
 
-6. **Floating SectionNavDots**:
-   - Navigasi titik vertikal melayang di sisi layar untuk eksplorasi seksi dengan smooth scroll dan active state detection.
+6. **Cinematic side-nav (host plugin)**:
+   - Vertical section dots via platform `cinematic-nav` / `floating_overlay` (ADR-018). Theme keys: `home_side_nav_dots`, `home_side_nav_style`, `home_side_nav_show_mobile` — not a local `SectionNavDots` Vue.
 
 ## Struktur Direktori
 
@@ -38,12 +38,18 @@ sareupna/
 ├── components/
 │   ├── layout/                 # Header, Footer, Floating Social Dock
 │   ├── sections/               # Hero, BentoGrid, TerminalShowcase, Products, CTA
-│   └── shared/                 # SectionNavDots, SareupnaSplitText
+│   └── shared/                 # SareupnaSplitText, PageGate, …
 ├── locales/                    # en.json, id.json, su.json
-├── pages/                      # Home, Solusi, Pricing, Blog, Post, Page, Contact, Search
+├── pages/                      # Home, About, Solutions, Pricing, Blog, Post, Page, Contact, Search
 ├── sample-data/bundle.json     # Paket data sampel siap pasang
 ├── ui/                         # Primitif UI independen
 ├── routes.ts                   # Registrasi rute tema
 ├── theme.bundle-entry.ts       # Bundler entrypoint
-└── theme.json                  # Manifest & Customizer Schema
+└── theme.json                  # Manifest & settings schema
 ```
+
+### CMS baseline notes
+
+- Customizer schema is **theme-only** (platform identity / floating dock / colors come from host `global.settings.schema.json`).
+- Instagram feed is the **`instagram-feed` extension** (`after_hero` / `before_footer` slots) — not theme settings keys.
+- Blog uses `BlogSidebar.vue` (widget sidebar). Layung uses the same widget areas without a named `BlogSidebar` component — intentional.

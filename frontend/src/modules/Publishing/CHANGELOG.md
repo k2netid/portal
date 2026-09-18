@@ -4,6 +4,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+- Customizer sidebar keys: `page_tim` → `page_team` (en/id/su)
+
 ### Added
 - Theme Customizer hide/show controls labels (en/id/su).
 - Theme Customizer preview load-failure copy + open-tab CTA (en/id/su).

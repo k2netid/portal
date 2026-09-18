@@ -43,11 +43,11 @@
             "descriptionKey": "theme.sarangenge.customizer.sidebar.page_facilities_desc"
         },
         {
-            "id": "page-school-tim",
+            "id": "page-school-team",
             "manifestCategories": ["Tim Page"],
             "icon": "users",
-            "labelKey": "theme.sarangenge.customizer.sidebar.page_tim",
-            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_tim_desc"
+            "labelKey": "theme.sarangenge.customizer.sidebar.page_team",
+            "descriptionKey": "theme.sarangenge.customizer.sidebar.page_team_desc"
         },
         {
             "id": "page-school-pricing",
