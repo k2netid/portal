@@ -4,6 +4,8 @@ Selamat datang di pusat dokumentasi arsitektur, standar pemrograman, dan panduan
 
 > **Catatan fork:** Repo ini berasal dari `ja-cms`, direfaktor menjadi **master kernel** untuk aplikasi downstream. Baca [AGENT_START_HERE.md](AGENT_START_HERE.md) dan [architectural-status.md](architectural-status.md) sebelum kontribusi.
 
+> **Guides / Reference:** salinan mirror dari upstream — [guides/](guides/README.md) · [reference/](reference/README.md). SoT: `ja-core_engine`. Sync: `npm run docs:sync-downstream` di core.
+
 ---
 
 ## Mulai di sini
