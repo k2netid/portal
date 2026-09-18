@@ -6,8 +6,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Module version → `1.1.5`
-- Theme Demo Seeder: Align `SareupnaThemeDemoSeeder` with Jejakawan brand identity (supported by K2NET, developer @jejakawan, official platform products).
+- Module version → `1.1.6`
+- `SareupnaThemeDemoSeeder`: enforce ZERO client-specific hardcoding; demo identity set to `Sareupna Platform` (generic); client branding delegated strictly to downstream deployment seeders.
+- Theme sample data (`bundle.json`, `schema.settings.json`, `composables/sareupnaPublicSeo.ts`, `pages/Post.vue`): replaced all client-specific defaults with generic cloud platform placeholders.
 
 ### Added
 

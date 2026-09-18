@@ -33,61 +33,50 @@
         <!-- Solutions Links -->
         <div class="flex flex-col gap-3">
           <span class="text-xs font-mono uppercase tracking-widest text-foreground font-bold">
-            Platform & Produk
+            {{ t('bento.badge') }}
           </span>
           <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Jejakawan CMS
+            Core Engine Architecture
           </router-link>
           <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            KataMPI
+            Edge Deployment
           </router-link>
           <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Aksara Engine
+            Visual Canvas Studio
           </router-link>
-          <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            SME Platform
-          </router-link>
-          <router-link to="/solutions" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Safe Focus (Android)
+          <router-link to="/pricing" class="text-sm text-muted-foreground hover:text-primary transition-colors">
+            {{ t('header.pricing') }}
           </router-link>
         </div>
 
         <!-- Ecosystem Links -->
         <div class="flex flex-col gap-3">
           <span class="text-xs font-mono uppercase tracking-widest text-foreground font-bold">
-            Developer & Partner
+            Developer
           </span>
-          <a
-            href="https://github.com/jejakawan"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            Developer Git (@jejakawan)
-          </a>
-          <a
-            href="https://k2net.id"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            PT. Kirana Karina Network (K2NET)
-          </a>
-          <router-link to="/about" class="text-sm text-muted-foreground hover:text-primary transition-colors">
-            {{ t('header.about') }}
-          </router-link>
           <router-link to="/blog" class="text-sm text-muted-foreground hover:text-primary transition-colors">
             {{ t('header.blog') }}
           </router-link>
           <router-link to="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">
             {{ t('header.contact') }}
           </router-link>
+          <a
+            href="https://github.com/jejak-awan"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            GitHub Repository
+          </a>
+          <router-link to="/search" class="text-sm text-muted-foreground hover:text-primary transition-colors">
+            {{ t('header.search') }}
+          </router-link>
         </div>
       </div>
 
       <!-- Bottom Bar -->
       <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-        <p>© {{ currentYear }} {{ siteName }} · Supported by PT. Kirana Karina Network (K2NET). {{ t('footer.copyright') }}</p>
+        <p>© {{ currentYear }} {{ siteName }}. {{ t('footer.copyright') }}</p>
         <p class="font-mono text-[11px] text-foreground/50">
           {{ t('footer.tagline') }}
         </p>

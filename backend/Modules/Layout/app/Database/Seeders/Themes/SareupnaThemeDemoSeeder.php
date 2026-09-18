@@ -16,7 +16,7 @@ class SareupnaThemeDemoSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->command?->info('Seeding Sareupna Theme (Jejakawan Platform — Membangun Solusi, Meninggalkan Jejak)...');
+        $this->command?->info('Seeding Sareupna Theme (High-Performance Cloud & Developer Platform)...');
 
         // Guard: skip if current license tier does not allow premium themes (ADR-023 §2.8)
         if (class_exists(LicenseService::class)) {
@@ -42,11 +42,11 @@ class SareupnaThemeDemoSeeder extends Seeder
             Setting::set('theme_active', 'sareupna', 'string', 'layout');
         }
 
-        // 2. Set Platform Identity for Jejakawan.com
-        Setting::set('site_name', 'Jejakawan', 'string', 'general');
-        Setting::set('site_title', 'Jejakawan', 'string', 'general');
-        Setting::set('site_tagline', 'Membangun Solusi, Meninggalkan Jejak', 'string', 'general');
-        Setting::set('site_description', 'Inisiatif pengembangan solusi teknologi dan ekosistem platform digital terpadu. Membangun Solusi, Meninggalkan Jejak. Supported by PT. Kirana Karina Network (K2NET).', 'string', 'general');
+        // 2. Set generic demo identity — client-specific identity is set in deployment seeders (e.g. JejakawanDeploymentSeeder)
+        Setting::set('site_name', 'Sareupna Platform', 'string', 'general');
+        Setting::set('site_title', 'Sareupna Platform', 'string', 'general');
+        Setting::set('site_tagline', 'High-Performance Cloud & Developer Platform', 'string', 'general');
+        Setting::set('site_description', 'Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.', 'string', 'general');
 
         // 3. Install bundle sample data (menus, pages, settings)
         if ($sareupna) {

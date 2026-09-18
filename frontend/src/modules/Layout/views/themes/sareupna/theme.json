@@ -1,13 +1,13 @@
 {
     "name": "Sareupna",
     "slug": "sareupna",
-    "version": "1.1.6",
+    "version": "1.1.5",
     "type": "frontend",
     "archetype": "developer_platform",
-    "category": "Technology & Digital Platform",
+    "category": "Cloud & Developer Platform",
     "parent_theme": "janari",
-    "description": "Sareupna — High-Performance Digital Platform Theme untuk Jejakawan.com. Mengusung filosofi Membangun Solusi, Meninggalkan Jejak. Supported by PT. Kirana Karina Network (K2NET).",
-    "author": "Jejakawan (Supported by K2NET)",
+    "description": "Sareupna — High-Performance Cloud & Developer Platform Theme khusus untuk Jejakawan.com (PT Jejak Awan Digital). Arsitektur cloud terdistribusi, directional auto-hide floating dock, interactive CLI badge, 12-column Bento Grid, developer terminal showcase, dan telemetry metrics.",
+    "author": "PT Jejak Awan Digital",
     "supports": {
         "sareupna_canvas": true
     },
@@ -27,7 +27,7 @@
         "site_title": {
             "label": "Site Title",
             "type": "text",
-            "default": "Jejakawan",
+            "default": "PT Jejak Awan Digital",
             "category": "General",
             "scope": "platform"
         },
@@ -46,14 +46,14 @@
         "site_tagline": {
             "label": "Site Tagline",
             "type": "text",
-            "default": "Membangun Solusi, Meninggalkan Jejak",
+            "default": "High-Performance Cloud & Developer Platform",
             "category": "General",
             "scope": "platform"
         },
         "site_description": {
             "label": "Site Description",
             "type": "textarea",
-            "default": "Jejakawan adalah inisiatif pengembangan solusi teknologi yang berorientasi pada manfaat, kolaborasi, dan dampak positif. Supported by PT. Kirana Karina Network (K2NET).",
+            "default": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
             "category": "General",
             "scope": "platform"
         },
@@ -527,7 +527,7 @@
         "platform_contact_email": {
             "label": "Email Resmi Platform",
             "type": "text",
-            "default": "halo@jejakawan.com",
+            "default": "halo@example.com",
             "category": "Platform Specs"
         },
         "platform_contact_phone": {
@@ -545,7 +545,7 @@
         "platform_address": {
             "label": "Alamat Kantor Operasional",
             "type": "textarea",
-            "default": "Bandung & Jakarta, Indonesia",
+            "default": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
             "category": "Platform Specs"
         },
         "hero_badge_text": {
@@ -1092,19 +1092,19 @@
         "footer_about_text": {
             "label": "Teks Deskripsi Footer",
             "type": "textarea",
-            "default": "Jejakawan — Membangun berbagai aplikasi dan solusi teknologi dengan semangat menciptakan karya yang bermanfaat dan meninggalkan jejak positif. Supported by PT. Kirana Karina Network (K2NET).",
+            "default": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
             "category": "Footer"
         },
         "footer_text": {
             "label": "Teks Identitas Footer",
             "type": "text",
-            "default": "Jejakawan (Supported by K2NET)",
+            "default": "PT Jejak Awan Digital",
             "category": "Footer"
         },
         "footer_copyright": {
             "label": "Teks Hak Cipta Footer",
             "type": "text",
-            "default": "Hak cipta dilindungi undang-undang. Supported by PT. Kirana Karina Network (K2NET).",
+            "default": "Hak cipta dilindungi undang-undang.",
             "category": "Footer"
         },
         "back_to_top": {

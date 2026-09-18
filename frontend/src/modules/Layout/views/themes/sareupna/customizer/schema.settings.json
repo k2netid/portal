@@ -303,7 +303,7 @@
     "platform_contact_email": {
         "label": "Email Resmi Platform",
         "type": "text",
-        "default": "halo@jejakawan.com",
+        "default": "halo@example.com",
         "category": "Platform Specs"
     },
     "platform_contact_phone": {
@@ -596,7 +596,7 @@
         "type": "select",
         "options": [
             {
-                "label": "Jejakawan CLI",
+                "label": "Platform CLI",
                 "value": "cli"
             },
             {
@@ -699,13 +699,13 @@
     "footer_about_text": {
         "label": "Teks Deskripsi Footer",
         "type": "textarea",
-        "default": "Jejakawan — Membangun berbagai aplikasi dan solusi teknologi dengan semangat menciptakan karya yang bermanfaat dan meninggalkan jejak positif. Supported by PT. Kirana Karina Network (K2NET).",
+        "default": "Sareupna — high-performance cloud & developer platform theme untuk Jejakawan CMS. Membangun ekosistem digital yang berdampak.",
         "category": "Footer"
     },
     "footer_copyright": {
         "label": "Teks Hak Cipta Footer",
         "type": "text",
-        "default": "Hak cipta dilindungi undang-undang. Supported by PT. Kirana Karina Network (K2NET).",
+        "default": "Hak cipta dilindungi undang-undang.",
         "category": "Footer"
     },
     "footer_col_1_title": {

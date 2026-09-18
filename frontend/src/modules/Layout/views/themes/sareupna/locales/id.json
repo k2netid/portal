@@ -1,6 +1,6 @@
 {
   "name": "Sareupna",
-  "description": "Sareupna — High-Performance Digital Platform Theme untuk Jejakawan.com. Membangun Solusi, Meninggalkan Jejak. Supported by PT. Kirana Karina Network (K2NET).",
+  "description": "Sareupna — High-Performance Cloud & Developer Platform Theme untuk Jejakawan.com.",
   "header": {
     "home": "Tepas",
     "about": "Tentang",
@@ -25,7 +25,7 @@
     "memberFallback": "Pengembang",
     "officialLine1": "Jejakawan",
     "officialLine2": "Membangun Solusi, Meninggalkan Jejak",
-    "solutions": "Produk & Solusi"
+    "solutions": "Solusi Cloud"
   },
   "common": {
     "copied": "KASALIN!",
@@ -46,8 +46,8 @@
   },
   "hero": {
     "badgeDefault": "$ ja cloud:deploy --prod",
-    "brandFallback": "MEMBANGUN SOLUSI, MENINGGALKAN JEJAK",
-    "subtitleDefault": "Inisiatif pengembangan aplikasi dan solusi platform digital yang berorientasi pada manfaat, kolaborasi, dan dampak positif. Supported by PT. Kirana Karina Network (K2NET).",
+    "brandFallback": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
+    "subtitleDefault": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
     "ctaPrimary": "Kotéktak Solusi",
     "ctaPricing": "Tingali Pakét",
     "stat1Val": "99.99%",
@@ -112,9 +112,9 @@
     "secondary": "Pelajari Dokumentasi"
   },
   "footer": {
-    "description": "Jejakawan — Membangun berbagai aplikasi dan solusi teknologi dengan semangat menciptakan karya yang bermanfaat dan meninggalkan jejak positif. Supported by PT. Kirana Karina Network (K2NET).",
+    "description": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
     "copyright": "Hak cipta dilindungi undang-undang.",
-    "tagline": "Membangun Solusi, Meninggalkan Jejak.",
+    "tagline": "Empowering Digital Cloud Horizons.",
     "systemStatus": "Operasional Penuh"
   },
   "navDots": {
@@ -129,7 +129,7 @@
     "blog": {
       "title": "Wawasan & Rekayasa Teknologi",
       "headline": "Wawasan & Pemikiran Terkini",
-      "subtitle": "Artikel teknis, wawasan platform, dan arsitektur sistem dari pengembang Jejakawan.",
+      "subtitle": "Artikel teknis, arsitektur sistem, dan inovasi cloud dari tim PT Jejak Awan Digital.",
       "sectionLabel": "Warta & Analisis",
       "searching": "Mencari wawasan...",
       "loadingMore": "Memuat artikel lainnya...",
@@ -149,15 +149,15 @@
       "contentTypeDefault": "Konten"
     },
     "about": {
-      "title": "Tentang Jejakawan",
+      "title": "Tentang Platform",
       "sectionLabel": "Platform Identity",
-      "subtitle": "Membangun Solusi, Meninggalkan Jejak.",
-      "missionTitle": "Filosofi Jejakawan",
-      "missionP1": "Jejakawan adalah gagasan untuk mengembangkan berbagai aplikasi dan solusi teknologi yang tidak hanya berfungsi secara teknis, tetapi juga memberikan manfaat dan meninggalkan dampak positif.",
-      "missionP2": "Lahir dari inisiatif mandiri owner PT. Kirana Karina Network (K2NET), Jejakawan merangkum tiga nilai utama: Jejak (karya berdampak), Awan (manusia dan teknologi), dan Kawan (komunitas dan kolaborasi).",
-      "solutionsCta": "Lihat Produk Platform",
-      "identityLabel": "Pengembang & Pendukung",
-      "contactCta": "Hubungi Pengembang"
+      "subtitle": "Visi teknologi dan arsitektur cloud untuk control plane modern.",
+      "missionTitle": "Misi Rekayasa",
+      "missionP1": "Kami membangun control plane modular agar tim produk dapat merilis, mengkurasi, dan mengoperasikan portal tanpa mengorbankan isolasi tema.",
+      "missionP2": "Sareupna menampilkan kontrak CMS yang sama dengan tema lain — About, Contact Reach, Blog, menus — dengan chrome cyber khas developer platform.",
+      "solutionsCta": "Lihat Solusi Platform",
+      "identityLabel": "Operator",
+      "contactCta": "Hubungi Tim Arsitek"
     },
     "pricing": {
       "title": "Paket & Layanan",
@@ -216,7 +216,7 @@
       "coordsUnavailable": "Koordinat lokasi belum disetel.",
       "coordsCopied": "Koordinat lokasi berhasil disalin.",
       "location": "Lokasi Kantor",
-      "siteLocationDefault": "Bandung & Jakarta, Indonesia",
+      "siteLocationDefault": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
       "locationLinkCopied": "Tautan lokasi berhasil disalin.",
       "formNotPublished": "Formulir belum dipublikasikan.",
       "formLoadFailed": "Gagal memuat formulir kontak.",
@@ -230,7 +230,7 @@
       "mapOpen": "Buka Google Maps",
       "mapDirections": "Petunjuk Arah",
       "copyAddress": "Salin Alamat",
-      "mapTitle": "Lokasi Jejakawan / K2NET",
+      "mapTitle": "Lokasi PT Jejak Awan Digital",
       "formLoading": "Mengirimkan pesan...",
       "formUnavailableTitle": "Formulir Tidak Tersedia",
       "yes": "Ya",
@@ -242,7 +242,7 @@
       "statusLabel": "Status Layanan",
       "defaultMessage": "Layanan ini sedang dalam peningkatan performa berkala.",
       "backHome": "Kembali ke Beranda",
-      "contactAdmin": "Hubungi Pengembang"
+      "contactAdmin": "Hubungi Arsitek Cloud"
     },
     "page": {
       "emptyPublished": "Halaman ini belum memiliki konten publikasi.",
@@ -252,7 +252,7 @@
       "notFoundDescription": "Halaman yang Anda tuju tidak tersedia atau telah dipindahkan."
     },
     "post": {
-      "authorRole": "Pengembang Jejakawan"
+      "authorRole": "Tim Arsitek Cloud"
     },
     "solutions": {
       "title": "Solusi Platform",
@@ -273,10 +273,10 @@
       "page_products_desc": "Etalase modul enterprise dan cluster cloud",
       "page_specs": "Spesifikasi & SLA",
       "page_specs_desc": "Jaminan uptime cloud, latency, dan cluster tier",
-      "page_about": "Tentang Jejakawan",
-      "page_about_desc": "Filosofi, visi, dan ekosistem platform Jejakawan",
-      "page_solusi": "Produk & Solusi",
-      "page_solusi_desc": "Katalog produk dan ekosistem aplikasi Jejakawan Platform",
+      "page_about": "Tentang Platform",
+      "page_about_desc": "Visi teknologi dan arsitektur PT Jejak Awan Digital",
+      "page_solusi": "Solusi Cloud",
+      "page_solusi_desc": "Katalog solusi komputasi awan dan arsitektur enterprise",
       "page_pricing": "Paket & Layanan",
       "page_pricing_desc": "Tingkat langganan komputasi dan deployment",
       "page_news": "Wawasan & Berita",
