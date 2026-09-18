@@ -1,5 +1,7 @@
 # ADR-009: Simulator bandwidth internal dan pemetaan paket K2NET
 
+> **SoT untuk keputusan ini:** repo `k2net-portal` (file ini). Di `ja-core_engine` hanya ada stub pointer di `docs/adr/ADR-009-...` plus salinan arsip di `docs/_archive/downstream-k2net/`.
+
 **Status:** Accepted (dikoreksi 2026-09-03)  
 **Tanggal:** 2026-09-03  
 **Author:** Jejakawan Engineering & K2NET Team  
