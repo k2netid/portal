@@ -86,8 +86,17 @@ class ThemeDowngradeRemediator
 
             if ($janari) {
                 $janari->update(['is_active' => true, 'status' => 'active']);
-                Setting::set('theme_active', 'janari', 'string', 'layout');
+            } else {
+                Theme::create([
+                    'slug' => 'janari',
+                    'name' => 'Janari',
+                    'type' => 'frontend',
+                    'path' => 'themes/janari',
+                    'is_active' => true,
+                    'status' => 'active',
+                ]);
             }
+            Setting::set('theme_active', 'janari', 'string', 'layout');
 
             // Clear frontend_theme_snapshot_v1 (ADR-023 §2.7)
             Setting::set('frontend_theme_snapshot_v1', null);

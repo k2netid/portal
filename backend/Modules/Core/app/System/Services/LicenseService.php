@@ -71,6 +71,7 @@ class LicenseService
             'last_checked_at' => $lastCheckedAt,
             'grace_until' => $graceUntil,
             'features' => $this->getFeaturesMatrix($tier),
+            'theme_quota' => $this->getThemeQuota($tier),
             'control_plane_url' => $controlPlaneUrl,
         ];
     }
@@ -144,7 +145,7 @@ class LicenseService
      * Theme quota entitlement per tier (ADR-023).
      *
      * Phases:
-     *  - Phase 1 (current): mirror from license_type.
+     *  - Phase 1: mirror from license_type.
      *  - Phase 2: populated from JA-CP heartbeat/activate payload `themes.*`.
      *
      * @return array{
@@ -153,12 +154,16 @@ class LicenseService
      *   catalog: list<string>
      * }
      */
-    public function getThemeQuota(string $tier): array
+    public function getThemeQuota(?string $tier = null): array
     {
-        $isPaid = in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
-        $isEnterprisePlus = in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $currentTier = $this->getLicenseTier();
+        $targetTier = $tier ?? $currentTier;
 
-        return [
+        $isPaid = in_array($targetTier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $isEnterprisePlus = in_array($targetTier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+
+        /** @var array{always_on: list<string>, max_premium_active: int|null, catalog: list<string>} $defaultQuota */
+        $defaultQuota = [
             'always_on' => ['janari'],
             'max_premium_active' => match (true) {
                 $isEnterprisePlus => null,    // unlimited
@@ -166,6 +171,87 @@ class LicenseService
                 default => 0,                 // Community/Starter: janari only
             },
             'catalog' => ['janari', 'layung', 'sarangenge', 'sareupna'],
+        ];
+
+        // If querying a different tier than the active tier, return static default
+        if ($targetTier !== $currentTier) {
+            return $defaultQuota;
+        }
+
+        // Phase 2: Check for custom themes quota payload synced from JA-CP
+        $customQuotaRaw = Setting::get('license_themes_quota');
+        if (! is_array($customQuotaRaw)) {
+            return $defaultQuota;
+        }
+
+        /** @var array<string, mixed> $customQuotaRaw */
+        return $this->sanitizeThemeQuotaPayload($customQuotaRaw, $targetTier, $defaultQuota);
+    }
+
+    /**
+     * Sanitize and validate theme quota payload from JA-CP with safe fallback.
+     *
+     * @param  array<string, mixed>  $payload
+     * @param  array{always_on: list<string>, max_premium_active: int|null, catalog: list<string>}  $defaultQuota
+     * @return array{
+     *   always_on: list<string>,
+     *   max_premium_active: int|null,
+     *   catalog: list<string>
+     * }
+     */
+    private function sanitizeThemeQuotaPayload(array $payload, string $tier, array $defaultQuota): array
+    {
+        // 1. always_on: list of strings, always ensuring 'janari' is included
+        $alwaysOn = $defaultQuota['always_on'];
+        if (isset($payload['always_on']) && is_array($payload['always_on'])) {
+            $parsed = [];
+            foreach ($payload['always_on'] as $item) {
+                if (is_string($item) && $item !== '') {
+                    $parsed[] = $item;
+                }
+            }
+            if (! in_array('janari', $parsed, true)) {
+                $parsed[] = 'janari';
+            }
+            /** @var list<string> $alwaysOn */
+            $alwaysOn = array_values(array_unique($parsed));
+        }
+
+        // 2. max_premium_active: int|null. Community/Starter tier forced to 0.
+        if (in_array($tier, [self::TIER_COMMUNITY, self::TIER_STARTER], true)) {
+            $maxPremium = 0;
+        } elseif (array_key_exists('max_premium_active', $payload)) {
+            if ($payload['max_premium_active'] === null) {
+                $maxPremium = null;
+            } elseif (is_numeric($payload['max_premium_active'])) {
+                $maxPremium = max(0, (int) $payload['max_premium_active']);
+            } else {
+                $maxPremium = $defaultQuota['max_premium_active'];
+            }
+        } else {
+            $maxPremium = $defaultQuota['max_premium_active'];
+        }
+
+        // 3. catalog: list of strings, always ensuring 'janari' is included
+        $catalog = $defaultQuota['catalog'];
+        if (isset($payload['catalog']) && is_array($payload['catalog'])) {
+            $parsedCat = [];
+            foreach ($payload['catalog'] as $item) {
+                if (is_string($item) && $item !== '') {
+                    $parsedCat[] = $item;
+                }
+            }
+            if (! in_array('janari', $parsedCat, true)) {
+                $parsedCat[] = 'janari';
+            }
+            /** @var list<string> $catalog */
+            $catalog = array_values(array_unique($parsedCat));
+        }
+
+        return [
+            'always_on' => $alwaysOn,
+            'max_premium_active' => $maxPremium,
+            'catalog' => $catalog,
         ];
     }
 
@@ -206,10 +292,15 @@ class LicenseService
             return true;
         }
 
-        // Not in catalog → not entitled (e.g. custom ZIP slug on community)
+        // First-party theme not in license catalog → not entitled
+        if (in_array($themeSlug, ['janari', 'layung', 'sarangenge', 'sareupna'], true)
+            && ! in_array($themeSlug, $quota['catalog'], true)) {
+            return false;
+        }
+
+        // Third-party / custom ZIP theme: blocked on community or if max_premium_active is 0
         if (! in_array($themeSlug, $quota['catalog'], true)) {
-            // ZIP themes on community are blocked; on paid tiers they use the premium slot.
-            if ($quota['max_premium_active'] === 0) {
+            if ($quota['max_premium_active'] === 0 || ! $this->canUseFeature('theme_upload')) {
                 return false;
             }
         }
@@ -276,6 +367,21 @@ class LicenseService
                     'license_domain' => request()->getHost() ?: 'localhost',
                 ]);
 
+                // Phase 2: Store optional JA-CP themes quota payload
+                $themesPayload = isset($payload['themes']) && is_array($payload['themes']) ? $payload['themes'] : null;
+                if ($themesPayload !== null) {
+                    Setting::set('license_themes_quota', $themesPayload, 'json');
+                } else {
+                    Setting::set('license_themes_quota', null);
+                }
+
+                // Remediate served theme if new tier/quota restricts active theme (ADR-023 §2.7)
+                try {
+                    app(ThemeDowngradeRemediator::class)->remediate();
+                } catch (\Throwable $re) {
+                    Log::warning('Theme remediator failed after license activation: '.$re->getMessage());
+                }
+
                 return [
                     'success' => true,
                     'message' => 'License activated successfully for tier '.strtoupper($tier),
@@ -288,6 +394,7 @@ class LicenseService
 
         // Fallback local key format verification (e.g. JACP-PRO-*, JACP-ENT-*, JACP-WL-*)
         if (str_starts_with($cleanKey, 'JACP-PRO-')) {
+            Setting::set('license_themes_quota', null);
             $this->persistLicense([
                 'license_key' => $cleanKey,
                 'license_type' => self::TIER_PRO,
@@ -304,6 +411,7 @@ class LicenseService
         }
 
         if (str_starts_with($cleanKey, 'JACP-ENT-') || str_starts_with($cleanKey, 'JACP-WL-')) {
+            Setting::set('license_themes_quota', null);
             $tier = str_starts_with($cleanKey, 'JACP-WL-') ? self::TIER_WHITE_LABEL : self::TIER_ENTERPRISE;
             $isPerpetual = $this->isPerpetualLicense($cleanKey);
             $this->persistLicense([
@@ -392,6 +500,13 @@ class LicenseService
             if ($response->successful() && $response->json('valid')) {
                 $payloadData = $response->json('data');
                 $payload = is_array($payloadData) ? $payloadData : [];
+
+                if (isset($payload['tier']) && is_scalar($payload['tier'])) {
+                    $newTier = (string) $payload['tier'];
+                    Setting::set('license_type', $newTier);
+                    Setting::set('app_license_tier', $newTier);
+                }
+
                 $this->persistLicense([
                     'license_status' => self::STATUS_ACTIVE,
                     'license_last_checked_at' => now()->toIso8601String(),
@@ -399,7 +514,12 @@ class LicenseService
                     'license_expires_at' => $payload['expires_at'] ?? Setting::get('license_expires_at'),
                 ]);
 
-                // Remediate served theme if tier changed (ADR-023 §2.7)
+                // Phase 2: Sync optional JA-CP themes quota payload
+                if (isset($payload['themes']) && is_array($payload['themes'])) {
+                    Setting::set('license_themes_quota', $payload['themes'], 'json');
+                }
+
+                // Remediate served theme if tier or quota changed (ADR-023 §2.7)
                 try {
                     app(ThemeDowngradeRemediator::class)->remediate();
                 } catch (\Throwable $re) {
@@ -435,6 +555,8 @@ class LicenseService
      */
     public function deactivateLicense(): array
     {
+        Setting::set('license_themes_quota', null);
+
         $this->persistLicense([
             'license_key' => '',
             'license_type' => self::TIER_COMMUNITY,
@@ -510,6 +632,7 @@ class LicenseService
         Cache::forget('sys_setting_license_status');
         Cache::forget('sys_setting_license_expires_at');
         Cache::forget('sys_setting_license_is_perpetual');
+        Cache::forget('sys_setting_license_themes_quota');
     }
 
     /**

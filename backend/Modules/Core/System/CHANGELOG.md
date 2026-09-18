@@ -17,6 +17,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 - Discovery sync: `description`, `license` / `license_tier` / `settings_route`; preserve `requirements`.
 - `EnsureExtensionActive` middleware alias `extension.active:{slug}`.
 - **ADR-023 Theme Registry Serving**: `ExtensionController` attaches `is_served` indicator and `ExtensionFamilyCatalog` provides `themeSlugForPack()` and `isPremiumThemePackSlug()`.
+- **ADR-023 Phase 2 JA-CP Themes Payload Integration**: `LicenseService` parses and dynamically applies `themes.*` quota from JA-CP heartbeat/activation responses, auto-triggers `ThemeDowngradeRemediator`, and displays theme quotas in `license:check` CLI.
 - Docs: `external-module-packaging.md` + `scripts/scaffold-optional-module.sh`.
 
 ### Fixed

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Core\Tests\Feature;
 
+use Illuminate\Support\Facades\Http;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\ExtensionBootstrapService;
 use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
+use Modules\Layout\Models\Theme;
 use Tests\TestCase;
 
 /**
@@ -325,5 +327,140 @@ final class ThemePackRegistryTest extends TestCase
             $this->assertArrayHasKey('is_entitled', $item);
             $this->assertArrayHasKey('is_premium', $item);
         });
+    }
+
+    // -----------------------------------------------------------------------
+    // ADR-023 Phase 2: JA-CP themes.* payload integration & heartbeat
+    // -----------------------------------------------------------------------
+
+    public function test_get_license_status_includes_top_level_theme_quota(): void
+    {
+        $status = $this->license->getLicenseStatus();
+
+        $this->assertArrayHasKey('theme_quota', $status);
+        $this->assertIsArray($status['theme_quota']);
+        $this->assertArrayHasKey('always_on', $status['theme_quota']);
+        $this->assertArrayHasKey('max_premium_active', $status['theme_quota']);
+        $this->assertArrayHasKey('catalog', $status['theme_quota']);
+    }
+
+    public function test_jacp_activate_persists_custom_themes_quota(): void
+    {
+        Http::fake([
+            'https://cp.jejakawan.com/api/v1/licenses/activate' => Http::response([
+                'valid' => true,
+                'data' => [
+                    'tier' => 'pro',
+                    'expires_at' => null,
+                    'themes' => [
+                        'always_on' => ['janari'],
+                        'max_premium_active' => 2,
+                        'catalog' => ['janari', 'layung', 'sarangenge'],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $res = $this->license->activateLicense('JACP-PRO-CUSTOM-REMOTE-KEY');
+        $this->assertTrue($res['success']);
+
+        $quota = $this->license->getThemeQuota();
+        $this->assertSame(2, $quota['max_premium_active']);
+        $this->assertSame(['janari'], $quota['always_on']);
+        $this->assertSame(['janari', 'layung', 'sarangenge'], $quota['catalog']);
+
+        // Entitlement checks: janari and layung are entitled, sareupna is not in custom catalog
+        $this->assertTrue($this->license->isThemeServeEntitled('janari'));
+        $this->assertTrue($this->license->isThemeServeEntitled('layung'));
+        $this->assertFalse($this->license->isThemeServeEntitled('sareupna'));
+    }
+
+    public function test_jacp_payload_partial_missing_fields_falls_back_safely(): void
+    {
+        Http::fake([
+            'https://cp.jejakawan.com/api/v1/licenses/activate' => Http::response([
+                'valid' => true,
+                'data' => [
+                    'tier' => 'pro',
+                    'expires_at' => null,
+                    'themes' => [
+                        'max_premium_active' => 3,
+                        // always_on and catalog omitted
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $res = $this->license->activateLicense('JACP-PRO-PARTIAL-KEY');
+        $this->assertTrue($res['success']);
+
+        $quota = $this->license->getThemeQuota();
+        $this->assertSame(3, $quota['max_premium_active']);
+        $this->assertSame(['janari'], $quota['always_on']);
+        $this->assertContains('janari', $quota['catalog']);
+        $this->assertContains('layung', $quota['catalog']);
+        $this->assertContains('sarangenge', $quota['catalog']);
+        $this->assertContains('sareupna', $quota['catalog']);
+    }
+
+    public function test_jacp_heartbeat_sync_updates_theme_quota_and_remediates(): void
+    {
+        // Activate Pro
+        $this->license->activateLicense('JACP-PRO-HEARTBEAT-TEST');
+        Setting::set('license_key', 'JACP-PRO-HEARTBEAT-TEST');
+
+        // Ensure janari and layung exist in lay_themes
+        Theme::updateOrCreate(
+            ['slug' => 'janari'],
+            ['name' => 'Janari', 'type' => 'frontend', 'path' => 'themes/janari', 'is_active' => false, 'status' => 'inactive']
+        );
+        Theme::updateOrCreate(
+            ['slug' => 'layung'],
+            ['name' => 'Layung', 'type' => 'frontend', 'path' => 'themes/layung', 'is_active' => true, 'status' => 'active']
+        );
+
+        // Set layung active
+        Theme::query()->where('type', 'frontend')->update(['is_active' => false]);
+        Theme::query()->where('slug', 'layung')->update(['is_active' => true]);
+        Setting::set('theme_active', 'layung');
+
+        // Mock heartbeat response that reduces quota to 0 premium themes
+        Http::fake([
+            'https://cp.jejakawan.com/api/v1/licenses/heartbeat' => Http::response([
+                'valid' => true,
+                'data' => [
+                    'tier' => 'community',
+                    'themes' => [
+                        'always_on' => ['janari'],
+                        'max_premium_active' => 0,
+                        'catalog' => ['janari'],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $res = $this->license->syncHeartbeat(true);
+        $this->assertTrue($res['success']);
+
+        // Layung should have been remediated back to janari
+        $activeTheme = Theme::query()->where('type', 'frontend')->where('is_active', true)->first();
+        $this->assertNotNull($activeTheme);
+        $this->assertSame('janari', $activeTheme->slug);
+        $this->assertSame('janari', Setting::get('theme_active'));
+    }
+
+    public function test_deactivate_license_clears_themes_quota_setting(): void
+    {
+        Setting::set('license_themes_quota', [
+            'always_on' => ['janari'],
+            'max_premium_active' => 5,
+            'catalog' => ['janari', 'layung'],
+        ], 'json');
+
+        $this->license->deactivateLicense();
+
+        $this->assertNull(Setting::get('license_themes_quota'));
+        $quota = $this->license->getThemeQuota();
+        $this->assertSame(0, $quota['max_premium_active']);
     }
 }

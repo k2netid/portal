@@ -35,6 +35,13 @@ class LicenseCheckCommand extends Command
 
         $cpUrl = isset($status['control_plane_url']) && is_string($status['control_plane_url']) ? $status['control_plane_url'] : 'N/A';
 
+        $quota = $licenseService->getThemeQuota($tier);
+        $maxPremium = $quota['max_premium_active'] === null
+            ? 'Unlimited'
+            : (string) $quota['max_premium_active'];
+        $catalogCount = count($quota['catalog']);
+        $quotaDisplay = "Max Premium: {$maxPremium} | Catalog: {$catalogCount} themes";
+
         $this->table(
             ['Property', 'Value'],
             [
@@ -43,6 +50,7 @@ class LicenseCheckCommand extends Command
                 ['Active Key', $maskedKey],
                 ['Bound Domain', $domain],
                 ['Control Plane', $cpUrl],
+                ['Theme Quota', $quotaDisplay],
             ]
         );
 
