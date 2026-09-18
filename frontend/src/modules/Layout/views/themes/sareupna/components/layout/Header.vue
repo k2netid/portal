@@ -351,7 +351,6 @@ const siteTagline = computed(() => {
     ''
   );
 });
-const officialLine2 = siteTagline;
 
 const isDesktop = computed(() => device.value === 'desktop');
 
