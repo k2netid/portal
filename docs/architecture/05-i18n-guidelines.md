@@ -80,3 +80,5 @@ Jejakawan Core Engine dilengkapi alat validator otomatis untuk memeriksa kepatuh
    cd frontend && npm run i18n:check:braces
    ```
    *Mencegah error sintaks `VueI18n` yang diakibatkan oleh kurung kurawal yang tidak ditutup.*
+
+How-to prosedur: [add-i18n-keys.md](../guides/add-i18n-keys.md).

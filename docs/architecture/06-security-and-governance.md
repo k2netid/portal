@@ -50,6 +50,7 @@ Jejakawan Core Engine menerapkan prinsip *Defense in Depth* di seluruh tingkatan
 - Product packs gate APIs with `extension.active:<slug>`; deactivate does **not** truncate data or delete Spatie permissions.
 - Console operators (`srv_auth_users` + Spatie) ≠ public readers (`mem_members` + `auth:member`).
 - Full policy: [RBAC & seeders RFC](../extensions/rbac-and-lifecycle-seeders.md). Adaptive reader portal: [Member Area RFC](../extensions/member-area.md).
+- How-to pre-merge: [security-checks.md](../guides/security-checks.md).
 
 ---
 
