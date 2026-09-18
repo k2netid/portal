@@ -84,7 +84,7 @@ Pusat navigasi arsitektur, standar pemrograman, dan panduan teknis.
 Dokumen usang atau tenant-specific **tidak disimpan di core**. Lihat:
 
 - K2NET: `k2net-portal/docs/adr/ADR-009-...`, `k2net-portal/docs/audit/`
-- Sarangenge / SMKN6 history: `smkn6-portal/docs/feat_sarangenge/`
+- Sarangenge / school history: `smkn6-portal/docs/feat_sarangenge/` (dan `smkn1cijulang-portal`) — bukan SoT `ja-cms` / `k2net-portal`
 
 ---
 
