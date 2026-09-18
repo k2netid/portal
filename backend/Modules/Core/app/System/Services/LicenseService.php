@@ -106,28 +106,139 @@ class LicenseService
     /**
      * Feature capability matrix per tier.
      *
-     * @return array<string, bool>
+     * @return array<string, mixed>
      */
     public function getFeaturesMatrix(string $tier): array
     {
+        $isPaid = in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $isEnterprisePlus = in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+
         $matrix = [
             'custom_css' => in_array($tier, [self::TIER_STARTER, self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'premium_themes' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'pro_builder_modules' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'custom_code_injection' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'remove_watermark' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'white_label' => in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'multi_site' => in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'priority_updates' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'theme_upload' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'plugin_upload' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'theme_export' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'plugin_export' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'visual_builder' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
-            'data_studio' => in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            /**
+             * @deprecated Use `theme_quota` instead for granular theme entitlement checks.
+             * Kept for backward-compat with existing frontend feature checks.
+             */
+            'premium_themes' => $isPaid,
+            // Theme quota (ADR-023) — replaces the boolean premium_themes gate.
+            'theme_quota' => $this->getThemeQuota($tier),
+            'pro_builder_modules' => $isPaid,
+            'custom_code_injection' => $isPaid,
+            'remove_watermark' => $isPaid,
+            'white_label' => $isEnterprisePlus,
+            'multi_site' => $isEnterprisePlus,
+            'priority_updates' => $isPaid,
+            'theme_upload' => $isPaid,
+            'plugin_upload' => $isPaid,
+            'theme_export' => $isPaid,
+            'plugin_export' => $isPaid,
+            'visual_builder' => $isPaid,
+            'data_studio' => $isPaid,
         ];
 
         return $matrix;
+    }
+
+    /**
+     * Theme quota entitlement per tier (ADR-023).
+     *
+     * Phases:
+     *  - Phase 1 (current): mirror from license_type.
+     *  - Phase 2: populated from JA-CP heartbeat/activate payload `themes.*`.
+     *
+     * @return array{
+     *   always_on: list<string>,
+     *   max_premium_active: int|null,
+     *   catalog: list<string>
+     * }
+     */
+    public function getThemeQuota(string $tier): array
+    {
+        $isPaid = in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $isEnterprisePlus = in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+
+        return [
+            'always_on' => ['janari'],
+            'max_premium_active' => match (true) {
+                $isEnterprisePlus => null,    // unlimited
+                $isPaid => 1,                 // Pro: 1 premium slot
+                default => 0,                 // Community/Starter: janari only
+            },
+            'catalog' => ['janari', 'layung', 'sarangenge', 'sareupna'],
+        ];
+    }
+
+    /**
+     * Count remaining premium theme slots for the current tier.
+     * Returns null when unlimited (enterprise/white_label).
+     * Returns 0 when no slots remain.
+     *
+     * Premium = first-party non-janari served OR uploaded ZIP served.
+     */
+    public function remainingPremiumSlots(): ?int
+    {
+        $tier = $this->getLicenseTier();
+        $quota = $this->getThemeQuota($tier);
+
+        if ($quota['max_premium_active'] === null) {
+            return null; // unlimited
+        }
+
+        // Count currently served premium themes.
+        $servedPremium = $this->countServedPremiumThemes();
+
+        return max(0, $quota['max_premium_active'] - $servedPremium);
+    }
+
+    /**
+     * Check whether a theme slug is entitled to be served for the current tier.
+     *
+     * @param  string  $themeSlug  The lay_themes.slug (e.g. 'layung'), not the pack slug.
+     */
+    public function isThemeServeEntitled(string $themeSlug): bool
+    {
+        $tier = $this->getLicenseTier();
+        $quota = $this->getThemeQuota($tier);
+
+        // always_on themes are always entitled
+        if (in_array($themeSlug, $quota['always_on'], true)) {
+            return true;
+        }
+
+        // Not in catalog → not entitled (e.g. custom ZIP slug on community)
+        if (! in_array($themeSlug, $quota['catalog'], true)) {
+            // ZIP themes on community are blocked; on paid tiers they use the premium slot.
+            if ($quota['max_premium_active'] === 0) {
+                return false;
+            }
+        }
+
+        // Check max_premium_active
+        return $quota['max_premium_active'] === null || $quota['max_premium_active'] > 0;
+    }
+
+    /**
+     * Count how many non-janari (premium) themes are currently served.
+     * Uses lay_themes table when Layout module is available.
+     */
+    private function countServedPremiumThemes(): int
+    {
+        try {
+            if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+                return 0;
+            }
+
+            /** @var \Illuminate\Database\Eloquent\Model $themeModel */
+            $themeModel = \Modules\Layout\Models\Theme::class;
+
+            return (int) $themeModel::query()
+                ->where('is_active', true)
+                ->where('type', 'frontend')
+                ->where('slug', '!=', 'janari')
+                ->count();
+        } catch (\Throwable) {
+            return 0;
+        }
     }
 
     /**
@@ -289,6 +400,13 @@ class LicenseService
                     'license_expires_at' => $payload['expires_at'] ?? Setting::get('license_expires_at'),
                 ]);
 
+                // Remediate served theme if tier changed (ADR-023 §2.7)
+                try {
+                    app(ThemeDowngradeRemediator::class)->remediate();
+                } catch (\Throwable $re) {
+                    Log::warning('Theme remediator failed after heartbeat: '.$re->getMessage());
+                }
+
                 return ['success' => true, 'message' => 'License heartbeat synchronized.', 'status' => self::STATUS_ACTIVE];
             }
         } catch (\Throwable $e) {
@@ -326,6 +444,13 @@ class LicenseService
             'license_grace_until' => null,
             'license_last_checked_at' => now()->toIso8601String(),
         ]);
+
+        // Remediate served theme — revert to janari if no longer entitled (ADR-023 §2.7)
+        try {
+            app(ThemeDowngradeRemediator::class)->remediate();
+        } catch (\Throwable $re) {
+            Log::warning('Theme remediator failed after license deactivation: '.$re->getMessage());
+        }
 
         return [
             'success' => true,

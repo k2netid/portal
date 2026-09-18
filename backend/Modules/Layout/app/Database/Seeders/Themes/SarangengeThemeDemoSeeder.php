@@ -7,6 +7,7 @@ namespace Modules\Layout\Database\Seeders\Themes;
 use Illuminate\Database\Seeder;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
@@ -19,6 +20,20 @@ class SarangengeThemeDemoSeeder extends Seeder
     public function run(): void
     {
         $this->command?->info('Seeding Sarangenge Theme (Generic Vocational School / Pusat Keunggulan Portal)...');
+
+        // Guard: skip if current license tier does not allow premium themes (ADR-023 §2.8)
+        if (class_exists(LicenseService::class)) {
+            /** @var LicenseService $license */
+            $license = app(LicenseService::class);
+            $quota = $license->getThemeQuota($license->getLicenseTier());
+            if ($quota['max_premium_active'] === 0) {
+                $this->command?->warn(
+                    'Skipping Sarangenge demo seed — current license tier does not allow premium themes (max_premium_active=0).'
+                );
+
+                return;
+            }
+        }
 
         // 1. Scan and activate Sarangenge
         $themeService = app(ThemeService::class);

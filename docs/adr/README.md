@@ -25,6 +25,7 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, ja
 | **[ADR-020](./ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md)** | RBAC Hierarchy, Route Hardening & UI Primitives | Accepted | core |
 | **[ADR-021](./ADR-021-capability-registry-auto-discovery-and-sso-scope-mapping.md)** | Capability Registry, Manifest & SSO Scope Mapping | Accepted | core |
 | **[ADR-022](./ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md)** | Upstream Curation & Generic Theme Demo Seeders | Accepted | core |
+| **[ADR-023](./ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** | First-party themes as Registry packs + license quotas | Accepted | core |
 
 ## Theme-scoped / downstream (stub di folder ini)
 

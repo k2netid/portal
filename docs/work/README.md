@@ -12,7 +12,9 @@ Alur wajib: [`WORKFLOW.md`](../WORKFLOW.md) · Mulai task: [`guides/start-a-task
 
 ## Indeks aktif
 
-_(tidak ada task `in_progress` — deferred cinematic-nav / archetype slots ditutup.)_
+| ID | Judul | Status | Skala |
+| :--- | :--- | :--- | :--- |
+| [2026-09-18-theme-registry-packs-phase1](2026-09-18-theme-registry-packs-phase1.md) | Theme packs registry + kuota lisensi (fase 1) | `approved` | L |
 
 ## Selesai hari ini (belum diarsip)
 

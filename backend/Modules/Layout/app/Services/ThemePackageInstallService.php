@@ -7,6 +7,8 @@ namespace Modules\Layout\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Modules\Core\System\Services\LicenseService;
+use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Layout\Models\Theme;
 use ZipArchive;
 
@@ -113,6 +115,43 @@ final class ThemePackageInstallService
 
             if ($this->verifyBundleChecksum($packageRoot, $manifest, $warnings) === false) {
                 throw new \InvalidArgumentException('theme.esm.js checksum mismatch (bundle_checksum).');
+            }
+
+            // ---- ZIP Guard 1: block first-party slug collision (ADR-023 §2.5) ---
+            $firstPartySlugs = array_map(
+                static fn (string $packSlug): string => str_replace('theme-', '', $packSlug),
+                ExtensionFamilyCatalog::firstPartyThemePackSlugs()
+            );
+            if (in_array($slug, $firstPartySlugs, true)) {
+                throw new \InvalidArgumentException(
+                    "Slug [{$slug}] is reserved for a first-party theme and cannot be overridden by ZIP upload."
+                );
+            }
+
+            // ---- ZIP Guard 2: community cannot serve uploaded themes (ADR-023 §2.5) ---
+            // ---- ZIP Guard 3: Pro slot — ZIP counts as premium slot -------------------
+            if (class_exists(LicenseService::class)) {
+                /** @var LicenseService $license */
+                $license = app(LicenseService::class);
+                $tier = $license->getLicenseTier();
+                $quota = $license->getThemeQuota($tier);
+
+                if ($quota['max_premium_active'] === 0) {
+                    throw new \RuntimeException(
+                        "Uploaded themes cannot be served on tier [{$tier}]. Upgrade to Pro or higher."
+                    );
+                }
+
+                // For Pro: check that a slot is available
+                if ($quota['max_premium_active'] !== null) {
+                    $remaining = $license->remainingPremiumSlots();
+                    if ($remaining !== null && $remaining <= 0) {
+                        throw new \RuntimeException(
+                            "Premium theme slot limit reached (max {$quota['max_premium_active']}). "
+                            .'Deactivate the current premium theme before uploading another.'
+                        );
+                    }
+                }
             }
 
             $dest = storage_path('app/public/themes/'.$slug);

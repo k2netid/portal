@@ -6,6 +6,7 @@ namespace Modules\Layout\Console\Commands;
 
 use Illuminate\Console\Command;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Database\Seeders\Themes\JanariThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\LayungThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\SarangengeThemeDemoSeeder;
@@ -26,11 +27,28 @@ class ThemeSeedCommand extends Command
 
         if ($this->option('all')) {
             $this->info('Seeding demo data for all official themes...');
+
+            // Check premium entitlement (ADR-023 §2.8) — warn but let each seeder guard itself
+            $premiumEntitled = true;
+            if (class_exists(LicenseService::class)) {
+                /** @var LicenseService $license */
+                $license = app(LicenseService::class);
+                $quota = $license->getThemeQuota($license->getLicenseTier());
+                if ($quota['max_premium_active'] === 0) {
+                    $this->warn('Current license tier does not allow premium themes. Only Janari will be seeded.');
+                    $premiumEntitled = false;
+                }
+            }
+
             $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]);
-            $this->info('All theme demo datasets seeded successfully.');
+
+            if ($premiumEntitled) {
+                $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
+                $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
+                $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]);
+            }
+
+            $this->info('Theme demo dataset seeding completed.');
 
             return self::SUCCESS;
         }
