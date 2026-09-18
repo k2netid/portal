@@ -498,7 +498,7 @@ class MenuController extends BaseApiController
             'parent_id' => $parentId,
             'icon' => $row['icon'] ?? null,
             'css_class' => $row['css_class'] ?? null,
-            'sort_order' => (int) ($row['sort_order'] ?? $index),
+            'sort_order' => is_numeric($row['sort_order'] ?? null) ? (int) ($row['sort_order'] ?? $index) : $index,
             'open_in_new_tab' => filter_var($row['open_in_new_tab'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'metadata' => $row['metadata'] ?? null,
         ];

@@ -1,6 +1,3 @@
-> **Source of Truth:** `ja-core_engine/docs/DOCUMENTATION.md` — mirrored copy. Do not edit here.
-> Re-sync: `bash /home/jejakawan/dev/ja-core_engine/scripts/sync-docs-guides-reference-downstream.sh`
-
 # Kebijakan Dokumentasi — Jejakawan Core Engine
 
 Panduan ini adalah **kontrak dokumentasi** untuk repo `ja-core_engine`. Semua agen dan kontributor wajib mengikutinya sebelum menambah atau memindah dokumen.

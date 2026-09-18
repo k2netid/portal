@@ -33,8 +33,8 @@ JSON Schema: [`module-manifest.schema.json`](./module-manifest.schema.json)
 |-------|----------|--------|
 | `name` | yes | Display name |
 | `slug` | yes | Stable id (`mail`); equals FE `AppModule.id` |
-| `version` | yes | Semver string |
-| `type` | yes | `module` (first-party) or `plugin` |
+| `version` | yes | SemVer string (pack-local; **bukan** produk `package.json`). Bump saat ubah runtime — lihat [release-and-versioning.md](../guides/release-and-versioning.md) · `npm run modules:versions:check` |
+| `type` | yes | `module` (first-party) or `plugin` — **theme packs:** `theme` (see [ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md), fase 1 live). Theme packs live in `backend/theme-packs/<slug>/manifest.json`; store `theme_slug` and `theme_flags` alongside standard fields. |
 | `is_core` | yes | `false` for optionals; only kernel may be `true` |
 | `author` | yes | |
 | `description` | yes | Shown in registry UI |

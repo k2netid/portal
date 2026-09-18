@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Modules\Core\System\Models\User;
 use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
@@ -63,7 +64,7 @@ class InstallCommand extends Command
         $this->comment('👤 Ensuring super administrator account...');
         try {
             $email = 'super@jejakawan.com';
-            $user = \Modules\Core\System\Models\User::updateOrCreate(
+            $user = User::updateOrCreate(
                 ['email' => $email],
                 [
                     'username' => 'super',

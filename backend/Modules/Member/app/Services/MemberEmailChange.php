@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Member\Services;
 
 use Illuminate\Support\Facades\URL;
+use Laravel\Sanctum\PersonalAccessToken;
 use Modules\Member\Models\Member;
 
 class MemberEmailChange
@@ -70,7 +71,7 @@ class MemberEmailChange
 
         // Revoke all reader sessions — email change is a security boundary.
         $member->tokens()->delete();
-        \Laravel\Sanctum\PersonalAccessToken::query()
+        PersonalAccessToken::query()
             ->where('tokenable_type', $member->getMorphClass())
             ->where('tokenable_id', $member->getKey())
             ->delete();

@@ -36,8 +36,9 @@ CMS domains diekstrak dari `ja-cms` sebagai pack (`publishing`, `media`, `forms`
 
 | Edition | Isi tipikal |
 | :--- | :--- |
-| **Community** | Core kernel, tanpa key komersial |
-| **Starter / Pro** | Extension premium, builder modules, watermark removal |
-| **Enterprise / White-label** | Multi-site, branding console, priority sync |
+| **Community** | Core kernel; public themes = **janari only** (lihat ADR-023) |
+| **Starter / Pro** | Extension premium; Pro theme quota = **janari + 1 premium** dari katalog |
+| **Enterprise / White-label** | Multi-site, branding console; **semua** first-party themes |
 
-Detail tier = kontrak bisnis di JA-CP; matrix fitur di `LicenseService::getFeaturesMatrix()`.
+Detail tier = kontrak bisnis di JA-CP; matrix fitur di `LicenseService::getFeaturesMatrix()`.  
+Theme packs sebagai Module Registry + kuota: **[ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** (fase 1 implementasi: [`docs/work/2026-09-18-theme-registry-packs-phase1.md`](../work/2026-09-18-theme-registry-packs-phase1.md)).

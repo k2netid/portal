@@ -52,13 +52,22 @@ class SettingController extends BaseApiController
 
     public function update(Request $request): JsonResponse
     {
-        return $this->bulkUpdate($request);
+        return $this->applyBulkSettings($request);
     }
 
     /**
      * Bulk update Publishing settings.
      */
     public function bulkUpdate(Request $request): JsonResponse
+    {
+        return $this->applyBulkSettings($request);
+    }
+
+    /**
+     * Shared implementation for PUT settings and POST bulk-update.
+     * Kept private so Scramble does not share RouteInfo scope across two route actions (GEN001).
+     */
+    private function applyBulkSettings(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'settings' => 'required|array',

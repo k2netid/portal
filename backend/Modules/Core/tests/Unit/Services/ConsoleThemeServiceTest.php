@@ -7,6 +7,7 @@ namespace Modules\Core\Tests\Unit\Services;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\ConsoleThemeService;
+use Modules\Core\System\Services\LicenseService;
 use Tests\TestCase;
 
 class ConsoleThemeServiceTest extends TestCase
@@ -46,6 +47,9 @@ class ConsoleThemeServiceTest extends TestCase
 
     public function test_resolved_settings_merge_brand_group_logos(): void
     {
+        $licenseService = app(LicenseService::class);
+        $licenseService->activateLicense('JACP-ENT-PERPETUAL-K2NET-ID');
+
         Setting::updateOrCreate(
             ['key' => 'app_logo_light'],
             ['value' => 'https://cdn.example/logo-light.png', 'group' => 'brand', 'type' => 'image'],

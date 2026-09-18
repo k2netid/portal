@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Member\Tests\Feature;
 
+use Laravel\Sanctum\PersonalAccessToken;
 use Modules\Core\System\Contracts\OutboundMailPortInterface;
+use Modules\Member\Database\Seeders\MemberDemoSeeder;
 use Modules\Member\Models\Member;
 use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
 use Tests\TestCase;
@@ -136,7 +138,7 @@ class MemberAccountLifecycleTest extends TestCase
         $this->assertNotNull($member->email_verified_at);
         $this->assertSame(0, $member->tokens()->count());
         $this->assertDatabaseCount('personal_access_tokens', 0);
-        $this->assertNull(\Laravel\Sanctum\PersonalAccessToken::findToken($auth['token']));
+        $this->assertNull(PersonalAccessToken::findToken($auth['token']));
 
         // Old email no longer authenticates; new email does (tokens were revoked).
         $this->postJson('/api/v1/public/member/login', [
@@ -197,7 +199,7 @@ class MemberAccountLifecycleTest extends TestCase
     public function test_demo_seeder_creates_verified_reader_when_flag_on(): void
     {
         config(['install.seed_demo' => true]);
-        \Modules\Member\Database\Seeders\MemberDemoSeeder::ensure();
+        MemberDemoSeeder::ensure();
 
         $member = Member::query()->where('email', 'reader@example.com')->first();
         $this->assertNotNull($member);

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-016: Orkes Lifecycle dan Guard Dependensi Modul pada Site Identity
 
 **Status:** Accepted / Implemented  

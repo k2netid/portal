@@ -597,9 +597,31 @@
     "platform": "Platform",
     "modules": "Modul",
     "plugins": "Plugin",
+    "familyThemes": "Téma",
     "familyCms": "Content Management System",
     "familyAudience": "Audiens",
     "familyCommunications": "Komunikasi",
+    "themeQuota": {
+      "community": "Community: Janari wungkul",
+      "pro": "PRO: 1 téma premium ({active}/{max})",
+      "enterprise": "Enterprise: Téma taya wates"
+    },
+    "threeLevels": {
+      "title": "Arsitéktur Téma 3 Tingkat",
+      "badge": "Pituduh Arsitéktur",
+      "level1Title": "Tingkat 1: Inventori Paket",
+      "level1Desc": "Paket téma dipasang & aktip dina éksténsi sistem (sys_extensions).",
+      "level2Title": "Tingkat 2: Téma Dilayanan (Served)",
+      "level2Desc": "Hiji téma aktip anu ngalayanan perenah & gaya visual (lay_themes).",
+      "level3Title": "Tingkat 3: Situs Publik",
+      "level3Desc": "Paket Site aktip dina domain apex /.",
+      "siteActive": "Situs Publik Aktip",
+      "siteInactive": "Situs Publik Nonaktip (Landing Kernel Apex)"
+    },
+    "openCustomizer": "Buka Customizer",
+    "currentlyServedTheme": "Téma Aktip Dilayanan",
+    "baselineThemeLocked": "Téma baseline teu tiasa dinonaktipkeun",
+    "goToThemesManager": "Atur Téma",
     "bulkActivateCms": "Aktifkeun paket CMS",
     "bulkDeactivateCms": "Nonaktifkeun paket CMS",
     "installProfileBtn": "Profil instalasi",
@@ -661,7 +683,10 @@
       "operationalExtensions": "Ekstensi Operasional",
       "activeToggleable": "Tiasa Diaktifkan",
       "featureDescCoreFallback": "Infrastruktur inti sistem anu wajib.",
-      "featureDescEmpty": "Teu aya deskripsi."
+      "featureDescEmpty": "Teu aya deskripsi.",
+      "themeServedBadge": "Téma Dilayanan",
+      "themePackEnabled": "Paket Aktip",
+      "themePackDisabled": "Paket Nonaktip"
     },
     "constituentFeatures": "Daftar Fitur Bawaan",
     "noFeatures": "Teu aya fitur terdaftar.",

@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Module version → `1.1.7`
+- Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
+- `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.
+- Module version → `1.1.6`
+- `SareupnaThemeDemoSeeder`: enforce ZERO client-specific hardcoding; demo identity set to `Sareupna Platform` (generic); client branding delegated strictly to downstream deployment seeders.
+- Theme sample data (`bundle.json`, `schema.settings.json`, `composables/sareupnaPublicSeo.ts`, `pages/Post.vue`): replaced all client-specific defaults with generic cloud platform placeholders.
+
 ### Added
 
 - Host contract: all themes use `cinematic-nav` only (Janari local `SectionNavDots` removed); archetype pages get `after_hero`.

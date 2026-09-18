@@ -178,6 +178,7 @@ class SpaController extends Controller
 
         // Dev / pre-build fallback — still not the console login form.
         $nonce = htmlspecialchars((string) request()->cspNonce(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
         return response(
             '<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">'
             .'<meta name="viewport" content="width=device-width,initial-scale=1">'

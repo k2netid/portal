@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Member\Tests\Feature;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Modules\Member\Models\Member;
 use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
 use Tests\TestCase;
@@ -101,7 +103,7 @@ class MemberProfileFieldsTest extends TestCase
     public function test_member_can_upload_avatar_image(): void
     {
         $auth = $this->registerMember();
-        $file = \Illuminate\Http\UploadedFile::fake()->image('avatar.jpg', 120, 120);
+        $file = UploadedFile::fake()->image('avatar.jpg', 120, 120);
 
         $response = $this->withToken($auth['token'])
             ->post('/api/v1/member/profile/avatar', [
@@ -122,7 +124,7 @@ class MemberProfileFieldsTest extends TestCase
         ]);
 
         $relative = ltrim(substr($avatar, strlen('/storage/')), '/');
-        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($relative));
+        $this->assertTrue(Storage::disk('public')->exists($relative));
     }
 
     public function test_replacing_avatar_deletes_previous_owned_file(): void
@@ -131,21 +133,21 @@ class MemberProfileFieldsTest extends TestCase
 
         $first = $this->withToken($auth['token'])
             ->post('/api/v1/member/profile/avatar', [
-                'file' => \Illuminate\Http\UploadedFile::fake()->image('one.jpg', 80, 80),
+                'file' => UploadedFile::fake()->image('one.jpg', 80, 80),
             ], ['Accept' => 'application/json']);
         $first->assertOk();
         $firstUrl = (string) $first->json('data.avatar');
         $firstPath = ltrim(substr($firstUrl, strlen('/storage/')), '/');
-        $this->assertTrue(\Illuminate\Support\Facades\Storage::disk('public')->exists($firstPath));
+        $this->assertTrue(Storage::disk('public')->exists($firstPath));
 
         $second = $this->withToken($auth['token'])
             ->post('/api/v1/member/profile/avatar', [
-                'file' => \Illuminate\Http\UploadedFile::fake()->image('two.png', 80, 80),
+                'file' => UploadedFile::fake()->image('two.png', 80, 80),
             ], ['Accept' => 'application/json']);
         $second->assertOk();
         $secondUrl = (string) $second->json('data.avatar');
         $this->assertNotSame($firstUrl, $secondUrl);
-        $this->assertFalse(\Illuminate\Support\Facades\Storage::disk('public')->exists($firstPath));
+        $this->assertFalse(Storage::disk('public')->exists($firstPath));
     }
 
     public function test_clearing_avatar_deletes_owned_file_but_keeps_external_urls(): void
@@ -154,7 +156,7 @@ class MemberProfileFieldsTest extends TestCase
 
         $upload = $this->withToken($auth['token'])
             ->post('/api/v1/member/profile/avatar', [
-                'file' => \Illuminate\Http\UploadedFile::fake()->image('clear-me.jpg', 64, 64),
+                'file' => UploadedFile::fake()->image('clear-me.jpg', 64, 64),
             ], ['Accept' => 'application/json']);
         $upload->assertOk();
         $ownedUrl = (string) $upload->json('data.avatar');
@@ -168,7 +170,7 @@ class MemberProfileFieldsTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.avatar', null);
 
-        $this->assertFalse(\Illuminate\Support\Facades\Storage::disk('public')->exists($ownedPath));
+        $this->assertFalse(Storage::disk('public')->exists($ownedPath));
 
         $external = 'https://cdn.example.com/reader.png';
         $this->withToken($auth['token'])

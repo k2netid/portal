@@ -7,7 +7,6 @@ namespace Modules\Core\Tests\System\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\User;
-use Modules\Core\System\Services\InstagramFeedService;
 use Tests\TestCase;
 
 class InstagramFeedServiceTest extends TestCase

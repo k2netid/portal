@@ -31,4 +31,23 @@ class ModuleManifestValidatorTest extends TestCase
         $this->assertNotEmpty($errors);
         $this->assertFalse(ModuleManifestValidator::isValidFirstParty(['name' => 'X']));
     }
+
+    public function test_non_semver_version_fails(): void
+    {
+        $errors = ModuleManifestValidator::validateFirstParty([
+            'name' => 'Demo',
+            'slug' => 'demo',
+            'version' => 'V.2.0',
+            'type' => 'module',
+            'author' => 'Jejakawan',
+            'description' => 'x',
+            'is_core' => false,
+        ]);
+
+        $this->assertNotEmpty($errors);
+        $this->assertTrue(
+            collect($errors)->contains(fn (string $e): bool => str_contains($e, 'SemVer')),
+            implode('; ', $errors)
+        );
+    }
 }

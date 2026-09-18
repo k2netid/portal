@@ -41,8 +41,8 @@ class CapabilityRegistryService
                 $manifestFile = $dir.'/manifest.json';
                 if (File::exists($manifestFile)) {
                     $content = json_decode(File::get($manifestFile), true);
-                    if (is_array($content) && ! empty($content['slug'])) {
-                        $manifests[$content['slug']] = $content;
+                    if (is_array($content) && is_string($content['slug'] ?? null) && ($content['slug'] ?? '') !== '') {
+                        $manifests[(string) $content['slug']] = $content;
                     }
                 }
             }
@@ -102,16 +102,22 @@ class CapabilityRegistryService
 
         // Order: Core first, then alphabetical
         uksort($manifests, function (string $a, string $b): int {
-            if ($a === 'core') return -1;
-            if ($b === 'core') return 1;
+            if ($a === 'core') {
+                return -1;
+            }
+            if ($b === 'core') {
+                return 1;
+            }
+
             return strcmp($a, $b);
         });
 
         foreach ($manifests as $slug => $manifest) {
-            $moduleName = (string) ($manifest['name'] ?? ucfirst($slug));
-            $description = (string) ($manifest['description'] ?? '');
+            /** @var array<string, mixed> $manifest */
+            $moduleName = is_scalar($manifest['name'] ?? null) ? (string) ($manifest['name'] ?? ucfirst((string) $slug)) : ucfirst((string) $slug);
+            $description = is_scalar($manifest['description'] ?? null) ? (string) ($manifest['description'] ?? '') : '';
             $isCore = (bool) ($manifest['is_core'] ?? false);
-            $family = (string) ($manifest['family'] ?? 'module');
+            $family = is_scalar($manifest['family'] ?? null) ? (string) ($manifest['family'] ?? 'module') : 'module';
 
             $featuresList = [];
 
@@ -127,16 +133,16 @@ class CapabilityRegistryService
                             if (! is_array($actionData) || empty($actionData['permission'])) {
                                 continue;
                             }
-
+                            /** @var array<string, mixed> $actionData */
                             $actionsList[] = [
                                 'key' => (string) $actionKey,
-                                'permission' => (string) $actionData['permission'],
-                                'label' => (string) ($actionData['label'] ?? ucfirst($actionKey)),
-                                'action_type' => (string) ($actionData['action_type'] ?? 'manage'),
+                                'permission' => is_scalar($actionData['permission']) ? (string) $actionData['permission'] : '',
+                                'label' => is_scalar($actionData['label'] ?? null) ? (string) $actionData['label'] : ucfirst((string) $actionKey),
+                                'action_type' => is_scalar($actionData['action_type'] ?? null) ? (string) ($actionData['action_type'] ?? 'manage') : 'manage',
                                 'default_roles' => is_array($actionData['default_roles'] ?? null)
                                     ? array_values(array_filter($actionData['default_roles'], 'is_string'))
                                     : ['admin'],
-                                'oauth_scope' => isset($actionData['oauth_scope']) ? (string) $actionData['oauth_scope'] : null,
+                                'oauth_scope' => isset($actionData['oauth_scope']) && is_scalar($actionData['oauth_scope']) ? (string) $actionData['oauth_scope'] : null,
                                 'is_dangerous' => (bool) ($actionData['is_dangerous'] ?? false),
                             ];
                         }
@@ -144,8 +150,8 @@ class CapabilityRegistryService
 
                     $featuresList[] = [
                         'slug' => (string) $featureSlug,
-                        'name' => (string) ($featureData['name'] ?? ucfirst($featureSlug)),
-                        'description' => (string) ($featureData['description'] ?? ''),
+                        'name' => is_scalar($featureData['name'] ?? null) ? (string) $featureData['name'] : ucfirst((string) $featureSlug),
+                        'description' => is_scalar($featureData['description'] ?? null) ? (string) ($featureData['description'] ?? '') : '',
                         'actions' => $actionsList,
                     ];
                 }
@@ -282,10 +288,13 @@ class CapabilityRegistryService
      */
     public function getRoleDiffWithDefaults(Role $role): array
     {
+        /** @var list<string> $current */
         $current = $role->permissions()->pluck('name')->all();
         $defaults = $this->getDefaultPermissionsForRole($role->name);
 
+        /** @var list<string> $toAdd */
         $toAdd = array_values(array_diff($defaults, $current));
+        /** @var list<string> $toRemove */
         $toRemove = array_values(array_diff($current, $defaults));
 
         return [

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-02
+supersedes: []
+---
+
 # ADR-005: Theme Visual Styles Architecture, Real-Time Cross-Frame Sync, Dynamic Typography, & Smart Popper Positioning
 
 **Status:** Accepted  

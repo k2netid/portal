@@ -240,6 +240,83 @@
               </Button>
             </div>
           </div>
+
+          <!-- 3-Level Theme Architecture Banner -->
+          <div
+            v-if="group.key === 'theme'"
+            class="rounded-xl border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-indigo-500/5 to-transparent p-4 sm:p-5 space-y-4"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <div class="p-2 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                  <Palette class="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 class="text-sm font-semibold text-foreground flex items-center gap-2">
+                    {{ t('system.appStore.threeLevels.title') }}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                      {{ themeQuotaBadgeText }}
+                    </span>
+                  </h4>
+                  <p class="text-xs text-muted-foreground">
+                    {{ t('system.appStore.threeLevels.badge') }}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                class="shrink-0 gap-1.5 border-purple-500/30 text-purple-600 dark:text-purple-300 hover:bg-purple-500/10"
+                @click="router.push('/dash/themes')"
+              >
+                {{ t('system.appStore.goToThemesManager') }}
+                <ExternalLink class="w-3.5 h-3.5" />
+              </Button>
+            </div>
+
+            <!-- 3 Columns Pipeline Visual -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <!-- Level 1: Pack Inventory -->
+              <div class="rounded-lg border border-border/70 bg-card/60 p-3 flex flex-col justify-between space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{{ t('system.appStore.threeLevels.level1Title') }}</span>
+                  <Badge variant="outline" class="text-[10px] font-mono">
+                    {{ themePacksActiveCount }}/{{ themePacksTotalCount }} Active
+                  </Badge>
+                </div>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  {{ t('system.appStore.threeLevels.level1Desc') }}
+                </p>
+              </div>
+
+              <!-- Level 2: Served Theme -->
+              <div class="rounded-lg border border-purple-500/30 bg-purple-500/5 p-3 flex flex-col justify-between space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300">{{ t('system.appStore.threeLevels.level2Title') }}</span>
+                  <Badge variant="default" class="text-[10px] bg-purple-600">
+                    {{ currentlyServedThemeName }}
+                  </Badge>
+                </div>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  {{ t('system.appStore.threeLevels.level2Desc') }}
+                </p>
+              </div>
+
+              <!-- Level 3: Public Website -->
+              <div class="rounded-lg border border-border/70 bg-card/60 p-3 flex flex-col justify-between space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{{ t('system.appStore.threeLevels.level3Title') }}</span>
+                  <Badge :variant="siteIsActive ? 'success' : 'secondary'" class="text-[10px]">
+                    {{ siteIsActive ? t('system.appStore.threeLevels.siteActive') : t('system.appStore.threeLevels.siteInactive') }}
+                  </Badge>
+                </div>
+                <p class="text-xs text-muted-foreground leading-relaxed">
+                  {{ t('system.appStore.threeLevels.level3Desc') }}
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div class="overflow-x-auto rounded-xl border border-border/60">
             <table class="min-w-full divide-y divide-border text-sm">
               <thead class="bg-muted/50">
@@ -259,8 +336,26 @@
                   class="hover:bg-muted/40"
                 >
                   <td class="px-4 py-3">
-                    <div class="font-medium text-foreground">{{ ext.name }}</div>
-                    <div class="font-mono text-[11px] text-muted-foreground">{{ ext.slug }} · v{{ ext.version }}</div>
+                    <div class="flex items-center gap-2.5">
+                      <div
+                        v-if="resolveFamily(ext) === 'theme'"
+                        class="p-1.5 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 shrink-0"
+                      >
+                        <Palette class="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div class="font-medium text-foreground flex items-center gap-1.5 flex-wrap">
+                          {{ ext.name }}
+                          <span
+                            v-if="ext.is_served"
+                            class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30"
+                          >
+                            {{ t('system.appStore.currentlyServedTheme') }}
+                          </span>
+                        </div>
+                        <div class="font-mono text-[11px] text-muted-foreground">{{ ext.slug }} · v{{ ext.version }}</div>
+                      </div>
+                    </div>
                   </td>
                   <td class="px-4 py-3">
                     <Badge :variant="ext.status === 'active' ? 'success' : 'secondary'">
@@ -283,14 +378,32 @@
                   </td>
                   <td class="px-4 py-3 text-right whitespace-nowrap space-x-1">
                     <Button
-                      v-if="!ext.is_core"
+                      v-if="resolveFamily(ext) === 'theme' && ext.is_served"
+                      variant="outline"
+                      size="sm"
+                      class="text-purple-600 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/10"
+                      @click="navigateToThemeCustomizer(ext)"
+                    >
+                      <Palette class="h-3.5 w-3.5 mr-1" />
+                      {{ t('system.appStore.openCustomizer') }}
+                    </Button>
+                    <Button
+                      v-if="!ext.is_core && ext.slug !== 'theme-janari'"
                       variant="ghost"
                       size="sm"
                       @click="toggleExtensionStatus(ext)"
                     >
                       {{ ext.status === 'active' ? trans.deactivate : trans.activate }}
                     </Button>
+                    <span
+                      v-else-if="ext.slug === 'theme-janari'"
+                      class="text-xs text-muted-foreground/70 font-semibold uppercase tracking-wider px-2"
+                      :title="t('system.appStore.baselineThemeLocked')"
+                    >
+                      {{ t('system.appStore.locked') }}
+                    </span>
                     <Button
+                      v-if="ext.type !== 'theme'"
                       variant="ghost"
                       size="sm"
                       @click="openSettingsModal(ext)"
@@ -389,10 +502,12 @@ import ScaffolderModal from './components/ScaffolderModal.vue';
 // Lucide icons
 import {
   Download,
+  ExternalLink,
   GitBranch,
   Globe,
   Layers,
   Package,
+  Palette,
   PowerOff,
   Puzzle,
   SearchIcon,
@@ -414,13 +529,14 @@ interface FeatureItem {
 interface ExtensionItem {
     id: string;
     slug: string;
-    type: 'module' | 'plugin';
+    type: 'module' | 'plugin' | 'theme';
     family?: string;
     parent_slug?: string | null;
     name: string;
     version: string;
     status: 'active' | 'inactive';
     is_core: boolean;
+    is_served?: boolean;
     can_uninstall?: boolean;
     can_export?: boolean;
     author?: string;
@@ -460,6 +576,7 @@ const trans = computed(() => ({
     platform: t('system.appStore.platform'),
     modules: t('system.appStore.modules'),
     plugins: t('system.appStore.plugins'),
+    familyThemes: t('system.appStore.familyThemes'),
     familyCms: t('system.appStore.familyCms'),
     familyAudience: t('system.appStore.familyAudience'),
     familyCommunications: t('system.appStore.familyCommunications'),
@@ -514,6 +631,7 @@ const getLocalizedDescription = (ext: ExtensionItem) => {
 const filterTabs = computed(() => [
     { label: trans.value.all, value: 'all' },
     { label: trans.value.platform, value: 'platform' },
+    { label: trans.value.familyThemes, value: 'theme' },
     { label: trans.value.familyCms, value: 'cms' },
     { label: trans.value.familyAudience, value: 'audience' },
     { label: trans.value.familyCommunications, value: 'communications' },
@@ -521,6 +639,9 @@ const filterTabs = computed(() => [
 ]);
 
 const resolveFamily = (ext: ExtensionItem): string => {
+    if (ext.type === 'theme' || ext.family === 'theme' || ext.slug.startsWith('theme-')) {
+        return 'theme';
+    }
     if (ext.type === 'plugin' || ext.family === 'plugin') {
         return 'plugin';
     }
@@ -536,6 +657,7 @@ const resolveFamily = (ext: ExtensionItem): string => {
 const familyLabel = (key: string): string => {
     const map: Record<string, string> = {
         platform: trans.value.platform,
+        theme: trans.value.familyThemes,
         cms: trans.value.familyCms,
         audience: trans.value.familyAudience,
         communications: trans.value.familyCommunications,
@@ -543,6 +665,57 @@ const familyLabel = (key: string): string => {
         module: trans.value.modules,
     };
     return map[key] || key;
+};
+
+const themePacks = computed(() => extensions.value.filter((ext) => resolveFamily(ext) === 'theme'));
+const themePacksActiveCount = computed(() => themePacks.value.filter((ext) => ext.status === 'active').length);
+const themePacksTotalCount = computed(() => themePacks.value.length);
+const currentlyServedTheme = computed(() => themePacks.value.find((ext) => ext.is_served) ?? null);
+const currentlyServedThemeName = computed(() => currentlyServedTheme.value?.name ?? 'Janari');
+
+const themeQuotaMeta = ref<{
+    tier: string;
+    tier_label: string;
+    max_premium_active: number | null;
+    remaining_slots: number | null;
+    is_unlimited: boolean;
+} | null>(null);
+
+const fetchThemesQuota = async () => {
+    try {
+        const response = await api.get('/manage/layout/themes');
+        if (response.data?.meta?.quota) {
+            themeQuotaMeta.value = response.data.meta.quota;
+        }
+    } catch {
+        // Layout module might not be enabled or API unavailable
+    }
+};
+
+const themeQuotaBadgeText = computed(() => {
+    if (themeQuotaMeta.value) {
+        if (themeQuotaMeta.value.is_unlimited) {
+            return t('system.appStore.themeQuota.enterprise');
+        }
+        if (themeQuotaMeta.value.max_premium_active && themeQuotaMeta.value.max_premium_active > 0) {
+            const active = themeQuotaMeta.value.max_premium_active - (themeQuotaMeta.value.remaining_slots ?? 0);
+            return t('system.appStore.themeQuota.pro', { active, max: themeQuotaMeta.value.max_premium_active });
+        }
+        return t('system.appStore.themeQuota.community');
+    }
+    const tier = systemStore.appIdentity.app_license_tier?.toLowerCase();
+    if (tier === 'enterprise' || tier === 'white_label') {
+        return t('system.appStore.themeQuota.enterprise');
+    }
+    if (tier === 'pro') {
+        return t('system.appStore.themeQuota.pro', { active: 1, max: 1 });
+    }
+    return t('system.appStore.themeQuota.community');
+});
+
+const navigateToThemeCustomizer = (ext: ExtensionItem) => {
+    const slug = ext.slug.replace(/^theme-/, '');
+    router.push({ name: 'themes.customizer', params: { slug } });
 };
 
 const inactiveCms = computed(() =>
@@ -689,7 +862,7 @@ const fetchExtensions = async () => {
     }
 };
 
-const FAMILY_ORDER = ['platform', 'cms', 'audience', 'communications', 'module', 'plugin'] as const;
+const FAMILY_ORDER = ['platform', 'theme', 'cms', 'audience', 'communications', 'module', 'plugin'] as const;
 
 const filteredExtensions = computed(() => {
     return extensions.value
@@ -1533,6 +1706,7 @@ const exportExtension = async (ext: ExtensionItem) => {
 onMounted(() => {
     fetchCapabilities();
     fetchExtensions();
+    void fetchThemesQuota();
 });
 
 defineExpose({

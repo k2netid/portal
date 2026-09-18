@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\Rule;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Permission;
 use Modules\Core\System\Models\Role;
@@ -148,11 +149,10 @@ class RoleController extends BaseApiController
             return $this->error('Cannot modify protected role', 403);
         }
 
-        $rolesTable = is_string($v = config('permission.table_names.roles')) ? $v : 'roles';
         $permissionsTable = is_string($p = config('permission.table_names.permissions')) ? $p : 'permissions';
 
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255|unique:'.$rolesTable.',name,'.$role->id,
+            'name' => ['sometimes', 'string', 'max:255', Rule::unique(Role::class, 'name')->ignore($role)],
             'permissions' => 'array',
             'permissions.*' => 'exists:'.$permissionsTable.',name',
         ]);

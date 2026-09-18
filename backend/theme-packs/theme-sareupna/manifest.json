@@ -1,0 +1,23 @@
+{
+  "name": "Sareupna Theme",
+  "slug": "theme-sareupna",
+  "version": "1.1.6",
+  "type": "theme",
+  "family": "theme",
+  "theme_slug": "sareupna",
+  "description": "Tema premium katalog — tersedia mulai tier Pro. Membutuhkan tema Janari sebagai parent.",
+  "author": "Jejakawan Team",
+  "is_core": false,
+  "license": "Jejakawan First-Party",
+  "license_tier": "pro",
+  "dependencies": {
+    "layout": ">=1.0.0",
+    "theme-janari": ">=1.0.0"
+  },
+  "suggests": ["publishing", "media", "forms"],
+  "theme_flags": {
+    "always_on": false,
+    "non_deactivatable": false,
+    "premium": true
+  }
+}

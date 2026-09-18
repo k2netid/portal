@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-06
+supersedes: []
+---
+
 # ADR-021: Capability Registry Auto-Discovery, Manifest Standardization, and SSO Scope Mapping
 
 ## Status

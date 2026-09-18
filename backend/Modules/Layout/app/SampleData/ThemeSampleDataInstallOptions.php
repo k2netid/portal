@@ -12,8 +12,7 @@ final class ThemeSampleDataInstallOptions
         public readonly bool $settings = true,
         public readonly bool $pages = true,
         public readonly bool $forms = true,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $input

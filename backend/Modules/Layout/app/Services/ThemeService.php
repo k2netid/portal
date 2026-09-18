@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Support\ThemeViews;
@@ -102,10 +103,65 @@ class ThemeService
     }
 
     /**
-     * Activate a theme
+     * Activate a theme.
+     *
+     * Hard-blocks (throw \RuntimeException) if:
+     *  1. Layout pack is not product-active.
+     *  2. The theme-pack registry row (`theme-{slug}`) is not enabled.
+     *  3. Child theme's parent pack (`theme-janari`) is not enabled.
+     *  4. License quota exceeded (Community → no premium; Pro → max 1 premium served).
+     *
+     * ADR-023 §2.6 — previously "warn but don't block" → now hard gate.
      */
     public function activateTheme(Theme $theme): bool
     {
+        // ---- Gate 1: Layout must be product-active -------------------------
+        if (! Extension::isProductActive('layout')) {
+            throw new \RuntimeException(
+                "Cannot activate theme [{$theme->slug}]: Layout pack is not product-active."
+            );
+        }
+
+        // ---- Gate 2: Theme-pack registry row must be enabled ---------------
+        if (! $this->isThemePackEnabled($theme->slug)) {
+            throw new \RuntimeException(
+                "Cannot activate theme [{$theme->slug}]: theme-pack registry entry (theme-{$theme->slug}) "
+                .'is not enabled. Enable the pack in App Store → Themes first.'
+            );
+        }
+
+        // ---- Gate 3: Parent pack check (child themes require theme-janari) -
+        $parentSlug = is_string($theme->parent_theme) ? $theme->parent_theme : null;
+        if ($parentSlug !== null && $parentSlug !== '' && $parentSlug !== 'janari') {
+            if (! $this->isThemePackEnabled($parentSlug)) {
+                throw new \RuntimeException(
+                    "Cannot activate theme [{$theme->slug}]: parent pack (theme-{$parentSlug}) is not enabled."
+                );
+            }
+        }
+        // All child themes implicitly require theme-janari (ADR-023 §2.3)
+        if ($theme->slug !== 'janari' && ! $this->isThemePackEnabled('janari')) {
+            throw new \RuntimeException(
+                "Cannot activate theme [{$theme->slug}]: baseline pack (theme-janari) is not enabled."
+            );
+        }
+
+        // ---- Gate 4: License quota ----------------------------------------
+        /** @var LicenseService $license */
+        $license = app(LicenseService::class);
+        if (! $license->isThemeServeEntitled($theme->slug)) {
+            $tier = $license->getLicenseTier();
+            $quota = $license->getThemeQuota($tier);
+            $max = $quota['max_premium_active'];
+            throw new \RuntimeException(
+                "Cannot activate theme [{$theme->slug}]: not entitled on tier [{$tier}]. "
+                .($max === 0
+                    ? 'Upgrade to Pro or higher for premium themes.'
+                    : "Premium slot limit reached (max {$max}). Deactivate current premium theme first."
+                )
+            );
+        }
+
         // Fire before activation hook
         if ($this->hooks instanceof ThemeHooksService) {
             $this->hooks->doAction('theme.before_activate', $theme);
@@ -127,15 +183,6 @@ class ThemeService
             if ($criticalErrors !== []) {
                 throw new \Exception('Theme validation failed: '.implode(', ', $criticalErrors));
             }
-        }
-
-        // Check dependencies (warn but don't block)
-        if (! $this->checkDependencies($theme)) {
-            \Log::warning('Theme dependencies not met', [
-                'theme_id' => $theme->id,
-                'theme_slug' => $theme->slug,
-            ]);
-            // Don't throw, just log warning
         }
 
         // Activate theme
@@ -182,14 +229,65 @@ class ThemeService
     }
 
     /**
-     * Deactivate a theme
+     * Deactivate a theme.
+     * janari (baseline / always-on) cannot be deactivated — throws RuntimeException.
      */
     public function deactivateTheme(Theme $theme): bool
     {
+        if ($theme->slug === 'janari') {
+            throw new \RuntimeException(
+                'Cannot deactivate theme [janari]: it is the baseline always-on theme (ADR-023 §2.3). '
+                .'Switch the served theme to another entitled theme first, then deactivate its pack if needed.'
+            );
+        }
+
         $theme->deactivate();
         $this->clearThemeCache($theme);
 
         return true;
+    }
+
+    /**
+     * Check whether the registry pack for a theme slug is enabled in sys_extensions.
+     *
+     * @param  string  $themeSlug  The theme file-tree slug (e.g. 'layung'), NOT the pack slug.
+     */
+    public function isThemePackEnabled(string $themeSlug): bool
+    {
+        $packSlug = 'theme-'.$themeSlug;
+
+        try {
+            return Extension::isProductActive($packSlug);
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
+    /**
+     * Return the list of theme slugs (lay_themes.slug) entitled to be served for the current license.
+     *
+     * @return list<string>
+     */
+    public function getEntitledThemeSlugs(): array
+    {
+        /** @var LicenseService $license */
+        $license = app(LicenseService::class);
+        $tier = $license->getLicenseTier();
+        $quota = $license->getThemeQuota($tier);
+
+        // always_on themes are always entitled
+        $entitled = $quota['always_on'];
+
+        // For paid tiers, add premium catalog themes (if slots available)
+        if ($quota['max_premium_active'] !== 0) {
+            foreach ($quota['catalog'] as $slug) {
+                if (! in_array($slug, $entitled, true)) {
+                    $entitled[] = $slug;
+                }
+            }
+        }
+
+        return $entitled;
     }
 
     /**

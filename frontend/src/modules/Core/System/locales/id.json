@@ -597,9 +597,31 @@
     "platform": "Platform",
     "modules": "Modul",
     "plugins": "Plugin",
+    "familyThemes": "Tema",
     "familyCms": "Content Management System",
     "familyAudience": "Audiens",
     "familyCommunications": "Komunikasi",
+    "themeQuota": {
+      "community": "Community: Janari saja",
+      "pro": "PRO: 1 tema premium ({active}/{max})",
+      "enterprise": "Enterprise: Tema tanpa batas"
+    },
+    "threeLevels": {
+      "title": "Arsitektur Tema 3 Tingkat",
+      "badge": "Panduan Arsitektur",
+      "level1Title": "Tingkat 1: Inventori Paket",
+      "level1Desc": "Paket tema terpasang & aktif di ekstensi sistem (sys_extensions).",
+      "level2Title": "Tingkat 2: Tema Dilayani (Served)",
+      "level2Desc": "Satu tema aktif yang melayani layout & gaya visual (lay_themes).",
+      "level3Title": "Tingkat 3: Situs Publik",
+      "level3Desc": "Paket Site aktif pada domain apex /.",
+      "siteActive": "Situs Publik Aktif",
+      "siteInactive": "Situs Publik Nonaktif (Landing Kernel Apex)"
+    },
+    "openCustomizer": "Buka Customizer",
+    "currentlyServedTheme": "Tema Aktif Dilayani",
+    "baselineThemeLocked": "Tema baseline tidak dapat dinonaktifkan",
+    "goToThemesManager": "Kelola Tema",
     "bulkActivateCms": "Aktifkan paket CMS",
     "bulkDeactivateCms": "Nonaktifkan paket CMS",
     "installProfileBtn": "Profil instalasi",
@@ -661,7 +683,10 @@
       "operationalExtensions": "Ekstensi Operasional",
       "activeToggleable": "Dapat Diaktifkan",
       "featureDescCoreFallback": "Infrastruktur inti sistem yang wajib.",
-      "featureDescEmpty": "Tidak ada deskripsi."
+      "featureDescEmpty": "Tidak ada deskripsi.",
+      "themeServedBadge": "Tema Dilayani",
+      "themePackEnabled": "Paket Aktif",
+      "themePackDisabled": "Paket Nonaktif"
     },
     "constituentFeatures": "Daftar Fitur Bawaan",
     "noFeatures": "Tidak ada fitur terdaftar.",

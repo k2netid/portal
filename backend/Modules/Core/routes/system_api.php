@@ -28,7 +28,6 @@ use Modules\Core\System\Http\Controllers\Console\OAuthClientController;
 use Modules\Core\System\Http\Controllers\Console\OnboardingStatusController;
 use Modules\Core\System\Http\Controllers\Console\ProfileKycController;
 use Modules\Core\System\Http\Controllers\Console\PublicSettingsController;
-use Modules\Core\System\Http\Controllers\PublicInstagramFeedController;
 use Modules\Core\System\Http\Controllers\Console\RedisController;
 use Modules\Core\System\Http\Controllers\Console\RoleController;
 use Modules\Core\System\Http\Controllers\Console\ScheduledTaskController;
@@ -37,6 +36,7 @@ use Modules\Core\System\Http\Controllers\Console\SystemController;
 use Modules\Core\System\Http\Controllers\Console\TranslationController;
 use Modules\Core\System\Http\Controllers\Console\TwoFactorController;
 use Modules\Core\System\Http\Controllers\Console\UserController;
+use Modules\Core\System\Http\Controllers\PublicInstagramFeedController;
 use Modules\Core\System\Http\Middleware\ScimAuth;
 
 Route::prefix('v1')->group(function (): void {

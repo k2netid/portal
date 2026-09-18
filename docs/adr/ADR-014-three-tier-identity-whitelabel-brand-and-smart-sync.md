@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-014: Arsitektur 3-Tier Identitas, White Label Enterprise, dan Smart Brand Sync
 
 **Status:** Accepted / Implemented  

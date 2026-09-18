@@ -617,12 +617,12 @@ class ContentController extends BaseApiController
         $this->normalizeContentWriteRequest($request);
 
         try {
-            $rules = [
+            $validated = $request->validate([
                 'title' => 'sometimes|required|string|max:255',
                 'slug' => 'sometimes|nullable|string',
                 'excerpt' => 'nullable|string',
                 'intro' => 'nullable|string|max:500',
-                'body' => 'nullable|string', // Allow null body for drafts
+                'body' => 'nullable|string', // Allow null body for drafts; publish transition enforced below
                 'featured_image' => 'nullable|string',
                 'featured_image_title' => 'nullable|string|max:120',
                 'featured_image_caption' => 'nullable|string|max:255',
@@ -645,14 +645,15 @@ class ContentController extends BaseApiController
                 'new_tags' => 'nullable|array',
                 'new_tags.*' => 'string|max:50',
                 'comment_status' => 'nullable|in:1,0,true,false,open,closed',
-            ];
+            ]);
 
             // Require non-empty body only when transitioning to published (partial PUT on published content must not 422)
             if ($request->input('status') === 'published' && $content->status !== 'published') {
-                $rules['body'] = 'required|string|min:1';
+                $body = $validated['body'] ?? $request->input('body', $content->body);
+                if (! is_string($body) || trim($body) === '') {
+                    return $this->validationError(['body' => ['The body field is required when publishing.']]);
+                }
             }
-
-            $validated = $request->validate($rules);
         } catch (ValidationException $e) {
             Log::error('Content update validation failed', ['errors' => $e->errors(), 'input' => $request->all()]);
 

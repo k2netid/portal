@@ -597,9 +597,31 @@
     "platform": "Platform",
     "modules": "Modules",
     "plugins": "Plugins",
+    "familyThemes": "Themes",
     "familyCms": "Content Management System",
     "familyAudience": "Audience",
     "familyCommunications": "Communications",
+    "themeQuota": {
+      "community": "Community: Janari only",
+      "pro": "PRO: 1 premium theme ({active}/{max})",
+      "enterprise": "Enterprise: Unlimited themes"
+    },
+    "threeLevels": {
+      "title": "3-Level Theme Architecture",
+      "badge": "Architecture Guide",
+      "level1Title": "Level 1: Pack Inventory",
+      "level1Desc": "Theme packs enabled in system extensions (sys_extensions).",
+      "level2Title": "Level 2: Served Theme",
+      "level2Desc": "Single active theme delivering layout & styling (lay_themes).",
+      "level3Title": "Level 3: Public Website",
+      "level3Desc": "Public Site pack active on apex / domain.",
+      "siteActive": "Public Website Active",
+      "siteInactive": "Public Website Inactive (Apex Kernel Landing)"
+    },
+    "openCustomizer": "Open Customizer",
+    "currentlyServedTheme": "Currently Served Theme",
+    "baselineThemeLocked": "Baseline theme cannot be deactivated",
+    "goToThemesManager": "Manage Themes",
     "bulkActivateCms": "Activate CMS pack",
     "bulkDeactivateCms": "Deactivate CMS pack",
     "installProfileBtn": "Install profile",
@@ -661,7 +683,10 @@
       "operationalExtensions": "Operational Extensions",
       "activeToggleable": "Active Toggleable",
       "featureDescCoreFallback": "Mandatory core system infrastructure.",
-      "featureDescEmpty": "No description provided."
+      "featureDescEmpty": "No description provided.",
+      "themeServedBadge": "Served Theme",
+      "themePackEnabled": "Pack Enabled",
+      "themePackDisabled": "Pack Inactive"
     },
     "constituentFeatures": "Constituent Features",
     "noFeatures": "No features registered.",

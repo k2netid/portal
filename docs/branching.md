@@ -38,7 +38,7 @@ Sistem portal Jejakawan beroperasi dengan model **Upstream Core Engine + Downstr
 | Repositori | Peran / Scope | Branch Utama | Remote Upstream | Basis Tema | Seeder Deployment Khusus |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [**`ja-core_engine`**](file:///home/jejakawan/dev/ja-core_engine) | **Upstream Source of Truth** | `main` | - | Janari, Layung, Sarangenge | `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder` *(Semua Generic)* |
-| [**`ja-cms`**](file:///home/jejakawan/dev/ja-cms) | **Official PT Jejak Awan Digital** | `main` | `ja-core_engine.git` | **`janari`** | [`JejakawanDeploymentSeeder`](file:///home/jejakawan/dev/ja-cms/backend/database/seeders/JejakawanDeploymentSeeder.php) |
+| [**`ja-cms`**](file:///home/jejakawan/dev/ja-cms) | **Official Jejakawan (Supported by K2NET)** | `main` | `ja-core_engine.git` | **`sareupna`** | [`JejakawanDeploymentSeeder`](file:///home/jejakawan/dev/ja-cms/backend/database/seeders/JejakawanDeploymentSeeder.php) |
 | [**`k2net-portal`**](file:///home/jejakawan/dev/k2net-portal) | **PT Kirana Karina Network (ISP)** | `main` | `ja-core_engine.git` | **`layung`** | [`K2netDeploymentSeeder`](file:///home/jejakawan/dev/k2net-portal/backend/database/seeders/K2netDeploymentSeeder.php) |
 | [**`smkn6-portal`**](file:///home/jejakawan/dev/smkn6-portal) | **SMK Negeri 6 Bandung (Vokasi PK)** | `feat/theme-sarangenge` | `ja-core_engine.git` | **`sarangenge`** | [`Smkn6DeploymentSeeder`](file:///home/jejakawan/dev/smkn6-portal/backend/database/seeders/Smkn6DeploymentSeeder.php) |
 
@@ -57,12 +57,16 @@ Sistem portal Jejakawan beroperasi dengan model **Upstream Core Engine + Downstr
    - `JanariThemeDemoSeeder` (Portal Komunitas/Pemerintahan umum).
    - `LayungThemeDemoSeeder` (Portal Bisnis ISP & Managed Services generik).
    - `SarangengeThemeDemoSeeder` (Portal Sekolah Kejuruan Pusat Keunggulan generik).
-4. **Artisan Tooling**:
-   - `php artisan theme:seed [slug] [--all]`
+4. **Artisan Tooling & Safeguards**:
+   - `php artisan theme:seed [slug] [--all] [--force]`:
+     - Secara default berjalan dalam mode **Non-Destructive**: menggunakan `Setting::setIfMissing()` dan `ThemeSampleDataInstallOptions(force: false)`. Pengaturan identitas dan kustomisasi tema klien yang sudah ada di database downstream **tidak akan pernah ditimpa/di-reset**.
+     - Opsi `--force` hanya digunakan jika admin/developer secara sadar ingin melakukan hard-reset ke demo bawaan.
    - `php artisan rbac:sync`
-5. **ATURAN MUTLAK CORE**:
+5. **ATURAN MUTLAK CORE & CI SAFEGUARD**:
    > [!CAUTION]
    > **ZERO CLIENT-SPECIFIC HARDCODING!** Dilarang keras menuliskan nama legal PT klien, nomor WhatsApp marketing klien, alamat fisik kantor/sekolah, jurusan riil, atau logo berhak cipta klien di dalam upstream `ja-core_engine`.
+   >
+   > **Enforcement Otomatis:** Repositori upstream dilengkapi dengan `scripts/check-zero-client-hardcoding.mjs` yang terintegrasi pada `npm run agent:verify`. Setiap PR/commit yang mencoba memasukkan identitas klien ke file tema atau demo seeder akan otomatis ditolak.
 
 ### B. Wajib Masuk ke Repositori Downstream Klien (Client Deployment Scope):
 1. **Deployment Seeder Spesifik**:

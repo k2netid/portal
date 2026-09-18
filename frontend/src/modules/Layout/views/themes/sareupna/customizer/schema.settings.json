@@ -303,7 +303,7 @@
     "platform_contact_email": {
         "label": "Email Resmi Platform",
         "type": "text",
-        "default": "halo@jejakawan.com",
+        "default": "halo@example.com",
         "category": "Platform Specs"
     },
     "platform_contact_phone": {
@@ -321,7 +321,7 @@
     "platform_address": {
         "label": "Alamat Kantor Operasional",
         "type": "textarea",
-        "default": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
+        "default": "Bandung & Jakarta, Indonesia",
         "category": "Platform Specs"
     },
     "hero_badge_text": {
@@ -596,7 +596,7 @@
         "type": "select",
         "options": [
             {
-                "label": "Jejakawan CLI",
+                "label": "Platform CLI",
                 "value": "cli"
             },
             {
@@ -699,7 +699,7 @@
     "footer_about_text": {
         "label": "Teks Deskripsi Footer",
         "type": "textarea",
-        "default": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
+        "default": "Sareupna — high-performance cloud & developer platform theme untuk Jejakawan CMS. Membangun ekosistem digital yang berdampak.",
         "category": "Footer"
     },
     "footer_copyright": {

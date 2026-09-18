@@ -6,6 +6,7 @@ namespace Modules\Layout\Console\Commands;
 
 use Illuminate\Console\Command;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Database\Seeders\Themes\JanariThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\LayungThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\SarangengeThemeDemoSeeder;
@@ -16,27 +17,49 @@ class ThemeSeedCommand extends Command
 {
     protected $signature = 'theme:seed
                             {slug? : Theme slug (janari, layung, sarangenge, sareupna). Defaults to active theme.}
-                            {--all : Seed demo data for all supported themes}';
+                            {--all : Seed demo data for all supported themes}
+                            {--force : Force overwrite existing theme settings, identity, and sample data}';
 
     protected $description = 'Seed generic starter demo data for a theme (janari, layung, sarangenge, sareupna) or the currently active theme.';
 
     public function handle(ThemeService $themeService): int
     {
+        $force = (bool) $this->option('force');
+        config(['layout.theme_seed_force' => $force]);
+
         $themeService->scanThemes();
 
         if ($this->option('all')) {
             $this->info('Seeding demo data for all official themes...');
+
+            // Check premium entitlement (ADR-023 §2.8) — warn but let each seeder guard itself
+            $premiumEntitled = true;
+            if (class_exists(LicenseService::class)) {
+                /** @var LicenseService $license */
+                $license = app(LicenseService::class);
+                $quota = $license->getThemeQuota($license->getLicenseTier());
+                if ($quota['max_premium_active'] === 0) {
+                    $this->warn('Current license tier does not allow premium themes. Only Janari will be seeded.');
+                    $premiumEntitled = false;
+                }
+            }
+
             $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
-            $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]);
-            $this->info('All theme demo datasets seeded successfully.');
+
+            if ($premiumEntitled) {
+                $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
+                $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
+                $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]);
+            }
+
+            $this->info('Theme demo dataset seeding completed.');
 
             return self::SUCCESS;
         }
 
-        $slug = (string) ($this->argument('slug') ?: Setting::get('theme_active', 'janari'));
-        $slug = strtolower(trim($slug));
+        $slugArg = $this->argument('slug');
+        $slugRaw = is_string($slugArg) && $slugArg !== '' ? $slugArg : Setting::get('theme_active', 'janari');
+        $slug = strtolower(trim(is_string($slugRaw) ? $slugRaw : 'janari'));
 
         $this->info("Target theme for demo seeding: [{$slug}]");
 
@@ -57,7 +80,7 @@ class ThemeSeedCommand extends Command
 
         return $this->call('theme:install-sample', [
             'slug' => $slug,
-            '--force' => true,
+            '--force' => (bool) $this->option('force'),
         ]);
     }
 }

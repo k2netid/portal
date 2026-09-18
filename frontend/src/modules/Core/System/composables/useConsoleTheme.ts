@@ -141,8 +141,8 @@ function applyDropdownVars(
 ) {
     const style = normalizeConsoleDropdownStyle(dropdownStyle);
     const baseOpacity = clampGlassIntensity(popperOpacityPct, 98) / 100;
-    let opacity = baseOpacity;
-    let blur = '20px';
+    let opacity: number;
+    let blur: string;
     if (style === 'minimal') {
         opacity = 1;
         blur = '0px';

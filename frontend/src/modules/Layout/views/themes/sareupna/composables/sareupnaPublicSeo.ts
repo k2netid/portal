@@ -11,7 +11,7 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     titleKey: 'header.about',
     titleFallback: 'Tentang Platform',
     descKey: 'pages.about.subtitle',
-    descFallback: 'Visi teknologi dan arsitektur cloud PT Jejak Awan Digital.',
+    descFallback: 'Visi teknologi dan arsitektur cloud platform.',
   },
   'pages/Solutions': {
     titleKey: 'pages.solutions.title',

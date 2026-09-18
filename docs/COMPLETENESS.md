@@ -1,6 +1,3 @@
-> **Source of Truth:** `ja-core_engine/docs/COMPLETENESS.md` — mirrored copy. Do not edit here.
-> Re-sync: `bash /home/jejakawan/dev/ja-core_engine/scripts/sync-docs-guides-reference-downstream.sh`
-
 # Documentation completeness — ja-core_engine
 
 Checklist fondasi docs (update saat menambah kuadran/lapisan baru).

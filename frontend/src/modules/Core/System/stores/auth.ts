@@ -110,7 +110,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         permissionNameSet: (state): Set<string> => {
-            const names = state.user?.permissions?.map((perm: any) => typeof perm === 'string' ? perm : (perm?.name ?? ''))?.filter(Boolean) ?? [];
+            const names = state.user?.permissions?.map((perm: string | { name?: string }) => typeof perm === 'string' ? perm : (perm?.name ?? ''))?.filter(Boolean) ?? [];
             return new Set(names);
         },
 
@@ -125,7 +125,7 @@ export const useAuthStore = defineStore('auth', {
         hasRole(): (roleName: string) => boolean {
             return (roleName: string): boolean => {
                 if (!this.user || !this.user.roles) return false;
-                return this.user.roles.some((role: any) => 
+                return this.user.roles.some((role: string | { name?: string }) =>
                     (typeof role === 'string' ? role : role?.name) === roleName
                 );
             };

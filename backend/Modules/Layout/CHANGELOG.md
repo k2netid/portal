@@ -1,29 +1,40 @@
 # Changelog — Layout
 
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
 ## [Unreleased]
 
 ### Added
+- Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
+- `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.
+- Host SEO resolver for theme **Sareupna** (`FrontendLayout` + `sareupnaPublicSeo`) — CMS baseline P0.
 - **Site Identity to Theme Settings Sync**: Integrated with `SettingController::updatePlatformIdentity` where `site_name`, `site_logo`, and `site_favicon` are synchronized into active theme settings (`lay_theme_settings`) when smart brand sync is invoked ([ADR-014](../../docs/adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md)).
 - **Visual Builder Decoupling**: Modularized Visual Builder (`builder.site`) manifest with license gating ([ADR-011](../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md)).
+- **ADR-023 3-Level Theme Pipeline & Quota Metadata**: `ThemeController::index()` returns per-theme flags (`is_pack_enabled`, `is_entitled`, `is_premium`) and response metadata (`meta.quota` and `meta.site_active`).
 
 ### Fixed
 - `dynamicSources` no longer logs the full query string.
+- ThemeSampleDataOrchestrator and blocks factory strict typing fixes.
 
 ### Changed
+- ADR-023: Hardened ThemeService activation gates, ThemeDowngradeRemediator integration, and ThemeSeedCommand licensing guard.
+
+### Changed
+- Manifest version → `1.1.1` (FE host SEO wiring for sareupna CMS baseline).
 - Manifest widget types match runtime (`content_list`, `menu`, `form`).
 - Public menus/themes return empty when the layout pack is inactive.
 - Widget types register even when an active theme supplies locations.
 - Default frontend theme is **Janari** (builder/fork reference); Sarangenge remains optional alternate.
 - Menu location assignments sync into active theme `menu_location_{slot}` settings; customization publish preserves those keys; public `GET /layout/menus/{id}` resolves UUID assignments.
 
-## 1.1.0 — P3-3b (themes + visual builder)
+## [1.1.0] - P3-3b (themes + visual builder)
 
 - Full Theme API, theme CLI commands, and Janari theme bundle.
 - Visual Builder + BlockRenderer wired into Publishing create/edit.
 - `lay_builder_presets` migration; builder dynamic-sources API.
 - Console menu: Site Editor + Themes under Editorial.
 
-## 1.0.0 — P3-3a (menus / widgets / redirects)
+## [1.0.0] - P3-3a (menus / widgets / redirects)
 
 - Optional first-party pack extracted from ja-cms Content/Layout (menus-first slice).
 - Console: Menus, Widgets (Editorial); Redirects (Infrastructure).

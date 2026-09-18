@@ -1,0 +1,22 @@
+{
+  "name": "Janari Theme",
+  "slug": "theme-janari",
+  "version": "2.0.5",
+  "type": "theme",
+  "family": "theme",
+  "theme_slug": "janari",
+  "description": "Tema baseline Community — always-on inventory bila Layout aktif. Parent / fallback untuk semua child theme.",
+  "author": "Jejakawan Team",
+  "is_core": false,
+  "license": "Jejakawan First-Party",
+  "license_tier": "free",
+  "dependencies": {
+    "layout": ">=1.0.0"
+  },
+  "suggests": ["publishing", "media", "forms"],
+  "theme_flags": {
+    "always_on": true,
+    "non_deactivatable": true,
+    "premium": false
+  }
+}

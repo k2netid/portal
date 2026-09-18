@@ -7,8 +7,6 @@ namespace Modules\Layout\Tests\Feature;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Layout\Models\Theme;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ThemePackageLifecycleTest extends TestCase

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Member\Tests\Feature;
 
+use Illuminate\Http\UploadedFile;
 use Modules\Core\Security\Models\SecurityLog;
 use Modules\Member\Models\Member;
 use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
@@ -169,7 +170,7 @@ class MemberSecurityAuditTest extends TestCase
 
         $this->withToken($token)
             ->post('/api/v1/member/profile/avatar', [
-                'file' => new \Illuminate\Http\UploadedFile($path, 'avatar.png', 'image/png', null, true),
+                'file' => new UploadedFile($path, 'avatar.png', 'image/png', null, true),
             ])
             ->assertOk();
 

@@ -9,6 +9,7 @@
 1. [`docs/branching.md`](docs/branching.md) — Matriks multi-repo & sinkronisasi upstream core.
 2. [`docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md`](docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md) — Hasil kurasi & standardisasi seeder Sarangenge.
 3. [`/home/jejakawan/dev/docs/configs/nginx-smkn6-staging-jadev.conf`](../docs/configs/nginx-smkn6-staging-jadev.conf) — Konfigurasi vhost staging SMKN 6.
+4. [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — Urutan kerja: audit → diskusi → rencana → implement → verify → catat.
 
 ---
 
@@ -56,3 +57,5 @@ php artisan rbac:sync
 # 3. Validasi seeder SMKN 6
 php artisan db:seed --class=Smkn6DeploymentSeeder
 ```
+
+How-to: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · Testing: [`docs/reference/testing.md`](docs/reference/testing.md) · E2E: [`docs/guides/run-e2e-playwright.md`](docs/guides/run-e2e-playwright.md) · CLI: [`docs/reference/cli-commands.md`](docs/reference/cli-commands.md) · Changelog: [`docs/guides/update-changelog.md`](docs/guides/update-changelog.md) · Versioning: [`docs/guides/release-and-versioning.md`](docs/guides/release-and-versioning.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md).

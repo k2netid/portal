@@ -173,9 +173,9 @@ export const createPublicRouter = () => {
                     const loadThemeRoutes = moduleKey ? modules[moduleKey] : undefined;
                     
                     if (loadThemeRoutes) {
-                        const module = await loadThemeRoutes() as any;
+                        const module = await loadThemeRoutes() as { default?: RouteRecordRaw[] };
                         if (module.default && Array.isArray(module.default)) {
-                            module.default.forEach((route: any) => {
+                            module.default.forEach((route: RouteRecordRaw) => {
                                 const remove = router.addRoute('public-layout', route);
                                 if (typeof remove === 'function') {
                                     activeThemeRouteRemovers.push(remove);
@@ -196,7 +196,7 @@ export const createPublicRouter = () => {
                         injectedThemeSlug = currentSlug;
                     }
                 }
-            } catch (e) {
+            } catch (_e) {
                 // Ignore error, theme routes just won't be loaded
             }
         }

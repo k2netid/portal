@@ -14,8 +14,9 @@ class VocationalContentSeeder extends Seeder
     public function run(): void
     {
         $author = User::query()->first();
-        if (!$author) {
+        if (! $author) {
             $this->command?->warn('No user found to set as author.');
+
             return;
         }
 

@@ -435,6 +435,30 @@
       "all": "Semua Tipe",
       "email": "Email",
       "frontend": "Frontend"
+    },
+    "threeLevels": {
+      "title": "Alur Penayangan Tema",
+      "level1": "1. Katalog Paket",
+      "level1Active": "{count} Paket Aktif",
+      "level2": "2. Tema Dilayani",
+      "level2Active": "Aktif: {name}",
+      "level3": "3. Apex / Situs",
+      "level3SiteActive": "Paket Site Aktif",
+      "level3SiteInactive": "Landing Modular"
+    },
+    "quota": {
+      "title": "Kuota Lisensi Tema",
+      "freeBaseline": "Free Baseline",
+      "proIncluded": "Termasuk PRO",
+      "proRequired": "Perlu Lisensi PRO",
+      "unlimited": "Tanpa Batas",
+      "communityNote": "Tingkat Community melayani tema baseline Janari. Tingkatkan ke PRO untuk mengaktifkan tema premium.",
+      "remainingSlots": "{count} slot premium tersisa",
+      "noSlots": "0 slot tersisa"
+    },
+    "packStatus": {
+      "enabled": "Paket Aktif",
+      "disabled": "Paket Nonaktif"
     }
   },
   "frontend": {

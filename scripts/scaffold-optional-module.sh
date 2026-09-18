@@ -120,16 +120,25 @@ Optional first-party module — contract: \`docs/extensions/module-contract.md\`
 6. Module Registry → Activate
 
 Packaging modes: \`docs/extensions/external-module-packaging.md\`.
+Changelog policy: \`docs/guides/update-changelog.md\`.
 EOF
 
 cat > "$BACKEND_MODULE/CHANGELOG.md" <<EOF
-# Changelog — $DISPLAY_NAME
+# Changelog — $DISPLAY_NAME (BE)
+
+All notable changes to \`Modules/$STUDLY\` are documented here.
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
 ### Added
 
 - Scaffold via \`scripts/scaffold-optional-module.sh\`
+
+### Changed
+
+### Fixed
 EOF
 
 echo "==> Frontend src/modules/$STUDLY"
@@ -215,16 +224,26 @@ cat > "$FRONTEND_MODULE/README.md" <<EOF
 \`AppModule.id\` / \`extensionSlug\` = \`$SLUG\`.
 
 Register via \`OPTIONAL_FIRST_PARTY\` in \`frontend/src/engine/bootstrap/deferredConsoleModules.ts\`.
+
+See \`CHANGELOG.md\` and \`docs/guides/update-changelog.md\`.
 EOF
 
 cat > "$FRONTEND_MODULE/CHANGELOG.md" <<EOF
-# Changelog — $DISPLAY_NAME (frontend)
+# Changelog — $DISPLAY_NAME (FE)
+
+All notable changes to \`frontend/src/modules/$STUDLY\` are documented here.
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
 ### Added
 
 - Scaffold via \`scripts/scaffold-optional-module.sh\`
+
+### Changed
+
+### Fixed
 EOF
 
 echo ""

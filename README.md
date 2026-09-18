@@ -22,14 +22,14 @@
 | **Produk** | **Jejakawan Core Engine** |
 | **Repositori** | `ja-core_engine` |
 | **Arsitektur** | Modular Monolith Kernel + Single Unified Console SPA |
-| **Versi** | `1.0.0-beta.1` |
+| **Versi** | `1.0.0-beta.2` |
 | **Database Engine** | PostgreSQL 16+ / 18.x (Schema terisolasi `core_engine`) |
 | **Runtime Backend** | PHP 8.2+ (Laravel 13 Modular Kernel; tested on 8.3) |
 | **Runtime Frontend** | Node.js 20+ / 22+ (Vue 3.5, Vite 8, Tailwind CSS v4, TypeScript) |
 | **Cache & Queue** | Redis (Dedicated session & cache DB) |
 | **Lisensi** | MIT / Proprietary |
 
-> **Asal fork:** Repo ini diekstrak dari `ja-cms` menjadi **master kernel** untuk aplikasi downstream (CMS, portal, SaaS). Hub lisensi tetap **JA-CP** (`ja-control-plane`). Detail: [docs/AGENT_START_HERE.md](docs/AGENT_START_HERE.md).
+> **Asal fork:** Repo ini diekstrak dari `ja-cms` menjadi **master kernel** untuk aplikasi downstream (CMS, portal, SaaS). Hub lisensi tetap **JA-CP** (`ja-control-plane`). Detail: [docs/AGENT_START_HERE.md](docs/AGENT_START_HERE.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [docs/WORKFLOW.md](docs/WORKFLOW.md).
 
 ---
 
@@ -83,7 +83,7 @@ ja-core_engine/
 │   │   │   └── Core/           # System, Infra, Security Views & Stores
 │   │   └── shared/             # UI Components, Composables, Utils
 │   └── tests/                  # Vitest Component & Unit Tests
-└── docs/                       # Dokumentasi Arsitektur & Standar Teknis
+└── docs/                       # DOCUMENTATION + WORKFLOW + guides/reference/work/adr/…
 ```
 
 ---

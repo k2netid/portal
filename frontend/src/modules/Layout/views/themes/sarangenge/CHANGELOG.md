@@ -25,3 +25,4 @@ Docs index: `docs/themes/sarangenge/`.
 ### Fixed
 
 - Contact no longer hardcodes `/public/forms/contact/submit`
+- Post.vue and Programs.vue TypeScript and ESLint typing refinements.

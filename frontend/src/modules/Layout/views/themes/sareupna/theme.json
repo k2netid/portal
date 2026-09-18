@@ -1,7 +1,7 @@
 {
     "name": "Sareupna",
     "slug": "sareupna",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "type": "frontend",
     "archetype": "developer_platform",
     "category": "Cloud & Developer Platform",
@@ -527,7 +527,7 @@
         "platform_contact_email": {
             "label": "Email Resmi Platform",
             "type": "text",
-            "default": "halo@jejakawan.com",
+            "default": "halo@example.com",
             "category": "Platform Specs"
         },
         "platform_contact_phone": {

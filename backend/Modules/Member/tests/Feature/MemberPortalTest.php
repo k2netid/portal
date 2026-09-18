@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Modules\Member\Tests\Feature;
 
 use Modules\Core\System\Models\Extension;
+use Modules\Forms\Database\Seeders\ContactFormSeeder;
 use Modules\Member\Models\Member;
 use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;
+use Modules\Publishing\Models\Content;
 use Tests\TestCase;
 
 class MemberPortalTest extends TestCase
@@ -173,7 +175,7 @@ class MemberPortalTest extends TestCase
         $this->activatePack('publishing');
         $this->seedPermissionsAndRoles();
         $admin = $this->createAdminUser();
-        $content = \Modules\Publishing\Models\Content::factory()->published()->create([
+        $content = Content::factory()->published()->create([
             'author_id' => $admin->id,
             'category_id' => null,
             'comment_status' => 'open',
@@ -263,7 +265,7 @@ class MemberPortalTest extends TestCase
     public function test_member_submissions_list_when_forms_active(): void
     {
         $this->activatePack('forms');
-        \Modules\Forms\Database\Seeders\ContactFormSeeder::ensure();
+        ContactFormSeeder::ensure();
 
         $auth = $this->registerMember();
 

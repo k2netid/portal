@@ -7,7 +7,9 @@ namespace Modules\Member\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
@@ -28,7 +30,7 @@ class ProfileController extends BaseApiController
         }
 
         try {
-            $validated = $request->validate(MemberPublicProfile::profileValidationRules($member));
+            $validated = $request->validate(MemberPublicProfile::profileValidationRules());
         } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
@@ -71,7 +73,7 @@ class ProfileController extends BaseApiController
             return $this->validationError($e->errors());
         }
 
-        /** @var \Illuminate\Http\UploadedFile $file */
+        /** @var UploadedFile $file */
         $file = $validated['file'];
 
         try {
@@ -138,7 +140,7 @@ class ProfileController extends BaseApiController
 
         try {
             $validated = $request->validate([
-                'email' => 'required|email|max:255|unique:mem_members,email,'.$member->id,
+                'email' => ['required', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member->getKey())],
                 'current_password' => 'required|string',
             ]);
         } catch (ValidationException $e) {
