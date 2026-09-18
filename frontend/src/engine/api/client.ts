@@ -139,6 +139,13 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig & { _perf
         }
     }
 
+    if (typeof localStorage !== 'undefined' && config.headers) {
+        const activeLocale = localStorage.getItem('locale');
+        if (activeLocale) {
+            config.headers['Accept-Language'] = activeLocale;
+        }
+    }
+
     return config;
 });
 

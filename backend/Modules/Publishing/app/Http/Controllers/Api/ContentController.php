@@ -110,7 +110,20 @@ class ContentController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
+        $locale = $this->normalizePublicLocale(
+            $request->query('locale') ?? $request->header('Accept-Language')
+        );
+
         $result = $this->contentService->getPublishedContents($request);
+
+        if ($locale !== null) {
+            $items = $result['paginated'] ? $result['data']->items() : $result['data'];
+            foreach ($items as $item) {
+                if ($item instanceof Content) {
+                    $this->applyPublicLocale($item, $locale);
+                }
+            }
+        }
 
         if ($result['paginated']) {
             /** @var LengthAwarePaginator<int, mixed> $paginator */
@@ -145,7 +158,9 @@ class ContentController extends BaseApiController
      */
     public function show(Request $request, string $slug): JsonResponse
     {
-        $locale = $this->normalizePublicLocale($request->query('locale'));
+        $locale = $this->normalizePublicLocale(
+            $request->query('locale') ?? $request->header('Accept-Language')
+        );
 
         $content = Content::with(['author', 'category', 'tags', 'menuItems.menu', 'comments' => function ($q): void {
             $q->where('status', 'approved')->latest();
@@ -207,9 +222,10 @@ class ContentController extends BaseApiController
             return null;
         }
 
-        $base = strtolower(explode('-', trim($raw))[0]);
+        $first = explode(',', trim($raw))[0];
+        $base = strtolower(explode('-', trim($first))[0]);
 
-        return in_array($base, ['en', 'id'], true) ? $base : null;
+        return in_array($base, ['en', 'id', 'su'], true) ? $base : null;
     }
 
     private function applyPublicLocale(Content $content, ?string $locale): void
