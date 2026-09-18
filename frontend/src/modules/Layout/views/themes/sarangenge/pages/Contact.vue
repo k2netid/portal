@@ -323,10 +323,16 @@ const form = ref({
 const submitting = ref(false);
 const submitSuccess = ref(false);
 
+const contactFormSlug = computed(() => {
+  const raw = getSetting('contact_form_slug', 'contact');
+  const slug = typeof raw === 'string' ? raw.trim() : '';
+  return slug || 'contact';
+});
+
 const handleSubmit = async () => {
   submitting.value = true;
   try {
-    await api.post('/public/forms/contact/submit', {
+    await api.post(`/public/forms/${encodeURIComponent(contactFormSlug.value)}/submit`, {
       data: {
         name: form.value.name,
         phone: form.value.phone,

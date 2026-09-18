@@ -39,6 +39,8 @@
             </div>
           </div>
 
+          <PluginSlot name="after_hero" class="w-full" />
+
           <!-- Alumni Stats Grid -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div class="sarangenge-panel p-6 space-y-1">
@@ -138,6 +140,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { ref, computed, onMounted } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';

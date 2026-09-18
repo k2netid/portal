@@ -62,6 +62,16 @@
               <ThemeSafeHtml :html="post.body || post.excerpt || ''" />
             </div>
 
+            <PluginSlot
+              name="after_post_content"
+              class="mt-8"
+              :context="{
+                post_id: post.id,
+                post_type: post.type,
+                slug: post.slug,
+              }"
+            />
+
             <!-- Share & Bookmark -->
             <div class="flex items-center justify-between gap-3 pt-6 border-t border-border/60">
               <Button
@@ -148,6 +158,12 @@
           <WidgetArea location="sidebar" :context="{ post }">
             <BlogSidebar />
           </WidgetArea>
+          <PluginSlot
+            v-if="post"
+            name="sidebar_article"
+            class="mt-8"
+            :context="{ post_id: post.id, slug: post.slug }"
+          />
         </div>
       </div>
     </div>
@@ -156,6 +172,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
+import { PluginSlot } from '@/shared/components';
 import { useRoute } from 'vue-router';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';

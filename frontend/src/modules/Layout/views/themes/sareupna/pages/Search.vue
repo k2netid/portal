@@ -8,6 +8,8 @@
         <p class="text-center text-lg text-muted-foreground mb-12">
           {{ queryLabel }} <strong class="text-foreground">{{ searchQuery }}</strong>
         </p>
+
+      <PluginSlot name="after_hero" class="w-full" />
             
         <div
           v-if="loading"
@@ -37,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { logger } from '@/shared/utils/logger';
 import { ref, computed, onMounted, watch, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'

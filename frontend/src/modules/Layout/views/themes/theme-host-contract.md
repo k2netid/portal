@@ -72,10 +72,10 @@ File names and canonical routes stay **English**. Do **not** force one shared na
 
 Indonesian (or other) paths are **aliases only**, never the Vue filename.
 
-### Side-nav: Janari `SectionNavDots` vs host `cinematic-nav`
+### Side-nav: host `cinematic-nav` (all themes)
 
-- **layung / sarangenge / sareupna** — host plugin `cinematic-nav` via `floating_overlay` (ADR-018). Theme keys: `home_side_nav_dots`, `home_side_nav_style`, `home_side_nav_show_mobile`.
-- **janari** — may still ship local `SectionNavDots` on Home as CMS reference chrome. Do **not** re-introduce theme-local copies on other packages. Full consolidation onto the plugin is optional follow-up, not required for CMS baseline.
+- **layung / sarangenge / sareupna / janari** — host plugin `cinematic-nav` via `floating_overlay` (ADR-018). Theme keys: `home_side_nav_dots`, `home_side_nav_style`, optional `home_side_nav_show_mobile`.
+- Themes **must not** ship local `SectionNavDots` (or equivalent). Section anchors stay as semantic `id="section-*"` on Home.
 
 ### sample-data / `bundle.json` contract
 

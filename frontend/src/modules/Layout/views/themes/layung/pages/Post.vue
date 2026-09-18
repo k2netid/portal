@@ -49,6 +49,16 @@
             {{ post.excerpt }}
           </p>
         </div>
+
+        <PluginSlot
+          name="after_post_content"
+          class="mt-8"
+          :context="{
+            post_id: post.id,
+            post_type: post.type,
+            slug: post.slug,
+          }"
+        />
       </article>
 
       <!-- Sidebar with Universal WidgetArea -->
@@ -64,6 +74,11 @@
             <SocialShareWidget :title="post?.title" />
           </div>
         </WidgetArea>
+        <PluginSlot
+          name="sidebar_article"
+          class="mt-8"
+          :context="{ post_id: post.id, slug: post.slug }"
+        />
       </aside>
     </div>
 
@@ -78,6 +93,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { PluginSlot } from '@/shared/components';
 import { useRoute } from 'vue-router';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';

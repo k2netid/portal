@@ -65,9 +65,9 @@
         </div>
       </section>
 
-      <!-- Plugin slot: after hero -->
+      <!-- Plugin slot: after hero (standard CMS baseline name) -->
       <PluginSlot
-        name="about-after-hero"
+        name="after_hero"
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         :context="{ theme: 'layung', page: 'about' }"
       />
