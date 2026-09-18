@@ -1,0 +1,67 @@
+{
+    "specialPageItems": [
+        {
+            "id": "page-hero",
+            "manifestCategories": ["Hero Section", "Platform Specs"],
+            "icon": "sparkles",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_hero",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_hero_desc"
+        },
+        {
+            "id": "page-bento",
+            "manifestCategories": ["Bento Architecture"],
+            "icon": "layers",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_bento",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_bento_desc"
+        },
+        {
+            "id": "page-terminal",
+            "manifestCategories": ["Developer Terminal"],
+            "icon": "terminal",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_terminal",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_terminal_desc"
+        },
+        {
+            "id": "page-products",
+            "manifestCategories": ["Products & Modules"],
+            "icon": "boxes",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_products",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_products_desc"
+        },
+        {
+            "id": "page-specs",
+            "manifestCategories": ["Cloud Specs & SLA"],
+            "icon": "cpu",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_specs",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_specs_desc"
+        },
+        {
+            "id": "page-solusi",
+            "manifestCategories": ["Solusi Page"],
+            "icon": "layers",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_solusi",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_solusi_desc"
+        },
+        {
+            "id": "page-pricing",
+            "manifestCategories": ["Pricing Page"],
+            "icon": "credit-card",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_pricing",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_pricing_desc"
+        },
+        {
+            "id": "page-news",
+            "manifestCategories": ["News Page"],
+            "icon": "newspaper",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_news",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_news_desc"
+        },
+        {
+            "id": "page-contact",
+            "manifestCategories": ["Contact Page"],
+            "icon": "phone-call",
+            "labelKey": "theme.sareupna.customizer.sidebar.page_contact",
+            "descriptionKey": "theme.sareupna.customizer.sidebar.page_contact_desc"
+        }
+    ]
+}

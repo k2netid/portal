@@ -1,0 +1,1118 @@
+{
+    "name": "Sareupna",
+    "slug": "sareupna",
+    "version": "1.0.0",
+    "type": "frontend",
+    "archetype": "developer_platform",
+    "category": "Cloud & Developer Platform",
+    "parent_theme": "janari",
+    "description": "Sareupna \u2014 High-Performance Cloud & Developer Platform Theme khusus untuk Jejakawan.com (PT Jejak Awan Digital). Arsitektur cloud terdistribusi, directional auto-hide floating dock, interactive CLI badge, 12-column Bento Grid, developer terminal showcase, dan telemetry metrics.",
+    "author": "PT Jejak Awan Digital",
+    "supports": {
+        "sareupna_canvas": true
+    },
+    "customizer": {
+        "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
+        "themeSchema": "customizer/schema.settings.json"
+    },
+    "settings_schema": {
+        "site_title": {
+            "label": "Site Title",
+            "type": "text",
+            "default": "PT Jejak Awan Digital",
+            "category": "General",
+            "scope": "platform"
+        },
+        "brand_logo": {
+            "label": "Logo",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "brand_favicon": {
+            "label": "Favicon",
+            "type": "media",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_tagline": {
+            "label": "Site Tagline",
+            "type": "text",
+            "default": "High-Performance Cloud & Developer Platform",
+            "category": "General",
+            "scope": "platform"
+        },
+        "site_description": {
+            "label": "Site Description",
+            "type": "textarea",
+            "default": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+            "category": "General",
+            "scope": "platform"
+        },
+        "branding_display": {
+            "label": "Branding Display",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Logo only",
+                    "value": "logo_only"
+                },
+                {
+                    "label": "Site name only",
+                    "value": "text_only"
+                },
+                {
+                    "label": "Logo + Site name",
+                    "value": "both"
+                }
+            ],
+            "default": "text_only",
+            "category": "General",
+            "scope": "platform"
+        },
+        "theme_style": {
+            "label": "Theme Visual Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Obsidian Deep Space (Default)",
+                    "value": "obsidian"
+                },
+                {
+                    "label": "Cyber Violet Glow (Radiant Mesh)",
+                    "value": "cyber_glow"
+                },
+                {
+                    "label": "Frosted Glassmorphism (Acrylic)",
+                    "value": "glass"
+                },
+                {
+                    "label": "Clean Minimalist Dark (High Contrast)",
+                    "value": "clean"
+                }
+            ],
+            "default": "obsidian",
+            "category": "Appearance",
+            "scope": "platform"
+        },
+        "color_primary": {
+            "label": "Warna Utama (Primary Violet)",
+            "type": "color",
+            "default": "#8b5cf6",
+            "category": "Colors",
+            "scope": "platform"
+        },
+        "color_secondary": {
+            "label": "Warna Sekunder (Electric Cyan)",
+            "type": "color",
+            "default": "#06b6d4",
+            "category": "Colors",
+            "scope": "platform"
+        },
+        "color_accent": {
+            "label": "Warna Aksen / Glow (Royal Blue)",
+            "type": "color",
+            "default": "#3b82f6",
+            "category": "Colors",
+            "scope": "platform"
+        },
+        "font_heading": {
+            "label": "Font Judul (Heading Font)",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Plus Jakarta Sans (Modern Geometric)",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Geist (Technical Clean)",
+                    "value": "Geist"
+                },
+                {
+                    "label": "Outfit (Bold Modern)",
+                    "value": "Outfit"
+                },
+                {
+                    "label": "Inter (Universal Sans)",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Orbitron (Futuristic Display)",
+                    "value": "Orbitron"
+                }
+            ],
+            "default": "Plus Jakarta Sans",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "font_body": {
+            "label": "Font Konten / Body",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Plus Jakarta Sans",
+                    "value": "Plus Jakarta Sans"
+                },
+                {
+                    "label": "Inter",
+                    "value": "Inter"
+                },
+                {
+                    "label": "Roboto",
+                    "value": "Roboto"
+                },
+                {
+                    "label": "Geist",
+                    "value": "Geist"
+                }
+            ],
+            "default": "Plus Jakarta Sans",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "font_mono": {
+            "label": "Font Kode / Monospace",
+            "type": "select",
+            "options": [
+                {
+                    "label": "JetBrains Mono (Developer Favorite)",
+                    "value": "JetBrains Mono"
+                },
+                {
+                    "label": "Fira Code (Ligatures)",
+                    "value": "Fira Code"
+                },
+                {
+                    "label": "Geist Mono (Technical Clean)",
+                    "value": "Geist Mono"
+                }
+            ],
+            "default": "JetBrains Mono",
+            "category": "Typography",
+            "scope": "platform"
+        },
+        "breadcrumb_sticky": {
+            "label": "Sticky Breadcrumbs",
+            "type": "checkbox",
+            "default": false,
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_sticky": {
+            "label": "Sticky Header",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "layout_style": {
+            "label": "Layout Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Full Width (Modern Canvas)",
+                    "value": "fullwidth"
+                },
+                {
+                    "label": "Boxed Container",
+                    "value": "boxed"
+                },
+                {
+                    "label": "Framed Border",
+                    "value": "framed"
+                }
+            ],
+            "default": "fullwidth",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "home_sections": {
+            "label": "Bagian Beranda Platform",
+            "type": "checkbox_list",
+            "options": [
+                {
+                    "label": "Hero Section & Telemetry",
+                    "value": "hero"
+                },
+                {
+                    "label": "Bento Architecture Grid",
+                    "value": "bento"
+                },
+                {
+                    "label": "Developer Terminal Showcase",
+                    "value": "terminal"
+                },
+                {
+                    "label": "Products & Enterprise Modules",
+                    "value": "products"
+                },
+                {
+                    "label": "Cloud Specs & SLA Telemetry",
+                    "value": "specs"
+                },
+                {
+                    "label": "Conversion CTA Banner",
+                    "value": "cta"
+                }
+            ],
+            "default": [
+                "hero",
+                "bento",
+                "terminal",
+                "products",
+                "specs",
+                "cta"
+            ],
+            "category": "Layout"
+        },
+        "home_scroll_mode": {
+            "label": "Gaya Tampilan & Gulir Beranda",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Normal Smooth Scrolling",
+                    "value": "default"
+                },
+                {
+                    "label": "Proportional Viewport Snapping",
+                    "value": "proportional_snap"
+                }
+            ],
+            "default": "default",
+            "category": "Layout"
+        },
+        "home_side_nav_dots": {
+            "label": "Tampilkan Navigasi Titik Samping",
+            "type": "boolean",
+            "default": true,
+            "category": "Layout"
+        },
+        "home_side_nav_style": {
+            "label": "Gaya & Efek Navigasi Samping",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Frosted Glass Pill",
+                    "value": "glass"
+                },
+                {
+                    "label": "Minimal Dots",
+                    "value": "minimal"
+                },
+                {
+                    "label": "Radiant Neon Glow",
+                    "value": "glow"
+                },
+                {
+                    "label": "Vertical Bar Indicator",
+                    "value": "bars"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout"
+        },
+        "container_max_width": {
+            "label": "Container Max Width",
+            "type": "range",
+            "min": 1024,
+            "max": 1600,
+            "step": 32,
+            "default": 1280,
+            "unit": "px",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "boxed_bg_color": {
+            "label": "Page Background Color",
+            "type": "color",
+            "default": "#07090e",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "boxed_shadow": {
+            "label": "Boxed Content Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle Dark",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Medium Depth",
+                    "value": "medium"
+                },
+                {
+                    "label": "Neon Glow Halo",
+                    "value": "glow"
+                }
+            ],
+            "default": "glow",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "framed_padding": {
+            "label": "Frame Padding",
+            "type": "range",
+            "min": 8,
+            "max": 32,
+            "step": 4,
+            "default": 16,
+            "unit": "px",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_style": {
+            "label": "Header Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Frosted Glass Floating Dock",
+                    "value": "glass"
+                },
+                {
+                    "label": "Transparent Seamless",
+                    "value": "transparent"
+                },
+                {
+                    "label": "Solid Dark Background",
+                    "value": "solid"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_text": {
+            "label": "Header CTA Button Text",
+            "type": "text",
+            "default": "Mulai Sekarang",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "header_cta_url": {
+            "label": "Header CTA Button URL",
+            "type": "text",
+            "default": "/contact",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "nav_style": {
+            "label": "Navigation Style",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Interactive Pill",
+                    "value": "pill"
+                },
+                {
+                    "label": "Minimal Clean",
+                    "value": "minimal"
+                },
+                {
+                    "label": "Glowing Underline",
+                    "value": "underline"
+                }
+            ],
+            "default": "pill",
+            "category": "Layout",
+            "scope": "platform"
+        },
+        "button_radius": {
+            "label": "Button Roundedness",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Sharp (Square)",
+                    "value": "none"
+                },
+                {
+                    "label": "Slight Rounded (sm)",
+                    "value": "sm"
+                },
+                {
+                    "label": "Medium Rounded (md)",
+                    "value": "md"
+                },
+                {
+                    "label": "Large Rounded (lg)",
+                    "value": "lg"
+                },
+                {
+                    "label": "Full Pill",
+                    "value": "full"
+                }
+            ],
+            "default": "lg",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_border_width": {
+            "label": "Button Border Width",
+            "type": "range",
+            "min": 0,
+            "max": 4,
+            "step": 1,
+            "default": 1,
+            "unit": "px",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "button_shadow": {
+            "label": "Button Shadow",
+            "type": "select",
+            "options": [
+                {
+                    "label": "None",
+                    "value": "none"
+                },
+                {
+                    "label": "Subtle Glow",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Medium Glow",
+                    "value": "medium"
+                },
+                {
+                    "label": "Intense Cyber Glow",
+                    "value": "glow"
+                }
+            ],
+            "default": "glow",
+            "category": "Buttons",
+            "scope": "platform"
+        },
+        "platform_sla_guarantee": {
+            "label": "Jaminan Uptime SLA Platform",
+            "type": "text",
+            "default": "99.99% Uptime SLA",
+            "category": "Platform Specs"
+        },
+        "platform_cluster_region": {
+            "label": "Wilayah Klaster / Data Center",
+            "type": "text",
+            "default": "ID-JKT01 (Equinix JK1) & SG01",
+            "category": "Platform Specs"
+        },
+        "platform_core_latency": {
+            "label": "Latensi Inti Edge Platform",
+            "type": "text",
+            "default": "< 15ms Core Edge",
+            "category": "Platform Specs"
+        },
+        "platform_support_tier": {
+            "label": "Dukungan Teknis & DevOps",
+            "type": "text",
+            "default": "24/7/365 Dedicated SRE",
+            "category": "Platform Specs"
+        },
+        "platform_cli_command": {
+            "label": "Perintah CLI Standar",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Platform Specs"
+        },
+        "platform_contact_email": {
+            "label": "Email Resmi Platform",
+            "type": "text",
+            "default": "halo@jejakawan.com",
+            "category": "Platform Specs"
+        },
+        "platform_contact_phone": {
+            "label": "Nomor Telepon Platform",
+            "type": "text",
+            "default": "+62 811-2345-6789",
+            "category": "Platform Specs"
+        },
+        "platform_contact_whatsapp": {
+            "label": "WhatsApp Konsultasi Cloud",
+            "type": "text",
+            "default": "6281123456789",
+            "category": "Platform Specs"
+        },
+        "platform_address": {
+            "label": "Alamat Kantor Operasional",
+            "type": "textarea",
+            "default": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
+            "category": "Platform Specs"
+        },
+        "hero_badge_text": {
+            "label": "Hero Badge / Slogan (fallback)",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Hero Section"
+        },
+        "hero_badge_text_id": {
+            "label": "Hero Badge / Slogan (Indonesia)",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Hero Section"
+        },
+        "hero_badge_text_en": {
+            "label": "Hero Badge / Slogan (English)",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Hero Section"
+        },
+        "hero_badge_text_su": {
+            "label": "Hero Badge / Slogan (Sunda)",
+            "type": "text",
+            "default": "$ ja cloud:deploy --prod",
+            "category": "Hero Section"
+        },
+        "hero_title": {
+            "label": "Judul Utama Hero (fallback)",
+            "type": "text",
+            "default": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
+            "category": "Hero Section"
+        },
+        "hero_title_id": {
+            "label": "Judul Utama Hero (Indonesia)",
+            "type": "text",
+            "default": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
+            "category": "Hero Section"
+        },
+        "hero_title_en": {
+            "label": "Judul Utama Hero (English)",
+            "type": "text",
+            "default": "NEXT-GENERATION CLOUD ENGINE & PLATFORM",
+            "category": "Hero Section"
+        },
+        "hero_title_su": {
+            "label": "Judul Utama Hero (Sunda)",
+            "type": "text",
+            "default": "ARSIT\u00c9KTUR CLOUD & ENGINE GENERASI ENGGAL",
+            "category": "Hero Section"
+        },
+        "hero_subtitle": {
+            "label": "Subjudul Hero (fallback)",
+            "type": "textarea",
+            "default": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+            "category": "Hero Section"
+        },
+        "hero_subtitle_id": {
+            "label": "Subjudul Hero (Indonesia)",
+            "type": "textarea",
+            "default": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+            "category": "Hero Section"
+        },
+        "hero_subtitle_en": {
+            "label": "Subjudul Hero (English)",
+            "type": "textarea",
+            "default": "Distributed cloud platform, high-performance content engine, and modern developer ecosystem unified into a single runtime.",
+            "category": "Hero Section"
+        },
+        "hero_subtitle_su": {
+            "label": "Subjudul Hero (Sunda)",
+            "type": "textarea",
+            "default": "Platform cloud terdistribusi, engine kont\u00e9n kinerja luhur, sareng \u00e9kosistem pamekar mod\u00e9rn dina hiji platform.",
+            "category": "Hero Section"
+        },
+        "hero_primary_cta_text": {
+            "label": "Teks Tombol Utama Hero (fallback)",
+            "type": "text",
+            "default": "Eksplorasi Solusi",
+            "category": "Hero Section"
+        },
+        "hero_primary_cta_text_id": {
+            "label": "Teks Tombol Utama Hero (Indonesia)",
+            "type": "text",
+            "default": "Eksplorasi Solusi",
+            "category": "Hero Section"
+        },
+        "hero_primary_cta_text_en": {
+            "label": "Teks Tombol Utama Hero (English)",
+            "type": "text",
+            "default": "Explore Solutions",
+            "category": "Hero Section"
+        },
+        "hero_primary_cta_text_su": {
+            "label": "Teks Tombol Utama Hero (Sunda)",
+            "type": "text",
+            "default": "Kot\u00e9ktak Solusi",
+            "category": "Hero Section"
+        },
+        "hero_primary_cta_link": {
+            "label": "Tautan Tombol Utama Hero",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_text": {
+            "label": "Teks Tombol Sekunder Hero (fallback)",
+            "type": "text",
+            "default": "Lihat Paket",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_text_id": {
+            "label": "Teks Tombol Sekunder Hero (Indonesia)",
+            "type": "text",
+            "default": "Lihat Paket",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_text_en": {
+            "label": "Teks Tombol Sekunder Hero (English)",
+            "type": "text",
+            "default": "View Pricing",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_text_su": {
+            "label": "Teks Tombol Sekunder Hero (Sunda)",
+            "type": "text",
+            "default": "Tingali Paket",
+            "category": "Hero Section"
+        },
+        "hero_secondary_cta_link": {
+            "label": "Tautan Tombol Sekunder Hero",
+            "type": "text",
+            "default": "/pricing",
+            "category": "Hero Section"
+        },
+        "hero_stat_1_val": {
+            "label": "Statistik 1 Nilai",
+            "type": "text",
+            "default": "99.99%",
+            "category": "Hero Section"
+        },
+        "hero_stat_1_label": {
+            "label": "Statistik 1 Label",
+            "type": "text",
+            "default": "Uptime SLA",
+            "category": "Hero Section"
+        },
+        "hero_stat_2_val": {
+            "label": "Statistik 2 Nilai",
+            "type": "text",
+            "default": "< 15ms",
+            "category": "Hero Section"
+        },
+        "hero_stat_2_label": {
+            "label": "Statistik 2 Label",
+            "type": "text",
+            "default": "Core Latency",
+            "category": "Hero Section"
+        },
+        "hero_stat_3_val": {
+            "label": "Statistik 3 Nilai",
+            "type": "text",
+            "default": "100%",
+            "category": "Hero Section"
+        },
+        "hero_stat_3_label": {
+            "label": "Statistik 3 Label",
+            "type": "text",
+            "default": "API Driven",
+            "category": "Hero Section"
+        },
+        "hero_stat_4_val": {
+            "label": "Statistik 4 Nilai",
+            "type": "text",
+            "default": "24/7",
+            "category": "Hero Section"
+        },
+        "hero_stat_4_label": {
+            "label": "Statistik 4 Label",
+            "type": "text",
+            "default": "Dedicated Support",
+            "category": "Hero Section"
+        },
+        "hero_bg_type": {
+            "label": "Tipe Background Hero",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Preset Gradien Cyber",
+                    "value": "preset"
+                },
+                {
+                    "label": "Gambar Kustom Cloud",
+                    "value": "custom_image"
+                }
+            ],
+            "default": "preset",
+            "category": "Hero Section"
+        },
+        "hero_bg_preset": {
+            "label": "Preset Background Hero",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Cyber Cosmic Mesh",
+                    "value": "cyber_mesh"
+                },
+                {
+                    "label": "Obsidian Deep Void",
+                    "value": "obsidian_void"
+                },
+                {
+                    "label": "Electric Aurora Neon",
+                    "value": "aurora_neon"
+                }
+            ],
+            "default": "cyber_mesh",
+            "category": "Hero Section"
+        },
+        "hero_bg_image": {
+            "label": "Gambar Background Hero",
+            "type": "media",
+            "category": "Hero Section"
+        },
+        "hero_bg_overlay_opacity": {
+            "label": "Kegelapan Overlay Background (%)",
+            "type": "range",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 60,
+            "unit": "%",
+            "category": "Hero Section"
+        },
+        "bento_badge": {
+            "label": "Bento Badge / Eyebrow",
+            "type": "text",
+            "default": "KAPABILITAS PLATFORM",
+            "category": "Bento Architecture"
+        },
+        "bento_title": {
+            "label": "Judul Bento Grid",
+            "type": "text",
+            "default": "Dibangun untuk Skala & Performa Ekstrem",
+            "category": "Bento Architecture"
+        },
+        "bento_subtitle": {
+            "label": "Subjudul Bento Grid",
+            "type": "textarea",
+            "default": "Kombinasi modular engine, cloud-native architecture, dan keamanan tingkat enterprise.",
+            "category": "Bento Architecture"
+        },
+        "terminal_badge": {
+            "label": "Terminal Badge / Eyebrow",
+            "type": "text",
+            "default": "INTERAKTIF CLI",
+            "category": "Developer Terminal"
+        },
+        "terminal_title": {
+            "label": "Judul Terminal Section",
+            "type": "text",
+            "default": "Pengalaman Developer Tanpa Hambatan",
+            "category": "Developer Terminal"
+        },
+        "terminal_subtitle": {
+            "label": "Subjudul Terminal Section",
+            "type": "textarea",
+            "default": "Kelola layanan, deploy modul, dan pantau metrik langsung dari baris perintah Anda.",
+            "category": "Developer Terminal"
+        },
+        "terminal_default_tab": {
+            "label": "Default Tab Terminal",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Jejakawan CLI",
+                    "value": "cli"
+                },
+                {
+                    "label": "REST API Endpoint",
+                    "value": "api"
+                },
+                {
+                    "label": "TypeScript SDK",
+                    "value": "sdk"
+                },
+                {
+                    "label": "Docker Container",
+                    "value": "docker"
+                }
+            ],
+            "default": "cli",
+            "category": "Developer Terminal"
+        },
+        "products_badge": {
+            "label": "Products Badge / Eyebrow",
+            "type": "text",
+            "default": "PRODUK & MODUL",
+            "category": "Products & Modules"
+        },
+        "products_title": {
+            "label": "Judul Bagian Produk",
+            "type": "text",
+            "default": "Solusi End-to-End untuk Pertumbuhan Digital",
+            "category": "Products & Modules"
+        },
+        "products_subtitle": {
+            "label": "Subjudul Bagian Produk",
+            "type": "textarea",
+            "default": "Rangkaian produk teruji untuk mempercepat transformasi teknologi organisasi Anda.",
+            "category": "Products & Modules"
+        },
+        "products_view_all_text": {
+            "label": "Teks Tombol Lihat Semua Produk",
+            "type": "text",
+            "default": "Jelajahi Ekosistem",
+            "category": "Products & Modules"
+        },
+        "products_view_all_url": {
+            "label": "Tautan Tombol Semua Produk",
+            "type": "text",
+            "default": "/solusi",
+            "category": "Products & Modules"
+        },
+        "specs_title": {
+            "label": "Judul Spesifikasi & SLA",
+            "type": "text",
+            "default": "Keandalan Infrastruktur Tingkat Enterprise",
+            "category": "Cloud Specs & SLA"
+        },
+        "specs_subtitle": {
+            "label": "Subjudul Spesifikasi & SLA",
+            "type": "textarea",
+            "default": "Arsitektur cloud dengan jaminan ketersediaan tinggi, latensi ultra rendah, dan perlindungan multi-region.",
+            "category": "Cloud Specs & SLA"
+        },
+        "enable_solusi": {
+            "label": "Aktifkan Halaman Solusi Cloud",
+            "type": "boolean",
+            "default": true,
+            "category": "Public Pages"
+        },
+        "enable_pricing": {
+            "label": "Aktifkan Halaman Paket & Harga",
+            "type": "boolean",
+            "default": true,
+            "category": "Public Pages"
+        },
+        "enable_blog": {
+            "label": "Aktifkan Halaman Wawasan & Berita",
+            "type": "boolean",
+            "default": true,
+            "category": "Public Pages"
+        },
+        "enable_about": {
+            "label": "Aktifkan Halaman Profil & Visi",
+            "type": "boolean",
+            "default": true,
+            "category": "Public Pages"
+        },
+        "enable_contact": {
+            "label": "Aktifkan Halaman Kontak",
+            "type": "boolean",
+            "default": true,
+            "category": "Public Pages"
+        },
+        "disabled_page_behavior": {
+            "label": "When a page is turned off",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Show 'Page Offline' message",
+                    "value": "show_message"
+                },
+                {
+                    "label": "Redirect to Home Page",
+                    "value": "redirect_home"
+                }
+            ],
+            "default": "show_message",
+            "category": "Public Pages"
+        },
+        "disabled_page_message": {
+            "label": "Message shown to visitors",
+            "type": "textarea",
+            "default": "Layanan ini sedang dalam peningkatan performa berkala.",
+            "category": "Public Pages"
+        },
+        "enable_floating_social": {
+            "label": "Tampilkan Floating Social Dock",
+            "type": "checkbox",
+            "default": true,
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_position": {
+            "label": "Posisi Floating Dock",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Kanan Tengah (Right Center)",
+                    "value": "right"
+                },
+                {
+                    "label": "Kiri Tengah (Left Center)",
+                    "value": "left"
+                },
+                {
+                    "label": "Kanan Bawah (Bottom Right)",
+                    "value": "bottom_right"
+                },
+                {
+                    "label": "Kiri Bawah (Bottom Left)",
+                    "value": "bottom_left"
+                },
+                {
+                    "label": "Bawah Tengah (Bottom Center / Dock Pill)",
+                    "value": "bottom_center"
+                },
+                {
+                    "label": "Kanan Atas (Top Right)",
+                    "value": "top_right"
+                },
+                {
+                    "label": "Kiri Atas (Top Left)",
+                    "value": "top_left"
+                }
+            ],
+            "default": "right",
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_orientation": {
+            "label": "Orientasi Dock",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Otomatis (Sesuai Posisi)",
+                    "value": "auto"
+                },
+                {
+                    "label": "Vertikal (Tegak)",
+                    "value": "vertical"
+                },
+                {
+                    "label": "Horizontal (Mendatar)",
+                    "value": "horizontal"
+                }
+            ],
+            "default": "auto",
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_style": {
+            "label": "Gaya Kapsul Dock",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Frosted Obsidian Glass (Glassmorphism)",
+                    "value": "glass"
+                },
+                {
+                    "label": "Solid Dark Obsidian (Solid)",
+                    "value": "solid"
+                },
+                {
+                    "label": "Radiant Neon Aura (Glow)",
+                    "value": "glow"
+                }
+            ],
+            "default": "glass",
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_default_collapsed": {
+            "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
+            "type": "checkbox",
+            "default": false,
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "floating_social_show_on_mobile": {
+            "label": "Tampilkan di Layar Mobile",
+            "type": "checkbox",
+            "default": false,
+            "category": "Social Media",
+            "scope": "platform"
+        },
+        "social_links": {
+            "label": "Social Media Links",
+            "type": "repeater",
+            "category": "Social Media",
+            "default": [
+                {
+                    "network": "github",
+                    "url": "https://github.com/jejakawan"
+                },
+                {
+                    "network": "linkedin",
+                    "url": "https://linkedin.com/company/jejakawan"
+                }
+            ]
+        },
+        "animation_enabled": {
+            "label": "Enable GSAP & CSS Animations",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations"
+        },
+        "animation_intensity": {
+            "label": "Animation Intensity",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Subtle & Snappy",
+                    "value": "subtle"
+                },
+                {
+                    "label": "Medium Balanced",
+                    "value": "medium"
+                },
+                {
+                    "label": "Cinematic Smooth",
+                    "value": "cinematic"
+                }
+            ],
+            "default": "subtle",
+            "category": "Animations"
+        },
+        "parallax_enabled": {
+            "label": "Enable Parallax Mesh Glows",
+            "type": "boolean",
+            "default": true,
+            "category": "Animations"
+        },
+        "footer_about_text": {
+            "label": "Teks Deskripsi Footer",
+            "type": "textarea",
+            "default": "PT Jejak Awan Digital \u2014 Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
+            "category": "Footer"
+        },
+        "footer_text": {
+            "label": "Teks Identitas Footer",
+            "type": "text",
+            "default": "PT Jejak Awan Digital",
+            "category": "Footer"
+        },
+        "footer_copyright": {
+            "label": "Teks Hak Cipta Footer",
+            "type": "text",
+            "default": "Hak cipta dilindungi undang-undang.",
+            "category": "Footer"
+        },
+        "back_to_top": {
+            "label": "Enable Back to Top",
+            "type": "checkbox",
+            "default": true,
+            "category": "Footer"
+        },
+        "footer_col_1_title": {
+            "label": "Judul Kolom 1 Footer",
+            "type": "text",
+            "default": "Platform & Cloud",
+            "category": "Footer"
+        },
+        "footer_col_2_title": {
+            "label": "Judul Kolom 2 Footer",
+            "type": "text",
+            "default": "Ekosistem Pengembang",
+            "category": "Footer"
+        },
+        "footer_col_3_title": {
+            "label": "Judul Kolom 3 Footer",
+            "type": "text",
+            "default": "Perusahaan",
+            "category": "Footer"
+        }
+    }
+}

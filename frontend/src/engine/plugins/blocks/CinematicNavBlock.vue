@@ -5,8 +5,9 @@
       data-plugin="cinematic-nav"
       :data-theme="currentThemeSlug"
       :aria-label="te('plugin.cinematicNav.ariaLabel') ? t('plugin.cinematicNav.ariaLabel') : t('nav_sections.aria_label', 'Navigasi Seksi Halaman')"
-      class="ja-cinematic-nav hidden md:block select-none"
       :class="[
+        showOnMobile ? 'block' : 'hidden md:block',
+        'ja-cinematic-nav select-none',
         `ja-cinematic-nav--${dockPosition}`,
         `ja-cinematic-nav--${stylePreset}`,
         `ja-cinematic-nav--theme-${currentThemeSlug}`
@@ -59,11 +60,11 @@
           <template v-if="stylePreset === 'bars'">
             <div class="relative flex items-center justify-center py-1">
               <span
-                class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-bar transition-all duration-300 block origin-center"
+                class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-bar transition-all duration-300 block origin-center rounded-full"
                 :class="[
                   activeSectionId === item.id
                     ? 'ja-cinematic-nav__bar-active w-7 h-2 bg-primary shadow-[0_0_14px_hsl(var(--primary)/0.6)] ring-1 ring-primary/50'
-                    : 'w-3.5 h-1 bg-muted-foreground/40 group-hover:w-5.5 group-hover:bg-foreground/80'
+                    : 'w-4 h-1.5 bg-foreground/25 dark:bg-white/30 group-hover:w-6 group-hover:bg-primary/80 group-hover:shadow-[0_0_8px_hsl(var(--primary)/0.4)]'
                 ]"
               />
             </div>
@@ -71,25 +72,23 @@
 
           <!-- 2. MINIMAL PRESET: Magnetic Orbital Target Rings -->
           <template v-else-if="stylePreset === 'minimal'">
-            <div class="relative flex items-center justify-center w-5 h-5">
-              <!-- Inactive: Hollow Ring | Active: Concentric Breathing Target Core -->
+            <div class="relative flex items-center justify-center w-6 h-6">
+              <!-- Active: Concentric breathing halo + illuminated jewel -->
               <template v-if="activeSectionId === item.id">
-                <!-- Outer breathing orbital ring -->
                 <span
-                  class="absolute inset-0 rounded-full border border-primary/40 animate-ping opacity-60 pointer-events-none"
+                  class="absolute -inset-1 rounded-full border border-primary/40 animate-ping opacity-60 pointer-events-none"
                 />
                 <span
-                  class="absolute inset-0.5 rounded-full border-2 border-primary/30 pointer-events-none"
+                  class="absolute inset-0 rounded-full border-2 border-primary/40 pointer-events-none"
                 />
-                <!-- Inner solid luminous bead -->
                 <span
-                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-orbital w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary))] block transition-transform duration-300"
+                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-orbital w-3 h-3 rounded-full bg-primary shadow-[0_0_12px_hsl(var(--primary))] ring-2 ring-primary/30 block transition-transform duration-300"
                 />
               </template>
               <template v-else>
-                <!-- Inactive: Hollow precision ring -->
+                <!-- Inactive: Refined precision ring -->
                 <span
-                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-orbital w-2.5 h-2.5 rounded-full border-2 border-foreground/35 bg-transparent group-hover:border-primary group-hover:bg-primary/20 group-hover:scale-125 transition-all duration-200 block"
+                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-orbital w-2.5 h-2.5 rounded-full border-2 border-foreground/40 dark:border-white/40 bg-background/50 group-hover:border-primary group-hover:bg-primary/25 group-hover:scale-125 transition-all duration-200 block"
                 />
               </template>
             </div>
@@ -97,7 +96,7 @@
 
           <!-- 3. GLOW PRESET: Faceted Cyber Shard / Rotated Diamond Beacon -->
           <template v-else-if="stylePreset === 'glow'">
-            <div class="relative flex items-center justify-center w-5 h-6">
+            <div class="relative flex items-center justify-center w-6 h-6">
               <!-- Active: Elongated vertical tech shard with neon pulse -->
               <template v-if="activeSectionId === item.id">
                 <span
@@ -107,7 +106,7 @@
               <!-- Inactive: 45-degree diamond shard with hover spin -->
               <template v-else>
                 <span
-                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-shard w-2.5 h-2.5 rotate-45 border border-primary/60 bg-primary/25 group-hover:scale-125 group-hover:rotate-90 group-hover:bg-primary group-hover:shadow-[0_0_10px_hsl(var(--primary)/0.8)] transition-all duration-300 block"
+                  class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-shard w-2.5 h-2.5 rotate-45 border border-primary/60 bg-primary/20 dark:bg-primary/30 group-hover:scale-125 group-hover:rotate-90 group-hover:bg-primary group-hover:shadow-[0_0_12px_hsl(var(--primary))] transition-all duration-300 block"
                 />
               </template>
             </div>
@@ -115,14 +114,16 @@
 
           <!-- 4. GLASS PRESET: Liquid Morphic Capsule (Smooth Round Pill) -->
           <template v-else>
-            <div class="relative flex items-center justify-center">
+            <div class="relative flex items-center justify-center w-6 h-6">
+              <!-- Active: Liquid elongated pill with primary gradient -->
               <span
-                class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-pill transition-all duration-300 block origin-center rounded-full"
-                :class="[
-                  activeSectionId === item.id
-                    ? 'ja-cinematic-nav__pill-active w-2.5 h-7 bg-gradient-to-b from-primary via-primary to-primary/85 shadow-[0_0_14px_hsl(var(--primary)/0.5)] ring-2 ring-primary/30'
-                    : 'w-2.5 h-2.5 bg-foreground/25 group-hover:bg-foreground/80 group-hover:scale-125'
-                ]"
+                v-if="activeSectionId === item.id"
+                class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-pill ja-cinematic-nav__pill-active w-2.5 h-7 rounded-full bg-gradient-to-b from-primary via-primary to-primary/85 shadow-[0_0_16px_hsl(var(--primary)/0.6)] ring-2 ring-primary/40 block origin-center transition-all duration-300"
+              />
+              <!-- Inactive: Refined concentric micro-ring with core -->
+              <span
+                v-else
+                class="ja-cinematic-nav__indicator ja-cinematic-nav__shape-pill w-2.5 h-2.5 rounded-full border border-foreground/35 dark:border-white/35 bg-foreground/20 dark:bg-white/20 group-hover:scale-125 group-hover:border-primary group-hover:bg-primary/50 group-hover:shadow-[0_0_8px_hsl(var(--primary)/0.5)] block origin-center transition-all duration-300"
               />
             </div>
           </template>
@@ -200,6 +201,13 @@ const showTooltips = computed<boolean>(() => {
   return getSetting('side_nav_show_tooltips', true) !== false;
 });
 
+const showOnMobile = computed<boolean>(() => {
+  return (
+    getSetting('home_side_nav_show_mobile', false) === true ||
+    getSetting('side_nav_show_mobile', false) === true
+  );
+});
+
 const enableScrollSnap = computed<boolean>(() => {
   return (
     getSetting('home_side_nav_scroll_snap', false) === true ||
@@ -224,26 +232,26 @@ const dockPresetClasses = computed(() => {
     case 'minimal':
       return 'bg-transparent border-none shadow-none py-1 px-1 gap-3';
     case 'glow':
-      return 'bg-card/85 hover:bg-card/95 backdrop-blur-2xl border border-primary/45 shadow-[0_0_24px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_35px_hsl(var(--primary)/0.4)] py-3 px-1.5 rounded-xl ring-1 ring-primary/25';
+      return 'bg-white/85 dark:bg-card/85 hover:bg-white/95 dark:hover:bg-card/95 backdrop-blur-2xl border border-primary/45 shadow-[0_0_24px_hsl(var(--primary)/0.2)] hover:shadow-[0_0_35px_hsl(var(--primary)/0.35)] py-3 px-2 rounded-2xl ring-1 ring-primary/25';
     case 'bars':
-      return 'bg-card/80 hover:bg-card/95 backdrop-blur-xl border border-border/70 shadow-2xl py-3.5 px-2.5 rounded-2xl';
+      return 'bg-white/85 dark:bg-card/80 hover:bg-white/95 dark:hover:bg-card/95 backdrop-blur-xl border border-border/80 shadow-2xl py-3.5 px-2.5 rounded-2xl';
     case 'glass':
     default:
-      return 'bg-background/70 hover:bg-background/90 backdrop-blur-2xl border border-border/60 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)] py-3 px-1.5 rounded-full ring-1 ring-black/5 dark:ring-white/5';
+      return 'bg-white/80 dark:bg-zinc-950/75 hover:bg-white/95 dark:hover:bg-zinc-950/90 backdrop-blur-2xl border border-zinc-200/80 dark:border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)] py-3.5 px-2 rounded-full ring-1 ring-black/5 dark:ring-white/10';
   }
 });
 
 const tooltipPresetClasses = computed(() => {
   switch (stylePreset.value) {
     case 'glow':
-      return 'bg-card/95 text-card-foreground border border-primary/40 shadow-[0_4px_20px_hsl(var(--primary)/0.25)]';
+      return 'bg-white/95 dark:bg-card/95 text-foreground border border-primary/40 shadow-[0_4px_20px_hsl(var(--primary)/0.25)] rounded-xl';
     case 'minimal':
-      return 'bg-popover/95 text-popover-foreground border border-border/60 shadow-xl';
+      return 'bg-white/95 dark:bg-popover/95 text-foreground border border-border/70 shadow-xl rounded-xl';
     case 'bars':
-      return 'bg-card/95 text-card-foreground border border-border/60 shadow-xl';
+      return 'bg-white/95 dark:bg-card/95 text-foreground border border-border/70 shadow-xl rounded-xl';
     case 'glass':
     default:
-      return 'bg-background/90 text-foreground border border-border/60 shadow-xl backdrop-blur-xl';
+      return 'bg-white/95 dark:bg-zinc-900/95 text-foreground border border-border/70 shadow-xl backdrop-blur-xl rounded-xl';
   }
 });
 
@@ -642,19 +650,17 @@ onUnmounted(() => {
    ========================================================================== */
 
 /* ── 1. Sareupna: Cyberpunk / Developer Terminal / Obsidian & Shards ── */
-[data-theme="sareupna"] .ja-cinematic-nav__dock {
-  background-color: rgba(7, 9, 14, 0.88) !important;
-  border-color: rgba(139, 92, 246, 0.3) !important;
-  border-radius: 0.5rem !important; /* Tech chamfered dock */
+.dark[data-theme="sareupna"] .ja-cinematic-nav__dock,
+.dark [data-theme="sareupna"] .ja-cinematic-nav__dock {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(139, 92, 246, 0.15);
 }
 [data-theme="sareupna"] .ja-cinematic-nav__rail-track {
-  background-color: rgba(139, 92, 246, 0.25) !important;
+  background-color: rgba(139, 92, 246, 0.3) !important;
 }
 [data-theme="sareupna"] .ja-cinematic-nav__tooltip {
   font-family: var(--sareupna-font-mono, 'Geist Mono', ui-monospace, monospace);
   border-radius: 0.25rem;
-  background-color: rgba(12, 16, 24, 0.96) !important;
-  border-color: rgba(139, 92, 246, 0.35) !important;
 }
 [data-theme="sareupna"] .ja-cinematic-nav__shape-bar {
   border-radius: 1px !important; /* Crisp terminal cursor slabs */
@@ -664,10 +670,10 @@ onUnmounted(() => {
 }
 
 /* ── 2. Layung: Telecom ISP / Optical Fiber Transceiver & Laser Grid ── */
-[data-theme="layung"] .ja-cinematic-nav__dock {
-  background-color: rgba(7, 10, 15, 0.85) !important;
-  border-color: rgba(0, 174, 239, 0.35) !important;
-  border-radius: 0.75rem !important;
+.dark[data-theme="layung"] .ja-cinematic-nav__dock,
+.dark [data-theme="layung"] .ja-cinematic-nav__dock {
+  border-color: rgba(0, 174, 239, 0.4);
+  box-shadow: 0 0 25px rgba(0, 174, 239, 0.15);
 }
 [data-theme="layung"] .ja-cinematic-nav__rail-track {
   background: linear-gradient(180deg, rgba(0, 174, 239, 0.1), rgba(0, 174, 239, 0.5), rgba(0, 174, 239, 0.1)) !important;
@@ -676,18 +682,12 @@ onUnmounted(() => {
 [data-theme="layung"] .ja-cinematic-nav__tooltip {
   font-family: var(--layung-font-mono, 'Geist Mono', ui-monospace, monospace);
   border-radius: 0.375rem;
-  background-color: rgba(11, 17, 26, 0.95) !important;
-  border-color: rgba(0, 174, 239, 0.4) !important;
 }
 [data-theme="layung"] .ja-cinematic-nav__glow-active {
   box-shadow: 0 0 16px #00aeef, 0 0 32px rgba(0, 174, 239, 0.6) !important;
 }
 
 /* ── 3. Janari: Editorial Modern Newspaper / Letterpress Ticks ── */
-[data-theme="janari"] .ja-cinematic-nav__dock {
-  border-radius: 0.25rem !important; /* Clean rectangular editorial cartridge */
-  border-width: 1px !important;
-}
 [data-theme="janari"] .ja-cinematic-nav__tooltip {
   font-family: var(--janari-font-heading, ui-sans-serif, system-ui);
   border-radius: 0.125rem !important;
@@ -705,10 +705,6 @@ onUnmounted(() => {
 }
 
 /* ── 4. Sarangenge: Scholastic Dawn / Organic Rounded Pebble ── */
-[data-theme="sarangenge"] .ja-cinematic-nav__dock {
-  border-radius: 9999px !important; /* Ultra-friendly organic capsule */
-  box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.15), 0 8px 16px -6px rgba(15, 23, 42, 0.1) !important;
-}
 [data-theme="sarangenge"] .ja-cinematic-nav__tooltip {
   font-family: var(--sarangenge-font-body, ui-sans-serif, system-ui);
   border-radius: 0.75rem !important;

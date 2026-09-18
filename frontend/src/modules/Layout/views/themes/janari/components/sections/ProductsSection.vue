@@ -18,7 +18,7 @@
           v-for="card in cards"
           :id="card.key === 'organization' ? 'organization-roadmap' : undefined"
           :key="card.key"
-          class="group p-8 rounded-2xl border border-border bg-card/50 hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col"
+          class="group p-8 rounded-2xl border border-border bg-card/50 hover:border-primary/50 hover:shadow-[0_12px_32px_-8px_hsl(var(--primary)/0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
         >
           <component
             :is="card.icon"
