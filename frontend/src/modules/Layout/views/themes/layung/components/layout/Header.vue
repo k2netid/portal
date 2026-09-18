@@ -37,6 +37,7 @@
           v-if="isDesktop"
           data-ja-customizer-target="nav"
           class="hidden lg:flex items-center gap-1 overflow-visible relative z-[105]"
+          :class="navAlignmentClasses"
           :aria-label="tt('header.navAria', 'Navigasi utama')"
         >
           <template
@@ -175,7 +176,7 @@
           </template>
         </nav>
 
-        <div class="flex items-center gap-1.5 sm:gap-2 overflow-visible relative z-[105]">
+        <div class="flex items-center gap-1.5 sm:gap-2 overflow-visible relative z-[105] shrink-0">
           <DropdownMenu v-if="isDesktop">
             <DropdownMenuTrigger
               class="px-2 py-1 rounded-lg text-xs font-medium border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors inline-flex items-center gap-1.5 focus:outline-none font-mono"
@@ -728,6 +729,22 @@ watch(
 const headerRef = ref<HTMLElement>();
 const headerStyle = computed(() => String(getSetting('header_style', 'glass') || 'glass'));
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'logo_only') || 'logo_only'));
+const headerMenuAlignment = computed(() => {
+  const val = String(getSetting('header_menu_alignment', 'center') || 'center').toLowerCase();
+  return ['left', 'center', 'right'].includes(val) ? val : 'center';
+});
+
+const navAlignmentClasses = computed(() => {
+  switch (headerMenuAlignment.value) {
+    case 'left':
+      return 'mr-auto ml-6 xl:ml-8';
+    case 'right':
+      return 'ml-auto mr-4 xl:mr-6';
+    case 'center':
+    default:
+      return 'mx-auto';
+  }
+});
 
 const headerCtaText = computed(() => {
   const raw = getSetting('header_cta_text', '');

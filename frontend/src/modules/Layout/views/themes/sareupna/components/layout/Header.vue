@@ -55,7 +55,8 @@
         <nav
           v-if="isDesktop"
           data-ja-customizer-target="nav"
-          class="flex items-center gap-1.5 ml-auto pr-6"
+          class="flex items-center gap-1.5"
+          :class="navAlignmentClasses"
         >
           <template
             v-for="item in navItems"
@@ -353,6 +354,22 @@ const siteTagline = computed(() => {
 });
 
 const isDesktop = computed(() => device.value === 'desktop');
+const headerMenuAlignment = computed(() => {
+  const val = String(getSetting('header_menu_alignment', 'center') || 'center').toLowerCase();
+  return ['left', 'center', 'right'].includes(val) ? val : 'center';
+});
+
+const navAlignmentClasses = computed(() => {
+  switch (headerMenuAlignment.value) {
+    case 'left':
+      return 'mr-auto ml-6 md:ml-8';
+    case 'right':
+      return 'ml-auto pr-6';
+    case 'center':
+    default:
+      return 'mx-auto px-4';
+  }
+});
 
 const currentMenuLocation = computed(() => {
   return String(getSetting('menu_location_header', 'header') || 'header');

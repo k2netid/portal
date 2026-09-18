@@ -58,4 +58,18 @@ describe('mergeThemeSettingsSchema', () => {
             'cta',
         ]);
     });
+
+    it('inherits platform header_menu_alignment with default center across themes', () => {
+        const layungSchema = mergeThemeSettingsSchema('layung');
+        expect(layungSchema.header_menu_alignment).toBeDefined();
+        expect(layungSchema.header_menu_alignment?.default).toBe('center');
+        expect(layungSchema.header_menu_alignment?.category).toBe('Layout');
+
+        const janariSchema = mergeThemeSettingsSchema('janari');
+        expect(janariSchema.header_menu_alignment).toBeDefined();
+        expect(janariSchema.header_menu_alignment?.default).toBe('center');
+
+        const options = (layungSchema.header_menu_alignment?.options || []) as Array<{ value: string }>;
+        expect(options.map((o) => o.value)).toEqual(['center', 'left', 'right']);
+    });
 });

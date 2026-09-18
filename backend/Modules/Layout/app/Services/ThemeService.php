@@ -997,6 +997,18 @@ class ThemeService
                 ],
                 'category' => 'Layout',
             ],
+            'header_menu_alignment' => [
+                'type' => 'select',
+                'label' => 'Header Menu Alignment',
+                'description' => 'Perataan posisi menu navigasi desktop pada header',
+                'default' => 'center',
+                'options' => [
+                    ['value' => 'center', 'label' => 'Center (Default)'],
+                    ['value' => 'left', 'label' => 'Left Aligned'],
+                    ['value' => 'right', 'label' => 'Right Aligned'],
+                ],
+                'category' => 'Layout',
+            ],
             'sidebar_enabled' => [
                 'type' => 'checkbox',
                 'label' => 'Enable Sidebar',

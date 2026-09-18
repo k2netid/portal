@@ -686,6 +686,8 @@
       "framed_padding": "Frame Padding",
       "framed_padding_hint": "Padding around framed layout (px)",
       "header_style": "Header Aesthetic Style",
+      "header_menu_alignment": "Header Menu Alignment",
+      "header_menu_alignment_hint": "Primary desktop navigation alignment in header (Center, Left, or Right)",
       "header_cta_text": "Header CTA Label",
       "header_cta_url": "Header CTA Destination",
       "nav_style": "Navigation Interaction link Style",
