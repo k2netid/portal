@@ -26,6 +26,8 @@
         </div>
       </header>
 
+      <PluginSlot name="after_hero" class="w-full" />
+
       <section class="py-14 md:py-16">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -91,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { computed, type Component } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Heart, Rocket, Shield, Code, PenLine, Settings, Headphones } from 'lucide-vue-next'

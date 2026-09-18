@@ -31,6 +31,8 @@
         </div>
       </header>
 
+      <PluginSlot name="after_hero" class="w-full" />
+
       <section class="py-16">
         <div class="container mx-auto px-4">
           <div v-if="loading" class="flex justify-center py-20">
@@ -124,6 +126,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue'

@@ -39,6 +39,8 @@
             </div>
           </div>
 
+          <PluginSlot name="after_hero" class="w-full" />
+
           <!-- Loading Spinner -->
           <div v-if="loading && !hasBinding" class="min-h-[250px] flex items-center justify-center">
             <div class="w-8 h-8 rounded-full border-2 border-[var(--sarangenge-teal,#0f766e)] border-t-transparent animate-spin" />
@@ -91,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { ref, computed, onMounted } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import api from '@/engine/api/client';

@@ -50,8 +50,7 @@ janari `2.0.2` · layung `1.0.3` · sarangenge `2.0.3` · sareupna `1.1.2` · La
 - ESLint on P0/P1 touched paths OK
 
 ### Deferred (optional)
-- Migrate Janari Home off local `SectionNavDots` onto `cinematic-nav` only
-- Archetype pages (PricingIsp, Programs, …) PluginSlot — not CMS baseline
+- _(none — Janari cinematic-nav + archetype PluginSlot closed in [2026-09-18-deferred-cinematic-nav-and-archetype-slots](2026-09-18-deferred-cinematic-nav-and-archetype-slots.md))_
 
 ## 3. Plan (checklist)
 

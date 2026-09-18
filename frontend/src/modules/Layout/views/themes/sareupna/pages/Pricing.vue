@@ -20,6 +20,8 @@
               )
             }}
           </p>
+
+      <PluginSlot name="after_hero" class="w-full" />
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
@@ -90,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { computed } from 'vue'
 import { Check } from 'lucide-vue-next'
 import SareupnaPageGate from '../components/shared/SareupnaPageGate.vue'

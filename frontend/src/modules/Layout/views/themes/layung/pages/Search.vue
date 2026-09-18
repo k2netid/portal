@@ -11,6 +11,8 @@
       </p>
     </div>
 
+    <PluginSlot name="after_hero" class="w-full" />
+
     <div class="relative">
       <Search class="w-5 h-5 text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2" />
       <input
@@ -63,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { ref, computed } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { Search, ArrowRight } from 'lucide-vue-next';

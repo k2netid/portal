@@ -34,6 +34,8 @@
         </div>
       </header>
 
+      <PluginSlot name="after_hero" class="w-full" />
+
       <div class="container mx-auto px-4 py-10 md:py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Main Content (Job List) -->
@@ -150,6 +152,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
