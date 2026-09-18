@@ -43,6 +43,7 @@
       </template>
     </div>
 
+    <PluginSlot name="after_hero" class="w-full" />
     <template v-if="!hasBuilderBlocks && !cmsBody">
       <section
         id="packages"
@@ -59,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';

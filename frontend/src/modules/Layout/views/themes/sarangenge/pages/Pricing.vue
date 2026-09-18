@@ -22,6 +22,8 @@
             </p>
           </div>
 
+          <PluginSlot name="after_hero" class="w-full" />
+
           <div class="sarangenge-panel p-8 md:p-12 bg-[var(--sarangenge-teal,#0f766e)]/5 border-[var(--sarangenge-teal,#0f766e)]/20 shadow-lg">
             <div class="w-16 h-16 mx-auto rounded-full bg-[var(--sarangenge-teal,#0f766e)]/10 flex items-center justify-center text-[var(--sarangenge-teal-deep,#115e59)] mb-6">
               <CheckCircle2 class="w-8 h-8" />
@@ -80,6 +82,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';
 import BlockRenderer from '@/modules/Layout/components/content-renderer/BlockRenderer.vue';

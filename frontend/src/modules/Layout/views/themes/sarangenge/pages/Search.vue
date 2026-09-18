@@ -18,6 +18,8 @@
           <p class="text-base text-muted-foreground leading-relaxed">
             {{ t('pages.search.subtitle', 'Temukan artikel berita, panduan PPDB, program kurikulum, dan pengumuman sekolah.') }}
           </p>
+
+        <PluginSlot name="after_hero" class="w-full" />
         </div>
       </div>
 
@@ -118,6 +120,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';

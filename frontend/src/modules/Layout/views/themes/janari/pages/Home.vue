@@ -91,13 +91,7 @@
               v-if="isSectionActive('cta') && mountedSections.cta"
             />
           </div>
-
-          <!-- Floating Side Dot Navigation (Desktop only) -->
-          <SectionNavDots
-            v-if="showSideNavDots && visibleNavSections.length > 1"
-            :sections="visibleNavSections"
-            :style-preset="sideNavStyle"
-          />
+          <!-- Side dots: host PluginSlot floating_overlay → cinematic-nav (ADR-018) -->
         </section>
       </div>
     </div>
@@ -115,7 +109,6 @@ import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
 import { resolvePublicPageCmsBody } from '@/modules/Layout/utils/resolveLocalizedContent'
 import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'
-import SectionNavDots, { type SectionNavItem } from '../components/shared/SectionNavDots.vue'
 
 // Above-the-fold (LCP): static import
 import Hero from '../components/sections/Hero.vue'
@@ -170,25 +163,6 @@ const activeSections = computed(() => {
   return [...DEFAULT_HOME_SECTIONS]
 });
 const isSectionActive = (section: string) => activeSections.value.includes(section);
-
-const sectionMeta = computed<Record<string, { id: string; label: string }>>(() => ({
-  hero: { id: 'section-hero', label: t('theme.janari.nav_sections.hero', 'Beranda') },
-  products: { id: 'section-products', label: t('theme.janari.nav_sections.products', 'Produk') },
-  updates: { id: 'section-updates', label: t('theme.janari.nav_sections.updates', 'Informasi') },
-  partners: { id: 'section-partners', label: t('theme.janari.nav_sections.partners', 'Mitra') },
-  testimonials: { id: 'section-testimonials', label: t('theme.janari.nav_sections.testimonials', 'Testimoni') },
-  cta: { id: 'section-cta', label: t('theme.janari.nav_sections.cta', 'Kontak') },
-}));
-
-const visibleNavSections = computed<SectionNavItem[]>(() => {
-  return DEFAULT_HOME_SECTIONS
-    .filter((key) => isSectionActive(key))
-    .map((key) => sectionMeta.value[key])
-    .filter((item): item is SectionNavItem => Boolean(item));
-});
-
-const showSideNavDots = computed(() => Boolean(getSetting('home_side_nav_dots', true)));
-const sideNavStyle = computed(() => String(getSetting('home_side_nav_style', 'glass') || 'glass'));
 
 const testimonialData = computed<Testimonial[]>(() => dynamicTestimonials.value.map((item: any) => ({ 
     name: item.title, 

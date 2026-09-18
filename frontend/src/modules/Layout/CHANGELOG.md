@@ -6,6 +6,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Host contract: all themes use `cinematic-nav` only (Janari local `SectionNavDots` removed); archetype pages get `after_hero`.
 - Theme-native Team page: prefetch map `/team` (+ `/tim` alias) → `Team`.
 - Host SEO: wire `resolveSareupnaPublicSeo` in `FrontendLayout` (parity with janari/layung/sarangenge).
 - Theme-native public pages: prefetch map `/solutions` (+ `/solusi` alias) → `Solutions` for janari/sareupna.

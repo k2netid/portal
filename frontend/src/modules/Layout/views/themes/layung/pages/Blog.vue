@@ -38,6 +38,8 @@
           </div>
         </div>
 
+        <PluginSlot name="after_hero" class="w-full" />
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div class="lg:col-span-8 space-y-8">
             <div
@@ -110,6 +112,7 @@ import SearchWidget from '@/modules/Layout/components/widgets/SearchWidget.vue';
 import CategoriesWidget from '@/modules/Layout/components/widgets/CategoriesWidget.vue';
 import RecentPostsWidget from '@/modules/Layout/components/widgets/RecentPostsWidget.vue';
 import NewsletterWidget from '@/modules/Layout/components/widgets/NewsletterWidget.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import apiClient from '@/engine/api/client';
 import { publishingPaths } from '@/engine/api/paths';
 

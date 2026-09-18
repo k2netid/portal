@@ -38,6 +38,8 @@
             </div>
           </div>
 
+          <PluginSlot name="after_hero" class="w-full" />
+
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-8 space-y-8">
               <div
@@ -98,6 +100,7 @@ import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shar
 import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
 import PostCard from '@/modules/Layout/views/themes/sarangenge/components/blog/PostCard.vue';
 import BlogSidebar from '@/modules/Layout/views/themes/sarangenge/components/blog/BlogSidebar.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import type { Content } from '@/modules/Publishing/types/content';
 import { Newspaper } from 'lucide-vue-next';

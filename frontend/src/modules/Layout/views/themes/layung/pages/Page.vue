@@ -18,6 +18,8 @@
         </p>
       </div>
 
+      <PluginSlot name="after_hero" class="w-full" />
+
       <div class="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
         <ThemeSafeHtml
           v-if="page.body"
@@ -40,6 +42,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Breadcrumb from '../components/shared/Breadcrumb.vue';
 import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue';
+import PluginSlot from '@/shared/components/PluginSlot.vue';
 import apiClient from '@/engine/api/client';
 
 const route = useRoute();

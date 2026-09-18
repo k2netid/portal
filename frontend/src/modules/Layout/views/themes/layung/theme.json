@@ -1,7 +1,7 @@
 {
     "name": "Layung",
     "slug": "layung",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "frontend",
     "archetype": "corporate_industry",
     "category": "Corporate & Industry (ISP/MSP)",

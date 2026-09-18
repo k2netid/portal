@@ -15,8 +15,9 @@ Docs index: `docs/themes/sarangenge/`.
 
 ### Changed
 
-- Theme package version → `2.0.5`
+- Theme package version → `2.0.6`
 - Faculty directory: `Tim.vue` → `Team.vue` (`/team`, aliases `/tim` `/guru` …); i18n `pages.team`; `enable_tim` → `enable_team`
+- Archetype + Post: `after_hero` / `after_post_content` + `sidebar_article` PluginSlots
 - Customizer: floating dock keys deferred to platform schema; removed dead `social_instagram_feed_*` keys (use `instagram-feed` extension)
 - CMS pages: `after_hero` on About, Blog, Page
 - Removed thin `Solusi.vue` / `Services.vue`; `/solusi` aliases → Programs, `/services` → Facilities

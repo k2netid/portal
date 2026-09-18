@@ -1,7 +1,7 @@
 {
     "name": "Janari",
     "slug": "janari",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "type": "frontend",
     "archetype": "universal",
     "category": "Universal CMS & Editorial",

@@ -39,6 +39,7 @@
         </template>
       </div>
 
+      <PluginSlot name="after_hero" class="w-full" />
       <template v-if="!hasBuilderBlocks && !cmsBody">
         <!-- Keuntungan & Budaya Kerja -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8">
@@ -185,6 +186,7 @@
 </template>
 
 <script setup lang="ts">
+import { PluginSlot } from '@/shared/components'
 import { computed } from 'vue';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useThemePageOverride } from '@/modules/Layout/composables/useThemePageOverride';

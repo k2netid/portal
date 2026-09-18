@@ -20,7 +20,8 @@ Docs index: `docs/themes/sareupna/`.
 ### Changed
 
 - `disabled_page_behavior` enums normalized to `message` / `redirect` (aligned with Blog/Contact defaults)
-- Theme package version → `1.1.3`
+- Theme package version → `1.1.4`
+- Pricing / Search: `after_hero` PluginSlot
 - Customizer schema stripped to **theme-only** (platform identity / floating dock / colors from host); dropped dead `home_side_nav_labels` / `home_side_nav_position`
 - Readme: side-nav is host `cinematic-nav` (ADR-018), not local SectionNavDots
 - `pages.solutions` / `pages.pricing` i18n (id/en/su); page file `Solutions.vue` (`/solutions`, alias `/solusi`)
