@@ -39,7 +39,7 @@ const fileBaseFromThemeComponentsPath = (normalizedKey: string, slugLower: strin
 }
 
 /** In-tree themes used when the API row has no slug or no active theme. Janari first = CMS reference. */
-export const BUNDLED_FRONTEND_THEME_SLUGS = ['janari', 'sarangenge', 'layung'] as const
+export const BUNDLED_FRONTEND_THEME_SLUGS = ['janari', 'sarangenge', 'layung', 'sareupna'] as const
 
 /**
  * @deprecated Violates strict theme isolation (ADR-004). Only kept for

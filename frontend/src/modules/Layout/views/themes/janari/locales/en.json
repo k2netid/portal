@@ -884,7 +884,11 @@
             "url": "URL",
             "subtle_halus": "Subtle",
             "normal": "Normal",
-            "dramatic_dramatis": "Dramatic"
+            "dramatic_dramatis": "Dramatic",
+            "home_side_nav_dots": "Show Side Dot Navigation",
+            "home_side_nav_dots_hint": "Show floating dots on the right side for fast navigation between homepage sections",
+            "home_side_nav_style": "Side Navigation Style & Effect",
+            "home_side_nav_style_hint": "Choose the visual style of homepage section navigation capsule"
         },
         "manifest_categories": {
             "general": "General",
@@ -913,5 +917,14 @@
             "social_media": "Social Media",
             "animations": "Animation Effects"
         }
+    },
+    "nav_sections": {
+        "aria_label": "Homepage Section Navigation",
+        "hero": "Home",
+        "products": "Products & Solutions",
+        "updates": "Updates & News",
+        "partners": "Clients & Partners",
+        "testimonials": "Testimonials",
+        "cta": "Contact Us"
     }
 }

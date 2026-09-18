@@ -9,15 +9,16 @@ use Modules\Core\System\Models\Setting;
 use Modules\Layout\Database\Seeders\Themes\JanariThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\LayungThemeDemoSeeder;
 use Modules\Layout\Database\Seeders\Themes\SarangengeThemeDemoSeeder;
+use Modules\Layout\Database\Seeders\Themes\SareupnaThemeDemoSeeder;
 use Modules\Layout\Services\ThemeService;
 
 class ThemeSeedCommand extends Command
 {
     protected $signature = 'theme:seed
-                            {slug? : Theme slug (janari, layung, sarangenge). Defaults to active theme.}
+                            {slug? : Theme slug (janari, layung, sarangenge, sareupna). Defaults to active theme.}
                             {--all : Seed demo data for all supported themes}';
 
-    protected $description = 'Seed generic starter demo data for a theme (janari, layung, sarangenge) or the currently active theme.';
+    protected $description = 'Seed generic starter demo data for a theme (janari, layung, sarangenge, sareupna) or the currently active theme.';
 
     public function handle(ThemeService $themeService): int
     {
@@ -28,6 +29,7 @@ class ThemeSeedCommand extends Command
             $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]);
             $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]);
             $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]);
+            $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]);
             $this->info('All theme demo datasets seeded successfully.');
 
             return self::SUCCESS;
@@ -42,6 +44,7 @@ class ThemeSeedCommand extends Command
             'janari' => $this->call('db:seed', ['--class' => JanariThemeDemoSeeder::class]),
             'layung' => $this->call('db:seed', ['--class' => LayungThemeDemoSeeder::class]),
             'sarangenge' => $this->call('db:seed', ['--class' => SarangengeThemeDemoSeeder::class]),
+            'sareupna' => $this->call('db:seed', ['--class' => SareupnaThemeDemoSeeder::class]),
             default => $this->fallbackGenericSeed($slug),
         };
 

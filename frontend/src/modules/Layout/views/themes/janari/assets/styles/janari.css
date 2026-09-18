@@ -6,7 +6,7 @@
  * `custom` preset uses --theme-primary-color-hsl from theme color picker.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap');
 
 :root {
     --janari-font-heading: var(--theme-font-heading, Geist), ui-sans-serif, system-ui, sans-serif;
@@ -111,6 +111,28 @@
     .janari-heading {
         font-family: var(--janari-font-heading);
         letter-spacing: -0.035em;
+        font-weight: 700;
+    }
+
+    .theme-janari h1.font-heading,
+    .theme-janari .janari-h1 {
+        font-size: clamp(2rem, 1.4rem + 2.4vw, 3.75rem) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.04em !important;
+    }
+
+    .theme-janari h2.font-heading,
+    .theme-janari .janari-h2 {
+        font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.25rem) !important;
+        line-height: 1.18 !important;
+        letter-spacing: -0.035em !important;
+    }
+
+    .theme-janari h3.font-heading,
+    .theme-janari .janari-h3 {
+        font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
+        line-height: 1.25;
+        letter-spacing: -0.025em;
     }
 
     .theme-janari .font-mono,
@@ -881,35 +903,85 @@
         box-shadow: 0 15px 40px hsl(var(--primary) / 0.06);
     }
 
-    /* ─── Navigation Styles ─── */
-    .theme-janari[data-janari-nav] nav a {
+    /* ─── Header Scroll-Reactivity & Elevation (Antigravity Style) ─── */
+    .theme-janari header.janari-header {
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 0.3s ease,
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease;
+        will-change: transform;
+    }
+    .theme-janari header.janari-header--hidden {
+        transform: translateY(-100%) !important;
+        pointer-events: none !important;
+    }
+    .theme-janari header.janari-header--scrolled {
+        background-color: hsl(var(--background) / 0.82) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border-bottom-color: hsl(var(--border) / 0.7) !important;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15), 0 0 15px -3px hsl(var(--primary) / 0.08) !important;
+    }
+    .dark .theme-janari header.janari-header--scrolled {
+        background-color: hsl(var(--card) / 0.85) !important;
+        border-bottom-color: hsl(var(--border) / 0.8) !important;
+        box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.6), 0 0 20px -5px hsl(var(--primary) / 0.15) !important;
+    }
+
+    /* Hide pipe separators on modern capsule / pill / floating nav styles */
+    .theme-janari[data-janari-nav]:not([data-janari-nav="minimal"]):not([data-janari-nav="none"]) .janari-nav-pipe {
+        display: none !important;
+    }
+
+    /* CLI / Terminal Typed Cursor */
+    @keyframes janari-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    .janari-typed-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1.1em;
+        vertical-align: -0.15em;
+        background-color: currentColor;
+        animation: janari-blink 0.9s infinite;
+    }
+
+    /* ─── Navigation Styles (Normalized for <a> and <button>) ─── */
+    .theme-janari[data-janari-nav] nav a,
+    .theme-janari[data-janari-nav] nav button {
         position: relative;
         z-index: 10;
         transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
     }
 
     /* [data-janari-nav="glass"] */
-    .theme-janari[data-janari-nav="glass"] nav a {
+    .theme-janari[data-janari-nav="glass"] nav a,
+    .theme-janari[data-janari-nav="glass"] nav button {
         border-radius: 0.5rem;
         transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
     }
-    .theme-janari[data-janari-nav="glass"] nav a:hover {
+    .theme-janari[data-janari-nav="glass"] nav a:hover,
+    .theme-janari[data-janari-nav="glass"] nav button:hover {
         background-color: rgba(255, 255, 255, 0.12);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-color: hsl(var(--primary) / 0.2);
     }
-    .theme-janari[data-janari-nav="glass"] nav a.is-active {
+    .theme-janari[data-janari-nav="glass"] nav a.is-active,
+    .theme-janari[data-janari-nav="glass"] nav button.is-active {
         background-color: hsl(var(--primary) / 0.25);
         color: hsl(var(--primary));
         border: 1px solid hsl(var(--primary) / 0.4);
     }
 
     /* [data-janari-nav="spotlight"] */
-    .theme-janari[data-janari-nav="spotlight"] nav a:hover {
+    .theme-janari[data-janari-nav="spotlight"] nav a:hover,
+    .theme-janari[data-janari-nav="spotlight"] nav button:hover {
         color: hsl(var(--primary));
     }
-    .theme-janari[data-janari-nav="spotlight"] nav a::before {
+    .theme-janari[data-janari-nav="spotlight"] nav a::before,
+    .theme-janari[data-janari-nav="spotlight"] nav button::before {
         content: '';
         position: absolute;
         inset: -6px;
@@ -920,31 +992,38 @@
         transition: opacity 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
         z-index: -10;
     }
-    .theme-janari[data-janari-nav="spotlight"] nav a:hover::before {
+    .theme-janari[data-janari-nav="spotlight"] nav a:hover::before,
+    .theme-janari[data-janari-nav="spotlight"] nav button:hover::before {
         opacity: 1;
     }
 
     /* [data-janari-nav="magnetic"] */
-    .theme-janari[data-janari-nav="magnetic"] nav a {
+    .theme-janari[data-janari-nav="magnetic"] nav a,
+    .theme-janari[data-janari-nav="magnetic"] nav button {
         transition: all 0.35s cubic-bezier(0.37, 0.01, 0, 0.98);
     }
-    .theme-janari[data-janari-nav="magnetic"] nav a:hover {
+    .theme-janari[data-janari-nav="magnetic"] nav a:hover,
+    .theme-janari[data-janari-nav="magnetic"] nav button:hover {
         transform: scale(1.08) translateY(-3px);
         color: hsl(var(--primary));
     }
 
     /* [data-janari-nav="slide"] */
-    .theme-janari[data-janari-nav="slide"] nav a {
+    .theme-janari[data-janari-nav="slide"] nav a,
+    .theme-janari[data-janari-nav="slide"] nav button {
         overflow: hidden;
     }
-    .theme-janari[data-janari-nav="slide"] nav a span {
+    .theme-janari[data-janari-nav="slide"] nav a span,
+    .theme-janari[data-janari-nav="slide"] nav button span {
         display: inline-block;
         transition: transform 0.3s ease;
     }
-    .theme-janari[data-janari-nav="slide"] nav a:hover span {
+    .theme-janari[data-janari-nav="slide"] nav a:hover span,
+    .theme-janari[data-janari-nav="slide"] nav button:hover span {
         transform: translateY(-100%);
     }
-    .theme-janari[data-janari-nav="slide"] nav a::after {
+    .theme-janari[data-janari-nav="slide"] nav a::after,
+    .theme-janari[data-janari-nav="slide"] nav button::after {
         content: attr(data-title);
         position: absolute;
         top: 100%;
@@ -958,7 +1037,8 @@
         font-weight: 700;
         transition: transform 0.3s ease;
     }
-    .theme-janari[data-janari-nav="slide"] nav a:hover::after {
+    .theme-janari[data-janari-nav="slide"] nav a:hover::after,
+    .theme-janari[data-janari-nav="slide"] nav button:hover::after {
         transform: translateY(-100%);
     }
 
@@ -966,25 +1046,29 @@
     .theme-janari[data-janari-nav="pill"] nav a,
     .theme-janari[data-janari-nav="pill"] nav button {
         border-radius: 9999px;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
     }
-    .theme-janari[data-janari-nav="pill"] nav a:hover {
+    .theme-janari[data-janari-nav="pill"] nav a:hover,
+    .theme-janari[data-janari-nav="pill"] nav button:hover {
         background-color: hsl(var(--primary) / 0.1);
     }
-    .theme-janari[data-janari-nav="pill"] nav a.is-active {
+    .theme-janari[data-janari-nav="pill"] nav a.is-active,
+    .theme-janari[data-janari-nav="pill"] nav button.is-active {
         background-color: hsl(var(--primary));
         color: hsl(var(--primary-foreground));
     }
 
     /* [data-janari-nav="glow"] */
-    .theme-janari[data-janari-nav="glow"] nav a:hover {
+    .theme-janari[data-janari-nav="glow"] nav a:hover,
+    .theme-janari[data-janari-nav="glow"] nav button:hover {
         text-shadow: 0 0 8px hsl(var(--primary) / 0.8);
         color: hsl(var(--primary));
     }
 
     /* [data-janari-nav="underline"] */
-    .theme-janari[data-janari-nav="underline"] nav a::after {
+    .theme-janari[data-janari-nav="underline"] nav a::after,
+    .theme-janari[data-janari-nav="underline"] nav button::after {
         content: '';
         position: absolute;
         bottom: -2px;
@@ -997,13 +1081,16 @@
         transform-origin: right;
     }
     .theme-janari[data-janari-nav="underline"] nav a:hover::after,
-    .theme-janari[data-janari-nav="underline"] nav a.is-active::after {
+    .theme-janari[data-janari-nav="underline"] nav a.is-active::after,
+    .theme-janari[data-janari-nav="underline"] nav button:hover::after,
+    .theme-janari[data-janari-nav="underline"] nav button.is-active::after {
         transform: scaleX(1);
         transform-origin: left;
     }
 
     /* [data-janari-nav="floating"] */
-    .theme-janari[data-janari-nav="floating"] nav a:hover {
+    .theme-janari[data-janari-nav="floating"] nav a:hover,
+    .theme-janari[data-janari-nav="floating"] nav button:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 24px hsl(var(--primary) / 0.25);
         color: hsl(var(--primary));

@@ -59,14 +59,28 @@
       class="relative z-20 flex flex-1 flex-col justify-center min-h-0 pt-6 md:pt-8 pb-[8.5rem] md:pb-[9.5rem] px-6 lg:px-24 overflow-hidden"
       :class="heroAlignment"
     >
-      <!-- Badge -->
-      <span
+      <!-- Badge (Interactive CLI / Antigravity Style Pill) -->
+      <div
         ref="heroBadge"
-        class="inline-flex items-center px-4 py-2 rounded-full border border-primary/40 text-[9px] font-bold tracking-[0.5em] uppercase text-white mb-4 md:mb-5 bg-primary/8 backdrop-blur-sm shrink-0"
+        class="group/badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 text-white transition-all duration-300 backdrop-blur-md mb-4 md:mb-5 shadow-xs shrink-0 cursor-pointer select-none"
+        :title="badgeCopied ? 'Tersalin!' : 'Klik untuk menyalin'"
+        @click="copyHeroBadge"
       >
-        <span class="w-1 h-1 bg-primary rounded-full mr-2" />
-        {{ heroBadgeText }}
-      </span>
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+        </span>
+        <span class="text-[9.5px] font-mono tracking-[0.2em] uppercase text-white/95 font-semibold">
+          <span class="text-primary font-bold mr-1">$</span>{{ heroBadgeCleanText }}
+        </span>
+        <span class="janari-typed-cursor" />
+        <span
+          v-if="badgeCopied"
+          class="text-[8px] font-mono text-primary font-bold tracking-wider uppercase ml-1"
+        >
+          COPIED!
+        </span>
+      </div>
 
       <!-- Large Centered Title — capped size so CTAs stay visible above news strip -->
       <h1
@@ -402,6 +416,25 @@ const heroTitleText = computed(
 const heroBadgeText = computed(
     () => localizedString('hero_badge') || t('theme.janari.hero.badgeDefault'),
 );
+const heroBadgeCleanText = computed(() => {
+    const raw = heroBadgeText.value.trim();
+    return raw.startsWith('$') ? raw.slice(1).trim() : raw;
+});
+const badgeCopied = ref(false);
+const copyHeroBadge = async () => {
+    try {
+        const textToCopy = heroBadgeCleanText.value;
+        if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(textToCopy);
+            badgeCopied.value = true;
+            setTimeout(() => {
+                badgeCopied.value = false;
+            }, 2000);
+        }
+    } catch {
+        // Silently ignore if clipboard is unavailable
+    }
+};
 const heroSubtitleText = computed(
     () => localizedString('hero_subtitle') || t('theme.janari.hero.subtitleDefault'),
 )

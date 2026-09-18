@@ -1,0 +1,20 @@
+{
+    "targets": {
+        "header": { "navItemId": "identity-general", "mode": "design" },
+        "branding": { "navItemId": "design-branding", "mode": "design" },
+        "colors": { "navItemId": "design-colors", "mode": "design" },
+        "typo": { "navItemId": "design-typo", "mode": "design" },
+        "social_links": { "navItemId": "identity-social", "mode": "design" },
+        "nav": { "navItemId": "identity-menus", "mode": "design" },
+        "hero": { "navItemId": "comp-hero", "mode": "design", "bindingsId": "hero" },
+        "bento": { "navItemId": "comp-hero", "mode": "design" },
+        "terminal": { "navItemId": "comp-hero", "mode": "design" },
+        "products": { "navItemId": "comp-hero", "mode": "design" },
+        "specs": { "navItemId": "comp-hero", "mode": "design" },
+        "solusi": { "navItemId": "page-solusi", "mode": "design" },
+        "pricing": { "navItemId": "page-pricing", "mode": "design" },
+        "news": { "navItemId": "page-news", "mode": "design" },
+        "contact": { "navItemId": "page-contact", "mode": "design" },
+        "footer": { "navItemId": "ux-footer", "mode": "design" }
+    }
+}

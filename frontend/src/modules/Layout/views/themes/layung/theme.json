@@ -433,6 +433,39 @@
             "category": "Layout",
             "scope": "platform"
         },
+        "home_side_nav_dots": {
+            "label": "Tampilkan Navigasi Titik Samping",
+            "type": "checkbox",
+            "default": true,
+            "category": "Layout",
+            "description": "Tampilkan titik floating di sisi kanan untuk navigasi cepat antar seksi beranda",
+            "scope": "theme"
+        },
+        "home_side_nav_style": {
+            "label": "Gaya & Efek Navigasi Samping",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Glass Capsule (Default)",
+                    "value": "glass"
+                },
+                {
+                    "label": "Minimalist Dots (Transparan & Ramping)",
+                    "value": "minimal"
+                },
+                {
+                    "label": "Cyber Glow (Neon Aura Aksentuasi)",
+                    "value": "glow"
+                },
+                {
+                    "label": "Progress Bars (Garis Indikator Modern)",
+                    "value": "bars"
+                }
+            ],
+            "default": "glass",
+            "category": "Layout",
+            "scope": "theme"
+        },
         "button_radius": {
             "label": "Button Roundedness",
             "type": "select",

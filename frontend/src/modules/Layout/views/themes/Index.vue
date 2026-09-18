@@ -401,7 +401,7 @@ const scanThemes = async () => {
     }
 };
 
-const SAMPLE_DATA_SLUGS = new Set(['janari', 'sarangenge', 'layung']);
+const SAMPLE_DATA_SLUGS = new Set(['janari', 'sarangenge', 'layung', 'sareupna']);
 
 const hasSampleData = (theme: Theme) =>
   (theme.type || 'frontend') === 'frontend' && SAMPLE_DATA_SLUGS.has(theme.slug);

@@ -3,8 +3,13 @@
     ref="headerRef"
     data-ja-customizer-target="header"
     :class="[
+      'janari-header',
       headerSticky ? 'fixed top-0 left-0 w-full z-[100] bg-background/80 backdrop-blur-xl border-b border-border/20 shadow-sm' : 'relative z-40',
-      headerStyleClasses
+      headerStyleClasses,
+      {
+        'janari-header--scrolled': isHeaderScrolled,
+        'janari-header--hidden': isHeaderHidden && !isOpen && !isBuilder
+      }
     ]"
   >
     <!-- Main Header Container -->
@@ -57,7 +62,7 @@
           >
             <span
               v-if="index > 0"
-              class="text-foreground mx-1"
+              class="text-foreground mx-1 janari-nav-pipe"
             >|</span>
             <div
               v-if="item.children && item.children.length > 0"
@@ -634,6 +639,32 @@ const handleSelectLanguage = async (code: string) => {
 
 const isOpen = ref(false);
 const mobileOpenSubmenus = ref<Set<string>>(new Set());
+const isHeaderScrolled = ref(false);
+const isHeaderHidden = ref(false);
+let lastScrollY = 0;
+let scrollTicking = false;
+
+const handleScroll = () => {
+    if (scrollTicking || typeof window === 'undefined') return;
+    scrollTicking = true;
+    window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY || window.pageYOffset || 0;
+        isHeaderScrolled.value = currentScrollY > 20;
+
+        if (currentScrollY > 80) {
+            if (currentScrollY > lastScrollY + 5) {
+                isHeaderHidden.value = true;
+            } else if (currentScrollY < lastScrollY - 5) {
+                isHeaderHidden.value = false;
+            }
+        } else {
+            isHeaderHidden.value = false;
+        }
+
+        lastScrollY = Math.max(0, currentScrollY);
+        scrollTicking = false;
+    });
+};
 const loginUrl = computed(() => {
   const raw = getSetting('header_login_url', '/member/login')
   return typeof raw === 'string' && raw.trim() ? raw.trim() : '/member/login'
@@ -977,10 +1008,16 @@ onMounted(() => {
         motion.to(headerRef.value, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', clearProps: 'all' });
     }
     initializeLanguage();
+    if (typeof window !== 'undefined') {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
 });
 
 onUnmounted(() => {
     document.body.style.overflow = '';
+    if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScroll);
+    }
 });
 </script>
 

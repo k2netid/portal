@@ -187,22 +187,28 @@ onMounted(() => {
 
 interface SocialLinkItem {
   icon?: string;
+  network?: string;
+  platform?: string;
   url?: string;
   label?: string;
 }
 
 const parseSocialLinks = (raw: unknown): SocialLinkItem[] => {
+  let list: SocialLinkItem[] = [];
   if (!raw) return [];
-  if (Array.isArray(raw)) return raw;
-  if (typeof raw === 'string') {
+  if (Array.isArray(raw)) list = raw;
+  else if (typeof raw === 'string') {
     try {
       const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
+      if (Array.isArray(parsed)) list = parsed;
     } catch {
       return [];
     }
   }
-  return [];
+  return list.map((item) => ({
+    ...item,
+    icon: item.icon || item.network || item.platform || 'Globe',
+  }));
 };
 
 const socialLinks = computed<SocialLinkItem[]>(() => {
@@ -229,47 +235,63 @@ const toWhatsAppDialDigits = (input: string): string => {
 };
 
 const getSocialIcon = (key?: string) => {
-  switch (key) {
-    case 'Twitter': return Twitter;
-    case 'Instagram': return Instagram;
-    case 'Facebook': return Facebook;
-    case 'Youtube': return Youtube;
-    case 'Linkedin': return Linkedin;
-    case 'Github': return Github;
-    case 'Music2': return Music2;
-    case 'MessageCircle':
-    case 'WhatsApp':
+  const k = trimStr(key).toLowerCase().replace(/[-_]/g, '');
+  switch (k) {
+    case 'twitter':
+    case 'x':
+      return Twitter;
+    case 'instagram':
+      return Instagram;
+    case 'facebook':
+      return Facebook;
+    case 'youtube':
+      return Youtube;
+    case 'linkedin':
+      return Linkedin;
+    case 'github':
+      return Github;
+    case 'music2':
+    case 'tiktok':
+      return Music2;
+    case 'messagecircle':
+    case 'whatsapp':
+    case 'wa':
       return MessageCircle;
-    case 'Mail':
-    case 'Email':
+    case 'mail':
+    case 'email':
       return Mail;
-    default: return Globe;
+    default:
+      return Globe;
   }
 };
 
-const getSocialPlatformName = (link: { icon?: string; label?: string }) => {
+const getSocialPlatformName = (link: { icon?: string; network?: string; label?: string }) => {
   const customLabel = trimStr(link?.label);
   if (customLabel) return customLabel;
 
-  const clean = trimStr(link?.icon);
+  const clean = trimStr(link?.icon || link?.network);
   if (!clean) return t('common.link', 'Tautan');
-  if (clean === 'MessageCircle' || clean === 'WhatsApp') return 'WhatsApp';
-  if (clean === 'Instagram') return 'Instagram';
-  if (clean === 'Youtube') return 'YouTube';
-  if (clean === 'Mail' || clean === 'Email') return 'Email';
+  const lower = clean.toLowerCase();
+  if (lower === 'messagecircle' || lower === 'whatsapp' || lower === 'wa') return 'WhatsApp';
+  if (lower === 'instagram') return 'Instagram';
+  if (lower === 'youtube') return 'YouTube';
+  if (lower === 'linkedin') return 'LinkedIn';
+  if (lower === 'github') return 'GitHub';
+  if (lower === 'twitter' || lower === 'x') return 'Twitter / X';
+  if (lower === 'mail' || lower === 'email') return 'Email';
   return clean;
 };
 
-const resolveSocialHref = (link: { icon?: string; url?: string }) => {
-  const icon = trimStr(link?.icon);
+const resolveSocialHref = (link: { icon?: string; network?: string; url?: string }) => {
+  const icon = trimStr(link?.icon || link?.network).toLowerCase();
   const raw = trimStr(link?.url);
   if (!raw) return '#';
-  if (icon === 'Mail' || icon === 'Email') {
+  if (icon === 'mail' || icon === 'email') {
     if (raw.startsWith('mailto:')) return raw;
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) return `mailto:${raw}`;
     return raw;
   }
-  if (icon === 'MessageCircle' || icon === 'WhatsApp') {
+  if (icon === 'messagecircle' || icon === 'whatsapp' || icon === 'wa') {
     if (raw.includes('wa.me/') || raw.includes('api.whatsapp.com/') || raw.includes('whatsapp.com/')) {
       return raw.startsWith('http') ? raw : `https://${raw.replace(/^\/+/, '')}`;
     }
