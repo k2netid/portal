@@ -138,4 +138,24 @@ final class ExtensionFamilyCatalog
             static fn (string $slug): bool => $slug !== 'theme-janari',
         ));
     }
+
+    /**
+     * Resolve a theme slug (lay_themes.slug) from a pack slug (e.g. 'theme-layung' -> 'layung').
+     */
+    public static function themeSlugForPack(string $packSlug): ?string
+    {
+        if (str_starts_with($packSlug, 'theme-')) {
+            return substr($packSlug, strlen('theme-'));
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if a pack slug represents a premium theme pack.
+     */
+    public static function isPremiumThemePackSlug(string $packSlug): bool
+    {
+        return in_array($packSlug, self::premiumThemePackSlugs(), true);
+    }
 }

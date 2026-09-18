@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Core\Tests\Feature;
 
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\ExtensionBootstrapService;
 use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
@@ -240,5 +241,89 @@ final class ThemePackRegistryTest extends TestCase
         $manifest = $layungPack->manifest;
         $this->assertIsArray($manifest);
         $this->assertTrue((bool) ($manifest['theme_flags']['premium'] ?? false));
+    }
+
+    public function test_theme_slug_for_pack_resolves_theme_slug(): void
+    {
+        $this->assertSame('layung', ExtensionFamilyCatalog::themeSlugForPack('theme-layung'));
+        $this->assertSame('janari', ExtensionFamilyCatalog::themeSlugForPack('theme-janari'));
+        $this->assertNull(ExtensionFamilyCatalog::themeSlugForPack('cms-publishing'));
+    }
+
+    public function test_is_premium_theme_pack_slug_identifies_premium_packs(): void
+    {
+        $this->assertTrue(ExtensionFamilyCatalog::isPremiumThemePackSlug('theme-layung'));
+        $this->assertTrue(ExtensionFamilyCatalog::isPremiumThemePackSlug('theme-sarangenge'));
+        $this->assertTrue(ExtensionFamilyCatalog::isPremiumThemePackSlug('theme-sareupna'));
+        $this->assertFalse(ExtensionFamilyCatalog::isPremiumThemePackSlug('theme-janari'));
+        $this->assertFalse(ExtensionFamilyCatalog::isPremiumThemePackSlug('layout'));
+    }
+
+    public function test_extension_controller_attaches_is_served_to_theme_packs(): void
+    {
+        $this->seedPermissionsAndRoles();
+        $admin = $this->createAdminUser();
+
+        $bootstrapService = app(ExtensionBootstrapService::class);
+        $bootstrapService->discover();
+
+        Setting::set('theme_active', 'janari');
+
+        $response = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions');
+
+        $response->assertOk();
+        $data = collect($response->json('data'));
+
+        $janari = $data->firstWhere('slug', 'theme-janari');
+        $this->assertNotNull($janari);
+        $this->assertTrue((bool) ($janari['is_served'] ?? false));
+
+        $layung = $data->firstWhere('slug', 'theme-layung');
+        $this->assertNotNull($layung);
+        $this->assertFalse((bool) ($layung['is_served'] ?? false));
+    }
+
+    public function test_theme_controller_returns_3level_meta_and_quota(): void
+    {
+        $this->seedPermissionsAndRoles();
+        $admin = $this->createAdminUser();
+
+        // Ensure Layout module is active
+        Extension::updateOrCreate(
+            ['slug' => 'layout'],
+            ['type' => 'module', 'name' => 'Layout', 'version' => '1.0.0', 'status' => 'active', 'is_core' => false]
+        );
+
+        $response = $this->actingAs($admin, 'sanctum')
+            ->getJson('/api/v1/manage/layout/themes');
+
+        $response->assertOk()
+            ->assertJsonPath('success', true)
+            ->assertJsonStructure([
+                'success',
+                'message',
+                'data',
+                'meta' => [
+                    'quota' => [
+                        'tier',
+                        'tier_label',
+                        'max_premium_active',
+                        'remaining_slots',
+                        'is_unlimited',
+                    ],
+                    'site_active',
+                ],
+            ]);
+
+        $themes = collect($response->json('data'));
+        $this->assertNotEmpty($themes);
+
+        // Every theme item must have 3-level & quota properties
+        $themes->each(function (array $item): void {
+            $this->assertArrayHasKey('is_pack_enabled', $item);
+            $this->assertArrayHasKey('is_entitled', $item);
+            $this->assertArrayHasKey('is_premium', $item);
+        });
     }
 }

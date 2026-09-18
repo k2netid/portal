@@ -16,6 +16,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 - Module contract freeze + `ModuleManifestValidator`.
 - Discovery sync: `description`, `license` / `license_tier` / `settings_route`; preserve `requirements`.
 - `EnsureExtensionActive` middleware alias `extension.active:{slug}`.
+- **ADR-023 Theme Registry Serving**: `ExtensionController` attaches `is_served` indicator and `ExtensionFamilyCatalog` provides `themeSlugForPack()` and `isPremiumThemePackSlug()`.
 - Docs: `external-module-packaging.md` + `scripts/scaffold-optional-module.sh`.
 
 ### Fixed

@@ -12,6 +12,7 @@ use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\LicenseService;
+use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
@@ -44,12 +45,35 @@ class ThemeController extends BaseApiController
             ->orderBy('name')
             ->get();
 
-        // Attach manifest to each theme
-        $themes->each(function ($theme): void {
+        /** @var LicenseService $licenseService */
+        $licenseService = app(LicenseService::class);
+        $tier = $licenseService->getLicenseTier();
+        $quota = $licenseService->getThemeQuota($tier);
+        $remainingSlots = $licenseService->remainingPremiumSlots();
+
+        // Attach manifest and 3-level / license quota flags to each theme
+        $themes->each(function (Theme $theme) use ($licenseService): void {
             $theme->manifest = $theme->getManifest();
+            $theme->setAttribute('is_pack_enabled', $this->themeService->isThemePackEnabled($theme->slug));
+            $theme->setAttribute('is_entitled', $licenseService->isThemeServeEntitled($theme->slug));
+            $theme->setAttribute('is_premium', ExtensionFamilyCatalog::isPremiumThemePackSlug('theme-'.$theme->slug));
         });
 
-        return $this->success($themes, 'Themes retrieved successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Themes retrieved successfully',
+            'data' => $themes,
+            'meta' => [
+                'quota' => [
+                    'tier' => $tier,
+                    'tier_label' => $licenseService->getTierDisplayName($tier),
+                    'max_premium_active' => $quota['max_premium_active'],
+                    'remaining_slots' => $remainingSlots,
+                    'is_unlimited' => $quota['max_premium_active'] === null,
+                ],
+                'site_active' => Extension::isProductActive('site'),
+            ],
+        ]);
     }
 
     // Store method removed (Themes are code-managed)

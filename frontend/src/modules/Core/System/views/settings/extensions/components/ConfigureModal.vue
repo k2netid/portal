@@ -293,7 +293,7 @@ interface FeatureItem {
 interface ExtensionItem {
   id: string;
   slug: string;
-  type: 'module' | 'plugin';
+  type: 'module' | 'plugin' | 'theme';
   name: string;
   version: string;
   status: 'active' | 'inactive';

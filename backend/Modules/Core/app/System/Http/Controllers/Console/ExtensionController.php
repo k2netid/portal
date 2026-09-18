@@ -54,9 +54,16 @@ class ExtensionController extends BaseApiController
         $extensions = Extension::with('features')->latest()->get();
         app(ExtensionHealthService::class)->attach($extensions);
         $exportAllowed = $this->isExportAllowed();
-        $extensions->each(function (Extension $extension) use ($exportAllowed): void {
+        $activeThemeVal = Setting::get('theme_active', 'janari');
+        $activeThemeSlug = is_string($activeThemeVal) ? strtolower($activeThemeVal) : 'janari';
+
+        $extensions->each(function (Extension $extension) use ($exportAllowed, $activeThemeSlug): void {
             $extension->setAttribute('can_uninstall', $this->canUninstall($extension));
             $extension->setAttribute('can_export', $exportAllowed && $this->canExport($extension));
+            if ($extension->type === 'theme') {
+                $rawThemeSlug = ExtensionFamilyCatalog::themeSlugForPack($extension->slug) ?? str_replace('theme-', '', $extension->slug);
+                $extension->setAttribute('is_served', strtolower($rawThemeSlug) === $activeThemeSlug);
+            }
         });
 
         return $this->success($extensions, 'Extensions retrieved successfully');

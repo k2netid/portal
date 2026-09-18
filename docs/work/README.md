@@ -14,7 +14,7 @@ Alur wajib: [`WORKFLOW.md`](../WORKFLOW.md) · Mulai task: [`guides/start-a-task
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
-| _(tidak ada — semua selesai hari ini)_ | | | |
+| [2026-09-19-theme-registry-console-ux-3level](2026-09-19-theme-registry-console-ux-3level.md) | Console UI/UX Themes shelf + 3 tingkat visual & kuota lisensi | `in_progress` | M |
 
 ## Selesai hari ini (belum diarsip)
 

@@ -8,6 +8,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Host SEO resolver for theme **Sareupna** (`FrontendLayout` + `sareupnaPublicSeo`) — CMS baseline P0.
 - **Site Identity to Theme Settings Sync**: Integrated with `SettingController::updatePlatformIdentity` where `site_name`, `site_logo`, and `site_favicon` are synchronized into active theme settings (`lay_theme_settings`) when smart brand sync is invoked ([ADR-014](../../docs/adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md)).
 - **Visual Builder Decoupling**: Modularized Visual Builder (`builder.site`) manifest with license gating ([ADR-011](../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md)).
+- **ADR-023 3-Level Theme Pipeline & Quota Metadata**: `ThemeController::index()` returns per-theme flags (`is_pack_enabled`, `is_entitled`, `is_premium`) and response metadata (`meta.quota` and `meta.site_active`).
 
 ### Fixed
 - `dynamicSources` no longer logs the full query string.

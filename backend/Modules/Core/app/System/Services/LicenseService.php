@@ -527,7 +527,7 @@ class LicenseService
         return $prefix.'****-'.$suffix;
     }
 
-    private function getTierDisplayName(string $tier): string
+    public function getTierDisplayName(string $tier): string
     {
         return match ($tier) {
             self::TIER_WHITE_LABEL => 'White Label',
