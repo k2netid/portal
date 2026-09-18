@@ -34,6 +34,16 @@ php artisan theme:seed --all
 
 Perintah ini memanggil `*ThemeDemoSeeder` di `Modules/Layout` dan menjalankan `ThemeService::scanThemes()` terlebih dahulu.
 
+## Bundle contract (`sample-data/bundle.json`)
+
+SoT detail: [`theme-host-contract.md`](../../frontend/src/modules/Layout/views/themes/theme-host-contract.md) (section sample-data).
+
+Ringkas:
+
+- `settings` — defaults tema
+- `menus` — **object keyed by location** (`header`, `footer`, …), bukan array
+- `pages` / `posts` — konten Publishing demo (slug, title, body, `theme_page` untuk pages)
+
 ## Verify
 
 - Tema terdaftar di console Appearance / theme list
