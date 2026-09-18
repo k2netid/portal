@@ -882,8 +882,8 @@ const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
 const defaultNavItems = computed((): MenuItem[] => [
     { id: 'janari-nav-home', title: tt('header.navHome'), url: '/', type: 'custom', sort_order: 0 },
     { id: 'janari-nav-about', title: tt('header.navAbout'), url: '/about', type: 'custom', sort_order: 1 },
-    { id: 'janari-nav-solusi', title: tt('header.navSolutions'), url: '/solusi', type: 'custom', sort_order: 2 },
-    { id: 'janari-nav-tim', title: tt('header.navTeam'), url: '/tim', type: 'custom', sort_order: 3 },
+    { id: 'janari-nav-solusi', title: tt('header.navSolutions'), url: '/solutions', type: 'custom', sort_order: 2 },
+    { id: 'janari-nav-team', title: tt('header.navTeam'), url: '/team', type: 'custom', sort_order: 3 },
     { id: 'janari-nav-pricing', title: tt('header.navPricing'), url: '/pricing', type: 'custom', sort_order: 4 },
     { id: 'janari-nav-news', title: tt('header.navNews'), url: '/blog', type: 'custom', sort_order: 5 },
     { id: 'janari-nav-contact', title: tt('header.navContact'), url: '/contact', type: 'custom', sort_order: 6 },

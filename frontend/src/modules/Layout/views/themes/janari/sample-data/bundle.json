@@ -28,7 +28,7 @@
       }
     },
     "cta_primary_label": "Jelajahi produk",
-    "cta_primary_url": "/solusi",
+    "cta_primary_url": "/solutions",
     "cta_secondary_label": "Hubungi kami",
     "cta_secondary_url": "/contact",
     "home_sections": ["hero", "products", "updates", "partners", "testimonials", "cta"],
@@ -50,8 +50,8 @@
       "items": [
         { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
         { "title": "Tentang", "title_en": "About", "url": "/about", "type": "custom", "sort_order": 1 },
-        { "title": "Produk", "title_en": "Products", "url": "/solusi", "type": "custom", "sort_order": 2 },
-        { "title": "Tim", "title_en": "Team", "url": "/tim", "type": "custom", "sort_order": 3 },
+        { "title": "Produk", "title_en": "Products", "url": "/solutions", "type": "custom", "sort_order": 2 },
+        { "title": "Tim", "title_en": "Team", "url": "/team", "type": "custom", "sort_order": 3 },
         { "title": "Harga", "title_en": "Pricing", "url": "/pricing", "type": "custom", "sort_order": 4 },
         { "title": "Berita", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 5 },
         { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 6 }
@@ -98,17 +98,17 @@
       "slug": "solusi",
       "title": "Produk & Solusi",
       "title_en": "Products & Solutions",
-      "theme_page": "pages/Solusi",
+      "theme_page": "pages/Solutions",
       "status": "published",
       "excerpt": "Modul CMS, tema, dan integrasi Jejakawan.",
       "body": "<p>Ringkasan modul Jejakawan: Publishing, Layout &amp; Themes, Identity, Analytics, dan integrasi API.</p><p>Grid produk dan ikon di halaman publik diatur oleh komponen tema Janari. Edit teks di sini untuk SEO atau dokumentasi internal.</p>",
       "body_en": "<p>Overview of Jejakawan modules: Publishing, Layout &amp; Themes, Identity, Analytics, and API integrations.</p><p>Product grids and icons on the public page are controlled by Janari theme components. Edit text here for SEO or internal documentation.</p>"
     },
     {
-      "slug": "tim",
+      "slug": "team",
       "title": "Tim Kami",
       "title_en": "Our Team",
-      "theme_page": "pages/Tim",
+      "theme_page": "pages/Team",
       "status": "published",
       "excerpt": "Tim di balik Jejakawan.",
       "body": "<p>Direktori tim Jejakawan — engineering, product, dan customer success.</p><p>Kartu anggota tim di situs publik dapat diisi lewat data binding tema atau diganti sepenuhnya dengan Visual Builder.</p>",

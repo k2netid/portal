@@ -1,12 +1,9 @@
 <template>
   <section
-    id="services-tabs"
+    id="msp"
     class="py-12 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24"
   >
-    <span id="isp" class="sr-only">Internet (ISP)</span>
-    <span id="internet" class="sr-only">Internet</span>
-    <span id="msp" class="sr-only">Managed Services (MSP)</span>
-    <span id="services" class="sr-only">Services</span>
+    <span id="solusi" class="sr-only">Solusi</span>
     <span id="managed-services" class="sr-only">Managed Services</span>
     <div class="text-center max-w-3xl mx-auto space-y-4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 uppercase tracking-wider font-mono">
@@ -78,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, watch, type Ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import {
   Network, Wifi, Home, MapPin, Globe, Headset,
@@ -93,46 +90,35 @@ type TabId = 'isp' | 'msp';
 const { t } = useThemeI18n('layung');
 const route = useRoute();
 const router = useRouter();
-
-const injectedTab = inject<Ref<TabId> | null>('servicesActiveTab', null) || inject<Ref<TabId> | null>('solusiActiveTab', null);
-const localTab = ref<TabId>('isp');
-const activeTab = injectedTab || localTab;
+const activeTab = ref<TabId>('isp');
 
 const hashToTab = (hash: string): TabId | null => {
-  const id = hash.replace(/^#/, '').trim().toLowerCase();
-  if (id === 'isp' || id === 'dia' || id === 'internet') return 'isp';
-  if (id === 'msp' || id === 'soc' || id === 'sdwan' || id === 'solusi' || id === 'managed-services') return 'msp';
+  const id = hash.replace(/^#/, '').trim();
+  if (id === 'isp' || id === 'dia') return 'isp';
+  if (id === 'msp' || id === 'soc' || id === 'sdwan' || id === 'solusi') return 'msp';
   return null;
 };
 
 const syncFromRoute = () => {
-  const q = String(route.query.tab || '').toLowerCase();
-  if (q === 'isp' || q === 'dia' || q === 'internet') {
-    activeTab.value = 'isp';
-    return;
-  }
-  if (q === 'msp' || q === 'soc' || q === 'sdwan' || q === 'solusi' || q === 'managed-services') {
-    activeTab.value = 'msp';
-    return;
-  }
-
   const fromHash = hashToTab(route.hash || '');
   if (fromHash) {
     activeTab.value = fromHash;
     return;
   }
-
-  // Default to ISP for services / solusi
-  activeTab.value = 'isp';
+  if (
+    route.path.startsWith('/solusi')
+    || route.path.startsWith('/services')
+    || route.path.startsWith('/pricing/msp')
+  ) {
+    activeTab.value = 'msp';
+  }
 };
 
 const selectTab = (tab: TabId) => {
   activeTab.value = tab;
-  void router.replace({
-    path: route.path,
-    hash: `#${tab}`,
-    query: { ...route.query, tab },
-  });
+  if (route.path === '/' || route.path === '') {
+    void router.replace({ hash: `#${tab}` });
+  }
 };
 
 const ispItems = computed(() => [

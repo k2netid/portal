@@ -3,7 +3,7 @@
   "description": "Sareupna — High-Performance Cloud & Developer Platform Theme untuk Jejakawan.com.",
   "header": {
     "home": "Tepas",
-    "solusi": "Solusi Cloud",
+    "about": "Ngeunaan",
     "platform": "Platform",
     "pricing": "Pakét & Rérégan",
     "blog": "Wawasan",
@@ -24,7 +24,8 @@
     "logout": "Keluar",
     "memberFallback": "Pengembang",
     "officialLine1": "Jejakawan",
-    "officialLine2": "Membangun Solusi, Meninggalkan Jejak"
+    "officialLine2": "Membangun Solusi, Meninggalkan Jejak",
+    "solutions": "Solusi Cloud"
   },
   "common": {
     "copied": "KASALIN!",
@@ -147,6 +148,58 @@
       "contentTypeTag": "Topik",
       "contentTypeDefault": "Konten"
     },
+    "about": {
+      "title": "Ngeunaan Platform",
+      "sectionLabel": "Identitas Platform",
+      "subtitle": "Visi téknologi jeung arsitéktur cloud pikeun control plane modern.",
+      "missionTitle": "Misi Rékayasa",
+      "missionP1": "Kami ngawangun control plane modular supaya tim produk bisa ngarilis, ngakurasi, jeung ngoperasikeun portal tanpa ngorbankeun isolasi téma.",
+      "missionP2": "Sareupna némbongkeun kontrak CMS anu sami — About, Contact Reach, Blog, menus — kalayan chrome cyber khas platform pamekar.",
+      "solutionsCta": "Tingali Solusi Platform",
+      "identityLabel": "Operator",
+      "contactCta": "Hubungi Tim Arsitek"
+    },
+    "pricing": {
+      "title": "Pakét & Layanan",
+      "sectionLabel": "Pricing & Cloud Subscriptions",
+      "headline": "Pilihan Pakét Transparan",
+      "subtitle": "Pilih skala komputasi jeung kapabilitas anu cocog jeung tahap kamekaran platform anjeun.",
+      "tiers": {
+        "starter": {
+          "name": "Starter",
+          "price": "IDR 0",
+          "period": "/ salamina",
+          "description": "Pikeun pamekar independen jeung eksperimen arsitéktur lokal.",
+          "f1": "Single Instance Deployment",
+          "f2": "Core CMS & Visual Canvas",
+          "f3": "Community Discord Support",
+          "cta": "Mimitian Gratis"
+        },
+        "pro": {
+          "name": "Professional",
+          "price": "IDR 499K",
+          "period": "/ bulan",
+          "description": "Pikeun bisnis anu kudu edge delivery jeung performa teruji.",
+          "f1": "Multi-Tenant Ready",
+          "f2": "CDN & Edge Asset Optimization",
+          "f3": "Granular RBAC & Security Audit",
+          "f4": "Email Support 8x5",
+          "cta": "Pilih Pakét Pro",
+          "badge": "Paling Populer"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Custom",
+          "period": "/ SLA Dumasar Kontrak",
+          "description": "Infrastruktur terdedikasi pinuh kalayan audit régulasi jeung dukungan 24/7.",
+          "f1": "Dedicated Cloud Cluster",
+          "f2": "99.99% Uptime SLA Garansi",
+          "f3": "Dedicated Technical Account Manager",
+          "f4": "On-Premise / Hybrid Deployment",
+          "cta": "Hubungi Sales"
+        }
+      }
+    },
     "contact": {
       "title": "Hubungi Tim Arsitek Kami",
       "introQuestion": "Ada kebutuhan arsitektur cloud atau implementasi enterprise?",
@@ -200,6 +253,12 @@
     },
     "post": {
       "authorRole": "Tim Arsitek Cloud"
+    },
+    "solutions": {
+      "title": "Solusi Platform",
+      "sectionLabel": "Cloud Architecture & Solutions",
+      "headline": "Solusi Skalabilitas Platform",
+      "subtitle": "Infrastruktur terdistribusi jeung solusi rékayasa cerdas pikeun mentransformasi kaandalan sistem digital anjeun."
     }
   },
   "customizer": {

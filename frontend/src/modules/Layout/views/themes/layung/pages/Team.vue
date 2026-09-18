@@ -224,7 +224,7 @@ import {
 
 const { t } = useThemeI18n('layung');
 const { displayCompanyName } = useLayungIdentity();
-const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('team');
+const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('tim');
 
 const operationalPillars = computed(() => [
   {

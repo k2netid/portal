@@ -47,6 +47,59 @@ Global shell CSS stays in `frontend/src/styles/` (`foundation/`, `shell/*-tailwi
 | `ThemeSafeHtml` | `@/modules/Layout/components/themes/ThemeSafeHtml.vue` | Sanitized `v-html` for Jejakawan body (replaces `Core/System/.../SafeHtml` in themes) |
 | `PluginSlot` | `@/shared/components/PluginSlot.vue` | App Blocks from active plugins (do not register blocks inside theme) |
 
+### Standard PluginSlot names (CMS baseline)
+
+| Slot | Where | Notes |
+|------|-------|-------|
+| `after_hero` | Theme pages after hero/header block | Home, About, Contact, Blog, Page (CMS baseline). Extensions like `instagram-feed` bind here. |
+| `before_footer` | **Host only** — `FrontendLayout.vue` | Do not duplicate per page. |
+| `after_header` | **Host only** — `FrontendLayout.vue` | |
+| `floating_overlay` | **Host only** — `FrontendLayout.vue` | `cinematic-nav`, floating social dock |
+| `sidebar_article` | Post detail (optional) | Article sidebar extensions |
+
+Prefer the **standard names** above. Theme-specific aliases (e.g. former `about-after-hero`) break extension placement.
+
+### Page filenames: English + theme-native
+
+File names and canonical routes stay **English**. Do **not** force one shared name across themes — name matches theme SoC:
+
+| Tema | Canonical page | Path | Notes |
+| :--- | :--- | :--- | :--- |
+| janari / sareupna | `Solutions.vue` | `/solutions` | Product / cloud hub; alias `/solusi` |
+| layung | `Services.vue` | `/services` | ISP connectivity only; MSP via `PricingMsp`; alias `/solusi` → services |
+| sarangenge | `Programs.vue` / `Facilities.vue` | `/programs` / `/facilities` | Legacy `/solusi` → Programs; `/services` → Facilities |
+| janari / layung / sarangenge | `Team.vue` | `/team` | Staff / faculty directory; alias `/tim` (sarangenge also `/guru`, `/staf`, …) |
+
+Indonesian (or other) paths are **aliases only**, never the Vue filename.
+
+### Side-nav: Janari `SectionNavDots` vs host `cinematic-nav`
+
+- **layung / sarangenge / sareupna** — host plugin `cinematic-nav` via `floating_overlay` (ADR-018). Theme keys: `home_side_nav_dots`, `home_side_nav_style`, `home_side_nav_show_mobile`.
+- **janari** — may still ship local `SectionNavDots` on Home as CMS reference chrome. Do **not** re-introduce theme-local copies on other packages. Full consolidation onto the plugin is optional follow-up, not required for CMS baseline.
+
+### sample-data / `bundle.json` contract
+
+Path: `themes/<slug>/sample-data/bundle.json` (consumed by `ThemeSampleDataOrchestrator` / `php artisan theme:seed`).
+
+| Key | Shape | Required |
+|-----|-------|----------|
+| `version` | number | yes |
+| `settings` | object of theme setting defaults | yes |
+| `menus` | **object keyed by location** → `{ name, items[] }` | yes for demo nav |
+| `pages` | array of `{ slug, title, title_en?, theme_page, status, excerpt, body, body_en? }` | yes for CMS baseline |
+| `posts` | array of `{ slug, title, title_en?, status, excerpt, excerpt_en?, body, body_en? }` | yes for blog demo |
+
+**Menus must be a dict**, not a list. List form is skipped by `applyMenus()` (`is_string($location)`). Example:
+
+```json
+"menus": {
+  "header": { "name": "Header Nav", "items": [{ "title": "Beranda", "url": "/", "type": "custom", "sort_order": 0 }] },
+  "footer": { "name": "Footer Nav", "items": [] }
+}
+```
+
+See also: [seed-theme-demo-data.md](../../../../docs/guides/seed-theme-demo-data.md), [ADR-022](../../../../docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md).
+
 ## Forbidden in theme views (UI boundary)
 - Registering plugin App Blocks inside theme packages — use `<PluginSlot>` only; blocks are registered via `pluginBootstrap` + plugin loaders.
 

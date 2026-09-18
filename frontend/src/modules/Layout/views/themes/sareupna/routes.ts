@@ -5,10 +5,17 @@ const publicThemePage = () => import('@/modules/Layout/components/themes/PublicT
 
 const routes: RouteRecordRaw[] = [
     {
-        path: 'solusi',
-        name: 'sareupna-solusi',
+        path: 'about',
+        name: 'sareupna-about',
         component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Solusi' },
+        meta: { public: true, themePage: 'pages/About' },
+    },
+    {
+        path: 'solutions',
+        name: 'sareupna-solutions',
+        alias: ['solusi'],
+        component: publicThemePage,
+        meta: { public: true, themePage: 'pages/Solutions' },
     },
     {
         path: 'pricing',

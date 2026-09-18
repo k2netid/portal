@@ -32,7 +32,7 @@
             </router-link>
 
             <router-link
-              to="/solusi"
+              to="/solutions"
               class="w-full sm:w-auto px-8 py-4 text-xs font-bold uppercase tracking-wider rounded-xl border border-border bg-card/60 hover:bg-card hover:border-primary/50 text-foreground transition-all duration-200 inline-flex items-center justify-center gap-2"
             >
               <span>{{ t('cta.secondary') }}</span>

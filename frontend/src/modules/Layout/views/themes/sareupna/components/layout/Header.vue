@@ -180,7 +180,7 @@
 
           <!-- Primary Console / CTA Button -->
           <router-link
-            to="/solusi"
+            to="/solutions"
             class="inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-primary-foreground bg-primary hover:bg-primary/90 rounded-xl shadow-sm shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02] active:scale-95 transition-all duration-200"
           >
             {{ t('header.getStarted') }}
@@ -258,7 +258,7 @@
         <div class="pt-6 border-t border-border/40 flex items-center justify-between">
           <ThemeToggle />
           <router-link
-            to="/solusi"
+            to="/solutions"
             class="px-5 py-2.5 text-xs font-semibold text-primary-foreground bg-primary rounded-xl"
             @click="isOpen = false"
           >
@@ -367,7 +367,7 @@ const navItems = computed((): MenuItem[] => {
   // Fallback items if menu not configured
   return [
     { id: '1', title: t('header.home'), url: '/' },
-    { id: '2', title: t('header.solusi'), url: '/solusi' },
+    { id: '2', title: t('header.solutions'), url: '/solutions' },
     { id: '3', title: t('header.pricing'), url: '/pricing' },
     { id: '4', title: t('header.blog'), url: '/blog' },
     { id: '5', title: t('header.contact'), url: '/contact' },

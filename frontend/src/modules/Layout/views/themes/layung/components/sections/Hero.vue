@@ -524,7 +524,7 @@ const defaultManualSlides = computed(() => [
     title: t('hero.slideMspTitle', 'Solusi Pengelolaan Infrastruktur & Keamanan IT'),
     subtitle: t('hero.slideMspDesc', 'Dari pengawasan jaringan 24/7 NOC, mitigasi serangan siber, hingga pemeliharaan sistem data center Anda.'),
     ctaText: t('hero.slideMspCta', 'Konsultasi Layanan'),
-    ctaUrl: '/solusi',
+    ctaUrl: '/pricing/msp',
     animation: 'datacenter',
   },
   {

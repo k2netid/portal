@@ -107,7 +107,7 @@
 
         <!-- 5. Guru & Tenaga Pendidik -->
         <router-link
-          to="/tim"
+          to="/team"
           class="sarangenge-bento__cell group"
         >
           <div class="space-y-2">

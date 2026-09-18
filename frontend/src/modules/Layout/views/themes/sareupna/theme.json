@@ -1,15 +1,23 @@
 {
     "name": "Sareupna",
     "slug": "sareupna",
-    "version": "1.0.0",
+    "version": "1.1.3",
     "type": "frontend",
     "archetype": "developer_platform",
     "category": "Cloud & Developer Platform",
     "parent_theme": "janari",
-    "description": "Sareupna \u2014 High-Performance Cloud & Developer Platform Theme khusus untuk Jejakawan.com (PT Jejak Awan Digital). Arsitektur cloud terdistribusi, directional auto-hide floating dock, interactive CLI badge, 12-column Bento Grid, developer terminal showcase, dan telemetry metrics.",
+    "description": "Sareupna — High-Performance Cloud & Developer Platform Theme khusus untuk Jejakawan.com (PT Jejak Awan Digital). Arsitektur cloud terdistribusi, directional auto-hide floating dock, interactive CLI badge, 12-column Bento Grid, developer terminal showcase, dan telemetry metrics.",
     "author": "PT Jejak Awan Digital",
     "supports": {
         "sareupna_canvas": true
+    },
+    "menus": {
+        "header": "Header Primary Navigation",
+        "header_top": "Header Top Utility",
+        "footer": "Footer Bottom Links",
+        "footer_col_1": "Footer Column 1",
+        "footer_col_2": "Footer Column 2",
+        "sidebar": "Sidebar Navigation"
     },
     "customizer": {
         "platformSchema": "Layout/customizer/platform/schema/global.settings.schema.json",
@@ -585,7 +593,7 @@
         "hero_title_su": {
             "label": "Judul Utama Hero (Sunda)",
             "type": "text",
-            "default": "ARSIT\u00c9KTUR CLOUD & ENGINE GENERASI ENGGAL",
+            "default": "ARSITÉKTUR CLOUD & ENGINE GENERASI ENGGAL",
             "category": "Hero Section"
         },
         "hero_subtitle": {
@@ -609,7 +617,7 @@
         "hero_subtitle_su": {
             "label": "Subjudul Hero (Sunda)",
             "type": "textarea",
-            "default": "Platform cloud terdistribusi, engine kont\u00e9n kinerja luhur, sareng \u00e9kosistem pamekar mod\u00e9rn dina hiji platform.",
+            "default": "Platform cloud terdistribusi, engine kontén kinerja luhur, sareng ékosistem pamekar modérn dina hiji platform.",
             "category": "Hero Section"
         },
         "hero_primary_cta_text": {
@@ -633,13 +641,13 @@
         "hero_primary_cta_text_su": {
             "label": "Teks Tombol Utama Hero (Sunda)",
             "type": "text",
-            "default": "Kot\u00e9ktak Solusi",
+            "default": "Kotéktak Solusi",
             "category": "Hero Section"
         },
         "hero_primary_cta_link": {
             "label": "Tautan Tombol Utama Hero",
             "type": "text",
-            "default": "/solusi",
+            "default": "/solutions",
             "category": "Hero Section"
         },
         "hero_secondary_cta_text": {
@@ -858,7 +866,7 @@
         "products_view_all_url": {
             "label": "Tautan Tombol Semua Produk",
             "type": "text",
-            "default": "/solusi",
+            "default": "/solutions",
             "category": "Products & Modules"
         },
         "specs_title": {
@@ -873,7 +881,7 @@
             "default": "Arsitektur cloud dengan jaminan ketersediaan tinggi, latensi ultra rendah, dan perlindungan multi-region.",
             "category": "Cloud Specs & SLA"
         },
-        "enable_solusi": {
+        "enable_solutions": {
             "label": "Aktifkan Halaman Solusi Cloud",
             "type": "boolean",
             "default": true,
@@ -903,21 +911,30 @@
             "default": true,
             "category": "Public Pages"
         },
+        "contact_form_slug": {
+            "label": "Slug formulir kontak",
+            "type": "text",
+            "default": "contact",
+            "category": "Contact Page",
+            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+            "scope": "theme"
+        },
         "disabled_page_behavior": {
             "label": "When a page is turned off",
             "type": "select",
             "options": [
                 {
-                    "label": "Show 'Page Offline' message",
-                    "value": "show_message"
+                    "label": "Redirect to Home",
+                    "value": "redirect"
                 },
                 {
-                    "label": "Redirect to Home Page",
-                    "value": "redirect_home"
+                    "label": "Show Maintenance Message",
+                    "value": "message"
                 }
             ],
-            "default": "show_message",
-            "category": "Public Pages"
+            "default": "message",
+            "category": "Public Pages",
+            "scope": "platform"
         },
         "disabled_page_message": {
             "label": "Message shown to visitors",
@@ -1075,7 +1092,7 @@
         "footer_about_text": {
             "label": "Teks Deskripsi Footer",
             "type": "textarea",
-            "default": "PT Jejak Awan Digital \u2014 Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
+            "default": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
             "category": "Footer"
         },
         "footer_text": {

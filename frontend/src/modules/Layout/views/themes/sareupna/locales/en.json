@@ -3,7 +3,7 @@
   "description": "Sareupna — High-Performance Cloud & Developer Platform Theme for Jejakawan.com.",
   "header": {
     "home": "Home",
-    "solusi": "Cloud Solutions",
+    "about": "About",
     "platform": "Platform",
     "pricing": "Plans & Pricing",
     "blog": "Insights",
@@ -24,7 +24,8 @@
     "logout": "Sign Out",
     "memberFallback": "Developer",
     "officialLine1": "Jejakawan",
-    "officialLine2": "Membangun Solusi, Meninggalkan Jejak"
+    "officialLine2": "Membangun Solusi, Meninggalkan Jejak",
+    "solutions": "Cloud Solutions"
   },
   "common": {
     "copied": "COPIED!",
@@ -147,6 +148,58 @@
       "contentTypeTag": "Topic",
       "contentTypeDefault": "Content"
     },
+    "about": {
+      "title": "About Platform",
+      "sectionLabel": "Platform Identity",
+      "subtitle": "Technology vision and cloud architecture for a modern control plane.",
+      "missionTitle": "Engineering Mission",
+      "missionP1": "We build a modular control plane so product teams can ship, curate, and operate portals without breaking theme isolation.",
+      "missionP2": "Sareupna keeps the same CMS contract as other themes — About, Reach Contact, Blog, menus — with cyber developer-platform chrome.",
+      "solutionsCta": "View Platform Solutions",
+      "identityLabel": "Operator",
+      "contactCta": "Contact the Architecture Team"
+    },
+    "pricing": {
+      "title": "Plans & Services",
+      "sectionLabel": "Pricing & Cloud Subscriptions",
+      "headline": "Transparent Plan Choices",
+      "subtitle": "Choose the compute scale and capabilities that match your platform stage.",
+      "tiers": {
+        "starter": {
+          "name": "Starter",
+          "price": "IDR 0",
+          "period": "/ forever",
+          "description": "For independent developers and local architecture experiments.",
+          "f1": "Single Instance Deployment",
+          "f2": "Core CMS & Visual Canvas",
+          "f3": "Community Discord Support",
+          "cta": "Start Free"
+        },
+        "pro": {
+          "name": "Professional",
+          "price": "IDR 499K",
+          "period": "/ month",
+          "description": "For growing businesses that need edge delivery and proven performance.",
+          "f1": "Multi-Tenant Ready",
+          "f2": "CDN & Edge Asset Optimization",
+          "f3": "Granular RBAC & Security Audit",
+          "f4": "Email Support 8x5",
+          "cta": "Choose Pro",
+          "badge": "Most Popular"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Custom",
+          "period": "/ Contract-based SLA",
+          "description": "Fully dedicated infrastructure with regulatory audit and 24/7 support.",
+          "f1": "Dedicated Cloud Cluster",
+          "f2": "99.99% Uptime SLA Guarantee",
+          "f3": "Dedicated Technical Account Manager",
+          "f4": "On-Premise / Hybrid Deployment",
+          "cta": "Contact Sales"
+        }
+      }
+    },
     "contact": {
       "title": "Consult with Our Cloud Architects",
       "introQuestion": "Have enterprise cloud infrastructure or custom platform requirements?",
@@ -200,6 +253,12 @@
     },
     "post": {
       "authorRole": "Cloud Architecture Team"
+    },
+    "solutions": {
+      "title": "Platform Solutions",
+      "sectionLabel": "Cloud Architecture & Solutions",
+      "headline": "Platform Scalability Solutions",
+      "subtitle": "Distributed infrastructure and intelligent engineering to transform the reliability of your digital systems."
     }
   },
   "customizer": {

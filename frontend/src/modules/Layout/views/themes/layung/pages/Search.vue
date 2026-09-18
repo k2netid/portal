@@ -89,7 +89,7 @@ const allItems = computed(() => [
     title: t('pages.solusi.title', 'Managed Services'),
     category: t('header.solusi', 'Managed Services'),
     desc: t('pages.solusi.subtitle'),
-    path: '/solusi',
+    path: '/pricing/msp',
   },
   {
     title: t('pages.achievements.title', 'SLA'),

@@ -4,9 +4,11 @@ import type { RouteRecordRaw } from 'vue-router';
 const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
 const routes: RouteRecordRaw[] = [
+
     {
         path: 'services',
         name: 'layung-services',
+        alias: ['solusi'],
         component: publicThemePage,
         meta: { public: true, themePage: 'pages/Services' },
     },

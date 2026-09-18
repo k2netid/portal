@@ -2,8 +2,6 @@
   "version": 1,
   "settings": {
     "site_title": "Portal ISP",
-    "default_theme_mode": "dark",
-    "default_site_locale": "id",
     "brand_logo": "/logofull_portal-isp.png",
     "branding_display": "logo_only",
     "header_cta_url": "",
@@ -83,17 +81,45 @@
     "header": {
       "name": "Portal ISP Header Navigation",
       "items": [
-        { "title": "Beranda", "title_en": "Home", "url": "/", "type": "custom", "sort_order": 0 },
-        { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 1 },
+        {
+          "title": "Beranda",
+          "title_en": "Home",
+          "url": "/",
+          "type": "custom",
+          "sort_order": 0
+        },
+        {
+          "title": "Tentang Kami",
+          "title_en": "About Us",
+          "url": "/about",
+          "type": "custom",
+          "sort_order": 1
+        },
         {
           "title": "Layanan",
           "title_en": "Services",
-          "url": "/services#isp",
+          "url": "/services",
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Internet", "title_en": "Internet", "url": "/services#isp", "type": "custom" },
-            { "title": "Managed Services", "title_en": "Managed Services", "url": "/services#msp", "type": "custom" }
+            {
+              "title": "Internet",
+              "title_en": "Internet",
+              "url": "/pricing/isp",
+              "type": "custom"
+            },
+            {
+              "title": "Managed Services",
+              "title_en": "Managed Services",
+              "url": "/pricing/msp",
+              "type": "custom"
+            },
+            {
+              "title": "SLA & Jaringan",
+              "title_en": "SLA & Network",
+              "url": "/achievement",
+              "type": "custom"
+            }
           ]
         },
         {
@@ -103,56 +129,259 @@
           "type": "custom",
           "sort_order": 3,
           "children": [
-            { "title": "Paket Internet", "title_en": "Internet Plans", "url": "/pricing/isp", "type": "custom" },
-            { "title": "Paket MSP", "title_en": "MSP Plans", "url": "/pricing/msp", "type": "custom" }
+            {
+              "title": "Paket Internet",
+              "title_en": "Internet Plans",
+              "url": "/pricing/isp",
+              "type": "custom"
+            },
+            {
+              "title": "Paket MSP",
+              "title_en": "MSP Plans",
+              "url": "/pricing/msp",
+              "type": "custom"
+            }
           ]
         },
-        { "title": "Tim", "title_en": "Team", "url": "/team", "type": "custom", "sort_order": 4 },
-        { "title": "Berita", "title_en": "News", "url": "/blog", "type": "custom", "sort_order": 5 },
-        { "title": "Kontak", "title_en": "Contact", "url": "/contact", "type": "custom", "sort_order": 6 }
+        {
+          "title": "Berita",
+          "title_en": "News",
+          "url": "/blog",
+          "type": "custom",
+          "sort_order": 4
+        },
+        {
+          "title": "Kontak",
+          "title_en": "Contact",
+          "url": "/contact",
+          "type": "custom",
+          "sort_order": 5
+        }
       ]
     },
     "footer_col_1": {
       "name": "Portal ISP Footer ISP",
       "items": [
-        { "title": "Internet", "title_en": "Internet", "url": "/pricing/isp", "type": "custom", "sort_order": 0 },
-        { "title": "Simulator Bandwidth", "title_en": "Bandwidth Simulator", "url": "/#calculator", "type": "custom", "sort_order": 1 },
-        { "title": "Tentang Kami", "title_en": "About Us", "url": "/about", "type": "custom", "sort_order": 2 },
-        { "title": "SLA", "title_en": "SLA", "url": "/achievement", "type": "custom", "sort_order": 3 }
+        {
+          "title": "Internet",
+          "title_en": "Internet",
+          "url": "/pricing/isp",
+          "type": "custom",
+          "sort_order": 0
+        },
+        {
+          "title": "Simulator Bandwidth",
+          "title_en": "Bandwidth Simulator",
+          "url": "/#calculator",
+          "type": "custom",
+          "sort_order": 1
+        },
+        {
+          "title": "Tentang Kami",
+          "title_en": "About Us",
+          "url": "/about",
+          "type": "custom",
+          "sort_order": 2
+        },
+        {
+          "title": "SLA",
+          "title_en": "SLA",
+          "url": "/achievement",
+          "type": "custom",
+          "sort_order": 3
+        }
       ]
     },
     "footer_col_2": {
       "name": "Portal ISP Footer MSP",
       "items": [
-        { "title": "Managed Services", "title_en": "Managed Services", "url": "/services#msp", "type": "custom", "sort_order": 0 },
-        { "title": "Paket MSP", "title_en": "MSP Plans", "url": "/pricing/msp", "type": "custom", "sort_order": 1 },
-        { "title": "Tim", "title_en": "Team", "url": "/team", "type": "custom", "sort_order": 2 },
-        { "title": "Karir", "title_en": "Careers", "url": "/career", "type": "custom", "sort_order": 3 }
+        {
+          "title": "Managed Services",
+          "title_en": "Managed Services",
+          "url": "/pricing/msp",
+          "type": "custom",
+          "sort_order": 0
+        },
+        {
+          "title": "Paket MSP",
+          "title_en": "MSP Plans",
+          "url": "/pricing/msp",
+          "type": "custom",
+          "sort_order": 1
+        },
+        {
+          "title": "Tim",
+          "title_en": "Team",
+          "url": "/team",
+          "type": "custom",
+          "sort_order": 2
+        },
+        {
+          "title": "Karir",
+          "title_en": "Careers",
+          "url": "/career",
+          "type": "custom",
+          "sort_order": 3
+        }
       ]
     },
     "footer_col_3": {
       "name": "Portal ISP Footer Produk IT",
       "items": [
-        { "title": "Toko Offline", "url": "/contact", "type": "custom", "sort_order": 0 },
-        { "title": "Tokopedia Portal ISP", "url": "https://www.tokopedia.com/portal-isp-bandung", "type": "custom", "sort_order": 1 },
-        { "title": "Shopee Portal ISP", "url": "https://shopee.co.id/portal-isp?entryPoint=ShopByPDP", "type": "custom", "sort_order": 2 },
-        { "title": "SIPLah Blibli", "url": "https://siplah.blibli.com/merchant-detail/SPKK-1030", "type": "custom", "sort_order": 3 },
-        { "title": "SIPLah Toko Ladang", "url": "https://siplah.tokoladang.co.id/m/portal-isp.39644", "type": "custom", "sort_order": 4 }
+        {
+          "title": "Toko Offline",
+          "url": "/contact",
+          "type": "custom",
+          "sort_order": 0
+        },
+        {
+          "title": "Tokopedia Portal ISP",
+          "url": "https://www.tokopedia.com/portal-isp-bandung",
+          "type": "custom",
+          "sort_order": 1
+        },
+        {
+          "title": "Shopee Portal ISP",
+          "url": "https://shopee.co.id/portal-isp?entryPoint=ShopByPDP",
+          "type": "custom",
+          "sort_order": 2
+        },
+        {
+          "title": "SIPLah Blibli",
+          "url": "https://siplah.blibli.com/merchant-detail/SPKK-1030",
+          "type": "custom",
+          "sort_order": 3
+        },
+        {
+          "title": "SIPLah Toko Ladang",
+          "url": "https://siplah.tokoladang.co.id/m/portal-isp.39644",
+          "type": "custom",
+          "sort_order": 4
+        }
       ]
     }
   },
   "pages": [
-    { "slug": "home", "title": "Beranda", "title_en": "Home", "theme_page": "pages/Home", "status": "published", "excerpt": "Portal resmi Portal ISP — ISP dan Managed Service Provider.", "body": "<p>Portal resmi Portal ISP (Penyedia Layanan Internet) — Internet Service Provider dan Managed Service Provider di Bandung.</p>", "body_en": "<p>Official Portal ISP (Penyedia Layanan Internet) portal — Internet Service Provider and Managed Service Provider in Bandung.</p>" },
-    { "slug": "about", "title": "Tentang Kami", "title_en": "About Us", "theme_page": "pages/About", "status": "published", "excerpt": "Profil Penyedia Layanan Internet (Portal ISP).", "body": "", "body_en": "" },
-    { "slug": "services", "title": "Layanan", "title_en": "Services", "theme_page": "pages/Services", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis, dan Managed Services.", "body": "<p>Layanan internet dan IT operasional Portal ISP: Dedicated Internet, Broadband Bisnis, dan Managed Services di Bandung dan Jawa Barat.</p>", "body_en": "<p>Portal ISP internet and IT operations services: Dedicated Internet, Business Broadband, and Managed Services in Bandung and West Java.</p>" },
-    { "slug": "pricing", "title": "Paket & Harga", "title_en": "Plans & Pricing", "theme_page": "pages/Pricing", "status": "published", "excerpt": "Pilih paket ISP atau MSP sesuai kebutuhan.", "body": "<p>Halaman induk paket layanan Portal ISP — konektivitas internet (ISP) dan managed services (MSP).</p>", "body_en": "<p>Portal ISP service plans hub — internet connectivity (ISP) and managed services (MSP).</p>" },
-    { "slug": "pricing-isp", "title": "Paket Internet (ISP)", "title_en": "Internet Plans (ISP)", "theme_page": "pages/PricingIsp", "status": "published", "excerpt": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.", "body": "<p>Paket konektivitas internet Portal ISP untuk dedicated, bisnis, dan retail.</p>", "body_en": "<p>Portal ISP internet connectivity plans for dedicated, business, and retail.</p>" },
-    { "slug": "pricing-msp", "title": "Managed Services (MSP)", "title_en": "Managed Services (MSP)", "theme_page": "pages/PricingMsp", "status": "published", "excerpt": "Paket Basic, Standard, dan Custom untuk sekolah dan institusi.", "body": "<p>Paket managed services Portal ISP untuk sekolah dan institusi pendidikan.</p>", "body_en": "<p>Portal ISP managed services plans for schools and educational institutions.</p>" },
-    { "slug": "team", "title": "Tim", "title_en": "Team", "theme_page": "pages/Team", "status": "published", "excerpt": "Tim operasional Portal ISP di Bandung.", "body": "<p>Tim operasional Portal ISP beroperasi dari Bandung untuk dukungan teknis dan sales.</p>", "body_en": "<p>The Portal ISP operations team works from Bandung for technical support and sales.</p>" },
-    { "slug": "blog", "title": "Berita", "title_en": "News", "theme_page": "pages/Blog", "status": "published", "excerpt": "Pengumuman layanan dan operasional Portal ISP.", "body": "<p>Berita layanan, jangkauan, dan operasional Portal ISP.</p>", "body_en": "<p>Portal ISP service, coverage, and operations news.</p>" },
-    { "slug": "contact", "title": "Kontak", "title_en": "Contact", "theme_page": "pages/Contact", "status": "published", "excerpt": "Sales, CS, NOC, dan Service Desk.", "body": "<p>Hubungi tim Portal ISP untuk survei, penawaran, dan dukungan operasional.</p>", "body_en": "<p>Contact the Portal ISP team for surveys, quotations, and operational support.</p>" },
-    { "slug": "achievement", "title": "SLA", "title_en": "SLA", "theme_page": "pages/Achievement", "status": "published", "excerpt": "Komitmen layanan sesuai kontrak.", "body": "<p>Komitmen SLA berbasis kontrak, anggota korporat IDNIC, dan operasional AS153992.</p>", "body_en": "<p>Contract-based SLA commitment, IDNIC corporate membership, and AS153992 operations.</p>" },
-    { "slug": "careers", "title": "Karir", "title_en": "Careers", "theme_page": "pages/CareerCenter", "status": "published", "excerpt": "Lowongan operasional Portal ISP di Bandung.", "body": "<p>Lowongan dibuka sesuai kebutuhan operasional Portal ISP di Bandung.</p>", "body_en": "<p>Roles open according to Portal ISP operational needs in Bandung.</p>" }
+    {
+      "slug": "home",
+      "title": "Beranda",
+      "title_en": "Home",
+      "theme_page": "pages/Home",
+      "status": "published",
+      "excerpt": "Portal resmi Portal ISP — ISP dan Managed Service Provider.",
+      "body": "<p>Portal resmi Portal ISP (Penyedia Layanan Internet) — Internet Service Provider dan Managed Service Provider di Bandung.</p>",
+      "body_en": "<p>Official Portal ISP (Penyedia Layanan Internet) portal — Internet Service Provider and Managed Service Provider in Bandung.</p>"
+    },
+    {
+      "slug": "about",
+      "title": "Tentang Kami",
+      "title_en": "About Us",
+      "theme_page": "pages/About",
+      "status": "published",
+      "excerpt": "Profil Penyedia Layanan Internet (Portal ISP).",
+      "body": "",
+      "body_en": ""
+    },
+    {
+      "slug": "services",
+      "title": "Internet",
+      "title_en": "Internet",
+      "theme_page": "pages/Services",
+      "status": "published",
+      "excerpt": "Dedicated Internet, Broadband Bisnis, dan Retail Broadband.",
+      "body": "<p>Layanan internet Portal ISP: Dedicated Internet, Broadband Bisnis, dan Retail Broadband di Bandung dan Jawa Barat.</p>",
+      "body_en": "<p>Portal ISP internet services: Dedicated Internet, Business Broadband, and Retail Broadband in Bandung and West Java.</p>"
+    },
+    {
+      "slug": "pricing-msp",
+      "title": "Managed Services",
+      "title_en": "Managed Services",
+      "theme_page": "pages/PricingMsp",
+      "status": "published",
+      "excerpt": "Pendampingan IT operasional untuk sekolah dan institusi.",
+      "body": "<p>Managed services Portal ISP: jaringan, server, CCTV, dan dukungan IT harian untuk sekolah dan institusi.</p>",
+      "body_en": "<p>Portal ISP managed services: network, servers, CCTV, and day-to-day IT support for schools and institutions.</p>"
+    },
+    {
+      "slug": "pricing",
+      "title": "Paket & Harga",
+      "title_en": "Plans & Pricing",
+      "theme_page": "pages/Pricing",
+      "status": "published",
+      "excerpt": "Pilih paket ISP atau MSP sesuai kebutuhan.",
+      "body": "<p>Halaman induk paket layanan Portal ISP — konektivitas internet (ISP) dan managed services (MSP).</p>",
+      "body_en": "<p>Portal ISP service plans hub — internet connectivity (ISP) and managed services (MSP).</p>"
+    },
+    {
+      "slug": "pricing-isp",
+      "title": "Paket Internet (ISP)",
+      "title_en": "Internet Plans (ISP)",
+      "theme_page": "pages/PricingIsp",
+      "status": "published",
+      "excerpt": "Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.",
+      "body": "<p>Paket konektivitas internet Portal ISP untuk dedicated, bisnis, dan retail.</p>",
+      "body_en": "<p>Portal ISP internet connectivity plans for dedicated, business, and retail.</p>"
+    },
+    {
+      "slug": "pricing-msp",
+      "title": "Managed Services (MSP)",
+      "title_en": "Managed Services (MSP)",
+      "theme_page": "pages/PricingMsp",
+      "status": "published",
+      "excerpt": "Paket Basic, Standard, dan Custom untuk sekolah dan institusi.",
+      "body": "<p>Paket managed services Portal ISP untuk sekolah dan institusi pendidikan.</p>",
+      "body_en": "<p>Portal ISP managed services plans for schools and educational institutions.</p>"
+    },
+    {
+      "slug": "team",
+      "title": "Tim",
+      "title_en": "Team",
+      "theme_page": "pages/Team",
+      "status": "published",
+      "excerpt": "Tim operasional Portal ISP di Bandung.",
+      "body": "<p>Tim operasional Portal ISP beroperasi dari Bandung untuk dukungan teknis dan sales.</p>",
+      "body_en": "<p>The Portal ISP operations team works from Bandung for technical support and sales.</p>"
+    },
+    {
+      "slug": "blog",
+      "title": "Berita",
+      "title_en": "News",
+      "theme_page": "pages/Blog",
+      "status": "published",
+      "excerpt": "Pengumuman layanan dan operasional Portal ISP.",
+      "body": "<p>Berita layanan, jangkauan, dan operasional Portal ISP.</p>",
+      "body_en": "<p>Portal ISP service, coverage, and operations news.</p>"
+    },
+    {
+      "slug": "contact",
+      "title": "Kontak",
+      "title_en": "Contact",
+      "theme_page": "pages/Contact",
+      "status": "published",
+      "excerpt": "Sales, CS, NOC, dan Service Desk.",
+      "body": "<p>Hubungi tim Portal ISP untuk survei, penawaran, dan dukungan operasional.</p>",
+      "body_en": "<p>Contact the Portal ISP team for surveys, quotations, and operational support.</p>"
+    },
+    {
+      "slug": "achievement",
+      "title": "SLA",
+      "title_en": "SLA",
+      "theme_page": "pages/Achievement",
+      "status": "published",
+      "excerpt": "Komitmen layanan sesuai kontrak.",
+      "body": "<p>Komitmen SLA berbasis kontrak, anggota korporat IDNIC, dan operasional AS153992.</p>",
+      "body_en": "<p>Contract-based SLA commitment, IDNIC corporate membership, and AS153992 operations.</p>"
+    },
+    {
+      "slug": "careers",
+      "title": "Karir",
+      "title_en": "Careers",
+      "theme_page": "pages/CareerCenter",
+      "status": "published",
+      "excerpt": "Lowongan operasional Portal ISP di Bandung.",
+      "body": "<p>Lowongan dibuka sesuai kebutuhan operasional Portal ISP di Bandung.</p>",
+      "body_en": "<p>Roles open according to Portal ISP operational needs in Bandung.</p>"
+    }
   ],
   "posts": [
     {

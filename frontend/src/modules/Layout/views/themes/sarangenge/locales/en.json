@@ -209,11 +209,6 @@
       "title": "{school} Community Achievements",
       "subtitle": "Celebrating outstanding milestones in academic olympiads, sciences, technology, arts, and athletics."
     },
-    "tim": {
-      "badge": "Dedicated Educators",
-      "title": "Faculty & Educational Staff",
-      "subtitle": "Led by certified educators and postgraduate faculty with national and Cambridge teaching credentials."
-    },
     "disabled": {
       "statusLabel": "School Information",
       "defaultTitle": "Page Unavailable",
@@ -228,6 +223,11 @@
       "submit": "Search",
       "empty": "No results found for that keyword.",
       "unavailable": "Search service is currently unavailable."
+    },
+    "team": {
+      "badge": "Dedicated Educators",
+      "title": "Faculty & Educational Staff",
+      "subtitle": "Led by certified educators and postgraduate faculty with national and Cambridge teaching credentials."
     }
   },
   "faq": {
@@ -276,8 +276,8 @@
       "page_achievements_desc": "Manage student awards and medal gallery",
       "page_facilities": "Facilities Page",
       "page_facilities_desc": "Manage campus facilities and learning spaces",
-      "page_tim": "Faculty & Staff Page",
-      "page_tim_desc": "Manage directory of teachers and school leadership",
+      "page_team": "Faculty & Staff Page",
+      "page_team_desc": "Manage directory of teachers and school leadership",
       "page_pricing": "Fees & Scholarships Page",
       "page_pricing_desc": "Manage tuition fees and scholarship schemes",
       "page_alumni": "Alumni Page",
@@ -415,8 +415,8 @@
       "enable_facilities_hint": "Open or close public access to the campus facilities page.",
       "enable_pricing": "Enable Tuition & Admissions Page",
       "enable_pricing_hint": "Open or close public access to the tuition and admissions page.",
-      "enable_tim": "Enable Faculty & Staff Page",
-      "enable_tim_hint": "Open or close public access to the faculty and staff directory page.",
+      "enable_team": "Enable Faculty & Staff Page",
+      "enable_team_hint": "Open or close public access to the faculty and staff directory page.",
       "enable_achievement": "Enable Achievements Page",
       "enable_achievement_hint": "Open or close public access to the student achievements page.",
       "enable_career": "Enable Alumni & Career Center Page",
