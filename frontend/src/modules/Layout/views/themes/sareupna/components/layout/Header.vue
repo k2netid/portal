@@ -40,8 +40,12 @@
               <span class="text-base md:text-lg font-heading font-black tracking-tight uppercase text-foreground leading-none">
                 {{ siteName }}
               </span>
-              <span class="text-[8px] font-mono tracking-[0.28em] uppercase text-foreground/50 mt-1 hidden sm:block">
-                {{ officialLine2 }}
+              <span
+                v-if="siteTagline"
+                class="text-[8px] font-mono tracking-[0.28em] uppercase text-foreground/50 mt-1 hidden sm:block truncate max-w-[280px]"
+                :title="siteTagline"
+              >
+                {{ siteTagline }}
               </span>
             </div>
           </template>
@@ -206,9 +210,17 @@
         class="fixed inset-0 z-[999] bg-background/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto"
       >
         <div class="flex items-center justify-between pb-6 border-b border-border/40">
-          <span class="text-lg font-heading font-black tracking-tight uppercase text-foreground">
-            {{ siteName }}
-          </span>
+          <div class="flex flex-col">
+            <span class="text-lg font-heading font-black tracking-tight uppercase text-foreground leading-none">
+              {{ siteName }}
+            </span>
+            <span
+              v-if="siteTagline"
+              class="text-[8px] font-mono tracking-[0.22em] uppercase text-foreground/50 mt-1.5 truncate max-w-[240px]"
+            >
+              {{ siteTagline }}
+            </span>
+          </div>
           <button
             type="button"
             class="p-2 text-foreground/70 hover:text-foreground"
@@ -327,10 +339,19 @@ const handleSelectLanguage = async (code: string) => {
   await setLanguage(code);
 };
 
-const siteName = computed(() => (getSetting('site_title') as string) || 'Jejakawan');
+const siteName = computed(() => (getSetting('site_title') as string) || (getSetting('site_name') as string) || 'Jejakawan');
 const siteLogo = computed(() => (getSetting('brand_logo') as string) || '');
 const brandingDisplay = computed(() => (getSetting('branding_display', 'logo_and_text') as string));
-const officialLine2 = computed(() => localizedString('header_official_line2') || t('header.officialLine2'));
+const siteTagline = computed(() => {
+  return (
+    localizedString('header_official_line2') ||
+    localizedString('site_tagline') ||
+    (getSetting('site_tagline') as string) ||
+    t('header.officialLine2') ||
+    ''
+  );
+});
+const officialLine2 = siteTagline;
 
 const isDesktop = computed(() => device.value === 'desktop');
 
