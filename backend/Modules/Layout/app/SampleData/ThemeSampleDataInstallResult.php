@@ -18,8 +18,7 @@ final class ThemeSampleDataInstallResult
         public readonly int $settingsApplied = 0,
         public readonly array $messages = [],
         public readonly array $warnings = [],
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>

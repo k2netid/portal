@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-020: Standarisasi Hirarki Role RBAC, Pengamanan Rute Backend (Defense-in-Depth), dan Primitives UI Komprehensif
 
 **Status:** Accepted / Implemented  

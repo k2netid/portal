@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-022: Kurasi Codebase Upstream, Pemisahan Seeder Deployment Klien, dan Arsitektur Generic Theme Demo Seeders
 
 **Status:** Accepted  

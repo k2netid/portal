@@ -435,6 +435,30 @@
       "all": "Sadaya Tipe",
       "email": "Email",
       "frontend": "Frontend"
+    },
+    "threeLevels": {
+      "title": "Alur Tayang Téma",
+      "level1": "1. Katalog Paket",
+      "level1Active": "{count} Paket Aktip",
+      "level2": "2. Téma Dilayanan",
+      "level2Active": "Aktip: {name}",
+      "level3": "3. Apex / Situs",
+      "level3SiteActive": "Paket Site Aktip",
+      "level3SiteInactive": "Landing Modular"
+    },
+    "quota": {
+      "title": "Kuota Lisénsi Téma",
+      "freeBaseline": "Free Baseline",
+      "proIncluded": "Kaasup PRO",
+      "proRequired": "Peryogi Lisénsi PRO",
+      "unlimited": "Taya Wates",
+      "communityNote": "Tingkat Community ngalayanan téma baseline Janari. Ningkatkeun ka PRO pikeun ngaktipkeun téma premium.",
+      "remainingSlots": "{count} slot premium nyésa",
+      "noSlots": "0 slot nyésa"
+    },
+    "packStatus": {
+      "enabled": "Paket Aktip",
+      "disabled": "Paket Nonaktip"
     }
   },
   "frontend": {

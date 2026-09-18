@@ -1,6 +1,9 @@
 # Theme & customizer naming conventions
 
-Applies to **`ja-control-plane`** (single hub). Not for `ja-organization` (per-customer Jejakawan — separate repo later).
+**L0 Source of Truth** untuk naming & scope customizer di Core Engine.  
+Explanation lintas-modul: [`docs/architecture/04-theme-system.md`](../../../../../docs/architecture/04-theme-system.md) · indeks tema: [`docs/themes/README.md`](../../../../../docs/themes/README.md).
+
+Applies to the Jejakawan hub / core console host. Not for `ja-organization` (per-customer Jejakawan — separate repo later).
 
 ## Mental model
 

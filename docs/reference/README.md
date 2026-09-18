@@ -1,6 +1,3 @@
-> **Source of Truth:** `ja-core_engine/docs/reference/` — mirrored copy. Do not edit here.
-> Re-sync: `bash /home/jejakawan/dev/ja-core_engine/scripts/sync-docs-guides-reference-downstream.sh`
-
 # Reference
 
 Indeks **kontrak & katalog** (Diátaxis: Reference).  

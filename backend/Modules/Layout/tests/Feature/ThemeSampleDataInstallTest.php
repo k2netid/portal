@@ -50,14 +50,13 @@ class ThemeSampleDataInstallTest extends TestCase
 
         $headerUrls = $headerMenu->items()->pluck('url')->all();
         $this->assertContains('/pricing/isp', $headerUrls);
-        $this->assertContains('/solusi', $headerUrls);
         $this->assertContains('/achievement', $headerUrls);
         $this->assertContains('/pricing/msp', $headerUrls);
 
         $layanan = $headerMenu->items()->where('url', '/services')->whereNull('parent_id')->first();
         $this->assertNotNull($layanan);
         $childUrls = $headerMenu->items()->where('parent_id', $layanan->id)->pluck('url')->all();
-        $this->assertSame(['/pricing/isp', '/solusi', '/achievement'], array_values($childUrls));
+        $this->assertSame(['/pricing/isp', '/pricing/msp', '/achievement'], array_values($childUrls));
 
         $theme->refresh();
         $this->assertSame((string) $headerMenu->id, $theme->settings['menu_location_header'] ?? null);

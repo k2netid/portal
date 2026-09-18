@@ -7,9 +7,11 @@ namespace Modules\Layout\Database\Seeders\Themes;
 use Illuminate\Database\Seeder;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
+use Modules\Layout\Services\ThemeCacheService;
 use Modules\Layout\Services\ThemeService;
 use Modules\Library\Models\Category;
 use Modules\Publishing\Models\Content;
@@ -19,6 +21,20 @@ class SarangengeThemeDemoSeeder extends Seeder
     public function run(): void
     {
         $this->command?->info('Seeding Sarangenge Theme (Generic Vocational School / Pusat Keunggulan Portal)...');
+
+        // Guard: skip if current license tier does not allow premium themes (ADR-023 §2.8)
+        if (class_exists(LicenseService::class)) {
+            /** @var LicenseService $license */
+            $license = app(LicenseService::class);
+            $quota = $license->getThemeQuota($license->getLicenseTier());
+            if ($quota['max_premium_active'] === 0) {
+                $this->command?->warn(
+                    'Skipping Sarangenge demo seed — current license tier does not allow premium themes (max_premium_active=0).'
+                );
+
+                return;
+            }
+        }
 
         // 1. Scan and activate Sarangenge
         $themeService = app(ThemeService::class);
@@ -31,20 +47,31 @@ class SarangengeThemeDemoSeeder extends Seeder
             Setting::set('theme_active', 'sarangenge', 'string', 'layout');
         }
 
-        // 2. Generic Platform Identity for Vocational School
-        Setting::set('site_name', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
-        Setting::set('site_title', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
-        Setting::set('site_tagline', 'Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan', 'string', 'general');
-        Setting::set('site_description', 'Portal resmi sekolah menengah kejuruan pusat keunggulan: pendidikan vokasi berstandar industri dengan program keahlian unggulan, fasilitas modern, dan kemitraan DUDI.', 'string', 'general');
-        Setting::set('contact_email', 'info@smk-nusantara.sch.id', 'string', 'general');
-        Setting::set('admin_email', 'admin@smk-nusantara.sch.id', 'string', 'general');
+        $force = (bool) config('layout.theme_seed_force', false);
+
+        // 2. Generic Platform Identity for Vocational School (Non-destructive: only sets if missing)
+        if ($force) {
+            Setting::set('site_name', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
+            Setting::set('site_title', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
+            Setting::set('site_tagline', 'Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan', 'string', 'general');
+            Setting::set('site_description', 'Portal resmi sekolah menengah kejuruan pusat keunggulan: pendidikan vokasi berstandar industri dengan program keahlian unggulan, fasilitas modern, dan kemitraan DUDI.', 'string', 'general');
+            Setting::set('contact_email', 'info@smk-nusantara.sch.id', 'string', 'general');
+            Setting::set('admin_email', 'admin@smk-nusantara.sch.id', 'string', 'general');
+        } else {
+            Setting::setIfMissing('site_name', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
+            Setting::setIfMissing('site_title', 'SMK Pusat Keunggulan Nusantara', 'string', 'general');
+            Setting::setIfMissing('site_tagline', 'Maju Mandiri Berkarakter — Sekolah Menengah Kejuruan Pusat Keunggulan', 'string', 'general');
+            Setting::setIfMissing('site_description', 'Portal resmi sekolah menengah kejuruan pusat keunggulan: pendidikan vokasi berstandar industri dengan program keahlian unggulan, fasilitas modern, dan kemitraan DUDI.', 'string', 'general');
+            Setting::setIfMissing('contact_email', 'info@smk-nusantara.sch.id', 'string', 'general');
+            Setting::setIfMissing('admin_email', 'admin@smk-nusantara.sch.id', 'string', 'general');
+        }
 
         // 3. Install bundle sample data (menus, pages, settings)
         if ($sarangenge) {
             try {
                 $orchestrator = app(ThemeSampleDataOrchestrator::class);
                 $options = new ThemeSampleDataInstallOptions(
-                    force: true,
+                    force: $force,
                     menus: true,
                     settings: true,
                     pages: true,
@@ -162,9 +189,9 @@ class SarangengeThemeDemoSeeder extends Seeder
             }
         }
 
-        if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
+        if (class_exists(ThemeCacheService::class)) {
             try {
-                app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+                app(ThemeCacheService::class)->clearAll();
             } catch (\Throwable $e) {
                 // Ignore cache clear error
             }

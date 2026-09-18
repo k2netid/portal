@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-017: Workspace Tampilan Konsol Dual-Mode (Easy vs Advanced) dan Komponen Slider
 
 **Status:** Accepted / Implemented  

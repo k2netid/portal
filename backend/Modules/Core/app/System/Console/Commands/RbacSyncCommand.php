@@ -66,6 +66,7 @@ class RbacSyncCommand extends Command
             $role = Role::query()->where('name', $roleName)->where('guard_name', 'web')->first();
             if (! $role) {
                 $this->error("Role [{$roleName}] not found.");
+
                 return self::FAILURE;
             }
 

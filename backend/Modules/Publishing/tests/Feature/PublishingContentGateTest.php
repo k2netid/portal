@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Publishing\Tests\Feature;
 
+use Modules\Library\Models\Category;
 use Modules\Publishing\Models\Content;
 use Tests\TestCase;
 
@@ -49,7 +50,7 @@ class PublishingContentGateTest extends TestCase
         $this->activatePack('publishing');
         $admin = $this->createAdminUser();
 
-        $category = \Modules\Library\Models\Category::create([
+        $category = Category::create([
             'name' => 'Prestasi Siswa',
             'slug' => 'prestasi-siswa',
             'is_active' => true,

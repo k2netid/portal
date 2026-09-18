@@ -79,12 +79,6 @@ parameters:
 			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
 
 		-
-			message: '#^Method Modules\\Core\\System\\Http\\Controllers\\Console\\ExtensionController\:\:resolveActivationTargets\(\) should return list\<string\> but returns array\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: Modules/Core/app/System/Http/Controllers/Console/ExtensionController.php
-
-		-
 			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
@@ -393,7 +387,7 @@ parameters:
 		-
 			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
 			identifier: class.notFound
-			count: 4
+			count: 3
 			path: Modules/Layout/app/Services/ThemeService.php
 
 		-
@@ -401,18 +395,6 @@ parameters:
 			identifier: property.notFound
 			count: 1
 			path: Modules/Member/app/Http/Controllers/Api/BookmarkController.php
-
-		-
-			message: '#^Cannot cast mixed to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: Modules/Member/app/Http/Controllers/Api/MemberDirectoryController.php
-
-		-
-			message: '#^Cannot cast mixed to string\.$#'
-			identifier: cast.string
-			count: 1
-			path: Modules/Member/app/Services/MemberEmailVerification.php
 
 		-
 			message: '#^Parameter \#1 \$meta of method Modules\\Publishing\\Support\\BuilderDocumentValidator\:\:validate\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'

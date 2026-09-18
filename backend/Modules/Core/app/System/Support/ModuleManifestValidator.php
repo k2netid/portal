@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Core\System\Support;
 
+use App\Support\ProductVersion;
+
 /**
  * Lightweight first-party manifest checks aligned with
  * docs/extensions/module-manifest.schema.json (no Composer JSON Schema runtime dep).
@@ -22,6 +24,11 @@ final class ModuleManifestValidator
             if (! isset($manifest[$field]) || ! is_string($manifest[$field]) || $manifest[$field] === '') {
                 $errors[] = "Missing or invalid string field: {$field}";
             }
+        }
+
+        if (isset($manifest['version']) && is_string($manifest['version']) && $manifest['version'] !== ''
+            && ! ProductVersion::isSemVer($manifest['version'])) {
+            $errors[] = 'version must be SemVer (e.g. 1.0.0 or 1.0.0-beta.1)';
         }
 
         if (isset($manifest['slug']) && is_string($manifest['slug'])

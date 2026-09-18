@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Modules\Core\System\Http\Controllers\BaseApiController;
+use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\RedisSetting;
 use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Models\User;
 use Modules\Core\System\Services\LicenseService;
+use Modules\Layout\Models\Theme;
+use Modules\Layout\Services\ThemeService;
 
 class SettingController extends BaseApiController
 {
@@ -414,16 +417,16 @@ class SettingController extends BaseApiController
             return;
         }
 
-        if (! \Modules\Core\System\Models\Extension::isProductActive('layout')) {
+        if (! Extension::isProductActive('layout')) {
             return;
         }
 
         try {
-            if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+            if (! class_exists(Theme::class)) {
                 return;
             }
 
-            $activeTheme = \Modules\Layout\Models\Theme::getActiveTheme('frontend');
+            $activeTheme = Theme::getActiveTheme('frontend');
             if (! $activeTheme) {
                 return;
             }
@@ -442,8 +445,8 @@ class SettingController extends BaseApiController
             $activeTheme->settings = $settings;
             $activeTheme->save();
 
-            if (class_exists(\Modules\Layout\Services\ThemeService::class) && app()->bound(\Modules\Layout\Services\ThemeService::class)) {
-                app(\Modules\Layout\Services\ThemeService::class)->clearThemeCache($activeTheme);
+            if (class_exists(ThemeService::class) && app()->bound(ThemeService::class)) {
+                app(ThemeService::class)->clearThemeCache($activeTheme);
             }
         } catch (\Throwable $e) {
             Log::warning('Failed to sync '.$key.' to active theme settings: '.$e->getMessage());

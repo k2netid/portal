@@ -435,6 +435,30 @@
       "all": "All Types",
       "email": "Email",
       "frontend": "Frontend"
+    },
+    "threeLevels": {
+      "title": "Theme Serving Pipeline",
+      "level1": "1. Pack Catalog",
+      "level1Active": "{count} Packs Enabled",
+      "level2": "2. Served Theme",
+      "level2Active": "Active: {name}",
+      "level3": "3. Apex / Website",
+      "level3SiteActive": "Site Pack Active",
+      "level3SiteInactive": "Modular Landing"
+    },
+    "quota": {
+      "title": "Theme Quota",
+      "freeBaseline": "Free Baseline",
+      "proIncluded": "PRO Included",
+      "proRequired": "PRO Required",
+      "unlimited": "Unlimited",
+      "communityNote": "Community tier serves Janari baseline theme. Upgrade to PRO to activate premium themes.",
+      "remainingSlots": "{count} premium slot(s) available",
+      "noSlots": "0 slots available"
+    },
+    "packStatus": {
+      "enabled": "Pack Enabled",
+      "disabled": "Pack Inactive"
     }
   },
   "frontend": {

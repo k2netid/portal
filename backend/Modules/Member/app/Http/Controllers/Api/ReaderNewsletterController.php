@@ -7,8 +7,8 @@ namespace Modules\Member\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Helpers\IpHelper;
+use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
 use Modules\Newsletter\Models\NewsletterSubscriber;
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Member\Tests\Feature;
 
-use Modules\Core\Security\Models\SecurityLog;
 use Modules\Core\System\Models\Setting;
 use Modules\Member\Models\Member;
 use Modules\Member\Tests\Concerns\SoftensPasswordPolicyForTests;

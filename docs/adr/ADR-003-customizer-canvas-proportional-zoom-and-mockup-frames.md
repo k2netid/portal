@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-02
+supersedes: []
+---
+
 # ADR-003: Proportional Canvas Zoom Scaling, Viewport Device Mockup Frames, & Compact Responsive Toolbars
 
 **Status:** Accepted  

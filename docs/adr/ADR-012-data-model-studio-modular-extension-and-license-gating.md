@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-06
+supersedes: []
+---
+
 # ADR-012: Modularisasi Data Model Studio Menjadi Ekstensi Pluggable Berlisensi Komersial (PRO/Enterprise)
 
 **Status:** Accepted  

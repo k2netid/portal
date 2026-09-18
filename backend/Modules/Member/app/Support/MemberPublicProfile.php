@@ -50,8 +50,10 @@ final class MemberPublicProfile
     /**
      * @return array<string, mixed>
      */
-    public static function profileValidationRules(Member $member): array
+    public static function profileValidationRules(?Member $member = null): array
     {
+        unset($member); // reserved for future unique rules; kept optional for Scramble static analysis
+
         return [
             'name' => 'required|string|max:255',
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],
@@ -69,7 +71,7 @@ final class MemberPublicProfile
     public static function profileFillAttributes(array $validated): array
     {
         $out = [
-            'name' => trim((string) $validated['name']),
+            'name' => trim(is_scalar($validated['name']) ? (string) $validated['name'] : ''),
         ];
 
         foreach (['phone', 'avatar', 'bio', 'locale', 'timezone'] as $key) {
@@ -79,6 +81,7 @@ final class MemberPublicProfile
             $value = $validated[$key];
             if ($value === null || (is_string($value) && trim($value) === '')) {
                 $out[$key] = null;
+
                 continue;
             }
             $out[$key] = is_string($value) ? trim($value) : $value;

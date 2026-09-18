@@ -125,7 +125,7 @@ class ExtensionLifecycleOrchestrator
         }
 
         $instance = app($class);
-        if (method_exists($instance, 'run')) {
+        if (is_object($instance) && method_exists($instance, 'run')) {
             $instance->run();
         }
     }

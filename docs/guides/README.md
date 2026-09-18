@@ -1,6 +1,3 @@
-> **Source of Truth:** `ja-core_engine/docs/guides/` — mirrored copy. Do not edit here.
-> Re-sync: `bash /home/jejakawan/dev/ja-core_engine/scripts/sync-docs-guides-reference-downstream.sh`
-
 # Guides (How-to)
 
 Prosedur singkat untuk tugas umum di **ja-core_engine**.  

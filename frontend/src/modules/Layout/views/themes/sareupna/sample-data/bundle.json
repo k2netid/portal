@@ -1,299 +1,299 @@
 {
-  "version": 1,
-  "settings": {
-    "site_title": "PT Jejak Awan Digital",
-    "site_tagline": "High-Performance Cloud & Developer Platform",
-    "site_description": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
-    "branding_display": "text_only",
-    "theme_style": "obsidian",
-    "color_primary": "#8b5cf6",
-    "color_secondary": "#06b6d4",
-    "color_accent": "#3b82f6",
-    "font_heading": "Plus Jakarta Sans",
-    "font_body": "Plus Jakarta Sans",
-    "font_mono": "JetBrains Mono",
-    "breadcrumb_sticky": false,
-    "header_sticky": true,
-    "layout_style": "fullwidth",
-    "home_sections": [
-      "hero",
-      "bento",
-      "terminal",
-      "products",
-      "specs",
-      "cta"
-    ],
-    "home_scroll_mode": "default",
-    "home_side_nav_dots": true,
-    "home_side_nav_style": "glass",
-    "container_max_width": 1280,
-    "boxed_bg_color": "#07090e",
-    "boxed_shadow": "glow",
-    "framed_padding": 16,
-    "header_style": "glass",
-    "header_cta_text": "Mulai Sekarang",
-    "header_cta_url": "/contact",
-    "nav_style": "pill",
-    "button_radius": "lg",
-    "button_border_width": 1,
-    "button_shadow": "glow",
-    "platform_sla_guarantee": "99.99% Uptime SLA",
-    "platform_cluster_region": "ID-JKT01 (Equinix JK1) & SG01",
-    "platform_core_latency": "< 15ms Core Edge",
-    "platform_support_tier": "24/7/365 Dedicated SRE",
-    "platform_cli_command": "$ ja cloud:deploy --prod",
-    "platform_contact_email": "halo@jejakawan.com",
-    "platform_contact_phone": "+62 811-2345-6789",
-    "platform_contact_whatsapp": "6281123456789",
-    "platform_address": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
-    "hero_badge_text": "$ ja cloud:deploy --prod",
-    "hero_badge_text_id": "$ ja cloud:deploy --prod",
-    "hero_badge_text_en": "$ ja cloud:deploy --prod",
-    "hero_badge_text_su": "$ ja cloud:deploy --prod",
-    "hero_title": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
-    "hero_title_id": "ARSITEKTUR CLOUD & ENGINE GENERASI BARU",
-    "hero_title_en": "NEXT-GENERATION CLOUD ENGINE & PLATFORM",
-    "hero_title_su": "ARSITÉKTUR CLOUD & ENGINE GENERASI ENGGAL",
-    "hero_subtitle": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
-    "hero_subtitle_id": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
-    "hero_subtitle_en": "Distributed cloud platform, high-performance content engine, and modern developer ecosystem unified into a single runtime.",
-    "hero_subtitle_su": "Platform cloud terdistribusi, engine kontén kinerja luhur, sareng ékosistem pamekar modérn dina hiji platform.",
-    "hero_primary_cta_text": "Eksplorasi Solusi",
-    "hero_primary_cta_text_id": "Eksplorasi Solusi",
-    "hero_primary_cta_text_en": "Explore Solutions",
-    "hero_primary_cta_text_su": "Kotéktak Solusi",
-    "hero_primary_cta_link": "/solutions",
-    "hero_secondary_cta_text": "Lihat Paket",
-    "hero_secondary_cta_text_id": "Lihat Paket",
-    "hero_secondary_cta_text_en": "View Pricing",
-    "hero_secondary_cta_text_su": "Tingali Paket",
-    "hero_secondary_cta_link": "/pricing",
-    "hero_stat_1_val": "99.99%",
-    "hero_stat_1_label": "Uptime SLA",
-    "hero_stat_2_val": "< 15ms",
-    "hero_stat_2_label": "Core Latency",
-    "hero_stat_3_val": "100%",
-    "hero_stat_3_label": "API Driven",
-    "hero_stat_4_val": "24/7",
-    "hero_stat_4_label": "Dedicated Support",
-    "hero_bg_type": "preset",
-    "hero_bg_preset": "cyber_mesh",
-    "hero_bg_overlay_opacity": 60,
-    "bento_badge": "KAPABILITAS PLATFORM",
-    "bento_title": "Dibangun untuk Skala & Performa Ekstrem",
-    "bento_subtitle": "Kombinasi modular engine, cloud-native architecture, dan keamanan tingkat enterprise.",
-    "terminal_badge": "INTERAKTIF CLI",
-    "terminal_title": "Pengalaman Developer Tanpa Hambatan",
-    "terminal_subtitle": "Kelola layanan, deploy modul, dan pantau metrik langsung dari baris perintah Anda.",
-    "terminal_default_tab": "cli",
-    "products_badge": "PRODUK & MODUL",
-    "products_title": "Solusi End-to-End untuk Pertumbuhan Digital",
-    "products_subtitle": "Rangkaian produk teruji untuk mempercepat transformasi teknologi organisasi Anda.",
-    "products_view_all_text": "Jelajahi Ekosistem",
-    "products_view_all_url": "/solutions",
-    "specs_title": "Keandalan Infrastruktur Tingkat Enterprise",
-    "specs_subtitle": "Arsitektur cloud dengan jaminan ketersediaan tinggi, latensi ultra rendah, dan perlindungan multi-region.",
-    "enable_solutions": true,
-    "enable_pricing": true,
-    "enable_blog": true,
-    "enable_about": true,
-    "enable_contact": true,
-    "disabled_page_behavior": "message",
-    "disabled_page_message": "Layanan ini sedang dalam peningkatan performa berkala.",
-    "enable_floating_social": true,
-    "floating_social_position": "right",
-    "floating_social_orientation": "auto",
-    "floating_social_style": "glass",
-    "floating_social_default_collapsed": false,
-    "floating_social_show_on_mobile": false,
-    "social_links": [
-      {
-        "icon": "Github",
-        "label": "GitHub",
-        "url": "https://github.com/jejakawan"
-      },
-      {
-        "icon": "Linkedin",
-        "label": "LinkedIn",
-        "url": "https://linkedin.com/company/jejakawan"
-      },
-      {
-        "icon": "MessageCircle",
-        "label": "WhatsApp Hotline",
-        "url": "https://wa.me/6281234567890"
-      },
-      {
-        "icon": "Mail",
-        "label": "Email Enterprise",
-        "url": "mailto:halo@jejakawan.com"
-      }
-    ],
-    "animation_enabled": true,
-    "animation_intensity": "subtle",
-    "parallax_enabled": true,
-    "footer_about_text": "PT Jejak Awan Digital — Inovator cloud computing, content infrastructure, dan solusi enterprise terdepan di Indonesia.",
-    "footer_text": "PT Jejak Awan Digital",
-    "footer_copyright": "Hak cipta dilindungi undang-undang.",
-    "back_to_top": true,
-    "footer_col_1_title": "Platform & Cloud",
-    "footer_col_2_title": "Ekosistem Pengembang",
-    "footer_col_3_title": "Perusahaan",
-    "contact_form_slug": "contact"
-  },
-  "menus": {
-    "header": {
-      "name": "Header Nav Sareupna",
-      "items": [
-        {
-          "title": "Beranda",
-          "title_en": "Beranda",
-          "url": "/",
-          "type": "custom",
-          "sort_order": 0
+    "version": 1,
+    "settings": {
+        "site_title": "Sareupna Platform",
+        "site_tagline": "High-Performance Cloud & Developer Platform",
+        "site_description": "Platform cloud terdistribusi, engine konten berperforma tinggi, dan ekosistem pengembang modern dalam satu platform terpadu.",
+        "branding_display": "text_only",
+        "theme_style": "obsidian",
+        "color_primary": "#8b5cf6",
+        "color_secondary": "#06b6d4",
+        "color_accent": "#3b82f6",
+        "font_heading": "Plus Jakarta Sans",
+        "font_body": "Plus Jakarta Sans",
+        "font_mono": "JetBrains Mono",
+        "breadcrumb_sticky": false,
+        "header_sticky": true,
+        "layout_style": "fullwidth",
+        "home_sections": [
+            "hero",
+            "bento",
+            "terminal",
+            "products",
+            "specs",
+            "cta"
+        ],
+        "home_scroll_mode": "default",
+        "home_side_nav_dots": true,
+        "home_side_nav_style": "glass",
+        "container_max_width": 1280,
+        "boxed_bg_color": "#07090e",
+        "boxed_shadow": "glow",
+        "framed_padding": 16,
+        "header_style": "glass",
+        "header_cta_text": "Mulai Sekarang",
+        "header_cta_url": "/contact",
+        "nav_style": "pill",
+        "button_radius": "lg",
+        "button_border_width": 1,
+        "button_shadow": "glow",
+        "platform_sla_guarantee": "99.99% Uptime SLA",
+        "platform_cluster_region": "ID-JKT01 (Equinix JK1) & SG01",
+        "platform_core_latency": "< 15ms Core Edge",
+        "platform_support_tier": "24/7/365 Dedicated SRE",
+        "platform_cli_command": "$ ja cloud:deploy --prod",
+        "platform_contact_email": "halo@example.com",
+        "platform_contact_phone": "+62 811-2345-6789",
+        "platform_contact_whatsapp": "6281123456789",
+        "platform_address": "Bandung & Jakarta, Indonesia",
+        "hero_badge_text": "$ ja cloud:deploy --prod",
+        "hero_badge_text_id": "$ ja cloud:deploy --prod",
+        "hero_badge_text_en": "$ ja cloud:deploy --prod",
+        "hero_badge_text_su": "$ ja cloud:deploy --prod",
+        "hero_title": "MEMBANGUN SOLUSI, MENINGGALKAN JEJAK",
+        "hero_title_id": "MEMBANGUN SOLUSI, MENINGGALKAN JEJAK",
+        "hero_title_en": "BUILDING SOLUTIONS, LEAVING FOOTPRINTS",
+        "hero_title_su": "NGABANGUN SOLUSI, NINGGALKEUN TAPAK",
+        "hero_subtitle": "Platform cloud terdistribusi dan ekosistem pengembang modern. Arsitektur high-performance untuk aplikasi enterprise skala besar.",
+        "hero_subtitle_id": "Platform cloud terdistribusi dan ekosistem pengembang modern. Arsitektur high-performance untuk aplikasi enterprise skala besar.",
+        "hero_subtitle_en": "Distributed cloud platform and modern developer ecosystem. High-performance architecture for large-scale enterprise applications.",
+        "hero_subtitle_su": "Platform cloud terdistribusi jeung ekosistem pamekar modern. Arsitektur high-performance keur aplikasi enterprise skala badag.",
+        "hero_primary_cta_text": "Eksplorasi Solusi",
+        "hero_primary_cta_text_id": "Eksplorasi Solusi",
+        "hero_primary_cta_text_en": "Explore Solutions",
+        "hero_primary_cta_text_su": "Kotéktak Solusi",
+        "hero_primary_cta_link": "/solutions",
+        "hero_secondary_cta_text": "Lihat Paket",
+        "hero_secondary_cta_text_id": "Lihat Paket",
+        "hero_secondary_cta_text_en": "View Pricing",
+        "hero_secondary_cta_text_su": "Tingali Paket",
+        "hero_secondary_cta_link": "/pricing",
+        "hero_stat_1_val": "99.99%",
+        "hero_stat_1_label": "Uptime SLA",
+        "hero_stat_2_val": "< 15ms",
+        "hero_stat_2_label": "Core Latency",
+        "hero_stat_3_val": "100%",
+        "hero_stat_3_label": "API Driven",
+        "hero_stat_4_val": "24/7",
+        "hero_stat_4_label": "Dedicated Support",
+        "hero_bg_type": "preset",
+        "hero_bg_preset": "cyber_mesh",
+        "hero_bg_overlay_opacity": 60,
+        "bento_badge": "KAPABILITAS PLATFORM",
+        "bento_title": "Dibangun untuk Skala & Performa Ekstrem",
+        "bento_subtitle": "Kombinasi modular engine, cloud-native architecture, dan keamanan tingkat enterprise.",
+        "terminal_badge": "INTERAKTIF CLI",
+        "terminal_title": "Pengalaman Developer Tanpa Hambatan",
+        "terminal_subtitle": "Kelola layanan, deploy modul, dan pantau metrik langsung dari baris perintah Anda.",
+        "terminal_default_tab": "cli",
+        "products_badge": "PRODUK & MODUL",
+        "products_title": "Solusi End-to-End untuk Pertumbuhan Digital",
+        "products_subtitle": "Rangkaian produk teruji untuk mempercepat transformasi teknologi organisasi Anda.",
+        "products_view_all_text": "Jelajahi Ekosistem",
+        "products_view_all_url": "/solutions",
+        "specs_title": "Keandalan Infrastruktur Tingkat Enterprise",
+        "specs_subtitle": "Arsitektur cloud dengan jaminan ketersediaan tinggi, latensi ultra rendah, dan perlindungan multi-region.",
+        "enable_solutions": true,
+        "enable_pricing": true,
+        "enable_blog": true,
+        "enable_about": true,
+        "enable_contact": true,
+        "disabled_page_behavior": "message",
+        "disabled_page_message": "Layanan ini sedang dalam peningkatan performa berkala.",
+        "enable_floating_social": true,
+        "floating_social_position": "right",
+        "floating_social_orientation": "auto",
+        "floating_social_style": "glass",
+        "floating_social_default_collapsed": false,
+        "floating_social_show_on_mobile": false,
+        "social_links": [
+            {
+                "icon": "Github",
+                "label": "GitHub",
+                "url": "https://github.com/example"
+            },
+            {
+                "icon": "Linkedin",
+                "label": "LinkedIn",
+                "url": "https://linkedin.com/company/example"
+            },
+            {
+                "icon": "MessageCircle",
+                "label": "WhatsApp",
+                "url": "https://wa.me/6281234567890"
+            },
+            {
+                "icon": "Mail",
+                "label": "Email",
+                "url": "mailto:halo@example.com"
+            }
+        ],
+        "animation_enabled": true,
+        "animation_intensity": "subtle",
+        "parallax_enabled": true,
+        "footer_about_text": "Sareupna — high-performance cloud & developer platform theme untuk Jejakawan CMS. Membangun ekosistem digital yang berdampak.",
+        "footer_text": "Sareupna Platform",
+        "footer_copyright": "Hak cipta dilindungi undang-undang.",
+        "back_to_top": true,
+        "footer_col_1_title": "Platform & Cloud",
+        "footer_col_2_title": "Ekosistem Pengembang",
+        "footer_col_3_title": "Perusahaan",
+        "contact_form_slug": "contact"
+    },
+    "menus": {
+        "header": {
+            "name": "Header Nav Sareupna",
+            "items": [
+                {
+                    "title": "Beranda",
+                    "title_en": "Beranda",
+                    "url": "/",
+                    "type": "custom",
+                    "sort_order": 0
+                },
+                {
+                    "title": "Tentang",
+                    "title_en": "Tentang",
+                    "url": "/about",
+                    "type": "custom",
+                    "sort_order": 1
+                },
+                {
+                    "title": "Solusi Cloud",
+                    "title_en": "Solusi Cloud",
+                    "url": "/solutions",
+                    "type": "custom",
+                    "sort_order": 2
+                },
+                {
+                    "title": "Paket & Harga",
+                    "title_en": "Paket & Harga",
+                    "url": "/pricing",
+                    "type": "custom",
+                    "sort_order": 3
+                },
+                {
+                    "title": "Wawasan",
+                    "title_en": "Wawasan",
+                    "url": "/blog",
+                    "type": "custom",
+                    "sort_order": 4
+                },
+                {
+                    "title": "Hubungi Kami",
+                    "title_en": "Hubungi Kami",
+                    "url": "/contact",
+                    "type": "custom",
+                    "sort_order": 5
+                }
+            ]
         },
-        {
-          "title": "Tentang",
-          "title_en": "Tentang",
-          "url": "/about",
-          "type": "custom",
-          "sort_order": 1
-        },
-        {
-          "title": "Solusi Cloud",
-          "title_en": "Solusi Cloud",
-          "url": "/solutions",
-          "type": "custom",
-          "sort_order": 2
-        },
-        {
-          "title": "Paket & Harga",
-          "title_en": "Paket & Harga",
-          "url": "/pricing",
-          "type": "custom",
-          "sort_order": 3
-        },
-        {
-          "title": "Wawasan",
-          "title_en": "Wawasan",
-          "url": "/blog",
-          "type": "custom",
-          "sort_order": 4
-        },
-        {
-          "title": "Hubungi Kami",
-          "title_en": "Hubungi Kami",
-          "url": "/contact",
-          "type": "custom",
-          "sort_order": 5
+        "footer": {
+            "name": "Footer Nav Sareupna",
+            "items": [
+                {
+                    "title": "Solusi Cloud",
+                    "title_en": "Solusi Cloud",
+                    "url": "/solutions",
+                    "type": "custom",
+                    "sort_order": 0
+                },
+                {
+                    "title": "Paket & Harga",
+                    "title_en": "Paket & Harga",
+                    "url": "/pricing",
+                    "type": "custom",
+                    "sort_order": 1
+                },
+                {
+                    "title": "Wawasan",
+                    "title_en": "Wawasan",
+                    "url": "/blog",
+                    "type": "custom",
+                    "sort_order": 2
+                },
+                {
+                    "title": "Kontak",
+                    "title_en": "Kontak",
+                    "url": "/contact",
+                    "type": "custom",
+                    "sort_order": 3
+                }
+            ]
         }
-      ]
     },
-    "footer": {
-      "name": "Footer Nav Sareupna",
-      "items": [
+    "pages": [
         {
-          "title": "Solusi Cloud",
-          "title_en": "Solusi Cloud",
-          "url": "/solutions",
-          "type": "custom",
-          "sort_order": 0
+            "slug": "home",
+            "title": "Beranda",
+            "title_en": "Home",
+            "theme_page": "pages/Home",
+            "status": "published",
+            "excerpt": "Landing Sareupna — cloud & developer platform.",
+            "body": "<p>Beranda memakai template tema <strong>Sareupna</strong> (terminal showcase, bento, platform specs).</p>",
+            "body_en": "<p>Home uses the <strong>Sareupna</strong> theme template (terminal showcase, bento, platform specs).</p>"
         },
         {
-          "title": "Paket & Harga",
-          "title_en": "Paket & Harga",
-          "url": "/pricing",
-          "type": "custom",
-          "sort_order": 1
+            "slug": "about",
+            "title": "Tentang Platform",
+            "title_en": "About Platform",
+            "theme_page": "pages/About",
+            "status": "published",
+            "excerpt": "Visi dan identitas operator platform cloud.",
+            "body": "<p>Halaman tentang Sareupna — kontrak CMS About sendiri, bukan fallback Janari.</p>",
+            "body_en": "<p>About Sareupna — own CMS About page, not a Janari fallback.</p>"
         },
         {
-          "title": "Wawasan",
-          "title_en": "Wawasan",
-          "url": "/blog",
-          "type": "custom",
-          "sort_order": 2
+            "slug": "solusi",
+            "title": "Solusi Cloud",
+            "title_en": "Cloud Solutions",
+            "theme_page": "pages/Solutions",
+            "status": "published",
+            "excerpt": "Arsitektur dan solusi skalabilitas platform.",
+            "body": "<p>Solusi cloud dan rekayasa infrastruktur terdistribusi.</p>",
+            "body_en": "<p>Cloud solutions and distributed infrastructure engineering.</p>"
         },
         {
-          "title": "Kontak",
-          "title_en": "Kontak",
-          "url": "/contact",
-          "type": "custom",
-          "sort_order": 3
+            "slug": "pricing",
+            "title": "Paket & Harga",
+            "title_en": "Pricing",
+            "theme_page": "pages/Pricing",
+            "status": "published",
+            "excerpt": "Paket platform dan lisensi modular.",
+            "body": "<p>Paket &amp; harga untuk platform cloud.</p>",
+            "body_en": "<p>Packages and pricing for the cloud platform.</p>"
+        },
+        {
+            "slug": "contact",
+            "title": "Hubungi Kami",
+            "title_en": "Contact",
+            "theme_page": "pages/Contact",
+            "status": "published",
+            "excerpt": "Konsultasi arsitektur cloud dan implementasi.",
+            "body": "<p>Formulir Reach memakai <code>contact_form_slug</code>.</p>",
+            "body_en": "<p>Reach form uses <code>contact_form_slug</code>.</p>"
         }
-      ]
-    }
-  },
-  "pages": [
-    {
-      "slug": "home",
-      "title": "Beranda",
-      "title_en": "Home",
-      "theme_page": "pages/Home",
-      "status": "published",
-      "excerpt": "Landing Sareupna — cloud & developer platform.",
-      "body": "<p>Beranda memakai template tema <strong>Sareupna</strong> (terminal showcase, bento, platform specs).</p>",
-      "body_en": "<p>Home uses the <strong>Sareupna</strong> theme template (terminal showcase, bento, platform specs).</p>"
-    },
-    {
-      "slug": "about",
-      "title": "Tentang Platform",
-      "title_en": "About Platform",
-      "theme_page": "pages/About",
-      "status": "published",
-      "excerpt": "Visi dan identitas operator platform cloud.",
-      "body": "<p>Halaman tentang Sareupna — kontrak CMS About sendiri, bukan fallback Janari.</p>",
-      "body_en": "<p>About Sareupna — own CMS About page, not a Janari fallback.</p>"
-    },
-    {
-      "slug": "solusi",
-      "title": "Solusi Cloud",
-      "title_en": "Cloud Solutions",
-      "theme_page": "pages/Solutions",
-      "status": "published",
-      "excerpt": "Arsitektur dan solusi skalabilitas platform.",
-      "body": "<p>Solusi cloud dan rekayasa infrastruktur terdistribusi.</p>",
-      "body_en": "<p>Cloud solutions and distributed infrastructure engineering.</p>"
-    },
-    {
-      "slug": "pricing",
-      "title": "Paket & Harga",
-      "title_en": "Pricing",
-      "theme_page": "pages/Pricing",
-      "status": "published",
-      "excerpt": "Paket platform dan lisensi modular.",
-      "body": "<p>Paket & harga untuk control plane Jejakawan.</p>",
-      "body_en": "<p>Packages and pricing for the Jejakawan control plane.</p>"
-    },
-    {
-      "slug": "contact",
-      "title": "Hubungi Kami",
-      "title_en": "Contact",
-      "theme_page": "pages/Contact",
-      "status": "published",
-      "excerpt": "Konsultasi arsitektur cloud dan implementasi.",
-      "body": "<p>Formulir Reach memakai <code>contact_form_slug</code>.</p>",
-      "body_en": "<p>Reach form uses <code>contact_form_slug</code>.</p>"
-    }
-  ],
-  "posts": [
-    {
-      "slug": "sareupna-sample-control-plane",
-      "title": "Control plane modular untuk tim produk cloud",
-      "title_en": "Modular control plane for cloud product teams",
-      "status": "published",
-      "excerpt": "Sample wawasan Sareupna — arsitektur host vs tema.",
-      "excerpt_en": "Sareupna sample insight — host vs theme architecture.",
-      "body": "<p>Artikel demo agar Blog Sareupna terisi konten publishing nyata.</p>",
-      "body_en": "<p>Demo article so Sareupna Blog shows real publishing content.</p>"
-    },
-    {
-      "slug": "sareupna-sample-reach-forms",
-      "title": "Reach forms: slug kontak yang bisa dikustomisasi",
-      "title_en": "Reach forms: customizable contact slug",
-      "status": "published",
-      "excerpt": "Kontrak CMS Contact memakai contact_form_slug.",
-      "excerpt_en": "CMS Contact contract uses contact_form_slug.",
-      "body": "<p>Jangan hardcode <code>/public/forms/contact/submit</code> di tema.</p>",
-      "body_en": "<p>Do not hardcode <code>/public/forms/contact/submit</code> in themes.</p>"
-    }
-  ]
+    ],
+    "posts": [
+        {
+            "slug": "sareupna-sample-control-plane",
+            "title": "Control plane modular untuk tim produk cloud",
+            "title_en": "Modular control plane for cloud product teams",
+            "status": "published",
+            "excerpt": "Sample wawasan Sareupna — arsitektur host vs tema.",
+            "excerpt_en": "Sareupna sample insight — host vs theme architecture.",
+            "body": "<p>Artikel demo agar Blog Sareupna terisi konten publishing nyata.</p>",
+            "body_en": "<p>Demo article so Sareupna Blog shows real publishing content.</p>"
+        },
+        {
+            "slug": "sareupna-sample-reach-forms",
+            "title": "Reach forms: slug kontak yang bisa dikustomisasi",
+            "title_en": "Reach forms: customizable contact slug",
+            "status": "published",
+            "excerpt": "Kontrak CMS Contact memakai contact_form_slug.",
+            "excerpt_en": "CMS Contact contract uses contact_form_slug.",
+            "body": "<p>Jangan hardcode <code>/public/forms/contact/submit</code> di tema.</p>",
+            "body_en": "<p>Do not hardcode <code>/public/forms/contact/submit</code> in themes.</p>"
+        }
+    ]
 }

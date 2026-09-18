@@ -205,14 +205,14 @@ class FoundationSeeder extends Seeder
 
     protected function seedSettings(): void
     {
-        $appName = (string) config('app.name', 'Jejakawan');
+        $appName = is_scalar(config('app.name')) ? (string) config('app.name') : 'Jejakawan';
         $superEmailRaw = config('app.super_admin_email');
         $superEmail = is_scalar($superEmailRaw) && (string) $superEmailRaw !== '' ? (string) $superEmailRaw : 'super@jejakawan.com';
-        $appUrl = (string) config('app.url', 'http://localhost');
+        $appUrl = is_scalar(config('app.url')) ? (string) config('app.url') : 'http://localhost';
 
         // APP_NAME is the developer/engine brand (Jejakawan); site_name is the site owner identity.
         // These are intentionally separate: app_name is protected by White Label licensing.
-        $siteName = (string) env('SITE_NAME', $appName);
+        $siteName = is_scalar(env('SITE_NAME', $appName)) ? (string) env('SITE_NAME', $appName) : $appName;
 
         $settings = [
             // System Settings
@@ -245,7 +245,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
 
             // Contact & Social
-            ['key' => 'contact_email', 'value' => (string) config('mail.from.address', 'hello@example.com'), 'group' => 'general', 'type' => 'string'],
+            ['key' => 'contact_email', 'value' => is_scalar(config('mail.from.address')) ? (string) config('mail.from.address') : 'hello@example.com', 'group' => 'general', 'type' => 'string'],
             ['key' => 'contact_phone', 'value' => '', 'group' => 'general', 'type' => 'string'],
             ['key' => 'contact_address', 'value' => '', 'group' => 'general', 'type' => 'string'],
             ['key' => 'social_twitter', 'value' => '', 'group' => 'general', 'type' => 'string'],
@@ -323,7 +323,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'mail_username', 'value' => '', 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_password', 'value' => '', 'group' => 'email', 'type' => 'password'],
             ['key' => 'mail_encryption', 'value' => 'tls', 'group' => 'email', 'type' => 'string'],
-            ['key' => 'mail_from_address', 'value' => (string) config('mail.from.address', 'noreply@example.com'), 'group' => 'email', 'type' => 'string'],
+            ['key' => 'mail_from_address', 'value' => is_scalar(config('mail.from.address')) ? (string) config('mail.from.address') : 'noreply@example.com', 'group' => 'email', 'type' => 'string'],
             ['key' => 'mail_from_name', 'value' => $appName, 'group' => 'email', 'type' => 'string'],
 
             // Monitoring Settings

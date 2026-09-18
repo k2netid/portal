@@ -14,13 +14,17 @@ This repo is the **headless kernel + unified admin console**, not `ja-cms` and n
 - **Downstream apps** (CMS, portals, SaaS) = **separate forks**, not long-lived branches here.
 
 ## Read first
-1. [docs/AGENT_START_HERE.md](../../docs/AGENT_START_HERE.md)
-2. [docs/architectural-status.md](../../docs/architectural-status.md)
-3. [AGENTS.md](../../AGENTS.md)
+1. [docs/WORKFLOW.md](../../docs/WORKFLOW.md) — audit → plan → implement → verify → record
+2. [docs/AGENT_START_HERE.md](../../docs/AGENT_START_HERE.md)
+3. [docs/architectural-status.md](../../docs/architectural-status.md)
+4. [AGENTS.md](../../AGENTS.md)
+
+Task M+: create/update brief under [docs/work/](../../docs/work/README.md) from [docs/templates/task-brief.md](../../docs/templates/task-brief.md).
 
 ## Do / don't
 - Do not call this product `ja-cms` / `JA-CMS` in new user-facing copy.
 - Do not re-add Content/Layout/Publishing/themes to `main` unless explicitly building a downstream product line.
+- Do not mark work `done` without verify evidence and task brief § Hasil (scale M+).
 - Prefer minimal diffs; run `npm run agent:verify` (or CI gates) before calling work done.
 - Never commit secrets / `.env`.
 - Keep per-module `README.md` + `CHANGELOG.md` updated (see `.cursor/rules/module-documentation.mdc`).

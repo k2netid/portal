@@ -9,6 +9,7 @@
 1. [`docs/branching.md`](docs/branching.md) — Matriks multi-repo & sinkronisasi upstream core.
 2. [`/home/jejakawan/dev/docs/handoff/k2net-portal-agent.md`](../docs/handoff/k2net-portal-agent.md) — Handoff spesifik K2NET.
 3. [`/home/jejakawan/dev/docs/runbooks/k2net-portal.md`](../docs/runbooks/k2net-portal.md) — Runbook staging & production K2NET.
+4. [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — Urutan kerja: audit → diskusi → rencana → implement → verify → catat.
 
 ---
 
@@ -57,3 +58,5 @@ php artisan rbac:sync
 # 3. Validasi seeder K2NET
 php artisan db:seed --class=K2netDeploymentSeeder
 ```
+
+How-to: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · Testing: [`docs/reference/testing.md`](docs/reference/testing.md) · E2E: [`docs/guides/run-e2e-playwright.md`](docs/guides/run-e2e-playwright.md) · CLI: [`docs/reference/cli-commands.md`](docs/reference/cli-commands.md) · Changelog: [`docs/guides/update-changelog.md`](docs/guides/update-changelog.md) · Versioning: [`docs/guides/release-and-versioning.md`](docs/guides/release-and-versioning.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md).

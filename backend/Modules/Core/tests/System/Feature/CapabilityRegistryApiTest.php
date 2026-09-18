@@ -7,7 +7,6 @@ namespace Modules\Core\System\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Core\System\Models\Role;
 use Modules\Core\System\Models\User;
-use Modules\Core\System\Services\CapabilityRegistryService;
 use Tests\TestCase;
 
 class CapabilityRegistryApiTest extends TestCase

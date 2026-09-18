@@ -37,6 +37,8 @@ Console always stays at `/auth/console-sign-in` and `/dash` — never the defaul
 
 Applicator steps: **discover** → **preview gates** → **activate** missing → **deactivate** extras → theme baseline (when applicable).
 
+Theme baseline (cms / cms_site only): scan themes → **enable `theme-janari` pack** in `sys_extensions` → `ensureDefaultFrontendTheme`. Child theme packs (layung, sarangenge, sareupna) are **not** auto-enabled. See [ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md).
+
 ## Operator without code
 
 - App Store shows a contextual banner when **Site is off** (“Enable public website” → `cms_site`) or when CMS packs are fully inactive

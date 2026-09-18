@@ -4,7 +4,6 @@ namespace Modules\Core\System\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -122,6 +121,16 @@ class Setting extends Model
         );
     }
 
+    public static function setIfMissing(string $key, mixed $value, string $type = 'string', string $group = 'general'): self
+    {
+        $existing = static::where('key', $key)->first();
+        if ($existing !== null && $existing->value !== null && $existing->value !== '') {
+            return $existing;
+        }
+
+        return static::set($key, $value, $type, $group);
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -147,13 +156,14 @@ class Setting extends Model
     {
         if ($key !== null) {
             Cache::forget("sys_setting_{$key}");
+
             return;
         }
 
         try {
             $keys = static::query()->pluck('key');
             foreach ($keys as $k) {
-                Cache::forget("sys_setting_{$k}");
+                Cache::forget('sys_setting_'.(is_scalar($k) ? (string) $k : ''));
             }
         } catch (\Throwable) {
             // silent fail

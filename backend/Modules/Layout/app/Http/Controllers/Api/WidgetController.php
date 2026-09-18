@@ -54,7 +54,7 @@ class WidgetController extends BaseApiController
             $settings['content'] = $validated['content'];
         }
 
-        $location = !empty($validated['location']) ? trim($validated['location']) : 'sidebar';
+        $location = ! empty($validated['location']) ? trim($validated['location']) : 'sidebar';
 
         $widget = Widget::create([
             'name' => $name,
@@ -95,7 +95,7 @@ class WidgetController extends BaseApiController
             $payload['type'] = $validated['type'];
         }
         if (array_key_exists('location', $validated)) {
-            $payload['location'] = !empty($validated['location']) ? trim($validated['location']) : 'sidebar';
+            $payload['location'] = ! empty($validated['location']) ? trim($validated['location']) : 'sidebar';
         }
         if (isset($validated['sort_order'])) {
             $payload['sort_order'] = $validated['sort_order'];

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-019: Tata Kelola Verifikasi Email Pengguna Baru dan Proteksi Otorisasi Pembuatan Akun
 
 **Status:** Accepted / Implemented  

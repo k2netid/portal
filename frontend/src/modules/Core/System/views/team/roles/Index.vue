@@ -1087,7 +1087,7 @@ const confirmResetDefaults = async () => {
         const response = await api.post(`/manage/system/roles/${activeRole.value.id}/reset-defaults`);
         const updatedRole = response.data?.data || response.data;
         if (updatedRole?.permissions) {
-            form.value.permissions = updatedRole.permissions.map((p: any) => p.name);
+            form.value.permissions = updatedRole.permissions.map((p: { name: string }) => p.name);
             if (initialData.value) {
                 initialData.value.permissions = [...form.value.permissions];
             }

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-07
+supersedes: []
+---
+
 # ADR-015: Isolasi Favicon Prepaint Shell, Guard DOM Equality, dan Zero-Race Lifecycle
 
 **Status:** Accepted / Implemented  

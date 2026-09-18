@@ -1,7 +1,7 @@
 {
   "name": "Publishing",
   "slug": "publishing",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Console content publishing \u2014 articles, pages, revisions, comments, and SEO tools. Depends on Library.",
   "author": "Jejakawan Team",
   "type": "module",

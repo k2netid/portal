@@ -82,6 +82,27 @@ class ExtensionBootstrapService
             $discovered[$slug] = $meta;
         }
 
+        // Discover first-party theme packs from backend/theme-packs/ (ADR-023).
+        foreach (ExtensionPaths::discoverThemePackDirectories() as $dir) {
+            $manifestFile = $dir.'/manifest.json';
+            if (! File::exists($manifestFile)) {
+                continue;
+            }
+            $manifest = $this->decodeJson(File::get($manifestFile));
+            if ($manifest === null) {
+                continue;
+            }
+            $slug = $manifest['slug'] ?? null;
+            if (! is_string($slug) || $slug === '') {
+                continue;
+            }
+            $meta = $this->extractMeta($manifest, $slug, defaultType: 'theme');
+            $meta['is_core'] = false;
+            $meta['theme_slug'] = is_string($manifest['theme_slug'] ?? null) ? $manifest['theme_slug'] : null;
+            $meta['theme_flags'] = is_array($manifest['theme_flags'] ?? null) ? $manifest['theme_flags'] : [];
+            $discovered[$slug] = $meta;
+        }
+
         $count = 0;
         foreach ($discovered as $slug => $meta) {
             $existing = Extension::query()->where('slug', $slug)->first();
@@ -97,7 +118,7 @@ class ExtensionBootstrapService
                     'family' => $meta['family'],
                     'name' => $meta['name'],
                     'version' => $meta['version'],
-                    'database_version' => $existing?->database_version ?? '1.0.0',
+                    'database_version' => $existing !== null ? $existing->database_version : '1.0.0',
                     'status' => $status,
                     'is_core' => $isKernel,
                     'author' => $meta['author'],
@@ -112,6 +133,9 @@ class ExtensionBootstrapService
                         'permissions' => $meta['permissions'],
                         'member_area' => $meta['member_area'],
                         'lifecycle' => $meta['lifecycle'],
+                        // Theme-pack specific fields (ADR-023)
+                        'theme_slug' => $meta['theme_slug'] ?? null,
+                        'theme_flags' => $meta['theme_flags'] ?? null,
                     ], static fn ($v) => $v !== null && $v !== '' && $v !== []),
                     'settings' => array_filter([
                         'settings_route' => $meta['settings_route'],
@@ -159,10 +183,12 @@ class ExtensionBootstrapService
             $extension = Extension::query()->where('slug', $slug)->first();
             if ($extension === null) {
                 $errors[] = "Missing extension row: {$slug}";
+
                 continue;
             }
             if ($extension->status === 'active') {
                 $skipped[] = $slug;
+
                 continue;
             }
 
@@ -170,6 +196,7 @@ class ExtensionBootstrapService
                 $licenseBlock = $this->health->licenseBlocker($extension);
                 if ($licenseBlock !== null) {
                     $errors[] = $licenseBlock;
+
                     continue;
                 }
             }
@@ -182,6 +209,7 @@ class ExtensionBootstrapService
                     'version_conflicts' => [],
                     'cycle' => [],
                 ]);
+
                 continue;
             }
 
@@ -229,14 +257,17 @@ class ExtensionBootstrapService
             $extension = Extension::query()->where('slug', $slug)->first();
             if ($extension === null) {
                 $errors[] = "Missing extension row: {$slug}";
+
                 continue;
             }
             if ($extension->status !== 'active') {
                 $skipped[] = $slug;
+
                 continue;
             }
             if ($extension->is_core || $this->isKernelSlug($slug)) {
                 $errors[] = "Cannot deactivate kernel: {$slug}";
+
                 continue;
             }
 
@@ -331,7 +362,10 @@ class ExtensionBootstrapService
             return null;
         }
 
-        return is_array($decoded) ? $decoded : null;
+        /** @var array<string, mixed>|null $result */
+        $result = is_array($decoded) ? $decoded : null;
+
+        return $result;
     }
 
     /**
@@ -359,7 +393,7 @@ class ExtensionBootstrapService
     {
         $type = $defaultType;
         if (isset($manifest['type']) && is_string($manifest['type'])
-            && in_array($manifest['type'], ['module', 'plugin'], true)) {
+            && in_array($manifest['type'], ['module', 'plugin', 'theme'], true)) {
             $type = $manifest['type'];
         }
 
@@ -439,8 +473,11 @@ class ExtensionBootstrapService
             'suggests' => $suggests,
             'runtime_requires' => $runtimeRequires,
             'permissions' => array_values(array_unique($permissions)),
-            'member_area' => is_array($manifest['member_area'] ?? null) ? $manifest['member_area'] : null,
-            'lifecycle' => is_array($manifest['lifecycle'] ?? null) ? $manifest['lifecycle'] : null,
+            'member_area' => is_array($manifest['member_area'] ?? null) ? array_map(fn ($v) => $v, (array) $manifest['member_area']) : null,
+            'lifecycle' => is_array($manifest['lifecycle'] ?? null) ? array_map(fn ($v) => $v, (array) $manifest['lifecycle']) : null,
+            // Theme-pack specifics (populated by caller for theme default type)
+            'theme_slug' => null,
+            'theme_flags' => [],
         ];
     }
 }

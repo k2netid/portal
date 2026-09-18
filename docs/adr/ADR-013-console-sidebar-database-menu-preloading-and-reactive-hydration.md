@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-06
+supersedes: []
+---
+
 # ADR-013: Preload dan Hidrasi Reaktif Menu Konsol Database Saat Transisi Otentikasi
 
 **Status:** Accepted / Implemented  

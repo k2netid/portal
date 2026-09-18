@@ -4,9 +4,13 @@
       <!-- Card Header Info -->
       <div class="flex items-start justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div :class="['p-2.5 rounded-xl transition-colors', ext.type === 'module' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-emerald-500/10 text-emerald-400']">
+          <div :class="['p-2.5 rounded-xl transition-colors', ext.type === 'theme' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-300' : (ext.type === 'module' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-emerald-500/10 text-emerald-400')]">
+            <Palette
+              v-if="ext.type === 'theme'"
+              class="w-5 h-5"
+            />
             <Layers
-              v-if="ext.type === 'module'"
+              v-else-if="ext.type === 'module'"
               class="w-5 h-5"
             />
             <Puzzle
@@ -28,6 +32,13 @@
             {{ ext.status === 'active' ? t('system.appStore.card.statusActive') : t('system.appStore.card.statusInactive') }}
           </Badge>
           
+          <span
+            v-if="ext.is_served"
+            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30 shadow-sm shadow-purple-500/5"
+          >
+            {{ t('system.appStore.card.themeServedBadge') }}
+          </span>
+
           <span 
             v-if="getExtensionLicenseTier(ext) === 'free'"
             class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-500/10 text-slate-400 border border-slate-500/20"
@@ -161,9 +172,9 @@
 
     <!-- Card Footer Actions -->
     <CardFooter class="px-6 py-4 bg-muted/20 border-t border-border/30 flex items-center justify-between gap-2">
-      <div>
+      <div class="flex items-center gap-2">
         <Button
-          v-if="ext.status === 'active'"
+          v-if="ext.status === 'active' && ext.type !== 'theme'"
           variant="secondary"
           size="sm"
           class="flex items-center gap-1.5 hover:bg-secondary/80"
@@ -172,12 +183,22 @@
           <Settings class="w-3.5 h-3.5" />
           {{ t('system.appStore.configure') }}
         </Button>
+        <Button
+          v-if="ext.type === 'theme' && ext.is_served"
+          variant="secondary"
+          size="sm"
+          class="flex items-center gap-1.5 hover:bg-secondary/80 bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:bg-purple-500/20 border border-purple-500/20"
+          @click="$emit('open-customizer', ext)"
+        >
+          <Palette class="w-3.5 h-3.5" />
+          {{ t('system.appStore.openCustomizer') }}
+        </Button>
       </div>
 
       <div class="flex items-center gap-2">
         <!-- Uninstall Inactive Non-Core -->
         <Button
-          v-if="ext.status === 'inactive' && !ext.is_core && ext.can_uninstall !== false"
+          v-if="ext.status === 'inactive' && !ext.is_core && ext.can_uninstall !== false && ext.slug !== 'theme-janari'"
           variant="destructive"
           size="sm"
           class="px-2 hover:bg-destructive/90"
@@ -189,7 +210,7 @@
 
         <!-- Activate / Deactivate Toggle -->
         <Button
-          v-if="!ext.is_core"
+          v-if="!ext.is_core && ext.slug !== 'theme-janari'"
           :variant="ext.status === 'active' ? 'destructive' : 'secondary'"
           size="sm"
           class="flex items-center gap-1.5 font-semibold text-xs border-0"
@@ -201,6 +222,7 @@
         <span
           v-else
           class="text-xs text-muted-foreground/80 font-semibold uppercase tracking-wider"
+          :title="ext.slug === 'theme-janari' ? t('system.appStore.baselineThemeLocked') : undefined"
         >
           {{ t('system.appStore.locked') }}
         </span>
@@ -221,6 +243,7 @@ import {
   ChevronDown,
   ChevronUp,
   Layers,
+  Palette,
   Power,
   Puzzle,
   Settings,
@@ -240,11 +263,13 @@ interface FeatureItem {
 interface ExtensionItem {
   id: string;
   slug: string;
-  type: 'module' | 'plugin';
+  type: 'module' | 'plugin' | 'theme';
+  family?: string;
   name: string;
   version: string;
   status: 'active' | 'inactive';
   is_core: boolean;
+  is_served?: boolean;
   can_uninstall?: boolean;
   author?: string;
   description?: string;
@@ -263,6 +288,7 @@ defineEmits<{
   (e: 'toggle-status', ext: ExtensionItem): void;
   (e: 'configure', ext: ExtensionItem): void;
   (e: 'uninstall', slug: string): void;
+  (e: 'open-customizer', ext: ExtensionItem): void;
 }>();
 
 const isExpanded = ref(false);
@@ -300,6 +326,7 @@ const getExtensionLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus
     core: 'free',
     system: 'free',
     search: 'free',
+    'theme-janari': 'free',
     mail: 'pro',
     media: 'pro',
     publishing: 'pro',
@@ -307,6 +334,9 @@ const getExtensionLicenseTier = (ext: ExtensionItem): 'free' | 'pro' | 'pro_plus
     forms: 'pro',
     newsletter: 'pro',
     library: 'pro',
+    'theme-layung': 'pro',
+    'theme-sarangenge': 'pro',
+    'theme-sareupna': 'pro',
     security: 'pro_plus',
     infra: 'pro_plus',
     ai: 'pro_plus',

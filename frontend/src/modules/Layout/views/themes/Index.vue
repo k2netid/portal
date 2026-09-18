@@ -61,6 +61,80 @@
       </template>
     </PageHeader>
 
+    <!-- 3-Level Theme Pipeline & Quota Status Header -->
+    <div class="rounded-xl border border-border/80 bg-card p-4 sm:p-5 space-y-4 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/40 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 rounded-lg bg-primary/10 text-primary">
+            <Palette class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-sm font-semibold text-foreground flex items-center gap-2 flex-wrap">
+              {{ t('layout.themes.threeLevels.title') }}
+              <Badge variant="outline" class="text-xs font-medium">
+                {{ quotaBadgeLabel }}
+              </Badge>
+            </h2>
+            <p class="text-xs text-muted-foreground mt-0.5">
+              {{ quotaNote }}
+            </p>
+          </div>
+        </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          class="shrink-0 gap-1.5"
+          @click="router.push('/dash/settings/extensions')"
+        >
+          <Package class="w-4 h-4" />
+          {{ t('system.appStore.title') }}
+        </Button>
+      </div>
+
+      <!-- 3-Level Pipeline Indicators -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <!-- Level 1: Pack Catalog -->
+        <div class="rounded-lg border border-border/60 bg-muted/30 p-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{{ t('layout.themes.threeLevels.level1') }}</span>
+            <Badge variant="outline" class="text-[10px] font-mono">
+              {{ t('layout.themes.threeLevels.level1Active', { count: activePackCount }) }}
+            </Badge>
+          </div>
+          <p class="text-xs text-muted-foreground mt-2">
+            {{ activePackCount }} of {{ themes.length }} theme packs enabled in System Extensions.
+          </p>
+        </div>
+
+        <!-- Level 2: Served Theme -->
+        <div class="rounded-lg border border-primary/30 bg-primary/5 p-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">{{ t('layout.themes.threeLevels.level2') }}</span>
+            <Badge variant="default" class="text-[10px]">
+              {{ activeTheme ? t('layout.themes.threeLevels.level2Active', { name: activeTheme.name }) : 'None' }}
+            </Badge>
+          </div>
+          <p class="text-xs text-muted-foreground mt-2">
+            Single theme currently rendering styles and Vue templates.
+          </p>
+        </div>
+
+        <!-- Level 3: Apex / Website -->
+        <div class="rounded-lg border border-border/60 bg-muted/30 p-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{{ t('layout.themes.threeLevels.level3') }}</span>
+            <Badge :variant="siteActive ? 'success' : 'secondary'" class="text-[10px]">
+              {{ siteActive ? t('layout.themes.threeLevels.level3SiteActive') : t('layout.themes.threeLevels.level3SiteInactive') }}
+            </Badge>
+          </div>
+          <p class="text-xs text-muted-foreground mt-2">
+            {{ siteActive ? 'Apex URL / serves theme frontend directly.' : 'Apex URL / serves kernel landing page.' }}
+          </p>
+        </div>
+      </div>
+    </div>
+
     <EmptyState
       v-if="themes.length === 0"
       :title="$t('layout.themes.list.empty')"
@@ -102,8 +176,8 @@
             <Image class="h-16 w-16" />
           </div>
                     
-          <!-- Status Badge -->
-          <div class="absolute top-2 right-2">
+          <!-- Status Badges Stack -->
+          <div class="absolute top-2 right-2 flex flex-col items-end gap-1">
             <Badge
               v-if="theme.is_active"
               variant="default"
@@ -117,6 +191,38 @@
               :variant="theme.status === 'broken' ? 'destructive' : (theme.status === 'pending' ? 'warning' : 'secondary')"
             >
               {{ $t('layout.themes.status.' + (theme.status || 'inactive')) }}
+            </Badge>
+
+            <!-- Entitlement Badge -->
+            <Badge
+              v-if="theme.slug === 'janari'"
+              variant="outline"
+              class="bg-card/90 backdrop-blur-sm text-[10px] shadow-sm"
+            >
+              {{ $t('layout.themes.quota.freeBaseline') }}
+            </Badge>
+            <Badge
+              v-else-if="theme.is_premium && theme.is_entitled"
+              variant="outline"
+              class="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 text-[10px] shadow-sm"
+            >
+              {{ $t('layout.themes.quota.proIncluded') }}
+            </Badge>
+            <Badge
+              v-else-if="theme.is_premium && !theme.is_entitled"
+              variant="outline"
+              class="bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30 text-[10px] shadow-sm"
+            >
+              {{ $t('layout.themes.quota.proRequired') }}
+            </Badge>
+
+            <!-- Pack Inventory Badge -->
+            <Badge
+              v-if="theme.is_pack_enabled !== undefined"
+              :variant="theme.is_pack_enabled ? 'outline' : 'secondary'"
+              class="text-[9px] backdrop-blur-sm shadow-sm"
+            >
+              {{ theme.is_pack_enabled ? $t('layout.themes.packStatus.enabled') : $t('layout.themes.packStatus.disabled') }}
             </Badge>
           </div>
 
@@ -205,10 +311,13 @@
                   v-else
                   size="sm"
                   class="flex-1 h-10 inline-flex items-center gap-2"
+                  :disabled="theme.is_entitled === false || theme.is_pack_enabled === false"
+                  :title="theme.is_entitled === false ? $t('layout.themes.quota.proRequired') : (theme.is_pack_enabled === false ? $t('layout.themes.packStatus.disabled') : undefined)"
                   @click="activateTheme(theme)"
                 >
-                  <Check data-icon="inline-start" class="size-4 shrink-0" />
-                  {{ $t('layout.themes.actions.activate') }}
+                  <Lock v-if="theme.is_entitled === false" data-icon="inline-start" class="size-4 shrink-0" />
+                  <Check v-else data-icon="inline-start" class="size-4 shrink-0" />
+                  {{ theme.is_entitled === false ? $t('layout.themes.quota.proRequired') : $t('layout.themes.actions.activate') }}
                 </Button>
               </div>
             </div>
@@ -315,6 +424,8 @@ import {
   Download,
   Eye,
   Image,
+  Lock,
+  Package,
   Palette,
   X,
 } from 'lucide-vue-next';
@@ -347,9 +458,22 @@ interface Theme {
     preview_image?: string;
     source?: string;
     bundle_url?: string;
+    is_pack_enabled?: boolean;
+    is_entitled?: boolean;
+    is_premium?: boolean;
+}
+
+interface ThemeQuotaMeta {
+    tier: string;
+    tier_label: string;
+    max_premium_active: number | null;
+    remaining_slots: number | null;
+    is_unlimited: boolean;
 }
 
 const themes = ref<Theme[]>([]);
+const quotaMeta = ref<ThemeQuotaMeta | null>(null);
+const siteActive = ref<boolean>(false);
 const selectedType = ref('all');
 const scanning = ref(false);
 const installingSample = ref<string | null>(null);
@@ -369,12 +493,42 @@ const bumpPreviewRev = () => {
     previewRev.value = Date.now();
 };
 
+const activeTheme = computed(() => themes.value.find((t) => t.is_active) ?? null);
+const activePackCount = computed(() => themes.value.filter((t) => t.is_pack_enabled).length);
+
+const quotaBadgeLabel = computed(() => {
+    if (!quotaMeta.value) return 'Community';
+    if (quotaMeta.value.is_unlimited) {
+        return `${quotaMeta.value.tier_label}: ${t('layout.themes.quota.unlimited')}`;
+    }
+    if (quotaMeta.value.max_premium_active && quotaMeta.value.max_premium_active > 0) {
+        return `${quotaMeta.value.tier_label}: ${t('layout.themes.quota.remainingSlots', { count: quotaMeta.value.remaining_slots ?? 0 })}`;
+    }
+    return `${quotaMeta.value.tier_label}: ${t('layout.themes.quota.freeBaseline')}`;
+});
+
+const quotaNote = computed(() => {
+    if (quotaMeta.value?.tier === 'community' || quotaMeta.value?.tier === 'starter') {
+        return t('layout.themes.quota.communityNote');
+    }
+    if (quotaMeta.value?.is_unlimited) {
+        return 'All first-party and custom themes are available for activation without restriction.';
+    }
+    return `${quotaMeta.value?.tier_label ?? 'PRO'} includes 1 active premium theme slot with seamless swapping.`;
+});
+
 const fetchThemes = async () => {
     try {
         const params = selectedType.value ? { type: selectedType.value } : {};
         const response = await api.get('/manage/layout/themes', { params });
         const { data } = parseResponse(response);
         const rows = ensureArray(data) as Theme[];
+        if (response.data?.meta?.quota) {
+            quotaMeta.value = response.data.meta.quota;
+        }
+        if (response.data?.meta?.site_active !== undefined) {
+            siteActive.value = Boolean(response.data.meta.site_active);
+        }
         themes.value = rows.sort((a, b) => {
             if (a.is_active && !b.is_active) return -1;
             if (!a.is_active && b.is_active) return 1;

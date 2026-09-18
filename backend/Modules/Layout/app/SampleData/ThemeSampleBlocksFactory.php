@@ -573,7 +573,7 @@ final class ThemeSampleBlocksFactory
     /**
      * @return array<string, mixed>
      */
-    private function testimonialColumn(string $quote, string $name, string $title): array
+    protected function testimonialColumn(string $quote, string $name, string $title): array
     {
         return $this->column([
             $this->node('testimonial', [

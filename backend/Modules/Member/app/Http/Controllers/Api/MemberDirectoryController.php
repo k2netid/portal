@@ -6,6 +6,7 @@ namespace Modules\Member\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Modules\Core\Security\Models\SecurityLog;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Member\Models\Member;
@@ -53,7 +54,7 @@ class MemberDirectoryController extends BaseApiController
     {
         try {
             $validated = $request->validate(MemberDirectorySupport::adminStoreRules());
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
 
@@ -125,13 +126,14 @@ class MemberDirectoryController extends BaseApiController
 
     public function update(Request $request, string $member): JsonResponse
     {
-        $record = Member::withTrashed()->findOrFail($member);
-
+        // Validate using route id first (Scramble-safe); then load model.
         try {
-            $validated = $request->validate(MemberDirectorySupport::adminUpdateRules($record));
-        } catch (\Illuminate\Validation\ValidationException $e) {
+            $validated = $request->validate(MemberDirectorySupport::adminUpdateRules($member));
+        } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
+
+        $record = Member::withTrashed()->findOrFail($member);
 
         if ($validated === []) {
             return $this->validationError(['name' => ['No valid fields to update.']]);
@@ -155,6 +157,7 @@ class MemberDirectoryController extends BaseApiController
             $value = $validated[$key];
             if ($key === 'name') {
                 $record->name = trim((string) $value);
+
                 continue;
             }
             $record->{$key} = ($value === null || (is_string($value) && trim($value) === ''))
@@ -230,7 +233,7 @@ class MemberDirectoryController extends BaseApiController
                 'ids.*' => ['required', 'uuid'],
                 'action' => 'required|in:activate,deactivate,verify,delete,restore,force_delete',
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
 

@@ -121,7 +121,7 @@ class MemberTwoFactorController extends BaseApiController
 
         return $this->success([
             'enabled' => true,
-            'enabled_at' => $twoFactor->enabled_at?->toIso8601String(),
+            'enabled_at' => $twoFactor->enabled_at->toIso8601String(),
             'backup_codes_count' => $twoFactor->getRemainingBackupCodesCount(),
         ], 'Two-factor authentication enabled');
     }

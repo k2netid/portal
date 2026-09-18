@@ -30,6 +30,7 @@ use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Registries\DashboardRegistry;
 use Modules\Core\System\Registries\HookRegistry;
 use Modules\Core\System\Registries\LayoutRegistry;
+use Modules\Core\System\Services\CapabilityRegistryService;
 use Modules\Core\System\Services\EmailTemplateRenderer;
 use Modules\Core\System\Services\LoginThrottleService;
 use Modules\Core\System\Services\ModuleHealthProbe;
@@ -125,7 +126,7 @@ class SystemServiceProvider extends ServiceProvider
         $this->app->singleton(PasswordPolicyPortInterface::class, PasswordPolicyService::class);
         $this->app->singleton(LoginThrottlePortInterface::class, LoginThrottleService::class);
         $this->app->singleton(PermissionRegistry::class);
-        $this->app->singleton(\Modules\Core\System\Services\CapabilityRegistryService::class);
+        $this->app->singleton(CapabilityRegistryService::class);
         $this->app->singleton(ModuleHealthProbe::class);
         $this->app->singleton(DashboardRegistry::class);
         $this->app->singleton(\Modules\Core\System\Services\DashboardRegistry::class);

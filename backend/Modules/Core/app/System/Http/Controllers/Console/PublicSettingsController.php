@@ -4,6 +4,7 @@ namespace Modules\Core\System\Http\Controllers\Console;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\Setting;
@@ -25,7 +26,7 @@ class PublicSettingsController extends BaseApiController
             'enable_member_registration' => (bool) Setting::get('enable_member_registration', true),
             'require_email_verification' => (bool) Setting::get('require_email_verification', true),
             'enable_2fa' => (bool) Setting::get('enable_2fa', false),
-            'password_policy' => app(\Modules\Core\System\Contracts\PasswordPolicyPortInterface::class)->requirements(),
+            'password_policy' => app(PasswordPolicyPortInterface::class)->requirements(),
             'site_name' => Setting::get('site_name', 'Jejakawan'),
             'site_description' => Setting::get('site_description', ''),
             'site_url' => Setting::get('site_url', config('app.url')),
@@ -39,8 +40,8 @@ class PublicSettingsController extends BaseApiController
             'app_name' => $licenseService->hasWhiteLabel() ? Setting::get('app_name', 'Jejakawan') : 'Jejakawan',
             'app_logo' => $licenseService->hasWhiteLabel() ? (Setting::get('brand_logo') ?: Setting::get('app_logo') ?: '/logo.png') : '/logo.png',
             'app_favicon' => $licenseService->hasWhiteLabel() ? (Setting::get('brand_favicon') ?: Setting::get('app_favicon') ?: '/favicon.ico') : '/favicon.ico',
-            'brand_logo' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_logo', '') : '',
-            'brand_favicon' => $licenseService->hasWhiteLabel() ? (string) Setting::get('brand_favicon', '') : '',
+            'brand_logo' => $licenseService->hasWhiteLabel() ? (is_scalar($brandLogo = Setting::get('brand_logo', '')) ? (string) $brandLogo : '') : '',
+            'brand_favicon' => $licenseService->hasWhiteLabel() ? (is_scalar($brandFavicon = Setting::get('brand_favicon', '')) ? (string) $brandFavicon : '') : '',
             'brand_sync_site_identity' => (bool) Setting::get('brand_sync_site_identity', false),
             'branding_display' => Setting::get('branding_display', 'both'),
             'app_license_tier' => $licenseService->getLicenseTier(),

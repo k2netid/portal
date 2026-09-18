@@ -6,9 +6,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Models\User;
 use Modules\Layout\Database\Seeders\Themes\LayungThemeDemoSeeder;
+use Modules\Layout\Models\Menu;
+use Modules\Layout\Models\MenuItem;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Services\ThemeCacheService;
+use Modules\Library\Models\Category;
+use Modules\Library\Models\Tag;
+use Modules\Publishing\Models\Content;
 
 class K2netDeploymentSeeder extends Seeder
 {
@@ -72,7 +78,7 @@ class K2netDeploymentSeeder extends Seeder
         }
 
         // 4. Ensure K2NET Categories and categorize all posts and pages
-        $author = \Modules\Core\System\Models\User::query()->first();
+        $author = User::query()->first();
         if ($author) {
             $categories = [
                 // Post categories (matching Layung theme blog navigation)
@@ -137,7 +143,7 @@ class K2netDeploymentSeeder extends Seeder
 
             $catMap = [];
             foreach ($categories as $cat) {
-                $category = \Modules\Library\Models\Category::withTrashed()->where('slug', $cat['slug'])->first();
+                $category = Category::withTrashed()->where('slug', $cat['slug'])->first();
                 if ($category) {
                     $category->restore();
                     $category->update([
@@ -149,7 +155,7 @@ class K2netDeploymentSeeder extends Seeder
                         'author_id' => $author->id,
                     ]);
                 } else {
-                    $category = \Modules\Library\Models\Category::create([
+                    $category = Category::create([
                         'name' => $cat['name'],
                         'slug' => $cat['slug'],
                         'description' => $cat['description'],
@@ -180,15 +186,15 @@ class K2netDeploymentSeeder extends Seeder
 
             foreach ($postCategoryMapping as $postSlug => $catSlug) {
                 if (isset($catMap[$catSlug])) {
-                    \Modules\Publishing\Models\Content::where('slug', $postSlug)->update([
+                    Content::where('slug', $postSlug)->update([
                         'category_id' => $catMap[$catSlug],
                     ]);
                 }
             }
 
             // Clean up old solusi page shell and rename tim to team
-            \Modules\Publishing\Models\Content::where('slug', 'solusi')->delete();
-            \Modules\Publishing\Models\Content::where('slug', 'tim')->update(['slug' => 'team']);
+            Content::where('slug', 'solusi')->delete();
+            Content::where('slug', 'tim')->update(['slug' => 'team']);
 
             // Categorize Pages
             $pageCategoryMapping = [
@@ -207,21 +213,21 @@ class K2netDeploymentSeeder extends Seeder
 
             foreach ($pageCategoryMapping as $pageSlug => $catSlug) {
                 if (isset($catMap[$catSlug])) {
-                    \Modules\Publishing\Models\Content::where('slug', $pageSlug)->update([
+                    Content::where('slug', $pageSlug)->update([
                         'category_id' => $catMap[$catSlug],
                     ]);
                 }
             }
 
             // Remove unused generic demo categories
-            \Modules\Library\Models\Category::whereIn('slug', ['layanan-internet', 'managed-services'])->delete();
+            Category::whereIn('slug', ['layanan-internet', 'managed-services'])->delete();
 
             // Recalculate content_count for all categories
             foreach ($catMap as $catId) {
-                $count = \Modules\Publishing\Models\Content::where('category_id', $catId)
+                $count = Content::where('category_id', $catId)
                     ->whereNull('deleted_at')
                     ->count();
-                \Modules\Library\Models\Category::where('id', $catId)->update(['content_count' => $count]);
+                Category::where('id', $catId)->update(['content_count' => $count]);
             }
 
             // 5. Ensure K2NET Tags and tag all posts and pages
@@ -244,7 +250,7 @@ class K2netDeploymentSeeder extends Seeder
 
             $tagMap = [];
             foreach ($tags as $t) {
-                $tag = \Modules\Library\Models\Tag::withTrashed()->where('slug', $t['slug'])->first();
+                $tag = Tag::withTrashed()->where('slug', $t['slug'])->first();
                 if ($tag) {
                     $tag->restore();
                     $tag->update([
@@ -254,7 +260,7 @@ class K2netDeploymentSeeder extends Seeder
                         'author_id' => null,
                     ]);
                 } else {
-                    $tag = \Modules\Library\Models\Tag::create([
+                    $tag = Tag::create([
                         'name' => $t['name'],
                         'slug' => $t['slug'],
                         'description' => $t['description'],
@@ -292,7 +298,7 @@ class K2netDeploymentSeeder extends Seeder
             ];
 
             foreach ($contentTags as $contentSlug => $tagSlugs) {
-                $content = \Modules\Publishing\Models\Content::where('slug', $contentSlug)->first();
+                $content = Content::where('slug', $contentSlug)->first();
                 if ($content) {
                     $tagIds = [];
                     foreach ($tagSlugs as $ts) {
@@ -311,9 +317,9 @@ class K2netDeploymentSeeder extends Seeder
             }
 
             // 6. Ensure Navigation Links for Services (ISP & MSP) and Team
-            $headerMenus = \Modules\Layout\Models\Menu::where('location', 'header')->get();
+            $headerMenus = Menu::where('location', 'header')->get();
             foreach ($headerMenus as $hm) {
-                $serviceItem = \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                $serviceItem = MenuItem::where('menu_id', $hm->id)
                     ->whereNull('parent_id')
                     ->where(function ($q): void {
                         $q->where('title', 'ilike', '%Layanan%')
@@ -330,7 +336,7 @@ class K2netDeploymentSeeder extends Seeder
                     ]);
 
                     // Submenu Internet -> /services#isp
-                    \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                    MenuItem::where('menu_id', $hm->id)
                         ->where('parent_id', $serviceItem->id)
                         ->where(function ($q): void {
                             $q->where('title', 'ilike', '%Internet%')
@@ -340,13 +346,13 @@ class K2netDeploymentSeeder extends Seeder
                         ->update(['url' => '/services#isp']);
 
                     // Submenu Managed Services -> /services#msp
-                    \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                    MenuItem::where('menu_id', $hm->id)
                         ->where('parent_id', $serviceItem->id)
                         ->where('title', 'ilike', '%Managed Services%')
                         ->update(['url' => '/services#msp']);
 
                     // Remove SLA from Services dropdown
-                    \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                    MenuItem::where('menu_id', $hm->id)
                         ->where('parent_id', $serviceItem->id)
                         ->where(function ($q): void {
                             $q->where('title', 'ilike', '%SLA%')
@@ -356,7 +362,7 @@ class K2netDeploymentSeeder extends Seeder
                 }
 
                 // Ensure Team is in Header Menu
-                $teamItem = \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                $teamItem = MenuItem::where('menu_id', $hm->id)
                     ->whereNull('parent_id')
                     ->where(function ($q): void {
                         $q->where('title', 'ilike', '%Tim%')
@@ -374,7 +380,7 @@ class K2netDeploymentSeeder extends Seeder
                         'metadata' => array_merge($teamItem->metadata ?? [], ['title_en' => 'Team']),
                     ]);
                 } else {
-                    \Modules\Layout\Models\MenuItem::create([
+                    MenuItem::create([
                         'menu_id' => $hm->id,
                         'parent_id' => null,
                         'title' => 'Tim',
@@ -387,7 +393,7 @@ class K2netDeploymentSeeder extends Seeder
                 }
 
                 // Adjust Berita to sort_order 5 and Kontak to sort_order 6
-                \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                MenuItem::where('menu_id', $hm->id)
                     ->whereNull('parent_id')
                     ->where(function ($q): void {
                         $q->where('title', 'ilike', '%Berita%')
@@ -395,7 +401,7 @@ class K2netDeploymentSeeder extends Seeder
                     })
                     ->update(['sort_order' => 5]);
 
-                \Modules\Layout\Models\MenuItem::where('menu_id', $hm->id)
+                MenuItem::where('menu_id', $hm->id)
                     ->whereNull('parent_id')
                     ->where(function ($q): void {
                         $q->where('title', 'ilike', '%Kontak%')
@@ -405,8 +411,8 @@ class K2netDeploymentSeeder extends Seeder
             }
 
             // Update footer menus referencing old urls
-            \Modules\Layout\Models\MenuItem::where('url', 'like', '/solusi%')->update(['url' => '/services#msp']);
-            \Modules\Layout\Models\MenuItem::where('url', '/tim')->update(['url' => '/team']);
+            MenuItem::where('url', 'like', '/solusi%')->update(['url' => '/services#msp']);
+            MenuItem::where('url', '/tim')->update(['url' => '/team']);
         }
 
         $this->command?->info('K2NET deployment configuration, categorization & tags seeded successfully.');

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-02
+supersedes: []
+---
+
 # ADR-006: Master Layout Architecture, 5 Viewport Layout Modes, & Dynamic Homepage Section Toggle
 
 **Status:** Accepted  

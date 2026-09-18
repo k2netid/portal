@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Support;
 
 use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\LicenseService;
+use Modules\Layout\Models\Theme;
 
 final class SpaHtmlFavicon
 {
     public static function resolveHref(string $shell): string
     {
-        $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        $licenseService = app(LicenseService::class);
         $hasWhiteLabel = $licenseService->hasWhiteLabel();
 
         // Console and Landing shells: Strictly use App / Brand identity, NEVER site or theme identity
@@ -119,12 +121,12 @@ final class SpaHtmlFavicon
 
     private static function activeThemeBrandFavicon(): string
     {
-        if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+        if (! class_exists(Theme::class)) {
             return '';
         }
 
         try {
-            $theme = \Modules\Layout\Models\Theme::query()
+            $theme = Theme::query()
                 ->where('is_active', true)
                 ->where('type', 'frontend')
                 ->where('status', 'active')

@@ -35,10 +35,13 @@ class MemberMailer
         });
     }
 
+    /**
+     * @param  array<string, mixed>  $query
+     */
     public function frontendUrl(string $path, array $query = []): string
     {
         $base = config('app.frontend_url');
-        $root = is_string($base) && $base !== '' ? $base : (string) config('app.url');
+        $root = is_string($base) && $base !== '' ? $base : (is_string(config('app.url')) ? (string) config('app.url') : '');
         $root = rtrim($root, '/');
         if (str_ends_with($root, '/site')) {
             $root = rtrim(substr($root, 0, -strlen('/site')), '/');

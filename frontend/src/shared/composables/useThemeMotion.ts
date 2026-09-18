@@ -100,7 +100,7 @@ export function useThemeMotion() {
     const normalizedSelector = /^[>+~]/.test(childSelector.trim())
       ? `:scope ${childSelector.trim()}`
       : childSelector;
-    let children: Element[] = [];
+    let children: Element[];
     try {
       children = Array.from(container.querySelectorAll(normalizedSelector));
     } catch {
