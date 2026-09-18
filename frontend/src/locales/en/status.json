@@ -4,6 +4,7 @@
     "connected": "Connected",
     "disconnected": "Disconnected",
     "failed": "Failed",
+    "loading": "Loading",
     "not_configured": "Not Configured",
     "online": "Online",
     "success": "Success",
