@@ -25,6 +25,7 @@ const detectLocale = (): string => {
     return resolvePreferredLocale(availableCodes(), {
         stored: localStorage.getItem('locale'),
         fallback: config.locale,
+        detectBrowser: true,
     });
 };
 

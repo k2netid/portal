@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import i18n, { normalizeLocaleCode, setLocale as i18nSetLocale, getLocale as i18nGetLocale, loadLocaleMessages } from '@/engine/i18n';
 import api from '@/engine/api/client';
 import { parseResponse, ensureArray } from '@/shared/utils/responseParser';
+import { isPublicShell } from '@/config/shell';
 
 export interface Language {
     id?: number;
@@ -38,7 +39,7 @@ const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur', 'yi'];
  * Composable for language management
  * 
  * IMPORTANT: This composable syncs with Vue I18n (i18n.js).
- * Priority: Backend (if authenticated) → localStorage → Browser detect → Default
+ * Priority: Backend (if authenticated in Console) → localStorage → Browser detect → Default
  */
 export function useLanguage() {
     /**
@@ -79,10 +80,11 @@ export function useLanguage() {
     };
 
     /**
-     * Load locale preference from backend (if authenticated)
+     * Load locale preference from backend (if authenticated and inside Console shell)
+     * Public visitors must remain independent and client-scoped.
      */
     const loadFromBackend = async (): Promise<string | null> => {
-        if (!isAuthenticated()) return null;
+        if (isPublicShell() || !isAuthenticated()) return null;
 
         try {
             const response = await api.get('/manage/system/profile/preferences');
@@ -97,9 +99,10 @@ export function useLanguage() {
 
     /**
      * Sync locale with backend
+     * Only synchronized when within the Console shell; never from the public portal.
      */
     const syncLanguageWithBackend = async (locale: string) => {
-        if (!isAuthenticated()) return;
+        if (isPublicShell() || !isAuthenticated()) return;
 
         try {
             await api.put('/manage/system/profile/preferences', { locale });
@@ -109,9 +112,10 @@ export function useLanguage() {
     };
 
     /**
-     * Set current language with full persistence
+     * Set current language with full persistence.
+     * Public site changes stay strictly in localStorage and never overwrite backend profiles.
      */
-    const setLanguage = async (languageCode: string) => {
+    const setLanguage = async (languageCode: string, options?: { syncBackend?: boolean }) => {
         const resolved = normalizeLocaleCode(languageCode);
         // Ensure locale messages are loaded
         await loadLocaleMessages(resolved);
@@ -131,8 +135,15 @@ export function useLanguage() {
         // Update document attributes
         updateDocumentLanguage(resolved);
 
-        // Sync with backend
-        syncLanguageWithBackend(resolved);
+        // Dispatch language-changed event across window so theme components & public content update
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('language-changed', { detail: { code: resolved, language: currentLanguage.value } }));
+        }
+
+        // Sync with backend only if inside Console or explicitly requested
+        if (options?.syncBackend !== false && !isPublicShell()) {
+            syncLanguageWithBackend(resolved);
+        }
     };
 
     /**
@@ -177,7 +188,7 @@ export function useLanguage() {
         // Try to load from backend first (source of truth for logged-in users)
         const backendLocale = await loadFromBackend();
 
-        let currentLocale;
+        let currentLocale: string;
         if (backendLocale) {
             // Backend is source of truth - also update localStorage and Vue I18n
             currentLocale = backendLocale;
@@ -189,11 +200,20 @@ export function useLanguage() {
         }
 
         // Find matching language object
-        let language = languages.value.find(l => l.code === currentLocale);
+        let language = languages.value.find(l => normalizeLocaleCode(l.code) === normalizeLocaleCode(currentLocale));
 
         if (!language && languages.value.length > 0) {
-            // Locale not found in DB, but we still honor user preference
-            language = { code: currentLocale, name: currentLocale.toUpperCase() };
+            const hasStoredPreference = typeof localStorage !== 'undefined' && !!localStorage.getItem('locale');
+            const defaultLang = languages.value.find(l => l.is_default);
+            if (!hasStoredPreference && defaultLang) {
+                currentLocale = normalizeLocaleCode(defaultLang.code);
+                await loadLocaleMessages(currentLocale);
+                i18nSetLocale(currentLocale);
+                language = defaultLang;
+            } else {
+                // Locale not found in DB, but we still honor user preference
+                language = { code: currentLocale, name: currentLocale.toUpperCase() };
+            }
         }
 
         if (language) {
