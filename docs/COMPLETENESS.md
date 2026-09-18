@@ -17,7 +17,7 @@ Checklist fondasi docs (update saat menambah kuadran/lapisan baru).
 | Release / SemVer alignment | ✅ | `guides/release-and-versioning.md`, `npm run versions:check`, `npm run modules:versions:check` |
 | Core domain changelogs | ✅ | `Core/{System,Infra,Security}/CHANGELOG.md` (BE+FE) |
 | Link checker + CI | ✅ | `npm run docs:links`, CI `docs-links` (+ product & module version checks) |
-| Mirror downstream | ✅ | guides + reference + **architecture** + policy → k2net, smkn6, ja-cms |
+| Mirror downstream | ✅ | guides + reference + **architecture** + policy → k2net, smkn6, smkn1cijulang, ja-cms |
 | Ops/kredensial host | ✅ (terpisah) | `/home/jejakawan/dev/docs/` |
 
 ## Saat task docs berikutnya
