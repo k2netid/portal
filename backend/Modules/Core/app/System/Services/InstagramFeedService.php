@@ -50,19 +50,22 @@ class InstagramFeedService
 
             if ($response->successful()) {
                 $data = $response->json();
+                /** @var array<string, mixed> $data */
+                $data = is_array($data) ? $data : [];
 
                 return [
                     'success' => true,
                     'account' => [
-                        'id' => (string) ($data['id'] ?? ''),
-                        'username' => (string) ($data['username'] ?? $username),
-                        'account_type' => (string) ($data['account_type'] ?? 'CREATOR'),
-                        'media_count' => (int) ($data['media_count'] ?? 0),
+                        'id' => is_scalar($data['id'] ?? null) ? (string) ($data['id'] ?? '') : '',
+                        'username' => is_scalar($data['username'] ?? null) ? (string) ($data['username'] ?? $username) : $username,
+                        'account_type' => is_scalar($data['account_type'] ?? null) ? (string) ($data['account_type'] ?? 'CREATOR') : 'CREATOR',
+                        'media_count' => is_numeric($data['media_count'] ?? null) ? (int) ($data['media_count'] ?? 0) : 0,
                     ],
                 ];
             }
 
-            $error = $response->json('error.message') ?? 'HTTP '.$response->status().' from Instagram Graph API.';
+            $errorMsg = $response->json('error.message');
+            $error = is_string($errorMsg) ? $errorMsg : 'HTTP '.$response->status().' from Instagram Graph API.';
 
             return [
                 'success' => false,
@@ -99,8 +102,9 @@ class InstagramFeedService
         }
 
         $settings = is_array($extension->settings) ? $extension->settings : [];
-        $token = trim((string) ($settings['access_token'] ?? ''));
-        $username = trim((string) ($settings['instagram_username'] ?? ''));
+        /** @var array<string, mixed> $settings */
+        $token = trim(is_scalar($settings['access_token'] ?? null) ? (string) ($settings['access_token'] ?? '') : '');
+        $username = trim(is_scalar($settings['instagram_username'] ?? null) ? (string) ($settings['instagram_username'] ?? '') : '');
 
         if ($token === '') {
             return [
@@ -110,19 +114,19 @@ class InstagramFeedService
             ];
         }
 
-        $ttlMinutes = (int) ($settings['cache_ttl_minutes'] ?? 60);
+        $ttlMinutes = is_numeric($settings['cache_ttl_minutes'] ?? null) ? (int) ($settings['cache_ttl_minutes'] ?? 60) : 60;
         if ($ttlMinutes < 5) {
             $ttlMinutes = 5;
         }
 
-        $postLimit = (int) ($settings['post_limit'] ?? 8);
+        $postLimit = is_numeric($settings['post_limit'] ?? null) ? (int) ($settings['post_limit'] ?? 8) : 8;
         if ($postLimit < 1 || $postLimit > 24) {
             $postLimit = 8;
         }
 
         $showLikes = (bool) ($settings['show_likes_count'] ?? true);
         $showComments = (bool) ($settings['show_comments_count'] ?? true);
-        $filterKeywords = (string) ($settings['comment_filter_keywords'] ?? '');
+        $filterKeywords = is_scalar($settings['comment_filter_keywords'] ?? null) ? (string) ($settings['comment_filter_keywords'] ?? '') : '';
 
         $cacheKey = 'instagram_feed_posts_'.md5($username.$token.$postLimit);
 
@@ -134,7 +138,7 @@ class InstagramFeedService
             return [
                 'enabled' => true,
                 'username' => ltrim($username, '@'),
-                'account_id' => (string) ($settings['instagram_account_id'] ?? ''),
+                'account_id' => is_scalar($settings['instagram_account_id'] ?? null) ? (string) ($settings['instagram_account_id'] ?? '') : '',
                 'items' => is_array($feed) ? $feed : [],
             ];
         } catch (Exception $e) {
@@ -173,7 +177,9 @@ class InstagramFeedService
         ]);
 
         if (! $response->successful()) {
-            throw new Exception('Instagram Graph API error: '.($response->json('error.message') ?? 'HTTP '.$response->status()));
+            $errorMessage = $response->json('error.message');
+            $errorStr = is_string($errorMessage) && $errorMessage !== '' ? $errorMessage : ('HTTP '.$response->status());
+            throw new Exception('Instagram Graph API error: '.$errorStr);
         }
 
         $rawItems = $response->json('data') ?? [];
@@ -190,16 +196,16 @@ class InstagramFeedService
             if (! is_array($item)) {
                 continue;
             }
-
-            $mediaId = (string) ($item['id'] ?? '');
-            $mediaType = (string) ($item['media_type'] ?? 'IMAGE');
-            $mediaUrl = (string) ($item['media_url'] ?? '');
-            $thumbnailUrl = (string) ($item['thumbnail_url'] ?? $mediaUrl);
-            $caption = (string) ($item['caption'] ?? '');
-            $permalink = (string) ($item['permalink'] ?? "https://instagram.com/p/{$mediaId}");
-            $likeCount = (int) ($item['like_count'] ?? 0);
-            $commentsCount = (int) ($item['comments_count'] ?? 0);
-            $timestamp = (string) ($item['timestamp'] ?? now()->toIso8601String());
+            /** @var array<string, mixed> $item */
+            $mediaId = is_scalar($item['id'] ?? null) ? (string) ($item['id'] ?? '') : '';
+            $mediaType = is_scalar($item['media_type'] ?? null) ? (string) ($item['media_type'] ?? 'IMAGE') : 'IMAGE';
+            $mediaUrl = is_scalar($item['media_url'] ?? null) ? (string) ($item['media_url'] ?? '') : '';
+            $thumbnailUrl = is_scalar($item['thumbnail_url'] ?? null) ? (string) ($item['thumbnail_url'] ?? $mediaUrl) : $mediaUrl;
+            $caption = is_scalar($item['caption'] ?? null) ? (string) ($item['caption'] ?? '') : '';
+            $permalink = is_scalar($item['permalink'] ?? null) ? (string) ($item['permalink'] ?? "https://instagram.com/p/{$mediaId}") : "https://instagram.com/p/{$mediaId}";
+            $likeCount = is_numeric($item['like_count'] ?? null) ? (int) ($item['like_count'] ?? 0) : 0;
+            $commentsCount = is_numeric($item['comments_count'] ?? null) ? (int) ($item['comments_count'] ?? 0) : 0;
+            $timestamp = is_scalar($item['timestamp'] ?? null) ? (string) ($item['timestamp'] ?? now()->toIso8601String()) : now()->toIso8601String();
 
             $comments = [];
             if ($showComments && $mediaId !== '') {
@@ -252,8 +258,8 @@ class InstagramFeedService
                 if (! is_array($c)) {
                     continue;
                 }
-
-                $text = (string) ($c['text'] ?? '');
+                /** @var array<string, mixed> $c */
+                $text = is_scalar($c['text'] ?? null) ? (string) ($c['text'] ?? '') : '';
                 $lower = strtolower($text);
 
                 // Filter keywords
@@ -270,10 +276,10 @@ class InstagramFeedService
                 }
 
                 $comments[] = [
-                    'id' => (string) ($c['id'] ?? ''),
-                    'username' => (string) ($c['username'] ?? 'user'),
+                    'id' => is_scalar($c['id'] ?? null) ? (string) ($c['id'] ?? '') : '',
+                    'username' => is_scalar($c['username'] ?? null) ? (string) ($c['username'] ?? 'user') : 'user',
                     'text' => $text,
-                    'timestamp' => (string) ($c['timestamp'] ?? ''),
+                    'timestamp' => is_scalar($c['timestamp'] ?? null) ? (string) ($c['timestamp'] ?? '') : '',
                 ];
             }
 

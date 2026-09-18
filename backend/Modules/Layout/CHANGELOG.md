@@ -11,6 +11,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - `dynamicSources` no longer logs the full query string.
+- ThemeSampleDataOrchestrator and blocks factory strict typing fixes.
+
+### Changed
+- ADR-023: Hardened ThemeService activation gates, ThemeDowngradeRemediator integration, and ThemeSeedCommand licensing guard.
 
 ### Changed
 - Manifest version → `1.1.1` (FE host SEO wiring for sareupna CMS baseline).

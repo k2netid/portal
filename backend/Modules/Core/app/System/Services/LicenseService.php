@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Core\System\Services;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -230,10 +229,7 @@ class LicenseService
                 return 0;
             }
 
-            /** @var Model $themeModel */
-            $themeModel = Theme::class;
-
-            return (int) $themeModel::query()
+            return (int) Theme::query()
                 ->where('is_active', true)
                 ->where('type', 'frontend')
                 ->where('slug', '!=', 'janari')
@@ -339,7 +335,8 @@ class LicenseService
      */
     public function isPerpetualLicense(?string $key = null): bool
     {
-        $rawKey = $key ?? (string) Setting::get('license_key', '');
+        $rawKeyVal = Setting::get('license_key', '');
+        $rawKey = $key ?? (is_scalar($rawKeyVal) ? (string) $rawKeyVal : '');
         if (empty($rawKey)) {
             return false;
         }

@@ -71,7 +71,7 @@ final class MemberPublicProfile
     public static function profileFillAttributes(array $validated): array
     {
         $out = [
-            'name' => trim((string) $validated['name']),
+            'name' => trim(is_scalar($validated['name']) ? (string) $validated['name'] : ''),
         ];
 
         foreach (['phone', 'avatar', 'bio', 'locale', 'timezone'] as $key) {

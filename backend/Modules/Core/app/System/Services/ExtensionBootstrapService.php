@@ -118,7 +118,7 @@ class ExtensionBootstrapService
                     'family' => $meta['family'],
                     'name' => $meta['name'],
                     'version' => $meta['version'],
-                    'database_version' => $existing?->database_version ?? '1.0.0',
+                    'database_version' => $existing !== null ? $existing->database_version : '1.0.0',
                     'status' => $status,
                     'is_core' => $isKernel,
                     'author' => $meta['author'],
@@ -362,7 +362,10 @@ class ExtensionBootstrapService
             return null;
         }
 
-        return is_array($decoded) ? $decoded : null;
+        /** @var array<string, mixed>|null $result */
+        $result = is_array($decoded) ? $decoded : null;
+
+        return $result;
     }
 
     /**
@@ -470,8 +473,8 @@ class ExtensionBootstrapService
             'suggests' => $suggests,
             'runtime_requires' => $runtimeRequires,
             'permissions' => array_values(array_unique($permissions)),
-            'member_area' => is_array($manifest['member_area'] ?? null) ? $manifest['member_area'] : null,
-            'lifecycle' => is_array($manifest['lifecycle'] ?? null) ? $manifest['lifecycle'] : null,
+            'member_area' => is_array($manifest['member_area'] ?? null) ? array_map(fn ($v) => $v, (array) $manifest['member_area']) : null,
+            'lifecycle' => is_array($manifest['lifecycle'] ?? null) ? array_map(fn ($v) => $v, (array) $manifest['lifecycle']) : null,
             // Theme-pack specifics (populated by caller for theme default type)
             'theme_slug' => null,
             'theme_flags' => [],

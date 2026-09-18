@@ -20,7 +20,7 @@ class MemberPortalService
 
     /**
      * @return array{
-     *   member: array{id: string, name: string, email: string, status: string, email_verified: bool},
+     *   member: array<string, mixed>,
      *   active_extensions: list<string>,
      *   capabilities: list<string>,
      *   navigation: list<array<string, mixed>>,
@@ -29,10 +29,11 @@ class MemberPortalService
      */
     public function build(Member $member): array
     {
+        /** @var list<string> $activeExtensions */
         $activeExtensions = Extension::query()
             ->where('status', 'active')
             ->pluck('slug')
-            ->map(static fn (mixed $slug): string => strtolower((string) $slug))
+            ->map(static fn (mixed $slug): string => strtolower(is_scalar($slug) ? (string) $slug : ''))
             ->filter(static fn (string $slug): bool => $slug !== '')
             ->values()
             ->all();
@@ -58,16 +59,17 @@ class MemberPortalService
                     continue;
                 }
 
-                foreach ($memberArea['capabilities'] ?? [] as $capability) {
+                foreach (is_array($memberArea['capabilities'] ?? null) ? $memberArea['capabilities'] : [] as $capability) {
                     if (is_string($capability) && $capability !== '') {
                         $capabilities[] = $capability;
                     }
                 }
 
-                foreach ($memberArea['nav'] ?? [] as $item) {
+                foreach (is_array($memberArea['nav'] ?? null) ? $memberArea['nav'] : [] as $item) {
                     if (! is_array($item)) {
                         continue;
                     }
+                    /** @var array<string, mixed> $item */
                     $normalized = $this->normalizeNavItem($item, $slug);
                     if ($normalized === null) {
                         continue;
@@ -77,10 +79,11 @@ class MemberPortalService
                     }
                 }
 
-                foreach ($memberArea['widgets'] ?? [] as $widget) {
+                foreach (is_array($memberArea['widgets'] ?? null) ? $memberArea['widgets'] : [] as $widget) {
                     if (! is_array($widget)) {
                         continue;
                     }
+                    /** @var array<string, mixed> $widget */
                     $normalized = $this->normalizeWidget($widget, $slug);
                     if ($normalized === null) {
                         continue;
@@ -92,8 +95,18 @@ class MemberPortalService
             }
         }
 
-        usort($navigation, static fn (array $a, array $b): int => ((int) ($a['order'] ?? 100)) <=> ((int) ($b['order'] ?? 100)));
-        usort($widgets, static fn (array $a, array $b): int => ((int) ($a['order'] ?? 100)) <=> ((int) ($b['order'] ?? 100)));
+        usort($navigation, static function (array $a, array $b): int {
+            $aOrder = is_numeric($a['order'] ?? null) ? (int) $a['order'] : 100;
+            $bOrder = is_numeric($b['order'] ?? null) ? (int) $b['order'] : 100;
+
+            return $aOrder <=> $bOrder;
+        });
+        usort($widgets, static function (array $a, array $b): int {
+            $aOrder = is_numeric($a['order'] ?? null) ? (int) $a['order'] : 100;
+            $bOrder = is_numeric($b['order'] ?? null) ? (int) $b['order'] : 100;
+
+            return $aOrder <=> $bOrder;
+        });
 
         return [
             'member' => $member->toPublicProfile(),
@@ -165,7 +178,10 @@ class MemberPortalService
         $manifest = $this->resolveManifest($extension);
         $memberArea = $manifest['member_area'] ?? null;
 
-        return is_array($memberArea) ? $memberArea : null;
+        /** @var array<string, mixed>|null $memberArea */
+        $memberArea = is_array($memberArea) ? $memberArea : null;
+
+        return $memberArea;
     }
 
     /**
@@ -210,6 +226,7 @@ class MemberPortalService
             }
             $decoded = json_decode((string) file_get_contents($path), true);
             if (is_array($decoded) && $decoded !== []) {
+                /** @var array<string, mixed> $decoded */
                 return $decoded;
             }
         }

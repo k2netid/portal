@@ -591,6 +591,8 @@ class ThemeController extends BaseApiController
 
     /**
      * Bidirectionally sync school identity settings back to global sys_settings.
+     *
+     * @param  array<string, mixed>  $newSettings
      */
     private function syncThemeSettingsToGlobalSettings(array &$newSettings): void
     {

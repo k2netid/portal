@@ -119,10 +119,10 @@ final class ExtensionFamilyCatalog
      */
     public static function firstPartyThemePackSlugs(): array
     {
-        return array_values(array_keys(array_filter(
+        return array_keys(array_filter(
             self::SLUG_FAMILY,
             static fn (string $family): bool => $family === self::THEME,
-        )));
+        ));
     }
 
     /**

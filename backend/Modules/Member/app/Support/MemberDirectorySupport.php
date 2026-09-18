@@ -53,31 +53,31 @@ final class MemberDirectorySupport
     {
         $query = Member::query()->orderByDesc('created_at');
 
-        $search = trim((string) $request->input('search', $request->input('q', '')));
+        $search = trim($request->string('search', $request->string('q', '')->value())->value());
         if ($search !== '') {
             SqlLikeEscape::whereContainsAny($query, ['email', 'name', 'phone'], $search);
         }
 
-        $status = (string) $request->input('status', '');
+        $status = $request->string('status', '')->value();
         if (in_array($status, ['active', 'inactive'], true)) {
             $query->where('status', $status);
         }
 
-        $verified = (string) $request->input('verified', '');
+        $verified = $request->string('verified', '')->value();
         if ($verified === '1' || $verified === 'verified') {
             $query->whereNotNull('email_verified_at');
         } elseif ($verified === '0' || $verified === 'unverified') {
             $query->whereNull('email_verified_at');
         }
 
-        $trashed = (string) $request->input('trashed', 'without');
+        $trashed = $request->string('trashed', 'without')->value();
         if ($trashed === 'only') {
             $query->onlyTrashed();
         } elseif ($trashed === 'with') {
             $query->withTrashed();
         }
 
-        $stat = (string) $request->input('stat', '');
+        $stat = $request->string('stat', '')->value();
         if ($stat === 'recent') {
             $query->where('created_at', '>=', now()->subDays(7));
         } elseif ($stat === 'active') {

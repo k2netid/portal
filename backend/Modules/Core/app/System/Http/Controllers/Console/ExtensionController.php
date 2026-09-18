@@ -195,8 +195,8 @@ class ExtensionController extends BaseApiController
 
             if ($extension->slug === 'instagram-feed') {
                 $settings = is_array($extension->settings) ? $extension->settings : [];
-                $token = trim((string) ($settings['access_token'] ?? ''));
-                $username = trim((string) ($settings['instagram_username'] ?? ''));
+                $token = trim(is_scalar($settings['access_token'] ?? '') ? (string) ($settings['access_token'] ?? '') : '');
+                $username = trim(is_scalar($settings['instagram_username'] ?? '') ? (string) ($settings['instagram_username'] ?? '') : '');
                 if ($token === '' || $username === '') {
                     return response()->json([
                         'success' => false,
@@ -1360,7 +1360,10 @@ class ExtensionController extends BaseApiController
                 $query->where('status', '!=', 'active');
             }
 
-            return $query->pluck('slug')->all();
+            /** @var list<string> $slugList */
+            $slugList = $query->pluck('slug')->all();
+
+            return $slugList;
         }
 
         if (! is_array($slugs)) {

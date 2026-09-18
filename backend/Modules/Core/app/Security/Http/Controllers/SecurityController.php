@@ -51,12 +51,12 @@ class SecurityController extends BaseApiController
         }
 
         if ($request->filled('member_id')) {
-            $memberId = (string) $request->input('member_id');
+            $memberId = $request->string('member_id')->value();
             $query->where('metadata->member_id', $memberId);
         }
 
         if ($request->filled('realm')) {
-            $realm = strtolower(trim((string) $request->input('realm')));
+            $realm = strtolower(trim($request->string('realm')->value()));
             if ($realm === 'member') {
                 $query->where('metadata->realm', 'member');
             } elseif ($realm === 'console') {

@@ -16,6 +16,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - Scramble OpenAPI: Publishing settings GEN001 — private `applyBulkSettings` shared by PUT + bulk-update.
 - Scramble OpenAPI: Content publish body check after static validate (VR002).
+- Cleaned up unused class imports and code style in feature test suites.
 
 ### Added
 

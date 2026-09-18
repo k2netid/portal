@@ -19,3 +19,5 @@ Policy: [`docs/guides/update-changelog.md`](../../../docs/guides/update-changelo
 
 ### Changed
 - This file is now an **index**; do not duplicate long bullets here — link domains instead.
+- ADR-023: First-party theme packs as registry packs, tier license quota enforcement, and downgrade remediator.
+- PHPStan level 9 strict typing and error resolution across Core modules.

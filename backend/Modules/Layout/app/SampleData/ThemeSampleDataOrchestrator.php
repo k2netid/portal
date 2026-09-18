@@ -29,7 +29,9 @@ final class ThemeSampleDataOrchestrator
             throw new \RuntimeException("No sample-data bundle found for theme [{$slug}].");
         }
 
+        /** @var list<string> $messages */
         $messages = [];
+        /** @var list<string> $warnings */
         $warnings = [];
         $menusInstalled = 0;
         $pagesInstalled = 0;
@@ -141,7 +143,7 @@ final class ThemeSampleDataOrchestrator
             if (! is_string($location) || ! is_array($menuDef)) {
                 continue;
             }
-
+            /** @var array<string, mixed> $menuDef */
             $slotKey = "menu_location_{$location}";
             $existingAssignment = $settings[$slotKey] ?? null;
             $sampleSlug = $this->sampleMenuSlug((string) $theme->slug, $location);
@@ -156,10 +158,10 @@ final class ThemeSampleDataOrchestrator
                 }
 
                 $menu = Menu::query()->create([
-                    'name' => (string) ($menuDef['name'] ?? Str::headline($location).' Navigation'),
+                    'name' => is_scalar($menuDef['name'] ?? null) ? (string) ($menuDef['name'] ?? Str::headline($location).' Navigation') : Str::headline($location).' Navigation',
                     'slug' => $sampleSlug,
                     'location' => $location,
-                    'description' => 'Theme sample data ('.(string) $theme->slug.')',
+                    'description' => 'Theme sample data ('.(is_scalar($theme->slug) ? (string) $theme->slug : '').')',
                     'module_scope' => 'publishing',
                     'is_active' => true,
                 ]);
@@ -169,7 +171,7 @@ final class ThemeSampleDataOrchestrator
 
             $shouldAssign = $force
                 || empty($existingAssignment)
-                || (string) $existingAssignment === (string) $menu->id;
+                || (is_scalar($existingAssignment) && (string) $existingAssignment === (string) $menu->id);
 
             if ($shouldAssign) {
                 $previousLocation = is_string($menu->location) ? $menu->location : null;
@@ -200,7 +202,7 @@ final class ThemeSampleDataOrchestrator
             return;
         }
 
-        $this->createMenuItems($menu, $items, null);
+        $this->createMenuItems($menu, array_values($items), null);
     }
 
     /**
@@ -212,7 +214,7 @@ final class ThemeSampleDataOrchestrator
             if (! is_array($itemDef)) {
                 continue;
             }
-
+            /** @var array<string, mixed> $itemDef */
             $metadata = is_array($itemDef['metadata'] ?? null) ? $itemDef['metadata'] : [];
             foreach (['title_en', 'title_id', 'description'] as $metaKey) {
                 if (isset($itemDef[$metaKey]) && is_string($itemDef[$metaKey]) && $itemDef[$metaKey] !== '') {
@@ -222,17 +224,17 @@ final class ThemeSampleDataOrchestrator
 
             $created = $menu->items()->create([
                 'parent_id' => $parentId,
-                'title' => (string) ($itemDef['title'] ?? 'Menu Item'),
-                'url' => (string) ($itemDef['url'] ?? '/'),
-                'type' => (string) ($itemDef['type'] ?? 'custom'),
-                'sort_order' => (int) ($itemDef['sort_order'] ?? $index),
+                'title' => is_scalar($itemDef['title'] ?? null) ? (string) ($itemDef['title'] ?? 'Menu Item') : 'Menu Item',
+                'url' => is_scalar($itemDef['url'] ?? null) ? (string) ($itemDef['url'] ?? '/') : '/',
+                'type' => is_scalar($itemDef['type'] ?? null) ? (string) ($itemDef['type'] ?? 'custom') : 'custom',
+                'sort_order' => is_numeric($itemDef['sort_order'] ?? null) ? (int) ($itemDef['sort_order'] ?? $index) : $index,
                 'open_in_new_tab' => (bool) ($itemDef['open_in_new_tab'] ?? false),
                 'metadata' => $metadata !== [] ? $metadata : null,
             ]);
 
             $children = $itemDef['children'] ?? [];
             if (is_array($children) && $children !== []) {
-                $this->createMenuItems($menu, $children, (string) $created->id);
+                $this->createMenuItems($menu, array_values($children), (string) $created->id);
             }
         }
     }
@@ -261,8 +263,8 @@ final class ThemeSampleDataOrchestrator
             if (! is_array($pageDef)) {
                 continue;
             }
-
-            $slug = (string) ($pageDef['slug'] ?? '');
+            /** @var array<string, mixed> $pageDef */
+            $slug = is_scalar($pageDef['slug'] ?? null) ? (string) ($pageDef['slug'] ?? '') : '';
             if ($slug === '') {
                 continue;
             }
@@ -282,9 +284,9 @@ final class ThemeSampleDataOrchestrator
                 }
             }
 
-            $themePage = (string) ($pageDef['theme_page'] ?? '');
-            $title = (string) ($pageDef['title'] ?? Str::headline($slug));
-            $excerpt = (string) ($pageDef['excerpt'] ?? '');
+            $themePage = is_scalar($pageDef['theme_page'] ?? null) ? (string) $pageDef['theme_page'] : '';
+            $title = is_scalar($pageDef['title'] ?? null) ? (string) $pageDef['title'] : Str::headline($slug);
+            $excerpt = is_scalar($pageDef['excerpt'] ?? null) ? (string) $pageDef['excerpt'] : '';
 
             // Sample installs keep Vue theme layout intact (menus + settings + CMS shells only).
             // Full builder_blocks require an explicit opt-in via pageDef / builder_override later.
@@ -316,9 +318,9 @@ final class ThemeSampleDataOrchestrator
                 'title' => $title,
                 'slug' => $slug,
                 'type' => 'page',
-                'status' => (string) ($pageDef['status'] ?? 'published'),
+                'status' => is_scalar($pageDef['status'] ?? null) ? (string) $pageDef['status'] : 'published',
                 'excerpt' => $excerpt,
-                'body' => (string) ($pageDef['body'] ?? ''),
+                'body' => is_scalar($pageDef['body'] ?? null) ? (string) $pageDef['body'] : '',
                 'author_id' => $authorId,
                 'meta' => $meta,
                 'published_at' => now(),
@@ -338,6 +340,7 @@ final class ThemeSampleDataOrchestrator
 
     /**
      * @param  array<string, mixed>  $bundle
+     * @param  list<string>  &$warnings
      */
     private function applyPosts(Theme $theme, string $themeSlug, array $bundle, bool $force, array &$warnings): int
     {
@@ -357,8 +360,8 @@ final class ThemeSampleDataOrchestrator
             if (! is_array($postDef)) {
                 continue;
             }
-
-            $slug = (string) ($postDef['slug'] ?? '');
+            /** @var array<string, mixed> $postDef */
+            $slug = is_scalar($postDef['slug'] ?? null) ? (string) ($postDef['slug'] ?? '') : '';
             if ($slug === '') {
                 continue;
             }
@@ -378,8 +381,8 @@ final class ThemeSampleDataOrchestrator
                 }
             }
 
-            $title = (string) ($postDef['title'] ?? Str::headline($slug));
-            $excerpt = (string) ($postDef['excerpt'] ?? '');
+            $title = is_scalar($postDef['title'] ?? null) ? (string) $postDef['title'] : Str::headline($slug);
+            $excerpt = is_scalar($postDef['excerpt'] ?? null) ? (string) $postDef['excerpt'] : '';
 
             $meta = [
                 'sample_theme' => $themeSlug,
@@ -399,9 +402,9 @@ final class ThemeSampleDataOrchestrator
                 'title' => $title,
                 'slug' => $slug,
                 'type' => 'post',
-                'status' => (string) ($postDef['status'] ?? 'published'),
+                'status' => is_scalar($postDef['status'] ?? null) ? (string) $postDef['status'] : 'published',
                 'excerpt' => $excerpt,
-                'body' => (string) ($postDef['body'] ?? ''),
+                'body' => is_scalar($postDef['body'] ?? null) ? (string) $postDef['body'] : '',
                 'author_id' => $authorId,
                 'meta' => $meta,
                 'published_at' => now()->subDays(max(0, 3 - $installed)),
@@ -444,17 +447,17 @@ final class ThemeSampleDataOrchestrator
             return $blocks;
         }
 
-        $template = (string) ($pageDef['blocks_template'] ?? $pageSlug);
+        $template = is_scalar($pageDef['blocks_template'] ?? null) ? (string) $pageDef['blocks_template'] : $pageSlug;
         $settings = is_array($bundle['settings'] ?? null) ? $bundle['settings'] : [];
-
+        /** @var array<string, mixed> $settings */
         $ctx = [
-            'brand' => (string) ($settings['site_title'] ?? Str::headline($themeSlug)),
-            'hero_title' => (string) ($settings['hero_title'] ?? ''),
-            'hero_subtitle' => (string) ($settings['hero_subtitle'] ?? ''),
-            'cta_primary_label' => (string) ($settings['cta_primary_label'] ?? ''),
-            'cta_primary_url' => (string) ($settings['cta_primary_url'] ?? ''),
-            'cta_secondary_label' => (string) ($settings['cta_secondary_label'] ?? ''),
-            'cta_secondary_url' => (string) ($settings['cta_secondary_url'] ?? ''),
+            'brand' => is_scalar($settings['site_title'] ?? null) ? (string) ($settings['site_title'] ?? Str::headline($themeSlug)) : Str::headline($themeSlug),
+            'hero_title' => is_scalar($settings['hero_title'] ?? null) ? (string) ($settings['hero_title'] ?? '') : '',
+            'hero_subtitle' => is_scalar($settings['hero_subtitle'] ?? null) ? (string) ($settings['hero_subtitle'] ?? '') : '',
+            'cta_primary_label' => is_scalar($settings['cta_primary_label'] ?? null) ? (string) ($settings['cta_primary_label'] ?? '') : '',
+            'cta_primary_url' => is_scalar($settings['cta_primary_url'] ?? null) ? (string) ($settings['cta_primary_url'] ?? '') : '',
+            'cta_secondary_label' => is_scalar($settings['cta_secondary_label'] ?? null) ? (string) ($settings['cta_secondary_label'] ?? '') : '',
+            'cta_secondary_url' => is_scalar($settings['cta_secondary_url'] ?? null) ? (string) ($settings['cta_secondary_url'] ?? '') : '',
             'title' => $title,
             'excerpt' => $excerpt,
         ];

@@ -153,7 +153,7 @@ class Setting extends Model
         try {
             $keys = static::query()->pluck('key');
             foreach ($keys as $k) {
-                Cache::forget("sys_setting_{$k}");
+                Cache::forget('sys_setting_'.(is_scalar($k) ? (string) $k : ''));
             }
         } catch (\Throwable) {
             // silent fail

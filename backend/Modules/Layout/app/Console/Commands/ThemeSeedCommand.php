@@ -53,8 +53,9 @@ class ThemeSeedCommand extends Command
             return self::SUCCESS;
         }
 
-        $slug = (string) ($this->argument('slug') ?: Setting::get('theme_active', 'janari'));
-        $slug = strtolower(trim($slug));
+        $slugArg = $this->argument('slug');
+        $slugRaw = is_string($slugArg) && $slugArg !== '' ? $slugArg : Setting::get('theme_active', 'janari');
+        $slug = strtolower(trim(is_string($slugRaw) ? $slugRaw : 'janari'));
 
         $this->info("Target theme for demo seeding: [{$slug}]");
 

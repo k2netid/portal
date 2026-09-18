@@ -28,6 +28,7 @@ final class ThemeSampleDataReader
             throw new \RuntimeException("Invalid sample-data bundle JSON for theme [{$themeSlug}].");
         }
 
+        /** @var array<string, mixed> $decoded */
         return $decoded;
     }
 

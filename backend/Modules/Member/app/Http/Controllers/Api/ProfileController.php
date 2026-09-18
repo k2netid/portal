@@ -140,7 +140,7 @@ class ProfileController extends BaseApiController
 
         try {
             $validated = $request->validate([
-                'email' => ['required', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member?->getKey())],
+                'email' => ['required', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member->getKey())],
                 'current_password' => 'required|string',
             ]);
         } catch (ValidationException $e) {

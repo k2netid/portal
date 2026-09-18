@@ -1,7 +1,7 @@
 {
   "name": "Member",
   "slug": "member",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Public reader accounts — register/login/dashboard. Not console users. Publishing comments and bookmarks use MemberIdentityPort.",
   "author": "Jejakawan Team",
   "type": "module",
