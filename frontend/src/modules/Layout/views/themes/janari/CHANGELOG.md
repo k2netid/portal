@@ -9,8 +9,9 @@ ADR theme-scoped (if any): `docs/themes/janari/`.
 
 ## [Unreleased]
 
-### Added
-
 ### Changed
+- `theme.json` version normalized to SemVer `2.0.0` (was `V.2.0`).
+
+### Added
 
 ### Fixed

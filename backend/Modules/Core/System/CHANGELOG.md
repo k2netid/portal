@@ -26,6 +26,9 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 - Dropped stale CMS `is_core` whitelist (`analytics`, `media`, `publishing`, …).
 - Console Navigation: menu hierarchy order synced at auth completion ([ADR-013](../../../../docs/adr/ADR-013-console-sidebar-database-menu-preloading-and-reactive-hydration.md)).
 - Scramble OpenAPI: nullsafe `Rule::unique` on User/Role profile update (VR002).
+- Product SemVer: `config('app.version')` / OpenAPI / `site_version` follow root `package.json` (or `APP_VERSION`).
+- Manifest first-party: `version` must be SemVer (`ModuleManifestValidator` + schema pattern).
+- Pack SemVer: Core `manifest.json` → `1.0.1` (OpenAPI version wiring + SemVer validator); CI `modules:versions:check`.
 
 ### Changed
 - **Unified Role Ranks**: `User::getRoleRankMap()` hierarchy ([ADR-020](../../../../docs/adr/ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md)).

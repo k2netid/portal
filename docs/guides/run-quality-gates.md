@@ -16,7 +16,7 @@ Jalankan gate sebelum mengklaim task selesai atau membuka PR.
 npm run agent:verify
 ```
 
-Ini menjalankan `quality:frontend` lalu `quality:backend` (Pint `--test` + `composer run quality`).
+Ini menjalankan `quality:frontend`, `quality:backend` (Pint `--test` + `composer run quality`), `docs:links`, `versions:check`, dan `modules:versions:check`.
 
 2. Jika hanya menyentuh frontend dan butuh feedback cepat:
 
@@ -29,8 +29,10 @@ npm run agent:verify:quick
 ```bash
 cd backend && php artisan rbac:sync
 cd backend && php artisan theme:seed --all   # hanya jika menyentuh demo seeder tema
-# dari root — cek link docs saja:
+# dari root — cek link docs / SemVer saja:
 npm run docs:links
+npm run versions:check
+npm run modules:versions:check
 ```
 
 ## Related

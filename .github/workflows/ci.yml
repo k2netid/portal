@@ -188,8 +188,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
       - name: Check relative markdown links in docs/
         run: npm run docs:links
+      - name: Check product SemVer alignment
+        run: npm run versions:check
+      - name: Check module/theme SemVer bumps on runtime diffs
+        run: npm run modules:versions:check
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref || 'main' }}

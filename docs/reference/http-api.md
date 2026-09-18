@@ -64,3 +64,4 @@ bash scripts/member-security-qa.sh   # member auth surface
 - ADR-012 (Data Model Studio modular)
 - CLI index: [cli-commands.md](cli-commands.md)
 - Security how-to: [security-checks.md](../guides/security-checks.md)
+- Product / OpenAPI SemVer: [release-and-versioning.md](../guides/release-and-versioning.md)

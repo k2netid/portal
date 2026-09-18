@@ -74,5 +74,6 @@ Path: `frontend/src/modules/Layout/views/themes/<slug>/CHANGELOG.md`
 ## Related
 
 - Template header: [changelog-module.md](../templates/changelog-module.md)
+- Release / SemVer: [release-and-versioning.md](release-and-versioning.md)
 - DoD: [WORKFLOW.md](../WORKFLOW.md)
 - Start task: [start-a-task.md](start-a-task.md)

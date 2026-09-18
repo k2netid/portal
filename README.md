@@ -22,7 +22,7 @@
 | **Produk** | **Jejakawan Core Engine** |
 | **Repositori** | `ja-core_engine` |
 | **Arsitektur** | Modular Monolith Kernel + Single Unified Console SPA |
-| **Versi** | `1.0.0-beta.1` |
+| **Versi** | `1.0.0-beta.2` |
 | **Database Engine** | PostgreSQL 16+ / 18.x (Schema terisolasi `core_engine`) |
 | **Runtime Backend** | PHP 8.2+ (Laravel 13 Modular Kernel; tested on 8.3) |
 | **Runtime Frontend** | Node.js 20+ / 22+ (Vue 3.5, Vite 8, Tailwind CSS v4, TypeScript) |

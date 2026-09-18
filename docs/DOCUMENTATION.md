@@ -90,6 +90,7 @@ supersedes: []            # daftar ID ADR, opsional
 | :--- | :--- |
 | Kontrak L0 (schema/types/naming) | File L0 + mention di L1/L2 yang merujuknya |
 | Perilaku modul / tema | `README`/`CHANGELOG` modul atau `themes/<slug>/CHANGELOG.md` (L1) — lihat [update-changelog.md](guides/update-changelog.md) |
+| SemVer produk / cut release | [release-and-versioning.md](guides/release-and-versioning.md) · `npm run versions:check` |
 | Rilis / docs sistem user-facing | Root `CHANGELOG.md` `[Unreleased]` (pointer ringkas) |
 | Cross-cutting architecture | `docs/architecture/` (L2) |
 | Keputusan arsitektur baru | ADR baru (L3) |

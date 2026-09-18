@@ -1,6 +1,6 @@
 {
     "name": "jejakawan",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "private": true,
     "engines": {
         "node": ">=22.12.0"
@@ -12,9 +12,11 @@
         "deploy": "npm run deploy:assets:full",
         "deploy:assets": "npm run deploy:assets:full",
         "deploy:assets:full": "bash scripts/sync-frontend-assets-to-backend.sh",
-        "agent:verify": "npm run quality:frontend && npm run quality:backend && npm run docs:links",
+        "agent:verify": "npm run quality:frontend && npm run quality:backend && npm run docs:links && npm run versions:check && npm run modules:versions:check",
         "agent:verify:quick": "npm run quality:frontend",
         "docs:links": "node scripts/check-docs-links.mjs",
+        "versions:check": "node scripts/check-versions.mjs",
+        "modules:versions:check": "node scripts/check-module-versions.mjs",
         "docs:sync-downstream": "bash scripts/sync-docs-guides-reference-downstream.sh",
         "docs:openapi": "bash scripts/export-openapi.sh",
         "test:backend": "cd backend && php artisan test",

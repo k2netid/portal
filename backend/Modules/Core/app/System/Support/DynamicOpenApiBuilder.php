@@ -103,7 +103,7 @@ final class DynamicOpenApiBuilder
             'openapi' => '3.0.3',
             'info' => [
                 'title' => "Jejakawan Dynamic API — {$type->name}",
-                'version' => '1.0.0',
+                'version' => (string) config('app.version'),
                 'description' => $type->description ?? "Data model records for slug `{$slug}`",
             ],
             'servers' => [

@@ -28,11 +28,13 @@ When you **create or meaningfully change** a first-party module under `backend/M
 | Root | `/CHANGELOG.md` | Ringkas release-facing + pointer (bukan duplikat esai) |
 
 How-to: [`docs/guides/update-changelog.md`](../../docs/guides/update-changelog.md).  
+Versioning (produk + per pack): [`docs/guides/release-and-versioning.md`](../../docs/guides/release-and-versioning.md) · `npm run modules:versions:check`.  
 Template: [`docs/templates/changelog-module.md`](../../docs/templates/changelog-module.md).
 
 ## Also update
 
 - Extension/product doc if one exists (e.g. `docs/extensions/ja-mail.md`)
+- Pack **`manifest.json` `version`** (or theme `theme.json`) when changing runtime code — forward-only SemVer; locales count as PATCH
 - Root `CHANGELOG.md` `[Unreleased]` with a one-line pointer for user-visible **or** system-docs changes
 - Task brief § Hasil when scale M+ (`docs/work/`)
 

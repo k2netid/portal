@@ -28,9 +28,10 @@ return [
 
     'info' => [
         /*
-         * API version.
+         * OpenAPI info.version — defaults to product SemVer (APP_VERSION / package.json).
+         * Override with API_VERSION only if the docs surface must diverge from the app tag.
          */
-        'version' => env('API_VERSION', '0.0.1'),
+        'version' => env('API_VERSION') ?: (env('APP_VERSION') ?: \App\Support\ProductVersion::readPackageJson()),
 
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).

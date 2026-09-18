@@ -13,8 +13,9 @@ Checklist fondasi docs (update saat menambah kuadran/lapisan baru).
 | ADR core + theme stubs | ✅ | `adr/`, `themes/` |
 | HTTP / OpenAPI | ✅ | `reference/http-api.md`, `npm run docs:openapi`, `api/` |
 | Dual-layer changelog | ✅ | modul + tema + root |
+| Release / SemVer alignment | ✅ | `guides/release-and-versioning.md`, `npm run versions:check`, `npm run modules:versions:check` |
 | Core domain changelogs | ✅ | `Core/{System,Infra,Security}/CHANGELOG.md` (BE+FE) |
-| Link checker + CI | ✅ | `npm run docs:links`, CI `docs-links` |
+| Link checker + CI | ✅ | `npm run docs:links`, CI `docs-links` (+ product & module version checks) |
 | Mirror downstream | ✅ | guides + reference + **architecture** + policy → k2net, smkn6, ja-cms |
 | Ops/kredensial host | ✅ (terpisah) | `/home/jejakawan/dev/docs/` |
 

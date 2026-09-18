@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application / product SemVer
+    |--------------------------------------------------------------------------
+    |
+    | Exposed as public site_version and used as default OpenAPI info.version.
+    | SoT when unset: root package.json (see docs/guides/release-and-versioning.md).
+    |
+    */
+
+    'version' => env('APP_VERSION') ?: \App\Support\ProductVersion::readPackageJson(),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

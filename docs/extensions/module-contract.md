@@ -33,7 +33,7 @@ JSON Schema: [`module-manifest.schema.json`](./module-manifest.schema.json)
 |-------|----------|--------|
 | `name` | yes | Display name |
 | `slug` | yes | Stable id (`mail`); equals FE `AppModule.id` |
-| `version` | yes | Semver string |
+| `version` | yes | SemVer string (pack-local; **bukan** produk `package.json`). Bump saat ubah runtime — lihat [release-and-versioning.md](../guides/release-and-versioning.md) · `npm run modules:versions:check` |
 | `type` | yes | `module` (first-party) or `plugin` |
 | `is_core` | yes | `false` for optionals; only kernel may be `true` |
 | `author` | yes | |

@@ -14,6 +14,7 @@ Kontribusi ke **`ja-core_engine`** (kernel upstream). Downstream portal (K2NET, 
 - Scope sesuai rencana; SoC core vs tema vs tenant
 - `npm run agent:verify` (termasuk `docs:links`)
 - Changelog dual-layer: [guides/update-changelog.md](docs/guides/update-changelog.md)
+- Release / SemVer: [guides/release-and-versioning.md](docs/guides/release-and-versioning.md) (`npm run versions:check`, `npm run modules:versions:check`)
 - Modul `README.md` / `CHANGELOG.md` tetap akurat
 - Commit hanya jika diminta maintainer/user
 

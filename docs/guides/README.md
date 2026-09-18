@@ -15,6 +15,7 @@ Bukan penjelasan arsitektur — untuk “kenapa”, lihat `docs/architecture/` d
 | [Add i18n keys](add-i18n-keys.md) | Paritas `id` / `en` / `su` + `i18n:check` |
 | [Security checks](security-checks.md) | Audit deps, gate route, member/API smoke |
 | [Update changelogs](update-changelog.md) | Dual-layer: modul/tema + root |
+| [Release & versioning](release-and-versioning.md) | SemVer produk, API `v1`, OpenAPI, cut release |
 | [Sync docs downstream](sync-docs-downstream.md) | Mirror guides/reference → k2net / smkn6 / ja-cms |
 
 Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) · Tutorial onboarding: [`AGENT_START_HERE.md`](../AGENT_START_HERE.md) · Contributing: [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
