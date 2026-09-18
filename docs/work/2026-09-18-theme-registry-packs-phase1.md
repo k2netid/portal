@@ -1,7 +1,7 @@
 ---
 id: 2026-09-18-theme-registry-packs-phase1
 title: Theme packs di Module Registry + kuota lisensi (fase 1)
-status: approved
+status: done
 scale: L
 repo: ja-core_engine
 owner: agent

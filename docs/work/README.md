@@ -14,13 +14,13 @@ Alur wajib: [`WORKFLOW.md`](../WORKFLOW.md) · Mulai task: [`guides/start-a-task
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
-| [2026-09-18-theme-registry-packs-phase1](2026-09-18-theme-registry-packs-phase1.md) | Theme packs registry + kuota lisensi (fase 1) | `approved` | L |
+| _(tidak ada — semua selesai hari ini)_ | | | |
 
 ## Selesai hari ini (belum diarsip)
 
 | ID | Judul | Status | Skala |
 | :--- | :--- | :--- | :--- |
-| [2026-09-18-deferred-cinematic-nav-and-archetype-slots](2026-09-18-deferred-cinematic-nav-and-archetype-slots.md) | Janari cinematic-nav + PluginSlot archetype | `done` | M |
+| [2026-09-18-theme-registry-packs-phase1](2026-09-18-theme-registry-packs-phase1.md) | Theme packs registry + kuota lisensi (fase 1) | `done` | L |
 | [2026-09-18-theme-cms-baseline-alignment](2026-09-18-theme-cms-baseline-alignment.md) | Align fitur CMS lintas tema | `done` | L |
 | [2026-09-18-tim-to-team-rename](2026-09-18-tim-to-team-rename.md) | Tim → Team (English + alias `/tim`) | `done` | M |
 | [2026-09-18-scramble-openapi-warnings](2026-09-18-scramble-openapi-warnings.md) | Scramble OpenAPI GEN001 / VR002 | `done` | M |
