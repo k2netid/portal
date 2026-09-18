@@ -51,4 +51,4 @@ php artisan rbac:sync
 php artisan theme:seed --all
 ```
 
-How-to: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · CLI: [`docs/reference/cli-commands.md`](docs/reference/cli-commands.md) · Changelog: [`docs/guides/update-changelog.md`](docs/guides/update-changelog.md) · Versioning: [`docs/guides/release-and-versioning.md`](docs/guides/release-and-versioning.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md).
+How-to: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · Testing: [`docs/reference/testing.md`](docs/reference/testing.md) · E2E: [`docs/guides/run-e2e-playwright.md`](docs/guides/run-e2e-playwright.md) · CLI: [`docs/reference/cli-commands.md`](docs/reference/cli-commands.md) · Changelog: [`docs/guides/update-changelog.md`](docs/guides/update-changelog.md) · Versioning: [`docs/guides/release-and-versioning.md`](docs/guides/release-and-versioning.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md).

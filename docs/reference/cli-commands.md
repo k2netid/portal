@@ -6,14 +6,18 @@ Perintah yang sering dipakai di `ja-core_engine`. Jalankan dari lokasi yang dise
 
 | Command | Fungsi |
 | :--- | :--- |
-| `npm run agent:verify` | Quality frontend + backend (wajib sebelum tutup task) |
+| `npm run agent:verify` | Quality FE+BE + docs/SemVer (bukan PHPUnit penuh — lihat [testing.md](testing.md)) |
 | `npm run agent:verify:quick` | Quality frontend saja |
-| `npm run quality:frontend` | Lint/typecheck FE |
+| `npm run quality:frontend` | Lint/typecheck/i18n + Vitest + e2e:list |
 | `npm run quality:backend` | Pint `--test` + `composer run quality` |
 | `npm run build` | Build Vite frontend |
 | `npm run sync` / `npm run deploy:assets:sync` | Sync asset FE → backend |
-| `npm run test:backend` | PHPUnit via `php artisan test` |
+| `npm run test:backend` | Pest/PHPUnit via `php artisan test` |
+| `npm run test:backend:coverage` | Backend coverage |
 | `npm run test:e2e:smoke` | Smoke e2e FE |
+| `npm run test:e2e:smoke:docker` | Smoke e2e di container Playwright |
+| `npm run test:e2e:list` | Inventaris Playwright (no browser) |
+| `npm run test:e2e:auth` | E2E auth subset |
 
 ## Backend (`cd backend`)
 
@@ -52,6 +56,8 @@ Perintah yang sering dipakai di `ja-core_engine`. Jalankan dari lokasi yang dise
 ## Related how-tos
 
 - [run-quality-gates.md](../guides/run-quality-gates.md)
+- [run-e2e-playwright.md](../guides/run-e2e-playwright.md)
+- [testing.md](testing.md) — peta suite QA
 - [sync-rbac-and-capabilities.md](../guides/sync-rbac-and-capabilities.md)
 - [seed-theme-demo-data.md](../guides/seed-theme-demo-data.md)
 - [apply-install-profile.md](../guides/apply-install-profile.md)

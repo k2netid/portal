@@ -38,5 +38,6 @@ npm run modules:versions:check
 ## Related
 
 - Script root: `package.json` → `agent:verify`
+- Peta suite test: [testing.md](../reference/testing.md) · E2E: [run-e2e-playwright.md](run-e2e-playwright.md)
 - Pedoman agen: [`AGENTS.md`](../../AGENTS.md)
 - RBAC sync detail: [sync-rbac-and-capabilities.md](sync-rbac-and-capabilities.md)

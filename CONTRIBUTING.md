@@ -12,9 +12,11 @@ Kontribusi ke **`ja-core_engine`** (kernel upstream). Downstream portal (K2NET, 
 ## Definition of Done (ringkas)
 
 - Scope sesuai rencana; SoC core vs tema vs tenant
-- `npm run agent:verify` (termasuk `docs:links`)
+- `npm run agent:verify` (termasuk `docs:links` + SemVer checks)
+- BE runtime: juga `npm run test:backend` (atau CI) — lihat [reference/testing.md](docs/reference/testing.md)
 - Changelog dual-layer: [guides/update-changelog.md](docs/guides/update-changelog.md)
 - Release / SemVer: [guides/release-and-versioning.md](docs/guides/release-and-versioning.md) (`npm run versions:check`, `npm run modules:versions:check`)
+- E2E UX kritis: [guides/run-e2e-playwright.md](docs/guides/run-e2e-playwright.md)
 - Modul `README.md` / `CHANGELOG.md` tetap akurat
 - Commit hanya jika diminta maintainer/user
 
@@ -22,7 +24,7 @@ Kontribusi ke **`ja-core_engine`** (kernel upstream). Downstream portal (K2NET, 
 
 - Trunk: **`main`**
 - Kebijakan multi-repo: [`docs/branching.md`](docs/branching.md)
-- Mirror guides/reference ke downstream: `npm run docs:sync-downstream` (k2net-portal, smkn6-portal, ja-cms)
+- Mirror guides/reference ke downstream: `npm run docs:sync-downstream` (k2net-portal, smkn6-portal, smkn1cijulang-portal, ja-cms)
 
 ## Jangan
 

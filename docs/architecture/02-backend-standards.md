@@ -109,12 +109,37 @@ Modules/Core/tests/
 
 ## 🧪 3. Standar Pengujian (Testing)
 
-- Seluruh endpoint dan service wajib memiliki pengujian otomatis (Feature & Unit Tests).
-- Jalankan test suite:
-  ```bash
-  cd backend && php artisan test
-  ```
-- **Prinsip Pengujian**:
-  - Gunakan `RefreshDatabase` pada base test case.
-  - Uji permission authorization (user tanpa hak akses harus menerima `403 Forbidden`).
-  - Uji validasi input batas maksimum/minimum dan format data.
+- Endpoint/service penting wajib punya automated coverage (Feature dan/atau Unit).
+- **Pest + PHPUnit** — lihat peta suite: [testing.md](../reference/testing.md).
+
+### Menjalankan
+
+```bash
+# dari root
+npm run test:backend
+npm run test:backend:coverage
+
+# filter
+cd backend && php artisan test --filter=ModuleManifestValidatorTest
+cd backend && php artisan test --testsuite=Modules
+```
+
+`npm run agent:verify` **tidak** menjalankan PHPUnit penuh — sebelum merge BE, jalankan `test:backend` atau andalkan CI job `backend`.
+
+### Di mana menaruh tes
+
+| Jenis | Path |
+| :--- | :--- |
+| Kernel app-wide | `backend/tests/Unit`, `backend/tests/Feature` |
+| Pack first-party | `backend/Modules/<Name>/tests/{Unit,Feature,Security,...}` |
+| Config suites | `backend/phpunit.xml` · Pest bind: `backend/tests/Pest.php` |
+
+Pakai helpers di `Tests\TestCase` (`createAdminUser()`, `seedPermissionsAndRoles()`, dll.).
+
+### Prinsip
+
+- `RefreshDatabase` (atau setara) untuk Feature yang menyentuh DB.
+- Authorization: user tanpa permission → **403** (atau error_code kontrak pack).
+- Validasi: batas min/max, format, unique ignore (hindari VR002 Scramble di controller — lihat OpenAPI guide).
+- Extension gates: uji `extension.active:*` inactive → 403.
+- Jangan hardcode secret; pakai factories / env testing (`APP_ENV=testing` di phpunit.xml).

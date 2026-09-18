@@ -15,6 +15,7 @@ DEV_ROOT="$(cd "${ROOT}/.." && pwd)"
 TARGETS=(
   "${DEV_ROOT}/k2net-portal"
   "${DEV_ROOT}/smkn6-portal"
+  "${DEV_ROOT}/smkn1cijulang-portal"
   "${DEV_ROOT}/ja-cms"
 )
 

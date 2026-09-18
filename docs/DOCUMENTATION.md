@@ -152,7 +152,8 @@ Lihat indeks di [`README.md`](README.md). Ringkas:
 8. i18n → `architecture/05-i18n-guidelines.md` · how-to: `guides/add-i18n-keys.md`
 9. Upstream/downstream → ADR-022 + `product/*` · sync guides: `npm run docs:sync-downstream`
 10. Quality gates → `guides/run-quality-gates.md` · `reference/cli-commands.md` · `npm run docs:links`
-11. HTTP API → `reference/http-api.md` · artifacts: `docs/api/`
+11. Testing / QA suite → `reference/testing.md` · E2E: `guides/run-e2e-playwright.md`
+12. HTTP API → `reference/http-api.md` · artifacts: `docs/api/`
 
 ---
 

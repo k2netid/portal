@@ -78,5 +78,6 @@ bash scripts/api-smoke.sh
 ## Related
 
 - RBAC how-to: [sync-rbac-and-capabilities.md](sync-rbac-and-capabilities.md)
+- Suite map: [testing.md](../reference/testing.md)
 - Member area: [member-area.md](../extensions/member-area.md)
 - DAST workflow: `.github/workflows/dast-security-scan.yml`

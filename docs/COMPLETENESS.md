@@ -12,6 +12,7 @@ Checklist fondasi docs (update saat menambah kuadran/lapisan baru).
 | Explanation / standards | ✅ | `architecture/` |
 | ADR core + theme stubs | ✅ | `adr/`, `themes/` |
 | HTTP / OpenAPI | ✅ | `reference/http-api.md`, `npm run docs:openapi`, `api/` |
+| Testing / QA suite map | ✅ | `reference/testing.md`, `guides/run-e2e-playwright.md` |
 | Dual-layer changelog | ✅ | modul + tema + root |
 | Release / SemVer alignment | ✅ | `guides/release-and-versioning.md`, `npm run versions:check`, `npm run modules:versions:check` |
 | Core domain changelogs | ✅ | `Core/{System,Infra,Security}/CHANGELOG.md` (BE+FE) |

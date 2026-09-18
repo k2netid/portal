@@ -5,7 +5,7 @@ SoT tetap di core — salinan downstream hanya untuk navigasi lokal agen.
 
 ## Prerequisites
 
-- Repo sibling di `/home/jejakawan/dev/`: `k2net-portal`, `smkn6-portal`, `ja-cms`
+- Repo sibling di `/home/jejakawan/dev/`: `k2net-portal`, `smkn6-portal`, `smkn1cijulang-portal`, `ja-cms`
 - Sudah mengedit di **core** dulu
 
 ## Steps
@@ -19,6 +19,8 @@ npm run docs:sync-downstream
 
 ```bash
 ls ../k2net-portal/docs/architecture
+ls ../smkn6-portal/docs/architecture
+ls ../smkn1cijulang-portal/docs/architecture
 ls ../ja-cms/docs/architecture
 head -n 3 ../k2net-portal/docs/architecture/01-overview-and-tier-design.md
 ```

@@ -42,7 +42,7 @@ Mulai task M+: [guides/start-a-task.md](guides/start-a-task.md) · [work/](work/
 npm run agent:verify
 ```
 
-Prosedur lengkap: [guides/run-quality-gates.md](guides/run-quality-gates.md) · perintah lain: [reference/cli-commands.md](reference/cli-commands.md).
+Prosedur lengkap: [guides/run-quality-gates.md](guides/run-quality-gates.md) · peta suite: [reference/testing.md](reference/testing.md) · E2E: [guides/run-e2e-playwright.md](guides/run-e2e-playwright.md) · perintah lain: [reference/cli-commands.md](reference/cli-commands.md).
 
 ## Dokumentasi modul
 

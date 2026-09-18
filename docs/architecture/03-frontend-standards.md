@@ -84,3 +84,32 @@ const { t } = useI18n();
 - **No `any` types**: Gunakan interface eksplisit dari `@/engine/types/*` atau definisikan tipe lokal.
 - **i18n Integration**: Semua label teks yang tampak oleh user wajib menggunakan `$t()` atau `t()`.
 - **Lucide Icons**: Seluruh ikon diimpor secara eksplisit dari `lucide-vue-next` atau melalui utilitas `getIcon()`.
+
+---
+
+## 🧪 5. Standar Pengujian (Vitest + Playwright)
+
+Peta suite: [testing.md](../reference/testing.md). E2E how-to: [run-e2e-playwright.md](../guides/run-e2e-playwright.md).
+
+### Unit (Vitest)
+
+- Lokasi: `frontend/tests/unit/`, `frontend/tests/components/`
+- Setup: `frontend/tests/setup/vitest.setup.ts` (via `vite.config.ts`)
+- `tests/e2e/**` **tidak** ikut Vitest
+
+```bash
+npm --prefix frontend run test:unit
+npm --prefix frontend run test:coverage
+```
+
+`quality:frontend` / `agent:verify` sudah menjalankan `test:unit` (+ eslint, i18n, `vue-tsc`, `test:e2e:list`).
+
+**Prinsip:** uji store/composable/util murni; mock axios/engine API; jangan dependensi browser E2E di unit.
+
+### E2E (Playwright)
+
+- Specs: `frontend/tests/e2e/`
+- Prefer Docker di host tanpa browser: `npm run test:e2e:smoke:docker`
+- Smoke set = CI `e2e-smoke` (login / onboarding / auth probe)
+
+Jangan commit token captcha bypass untuk production; pakai env local/testing saja.
