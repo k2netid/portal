@@ -1,8 +1,8 @@
-# Sareupna — High-Performance Cloud & Developer Platform Theme
+# Sareupna — High-Performance Digital & Platform Solution Theme
 
 > **SoT paket tema = file ini.** Indeks docs: [`docs/themes/sareupna/`](../../../../../../../docs/themes/sareupna/README.md) · Host: [`04-theme-system.md`](../../../../../../../docs/architecture/04-theme-system.md) · Changelog: [`CHANGELOG.md`](./CHANGELOG.md).
 
-Tema resmi flagship untuk **jejakawan.com** (PT Jejak Awan Digital).
+Tema resmi flagship untuk **jejakawan.com** (Supported by K2NET).
 
 ## Filosofi Basa Sunda
 

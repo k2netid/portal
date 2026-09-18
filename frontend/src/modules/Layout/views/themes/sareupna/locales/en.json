@@ -1,6 +1,6 @@
 {
   "name": "Sareupna",
-  "description": "Sareupna — High-Performance Cloud & Developer Platform Theme for Jejakawan.com.",
+  "description": "Sareupna — High-Performance Digital Platform Theme for Jejakawan.com. Building Solutions, Leaving Footprints. Supported by PT. Kirana Karina Network (K2NET).",
   "header": {
     "home": "Home",
     "about": "About",
@@ -25,7 +25,7 @@
     "memberFallback": "Developer",
     "officialLine1": "Jejakawan",
     "officialLine2": "Membangun Solusi, Meninggalkan Jejak",
-    "solutions": "Cloud Solutions"
+    "solutions": "Products & Solutions"
   },
   "common": {
     "copied": "COPIED!",
@@ -46,8 +46,8 @@
   },
   "hero": {
     "badgeDefault": "$ ja cloud:deploy --prod",
-    "brandFallback": "NEXT-GENERATION CLOUD ENGINE & PLATFORM",
-    "subtitleDefault": "Distributed cloud platform, high-performance content engine, and modern developer ecosystem unified into a single runtime.",
+    "brandFallback": "BUILDING SOLUTIONS, LEAVING FOOTPRINTS",
+    "subtitleDefault": "An initiative developing software applications and digital platforms oriented around impact, collaboration, and tangible value. Supported by PT. Kirana Karina Network (K2NET).",
     "ctaPrimary": "Explore Solutions",
     "ctaPricing": "View Pricing",
     "stat1Val": "99.99%",
@@ -112,9 +112,9 @@
     "secondary": "Read Documentation"
   },
   "footer": {
-    "description": "PT Jejak Awan Digital — Pioneering cloud computing, content infrastructure, and enterprise digital solutions in Indonesia.",
+    "description": "Jejakawan — Developing technology solutions with a spirit of creating impactful work and leaving positive footprints. Supported by PT. Kirana Karina Network (K2NET).",
     "copyright": "All rights reserved.",
-    "tagline": "Empowering Digital Cloud Horizons.",
+    "tagline": "Membangun Solusi, Meninggalkan Jejak.",
     "systemStatus": "All Systems Operational"
   },
   "navDots": {
@@ -129,7 +129,7 @@
     "blog": {
       "title": "Engineering Insights & Tech Radar",
       "headline": "Latest Insights & Engineering Radar",
-      "subtitle": "Technical deep-dives, distributed system design, and cloud innovations from PT Jejak Awan Digital.",
+      "subtitle": "Technical deep-dives, platform insights, and system architectures from Jejakawan developers.",
       "sectionLabel": "Engineering & Insights",
       "searching": "Searching insights...",
       "loadingMore": "Loading more articles...",
@@ -149,15 +149,15 @@
       "contentTypeDefault": "Content"
     },
     "about": {
-      "title": "About Platform",
+      "title": "About Jejakawan",
       "sectionLabel": "Platform Identity",
-      "subtitle": "Technology vision and cloud architecture for a modern control plane.",
-      "missionTitle": "Engineering Mission",
-      "missionP1": "We build a modular control plane so product teams can ship, curate, and operate portals without breaking theme isolation.",
-      "missionP2": "Sareupna keeps the same CMS contract as other themes — About, Reach Contact, Blog, menus — with cyber developer-platform chrome.",
-      "solutionsCta": "View Platform Solutions",
-      "identityLabel": "Operator",
-      "contactCta": "Contact the Architecture Team"
+      "subtitle": "Building Solutions, Leaving Footprints.",
+      "missionTitle": "Jejakawan Philosophy",
+      "missionP1": "Jejakawan is an initiative to develop technology applications and solutions that not only function technically, but also deliver tangible benefits and positive impact.",
+      "missionP2": "Created as an independent initiative by the owner of PT. Kirana Karina Network (K2NET), Jejakawan embodies three core values: Jejak (impactful work), Awan (people & technology), and Kawan (community & collaboration).",
+      "solutionsCta": "View Platform Products",
+      "identityLabel": "Developer & Backer",
+      "contactCta": "Contact Developer"
     },
     "pricing": {
       "title": "Plans & Services",
@@ -216,7 +216,7 @@
       "coordsUnavailable": "Coordinates not configured.",
       "coordsCopied": "Coordinates copied to clipboard.",
       "location": "Office Location",
-      "siteLocationDefault": "PT Jejak Awan Digital, Bandung & Jakarta, Indonesia",
+      "siteLocationDefault": "Bandung & Jakarta, Indonesia",
       "locationLinkCopied": "Location link copied to clipboard.",
       "formNotPublished": "Form is not yet published.",
       "formLoadFailed": "Failed to load consultation form.",
@@ -230,7 +230,7 @@
       "mapOpen": "Open in Google Maps",
       "mapDirections": "Get Directions",
       "copyAddress": "Copy Address",
-      "mapTitle": "PT Jejak Awan Digital Office Location",
+      "mapTitle": "Jejakawan / K2NET Location",
       "formLoading": "Submitting request...",
       "formUnavailableTitle": "Form Unavailable",
       "yes": "Yes",
@@ -242,7 +242,7 @@
       "statusLabel": "Service Status",
       "defaultMessage": "This service is currently undergoing scheduled platform upgrades.",
       "backHome": "Return Home",
-      "contactAdmin": "Contact Cloud Architects"
+      "contactAdmin": "Contact Developer"
     },
     "page": {
       "emptyPublished": "This page has not published any public content yet.",
@@ -252,7 +252,7 @@
       "notFoundDescription": "The page you are looking for is unavailable or has been relocated."
     },
     "post": {
-      "authorRole": "Cloud Architecture Team"
+      "authorRole": "Jejakawan Developer"
     },
     "solutions": {
       "title": "Platform Solutions",
@@ -273,10 +273,10 @@
       "page_products_desc": "Showcase enterprise modules and cloud clusters",
       "page_specs": "Specs & SLA",
       "page_specs_desc": "Set uptime guarantee, core latency, and cluster tier",
-      "page_about": "About Platform",
-      "page_about_desc": "Technology vision and PT Jejak Awan Digital overview",
-      "page_solusi": "Cloud Solutions",
-      "page_solusi_desc": "Catalog of cloud compute architectures and enterprise modules",
+      "page_about": "About Jejakawan",
+      "page_about_desc": "Philosophy, vision, and ecosystem of Jejakawan Platform",
+      "page_solusi": "Products & Solutions",
+      "page_solusi_desc": "Catalog of Jejakawan Platform products and solutions",
       "page_pricing": "Pricing & Tiers",
       "page_pricing_desc": "Compute tiers and subscription options",
       "page_news": "Insights & News",

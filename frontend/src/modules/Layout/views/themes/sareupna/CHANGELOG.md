@@ -19,6 +19,9 @@ Docs index: `docs/themes/sareupna/`.
 
 ### Changed
 
+- Theme package version → `1.1.6`
+- Align brand identity: Supported by K2NET, developer @jejakawan (https://github.com/jejakawan), tagline "Membangun Solusi, Meninggalkan Jejak", and official platform products (CMS, KataMPI, Aksara Engine, SME Platform, Safe Focus Android, Ecosystem).
+- Removed fictitious "PT Jejak Awan Digital" references across seeders, manifests, sample bundles, locales, and theme components.
 - `disabled_page_behavior` enums normalized to `message` / `redirect` (aligned with Blog/Contact defaults)
 - Theme package version → `1.1.5`
 - Sync `useSareupnaIdentity` composable and upstream core refinements.

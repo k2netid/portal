@@ -191,12 +191,12 @@ const { hydrateIcons } = useIconHydration();
 const post = ref<Content | null>(null);
 const loading = ref(true);
 const contentRef = ref<{ $el: HTMLElement } | null>(null);
-const displaySiteName = computed(() => getSetting('site_title', 'PT Jejak Awan Digital'));
+const displaySiteName = computed(() => getSetting('site_title', 'Jejakawan'));
 const authorFallback = computed(() => {
   const tpl = localizedString('page_post_author_fallback') || '{site} Editorial';
-  return tpl.replace(/\{site\}/g, String(displaySiteName.value || 'PT Jejak Awan Digital'));
+  return tpl.replace(/\{site\}/g, String(displaySiteName.value || 'Jejakawan'));
 });
-const authorRole = computed(() => localizedString('page_post_author_role') || t('pages.post.authorRole', 'Tim Arsitek Cloud'));
+const authorRole = computed(() => localizedString('page_post_author_role') || t('pages.post.authorRole', 'Pengembang Jejakawan'));
 const notFoundText = computed(() => localizedString('page_post_not_found') || t('publishing.frontend.post.notFound'));
 const backToBlogText = computed(() => localizedString('page_post_back_to_blog') || t('publishing.frontend.post.backToBlog'));
 

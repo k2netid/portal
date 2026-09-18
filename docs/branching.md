@@ -38,7 +38,7 @@ Sistem portal Jejakawan beroperasi dengan model **Upstream Core Engine + Downstr
 | Repositori | Peran / Scope | Branch Utama | Remote Upstream | Basis Tema | Seeder Deployment Khusus |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [**`ja-core_engine`**](file:///home/jejakawan/dev/ja-core_engine) | **Upstream Source of Truth** | `main` | - | Janari, Layung, Sarangenge | `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder` *(Semua Generic)* |
-| [**`ja-cms`**](file:///home/jejakawan/dev/ja-cms) | **Official PT Jejak Awan Digital** | `main` | `ja-core_engine.git` | **`janari`** | [`JejakawanDeploymentSeeder`](file:///home/jejakawan/dev/ja-cms/backend/database/seeders/JejakawanDeploymentSeeder.php) |
+| [**`ja-cms`**](file:///home/jejakawan/dev/ja-cms) | **Official Jejakawan (Supported by K2NET)** | `main` | `ja-core_engine.git` | **`sareupna`** | [`JejakawanDeploymentSeeder`](file:///home/jejakawan/dev/ja-cms/backend/database/seeders/JejakawanDeploymentSeeder.php) |
 | [**`k2net-portal`**](file:///home/jejakawan/dev/k2net-portal) | **PT Kirana Karina Network (ISP)** | `main` | `ja-core_engine.git` | **`layung`** | [`K2netDeploymentSeeder`](file:///home/jejakawan/dev/k2net-portal/backend/database/seeders/K2netDeploymentSeeder.php) |
 | [**`smkn6-portal`**](file:///home/jejakawan/dev/smkn6-portal) | **SMK Negeri 6 Bandung (Vokasi PK)** | `feat/theme-sarangenge` | `ja-core_engine.git` | **`sarangenge`** | [`Smkn6DeploymentSeeder`](file:///home/jejakawan/dev/smkn6-portal/backend/database/seeders/Smkn6DeploymentSeeder.php) |
 

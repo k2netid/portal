@@ -4,6 +4,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Module version → `1.1.5`
+- Theme Demo Seeder: Align `SareupnaThemeDemoSeeder` with Jejakawan brand identity (supported by K2NET, developer @jejakawan, official platform products).
+
 ### Added
 
 - Host contract: all themes use `cinematic-nav` only (Janari local `SectionNavDots` removed); archetype pages get `after_hero`.

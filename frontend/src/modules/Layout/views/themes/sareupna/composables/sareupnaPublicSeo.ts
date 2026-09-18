@@ -5,13 +5,13 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     titleKey: 'header.home',
     titleFallback: 'Beranda',
     descKey: 'footer.description',
-    descFallback: 'Sareupna — high-performance cloud & developer platform theme.',
+    descFallback: 'Jejakawan — Membangun Solusi, Meninggalkan Jejak. Supported by K2NET.',
   },
   'pages/About': {
     titleKey: 'header.about',
-    titleFallback: 'Tentang Platform',
+    titleFallback: 'Tentang Jejakawan',
     descKey: 'pages.about.subtitle',
-    descFallback: 'Visi teknologi dan arsitektur cloud PT Jejak Awan Digital.',
+    descFallback: 'Filosofi dan ekosistem platform Jejakawan — Membangun Solusi, Meninggalkan Jejak.',
   },
   'pages/Solutions': {
     titleKey: 'pages.solutions.title',
@@ -55,7 +55,7 @@ export function resolveSareupnaPublicSeo(input: {
   const pageTitle = copy ? input.t(copy.titleKey, copy.titleFallback) : siteName;
   const description = copy
     ? input.t(copy.descKey, copy.descFallback)
-    : input.t('footer.description', `${siteName} — Cloud & developer platform.`);
+    : input.t('footer.description', `${siteName} — Membangun Solusi, Meninggalkan Jejak. Supported by K2NET.`);
 
   const title =
     !input.themePage || input.themePage === 'pages/Home'
