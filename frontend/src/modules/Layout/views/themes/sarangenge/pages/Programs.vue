@@ -125,7 +125,7 @@ onMounted(async () => {
           ? data.data.data
           : [];
     programs.value = items;
-  } catch (err) {
+  } catch (_err) {
     programs.value = [];
   } finally {
     loading.value = false;

@@ -56,6 +56,8 @@ const props = withDefaults(
     min: 0,
     max: 100,
     step: 1,
+    id: undefined,
+    ariaLabel: undefined,
     disabled: false,
   }
 );
@@ -66,7 +68,7 @@ const emit = defineEmits<{
 
 const percentage = computed(() => {
   const min = Number(props.min) || 0;
-  const max = Number(props.max) ?? 100;
+  const max = Number(props.max) || 100;
   if (max <= min) return 0;
   const val = Number(props.modelValue) || 0;
   const clamped = Math.min(Math.max(val, min), max);
