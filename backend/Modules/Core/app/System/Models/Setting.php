@@ -4,7 +4,6 @@ namespace Modules\Core\System\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -147,6 +146,7 @@ class Setting extends Model
     {
         if ($key !== null) {
             Cache::forget("sys_setting_{$key}");
+
             return;
         }
 

@@ -7,6 +7,7 @@ namespace Modules\Layout\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Layout\Models\Theme;
@@ -24,13 +25,13 @@ final class ThemePackageInstallService
             return false;
         }
 
-        if (class_exists(\Modules\Core\System\Models\Setting::class)) {
-            $settingAllowed = filter_var(\Modules\Core\System\Models\Setting::get('enable_theme_upload', true), FILTER_VALIDATE_BOOLEAN);
+        if (class_exists(Setting::class)) {
+            $settingAllowed = filter_var(Setting::get('enable_theme_upload', true), FILTER_VALIDATE_BOOLEAN);
             if (! $settingAllowed) {
                 return false;
             }
 
-            if (\Modules\Core\System\Models\Setting::get('license_type') === 'community') {
+            if (Setting::get('license_type') === 'community') {
                 return false;
             }
         }
@@ -39,8 +40,8 @@ final class ThemePackageInstallService
             return true;
         }
 
-        if (class_exists(\Modules\Core\System\Services\LicenseService::class)) {
-            $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        if (class_exists(LicenseService::class)) {
+            $licenseService = app(LicenseService::class);
             if (! $licenseService->canUseFeature('theme_upload')) {
                 return false;
             }

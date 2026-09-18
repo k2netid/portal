@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Core\Tests\Security\Feature;
 
+use Modules\Core\System\Models\Role;
 use Tests\TestCase;
 
 final class ApiDocsAccessTest extends TestCase
@@ -43,7 +44,7 @@ final class ApiDocsAccessTest extends TestCase
     {
         $member = $this->createUser();
         $member->assignRole(
-            \Modules\Core\System\Models\Role::firstOrCreate(['name' => 'member', 'guard_name' => 'web'])
+            Role::firstOrCreate(['name' => 'member', 'guard_name' => 'web'])
         );
 
         $this->actingAs($member)

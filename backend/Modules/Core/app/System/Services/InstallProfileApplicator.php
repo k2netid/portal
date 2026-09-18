@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Database\Seeders\CmsRolesSeeder;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
+use Modules\Layout\Services\ThemeCacheService;
+use Modules\Layout\Services\ThemeService;
 use Throwable;
 
 /**
@@ -308,13 +310,13 @@ class InstallProfileApplicator
             return ['scanned' => 0, 'active' => null];
         }
 
-        if (! class_exists(\Modules\Layout\Services\ThemeService::class)) {
+        if (! class_exists(ThemeService::class)) {
             return ['scanned' => 0, 'active' => null];
         }
 
         try {
-            /** @var \Modules\Layout\Services\ThemeService $themes */
-            $themes = app(\Modules\Layout\Services\ThemeService::class);
+            /** @var ThemeService $themes */
+            $themes = app(ThemeService::class);
             $scanned = $themes->scanThemes();
 
             // Enable theme-janari registry pack (ADR-023 §2.3, §2.2).
@@ -327,8 +329,8 @@ class InstallProfileApplicator
             }
 
             $active = $themes->ensureDefaultFrontendTheme();
-            if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
-                app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+            if (class_exists(ThemeCacheService::class)) {
+                app(ThemeCacheService::class)->clearAll();
             }
 
             return [

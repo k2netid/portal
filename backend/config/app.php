@@ -1,5 +1,7 @@
 <?php
 
+use App\Support\ProductVersion;
+
 return [
 
     /*
@@ -25,7 +27,7 @@ return [
     |
     */
 
-    'version' => env('APP_VERSION') ?: \App\Support\ProductVersion::readPackageJson(),
+    'version' => env('APP_VERSION') ?: ProductVersion::readPackageJson(),
 
     /*
     |--------------------------------------------------------------------------

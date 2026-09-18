@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Core\System\Contracts;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 interface PasswordPolicyPortInterface
 {

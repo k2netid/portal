@@ -102,8 +102,13 @@ class CapabilityRegistryService
 
         // Order: Core first, then alphabetical
         uksort($manifests, function (string $a, string $b): int {
-            if ($a === 'core') return -1;
-            if ($b === 'core') return 1;
+            if ($a === 'core') {
+                return -1;
+            }
+            if ($b === 'core') {
+                return 1;
+            }
+
             return strcmp($a, $b);
         });
 

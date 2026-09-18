@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use Modules\Core\System\Models\User;
 use Modules\Forms\Database\Seeders\ContactFormSeeder;
 use Modules\Layout\Models\Menu;
-use Modules\Layout\Models\MenuItem;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Services\ThemeService;
 use Modules\Publishing\Models\Content;
@@ -20,8 +19,7 @@ final class ThemeSampleDataOrchestrator
         private readonly ThemeSampleDataReader $reader,
         private readonly ThemeService $themeService,
         private readonly ThemeSampleBlocksFactory $blocksFactory,
-    ) {
-    }
+    ) {}
 
     public function install(Theme $theme, ThemeSampleDataInstallOptions $options): ThemeSampleDataInstallResult
     {
@@ -279,6 +277,7 @@ final class ThemeSampleDataOrchestrator
                 $isSample = ($meta['sample_theme'] ?? null) === $themeSlug;
                 if (! $force && ! $isSample) {
                     $warnings[] = "Skipped page [{$slug}] — already exists and is not sample data.";
+
                     continue;
                 }
             }
@@ -374,6 +373,7 @@ final class ThemeSampleDataOrchestrator
                 $isSample = ($meta['sample_theme'] ?? null) === $themeSlug;
                 if (! $force && ! $isSample) {
                     $warnings[] = "Skipped post [{$slug}] — already exists and is not sample data.";
+
                     continue;
                 }
             }

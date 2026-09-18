@@ -1349,7 +1349,7 @@ class ExtensionControllerTest extends TestCase
     {
         Setting::set('enable_plugin_upload', false, 'boolean', 'security');
 
-        $uploadedFile = \Illuminate\Http\UploadedFile::fake()->create('fake-pack.zip', 100, 'application/zip');
+        $uploadedFile = UploadedFile::fake()->create('fake-pack.zip', 100, 'application/zip');
 
         $response = $this->actingAs($this->admin, 'sanctum')
             ->postJson('/api/v1/manage/infra/extensions/upload', [
@@ -1380,4 +1380,3 @@ class ExtensionControllerTest extends TestCase
         $this->assertTrue(str_contains((string) $response->headers->get('content-type'), 'zip') || str_contains((string) $response->headers->get('content-disposition'), 'attachment'));
     }
 }
-

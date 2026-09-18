@@ -183,10 +183,12 @@ class ExtensionBootstrapService
             $extension = Extension::query()->where('slug', $slug)->first();
             if ($extension === null) {
                 $errors[] = "Missing extension row: {$slug}";
+
                 continue;
             }
             if ($extension->status === 'active') {
                 $skipped[] = $slug;
+
                 continue;
             }
 
@@ -194,6 +196,7 @@ class ExtensionBootstrapService
                 $licenseBlock = $this->health->licenseBlocker($extension);
                 if ($licenseBlock !== null) {
                     $errors[] = $licenseBlock;
+
                     continue;
                 }
             }
@@ -206,6 +209,7 @@ class ExtensionBootstrapService
                     'version_conflicts' => [],
                     'cycle' => [],
                 ]);
+
                 continue;
             }
 
@@ -253,14 +257,17 @@ class ExtensionBootstrapService
             $extension = Extension::query()->where('slug', $slug)->first();
             if ($extension === null) {
                 $errors[] = "Missing extension row: {$slug}";
+
                 continue;
             }
             if ($extension->status !== 'active') {
                 $skipped[] = $slug;
+
                 continue;
             }
             if ($extension->is_core || $this->isKernelSlug($slug)) {
                 $errors[] = "Cannot deactivate kernel: {$slug}";
+
                 continue;
             }
 

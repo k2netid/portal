@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\ProductVersion;
 use Modules\Core\Security\Http\Middleware\EnsureApiDocsAccess;
 
 return [
@@ -31,7 +32,7 @@ return [
          * OpenAPI info.version — defaults to product SemVer (APP_VERSION / package.json).
          * Override with API_VERSION only if the docs surface must diverge from the app tag.
          */
-        'version' => env('API_VERSION') ?: (env('APP_VERSION') ?: \App\Support\ProductVersion::readPackageJson()),
+        'version' => env('API_VERSION') ?: (env('APP_VERSION') ?: ProductVersion::readPackageJson()),
 
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).

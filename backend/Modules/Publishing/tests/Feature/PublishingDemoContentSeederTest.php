@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Publishing\Tests\Feature;
 
-use Modules\Core\System\Models\User;
 use Modules\Publishing\Database\Seeders\PublishingDemoContentSeeder;
 use Modules\Publishing\Models\Content;
 use Tests\TestCase;

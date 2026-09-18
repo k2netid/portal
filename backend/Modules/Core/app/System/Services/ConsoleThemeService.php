@@ -73,7 +73,7 @@ final class ConsoleThemeService
         }
 
         // Logo assets are saved under group `brand` from console appearance UI.
-        $licenseService = app(\Modules\Core\System\Services\LicenseService::class);
+        $licenseService = app(LicenseService::class);
         if ($licenseService->hasWhiteLabel()) {
             $brand = Setting::getGroup('brand');
             foreach ($brand as $key => $value) {

@@ -5,9 +5,13 @@ namespace Modules\Layout\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Setting;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
@@ -16,8 +20,6 @@ use Modules\Layout\Services\ThemePackageInstallService;
 use Modules\Layout\Services\ThemeService;
 use Modules\Layout\Support\ThemeViews;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use ZipArchive;
 
 class ThemeController extends BaseApiController
@@ -315,13 +317,13 @@ class ThemeController extends BaseApiController
 
     protected function isExportAllowed(): bool
     {
-        if (class_exists(\Modules\Core\System\Models\Setting::class)) {
-            $settingAllowed = filter_var(\Modules\Core\System\Models\Setting::get('enable_theme_export', true), FILTER_VALIDATE_BOOLEAN);
+        if (class_exists(Setting::class)) {
+            $settingAllowed = filter_var(Setting::get('enable_theme_export', true), FILTER_VALIDATE_BOOLEAN);
             if (! $settingAllowed) {
                 return false;
             }
 
-            if (\Modules\Core\System\Models\Setting::get('license_type') === 'community') {
+            if (Setting::get('license_type') === 'community') {
                 return false;
             }
         }
@@ -330,8 +332,8 @@ class ThemeController extends BaseApiController
             return true;
         }
 
-        if (class_exists(\Modules\Core\System\Services\LicenseService::class)) {
-            return app(\Modules\Core\System\Services\LicenseService::class)->canUseFeature('theme_export');
+        if (class_exists(LicenseService::class)) {
+            return app(LicenseService::class)->canUseFeature('theme_export');
         }
 
         return true;
@@ -434,20 +436,21 @@ class ThemeController extends BaseApiController
                 return $this->error('Failed to create theme zip archive.', 500);
             }
 
-        $files = File::allFiles($sourcePath);
-        foreach ($files as $file) {
-            $relative = $file->getRelativePathname();
-            if (str_starts_with($relative, '.git') || str_ends_with($relative, '.DS_Store')) {
-                continue;
+            $files = File::allFiles($sourcePath);
+            foreach ($files as $file) {
+                $relative = $file->getRelativePathname();
+                if (str_starts_with($relative, '.git') || str_ends_with($relative, '.DS_Store')) {
+                    continue;
+                }
+                $zip->addFile($file->getRealPath(), "{$theme->slug}/{$relative}");
             }
-            $zip->addFile($file->getRealPath(), "{$theme->slug}/{$relative}");
-        }
 
-        $zip->close();
+            $zip->close();
 
-        return response()->download($zipPath, "{$theme->slug}-theme.zip")->deleteFileAfterSend(true);
+            return response()->download($zipPath, "{$theme->slug}-theme.zip")->deleteFileAfterSend(true);
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Theme export failed', ['theme' => $theme->slug, 'error' => $e->getMessage()]);
+            Log::error('Theme export failed', ['theme' => $theme->slug, 'error' => $e->getMessage()]);
+
             return $this->error('Theme export failed: '.$e->getMessage(), 500);
         }
     }
@@ -597,9 +600,9 @@ class ThemeController extends BaseApiController
             $newSettings['school_name'] = $trimmed;
             $newSettings['site_title'] = $trimmed;
             try {
-                if (class_exists(\Modules\Core\System\Models\Setting::class)) {
-                    \Modules\Core\System\Models\Setting::set('site_name', $trimmed, 'string', 'general');
-                    \Modules\Core\System\Models\Setting::clearCache('site_name');
+                if (class_exists(Setting::class)) {
+                    Setting::set('site_name', $trimmed, 'string', 'general');
+                    Setting::clearCache('site_name');
                 }
             } catch (\Throwable $e) {
                 Log::warning('Failed to sync school_name to site_name: '.$e->getMessage());
@@ -612,9 +615,9 @@ class ThemeController extends BaseApiController
             $newSettings['school_tagline'] = $trimmedTag;
             $newSettings['site_tagline'] = $trimmedTag;
             try {
-                if (class_exists(\Modules\Core\System\Models\Setting::class)) {
-                    \Modules\Core\System\Models\Setting::set('site_tagline', $trimmedTag, 'string', 'general');
-                    \Modules\Core\System\Models\Setting::clearCache('site_tagline');
+                if (class_exists(Setting::class)) {
+                    Setting::set('site_tagline', $trimmedTag, 'string', 'general');
+                    Setting::clearCache('site_tagline');
                 }
             } catch (\Throwable $e) {
                 Log::warning('Failed to sync school_tagline to site_tagline: '.$e->getMessage());

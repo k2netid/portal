@@ -11,6 +11,7 @@ use Modules\Core\System\Services\LicenseService;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\SampleData\ThemeSampleDataInstallOptions;
 use Modules\Layout\SampleData\ThemeSampleDataOrchestrator;
+use Modules\Layout\Services\ThemeCacheService;
 use Modules\Layout\Services\ThemeService;
 use Modules\Library\Models\Category;
 use Modules\Publishing\Models\Content;
@@ -177,9 +178,9 @@ class SarangengeThemeDemoSeeder extends Seeder
             }
         }
 
-        if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
+        if (class_exists(ThemeCacheService::class)) {
             try {
-                app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+                app(ThemeCacheService::class)->clearAll();
             } catch (\Throwable $e) {
                 // Ignore cache clear error
             }

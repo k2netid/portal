@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Rule;
@@ -188,7 +189,7 @@ class UserController extends BaseApiController
                 try {
                     $user->sendEmailVerificationNotification();
                 } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning('Failed to send email verification notification: '.$e->getMessage());
+                    Log::warning('Failed to send email verification notification: '.$e->getMessage());
                 }
             }
         }

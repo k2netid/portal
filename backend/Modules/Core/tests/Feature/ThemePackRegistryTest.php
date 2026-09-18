@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Core\Tests\Feature;
 
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Services\ExtensionBootstrapService;
 use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Tests\TestCase;
@@ -202,7 +203,7 @@ final class ThemePackRegistryTest extends TestCase
 
     public function test_theme_pack_discovery_creates_registry_rows(): void
     {
-        $bootstrapService = app(\Modules\Core\System\Services\ExtensionBootstrapService::class);
+        $bootstrapService = app(ExtensionBootstrapService::class);
         $bootstrapService->discover();
 
         foreach (ExtensionFamilyCatalog::firstPartyThemePackSlugs() as $packSlug) {
@@ -215,7 +216,7 @@ final class ThemePackRegistryTest extends TestCase
 
     public function test_theme_janari_pack_manifest_column_has_theme_flags(): void
     {
-        $bootstrapService = app(\Modules\Core\System\Services\ExtensionBootstrapService::class);
+        $bootstrapService = app(ExtensionBootstrapService::class);
         $bootstrapService->discover();
 
         $janariPack = Extension::query()->where('slug', 'theme-janari')->first();
@@ -230,7 +231,7 @@ final class ThemePackRegistryTest extends TestCase
 
     public function test_premium_pack_manifest_has_premium_flag(): void
     {
-        $bootstrapService = app(\Modules\Core\System\Services\ExtensionBootstrapService::class);
+        $bootstrapService = app(ExtensionBootstrapService::class);
         $bootstrapService->discover();
 
         $layungPack = Extension::query()->where('slug', 'theme-layung')->first();

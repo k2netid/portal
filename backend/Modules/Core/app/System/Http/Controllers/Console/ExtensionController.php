@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Modules\Core\System\Helpers\IpHelper;
 use Modules\Core\System\Http\Controllers\BaseApiController;
 use Modules\Core\System\Models\ConsoleMenu;
@@ -24,9 +26,10 @@ use Modules\Core\System\Services\ExtensionLifecycleLock;
 use Modules\Core\System\Services\ExtensionLifecycleOrchestrator;
 use Modules\Core\System\Services\ExtensionSecurityScanner;
 use Modules\Core\System\Services\InstagramFeedService;
+use Modules\Core\System\Services\InstallProfileApplicator;
+use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
-use Modules\Core\System\Services\LicenseService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
@@ -425,7 +428,7 @@ class ExtensionController extends BaseApiController
             'profile' => 'required|string|in:core,cms,cms_site',
         ]);
 
-        $preview = app(\Modules\Core\System\Services\InstallProfileApplicator::class)
+        $preview = app(InstallProfileApplicator::class)
             ->preview($validated['profile']);
 
         return $this->success($preview, 'Install profile preview');
@@ -447,7 +450,7 @@ class ExtensionController extends BaseApiController
             : null;
 
         try {
-            $result = app(\Modules\Core\System\Services\InstallProfileApplicator::class)->apply($profile);
+            $result = app(InstallProfileApplicator::class)->apply($profile);
         } catch (\RuntimeException $e) {
             return response()->json([
                 'success' => false,
@@ -736,7 +739,7 @@ class ExtensionController extends BaseApiController
                 File::ensureDirectoryExists($tempParent, 0777, true);
                 @chmod($tempParent, 0777);
             }
-            $tempDir = $tempParent.'/extension-export-'.\Illuminate\Support\Str::random(16);
+            $tempDir = $tempParent.'/extension-export-'.Str::random(16);
             File::ensureDirectoryExists($tempDir, 0777, true);
             @chmod($tempDir, 0777);
             $zipPath = $tempDir."/{$slug}-extension.zip";
@@ -764,7 +767,8 @@ class ExtensionController extends BaseApiController
 
             return response()->download($zipPath, "{$slug}-extension.zip")->deleteFileAfterSend(true);
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Extension export failed', ['slug' => $slug, 'error' => $e->getMessage()]);
+            Log::error('Extension export failed', ['slug' => $slug, 'error' => $e->getMessage()]);
+
             return $this->error('Extension export failed: '.$e->getMessage(), 500);
         }
     }

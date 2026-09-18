@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Contracts\LayoutRegistryInterface;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Services\LicenseService;
-use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Layout\Models\Menu;
 use Modules\Layout\Models\Theme;
 use Modules\Layout\Support\ThemeViews;

@@ -81,6 +81,7 @@ final class MemberPublicProfile
             $value = $validated[$key];
             if ($value === null || (is_string($value) && trim($value) === '')) {
                 $out[$key] = null;
+
                 continue;
             }
             $out[$key] = is_string($value) ? trim($value) : $value;

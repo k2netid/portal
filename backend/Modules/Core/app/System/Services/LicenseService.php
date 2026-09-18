@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Modules\Core\System\Services;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Models\Setting;
+use Modules\Layout\Models\Theme;
 
 class LicenseService
 {
@@ -224,12 +226,12 @@ class LicenseService
     private function countServedPremiumThemes(): int
     {
         try {
-            if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+            if (! class_exists(Theme::class)) {
                 return 0;
             }
 
-            /** @var \Illuminate\Database\Eloquent\Model $themeModel */
-            $themeModel = \Modules\Layout\Models\Theme::class;
+            /** @var Model $themeModel */
+            $themeModel = Theme::class;
 
             return (int) $themeModel::query()
                 ->where('is_active', true)

@@ -7,6 +7,7 @@ namespace Modules\Member\Tests\Feature;
 use Illuminate\Support\Facades\URL;
 use Modules\Core\System\Contracts\OutboundMailPortInterface;
 use Modules\Core\System\Models\Extension;
+use Modules\Core\System\Models\Setting;
 use Modules\Member\Models\Member;
 use Modules\Member\Models\MemberBookmark;
 use Modules\Member\Services\MemberEmailVerification;
@@ -84,7 +85,7 @@ class MemberAuthTest extends TestCase
 
     public function test_member_registration_respects_enable_member_registration_setting(): void
     {
-        \Modules\Core\System\Models\Setting::set('enable_member_registration', false, 'boolean', 'security');
+        Setting::set('enable_member_registration', false, 'boolean', 'security');
 
         $this->postJson('/api/v1/public/member/register', [
             'name' => 'Blocked Reader',
@@ -100,8 +101,8 @@ class MemberAuthTest extends TestCase
         ]);
 
         // Console operator flag must not gate reader signup.
-        \Modules\Core\System\Models\Setting::set('enable_registration', false, 'boolean', 'security');
-        \Modules\Core\System\Models\Setting::set('enable_member_registration', true, 'boolean', 'security');
+        Setting::set('enable_registration', false, 'boolean', 'security');
+        Setting::set('enable_member_registration', true, 'boolean', 'security');
 
         $this->postJson('/api/v1/public/member/register', [
             'name' => 'Allowed Reader',

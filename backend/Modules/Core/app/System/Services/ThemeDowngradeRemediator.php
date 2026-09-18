@@ -6,6 +6,8 @@ namespace Modules\Core\System\Services;
 
 use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Models\Setting;
+use Modules\Layout\Models\Theme;
+use Modules\Layout\Services\ThemeCacheService;
 
 /**
  * Downgrade remediator for theme entitlement violations.
@@ -26,7 +28,7 @@ class ThemeDowngradeRemediator
     public function remediate(): array
     {
         // Bail early if Layout module is not loaded
-        if (! class_exists(\Modules\Layout\Models\Theme::class)) {
+        if (! class_exists(Theme::class)) {
             return [
                 'remediated' => false,
                 'previous_slug' => null,
@@ -40,7 +42,7 @@ class ThemeDowngradeRemediator
             $license = app(LicenseService::class);
 
             // Find the currently served (is_active) frontend theme
-            $servedTheme = \Modules\Layout\Models\Theme::query()
+            $servedTheme = Theme::query()
                 ->where('type', 'frontend')
                 ->where('is_active', true)
                 ->first();
@@ -73,12 +75,12 @@ class ThemeDowngradeRemediator
             ]);
 
             // Deactivate all frontend themes
-            \Modules\Layout\Models\Theme::query()
+            Theme::query()
                 ->where('type', 'frontend')
                 ->update(['is_active' => false]);
 
             // Activate janari
-            $janari = \Modules\Layout\Models\Theme::query()
+            $janari = Theme::query()
                 ->where('slug', 'janari')
                 ->first();
 
@@ -91,9 +93,9 @@ class ThemeDowngradeRemediator
             Setting::set('frontend_theme_snapshot_v1', null);
 
             // Clear theme caches
-            if (class_exists(\Modules\Layout\Services\ThemeCacheService::class)) {
+            if (class_exists(ThemeCacheService::class)) {
                 try {
-                    app(\Modules\Layout\Services\ThemeCacheService::class)->clearAll();
+                    app(ThemeCacheService::class)->clearAll();
                 } catch (\Throwable) {
                     // non-fatal
                 }

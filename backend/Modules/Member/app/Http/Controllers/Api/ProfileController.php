@@ -7,6 +7,7 @@ namespace Modules\Member\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -72,7 +73,7 @@ class ProfileController extends BaseApiController
             return $this->validationError($e->errors());
         }
 
-        /** @var \Illuminate\Http\UploadedFile $file */
+        /** @var UploadedFile $file */
         $file = $validated['file'];
 
         try {

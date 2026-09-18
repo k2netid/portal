@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Core\System\Services;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Modules\Core\System\Contracts\LoginThrottlePortInterface;
 use Modules\Core\System\Models\Setting;
@@ -161,7 +162,7 @@ final class LoginThrottleService implements LoginThrottlePortInterface
         }
 
         try {
-            $seconds = now()->diffInSeconds(\Illuminate\Support\Carbon::parse($until), false);
+            $seconds = now()->diffInSeconds(Carbon::parse($until), false);
 
             return $seconds > 0 ? (int) $seconds : $this->baseBlockMinutes * 60;
         } catch (\Throwable) {
