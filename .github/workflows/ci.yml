@@ -183,3 +183,13 @@ jobs:
         run: |
           node scripts/e2e-preflight.mjs
           npm run test:e2e:ci
+
+  docs-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Check relative markdown links in docs/
+        run: npm run docs:links

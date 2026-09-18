@@ -1,5 +1,7 @@
 # Layung Theme Package
 
+> **SoT paket tema = file ini.** Indeks docs + ADR theme-scoped: [`docs/themes/layung/`](../../../../../../../docs/themes/layung/README.md) · Host contract: [`04-theme-system.md`](../../../../../../../docs/architecture/04-theme-system.md) · Changelog: [`CHANGELOG.md`](./CHANGELOG.md).
+
 **Layung** (bahasa Sunda: *cahaya layung / cahaya beureum konéng di langit wanci pasosoré nalika panonpoé surup*) adalah tema resmi untuk perusahaan **Internet Service Provider (ISP)**, **Fiber Optic Backbone**, dan **Managed Service Provider (MSP)** pada platform Jejakawan Core Engine — saudara filosofis **Janari** (*fajar*) dan **Sarangenge** (*matahari siang/sekolah*).
 
 ---

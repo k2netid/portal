@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-08
+supersedes: ["ADR-006"]
+---
+
 # ADR-018: Platform-Wide Plugin SoC & SoT Architecture — Cinematic Side Navigation (`cinematic-nav`), Floating Extensions, and Slot Contracts
 
 **Status:** Accepted / Implemented  

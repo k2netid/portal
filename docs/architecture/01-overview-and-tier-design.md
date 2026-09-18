@@ -1,5 +1,7 @@
 # 01. Overview & Architecture — Jejakawan Core Engine
 
+> Navigasi docs: [`DOCUMENTATION.md`](../DOCUMENTATION.md) · Theme host: [`04-theme-system.md`](04-theme-system.md) · ADRs: [`adr/README.md`](../adr/README.md)
+
 ## 🌟 1. Ikhtisar Sistem
 **Jejakawan Core Engine (`ja-core_engine`)** adalah platform Headless Kernel dan Admin Console modern berbasis arsitektur **Modular Monolith** yang dirancang untuk performa tinggi, isolasi domain yang kokoh, serta keandalan tata kelola data & infrastruktur.
 

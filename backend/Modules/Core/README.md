@@ -9,8 +9,20 @@ Platform kernel: System, Infra, Security. Always product-active. Not App Store t
 - `app/Security/` RBAC/ABAC, CSP, SIEM
 - Settings Identity owns group `general` (site name). Product packs own `seo` / `comments` / `analytics`
 
+## Changelogs (per domain)
+
+| Domain | File |
+| :--- | :--- |
+| Index | [`CHANGELOG.md`](CHANGELOG.md) |
+| System | [`System/CHANGELOG.md`](System/CHANGELOG.md) |
+| Infra | [`Infra/CHANGELOG.md`](Infra/CHANGELOG.md) |
+| Security | [`Security/CHANGELOG.md`](Security/CHANGELOG.md) |
+
+Policy: [`docs/guides/update-changelog.md`](../../../docs/guides/update-changelog.md).
+
 ## Agent notes
 
 - First-party modules cannot be uninstalled
 - Plugin uninstall must not proceed if deactivate is blocked by reverse dependents
 - Kernel `/manage/ai/generate` is gated by `ai_enabled`, not the cms-ai pack
+- Update the **domain** changelog that owns the change; keep index rollup short

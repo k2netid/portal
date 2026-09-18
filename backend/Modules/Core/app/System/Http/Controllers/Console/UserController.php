@@ -386,8 +386,8 @@ class UserController extends BaseApiController
 
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'username' => ['sometimes', 'nullable', 'string', 'alpha_dash', 'max:50', Rule::unique(User::class, 'username')->ignore($user->id)],
-            'email' => ['sometimes', 'required', 'email', Rule::unique(User::class, 'email')->ignore($user->id)],
+            'username' => ['sometimes', 'nullable', 'string', 'alpha_dash', 'max:50', Rule::unique(User::class, 'username')->ignore($user?->id)],
+            'email' => ['sometimes', 'required', 'email', Rule::unique(User::class, 'email')->ignore($user?->id)],
             'phone' => 'nullable|string|max:20',
             'bio' => 'nullable|string|max:1000',
             'website' => 'nullable|url|max:255',

@@ -50,8 +50,10 @@ final class MemberPublicProfile
     /**
      * @return array<string, mixed>
      */
-    public static function profileValidationRules(Member $member): array
+    public static function profileValidationRules(?Member $member = null): array
     {
+        unset($member); // reserved for future unique rules; kept optional for Scramble static analysis
+
         return [
             'name' => 'required|string|max:255',
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],

@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-06
+supersedes: []
+---
+
 # ADR-010: Visual Builder Viewport Preview Scaling, Adaptive Multi-Breakpoint Toolbar, & Auto-Fit Device Mode
 
 **Status:** Accepted  

@@ -147,13 +147,21 @@ final class MemberDirectorySupport
     }
 
     /**
+     * @param  Member|string|null  $member  Model or primary key for unique email ignore (Scramble-safe when null/string).
      * @return array<string, mixed>
      */
-    public static function adminUpdateRules(Member $member): array
+    public static function adminUpdateRules(Member|string|null $member = null): array
     {
+        $emailUnique = Rule::unique('mem_members', 'email');
+        if ($member instanceof Member) {
+            $emailUnique = $emailUnique->ignore($member->id);
+        } elseif (is_string($member) && $member !== '') {
+            $emailUnique = $emailUnique->ignore($member);
+        }
+
         return [
             'name' => 'sometimes|string|max:255',
-            'email' => ['sometimes', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member->id)],
+            'email' => ['sometimes', 'email', 'max:255', $emailUnique],
             'password' => ['sometimes', 'nullable', 'string', app(PasswordPolicyPortInterface::class)->rule()],
             'phone' => ['nullable', 'string', 'max:32', 'regex:/^[\d\s+\-().#extxEXT]*$/u'],
             'avatar' => 'nullable|string|max:512',

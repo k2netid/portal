@@ -5,10 +5,15 @@
 ---
 
 ## 1. Wajib Dibaca Sebelum Mulai (*Mandatory Reading*)
-1. [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md) — Arsitektur engine, modul, dan lifecycle.
-2. [`docs/branching.md`](docs/branching.md) — Matriks 4-repo & strategi sinkronisasi upstream/downstream.
-3. [`docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md`](docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md) — Filosofi pemisahan core vs deployment seeder.
-4. [`docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md`](docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md) — Laporan audit kualitas & sinkronisasi multi-repo.
+1. [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — Urutan kerja: audit → diskusi → rencana → implement → verify → catat.
+2. [`docs/DOCUMENTATION.md`](docs/DOCUMENTATION.md) — SoT / SoC / Diátaxis & aturan ADR (jangan campur docs tenant ke core).
+3. [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md) — Arsitektur engine, modul, dan lifecycle.
+4. [`docs/branching.md`](docs/branching.md) — Matriks 4-repo & strategi sinkronisasi upstream/downstream.
+5. [`docs/architecture/04-theme-system.md`](docs/architecture/04-theme-system.md) — Host vs theme package; pointer ke naming-conventions di kode.
+6. [`docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md`](docs/adr/ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md) — Filosofi pemisahan core vs deployment seeder.
+7. [`docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md`](docs/audit/AUDIT-2026-09-07-codebase-curation-and-upstream-sync.md) — Laporan audit kualitas & sinkronisasi multi-repo.
+
+Task M+: buat/isi brief di [`docs/work/`](docs/work/README.md) dari [`docs/templates/task-brief.md`](docs/templates/task-brief.md). How-to: [`docs/guides/start-a-task.md`](docs/guides/start-a-task.md).
 
 ---
 
@@ -45,3 +50,5 @@ php artisan rbac:sync
 # Verifikasi seeder tema
 php artisan theme:seed --all
 ```
+
+How-to: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · CLI: [`docs/reference/cli-commands.md`](docs/reference/cli-commands.md) · Changelog: [`docs/guides/update-changelog.md`](docs/guides/update-changelog.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md).

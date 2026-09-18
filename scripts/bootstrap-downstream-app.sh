@@ -78,7 +78,51 @@ cat > "$FRONTEND_MODULE/README.md" <<EOF
 # $PRODUCT_NAME ($PRODUCT_ID)
 
 Downstream module — register routes in \`frontend/src/engine/router/console.ts\`.
+
+See \`CHANGELOG.md\` and upstream \`docs/guides/update-changelog.md\` (ja-core_engine).
 EOF
+
+cat > "$FRONTEND_MODULE/CHANGELOG.md" <<EOF
+# Changelog — $PRODUCT_NAME (FE)
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+### Added
+
+- Scaffold via \`scripts/bootstrap-downstream-app.sh\`
+
+### Changed
+
+### Fixed
+EOF
+
+# Backend README + CHANGELOG if missing
+if [[ ! -f "$BACKEND_MODULE/README.md" ]]; then
+cat > "$BACKEND_MODULE/README.md" <<EOF
+# $PRODUCT_NAME ($PRODUCT_ID)
+
+Downstream backend module scaffold.
+EOF
+fi
+if [[ ! -f "$BACKEND_MODULE/CHANGELOG.md" ]]; then
+cat > "$BACKEND_MODULE/CHANGELOG.md" <<EOF
+# Changelog — $PRODUCT_NAME (BE)
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+### Added
+
+- Scaffold via \`scripts/bootstrap-downstream-app.sh\`
+
+### Changed
+
+### Fixed
+EOF
+fi
 
 echo "==> Next manual steps"
 echo "1. Enable module in backend/modules_statuses.json: \"$MODULE_CLASS\": true"

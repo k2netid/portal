@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\System\Contracts\PasswordPolicyPortInterface;
 use Modules\Core\System\Http\Controllers\BaseApiController;
@@ -28,7 +29,7 @@ class ProfileController extends BaseApiController
         }
 
         try {
-            $validated = $request->validate(MemberPublicProfile::profileValidationRules($member));
+            $validated = $request->validate(MemberPublicProfile::profileValidationRules());
         } catch (ValidationException $e) {
             return $this->validationError($e->errors());
         }
@@ -138,7 +139,7 @@ class ProfileController extends BaseApiController
 
         try {
             $validated = $request->validate([
-                'email' => 'required|email|max:255|unique:mem_members,email,'.$member->id,
+                'email' => ['required', 'email', 'max:255', Rule::unique('mem_members', 'email')->ignore($member?->getKey())],
                 'current_password' => 'required|string',
             ]);
         } catch (ValidationException $e) {

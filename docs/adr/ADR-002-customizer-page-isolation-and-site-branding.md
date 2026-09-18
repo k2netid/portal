@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-02
+supersedes: []
+---
+
 # ADR-002: Penyelarasan Panel Halaman Customizer & Pemisahan Tegas Site Branding vs Core Branding
 
 **Status:** Accepted  
@@ -21,7 +28,7 @@ Sebelum refaktor ini, arsitektur Theme Customizer memiliki beberapa kelemahan st
 ## Keputusan
 
 ### 1. Isolasi Halaman Per Panel (Page Isolation)
-Setiap halaman publik di tema Layung didefinisikan secara modular di [sidebar.pages.json](../../frontend/src/modules/Layout/customizer/platform/sidebar.pages.json) dengan `manifestCategories` masing-masing:
+Setiap halaman publik di tema Layung didefinisikan secara modular di [sidebar.pages.json](../../frontend/src/modules/Layout/views/themes/layung/customizer/sidebar.pages.json) dengan `manifestCategories` masing-masing:
 - `About Page` → `identity-page-about`
 - `Services Page` → `identity-page-services`
 - `Solusi Page` → `identity-page-solusi`
@@ -56,7 +63,7 @@ Pembaruan terjemahan i18n:
 
 | File | Perubahan |
 |------|-----------|
-| `customizer/platform/sidebar.pages.json` | Pemecahan manifestCategories per halaman terisolasi & cleanup career |
+| `views/themes/layung/customizer/sidebar.pages.json` | Pemecahan manifestCategories per halaman terisolasi & cleanup career |
 | `Publishing/locales/en.json` | Update `Site Branding` + paritas i18n halaman |
 | `Publishing/locales/id.json` | Update `Branding Situs` + paritas i18n halaman |
 | `Publishing/locales/su.json` | Update `Branding Loka` + paritas i18n halaman |

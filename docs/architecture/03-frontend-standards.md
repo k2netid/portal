@@ -2,6 +2,8 @@
 
 Panduan arsitektur dan standar pengembangan frontend Vue 3 + TypeScript di **Jejakawan Core Engine (`ja-core_engine`)**.
 
+> **SoT per modul:** `frontend/src/modules/{Module}/README.md`. Theme host & customizer: [04-theme-system.md](04-theme-system.md) → L0 di [`naming-conventions.md`](../../frontend/src/modules/Layout/customizer/naming-conventions.md).
+
 ---
 
 ## 🎨 1. Tech Stack Frontend

@@ -1,7 +1,12 @@
 # Changelog — Layout (FE)
 
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
 ## [Unreleased]
 
+### Added
+
+- Theme package `CHANGELOG.md` (Keep a Changelog) for janari / layung / sarangenge / sareupna; host changes remain in this file.
 - **Theme Sarangenge Side Nav Presets & Viewport Scroll Snap**: Created floating side dot navigation (`SarangengeSideNav.vue`) with 4 visual presets (`glass`, `minimal`, `glow`, `bars`), GSAP spring motion, i18n tooltips, `<Teleport to="body">` centered vertical placement, and `yMandatory` scroll snap with Theme Customizer controls ([ADR-018](../../../../docs/adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md)).
 - Site Favicon Isolation & DOM Equality: `FrontendLayout.vue` acts as the single source of truth for public site favicon lifecycle, using the isolated `ja_site_favicon_href` cache key and DOM equality check in `applySiteFavicon` to eliminate cross-tab favicon flickering ([ADR-015](../../../../docs/adr/ADR-015-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md)).
 - Viewport Preview Scaling & Adaptive Toolbar: Live preview modal features proportional viewport scaling (`scale(0.8)` for tablet/mobile), dynamic iframe aspect ratio, and adaptive mobile toolbar wrap ([ADR-010](../../../../docs/adr/ADR-010-builder-viewport-preview-scaling-and-adaptive-responsive-toolbar.md)).
@@ -56,11 +61,11 @@
 - Site Editor theme panel uses merged customizer schema (`SettingControl`) + live apex `/` (or page slug) preview dialog.
 - Theme tab shows live Janari Vue pages on the canvas instead of empty “create new” drafts.
 
-## 1.1.0 — P3-3b
+## [1.1.0] - P3-3b
 
 - ~500 files: builder, themes, customizer, content-renderer.
 - Publishing imports Builder/BlockRenderer from `@/modules/Layout`.
 
-## 1.0.0 — P3-3a
+## [1.0.0] - P3-3a
 
 - Console views for menus, widgets, and redirects.

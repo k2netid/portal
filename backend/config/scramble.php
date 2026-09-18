@@ -1,13 +1,19 @@
 <?php
 
-use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
+use Modules\Core\Security\Http\Middleware\EnsureApiDocsAccess;
 
 return [
     /*
      * Your API path. By default, all routes starting with this path will be added to the docs.
      * If you need to change this behavior, you can add your custom routes resolver using `Scramble::routes()`.
+     *
+     * Dynamic Data Model CRUD (`api/v1/dynamic/{slug}`) is documented by `php artisan dynamic:openapi`
+     * / `npm run docs:openapi` — exclude from Scramble to avoid VR002 on field-driven rules.
      */
-    'api_path' => 'api',
+    'api_path' => [
+        'include' => 'api',
+        'exclude' => ['api/v1/dynamic'],
+    ],
 
     /*
      * Your API domain. By default, app domain is used. This is also a part of the default API routes
@@ -129,7 +135,9 @@ return [
 
     'middleware' => [
         'web',
-        RestrictedDocsAccess::class,
+        // Always require viewApiDocs (admin+). Do not use Scramble's RestrictedDocsAccess
+        // — it bypasses auth entirely when APP_ENV=local.
+        EnsureApiDocsAccess::class,
     ],
 
     'extensions' => [],

@@ -364,14 +364,19 @@ class FileManagerController extends BaseApiController
         }
 
         // Get settings from UploadSettingsHelper (shared with Media component)
-        $maxSize = UploadSettingsHelper::getMaxUploadSize();
-        $allowedExtensions = UploadSettingsHelper::getAllowedExtensions();
-        $allowedMimes = implode(',', $allowedExtensions);
-
         $request->validate([
-            'file' => "required_without:files|file|max:{$maxSize}|mimes:{$allowedMimes}",
+            'file' => [
+                'required_without:files',
+                'file',
+                'max:'.UploadSettingsHelper::getMaxUploadSize(),
+                'mimes:'.implode(',', UploadSettingsHelper::getAllowedExtensions()),
+            ],
             'files' => 'required_without:file|array',
-            'files.*' => "file|max:{$maxSize}|mimes:{$allowedMimes}",
+            'files.*' => [
+                'file',
+                'max:'.UploadSettingsHelper::getMaxUploadSize(),
+                'mimes:'.implode(',', UploadSettingsHelper::getAllowedExtensions()),
+            ],
             'path' => 'nullable|string',
             'disk' => 'nullable|string',
         ]);

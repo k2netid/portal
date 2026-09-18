@@ -1,5 +1,7 @@
 # Changelog — Publishing
 
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
 ## [Unreleased]
 
 ### Added
@@ -8,6 +10,10 @@
 ### Changed
 - Settings groups are `seo` + `comments` only. Site identity (`general`) stays on kernel Identity.
 - SEO and Discussion setting tabs live in this pack (`views/settings/tabs/`).
+
+### Fixed
+- Scramble OpenAPI: Publishing settings GEN001 — private `applyBulkSettings` shared by PUT + bulk-update.
+- Scramble OpenAPI: Content publish body check after static validate (VR002).
 
 ### Added
 

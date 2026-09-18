@@ -12,8 +12,11 @@
         "deploy": "npm run deploy:assets:full",
         "deploy:assets": "npm run deploy:assets:full",
         "deploy:assets:full": "bash scripts/sync-frontend-assets-to-backend.sh",
-        "agent:verify": "npm run quality:frontend && npm run quality:backend",
+        "agent:verify": "npm run quality:frontend && npm run quality:backend && npm run docs:links",
         "agent:verify:quick": "npm run quality:frontend",
+        "docs:links": "node scripts/check-docs-links.mjs",
+        "docs:sync-downstream": "bash scripts/sync-docs-guides-reference-downstream.sh",
+        "docs:openapi": "bash scripts/export-openapi.sh",
         "test:backend": "cd backend && php artisan test",
         "test:backend:coverage": "cd backend && php artisan test --coverage",
         "test:e2e:list": "npm --prefix frontend run test:e2e:list",
@@ -31,11 +34,13 @@
         "purpose": "Standard instructions for AI/coding agents when creating or updating this project.",
         "scope": "Jejakawan Core Engine; repo ja-core_engine (Core System, Security, Infra, Data Model Studio, IAM, Engine Architecture).",
         "when_creating_or_updating_project": [
-            "Read docs/AGENT_START_HERE.md and docs/architectural-status.md first, then docs/product/downstream-apps-and-licensing.md and docs/architecture/*.md listed in docs/README.md.",
+            "Read docs/WORKFLOW.md and docs/DOCUMENTATION.md first, then docs/AGENT_START_HERE.md, docs/architectural-status.md, docs/product/downstream-apps-and-licensing.md, and docs/architecture/*.md listed in docs/README.md.",
+            "For scale M+ work: create/update a brief under docs/work/ from docs/templates/task-brief.md (audit → plan → implement → verify → record).",
             "Use branch-based workflow; avoid direct edits on main unless explicitly requested.",
             "Prefer package managers for dependency changes (npm/composer), avoid manual lockfile edits.",
             "Keep changes minimal and focused; avoid unrelated refactors.",
             "Do not commit secrets or environment-specific credentials.",
+            "Update dual-layer changelogs per docs/guides/update-changelog.md when behavior or system docs change.",
             "After edits, run npm run agent:verify before proposing merge."
         ],
         "required_validation_before_pr": [

@@ -1,5 +1,7 @@
 # Sarangenge Theme Package
 
+> **SoT paket tema = file ini.** Indeks docs: [`docs/themes/sarangenge/`](../../../../../../../docs/themes/sarangenge/README.md) · Host: [`04-theme-system.md`](../../../../../../../docs/architecture/04-theme-system.md) · Platform plugin slots: [ADR-018](../../../../../../../docs/adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md) · Changelog: [`CHANGELOG.md`](./CHANGELOG.md).
+
 **Sarangenge** (bahasa Sunda: *kembang sarangenge / bunga matahari* sarta *panonpoé isuk-isuk / haneut moyan*) adalah tema resmi institusi pendidikan dan sekolah modern untuk Jejakawan Core Engine — saudara filosofis **Janari** (*fajar*).
 
 ## Filosofi & Positioning (Standar Sekolah Modern 2026)

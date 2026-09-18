@@ -1,3 +1,10 @@
+---
+status: accepted
+scope: core
+date: 2026-09-02
+supersedes: []
+---
+
 # ADR-004: Floating Social Dock Architecture, GSAP Animation Flow, & Theme Customizer Integration
 
 **Status:** Accepted  

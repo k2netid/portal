@@ -1,5 +1,7 @@
 # Janari theme package
 
+> **SoT paket tema = file ini.** Indeks docs: [`docs/themes/janari/`](../../../../../../../docs/themes/janari/README.md) · Host: [`04-theme-system.md`](../../../../../../../docs/architecture/04-theme-system.md) · Changelog: [`CHANGELOG.md`](./CHANGELOG.md).
+
 Self-contained public theme for the Jejakawan hub site (marketing + Jejakawan on `ja-control-plane`). Follow [Theme Host Contract](../theme-host-contract.md) for allowed host imports.
 
 ## Layout

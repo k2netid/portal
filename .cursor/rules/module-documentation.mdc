@@ -14,15 +14,30 @@ When you **create or meaningfully change** a first-party module under `backend/M
    - Links to `docs/extensions/*.md` or architecture docs when relevant
    - Short “Agent notes” (do/don’t for the next agent)
 2. **`CHANGELOG.md`** in the same module root
-   - Keep a Changelog style; put new entries under `[Unreleased]`
-   - Move to a dated/versioned section when the work ships/merges
+   - [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) style
+   - Put new entries under `[Unreleased]` with `### Added` / `### Changed` / `### Fixed` (as needed)
+   - Move to a dated/versioned section when the pack ships a versioned release
+
+## Dual-layer changelog (wajib pahami)
+
+| Layer | Path | Isi |
+| :--- | :--- | :--- |
+| Module | `backend/Modules/*/CHANGELOG.md`, `frontend/src/modules/*/CHANGELOG.md` | Detail teknis domain |
+| Core domains | `Modules/Core/{System,Infra,Security}/CHANGELOG.md` (+ FE) | Wajib per domain; `Core/CHANGELOG.md` = index |
+| Theme package | `frontend/src/modules/Layout/views/themes/<slug>/CHANGELOG.md` | Hanya perubahan khusus slug |
+| Root | `/CHANGELOG.md` | Ringkas release-facing + pointer (bukan duplikat esai) |
+
+How-to: [`docs/guides/update-changelog.md`](../../docs/guides/update-changelog.md).  
+Template: [`docs/templates/changelog-module.md`](../../docs/templates/changelog-module.md).
 
 ## Also update
 
 - Extension/product doc if one exists (e.g. `docs/extensions/ja-mail.md`)
-- Root `CHANGELOG.md` `[Unreleased]` with a one-line pointer for user-visible releases
+- Root `CHANGELOG.md` `[Unreleased]` with a one-line pointer for user-visible **or** system-docs changes
+- Task brief § Hasil when scale M+ (`docs/work/`)
 
 ## Do not
 
 - Leave hanging “future backlog” items that belong to other systems (e.g. MTA/DNS/IMAP for JA-Mail)
-- Skip changelog when behavior, API, or permissions change
+- Skip changelog when behavior, API, permissions, or public theme UX change
+- Put client/tenant brand data into changelogs or seeders in this repo

@@ -74,6 +74,11 @@ backend/public/stats.html
 backend/bootstrap/cache/*.php
 
 # Documentation is versioned under docs/ (see ROADMAP_2026_Q4.md)
+# Generated OpenAPI JSON (regenerate: npm run docs:openapi)
+docs/api/*.openapi.json
+docs/api/console.openapi.json
+!docs/api/README.md
+!docs/api/INDEX.md
 
 # Local dev credentials
 ../dev/

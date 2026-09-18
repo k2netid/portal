@@ -11,6 +11,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 ## [Unreleased]
 
 ### Added
+- **Documentation system (SoT / Diátaxis / WORKFLOW)**: Layered docs policy (`docs/DOCUMENTATION.md`), agent work lifecycle (`docs/WORKFLOW.md`, `docs/work/`, task templates), `docs/guides/` + `docs/reference/`, theme docs index, OpenAPI reference + unified exporter (`npm run docs:openapi`), docs link checker (`npm run docs:links` + CI), dual-layer changelog with Core System/Infra/Security split, `docs/COMPLETENESS.md`, and downstream mirror of guides/reference/**architecture**/policy including `ja-cms` (`npm run docs:sync-downstream`). See also `CONTRIBUTING.md`.
+- **Theme package changelogs**: Keep a Changelog files under `frontend/src/modules/Layout/views/themes/{janari,layung,sarangenge,sareupna}/CHANGELOG.md`.
 - **Theme Sarangenge Side Nav Presets & Viewport Scroll Snap**: Added floating side dot navigation (`SarangengeSideNav.vue`) with 4 presets (`glass`, `minimal`, `glow`, `bars`), GSAP spring motion, i18n tooltips, `<Teleport to="body">` viewport centering, and `yMandatory` scroll snap with Theme Customizer controls ([ADR-018](docs/adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md)).
 - **RBAC UI Primitives**: Added Vue directives `v-can` and `v-role` (with `.disabled` modifier) and `<Can>` component supporting `:permission`, `:role`, `:any`, `:minRank`, and `#fallback` slot. Registered globally in `main-shared.ts` ([ADR-020](docs/adr/ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md)).
 - **User Creation Email Verification Controls**: Added explicit `is_verified` toggle in `UserModal.vue` allowing authorized higher-rank roles to mark accounts as verified on creation ([ADR-019](docs/adr/ADR-019-user-email-verification-and-privilege-lifecycle.md)).
@@ -23,6 +25,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 
 ### Changed
 - **Unified Role Hierarchy & Ranks**: Standardized role ranks across backend `User::getRoleRankMap()` and frontend `auth.ts` (`super: 100 > system-admin: 95 > admin: 90 > security-officer: 85 > operator: 80 > editor: 60 > author: 40 > staff: 30 > member: 10`) ([ADR-020](docs/adr/ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md)).
+- **Scramble OpenAPI clean export**: Fixed GEN001/VR002 across Publishing/Core/Member/Infra; exclude `api/v1/dynamic` from Scramble (covered by `dynamic:openapi`). `npm run docs:openapi` / `scramble:export -v` → 0 errors / 0 warnings.
+- **Scramble docs access**: `/docs/api` always requires admin+ (`EnsureApiDocsAccess`) — no open access when `APP_ENV=local`.
 - **Console Branding & Display Select**: Refined Console Appearance by eliminating redundant logo upload fields, centralizing brand assets into General settings, and providing reactive `branding_display` mode selector (`both`, `logo_only`, `name_only`, `collapsed_icon_only`) in `TheSidebar.vue`.
 
 - **Commercial Licensing Gating**: Gated theme portability (import/export JSON) and custom console logos behind Enterprise/Pro license tiers with clear disabled states and tier badges.

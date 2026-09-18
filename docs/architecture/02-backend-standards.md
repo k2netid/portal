@@ -4,6 +4,8 @@ Panduan standar pengembangan backend Laravel di **Jejakawan Core Engine (`ja-cor
 
 Modul contoh di bawah memakai domain **System** (kernel). Downstream apps menambah modul sendiri di `backend/Modules/{Product}/` — lihat [downstream-apps-and-licensing.md](../product/downstream-apps-and-licensing.md).
 
+> **SoT per modul:** `backend/Modules/{Module}/README.md` (+ `CHANGELOG.md`). Dokumen ini = standar lintas-modul. Kebijakan docs: [`DOCUMENTATION.md`](../DOCUMENTATION.md).
+
 ---
 
 ## 🏗️ 1. Struktur Modul Backend

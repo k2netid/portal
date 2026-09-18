@@ -1,6 +1,16 @@
 # Changelog — Forms (FE)
 
-## 1.0.0 — P3-4
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [1.0.0] - P3-4
 
 - Console views: list, create/edit with field designer, submissions, analytics.
 - Wired into OPTIONAL_FIRST_PARTY loader and module locales.

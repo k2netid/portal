@@ -125,13 +125,14 @@ class MemberDirectoryController extends BaseApiController
 
     public function update(Request $request, string $member): JsonResponse
     {
-        $record = Member::withTrashed()->findOrFail($member);
-
+        // Validate using route id first (Scramble-safe); then load model.
         try {
-            $validated = $request->validate(MemberDirectorySupport::adminUpdateRules($record));
+            $validated = $request->validate(MemberDirectorySupport::adminUpdateRules($member));
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->validationError($e->errors());
         }
+
+        $record = Member::withTrashed()->findOrFail($member);
 
         if ($validated === []) {
             return $this->validationError(['name' => ['No valid fields to update.']]);
