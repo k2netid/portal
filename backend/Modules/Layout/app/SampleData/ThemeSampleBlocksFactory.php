@@ -172,7 +172,7 @@ final class ThemeSampleBlocksFactory
                 'title' => 'Ingin mengenal tim kami?',
                 'content' => 'Lihat halaman Tim atau hubungi sales untuk demo.',
                 'buttonText' => 'Lihat Tim',
-                'buttonUrl' => '/tim',
+                'buttonUrl' => '/team',
                 'layout' => 'inline',
                 '_label' => 'CTA',
             ]),

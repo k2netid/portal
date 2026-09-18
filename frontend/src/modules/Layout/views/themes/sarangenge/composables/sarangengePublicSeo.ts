@@ -19,19 +19,7 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     descKey: 'pages.programs.subtitle',
     descFallback: 'Kompetensi keahlian dan kurikulum vokasi berstandar industri 4.0.',
   },
-  'pages/Solusi': {
-    titleKey: 'header.solusi',
-    titleFallback: 'Program Keahlian',
-    descKey: 'pages.programs.subtitle',
-    descFallback: 'Kompetensi keahlian dan kurikulum vokasi berstandar industri 4.0.',
-  },
   'pages/Facilities': {
-    titleKey: 'header.services',
-    titleFallback: 'Fasilitas Kampus',
-    descKey: 'pages.facilities.subtitle',
-    descFallback: 'Sarana prasarana, bengkel praktik, dan laboratorium modern.',
-  },
-  'pages/Services': {
     titleKey: 'header.services',
     titleFallback: 'Fasilitas Kampus',
     descKey: 'pages.facilities.subtitle',
@@ -55,10 +43,10 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     descKey: 'pages.alumni.subtitle',
     descFallback: 'Bursa Kerja Khusus, kemitraan industri, dan jejaring alumni sekolah.',
   },
-  'pages/Tim': {
+  'pages/Team': {
     titleKey: 'header.tim',
     titleFallback: 'Guru & Tenaga Kependidikan',
-    descKey: 'pages.tim.subtitle',
+    descKey: 'pages.team.subtitle',
     descFallback: 'Direktori dewan guru dan tenaga kependidikan bersertifikasi profesional.',
   },
   'pages/Blog': {

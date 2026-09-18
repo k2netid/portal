@@ -48,8 +48,8 @@
             "navItemId": "page-solusi",
             "mode": "design"
         },
-        "tim": {
-            "navItemId": "page-tim",
+        "team": {
+            "navItemId": "page-team",
             "mode": "design"
         },
         "pricing": {

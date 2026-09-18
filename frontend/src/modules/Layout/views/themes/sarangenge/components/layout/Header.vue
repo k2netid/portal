@@ -789,7 +789,7 @@ const defaultNavItems = computed((): MenuItem[] => [
     children: [
       { id: 'sg-nav-about-history', title: 'Visi & Sejarah', url: '/about#visi', type: 'custom', description: 'Falsafah dan keunggulan sekolah' },
       { id: 'sg-nav-about-facilities', title: 'Fasilitas & Bengkel', url: '/facilities', type: 'custom', description: 'Laboratorium & bengkel kejuruan' },
-      { id: 'sg-nav-about-team', title: tt('header.teachers', 'Guru & Staf'), url: '/tim', type: 'custom', description: 'Pendidik bersertifikasi industri' },
+      { id: 'sg-nav-about-team', title: tt('header.teachers', 'Guru & Staf'), url: '/team', type: 'custom', description: 'Pendidik bersertifikasi industri' },
       { id: 'sg-nav-about-achieve', title: tt('header.achievements', 'Prestasi Siswa'), url: '/achievement', type: 'custom', description: 'Medali LKS & juara nasional' },
     ],
   },

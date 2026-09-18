@@ -1,7 +1,7 @@
 {
     "name": "Sarangenge",
     "slug": "sarangenge",
-    "version": "2.0.0",
+    "version": "2.0.5",
     "type": "frontend",
     "archetype": "education_school",
     "category": "Education & Institution",
@@ -619,6 +619,14 @@
             "default": true,
             "category": "Contact Page"
         },
+        "contact_form_slug": {
+            "label": "Slug formulir kontak",
+            "type": "text",
+            "default": "contact",
+            "category": "Contact Page",
+            "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+            "scope": "theme"
+        },
         "footer_text": {
             "label": "Copyright Text",
             "type": "text",
@@ -1115,59 +1123,11 @@
             "default": true,
             "category": "Pricing Page"
         },
-        "enable_tim": {
+        "enable_team": {
             "label": "Aktifkan Halaman Guru & Staf",
             "type": "boolean",
             "default": true,
             "category": "Tim Page"
-        },
-        "social_instagram_feed_enabled": {
-            "label": "Tampilkan Instagram Feed di Beranda",
-            "type": "boolean",
-            "default": false,
-            "category": "Social Media"
-        },
-        "social_instagram_feed_slot": {
-            "label": "Posisi Penempatan Instagram Feed",
-            "type": "select",
-            "options": [
-                {
-                    "label": "Bawah Hero Section (after_hero)",
-                    "value": "after_hero"
-                },
-                {
-                    "label": "Atas Footer Situs (before_footer)",
-                    "value": "before_footer"
-                }
-            ],
-            "default": "after_hero",
-            "category": "Social Media"
-        },
-        "social_instagram_feed_layout": {
-            "label": "Gaya Tampilan Instagram Feed",
-            "type": "select",
-            "options": [
-                {
-                    "label": "Bento Grid (Modern Berjenjang)",
-                    "value": "bento"
-                },
-                {
-                    "label": "Classic Grid (Kotak Responsif)",
-                    "value": "grid"
-                },
-                {
-                    "label": "Carousel Slider (Geser Horizontal)",
-                    "value": "carousel"
-                }
-            ],
-            "default": "bento",
-            "category": "Social Media"
-        },
-        "social_instagram_feed_title": {
-            "label": "Judul Seksi Instagram",
-            "type": "text",
-            "default": "",
-            "category": "Social Media"
         }
     },
     "menus": {

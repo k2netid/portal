@@ -1,6 +1,6 @@
 <template>
   <LayungPageGate
-    setting-key="enable_tim"
+    setting-key="enable_team"
     :title="t('pages.team.title', 'Tim Operasional')"
   >
     <div

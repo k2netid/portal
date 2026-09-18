@@ -22,11 +22,11 @@
             "descriptionKey": "theme.layung.customizer.sidebar.page_services_desc"
         },
         {
-            "id": "page-solusi",
-            "manifestCategories": ["Solusi Page"],
+            "id": "page-pricing-msp",
+            "manifestCategories": ["Pricing Page", "MSP"],
             "icon": "layers",
-            "labelKey": "theme.layung.customizer.sidebar.page_solusi",
-            "descriptionKey": "theme.layung.customizer.sidebar.page_solusi_desc"
+            "labelKey": "theme.layung.customizer.sidebar.page_pricing",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_pricing_desc"
         },
         {
             "id": "page-pricing",
@@ -43,11 +43,11 @@
             "descriptionKey": "theme.layung.customizer.sidebar.page_achievement_desc"
         },
         {
-            "id": "page-tim",
+            "id": "page-team",
             "manifestCategories": ["Tim Page"],
             "icon": "users",
-            "labelKey": "theme.layung.customizer.sidebar.page_tim",
-            "descriptionKey": "theme.layung.customizer.sidebar.page_tim_desc"
+            "labelKey": "theme.layung.customizer.sidebar.page_team",
+            "descriptionKey": "theme.layung.customizer.sidebar.page_team_desc"
         },
         {
             "id": "page-careers",

@@ -36,8 +36,8 @@
             "mode": "bindings",
             "bindingsId": "facilities"
         },
-        "tim": {
-            "navItemId": "page-school-tim",
+        "team": {
+            "navItemId": "page-school-team",
             "mode": "bindings",
             "bindingsId": "staff"
         },

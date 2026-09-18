@@ -39,10 +39,10 @@ const { getSetting } = useTheme()
 const { localizedString } = useLocalizedThemeSetting()
 
 const DEFAULTS = [
-  { key: 'hub', to: '/solusi' },
+  { key: 'hub', to: '/solutions' },
   { key: 'commercial', to: '/pricing' },
   { key: 'onprem', to: '/contact' },
-  { key: 'organization', to: '/solusi#organization-roadmap' },
+  { key: 'organization', to: '/solutions#organization-roadmap' },
 ] as const
 
 const titleText = computed(() => localizedString('page_about_offerings_title') || t('pages.about.offeringsTitle'))

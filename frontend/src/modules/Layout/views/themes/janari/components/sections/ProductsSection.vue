@@ -89,7 +89,7 @@ const DEFAULT_DEFS: Array<{ key: ProductKey; to: string }> = [
   { key: 'reach', to: '/contact' },
   { key: 'intelligence', to: '/search' },
   { key: 'platform', to: '/pricing' },
-  { key: 'organization', to: '/solusi#organization-roadmap' },
+  { key: 'organization', to: '/solutions#organization-roadmap' },
   { key: 'member', to: '/member/register' },
 ]
 
@@ -98,8 +98,8 @@ const titleText = computed(() => localizedString('home_products_title') || t('pr
 const subtitleText = computed(() => localizedString('home_products_subtitle') || t('products.subtitle'))
 const viewAllText = computed(() => localizedString('home_products_view_all') || t('products.viewAll'))
 const viewAllUrl = computed(() => {
-  const raw = getSetting('home_products_view_all_url', '/solusi')
-  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solusi'
+  const raw = getSetting('home_products_view_all_url', '/solutions')
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : '/solutions'
 })
 
 const cards = computed(() => {

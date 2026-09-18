@@ -71,11 +71,11 @@
             "descriptionKey": "publishing.theme_customizer.sidebar.items.page_solusi_desc"
         },
         {
-            "id": "page-tim",
+            "id": "page-team",
             "manifestCategories": ["Tim Page"],
             "icon": "users",
-            "labelKey": "publishing.theme_customizer.sidebar.items.page_tim",
-            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_tim_desc"
+            "labelKey": "publishing.theme_customizer.sidebar.items.page_team",
+            "descriptionKey": "publishing.theme_customizer.sidebar.items.page_team_desc"
         },
         {
             "id": "page-products",

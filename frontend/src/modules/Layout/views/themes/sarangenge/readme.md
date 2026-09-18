@@ -1,5 +1,7 @@
 # Sarangenge Theme Package
 
+> **SoT paket tema = file ini.** Indeks docs: [`docs/themes/sarangenge/`](../../../../../../../docs/themes/sarangenge/README.md) · Host: [`04-theme-system.md`](../../../../../../../docs/architecture/04-theme-system.md) · Platform plugin slots: [ADR-018](../../../../../../../docs/adr/ADR-018-theme-sarangenge-side-nav-presets-and-viewport-scroll-snap.md) · Changelog: [`CHANGELOG.md`](./CHANGELOG.md).
+
 **Sarangenge** (bahasa Sunda: *kembang sarangenge / bunga matahari* sarta *panonpoé isuk-isuk / haneut moyan*) adalah tema resmi institusi pendidikan dan sekolah modern untuk Jejakawan Core Engine — saudara filosofis **Janari** (*fajar*).
 
 ## Filosofi & Positioning (Standar Sekolah Modern 2026)
@@ -50,7 +52,7 @@ sarangenge/
 │
 ├── pages/                                      # Route Views (ThemePageResolver)
 │   ├── Home.vue, About.vue, Blog.vue, Post.vue, Contact.vue, Search.vue
-│   ├── Achievement.vue, Solusi.vue, Services.vue, CareerCenter.vue, Pricing.vue, Tim.vue, Page.vue
+│   ├── Achievement.vue, Programs.vue, Facilities.vue, CareerCenter.vue, Pricing.vue, Team.vue, Page.vue
 │
 └── locales/                                    # 100% Symmetric 3-Language Bundles
     ├── en.json, id.json, su.json

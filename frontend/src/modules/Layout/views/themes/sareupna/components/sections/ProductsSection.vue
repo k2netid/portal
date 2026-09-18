@@ -47,7 +47,7 @@
 
       <div class="text-center mt-12">
         <router-link
-          to="/solusi"
+          to="/solutions"
           class="inline-flex items-center gap-2 px-8 py-3.5 text-xs font-bold uppercase tracking-wider rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/25 transition-all"
         >
           <span>{{ t('products.viewAll') }}</span>
@@ -79,37 +79,37 @@ const productCards = computed(() => [
     icon: Server,
     title: 'Core Engine Kernel',
     description: 'Kernel performa tinggi dengan response time sub-15ms, data caching multi-tier, dan modular plugin lifecycle.',
-    url: '/solusi',
+    url: '/solutions',
   },
   {
     icon: Cloud,
     title: 'Edge Cloud Infrastructure',
     description: 'Deployment global dengan otomatisasi DNS, routing ASN terdedikasi, dan perlindungan DDoS multi-vektor.',
-    url: '/solusi',
+    url: '/solutions',
   },
   {
     icon: FileCode,
     title: 'Visual Canvas Studio',
     description: 'Penyunting visual tanpa kompromi performa. Kompatibel dengan GSAP animation stack dan live customizer.',
-    url: '/solusi',
+    url: '/solutions',
   },
   {
     icon: ShieldCheck,
     title: 'Enterprise Identity & IAM',
     description: 'Manajemen otentikasi zero-trust, kontrol hak akses berbasis peran (RBAC), dan audit trail menyeluruh.',
-    url: '/solusi',
+    url: '/solutions',
   },
   {
     icon: Zap,
     title: 'Streaming Content Pipeline',
     description: 'Penyaluran konten instan ke berbagai channel, multi-locale translation engine, dan optimasi aset on-the-fly.',
-    url: '/solusi',
+    url: '/solutions',
   },
   {
     icon: Globe,
     title: 'Multi-Tenant Portal Network',
     description: 'Satu platform terpadu untuk mengelola portal puluhan cabang atau organisasi dengan isolasi database terjamin.',
-    url: '/solusi',
+    url: '/solutions',
   },
 ]);
 </script>

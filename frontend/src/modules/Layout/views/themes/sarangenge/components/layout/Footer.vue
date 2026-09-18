@@ -384,7 +384,7 @@ const defaultCol1Items = computed((): Partial<MenuItem>[] => [
 const defaultCol2Items = computed((): Partial<MenuItem>[] => [
   { title: 'Portal Resmi PPDB Jabar', url: ppdbPortalUrl.value },
   { title: 'Warta & Agenda Sekolah', url: '/blog' },
-  { title: 'Guru & Tenaga Kependidikan', url: '/tim' },
+  { title: 'Guru & Tenaga Kependidikan', url: '/team' },
   { title: 'Kontak & Lokasi Kampus', url: '/contact' },
 ]);
 

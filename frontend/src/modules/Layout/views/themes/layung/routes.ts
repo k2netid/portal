@@ -4,15 +4,11 @@ import type { RouteRecordRaw } from 'vue-router';
 const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
 const routes: RouteRecordRaw[] = [
-    {
-        path: 'solusi',
-        name: 'layung-solusi',
-        component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Solusi' },
-    },
+
     {
         path: 'services',
         name: 'layung-services',
+        alias: ['solusi'],
         component: publicThemePage,
         meta: { public: true, themePage: 'pages/Services' },
     },
@@ -47,10 +43,11 @@ const routes: RouteRecordRaw[] = [
         meta: { public: true, themePage: 'pages/Achievement' },
     },
     {
-        path: 'tim',
-        name: 'layung-tim',
+        path: 'team',
+        name: 'layung-team',
+        alias: ['tim'],
         component: publicThemePage,
-        meta: { public: true, themePage: 'pages/Tim' },
+        meta: { public: true, themePage: 'pages/Team' },
     },
     {
         path: 'contact',

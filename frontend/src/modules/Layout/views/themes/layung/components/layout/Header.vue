@@ -840,7 +840,7 @@ const defaultNavItems = computed((): MenuItem[] => [
     sort_order: 2,
     children: [
       { id: 'ly-nav-internet', title: tt('header.services', 'Internet'), url: '/pricing/isp', type: 'custom' },
-      { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/solusi', type: 'custom' },
+      { id: 'ly-nav-solusi', title: tt('header.solusi', 'Managed Services'), url: '/pricing/msp', type: 'custom' },
       { id: 'ly-nav-achievement', title: tt('header.achievement', 'SLA & Jaringan'), url: '/achievement', type: 'custom' },
     ],
   },

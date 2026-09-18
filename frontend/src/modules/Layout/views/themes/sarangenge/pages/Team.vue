@@ -1,10 +1,10 @@
 <template>
   <SarangengePageGate
-    setting-key="enable_tim"
-    :title="t('pages.tim.title', 'Dewan Guru & Tenaga Kependidikan')"
+    setting-key="enable_team"
+    :title="t('pages.team.title', 'Dewan Guru & Tenaga Kependidikan')"
   >
     <div
-      data-ja-customizer-target="tim"
+      data-ja-customizer-target="team"
       class="sarangenge-theme flex-1 flex flex-col py-10 md:py-12"
     >
       <BlockRenderer
@@ -24,17 +24,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 w-full">
           <!-- Breadcrumb & Header -->
           <div class="space-y-4">
-            <Breadcrumb :items="[{ name: t('pages.tim.title', 'Guru & Staf') }]" />
+            <Breadcrumb :items="[{ name: t('pages.team.title', 'Guru & Staf') }]" />
             <div class="max-w-3xl space-y-3">
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--sarangenge-teal,#0f766e)]/10 text-[var(--sarangenge-teal-deep,#115e59)] dark:text-teal-200">
                 <Users class="w-3.5 h-3.5" />
-                {{ t('pages.tim.badge', 'Pendidik Berdedikasi') }}
+                {{ t('pages.team.badge', 'Pendidik Berdedikasi') }}
               </span>
               <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground font-heading tracking-tight">
-                {{ t('pages.tim.title', 'Dewan Guru & Tenaga Kependidikan') }}
+                {{ t('pages.team.title', 'Dewan Guru & Tenaga Kependidikan') }}
               </h1>
               <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                {{ t('pages.tim.subtitle', 'Didukung oleh pendidik profesional berkualifikasi sarjana & magister dengan sertifikasi pendidik nasional serta pengajar bersertifikat Cambridge.') }}
+                {{ t('pages.team.subtitle', 'Didukung oleh pendidik profesional berkualifikasi sarjana & magister dengan sertifikasi pendidik nasional serta pengajar bersertifikat Cambridge.') }}
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@
 
           <div v-else class="sarangenge-panel p-10 text-center text-muted-foreground space-y-3">
             <p class="text-base font-semibold text-foreground">
-              {{ t('pages.tim.noData', 'Data dewan guru & staf belum tersedia.') }}
+              {{ t('pages.team.noData', 'Data dewan guru & staf belum tersedia.') }}
             </p>
           </div>
         </div>

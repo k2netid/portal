@@ -25,12 +25,7 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     descKey: 'bento.ispDesc',
     descFallback: 'Dedicated Internet, Broadband Bisnis SOHO, dan Retail Broadband.',
   },
-  'pages/Solusi': {
-    titleKey: 'header.solusi',
-    titleFallback: 'Managed Services',
-    descKey: 'bento.mspDesc',
-    descFallback: 'Dukungan IT operasional untuk sekolah dan institusi.',
-  },
+
   'pages/Pricing': {
     titleKey: 'header.pricing',
     titleFallback: 'Paket & Harga',
@@ -61,7 +56,7 @@ const PAGE_SEO: Record<string, { titleKey: string; titleFallback: string; descKe
     descKey: 'footer.description',
     descFallback: 'Lowongan dan karir di Kami.',
   },
-  'pages/Tim': {
+  'pages/Team': {
     titleKey: 'header.tim',
     titleFallback: 'Tim',
     descKey: 'footer.description',

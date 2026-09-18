@@ -38,8 +38,8 @@ test.describe('Sarangenge Dynamic Content Verification', () => {
         await expect(cards.first()).toBeVisible({ timeout: 15000 });
     });
 
-    test('/tim renders dynamic staff directory with profile links', async ({ page }) => {
-        await page.goto('/tim');
+    test('/team renders dynamic staff directory with profile links', async ({ page }) => {
+        await page.goto('/team');
 
         await expect(page.getByText(/halaman tidak stabil/i)).toHaveCount(0, { timeout: 15000 });
         await expect(page.locator('h1').first()).toBeVisible({ timeout: 15000 });

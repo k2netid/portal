@@ -58,6 +58,8 @@
             </div>
           </section>
 
+        <PluginSlot name="after_hero" class="w-full" />
+
         <!-- Mission/Content -->
         <section class="py-14 md:py-16 bg-background">
           <div class="container mx-auto px-4">
@@ -77,7 +79,7 @@
                     {{ missionP2 }}
                   </p>
                   <router-link
-                    to="/tim"
+                    to="/team"
                     class="inline-flex text-sm font-bold text-primary hover:underline"
                   >
                     {{ teamCta }} →
@@ -175,6 +177,7 @@ import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
 import PageDisabled from '../components/shared/PageDisabled.vue'
+import PluginSlot from '@/shared/components/PluginSlot.vue'
 import { useThemeMotion } from '@/modules/Layout/composables/useThemeMotion'
 import { usePublicPageContent } from '@/modules/Layout/composables/usePublicPageContent'
 import { pageUsesBuilderOverride } from '@/modules/Layout/composables/useThemePageOverride'

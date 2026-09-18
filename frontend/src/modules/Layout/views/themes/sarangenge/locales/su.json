@@ -209,11 +209,6 @@
       "title": "Préstasi & Pangajén Sivitas {school}",
       "subtitle": "Rangkuman préstasi kajuaraan akademik, sains, téknologi, seni budaya, sareng olahraga di tingkat nasional dugi ka internasional."
     },
-    "tim": {
-      "badge": "Pendidik Berdedikasi",
-      "title": "Dewan Guru & Tenaga Kependidikan",
-      "subtitle": "Dirojong ku para pendidik profésional anu boga gelar sarjana & magister kalayan sertifikasi pendidik nasional sareng guru Cambridge."
-    },
     "disabled": {
       "statusLabel": "Émbaran Sakola",
       "defaultTitle": "Kaca Teu Acan Sayaga",
@@ -228,6 +223,11 @@
       "submit": "Paluruh",
       "empty": "Teu aya hasil pikeun kecap konci kasebat.",
       "unavailable": "Layanan paluruhan nuju teu tiasa diaksés."
+    },
+    "team": {
+      "badge": "Pendidik Berdedikasi",
+      "title": "Dewan Guru & Tenaga Kependidikan",
+      "subtitle": "Dirojong ku para pendidik profésional anu boga gelar sarjana & magister kalayan sertifikasi pendidik nasional sareng guru Cambridge."
     }
   },
   "faq": {
@@ -276,8 +276,8 @@
       "page_achievements_desc": "Atur galeri sareng daptar préstasi siswa",
       "page_facilities": "Kaca Fasilitas",
       "page_facilities_desc": "Atur sarana sareng fasilitas kampus",
-      "page_tim": "Kaca Guru & Staf",
-      "page_tim_desc": "Atur diréktori pendidik sareng tenaga kependidikan",
+      "page_team": "Kaca Guru & Staf",
+      "page_team_desc": "Atur diréktori pendidik sareng tenaga kependidikan",
       "page_pricing": "Kaca Waragad & Beasiswa",
       "page_pricing_desc": "Atur émbaran waragad atikan sareng skéma beasiswa",
       "page_alumni": "Kaca Alumni",
@@ -415,8 +415,8 @@
       "enable_facilities_hint": "Buka atanapi tutup aksés publik kaca fasilitas bengkel.",
       "enable_pricing": "Aktifkan Kaca Waragad & PPDB",
       "enable_pricing_hint": "Buka atanapi tutup aksés publik kaca waragad atikan.",
-      "enable_tim": "Aktifkan Kaca Guru & Staf",
-      "enable_tim_hint": "Buka atanapi tutup aksés publik kaca dewan guru.",
+      "enable_team": "Aktifkan Kaca Guru & Staf",
+      "enable_team_hint": "Buka atanapi tutup aksés publik kaca dewan guru.",
       "enable_achievement": "Aktifkan Kaca Préstasi",
       "enable_achievement_hint": "Buka atanapi tutup aksés publik kaca préstasi murid.",
       "enable_career": "Aktifkan Kaca Alumni & Karir",
