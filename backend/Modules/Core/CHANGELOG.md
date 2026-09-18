@@ -18,6 +18,7 @@ Policy: [`docs/guides/update-changelog.md`](../../../docs/guides/update-changelo
 - See domain files for feature entries (identity, extensions, Data Studio, RBAC hardening, …).
 
 ### Changed
+- Version 1.0.3: `Setting::setIfMissing()` non-destructive helper to preserve downstream client identity settings during updates.
 - This file is now an **index**; do not duplicate long bullets here — link domains instead.
 - ADR-023: First-party theme packs as registry packs, tier license quota enforcement, and downgrade remediator.
 - PHPStan level 9 strict typing and error resolution across Core modules.

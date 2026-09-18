@@ -46,20 +46,31 @@ class LayungThemeDemoSeeder extends Seeder
             Setting::set('theme_active', 'layung', 'string', 'layout');
         }
 
-        // 2. Generic Platform Identity for ISP/MSP
-        Setting::set('site_name', 'Portal ISP Nusantara', 'string', 'general');
-        Setting::set('site_title', 'Portal ISP Nusantara', 'string', 'general');
-        Setting::set('site_tagline', 'Internet Service Provider & Managed Service Provider', 'string', 'general');
-        Setting::set('site_description', 'Penyedia layanan internet berkecepatan tinggi, dedicated fiber optic, dan solusi managed IT terpadu untuk korporasi dan institusi.', 'string', 'general');
-        Setting::set('contact_email', 'info@portal-isp.id', 'string', 'general');
-        Setting::set('admin_email', 'admin@portal-isp.id', 'string', 'general');
+        $force = (bool) config('layout.theme_seed_force', false);
+
+        // 2. Generic Platform Identity for ISP/MSP (Non-destructive: only sets if missing)
+        if ($force) {
+            Setting::set('site_name', 'Portal ISP Nusantara', 'string', 'general');
+            Setting::set('site_title', 'Portal ISP Nusantara', 'string', 'general');
+            Setting::set('site_tagline', 'Internet Service Provider & Managed Service Provider', 'string', 'general');
+            Setting::set('site_description', 'Penyedia layanan internet berkecepatan tinggi, dedicated fiber optic, dan solusi managed IT terpadu untuk korporasi dan institusi.', 'string', 'general');
+            Setting::set('contact_email', 'info@portal-isp.id', 'string', 'general');
+            Setting::set('admin_email', 'admin@portal-isp.id', 'string', 'general');
+        } else {
+            Setting::setIfMissing('site_name', 'Portal ISP Nusantara', 'string', 'general');
+            Setting::setIfMissing('site_title', 'Portal ISP Nusantara', 'string', 'general');
+            Setting::setIfMissing('site_tagline', 'Internet Service Provider & Managed Service Provider', 'string', 'general');
+            Setting::setIfMissing('site_description', 'Penyedia layanan internet berkecepatan tinggi, dedicated fiber optic, dan solusi managed IT terpadu untuk korporasi dan institusi.', 'string', 'general');
+            Setting::setIfMissing('contact_email', 'info@portal-isp.id', 'string', 'general');
+            Setting::setIfMissing('admin_email', 'admin@portal-isp.id', 'string', 'general');
+        }
 
         // 3. Install bundle sample data (menus, pages, theme settings)
         if ($layung) {
             try {
                 $orchestrator = app(ThemeSampleDataOrchestrator::class);
                 $options = new ThemeSampleDataInstallOptions(
-                    force: true,
+                    force: $force,
                     menus: true,
                     settings: true,
                     pages: true,

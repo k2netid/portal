@@ -32,30 +32,40 @@ class JanariThemeDemoSeeder extends Seeder
             Setting::set('theme_active', 'janari', 'string', 'layout');
         }
 
-        // 2. Platform Identity Defaults
-        Setting::set('site_name', 'Portal Resmi Komunitas', 'string', 'general');
-        Setting::set('site_title', 'Portal Resmi Komunitas', 'string', 'general');
-        Setting::set('site_tagline', 'Inovasi, Kolaborasi, dan Layanan Publik Terpadu', 'string', 'general');
-        Setting::set('site_description', 'Portal layanan informasi publik resmi berbasis sistem modular Jejakawan.', 'string', 'general');
-        Setting::set('contact_email', 'info@portal-komunitas.id', 'string', 'general');
+        $force = (bool) config('layout.theme_seed_force', false);
+
+        // 2. Platform Identity Defaults (Non-destructive: only sets if missing)
+        if ($force) {
+            Setting::set('site_name', 'Portal Resmi Komunitas', 'string', 'general');
+            Setting::set('site_title', 'Portal Resmi Komunitas', 'string', 'general');
+            Setting::set('site_tagline', 'Inovasi, Kolaborasi, dan Layanan Publik Terpadu', 'string', 'general');
+            Setting::set('site_description', 'Portal layanan informasi publik resmi berbasis sistem modular Jejakawan.', 'string', 'general');
+            Setting::set('contact_email', 'info@portal-komunitas.id', 'string', 'general');
+        } else {
+            Setting::setIfMissing('site_name', 'Portal Resmi Komunitas', 'string', 'general');
+            Setting::setIfMissing('site_title', 'Portal Resmi Komunitas', 'string', 'general');
+            Setting::setIfMissing('site_tagline', 'Inovasi, Kolaborasi, dan Layanan Publik Terpadu', 'string', 'general');
+            Setting::setIfMissing('site_description', 'Portal layanan informasi publik resmi berbasis sistem modular Jejakawan.', 'string', 'general');
+            Setting::setIfMissing('contact_email', 'info@portal-komunitas.id', 'string', 'general');
+        }
 
         // 3. Ensure Author User exists for sample content attribution
         $author = User::query()->first();
         if (! $author) {
             $author = User::query()->create([
                 'name' => 'Administrator',
-                'email' => 'admin@jejakawan.com',
+                'email' => 'admin@portal-komunitas.id',
                 'password' => bcrypt('password'),
                 'is_active' => true,
             ]);
         }
 
-        // 4. Install bundle sample data
+        // 4. Install bundle sample data (non-destructive by default)
         if ($janari) {
             try {
                 $orchestrator = app(ThemeSampleDataOrchestrator::class);
                 $options = new ThemeSampleDataInstallOptions(
-                    force: true,
+                    force: $force,
                     menus: true,
                     settings: true,
                     pages: true,

@@ -9,6 +9,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 ## [Unreleased]
 
 ### Added
+- **Non-Destructive Setting Helper (`Setting::setIfMissing`)**: Preserves existing settings in database during theme seeding / updates to prevent downstream data drift.
 - **User Creation Verification Privilege Control**: Optional `is_verified` on `UserController::store` ([ADR-019](../../../../docs/adr/ADR-019-user-email-verification-and-privilege-lifecycle.md)).
 - **3-Tier Identity & Smart Brand Sync**: `SettingController` 3-tier identity + `brand_sync_site_identity` ([ADR-014](../../../../docs/adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md)).
 - **Extension Gating & Manifests**: Registry manifests for first-party extensions incl. builder/studio license tiers ([ADR-011](../../../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md), [ADR-012](../../../../docs/adr/ADR-012-data-model-studio-modular-extension-and-license-gating.md)).

@@ -5,6 +5,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
+- `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.
 - Host SEO resolver for theme **Sareupna** (`FrontendLayout` + `sareupnaPublicSeo`) — CMS baseline P0.
 - **Site Identity to Theme Settings Sync**: Integrated with `SettingController::updatePlatformIdentity` where `site_name`, `site_logo`, and `site_favicon` are synchronized into active theme settings (`lay_theme_settings`) when smart brand sync is invoked ([ADR-014](../../docs/adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md)).
 - **Visual Builder Decoupling**: Modularized Visual Builder (`builder.site`) manifest with license gating ([ADR-011](../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md)).

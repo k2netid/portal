@@ -1,7 +1,7 @@
 {
   "name": "Core",
   "slug": "core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Platform kernel — System, Security, Identity, and Infra (always active)",
   "author": "Jejakawan Team",
   "type": "module",

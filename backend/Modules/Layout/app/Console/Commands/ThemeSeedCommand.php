@@ -17,12 +17,16 @@ class ThemeSeedCommand extends Command
 {
     protected $signature = 'theme:seed
                             {slug? : Theme slug (janari, layung, sarangenge, sareupna). Defaults to active theme.}
-                            {--all : Seed demo data for all supported themes}';
+                            {--all : Seed demo data for all supported themes}
+                            {--force : Force overwrite existing theme settings, identity, and sample data}';
 
     protected $description = 'Seed generic starter demo data for a theme (janari, layung, sarangenge, sareupna) or the currently active theme.';
 
     public function handle(ThemeService $themeService): int
     {
+        $force = (bool) $this->option('force');
+        config(['layout.theme_seed_force' => $force]);
+
         $themeService->scanThemes();
 
         if ($this->option('all')) {
@@ -76,7 +80,7 @@ class ThemeSeedCommand extends Command
 
         return $this->call('theme:install-sample', [
             'slug' => $slug,
-            '--force' => true,
+            '--force' => (bool) $this->option('force'),
         ]);
     }
 }

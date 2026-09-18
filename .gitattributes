@@ -1,0 +1,21 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Explicit binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.svg text
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Upstream Core Repository Contract:
+# All theme packages and demo seeders in ja-core_engine are upstream-owned,
+# 100% platform-agnostic, and must have ZERO client-specific hardcoding.
+# Downstream client identities are injected via downstream deployment seeders.
+# @see docs/branching.md

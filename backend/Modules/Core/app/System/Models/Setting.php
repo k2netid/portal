@@ -121,6 +121,16 @@ class Setting extends Model
         );
     }
 
+    public static function setIfMissing(string $key, mixed $value, string $type = 'string', string $group = 'general'): self
+    {
+        $existing = static::where('key', $key)->first();
+        if ($existing !== null && $existing->value !== null && $existing->value !== '') {
+            return $existing;
+        }
+
+        return static::set($key, $value, $type, $group);
+    }
+
     /**
      * @return array<string, mixed>
      */

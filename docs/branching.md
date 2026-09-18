@@ -57,12 +57,16 @@ Sistem portal Jejakawan beroperasi dengan model **Upstream Core Engine + Downstr
    - `JanariThemeDemoSeeder` (Portal Komunitas/Pemerintahan umum).
    - `LayungThemeDemoSeeder` (Portal Bisnis ISP & Managed Services generik).
    - `SarangengeThemeDemoSeeder` (Portal Sekolah Kejuruan Pusat Keunggulan generik).
-4. **Artisan Tooling**:
-   - `php artisan theme:seed [slug] [--all]`
+4. **Artisan Tooling & Safeguards**:
+   - `php artisan theme:seed [slug] [--all] [--force]`:
+     - Secara default berjalan dalam mode **Non-Destructive**: menggunakan `Setting::setIfMissing()` dan `ThemeSampleDataInstallOptions(force: false)`. Pengaturan identitas dan kustomisasi tema klien yang sudah ada di database downstream **tidak akan pernah ditimpa/di-reset**.
+     - Opsi `--force` hanya digunakan jika admin/developer secara sadar ingin melakukan hard-reset ke demo bawaan.
    - `php artisan rbac:sync`
-5. **ATURAN MUTLAK CORE**:
+5. **ATURAN MUTLAK CORE & CI SAFEGUARD**:
    > [!CAUTION]
    > **ZERO CLIENT-SPECIFIC HARDCODING!** Dilarang keras menuliskan nama legal PT klien, nomor WhatsApp marketing klien, alamat fisik kantor/sekolah, jurusan riil, atau logo berhak cipta klien di dalam upstream `ja-core_engine`.
+   >
+   > **Enforcement Otomatis:** Repositori upstream dilengkapi dengan `scripts/check-zero-client-hardcoding.mjs` yang terintegrasi pada `npm run agent:verify`. Setiap PR/commit yang mencoba memasukkan identitas klien ke file tema atau demo seeder akan otomatis ditolak.
 
 ### B. Wajib Masuk ke Repositori Downstream Klien (Client Deployment Scope):
 1. **Deployment Seeder Spesifik**:
