@@ -686,6 +686,8 @@
       "framed_padding": "Padding bingkai",
       "framed_padding_hint": "Padding sekitar layout framed (px)",
       "header_style": "Gaya Estetika Header",
+      "header_menu_alignment": "Perataan Menu Header",
+      "header_menu_alignment_hint": "Posisi perataan menu navigasi desktop pada header (Tengah, Kiri, atau Kanan)",
       "header_cta_text": "Label CTA Header",
       "header_cta_url": "Tujuan CTA Header",
       "nav_style": "Gaya Interaksi Link Navigasi",

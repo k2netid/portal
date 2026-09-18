@@ -54,7 +54,8 @@
         <nav
           v-if="isDesktop"
           data-ja-customizer-target="nav"
-          class="flex items-center ml-auto pr-8"
+          class="flex items-center"
+          :class="navAlignmentClasses"
         >
           <template
             v-for="(item, index) in navItems"
@@ -699,6 +700,22 @@ const isHomePage = computed(() => route.path === '/');
 const headerSticky = computed(() => getSetting('header_sticky', true));
 const headerStyle = computed(() => getSetting('header_style', 'glass'));
 const brandingDisplay = computed(() => getSetting('branding_display', 'logo_only'));
+const headerMenuAlignment = computed(() => {
+    const val = String(getSetting('header_menu_alignment', 'center') || 'center').toLowerCase();
+    return ['left', 'center', 'right'].includes(val) ? val : 'center';
+});
+
+const navAlignmentClasses = computed(() => {
+    switch (headerMenuAlignment.value) {
+        case 'left':
+            return 'mr-auto ml-6 md:ml-8';
+        case 'right':
+            return 'ml-auto pr-6 md:pr-8';
+        case 'center':
+        default:
+            return 'mx-auto px-4';
+    }
+});
 
 const systemStore = useSystemStore();
 const siteSettings = computed(() => systemStore.settings);

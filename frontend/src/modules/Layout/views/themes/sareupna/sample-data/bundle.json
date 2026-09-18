@@ -31,6 +31,7 @@
         "boxed_shadow": "glow",
         "framed_padding": 16,
         "header_style": "glass",
+        "header_menu_alignment": "center",
         "header_cta_text": "Mulai Sekarang",
         "header_cta_url": "/contact",
         "nav_style": "pill",

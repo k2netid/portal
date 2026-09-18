@@ -413,6 +413,28 @@
             "category": "Layout",
             "scope": "platform"
         },
+        "header_menu_alignment": {
+            "label": "Header Menu Alignment",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Center (Default)",
+                    "value": "center"
+                },
+                {
+                    "label": "Left Aligned",
+                    "value": "left"
+                },
+                {
+                    "label": "Right Aligned",
+                    "value": "right"
+                }
+            ],
+            "default": "center",
+            "category": "Layout",
+            "description": "Perataan posisi menu navigasi desktop pada header",
+            "scope": "platform"
+        },
         "header_cta_text": {
             "label": "Header CTA Button Text",
             "type": "text",
