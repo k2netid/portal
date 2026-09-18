@@ -12,7 +12,7 @@ related:
 
 # ADR-023: First-party themes as Module Registry packs + license quotas
 
-**Status:** Accepted (Phase 1 implementation pending)  
+**Status:** Accepted — Phase 1 ✅ implemented (2026-09-18) · Phase 2 (JA-CP payload) + Phase 3 (selective shipping) pending  
 **Tanggal:** 2026-09-18  
 **Author:** Jejakawan Core Engineering  
 **Scope:** Module Registry (`sys_extensions`), Layout theme host, `LicenseService` / JA-CP, install profiles, console App Store / Themes UI  
