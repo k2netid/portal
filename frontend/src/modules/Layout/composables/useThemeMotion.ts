@@ -377,7 +377,7 @@ export function useThemeMotion() {
             ScrollTrigger.create({
                 start: 0,
                 end: 'max',
-                onUpdate: (self) => {
+                onUpdate: (self: ScrollTrigger) => {
                     const y = self.scroll();
                     if (y > last && y > 80) gsap.to(target, { yPercent: -100, duration: 0.35, ease: 'power2.out' });
                     else gsap.to(target, { yPercent: 0, duration: 0.35, ease: 'power2.out' });

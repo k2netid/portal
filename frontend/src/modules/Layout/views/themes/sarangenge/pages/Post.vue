@@ -191,6 +191,7 @@ interface Post {
   id: string | number;
   title: string;
   slug: string;
+  type?: string;
   excerpt?: string;
   body?: string;
   featured_image?: string;
