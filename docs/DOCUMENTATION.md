@@ -126,7 +126,7 @@ docs/
 └── audit/                    ← evidence core
 ```
 
-> Dokumen usang / tenant (`feat_sarangenge`, audit K2NET, ADR-009 penuh) hidup di repo downstream (`k2net-portal`, `smkn6-portal`) — **jangan** diarsipkan ulang di core.
+> Dokumen tenant sekolah (`feat_sarangenge`, riwayat tema Sarangenge) hidup di **portal sekolah** (`smkn6-portal`, `smkn1cijulang-portal`) — **bukan** di `ja-cms` / `k2net-portal` / core. Audit K2NET penuh tetap di `k2net-portal`. Jangan diarsipkan ulang di core.
 
 ### Peta Diátaxis (isi saat ini)
 
@@ -137,7 +137,7 @@ docs/
 | Reference | `reference/`, `extensions/*schema*`, `docs/api/` (generated), L0 di kode |
 | Explanation | `architecture/`, `adr/`, `architectural-status.md` |
 
-Mirror ke downstream (bukan SoT): `npm run docs:sync-downstream` → guides + reference + **architecture** + policy → `k2net-portal`, `smkn6-portal`, `ja-cms`.
+Mirror ke downstream (bukan SoT): `npm run docs:sync-downstream` → guides + reference + **architecture** + policy → `k2net-portal`, `smkn6-portal`, `smkn1cijulang-portal`, `ja-cms`.
 
 ---
 
