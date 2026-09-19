@@ -64,6 +64,9 @@ export const useSystemStore = defineStore('system', {
             site_version: '',
             site_logo: '',
             site_favicon: '',
+            contact_address: '',
+            contact_phone: '',
+            contact_coordinates: '',
         },
         maintenance: {
             mode: false,
@@ -145,6 +148,9 @@ export const useSystemStore = defineStore('system', {
                         site_favicon: isGenericEngineFavicon(String(data.site_favicon || ''))
                             ? ''
                             : String(data.site_favicon || ''),
+                        contact_address: data.contact_address || '',
+                        contact_phone: data.contact_phone || '',
+                        contact_coordinates: data.contact_coordinates || '',
                         enable_registration: data.enable_registration,
                         enable_member_registration: data.enable_member_registration,
                         require_email_verification: data.require_email_verification,

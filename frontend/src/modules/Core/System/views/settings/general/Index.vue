@@ -512,6 +512,9 @@ const fetchSettings = async () => {
         ensureSetting('site_favicon', '/favicon.ico', 'image', 'general');
         ensureSetting('site_description', '', 'string', 'general');
         ensureSetting('site_url', 'http://localhost', 'string', 'general');
+        ensureSetting('contact_address', '', 'string', 'general');
+        ensureSetting('contact_phone', '', 'string', 'general');
+        ensureSetting('contact_coordinates', '', 'string', 'general');
 
         // Ensure Email Settings
         ensureSetting('mail_driver', 'smtp', 'string', 'email');

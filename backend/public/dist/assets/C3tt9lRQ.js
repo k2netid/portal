@@ -1,0 +1,1 @@
+import{C as e,D as t,N as n,R as r,Z as i}from"./C4sEBiSO.js";import{r as a}from"./D4GrcMP3.js";r();var o=[`innerHTML`],s=n({__name:`ThemeSafeHtml`,props:{html:{default:``}},setup(n){let r=n,s=e(()=>a(r.html||``));return(e,n)=>(i(),t(`div`,{class:`theme-safe-html-root`,innerHTML:s.value},null,8,o))}});export{s as t};

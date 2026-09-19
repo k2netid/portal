@@ -324,6 +324,51 @@
         "default": "Bandung & Jakarta, Indonesia",
         "category": "Platform Specs"
     },
+    "contact_coordinates": {
+        "label": "Titik Koordinat GPS (latitude, longitude)",
+        "type": "text",
+        "default": "",
+        "category": "Platform Specs",
+        "description": "Koordinat GPS presisi (contoh: -7.7151, 108.4731) untuk mengunci pin Google Maps langsung di atas gedung agar tidak nyasar ke laut."
+    },
+    "contact_map_enabled": {
+        "label": "Aktifkan Popover Peta Lokasi",
+        "type": "checkbox",
+        "default": true,
+        "category": "Platform Specs",
+        "description": "Tampilkan popup peta Google Maps saat pengunjung mengklik alamat kantor."
+    },
+    "contact_map_source": {
+        "label": "Mode Sumber Peta",
+        "type": "select",
+        "category": "Platform Specs",
+        "default": "current_location",
+        "options": [
+            {
+                "label": "Lokasi / Koordinat Saat Ini",
+                "value": "current_location"
+            },
+            {
+                "label": "Tautan Peta Langsung",
+                "value": "link"
+            }
+        ]
+    },
+    "contact_map_link": {
+        "label": "Tautan Google Maps Langsung (opsional)",
+        "type": "text",
+        "default": "",
+        "category": "Platform Specs"
+    },
+    "contact_map_zoom": {
+        "label": "Level Zoom Peta",
+        "type": "range",
+        "min": 10,
+        "max": 20,
+        "step": 1,
+        "default": 15,
+        "category": "Platform Specs"
+    },
     "hero_badge_text": {
         "label": "Hero Badge / Slogan (fallback)",
         "type": "text",

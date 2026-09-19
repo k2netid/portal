@@ -1,0 +1,1 @@
+var e=Symbol(`sareupna-select`);export{e as t};

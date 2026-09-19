@@ -591,6 +591,7 @@ import type { BlockInstance } from '@/modules/Layout/types/builder'
 import { useRouter } from 'vue-router'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
 import { useLocalizedThemeSetting } from '@/modules/Layout/composables/useLocalizedThemeSetting'
+import { useThemeContactMap } from '@/modules/Layout/composables/useThemeContactMap'
 import { useSareupnaIdentity } from '../composables/useSareupnaIdentity'
 import PageDisabled from '../components/shared/PageDisabled.vue'
 import api, { getCsrfCookie } from '@/engine/api/client'
@@ -751,48 +752,14 @@ watchEffect(() => {
     }
 })
 
-const mapEnabled = computed(() => getSetting('contact_map_enabled', true) !== false)
-const mapSource = computed(() => String(getSetting('contact_map_source', 'current_location') || 'current_location'))
-const mapZoom = computed(() => {
-    const raw = Number(getSetting('contact_map_zoom', 15))
-    if (!Number.isFinite(raw)) return 15
-    return Math.min(20, Math.max(10, Math.round(raw)))
-})
-const mapDirectLink = computed(() => {
-    const raw = String(getSetting('contact_map_link', '') || '').trim()
-    if (!raw) return ''
-    if (/^https?:\/\//i.test(raw)) return raw
-    return ''
-})
-const mapQuery = computed(() => {
-    if (mapDirectLink.value) {
-        try {
-            const url = new URL(mapDirectLink.value)
-            const q = url.searchParams.get('query') || url.searchParams.get('q') || url.searchParams.get('destination')
-            if (q) return q
-            const atMatch = url.pathname.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/)
-            if (atMatch) return `${atMatch[1]},${atMatch[2]}`
-        } catch {
-            /* ignore parse error */
-        }
-    }
-    return String(displayAddress.value || '').trim()
-})
-const mapEmbedUrl = computed(() => {
-    const q = encodeURIComponent(mapQuery.value || String(displayAddress.value || ''))
-    const z = mapZoom.value
-    return `https://www.google.com/maps?q=${q}&z=${z}&output=embed`
-})
-const mapExternalUrl = computed(() => {
-    if (mapDirectLink.value) return mapDirectLink.value
-    const q = encodeURIComponent(mapQuery.value || String(displayAddress.value || ''))
-    return `https://www.google.com/maps/search/?api=1&query=${q}`
-})
-const mapDirectionsUrl = computed(() => {
-    if (mapSource.value === 'link' && mapDirectLink.value) return mapDirectLink.value
-    const destination = encodeURIComponent(mapQuery.value || String(displayAddress.value || ''))
-    return `https://www.google.com/maps/dir/?api=1&destination=${destination}`
-})
+const {
+    mapEnabled,
+    mapQuery,
+    mapEmbedUrl,
+    mapExternalUrl,
+    openMapExternal,
+    openMapDirections,
+} = useThemeContactMap(displayAddress)
 
 const contactFormSlug = computed(() => {
     const raw = getSetting('contact_form_slug')
@@ -874,17 +841,6 @@ async function copyToClipboard(value: string, okMessage: string): Promise<void> 
     }
 }
 
-function openMapExternal(): void {
-    const url = mapExternalUrl.value
-    if (!url) return
-    window.open(url, '_blank', 'noopener,noreferrer')
-}
-
-function openMapDirections(): void {
-    const url = mapDirectionsUrl.value
-    if (!url) return
-    window.open(url, '_blank', 'noopener,noreferrer')
-}
 
 function onMapPopoverOpenChange(open: boolean): void {
     mapPopoverOpen.value = open

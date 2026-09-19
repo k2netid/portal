@@ -1,0 +1,1 @@
+import{c as e}from"./BoKaqmen.js";import{D as t,N as n,R as r,V as i,Z as a,et as o}from"./C4sEBiSO.js";r();var s=n({__name:`Label`,setup(e){return(e,n)=>(a(),t(`label`,i({class:[`block text-xs font-bold text-foreground mb-1.5 uppercase tracking-wider`,e.$attrs.class]},e.$attrs),[o(e.$slots,`default`)],16))}}),c=e({default:()=>l}),l=s;export{c as n,l as t};

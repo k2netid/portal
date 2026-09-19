@@ -1,0 +1,1 @@
+import{N as e,R as t,T as n,Z as r}from"./C4sEBiSO.js";import{t as i}from"./dlfVVG9b.js";t();var a=e({__name:`Edit`,setup(e){return(e,t)=>(r(),n(i,{mode:`edit`}))}});export{a as default};

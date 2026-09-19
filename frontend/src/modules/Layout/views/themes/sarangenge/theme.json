@@ -718,6 +718,15 @@
             "order": 25,
             "scope": "theme"
         },
+        "contact_coordinates": {
+            "label": "Titik Koordinat GPS (Theme Override)",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Format: latitude,longitude (contoh: -7.7151, 108.4731). Memastikan pin Google Maps tertancap presisi di gedung kampus tanpa meleset.",
+            "order": 26,
+            "scope": "theme"
+        },
         "contact_whatsapp": {
             "label": "Nomor WhatsApp Hotline PPDB",
             "type": "text",

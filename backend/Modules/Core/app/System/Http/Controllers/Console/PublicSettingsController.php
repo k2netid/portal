@@ -51,6 +51,7 @@ class PublicSettingsController extends BaseApiController
             'contact_email' => Setting::get('contact_email', 'hello@jejakawan.com'),
             'contact_phone' => Setting::get('contact_phone', ''),
             'contact_address' => Setting::get('contact_address', ''),
+            'contact_coordinates' => Setting::get('contact_coordinates', ''),
 
             // Social Links
             'social_twitter' => Setting::get('social_twitter', ''),

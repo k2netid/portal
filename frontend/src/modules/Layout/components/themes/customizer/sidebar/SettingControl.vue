@@ -398,6 +398,28 @@
       class="space-y-2 pt-1"
     >
       <div class="flex flex-wrap items-center gap-2">
+        <template v-if="isCoordinatesSetting">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-8 px-3 text-xs rounded-xl"
+            :disabled="helperLoading"
+            @click="resolveCoordinatesFromGps"
+          >
+            {{ helperLoading ? 'Mengambil GPS...' : 'Ambil GPS Saat Ini' }}
+          </Button>
+          <Button
+            v-if="hasCoordinatesValue"
+            type="button"
+            variant="outline"
+            size="sm"
+            class="h-8 px-3 text-xs rounded-xl"
+            @click="openCoordinatesInGoogleMaps"
+          >
+            Cek di Google Maps
+          </Button>
+        </template>
         <Button
           v-if="canResolveFromLink"
           type="button"
@@ -540,10 +562,49 @@ const helperError = ref('');
 const settingKey = computed(() => props.setting?.key || '');
 const helperVisible = computed(() =>
   settingKey.value === 'contact_map_source'
-  || settingKey.value === 'contact_map_link',
+  || settingKey.value === 'contact_map_link'
+  || settingKey.value === 'contact_coordinates',
 );
+const isCoordinatesSetting = computed(() => settingKey.value === 'contact_coordinates');
+const hasCoordinatesValue = computed(() => isCoordinatesSetting.value && /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.test(String(props.modelValue || '')));
 const isCurrentLocationMode = computed(() => settingKey.value === 'contact_map_source' && String(props.modelValue || '') === 'current_location');
 const canResolveFromLink = computed(() => settingKey.value === 'contact_map_link' && String(props.modelValue || '').trim() !== '');
+
+async function resolveCoordinatesFromGps(): Promise<void> {
+  if (helperLoading.value) return;
+  if (typeof navigator === 'undefined' || !navigator.geolocation) {
+    helperError.value = 'Browser tidak mendukung geolocation.';
+    return;
+  }
+  helperLoading.value = true;
+  helperError.value = '';
+  helperMessage.value = '';
+  try {
+    const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 60000,
+      });
+    });
+    const lat = Number(pos.coords.latitude).toFixed(6);
+    const lon = Number(pos.coords.longitude).toFixed(6);
+    const coords = `${lat}, ${lon}`;
+    emit('update:modelValue', coords);
+    emit('change');
+    helperMessage.value = `Koordinat GPS (${coords}) berhasil diambil.`;
+  } catch {
+    helperError.value = 'Izin lokasi ditolak atau gagal mengambil koordinat GPS.';
+  } finally {
+    helperLoading.value = false;
+  }
+}
+
+function openCoordinatesInGoogleMaps(): void {
+  const coords = String(props.modelValue || '').trim();
+  if (!coords) return;
+  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(coords)}`, '_blank', 'noopener,noreferrer');
+}
 
 async function resolveFromCurrentLocation(): Promise<void> {
   if (helperLoading.value) return;
