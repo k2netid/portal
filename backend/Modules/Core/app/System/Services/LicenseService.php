@@ -92,7 +92,15 @@ class LicenseService
             self::TIER_WHITE_LABEL,
         ];
 
-        return in_array($tier, $validTiers, true) ? $tier : self::TIER_COMMUNITY;
+        $resolved = in_array($tier, $validTiers, true) ? $tier : self::TIER_COMMUNITY;
+
+        // Auto-heal legacy app_license_tier if out of sync with primary license_type
+        if (Setting::get('license_type') && Setting::get('app_license_tier') !== $resolved) {
+            Setting::set('app_license_tier', $resolved, 'string', 'system');
+            Cache::forget('sys_setting_app_license_tier');
+        }
+
+        return $resolved;
     }
 
     /**
