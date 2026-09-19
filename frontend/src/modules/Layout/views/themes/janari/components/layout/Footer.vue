@@ -247,6 +247,8 @@ import {
   ArrowRight,
 } from 'lucide-vue-next';
 
+import { parseSocialLinks } from '@/modules/Layout/utils/socialLinks';
+
 const { t } = useI18n()
 const { t: tt } = useThemeI18n('janari')
 const { getSetting, themeSettings } = useTheme()
@@ -343,7 +345,7 @@ const brandUrl = computed(() => {
   return typeof raw === 'string' && raw.trim() ? raw.trim() : 'https://jejakawan.com'
 })
 
-const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);
+const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 
 const normalizeMenuSetting = (value: unknown, fallback: string): string => {
     if (value === null || value === undefined || value === '' || value === 'none') {
@@ -352,7 +354,7 @@ const normalizeMenuSetting = (value: unknown, fallback: string): string => {
     return String(value);
 };
 
-const getSocialIcon = (key: string) => {
+const getSocialIcon = (key?: string) => {
     switch (key) {
         case 'Twitter': return Twitter;
         case 'Instagram': return Instagram;

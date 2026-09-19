@@ -248,18 +248,20 @@ import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
 import type { MenuItem } from '@/modules/Layout/types/menu';
+import { parseSocialLinks } from '@/modules/Layout/utils/socialLinks';
 
 const { t: tt } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
+
 const {
   displaySchoolName,
+  displayNpsn,
+  displayAccreditation,
   displayAddress,
   displayPhone,
-  displayEmail,
-  displayAccreditation,
-  displayNpsn,
   phoneDialHref,
+  displayEmail,
   whatsAppUrl,
   ppdbPortalUrl,
   siteLogo,
@@ -267,7 +269,7 @@ const {
 
 const brandingDisplay = computed(() => String(getSetting('branding_display', 'both') || 'both'));
 
-const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string }>) || []);
+const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 
 const footerAboutText = computed(() => {
   const fromTheme = getSetting('footer_about_text', '');

@@ -681,6 +681,13 @@ class ThemeService
             }
         }
 
+        if (isset($next['social_links']) && is_string($next['social_links'])) {
+            $decoded = json_decode($next['social_links'], true);
+            if (is_array($decoded)) {
+                $next['social_links'] = $decoded;
+            }
+        }
+
         return $this->normalizeThemeDataBindingsInSettings($next);
     }
 
