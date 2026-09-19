@@ -51,13 +51,17 @@ export function useSarangengeIdentity() {
   const displayAddress = computed(() => {
     const fromTheme = getSetting('contact_address', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return 'Jl. Soekarno-Hatta No. 636, Sekejati, Kec. Buahbatu, Kota Bandung, Jawa Barat 40286';
+    const fromSystem = (siteSettings.value.contact_address || systemStore.siteSettings?.contact_address) as string | undefined;
+    if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
+    return '';
   });
 
   const displayPhone = computed(() => {
     const fromTheme = getSetting('contact_phone', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return '+62 22 7563286';
+    const fromSystem = (siteSettings.value.contact_phone || systemStore.siteSettings?.contact_phone) as string | undefined;
+    if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
+    return '';
   });
 
   const displayEmail = computed(() => {
@@ -71,29 +75,32 @@ export function useSarangengeIdentity() {
   const displayAccreditation = computed(() => {
     const fromTheme = getSetting('school_accreditation', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return 'Akreditasi A (Unggul)';
+    return '';
   });
 
   const displayNpsn = computed(() => {
     const fromTheme = getSetting('school_npsn', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return 'NPSN: 20268899';
+    return '';
   });
 
   const displayPrincipalName = computed(() => {
-    const fromTheme = getSetting('school_principal_name', '');
+    const fromTheme = getSetting('school_principal_name', '') || getSetting('principal_name', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return 'Drs. H. Rahmat Sudrajat, M.Pd.';
+    return '';
   });
 
   const phoneDialHref = computed(() => {
+    if (!displayPhone.value) return '';
     return `tel:${displayPhone.value.replace(/[^0-9+]/g, '')}`;
   });
 
   const whatsAppRaw = computed(() => {
     const fromTheme = getSetting('contact_whatsapp', '') || getSetting('whatsapp_hotline', '');
     if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
-    return '628127563286';
+    const fromSystem = (siteSettings.value.contact_whatsapp || siteSettings.value.whatsapp || systemStore.siteSettings?.contact_whatsapp) as string | undefined;
+    if (fromSystem && typeof fromSystem === 'string' && fromSystem.trim()) return fromSystem.trim();
+    return '';
   });
 
   const whatsAppUrl = computed(() => {
