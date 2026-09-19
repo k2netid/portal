@@ -1,0 +1,1 @@
+import{c as e}from"./BoKaqmen.js";import{D as t,N as n,R as r,V as i,Z as a,et as o}from"./C4sEBiSO.js";r();var s=n({__name:`Card`,setup(e){return(e,n)=>(a(),t(`div`,i({class:[`layung-panel p-6 overflow-hidden`,e.$attrs.class]},e.$attrs),[o(e.$slots,`default`)],16))}}),c=e({default:()=>l}),l=s;export{c as t};

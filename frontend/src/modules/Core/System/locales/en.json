@@ -1621,6 +1621,10 @@
         "title": "Site Information",
         "description": "Basic information about your website"
       },
+      "contactInfo": {
+        "title": "Contact & Map Geolocation (GPS)",
+        "description": "Physical address, contact phone, and precise GPS coordinates for all public themes."
+      },
       "analytics": {
         "retentionTitle": "Data Retention",
         "description": "Configure how long analytics data should be kept in the database.",
@@ -1648,6 +1652,10 @@
     "save": "Save Settings",
     "saving": "Saving…",
     "saved": "Settings saved successfully",
+    "contact_geo_locating": "Locating GPS...",
+    "contact_geo_get_btn": "Get Current GPS Location",
+    "contact_geo_test_btn": "Check on Google Maps",
+    "contact_geo_hint": "Format: latitude, longitude (e.g. -7.7151, 108.4731). Uniformly used across all themes (Sarangenge, Layung, Sareupna, Janari) so map pins lock accurately to the building gate and never drift into water.",
     "failed": "Failed to save settings",
     "jsonPlaceholder": "Enter valid JSON format",
     "options": {
@@ -1835,6 +1843,9 @@
     },
     "labels": {
       "site_name": "Site Name",
+      "contact_address": "Full Address / Office",
+      "contact_phone": "Phone Number / WhatsApp",
+      "contact_coordinates": "GPS Coordinates (Latitude, Longitude)",
       "app_name": "Application Name",
       "site_public_name": "Public site name",
       "site_public_address": "Public site address",
@@ -1978,6 +1989,9 @@
     },
     "descriptions": {
       "site_name": "The public name of your Jejakawan site",
+      "contact_address": "Official physical address of the institution/company displayed across all theme contact pages.",
+      "contact_phone": "Official telephone or WhatsApp hotline number for general information and support.",
+      "contact_coordinates": "Precise GPS coordinates (e.g. -7.7151, 108.4731). Locks the Google Maps pin directly over the building or gate across all themes to prevent drifting into the sea.",
       "app_name": "Custom name for this application instance",
       "site_public_name": "Official name shown on the public Jejakawan",
       "site_public_address": "Physical address shown on the public site",

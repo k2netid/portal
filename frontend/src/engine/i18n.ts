@@ -39,7 +39,7 @@ const detectLocale = (): string => {
     return resolvePreferredLocale(availableCodes(), {
         stored: localStorage.getItem('locale'),
         fallback: fallbackCode,
-        detectBrowser: true,
+        detectBrowser: isAuto,
     });
 };
 

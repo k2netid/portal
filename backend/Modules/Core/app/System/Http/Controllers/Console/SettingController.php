@@ -441,7 +441,7 @@ class SettingController extends BaseApiController
 
     private function syncSiteIdentityToActiveTheme(string $key, mixed $value): void
     {
-        if (! in_array($key, ['site_name', 'site_tagline'], true)) {
+        if (! in_array($key, ['site_name', 'site_tagline', 'contact_coordinates', 'contact_address', 'contact_phone'], true)) {
             return;
         }
 
@@ -468,6 +468,14 @@ class SettingController extends BaseApiController
             } elseif ($key === 'site_tagline') {
                 $settings['school_tagline'] = $val;
                 $settings['site_tagline'] = $val;
+            } elseif ($key === 'contact_coordinates') {
+                $settings['contact_coordinates'] = $val;
+            } elseif ($key === 'contact_address') {
+                $settings['contact_address'] = $val;
+                $settings['school_address'] = $val;
+            } elseif ($key === 'contact_phone') {
+                $settings['contact_phone'] = $val;
+                $settings['school_phone'] = $val;
             }
 
             $activeTheme->settings = $settings;

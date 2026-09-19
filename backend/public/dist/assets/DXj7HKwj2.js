@@ -1,0 +1,1 @@
+var e=`publishing-inline-notice`,t=()=>{};export{t as registerThemeBlocks,e as themeBlockPluginSlug};

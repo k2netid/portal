@@ -1621,6 +1621,10 @@
         "title": "Informasi Situs",
         "description": "Informasi dasar ngeunaan situs web salira"
       },
+      "contactInfo": {
+        "title": "Kontak & Geolokasi Peta (GPS)",
+        "description": "Alamat fisik, kontak telepon, sareng koordinat GPS presisi pikeun sadaya téma publik."
+      },
       "analytics": {
         "retentionTitle": "Retensi Data",
         "description": "Konfigurasi berapa lami data analitik harus disimpen di database.",
@@ -1648,6 +1652,10 @@
     "save": "Simpen Petélan",
     "saving": "Nyimpen…",
     "saved": "Petélan hasil disimpen",
+    "contact_geo_locating": "Nyandak GPS...",
+    "contact_geo_get_btn": "Candak Lokasi GPS Ayeuna",
+    "contact_geo_test_btn": "Pariksa dina Google Maps",
+    "contact_geo_hint": "Format: latitude, longitude (conto: -7.7151, 108.4731). Dianggo sacara seragam ku sadaya téma (Sarangenge, Layung, Sareupna, Janari) supados pin peta pas di luhureun gedong/gapura tur henteu nyasar ka laut.",
     "failed": "Gagal nyimpen petélan",
     "jsonPlaceholder": "Asupkeun format JSON anu valid",
     "options": {
@@ -1835,6 +1843,9 @@
     },
     "labels": {
       "site_name": "Nami Situs",
+      "contact_address": "Alamat Lengkep / Kantor",
+      "contact_phone": "Nomor Telepon / WhatsApp",
+      "contact_coordinates": "Titik Koordinat GPS (Latitude, Longitude)",
       "app_name": "Nami Aplikasi",
       "site_public_name": "Nami situs publik",
       "site_public_address": "Alamat situs publik",
@@ -1978,6 +1989,9 @@
     },
     "descriptions": {
       "site_name": "Nami publik situs Jejakawan salira",
+      "contact_address": "Alamat fisik resmi institusi / pausahaan anu némbongan dina kaca kontak sadaya téma.",
+      "contact_phone": "Nomor telepon atanapi nomor WhatsApp resmi pikeun layanan informasi sareng hotline.",
+      "contact_coordinates": "Koordinat GPS presisi (conto: -7.7151, 108.4731). Ngonci pin peta Google Maps pas di luhureun gedong/gapura dina sadaya téma supados henteu ngageser ka tengah laut.",
       "site_logo": "Logo utama situs Jejakawan",
       "site_favicon": "Ikon browser situs (rekomendasi 16x16 atawa 32x32)",
       "site_description": "Penjelasan singkat ngeunaan situs salira pikeun keperluan SEO",

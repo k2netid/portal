@@ -1,0 +1,1 @@
+function e(...e){return e.flatMap(e=>e?typeof e==`string`?[e]:Array.isArray(e)?e.filter(e=>typeof e==`string`):[]:[]).join(` `)}export{e as t};

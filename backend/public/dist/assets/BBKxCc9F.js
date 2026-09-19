@@ -1,0 +1,1 @@
+import{R as e,T as t,Z as n,tt as r}from"./C4sEBiSO.js";import{t as i}from"./BDNMzG2s.js";e();var a={};function o(e,i){let a=r(`router-view`);return n(),t(a)}var s=i(a,[[`render`,o]]);export{s as default};

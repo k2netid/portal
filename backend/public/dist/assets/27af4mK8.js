@@ -1,0 +1,1 @@
+var e=Symbol(`janari-select`);export{e as t};
