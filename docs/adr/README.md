@@ -27,6 +27,7 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, ja
 | **[ADR-022](./ADR-022-upstream-core-curation-and-generic-theme-seeder-architecture.md)** | Upstream Curation & Generic Theme Demo Seeders | Accepted | core |
 | **[ADR-023](./ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** | First-party themes as Registry packs + license quotas | Accepted | core |
 | **[ADR-024](./ADR-024-header-menu-alignment-customizer-controls-and-layout-parity.md)** | Header Menu Alignment Customizer Controls & Multi-Theme Layout Parity | Accepted | layout |
+| **[ADR-025](./ADR-025-theme-customizer-default-mode-and-locale.md)** | Theme Customizer Default Mode, Site Locale, and Runtime Prepaint Resilience | Accepted | layout |
 
 ## Theme-scoped / downstream (stub di folder ini)
 
