@@ -8,7 +8,8 @@
         "type": "text",
         "default": "Jejakawan",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "default_site_locale": {
         "label": "Bahasa Utama Situs",
@@ -34,7 +35,8 @@
         ],
         "default": "id",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 70
     },
     "theme_style": {
         "label": "Theme Visual Style",
@@ -59,7 +61,8 @@
         ],
         "default": "clean",
         "category": "Appearance",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "default_theme_mode": {
         "label": "Mode Tampilan Default",
@@ -81,33 +84,38 @@
         ],
         "default": "dark",
         "category": "Appearance",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "brand_logo": {
         "label": "Logo",
         "type": "media",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 40
     },
     "brand_favicon": {
         "label": "Favicon",
         "type": "media",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 50
     },
     "site_tagline": {
         "label": "Site Tagline",
         "type": "text",
         "default": "Modern & Elegant Jejakawan",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "site_description": {
         "label": "Site Description",
         "type": "textarea",
         "default": "Modern Content Management System built with Laravel and Vue.js",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "branding_display": {
         "label": "Branding Display",
@@ -128,71 +136,126 @@
         ],
         "default": "logo_only",
         "category": "General",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 60
     },
     "color_primary": {
         "label": "Warna Utama (Primary)",
         "type": "color",
         "default": "#00aeef",
         "category": "Colors",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "color_secondary": {
         "label": "Warna Sekunder (Secondary)",
         "type": "color",
         "default": "#0077a8",
         "category": "Colors",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "color_accent": {
         "label": "Warna Aksen / Glow (Accent)",
         "type": "color",
         "default": "#38c6f4",
         "category": "Colors",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "font_heading": {
         "label": "Font Judul (Heading Font)",
         "type": "select",
         "options": [
-            { "label": "Geist (Modern Clean)", "value": "Geist" },
-            { "label": "Inter", "value": "Inter" },
-            { "label": "Plus Jakarta Sans", "value": "Plus Jakarta Sans" },
-            { "label": "Outfit", "value": "Outfit" },
-            { "label": "Poppins", "value": "Poppins" },
-            { "label": "Roboto", "value": "Roboto" },
-            { "label": "Merriweather", "value": "Merriweather" }
+            {
+                "label": "Geist (Modern Clean)",
+                "value": "Geist"
+            },
+            {
+                "label": "Inter",
+                "value": "Inter"
+            },
+            {
+                "label": "Plus Jakarta Sans",
+                "value": "Plus Jakarta Sans"
+            },
+            {
+                "label": "Outfit",
+                "value": "Outfit"
+            },
+            {
+                "label": "Poppins",
+                "value": "Poppins"
+            },
+            {
+                "label": "Roboto",
+                "value": "Roboto"
+            },
+            {
+                "label": "Merriweather",
+                "value": "Merriweather"
+            }
         ],
         "default": "Geist",
         "category": "Typography",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "font_body": {
         "label": "Font Konten / Body",
         "type": "select",
         "options": [
-            { "label": "Geist (Modern Clean)", "value": "Geist" },
-            { "label": "Inter", "value": "Inter" },
-            { "label": "Plus Jakarta Sans", "value": "Plus Jakarta Sans" },
-            { "label": "Roboto", "value": "Roboto" },
-            { "label": "Open Sans", "value": "Open Sans" }
+            {
+                "label": "Geist (Modern Clean)",
+                "value": "Geist"
+            },
+            {
+                "label": "Inter",
+                "value": "Inter"
+            },
+            {
+                "label": "Plus Jakarta Sans",
+                "value": "Plus Jakarta Sans"
+            },
+            {
+                "label": "Roboto",
+                "value": "Roboto"
+            },
+            {
+                "label": "Open Sans",
+                "value": "Open Sans"
+            }
         ],
         "default": "Geist",
         "category": "Typography",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "font_mono": {
         "label": "Font Kode / Monospace",
         "type": "select",
         "options": [
-            { "label": "Geist Mono", "value": "Geist Mono" },
-            { "label": "JetBrains Mono", "value": "JetBrains Mono" },
-            { "label": "Fira Code", "value": "Fira Code" },
-            { "label": "UI Monospace", "value": "ui-monospace" }
+            {
+                "label": "Geist Mono",
+                "value": "Geist Mono"
+            },
+            {
+                "label": "JetBrains Mono",
+                "value": "JetBrains Mono"
+            },
+            {
+                "label": "Fira Code",
+                "value": "Fira Code"
+            },
+            {
+                "label": "UI Monospace",
+                "value": "ui-monospace"
+            }
         ],
         "default": "Geist Mono",
         "category": "Typography",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "breadcrumb_sticky": {
         "label": "Sticky Breadcrumbs",
@@ -200,14 +263,16 @@
         "default": false,
         "category": "Layout",
         "description": "Keep breadcrumbs visible while scrolling",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 120
     },
     "header_sticky": {
         "label": "Sticky Header",
         "type": "checkbox",
         "default": true,
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 70
     },
     "layout_style": {
         "label": "Layout Style",
@@ -237,7 +302,8 @@
         "default": "full",
         "category": "Layout",
         "description": "Choose overall page layout style",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "home_sections": {
         "label": "Homepage sections",
@@ -245,7 +311,8 @@
         "options": [],
         "default": [],
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 130
     },
     "container_max_width": {
         "label": "Container Max Width",
@@ -256,7 +323,8 @@
         "default": 1400,
         "category": "Layout",
         "description": "Max width in pixels (for Boxed/Wide/Framed)",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "boxed_bg_color": {
         "label": "Page Background Color",
@@ -264,7 +332,8 @@
         "default": "#f1f5f9",
         "category": "Layout",
         "description": "Background visible outside boxed content",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "boxed_shadow": {
         "label": "Boxed Content Shadow",
@@ -293,7 +362,8 @@
         ],
         "default": "lg",
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 40
     },
     "framed_padding": {
         "label": "Frame Padding",
@@ -304,7 +374,8 @@
         "default": 16,
         "category": "Layout",
         "description": "Padding around framed layout (px)",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 50
     },
     "header_style": {
         "label": "Header Style",
@@ -325,7 +396,8 @@
         ],
         "default": "glass",
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 60
     },
     "header_menu_alignment": {
         "label": "Header Menu Alignment",
@@ -347,21 +419,24 @@
         "default": "center",
         "category": "Layout",
         "description": "Perataan posisi menu navigasi desktop pada header",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 80
     },
     "header_cta_text": {
         "label": "Header CTA Button Text",
         "type": "text",
         "default": "Get Started",
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 100
     },
     "header_cta_url": {
         "label": "Header CTA Button URL",
         "type": "text",
         "default": "/contact",
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 110
     },
     "nav_style": {
         "label": "Navigation Style",
@@ -402,7 +477,8 @@
         ],
         "default": "glass",
         "category": "Layout",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 90
     },
     "button_radius": {
         "label": "Button Roundedness",
@@ -431,7 +507,8 @@
         ],
         "default": "8px",
         "category": "Buttons",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "button_border_width": {
         "label": "Button Border Width",
@@ -441,7 +518,8 @@
         "step": 1,
         "default": 1,
         "category": "Buttons",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "button_shadow": {
         "label": "Button Shadow",
@@ -470,7 +548,8 @@
         ],
         "default": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         "category": "Buttons",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "disabled_page_behavior": {
         "label": "When a page is turned off",
@@ -487,124 +566,178 @@
         ],
         "default": "message",
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "disabled_page_message": {
         "label": "Message shown to visitors",
         "type": "textarea",
         "default": "This page is temporarily unavailable while we improve the experience. Please check back soon.",
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "enable_about": {
         "label": "Show About page",
         "type": "checkbox",
         "default": true,
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "enable_achievement": {
         "label": "Show Achievements page",
         "type": "checkbox",
         "default": true,
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 40
     },
     "enable_career": {
         "label": "Show Careers page",
         "type": "checkbox",
         "default": true,
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 50
     },
     "enable_blog": {
         "label": "Show News page",
         "type": "checkbox",
         "default": true,
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 60
     },
     "enable_contact": {
         "label": "Show Contact page",
         "type": "checkbox",
         "default": true,
         "category": "Public Pages",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 70
     },
     "footer_text": {
         "label": "Copyright Text",
         "type": "text",
         "default": "© 2026 Jejakawan. All rights reserved.",
         "category": "Footer",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "back_to_top": {
         "label": "Enable Back to Top",
         "type": "checkbox",
         "default": true,
         "category": "Footer",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "enable_floating_social": {
         "label": "Tampilkan Floating Social Dock",
         "type": "checkbox",
         "default": true,
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "floating_social_position": {
         "label": "Posisi Floating Dock",
         "type": "select",
         "options": [
-            { "label": "Kanan Tengah (Right Center)", "value": "right" },
-            { "label": "Kiri Tengah (Left Center)", "value": "left" },
-            { "label": "Kanan Bawah (Bottom Right)", "value": "bottom_right" },
-            { "label": "Kiri Bawah (Bottom Left)", "value": "bottom_left" },
-            { "label": "Bawah Tengah (Bottom Center / Dock Pill)", "value": "bottom_center" },
-            { "label": "Kanan Atas (Top Right)", "value": "top_right" },
-            { "label": "Kiri Atas (Top Left)", "value": "top_left" }
+            {
+                "label": "Kanan Tengah (Right Center)",
+                "value": "right"
+            },
+            {
+                "label": "Kiri Tengah (Left Center)",
+                "value": "left"
+            },
+            {
+                "label": "Kanan Bawah (Bottom Right)",
+                "value": "bottom_right"
+            },
+            {
+                "label": "Kiri Bawah (Bottom Left)",
+                "value": "bottom_left"
+            },
+            {
+                "label": "Bawah Tengah (Bottom Center / Dock Pill)",
+                "value": "bottom_center"
+            },
+            {
+                "label": "Kanan Atas (Top Right)",
+                "value": "top_right"
+            },
+            {
+                "label": "Kiri Atas (Top Left)",
+                "value": "top_left"
+            }
         ],
         "default": "right",
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "floating_social_orientation": {
         "label": "Orientasi Dock",
         "type": "select",
         "options": [
-            { "label": "Otomatis (Sesuai Posisi)", "value": "auto" },
-            { "label": "Vertikal (Tegak)", "value": "vertical" },
-            { "label": "Horizontal (Mendatar)", "value": "horizontal" }
+            {
+                "label": "Otomatis (Sesuai Posisi)",
+                "value": "auto"
+            },
+            {
+                "label": "Vertikal (Tegak)",
+                "value": "vertical"
+            },
+            {
+                "label": "Horizontal (Mendatar)",
+                "value": "horizontal"
+            }
         ],
         "default": "auto",
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     },
     "floating_social_style": {
         "label": "Gaya Kapsul Dock",
         "type": "select",
         "options": [
-            { "label": "Frosted Glassmorphism (Glass)", "value": "glass" },
-            { "label": "Solid Dark Slate (Solid)", "value": "solid" },
-            { "label": "Aura Glow Keemasan (Glow)", "value": "glow" }
+            {
+                "label": "Frosted Glassmorphism (Glass)",
+                "value": "glass"
+            },
+            {
+                "label": "Solid Dark Slate (Solid)",
+                "value": "solid"
+            },
+            {
+                "label": "Aura Glow Keemasan (Glow)",
+                "value": "glow"
+            }
         ],
         "default": "glass",
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 40
     },
     "floating_social_default_collapsed": {
         "label": "Mulai dalam Keadaan Sembunyi (Collapsed)",
         "type": "checkbox",
         "default": false,
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 50
     },
     "floating_social_show_on_mobile": {
         "label": "Tampilkan di Layar Mobile",
         "type": "checkbox",
         "default": false,
         "category": "Social Media",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 60
     },
     "social_links": {
         "label": "Social Media Links",
@@ -642,14 +775,16 @@
                 "url": "https://github.com/jejakawan"
             }
         ],
-        "scope": "platform"
+        "scope": "platform",
+        "order": 70
     },
     "animation_enabled": {
         "label": "Enable GSAP Animations",
         "type": "boolean",
         "default": true,
         "category": "Animations",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 10
     },
     "animation_intensity": {
         "label": "Animation Intensity",
@@ -670,13 +805,15 @@
         ],
         "default": "normal",
         "category": "Animations",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 20
     },
     "parallax_enabled": {
         "label": "Enable Parallax Effects",
         "type": "boolean",
         "default": true,
         "category": "Animations",
-        "scope": "platform"
+        "scope": "platform",
+        "order": 30
     }
 }

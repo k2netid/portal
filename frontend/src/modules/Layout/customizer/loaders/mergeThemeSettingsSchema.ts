@@ -34,7 +34,20 @@ export function mergeThemeSettingsSchema(
 ): CustomizerSettingsSchema {
     const platform = omitMeta(platformSchemaJson as unknown as CustomizerSettingsSchema);
     const theme = omitMeta(themeSchemaBySlug[slug] ?? {});
-    const merged: CustomizerSettingsSchema = { ...platform, ...theme };
+    const merged: CustomizerSettingsSchema = {};
+
+    for (const [key, pDef] of Object.entries(platform)) {
+        if (theme[key]) {
+            merged[key] = { ...pDef, ...theme[key] };
+        } else {
+            merged[key] = pDef;
+        }
+    }
+    for (const [key, tDef] of Object.entries(theme)) {
+        if (!merged[key]) {
+            merged[key] = tDef;
+        }
+    }
 
     if (apiSchema && typeof apiSchema === 'object') {
         for (const [key, def] of Object.entries(apiSchema)) {
