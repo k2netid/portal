@@ -230,6 +230,7 @@ import BrandMark from '@/modules/Layout/views/themes/layung/components/layout/Br
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import { parseSocialLinks } from '@/modules/Layout/utils/socialLinks';
 import { useLayungIdentity } from '@/modules/Layout/views/themes/layung/composables/useLayungIdentity';
 import {
   resolveLayungLocalizedCopy,
@@ -258,7 +259,7 @@ const brandingDisplay = computed(() => String(getSetting('branding_display', 'lo
 
 const siteLogo = displayBrandLogo;
 
-const socialLinks = computed(() => (getSetting('social_links') as Array<{ icon?: string; url?: string; label?: string }>) || []);
+const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 
 const defaultSocialLinks = [
   { icon: 'Instagram', url: 'https://instagram.com/jejakawan', label: 'Instagram' },

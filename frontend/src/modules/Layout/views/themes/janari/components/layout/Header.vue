@@ -609,6 +609,7 @@ import {
     LogOut,
 } from 'lucide-vue-next';
 import type { MenuItem } from '@/modules/Layout/types/menu';
+import { parseSocialLinks } from '@/modules/Layout/utils/socialLinks';
 
 const builder = inject('builder', null);
 const isBuilder = computed(() => !!builder);
@@ -730,12 +731,12 @@ const siteLogo = computed((): string => {
     return logo;
 });
 
-const socialLinks = computed(() => (getSetting('social_links') as any[]) || []);
+const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 const socialLabel = computed(() => localizedString('header_social_label') || t('theme.janari.header.socialLabel'));
 const socialExpanded = ref(true);
 const socialLinksWrap = ref<HTMLElement>();
 
-const getSocialIcon = (key: string) => {
+const getSocialIcon = (key?: string) => {
     switch (key) {
         case 'Twitter': return Twitter;
         case 'Instagram': return Instagram;

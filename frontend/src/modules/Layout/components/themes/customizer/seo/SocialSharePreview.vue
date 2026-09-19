@@ -250,13 +250,14 @@ import {
   Share2,
   Twitter,
 } from 'lucide-vue-next';
+import { parseSocialLinks, type SocialLinkItem } from '@/modules/Layout/utils/socialLinks';
 
 const props = defineProps<{
   siteTitle?: string;
   siteTagline?: string;
   brandLogo?: string;
   favicon?: string;
-  socialLinks?: Array<{ icon: string; url: string }>;
+  socialLinks?: SocialLinkItem[] | string;
 }>();
 
 const { t } = useI18n();
@@ -296,6 +297,8 @@ const descLength = computed(() => displayDescription.value.length);
 const faviconUrl = computed(() => props.favicon || props.brandLogo || '');
 const ogImageUrl = computed(() => props.brandLogo || '');
 
+const normalizedSocialLinks = computed(() => parseSocialLinks(props.socialLinks));
+
 const jsonLdData = computed(() => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -309,7 +312,7 @@ const jsonLdData = computed(() => ({
       '@type': 'ImageObject',
       url: props.brandLogo || '',
     },
-    sameAs: (props.socialLinks || []).map((s) => s.url).filter(Boolean),
+    sameAs: normalizedSocialLinks.value.map((s) => s.url).filter(Boolean),
   },
 }));
 
