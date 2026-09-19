@@ -88,6 +88,8 @@ describe('mergeThemeSettingsSchema', () => {
         const schema = mergeThemeSettingsSchema('sarangenge');
         expect(schema.enable_contact?.order).toBe(10);
         expect(schema.contact_form_slug?.order).toBe(20);
+        expect(schema.contact_address?.order).toBe(22);
+        expect(schema.contact_phone?.order).toBe(25);
         expect(schema.contact_whatsapp?.order).toBe(30);
         expect(schema.contact_admission_hotline?.order).toBe(40);
         expect(schema.contact_operating_hours?.order).toBe(50);
