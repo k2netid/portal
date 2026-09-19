@@ -1379,4 +1379,57 @@ class ExtensionControllerTest extends TestCase
         $response->assertOk();
         $this->assertTrue(str_contains((string) $response->headers->get('content-type'), 'zip') || str_contains((string) $response->headers->get('content-disposition'), 'attachment'));
     }
+
+    public function test_admin_index_automatically_discovers_theme_packs_from_disk(): void
+    {
+        // Delete any existing theme extensions from DB to verify raw on-demand discovery
+        Extension::where('type', 'theme')->orWhere('slug', 'like', 'theme-%')->delete();
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->getJson('/api/v1/manage/infra/extensions')
+            ->assertOk();
+
+        $data = collect($response->json('data'));
+
+        $janari = $data->firstWhere('slug', 'theme-janari');
+        $this->assertNotNull($janari, 'theme-janari must be discovered by ExtensionController::index()');
+        $this->assertSame('theme', $janari['type']);
+        $this->assertSame('active', $janari['status']);
+        $this->assertTrue((bool) ($janari['is_served'] ?? false));
+        $this->assertFalse((bool) ($janari['can_uninstall'] ?? true));
+
+        $layung = $data->firstWhere('slug', 'theme-layung');
+        $this->assertNotNull($layung, 'theme-layung must be discovered by ExtensionController::index()');
+        $this->assertSame('theme', $layung['type']);
+        $this->assertFalse((bool) ($layung['can_uninstall'] ?? true));
+    }
+
+    public function test_deactivate_theme_janari_is_rejected(): void
+    {
+        Extension::updateOrCreate(
+            ['slug' => 'theme-janari'],
+            ['type' => 'theme', 'name' => 'Janari Theme', 'version' => '1.0.0', 'status' => 'active', 'is_core' => false]
+        );
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->postJson('/api/v1/manage/infra/extensions/theme-janari/deactivate');
+
+        $response->assertJsonPath('success', false);
+        $this->assertStringContainsString('Baseline theme pack', (string) $response->json('message'));
+    }
+
+    public function test_uninstall_theme_pack_is_rejected(): void
+    {
+        Extension::updateOrCreate(
+            ['slug' => 'theme-janari'],
+            ['type' => 'theme', 'name' => 'Janari Theme', 'version' => '1.0.0', 'status' => 'active', 'is_core' => false]
+        );
+
+        $response = $this->actingAs($this->admin, 'sanctum')
+            ->deleteJson('/api/v1/manage/infra/extensions/theme-janari/uninstall');
+
+        $response->assertStatus(422);
+        $this->assertStringContainsString('First-party theme packs cannot be uninstalled', (string) $response->json('message'));
+    }
 }
+
