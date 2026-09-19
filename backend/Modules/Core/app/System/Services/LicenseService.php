@@ -112,30 +112,31 @@ class LicenseService
      */
     public function getFeaturesMatrix(string $tier): array
     {
-        $isPaid = in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
-        $isEnterprisePlus = in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $isProOrHigher = in_array($tier, [self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
+        $isEnterprise = in_array($tier, [self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true);
 
         $matrix = [
-            'custom_css' => in_array($tier, [self::TIER_STARTER, self::TIER_PRO, self::TIER_ENTERPRISE, self::TIER_WHITE_LABEL], true),
+            'custom_css' => $isProOrHigher,
             /**
              * @deprecated Use `theme_quota` instead for granular theme entitlement checks.
              * Kept for backward-compat with existing frontend feature checks.
              */
-            'premium_themes' => $isPaid,
+            'premium_themes' => $isProOrHigher,
             // Theme quota (ADR-023) — replaces the boolean premium_themes gate.
             'theme_quota' => $this->getThemeQuota($tier),
-            'pro_builder_modules' => $isPaid,
-            'custom_code_injection' => $isPaid,
-            'remove_watermark' => $isPaid,
-            'white_label' => $isEnterprisePlus,
-            'multi_site' => $isEnterprisePlus,
-            'priority_updates' => $isPaid,
-            'theme_upload' => $isPaid,
-            'plugin_upload' => $isPaid,
-            'theme_export' => $isPaid,
-            'plugin_export' => $isPaid,
-            'visual_builder' => $isPaid,
-            'data_studio' => $isPaid,
+            'visual_builder' => $isProOrHigher,
+            'pro_builder_modules' => $isProOrHigher,
+            'custom_code_injection' => $isProOrHigher,
+            'remove_watermark' => $isProOrHigher,
+            'priority_updates' => $isProOrHigher,
+            // Strictly Enterprise capabilities (ADR-026)
+            'data_studio' => $isEnterprise,
+            'theme_upload' => $isEnterprise,
+            'plugin_upload' => $isEnterprise,
+            'theme_export' => $isEnterprise,
+            'plugin_export' => $isEnterprise,
+            'white_label' => $isEnterprise,
+            'multi_site' => $isEnterprise,
         ];
 
         return $matrix;

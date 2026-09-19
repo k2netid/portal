@@ -17,8 +17,10 @@ class ExtensionHealthService
      */
     private const PACK_RANK = [
         'free' => 0,
+        'community' => 0,
         'pro' => 2,
         'pro_plus' => 3,
+        'enterprise' => 4,
     ];
 
     /**
@@ -247,6 +249,6 @@ class ExtensionHealthService
         $fromSettings = is_array($extension->settings) ? ($extension->settings['license_tier'] ?? null) : null;
         $raw = is_string($fromManifest) ? $fromManifest : (is_string($fromSettings) ? $fromSettings : 'free');
 
-        return in_array($raw, ['free', 'pro', 'pro_plus'], true) ? $raw : 'free';
+        return in_array($raw, ['free', 'community', 'pro', 'pro_plus', 'enterprise'], true) ? $raw : 'free';
     }
 }

@@ -28,6 +28,7 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, ja
 | **[ADR-023](./ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** | First-party themes as Registry packs + license quotas | Accepted | core |
 | **[ADR-024](./ADR-024-header-menu-alignment-customizer-controls-and-layout-parity.md)** | Header Menu Alignment Customizer Controls & Multi-Theme Layout Parity | Accepted | layout |
 | **[ADR-025](./ADR-025-theme-customizer-default-mode-and-locale.md)** | Theme Customizer Default Mode, Site Locale, and Runtime Prepaint Resilience | Accepted | layout |
+| **[ADR-026](./ADR-026-three-tier-license-simplification-and-capability-matrix.md)** | Standarisasi Lisensi 3-Tier (Community, Pro, Enterprise) dan Penegakan Matriks Kapabilitas | Accepted | core |
 
 ## Theme-scoped / downstream (stub di folder ini)
 
