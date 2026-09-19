@@ -242,10 +242,18 @@ export const useSystemStore = defineStore('system', {
                 ]);
                 const rawData = { ...systemData, ...brandData };
 
-                const licenseTier = String(rawData.app_license_tier || rawData.license_type || this.appIdentity.app_license_tier || 'community').toLowerCase();
-                const hasWhiteLabel = typeof rawData.has_white_label === 'boolean'
-                    ? rawData.has_white_label
-                    : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier);
+                const licenseTier = String(
+                    (this.publicSettingsLoaded ? this.appIdentity.app_license_tier : '') ||
+                    rawData.app_license_tier ||
+                    rawData.license_type ||
+                    this.appIdentity.app_license_tier ||
+                    'community'
+                ).toLowerCase();
+                const hasWhiteLabel = (this.publicSettingsLoaded && typeof this.appIdentity.has_white_label === 'boolean')
+                    ? this.appIdentity.has_white_label
+                    : (typeof rawData.has_white_label === 'boolean'
+                        ? rawData.has_white_label
+                        : ['enterprise', 'white_label', 'pro_plus'].includes(licenseTier));
 
                 const syncEnabled = Boolean(rawData.brand_sync_site_identity);
                 const brandLogo = (rawData.brand_logo as string) || '';

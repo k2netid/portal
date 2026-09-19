@@ -133,6 +133,33 @@ describe('System Store', () => {
         expect(identity.app_logo).toBe('/media/logo.png');
     });
 
+    it('does not allow fetchAppIdentity to override has_white_label when publicSettings is loaded without white label', async () => {
+        const store = useSystemStore();
+        vi.mocked(api.get).mockResolvedValueOnce({
+            data: {
+                app_license_tier: 'pro',
+                has_white_label: false,
+                app_name: 'Jejakawan',
+                app_logo: '/logo.png',
+            },
+        });
+        await store.fetchPublicSettings();
+        expect(store.appIdentity.has_white_label).toBe(false);
+
+        // Even if raw group system returns enterprise app_license_tier
+        vi.mocked(api.get).mockResolvedValueOnce({
+            data: {
+                app_name: 'Attempted Brand Hijack',
+                app_logo: '/media/hacked.png',
+                app_license_tier: 'enterprise',
+            },
+        });
+        const identity = await store.fetchAppIdentity();
+        expect(identity.has_white_label).toBe(false);
+        expect(identity.app_name).toBe('Jejakawan');
+        expect(identity.app_logo).toBe('/logo.png');
+    });
+
     it('checks isAuthenticatedLocally with valid and invalid local storage', () => {
         const store = useSystemStore();
         expect(store.isAuthenticatedLocally()).toBe(false);
