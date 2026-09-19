@@ -27,16 +27,18 @@ final class DataStudioExtensionGateTest extends TestCase
         $this->licenseService->deactivateLicense();
         $this->assertFalse($this->licenseService->canUseFeature('data_studio'));
 
+        // ADR-026: Pro is locked for data_studio
         $this->licenseService->activateLicense('JACP-PRO-TEST-1234-5678');
-        $this->assertTrue($this->licenseService->canUseFeature('data_studio'));
+        $this->assertFalse($this->licenseService->canUseFeature('data_studio'));
 
+        // ADR-026: Enterprise unlocks data_studio
         $this->licenseService->activateLicense('JACP-ENT-VIP-9999-0000');
         $this->assertTrue($this->licenseService->canUseFeature('data_studio'));
 
         $this->licenseService->deactivateLicense();
     }
 
-    public function test_license_blocker_prevents_activation_on_community(): void
+    public function test_license_blocker_prevents_activation_on_community_and_pro(): void
     {
         $this->licenseService->deactivateLicense();
 
@@ -52,8 +54,12 @@ final class DataStudioExtensionGateTest extends TestCase
                 'is_core' => false,
                 'manifest' => [
                     'slug' => 'data-studio',
-                    'license_tier' => 'pro',
+                    'license_tier' => 'enterprise',
                 ],
+            ]);
+        } else {
+            $ext->update([
+                'manifest' => array_merge($ext->manifest ?? [], ['license_tier' => 'enterprise']),
             ]);
         }
 
@@ -62,9 +68,16 @@ final class DataStudioExtensionGateTest extends TestCase
         $this->assertNotNull($blocker);
         $this->assertStringContainsString('Lisensi situs (community) tidak mencukupi', $blocker);
 
+        // On Pro: still blocked (ADR-026)
         $this->licenseService->activateLicense('JACP-PRO-TEST-1234-5678');
         $blockerAfterPro = $healthService->licenseBlocker($ext);
-        $this->assertNull($blockerAfterPro);
+        $this->assertNotNull($blockerAfterPro);
+        $this->assertStringContainsString('Lisensi situs (pro) tidak mencukupi', $blockerAfterPro);
+
+        // On Enterprise: allowed
+        $this->licenseService->activateLicense('JACP-ENT-VIP-9999-0000');
+        $blockerAfterEnt = $healthService->licenseBlocker($ext);
+        $this->assertNull($blockerAfterEnt);
 
         $this->licenseService->deactivateLicense();
     }
