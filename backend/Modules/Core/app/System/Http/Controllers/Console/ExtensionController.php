@@ -54,8 +54,7 @@ class ExtensionController extends BaseApiController
         $extensions = Extension::with('features')->latest()->get();
         app(ExtensionHealthService::class)->attach($extensions);
         $exportAllowed = $this->isExportAllowed();
-        $activeThemeVal = Setting::get('theme_active', 'janari');
-        $activeThemeSlug = is_string($activeThemeVal) ? strtolower($activeThemeVal) : 'janari';
+        $activeThemeSlug = $this->resolveActiveServedThemeSlug();
 
         $extensions->each(function (Extension $extension) use ($exportAllowed, $activeThemeSlug): void {
             $extension->setAttribute('can_uninstall', $this->canUninstall($extension));
@@ -67,6 +66,29 @@ class ExtensionController extends BaseApiController
         });
 
         return $this->success($extensions, 'Extensions retrieved successfully');
+    }
+
+    /**
+     * Resolve currently active / served frontend theme slug (lay_themes.is_active SoT).
+     */
+    protected function resolveActiveServedThemeSlug(): string
+    {
+        if (class_exists(\Modules\Layout\Models\Theme::class)) {
+            try {
+                $theme = \Modules\Layout\Models\Theme::getActiveTheme('frontend');
+                if ($theme && is_string($theme->slug) && trim($theme->slug) !== '') {
+                    return strtolower(trim($theme->slug));
+                }
+            } catch (\Throwable) {
+                // Ignore and fall back to setting
+            }
+        }
+
+        $activeThemeVal = Setting::get('theme_active', 'janari');
+
+        return is_string($activeThemeVal) && trim($activeThemeVal) !== ''
+            ? strtolower(trim($activeThemeVal))
+            : 'janari';
     }
 
     /**
@@ -93,7 +115,7 @@ class ExtensionController extends BaseApiController
 
     protected function canUninstall(Extension $extension): bool
     {
-        if ($extension->is_core || $this->isKernelSlug($extension->slug)) {
+        if ($extension->is_core || $this->isKernelSlug($extension->slug) || $extension->type === 'theme') {
             return false;
         }
 
@@ -102,7 +124,7 @@ class ExtensionController extends BaseApiController
 
     protected function canExport(Extension $extension): bool
     {
-        if ($this->isKernelSlug($extension->slug)) {
+        if ($this->isKernelSlug($extension->slug) || $extension->type === 'theme') {
             return false;
         }
 
@@ -221,6 +243,14 @@ class ExtensionController extends BaseApiController
                 throw new Exception($licenseBlock);
             }
 
+            if ($extension->type === 'theme') {
+                $themeSlug = ExtensionFamilyCatalog::themeSlugForPack($extension->slug) ?? str_replace('theme-', '', $extension->slug);
+                $license = app(LicenseService::class);
+                if (! $license->isThemeServeEntitled($themeSlug)) {
+                    throw new Exception("Theme pack [{$extension->slug}] is not entitled under your current license tier ({$license->getLicenseTier()}).");
+                }
+            }
+
             $this->verifyDependencies($extension);
             $runtime = $graph->runtimeBlockers($extension);
             if ($runtime !== []) {
@@ -258,6 +288,18 @@ class ExtensionController extends BaseApiController
 
         if ($guard = $this->guardKernelLifecycle($extension, 'deactivated')) {
             return $guard;
+        }
+
+        if ($extension->slug === 'theme-janari') {
+            return $this->error('Baseline theme pack (theme-janari) cannot be deactivated');
+        }
+
+        if ($extension->type === 'theme') {
+            $rawThemeSlug = ExtensionFamilyCatalog::themeSlugForPack($extension->slug) ?? str_replace('theme-', '', $extension->slug);
+            $activeServedSlug = $this->resolveActiveServedThemeSlug();
+            if (strtolower($rawThemeSlug) === $activeServedSlug) {
+                return $this->error("Cannot deactivate theme pack [{$extension->slug}]: it is currently served to visitors. Switch to another theme first.");
+            }
         }
 
         if ($extension->status !== 'active') {
@@ -536,6 +578,13 @@ class ExtensionController extends BaseApiController
         if ($this->isShippedFirstPartyModule($extension)) {
             return $this->error(
                 'First-party modules cannot be uninstalled. Deactivate them instead. Uninstall is reserved for uploaded plugins.',
+                422
+            );
+        }
+
+        if ($extension->type === 'theme') {
+            return $this->error(
+                'First-party theme packs cannot be uninstalled. Deactivate them instead or switch themes.',
                 422
             );
         }
@@ -844,13 +893,49 @@ class ExtensionController extends BaseApiController
             }
         }
 
-        // 3. Synchronize with Database
+        // 3. Scan theme packs (backend/theme-packs/) (ADR-023)
+        foreach (ExtensionPaths::discoverThemePackDirectories() as $dir) {
+            $manifestFile = $dir.'/manifest.json';
+            if (File::exists($manifestFile)) {
+                $manifest = $this->decodeJsonToArray(File::get($manifestFile));
+                if ($manifest === null) {
+                    continue;
+                }
+
+                if (! isset($manifest['slug']) || ! is_string($manifest['slug']) || $manifest['slug'] === '') {
+                    continue;
+                }
+
+                $themeSlug = $manifest['slug'];
+                $extracted = $this->extractDiscoveryMeta($manifest, 'theme', 'Jejakawan Team');
+                if ($extracted === null) {
+                    continue;
+                }
+
+                $extracted['is_core'] = false;
+                $extracted['theme_slug'] = is_string($manifest['theme_slug'] ?? null) ? $manifest['theme_slug'] : null;
+                $extracted['theme_flags'] = is_array($manifest['theme_flags'] ?? null) ? $manifest['theme_flags'] : [];
+                $discovered[$themeSlug] = $extracted;
+            }
+        }
+
+        // 4. Synchronize with Database
+        $activeServedSlug = $this->resolveActiveServedThemeSlug();
+
         foreach ($discovered as $slug => $meta) {
             $existing = Extension::where('slug', $slug)->first();
             // Kernel packages are always active — heal stale inactive rows from old discovery.
-            $status = $meta['is_core']
-                ? 'active'
-                : ($existing !== null ? $existing->status : 'inactive');
+            // theme-janari is always-on baseline when layout is present (ADR-023).
+            // Any currently served theme is active (ADR-023).
+            if ($meta['is_core']) {
+                $status = 'active';
+            } elseif ($slug === 'theme-janari') {
+                $status = 'active';
+            } elseif ($meta['type'] === 'theme' && ($meta['theme_slug'] ?? null) === $activeServedSlug) {
+                $status = 'active';
+            } else {
+                $status = $existing !== null ? $existing->status : 'inactive';
+            }
 
             $author = $meta['author'] !== '' && $meta['author'] !== 'Core'
                 ? $meta['author']
@@ -895,7 +980,7 @@ class ExtensionController extends BaseApiController
                     'description' => $meta['description'] ?? $existing?->description,
                     'license' => $license,
                     'requirements' => $requirements,
-                    'manifest' => [
+                    'manifest' => array_filter([
                         'settings_route' => $meta['settings_route'],
                         'license_tier' => $meta['license_tier'],
                         'suggests' => $meta['suggests_declared']
@@ -907,7 +992,11 @@ class ExtensionController extends BaseApiController
                         'permissions' => $meta['permissions'] !== []
                             ? $meta['permissions']
                             : (is_array($existing?->manifest) ? ($existing->manifest['permissions'] ?? []) : []),
-                    ],
+                        'theme_slug' => $meta['theme_slug'] ?? ($existing?->manifest['theme_slug'] ?? null),
+                        'theme_flags' => ! empty($meta['theme_flags'])
+                            ? $meta['theme_flags']
+                            : ($existing?->manifest['theme_flags'] ?? null),
+                    ], static fn ($v) => $v !== null && $v !== '' && $v !== []),
                     'settings' => $settings,
                 ]
             );
@@ -946,7 +1035,9 @@ class ExtensionController extends BaseApiController
      *     suggests: array<string, string>,
      *     suggests_declared: bool,
      *     runtime_requires: array<string, string>,
-     *     permissions: list<string>
+     *     permissions: list<string>,
+     *     theme_slug?: string|null,
+     *     theme_flags?: array<string, mixed>
      * }|null
      */
     private function extractDiscoveryMeta(array $manifest, string $defaultType, string $defaultAuthor): ?array
@@ -968,7 +1059,7 @@ class ExtensionController extends BaseApiController
 
         $type = $defaultType;
         if (isset($manifest['type']) && is_string($manifest['type'])
-            && in_array($manifest['type'], ['module', 'plugin'], true)) {
+            && in_array($manifest['type'], ['module', 'plugin', 'theme'], true)) {
             $type = $manifest['type'];
         }
 
@@ -1076,6 +1167,8 @@ class ExtensionController extends BaseApiController
             'suggests_declared' => $suggestsDeclared,
             'runtime_requires' => $runtimeRequires,
             'permissions' => $permissions,
+            'theme_slug' => is_string($manifest['theme_slug'] ?? null) ? $manifest['theme_slug'] : null,
+            'theme_flags' => is_array($manifest['theme_flags'] ?? null) ? $manifest['theme_flags'] : [],
         ];
     }
 

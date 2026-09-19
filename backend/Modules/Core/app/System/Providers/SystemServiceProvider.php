@@ -13,6 +13,7 @@ use Laravel\Sanctum\Console\Commands\PruneExpired;
 use Modules\Core\System\Console\Commands\ApplyInstallProfileCommand;
 use Modules\Core\System\Console\Commands\CleanupOldLogs;
 use Modules\Core\System\Console\Commands\DynamicOpenApiExport;
+use Modules\Core\System\Console\Commands\ExtensionDiscoverCommand;
 use Modules\Core\System\Console\Commands\LicenseCheckCommand;
 use Modules\Core\System\Console\Commands\RbacSyncCommand;
 use Modules\Core\System\Console\Commands\SystemAudit;
@@ -115,6 +116,7 @@ class SystemServiceProvider extends ServiceProvider
             SystemHealthCheck::class,
             LicenseCheckCommand::class,
             ApplyInstallProfileCommand::class,
+            ExtensionDiscoverCommand::class,
             RbacSyncCommand::class,
         ]);
     }
