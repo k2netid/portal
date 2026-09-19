@@ -17,15 +17,29 @@ export const normalizeLocaleCode = (code: string): string => {
 
 const getComposer = (): Composer => i18n.global as unknown as Composer;
 
+export const getThemeDefaultLocale = (): string => {
+    if (typeof window === 'undefined') return 'id';
+    try {
+        const raw = localStorage.getItem('ja_theme_default_locale');
+        if (raw) return raw;
+    } catch {
+        // ignore
+    }
+    return 'id';
+};
+
 /**
  * Detect the best locale to use.
- * Priority: 1. localStorage, 2. Browser language, 3. Default
+ * Priority: 1. localStorage (user choice), 2. Theme default locale setting, 3. Browser language (if auto), 4. Fallback ('id')
  */
 const detectLocale = (): string => {
+    const themeDefault = getThemeDefaultLocale();
+    const isAuto = themeDefault === 'auto';
+    const fallbackCode = (!isAuto && availableCodes().includes(themeDefault)) ? themeDefault : (config.locale || 'id');
     return resolvePreferredLocale(availableCodes(), {
         stored: localStorage.getItem('locale'),
-        fallback: config.locale,
-        detectBrowser: true,
+        fallback: fallbackCode,
+        detectBrowser: isAuto,
     });
 };
 

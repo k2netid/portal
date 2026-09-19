@@ -62,7 +62,6 @@
           </div>
           <Select
             v-model="filterUsage"
-            @update:model-value="fetchTags(1)"
           >
             <SelectTrigger class="h-10 w-full sm:w-[150px] shrink-0 bg-background" :aria-label="t('common.labels.status')">
               <SelectValue :placeholder="t('library.tags.filters.usage')" />
@@ -82,7 +81,6 @@
           <Select
             v-if="!isEmbedded && !scope"
             v-model="filterType"
-            @update:model-value="fetchTags(1)"
           >
             <SelectTrigger
               class="h-10 w-full sm:w-[150px] shrink-0 bg-background"
@@ -345,6 +343,15 @@ watch(rowSelection, (newSelection) => {
 // Clear selection when tags change
 watch(tags, () => {
     rowSelection.value = {};
+});
+
+// Watch filters and scope changes
+watch([filterUsage, filterType], () => {
+    fetchTags(1);
+});
+
+watch(() => props.scope, () => {
+    fetchTags(1);
 });
 
 const onSearchInput = debounce(() => {

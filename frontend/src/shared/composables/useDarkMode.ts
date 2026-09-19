@@ -8,10 +8,44 @@ type ThemeMode = 'light' | 'dark' | 'system';
 /** `console` = Jejakawan Console (dashboard); `frontend` = public site theme. */
 export type DarkModeScope = 'console' | 'frontend';
 
-const FRONTEND_THEME_KEY = 'frontend-dark-mode';
-const frontendThemeMode = ref<ThemeMode>('system');
-const frontendIsDarkMode = ref(false);
+export const FRONTEND_THEME_KEY = 'frontend-dark-mode';
+export const FRONTEND_DEFAULT_THEME_MODE_KEY = 'ja_theme_default_mode';
+const frontendThemeMode = ref<ThemeMode>('dark');
+const frontendIsDarkMode = ref(true);
 let frontendInitialized = false;
+
+export const getThemeDefaultMode = (): ThemeMode => {
+    if (typeof window === 'undefined') return 'dark';
+    try {
+        const raw = localStorage.getItem(FRONTEND_DEFAULT_THEME_MODE_KEY);
+        if (raw === 'light' || raw === 'dark' || raw === 'system') return raw;
+    } catch {
+        // ignore
+    }
+    return 'dark';
+};
+
+export const applyFrontendThemeDefault = (defaultMode?: unknown): void => {
+    if (typeof window === 'undefined') return;
+    if (defaultMode !== 'light' && defaultMode !== 'dark' && defaultMode !== 'system') return;
+
+    try {
+        localStorage.setItem(FRONTEND_DEFAULT_THEME_MODE_KEY, defaultMode);
+    } catch {
+        // ignore
+    }
+
+    const savedMode = localStorage.getItem(FRONTEND_THEME_KEY);
+    if (!savedMode) {
+        frontendThemeMode.value = defaultMode;
+        frontendIsDarkMode.value = resolveIsDark(defaultMode);
+        if (frontendIsDarkMode.value) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }
+};
 
 const resolveIsDark = (mode: ThemeMode) => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -21,9 +55,10 @@ const resolveIsDark = (mode: ThemeMode) => {
 const initFrontendTheme = () => {
     if (frontendInitialized) return;
     const savedMode = localStorage.getItem(FRONTEND_THEME_KEY);
+    const defaultMode = getThemeDefaultMode();
     const parsedMode: ThemeMode = savedMode === 'light' || savedMode === 'dark' || savedMode === 'system'
         ? savedMode
-        : 'system';
+        : defaultMode;
     frontendThemeMode.value = parsedMode;
     frontendIsDarkMode.value = resolveIsDark(parsedMode);
     frontendInitialized = true;

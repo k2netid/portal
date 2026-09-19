@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
 import { resolve, dirname } from 'node:path'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import sri from 'vite-plugin-sri'
 
@@ -38,6 +39,23 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     sri(),
+    {
+      name: 'strip-prepaint-sri',
+      enforce: 'post',
+      apply: 'build',
+      closeBundle() {
+        const outDir = resolve(__dirname, 'dist')
+        const htmlFiles = ['index.html', 'landing.html', 'public.html']
+        for (const file of htmlFiles) {
+          const filePath = resolve(outDir, file)
+          if (existsSync(filePath)) {
+            let content = readFileSync(filePath, 'utf-8')
+            content = content.replace(/(<script\s+src="\/theme-prepaint\.js")[^>]*(><\/script>)/g, '$1$2')
+            writeFileSync(filePath, content, 'utf-8')
+          }
+        }
+      },
+    },
     {
       name: 'ja-site-boot-gate',
       configureServer(server) {
