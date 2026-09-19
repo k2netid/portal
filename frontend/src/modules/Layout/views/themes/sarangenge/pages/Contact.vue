@@ -63,34 +63,20 @@
                     <button
                       v-if="displayAddress && mapEnabled"
                       type="button"
-                      class="text-left leading-relaxed hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold transition-colors"
-                      @click="openMapExternal"
+                      class="group text-left leading-relaxed hover:text-[var(--sarangenge-teal,#0f766e)] font-semibold transition-colors flex flex-col items-start gap-1"
+                      :title="t('pages.contact.viewMap', 'Klik untuk melihat peta lokasi')"
+                      @click="mapModalOpen = true"
                     >
-                      {{ displayAddress }}
+                      <span>{{ displayAddress }}</span>
+                      <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--sarangenge-teal,#0f766e)] group-hover:underline">
+                        <MapPin class="w-3.5 h-3.5 shrink-0" />
+                        {{ t('pages.contact.viewMap', 'Lihat peta lokasi') }}
+                      </span>
                     </button>
                     <span
                       v-else
                       class="leading-relaxed"
                     >{{ displayAddress }}</span>
-                    <div
-                      v-if="displayAddress && mapEnabled"
-                      class="flex flex-wrap gap-2 pt-2"
-                    >
-                      <button
-                        type="button"
-                        class="text-xs font-bold text-[var(--sarangenge-teal,#0f766e)] hover:underline"
-                        @click="openMapExternal"
-                      >
-                        {{ t('pages.contact.openMap', 'Buka di Google Maps') }}
-                      </button>
-                      <button
-                        type="button"
-                        class="text-xs font-bold text-muted-foreground hover:text-foreground hover:underline"
-                        @click="openMapDirections"
-                      >
-                        {{ t('pages.contact.getDirections', 'Petunjuk arah') }}
-                      </button>
-                    </div>
                   </div>
                 </div>
 
@@ -267,6 +253,17 @@
     </template>
   </div>
   </SarangengePageGate>
+
+  <!-- Interactive Google Maps Location Modal -->
+  <ContactMapModal
+    v-model:open="mapModalOpen"
+    :address="displayAddress"
+    :school-name="displaySchoolName"
+    :map-embed-url="mapEmbedUrl"
+    :map-enabled="mapEnabled"
+    @open-external="openMapExternal"
+    @open-directions="openMapDirections"
+  />
 </template>
 
 <script setup lang="ts">
@@ -280,6 +277,7 @@ import ThemeSafeHtml from '@/modules/Layout/components/themes/ThemeSafeHtml.vue'
 import PluginSlot from '@/shared/components/PluginSlot.vue';
 import Breadcrumb from '@/modules/Layout/views/themes/sarangenge/components/shared/Breadcrumb.vue';
 import SarangengePageGate from '@/modules/Layout/views/themes/sarangenge/components/shared/SarangengePageGate.vue';
+import ContactMapModal from '@/modules/Layout/views/themes/sarangenge/components/shared/ContactMapModal.vue';
 import { Button, Input, Textarea, Label, Select } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useSarangengeIdentity } from '@/modules/Layout/views/themes/sarangenge/composables/useSarangengeIdentity';
@@ -288,6 +286,8 @@ import { MapPin, Phone, Mail, Clock, MessageCircle, Send, CheckCircle2, PhoneCal
 
 const { t } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
+const mapModalOpen = ref(false);
+
 const {
   displaySchoolName,
   displayAddress,
@@ -299,7 +299,7 @@ const {
   whatsAppUrl,
 } = useSarangengeIdentity();
 
-const { mapEnabled, openMapExternal, openMapDirections } = useThemeContactMap(displayAddress);
+const { mapEnabled, mapEmbedUrl, openMapExternal, openMapDirections } = useThemeContactMap(displayAddress);
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('contact');
 
 useThemeHashScroll(128);

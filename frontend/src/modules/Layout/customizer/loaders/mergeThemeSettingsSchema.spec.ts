@@ -72,4 +72,29 @@ describe('mergeThemeSettingsSchema', () => {
         const options = (layungSchema.header_menu_alignment?.options || []) as Array<{ value: string }>;
         expect(options.map((o) => o.value)).toEqual(['center', 'left', 'right']);
     });
+
+    it('assigns order attributes to platform layout settings deterministically', () => {
+        const schema = mergeThemeSettingsSchema('sarangenge');
+        expect(schema.layout_style?.order).toBe(10);
+        expect(schema.container_max_width?.order).toBe(20);
+        expect(schema.header_style?.order).toBe(60);
+        expect(schema.header_sticky?.order).toBe(70);
+        expect(schema.header_menu_alignment?.order).toBe(80);
+        expect(schema.nav_style?.order).toBe(90);
+        expect(schema.home_sections?.order).toBe(130);
+    });
+
+    it('includes contact map settings and order in sarangenge contact page', () => {
+        const schema = mergeThemeSettingsSchema('sarangenge');
+        expect(schema.enable_contact?.order).toBe(10);
+        expect(schema.contact_form_slug?.order).toBe(20);
+        expect(schema.contact_whatsapp?.order).toBe(30);
+        expect(schema.contact_admission_hotline?.order).toBe(40);
+        expect(schema.contact_operating_hours?.order).toBe(50);
+        expect(schema.contact_map_enabled?.order).toBe(60);
+        expect(schema.contact_map_source?.order).toBe(70);
+        expect(schema.contact_map_link?.order).toBe(80);
+        expect(schema.contact_map_zoom?.order).toBe(90);
+        expect(schema.contact_maps_embed_url?.order).toBe(100);
+    });
 });
