@@ -63,15 +63,24 @@
                 }
             }
         } else {
-            // Public/Janari Prepaint
+            // Public/Janari/Layung Prepaint
             const savedDark = localStorage.getItem('frontend-dark-mode');
+            const defaultMode = localStorage.getItem('ja_theme_default_mode') || 'dark';
+            const activeMode = savedDark || defaultMode;
             const mq = window.matchMedia('(prefers-color-scheme: dark)');
-            const isDark = savedDark === 'dark' || (savedDark === 'system' && mq.matches) || (!savedDark && mq.matches);
+            const isDark = activeMode === 'dark' || (activeMode === 'system' && mq.matches);
             
             if (isDark) {
                 document.documentElement.classList.add('dark');
-            } else if (savedDark === 'light') {
+            } else if (activeMode === 'light') {
                 document.documentElement.classList.remove('dark');
+            }
+
+            const savedLocale = localStorage.getItem('locale');
+            const defaultLocale = localStorage.getItem('ja_theme_default_locale') || 'id';
+            const effectiveLocale = savedLocale || (defaultLocale !== 'auto' ? defaultLocale : 'id');
+            if (effectiveLocale) {
+                document.documentElement.lang = effectiveLocale;
             }
 
             const snapshotStr = localStorage.getItem('frontend_theme_snapshot_v1');

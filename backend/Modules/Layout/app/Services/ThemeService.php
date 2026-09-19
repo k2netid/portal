@@ -897,8 +897,33 @@ class ThemeService
                 'placeholder' => 'https://example.com/logo.png',
                 'category' => 'General',
             ],
+            'default_site_locale' => [
+                'type' => 'select',
+                'label' => 'Bahasa Utama Situs',
+                'description' => 'Bahasa tampilan default saat situs pertama kali dibuka oleh pengunjung baru.',
+                'default' => 'id',
+                'options' => [
+                    ['value' => 'id', 'label' => 'Bahasa Indonesia (id)'],
+                    ['value' => 'en', 'label' => 'English (en)'],
+                    ['value' => 'su', 'label' => 'Basa Sunda (su)'],
+                    ['value' => 'auto', 'label' => 'Otomatis (Deteksi Browser)'],
+                ],
+                'category' => 'General',
+            ],
 
             // Color Scheme
+            'default_theme_mode' => [
+                'type' => 'select',
+                'label' => 'Mode Tampilan Default',
+                'description' => 'Mode warna tampilan awal bagi pengunjung publik sebelum memilih switch tema.',
+                'default' => 'dark',
+                'options' => [
+                    ['value' => 'dark', 'label' => 'Mode Gelap (Dark Mode)'],
+                    ['value' => 'light', 'label' => 'Mode Terang (Light Mode)'],
+                    ['value' => 'system', 'label' => 'Ikuti Sistem Pengguna (System)'],
+                ],
+                'category' => 'Colors',
+            ],
             'primary_color' => [
                 'type' => 'color',
                 'label' => 'Primary Color',

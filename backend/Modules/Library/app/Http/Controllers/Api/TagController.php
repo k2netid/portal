@@ -39,7 +39,16 @@ class TagController extends BaseApiController
         }
 
         if ($request->filled('type')) {
-            $query->where('type', $request->input('type'));
+            $type = $request->input('type');
+            if ($type === 'content') {
+                $query->where(function ($q): void {
+                    $q->where('type', 'content')
+                        ->orWhere('type', 'general')
+                        ->orWhereNull('type');
+                });
+            } else {
+                $query->where('type', $type);
+            }
         }
 
         if ($request->filled('usage')) {

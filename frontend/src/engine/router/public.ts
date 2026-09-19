@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import { handleBeforeEachGuard } from './guards';
 import { publicScrollBehavior } from './publicScrollBehavior';
+import { attemptChunkRecoveryReload, isChunkLoadError } from '@/shared/utils/chunkRecovery';
 
 const publicThemePage = () => import('@/modules/Layout/components/themes/PublicThemePage.vue');
 
@@ -266,6 +267,13 @@ export const createPublicRouter = () => {
         }
 
         return true;
+    });
+
+    let isHandlingRouterError = false;
+    router.onError((error) => {
+        if (isHandlingRouterError) return;
+        if (isChunkLoadError(error) && attemptChunkRecoveryReload()) return;
+        isHandlingRouterError = true;
     });
 
     return router;
