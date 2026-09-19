@@ -21,7 +21,12 @@
 # @see docs/branching.md
 
 # Downstream School Tier: Ignore non-entitled themes during export / release packaging
+frontend/src/modules/Layout/views/themes/layung export-ignore
 frontend/src/modules/Layout/views/themes/layung/** export-ignore
+frontend/src/modules/Layout/views/themes/sareupna export-ignore
 frontend/src/modules/Layout/views/themes/sareupna/** export-ignore
+backend/theme-packs/theme-layung export-ignore
 backend/theme-packs/theme-layung/** export-ignore
+backend/theme-packs/theme-sareupna export-ignore
 backend/theme-packs/theme-sareupna/** export-ignore
+
