@@ -56,12 +56,31 @@ class ExtensionController extends BaseApiController
         $exportAllowed = $this->isExportAllowed();
         $activeThemeSlug = $this->resolveActiveServedThemeSlug();
 
-        $extensions->each(function (Extension $extension) use ($exportAllowed, $activeThemeSlug): void {
+        /** @var LicenseService $licenseService */
+        $licenseService = app(LicenseService::class);
+        $tier = $licenseService->getLicenseTier();
+        $quota = $licenseService->getThemeQuota($tier);
+        $catalog = is_array($quota['catalog'] ?? null)
+            ? array_map('strtolower', $quota['catalog'])
+            : ['janari', 'layung', 'sarangenge', 'sareupna'];
+
+        // Filter out theme packs outside the entitled catalog (ADR-023 §2.4)
+        $extensions = $extensions->reject(function (Extension $extension) use ($catalog): bool {
+            if ($extension->type !== 'theme') {
+                return false;
+            }
+            $rawThemeSlug = ExtensionFamilyCatalog::themeSlugForPack($extension->slug) ?? str_replace('theme-', '', $extension->slug);
+
+            return ! in_array(strtolower($rawThemeSlug), $catalog, true);
+        })->values();
+
+        $extensions->each(function (Extension $extension) use ($exportAllowed, $activeThemeSlug, $licenseService): void {
             $extension->setAttribute('can_uninstall', $this->canUninstall($extension));
             $extension->setAttribute('can_export', $exportAllowed && $this->canExport($extension));
             if ($extension->type === 'theme') {
                 $rawThemeSlug = ExtensionFamilyCatalog::themeSlugForPack($extension->slug) ?? str_replace('theme-', '', $extension->slug);
                 $extension->setAttribute('is_served', strtolower($rawThemeSlug) === $activeThemeSlug);
+                $extension->setAttribute('is_entitled', $licenseService->isThemeServeEntitled($rawThemeSlug));
             }
         });
 
