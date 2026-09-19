@@ -700,6 +700,24 @@
             "order": 20,
             "scope": "theme"
         },
+        "contact_address": {
+            "label": "Alamat Kampus / Sekolah (Theme Override)",
+            "type": "textarea",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Alamat resmi sekolah yang ditampilkan pada halaman kontak dan footer. Mengesampingkan pengaturan global jika diisi.",
+            "order": 22,
+            "scope": "theme"
+        },
+        "contact_phone": {
+            "label": "Nomor Telepon Kantor / Hotline",
+            "type": "text",
+            "default": "",
+            "category": "Contact Page",
+            "description": "Nomor telepon resmi sekolah untuk pertanyaan umum.",
+            "order": 25,
+            "scope": "theme"
+        },
         "contact_whatsapp": {
             "label": "Nomor WhatsApp Hotline PPDB",
             "type": "text",
