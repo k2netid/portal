@@ -25,7 +25,7 @@ export const getThemeDefaultMode = (): ThemeMode => {
     return 'dark';
 };
 
-export const applyFrontendThemeDefault = (defaultMode?: unknown): void => {
+export const applyFrontendThemeDefault = (defaultMode?: unknown, force: boolean = false): void => {
     if (typeof window === 'undefined') return;
     if (defaultMode !== 'light' && defaultMode !== 'dark' && defaultMode !== 'system') return;
 
@@ -35,8 +35,12 @@ export const applyFrontendThemeDefault = (defaultMode?: unknown): void => {
         // ignore
     }
 
+    const isPreview = window !== window.parent
+        || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1')
+        || (typeof window.location !== 'undefined' && window.location.search.includes('ja_customizer_preview=1'));
+
     const savedMode = localStorage.getItem(FRONTEND_THEME_KEY);
-    if (!savedMode) {
+    if (!savedMode || force || isPreview) {
         frontendThemeMode.value = defaultMode;
         frontendIsDarkMode.value = resolveIsDark(defaultMode);
         if (frontendIsDarkMode.value) {

@@ -401,8 +401,10 @@ export function useTheme() {
                 themeSettings.value = data.settings || {};
             }
 
+            const isPreviewBoot = isCustomizerPreviewQuery(window.location.search)
+                || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1');
             if (themeSettings.value.default_theme_mode) {
-                applyFrontendThemeDefault(themeSettings.value.default_theme_mode);
+                applyFrontendThemeDefault(themeSettings.value.default_theme_mode, isPreviewBoot);
             }
             if (typeof window !== 'undefined' && themeSettings.value.default_site_locale) {
                 try {
@@ -457,6 +459,14 @@ export function useTheme() {
                                 sessionStorage.setItem('ja_customizer_preview', '1');
                                 sessionStorage.setItem('ja_customizer_theme_slug', boot.slug);
                             } catch { /* ignore */ }
+                            if (boot.settings?.default_theme_mode) {
+                                applyFrontendThemeDefault(boot.settings.default_theme_mode, true);
+                            }
+                            if (boot.settings?.default_site_locale) {
+                                try {
+                                    localStorage.setItem('ja_theme_default_locale', String(boot.settings.default_site_locale));
+                                } catch { /* ignore */ }
+                            }
                             applyCustomCss();
                             applyThemeStyles();
                             if (themeUsesJanariCanvas(boot)) {
@@ -485,7 +495,7 @@ export function useTheme() {
                             applyThemeStyles();
 
                             if (incomingSettings.default_theme_mode) {
-                                applyFrontendThemeDefault(incomingSettings.default_theme_mode);
+                                applyFrontendThemeDefault(incomingSettings.default_theme_mode, true);
                             }
                             if (incomingSettings.default_site_locale) {
                                 try {

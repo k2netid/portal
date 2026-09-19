@@ -656,7 +656,7 @@ class ThemeService
     {
         $config = $theme->getThemeConfig();
         /** @var array<string, mixed> $schema */
-        $schema = $config['settings_schema'];
+        $schema = array_merge($this->getDefaultSettingsSchema(), $config['settings_schema']);
         $allowed = array_fill_keys(array_keys($schema), true);
         $allowed[self::THEME_DATA_BINDINGS_KEY] = true;
 
