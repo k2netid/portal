@@ -242,7 +242,7 @@ class FoundationSeeder extends Seeder
             ['key' => 'brand_logo', 'value' => '/logo.png', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'brand_favicon', 'value' => '/favicon.ico', 'group' => 'brand', 'type' => 'image'],
             ['key' => 'brand_sync_site_identity', 'value' => '0', 'group' => 'brand', 'type' => 'boolean'],
-            ['key' => 'branding_display', 'value' => 'logo', 'group' => 'brand', 'type' => 'string'],
+            ['key' => 'branding_display', 'value' => 'both', 'group' => 'brand', 'type' => 'string'],
 
             // Contact & Social
             ['key' => 'contact_email', 'value' => is_scalar(config('mail.from.address')) ? (string) config('mail.from.address') : 'hello@example.com', 'group' => 'general', 'type' => 'string'],
