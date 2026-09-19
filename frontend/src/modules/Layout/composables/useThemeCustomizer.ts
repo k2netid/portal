@@ -181,6 +181,21 @@ export function useThemeCustomizer(slug: string, t: TranslateFn) {
 
             const state = JSON.stringify({ f: formValues.value, c: customCss.value, b: bindings.value });
             initialDataSnapshot.value = state;
+
+            if (typeof window !== 'undefined') {
+                if (formValues.value.default_theme_mode) {
+                    try {
+                        localStorage.setItem('ja_theme_default_mode', String(formValues.value.default_theme_mode));
+                        localStorage.setItem('frontend-dark-mode', String(formValues.value.default_theme_mode));
+                    } catch { /* ignore */ }
+                }
+                if (formValues.value.default_site_locale) {
+                    try {
+                        localStorage.setItem('ja_theme_default_locale', String(formValues.value.default_site_locale));
+                    } catch { /* ignore */ }
+                }
+            }
+
             toast.success.action(t('publishing.theme_customizer.messages.published'));
         } catch (err: unknown) {
             logger.error('Theme customizer publish failed:', err);
