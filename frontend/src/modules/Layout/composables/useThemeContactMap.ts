@@ -1,17 +1,23 @@
 import { computed, type ComputedRef, type Ref } from 'vue'
 import { useTheme } from '@/modules/Layout/composables/useTheme'
+import { useSystemStore } from '@/modules/Core/System/stores/system'
 
 type AddressSource = Ref<string> | ComputedRef<string>
 
 /**
  * Shared Google Maps helpers for theme contact pages.
- * Reads `contact_map_*` settings (same keys as Janari theme customizer).
+ * Reads `contact_map_*` settings (same keys as Janari theme customizer)
+ * and supports precise GPS coordinates (lat,lng) to prevent pins drifting into water.
  */
 export function useThemeContactMap(
   displayAddress: AddressSource,
-  options?: { useDirectLink?: boolean },
+  options?: {
+    useDirectLink?: boolean
+    coordinates?: Ref<string> | ComputedRef<string> | string
+  },
 ) {
   const { getSetting } = useTheme()
+  const systemStore = useSystemStore()
   const useDirectLink = options?.useDirectLink !== false
 
   const mapEnabled = computed(() => getSetting('contact_map_enabled', true) !== false)
@@ -32,6 +38,33 @@ export function useThemeContactMap(
     return /^https?:\/\//i.test(raw) ? raw : ''
   })
 
+  const mapCoordinates = computed(() => {
+    // 0. Explicit option passed
+    if (options?.coordinates) {
+      const explicit = typeof options.coordinates === 'string'
+        ? options.coordinates.trim()
+        : String(options.coordinates.value || '').trim()
+      if (explicit && /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.test(explicit)) {
+        return explicit
+      }
+    }
+    // 1. Theme override setting
+    const fromTheme = String(getSetting('contact_coordinates', '') || '').trim()
+    if (fromTheme && /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.test(fromTheme)) {
+      return fromTheme
+    }
+    // 2. Global Site Settings
+    const fromSite = String(
+      (systemStore.siteSettings as Record<string, unknown> | undefined)?.contact_coordinates ||
+      (systemStore.settings as Record<string, unknown> | undefined)?.contact_coordinates ||
+      ''
+    ).trim()
+    if (fromSite && /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.test(fromSite)) {
+      return fromSite
+    }
+    return ''
+  })
+
   const mapQuery = computed(() => {
     if (useDirectLink && mapDirectLink.value) {
       try {
@@ -47,6 +80,12 @@ export function useThemeContactMap(
         /* ignore */
       }
     }
+
+    // Coordinates guarantee 100% pinpoint accuracy without geocoding drifting into the ocean
+    if (mapCoordinates.value) {
+      return mapCoordinates.value
+    }
+
     return String(displayAddress.value || '').trim()
   })
 
@@ -81,6 +120,8 @@ export function useThemeContactMap(
 
   return {
     mapEnabled,
+    mapCoordinates,
+    mapQuery,
     mapEmbedUrl,
     mapExternalUrl,
     mapDirectionsUrl,

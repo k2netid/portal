@@ -892,6 +892,51 @@
             "default": "Bandung Trade Mall, Jl. Ibrahim Adjie No.47 Lantai 2 Blok EE No.1, Babakan Surabaya, Kec. Kiaracondong, Kota Bandung, Jawa Barat 40272",
             "category": "ISP Info"
         },
+        "contact_coordinates": {
+            "label": "Titik Koordinat GPS Kantor Utama (latitude, longitude)",
+            "type": "text",
+            "default": "",
+            "category": "ISP Info",
+            "description": "Koordinat GPS presisi (contoh: -6.8986, 107.6364) untuk mengunci pin Google Maps kantor utama agar tidak nyasar ke laut."
+        },
+        "contact_map_enabled": {
+            "label": "Aktifkan Popover Peta Lokasi",
+            "type": "checkbox",
+            "default": true,
+            "category": "ISP Info",
+            "description": "Tampilkan popup peta interaktif Google Maps saat kartu lokasi diklik."
+        },
+        "contact_map_source": {
+            "label": "Mode Sumber Peta",
+            "type": "select",
+            "category": "ISP Info",
+            "default": "current_location",
+            "options": [
+                {
+                    "label": "Lokasi / Koordinat Saat Ini",
+                    "value": "current_location"
+                },
+                {
+                    "label": "Tautan Peta Langsung",
+                    "value": "link"
+                }
+            ]
+        },
+        "contact_map_link": {
+            "label": "Tautan Peta Langsung (opsional)",
+            "type": "text",
+            "default": "",
+            "category": "ISP Info"
+        },
+        "contact_map_zoom": {
+            "label": "Level Zoom Peta",
+            "type": "range",
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "default": 15,
+            "category": "ISP Info"
+        },
         "hero_badge_text": {
             "label": "Hero Badge / Slogan (fallback)",
             "type": "text",

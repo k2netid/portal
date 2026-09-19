@@ -1,0 +1,1 @@
+import{c as e}from"./BoKaqmen.js";import{D as t,N as n,R as r,Z as i,w as a}from"./C4sEBiSO.js";r();var o={class:`layung-brand-mark`},s=[`src`,`alt`],c=n({__name:`BrandMark`,props:{src:{},alt:{}},setup(e){return(n,r)=>(i(),t(`div`,o,[a(`img`,{src:e.src,alt:e.alt,class:`layung-brand-mark__img`,width:`110`,height:`28`},null,8,s)]))}}),l=e({default:()=>u}),u=c;export{l as n,u as t};

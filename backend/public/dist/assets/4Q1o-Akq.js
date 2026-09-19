@@ -1,0 +1,1 @@
+var e=Symbol(`sareupna-popover`);export{e as t};

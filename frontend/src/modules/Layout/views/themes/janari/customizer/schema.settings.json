@@ -797,6 +797,14 @@
         "description": "Optional. When set, overrides Identity / Public settings.",
         "scope": "theme"
     },
+    "contact_coordinates": {
+        "label": "Contact GPS coordinates (latitude, longitude)",
+        "type": "text",
+        "default": "",
+        "category": "Contact Page",
+        "description": "Optional precise GPS coordinates (e.g. -7.7151, 108.4731). Locks Google Maps directly to the actual building or gate so the pin never drifts into the water.",
+        "scope": "theme"
+    },
     "contact_map_enabled": {
         "label": "Enable map in contact address popover",
         "type": "checkbox",

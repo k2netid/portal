@@ -1,0 +1,1 @@
+import{C as e,N as t,R as n,T as r,Z as i}from"./C4sEBiSO.js";import{c as a}from"./DzOKqoYm.js";import{t as o}from"./Cd60s3vU2.js";n();var s=t({__name:`PublicThemePage`,setup(t){let n=a(),s=e(()=>{let e=n.meta.themePage;return typeof e==`string`&&e!==``?e:`pages/Home`});return(e,t)=>(i(),r(o,{page:s.value},null,8,[`page`]))}});export{s as default};

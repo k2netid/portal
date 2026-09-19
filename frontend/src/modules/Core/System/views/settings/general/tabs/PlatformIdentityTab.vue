@@ -86,17 +86,60 @@
           :readonly="isFieldDisabled(setting.key)"
           @update:model-value="(value) => updateField(setting.key, value)"
         />
+
+        <!-- GPS Coordinates Geolocation Helper -->
+        <div
+          v-if="setting.key === 'contact_coordinates'"
+          class="mt-2.5 p-3.5 rounded-xl border border-border/80 bg-muted/20 space-y-2.5"
+        >
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/40 bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-xs transition-colors"
+              :disabled="geoLoading"
+              @click="getCurrentGpsCoordinates"
+            >
+              <Navigation class="w-3.5 h-3.5" :class="{ 'animate-spin': geoLoading }" />
+              {{ geoLoading ? $t('system.settings.contact_geo_locating', 'Mengambil GPS...') : $t('system.settings.contact_geo_get_btn', 'Ambil Lokasi GPS Saat Ini') }}
+            </button>
+            <a
+              v-if="hasValidCoordinates"
+              :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(String(formData.contact_coordinates || ''))}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-background hover:bg-muted text-foreground font-semibold text-xs transition-colors"
+            >
+              <ExternalLink class="w-3.5 h-3.5 text-muted-foreground" />
+              {{ $t('system.settings.contact_geo_test_btn', 'Cek di Google Maps') }}
+            </a>
+          </div>
+          <p
+            v-if="geoSuccessMessage"
+            class="text-xs text-emerald-600 dark:text-emerald-400 font-medium"
+          >
+            {{ geoSuccessMessage }}
+          </p>
+          <p
+            v-if="geoErrorMessage"
+            class="text-xs text-rose-600 dark:text-rose-400 font-medium"
+          >
+            {{ geoErrorMessage }}
+          </p>
+          <p class="text-[11px] text-muted-foreground leading-relaxed">
+            {{ $t('system.settings.contact_geo_hint', 'Format: latitude, longitude (contoh: -7.7151, 108.4731). Digunakan otomatis oleh semua tema (Sarangenge, Layung, Sareupna, Janari) agar pin peta terkunci tepat di atas gedung/gerbang dan tidak meleset ke laut.') }}
+          </p>
+        </div>
       </template>
     </SettingGroup>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SettingGroup from '@/modules/Core/System/components/settings/SettingGroup.vue'
 import SettingField from '@/modules/Core/System/components/settings/SettingField.vue'
-import { Globe, Info, PowerOff, AlertTriangle, ExternalLink } from 'lucide-vue-next'
+import { Globe, Info, PowerOff, AlertTriangle, ExternalLink, MapPin, Navigation } from 'lucide-vue-next'
 import { useSystemStore } from '@/modules/Core/System/stores/system'
 
 interface Setting {
@@ -130,6 +173,53 @@ const isLayoutActive = computed(() => systemStore.activeExtensions?.includes('la
 const isPublishingActive = computed(() => systemStore.activeExtensions?.includes('publishing') ?? false)
 const isDependenciesIncomplete = computed(() => isSiteActive.value && (!isLayoutActive.value || !isPublishingActive.value))
 const isBrandSyncActive = computed(() => Boolean(props.formData.brand_sync_site_identity ?? systemStore.getSetting('brand_sync_site_identity')) && systemStore.appIdentity.has_white_label)
+
+const geoLoading = ref(false)
+const geoSuccessMessage = ref('')
+const geoErrorMessage = ref('')
+
+const hasValidCoordinates = computed(() => {
+  const c = String(props.formData.contact_coordinates || '').trim()
+  return /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/.test(c)
+})
+
+async function getCurrentGpsCoordinates(): Promise<void> {
+  if (geoLoading.value) return
+  if (typeof navigator === 'undefined' || !navigator.geolocation) {
+    geoErrorMessage.value = 'Browser Anda tidak mendukung Geolocation API.'
+    return
+  }
+  geoLoading.value = true
+  geoSuccessMessage.value = ''
+  geoErrorMessage.value = ''
+  try {
+    const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 60000,
+      })
+    })
+    const lat = Number(pos.coords.latitude).toFixed(6)
+    const lon = Number(pos.coords.longitude).toFixed(6)
+    const coords = `${lat}, ${lon}`
+    updateField('contact_coordinates', coords)
+    geoSuccessMessage.value = `Koordinat GPS (${coords}) berhasil didapatkan dari perangkat Anda.`
+  } catch (err: unknown) {
+    const e = err as GeolocationPositionError
+    if (e?.code === 1) {
+      geoErrorMessage.value = 'Izin lokasi GPS ditolak oleh pengguna/browser.'
+    } else if (e?.code === 2) {
+      geoErrorMessage.value = 'Posisi GPS tidak dapat ditentukan.'
+    } else if (e?.code === 3) {
+      geoErrorMessage.value = 'Waktu permintaan lokasi GPS habis (timeout).'
+    } else {
+      geoErrorMessage.value = 'Gagal mengambil koordinat GPS perangkat.'
+    }
+  } finally {
+    geoLoading.value = false
+  }
+}
 
 const isFieldDisabled = (key: string) => {
     if (!isSiteActive.value) return true
@@ -172,6 +262,16 @@ const generalSettingsGrouped = computed(() => {
             settings: [],
             defaultExpanded: true,
         },
+        {
+            id: 'contact',
+            title: t('system.settings.groups.contactInfo.title', 'Kontak & Geolokasi Peta (GPS)'),
+            description: t('system.settings.groups.contactInfo.description', 'Alamat fisik, kontak telepon, dan titik koordinat GPS presisi untuk semua tema publik.'),
+            icon: MapPin,
+            color: 'emerald',
+            keys: ['contact_address', 'contact_phone', 'contact_coordinates'],
+            settings: [],
+            defaultExpanded: true,
+        },
     ]
 
     groups.forEach(group => {
@@ -180,6 +280,9 @@ const generalSettingsGrouped = computed(() => {
         // Ensure settings are in logical order
         if (group.id === 'site') {
             const order = ['site_name', 'site_logo', 'site_favicon', 'site_description', 'site_url', 'admin_email'];
+            group.settings.sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
+        } else if (group.id === 'contact') {
+            const order = ['contact_address', 'contact_phone', 'contact_coordinates'];
             group.settings.sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
         }
     })
