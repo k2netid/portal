@@ -28,7 +28,7 @@
         :aria-label="t('footer.socialExpand', 'Buka Media Sosial & Hotline')"
         @click="handleToggle(false)"
       >
-        <Share2 class="w-4 h-4 transition-transform group-hover:scale-110" />
+        <Users class="w-4 h-4 transition-transform group-hover:scale-110" />
       </button>
       <span class="ja-floating-social-dock__tooltip">
         {{ t('footer.socialMedia', 'Media Sosial & Hotline') }}
@@ -86,7 +86,7 @@
 import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import gsap from 'gsap';
 import {
-  Share2,
+  Users,
   ChevronRight,
   Globe,
   Instagram,
