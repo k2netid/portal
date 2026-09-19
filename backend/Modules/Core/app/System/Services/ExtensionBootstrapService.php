@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Log;
 use Modules\Core\System\Models\ConsoleMenu;
 use Modules\Core\System\Models\Extension;
 use Modules\Core\System\Models\ExtensionLog;
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
+use Modules\Layout\Models\Theme;
 use Throwable;
 
 /**
@@ -103,13 +105,37 @@ class ExtensionBootstrapService
             $discovered[$slug] = $meta;
         }
 
+        $activeServedSlug = null;
+        if (class_exists(Theme::class)) {
+            try {
+                $theme = Theme::getActiveTheme('frontend');
+                if ($theme && is_string($theme->slug) && trim($theme->slug) !== '') {
+                    $activeServedSlug = strtolower(trim($theme->slug));
+                }
+            } catch (Throwable) {
+                // Ignore
+            }
+        }
+        if (! $activeServedSlug) {
+            $settingVal = Setting::get('theme_active', 'janari');
+            $activeServedSlug = is_string($settingVal) && trim($settingVal) !== ''
+                ? strtolower(trim($settingVal))
+                : 'janari';
+        }
+
         $count = 0;
         foreach ($discovered as $slug => $meta) {
             $existing = Extension::query()->where('slug', $slug)->first();
             $isKernel = $meta['is_core'] || $this->isKernelSlug($slug);
-            $status = $isKernel
-                ? 'active'
-                : ($existing !== null ? (string) $existing->status : 'inactive');
+            if ($isKernel) {
+                $status = 'active';
+            } elseif ($slug === 'theme-janari') {
+                $status = 'active';
+            } elseif ($meta['type'] === 'theme' && ($meta['theme_slug'] ?? null) === $activeServedSlug) {
+                $status = 'active';
+            } else {
+                $status = $existing !== null ? (string) $existing->status : 'inactive';
+            }
 
             Extension::updateOrCreate(
                 ['slug' => $slug],
