@@ -120,6 +120,18 @@ class SettingController extends BaseApiController
         return $this->success($setting, 'Setting created successfully', 201);
     }
 
+    public const IMMUTABLE_LICENSE_KEYS = [
+        'license_type',
+        'app_license_tier',
+        'license_key',
+        'license_status',
+        'license_expires_at',
+        'license_is_perpetual',
+        'license_themes_quota',
+        'license_domain',
+        'license_signature',
+    ];
+
     public function update(Request $request, Setting $setting): JsonResponse
     {
         $validated = $request->validate([
@@ -133,6 +145,17 @@ class SettingController extends BaseApiController
         $nextGroup = is_string($validated['group'] ?? null) ? $validated['group'] : (string) $setting->group;
         if (Setting::isProductSettingGroup((string) $setting->group) || Setting::isProductSettingGroup($nextGroup)) {
             return $this->forbidden('This setting group is owned by a product pack, not kernel settings.');
+        }
+
+        // License parameters are strictly immutable via general settings CRUD
+        if (in_array((string) $setting->key, self::IMMUTABLE_LICENSE_KEYS, true)) {
+            return $this->forbidden('License parameters cannot be modified via general settings.');
+        }
+
+        // White Label security check: protect branding keys
+        $licenseService = app(LicenseService::class);
+        if ($licenseService->isProtectedKey((string) $setting->key) && ! $licenseService->hasWhiteLabel()) {
+            return $this->forbidden('White Label license required to modify this branding setting.');
         }
 
         if (in_array((string) $setting->key, ['brand_logo', 'brand_favicon', 'site_logo', 'site_favicon', 'app_logo', 'app_favicon', 'app_logo_light', 'app_logo_dark', 'app_logo_compact'])) {
@@ -162,6 +185,11 @@ class SettingController extends BaseApiController
         foreach ($settings as $settingData) {
             if (is_array($settingData) && isset($settingData['key'])) {
                 $sKey = is_scalar($settingData['key']) ? (string) $settingData['key'] : '';
+
+                // Never allow tampering with license tier / key via settings bulk-update
+                if (in_array($sKey, self::IMMUTABLE_LICENSE_KEYS, true)) {
+                    continue;
+                }
 
                 // Security Check: White Label Protection
                 if ($licenseService->isProtectedKey($sKey) && ! $hasWhiteLabel) {
