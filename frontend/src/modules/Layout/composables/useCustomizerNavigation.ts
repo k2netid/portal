@@ -119,6 +119,53 @@ export function useCustomizerNavigation(
     return Object.values(slots).some((slot) => slot.sourceType !== 'static');
   }
 
+  function getSemanticSettingWeight(key: string, type?: string): number {
+    // Master page/feature toggles first
+    if (/^(enable_|is_|show_|active_)/i.test(key) && (type === 'checkbox' || type === 'boolean')) return 10;
+    
+    // Core identifiers / titles / taglines
+    if (/(_title|_name|_heading|_tagline)$/i.test(key) || key === 'site_title' || key === 'site_tagline') return 20;
+    if (/(_description|_intro|_subtitle|_badge|_eyebrow)/i.test(key)) return 30;
+    
+    // Layout & structure & presets
+    if (/(_style|_layout|_mode|_preset|_alignment|_theme)$/i.test(key)) return 40;
+    if (/(_width|_height|_size|_padding|_radius|_shadow|_columns)/i.test(key)) return 50;
+    
+    // Colors & backgrounds
+    if (/(_color|_bg|_background)/i.test(key) || type === 'color') return 60;
+    
+    // Content data / form integrations / items
+    if (/(_slug|_form|_hours|_hotline|_phone|_email|_whatsapp|_address)/i.test(key)) return 70;
+    if (/(_sections|_items|_list|_options)/i.test(key) || type === 'checkbox_list' || type === 'repeater') return 80;
+    
+    // Actions / CTAs / Links
+    if (/(_cta_|_url|_link|_button|_action)/i.test(key)) return 90;
+    
+    // Maps & Embeds
+    if (/(_map_|_maps_|_embed|_zoom)/i.test(key)) return 100;
+    
+    return 500;
+  }
+
+  function sortSettings<T extends { key?: string; type?: string; order?: number }>(settings: T[]): T[] {
+    return [...settings].sort((a, b) => {
+      const orderA = typeof a.order === 'number' ? a.order : null;
+      const orderB = typeof b.order === 'number' ? b.order : null;
+      if (orderA !== null && orderB !== null) {
+        return orderA - orderB;
+      }
+      if (orderA !== null) return -1;
+      if (orderB !== null) return 1;
+
+      const weightA = getSemanticSettingWeight(String(a.key || ''), a.type);
+      const weightB = getSemanticSettingWeight(String(b.key || ''), b.type);
+      if (weightA !== weightB) {
+        return weightA - weightB;
+      }
+      return 0;
+    });
+  }
+
   // Helper to find manifest sections by category labels
   function findSections(catLabels: string[]): ThemeSection[] {
     if (!theme.value?.manifest?.settings_schema) return [];
@@ -135,7 +182,12 @@ export function useCustomizerNavigation(
         sections[cat].settings.push({ key, ...s });
       }
     });
-    return Object.values(sections);
+
+    const result = Object.values(sections);
+    result.forEach((sec) => {
+      sec.settings = sortSettings(sec.settings);
+    });
+    return result;
   }
 
   function isTruthySetting(val: unknown, defaultValue = true): boolean {
@@ -167,7 +219,7 @@ export function useCustomizerNavigation(
       isTruthySetting(formValues.value.home_side_nav_dots, true) &&
       isTruthySetting(formValues.value.enable_side_nav, true);
 
-    return filtered.filter((setting: { key?: string; hidden?: boolean }) => {
+    const visible = filtered.filter((setting: { key?: string; hidden?: boolean }) => {
       if (!setting || setting.hidden) return false;
       const key = String(setting.key || '');
       if (!isFloatingSocialEnabled && key.startsWith('floating_social_')) {
@@ -181,6 +233,8 @@ export function useCustomizerNavigation(
       }
       return true;
     });
+
+    return sortSettings(visible);
   }
 
   const specialPageNavItems = computed<NavItem[]>(() => {

@@ -259,29 +259,97 @@
         "default": "Transparansi investasi pendidikan masa depan anak Anda beserta skema beasiswa prestasi & afirmasi.",
         "category": "Pricing Page"
     },
+    "enable_contact": {
+        "label": "Aktifkan Halaman Kontak",
+        "type": "boolean",
+        "default": true,
+        "category": "Contact Page",
+        "order": 10
+    },
+    "contact_form_slug": {
+        "label": "Slug formulir kontak",
+        "type": "text",
+        "default": "contact",
+        "category": "Contact Page",
+        "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact.",
+        "order": 20
+    },
     "contact_whatsapp": {
         "label": "Nomor WhatsApp Hotline PPDB",
         "type": "text",
         "default": "081234567890",
-        "category": "Contact Page"
+        "category": "Contact Page",
+        "order": 30
     },
     "contact_admission_hotline": {
         "label": "Hotline Informasi Pendaftaran",
         "type": "text",
         "default": "+62 22 8765 4321",
-        "category": "Contact Page"
+        "category": "Contact Page",
+        "order": 40
     },
     "contact_operating_hours": {
         "label": "Jam Pelayanan Sekolah",
         "type": "text",
         "default": "Senin – Jumat: 07.30 – 15.30 WIB",
-        "category": "Contact Page"
+        "category": "Contact Page",
+        "order": 50
+    },
+    "contact_map_enabled": {
+        "label": "Aktifkan Popup Peta Lokasi Kontak",
+        "type": "checkbox",
+        "default": true,
+        "category": "Contact Page",
+        "description": "Menampilkan popup peta interaktif saat pengunjung mengetuk alamat kontak.",
+        "order": 60,
+        "scope": "theme"
+    },
+    "contact_map_source": {
+        "label": "Mode Sumber Peta",
+        "type": "select",
+        "category": "Contact Page",
+        "default": "current_location",
+        "options": [
+            {
+                "label": "Lokasi Alamat Sekolah",
+                "value": "current_location"
+            },
+            {
+                "label": "Tautan Peta Langsung (Direct Map Link)",
+                "value": "link"
+            }
+        ],
+        "description": "Pilih lokasi otomatis berdasarkan alamat sekolah atau tautan peta langsung.",
+        "order": 70,
+        "scope": "theme"
+    },
+    "contact_map_link": {
+        "label": "Tautan Peta Langsung (Opsional)",
+        "type": "text",
+        "default": "",
+        "category": "Contact Page",
+        "description": "Tempel tautan Google Maps (mendukung maps.app.goo.gl) untuk membuka peta / petunjuk arah.",
+        "order": 80,
+        "scope": "theme"
+    },
+    "contact_map_zoom": {
+        "label": "Level Zoom Peta",
+        "type": "range",
+        "min": 10,
+        "max": 20,
+        "step": 1,
+        "default": 15,
+        "category": "Contact Page",
+        "description": "Level perbesaran tampilan peta di dalam popup.",
+        "order": 90,
+        "scope": "theme"
     },
     "contact_maps_embed_url": {
         "label": "Google Maps Embed URL (Opsional)",
         "type": "text",
         "default": "",
-        "category": "Contact Page"
+        "category": "Contact Page",
+        "order": 100
     },
     "footer_about_text": {
         "label": "Teks Deskripsi Footer",
@@ -342,19 +410,6 @@
         "type": "boolean",
         "default": true,
         "category": "Blog Page"
-    },
-    "enable_contact": {
-        "label": "Aktifkan Halaman Kontak",
-        "type": "boolean",
-        "default": true,
-        "category": "Contact Page"
-    },
-    "contact_form_slug": {
-        "label": "Slug formulir kontak",
-        "type": "text",
-        "default": "contact",
-        "category": "Contact Page",
-        "description": "Slug formulir Reach (Forms) yang aktif dipublikasikan. Default: contact."
     },
     "home_sections": {
         "label": "Bagian Beranda Sekolah",
@@ -419,6 +474,7 @@
             "cta"
         ],
         "category": "Layout",
+        "order": 130,
         "scope": "theme"
     },
     "home_scroll_mode": {

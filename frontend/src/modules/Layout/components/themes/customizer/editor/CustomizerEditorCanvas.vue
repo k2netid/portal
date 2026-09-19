@@ -165,8 +165,21 @@
           <div
             v-for="section in selectedItem.manifestSections"
             :key="section.id"
-            class="space-y-6"
+            class="space-y-4"
           >
+            <!-- Subsection header when multiple categories exist (e.g. Appearance + Buttons, Social Media + Floating Dock) -->
+            <div
+              v-if="selectedItem.manifestSections.length > 1 && getVisibleSettings(section.settings).length > 0"
+              class="flex items-center justify-between gap-2 pt-3 pb-1.5 border-b border-border/60"
+            >
+              <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                {{ section.label }}
+              </h3>
+              <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+                {{ getVisibleSettings(section.settings).length }}
+              </span>
+            </div>
+
             <div
               class="grid gap-6"
               :class="panelMode ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'"

@@ -24,6 +24,8 @@ export interface ThemeSetting {
     description?: string;
     unit?: string;
     default?: unknown;
+    order?: number;
+    group?: string;
 }
 
 export interface ThemeManifest {
