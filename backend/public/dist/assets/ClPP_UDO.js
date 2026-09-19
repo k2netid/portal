@@ -1,1 +1,0 @@
-var e=e=>{if(!e||typeof e!=`object`||Array.isArray(e))return!1;let t=e;return typeof t.slug==`string`&&t.slug.length>0},t=e=>{let t=(e.body??e.content??``).trim(),n=(e.intro??e.excerpt??``).trim(),r=(e.featured_image??``).trim(),i=(e.meta||{}).builder_blocks,a=Array.isArray(i)&&i.length>0;return t.length>0||n.length>0||r.length>0||a};export{e as n,t};

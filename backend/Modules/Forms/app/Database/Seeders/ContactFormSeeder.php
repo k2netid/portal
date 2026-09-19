@@ -16,7 +16,18 @@ class ContactFormSeeder
             return;
         }
 
-        $form = Form::query()->where('slug', 'contact')->first();
+        $forms = Form::query()->where('slug', 'contact')->orderBy('created_at')->get();
+        if ($forms->count() > 1) {
+            $form = $forms->first();
+            $duplicates = $forms->slice(1);
+            foreach ($duplicates as $dup) {
+                $dup->fields()->delete();
+                $dup->forceDelete();
+            }
+        } else {
+            $form = $forms->first();
+        }
+
         if ($form === null) {
             $form = Form::query()->create([
                 'name' => 'Contact',

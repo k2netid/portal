@@ -1,1 +1,0 @@
-import{t as e}from"./DYvmOQ8W2.js";var t=t=>{t(`after_hero`,{pluginSlug:`instagram-feed`,component:e,priority:15}),t(`before_footer`,{pluginSlug:`instagram-feed`,component:e,priority:15})};export{t as registerThemeBlocks};

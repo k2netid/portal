@@ -668,11 +668,11 @@ const effectiveSelectValue = computed(() => {
 });
 
 const resolvedOptions = computed<ThemeOption[]>(() => {
+  let list: ThemeOption[] = [];
   if (isDynamicFormSelect.value) {
-    return dynamicFormOptions.value;
-  }
-  if (Array.isArray(props.setting?.options)) {
-    return props.setting.options.map((opt: unknown) => {
+    list = dynamicFormOptions.value;
+  } else if (Array.isArray(props.setting?.options)) {
+    list = props.setting.options.map((opt: unknown) => {
       if (typeof opt === 'string' || typeof opt === 'number') {
         return { label: String(opt), value: String(opt) };
       }
@@ -686,7 +686,18 @@ const resolvedOptions = computed<ThemeOption[]>(() => {
       return { label: String(opt), value: String(opt) };
     });
   }
-  return [];
+
+  // Deduplicate by string value to prevent Radix Vue from double-rendering concatenated labels
+  const seen = new Set<string>();
+  const deduped: ThemeOption[] = [];
+  for (const item of list) {
+    const key = String(item.value);
+    if (!seen.has(key)) {
+      seen.add(key);
+      deduped.push(item);
+    }
+  }
+  return deduped;
 });
 
 onMounted(async () => {
@@ -695,10 +706,18 @@ onMounted(async () => {
       const res = await api.get('/manage/forms');
       const parsed = parseResponse<any>(res);
       const data = ensureArray<any>(parsed.data);
-      const opts: ThemeOption[] = data.map((f: any) => ({
-        value: f.slug,
-        label: `${f.name || f.title || f.slug} (${f.slug})`,
-      }));
+      const seen = new Set<string>();
+      const opts: ThemeOption[] = [];
+      for (const f of data) {
+        const slug = String(f.slug || '').trim();
+        if (slug && !seen.has(slug)) {
+          seen.add(slug);
+          opts.push({
+            value: slug,
+            label: `${f.name || f.title || slug} (${slug})`,
+          });
+        }
+      }
       if (opts.length === 0) {
         opts.unshift({ value: 'contact', label: 'Default Contact (contact)' });
       }

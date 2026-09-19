@@ -25,6 +25,14 @@ export const getThemeDefaultMode = (): ThemeMode => {
     return 'dark';
 };
 
+export const isConsoleOrMemberRoute = (path: string): boolean => {
+    if (path.startsWith('/member') || path.startsWith('/auth')) {
+        return true;
+    }
+    const candidates = collectConsoleDashboardSlugCandidates();
+    return candidates.some(slug => pathUsesConsoleDashboardSlug(path, slug));
+};
+
 export const applyFrontendThemeDefault = (defaultMode?: unknown, force: boolean = false): void => {
     if (typeof window === 'undefined') return;
     if (defaultMode !== 'light' && defaultMode !== 'dark' && defaultMode !== 'system') return;
@@ -33,6 +41,11 @@ export const applyFrontendThemeDefault = (defaultMode?: unknown, force: boolean 
         localStorage.setItem(FRONTEND_DEFAULT_THEME_MODE_KEY, defaultMode);
     } catch {
         // ignore
+    }
+
+    // CRITICAL GUARD: Never toggle document.documentElement dark class if currently in console or member dashboard!
+    if (isConsoleOrMemberRoute(window.location.pathname)) {
+        return;
     }
 
     const isPreview = window !== window.parent
@@ -72,13 +85,6 @@ const initFrontendTheme = () => {
  * Keep `document.documentElement` dark class in sync with the *current* route:
  * console (`/dash` or custom slug) uses system store + `console-dark-mode`; everything else uses frontend prefs + `frontend-dark-mode`.
  */
-const isConsoleOrMemberRoute = (path: string): boolean => {
-    if (path.startsWith('/member') || path.startsWith('/auth')) {
-        return true;
-    }
-    const candidates = collectConsoleDashboardSlugCandidates();
-    return candidates.some(slug => pathUsesConsoleDashboardSlug(path, slug));
-};
 
 export function syncDocumentDarkClassForRoute(path: string) {
     const isConsole = isConsoleOrMemberRoute(path);

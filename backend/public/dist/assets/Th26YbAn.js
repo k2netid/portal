@@ -1,1 +1,0 @@
-import{t as e}from"./Cw5-cMvg.js";import{i as t}from"./BHbTn7yV2.js";var n={list(n,r){return e.get(t.index(n),{params:r})},get(n,r){return e.get(t.record(n,r))},create(n,r){return e.post(t.index(n),r)},update(n,r,i){return e.put(t.record(n,r),i)},remove(n,r){return e.delete(t.record(n,r))}};export{n as t};

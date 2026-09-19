@@ -1,1 +1,0 @@
-var e=Symbol(`sarangenge-dropdown`);export{e as t};

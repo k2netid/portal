@@ -1,1 +1,0 @@
-function e(){return new Promise(e=>{requestAnimationFrame(()=>{window.setTimeout(e,40)})})}var t=async(t,n,r)=>(await e(),t.hash?{el:t.hash,top:80,behavior:`smooth`}:r||{top:0,left:0,behavior:`auto`});export{t};
