@@ -42,6 +42,16 @@ final class LicenseServiceTest extends TestCase
         $this->assertEquals('pro', $result['data']['tier']);
         $this->assertTrue($this->licenseService->canUseFeature('premium_themes'));
         $this->assertTrue($this->licenseService->canUseFeature('pro_builder_modules'));
+        $this->assertTrue($this->licenseService->canUseFeature('visual_builder'));
+        $this->assertTrue($this->licenseService->canUseFeature('remove_watermark'));
+        // ADR-026: Pro is locked for data_studio, ZIP upload, and ZIP export
+        $this->assertFalse($this->licenseService->canUseFeature('data_studio'));
+        $this->assertFalse($this->licenseService->canUseFeature('theme_upload'));
+        $this->assertFalse($this->licenseService->canUseFeature('plugin_upload'));
+        $this->assertFalse($this->licenseService->canUseFeature('theme_export'));
+        $this->assertFalse($this->licenseService->canUseFeature('plugin_export'));
+        $this->assertFalse($this->licenseService->canUseFeature('white_label'));
+        $this->assertFalse($this->licenseService->canUseFeature('multi_site'));
     }
 
     public function test_local_key_activation_enterprise(): void
@@ -52,6 +62,13 @@ final class LicenseServiceTest extends TestCase
         $this->assertEquals('enterprise', $result['data']['tier']);
         $this->assertTrue($this->licenseService->canUseFeature('white_label'));
         $this->assertTrue($this->licenseService->canUseFeature('multi_site'));
+        // ADR-026: Enterprise unlocks developer & extensibility capabilities
+        $this->assertTrue($this->licenseService->canUseFeature('data_studio'));
+        $this->assertTrue($this->licenseService->canUseFeature('theme_upload'));
+        $this->assertTrue($this->licenseService->canUseFeature('plugin_upload'));
+        $this->assertTrue($this->licenseService->canUseFeature('theme_export'));
+        $this->assertTrue($this->licenseService->canUseFeature('plugin_export'));
+        $this->assertTrue($this->licenseService->canUseFeature('visual_builder'));
     }
 
     public function test_perpetual_enterprise_activation_and_sync(): void

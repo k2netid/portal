@@ -277,10 +277,12 @@ const licenseDescription = computed(() => {
 });
 
 const featureDefinitions = [
-  { key: 'premium_themes', name: 'Premium Extensions', description: 'Access to marketplace extensions and pro modules.' },
+  { key: 'visual_builder', name: 'Visual Page & Site Builder', description: 'Visual drag-and-drop page editor and site layout composer with responsive mockup canvas.' },
   { key: 'pro_builder_modules', name: 'Advanced Builder Modules', description: 'Dynamic components, sliders, portfolios, and pricing blocks.' },
+  { key: 'premium_themes', name: 'Curated Premium Themes', description: 'Access to curated official themes from the license catalog.' },
   { key: 'custom_code_injection', name: 'Custom Code Injection', description: 'Inject custom header/footer CSS and JS snippets.' },
   { key: 'remove_watermark', name: 'Watermark Removal', description: 'Remove Core Engine brand footers and watermarks.' },
+  { key: 'data_studio', name: 'Data Model Studio & APIs', description: 'Dynamic entity modeling engine, custom schemas, and instant REST APIs (Enterprise).' },
   { key: 'white_label', name: 'White Label Console', description: 'Custom console logos, brand naming, and admin customization.' },
   { key: 'multi_site', name: 'Multi-Site Fleet Management', description: 'Centralized management across multiple tenant instances.' },
   { key: 'priority_updates', name: 'Priority Updates & Support', description: 'Instant OTA patches and direct JA-CP sync.' },
