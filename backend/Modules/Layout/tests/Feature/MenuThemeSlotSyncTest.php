@@ -81,4 +81,27 @@ class MenuThemeSlotSyncTest extends TestCase
         $this->assertSame('keep-me', $published['menu_location_header'] ?? null);
         $this->assertSame('footer-id', $published['menu_location_footer'] ?? null);
     }
+
+    public function test_customization_publish_retains_default_theme_mode_and_locale(): void
+    {
+        $theme = Theme::factory()->create([
+            'name' => 'Minimal Theme',
+            'slug' => 'minimal-theme-'.uniqid(),
+            'type' => 'frontend',
+            'status' => 'active',
+            'is_active' => false,
+            'settings' => [],
+        ]);
+
+        $published = app(ThemeService::class)->settingsForCustomizationPublish($theme, [
+            'default_theme_mode' => 'dark',
+            'default_site_locale' => 'id',
+            'site_title' => 'PT Jejak Awan Digital',
+        ]);
+
+        $this->assertSame('dark', $published['default_theme_mode'] ?? null);
+        $this->assertSame('id', $published['default_site_locale'] ?? null);
+        $this->assertSame('PT Jejak Awan Digital', $published['site_title'] ?? null);
+    }
 }
+

@@ -64,7 +64,8 @@
             }
         } else {
             // Public/Janari/Layung Prepaint
-            const savedDark = localStorage.getItem('frontend-dark-mode');
+            const isPreview = window !== window.parent || window.location.search.includes('ja_customizer_preview=1') || (function() { try { return sessionStorage.getItem('ja_customizer_preview') === '1'; } catch(e) { return false; } })();
+            const savedDark = isPreview ? null : localStorage.getItem('frontend-dark-mode');
             const defaultMode = localStorage.getItem('ja_theme_default_mode') || 'dark';
             const activeMode = savedDark || defaultMode;
             const mq = window.matchMedia('(prefers-color-scheme: dark)');
