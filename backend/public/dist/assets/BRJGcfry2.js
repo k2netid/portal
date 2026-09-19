@@ -1,1 +1,0 @@
-import{Pt as e,R as t,Y as n,lt as r,yt as i}from"./C4sEBiSO.js";import{c as a}from"./DzOKqoYm.js";import{t as o}from"./Cu8oF4em2.js";t(),i();function s(t){let i=a(),{setBreadcrumb:s,clearBreadcrumb:c}=o();r(()=>e(t),e=>{let t=typeof e==`string`?e.trim():``;t?s(i.path,t):c(i.path)},{immediate:!0}),n(()=>c(i.path))}export{s as t};

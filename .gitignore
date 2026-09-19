@@ -64,6 +64,7 @@ backend/storage/framework/views/*
 backend/storage/installed
 backend/phpstan-output.txt
 backend/public/assets/
+backend/public/dist/
 backend/public/index.html
 backend/public/console.html
 backend/public/favicon.ico

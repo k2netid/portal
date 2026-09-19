@@ -1,1 +1,0 @@
-var e=`theme_data_bindings`;function t(e){return typeof e==`object`&&!!e&&!Array.isArray(e)}export{t as n,e as t};

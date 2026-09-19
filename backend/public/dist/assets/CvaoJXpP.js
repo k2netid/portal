@@ -1,1 +1,0 @@
-function e(e){return`system.security.logs.eventTypes.${e}`}function t(t,n){if(!n)return`-`;let r=e(n),i=t(r);return i===r?n.replace(/_/g,` `).replace(/\b\w/g,e=>e.toUpperCase()):i}export{t};

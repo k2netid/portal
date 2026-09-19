@@ -1,1 +1,0 @@
-var e=Symbol(`sareupna-dropdown`);export{e as t};
