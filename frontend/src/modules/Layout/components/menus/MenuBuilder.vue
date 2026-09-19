@@ -85,17 +85,17 @@
             </div>
 
             <!-- Center: Name & Location -->
-            <div class="flex items-center gap-3 border-l border-r border-border px-4 flex-1 min-w-0">
-              <div class="flex items-center gap-2 flex-1 min-w-0">
+            <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 border-l border-r border-border px-4 flex-1 min-w-0">
+              <div class="flex items-center gap-2 shrink-0">
                 <Label class="text-xs text-muted-foreground whitespace-nowrap">{{ t('layout.menus.form.name') }}</Label>
                 <Input 
                   v-model="menuName" 
-                  class="h-10 w-full min-w-[150px] max-w-[300px] text-sm" 
+                  class="h-10 w-[140px] sm:w-[180px] text-sm" 
                   :placeholder="t('layout.menus.form.namePlaceholder')"
                   :disabled="isTrashed || !menuId"
                 />
               </div>
-              <div class="flex items-center gap-2 flex-1 min-w-0">
+              <div class="flex items-center gap-2 shrink-0">
                 <Label class="text-xs text-muted-foreground whitespace-nowrap">{{ t('layout.menus.form.location') }}</Label>
                 <Select
                   v-model="menuLocation"
@@ -103,7 +103,7 @@
                 >
                   <SelectTrigger
                     :aria-label="t('layout.menus.form.location')"
-                    class="h-10 w-full min-w-[150px] max-w-[250px] text-sm truncate"
+                    class="h-10 w-[140px] sm:w-[170px] text-sm truncate"
                   >
                     <SelectValue :placeholder="t('layout.menus.form.placeholders.selectLocation')" />
                   </SelectTrigger>
@@ -119,7 +119,7 @@
                 </Select>
                 <RouterLink
                   v-if="activeThemeSlug"
-                  class="text-xs font-medium text-primary whitespace-nowrap hover:underline"
+                  class="text-xs font-medium text-primary shrink-0 whitespace-nowrap hover:underline inline-flex items-center"
                   :to="{ name: 'themes.customizer', params: { slug: activeThemeSlug }, query: { panel: 'menus' } }"
                 >
                   {{ t('layout.menus.actions.themeSlots', 'Theme slots') }}
@@ -580,7 +580,7 @@ defineExpose({
 });
 
 onMounted(() => {
-    void loadActiveTheme('frontend');
+    void loadActiveTheme('manage');
     fetchLocations();
     window.addEventListener('keydown', handleKeydown);
     window.addEventListener('mousemove', doResizing);

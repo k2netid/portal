@@ -1,1 +1,0 @@
-function e(e){let t=e.data;return t&&typeof t==`object`&&`data`in t?t.data:t}function t(t){let n=e(t);return Array.isArray(n)?n:n&&typeof n==`object`&&Array.isArray(n.data)?n.data:[]}export{e as n,t};

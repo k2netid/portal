@@ -1,1 +1,0 @@
-var e=[`Asia/Jakarta`,`Asia/Makassar`,`Asia/Jayapura`,`Asia/Singapore`,`UTC`];export{e as t};

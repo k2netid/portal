@@ -6,7 +6,7 @@ import { useSystemStore } from '@/modules/Core/System/stores/system';
 import { JANARI_PRESETS, type JanariPresetKey } from '@/modules/Layout/config/janariPresets';
 import { themeUsesJanariCanvas } from '@/modules/Layout/utils/themeManifest';
 import { hexToHslString } from '@/shared/utils/color';
-import { applyFrontendThemeDefault } from '@/shared/composables/useDarkMode';
+import { applyFrontendThemeDefault, isConsoleOrMemberRoute } from '@/shared/composables/useDarkMode';
 import { applyMergedSettingsSchema } from '@/modules/Layout/customizer/loaders/mergeThemeSettingsSchema';
 import {
     isCustomizerPreviewQuery,
@@ -403,39 +403,44 @@ export function useTheme() {
 
             const isPreviewBoot = isCustomizerPreviewQuery(window.location.search)
                 || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('ja_customizer_preview') === '1');
-            if (themeSettings.value.default_theme_mode) {
-                applyFrontendThemeDefault(themeSettings.value.default_theme_mode, isPreviewBoot);
-            }
-            if (typeof window !== 'undefined' && themeSettings.value.default_site_locale) {
-                try {
-                    localStorage.setItem('ja_theme_default_locale', String(themeSettings.value.default_site_locale));
-                } catch { /* ignore */ }
-            }
+            const inConsole = typeof window !== 'undefined' && isConsoleOrMemberRoute(window.location.pathname);
 
-            // Load theme assets
-            if (nextAssetsSig !== prevAssetsSig && data.assets) {
-                themeAssets.value = {
-                    css: Array.isArray(data.assets.css) ? data.assets.css : [],
-                    js: Array.isArray(data.assets.js) ? data.assets.js : [],
-                };
-                injectCssFiles(themeAssets.value.css);
-                injectJsFiles(themeAssets.value.js);
-            }
+            // STABILITY GUARD: Never mutate document styling, dark mode, or inject theme assets when running inside Console
+            if (!inConsole && type === 'frontend') {
+                if (themeSettings.value.default_theme_mode) {
+                    applyFrontendThemeDefault(themeSettings.value.default_theme_mode, isPreviewBoot);
+                }
+                if (typeof window !== 'undefined' && themeSettings.value.default_site_locale) {
+                    try {
+                        localStorage.setItem('ja_theme_default_locale', String(themeSettings.value.default_site_locale));
+                    } catch { /* ignore */ }
+                }
 
-            if (nextCss !== prevCss && data.custom_css) {
-                customCss.value = data.custom_css;
-                applyCustomCss();
-            }
+                // Load theme assets
+                if (nextAssetsSig !== prevAssetsSig && data.assets) {
+                    themeAssets.value = {
+                        css: Array.isArray(data.assets.css) ? data.assets.css : [],
+                        js: Array.isArray(data.assets.js) ? data.assets.js : [],
+                    };
+                    injectCssFiles(themeAssets.value.css);
+                    injectJsFiles(themeAssets.value.js);
+                }
 
-            applyThemeStyles();
+                if (nextCss !== prevCss && data.custom_css) {
+                    customCss.value = data.custom_css;
+                    applyCustomCss();
+                }
 
-            // Sync Janari canvas accent variables when theme declares support (or legacy janari* slug)
-            if (themeUsesJanariCanvas(data as Theme)) {
-                syncJanariStyles(themeSettings.value);
+                applyThemeStyles();
+
+                // Sync Janari canvas accent variables when theme declares support (or legacy janari* slug)
+                if (themeUsesJanariCanvas(data as Theme)) {
+                    syncJanariStyles(themeSettings.value);
+                }
             }
 
             // Add listener for Theme Customizer updates if in frontend
-            if (type === 'frontend' && typeof window !== 'undefined') {
+            if (type === 'frontend' && !inConsole && typeof window !== 'undefined') {
                 if (themeUpdateListener) {
                     window.removeEventListener('message', themeUpdateListener);
                 }
