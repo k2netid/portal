@@ -61,24 +61,6 @@ class TrustProxies
      */
     protected function getTrustedProxies(Request $request): array
     {
-        $configured = config('app.trusted_proxies');
-        if (is_string($configured) && trim($configured) !== '') {
-            if (trim($configured) === '*') {
-                return ['*'];
-            }
-
-            return array_values(array_filter(array_map(trim(...), explode(',', $configured)), static fn (string $ip): bool => $ip !== ''));
-        }
-
-        if (is_array($configured) && $configured !== []) {
-            $normalized = array_values(array_filter(array_map(static fn ($ip): string => is_scalar($ip) ? trim((string) $ip) : '', $configured), static fn (string $ip): bool => $ip !== ''));
-            if ($normalized !== []) {
-                return $normalized;
-            }
-        }
-
-        // Safe auto-detection fallback:
-        // trust loopback and the direct upstream proxy (REMOTE_ADDR) when internal.
         $defaults = ['127.0.0.1', '::1'];
         $remoteAddr = $request->server->get('REMOTE_ADDR');
         if (is_string($remoteAddr) && filter_var($remoteAddr, FILTER_VALIDATE_IP)) {
@@ -93,12 +75,31 @@ class TrustProxies
             }
         }
 
-        return array_values(array_unique($defaults));
+        $proxies = $defaults;
+        $configured = config('app.trusted_proxies');
+        if (is_string($configured) && trim($configured) !== '') {
+            if (trim($configured) === '*') {
+                return ['*'];
+            }
+
+            $proxies = array_values(array_filter(array_map(trim(...), explode(',', $configured)), static fn (string $ip): bool => $ip !== ''));
+        } elseif (is_array($configured) && $configured !== []) {
+            $normalized = array_values(array_filter(array_map(static fn ($ip): string => is_scalar($ip) ? trim((string) $ip) : '', $configured), static fn (string $ip): bool => $ip !== ''));
+            if ($normalized !== []) {
+                $proxies = $normalized;
+            }
+        }
+
+        // Include Cloudflare CIDRs as trusted proxies so Symfony Request::getClientIp recognizes Cloudflare proxies
+        return array_values(array_unique(array_merge($proxies, $this->getCloudflareCidrs())));
     }
 
-    protected function isCloudflareEdgeIp(string $ip): bool
+    /**
+     * @return array<int, string>
+     */
+    protected function getCloudflareCidrs(): array
     {
-        $cloudflareCidrs = [
+        return [
             // IPv4 ranges
             '173.245.48.0/20',
             '103.21.244.0/22',
@@ -124,8 +125,11 @@ class TrustProxies
             '2a06:98c0::/29',
             '2c0f:f248::/32',
         ];
+    }
 
-        foreach ($cloudflareCidrs as $cidr) {
+    protected function isCloudflareEdgeIp(string $ip): bool
+    {
+        foreach ($this->getCloudflareCidrs() as $cidr) {
             if ($this->ipInCidr($ip, $cidr)) {
                 return true;
             }
@@ -170,25 +174,29 @@ class TrustProxies
 
     protected function extractForwardedClientIp(Request $request): ?string
     {
-        $headerCandidates = [
-            $request->header('CF-Connecting-IP'),
-            $request->header('True-Client-IP'),
-            $request->header('X-Real-IP'),
-        ];
-
-        foreach ($headerCandidates as $candidate) {
-            if (is_string($candidate) && filter_var($candidate, FILTER_VALIDATE_IP)) {
-                return $candidate;
-            }
+        // 1. Direct Cloudflare connecting IP (always the actual end-user IP when proxied by Cloudflare)
+        $cfIp = $request->header('CF-Connecting-IP') ?? $request->header('True-Client-IP');
+        if (is_string($cfIp) && filter_var($cfIp, FILTER_VALIDATE_IP)) {
+            return $cfIp;
         }
 
+        // 2. X-Real-IP if not a Cloudflare edge IP
+        $realIp = $request->header('X-Real-IP');
+        if (is_string($realIp) && filter_var($realIp, FILTER_VALIDATE_IP) && ! $this->isCloudflareEdgeIp($realIp)) {
+            return $realIp;
+        }
+
+        // 3. X-Forwarded-For (extract end-user IP, ignoring Cloudflare edge IPs in the proxy chain)
         $forwardedFor = $request->header('X-Forwarded-For');
         if (is_string($forwardedFor)) {
             $ips = array_values(array_filter(array_map(trim(...), explode(',', $forwardedFor))));
             foreach ($ips as $ip) {
-                if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                if (filter_var($ip, FILTER_VALIDATE_IP) && ! $this->isCloudflareEdgeIp($ip)) {
                     return $ip;
                 }
+            }
+            if (! empty($ips) && filter_var($ips[0], FILTER_VALIDATE_IP)) {
+                return $ips[0];
             }
         }
 
