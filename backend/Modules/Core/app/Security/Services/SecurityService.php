@@ -502,14 +502,41 @@ class SecurityService
 
     /**
      * Check if an IP is protected (should never be blocked).
-     * Only protects localhost - private IPs can still be blocked for security.
+     * Protects localhost, configured trusted proxies/gateways, and private/internal subnets.
      */
     public function isProtectedIp(string $ip): bool
     {
-        // Only protect localhost IPs (development/testing)
+        // 1. Only protect localhost IPs (development/testing)
         $localhostIps = ['127.0.0.1', '::1', 'localhost'];
+        if (in_array($ip, $localhostIps, true)) {
+            return true;
+        }
 
-        return in_array($ip, $localhostIps);
+        // 2. Protect configured trusted proxies / gateways
+        $trustedProxies = config('app.trusted_proxies');
+        if (is_string($trustedProxies) && trim($trustedProxies) !== '') {
+            if (trim($trustedProxies) !== '*') {
+                $proxies = array_filter(array_map('trim', explode(',', $trustedProxies)));
+                foreach ($proxies as $proxy) {
+                    if ($proxy === $ip || IpHelper::ipInSubnet($ip, $proxy)) {
+                        return true;
+                    }
+                }
+            }
+        } elseif (is_array($trustedProxies)) {
+            foreach ($trustedProxies as $proxy) {
+                if (is_string($proxy) && ($proxy === $ip || IpHelper::ipInSubnet($ip, $proxy))) {
+                    return true;
+                }
+            }
+        }
+
+        // 3. Never block private/reserved IPs (internal infrastructure protection)
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
