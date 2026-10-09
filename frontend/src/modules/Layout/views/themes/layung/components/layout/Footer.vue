@@ -262,9 +262,9 @@ const siteLogo = displayBrandLogo;
 const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 
 const defaultSocialLinks = [
-  { icon: 'Instagram', url: 'https://instagram.com/jejakawan', label: 'Instagram' },
-  { icon: 'Github', url: 'https://github.com/jejakawan/isp-provider', label: 'GitHub' },
-  { icon: 'MessageCircle', url: 'https://wa.me/6285136290851', label: 'WhatsApp' },
+  { icon: 'Instagram', url: 'https://instagram.com', label: 'Instagram' },
+  { icon: 'Youtube', url: 'https://youtube.com', label: 'YouTube' },
+  { icon: 'Twitter', url: 'https://x.com', label: 'X' },
 ];
 
 const effectiveSocialLinks = computed(() => (socialLinks.value.length ? socialLinks.value : defaultSocialLinks));

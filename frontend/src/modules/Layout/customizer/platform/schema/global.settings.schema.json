@@ -763,16 +763,16 @@
         ],
         "default": [
             {
-                "icon": "Twitter",
-                "url": "https://twitter.com/jejakawan"
-            },
-            {
                 "icon": "Instagram",
-                "url": "https://instagram.com/jejakawan"
+                "url": "https://instagram.com"
             },
             {
-                "icon": "Github",
-                "url": "https://github.com/jejakawan"
+                "icon": "Youtube",
+                "url": "https://youtube.com"
+            },
+            {
+                "icon": "Twitter",
+                "url": "https://x.com"
             }
         ],
         "scope": "platform",
