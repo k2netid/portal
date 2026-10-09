@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="isPreview || (feedData.enabled && feedData.items.length > 0)"
     class="ja-plugin-block instagram-feed-block plugin-slot-isolate w-full py-8 md:py-14"
     :data-plugin="pluginSlug"
   >
