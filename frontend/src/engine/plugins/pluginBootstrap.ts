@@ -23,12 +23,15 @@ export async function bootstrapPluginThemeBlocks(force = false): Promise<void> {
 
   let manifest: PluginBlocksApiResponse['plugins'] = [];
 
+  let apiFailed = false;
+
   try {
     const response = await api.get('/public/layout/plugin-blocks');
     const data = (response.data ?? response) as PluginBlocksApiResponse;
     manifest = Array.isArray(data.plugins) ? data.plugins : [];
   } catch (error) {
-    logger.warning('[pluginBootstrap] Could not load plugin-blocks manifest; using bundled loaders only', error);
+    apiFailed = true;
+    logger.warning('[pluginBootstrap] Could not load plugin-blocks manifest; using bundled loaders only in dev', error);
   }
 
   const activeSlugs = new Set(manifest.map((p) => p.slug));
@@ -63,8 +66,9 @@ export async function bootstrapPluginThemeBlocks(force = false): Promise<void> {
     }
   }
 
-  // Dev fallback: register bundled loaders when API empty but loader exists
-  if (manifest.length === 0) {
+  // Dev fallback: ONLY run if API request actually failed/errored (e.g. offline dev without backend)
+  // NEVER run when API succeeded and authoritatively returned 0 active plugins!
+  if (apiFailed && import.meta.env.DEV) {
     for (const [slug, loader] of Object.entries(themeBlockLoaders)) {
       try {
         const mod = await loader();

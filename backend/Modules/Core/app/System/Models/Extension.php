@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property string $id
@@ -33,11 +34,13 @@ class Extension extends Model
     {
         static::saved(function () {
             @unlink(storage_path('framework/cache/active_extensions.json'));
+            Cache::forget('core.public_settings.v1');
             self::flushProductActiveMemo();
         });
 
         static::deleted(function () {
             @unlink(storage_path('framework/cache/active_extensions.json'));
+            Cache::forget('core.public_settings.v1');
             self::flushProductActiveMemo();
         });
     }
@@ -104,6 +107,8 @@ class Extension extends Model
         'version',
         'database_version',
         'status',
+        'is_active',
+        'priority',
         'is_core',
         'author',
         'description',

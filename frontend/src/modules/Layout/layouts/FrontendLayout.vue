@@ -652,7 +652,7 @@ onMounted(async () => {
 
   try {
     const { bootstrapPluginThemeBlocks } = await import('@/engine/plugins/pluginBootstrap')
-    await bootstrapPluginThemeBlocks()
+    await bootstrapPluginThemeBlocks(!inCustomizerPreview)
   } catch {
     /* ignore plugin bootstrap errors */
   }
