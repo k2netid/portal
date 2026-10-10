@@ -24,5 +24,6 @@ Docs index: `docs/themes/sarangenge/`.
 
 ### Fixed
 
+- ContactMapModal ESLint prop type definition for optional prop with default.
 - Contact no longer hardcodes `/public/forms/contact/submit`
 - Post.vue and Programs.vue TypeScript and ESLint typing refinements.

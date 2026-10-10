@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import type { Component } from 'vue';
 import {
     Bookmark,
+    CreditCard,
     FileText,
     LayoutDashboard,
     Mail,
@@ -33,6 +34,7 @@ export type MemberSidebarGroup = {
 
 const NAV_ICONS: Record<string, Component> = {
     dashboard: LayoutDashboard,
+    billing: CreditCard,
     profile: User,
     security: Shield,
     bookmarks: Bookmark,
@@ -80,6 +82,9 @@ function readOpenSections(): Record<string, boolean> {
 
 function resolveGroupId(item: { slug: string; extensionSlug?: string }): string {
     if (item.extensionSlug && item.extensionSlug !== 'member') {
+        if (item.extensionSlug === 'billing') {
+            return 'account';
+        }
         if (item.extensionSlug === 'publishing') {
             return 'publishing';
         }

@@ -381,5 +381,33 @@
   "status": {
     "active": "Aktif",
     "inactive": "Nonaktif"
+  },
+  "billing": {
+    "nav": "Tagihan & Langganan",
+    "title": "Langganan & Tagihan",
+    "subtitle": "Atur paket langganan internét sareng riwayat pamayaran anjeun.",
+    "currentPlan": "Pakét Aktif",
+    "noActivePlan": "Teu acan aya pakét aktif",
+    "noActivePlanDesc": "Pilih salah sahiji pakét di handap pikeun ngamimitian langganan layanan K2NET.",
+    "expires": "Luyu dugi ka",
+    "usersIncluded": "Wates Pamaké:",
+    "storage": "Kapasitas Panyimpenan:",
+    "viewPlans": "Tingali Pilihan Pakét",
+    "recentInvoices": "Riwayat Tagihan & Faktur",
+    "noInvoices": "Teu acan aya riwayat tagihan",
+    "payNow": "Bayar Ayeuna",
+    "checkoutWorking": "Ngolah Pamayaran...",
+    "checkoutCreated": "Sési pamayaran parantos didamel",
+    "checkoutFailed": "Gagal ngolah pamayaran",
+    "loading": "Ngamuat data billing...",
+    "loadFailed": "Gagal ngamuat inpormasi tagihan",
+    "pendingCount": "{n} tagihan katunda",
+    "selectPlan": "Pilih Pakét",
+    "ordering": "Ngolah Pesenan...",
+    "orderSuccess": "Pesenan parantos didamel",
+    "monthly": "Bulanan",
+    "yearly": "Taunan",
+    "perMonth": "/ sasih",
+    "perYear": "/ taun"
   }
 }

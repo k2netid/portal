@@ -397,6 +397,12 @@ parameters:
 			path: Modules/Member/app/Http/Controllers/Api/BookmarkController.php
 
 		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Collection\<int, Modules\\Publishing\\Models\\Content\>\|Illuminate\\Pagination\\LengthAwarePaginator\<int, Modules\\Publishing\\Models\\Content\>\:\:items\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Modules/Publishing/app/Http/Controllers/Api/ContentController.php
+
+		-
 			message: '#^Parameter \#1 \$meta of method Modules\\Publishing\\Support\\BuilderDocumentValidator\:\:validate\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
 			identifier: argument.type
 			count: 1

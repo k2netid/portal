@@ -11,5 +11,6 @@
     "Search": true,
     "CmsAi": true,
     "Member": true,
+    "Billing": true,
     "Site": true
 }

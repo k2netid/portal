@@ -1,0 +1,31 @@
+{
+  "name": "Billing",
+  "slug": "billing",
+  "version": "1.0.0",
+  "description": "K2NET Member Self-Billing & Subscription Integration with Control Plane",
+  "author": "K2NET Engineering",
+  "type": "module",
+  "family": "audience",
+  "is_core": true,
+  "requires": {
+    "php": ">=8.2",
+    "laravel": ">=13.0",
+    "core": ">=1.0.0-beta"
+  },
+  "dependencies": {
+    "member": ">=1.0.0"
+  },
+  "member_area": {
+    "depends_on": ["member"],
+    "capabilities": ["member.billing"],
+    "nav": [
+      {
+        "slug": "billing",
+        "label_key": "member.billing.nav",
+        "route": "member.billing",
+        "order": 15
+      }
+    ],
+    "widgets": []
+  }
+}

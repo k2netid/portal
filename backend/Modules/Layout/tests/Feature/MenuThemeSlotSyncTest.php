@@ -104,4 +104,3 @@ class MenuThemeSlotSyncTest extends TestCase
         $this->assertSame('PT Jejak Awan Digital', $published['site_title'] ?? null);
     }
 }
-

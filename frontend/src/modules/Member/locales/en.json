@@ -381,5 +381,33 @@
   "status": {
     "active": "Active",
     "inactive": "Inactive"
+  },
+  "billing": {
+    "nav": "Billing & Plans",
+    "title": "Billing & Subscriptions",
+    "subtitle": "Manage your internet subscriptions and payment history.",
+    "currentPlan": "Current Plan",
+    "noActivePlan": "No active subscription",
+    "noActivePlanDesc": "Choose a plan below to subscribe to K2NET services.",
+    "expires": "Valid until",
+    "usersIncluded": "Users Included:",
+    "storage": "Storage:",
+    "viewPlans": "View Available Plans",
+    "recentInvoices": "Recent Invoices",
+    "noInvoices": "No invoice history yet",
+    "payNow": "Pay Now",
+    "checkoutWorking": "Processing Checkout...",
+    "checkoutCreated": "Payment session created",
+    "checkoutFailed": "Failed to process payment",
+    "loading": "Loading billing data...",
+    "loadFailed": "Failed to load billing information",
+    "pendingCount": "{n} pending invoice(s)",
+    "selectPlan": "Select Plan",
+    "ordering": "Placing Order...",
+    "orderSuccess": "Order created successfully",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "/ month",
+    "perYear": "/ year"
   }
 }

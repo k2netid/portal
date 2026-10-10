@@ -111,7 +111,7 @@ import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 
 const props = withDefaults(
   defineProps<{
-    open: boolean;
+    open?: boolean;
     address: string;
     schoolName?: string;
     mapEmbedUrl?: string;

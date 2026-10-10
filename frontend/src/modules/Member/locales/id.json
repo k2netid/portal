@@ -381,5 +381,33 @@
   "status": {
     "active": "Aktif",
     "inactive": "Nonaktif"
+  },
+  "billing": {
+    "nav": "Tagihan & Langganan",
+    "title": "Langganan & Tagihan",
+    "subtitle": "Kelola paket langganan internet dan riwayat pembayaran Anda.",
+    "currentPlan": "Paket Aktif",
+    "noActivePlan": "Belum ada paket aktif",
+    "noActivePlanDesc": "Pilih salah satu paket di bawah untuk mulai berlangganan layanan K2NET.",
+    "expires": "Berlaku hingga",
+    "usersIncluded": "Batas Pengguna:",
+    "storage": "Kapasitas Penyimpanan:",
+    "viewPlans": "Lihat Pilihan Paket",
+    "recentInvoices": "Riwayat Tagihan & Faktur",
+    "noInvoices": "Belum ada riwayat tagihan",
+    "payNow": "Bayar Sekarang",
+    "checkoutWorking": "Memproses Pembayaran...",
+    "checkoutCreated": "Sesi pembayaran berhasil dibuat",
+    "checkoutFailed": "Gagal memproses pembayaran",
+    "loading": "Memuat data billing...",
+    "loadFailed": "Gagal memuat informasi tagihan",
+    "pendingCount": "{n} tagihan tertunda",
+    "selectPlan": "Pilih Paket",
+    "ordering": "Memproses Pesanan...",
+    "orderSuccess": "Pesanan berhasil dibuat",
+    "monthly": "Bulanan",
+    "yearly": "Tahunan",
+    "perMonth": "/ bulan",
+    "perYear": "/ tahun"
   }
 }

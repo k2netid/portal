@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Core\Tests\Feature;
 
+use Modules\Core\System\Models\Setting;
 use Modules\Core\System\Services\LicenseService;
 use Tests\TestCase;
 
@@ -118,11 +119,11 @@ final class LicenseServiceTest extends TestCase
 
     public function test_get_license_tier_auto_heals_app_license_tier(): void
     {
-        \Modules\Core\System\Models\Setting::set('license_type', 'pro');
-        \Modules\Core\System\Models\Setting::set('app_license_tier', 'enterprise');
+        Setting::set('license_type', 'pro');
+        Setting::set('app_license_tier', 'enterprise');
 
         $tier = $this->licenseService->getLicenseTier();
         $this->assertEquals('pro', $tier);
-        $this->assertEquals('pro', \Modules\Core\System\Models\Setting::get('app_license_tier'));
+        $this->assertEquals('pro', Setting::get('app_license_tier'));
     }
 }

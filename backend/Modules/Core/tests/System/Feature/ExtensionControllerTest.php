@@ -1432,4 +1432,3 @@ class ExtensionControllerTest extends TestCase
         $this->assertStringContainsString('First-party theme packs cannot be uninstalled', (string) $response->json('message'));
     }
 }
-

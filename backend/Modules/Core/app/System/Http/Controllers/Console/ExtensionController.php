@@ -30,6 +30,7 @@ use Modules\Core\System\Services\InstallProfileApplicator;
 use Modules\Core\System\Services\LicenseService;
 use Modules\Core\System\Support\ExtensionFamilyCatalog;
 use Modules\Core\System\Support\ExtensionPaths;
+use Modules\Layout\Models\Theme;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
@@ -92,9 +93,9 @@ class ExtensionController extends BaseApiController
      */
     protected function resolveActiveServedThemeSlug(): string
     {
-        if (class_exists(\Modules\Layout\Models\Theme::class)) {
+        if (class_exists(Theme::class)) {
             try {
-                $theme = \Modules\Layout\Models\Theme::getActiveTheme('frontend');
+                $theme = Theme::getActiveTheme('frontend');
                 if ($theme && is_string($theme->slug) && trim($theme->slug) !== '') {
                     return strtolower(trim($theme->slug));
                 }

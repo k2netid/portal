@@ -13,6 +13,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **ADR-023 3-Level Theme Pipeline & Quota Metadata**: `ThemeController::index()` returns per-theme flags (`is_pack_enabled`, `is_entitled`, `is_premium`) and response metadata (`meta.quota` and `meta.site_active`).
 
 ### Fixed
+- MenuThemeSlotSyncTest code style and lint formatting refinement.
 - `dynamicSources` no longer logs the full query string.
 - ThemeSampleDataOrchestrator and blocks factory strict typing fixes.
 

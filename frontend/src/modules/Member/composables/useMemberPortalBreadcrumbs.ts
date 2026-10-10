@@ -9,6 +9,7 @@ export type MemberPortalCrumb = {
 
 const ROUTE_LABEL_KEYS: Record<string, string> = {
     'member.dashboard': 'member.portal.nav.dashboard',
+    'member.billing': 'member.billing.nav',
     'member.profile': 'member.portal.nav.profile',
     'member.security': 'member.portal.nav.security',
     'member.bookmarks': 'member.nav.bookmarks',

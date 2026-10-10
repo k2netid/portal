@@ -70,6 +70,11 @@ async function bootstrap(): Promise<void> {
             contributions.push(formsMemberAreaContribution);
         }
 
+        if (active.includes('billing')) {
+            const { billingMemberAreaContribution } = await import('@/modules/Billing/memberArea');
+            contributions.push(billingMemberAreaContribution);
+        }
+
         registerMemberAreaContributions(contributions);
         appendMemberPortalRoutes(router, active);
     }

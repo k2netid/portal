@@ -1,0 +1,11 @@
+{
+  "name": "Billing",
+  "alias": "billing",
+  "description": "K2NET Member Self-Billing & Subscription Integration with Control Plane",
+  "keywords": ["billing", "subscription", "k2net", "control-plane"],
+  "priority": 40,
+  "providers": [
+    "Modules\\Billing\\Providers\\BillingServiceProvider"
+  ],
+  "files": []
+}

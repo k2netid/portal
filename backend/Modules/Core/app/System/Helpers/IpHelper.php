@@ -64,4 +64,3 @@ class IpHelper
         return (ord($ipBinary[$fullBytes]) & $mask) === (ord($subnetBinary[$fullBytes]) & $mask);
     }
 }
-
