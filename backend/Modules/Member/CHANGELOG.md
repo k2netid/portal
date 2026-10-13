@@ -5,6 +5,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- **Sign in with Google (member portal)**: Socialite OAuth (`MEMBER_GOOGLE_*`), `google_id` on `mem_members`, public routes `auth/google/{redirect,callback,2fa}`, FE Login/Register + `/member/oauth/callback`. Toggle `enable_member_google_login` (console Security settings). Console Google/GitHub stubs removed — operators stay on password/passkey/2FA.
 - Reader register/login, bookmarks, signed email verification.
 - `extension.active:member` on public and authenticated member APIs.
 - Console Members directory (`GET /manage/members`, `members.index`). Email verify required for bookmarks and member comments (`EMAIL_UNVERIFIED`).

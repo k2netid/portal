@@ -9,6 +9,7 @@ Public reader accounts. Not console IAM.
 ## Paths
 
 - API: `routes/api.php` — gated `extension.active:member`
+- Google OAuth: `GET /api/v1/public/member/auth/google/redirect|callback`, `POST .../auth/google/2fa` (env `MEMBER_GOOGLE_CLIENT_ID` / `SECRET`; setting `enable_member_google_login`)
 - Verify email: signed `GET /api/v1/public/member/verify-email/{id}/{hash}` → `/member/verified`
 - FE public: `frontend/src/modules/Member/views/` (`/member/*` on apex when Site is active)
 - FE console: `members.index` (`/dash/members`) — list only, permission `view members`

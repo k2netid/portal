@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Modules\Member\Http\Controllers\Api\AuthController;
 use Modules\Member\Http\Controllers\Api\BookmarkController;
+use Modules\Member\Http\Controllers\Api\GoogleAuthController;
 use Modules\Member\Http\Controllers\Api\MemberDirectoryController;
 use Modules\Member\Http\Controllers\Api\MemberTwoFactorController;
 use Modules\Member\Http\Controllers\Api\PasswordResetController;
@@ -20,6 +21,12 @@ Route::prefix('v1')->group(function (): void {
         Route::post('login', [AuthController::class, 'login']);
         Route::post('forgot-password', [PasswordResetController::class, 'forgot']);
         Route::post('reset-password', [PasswordResetController::class, 'reset']);
+        Route::get('auth/google/redirect', [GoogleAuthController::class, 'redirect'])
+            ->middleware('throttle:20,1');
+        Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])
+            ->middleware('throttle:20,1');
+        Route::post('auth/google/2fa', [GoogleAuthController::class, 'completeTwoFactor'])
+            ->middleware('throttle:20,1');
         Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
             ->middleware('signed')
             ->name('member.verify-email');

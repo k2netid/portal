@@ -195,6 +195,8 @@
     "failed": "Invalid credentials",
     "noAccount": "No account?",
     "link": "Sign in",
+    "or": "Or",
+    "google": "Sign in with Google",
     "captchaRequired": "Please complete the captcha.",
     "throttled": "Too many attempts. Please try again later.",
     "throttledRetry": "Too many attempts. Try again in {seconds}s.",
@@ -208,6 +210,16 @@
       "cancel": "Back",
       "invalid": "Invalid authentication code."
     }
+  },
+  "oauth": {
+    "completing": "Completing sign-in…",
+    "wait": "Please wait while we finish connecting your Google account.",
+    "missingToken": "Sign-in token missing. Please try again.",
+    "failed": "Google sign-in failed. Please try again.",
+    "registrationDisabled": "Reader registration is disabled. Ask an operator to create your account, or sign in with email if you already have one.",
+    "inactive": "This member account is not active.",
+    "unavailable": "Google sign-in is not available right now.",
+    "invalidState": "Google sign-in expired. Please try again."
   },
   "forgot": {
     "title": "Forgot password",

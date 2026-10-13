@@ -39,4 +39,18 @@ return [
         ],
     ],
 
+    /*
+    | Member portal "Sign in with Google" (Socialite).
+    | Not the same as Media → Google Drive (google_client_* settings).
+    | Redirect URI: {APP_URL}/api/v1/public/member/auth/google/callback
+    */
+    'google' => [
+        'client_id' => env('MEMBER_GOOGLE_CLIENT_ID', env('GOOGLE_CLIENT_ID')),
+        'client_secret' => env('MEMBER_GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET')),
+        'redirect' => env(
+            'MEMBER_GOOGLE_REDIRECT_URI',
+            rtrim((string) env('APP_URL', 'http://localhost'), '/').'/api/v1/public/member/auth/google/callback'
+        ),
+    ],
+
 ];
