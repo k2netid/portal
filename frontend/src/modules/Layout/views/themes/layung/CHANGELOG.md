@@ -15,7 +15,9 @@ Theme ADRs: `docs/themes/layung/` (ADR-001, 007, 008).
 
 ### Changed
 
-- Theme package version → `1.0.6`
+- Theme package version → `1.0.7`
+- Footer social icons: no demo URL fallbacks — render only configured `social_links` (ADR-022)
+- Mobile header NOC WhatsApp: bind to `useLayungIdentity` instead of hardcoded `wa.me`
 - Team page: `Tim.vue` → `Team.vue` (`/team`, alias `/tim`); `enable_tim` → `enable_team`
 - Archetype + Post: `after_hero` / `after_post_content` + `sidebar_article` PluginSlots
 - Removed dead `social_instagram_feed_*` keys (Instagram via `instagram-feed` extension slots)
