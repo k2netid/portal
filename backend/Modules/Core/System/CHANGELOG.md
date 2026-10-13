@@ -9,8 +9,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 ## [Unreleased]
 
 ### Added
-- Public setting `enable_member_google_login` (Security tab + `PublicSettingsController`) for member-portal Google OAuth; Foundation seeder default on.
-- Integrations settings `member_google_client_id` / `member_google_client_secret` (console Identity & Integrations UI); preferred over `MEMBER_GOOGLE_*` env.
+- Public setting `enable_member_google_login` + `member_google_client_id` / `member_google_client_secret` on Identity & Integrations only (not Security tab); preferred over `MEMBER_GOOGLE_*` env.
 - **Non-Destructive Setting Helper (`Setting::setIfMissing`)**: Preserves existing settings in database during theme seeding / updates to prevent downstream data drift.
 
 ### Removed

@@ -102,7 +102,7 @@ const securitySettingsGrouped = computed(() => {
             description: t('system.settings.groups.authentication.description'),
             icon: ShieldCheck,
             color: 'emerald',
-            keys: ['enable_registration', 'enable_member_registration', 'enable_member_google_login', 'require_email_verification', 'enable_2fa', 'two_factor_method', 'two_factor_enforced_roles'],
+            keys: ['enable_registration', 'enable_member_registration', 'require_email_verification', 'enable_2fa', 'two_factor_method', 'two_factor_enforced_roles'],
             settings: [],
             defaultExpanded: true,
         },

@@ -19,6 +19,7 @@ Policy: [`docs/guides/update-changelog.md`](../../../docs/guides/update-changelo
 - See System: `enable_member_google_login` public setting; console Google/GitHub stubs removed.
 
 ### Changed
+- Version 1.0.8: member Google OAuth toggle only on Integrations (removed from Security tab).
 - Version 1.0.7: member Google OAuth credentials on Integrations settings (System).
 - Version 1.0.6: member Google OAuth toggle + console auth stub cleanup (System).
 - Version 1.0.3: `Setting::setIfMissing()` non-destructive helper to preserve downstream client identity settings during updates.
