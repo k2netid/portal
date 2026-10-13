@@ -600,13 +600,14 @@
                   <span>NOC 24/7 Monitoring</span>
                 </span>
                 <a
-                  href="https://wa.me/6285136290851"
+                  v-if="csWhatsAppUrl"
+                  :href="csWhatsAppUrl"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-cyan-400 hover:underline flex items-center gap-1 font-semibold"
                 >
                   <MessageCircle class="w-3.5 h-3.5" />
-                  <span>0851-3629-0851</span>
+                  <span>{{ displayCsPhone }}</span>
                 </a>
               </div>
             </div>
@@ -669,6 +670,8 @@ const {
   displayCompanyName,
   displayBrandLogo,
   displayTagline,
+  displayCsPhone,
+  csWhatsAppUrl,
 } = useLayungIdentity();
 
 const isDesktop = computed(() => device.value === 'desktop');

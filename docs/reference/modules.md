@@ -17,6 +17,7 @@ Tema: `views/themes/<slug>/CHANGELOG.md`. Dual-layer: [update-changelog.md](../g
 | **Forms** | Dynamic forms | [README](../../backend/Modules/Forms/README.md) |
 | **Mail** | Mail — golden sample optional module | [README](../../backend/Modules/Mail/README.md) |
 | **Member** | Member area | [README](../../backend/Modules/Member/README.md) |
+| **Billing** | Member self-billing ↔ ja-cp (K2NET) | [README](../../backend/Modules/Billing/README.md) |
 | **Newsletter** | Newsletter | [README](../../backend/Modules/Newsletter/README.md) |
 | **Search** | Search | [README](../../backend/Modules/Search/README.md) |
 | **Analytics** | Analytics | [README](../../backend/Modules/Analytics/README.md) |
@@ -34,6 +35,7 @@ Tema: `views/themes/<slug>/CHANGELOG.md`. Dual-layer: [update-changelog.md](../g
 | Forms | [README](../../frontend/src/modules/Forms/README.md) |
 | Mail | [README](../../frontend/src/modules/Mail/README.md) |
 | Member | [README](../../frontend/src/modules/Member/README.md) |
+| Billing | [README](../../frontend/src/modules/Billing/README.md) |
 | Newsletter | [README](../../frontend/src/modules/Newsletter/README.md) |
 | Search | [README](../../frontend/src/modules/Search/README.md) |
 | Analytics | [README](../../frontend/src/modules/Analytics/README.md) |

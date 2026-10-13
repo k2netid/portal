@@ -52,11 +52,25 @@ class K2netDeploymentSeeder extends Seeder
                 'cs_email' => 'cs@k2net.id',
                 'sales_email' => 'sales@k2net.id',
                 'billing_email' => 'billing@k2net.id',
+                'isp_email' => 'info@k2net.id',
+                'isp_cs_email' => 'cs@k2net.id',
+                'isp_sales_email' => 'sales@k2net.id',
+                'isp_billing_email' => 'billing@k2net.id',
                 'brand_logo' => '/logofull_k2net.png',
                 'tokopedia_url' => 'https://tokopedia.link/k2net',
                 'shopee_url' => 'https://shopee.co.id/k2net',
                 'company_phone' => '022-87309999',
-                'company_whatsapp' => '6281122334455',
+                // Align with Layung defaults / public hotline (not engine demo numbers).
+                'company_whatsapp' => '6285136290851',
+                'isp_whatsapp' => '6285136290851',
+                // Override engine demo socials (jejakawan.*) — marketplace + WhatsApp only until IG/FB SoT exists.
+                'social_links' => [
+                    [
+                        'icon' => 'MessageCircle',
+                        'url' => 'https://wa.me/6285136290851',
+                        'label' => 'WhatsApp',
+                    ],
+                ],
                 'default_theme_mode' => 'dark',
                 'default_site_locale' => 'id',
             ];

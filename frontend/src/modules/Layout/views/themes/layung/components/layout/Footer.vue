@@ -261,13 +261,8 @@ const siteLogo = displayBrandLogo;
 
 const socialLinks = computed(() => parseSocialLinks(getSetting('social_links')));
 
-const defaultSocialLinks = [
-  { icon: 'Instagram', url: 'https://instagram.com/jejakawan', label: 'Instagram' },
-  { icon: 'Github', url: 'https://github.com/jejakawan/isp-provider', label: 'GitHub' },
-  { icon: 'MessageCircle', url: 'https://wa.me/6285136290851', label: 'WhatsApp' },
-];
-
-const effectiveSocialLinks = computed(() => (socialLinks.value.length ? socialLinks.value : defaultSocialLinks));
+// No engine-demo fallbacks (jejakawan.*). Empty = hide icons until theme settings / seeder fill them.
+const effectiveSocialLinks = computed(() => socialLinks.value);
 
 const footerAboutText = computed(() => {
   const custom = resolveLayungLocalizedCopy({

@@ -7,8 +7,10 @@
 | Lapisan | SoT | Contoh |
 | :--- | :--- | :--- |
 | Engine theme defaults | `views/themes/*/theme.json` (+ schema platform) | Fallback `Jejakawan`, URL sosial demo `jejakawan` — aman untuk seed generik |
-| Produk K2NET | `K2netDeploymentSeeder` + settings DB + tema `layung` aktif | `site_name=K2NET`, `company_legal_name=PT Kirana Karina Network`, `theme_active=layung` |
+| Produk K2NET | `K2netDeploymentSeeder` + settings DB + tema `layung` aktif | `site_name=K2NET`, emails `*@k2net.id`, `isp_whatsapp=6285136290851`, `social_links` WhatsApp-only, `theme_active=layung` |
 | Aset logo | `frontend/public/logofull_k2net.png` dll. | Di-set seeder / identity settings |
+
+Seeder **menghapus** sosial demo engine (`jejakawan.*`) dengan meng-set `social_links` eksplisit. Footer Layung tidak lagi fallback ke Instagram/GitHub Jejakawan bila settings kosong.
 
 ## Mengapa tidak rewrite `theme.json` defaults?
 
