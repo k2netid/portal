@@ -36,12 +36,18 @@ vi.mock('@/modules/Core/System/stores/system', async () => {
 });
 
 import enMessages from '@/engine/i18n/messages/en';
+import mediaEn from '@/modules/Media/locales/en.json';
+import publishingEn from '@/modules/Publishing/locales/en.json';
 
 const i18n = createI18n({
     legacy: false,
     locale: 'en',
     messages: {
-        en: enMessages,
+        en: {
+            ...enMessages,
+            media: mediaEn,
+            publishing: publishingEn,
+        },
     }
 });
 

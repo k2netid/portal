@@ -1,5 +1,5 @@
 import '@/styles/shell/console-tailwind.css';
-import i18n from '@/engine/i18n';
+import i18n, { ensureModuleLocaleMessages } from '@/engine/i18n';
 import { bootstrapConsoleApp } from '@/engine/bootstrap/console';
 import { scheduleDeferredConsoleModules } from '@/engine/bootstrap/deferredConsoleModules';
 import {
@@ -22,6 +22,9 @@ async function bootstrap(): Promise<void> {
     const { logger } = await useLoggerPlugin(app);
 
     const { registry, authStore } = await bootstrapConsoleApp();
+    const { useSystemStore } = await import('@/modules/Core/System/stores/system');
+    const activeExtensions = useSystemStore().activeExtensions ?? [];
+    await ensureModuleLocaleMessages(['system', 'infra', ...activeExtensions]);
 
     const router = (await import('@/engine/router/console')).createConsoleRouter();
     app.use(router);

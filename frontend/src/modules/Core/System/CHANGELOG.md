@@ -16,6 +16,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 - **Site Identity Module Awareness** + Module Registry Site Configure bridge ([ADR-016](../../../../../docs/adr/ADR-016-module-aware-site-identity-and-dependency-orchestration.md)).
 
 ### Changed
+- **On-Demand System Locale in Captcha**: In `CaptchaWrapper.vue`, dynamically loads `system` locale pack on demand when rendered on public guest forms.
 - **Unified Role Hierarchy & Ranks** in auth stores ([ADR-020](../../../../../docs/adr/ADR-020-rbac-hierarchy-route-hardening-and-ui-primitives.md)).
 - **Console Branding & Display Select** / license gating on appearance portability.
 - **Sidebar & Header Polish**.

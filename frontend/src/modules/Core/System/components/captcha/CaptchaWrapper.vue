@@ -32,6 +32,7 @@ import {
   Loader2,
 } from 'lucide-vue-next';
 import api from '@/engine/api/client'
+import { ensureModuleLocaleMessages } from '@/engine/i18n'
 import SliderCaptcha from './SliderCaptcha.vue'
 import MathCaptcha from './MathCaptcha.vue'
 import ImageCaptcha from './ImageCaptcha.vue'
@@ -65,6 +66,7 @@ const method = ref('slider')
 
 const fetchSettings = async () => {
     try {
+        await ensureModuleLocaleMessages(['system'])
         const response = await api.get('/captcha/settings')
         const responseData = response.data
         const data = (responseData as { data?: Record<string, unknown> } | Record<string, unknown>);

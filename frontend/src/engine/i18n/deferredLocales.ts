@@ -1,12 +1,13 @@
-import i18n from '@/engine/i18n';
+import i18n, { ensureModuleLocaleMessages, getLocale, normalizeLocaleCode } from '@/engine/i18n';
 
 export type DeferredLocaleModule = 'security';
 
-const loaded = new Set<DeferredLocaleModule>();
-
-const loaderImporters: Record<DeferredLocaleModule, () => Promise<() => Promise<{ en: Record<string, unknown>; id: Record<string, unknown> }>>> = {
-    security: () => import('./loaders/security').then((m) => m.default),
-};
+const securityLocaleFiles = import.meta.glob<Record<string, unknown>>(
+    '/src/modules/Core/Security/locales/*.json',
+    { import: 'default' },
+);
+const loadedSecurityLocales = new Set<string>();
+const securityLocaleLoads = new Map<string, Promise<void>>();
 
 function mergeForLocale(locale: 'en' | 'id' | 'su', key: DeferredLocaleModule, messages: Record<string, unknown>): void {
     const composer = i18n.global;
@@ -25,37 +26,64 @@ function mergeForLocale(locale: 'en' | 'id' | 'su', key: DeferredLocaleModule, m
 }
 
 export async function ensureDeferredLocales(modules: DeferredLocaleModule[]): Promise<void> {
-    const pending = modules.filter((m) => !loaded.has(m));
-    if (pending.length === 0) {
+    if (!modules.includes('security')) {
         return;
     }
 
-    const localeRef = i18n.global.locale;
-    const currentLocale = (typeof localeRef === 'string' ? localeRef : (localeRef as { value: string }).value) as 'en' | 'id' | 'su';
+    const activeLocale = normalizeLocaleCode(getLocale());
+    const locales = activeLocale === 'id' ? ['id'] : [activeLocale, 'id'];
+    await Promise.all(locales.map(async (locale) => {
+        if (loadedSecurityLocales.has(locale)) return;
 
-    await Promise.all(
-        pending.map(async (key) => {
-            const loadBundle = await loaderImporters[key]();
-            const bundle = (await loadBundle()) as Record<string, Record<string, unknown>>;
-            if (currentLocale && bundle[currentLocale]) {
-                mergeForLocale(currentLocale, key, bundle[currentLocale]);
-            } else if (bundle.id) {
-                mergeForLocale('id', key, bundle.id);
-            }
-            loaded.add(key);
-        }),
-    );
+        const existing = securityLocaleLoads.get(locale);
+        if (existing) {
+            await existing;
+            return;
+        }
+
+        const path = `/src/modules/Core/Security/locales/${locale}.json`;
+        const loader = securityLocaleFiles[path];
+        if (!loader) {
+            throw new Error(`[i18n] Missing security locale catalog: ${path}`);
+        }
+
+        const pending = (async () => {
+            const messages = await loader();
+            mergeForLocale(locale as 'en' | 'id' | 'su', 'security', messages);
+            loadedSecurityLocales.add(locale);
+        })();
+        securityLocaleLoads.set(locale, pending);
+        try {
+            await pending;
+        } catch (error) {
+            securityLocaleLoads.delete(locale);
+            throw error;
+        }
+    }));
 }
 
 export async function preloadConsoleModuleLocales(): Promise<void> {
     void ensureDeferredLocales(['security']);
 }
 
-export async function preloadLocalesForRoute(path: string, _name?: string | symbol | null): Promise<void> {
+export async function preloadLocalesForRoute(
+    path: string,
+    _name?: string | symbol | null,
+    extension?: string,
+): Promise<void> {
     const routePath = path.toLowerCase();
     const modules: DeferredLocaleModule[] = [];
+    const moduleIds = new Set<string>();
 
-    if (routePath.includes('security')) {
+    if (extension) {
+        moduleIds.add(extension);
+    }
+
+    if (moduleIds.size > 0) {
+        await ensureModuleLocaleMessages([...moduleIds]);
+    }
+
+    if (routePath.includes('security') || routePath.includes('profile')) {
         modules.push('security');
     }
 

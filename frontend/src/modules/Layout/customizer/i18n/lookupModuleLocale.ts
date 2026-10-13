@@ -1,6 +1,22 @@
-import { moduleLocaleBundles } from '@/engine/i18n/moduleLocales';
+import i18n from '@/engine/i18n';
+import layungEn from '@/modules/Layout/views/themes/layung/locales/en.json';
+import layungId from '@/modules/Layout/views/themes/layung/locales/id.json';
+import layungSu from '@/modules/Layout/views/themes/layung/locales/su.json';
+import sarangengeEn from '@/modules/Layout/views/themes/sarangenge/locales/en.json';
+import sarangengeId from '@/modules/Layout/views/themes/sarangenge/locales/id.json';
+import sarangengeSu from '@/modules/Layout/views/themes/sarangenge/locales/su.json';
+import janariEn from '@/modules/Layout/views/themes/janari/locales/en.json';
+import janariId from '@/modules/Layout/views/themes/janari/locales/id.json';
+import janariSu from '@/modules/Layout/views/themes/janari/locales/su.json';
+import sareupnaEn from '@/modules/Layout/views/themes/sareupna/locales/en.json';
+import sareupnaId from '@/modules/Layout/views/themes/sareupna/locales/id.json';
+import sareupnaSu from '@/modules/Layout/views/themes/sareupna/locales/su.json';
 
-const bundledLocales = new Set(['id', 'en', 'su']);
+const themeLocales = {
+    en: { theme: { layung: layungEn, sarangenge: sarangengeEn, janari: janariEn, sareupna: sareupnaEn } },
+    id: { theme: { layung: layungId, sarangenge: sarangengeId, janari: janariId, sareupna: sareupnaId } },
+    su: { theme: { layung: layungSu, sarangenge: sarangengeSu, janari: janariSu, sareupna: sareupnaSu } },
+};
 
 function walkPath(root: unknown, key: string): unknown {
     if (!key || root == null) return undefined;
@@ -12,14 +28,18 @@ function walkPath(root: unknown, key: string): unknown {
     return cur;
 }
 
-/** Read a dotted key from the static module locale packs (not vue-i18n runtime). */
+/** Read theme labels statically and other module labels from the active i18n catalog. */
 export function lookupModuleLocale(locale: string, key: string): string | null {
     if (!key) return null;
-    const code = bundledLocales.has(locale) ? locale : 'id';
-    const packs = moduleLocaleBundles as Record<string, Record<string, unknown>>;
+    const code = locale in themeLocales ? (locale as keyof typeof themeLocales) : 'id';
+    const messages = i18n.global.getLocaleMessage(code) as Record<string, unknown>;
+    const packs = {
+        ...messages,
+        ...themeLocales[code],
+    };
     const order = code === 'id' ? ['id'] : [code, 'id'];
     for (const loc of order) {
-        const value = walkPath(packs[loc], key);
+        const value = walkPath(loc === code ? packs : i18n.global.getLocaleMessage(loc), key);
         if (typeof value === 'string' && value.length > 0) return value;
     }
     return null;

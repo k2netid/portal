@@ -1,5 +1,5 @@
-import '@/styles/shell/console-tailwind.css';
-import i18n from '@/engine/i18n';
+import '@/styles/shell/public-tailwind.css';
+import i18n, { ensureModuleLocaleMessages } from '@/engine/i18n';
 import { setAppShell } from '@/config/shell';
 import {
     createShellApp,
@@ -96,6 +96,12 @@ async function bootstrap(): Promise<void> {
     } catch (e) {
         logger.warning('[SPA] Could not bootstrap plugin theme blocks', e);
     }
+
+    const publicLocaleModules = ['layout'];
+    if (active.includes('member')) {
+        publicLocaleModules.push('member');
+    }
+    await ensureModuleLocaleMessages(publicLocaleModules);
 
     logger.info('[SPA] Mounting public theme runtime');
     app.mount('#app');

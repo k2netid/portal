@@ -4,6 +4,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- **Optimized Fallbacks & Decoupled Customizer Locales**: Switched fallback images in `BlockRenderer.vue` to WebP format while preserving legacy PNG assets for URL compatibility; decoupled `lookupModuleLocale` from eager module packs.
 - Module version → `1.1.7`
 - Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
 - `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.

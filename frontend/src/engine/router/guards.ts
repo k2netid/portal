@@ -27,7 +27,13 @@ export const handleBeforeEachGuard = async (
 ): Promise<RouteLocationRaw | boolean | void> => {
     // Ensure all dynamic locales for this route are fully loaded before rendering
     try {
-        await preloadLocalesForRoute(to.path, to.name);
+        await preloadLocalesForRoute(
+            to.path,
+            to.name,
+            typeof to.meta.extension === 'string'
+                ? to.meta.extension
+                : (typeof to.meta.memberExtension === 'string' ? to.meta.memberExtension : undefined),
+        );
     } catch (e) {
         logger.error('Failed to preload locales in router guard:', e);
     }

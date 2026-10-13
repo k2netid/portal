@@ -22,6 +22,6 @@ Do not add `modules/` or `features/` folders here; those were removed after the 
 2. **Cross-module sidebar / console chrome** → `src/locales/{en,id}/console.json`
 3. **Global actions, errors, pagination** → `src/locales/{en,id}/actions.json`, etc.
 
-Register new modules in `src/engine/i18n/moduleLocales.ts`.
+Register new modules in `src/engine/i18n.ts` (`moduleLocaleDefinitions`).
 
 **Public themes** (Janari, future extensions): co-located under `src/modules/Layout/views/themes/<slug>/locales/` → namespace `theme.<slug>.*`. See `views/themes/readme.md` and `src/engine/i18n/themeLocales.ts`.

@@ -1137,7 +1137,7 @@ const getSamplePosts = (count = 3): Array<{ title: string; excerpt: string; date
       date: '19 Agu 2026',
       author: 'Redaksi',
       category: 'Teknologi',
-      image: '/assets/themes/janari/news-placeholder.png',
+      image: '/assets/themes/janari/news-placeholder.webp',
       url: '/blog'
     },
     {
@@ -1146,7 +1146,7 @@ const getSamplePosts = (count = 3): Array<{ title: string; excerpt: string; date
       date: '18 Agu 2026',
       author: 'Admin',
       category: 'Insight',
-      image: '/assets/themes/janari/hero-placeholder.png',
+      image: '/assets/themes/janari/hero-placeholder.webp',
       url: '/blog'
     },
     {
@@ -1155,7 +1155,7 @@ const getSamplePosts = (count = 3): Array<{ title: string; excerpt: string; date
       date: '17 Agu 2026',
       author: 'Tim Desain',
       category: 'Design System',
-      image: '/assets/themes/janari/avatar-placeholder.png',
+      image: '/assets/themes/janari/avatar-placeholder.webp',
       url: '/blog'
     }
   ];
@@ -1170,42 +1170,42 @@ const getSampleDataModelRecords = (count = 6, modelSlug = ''): Array<{ title: st
       title: `${capitalized} Premium Solution 01`,
       description: 'Layanan dan solusi data model dinamis yang dirancang untuk mendukung operasional bisnis secara efisien.',
       badge: 'Featured',
-      image: '/assets/themes/janari/hero-placeholder.png',
+      image: '/assets/themes/janari/hero-placeholder.webp',
       url: '#'
     },
     {
       title: `${capitalized} Enterprise Service 02`,
       description: 'Implementasi terintegrasi dengan performa tinggi dan skalabilitas sistem yang solid.',
       badge: 'Popular',
-      image: '/assets/themes/janari/news-placeholder.png',
+      image: '/assets/themes/janari/news-placeholder.webp',
       url: '#'
     },
     {
       title: `${capitalized} Strategic Growth 03`,
       description: 'Pendekatan berbasis data untuk mengoptimalkan alur kerja dan konversi pengguna.',
       badge: 'New',
-      image: '/assets/themes/janari/avatar-placeholder.png',
+      image: '/assets/themes/janari/avatar-placeholder.webp',
       url: '#'
     },
     {
       title: `${capitalized} Advanced Core 04`,
       description: 'Fondasi arsitektur modern yang memastikan keandalan dan keamanan data tingkat tinggi.',
       badge: 'Core',
-      image: '/assets/themes/janari/hero-placeholder.png',
+      image: '/assets/themes/janari/hero-placeholder.webp',
       url: '#'
     },
     {
       title: `${capitalized} Cloud Integration 05`,
       description: 'Konektivitas menyeluruh dengan API dan ekosistem multi-platform yang fleksibel.',
       badge: 'Cloud',
-      image: '/assets/themes/janari/news-placeholder.png',
+      image: '/assets/themes/janari/news-placeholder.webp',
       url: '#'
     },
     {
       title: `${capitalized} Smart Architecture 06`,
       description: 'Kustomisasi tanpa batas untuk memenuhi kebutuhan spesifik industri dan organisasi Anda.',
       badge: 'Pro',
-      image: '/assets/themes/janari/avatar-placeholder.png',
+      image: '/assets/themes/janari/avatar-placeholder.webp',
       url: '#'
     }
   ];
@@ -1235,7 +1235,7 @@ const loadDataModelRecords = async (
       const title = String(data[fieldMapping?.titleField || 'title'] || data.name || data.subject || data.full_name || rec.title || 'Untitled');
       const description = String(data[fieldMapping?.descriptionField || 'description'] || data.content || data.body || data.excerpt || data.feedback || data.message || '');
       const badge = String(data[fieldMapping?.badgeField || 'badge'] || data.category || data.status || data.rating || data.role || '');
-      const image = String(data[fieldMapping?.imageField || 'image'] || data.avatar || data.thumbnail || data.photo || '/assets/themes/janari/hero-placeholder.png');
+      const image = String(data[fieldMapping?.imageField || 'image'] || data.avatar || data.thumbnail || data.photo || '/assets/themes/janari/hero-placeholder.webp');
       const url = String(data[fieldMapping?.linkField || 'link'] || data.url || '#');
       return { title, description, badge, image, url, raw: data };
     });

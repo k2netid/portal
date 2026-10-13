@@ -27,6 +27,7 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     globals: true,
+    testTimeout: 15000,
     setupFiles: ['./tests/setup/vitest.setup.ts'],
     exclude: ['node_modules', 'tests/e2e/**'],
     coverage: {
@@ -162,6 +163,7 @@ export default defineConfig({
   },
   build: {
     modulePreload: false,
+    manifest: true,
     cssMinify: 'esbuild',
     rollupOptions: {
       input: {
@@ -173,66 +175,6 @@ export default defineConfig({
         chunkFileNames: 'assets/[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
-        manualChunks: (id) => {
-          if (!id.includes('node_modules')) {
-            return;
-          }
-
-          // Individual heavy icons to avoid one massive icons chunk
-          if (id.includes('lucide-vue-next')) {
-            return 'vendor-icons';
-          }
-
-          // Core Vue & Router
-          if (
-            id.includes('node_modules/vue/') ||
-            id.includes('node_modules/vue-router/') ||
-            id.includes('node_modules/@vue/runtime')
-          ) {
-            return 'vendor-vue-core';
-          }
-
-          // Internationalization
-          if (id.includes('vue-i18n') || id.includes('@intlify')) {
-            return 'vendor-i18n';
-          }
-
-          // State management
-          if (id.includes('pinia')) {
-            return 'vendor-pinia';
-          }
-
-          // Split heavy rich-text stack
-          if (id.includes('@tiptap') || id.includes('prosemirror')) {
-            return 'vendor-tiptap';
-          }
-
-          if (id.includes('highlight.js') || id.includes('lowlight')) {
-            return 'vendor-syntax-highlighter';
-          }
-
-          // UI Frameworks
-          if (id.includes('radix-vue') || id.includes('reka-ui')) {
-            return 'vendor-ui-core';
-          }
-
-          // Form & Validation
-          if (id.includes('zod') || id.includes('vee-validate')) {
-            return 'vendor-forms';
-          }
-
-          // Utilities
-          if (id.includes('axios') || id.includes('dayjs') || id.includes('lodash')) {
-            return 'vendor-utils-base';
-          }
-
-          if (id.includes('gsap')) {
-            return 'vendor-animation';
-          }
-
-          // Fallback vendor chunk
-          return 'vendor-misc';
-        },
       },
     },
     chunkSizeWarningLimit: 1800,
@@ -256,6 +198,7 @@ export default defineConfig({
     host: process.env.VITE_DEV_HOST || '0.0.0.0',
     port: devServerPort,
     strictPort: process.env.VITE_DEV_PORT != null && process.env.VITE_DEV_PORT !== '',
+    allowedHosts: true,
     proxy: {
       '/api': {
         target: devApiProxyTarget,
