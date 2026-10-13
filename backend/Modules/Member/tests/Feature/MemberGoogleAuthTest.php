@@ -25,7 +25,7 @@ class MemberGoogleAuthTest extends TestCase
         $this->softenPasswordPolicyForTests();
         $this->activatePack('member');
 
-        Setting::set('enable_member_google_login', true, 'boolean', 'security');
+        Setting::set('enable_member_google_login', true, 'boolean', 'integrations');
         Setting::set('enable_member_registration', true, 'boolean', 'security');
 
         config([

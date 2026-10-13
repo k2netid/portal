@@ -299,7 +299,7 @@ const saveMemberGoogle = async (): Promise<void> => {
                 key: 'enable_member_google_login',
                 value: googleForm.enabled,
                 type: 'boolean',
-                group: 'security',
+                group: 'integrations',
             },
             {
                 key: 'member_google_client_id',

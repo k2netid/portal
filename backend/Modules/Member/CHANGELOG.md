@@ -4,6 +4,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+- Member Google enable toggle is only on Identity & Integrations (removed duplicate from Security settings).
+
 ### Added
 - **Sign in with Google (member portal)**: Socialite OAuth (`MEMBER_GOOGLE_*` or Integrations UI settings), `google_id` on `mem_members`, public routes `auth/google/{redirect,callback,2fa}`, FE Login/Register + `/member/oauth/callback`. Toggle `enable_member_google_login` + Client ID/Secret on Identity & Integrations. Console Google/GitHub stubs removed — operators stay on password/passkey/2FA.
 - Reader register/login, bookmarks, signed email verification.
