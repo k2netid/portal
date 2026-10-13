@@ -92,6 +92,36 @@
           >
             {{ pending ? t('member.register.pending', 'Creating…') : t('member.register.submit', 'Register') }}
           </Button>
+
+          <template v-if="googleLoginEnabled">
+            <div class="relative my-1">
+              <div class="absolute inset-0 flex items-center">
+                <span class="w-full border-t border-border/40" />
+              </div>
+              <div class="relative flex justify-center text-[10px] uppercase tracking-wider">
+                <span class="bg-card px-2 text-muted-foreground font-bold">
+                  {{ t('member.login.or', 'Or') }}
+                </span>
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              class="w-full gap-2"
+              :disabled="pending"
+              @click="startGoogleLogin"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="h-4 w-4 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.9 3.28-2.12 4.41-1.37 1.34-3.26 2.4-6.4 2.4-5.34 0-9.6-4.32-9.6-9.6s4.26-9.6 9.6-9.6c3.15 0 5.48 1.25 7.18 2.87l2.29-2.29C18.9 1.5 15.86 0 12.48 0 5.58 0 0 5.58 0 12.48s5.58 12.48 12.48 12.48c3.7 0 6.64-1.21 8.87-3.56 2.3-2.3 3-5.5 3-8.1 0-.6-.05-1.12-.15-1.57z" />
+              </svg>
+              {{ t('member.login.google', 'Sign in with Google') }}
+            </Button>
+          </template>
         </form>
 
         <p class="text-center text-sm text-muted-foreground">
@@ -134,6 +164,7 @@ const passwordConfirmation = ref('');
 const pending = ref(false);
 const checking = ref(true);
 const error = ref('');
+const googleLoginEnabled = ref(false);
 
 const captchaRef = ref<{ refresh: () => void } | null>(null);
 const captchaVerified = ref(false);
@@ -163,9 +194,15 @@ const isMemberRegistrationEnabled = (): boolean => {
     return value !== false;
 };
 
+const startGoogleLogin = (): void => {
+    const params = new URLSearchParams({ redirect: '/member' });
+    window.location.href = `/api/v1/public/member/auth/google/redirect?${params.toString()}`;
+};
+
 onMounted(async () => {
     try {
         await systemStore.fetchPublicSettings({ force: true });
+        googleLoginEnabled.value = systemStore.siteSettings.enable_member_google_login === true;
         if (!isMemberRegistrationEnabled()) {
             await router.replace({
                 path: '/member/login',

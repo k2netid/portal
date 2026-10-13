@@ -127,6 +127,37 @@
         >
           {{ pending ? t('member.login.pending', 'Signing in…') : t('member.login.submit', 'Sign in') }}
         </Button>
+
+        <template v-if="googleLoginEnabled">
+          <div class="relative my-1">
+            <div class="absolute inset-0 flex items-center">
+              <span class="w-full border-t border-border/40" />
+            </div>
+            <div class="relative flex justify-center text-[10px] uppercase tracking-wider">
+              <span class="bg-card px-2 text-muted-foreground font-bold">
+                {{ t('member.login.or', 'Or') }}
+              </span>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            class="w-full gap-2"
+            :disabled="pending || rateLimited"
+            @click="startGoogleLogin"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              class="h-4 w-4 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.9 3.28-2.12 4.41-1.37 1.34-3.26 2.4-6.4 2.4-5.34 0-9.6-4.32-9.6-9.6s4.26-9.6 9.6-9.6c3.15 0 5.48 1.25 7.18 2.87l2.29-2.29C18.9 1.5 15.86 0 12.48 0 5.58 0 0 5.58 0 12.48s5.58 12.48 12.48 12.48c3.7 0 6.64-1.21 8.87-3.56 2.3-2.3 3-5.5 3-8.1 0-.6-.05-1.12-.15-1.57z" />
+            </svg>
+            {{ t('member.login.google', 'Sign in with Google') }}
+          </Button>
+        </template>
+
         <p class="text-center text-sm">
           <router-link
             to="/member/forgot-password"
@@ -180,6 +211,8 @@ const registrationDisabledMessage = ref('');
 
 const requiresTwoFactor = ref(false);
 const twoFactorCode = ref('');
+const googlePending = ref('');
+const googleLoginEnabled = ref(false);
 
 const captchaRef = ref<{ refresh: () => void } | null>(null);
 const captchaVerified = ref(false);
@@ -254,17 +287,43 @@ const completeLogin = async (): Promise<void> => {
 const cancelTwoFactor = (): void => {
     requiresTwoFactor.value = false;
     twoFactorCode.value = '';
+    googlePending.value = '';
     error.value = '';
     password.value = '';
     refreshCaptcha();
+};
+
+const startGoogleLogin = (): void => {
+    const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+        ? route.query.redirect
+        : '/member';
+    const params = new URLSearchParams({ redirect });
+    window.location.href = `/api/v1/public/member/auth/google/redirect?${params.toString()}`;
+};
+
+const oauthErrorMessage = (code: string): string => {
+    switch (code) {
+        case 'registration_disabled':
+            return t('member.oauth.registrationDisabled', 'Reader registration is disabled. Ask an operator to create your account, or sign in with email if you already have one.');
+        case 'inactive':
+            return t('member.oauth.inactive', 'This member account is not active.');
+        case 'unavailable':
+            return t('member.oauth.unavailable', 'Google sign-in is not available right now.');
+        case 'invalid_state':
+            return t('member.oauth.invalidState', 'Google sign-in expired. Please try again.');
+        default:
+            return t('member.oauth.failed', 'Google sign-in failed. Please try again.');
+    }
 };
 
 onMounted(async () => {
     try {
         await systemStore.fetchPublicSettings();
         registrationEnabled.value = systemStore.siteSettings.enable_member_registration !== false;
+        googleLoginEnabled.value = systemStore.siteSettings.enable_member_google_login === true;
     } catch {
         registrationEnabled.value = true;
+        googleLoginEnabled.value = false;
     }
 
     if (route.query.info === 'registration_disabled') {
@@ -273,6 +332,15 @@ onMounted(async () => {
             'member.register.disabled',
             'Reader registration is currently disabled.',
         );
+    }
+
+    if (typeof route.query.oauth_error === 'string' && route.query.oauth_error) {
+        error.value = oauthErrorMessage(route.query.oauth_error);
+    }
+
+    if (route.query.google_2fa === '1' && typeof route.query.pending === 'string' && route.query.pending) {
+        googlePending.value = route.query.pending;
+        requiresTwoFactor.value = true;
     }
 });
 
@@ -338,6 +406,12 @@ const submitTwoFactor = async (): Promise<void> => {
     error.value = '';
 
     try {
+        if (googlePending.value) {
+            await memberStore.completeGoogleTwoFactor(googlePending.value, twoFactorCode.value);
+            await completeLogin();
+            return;
+        }
+
         // Step 2: same email/password + code; no captcha
         const result = await memberStore.login(email.value, password.value, {
             two_factor_code: twoFactorCode.value,

@@ -16,8 +16,10 @@ Policy: [`docs/guides/update-changelog.md`](../../../docs/guides/update-changelo
 ### Added
 - Domain changelogs split: System / Infra / Security (see table above).
 - See domain files for feature entries (identity, extensions, Data Studio, RBAC hardening, …).
+- See System: `enable_member_google_login` public setting; console Google/GitHub stubs removed.
 
 ### Changed
+- Version 1.0.6: member Google OAuth toggle + console auth stub cleanup (System).
 - Version 1.0.3: `Setting::setIfMissing()` non-destructive helper to preserve downstream client identity settings during updates.
 - This file is now an **index**; do not duplicate long bullets here — link domains instead.
 - ADR-023: First-party theme packs as registry packs, tier license quota enforcement, and downgrade remediator.

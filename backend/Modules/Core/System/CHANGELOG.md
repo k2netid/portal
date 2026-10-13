@@ -9,7 +9,11 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 ## [Unreleased]
 
 ### Added
+- Public setting `enable_member_google_login` (Security tab + `PublicSettingsController`) for member-portal Google OAuth; Foundation seeder default on.
 - **Non-Destructive Setting Helper (`Setting::setIfMissing`)**: Preserves existing settings in database during theme seeding / updates to prevent downstream data drift.
+
+### Removed
+- Dead Google/GitHub OAuth buttons on console Login/Register (operators use password/passkey/2FA only).
 - **User Creation Verification Privilege Control**: Optional `is_verified` on `UserController::store` ([ADR-019](../../../../docs/adr/ADR-019-user-email-verification-and-privilege-lifecycle.md)).
 - **3-Tier Identity & Smart Brand Sync**: `SettingController` 3-tier identity + `brand_sync_site_identity` ([ADR-014](../../../../docs/adr/ADR-014-three-tier-identity-whitelabel-brand-and-smart-sync.md)).
 - **Extension Gating & Manifests**: Registry manifests for first-party extensions incl. builder/studio license tiers ([ADR-011](../../../../docs/adr/ADR-011-visual-builder-modular-extension-and-license-gating.md), [ADR-012](../../../../docs/adr/ADR-012-data-model-studio-modular-extension-and-license-gating.md)).
@@ -22,6 +26,7 @@ Index: [`../CHANGELOG.md`](../CHANGELOG.md)
 - Docs: `external-module-packaging.md` + `scripts/scaffold-optional-module.sh`.
 
 ### Fixed
+- Code style and lint formatting refinement for IpHelper and ExtensionController.
 - **User Creation Verification Default**: New users `is_verified = false` / `email_verified_at = null` ([ADR-019](../../../../docs/adr/ADR-019-user-email-verification-and-privilege-lifecycle.md)).
 - **Strict Console Favicon Resolution (`SpaHtmlFavicon.php`)**: Console/landing never fall back to `site_favicon` ([ADR-015](../../../../docs/adr/ADR-015-favicon-isolation-prepaint-guards-and-zero-race-lifecycle.md)).
 - **Site Identity Layout Guard**: `syncSiteIdentityToActiveTheme()` gated on Layout pack ([ADR-016](../../../../docs/adr/ADR-016-module-aware-site-identity-and-dependency-orchestration.md)).

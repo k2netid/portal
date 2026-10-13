@@ -60,6 +60,12 @@ export const publicRoutes: RouteRecordRaw[] = [
                 meta: { public: true, memberGuest: true },
             },
             {
+                path: 'member/oauth/callback',
+                name: 'public-member-oauth-callback',
+                component: () => import('@/modules/Member/views/OAuthCallback.vue'),
+                meta: { public: true },
+            },
+            {
                 path: 'member/register',
                 name: 'public-member-register',
                 component: () => import('@/modules/Member/views/Register.vue'),
