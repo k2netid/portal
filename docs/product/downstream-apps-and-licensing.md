@@ -41,4 +41,4 @@ CMS domains diekstrak dari `ja-cms` sebagai pack (`publishing`, `media`, `forms`
 | **Enterprise / White-label** | Multi-site, branding console; **semua** first-party themes |
 
 Detail tier = kontrak bisnis di JA-CP; matrix fitur di `LicenseService::getFeaturesMatrix()`.  
-Theme packs sebagai Module Registry + kuota: **[ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** (fase 1 implementasi: [`docs/work/2026-09-18-theme-registry-packs-phase1.md`](../work/2026-09-18-theme-registry-packs-phase1.md)).
+Theme packs sebagai Module Registry + kuota: **[ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md)** (fase 1 implementasi: [`docs/work/archive/2026-09-18-theme-registry-packs-phase1.md`](../work/archive/2026-09-18-theme-registry-packs-phase1.md)).

@@ -25,7 +25,7 @@ Mengimplementasikan **ADR-023 fase 1**: first-party themes sebagai pack registry
 - Profil `core` skip theme baseline; `cms`/`cms_site` scan + default janari; apex butuh Site.
 - ZIP upload Pro+ tanpa kuota premium; seeder demo bisa force-activate.
 
-Detail: [ADR-023](../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md).
+Detail: [ADR-023](../../adr/ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md).
 
 ## 3. Diskusi / keputusan
 

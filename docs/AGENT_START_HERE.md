@@ -1,5 +1,9 @@
 # Agent Start Here — Jejakawan Core Engine
 
+> **Downstream notice (`k2net-portal`):** Anda sedang di clone portal K2NET (`k2netid/portal`), bukan di repo kernel.  
+> Identitas produk & ops: [`../AGENTS.md`](../AGENTS.md) · Handoff: [`../../docs/ja-dev/k2net/agent-handoff.md`](../../docs/ja-dev/k2net/agent-handoff.md).  
+> Bagian di bawah menjelaskan **cerita kernel upstream** yang di-fork; guides/reference/architecture yang bertanda `.upstream-sot.md` tetap SoT di `ja-core_engine`.
+
 ## Cerita produk
 
 **`ja-core_engine`** adalah fork/evolusi dari **`ja-cms`**. Tujuan fork:

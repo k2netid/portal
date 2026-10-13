@@ -1,11 +1,14 @@
-# Dokumentasi Resmi Jejakawan Core Engine (`ja-core_engine`)
+# Dokumentasi — K2NET Portal (`k2net-portal`)
 
-Pusat navigasi arsitektur, standar pemrograman, dan panduan teknis.
+Pusat navigasi untuk clone downstream **K2NET** (fork dari kernel `ja-core_engine`).
+
+> **Produk:** K2NET Portal (`k2net.id`) — tema default **`layung`**, seeder `K2netDeploymentSeeder`.  
+> **Agen / ops:** [`../AGENTS.md`](../AGENTS.md) · [`../../docs/ja-dev/k2net/agent-handoff.md`](../../docs/ja-dev/k2net/agent-handoff.md) · [`../../docs/ja-srv/k2net/runbook.md`](../../docs/ja-srv/k2net/runbook.md).
 
 > **Kebijakan SoT / SoC / Diátaxis:** [`DOCUMENTATION.md`](DOCUMENTATION.md) — baca sebelum menambah dokumen.  
-> **Catatan fork:** Repo ini master kernel untuk aplikasi downstream. Mulai dari [AGENT_START_HERE.md](AGENT_START_HERE.md).
+> **Cerita kernel (upstream framing):** [AGENT_START_HERE.md](AGENT_START_HERE.md).
 
-> **Guides / Reference:** salinan mirror dari upstream — [guides/](guides/README.md) · [reference/](reference/README.md). SoT: `ja-core_engine`. Sync: `npm run docs:sync-downstream` di core.
+> **Guides / Reference / Architecture:** mirror dari upstream — [guides/](guides/README.md) · [reference/](reference/README.md). SoT: `ja-core_engine` (lihat `.upstream-sot.md`). Sync dari core: `npm run docs:sync-downstream`. Jangan rewrite massal di clone ini.
 
 ---
 
@@ -23,6 +26,8 @@ Pusat navigasi arsitektur, standar pemrograman, dan panduan teknis.
 | [**Branching**](branching.md) | `main` + `integrate/*` + `feat`/`fix` |
 | [**Architectural status**](architectural-status.md) | Kernel + CMS packs / `/site` on `main` |
 | [**Downstream apps & licensing**](product/downstream-apps-and-licensing.md) | Hub JA-CP, OAuth IdP, pola extend kernel |
+| [**K2NET identity & theme defaults**](product/k2net-identity-and-theme-defaults.md) | Seeder-only brand; jangan rewrite `theme.json` engine |
+| [**Theme locations & sync**](themes/locations-and-sync.md) | FE SoT ↔ theme-packs ↔ `resources/themes` |
 | [**Bootstrap downstream app**](product/bootstrap-downstream-app.md) | Scaffold modul produk dari kernel |
 
 ---

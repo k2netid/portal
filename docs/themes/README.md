@@ -1,10 +1,23 @@
 # Themes — Indeks Dokumentasi
 
-Dokumentasi **lintas-repo** untuk paket tema publik di Core Engine.
+Dokumentasi paket tema publik (mirror kernel + catatan downstream K2NET).
 
 > **SoT UI/paket tema** tetap di kode:  
 > `frontend/src/modules/Layout/views/themes/<slug>/readme.md`  
 > Folder ini hanya **indeks + ADR theme-scoped**. Jangan menduplikasi README tema.
+
+> **K2NET Portal:** tema **default produk** = **`layung`** (`K2netDeploymentSeeder`).  
+> **`janari`** = baseline pack engine / CMS reference (ADR-023), selalu ada, tetapi bukan brand default K2NET.
+
+**Lokasi & sync (FE SoT → theme-packs → `resources/themes`):** [`locations-and-sync.md`](locations-and-sync.md)  
+**Identitas brand vs default `theme.json`:** [`../product/k2net-identity-and-theme-defaults.md`](../product/k2net-identity-and-theme-defaults.md)
+
+### Penamaan halaman publik (English canonical)
+
+| Canonical file / path | Alias path (backcompat) | Catatan |
+| :--- | :--- | :--- |
+| `Services.vue` → `/services` | `/solusi` → redirect/hash ISP·MSP | Jangan buat lagi `Solusi.vue` ([ADR-028](../adr/ADR-028-theme-customizer-defaults-services-hub-and-prepaint-sri-resilience.md)) |
+| `Team.vue` → `/team` | `/tim` | Keys customizer lama `page_tim_*` boleh tetap |
 
 ## Paket tema
 
@@ -26,7 +39,7 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md).
 ## CMS baseline (alignment lintas tema)
 
 Kontrak fitur yang **harus sama** vs yang **tetap khas** per tema:  
-[`docs/work/2026-09-18-theme-cms-baseline-alignment.md`](../work/2026-09-18-theme-cms-baseline-alignment.md)
+[`docs/work/archive/2026-09-18-theme-cms-baseline-alignment.md`](../work/archive/2026-09-18-theme-cms-baseline-alignment.md)
 
 ### Checklist kontrak (P0)
 

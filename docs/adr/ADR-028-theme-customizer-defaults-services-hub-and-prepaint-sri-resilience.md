@@ -1,9 +1,11 @@
-# ADR-023: Theme Customizer Global Defaults, Unified Services Hub, and SRI Prepaint Resilience
+# ADR-028: Theme Customizer Global Defaults, Unified Services Hub, and SRI Prepaint Resilience
 
 **Status:** Accepted  
 **Tanggal:** 2026-09-17  
 **Author:** Jejakawan Engineering  
-**Scope:** `frontend/`, `backend/Modules/Layout/`, `backend/Modules/Library/`, `backend/Modules/Core/`, `themes/layung`
+**Scope:** `frontend/`, `backend/Modules/Layout/`, `backend/Modules/Library/`, `backend/Modules/Core/`, `themes/layung` (downstream K2NET)  
+**Renumber note:** File ini sempat bentrok nomor dengan [ADR-023](./ADR-023-first-party-themes-as-registry-packs-and-license-quotas.md) (theme registry packs). Di-assign **ADR-028** pada 2026-10-13 agar indeks unik; isi keputusan tidak berubah.  
+**Related:** ADR-023 (theme packs), ADR-025 (default mode/locale upstream parity)
 
 ---
 

@@ -1,128 +1,104 @@
-# Jejakawan Core Engine (`ja-core_engine`)
+# K2NET Portal (`k2net-portal`)
 
 <p align="center">
-  <strong>High-Performance Headless Kernel, Data Model Engine & Admin Console Platform</strong>
+  <strong>Portal resmi PT Kirana Karina Network — ISP & Managed Services (`k2net.id`)</strong>
 </p>
 
 <p align="center">
-  <a href="#-ringkasan-sistem">Ringkasan</a> •
-  <a href="#-fitur-utama">Fitur Utama</a> •
-  <a href="#-arsitektur-sistem">Arsitektur</a> •
-  <a href="#-prasyarat-sistem">Prasyarat</a> •
-  <a href="#-instalasi--menjalankan">Instalasi</a> •
-  <a href="#-quality-gates--pengujian">Pengujian</a>
+  <a href="#ringkasan">Ringkasan</a> •
+  <a href="#arsitektur">Arsitektur</a> •
+  <a href="#menjalankan-dev">Menjalankan</a> •
+  <a href="#quality-gates">Pengujian</a> •
+  <a href="#sinkronisasi-upstream">Upstream</a>
 </p>
+
+> **Clone ini adalah downstream K2NET**, bukan repo kernel. Upstream kernel: [`ja-core_engine`](https://github.com/jejak-awan/ja-core_engine).  
+> Identitas runtime: `K2netDeploymentSeeder` + tema publik default **`layung`**.  
+> Panduan agen: [`AGENTS.md`](AGENTS.md) · Ops SoT: [`../docs/ja-dev/k2net/agent-handoff.md`](../docs/ja-dev/k2net/agent-handoff.md).
 
 ---
 
-## 📌 Ringkasan Sistem
+## Ringkasan
 
 | Komponen | Spesifikasi |
 | :--- | :--- |
-| **Produk** | **Jejakawan Core Engine** |
-| **Repositori** | `ja-core_engine` |
-| **Arsitektur** | Modular Monolith Kernel + Single Unified Console SPA |
+| **Produk** | **K2NET Portal** (`k2net.id`) |
+| **Repositori** | `k2netid/portal` (folder lokal: `k2net-portal`) |
+| **Upstream** | `jejak-awan/ja-core_engine` (merge via `upstream`) |
+| **Arsitektur** | Modular monolith (Laravel) + Vue SPA (console + public site) |
 | **Versi** | `1.0.0-beta.2` |
-| **Database Engine** | PostgreSQL 16+ / 18.x (Schema terisolasi `core_engine`) |
-| **Runtime Backend** | PHP 8.2+ (Laravel 13 Modular Kernel; tested on 8.3) |
-| **Runtime Frontend** | Node.js 20+ / 22+ (Vue 3.5, Vite 8, Tailwind CSS v4, TypeScript) |
-| **Cache & Queue** | Redis (Dedicated session & cache DB) |
-| **Lisensi** | MIT / Proprietary |
+| **Tema default** | `layung` |
+| **Database** | PostgreSQL (`k2net_portal_staging` di staging ja-dev) |
+| **Runtime** | PHP 8.2+ / 8.5 · Laravel 13 · Node.js 22+ · Vue 3.5 · Vite 8 |
 
-> **Asal fork:** Repo ini diekstrak dari `ja-cms` menjadi **master kernel** untuk aplikasi downstream (CMS, portal, SaaS). Hub lisensi tetap **JA-CP** (`ja-control-plane`). Detail: [docs/AGENT_START_HERE.md](docs/AGENT_START_HERE.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [docs/WORKFLOW.md](docs/WORKFLOW.md).
+Bagian `docs/guides/`, `docs/reference/`, dan `docs/architecture/` adalah **mirror kebijakan kernel** (lihat `.upstream-sot.md` di folder tersebut). Jangan rewrite massal — perbarui di upstream lalu sync. Dokumen khusus K2NET: `AGENTS.md`, seeder deployment, tema layung, modul `Billing`.
 
 ---
 
-## 🌟 Fitur Utama
-
-### 1. 🏗️ Domain Modul Core Kernel
-- **System Platform:**
-  - Manajemen Akun, Profil, dan Autentikasi Modern (Email / Username, 2FA Google Authenticator, WebAuthn Passkeys).
-  - RBAC (Role-Based Access Control) granular + ABAC Policy Interceptor.
-  - Multi-language support (Bahasa Indonesia, English, Basa Sunda) dengan dynamic runtime switcher.
-  - Extension & Plugin Marketplace Engine dengan AST Security Scanner.
-- **Data Studio & Infrastructure (`Infra`):**
-  - **Data Model Studio:** Pembuatan entity schema kustom, field types, validasi, dan dynamic relations.
-  - **Dynamic Entity Records:** Instant CRUD API & UI untuk semua data model yang didefinisikan secara runtime.
-  - **Automated Crons & Task Scheduler:** Pemantauan scheduled tasks real-time dan log eksekusi.
-  - **Backup Manager:** Backup database terisolasi dan recovery snapshot.
-  - **Redis Cache Explorer:** Key search, TTL management, dan real-time memory monitor.
-  - **Webhook Engine:** Multi-event dispatching dengan automatic exponential backoff retry.
-- **Security & Observability:**
-  - **Activity Journals:** Full audit trail untuk mutasi entitas, event lifecycle, dan administrative actions.
-  - **System Journals:** Error & exception logging real-time dengan log streaming.
-  - **Security Logs:** Deteksi brute-force, IP rate-limiting, IP blocking progressive, dan probe sinkhole.
-  - **KYC & Identity Verification:** Document review flow terstruktur untuk compliance.
-
-### 2. ⚡ Console SPA + kernel landing
-- **Console shell:** `index.html` — operator UI after auth (`/dash` or custom slug).
-- **Kernel landing:** When Site pack is off, apex `/` shows a public status page **without** login/dashboard links (anti-recon). Console paths stay out of the landing HTML.
-- **Operator login (docs only on public face):** `/auth/console-sign-in` — see also [docs/extensions/install-profiles.md](docs/extensions/install-profiles.md) and [docs/architectural-status.md](docs/architectural-status.md).
-- **Seed credentials (local):** username `super` / email `super@jejakawan.com`, password `password`.
-- **Guest `/dash`:** intentional SPA 404 sinkhole (do not link from public landing).
-
----
-
-## 🛠️ Struktur Direktori
+## Arsitektur
 
 ```
-ja-core_engine/
-├── backend/                    # Laravel Modular Kernel
-│   ├── app/
-│   │   ├── Http/Controllers/   # SpaController, Install API
-│   │   └── Models/
-│   ├── Modules/
-│   │   └── Core/               # System, Security, Infra
-│   ├── database/               # Core Migrations & Seeders
-│   └── routes/                 # Kernel Web & API Route Registrars
-├── frontend/                   # Vue 3.5 + Vite 8 Console SPA
-│   ├── src/
-│   │   ├── main.ts             # Single SPA Entry Point
-│   │   ├── engine/             # Router, State Store, API Clients, I18n
-│   │   ├── modules/
-│   │   │   └── Core/           # System, Infra, Security Views & Stores
-│   │   └── shared/             # UI Components, Composables, Utils
-│   └── tests/                  # Vitest Component & Unit Tests
-└── docs/                       # DOCUMENTATION + WORKFLOW + guides/reference/work/adr/…
+k2net-portal/
+├── backend/                 # Laravel modular kernel + packs
+│   ├── Modules/             # Core, Layout, Member, Billing, Site, …
+│   ├── database/seeders/    # K2netDeploymentSeeder
+│   └── public/              # SPA entry + synced assets
+├── frontend/                # Vue 3 console + public theme SPA
+│   └── src/modules/Layout/views/themes/layung/
+├── docs/                    # Workflow + mirrors upstream + ADR lokal
+└── scripts/                 # deploy/sync/quality
 ```
 
 ---
 
-## 🚀 Panduan Menjalankan Dev Server
+## Menjalankan Dev
 
-### 1. Backend (Laravel)
+### Backend
 ```bash
 cd backend
 composer install
 php artisan migrate --force
 php artisan db:seed --force
+php artisan db:seed --class=K2netDeploymentSeeder
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-### 2. Frontend (Vite)
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-## 🧪 Quality Gates & Pengujian
+Staging ja-dev (origin `:8083`): lihat [`AGENTS.md`](AGENTS.md) dan handoff ops.
+
+---
+
+## Quality Gates
 
 ```bash
-# Pengujian Backend (Pest / PHPUnit)
-cd backend && php artisan test
+npm run agent:verify
+```
 
-# Pemeriksaan TypeScript Frontend
-cd frontend && npx vue-tsc -b
+Detail: [`docs/guides/run-quality-gates.md`](docs/guides/run-quality-gates.md) · Testing: [`docs/reference/testing.md`](docs/reference/testing.md).
 
-# Pengujian Unit Frontend (Vitest)
-cd frontend && npm run test:unit
-
-# Production Build Test
-cd frontend && npm run build
-
-# E2E smoke — Playwright browsers are not supported on this PVE host.
-# Use the official image (same pin as CI: mcr.microsoft.com/playwright:v1.59.1-noble).
-# Requires Docker Engine + Vite :5273 + Laravel :8000.
+E2E smoke (Docker Playwright — host PVE tidak support browser lokal):
+```bash
 npm run test:e2e:smoke:docker
 ```
+
+---
+
+## Sinkronisasi Upstream
+
+```bash
+# origin   -> git@github.com-k2net:k2netid/portal.git
+# upstream -> git@github.com:jejak-awan/ja-core_engine.git
+
+git fetch upstream main
+git merge upstream/main
+```
+
+Setelah merge: pastikan banner identitas K2NET / `AGENTS.md` / seeder tidak hilang. Bug inti → dual-commit ke `ja-core_engine`. Fitur khusus K2NET (Billing, copy layung, seeder) tetap di repo ini saja.
+
+Lihat [`docs/branching.md`](docs/branching.md).

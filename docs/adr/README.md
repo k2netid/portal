@@ -1,7 +1,9 @@
 # Architecture Decision Records (ADRs)
 
-Keputusan arsitektur resmi untuk **Jejakawan Core Engine**.  
-Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, jangan renumber.
+Keputusan arsitektur untuk clone **K2NET Portal** (plus mirror ADR kernel).  
+Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**. Pengecualian 2026-10-13: file services-hub yang bentrok dengan ADR-023 packs di-assign ulang ke **ADR-028** (lihat note di file tersebut).
+
+> **Produk K2NET:** tema default publik = **`layung`** (`K2netDeploymentSeeder`). **`janari`** tetap baseline pack engine (ADR-023), bukan default brand K2NET.
 
 ## Core (`docs/adr/`)
 
@@ -30,6 +32,7 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, ja
 | **[ADR-025](./ADR-025-theme-customizer-default-mode-and-locale.md)** | Theme Customizer Default Mode, Site Locale, and Runtime Prepaint Resilience | Accepted | layout |
 | **[ADR-026](./ADR-026-three-tier-license-simplification-and-capability-matrix.md)** | Standarisasi Lisensi 3-Tier (Community, Pro, Enterprise) dan Penegakan Matriks Kapabilitas | Accepted | core |
 | **[ADR-027](./ADR-027-theme-customizer-properties-order-and-contact-map-parity.md)** | Theme Customizer Properties Ordering Hierarchy and Contact Map Parity | Accepted | layout |
+| **[ADR-028](./ADR-028-theme-customizer-defaults-services-hub-and-prepaint-sri-resilience.md)** | Theme Customizer Defaults, Unified Services Hub (`/services`), Team page, SRI prepaint | Accepted | downstream:k2net / layout |
 
 ## Theme-scoped / downstream (stub di folder ini)
 
@@ -38,6 +41,6 @@ Kebijakan: [`DOCUMENTATION.md`](../DOCUMENTATION.md) — nomor ADR **abadi**, ja
 | **[ADR-001](./ADR-001-about-page-layung-refactor.md)** → | [`themes/layung/ADR-001-...`](../themes/layung/ADR-001-about-page-layung-refactor.md) | theme:layung |
 | **[ADR-007](./ADR-007-hero-section-telemetry-animations-slider-and-customizer-isolation.md)** → | [`themes/layung/ADR-007-...`](../themes/layung/ADR-007-hero-section-telemetry-animations-slider-and-customizer-isolation.md) | theme:layung |
 | **[ADR-008](./ADR-008-navigation-hierarchy-alignment-homepage-anchors-and-footer-refinement.md)** → | [`themes/layung/ADR-008-...`](../themes/layung/ADR-008-navigation-hierarchy-alignment-homepage-anchors-and-footer-refinement.md) | theme:layung |
-| **[ADR-009](./ADR-009-interactive-bandwidth-simulator-and-k2net-package-mapping.md)** → | `k2net-portal/docs/adr/ADR-009-...` | downstream:k2net-portal |
+| **[ADR-009](./ADR-009-interactive-bandwidth-simulator-and-k2net-package-mapping.md)** | Interactive bandwidth simulator & K2NET package mapping | downstream:k2net-portal |
 
 Indeks tema: [`docs/themes/README.md`](../themes/README.md).

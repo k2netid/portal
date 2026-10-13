@@ -1,13 +1,14 @@
-# Contributing — Jejakawan Core Engine
+# Contributing — K2NET Portal (`k2net-portal`)
 
-Kontribusi ke **`ja-core_engine`** (kernel upstream). Downstream portal (K2NET, SMKN6, ja-cms) punya repo sendiri.
+Kontribusi ke **downstream K2NET** (`k2netid/portal`). Kernel upstream: **`ja-core_engine`** — bug inti wajib dual-commit ke sana.
 
 ## Mulai di sini
 
-1. [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — **Audit → Diskusi → Rencana → Implement → Verify → Catat**
-2. [`docs/DOCUMENTATION.md`](docs/DOCUMENTATION.md) — SoT / SoC / Diátaxis
-3. [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md) · [`AGENTS.md`](AGENTS.md)
-4. Task M+: brief dari [`docs/templates/task-brief.md`](docs/templates/task-brief.md) → [`docs/work/`](docs/work/README.md)
+1. [`AGENTS.md`](AGENTS.md) — identitas & batasan scope K2NET
+2. [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — **Audit → Diskusi → Rencana → Implement → Verify → Catat**
+3. [`docs/DOCUMENTATION.md`](docs/DOCUMENTATION.md) — SoT / SoC / Diátaxis
+4. [`docs/AGENT_START_HERE.md`](docs/AGENT_START_HERE.md) — konteks kernel (baca banner downstream)
+5. Task M+: brief dari [`docs/templates/task-brief.md`](docs/templates/task-brief.md) → [`docs/work/`](docs/work/README.md)
 
 ## Definition of Done (ringkas)
 

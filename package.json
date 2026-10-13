@@ -1,5 +1,5 @@
 {
-    "name": "jejakawan",
+    "name": "k2net-portal",
     "version": "1.0.0-beta.2",
     "private": true,
     "engines": {
@@ -35,9 +35,10 @@
     },
     "x-agent-guidelines": {
         "purpose": "Standard instructions for AI/coding agents when creating or updating this project.",
-        "scope": "Jejakawan Core Engine; repo ja-core_engine (Core System, Security, Infra, Data Model Studio, IAM, Engine Architecture).",
+        "scope": "K2NET Portal (k2net-portal / k2netid/portal); downstream of ja-core_engine. Product identity: K2NET / layung. Kernel bugfixes: dual-commit upstream.",
         "when_creating_or_updating_project": [
-            "Read docs/WORKFLOW.md and docs/DOCUMENTATION.md first, then docs/AGENT_START_HERE.md, docs/architectural-status.md, docs/product/downstream-apps-and-licensing.md, and docs/architecture/*.md listed in docs/README.md.",
+            "Read AGENTS.md first, then docs/WORKFLOW.md, docs/DOCUMENTATION.md, docs/AGENT_START_HERE.md (downstream banner), and ops handoff under ../docs/ja-dev/k2net/.",
+            "Do not rewrite mirrored docs/guides|reference|architecture (see .upstream-sot.md); put K2NET-specific docs in AGENTS.md, product/work/ADR lokal, or seeders.",
             "For scale M+ work: create/update a brief under docs/work/ from docs/templates/task-brief.md (audit → plan → implement → verify → record).",
             "Use branch-based workflow; avoid direct edits on main unless explicitly requested.",
             "Prefer package managers for dependency changes (npm/composer), avoid manual lockfile edits.",

@@ -208,4 +208,4 @@ Berlaku untuk first-party dan ZIP.
 - `scripts/sync-frontend-assets-to-backend.sh`
 - `docs/extensions/install-profiles.md`, `docs/product/downstream-apps-and-licensing.md`
 
-Work brief fase 1: [`docs/work/2026-09-18-theme-registry-packs-phase1.md`](../work/2026-09-18-theme-registry-packs-phase1.md)
+Work brief fase 1: [`docs/work/archive/2026-09-18-theme-registry-packs-phase1.md`](../work/archive/2026-09-18-theme-registry-packs-phase1.md)
