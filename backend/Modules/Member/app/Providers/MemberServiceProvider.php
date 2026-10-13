@@ -44,10 +44,12 @@ class MemberServiceProvider extends ServiceProvider
             }
             MemberPermissionSeeder::ensure();
             $this->ensureMemberRegistrationSetting();
+            $this->ensureMemberGoogleSettings();
         });
 
         $this->ensurePermissionsIfMissing();
         $this->ensureMemberRegistrationSetting();
+        $this->ensureMemberGoogleSettings();
     }
 
     protected function ensureMemberRegistrationSetting(): void
@@ -63,6 +65,42 @@ class MemberServiceProvider extends ServiceProvider
                     'value' => '1',
                     'group' => 'security',
                     'type' => 'boolean',
+                ],
+            );
+        } catch (\Throwable) {
+            // Avoid boot failure if settings table is mid-migrate.
+        }
+    }
+
+    protected function ensureMemberGoogleSettings(): void
+    {
+        try {
+            if (! Schema::hasTable('sys_settings')) {
+                return;
+            }
+
+            Setting::query()->firstOrCreate(
+                ['key' => 'enable_member_google_login'],
+                [
+                    'value' => '1',
+                    'group' => 'security',
+                    'type' => 'boolean',
+                ],
+            );
+            Setting::query()->firstOrCreate(
+                ['key' => 'member_google_client_id'],
+                [
+                    'value' => '',
+                    'group' => 'integrations',
+                    'type' => 'string',
+                ],
+            );
+            Setting::query()->firstOrCreate(
+                ['key' => 'member_google_client_secret'],
+                [
+                    'value' => '',
+                    'group' => 'integrations',
+                    'type' => 'password',
                 ],
             );
         } catch (\Throwable) {

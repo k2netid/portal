@@ -2028,7 +2028,7 @@
       "enable_robots_txt": "Expose robots.txt configuration dynamically",
       "enable_registration": "Allow new operators to self-register for the console (srv_auth_users). Does not affect the public reader (member) area.",
       "enable_member_registration": "Allow new readers to create accounts at /member/register (mem_members). Independent of console registration.",
-      "enable_member_google_login": "Show Sign in with Google on the member portal when MEMBER_GOOGLE_CLIENT_ID / SECRET are configured. Does not affect console login.",
+      "enable_member_google_login": "Show Sign in with Google on the member portal when Client ID / Secret are set under Identity & Integrations. Does not affect console login.",
       "require_email_verification": "New users must verify their email before they can log in",
       "password_min_length": "Minimum length for console and reader passwords",
       "password_require_uppercase": "Passwords must contain at least one uppercase letter (A-Z) — console and readers",
@@ -3522,6 +3522,28 @@
       "open": "Open",
       "siemCard": "SIEM export log",
       "siemDesc": "View security events forwarded to SIEM file export."
+    },
+    "memberGoogle": {
+      "title": "Member Sign in with Google",
+      "description": "OAuth client for the public reader portal. Console operators still use password, passkey, and 2FA. Not the same as Media → Google Drive.",
+      "loading": "Loading Google settings…",
+      "enabled": "Show Sign in with Google",
+      "enabledHint": "Button appears on /member/login when Client ID and Secret are set.",
+      "clientId": "Google Client ID",
+      "clientIdPlaceholder": "….apps.googleusercontent.com",
+      "clientSecret": "Google Client Secret",
+      "clientSecretPlaceholder": "Enter client secret",
+      "clientSecretKeep": "Leave blank to keep the current secret",
+      "clientSecretConfigured": "A secret is already saved. Enter a new value only to replace it.",
+      "redirectUri": "Authorized redirect URI",
+      "redirectHint": "Paste this into Google Cloud Console → Credentials → OAuth client → Authorized redirect URIs.",
+      "copy": "Copy",
+      "copied": "Redirect URI copied",
+      "copyFailed": "Could not copy to clipboard",
+      "save": "Save Google settings",
+      "saving": "Saving…",
+      "saved": "Google settings saved",
+      "saveFailed": "Failed to save Google settings"
     }
   },
   "webhooks": {

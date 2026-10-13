@@ -42,10 +42,27 @@ class MemberGoogleAuthTest extends TestCase
             'services.google.client_id' => '',
             'services.google.client_secret' => '',
         ]);
+        Setting::set('member_google_client_id', '', 'string', 'integrations');
+        Setting::set('member_google_client_secret', '', 'password', 'integrations');
 
         $this->getJson('/api/v1/public/member/auth/google/redirect')
             ->assertStatus(503)
             ->assertJsonPath('error_code', 'MEMBER_GOOGLE_UNAVAILABLE');
+    }
+
+    public function test_google_credentials_prefer_integrations_settings_over_env(): void
+    {
+        config([
+            'services.google.client_id' => 'env-client-id',
+            'services.google.client_secret' => 'env-client-secret',
+        ]);
+        Setting::set('member_google_client_id', 'ui-client-id', 'string', 'integrations');
+        Setting::set('member_google_client_secret', 'ui-client-secret', 'password', 'integrations');
+
+        $credentials = app(MemberGoogleAuthService::class)->resolveCredentials();
+
+        $this->assertSame('ui-client-id', $credentials['client_id']);
+        $this->assertSame('ui-client-secret', $credentials['client_secret']);
     }
 
     public function test_google_callback_creates_member_and_redirects_with_token(): void

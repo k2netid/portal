@@ -24,11 +24,50 @@ class MemberGoogleAuthService
             return false;
         }
 
-        $clientId = config('services.google.client_id');
-        $clientSecret = config('services.google.client_secret');
+        $credentials = $this->resolveCredentials();
 
-        return is_string($clientId) && $clientId !== ''
-            && is_string($clientSecret) && $clientSecret !== '';
+        return $credentials['client_id'] !== '' && $credentials['client_secret'] !== '';
+    }
+
+    /**
+     * Prefer console Integrations settings; fall back to MEMBER_GOOGLE_* / GOOGLE_* env.
+     *
+     * @return array{client_id: string, client_secret: string, redirect: string}
+     */
+    public function resolveCredentials(): array
+    {
+        $fromSettingId = Setting::get('member_google_client_id', '');
+        $fromSettingSecret = Setting::get('member_google_client_secret', '');
+
+        $clientId = is_string($fromSettingId) && trim($fromSettingId) !== ''
+            ? trim($fromSettingId)
+            : (string) (config('services.google.client_id') ?: '');
+
+        $clientSecret = is_string($fromSettingSecret) && trim($fromSettingSecret) !== ''
+            ? trim($fromSettingSecret)
+            : (string) (config('services.google.client_secret') ?: '');
+
+        $redirect = (string) (config('services.google.redirect') ?: '');
+        if ($redirect === '') {
+            $redirect = rtrim((string) config('app.url', ''), '/').'/api/v1/public/member/auth/google/callback';
+        }
+
+        return [
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret,
+            'redirect' => $redirect,
+        ];
+    }
+
+    /** Push resolved credentials into Socialite's services.google config for this request. */
+    public function applyRuntimeConfig(): void
+    {
+        $credentials = $this->resolveCredentials();
+        config([
+            'services.google.client_id' => $credentials['client_id'],
+            'services.google.client_secret' => $credentials['client_secret'],
+            'services.google.redirect' => $credentials['redirect'],
+        ]);
     }
 
     public function storeOAuthState(string $redirectPath): string

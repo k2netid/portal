@@ -2026,7 +2026,7 @@
       "enable_robots_txt": "Tampilkan konfigurasi robots.txt secara dinamis",
       "enable_registration": "Izinkan operator baru mendaftar sendiri ke konsol (srv_auth_users). Tidak memengaruhi area pembaca (member).",
       "enable_member_registration": "Izinkan pembaca baru membuat akun di /member/register (mem_members). Terpisah dari pendaftaran konsol.",
-      "enable_member_google_login": "Tampilkan Masuk dengan Google di portal member bila MEMBER_GOOGLE_CLIENT_ID / SECRET dikonfigurasi. Tidak memengaruhi login konsol.",
+      "enable_member_google_login": "Tampilkan Masuk dengan Google di portal member bila Client ID / Secret diisi di Identity & Integrations. Tidak memengaruhi login konsol.",
       "require_email_verification": "Pengguna baru harus memverifikasi email sebelum bisa login",
       "password_min_length": "Panjang minimal kata sandi konsol dan pembaca",
       "password_require_uppercase": "Kata sandi harus mengandung minimal satu huruf besar (A-Z) — konsol dan pembaca",
@@ -3522,6 +3522,28 @@
       "open": "Buka",
       "siemCard": "Log ekspor SIEM",
       "siemDesc": "Lihat event keamanan yang diekspor ke file SIEM."
+    },
+    "memberGoogle": {
+      "title": "Masuk Member dengan Google",
+      "description": "Klien OAuth untuk portal pembaca. Operator konsol tetap memakai password, passkey, dan 2FA. Bukan sama dengan Media → Google Drive.",
+      "loading": "Memuat pengaturan Google…",
+      "enabled": "Tampilkan Masuk dengan Google",
+      "enabledHint": "Tombol muncul di /member/login bila Client ID dan Secret sudah diisi.",
+      "clientId": "Google Client ID",
+      "clientIdPlaceholder": "….apps.googleusercontent.com",
+      "clientSecret": "Google Client Secret",
+      "clientSecretPlaceholder": "Masukkan client secret",
+      "clientSecretKeep": "Kosongkan untuk mempertahankan secret saat ini",
+      "clientSecretConfigured": "Secret sudah tersimpan. Isi nilai baru hanya untuk menggantinya.",
+      "redirectUri": "Authorized redirect URI",
+      "redirectHint": "Tempel ke Google Cloud Console → Credentials → OAuth client → Authorized redirect URIs.",
+      "copy": "Salin",
+      "copied": "Redirect URI disalin",
+      "copyFailed": "Gagal menyalin ke clipboard",
+      "save": "Simpan pengaturan Google",
+      "saving": "Menyimpan…",
+      "saved": "Pengaturan Google tersimpan",
+      "saveFailed": "Gagal menyimpan pengaturan Google"
     }
   },
   "webhooks": {

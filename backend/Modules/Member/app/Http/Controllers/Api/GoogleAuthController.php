@@ -26,6 +26,8 @@ class GoogleAuthController extends BaseApiController
 
     public function redirect(Request $request): RedirectResponse|JsonResponse
     {
+        $this->googleAuth->applyRuntimeConfig();
+
         if (! $this->googleAuth->isAvailable()) {
             return $this->error('Google login is not available.', 503, [], 'MEMBER_GOOGLE_UNAVAILABLE');
         }
@@ -44,6 +46,8 @@ class GoogleAuthController extends BaseApiController
 
     public function callback(Request $request): RedirectResponse
     {
+        $this->googleAuth->applyRuntimeConfig();
+
         $stateKey = is_string($request->query('state')) ? (string) $request->query('state') : null;
         $state = $this->googleAuth->pullOAuthState($stateKey);
         $redirectPath = $state['redirect'] ?? '/member';
