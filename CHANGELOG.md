@@ -12,7 +12,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) · [Semantic Ve
 ## [Unreleased]
 
 ### Added
-- **Member Sign in with Google**: Socialite OAuth for the reader portal (`MEMBER_GOOGLE_*`), setting `enable_member_google_login`, Login/Register UI + OAuth callback. Console Google/GitHub login stubs removed.
+- **Member Sign in with Google**: Socialite OAuth for the reader portal — configure Client ID/Secret on console Identity & Integrations (or `MEMBER_GOOGLE_*` env), toggle `enable_member_google_login`, Login/Register UI + OAuth callback. Console Google/GitHub login stubs removed.
 - **K2NET identity seeder polish (P3)**: `K2netDeploymentSeeder` menyelaraskan WhatsApp `6285136290851`, email ISP `*@k2net.id`, dan `social_links` WhatsApp-only (mengganti demo jejakawan). Layung `1.0.7`: footer tanpa fallback sosial engine; header mobile WA dari `useLayungIdentity`. Katalog modul + env contoh `JA_CP_*`.
 - **Downstream structure polish (P2)**: Docs [`themes/locations-and-sync.md`](docs/themes/locations-and-sync.md) (FE SoT ↔ `theme-packs` ↔ gitignored `resources/themes`); kebijakan identitas [`product/k2net-identity-and-theme-defaults.md`](docs/product/k2net-identity-and-theme-defaults.md) (seeder-only, jangan rewrite `theme.json` defaults); README/CHANGELOG FE+BE modul `Billing`.
 - **Downstream docs & ADR hygiene (P1)**: Bentrok nomor ADR services-hub/SRI di-assign ke **[ADR-028](docs/adr/ADR-028-theme-customizer-defaults-services-hub-and-prepaint-sri-resilience.md)**; **ADR-023** tetap theme registry packs. Work brief Sep 18–19 diarsip; hapus leftover `test:e2e:staging:smkn6` + `scripts/templates/nginx-smkn6-staging.conf`; docs tema menegaskan default produk **layung** + penamaan English `Services`/`Team` (+ alias).
