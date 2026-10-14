@@ -58,8 +58,8 @@ class LicenseService
             }
         }
 
-        $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
-        $controlPlaneUrl = is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com';
+        $jacpUrl = Config::get('services.jacp.url', 'https://cp.k2net.id');
+        $controlPlaneUrl = is_string($jacpUrl) ? $jacpUrl : 'https://cp.k2net.id';
 
         return [
             'tier' => $tier,
@@ -351,8 +351,8 @@ class LicenseService
             return ['success' => false, 'message' => 'License key cannot be empty.'];
         }
 
-        $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
-        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com').'/api/v1/licenses/activate';
+        $jacpUrl = Config::get('services.jacp.url', 'https://cp.k2net.id');
+        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.k2net.id').'/api/v1/licenses/activate';
 
         try {
             $response = Http::timeout(10)->post($endpoint, [
@@ -496,8 +496,8 @@ class LicenseService
             ];
         }
 
-        $jacpUrl = Config::get('services.jacp.url', 'https://cp.jejakawan.com');
-        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.jejakawan.com').'/api/v1/licenses/heartbeat';
+        $jacpUrl = Config::get('services.jacp.url', 'https://cp.k2net.id');
+        $endpoint = (is_string($jacpUrl) ? $jacpUrl : 'https://cp.k2net.id').'/api/v1/licenses/heartbeat';
 
         try {
             $response = Http::timeout(10)->post($endpoint, [

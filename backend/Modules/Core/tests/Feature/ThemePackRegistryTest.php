@@ -347,7 +347,7 @@ final class ThemePackRegistryTest extends TestCase
     public function test_jacp_activate_persists_custom_themes_quota(): void
     {
         Http::fake([
-            'https://cp.jejakawan.com/api/v1/licenses/activate' => Http::response([
+            'https://cp.k2net.id/api/v1/licenses/activate' => Http::response([
                 'valid' => true,
                 'data' => [
                     'tier' => 'pro',
@@ -378,7 +378,7 @@ final class ThemePackRegistryTest extends TestCase
     public function test_jacp_payload_partial_missing_fields_falls_back_safely(): void
     {
         Http::fake([
-            'https://cp.jejakawan.com/api/v1/licenses/activate' => Http::response([
+            'https://cp.k2net.id/api/v1/licenses/activate' => Http::response([
                 'valid' => true,
                 'data' => [
                     'tier' => 'pro',
@@ -426,7 +426,7 @@ final class ThemePackRegistryTest extends TestCase
 
         // Mock heartbeat response that reduces quota to 0 premium themes
         Http::fake([
-            'https://cp.jejakawan.com/api/v1/licenses/heartbeat' => Http::response([
+            'https://cp.k2net.id/api/v1/licenses/heartbeat' => Http::response([
                 'valid' => true,
                 'data' => [
                     'tier' => 'community',
