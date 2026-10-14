@@ -73,7 +73,7 @@ class WebhooksAndRedirectsApiTest extends TestCase
         $createResponse = $this->actingAs($admin, 'sanctum')
             ->postJson('/api/v1/manage/infra/redirects', [
                 'from_domain' => 'old.jejakawan.com',
-                'to_domain' => 'portal.jejakawan.com',
+                'to_domain' => 'cp.k2net.id',
                 'status_code' => 301,
                 'keep_path' => true,
                 'is_active' => true,
