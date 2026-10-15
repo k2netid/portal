@@ -269,12 +269,15 @@ final class ThemeSampleDataOrchestrator
                 continue;
             }
 
-            $existing = Content::query()
+            $existing = Content::withTrashed()
                 ->where('slug', $slug)
                 ->where('type', 'page')
                 ->first();
 
             if ($existing !== null) {
+                if ($existing->trashed()) {
+                    $existing->restore();
+                }
                 $meta = is_array($existing->meta) ? $existing->meta : [];
                 $isSample = ($meta['sample_theme'] ?? null) === $themeSlug;
                 if (! $force && ! $isSample) {
@@ -366,12 +369,15 @@ final class ThemeSampleDataOrchestrator
                 continue;
             }
 
-            $existing = Content::query()
+            $existing = Content::withTrashed()
                 ->where('slug', $slug)
                 ->where('type', 'post')
                 ->first();
 
             if ($existing !== null) {
+                if ($existing->trashed()) {
+                    $existing->restore();
+                }
                 $meta = is_array($existing->meta) ? $existing->meta : [];
                 $isSample = ($meta['sample_theme'] ?? null) === $themeSlug;
                 if (! $force && ! $isSample) {

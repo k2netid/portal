@@ -123,7 +123,7 @@
               <div class="flex items-center gap-2">
                 <Button
                   as="router-link"
-                  to="/programs"
+                  :to="currentRecommendation.slug ? `/blog/${currentRecommendation.slug}` : '/programs'"
                   variant="primary"
                   size="md"
                   class="!bg-amber-500 hover:!bg-amber-400 !text-slate-950 font-bold"
@@ -190,14 +190,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
+import api from '@/engine/api/client';
+import { publishingPaths } from '@/engine/api/paths';
 import { Button } from '@/modules/Layout/views/themes/sarangenge/ui';
 import {
   Compass,
   Code2,
   CarFront,
+  Bike,
+  Network,
+  Palette,
+  Briefcase,
+  Calculator,
+  Utensils,
   Zap,
   Building,
   Cog,
@@ -207,7 +215,6 @@ import {
   Hammer,
   Layers,
   Sparkles,
-  Briefcase,
   CheckCircle2,
   ArrowRight
 } from 'lucide-vue-next';
@@ -217,6 +224,7 @@ const { getSetting } = useTheme();
 
 const trackFinderEnabled = computed(() => getSetting('track_finder_enabled', true) !== false);
 
+const dynamicPrograms = ref<any[]>([]);
 const selectedInterest = ref('digital');
 const selectedStyle = ref('system');
 
@@ -237,104 +245,245 @@ interface StyleOption {
 interface Recommendation {
   code: string;
   name: string;
+  slug?: string;
   description: string;
   competencies: string[];
   careers: string[];
 }
 
-const defaultInterest: InterestOption = {
-  id: 'digital',
-  shortLabel: 'Software & AI',
-  label: 'Teknologi Software, Pemrograman & AI',
-  icon: Code2,
-};
-
 const defaultStyle: StyleOption = {
   id: 'system',
   label: 'Komputer, Logika & Sistem',
-  desc: 'Suka memecahkan masalah, coding algoritma, atau kontrol otomatis.',
+  desc: 'Suka memecahkan masalah, coding algoritma, sistem jaringan, atau kontrol otomatis.',
   icon: Laptop,
 };
 
-const defaultRecommendation: Recommendation = {
-  code: 'PPLG',
-  name: 'Pengembangan Perangkat Lunak & Gim',
-  description: 'Program keahlian unggulan dalam rekayasa perangkat lunak modern, pengembangan aplikasi web fullstack, mobile iOS/Android, pengembangan kecerdasan buatan (AI), serta perancangan video game interaktif.',
-  competencies: ['Pemrograman Web & Framework Modern', 'Mobile App Development', 'Database & Cloud Computing', 'Game Logic & UI/UX Design'],
-  careers: ['Software Engineer / Web Developer', 'Mobile Application Developer', 'Game Programmer', 'IT Support & QA Tester'],
-};
-
-const interestOptions: InterestOption[] = [
-  defaultInterest,
-  { id: 'otomotif', shortLabel: 'Otomotif Modern', label: 'Teknologi Otomotif & Kendaraan Ringan', icon: CarFront },
-  { id: 'listrik', shortLabel: 'Listrik & Otomasi', label: 'Instalasi Tenaga Listrik & Otomasi Pabrik', icon: Zap },
-  { id: 'arsitektur', shortLabel: 'Desain Bangunan', label: 'Desain Pemodelan Bangunan & Arsitektur BIM', icon: Building },
-  { id: 'mesin', shortLabel: 'Mesin Presisi', label: 'Teknik Pemesinan & Manufaktur Presisi CNC', icon: Cog },
-  { id: 'elektronika', shortLabel: 'Elektronika & IoT', label: 'Elektronika Industri & Internet of Things (IoT)', icon: Cpu },
-  { id: 'pengelasan', shortLabel: 'Las & Fabrikasi', label: 'Fabrikasi Logam & Pengelasan Industri', icon: Flame },
-];
-
 const styleOptions: StyleOption[] = [
-  { id: 'workshop', label: 'Praktik Bengkel Fisik', desc: 'Dominan mengasah keterampilan motorik dan alat mekanik.', icon: Hammer },
-  { id: 'design', label: 'Rancang Bangun & Kreativitas', desc: 'Suka menggambar teknis, visualisasi 3D, dan sketsa arsitektur.', icon: Layers },
+  { id: 'workshop', label: 'Praktik Bengkel Fisik', desc: 'Dominan mengasah keterampilan motorik, perkakas mesin, dan alat mekanik.', icon: Hammer },
+  { id: 'design', label: 'Kreativitas Visual & Manajemen', desc: 'Suka merancang visual, media kreatif, tata kelola data, atau tata hidang.', icon: Layers },
   defaultStyle,
 ];
-
-const selectedInterestData = computed<InterestOption>(() => {
-  return interestOptions.find((i) => i.id === selectedInterest.value) ?? defaultInterest;
-});
 
 const selectedStyleData = computed<StyleOption>(() => {
   return styleOptions.find((s) => s.id === selectedStyle.value) ?? defaultStyle;
 });
 
-const recommendationCatalog: Record<string, Recommendation> = {
-  digital: defaultRecommendation,
-  otomotif: {
-    code: 'TO / TKRO',
-    name: 'Teknik Kendaraan Ringan Otomotif',
-    description: 'Mempersiapkan teknisi profesional dalam perawatan dan perbaikan kendaraan roda empat modern, sistem Electronic Fuel Injection (EFI), transmisi otomatis, rem ABS, dan teknologi kendaraan listrik (EV).',
-    competencies: ['Tune-up & Diagnostic Scanner Engine', 'Overhaul Mesin Bensin & Diesel', 'Chasis, Suspensi & Transmisi Otomatis', 'Kelistrikan Bodi & AC Mobil'],
-    careers: ['Teknisi Bengkel Resmi (APM)', 'Mekanik Service Advisor', 'Teknisi Kendaraan Listrik', 'Wirausaha Bengkel Otomotif'],
-  },
-  listrik: {
-    code: 'TITL',
-    name: 'Teknik Instalasi Tenaga Listrik',
-    description: 'Mencetak ahli kelistrikan industri dan gedung bertingkat, penguasaan panel kendali motor listrik kontaktor, otomasi berbasis Programmable Logic Controller (PLC), serta pemasangan sistem PLTS Solar Cell.',
-    competencies: ['Instalasi Penerangan & Tenaga Gedung', 'Wiring Panel Distribusi 3 Fasa', 'Sistem Kendali Motor & Inverter', 'Pemrograman PLC & Sensor Industri'],
-    careers: ['Teknisi Listrik Industri / PLN', 'Operator Panel Listrik Gedung (ME)', 'Maintenance Automation Engineer', 'Kontraktor Kelistrikan'],
-  },
-  arsitektur: {
-    code: 'DPIB',
-    name: 'Desain Pemodelan & Informasi Bangunan',
-    description: 'Keahlian dalam perancangan arsitektur dan konstruksi menggunakan software standar internasional CAD 2D/3D, SketchUp, Revit, dan metodologi Building Information Modeling (BIM) untuk proyek infrastruktur modern.',
-    competencies: ['Gambar Teknik Arsitektur 2D/3D', 'Building Information Modeling (BIM)', 'Estimasi Biaya & RAB Proyek', 'Perancangan Struktur Beton & Baja'],
-    careers: ['BIM Modeler & Arsitektur Drafter', 'Quantity Surveyor / Estimator', 'Surveyor Pengukuran Tanah', 'Konsultan Desain Interior'],
-  },
-  mesin: {
-    code: 'TP / TPM',
-    name: 'Teknik Pemesinan & Manufaktur',
-    description: 'Pusat kompetensi permesinan logam presisi tinggi yang melatih siswa mengoperasikan mesin bubut, milling, gerinda presisi, serta pemrograman mesin Computer Numerical Control (CNC) standar industri kedirgantaraan & otomotif.',
-    competencies: ['Pemesinan Bubut & Frais Konvensional', 'Pemrograman CNC Turning & Milling (G-Code)', 'CAD/CAM Manufaktur Simulation', 'Pengukuran Presisi & Metrologi Industri'],
-    careers: ['CNC Machinist & Programmer', 'Toolmaker Industri Manufaktur', 'Quality Control Inspector', 'Teknisi Bubut & Fabrikasi Presisi'],
-  },
-  elektronika: {
-    code: 'TEI / TAV',
-    name: 'Teknik Elektronika Industri & Audio Video',
-    description: 'Mengintegrasikan perancangan sirkuit mikroelektronika, mikrokontroler Arduino/ESP32, Internet of Things (IoT), sistem telekomunikasi nirkabel, instrumentasi sensor, dan pemeliharaan robotika pabrik.',
-    competencies: ['Desain Skematik & PCB Layout', 'Mikrokontroler & IoT Programming', 'Sistem Audio Video Digital', 'Pemeliharaan Robotika & Sensor Industri'],
-    careers: ['Teknisi Elektronika & Audio Video', 'IoT Hardware Specialist', 'Teknisi Pemeliharaan Instrumen Pabrik', 'Pemasang Perangkat Smart Home'],
-  },
-  pengelasan: {
-    code: 'TPFL',
-    name: 'Teknik Pengelasan & Fabrikasi Logam',
-    description: 'Menghasilkan welder tersertifikasi nasional/internasional yang menguasai teknik las busur listrik (SMAW), las gas pelindung (GMAW/MIG/MAG), las argon (GTAW/TIG), serta fabrikasi konstruksi pipa dan baja berat.',
-    competencies: ['Las SMAW 1G s.d. 3G/4G Pelat & Pipa', 'Las GMAW / MIG Industri Karoseri', 'Las TIG / Argon Stainless & Aluminium', 'Fabrikasi & Perakitan Struktur Logam'],
-    careers: ['Welder Bersertifikat BNSP / MIGAS', 'Welding Inspector & Supervisor', 'Fabrikator Struktur Baja & Pipa', 'Wirausaha Fabrikasi & Konstruksi'],
-  },
+const defaultRecommendation: Recommendation = {
+  code: 'VOKASI',
+  name: 'Program Keahlian Vokasi Unggulan',
+  description: 'Program keahlian vokasi berstandar industri dengan sertifikasi kompetensi nasional, sarana bengkel modern, dan kemitraan dunia usaha & dunia industri (DUDI).',
+  competencies: ['Standar Operasional Prosedur (SOP) Industri', 'Praktik Kerja Industri & Teaching Factory', 'Sertifikasi Profesi Kompetensi BNSP', 'Kewirausahaan Mandiri'],
+  careers: ['Teknisi Profesional Industri', 'Supervisor & Service Advisor', 'Wirausahawan Mandiri', 'Lanjut Studi Perguruan Tinggi Vokasi'],
 };
 
+const resolveProgramProfile = (title: string, slug: string, _raw?: any): { icon: any; shortLabel: string; code: string; defaultComps: string[]; defaultCareers: string[] } => {
+  const tLower = title.toLowerCase();
+  const sLower = slug.toLowerCase();
+
+  if (sLower.includes('tbsm') || tLower.includes('sepeda motor')) {
+    return {
+      icon: Bike,
+      shortLabel: 'Sepeda Motor',
+      code: 'TBSM',
+      defaultComps: ['Servis Mesin Injeksi (FI/PGM-FI)', 'Sistem Transmisi Matic & CVT', 'Kelistrikan Bodi & Rem Hidrolik', 'Manajemen Usaha Bengkel Motor'],
+      defaultCareers: ['Mekanik Resmi Dealer Motor (AHASS/Yamaha)', 'Kepala Bengkel Servis Motor', 'Part Advisor & Sparepart Specialist', 'Wirausaha Bengkel Motor Mandiri'],
+    };
+  }
+
+  if (sLower.includes('tkro') || sLower.includes('to') || tLower.includes('kendaraan ringan') || tLower.includes('otomotif')) {
+    return {
+      icon: CarFront,
+      shortLabel: 'Otomotif Mobil',
+      code: 'TKRO',
+      defaultComps: ['Tune-up & Diagnostic Scanner Engine (OBD-II)', 'Overhaul Mesin Bensin & Diesel', 'Chasis, Suspensi & Transmisi Otomatis', 'Kelistrikan Bodi & AC Mobil Modern'],
+      defaultCareers: ['Teknisi Bengkel Resmi (APM / Astra)', 'Service Advisor Otomotif', 'Quality Control Inspector Otomotif', 'Wirausaha Bengkel Mobil Mandiri'],
+    };
+  }
+
+  if (sLower.includes('tjkt') || sLower.includes('tkj') || tLower.includes('jaringan') || tLower.includes('telekomunikasi')) {
+    return {
+      icon: Network,
+      shortLabel: 'Jaringan & IT',
+      code: 'TJKT',
+      defaultComps: ['Instalasi & Routing Jaringan (MikroTik/Cisco)', 'Fiber Optic Splicing & OTDR Testing', 'Linux Server & Cloud Computing', 'Keamanan Jaringan & Cyber Security Basics'],
+      defaultCareers: ['Network Administrator & Engineer', 'Fiber Optic Technician Specialist', 'Technical Support Specialist', 'Cloud & System Administrator'],
+    };
+  }
+
+  if (sLower.includes('dkv') || tLower.includes('desain komunikasi') || tLower.includes('multimedia')) {
+    return {
+      icon: Palette,
+      shortLabel: 'Desain Visual',
+      code: 'DKV',
+      defaultComps: ['Desain Grafis & Vektor Digital', 'Fotografi Komersial & Tata Cahaya Studio', 'Videografi & Editing Sinematografi', 'Animasi 2D & Motion Graphic'],
+      defaultCareers: ['Graphic Designer & Brand Specialist', 'Videographer & Video Editor', 'Fotografer Komersial Studio', 'Digital Content Creator & Animator'],
+    };
+  }
+
+  if (sLower.includes('mplb') || sLower.includes('otkp') || tLower.includes('perkantoran') || tLower.includes('layanan bisnis')) {
+    return {
+      icon: Briefcase,
+      shortLabel: 'Perkantoran',
+      code: 'MPLB',
+      defaultComps: ['Tata Kelola Kearsipan Digital & E-Office', 'Korespondensi & Komunikasi Bisnis Efektif', 'Aplikasi Perkantoran Terpadu & Spreadsheet', 'Manajemen Rapat, Event & Keprotokolan'],
+      defaultCareers: ['Staf Administrasi Perkantoran & E-Office', 'Sekretaris Junior / Executive Assistant', 'Customer Service & Public Relations', 'Staf Personalia (HRD Assistant)'],
+    };
+  }
+
+  if (sLower.includes('akl') || tLower.includes('akuntansi') || tLower.includes('keuangan')) {
+    return {
+      icon: Calculator,
+      shortLabel: 'Akuntansi',
+      code: 'AKL',
+      defaultComps: ['Pencatatan Akuntansi Manual & Siklus Finansial', 'Komputer Akuntansi (MYOB & Accurate)', 'Pengelolaan Kas Kecil & Administrasi Pajak', 'Simulasi Pelayanan Bank Mini & Transaksi Kasir'],
+      defaultCareers: ['Staf Akuntansi & Pembukuan Perusahaan', 'Kasir & Customer Service Perbankan', 'Staf Perpajakan & Verifikasi Keuangan', 'Asisten Auditor Finansial'],
+    };
+  }
+
+  if (sLower.includes('kuliner') || tLower.includes('boga') || tLower.includes('makanan')) {
+    return {
+      icon: Utensils,
+      shortLabel: 'Kuliner',
+      code: 'Kuliner',
+      defaultComps: ['Pengolahan Makanan Nusantara, Kontinental & Oriental', 'Pastry, Bakery & Pembuatan Kue Komersial', 'Higiene Sanitasi & Keselamatan Kerja Kuliner', 'Tata Hidang Restoran & Table Manner'],
+      defaultCareers: ['Commis Chef di Hotel & Restoran Berbintang', 'Pastry & Bakery Chef', 'Pengusaha Restoran / Catering Mandiri', 'Food Stylist & Barista'],
+    };
+  }
+
+  if (sLower.includes('titl') || tLower.includes('listrik')) {
+    return {
+      icon: Zap,
+      shortLabel: 'Listrik',
+      code: 'TITL',
+      defaultComps: ['Instalasi Penerangan & Tenaga Gedung', 'Wiring Panel Distribusi 3 Fasa', 'Sistem Kendali Motor & Inverter', 'Pemrograman PLC & Sensor Industri'],
+      defaultCareers: ['Teknisi Listrik Industri / PLN', 'Operator Panel Listrik Gedung (ME)', 'Maintenance Automation Engineer', 'Kontraktor Kelistrikan'],
+    };
+  }
+
+  if (sLower.includes('dpib') || tLower.includes('arsitektur') || tLower.includes('bangunan')) {
+    return {
+      icon: Building,
+      shortLabel: 'Arsitektur',
+      code: 'DPIB',
+      defaultComps: ['Gambar Teknik Arsitektur 2D/3D', 'Building Information Modeling (BIM)', 'Estimasi Biaya & RAB Proyek', 'Perancangan Struktur Beton & Baja'],
+      defaultCareers: ['BIM Modeler & Arsitektur Drafter', 'Quantity Surveyor / Estimator', 'Surveyor Pengukuran Tanah', 'Konsultan Desain Interior'],
+    };
+  }
+
+  if (sLower.includes('tpm') || sLower.includes('mesin')) {
+    return {
+      icon: Cog,
+      shortLabel: 'Mesin Presisi',
+      code: 'TPM',
+      defaultComps: ['Pemesinan Bubut & Frais Konvensional', 'Pemrograman CNC Turning & Milling', 'CAD/CAM Manufaktur Simulation', 'Pengukuran Presisi & Metrologi Industri'],
+      defaultCareers: ['CNC Machinist & Programmer', 'Toolmaker Industri Manufaktur', 'Quality Control Inspector', 'Teknisi Bubut & Fabrikasi Presisi'],
+    };
+  }
+
+  if (sLower.includes('tei') || sLower.includes('elektronika')) {
+    return {
+      icon: Cpu,
+      shortLabel: 'Elektronika',
+      code: 'TEI',
+      defaultComps: ['Desain Skematik & PCB Layout', 'Mikrokontroler & IoT Programming', 'Sistem Audio Video Digital', 'Pemeliharaan Robotika & Sensor Industri'],
+      defaultCareers: ['Teknisi Elektronika & Audio Video', 'IoT Hardware Specialist', 'Teknisi Pemeliharaan Instrumen Pabrik', 'Pemasang Perangkat Smart Home'],
+    };
+  }
+
+  if (sLower.includes('tpfl') || tLower.includes('las') || tLower.includes('pengelasan')) {
+    return {
+      icon: Flame,
+      shortLabel: 'Las & Fabrikasi',
+      code: 'TPFL',
+      defaultComps: ['Las SMAW 1G s.d. 3G/4G Pelat & Pipa', 'Las GMAW / MIG Industri Karoseri', 'Las TIG / Argon Stainless & Aluminium', 'Fabrikasi & Perakitan Struktur Logam'],
+      defaultCareers: ['Welder Bersertifikat BNSP / MIGAS', 'Welding Inspector & Supervisor', 'Fabrikator Struktur Baja & Pipa', 'Wirausaha Fabrikasi & Konstruksi'],
+    };
+  }
+
+  return {
+    icon: Code2,
+    shortLabel: title.slice(0, 14),
+    code: slug.toUpperCase(),
+    defaultComps: ['Kurikulum Merdeka Kejuruan', 'Praktik Industri & Bengkel Standar', 'Sertifikasi Kompetensi Keahlian', 'Kewirausahaan Berbasis Vokasi'],
+    defaultCareers: ['Teknisi Spesialis Bidang Keahlian', 'Supervisor Operasional', 'Tenaga Kerja Mandiri & Wirausaha', 'Melanjutkan ke Pendidikan Tinggi Vokasi'],
+  };
+};
+
+const staticInterestOptions: InterestOption[] = [
+  { id: 'digital', shortLabel: 'Software & AI', label: 'Teknologi Software, Pemrograman & AI', icon: Code2 },
+  { id: 'otomotif', shortLabel: 'Otomotif Modern', label: 'Teknologi Otomotif & Kendaraan Ringan', icon: CarFront },
+  { id: 'motor', shortLabel: 'Sepeda Motor', label: 'Teknik Bisnis Sepeda Motor & Injeksi', icon: Bike },
+  { id: 'jaringan', shortLabel: 'Jaringan & Cyber', label: 'Teknik Komputer, Jaringan & Telekomunikasi', icon: Network },
+  { id: 'desain', shortLabel: 'Desain Visual', label: 'Desain Komunikasi Visual & Multimedia', icon: Palette },
+  { id: 'perkantoran', shortLabel: 'Perkantoran', label: 'Manajemen Perkantoran & Bisnis Digital', icon: Briefcase },
+  { id: 'akuntansi', shortLabel: 'Akuntansi', label: 'Akuntansi & Layanan Keuangan Lembaga', icon: Calculator },
+];
+
+const interestOptions = computed<InterestOption[]>(() => {
+  if (dynamicPrograms.value.length > 0) {
+    return dynamicPrograms.value.map((item: any) => {
+      const raw = item._raw || item;
+      const profile = resolveProgramProfile(item.title || '', item.slug || '', raw);
+      return {
+        id: item.slug,
+        shortLabel: profile.shortLabel,
+        label: item.title,
+        icon: profile.icon,
+      };
+    });
+  }
+  return staticInterestOptions;
+});
+
+const fallbackInterest: InterestOption = staticInterestOptions[0]!;
+
+const selectedInterestData = computed<InterestOption>(() => {
+  return interestOptions.value.find((i) => i.id === selectedInterest.value) ?? interestOptions.value[0] ?? fallbackInterest;
+});
+
 const currentRecommendation = computed<Recommendation>(() => {
-  return recommendationCatalog[selectedInterest.value] ?? defaultRecommendation;
+  if (dynamicPrograms.value.length > 0) {
+    const item = dynamicPrograms.value.find((p: any) => p.slug === selectedInterest.value) || dynamicPrograms.value[0];
+    if (item) {
+      const raw = item._raw || item;
+      const meta = raw.meta || {};
+      const profile = resolveProgramProfile(item.title || '', item.slug || '', raw);
+      return {
+        code: meta.code || profile.code,
+        name: item.title,
+        slug: item.slug,
+        description: item.excerpt || item.intro || raw.description || defaultRecommendation.description,
+        competencies: Array.isArray(meta.competencies) && meta.competencies.length > 0 ? meta.competencies : profile.defaultComps,
+        careers: Array.isArray(meta.careers) && meta.careers.length > 0 ? meta.careers : profile.defaultCareers,
+      };
+    }
+  }
+
+  return defaultRecommendation;
+});
+
+onMounted(async () => {
+  try {
+    const res = await api.get(publishingPaths.publicContents, {
+      params: { category: 'program-keahlian', status: 'published', sort: 'title' },
+    });
+    const data = res?.data;
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.data?.data)
+          ? data.data.data
+          : [];
+
+    if (items.length > 0) {
+      dynamicPrograms.value = items;
+      if (items[0]?.slug) {
+        selectedInterest.value = items[0].slug;
+      }
+    }
+  } catch {
+    dynamicPrograms.value = [];
+  }
 });
 </script>

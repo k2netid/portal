@@ -403,17 +403,26 @@ const updateMetadataField = (key: string, value: any) => {
         ...currentMeta,
         [key]: value
     };
-    Object.assign(current, { metadata: newMeta });
+    Object.assign(current, {
+        [key]: value,
+        metadata: newMeta
+    });
     menuContext.takeSnapshot();
 };
 
 const updateField = (key: string, value: PropertyValue) => {
     const current = selectedItem.value;
     if (!current) return;
-    // Mutate the live tree node (selectedItem is findItemById, not a copy).
-    // A second lookup by id used to no-op when string/number ids diverged, so
-    // the input looked edited while save still posted the old title/url.
-    Object.assign(current, { [key]: value });
+    // Mutate both live node top-level key and metadata sub-object for full state alignment
+    const currentMeta = (current.metadata as Record<string, any>) || {};
+    const newMeta = {
+        ...currentMeta,
+        [key]: value
+    };
+    Object.assign(current, {
+        [key]: value,
+        metadata: newMeta
+    });
     menuContext.takeSnapshot();
 };
 

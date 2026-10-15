@@ -135,14 +135,13 @@ class SarangengeThemeDemoSeeder extends Seeder
             ];
 
             foreach ($sampleMajors as $major) {
-                Content::firstOrCreate(
-                    ['slug' => $major['slug']],
+                Content::withTrashed()->firstOrCreate(
+                    ['slug' => $major['slug'], 'type' => 'post'],
                     [
                         'title' => $major['title'],
                         'excerpt' => $major['excerpt'],
                         'body' => $major['body'],
                         'status' => 'published',
-                        'type' => 'post',
                         'author_id' => $author->id,
                         'category_id' => $catProgram->id,
                         'published_at' => now(),
@@ -173,14 +172,13 @@ class SarangengeThemeDemoSeeder extends Seeder
             ];
 
             foreach ($sampleFacilities as $facility) {
-                Content::firstOrCreate(
-                    ['slug' => $facility['slug']],
+                Content::withTrashed()->firstOrCreate(
+                    ['slug' => $facility['slug'], 'type' => 'post'],
                     [
                         'title' => $facility['title'],
                         'excerpt' => $facility['excerpt'],
                         'body' => $facility['body'],
                         'status' => 'published',
-                        'type' => 'post',
                         'author_id' => $author->id,
                         'category_id' => $catFasilitas->id,
                         'published_at' => now(),

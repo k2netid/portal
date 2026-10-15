@@ -63,6 +63,7 @@ const definition: MenuItemDefinition = {
                 { label: 'layout.menus.form.options.default', value: 'default' },
                 { label: 'layout.menus.form.options.grid2', value: 'grid-2' },
                 { label: 'layout.menus.form.options.grid3', value: 'grid-3' },
+                { label: 'layout.menus.form.options.grid4', value: 'grid-4' },
                 { label: 'layout.menus.form.options.full', value: 'full' }
             ],
             default: 'default',

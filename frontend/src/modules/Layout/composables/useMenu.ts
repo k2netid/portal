@@ -58,6 +58,34 @@ const deepClone = <T>(obj: T): T => {
 };
 
 /**
+ * Hydrate menu item by merging metadata into top-level properties
+ */
+export const hydrateMenuItem = (item: MenuItem): MenuItem => {
+    const meta = item.metadata && typeof item.metadata === 'object' && !Array.isArray(item.metadata)
+        ? { ...(item.metadata as Record<string, unknown>) }
+        : {};
+    return {
+        ...meta,
+        ...item,
+        metadata: meta,
+    };
+};
+
+/**
+ * Hydrate nested tree recursively
+ */
+export const hydrateTree = (items: MenuItem[]): MenuItem[] => {
+    if (!Array.isArray(items)) return [];
+    return items.map(item => {
+        const hydrated = hydrateMenuItem(item);
+        if (Array.isArray(item.children) && item.children.length > 0) {
+            hydrated.children = hydrateTree(item.children);
+        }
+        return hydrated;
+    });
+};
+
+/**
  * Build nested tree from flat items array
  */
 const buildTree = (flatItems: MenuItem[], parentId: number | string | null = null): MenuItem[] => {
@@ -66,7 +94,7 @@ const buildTree = (flatItems: MenuItem[], parentId: number | string | null = nul
         .filter(item => item.parent_id == parentId) // Use loose comparison for string/number IDs
         .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
         .map(item => ({
-            ...item,
+            ...hydrateMenuItem(item),
             children: buildTree(flatItems, item.id as number | string | null)
         }));
 };
@@ -83,7 +111,7 @@ const fetchMenuByLocation = async (location: string) => {
         const menu = parseSingleResponse(response) as Menu;
         if (menu) {
             if (menu.parent_items) {
-                menu.items = menu.parent_items;
+                menu.items = hydrateTree(menu.parent_items);
             } else if (Array.isArray(menu.items)) {
                 menu.items = buildTree(menu.items);
             }
@@ -113,7 +141,7 @@ const fetchMenuByIdentifier = async (identifier: string | number, cacheKey?: str
         const menu = parseSingleResponse(response) as Menu;
         if (menu) {
             if (menu.parent_items) {
-                menu.items = menu.parent_items;
+                menu.items = hydrateTree(menu.parent_items);
             } else if (Array.isArray(menu.items)) {
                 menu.items = buildTree(menu.items);
             }
@@ -568,17 +596,6 @@ export function useMenu(menuId?: Ref<number | string | null>) {
         '_temp_id',
         'add_to_menu',
     ]);
-
-    const hydrateMenuItem = (item: MenuItem): MenuItem => {
-        const meta = item.metadata && typeof item.metadata === 'object' && !Array.isArray(item.metadata)
-            ? { ...(item.metadata as Record<string, unknown>) }
-            : {};
-        return {
-            ...meta,
-            ...item,
-            metadata: meta,
-        };
-    };
 
     const toPersistedPayload = (item: MenuItem, parentId: string | null, sortOrder: number): Record<string, unknown> => {
         const raw = toRaw(item);

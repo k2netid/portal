@@ -195,6 +195,8 @@
     "failed": "Invalid credentials",
     "noAccount": "No account?",
     "link": "Sign in",
+    "or": "Or",
+    "google": "Sign in with Google",
     "captchaRequired": "Please complete the captcha.",
     "throttled": "Too many attempts. Please try again later.",
     "throttledRetry": "Too many attempts. Try again in {seconds}s.",
@@ -208,6 +210,16 @@
       "cancel": "Back",
       "invalid": "Invalid authentication code."
     }
+  },
+  "oauth": {
+    "completing": "Completing sign-in…",
+    "wait": "Please wait while we finish connecting your Google account.",
+    "missingToken": "Sign-in token missing. Please try again.",
+    "failed": "Google sign-in failed. Please try again.",
+    "registrationDisabled": "Reader registration is disabled. Ask an operator to create your account, or sign in with email if you already have one.",
+    "inactive": "This member account is not active.",
+    "unavailable": "Google sign-in is not available right now.",
+    "invalidState": "Google sign-in expired. Please try again."
   },
   "forgot": {
     "title": "Forgot password",
@@ -381,5 +393,33 @@
   "status": {
     "active": "Active",
     "inactive": "Inactive"
+  },
+  "billing": {
+    "nav": "Billing & Plans",
+    "title": "Billing & Subscriptions",
+    "subtitle": "Manage your internet subscriptions and payment history.",
+    "currentPlan": "Current Plan",
+    "noActivePlan": "No active subscription",
+    "noActivePlanDesc": "Choose a plan below to subscribe to K2NET services.",
+    "expires": "Valid until",
+    "usersIncluded": "Users Included:",
+    "storage": "Storage:",
+    "viewPlans": "View Available Plans",
+    "recentInvoices": "Recent Invoices",
+    "noInvoices": "No invoice history yet",
+    "payNow": "Pay Now",
+    "checkoutWorking": "Processing Checkout...",
+    "checkoutCreated": "Payment session created",
+    "checkoutFailed": "Failed to process payment",
+    "loading": "Loading billing data...",
+    "loadFailed": "Failed to load billing information",
+    "pendingCount": "{n} pending invoice(s)",
+    "selectPlan": "Select Plan",
+    "ordering": "Placing Order...",
+    "orderSuccess": "Order created successfully",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "/ month",
+    "perYear": "/ year"
   }
 }

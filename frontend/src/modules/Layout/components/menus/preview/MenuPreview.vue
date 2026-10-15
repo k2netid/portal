@@ -68,20 +68,72 @@
                       {{ item.title || 'Untitled' }}
                       <ChevronDown class="w-3 h-3" />
                     </button>
-                    <!-- Dropdown Preview -->
-                    <div class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-[opacity,transform] z-[100]">
-                      <div class="bg-card border border-border rounded-lg shadow-xl p-2 min-w-[200px]">
+                    <!-- Mega Menu Dropdown Preview -->
+                    <div
+                      v-if="isMegaMenu(item)"
+                      class="absolute top-full left-0 pt-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]"
+                      :class="getMegaWidthClass(item)"
+                    >
+                      <div class="bg-card border border-border rounded-xl shadow-2xl p-4" :class="getMegaGridClass(item)">
+                        <div
+                          v-for="(col, colIdx) in getMegaColumns(item)"
+                          :key="colIdx"
+                          class="space-y-2 min-w-0"
+                          :class="{ 'border-r border-border/60 pr-3': Boolean(item.mega_menu_show_dividers || (item.metadata as any)?.mega_menu_show_dividers) && colIdx < getMegaColumns(item).length - 1 }"
+                        >
+                          <div v-if="col.heading" class="pb-1 border-b border-border/60">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">{{ col.heading }}</h4>
+                          </div>
+                          <div class="space-y-1">
+                            <div
+                              v-for="sub in col.items"
+                              :key="sub.id || sub._temp_id"
+                              class="p-2 rounded-lg hover:bg-muted/70 transition-colors flex items-start gap-2.5 cursor-pointer group/sub"
+                            >
+                              <component
+                                :is="getIcon(sub.icon)"
+                                v-if="sub.icon"
+                                class="w-4 h-4 text-primary shrink-0 mt-0.5"
+                              />
+                              <div class="flex-1 min-w-0">
+                                <div class="text-xs font-semibold text-foreground group-hover/sub:text-primary transition-colors flex items-center justify-between gap-1">
+                                  <span class="truncate">{{ sub.title || 'Untitled' }}</span>
+                                  <Badge v-if="sub.badge || (sub.metadata as any)?.badge" :variant="(sub.badge_color || (sub.metadata as any)?.badge_color || 'default') as any" class="text-[9px] px-1 py-0 shrink-0">
+                                    {{ sub.badge || (sub.metadata as any)?.badge }}
+                                  </Badge>
+                                </div>
+                                <p v-if="sub.description || (sub.metadata as any)?.description" class="text-[10px] text-muted-foreground line-clamp-1 mt-0.5">
+                                  {{ sub.description || (sub.metadata as any)?.description }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Standard Dropdown Preview -->
+                    <div
+                      v-else
+                      class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-[opacity,transform] z-[100]"
+                    >
+                      <div class="bg-card border border-border rounded-lg shadow-xl p-2 min-w-[220px] space-y-0.5">
                         <template
                           v-for="child in item.children"
                           :key="child.id || child._temp_id"
                         >
-                          <div class="px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-md cursor-pointer flex items-center gap-2">
-                            <component
-                              :is="getIcon(child.icon)"
-                              v-if="child.icon"
-                              class="w-4 h-4"
-                            />
-                            {{ child.title || 'Untitled' }}
+                          <div class="px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md cursor-pointer flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2 truncate">
+                              <component
+                                :is="getIcon(child.icon)"
+                                v-if="child.icon"
+                                class="w-4 h-4 text-primary shrink-0"
+                              />
+                              <span class="truncate">{{ child.title || 'Untitled' }}</span>
+                            </div>
+                            <Badge v-if="child.badge || (child.metadata as any)?.badge" :variant="(child.badge_color || (child.metadata as any)?.badge_color || 'default') as any" class="text-[9px] px-1 py-0 shrink-0">
+                              {{ child.badge || (child.metadata as any)?.badge }}
+                            </Badge>
                           </div>
                         </template>
                       </div>
@@ -267,6 +319,7 @@ const iconMap: Record<string, Component> = {
     Eye, ChevronDown, Monitor, Smartphone, Menu, LayoutGrid, Circle
 };
 import type { MenuItem } from '@/modules/Layout/types/menu';
+import { useMegaMenu } from '@/modules/Layout/composables/useMegaMenu';
 
 // UI Components
 import Dialog from '@/shared/components/ui/Dialog.vue';
@@ -276,6 +329,7 @@ import DialogTitle from '@/shared/components/ui/DialogTitle.vue';
 import DialogDescription from '@/shared/components/ui/DialogDescription.vue';
 import DialogFooter from '@/shared/components/ui/DialogFooter.vue';
 import Button from '@/shared/components/ui/Button.vue';
+import Badge from '@/shared/components/ui/Badge.vue';
 
 const { t } = useI18n();
 
@@ -297,9 +351,17 @@ const previewStyles = [
     { value: 'footer', label: 'Footer', icon: LayoutGrid }
 ];
 
-const getIcon = (iconName: string) => {
+const getIcon = (iconName?: string | null) => {
+    if (!iconName) return iconMap.Circle;
     return iconMap[iconName] || iconMap.Circle;
 };
+
+const {
+    isMegaMenu,
+    getMegaWidthClass,
+    getMegaGridClass,
+    getMegaColumns,
+} = useMegaMenu();
 
 const toggleMobileItem = (item: MenuItem) => {
     const id = item.id || item._temp_id!;

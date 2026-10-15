@@ -44,7 +44,15 @@ const routes: RouteRecordRaw[] = [
     {
         path: 'career',
         name: 'sarangenge-career',
-        alias: ['karir', 'bkk', 'bursa-kerja', 'alumni', 'pusat-karier'],
+        alias: [
+            'karir',
+            'bkk',
+            'bursa-kerja',
+            'alumni',
+            'pusat-karier',
+            'career_center',
+            'career-center',
+        ],
         component: publicThemePage,
         meta: { public: true, themePage: 'pages/CareerCenter' },
     },

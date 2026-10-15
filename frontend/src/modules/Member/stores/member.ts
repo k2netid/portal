@@ -122,6 +122,24 @@ export const useMemberStore = defineStore('member', {
             this.hydrated = true;
         },
 
+        async applyOAuthToken(token: string): Promise<void> {
+            this.token = token;
+            persistToken(token);
+            const response = await api.get('/member/me');
+            this.member = unwrapPayload<PublicMember>(response);
+            this.hydrated = true;
+            await this.fetchPortal();
+        },
+
+        async completeGoogleTwoFactor(pending: string, twoFactorCode: string): Promise<void> {
+            const response = await api.post('/public/member/auth/google/2fa', {
+                pending,
+                two_factor_code: twoFactorCode,
+            });
+            this.applyAuth(unwrapPayload<MemberAuthPayload>(response));
+            await this.fetchPortal();
+        },
+
         clear(): void {
             this.member = null;
             this.token = null;

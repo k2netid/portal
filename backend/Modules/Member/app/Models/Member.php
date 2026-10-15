@@ -17,6 +17,7 @@ use Modules\Member\Support\MemberPublicProfile;
  * @property string $id
  * @property string $name
  * @property string $email
+ * @property string|null $google_id
  * @property string|null $phone
  * @property string|null $avatar
  * @property string|null $bio
@@ -48,6 +49,7 @@ class Member extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'google_id',
         'phone',
         'avatar',
         'bio',

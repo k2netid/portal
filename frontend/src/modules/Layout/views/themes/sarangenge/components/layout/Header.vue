@@ -93,10 +93,117 @@
 
               <div
                 class="absolute top-full pt-2 z-[120] opacity-0 invisible -translate-y-1 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:pointer-events-auto group-focus-within/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:pointer-events-auto transition-all duration-200"
-                :class="idx >= 3 ? 'right-0 origin-top-right' : 'left-0 origin-top-left'"
+                :class="isMegaMenu(item)
+                  ? [getMegaWidthClass(item), idx >= 3 ? 'right-0 origin-top-right' : 'left-0 origin-top-left']
+                  : [idx >= 3 ? 'right-0 origin-top-right' : 'left-0 origin-top-left']"
               >
                 <div class="absolute -top-3 inset-x-0 h-4 bg-transparent" />
-                <div class="sarangenge-panel p-2 min-w-[240px] shadow-2xl border border-border/80 bg-card rounded-2xl space-y-1">
+
+                <!-- Mega Menu Dropdown -->
+                <div
+                  v-if="isMegaMenu(item)"
+                  class="sarangenge-panel p-5 shadow-2xl border border-border/80 bg-card rounded-2xl"
+                  :class="getMegaGridClass(item)"
+                >
+                  <div
+                    v-for="(col, colIdx) in getMegaColumns(item)"
+                    :key="colIdx"
+                    class="space-y-3 min-w-0"
+                    :class="{ 'border-r border-border/60 pr-4': showDividers(item) && colIdx < getMegaColumns(item).length - 1 }"
+                  >
+                    <!-- Column Heading -->
+                    <div v-if="col.heading" class="pb-1.5 border-b border-border/60 flex items-center justify-between">
+                      <h4 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">{{ col.heading }}</h4>
+                    </div>
+
+                    <!-- Column Items -->
+                    <div class="space-y-1">
+                      <template v-for="sub in col.items" :key="String(sub.id || sub.title || sub.url)">
+                        <a
+                          v-if="isExternalLink(sub.url)"
+                          :href="sub.url || '#'"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/sub"
+                        >
+                          <img
+                            v-if="sub.image"
+                            :src="sub.image"
+                            alt=""
+                            class="w-9 h-9 rounded-lg object-cover border border-border/60 shrink-0 mt-0.5"
+                          />
+                          <component
+                            :is="resolveItemIcon(sub)"
+                            v-else-if="resolveItemIcon(sub)"
+                            class="w-4 h-4 text-primary shrink-0 mt-0.5"
+                          />
+                          <div class="flex-1 min-w-0">
+                            <div class="text-xs font-bold text-foreground group-hover/sub:text-primary transition-colors flex items-center justify-between gap-1.5">
+                              <span class="truncate">{{ sub.title }}</span>
+                              <Badge
+                                v-if="getMenuItemBadge(sub)"
+                                :variant="resolveBadgeVariant(getMenuItemBadge(sub)?.color)"
+                                size="sm"
+                                class="shrink-0"
+                              >
+                                {{ getMenuItemBadge(sub)?.text }}
+                              </Badge>
+                            </div>
+                            <div
+                              v-if="sub.description"
+                              class="text-[11px] text-muted-foreground line-clamp-1 mt-0.5"
+                            >
+                              {{ sub.description }}
+                            </div>
+                          </div>
+                        </a>
+                        <router-link
+                          v-else
+                          :to="getInternalUrl(sub.url)"
+                          class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/sub focus:outline-none"
+                          :class="isDropdownChildActive(sub, col.items || [], route) ? '!bg-primary/10' : ''"
+                        >
+                          <img
+                            v-if="sub.image"
+                            :src="sub.image"
+                            alt=""
+                            class="w-9 h-9 rounded-lg object-cover border border-border/60 shrink-0 mt-0.5"
+                          />
+                          <component
+                            :is="resolveItemIcon(sub)"
+                            v-else-if="resolveItemIcon(sub)"
+                            class="w-4 h-4 text-primary shrink-0 mt-0.5"
+                          />
+                          <div class="flex-1 min-w-0">
+                            <div class="text-xs font-bold text-foreground group-hover/sub:text-primary transition-colors flex items-center justify-between gap-1.5">
+                              <span class="truncate">{{ sub.title }}</span>
+                              <Badge
+                                v-if="getMenuItemBadge(sub)"
+                                :variant="resolveBadgeVariant(getMenuItemBadge(sub)?.color)"
+                                size="sm"
+                                class="shrink-0"
+                              >
+                                {{ getMenuItemBadge(sub)?.text }}
+                              </Badge>
+                            </div>
+                            <div
+                              v-if="sub.description"
+                              class="text-[11px] text-muted-foreground line-clamp-1 mt-0.5"
+                            >
+                              {{ sub.description }}
+                            </div>
+                          </div>
+                        </router-link>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Standard Single Column Dropdown -->
+                <div
+                  v-else
+                  class="sarangenge-panel p-2 min-w-[240px] shadow-2xl border border-border/80 bg-card rounded-2xl space-y-1"
+                >
                   <template
                     v-for="child in item.children"
                     :key="String(child.id || child.title || child.url)"
@@ -108,9 +215,28 @@
                       rel="noopener noreferrer"
                       class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item"
                     >
-                      <div>
-                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors">
-                          {{ child.title }}
+                      <img
+                        v-if="child.image"
+                        :src="child.image"
+                        alt=""
+                        class="w-8 h-8 rounded-lg object-cover border border-border/60 shrink-0 mt-0.5"
+                      />
+                      <component
+                        :is="resolveItemIcon(child)"
+                        v-else-if="resolveItemIcon(child)"
+                        class="w-4 h-4 text-primary shrink-0 mt-0.5"
+                      />
+                      <div class="flex-1 min-w-0">
+                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors flex items-center justify-between gap-1">
+                          <span class="truncate">{{ child.title }}</span>
+                          <Badge
+                            v-if="getMenuItemBadge(child)"
+                            :variant="resolveBadgeVariant(getMenuItemBadge(child)?.color)"
+                            size="sm"
+                            class="shrink-0"
+                          >
+                            {{ getMenuItemBadge(child)?.text }}
+                          </Badge>
                         </div>
                         <div
                           v-if="child.description"
@@ -128,9 +254,28 @@
                       class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/70 transition-colors group/item focus:outline-none"
                       :class="isDropdownChildActive(child, item.children || [], route) ? '!bg-primary/10' : ''"
                     >
-                      <div>
-                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors">
-                          {{ child.title }}
+                      <img
+                        v-if="child.image"
+                        :src="child.image"
+                        alt=""
+                        class="w-8 h-8 rounded-lg object-cover border border-border/60 shrink-0 mt-0.5"
+                      />
+                      <component
+                        :is="resolveItemIcon(child)"
+                        v-else-if="resolveItemIcon(child)"
+                        class="w-4 h-4 text-primary shrink-0 mt-0.5"
+                      />
+                      <div class="flex-1 min-w-0">
+                        <div class="text-xs font-bold text-foreground group-hover/item:text-primary transition-colors flex items-center justify-between gap-1">
+                          <span class="truncate">{{ child.title }}</span>
+                          <Badge
+                            v-if="getMenuItemBadge(child)"
+                            :variant="resolveBadgeVariant(getMenuItemBadge(child)?.color)"
+                            size="sm"
+                            class="shrink-0"
+                          >
+                            {{ getMenuItemBadge(child)?.text }}
+                          </Badge>
                         </div>
                         <div
                           v-if="child.description"
@@ -428,37 +573,134 @@
                         v-for="child in item.children"
                         :key="String(child.id || child.title || child.url)"
                       >
-                        <a
-                          v-if="isExternalLink(child.url)"
-                          :href="child.url || '#'"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-foreground/80 hover:text-foreground hover:bg-muted/70 transition-colors"
-                          @click="closeMobileMenu"
+                        <!-- Column Group on Mobile -->
+                        <div
+                          v-if="child.type === 'column_group' || (child.children && child.children.length > 0)"
+                          class="pt-2 pb-1 space-y-1"
                         >
-                          <span>{{ child.title }}</span>
-                          <ExternalLink class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                        </a>
-                        <router-link
-                          v-else
-                          :to="getInternalUrl(child.url)"
-                          class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors"
-                          :class="isDropdownChildActive(child, item.children || [], route)
-                            ? 'bg-primary/15 text-primary font-bold border border-primary/20'
-                            : 'text-foreground/80 hover:text-foreground hover:bg-muted/70'"
-                          @click="closeMobileMenu"
-                        >
-                          <div>
-                            <span class="block">{{ child.title }}</span>
-                            <span
-                              v-if="child.description"
-                              class="text-[10px] text-muted-foreground line-clamp-1 mt-0.5"
+                          <div
+                            v-if="!child.hide_label && (child.heading || child.title)"
+                            class="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between"
+                          >
+                            <span>{{ child.heading || child.title }}</span>
+                            <Badge
+                              v-if="getMenuItemBadge(child)"
+                              :variant="resolveBadgeVariant(getMenuItemBadge(child)?.color)"
+                              size="sm"
                             >
-                              {{ child.description }}
-                            </span>
+                              {{ getMenuItemBadge(child)?.text }}
+                            </Badge>
                           </div>
-                          <ChevronRight class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                        </router-link>
+                          <div class="space-y-1 pl-2 border-l border-border/50">
+                            <template
+                              v-for="sub in (child.children || [])"
+                              :key="String(sub.id || sub.title || sub.url)"
+                            >
+                              <a
+                                v-if="isExternalLink(sub.url)"
+                                :href="sub.url || '#'"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-foreground/80 hover:text-foreground hover:bg-muted/70 transition-colors"
+                                @click="closeMobileMenu"
+                              >
+                                <span class="flex items-center gap-1.5">
+                                  <span>{{ sub.title }}</span>
+                                  <Badge
+                                    v-if="getMenuItemBadge(sub)"
+                                    :variant="resolveBadgeVariant(getMenuItemBadge(sub)?.color)"
+                                    size="sm"
+                                  >
+                                    {{ getMenuItemBadge(sub)?.text }}
+                                  </Badge>
+                                </span>
+                                <ExternalLink class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                              </a>
+                              <router-link
+                                v-else
+                                :to="getInternalUrl(sub.url)"
+                                class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors"
+                                :class="isDropdownChildActive(sub, child.children || [], route)
+                                  ? 'bg-primary/15 text-primary font-bold border border-primary/20'
+                                  : 'text-foreground/80 hover:text-foreground hover:bg-muted/70'"
+                                @click="closeMobileMenu"
+                              >
+                                <div>
+                                  <div class="flex items-center gap-1.5">
+                                    <span class="block">{{ sub.title }}</span>
+                                    <Badge
+                                      v-if="getMenuItemBadge(sub)"
+                                      :variant="resolveBadgeVariant(getMenuItemBadge(sub)?.color)"
+                                      size="sm"
+                                    >
+                                      {{ getMenuItemBadge(sub)?.text }}
+                                    </Badge>
+                                  </div>
+                                  <span
+                                    v-if="sub.description"
+                                    class="text-[10px] text-muted-foreground line-clamp-1 mt-0.5"
+                                  >
+                                    {{ sub.description }}
+                                  </span>
+                                </div>
+                                <ChevronRight class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                              </router-link>
+                            </template>
+                          </div>
+                        </div>
+
+                        <!-- Standard Child Item -->
+                        <template v-else>
+                          <a
+                            v-if="isExternalLink(child.url)"
+                            :href="child.url || '#'"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-foreground/80 hover:text-foreground hover:bg-muted/70 transition-colors"
+                            @click="closeMobileMenu"
+                          >
+                            <span class="flex items-center gap-1.5">
+                              <span>{{ child.title }}</span>
+                              <Badge
+                                v-if="getMenuItemBadge(child)"
+                                :variant="resolveBadgeVariant(getMenuItemBadge(child)?.color)"
+                                size="sm"
+                              >
+                                {{ getMenuItemBadge(child)?.text }}
+                              </Badge>
+                            </span>
+                            <ExternalLink class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                          </a>
+                          <router-link
+                            v-else
+                            :to="getInternalUrl(child.url)"
+                            class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors"
+                            :class="isDropdownChildActive(child, item.children || [], route)
+                              ? 'bg-primary/15 text-primary font-bold border border-primary/20'
+                              : 'text-foreground/80 hover:text-foreground hover:bg-muted/70'"
+                            @click="closeMobileMenu"
+                          >
+                            <div>
+                              <div class="flex items-center gap-1.5">
+                                <span class="block">{{ child.title }}</span>
+                                <Badge
+                                  v-if="getMenuItemBadge(child)"
+                                  :variant="resolveBadgeVariant(getMenuItemBadge(child)?.color)"
+                                  size="sm"
+                                >
+                                  {{ getMenuItemBadge(child)?.text }}
+                                </Badge>
+                              </div>
+                              <span
+                                v-if="child.description"
+                                class="text-[10px] text-muted-foreground line-clamp-1 mt-0.5"
+                              >
+                                {{ child.description }}
+                              </span>
+                            </div>
+                            <ChevronRight class="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                          </router-link>
+                        </template>
                       </template>
                     </div>
                   </div>
@@ -601,6 +843,7 @@ import {
 } from 'lucide-vue-next';
 import {
   Button,
+  Badge,
   ThemeToggle,
   DropdownMenu,
   DropdownMenuTrigger,
@@ -609,6 +852,7 @@ import {
 } from '@/modules/Layout/views/themes/sarangenge/ui';
 import { useTheme } from '@/modules/Layout/composables/useTheme';
 import { useMenu } from '@/modules/Layout/composables/useMenu';
+import { useMegaMenu } from '@/modules/Layout/composables/useMegaMenu';
 import { useThemeI18n } from '@/modules/Layout/composables/useThemeI18n';
 import { useLanguage } from '@/shared/composables/useLanguage';
 import { useResponsiveDevice } from '@/shared/composables/useResponsiveDevice';
@@ -631,6 +875,37 @@ const { locale } = useI18n({ useScope: 'global' });
 const { t: tt } = useThemeI18n('sarangenge');
 const { getSetting } = useTheme();
 const { menus, fetchMenuByIdentifier } = useMenu();
+const {
+  isMegaMenu,
+  getMegaWidthClass,
+  getMegaGridClass,
+  showDividers,
+  getMegaColumns,
+  getMenuItemBadge,
+} = useMegaMenu();
+
+const resolveBadgeVariant = (color?: string | null): 'default' | 'teal' | 'sun' | 'outline' | 'success' | 'warning' => {
+  if (!color) return 'default';
+  const c = color.toLowerCase();
+  if (c === 'primary' || c === 'teal') return 'teal';
+  if (c === 'sun' || c === 'warning' || c === 'amber') return 'sun';
+  if (c === 'success' || c === 'emerald') return 'success';
+  if (c === 'destructive' || c === 'rose' || c === 'red') return 'warning';
+  if (c === 'outline' || c === 'secondary') return 'outline';
+  return 'default';
+};
+
+const iconLookup: Record<string, any> = {
+  Home, GraduationCap, Building, Briefcase, Newspaper, PhoneCall,
+  Users, BookOpen, Award, Globe, ExternalLink, MessageCircle
+};
+
+const resolveItemIcon = (item: MenuItem) => {
+  if (item.icon && iconLookup[item.icon]) {
+    return iconLookup[item.icon];
+  }
+  return null;
+};
 const { setLanguage, initializeLanguage, currentLanguageCode, languages, getLanguageFlag } = useLanguage();
 const device = useResponsiveDevice();
 const memberStore = useMemberStore();
@@ -817,12 +1092,13 @@ const defaultNavItems = computed((): MenuItem[] => [
     type: 'custom',
     sort_order: 2,
     children: [
-      { id: 'sg-nav-prog-dpib', title: 'DPIB (Desain Bangunan)', url: '/programs#dpib', type: 'custom', description: 'Arsitektur & Pemodelan BIM' },
-      { id: 'sg-nav-prog-titl', title: 'TITL (Teknik Listrik)', url: '/programs#titl', type: 'custom', description: 'Ketenagalistrikan & Otomasi PLC' },
-      { id: 'sg-nav-prog-tpm', title: 'TPM (Teknik Pemesinan)', url: '/programs#tpm', type: 'custom', description: 'CNC Milling & Bubut Presisi' },
-      { id: 'sg-nav-prog-tkro', title: 'TKRO (Teknik Otomotif)', url: '/programs#tkro', type: 'custom', description: 'Perawatan Kendaraan Ringan' },
-      { id: 'sg-nav-prog-tav', title: 'TAV (Audio Video)', url: '/programs#tav', type: 'custom', description: 'Elektronika & Smart IoT' },
-      { id: 'sg-nav-prog-tflm', title: 'TFLM (Pengelasan)', url: '/programs#tflm', type: 'custom', description: 'Fabrikasi Logam & Las Industri' },
+      { id: 'sg-nav-prog-tkro', title: 'TKRO (Teknik Kendaraan Ringan)', url: '/blog/tkro', type: 'custom', description: 'Teknik Kendaraan Ringan Otomotif' },
+      { id: 'sg-nav-prog-tbsm', title: 'TBSM (Sepeda Motor)', url: '/blog/tbsm', type: 'custom', description: 'Teknik dan Bisnis Sepeda Motor' },
+      { id: 'sg-nav-prog-tjkt', title: 'TJKT (Jaringan Komputer)', url: '/blog/tjkt', type: 'custom', description: 'Jaringan Komputer & Telekomunikasi' },
+      { id: 'sg-nav-prog-dkv', title: 'DKV (Komunikasi Visual)', url: '/blog/dkv', type: 'custom', description: 'Desain Grafis, Animasi & Media Digital' },
+      { id: 'sg-nav-prog-mplb', title: 'MPLB (Manajemen Perkantoran)', url: '/blog/mplb', type: 'custom', description: 'Manajemen Perkantoran & Bisnis' },
+      { id: 'sg-nav-prog-akl', title: 'AKL (Akuntansi)', url: '/blog/akl', type: 'custom', description: 'Akuntansi & Keuangan Lembaga' },
+      { id: 'sg-nav-prog-kuliner', title: 'Kuliner (Tata Boga)', url: '/blog/kuliner', type: 'custom', description: 'Seni Kuliner & Pengolahan Makanan' },
     ],
   },
   {

@@ -90,6 +90,30 @@ export function useSarangengeIdentity() {
     return '';
   });
 
+  const displayPrincipalTitle = computed(() => {
+    const fromTheme = getSetting('principal_title', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
+    return `Kepala ${displaySchoolName.value}`;
+  });
+
+  const displayPrincipalImage = computed(() => {
+    const fromTheme = getSetting('principal_image', '') || getSetting('school_principal_image', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
+    return '';
+  });
+
+  const displayPrincipalQuote = computed(() => {
+    const fromTheme = getSetting('principal_quote', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
+    return 'Membangun generasi terampil, berkarakter, dan siap menghadapi tantangan era digital dan industri modern.';
+  });
+
+  const displaySchoolVision = computed(() => {
+    const fromTheme = getSetting('school_vision', '');
+    if (fromTheme && typeof fromTheme === 'string' && fromTheme.trim()) return fromTheme.trim();
+    return 'Menjadi institusi pendidikan teladan yang mencetak insan beriman, berakhlak mulia, unggul dalam sains dan teknologi, serta berdaya saing global pada tahun 2030.';
+  });
+
   const phoneDialHref = computed(() => {
     if (!displayPhone.value) return '';
     return `tel:${displayPhone.value.replace(/[^0-9+]/g, '')}`;
@@ -130,6 +154,10 @@ export function useSarangengeIdentity() {
     displayAccreditation,
     displayNpsn,
     displayPrincipalName,
+    displayPrincipalTitle,
+    displayPrincipalImage,
+    displayPrincipalQuote,
+    displaySchoolVision,
     phoneDialHref,
     whatsAppUrl,
     isPpdbOpen,

@@ -44,10 +44,12 @@ class MemberServiceProvider extends ServiceProvider
             }
             MemberPermissionSeeder::ensure();
             $this->ensureMemberRegistrationSetting();
+            $this->ensureMemberGoogleSettings();
         });
 
         $this->ensurePermissionsIfMissing();
         $this->ensureMemberRegistrationSetting();
+        $this->ensureMemberGoogleSettings();
     }
 
     protected function ensureMemberRegistrationSetting(): void
@@ -65,6 +67,36 @@ class MemberServiceProvider extends ServiceProvider
                     'type' => 'boolean',
                 ],
             );
+        } catch (\Throwable) {
+            // Avoid boot failure if settings table is mid-migrate.
+        }
+    }
+
+    protected function ensureMemberGoogleSettings(): void
+    {
+        try {
+            if (! Schema::hasTable('sys_settings')) {
+                return;
+            }
+
+            foreach ([
+                ['key' => 'enable_member_google_login', 'value' => '1', 'type' => 'boolean'],
+                ['key' => 'member_google_client_id', 'value' => '', 'type' => 'string'],
+                ['key' => 'member_google_client_secret', 'value' => '', 'type' => 'password'],
+            ] as $row) {
+                $setting = Setting::query()->firstOrCreate(
+                    ['key' => $row['key']],
+                    [
+                        'value' => $row['value'],
+                        'group' => 'integrations',
+                        'type' => $row['type'],
+                    ],
+                );
+                // Keep Google OAuth knobs under Integrations (not Security).
+                if ($setting->group !== 'integrations') {
+                    $setting->forceFill(['group' => 'integrations'])->save();
+                }
+            }
         } catch (\Throwable) {
             // Avoid boot failure if settings table is mid-migrate.
         }

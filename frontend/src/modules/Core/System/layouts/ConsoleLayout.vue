@@ -25,7 +25,7 @@
     <!-- Main Content -->
     <div
       :class="[
-        'min-h-screen',
+        'min-h-screen transition-all duration-200',
         sidebarMinimized ? 'lg:pl-[68px]' : 'lg:pl-64'
       ]"
     >
@@ -43,7 +43,7 @@
         :class="route.meta?.fullWidth ? 'p-3.5 sm:p-4 lg:p-5' : 'p-6 lg:p-8'"
       >
         <div
-          class="w-full transition-all duration-200"
+          class="w-full mx-auto transition-all duration-200"
           :class="route.meta?.fullWidth ? 'max-w-none' : 'console-content-wrap'"
         >
         <router-view v-slot="{ Component, route: slotRoute }">

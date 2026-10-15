@@ -52,9 +52,19 @@ const definition: MenuItemDefinition = {
             label: 'layout.menus.form.megaMenuLayout',
             options: [
                 { label: 'layout.menus.form.options.default', value: 'default' },
-                { label: 'layout.menus.form.options.mega', value: 'mega' }
+                { label: 'layout.menus.form.options.grid2', value: 'grid-2' },
+                { label: 'layout.menus.form.options.grid3', value: 'grid-3' },
+                { label: 'layout.menus.form.options.grid4', value: 'grid-4' },
+                { label: 'layout.menus.form.options.full', value: 'full' }
             ],
             default: 'default',
+            group: 'mega_menu'
+        },
+        {
+            key: 'mega_menu_show_dividers',
+            type: 'boolean',
+            label: 'layout.menus.form.showDividers',
+            default: false,
             group: 'mega_menu'
         },
         {

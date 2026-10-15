@@ -24,6 +24,9 @@ class PublicSettingsController extends BaseApiController
         $payload = [
             'enable_registration' => (bool) Setting::get('enable_registration', true),
             'enable_member_registration' => (bool) Setting::get('enable_member_registration', true),
+            'enable_member_google_login' => (bool) Setting::get('enable_member_google_login', true)
+                && filled(Setting::get('member_google_client_id') ?: config('services.google.client_id'))
+                && filled(Setting::get('member_google_client_secret') ?: config('services.google.client_secret')),
             'require_email_verification' => (bool) Setting::get('require_email_verification', true),
             'enable_2fa' => (bool) Setting::get('enable_2fa', false),
             'password_policy' => app(PasswordPolicyPortInterface::class)->requirements(),

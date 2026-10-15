@@ -23,7 +23,7 @@ class MenuItemUrlValidator
         }
 
         if (! str_contains($trimmed, ':')) {
-            return ! str_starts_with($trimmed, '#');
+            return true;
         }
 
         $scheme = strtolower((string) parse_url($trimmed, PHP_URL_SCHEME));

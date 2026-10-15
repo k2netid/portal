@@ -6,6 +6,7 @@ use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -296,7 +297,9 @@ class MediaService implements MediaLibrarySyncInterface, MediaServiceInterface
         $thumbTrash = '.trash/thumbnails/'.uniqid().'_'.basename($media->thumbnail_path);
         Storage::disk($media->disk)->makeDirectory('.trash/thumbnails');
         Storage::disk($media->disk)->move($media->thumbnail_path, $thumbTrash);
-        $media->forceFill(['thumbnail_path' => $thumbTrash])->save();
+        if (Schema::hasColumn($media->getTable(), 'thumbnail_path')) {
+            $media->forceFill(['thumbnail_path' => $thumbTrash])->save();
+        }
     }
 
     /**
@@ -321,7 +324,9 @@ class MediaService implements MediaLibrarySyncInterface, MediaServiceInterface
 
         if (Storage::disk($media->disk)->exists($media->thumbnail_path)) {
             Storage::disk($media->disk)->move($media->thumbnail_path, $newThumbPath);
-            $media->forceFill(['thumbnail_path' => $newThumbPath])->save();
+            if (Schema::hasColumn($media->getTable(), 'thumbnail_path')) {
+                $media->forceFill(['thumbnail_path' => $newThumbPath])->save();
+            }
         }
     }
 

@@ -30,7 +30,7 @@
     <Input 
       v-else-if="setting.type === 'number'"
       type="number"
-      :model-value="(value as number)"
+      :model-value="resolvedNumberValue"
       :min="setting.min"
       :max="setting.max"
       class="h-8"
@@ -40,7 +40,7 @@
     <!-- Select -->
     <Select 
       v-else-if="setting.type === 'select'"
-      :model-value="String(value)"
+      :model-value="resolvedSelectValue"
       @update:model-value="$emit('update', $event)"
     >
       <SelectTrigger class="h-10" :aria-label="setting.label">
@@ -64,7 +64,7 @@
     >
       <Checkbox 
         :id="setting.key"
-        :checked="Boolean(value)"
+        :checked="resolvedBooleanValue"
         @update:checked="$emit('update', $event)"
       />
       <Label
@@ -161,6 +161,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   X,
@@ -190,10 +191,37 @@ const emit = defineEmits<{
     (e: 'update', value: PropertyValue): void;
 }>();
 
-defineProps<{
+const props = defineProps<{
     setting: MenuItemSetting;
     value?: PropertyValue;
 }>();
+
+const resolvedSelectValue = computed(() => {
+    if (props.value !== undefined && props.value !== null && props.value !== '') {
+        return String(props.value);
+    }
+    if (props.setting.default !== undefined && props.setting.default !== null) {
+        return String(props.setting.default);
+    }
+    return '';
+});
+
+const resolvedNumberValue = computed(() => {
+    if (props.value !== undefined && props.value !== null && !Number.isNaN(Number(props.value))) {
+        return Number(props.value);
+    }
+    if (props.setting.default !== undefined && props.setting.default !== null) {
+        return Number(props.setting.default);
+    }
+    return 0;
+});
+
+const resolvedBooleanValue = computed(() => {
+    if (props.value !== undefined && props.value !== null) {
+        return Boolean(props.value);
+    }
+    return Boolean(props.setting.default);
+});
 
 const handleMediaSelect = (media: { url: string }) => {
     if (media && media.url) {

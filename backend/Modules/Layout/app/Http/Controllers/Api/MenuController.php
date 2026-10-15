@@ -96,7 +96,7 @@ class MenuController extends BaseApiController
 
     public function show(Menu $menu): JsonResponse
     {
-        return $this->success($menu->load('parentItems.children'), 'Menu retrieved successfully');
+        return $this->success($menu->load('parentItems.children.children'), 'Menu retrieved successfully');
     }
 
     /**
@@ -108,7 +108,7 @@ class MenuController extends BaseApiController
             return $this->success(null, 'Menu not available');
         }
 
-        return $this->success($menu->load('parentItems.children'), 'Menu retrieved successfully');
+        return $this->success($menu->load('parentItems.children.children'), 'Menu retrieved successfully');
     }
 
     public function update(Request $request, Menu $menu): JsonResponse
@@ -409,7 +409,7 @@ class MenuController extends BaseApiController
             ->where('location', $location)
             ->where('is_active', true)
             ->orderByDesc('updated_at')
-            ->with(['parentItems.children'])
+            ->with(['parentItems.children.children'])
             ->first());
 
         if (! $menu) {

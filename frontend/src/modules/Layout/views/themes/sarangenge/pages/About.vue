@@ -47,8 +47,17 @@
         <!-- Sambutan Kepala Sekolah -->
         <div class="sarangenge-panel p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-4 flex flex-col items-center text-center space-y-3">
-            <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl bg-slate-900 border-2 border-amber-500/60 p-1 shadow-xl">
-              <div class="w-full h-full rounded-[1.3rem] bg-slate-950 flex items-center justify-center text-amber-400 font-black text-3xl">
+            <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl bg-slate-900 border-2 border-amber-500/60 p-1 shadow-xl overflow-hidden">
+              <img
+                v-if="displayPrincipalImage"
+                :src="displayPrincipalImage"
+                :alt="displayPrincipalName"
+                class="w-full h-full object-cover rounded-[1.3rem]"
+              >
+              <div
+                v-else
+                class="w-full h-full rounded-[1.3rem] bg-slate-950 flex items-center justify-center text-amber-400 font-black text-3xl"
+              >
                 KS
               </div>
             </div>
@@ -57,7 +66,7 @@
                 {{ displayPrincipalName }}
               </h3>
               <p class="text-xs text-primary font-bold">
-                Kepala {{ displaySchoolName }}
+                {{ displayPrincipalTitle }}
               </p>
             </div>
           </div>
@@ -68,12 +77,44 @@
               Sambutan Kepala Sekolah
             </h2>
             <div class="text-muted-foreground text-sm sm:text-base leading-relaxed space-y-3">
-              <p>
-                "Selamat datang di portal resmi {{ displaySchoolName }}. Kami mendedikasikan ekosistem pembelajaran holistik berstandar industri dan berakar pada nilai karakter unggul."
+              <p class="italic text-foreground font-medium">
+                "{{ displayPrincipalQuote }}"
               </p>
               <p>
-                "Kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam integritas budi pekerti, dan percaya diri menjadi pelopor kemajuan di era global."
+                "Selamat datang di portal resmi {{ displaySchoolName }}. Kami mendedikasikan ekosistem pembelajaran vokasi berkualitas berstandar industri dengan sertifikasi kompetensi nasional dan pembinaan akhlak mulia."
               </p>
+              <p>
+                "Kami membina setiap peserta didik agar senantiasa mencintai ilmu, bertumbuh dalam integritas karakter, dan percaya diri menjadi pelopor kemajuan di dunia usaha dan industri."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Identitas Resmi & Legalitas Grid (tampil jika NPSN atau Akreditasi terkonfigurasi) -->
+        <div
+          v-if="displayNpsn || displayAccreditation"
+          class="sarangenge-panel p-6 sm:p-8 bg-gradient-to-r from-card to-primary/5 space-y-4"
+        >
+          <div class="flex items-center gap-2 text-primary font-bold text-sm">
+            <ShieldCheck class="w-5 h-5" />
+            <span>Identitas & Legalitas Resmi Satuan Pendidikan</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm">
+            <div v-if="displayNpsn">
+              <span class="text-muted-foreground block text-[11px]">NPSN Resmi</span>
+              <span class="font-bold text-foreground font-heading">{{ displayNpsn }}</span>
+            </div>
+            <div v-if="displayAccreditation">
+              <span class="text-muted-foreground block text-[11px]">Status Akreditasi</span>
+              <span class="font-bold text-foreground font-heading">{{ displayAccreditation }}</span>
+            </div>
+            <div>
+              <span class="text-muted-foreground block text-[11px]">Sertifikasi Kejuruan</span>
+              <span class="font-bold text-foreground font-heading">LSP-P1 / BNSP Terakreditasi</span>
+            </div>
+            <div>
+              <span class="text-muted-foreground block text-[11px]">Model Pembelajaran</span>
+              <span class="font-bold text-foreground font-heading">Teaching Factory & Kurikulum Industri</span>
             </div>
           </div>
         </div>
@@ -88,8 +129,8 @@
             <h3 class="text-2xl font-bold text-foreground font-heading">
               {{ t('pages.about.visionTitle', 'Visi Sekolah') }}
             </h3>
-            <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              "Menjadi institusi pendidikan teladan yang mencetak insan beriman, berakhlak mulia, unggul dalam sains dan teknologi, serta berdaya saing global pada tahun 2030."
+            <p class="text-muted-foreground text-sm sm:text-base leading-relaxed italic">
+              "{{ displaySchoolVision }}"
             </p>
           </div>
 
@@ -104,15 +145,15 @@
             <ul class="space-y-2 text-sm text-muted-foreground leading-relaxed">
               <li class="flex items-start gap-2">
                 <span class="text-primary font-bold">1.</span>
-                <span>Menyelenggarakan proses pembelajaran interaktif berbasis riset, sains, dan teknologi masa depan.</span>
+                <span>Meningkatkan mutu Sumber Daya Manusia melalui dukungan Imtaq dan Iptek terapan berstandar global.</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-primary font-bold">2.</span>
-                <span>Membina karakter kepemimpinan, integritas, toleransi, dan adab mulia dalam kehidupan sehari-hari.</span>
+                <span>Memberikan layanan prima dalam semua aspek sarana dan prasarana untuk menghasilkan tenaga kerja yang kompeten dan mandiri.</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-primary font-bold">3.</span>
-                <span>Mengembangkan potensi minat, bakat, kreativitas seni, dan kebugaran jasmani peserta didik secara optimal.</span>
+                <span>Menciptakan tamatan yang berpengetahuan luas, memiliki etos kerja tinggi, kepribadian tangguh, dan akhlak terpuji.</span>
               </li>
             </ul>
           </div>
@@ -169,15 +210,24 @@ import { useThemeHashScroll } from '@/modules/Layout/composables/useThemeHashScr
 import { Building2, Quote, Target, Compass, ShieldCheck, Heart, Sparkles, Users } from 'lucide-vue-next';
 
 const { t } = useThemeI18n('sarangenge');
-const { displaySchoolName, displayPrincipalName } = useSarangengeIdentity();
+const {
+  displaySchoolName,
+  displayPrincipalName,
+  displayPrincipalTitle,
+  displayPrincipalImage,
+  displayPrincipalQuote,
+  displaySchoolVision,
+  displayNpsn,
+  displayAccreditation,
+} = useSarangengeIdentity();
 const { pageData, cmsBody, builderBlocks, hasBuilderBlocks } = useThemePageOverride('about');
 
 useThemeHashScroll(128);
 
 const coreValues = [
-  { icon: ShieldCheck, title: 'Integritas & Adab', desc: 'Menjunjung tinggi kejujuran, tanggung jawab moral, dan sopan santun dalam setiap tindakan.' },
-  { icon: Sparkles, title: 'Keunggulan Sains', desc: 'Berpikir kritis, inovatif, dan berani meneliti pemecahan masalah nyata di masyarakat.' },
-  { icon: Heart, title: 'Empati & Kepedulian', desc: 'Menumbuhkan rasa solidaritas, kepedulian sosial, serta cinta lingkungan hidup.' },
-  { icon: Users, title: 'Kolaborasi Global', desc: 'Mampu bekerja sama lintas disiplin dan berwawasan internasional dengan akar budaya lokal.' },
+  { icon: ShieldCheck, title: 'Integritas & Karakter', desc: 'Menjunjung tinggi kejujuran, tanggung jawab moral, dan etos kerja industri.' },
+  { icon: Sparkles, title: 'Kompetensi Terapan', desc: 'Terampil menguasai teknologi dan prosedur kerja profesional bersertifikat BNSP.' },
+  { icon: Heart, title: 'Empati & Mandiri', desc: 'Menumbuhkan jiwa kepedulian sosial, gotong royong, dan kemandirian wirausaha.' },
+  { icon: Users, title: 'Sinergi Industri', desc: 'Mampu berkolaborasi aktif dengan dunia usaha dan dunia industri (DUDI).' },
 ];
 </script>

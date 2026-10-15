@@ -39,6 +39,20 @@
               {{ typeLabel }}
             </Badge>
             <Badge
+              v-if="item.mega_menu_layout && item.mega_menu_layout !== 'default'"
+              variant="secondary"
+              class="text-[10px] px-1.5 py-0 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-800/80 font-mono"
+            >
+              Mega: {{ item.mega_menu_layout }}
+            </Badge>
+            <Badge
+              v-if="item.mega_menu_column"
+              variant="outline"
+              class="text-[10px] px-1 py-0 border-dashed text-muted-foreground"
+            >
+              Col {{ item.mega_menu_column }}
+            </Badge>
+            <Badge
               v-if="item.badge"
               :variant="(item.badge_color as any) || 'default'"
               class="text-[10px]"

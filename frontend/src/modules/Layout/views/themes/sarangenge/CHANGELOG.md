@@ -11,6 +11,9 @@ Docs index: `docs/themes/sarangenge/`.
 
 ### Added
 
+- **Mega Menu Container & Navigation Parity**: Implementation plan for multi-column mega menu dropdowns, column groups, badge indicators, and promotional media cards ([ADR-028](../../../../../../docs/adr/ADR-028-menu-builder-properties-mega-menu-and-multi-theme-parity.md)).
+- **Dynamic Identity Bindings**: Added reactive composable `useSarangengeIdentity.ts` for principal portrait, name, credentials, quote, and vision statement, bound dynamically to `About.vue` and `VocationalTrackFinder.vue`.
+- **7 Vocational Tracks Default Navigation**: Aligned `Header.vue` and sample data `bundle.json` with authentic vocational tracks (`tkro`, `tbsm`, `tjkt`, `dkv`, `mplb`, `akl`, `kuliner`) and Career/BKK link.
 - `contact_form_slug` setting (theme.json + customizer); Contact submit uses Reach slug URL
 
 ### Changed

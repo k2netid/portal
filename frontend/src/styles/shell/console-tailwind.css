@@ -23,15 +23,5 @@
 @source '../../LandingApp.vue';
 @source '../../main-landing.ts';
 
-@source '../../modules/Core/**/*.{vue,ts,js}';
-@source '../../modules/Intelligence/**/*.{vue,ts,js}';
-
-@source '../../modules/Content/Publishing/**/*.{vue,ts,js}';
-@source '../../modules/Content/Media/**/*.{vue,ts,js}';
-@source '../../modules/Content/Forms/**/*.{vue,ts,js}';
-@source '../../modules/Content/Library/**/*.{vue,ts,js}';
-@source '../../modules/Content/Studio/**/*.{vue,ts,js}';
-
-/* Layout module without Janari theme pages (public-only markup/classes). */
-@source '../../modules/Content/Layout/**/*.{vue,ts,js}';
-@source not '../../modules/Content/Layout/views/themes/janari/**/*';
+@source '../../modules/**/*.{vue,ts,js}';
+@source not '../../modules/Layout/views/themes/janari/**/*';

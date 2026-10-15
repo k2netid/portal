@@ -353,6 +353,9 @@ class FoundationSeeder extends Seeder
             // Security
             ['key' => 'enable_registration', 'value' => '0', 'group' => 'security', 'type' => 'boolean'],
             ['key' => 'enable_member_registration', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
+            ['key' => 'enable_member_google_login', 'value' => '1', 'group' => 'integrations', 'type' => 'boolean'],
+            ['key' => 'member_google_client_id', 'value' => '', 'group' => 'integrations', 'type' => 'string'],
+            ['key' => 'member_google_client_secret', 'value' => '', 'group' => 'integrations', 'type' => 'password'],
             ['key' => 'require_email_verification', 'value' => '1', 'group' => 'security', 'type' => 'boolean'],
             ['key' => 'enable_2fa', 'value' => '0', 'group' => 'security', 'type' => 'boolean'],
             ['key' => 'two_factor_method', 'value' => 'authenticator', 'group' => 'security', 'type' => 'string'],

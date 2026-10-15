@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Module version → `1.1.8`
+- **ADR-028 Menu Builder Properties & Mega Menu Parity**: Architectural decision record, unified mega menu schema (`grid-2`, `grid-3`, `grid-4`, `full`), `column_group` structural hierarchy, and public theme parity specification ([ADR-028](../../../../docs/adr/ADR-028-menu-builder-properties-mega-menu-and-multi-theme-parity.md)).
+- **Menu Builder Core Engine Implementation**:
+  - Created shared composable `useMegaMenu.ts` supporting column extraction (`column_group`, explicit numbers, and auto-distribution), container widths, grid classes, and badge styling.
+  - Upgraded `useMenu.ts` with recursive `hydrateTree` to unpack JSON `metadata` into top-level properties on all public menu endpoints.
+  - Enhanced `ItemPropertiesPanel.vue` and `ItemPropertyField.vue` fixing select binding string casts and synchronizing direct & metadata mutations.
+  - Enhanced `MenuPreview.vue` with live multi-column mega menu rendering, column headers, dividers, badges, and mobile submenu toggling.
+  - Upgraded Sarangenge `Header.vue` with full desktop Mega Menu renderer and structured mobile drawer accordion for `column_group` items.
+  - Added visual canvas badges (`Mega: {layout}`, `Col {num}`) in `MenuItemWrapper.vue`.
+- **Menu Builder Specification & Runbook**: Architecture document `docs/architecture/07-menu-builder-and-mega-menu.md` and working note `docs/work/2026-09-20-menu-builder-and-mega-menu-parity.md`.
 - Module version → `1.1.7`
 - Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
 - `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.

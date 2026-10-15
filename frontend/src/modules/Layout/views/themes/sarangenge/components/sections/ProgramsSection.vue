@@ -21,7 +21,7 @@
 
         <Button
           as="router-link"
-          to="/solusi"
+          to="/programs"
           variant="outline"
           size="md"
           class="self-start md:self-auto shrink-0"

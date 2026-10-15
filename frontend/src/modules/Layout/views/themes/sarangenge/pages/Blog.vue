@@ -115,16 +115,19 @@ const selectedCategory = ref('');
 
 const categories = computed(() => [
   { name: t('pages.blog.allCategories', 'Semua Warta'), slug: '' },
-  { name: t('pages.blog.catPpdb', 'Pengumuman & PPDB'), slug: 'ppdb' },
+  { name: t('pages.blog.catPpdb', 'Pengumuman & PPDB'), slug: 'pengumuman' },
   { name: t('pages.blog.catPrestasi', 'Prestasi Siswa'), slug: 'prestasi' },
-  { name: t('pages.blog.catKegiatan', 'Kegiatan Kesiswaan'), slug: 'kegiatan' },
-  { name: t('pages.blog.catAkademik', 'Akademik & Kurikulum'), slug: 'akademik' },
+  { name: t('pages.blog.catKegiatan', 'Berita & Kegiatan'), slug: 'berita' },
+  { name: t('pages.blog.catAgenda', 'Agenda Sekolah'), slug: 'agenda' },
+  { name: t('pages.blog.catProgram', 'Program Keahlian'), slug: 'program-keahlian' },
 ]);
 
 const filteredPosts = computed(() => {
   if (!selectedCategory.value) return posts.value;
   return posts.value.filter((p) => {
-    return p.category?.slug === selectedCategory.value || (p.category?.name || '').toLowerCase().includes(selectedCategory.value);
+    return p.category?.slug === selectedCategory.value ||
+      (p.category?.slug && p.category.slug.includes(selectedCategory.value)) ||
+      (p.category?.name || '').toLowerCase().includes(selectedCategory.value);
   });
 });
 

@@ -1,6 +1,6 @@
 <template>
   <aside
-    :class="[ 'fixed inset-y-0 left-0 z-50 bg-sidebar text-sidebar-foreground border-r border-border', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0', sidebarMinimized ? 'w-[68px]' : 'w-64' ]"
+    :class="[ 'fixed inset-y-0 left-0 z-50 bg-sidebar text-sidebar-foreground border-r border-border transition-all duration-200', sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0', sidebarMinimized ? 'w-[68px]' : 'w-64' ]"
   >
     <!-- Floating Toggle Button (Desktop) -->
     <button

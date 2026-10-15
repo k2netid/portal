@@ -40,6 +40,7 @@ export interface MenuItem {
     // Media / Mega Menu
     image?: string | null;
     image_size?: string;
+    is_mega_menu?: boolean;
     mega_menu_layout?: string;
     mega_menu_column?: number;
     mega_menu_show_dividers?: boolean;
@@ -72,6 +73,7 @@ export interface MenuItemDTO {
     is_active?: number | boolean;
     image?: string | null;
     image_size?: string;
+    is_mega_menu?: boolean;
     mega_menu_layout?: string;
     mega_menu_column?: number;
     mega_menu_show_dividers?: boolean;

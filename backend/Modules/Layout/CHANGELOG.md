@@ -5,6 +5,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- **ADR-028 Menu Builder Properties, Mega Menu Architecture, and URL Anchor Validation**: Documented architectural decision, allowance of anchor URLs (`#`, `#anchor`) in `MenuItemUrlValidator.php`, and 3-level eager loading (`parentItems.children.children`) in `MenuController.php` ([ADR-028](../../docs/adr/ADR-028-menu-builder-properties-mega-menu-and-multi-theme-parity.md)).
+- **Theme Demo Seeder Soft-Deleted Content Restoration**: Enhanced `SarangengeThemeDemoSeeder.php` and `ThemeSampleDataOrchestrator.php` to query `Content::withTrashed()` and automatically `restore()` soft-deleted items, preventing SQL unique constraint collisions during demo seeding.
 - Non-destructive theme demo seeders: `JanariThemeDemoSeeder`, `LayungThemeDemoSeeder`, `SarangengeThemeDemoSeeder`, and `SareupnaThemeDemoSeeder` default to non-destructive seeding (`Setting::setIfMissing`, `force: false`) to safeguard downstream client customization from database overwrites.
 - `theme:seed` CLI command: added `--force` option to explicitly opt-in to hard-resetting existing settings and sample data.
 - Host SEO resolver for theme **Sareupna** (`FrontendLayout` + `sareupnaPublicSeo`) — CMS baseline P0.

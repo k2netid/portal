@@ -148,14 +148,26 @@
     }
 }
 
+@utility console-content-wrap {
+    width: 100%;
+    min-width: 0;
+    max-width: min(80rem, 100%);
+    margin-inline: auto;
+}
+
+.console-content-wrap {
+    width: 100%;
+    min-width: 0;
+    max-width: min(80rem, 100%);
+    margin-inline: auto;
+}
+
 @layer components {
     .console-content-wrap {
-        max-width: 80rem;
-        margin-left: auto;
-        margin-right: auto;
         width: 100%;
         min-width: 0;
         max-width: min(80rem, 100%);
+        margin-inline: auto;
     }
 
     /* Flat+ console surfaces (Extensions / App Store reference) */

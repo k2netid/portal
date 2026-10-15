@@ -65,7 +65,13 @@
           "type": "custom",
           "sort_order": 2,
           "children": [
-            { "title": "Kompetensi Kejuruan", "title_en": "Expertise Programs", "url": "/programs", "type": "custom", "description": "Program keahlian berstandar industri" },
+            { "title": "TKRO (Teknik Kendaraan Ringan)", "title_en": "Automotive Engineering", "url": "/blog/tkro", "type": "custom", "description": "Teknik Kendaraan Ringan Otomotif" },
+            { "title": "TBSM (Sepeda Motor)", "title_en": "Motorcycle Engineering", "url": "/blog/tbsm", "type": "custom", "description": "Teknik dan Bisnis Sepeda Motor" },
+            { "title": "TJKT (Jaringan Komputer)", "title_en": "Computer Network", "url": "/blog/tjkt", "type": "custom", "description": "Jaringan Komputer & Telekomunikasi" },
+            { "title": "DKV (Komunikasi Visual)", "title_en": "Visual Communication Design", "url": "/blog/dkv", "type": "custom", "description": "Desain Grafis, Animasi & Media Digital" },
+            { "title": "MPLB (Manajemen Perkantoran)", "title_en": "Office Management", "url": "/blog/mplb", "type": "custom", "description": "Manajemen Perkantoran & Bisnis" },
+            { "title": "AKL (Akuntansi)", "title_en": "Accounting & Finance", "url": "/blog/akl", "type": "custom", "description": "Akuntansi & Keuangan Lembaga" },
+            { "title": "Kuliner (Tata Boga)", "title_en": "Culinary Arts", "url": "/blog/kuliner", "type": "custom", "description": "Seni Kuliner & Pengolahan Makanan" },
             { "title": "Bursa Kerja Khusus (BKK) & Alumni", "title_en": "Career & Alumni", "url": "/career", "type": "custom", "description": "Penyaluran kerja industri & jejaring alumni" }
           ]
         },

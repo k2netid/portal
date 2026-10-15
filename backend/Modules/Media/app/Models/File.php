@@ -59,7 +59,6 @@ class File extends Model implements MediaFileRecordInterface
         'mime_type',
         'disk',
         'path',
-        'thumbnail_path',
         'size',
         'alt',
         'description',
@@ -147,20 +146,30 @@ class File extends Model implements MediaFileRecordInterface
         return Storage::disk($this->disk)->url($this->path);
     }
 
-    public function getThumbnailUrlAttribute(): ?string
+    public function getThumbnailPathAttribute(): ?string
     {
         if (! $this->path || ! str_starts_with((string) $this->mime_type, 'image/')) {
             return null;
         }
 
-        // Check if thumbnail exists
-        $fileName = pathinfo($this->path, PATHINFO_FILENAME);
-        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
+        $pathInfo = pathinfo($this->path);
+        $fileName = isset($pathInfo['filename']) && is_string($pathInfo['filename']) ? $pathInfo['filename'] : '';
+        $extension = isset($pathInfo['extension']) && is_string($pathInfo['extension']) ? $pathInfo['extension'] : '';
+        $dirnameRaw = isset($pathInfo['dirname']) && is_string($pathInfo['dirname']) ? $pathInfo['dirname'] : '.';
+        $dirname = ($dirnameRaw === '.' || $dirnameRaw === '/') ? '' : $dirnameRaw.'/';
 
-        // For SVG files, thumbnail is saved as PNG
-        $isSvg = $this->mime_type === 'image/svg+xml' || str_ends_with($this->path, '.svg');
+        $isSvg = $this->mime_type === 'image/svg+xml' || strtolower((string) $extension) === 'svg';
         $thumbnailExtension = $isSvg ? 'png' : $extension;
-        $thumbnailPath = 'media/thumbnails/'.$fileName.'_thumb.'.$thumbnailExtension;
+
+        return $dirname.'thumbnails/'.$fileName.'_thumb.'.$thumbnailExtension;
+    }
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        $thumbnailPath = $this->thumbnail_path;
+        if (! $thumbnailPath) {
+            return $this->url;
+        }
 
         if (Storage::disk($this->disk)->exists($thumbnailPath)) {
             if ($this->disk === 'public') {

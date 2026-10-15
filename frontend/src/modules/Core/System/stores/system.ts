@@ -153,6 +153,7 @@ export const useSystemStore = defineStore('system', {
                         contact_coordinates: data.contact_coordinates || '',
                         enable_registration: data.enable_registration,
                         enable_member_registration: data.enable_member_registration,
+                        enable_member_google_login: data.enable_member_google_login,
                         require_email_verification: data.require_email_verification,
                         enable_2fa: data.enable_2fa,
                         password_policy: data.password_policy ?? this.siteSettings.password_policy,
